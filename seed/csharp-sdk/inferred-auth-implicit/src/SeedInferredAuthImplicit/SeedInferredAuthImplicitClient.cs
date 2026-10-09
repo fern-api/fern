@@ -11,7 +11,7 @@ public partial class SeedInferredAuthImplicitClient : ISeedInferredAuthImplicitC
     public SeedInferredAuthImplicitClient(
         string xApiKey,
         string clientId,
-        string clientSecret,
+        string? clientSecret = null,
         string? scope = null,
         ClientOptions? clientOptions = null
     )
@@ -22,7 +22,7 @@ public partial class SeedInferredAuthImplicitClient : ISeedInferredAuthImplicitC
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedInferredAuthImplicit" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedInferredAuthImplicit.Version.Current },
                 { "User-Agent", "Ferninferred-auth-implicit/0.0.1" },
             }
         );

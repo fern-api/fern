@@ -18,6 +18,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +36,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -48,7 +54,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<MyUnion>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -62,7 +68,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -73,7 +85,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -83,6 +101,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -95,6 +118,7 @@ public partial class UnionClient : IUnionClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/metadata",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -112,7 +136,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<Dictionary<Key, string>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -126,7 +150,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -137,7 +167,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -148,6 +184,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -161,6 +202,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Put,
                     Path = "/metadata",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -178,7 +220,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<bool>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -192,7 +234,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -203,7 +251,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -214,6 +268,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -227,6 +286,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/call",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -244,7 +304,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<bool>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -258,7 +318,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -269,7 +335,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -280,6 +352,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -293,6 +370,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/duplicate",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -310,7 +388,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<UnionWithDuplicateTypes>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -324,7 +402,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -335,7 +419,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -346,6 +436,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -359,6 +454,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/nested",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -376,7 +472,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -390,7 +486,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -401,7 +503,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -412,6 +520,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -425,6 +538,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/nested-objects",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -442,7 +556,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -456,7 +570,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -467,7 +587,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -478,6 +604,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -491,6 +622,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/aliased-object",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -508,7 +640,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -522,7 +654,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -533,7 +671,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -544,6 +688,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -557,6 +706,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/with-base-properties",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -574,7 +724,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<UnionWithBaseProperties>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -588,7 +738,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -599,7 +755,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -610,6 +772,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -623,6 +790,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/camel-case",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -640,7 +808,7 @@ public partial class UnionClient : IUnionClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -654,7 +822,13 @@ public partial class UnionClient : IUnionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -665,7 +839,13 @@ public partial class UnionClient : IUnionClient
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

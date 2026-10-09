@@ -26,6 +26,9 @@ export class CatalogClient {
      * @param {SeedApi.CreateCatalogImageBody} request
      * @param {CatalogClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     import { createReadStream } from "fs";
      *     await client.catalog.createCatalogImage({
@@ -93,6 +96,9 @@ export class CatalogClient {
     /**
      * @param {SeedApi.GetCatalogImageRequest} request
      * @param {CatalogClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.catalog.getCatalogImage({

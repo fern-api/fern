@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { XmlObjectGenerator } from "./XmlObjectGenerator.js";
 
 export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
@@ -20,10 +21,19 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
     }
 
     public doGenerate(): PhpFile {
+        const xml = this.typeDeclaration.encoding?.xml;
+        const xmlGenerator =
+            xml != null
+                ? new XmlObjectGenerator(this.context, this.typeDeclaration, this.objectDeclaration, xml)
+                : undefined;
         const clazz = php.dataClass({
             ...this.classReference,
             docs: this.typeDeclaration.docs,
-            parentClassReference: this.context.getJsonSerializableTypeClassReference(),
+            documentConstructorKeys: xml != null,
+            parentClassReference:
+                xml != null
+                    ? this.context.getXmlSerializableTypeClassReference()
+                    : this.context.getJsonSerializableTypeClassReference(),
             traits: this.objectDeclaration.extends.map((declaredTypeName) =>
                 this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
             )
@@ -33,10 +43,10 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             includeSetter: this.context.shouldGenerateSetterMethods()
         };
         for (const property of this.objectDeclaration.extendedProperties ?? []) {
-            clazz.addField(this.toField({ property, inherited: true }));
+            clazz.addField(this.toField({ property, inherited: true, xmlGenerator }));
         }
         for (const property of this.objectDeclaration.properties) {
-            const field = this.toField({ property });
+            const field = this.toField({ property, xmlGenerator });
             if (includeGetter) {
                 clazz.addMethod(this.context.getGetterMethod({ name: property.name, field }));
             }
@@ -45,7 +55,11 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             }
             clazz.addField(field);
         }
-        clazz.addMethod(this.context.getToStringMethod());
+        if (xmlGenerator != null) {
+            xmlGenerator.addXmlMembers(clazz);
+        } else {
+            clazz.addMethod(this.context.getToStringMethod());
+        }
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),
@@ -54,7 +68,15 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         });
     }
 
-    private toField({ property, inherited }: { property: FernIr.ObjectProperty; inherited?: boolean }): php.Field {
+    private toField({
+        property,
+        inherited,
+        xmlGenerator
+    }: {
+        property: FernIr.ObjectProperty;
+        inherited?: boolean;
+        xmlGenerator?: XmlObjectGenerator;
+    }): php.Field {
         const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
         return php.field({
             type: convertedType,
@@ -65,7 +87,8 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
                 type: convertedType,
                 property
             }),
-            inherited
+            inherited,
+            ...xmlGenerator?.getFieldConstructorOverrides(property)
         });
     }
 

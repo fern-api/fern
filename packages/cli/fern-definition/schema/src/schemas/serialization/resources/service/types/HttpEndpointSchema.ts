@@ -30,6 +30,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
         auth: HttpEndpointAuth.optional(),
         idempotent: core.serialization.boolean().optional(),
+        subtitle: core.serialization.string().optional(),
         "stream-condition": core.serialization.string().optional(),
         request: HttpRequest.optional(),
         response: HttpResponseSchema.optional(),
@@ -40,6 +41,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         transport: ServiceTransport.optional(),
         source: SourceSchema.optional(),
         retries: RetriesConfiguration.optional(),
+        "global-parameters": core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithDisplayName)
     .extend(DeclarationSchema);
@@ -53,6 +55,7 @@ export declare namespace HttpEndpointSchema {
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
         auth?: HttpEndpointAuth.Raw | null;
         idempotent?: boolean | null;
+        subtitle?: string | null;
         "stream-condition"?: string | null;
         request?: HttpRequest.Raw | null;
         response?: HttpResponseSchema.Raw | null;
@@ -63,5 +66,6 @@ export declare namespace HttpEndpointSchema {
         transport?: ServiceTransport.Raw | null;
         source?: SourceSchema.Raw | null;
         retries?: RetriesConfiguration.Raw | null;
+        "global-parameters"?: string[] | null;
     }
 }

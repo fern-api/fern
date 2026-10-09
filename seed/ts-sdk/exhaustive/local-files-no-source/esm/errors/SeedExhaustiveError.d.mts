@@ -11,4 +11,5 @@ export declare class SeedExhaustiveError extends Error {
         rawResponse?: core.RawResponse;
         cause?: unknown;
     });
+    get requestId(): string | undefined;
 }

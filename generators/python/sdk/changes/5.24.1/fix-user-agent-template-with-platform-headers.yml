@@ -1,0 +1,5 @@
+- summary: |
+    Respect the `user-agent` config template when `include_platform_headers` or
+    `runtime_version` is enabled. The structured User-Agent previously always used the
+    package name and version, ignoring the configured template.
+  type: fix

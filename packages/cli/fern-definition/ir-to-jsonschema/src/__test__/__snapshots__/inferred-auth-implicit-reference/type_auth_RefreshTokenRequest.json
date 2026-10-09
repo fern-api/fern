@@ -35,5 +35,6 @@
     "grant_type"
   ],
   "additionalProperties": false,
+  "description": "A request to refresh an OAuth token.",
   "definitions": {}
 }

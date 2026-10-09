@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "delta": {
+      "type": "string"
+    },
+    "tokens": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "delta"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

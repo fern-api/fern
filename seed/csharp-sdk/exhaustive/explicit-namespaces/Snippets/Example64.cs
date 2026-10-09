@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.InlinedRequests;
 
 public partial class Examples
 {
@@ -10,7 +11,16 @@ public partial class Examples
             }
         );
 
-        await client.NoReqBody.GetWithNoRequestBodyAsync();
+        await client.InlinedRequests.PostWithArrayBodyAndHeadersAsync(
+            new PostWithArrayBodyAndHeaders {
+                XCustomHeader = "X-Custom-Header",
+                Body = new List<string>(){
+                    "string",
+                    "string",
+                }
+
+            }
+        );
     }
 
 }

@@ -10,6 +10,7 @@ import {
     ApiDefinitionSettingsSchema,
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
+    OpenApiErrorResponsesSchema,
     OpenApiFilterSchema,
     ReadmeSchema,
     RemoveDiscriminantsFromSchemas
@@ -72,17 +73,21 @@ export interface APIDefinitionSettings {
     coerceEnumsToLiterals: boolean | undefined;
     objectQueryParameters: boolean | undefined;
     respectReadonlySchemas: boolean | undefined;
+    useReadVariantForResponses: boolean | undefined;
     respectNullableSchemas: boolean | undefined;
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
     useBytesForBinaryResponse: boolean | undefined;
     respectForwardCompatibleEnums: boolean | undefined;
+    respectOptionalRequestBody: boolean | undefined;
     filter: OpenApiFilterSchema | undefined;
     defaultFormParameterEncoding: "form" | "json" | undefined;
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     additionalPropertiesDefaultsTo: boolean | undefined;
     typeDatesAsStrings: boolean | undefined;
     preserveSingleSchemaOneOf: boolean | undefined;
+    preserveOneOfInAllOf: boolean | undefined;
+    anyOfSiblingPropertiesAsObject: boolean | undefined;
     inlineAllOfSchemas: boolean | undefined;
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
@@ -98,6 +103,19 @@ export interface APIDefinitionSettings {
     inferForwardCompatible: boolean | undefined;
     coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
+    disambiguateRequestNames: boolean | undefined;
+    ignoreTags: boolean | undefined;
+    respectParameterContent: boolean | undefined;
+    respectPerSpecBasePath: boolean | undefined;
+    respectOperationIdWordBoundaries: boolean | undefined;
+    namespacedErrors: boolean | undefined;
+    errorResponses: OpenApiErrorResponsesSchema | undefined;
+}
+
+export interface GitSource {
+    repo: string;
+    ref?: string;
+    path: string;
 }
 
 export interface APIDefinitionLocation {
@@ -107,6 +125,9 @@ export interface APIDefinitionLocation {
     overlays: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
+    gitSource?: GitSource;
+    /** Set to true when the path was resolved from a remote git source and is an absolute local path. */
+    resolvedAbsolutePath?: boolean;
 }
 
 export type APIDefinitionSchema =
@@ -127,6 +148,7 @@ export interface ProtoAPIDefinitionSchema {
 export interface OSSAPIDefinitionSchema {
     type: "oss";
     path: string;
+    sourceType?: "openapi" | "asyncapi";
 }
 
 export interface OpenRPCDefinitionSchema {
@@ -137,6 +159,7 @@ export interface OpenRPCDefinitionSchema {
 export interface GraphQLDefinitionSchema {
     type: "graphql";
     path: string;
+    examples: string | undefined;
 }
 
 /**
@@ -172,18 +195,39 @@ export interface GeneratorInvocation {
     /** Resolved automation configuration (generator → group → root → default true). */
     automation: ResolvedAutomationConfig;
     name: string;
+    sdkConfigTargetIndex?: number;
     /** Fully-qualified container image for local generation (e.g., `ghcr.io/myorg/fernapi/fern-typescript-sdk`). Undefined means use Docker Hub default. */
     containerImage: string | undefined;
     irVersionOverride: string | undefined;
     version: string;
     config: unknown;
+    /**
+     * Resolved `auto-generate-idempotency-key` value for this generator: the generator's own
+     * `config.auto-generate-idempotency-key` when present, otherwise the API-level default from
+     * `api.settings.auto-generate-idempotency-key`. Left as the raw boolean/object; normalized
+     * into the IR downstream.
+     */
+    idempotencyKeyGenerationConfig?: unknown;
+    /**
+     * Raw `api.settings.webhook-signature` value from generators.yml: an API-wide webhook
+     * signature scheme in the same shape as a Fern-definition webhook `signature` block.
+     * Validated and normalized into the IR (`SdkConfig.webhookSignatureVerification`) downstream.
+     */
+    webhookSignatureConfig?: unknown;
     // Note this also includes a reviewers block for PR mode, it's from fiddle
     // and the same schema
     outputMode: FernFiddle.remoteGen.OutputMode;
     absolutePathToLocalOutput: AbsoluteFilePath | undefined;
+    /**
+     * Set when `output.location` is `fern-hosted`: this invocation's generated MCP server is
+     * deployed to Fern's hosted platform after generation. `slug` is the user-configured URL
+     * slug; when undefined it is derived from the generated server's metadata.
+     */
+    fernHostedOutput?: { slug: string | undefined };
     absolutePathToLocalSnippets: AbsoluteFilePath | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    smartCasingDigitWordBoundary: boolean;
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;

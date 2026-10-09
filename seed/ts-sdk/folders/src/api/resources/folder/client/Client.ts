@@ -29,6 +29,9 @@ export class FolderClient {
     /**
      * @param {FolderClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.folder.foo()
      */

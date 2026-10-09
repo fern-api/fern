@@ -15,7 +15,7 @@ public partial class SeedWebsocketClient : ISeedWebsocketClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedWebsocket" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedWebsocket.Version.Current },
                 { "User-Agent", "Fernwebsocket/0.0.1" },
             }
         );
@@ -28,9 +28,12 @@ public partial class SeedWebsocketClient : ISeedWebsocketClient
         }
         _client = new RawClient(clientOptions);
         Empty = new EmptyClient(_client);
+        Status = new StatusClient(_client);
     }
 
     public IEmptyClient Empty { get; }
+
+    public IStatusClient Status { get; }
 
     public IRealtimeApi CreateRealtimeApi(RealtimeApi.Options options)
     {

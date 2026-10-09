@@ -88,6 +88,7 @@ $client->updateFoo(
         'nullableText' => 'nullable_text',
         'nullableNumber' => 1.1,
         'nonNullableText' => 'non_nullable_text',
+        'requiredNullableText' => 'required_nullable_text',
     ]),
 );
 ```
@@ -137,6 +138,14 @@ $client->updateFoo(
 <dd>
 
 **$nonNullableText:** `?string` — Regular non-nullable field
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$requiredNullableText:** `?string` — Must be sent, but may be null to clear the value
     
 </dd>
 </dl>

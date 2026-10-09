@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a race in credential storage that made `auth login --with-token` fail
+    intermittently when several CLI processes ran at once.
+
+    `atomic_write` derived its temp file name from the target alone, so every
+    concurrent writer used the same sibling path (`auth-keyring.tmp`). Whichever
+    process renamed first moved it away and the rest failed with
+    `error[auth]: Failed to rename .../auth-keyring.tmp: No such file or
+    directory (os error 2)`. The temp name now carries the writer's pid plus a
+    process-local counter, and a drop guard unlinks it on any early return or
+    panic so unique names can't accumulate orphaned credential files.
+
+    This surfaced as flaky generated wire-test suites. The harness gives each
+    case its own temp `HOME`, but `config_dir()` consults `$XDG_CONFIG_HOME`
+    first on Linux and CI runners set it to the real config directory — so the
+    `HOME` override was inert, every authenticated case shared one
+    `auth-keyring.json`, and `cargo test` ran them in parallel. On a workspace
+    with ~680 cases a different subset died on each run. macOS never consults
+    `$XDG_CONFIG_HOME`, so the isolation holds there and the bug cannot
+    reproduce locally on a Mac, which is why it reached a real workspace before
+    ours.
+
+    `rename` was already atomic for readers, so no partially written credential
+    file was ever observable — only writer-vs-writer collisions were affected.
+    `FileKeyringStore::set` is still an unlocked read-modify-write of the whole
+    map, so simultaneous writers can clobber one another's entries; that needs
+    file locking and is left alone here.
+  type: fix

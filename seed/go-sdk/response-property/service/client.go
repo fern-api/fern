@@ -26,13 +26,20 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Service.GetMovie(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetMovie(
 	ctx context.Context,
 	request string,
@@ -49,6 +56,12 @@ func (c *Client) GetMovie(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.GetMovieDocs(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetMovieDocs(
 	ctx context.Context,
 	request string,
@@ -65,6 +78,12 @@ func (c *Client) GetMovieDocs(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.GetMovieName(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetMovieName(
 	ctx context.Context,
 	request string,
@@ -81,6 +100,12 @@ func (c *Client) GetMovieName(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.GetMovieMetadata(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetMovieMetadata(
 	ctx context.Context,
 	request string,
@@ -97,6 +122,12 @@ func (c *Client) GetMovieMetadata(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.GetOptionalMovie(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetOptionalMovie(
 	ctx context.Context,
 	request string,
@@ -113,6 +144,12 @@ func (c *Client) GetOptionalMovie(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.GetOptionalMovieDocs(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetOptionalMovieDocs(
 	ctx context.Context,
 	request string,
@@ -129,6 +166,12 @@ func (c *Client) GetOptionalMovieDocs(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.GetOptionalMovieName(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetOptionalMovieName(
 	ctx context.Context,
 	request string,

@@ -100,7 +100,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -147,7 +148,8 @@
                         "safeName": "Password"
                     }
                 },
-                "passwordOmit": null
+                "passwordOmit": null,
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -220,7 +222,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -269,7 +272,8 @@
                         "safeName": "Password"
                     }
                 },
-                "passwordOmit": null
+                "passwordOmit": null,
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -347,7 +351,8 @@
                     "value": {
                         "type": "unknown"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -358,5 +363,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

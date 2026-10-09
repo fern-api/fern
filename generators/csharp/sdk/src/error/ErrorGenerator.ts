@@ -26,16 +26,30 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkGeneratorContex
                       reference: this.errorDeclaration.type
                   })
                 : this.Primitive.object;
+        const rawResponseReference = this.csharp
+            .classReference({
+                name: "RawResponse",
+                namespace: this.namespaces.root
+            })
+            .asFullyQualified();
         const class_ = this.csharp.class_({
             reference: this.classReference,
             access: ast.Access.Public,
             parentClassReference: this.Types.BaseApiException,
             primaryConstructor: {
-                parameters: [this.csharp.parameter({ name: "body", type: bodyType })],
+                parameters: [
+                    this.csharp.parameter({ name: "body", type: bodyType }),
+                    this.csharp.parameter({
+                        name: "rawResponse",
+                        type: rawResponseReference.asOptional(),
+                        initializer: "null"
+                    })
+                ],
                 superClassArguments: [
                     this.csharp.codeblock(`"${this.classReference.name}"`),
                     this.csharp.codeblock(`${this.errorDeclaration.statusCode}`),
-                    this.csharp.codeblock("body")
+                    this.csharp.codeblock("body"),
+                    this.csharp.codeblock("rawResponse: rawResponse")
                 ]
             },
             summary: "This exception type will be thrown for any non-2XX API responses.",

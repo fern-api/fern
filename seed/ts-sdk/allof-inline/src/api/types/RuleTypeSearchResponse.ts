@@ -5,5 +5,5 @@ import type * as SeedApi from "../index.js";
 export interface RuleTypeSearchResponse {
     paging: SeedApi.PagingCursors;
     /** Current page of results from the requested resource. */
-    results?: SeedApi.RuleType[] | undefined;
+    results: SeedApi.RuleType[];
 }

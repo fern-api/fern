@@ -6,5 +6,6 @@
     "GUEST",
     "MODERATOR"
   ],
+  "description": "Test enum for nullable enum fields",
   "definitions": {}
 }

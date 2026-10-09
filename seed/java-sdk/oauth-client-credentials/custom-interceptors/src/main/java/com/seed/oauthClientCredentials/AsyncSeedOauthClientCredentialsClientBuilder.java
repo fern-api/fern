@@ -21,6 +21,12 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+    private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+    private Optional<Double> retryJitterFactor = Optional.empty();
+
     private final Map<String, String> customHeaders = new HashMap<>();
 
     protected Environment environment;
@@ -83,6 +89,30 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
      */
     public AsyncSeedOauthClientCredentialsClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+     */
+    public AsyncSeedOauthClientCredentialsClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
+        this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+     */
+    public AsyncSeedOauthClientCredentialsClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
+        this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+     */
+    public AsyncSeedOauthClientCredentialsClientBuilder retryJitterFactor(double retryJitterFactor) {
+        this.retryJitterFactor = Optional.of(retryJitterFactor);
         return this;
     }
 
@@ -190,6 +220,15 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
         if (this.maxRetries.isPresent()) {
             builder.maxRetries(this.maxRetries.get());
         }
+        if (this.initialRetryDelayMillis.isPresent()) {
+            builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+        }
+        if (this.maxRetryDelayMillis.isPresent()) {
+            builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+        }
+        if (this.retryJitterFactor.isPresent()) {
+            builder.retryJitterFactor(this.retryJitterFactor.get());
+        }
     }
 
     /**
@@ -287,15 +326,20 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
 
         private final String clientSecret;
 
-        private String scope = null;
+        private Optional<String> scope = Optional.empty();
 
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
         }
 
-        public _CredentialsAuth scope(String scope) {
+        public _CredentialsAuth scope(Optional<String> scope) {
             this.scope = scope;
+            return this;
+        }
+
+        public _CredentialsAuth scope(String scope) {
+            this.scope = Optional.ofNullable(scope);
             return this;
         }
 
@@ -319,6 +363,12 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
         private Optional<Integer> timeout = Optional.empty();
 
         private Optional<Integer> maxRetries = Optional.empty();
+
+        private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+        private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+        private Optional<Double> retryJitterFactor = Optional.empty();
 
         private OkHttpClient httpClient;
 
@@ -344,6 +394,30 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
          */
         public _Builder maxRetries(int maxRetries) {
             this.maxRetries = Optional.of(maxRetries);
+            return this;
+        }
+
+        /**
+         * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+         */
+        public _Builder initialRetryDelayMillis(long initialRetryDelayMillis) {
+            this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+            return this;
+        }
+
+        /**
+         * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+         */
+        public _Builder maxRetryDelayMillis(long maxRetryDelayMillis) {
+            this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+            return this;
+        }
+
+        /**
+         * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+         */
+        public _Builder retryJitterFactor(double retryJitterFactor) {
+            this.retryJitterFactor = Optional.of(retryJitterFactor);
             return this;
         }
 
@@ -395,6 +469,15 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
             if (this.maxRetries.isPresent()) {
                 auth.maxRetries(this.maxRetries.get());
             }
+            if (this.initialRetryDelayMillis.isPresent()) {
+                auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+            }
+            if (this.maxRetryDelayMillis.isPresent()) {
+                auth.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+            }
+            if (this.retryJitterFactor.isPresent()) {
+                auth.retryJitterFactor(this.retryJitterFactor.get());
+            }
             if (this.httpClient != null) {
                 auth.httpClient(this.httpClient);
             }
@@ -425,6 +508,15 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
             }
             if (this.maxRetries.isPresent()) {
                 auth.maxRetries(this.maxRetries.get());
+            }
+            if (this.initialRetryDelayMillis.isPresent()) {
+                auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+            }
+            if (this.maxRetryDelayMillis.isPresent()) {
+                auth.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+            }
+            if (this.retryJitterFactor.isPresent()) {
+                auth.retryJitterFactor(this.retryJitterFactor.get());
             }
             if (this.httpClient != null) {
                 auth.httpClient(this.httpClient);

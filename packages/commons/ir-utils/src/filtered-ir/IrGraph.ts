@@ -65,6 +65,7 @@ export class IrGraph {
     private webhooksNeededForAudience: Set<WebhookId> = new Set();
     private channelsNeededForAudience: Set<WebSocketChannelId> = new Set();
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
+    private schemaIdToGraphTypeId: Map<string, TypeId> = new Map();
 
     public constructor(audiences: ConfigAudiences) {
         this.audiences = audiencesFromConfig(audiences);
@@ -91,6 +92,9 @@ export class IrGraph {
             referencedSubpackages: descendantFilepaths
         };
         this.types[typeId] = typeNode;
+        if (declaredTypeName.typeId != null && declaredTypeName.typeId !== typeId) {
+            this.schemaIdToGraphTypeId.set(declaredTypeName.typeId, typeId);
+        }
         if (this.typesReferencedByService[typeId] == null) {
             this.typesReferencedByService[typeId] = new Set();
         }
@@ -379,6 +383,31 @@ export class IrGraph {
         }
     }
 
+    /**
+     * Registers inline request body audience info for importers that don't pass a raw Fern
+     * Definition (e.g. OpenAPI V3). Properties absent from every audience set are universal.
+     */
+    public markInlinedRequestPropertiesForAudiences(
+        endpointId: EndpointId,
+        propertiesByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.requestProperties[endpointId] = { endpointId, propertiesByAudience };
+    }
+
+    public markQueryParametersForAudiences(
+        endpointId: EndpointId,
+        parametersByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.queryParameters[endpointId] = { endpointId, parametersByAudience };
+    }
+
+    public markInlinedWebhookPayloadPropertiesForAudiences(
+        webhookId: WebhookId,
+        propertiesByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.webhookProperties[webhookId] = { webhookId, propertiesByAudience };
+    }
+
     public addChannel(
         filepath: FernFilepath,
         channelId: string,
@@ -463,91 +492,67 @@ export class IrGraph {
             this.addReferencedTypes(typeIds, channelNode.referencedTypes);
         }
 
-        const properties: Record<TypeId, Set<string> | undefined> = {};
-        const requestProperties: Record<EndpointId, Set<string> | undefined> = {};
-        const queryParameters: Record<EndpointId, Set<string> | undefined> = {};
-        const webhookPayloadProperties: Record<WebhookId, Set<string> | undefined> = {};
+        // Property filtering is exclusion-based: drop only if declared audiences don't overlap.
+        const excludedProperties: Record<TypeId, Set<string> | undefined> = {};
+        const excludedRequestProperties: Record<EndpointId, Set<string> | undefined> = {};
+        const excludedQueryParameters: Record<EndpointId, Set<string> | undefined> = {};
+        const excludedWebhookPayloadProperties: Record<WebhookId, Set<string> | undefined> = {};
 
         if (this.audiences.type === "filtered") {
+            const activeAudiences = this.audiences.audiences;
+
             for (const [typeId, typePropertiesNode] of Object.entries(this.properties)) {
                 if (!typeIds.has(typeId)) {
                     continue;
                 }
-                const propertiesForTypeId = new Set<string>();
-                for (const audience of this.audiences.audiences) {
-                    const propertiesForAudience = typePropertiesNode.propertiesByAudience[audience];
-                    if (propertiesForAudience != null) {
-                        propertiesForAudience.forEach((property) => {
-                            propertiesForTypeId.add(property);
-                        });
-                    }
-                }
-                if (propertiesForTypeId.size > 0) {
-                    properties[typeId] = propertiesForTypeId;
-                }
-                properties[typeId] = propertiesForTypeId.size > 0 ? propertiesForTypeId : undefined;
+                excludedProperties[typeId] = computeExcludedKeys(
+                    typePropertiesNode.propertiesByAudience,
+                    activeAudiences
+                );
             }
 
             for (const [endpointId, requestPropertiesNode] of Object.entries(this.requestProperties)) {
                 if (!this.endpointsNeededForAudience.has(endpointId)) {
                     continue;
                 }
-                const propertiesForEndpoint = new Set<string>();
-                for (const audience of this.audiences.audiences) {
-                    const propertiesForAudience = requestPropertiesNode.propertiesByAudience[audience];
-                    if (propertiesForAudience != null) {
-                        propertiesForAudience.forEach((property) => {
-                            propertiesForEndpoint.add(property);
-                        });
-                    }
-                }
-                requestProperties[endpointId] = propertiesForEndpoint.size > 0 ? propertiesForEndpoint : undefined;
+                excludedRequestProperties[endpointId] = computeExcludedKeys(
+                    requestPropertiesNode.propertiesByAudience,
+                    activeAudiences
+                );
             }
 
             for (const [endpointId, queryParametersNode] of Object.entries(this.queryParameters)) {
                 if (!this.endpointsNeededForAudience.has(endpointId)) {
                     continue;
                 }
-                const parametersForEndpoint = new Set<string>();
-                for (const audience of this.audiences.audiences) {
-                    const parametersByAudience = queryParametersNode.parametersByAudience[audience];
-                    if (parametersByAudience != null) {
-                        parametersByAudience.forEach((parameter) => {
-                            parametersForEndpoint.add(parameter);
-                        });
-                    }
-                }
-                queryParameters[endpointId] = parametersForEndpoint.size > 0 ? parametersForEndpoint : undefined;
+                excludedQueryParameters[endpointId] = computeExcludedKeys(
+                    queryParametersNode.parametersByAudience,
+                    activeAudiences
+                );
             }
 
             for (const [webhookId, webhookPaylodPropertiesNode] of Object.entries(this.webhookProperties)) {
                 if (!this.webhooksNeededForAudience.has(webhookId)) {
                     continue;
                 }
-                const propertiesForWebhook = new Set<string>();
-                for (const audience of this.audiences.audiences) {
-                    const propertiesForAudience = webhookPaylodPropertiesNode.propertiesByAudience[audience];
-                    if (propertiesForAudience != null) {
-                        propertiesForAudience.forEach((property) => {
-                            propertiesForWebhook.add(property);
-                        });
-                    }
-                }
-                webhookPayloadProperties[webhookId] = propertiesForWebhook.size > 0 ? propertiesForWebhook : undefined;
+                excludedWebhookPayloadProperties[webhookId] = computeExcludedKeys(
+                    webhookPaylodPropertiesNode.propertiesByAudience,
+                    activeAudiences
+                );
             }
         }
 
         return new FilteredIrImpl({
             types: typeIds,
-            properties,
+            excludedProperties,
             errors: errorIds,
-            requestProperties,
-            queryParameters,
+            excludedRequestProperties,
+            excludedQueryParameters,
             environments: this.environmentsNeededForAudience,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
             webhooks: this.webhooksNeededForAudience,
-            webhookPayloadProperties,
+            excludedWebhookPayloadProperties,
             subpackages: this.subpackagesNeededForAudience,
             channels: this.channelsNeededForAudience
         });
@@ -563,36 +568,53 @@ export class IrGraph {
 
         const typeNode = this.getTypeNode(typeId);
         for (const descendantTypeId of typeNode.allDescendants) {
-            this.markTypeForService(descendantTypeId, serviceId);
+            this.markTypeForService(this.resolveTypeId(descendantTypeId), serviceId);
         }
     }
 
+    private resolveTypeId(id: TypeId): TypeId {
+        return this.schemaIdToGraphTypeId.get(id) ?? id;
+    }
+
+    /**
+     * BFS the type-dependency graph and add every transitively-reachable type
+     * to `types`. The walk must be recursive: an outer type's `allDescendants`
+     * may only list its direct dependencies (e.g. when a property uses `$ref`
+     * to another component schema, the outer type's referencedTypes contains
+     * the ref target but not the target's own inline-object descendants), so a
+     * single-level pass would silently drop deeper named types and they would
+     * later render as `any` in the docs.
+     */
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
-        for (const typeId of typesToAdd) {
-            if (types.has(typeId)) {
+        const queue: TypeId[] = [...typesToAdd];
+
+        while (queue.length > 0) {
+            const typeId = queue.pop();
+            if (typeId == null || types.has(typeId)) {
                 continue;
             }
             types.add(typeId);
             const typeNode = this.getTypeNode(typeId);
 
+            const enqueueDescendant = (descendantTypeId: TypeId): void => {
+                const resolved = this.resolveTypeId(descendantTypeId);
+                if (!types.has(resolved)) {
+                    queue.push(resolved);
+                }
+            };
+
             if (this.audiences.type === "filtered") {
                 for (const audienceId of this.audiences.audiences) {
                     const descendantsForAudience = typeNode.descendantsByAudience[audienceId];
                     if (descendantsForAudience != null) {
-                        descendantsForAudience.forEach((descendantTypeId) => {
-                            types.add(descendantTypeId);
-                        });
+                        descendantsForAudience.forEach(enqueueDescendant);
                     } else {
-                        typeNode.allDescendants.forEach((descendantTypeId) => {
-                            types.add(descendantTypeId);
-                        });
+                        typeNode.allDescendants.forEach(enqueueDescendant);
                         break;
                     }
                 }
             } else {
-                typeNode.allDescendants.forEach((descendantTypeId) => {
-                    types.add(descendantTypeId);
-                });
+                typeNode.allDescendants.forEach(enqueueDescendant);
             }
         }
     }
@@ -673,6 +695,29 @@ interface NoAudience {
 interface FilteredAudiences {
     type: "filtered";
     audiences: Set<string>;
+}
+
+/**
+ * Excludes keys whose declared audiences do not overlap `activeAudiences`. Keys absent
+ * from `keysByAudience` are untagged (universal) and never excluded.
+ */
+function computeExcludedKeys(
+    keysByAudience: Record<AudienceId, Set<string>>,
+    activeAudiences: Set<AudienceId>
+): Set<string> {
+    const matched = new Set<string>();
+    for (const audience of activeAudiences) {
+        keysByAudience[audience]?.forEach((key) => matched.add(key));
+    }
+    const excluded = new Set<string>();
+    for (const keys of Object.values(keysByAudience)) {
+        keys.forEach((key) => {
+            if (!matched.has(key)) {
+                excluded.add(key);
+            }
+        });
+    }
+    return excluded;
 }
 
 function audiencesFromConfig(configAudiences: ConfigAudiences): Audiences {

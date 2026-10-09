@@ -1,0 +1,5 @@
+- summary: |
+    Add `fern org set/get/unset cli-version` to pin the Fern CLI to a version
+    or a min/max range for your whole organization, keeping every project on a
+    consistent CLI version.
+  type: feat

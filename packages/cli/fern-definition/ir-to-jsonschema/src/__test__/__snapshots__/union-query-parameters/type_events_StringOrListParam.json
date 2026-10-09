@@ -10,5 +10,6 @@
       }
     }
   ],
+  "description": "Either a single string or a list of strings.",
   "definitions": {}
 }

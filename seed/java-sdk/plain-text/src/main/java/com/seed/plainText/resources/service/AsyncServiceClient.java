@@ -5,6 +5,7 @@ package com.seed.plainText.resources.service;
 
 import com.seed.plainText.core.ClientOptions;
 import com.seed.plainText.core.RequestOptions;
+import com.seed.plainText.core.SeedPlainTextHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -25,10 +26,68 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<String> getText() {
-        return this.rawClient.getText().thenApply(response -> response.body());
+        CompletableFuture<SeedPlainTextHttpResponse<String>> rawFuture = this.rawClient.getText();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> getText(RequestOptions requestOptions) {
-        return this.rawClient.getText(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPlainTextHttpResponse<String>> rawFuture = this.rawClient.getText(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> getCsv() {
+        CompletableFuture<SeedPlainTextHttpResponse<String>> rawFuture = this.rawClient.getCsv();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> getCsv(RequestOptions requestOptions) {
+        CompletableFuture<SeedPlainTextHttpResponse<String>> rawFuture = this.rawClient.getCsv(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> getXml() {
+        CompletableFuture<SeedPlainTextHttpResponse<String>> rawFuture = this.rawClient.getXml();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> getXml(RequestOptions requestOptions) {
+        CompletableFuture<SeedPlainTextHttpResponse<String>> rawFuture = this.rawClient.getXml(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

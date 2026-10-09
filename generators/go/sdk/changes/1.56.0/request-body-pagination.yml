@@ -1,0 +1,15 @@
+- summary: |
+    Add the `enableRequestBodyPagination` configuration option, which generates auto-pagination for
+    endpoints whose cursor or offset is a top-level request body property (e.g.
+    `cursor: $request.cursor`). These endpoints previously generated a regular method that returned
+    the response body, so the option defaults to `false` to preserve the existing return types.
+
+    ```yaml
+    - name: fernapi/fern-go-sdk
+      config:
+        enableRequestBodyPagination: true
+    ```
+
+    Pagination configured with a nested request body property (e.g. `cursor: $request.pagination.cursor`)
+    remains unsupported.
+  type: feat

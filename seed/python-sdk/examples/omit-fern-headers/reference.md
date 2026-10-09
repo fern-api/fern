@@ -629,10 +629,6 @@ client.service.create_big_entity(
         id="id",
     ),
     extended_movie=ExtendedMovie(
-        cast=[
-            "cast",
-            "cast"
-        ],
         id="id",
         prequel="prequel",
         title="title",
@@ -645,6 +641,10 @@ client.service.create_big_entity(
             "metadata": {"key": "value"}
         },
         revenue=1000000,
+        cast=[
+            "cast",
+            "cast"
+        ],
     ),
     entity=Entity(
         type="primitive",

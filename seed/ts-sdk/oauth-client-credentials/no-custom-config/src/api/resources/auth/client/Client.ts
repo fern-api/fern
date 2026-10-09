@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedOauthClientCredentials from "../../../index.js";
@@ -24,6 +25,9 @@ export class AuthClient {
     /**
      * @param {SeedOauthClientCredentials.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
      *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
@@ -55,7 +59,10 @@ export class AuthClient {
             contentType: "application/x-www-form-urlencoded",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "form",
-            body: { ...request, audience: "https://api.example.com", grant_type: "client_credentials" },
+            body: mergeAdditionalBodyParameters(
+                { ...request, audience: "https://api.example.com", grant_type: "client_credentials" },
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -83,6 +90,9 @@ export class AuthClient {
     /**
      * @param {SeedOauthClientCredentials.RefreshTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
      *
      * @example
      *     await client.auth.refreshToken({
@@ -115,7 +125,10 @@ export class AuthClient {
             contentType: "application/x-www-form-urlencoded",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "form",
-            body: { ...request, audience: "https://api.example.com", grant_type: "refresh_token" },
+            body: mergeAdditionalBodyParameters(
+                { ...request, audience: "https://api.example.com", grant_type: "refresh_token" },
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

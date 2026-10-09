@@ -30,7 +30,7 @@ public class Key
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a SeedUndiscriminatedUnions.KeyType value.
+    /// Factory method to create a union from a <see cref="SeedUndiscriminatedUnions.KeyType"/> value.
     /// </summary>
     public static Key FromKeyType(SeedUndiscriminatedUnions.KeyType value) => new("keyType", value);
 

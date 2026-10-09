@@ -156,10 +156,11 @@ export class UndiscriminatedUnionGenerator {
 
         if (isDateTimeOnlyType(variant.typeRef)) {
             const dateTimeType = this.context.getDateTimeType();
+            const coreModulePath = this.context.getCoreModulePath();
             const modulePath =
                 dateTimeType === "utc"
-                    ? "crate::core::flexible_datetime::utc"
-                    : "crate::core::flexible_datetime::offset";
+                    ? `${coreModulePath}::flexible_datetime::utc`
+                    : `${coreModulePath}::flexible_datetime::offset`;
             writer.writeLine(`    ${variant.variantName}(`);
             writer.writeLine(`        #[serde(with = "${modulePath}")]`);
             writer.writeLine(`        ${memberType.toString()}`);
@@ -307,6 +308,11 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateConversionMethods(writer: rust.Writer, variants: ResolvedVariant[]): void {
+        const writeFallbackArm = (): void => {
+            if (variants.length > 1) {
+                writer.writeLine("            _ => None,");
+            }
+        };
         variants.forEach((variant) => {
             // Use innerTypeRef (optional/nullable stripped) for return types to avoid double-Option
             const isRecursive =
@@ -333,7 +339,7 @@ export class UndiscriminatedUnionGenerator {
                     () => {
                         writer.writeLine("match self {");
                         writer.writeLine(`            Self::${variant.variantName}(value) => ${asRefExpr},`);
-                        writer.writeLine("            _ => None,");
+                        writeFallbackArm();
                         writer.writeLine("        }");
                     }
                 );
@@ -343,7 +349,7 @@ export class UndiscriminatedUnionGenerator {
                     () => {
                         writer.writeLine("match self {");
                         writer.writeLine(`            Self::${variant.variantName}(value) => Some(value),`);
-                        writer.writeLine("            _ => None,");
+                        writeFallbackArm();
                         writer.writeLine("        }");
                     }
                 );
@@ -358,7 +364,7 @@ export class UndiscriminatedUnionGenerator {
                     () => {
                         writer.writeLine("match self {");
                         writer.writeLine(`            Self::${variant.variantName}(value) => ${returnValue},`);
-                        writer.writeLine("            _ => None,");
+                        writeFallbackArm();
                         writer.writeLine("        }");
                     }
                 );
@@ -369,7 +375,7 @@ export class UndiscriminatedUnionGenerator {
                     () => {
                         writer.writeLine("match self {");
                         writer.writeLine(`            Self::${variant.variantName}(value) => ${returnValue},`);
-                        writer.writeLine("            _ => None,");
+                        writeFallbackArm();
                         writer.writeLine("        }");
                     }
                 );

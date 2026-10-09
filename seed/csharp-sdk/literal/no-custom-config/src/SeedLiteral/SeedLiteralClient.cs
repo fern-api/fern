@@ -14,7 +14,7 @@ public partial class SeedLiteralClient : ISeedLiteralClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedLiteral" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedLiteral.Version.Current },
                 { "User-Agent", "Fernliteral/0.0.1" },
             }
         );

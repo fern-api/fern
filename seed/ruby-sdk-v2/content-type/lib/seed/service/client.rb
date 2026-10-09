@@ -18,6 +18,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.patch(
+      #     application: "application",
+      #     require_auth: true
+      #   )
+      #
       # @return [untyped]
       def patch(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -53,6 +59,29 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.service.patch_complex(
+      #     id: "id",
+      #     name: "name",
+      #     age: 1,
+      #     active: true,
+      #     metadata: {
+      #       metadata: {
+      #         key: "value"
+      #       }
+      #     },
+      #     tags: %w[tags tags],
+      #     email: "email",
+      #     nickname: "nickname",
+      #     bio: "bio",
+      #     profile_image_url: "profileImageUrl",
+      #     settings: {
+      #       settings: {
+      #         key: "value"
+      #       }
+      #     }
+      #   )
       #
       # @return [untyped]
       def patch_complex(request_options: {}, **params)
@@ -91,6 +120,14 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.service.named_patch_with_mixed(
+      #     id: "id",
+      #     app_id: "appId",
+      #     instructions: "instructions",
+      #     active: true
+      #   )
       #
       # @return [untyped]
       def named_patch_with_mixed(request_options: {}, **params)
@@ -131,6 +168,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.optional_merge_patch_test(
+      #     required_field: "requiredField",
+      #     optional_string: "optionalString",
+      #     optional_integer: 1,
+      #     optional_boolean: true,
+      #     nullable_string: "nullableString"
+      #   )
+      #
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -163,6 +209,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.service.regular_patch(
+      #     id: "id",
+      #     field1: "field1",
+      #     field2: 1
+      #   )
       #
       # @return [untyped]
       def regular_patch(request_options: {}, **params)

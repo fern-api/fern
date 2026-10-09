@@ -1,0 +1,19 @@
+- summary: |
+    `packageIdentity` now reaches the published npm package. The launcher's
+    `package.json` carried only name/version/bin/optionalDependencies plus a
+    hardcoded description, so npm rendered the CLI as "License: none" with no
+    keywords, homepage or author — while the same config already populated
+    `Cargo.toml`. The license is the part that matters: dependency scanners and
+    corporate policy gates reject unlicensed packages. `authors[0]` becomes npm's
+    single `author` and the rest `contributors`.
+  type: fix
+
+- summary: |
+    A `license: MIT` entry in `generators.yml` now emits a matching LICENSE.
+    Fern's `LicenseConfig.Basic` mounts no file, so no generator honored it and
+    a repo publishing to npm as MIT shipped no LICENSE at all. The copyright
+    holder comes from `packageIdentity.authors[0]`, falling back to the
+    organization; when neither is known nothing is written, since a copyright
+    line naming nobody is worse than no file. `Apache-2.0` is left to
+    `license: { type: custom }`.
+  type: fix

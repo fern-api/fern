@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "stale-if-slow",
+    "no-cache"
+  ],
+  "definitions": {}
+}

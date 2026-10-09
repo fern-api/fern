@@ -163,7 +163,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_user:User": {
             "type": "object",
@@ -294,7 +295,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -319,6 +321,25 @@
                     "pascalCase": {
                         "unsafeName": "Token",
                         "safeName": "Token"
+                    }
+                },
+                "wrapperProperty": {
+                    "originalName": "Bearer",
+                    "camelCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BEARER",
+                        "safeName": "BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Bearer",
+                        "safeName": "Bearer"
                     }
                 }
             },
@@ -621,6 +642,25 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
+                },
+                "wrapperProperty": {
+                    "originalName": "Bearer",
+                    "camelCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BEARER",
+                        "safeName": "BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Bearer",
+                        "safeName": "Bearer"
+                    }
                 }
             },
             "declaration": {
@@ -694,7 +734,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -721,6 +762,25 @@
                     "pascalCase": {
                         "unsafeName": "Token",
                         "safeName": "Token"
+                    }
+                },
+                "wrapperProperty": {
+                    "originalName": "Bearer",
+                    "camelCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BEARER",
+                        "safeName": "BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Bearer",
+                        "safeName": "Bearer"
                     }
                 }
             },
@@ -795,7 +855,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -822,6 +883,25 @@
                     "pascalCase": {
                         "unsafeName": "Token",
                         "safeName": "Token"
+                    }
+                },
+                "wrapperProperty": {
+                    "originalName": "Bearer",
+                    "camelCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BEARER",
+                        "safeName": "BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Bearer",
+                        "safeName": "Bearer"
                     }
                 }
             },
@@ -896,7 +976,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -923,6 +1004,25 @@
                     "pascalCase": {
                         "unsafeName": "Token",
                         "safeName": "Token"
+                    }
+                },
+                "wrapperProperty": {
+                    "originalName": "Bearer",
+                    "camelCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BEARER",
+                        "safeName": "BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Bearer",
+                        "safeName": "Bearer"
                     }
                 }
             },
@@ -997,7 +1097,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1024,6 +1125,25 @@
                     "pascalCase": {
                         "unsafeName": "Token",
                         "safeName": "Token"
+                    }
+                },
+                "wrapperProperty": {
+                    "originalName": "Bearer",
+                    "camelCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BEARER",
+                        "safeName": "BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Bearer",
+                        "safeName": "Bearer"
                     }
                 }
             },
@@ -1098,7 +1218,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1125,6 +1246,25 @@
                     "pascalCase": {
                         "unsafeName": "Token",
                         "safeName": "Token"
+                    }
+                },
+                "wrapperProperty": {
+                    "originalName": "Bearer",
+                    "camelCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BEARER",
+                        "safeName": "BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Bearer",
+                        "safeName": "Bearer"
                     }
                 }
             },
@@ -1199,7 +1339,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1226,6 +1367,25 @@
                     "pascalCase": {
                         "unsafeName": "Token",
                         "safeName": "Token"
+                    }
+                },
+                "wrapperProperty": {
+                    "originalName": "Bearer",
+                    "camelCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bearer",
+                        "safeName": "bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BEARER",
+                        "safeName": "BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Bearer",
+                        "safeName": "Bearer"
                     }
                 }
             },
@@ -1300,7 +1460,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1311,5 +1472,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

@@ -3,21 +3,38 @@ from __future__ import annotations
 import os
 import typing
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 from types import TracebackType
-from typing import TYPE_CHECKING, List, Optional, Sequence, Set, Type
+from typing import TYPE_CHECKING, List, Optional, Sequence, Set, Tuple, Type
+
+
+class OutputDirectory(str, Enum):
+    PROJECT_ROOT = "project-root"
+    SOURCE_ROOT = "source-root"
+
 
 from .dependency_manager import DependencyManager
+from .file_header import get_file_header, get_license_comment
 from .filepath import Filepath
 from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 from .writer_impl import WriterImpl
 from fern_python.codegen import AST
+from fern_python.codegen.license_texts import LICENSE_FILENAME, get_license_text
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 from fern_python.codegen.requirements_txt import RequirementsTxt
 
-from fern.generator_exec import GeneratorUpdate, GithubOutputMode, LicenseConfig, LogLevel, LogUpdate, PypiMetadata
+from fern.generator_exec import (
+    BasicLicense,
+    GeneratorUpdate,
+    GithubOutputMode,
+    LicenseConfig,
+    LogLevel,
+    LogUpdate,
+    PypiMetadata,
+)
 
 if TYPE_CHECKING:
     from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -35,6 +52,26 @@ class Project:
         ...
     """
 
+    @staticmethod
+    def _resolve_layout(
+        *,
+        output_directory: Optional[OutputDirectory],
+        flat_layout: bool,
+    ) -> Tuple[bool, bool]:
+        """Returns (use_src_prefix, emit_scaffolding).
+
+        `output_directory` (when set) takes precedence over `flat_layout` and
+        controls both the `src/` prefix and whether project scaffolding files
+        (pyproject.toml, requirements.txt, README.md, py.typed, LICENSE) are
+        emitted. When unset, `flat_layout` continues to drive only the `src/`
+        prefix and scaffolding is always emitted — bit-exact legacy behavior.
+        """
+        if output_directory is OutputDirectory.SOURCE_ROOT:
+            return False, False
+        if output_directory is OutputDirectory.PROJECT_ROOT:
+            return True, True
+        return (not flat_layout), True
+
     def __init__(
         self,
         *,
@@ -45,7 +82,9 @@ class Project:
         project_config: Optional[ProjectConfig] = None,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
+        output_directory: Optional[OutputDirectory] = None,
         whitelabel: bool = False,
+        license_header: Optional[str] = None,
         pypi_metadata: Optional[PypiMetadata],
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
@@ -65,12 +104,19 @@ class Project:
         if package_path is not None:
             normalized_package_path = package_path.strip("/") or None
 
+        # Resolve layout from output_directory (new) or flat_layout (deprecated).
+        # output_directory wins when set; otherwise fall back to flat_layout so
+        # existing users keep bit-exact behavior.
+        use_src_prefix, emit_scaffolding = self._resolve_layout(
+            output_directory=output_directory, flat_layout=flat_layout
+        )
+
         # Build the project-relative filepath (e.g., "src/seed" or "src/seed/package/path")
         # package_path is applied as a suffix within the module
-        if flat_layout:
-            self._project_relative_filepath = relative_path_to_project
-        else:
+        if use_src_prefix:
             self._project_relative_filepath = os.path.join("src", relative_path_to_project)
+        else:
+            self._project_relative_filepath = relative_path_to_project
 
         if normalized_package_path:
             self._project_relative_filepath = os.path.join(self._project_relative_filepath, normalized_package_path)
@@ -81,7 +127,8 @@ class Project:
         self._generate_readme = True
         self._root_filepath = filepath
         self._package_path = normalized_package_path
-        self._flat_layout = flat_layout
+        self._use_src_prefix = use_src_prefix
+        self._emit_scaffolding = emit_scaffolding
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
         # Compute the package name for import_paths hook
@@ -97,10 +144,12 @@ class Project:
             recursion_limit=recursion_limit,
             import_paths=import_paths,
             package_name=package_name_for_import_paths,
+            license_header=license_header,
         )
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
         self._whitelabel = whitelabel
+        self._license_header = license_header
         self._github_output_mode = github_output_mode
         self._pypi_metadata = pypi_metadata
         self.license_ = license_
@@ -110,6 +159,15 @@ class Project:
         self._enable_wire_tests = enable_wire_tests
         self._generator_exec_wrapper = generator_exec_wrapper
         self._mypy_exclude = mypy_exclude
+
+    @property
+    def should_emit_scaffolding(self) -> bool:
+        """True when this project should emit ancillary files (pyproject.toml,
+        GitHub workflows, README, tests scaffolding, snippet.json, etc.) outside
+        the source tree. False when `output_directory == source-root` — the user
+        is embedding the source tree into an existing project and owns those files.
+        """
+        return self._emit_scaffolding
 
     def get_module_path_for_imports(self) -> str:
         """
@@ -163,6 +221,7 @@ class Project:
             dependency_manager=self._dependency_manager,
             should_format=False,
             whitelabel=self._whitelabel,
+            license_header=self._license_header,
         )
         return source_file
 
@@ -201,7 +260,7 @@ class Project:
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         with open(path_on_disk, "r") as existing_file:
-            writer = WriterImpl(should_format=False, should_sort_imports=True)
+            writer = WriterImpl(should_format=False, should_sort_imports=True, license_header=self._license_header)
             read_file = existing_file.read()
             if string_replacements is not None:
                 for k, v in string_replacements.items():
@@ -223,13 +282,18 @@ class Project:
         """Add a file relative to the root output directory (for project-level files like .gitignore)."""
         file = Path(os.path.join(self._root_filepath, filepath))
         file.parent.mkdir(exist_ok=True, parents=True)
-        file.write_text(contents)
+        file.write_text(self._with_license_header(file, contents))
 
     def add_source_file(self, filepath: str, contents: str) -> None:
         """Add a file relative to the root output directory."""
         file = Path(os.path.join(self._root_filepath, filepath))
         file.parent.mkdir(exist_ok=True, parents=True)
-        file.write_text(contents)
+        file.write_text(self._with_license_header(file, contents))
+
+    def _with_license_header(self, file: Path, contents: str) -> str:
+        if self._license_header is None or file.suffix != ".py":
+            return contents
+        return get_license_comment(self._license_header) + contents.lstrip("\n")
 
     def finish(self) -> None:
         self._module_manager.write_modules(base_filepath=self._root_filepath, filepath=self._project_filepath)
@@ -238,18 +302,15 @@ class Project:
         if self._package_path and self._project_config is not None:
             self._create_package_path_init_files()
 
-        if self._project_config is not None:
+        if self._project_config is not None and self._emit_scaffolding:
             # generate pyproject.toml
-            if self._flat_layout:
-                package_from = None
-                include_path = self._relative_path_to_project
-                if self._package_path:
-                    include_path = os.path.join(include_path, self._package_path)
-            else:
+            if self._use_src_prefix:
                 package_from = "src"
-                include_path = self._relative_path_to_project
-                if self._package_path:
-                    include_path = os.path.join(include_path, self._package_path)
+            else:
+                package_from = None
+            include_path = self._relative_path_to_project
+            if self._package_path:
+                include_path = os.path.join(include_path, self._package_path)
             py_project_toml = PyProjectToml(
                 name=self._project_config.package_name,
                 version=self._project_config.package_version,
@@ -280,8 +341,7 @@ class Project:
                 with open(os.path.join(self._root_filepath, "README.md"), "w") as f:
                     f.write("")
 
-            # copy LICENSE file if custom license is specified
-            self._copy_license_file()
+            self._write_license_file()
 
     def _create_package_path_init_files(self) -> None:
         """
@@ -301,10 +361,10 @@ class Project:
         package_path_parts = self._package_path.split("/")
 
         # Build path incrementally from the base module (e.g., src/seed)
-        if self._flat_layout:
-            base_path = os.path.join(self._root_filepath, self._relative_path_to_project)
-        else:
+        if self._use_src_prefix:
             base_path = os.path.join(self._root_filepath, "src", self._relative_path_to_project)
+        else:
+            base_path = os.path.join(self._root_filepath, self._relative_path_to_project)
 
         current_path = base_path
         for i, part in enumerate(package_path_parts):
@@ -314,9 +374,7 @@ class Project:
             next_part = package_path_parts[i] if i < len(package_path_parts) else None
 
             if next_part:
-                init_content = f'''# This file was auto-generated by Fern from our API Definition.
-
-from . import {next_part}
+                init_content = f'''{get_file_header(license_header=self._license_header, whitelabel=self._whitelabel)}from . import {next_part}
 
 __all__ = ["{next_part}"]
 '''
@@ -326,10 +384,21 @@ __all__ = ["{next_part}"]
 
             current_path = os.path.join(current_path, part)
 
-    def _copy_license_file(self) -> None:
-        """Copy LICENSE file from /tmp/LICENSE to project root for local generation."""
+    def _get_copyright_holder(self) -> Optional[str]:
+        if self._pypi_metadata is not None and self._pypi_metadata.authors:
+            return ", ".join(author.name for author in self._pypi_metadata.authors)
+        return self._project_config.package_name if self._project_config is not None else None
+
+    def _write_license_file(self) -> None:
+        """Write LICENSE for inline licenses, or copy the custom file from /tmp/LICENSE for local generation."""
         if self.license_ is not None:
             license_union = self.license_.get_as_union()
+            if license_union.type == "basic":
+                holder = self._get_copyright_holder()
+                license_text = get_license_text(typing.cast(BasicLicense, license_union).id, holder)
+                if license_text is not None:
+                    with open(os.path.join(self._root_filepath, LICENSE_FILENAME), "w") as f:
+                        f.write(license_text)
             if license_union.type == "custom":
                 # In Docker execution environment (local generation), the license file is mounted at /tmp/LICENSE
                 # For remote generation, Fiddle handles writing the LICENSE file after generation

@@ -6,6 +6,7 @@ export interface BaseTypeReferenceSchema
     extends GeneratorsYml.fernDefinition.WithDocsSchema,
         GeneratorsYml.fernDefinition.WithAvailability {
     default?: unknown;
+    "client-default"?: unknown;
     encoding?: GeneratorsYml.fernDefinition.EncodingSchema;
     validation?: GeneratorsYml.fernDefinition.ValidationSchema;
 }

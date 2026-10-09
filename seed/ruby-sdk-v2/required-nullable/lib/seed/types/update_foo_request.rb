@@ -7,11 +7,13 @@ module Seed
 
       field :x_idempotency_key, -> { String }, optional: false, nullable: false, api_name: "X-Idempotency-Key"
 
-      field :nullable_text, -> { String }, optional: true, nullable: false
+      field :nullable_text, -> { String }, optional: true, nullable: true
 
-      field :nullable_number, -> { Integer }, optional: true, nullable: false
+      field :nullable_number, -> { Float }, optional: true, nullable: true
 
       field :non_nullable_text, -> { String }, optional: true, nullable: false
+
+      field :required_nullable_text, -> { String }, optional: false, nullable: true
     end
   end
 end

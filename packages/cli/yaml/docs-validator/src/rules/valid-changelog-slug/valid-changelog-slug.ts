@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration-loader";
+import { docsYml } from "@fern-api/configuration";
 import { kebabCase } from "lodash-es";
 
 import { validateProductConfigFileSchema } from "../../docsAst/validateProductConfig.js";
@@ -17,15 +17,16 @@ import { Rule, RuleViolation } from "../../Rule.js";
  * `fern-api/fern-platform` (`packages/commons/docs-server/src/patterns.ts`).
  */
 export const CHANGELOG_FEED_ALLOWED_SLUGS: readonly string[] = [
+    "blog",
+    "blogs",
     "changelog",
     "changelogs",
+    "posts",
     "release-notes",
     "releasenotes",
     "whats-new",
     "whatsnew"
 ];
-
-const DEFAULT_CHANGELOG_TITLE = "Changelog";
 
 /**
  * Computes the URL segments contributed by a changelog node itself. Mirrors
@@ -34,7 +35,7 @@ const DEFAULT_CHANGELOG_TITLE = "Changelog";
  * which may be a nested path like `v2/release-notes`.
  */
 export function getEffectiveChangelogSlugSegments(config: { slug?: string; title?: string }): string[] {
-    const raw = config.slug ?? kebabCase(config.title ?? DEFAULT_CHANGELOG_TITLE);
+    const raw = config.slug ?? kebabCase(config.title ?? docsYml.DEFAULT_CHANGELOG_TITLE);
     return splitSegments(raw);
 }
 
@@ -101,10 +102,14 @@ function collectChangelogLocations(
     const out: ChangelogLocation[] = [];
     for (const item of items) {
         if (isChangelog(item)) {
+            const changelogFolder = docsYml.getChangelogFolderFromNavigationItem(item);
+            if (changelogFolder == null) {
+                continue;
+            }
             out.push({
-                where: `${breadcrumb} > changelog (${item.changelog})`,
+                where: `${breadcrumb} > changelog (${changelogFolder})`,
                 slug: item.slug,
-                title: item.title,
+                title: item.title ?? ("blog" in item ? docsYml.DEFAULT_BLOG_TITLE : docsYml.DEFAULT_CHANGELOG_TITLE),
                 ancestorSegments
             });
             continue;
@@ -124,6 +129,12 @@ function collectChangelogLocations(
     return out;
 }
 
+function isChangelog(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.ChangelogConfiguration | docsYml.RawSchemas.BlogConfiguration {
+    return docsYml.getChangelogFolderFromNavigationItem(item) != null;
+}
+
 function collectFromTabs(
     tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined,
     breadcrumb: string,
@@ -134,16 +145,21 @@ function collectFromTabs(
     }
     const out: ChangelogLocation[] = [];
     for (const [tabId, tab] of Object.entries(tabs)) {
-        if (tab.changelog != null) {
+        const changelogFolder = docsYml.getChangelogFolderFromTabConfig(tab);
+        if (changelogFolder != null) {
             // For a tab-level `changelog` field, the tab IS the changelog
             // node — its slug/displayName define the leaf URL segment, so
             // we don't add tabSegments to `ancestorSegments` (that would
             // double-count). `getEffectiveChangelogSlugSegments` derives
             // them from `slug`/`title` on the location itself.
             out.push({
-                where: `${breadcrumb} > tab "${tabId}" (changelog: ${tab.changelog})`,
+                where: `${breadcrumb} > tab "${tabId}" (changelog: ${changelogFolder})`,
                 slug: tab.slug,
-                title: tab.displayName,
+                title:
+                    tab.displayName ??
+                    (tab.blog != null && tab.changelog == null
+                        ? docsYml.DEFAULT_BLOG_TITLE
+                        : docsYml.DEFAULT_CHANGELOG_TITLE),
                 ancestorSegments
             });
         }
@@ -200,6 +216,30 @@ function collectFromNavigation(
     );
 }
 
+/**
+ * The site-level `changelog:` in docs.yml (valid alongside `products:`) is slugged off the root,
+ * so it contributes no ancestor segments — unlike a changelog nested under a product or version.
+ */
+function collectFromRootChangelog(
+    changelog: docsYml.RawSchemas.ChangelogConfiguration | undefined
+): ChangelogLocation[] {
+    if (changelog == null) {
+        return [];
+    }
+    const changelogFolder = docsYml.getChangelogFolderFromNavigationItem(changelog);
+    if (changelogFolder == null) {
+        return [];
+    }
+    return [
+        {
+            where: `changelog (${changelogFolder})`,
+            slug: changelog.slug,
+            title: changelog.title ?? docsYml.DEFAULT_CHANGELOG_TITLE,
+            ancestorSegments: []
+        }
+    ];
+}
+
 function violationsForLocations(locations: ChangelogLocation[]): RuleViolation[] {
     const violations: RuleViolation[] = [];
     for (const loc of locations) {
@@ -210,7 +250,7 @@ function violationsForLocations(locations: ChangelogLocation[]): RuleViolation[]
         }
         const allowed = CHANGELOG_FEED_ALLOWED_SLUGS.join(", ");
         const sourceField =
-            loc.slug != null ? `slug: "${loc.slug}"` : `title: "${loc.title ?? DEFAULT_CHANGELOG_TITLE}"`;
+            loc.slug != null ? `slug: "${loc.slug}"` : `title: "${loc.title ?? docsYml.DEFAULT_CHANGELOG_TITLE}"`;
         const fullPath = "/" + allSegments.join("/");
         violations.push({
             severity: "error",
@@ -227,51 +267,67 @@ export const ValidChangelogSlugRule: Rule = {
             file: async ({ config }) => {
                 const locations: ChangelogLocation[] = [
                     ...collectFromNavigation(config.navigation, config.tabs, "navigation", []),
-                    ...collectFromTabs(config.tabs, "tabs", [])
+                    ...collectFromTabs(config.tabs, "tabs", []),
+                    ...collectFromRootChangelog(config.changelog)
                 ];
                 return violationsForLocations(locations);
             },
-            versionFile: async ({ path, content }) => {
+            versionFile: async ({ path, content, version, product }) => {
                 const parseResult = await validateVersionConfigFileSchema({ value: content });
                 if (parseResult.type !== "success") {
                     return [];
                 }
                 const versionConfig = parseResult.contents;
+                // Mirrors `setProductSlug(...)` followed by `setVersionSlug(version.slug ?? kebabCase(version.displayName))`
+                // in the docs resolver: the (optional) product and the version prefix every URL beneath them.
+                const versionSegments = [
+                    ...(product != null
+                        ? ancestorSlugSegments({ slug: product.slug, displayName: product.displayName })
+                        : []),
+                    ...ancestorSlugSegments({ slug: version.slug, displayName: version.displayName })
+                ];
                 const locations: ChangelogLocation[] = [
                     ...collectFromNavigation(
                         versionConfig.navigation,
                         versionConfig.tabs,
                         `version "${path}" navigation`,
-                        []
+                        versionSegments
                     ),
-                    ...collectFromTabs(versionConfig.tabs, `version "${path}" tabs`, [])
+                    ...collectFromTabs(versionConfig.tabs, `version "${path}" tabs`, versionSegments)
                 ];
                 return violationsForLocations(locations);
             },
-            productFile: async ({ path, content }) => {
+            productFile: async ({ path, content, product }) => {
+                if (product.versions != null && product.versions.length > 0) {
+                    // The loader ignores the product file's own navigation when versions are
+                    // declared; each version file is validated via `versionFile` instead.
+                    return [];
+                }
                 const parseResult = await validateProductConfigFileSchema({ value: content });
                 if (parseResult.type !== "success") {
                     return [];
                 }
                 const productConfig = parseResult.contents;
+                // Mirrors `setProductSlug(product.slug ?? kebabCase(product.displayName))`
+                // in the docs resolver: the product prefixes every URL beneath it.
+                const productSegments = ancestorSlugSegments({
+                    slug: product.slug,
+                    displayName: product.displayName
+                });
                 const locations: ChangelogLocation[] = [
                     ...collectFromNavigation(
                         productConfig.navigation,
                         productConfig.tabs,
                         `product "${path}" navigation`,
-                        []
+                        productSegments
                     ),
-                    ...collectFromTabs(productConfig.tabs, `product "${path}" tabs`, [])
+                    ...collectFromTabs(productConfig.tabs, `product "${path}" tabs`, productSegments)
                 ];
                 return violationsForLocations(locations);
             }
         };
     }
 };
-
-function isChangelog(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.ChangelogConfiguration {
-    return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null;
-}
 
 function isSection(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.SectionConfiguration {
     return (item as docsYml.RawSchemas.SectionConfiguration)?.section != null;

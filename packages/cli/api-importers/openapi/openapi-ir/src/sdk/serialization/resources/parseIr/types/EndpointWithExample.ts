@@ -3,7 +3,7 @@
 import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { StatusCode } from "../../commons/types/StatusCode.js";
+import { ErrorStatusCodeKey } from "../../commons/types/ErrorStatusCodeKey.js";
 import { TagId } from "../../commons/types/TagId.js";
 import { WithAvailability } from "../../commons/types/WithAvailability.js";
 import { WithDescription } from "../../commons/types/WithDescription.js";
@@ -36,6 +36,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
         audiences: core.serialization.list(core.serialization.string()),
         path: core.serialization.string(),
         summary: core.serialization.string().optional(),
+        subtitle: core.serialization.string().optional(),
         operationId: core.serialization.string().optional(),
         tags: core.serialization.list(TagId),
         pathParameters: core.serialization.list(PathParameterWithExample),
@@ -46,11 +47,12 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
         requestNameOverride: core.serialization.string().optional(),
         request: RequestWithExample.optional(),
         response: ResponseWithExample.optional(),
-        errors: core.serialization.record(StatusCode, HttpErrorWithExample),
+        errors: core.serialization.record(ErrorStatusCodeKey, HttpErrorWithExample),
         servers: core.serialization.list(HttpEndpointServer),
         examples: core.serialization.list(EndpointExample),
         pagination: Pagination.optional(),
         retries: RetriesConfiguration.optional(),
+        globalParameterIds: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -67,6 +69,7 @@ export declare namespace EndpointWithExample {
         audiences: string[];
         path: string;
         summary?: string | null;
+        subtitle?: string | null;
         operationId?: string | null;
         tags: TagId.Raw[];
         pathParameters: PathParameterWithExample.Raw[];
@@ -77,10 +80,11 @@ export declare namespace EndpointWithExample {
         requestNameOverride?: string | null;
         request?: RequestWithExample.Raw | null;
         response?: ResponseWithExample.Raw | null;
-        errors: Record<StatusCode.Raw, HttpErrorWithExample.Raw>;
+        errors: Record<ErrorStatusCodeKey.Raw, HttpErrorWithExample.Raw>;
         servers: HttpEndpointServer.Raw[];
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;
         retries?: RetriesConfiguration.Raw | null;
+        globalParameterIds?: string[] | null;
     }
 }

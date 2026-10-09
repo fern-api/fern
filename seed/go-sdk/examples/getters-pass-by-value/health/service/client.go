@@ -25,14 +25,22 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // This endpoint checks the health of a resource.
+//
+// Example:
+//
+//	client.Health.Service.Check(
+//	    context.TODO(),
+//	    "id-2sdx82h",
+//	)
 func (c *Client) Check(
 	ctx context.Context,
 	// The id to check
@@ -51,6 +59,12 @@ func (c *Client) Check(
 }
 
 // This endpoint checks the health of the service.
+//
+// Example:
+//
+//	client.Health.Service.Ping(
+//	    context.TODO(),
+//	)
 func (c *Client) Ping(
 	ctx context.Context,
 	opts ...option.RequestOption,

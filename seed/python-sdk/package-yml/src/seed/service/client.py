@@ -22,12 +22,10 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def nop(self, id: str, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def nop(self, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        id : str
-
         nested_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -42,13 +40,14 @@ class ServiceClient:
         from seed import SeedPackageYml
 
         client = SeedPackageYml(
+            id="YOUR_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.service.nop(
             nested_id="id-219xca8",
         )
         """
-        _response = self._raw_client.nop(id, nested_id, request_options=request_options)
+        _response = self._raw_client.nop(nested_id, request_options=request_options)
         return _response.data
 
 
@@ -67,12 +66,10 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def nop(self, id: str, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def nop(self, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        id : str
-
         nested_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -89,6 +86,7 @@ class AsyncServiceClient:
         from seed import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(
+            id="YOUR_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -101,5 +99,5 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.nop(id, nested_id, request_options=request_options)
+        _response = await self._raw_client.nop(nested_id, request_options=request_options)
         return _response.data

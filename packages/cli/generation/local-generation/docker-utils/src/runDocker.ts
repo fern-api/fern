@@ -4,6 +4,9 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
+import { buildContainerEnvVars, FORWARDED_ENV_VARS } from "./buildContainerEnvVars.js";
+import { ensureDockerHubOatLogin } from "./dockerHubOatLogin.js";
+
 export declare namespace runContainer {
     export interface Args {
         logger: Logger;
@@ -15,6 +18,23 @@ export declare namespace runContainer {
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
+        /**
+         * When true, always pull the image before running (`docker run --pull always`)
+         * rather than only when it is absent locally. Use for mutable tags like
+         * `latest`; leave unset for immutable, version-pinned images.
+         */
+        pull?: boolean;
+        /**
+         * Force a specific platform (`docker run --platform <value>`, e.g. `linux/amd64`).
+         * Use when an image is published for only one architecture and must run under
+         * emulation on other hosts. Leave unset to use the host-native platform.
+         */
+        platform?: string;
+        /**
+         * Container network mode (`docker run --network <value>`). Pass `"none"` to run a generator
+         * with no network access at all. Leave unset for the runtime default.
+         */
+        network?: string;
         /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
         signal?: AbortSignal;
     }
@@ -34,6 +54,9 @@ export async function runContainer({
     writeLogsToFile = true,
     removeAfterCompletion = false,
     runner,
+    pull = false,
+    platform,
+    network,
     signal
 }: runContainer.Args): Promise<void> {
     const tryRun = () =>
@@ -47,8 +70,14 @@ export async function runContainer({
             removeAfterCompletion,
             writeLogsToFile,
             runner,
+            pull,
+            platform,
+            network,
             signal
         });
+    // Before the run, not in pullImage: `docker run` pulls the image itself when it is absent or
+    // when `--pull always` is passed, so those pulls never reach the explicit pull below.
+    await ensureDockerHubOatLogin({ imageName, runner, logger, signal });
     try {
         await tryRun();
     } catch (e) {
@@ -99,6 +128,9 @@ async function tryRunContainer({
     removeAfterCompletion,
     writeLogsToFile,
     runner,
+    pull = false,
+    platform,
+    network,
     signal
 }: {
     logger: Logger;
@@ -110,17 +142,25 @@ async function tryRunContainer({
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
+    pull?: boolean;
+    platform?: string;
+    network?: string;
     signal?: AbortSignal;
 }): Promise<void> {
-    if (process.env["FERN_STACK_TRACK"]) {
-        envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
-    }
+    const { envVars: containerEnvVars, forwardedFromHost } = buildContainerEnvVars({
+        envVars,
+        processEnv: process.env
+    });
+    logForwardedEnvVars({ logger, containerEnvVars, forwardedFromHost });
     const containerArgs = [
         "run",
         "--user",
         "root",
+        ...(pull ? ["--pull", "always"] : []),
+        ...(platform != null ? ["--platform", platform] : []),
+        ...(network != null ? ["--network", network] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
-        ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
+        ...Object.entries(containerEnvVars).flatMap(([key, value]) => ["-e", `${key}=${value}`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",
         imageName,
@@ -157,6 +197,31 @@ async function tryRunContainer({
     }
 }
 
+/**
+ * Surfaces host env vars that were forwarded into the container, so it is obvious in the
+ * CLI output which escape hatches are active for this run.
+ */
+function logForwardedEnvVars({
+    logger,
+    containerEnvVars,
+    forwardedFromHost
+}: {
+    logger: Logger;
+    containerEnvVars: Record<string, string>;
+    forwardedFromHost: string[];
+}): void {
+    for (const name of forwardedFromHost) {
+        logger.info(`Forwarding ${name}=${containerEnvVars[name]} into the generator container`);
+    }
+    // Log the ones we did NOT forward too, so "my env var had no effect" is diagnosable from
+    // a debug log alone rather than by inspecting the assembled `docker run` command.
+    for (const name of FORWARDED_ENV_VARS) {
+        if (!forwardedFromHost.includes(name) && containerEnvVars[name] == null) {
+            logger.debug(`${name} is not set on the host; not forwarding it into the generator container`);
+        }
+    }
+}
+
 async function pullImage(imageName: string, runner?: ContainerRunner, signal?: AbortSignal): Promise<void> {
     await loggingExeca(undefined, runner ?? "docker", ["pull", imageName], {
         all: true,
@@ -179,6 +244,7 @@ export async function startContainer({
     runner?: ContainerRunner;
 }): Promise<string> {
     const containerRunner = runner ?? "docker";
+    await ensureDockerHubOatLogin({ imageName, runner, logger });
 
     const tryStart = async () => {
         const { stdout, exitCode, stderr } = await loggingExeca(
@@ -217,26 +283,38 @@ export async function startContainer({
 }
 
 /**
- * Executes a command inside a running container.
+ * Executes a command inside a running container. Throws on non-zero exit by
+ * default; pass `reject: false` to receive the result without throwing
+ * (callers that need to surface stderr from a failing command).
  */
 export async function execInContainer({
     logger,
     containerId,
     command,
     runner,
-    writeLogsToFile = true
+    envVars = {},
+    writeLogsToFile = true,
+    reject = true
 }: {
     logger: Logger;
     containerId: string;
     command: string[];
     runner?: ContainerRunner;
+    envVars?: Record<string, string>;
     writeLogsToFile?: boolean;
-}): Promise<void> {
+    reject?: boolean;
+}): Promise<{ stdout: string; stderr: string; exitCode: number }> {
     const containerRunner = runner ?? "docker";
+    const { envVars: containerEnvVars, forwardedFromHost } = buildContainerEnvVars({
+        envVars,
+        processEnv: process.env
+    });
+    logForwardedEnvVars({ logger, containerEnvVars, forwardedFromHost });
+    const envArgs = Object.entries(containerEnvVars).flatMap(([key, value]) => ["-e", `${key}=${value}`]);
     const { stdout, stderr, exitCode } = await loggingExeca(
         logger,
         containerRunner,
-        ["exec", "--user", "root", containerId, ...command],
+        ["exec", "--user", "root", ...envArgs, containerId, ...command],
         {
             reject: false,
             all: true,
@@ -252,9 +330,12 @@ export async function execInContainer({
         logger.info(`Generator logs here: ${tmpFile.path}`);
     }
 
-    if (exitCode !== 0) {
-        throw new Error(`Container exec exited with code ${exitCode}.\n${stdout}\n${stderr}`);
+    const resolvedExitCode = exitCode ?? 1;
+    if (reject && resolvedExitCode !== 0) {
+        throw new Error(`Container exec exited with code ${resolvedExitCode}.\n${stdout}\n${stderr}`);
     }
+
+    return { stdout, stderr, exitCode: resolvedExitCode };
 }
 
 /**

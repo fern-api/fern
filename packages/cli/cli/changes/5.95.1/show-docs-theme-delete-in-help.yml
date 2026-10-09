@@ -1,0 +1,3 @@
+- summary: |
+    Show `fern docs theme delete` in the `fern docs theme --help` output.
+  type: chore

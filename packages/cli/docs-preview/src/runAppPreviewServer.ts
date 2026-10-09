@@ -1,25 +1,7 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
-import {
-    applyTranslatedFrontmatterToNavTree,
-    applyTranslatedNavigationOverlays,
-    getTranslatedAnnouncement,
-    replaceImagePathsAndUrls,
-    replaceReferencedCode,
-    replaceReferencedMarkdown,
-    stripMdxComments,
-    transformAtPrefixImports,
-    wrapWithHttps
-} from "@fern-api/docs-resolver";
+import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import {
-    AbsoluteFilePath,
-    dirname,
-    doesPathExist,
-    listFiles,
-    RelativeFilePath,
-    relative,
-    resolve
-} from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -29,17 +11,22 @@ import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
-import { readFile, rm } from "fs/promises";
+import { rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
+import os from "os";
 import path from "path";
 import { type Duplex } from "stream";
-import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
+import { computeTranslatedDefinitions } from "./computeTranslatedDefinitions.js";
 import { type BunServer, createBunServer } from "./createBunServer.js";
+import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
+import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
+import { GenerationFileManager, isContentOnlyEdit } from "./reloadUtils.js";
+import { SnippetDependencyTracker } from "./SnippetDependencyTracker.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -217,178 +204,6 @@ class SlugChangeTracker {
 }
 
 /**
- * Dependency tracking system for markdown snippets
- */
-class SnippetDependencyTracker {
-    // Map: snippet file path -> Set of page files that reference it
-    private snippetToPages = new Map<string, Set<string>>();
-    // Map: page file path -> Set of snippet files it references
-    private pageToSnippets = new Map<string, Set<string>>();
-
-    constructor(private context: TaskContext) {}
-
-    /**
-     * Extract referenced markdown and code files from a markdown file
-     */
-    private extractReferences(
-        markdown: string,
-        markdownFilePath: AbsoluteFilePath,
-        fernFolderPath: AbsoluteFilePath
-    ): Set<string> {
-        const references = new Set<string>();
-
-        // Extract markdown references: <Markdown src="path/to/file.md" />
-        const markdownRegex = /<Markdown\s+src={?['"]([^'"]+\.mdx?)['"](?! \+)}?\s*\/>/g;
-        let match;
-        while ((match = markdownRegex.exec(markdown)) !== null) {
-            const src = match[1];
-            if (src) {
-                const referencedFilePath = resolve(
-                    src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
-                    RelativeFilePath.of(src.replace(/^\//, ""))
-                );
-                references.add(referencedFilePath);
-            }
-        }
-
-        // Extract code references: <Code src="path/to/file.js" />
-        const codeRegex = /<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
-        while ((match = codeRegex.exec(markdown)) !== null) {
-            const src = match[1];
-            if (src) {
-                const referencedFilePath = resolve(
-                    src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
-                    RelativeFilePath.of(src.replace(/^\//, ""))
-                );
-                references.add(referencedFilePath);
-            }
-        }
-
-        return references;
-    }
-
-    /**
-     * Scan all pages in the project and build dependency maps
-     */
-    async buildDependencyMap(project: Project): Promise<void> {
-        this.snippetToPages.clear();
-        this.pageToSnippets.clear();
-
-        const docsWorkspace = project.docsWorkspaces;
-        if (!docsWorkspace) {
-            return;
-        }
-
-        this.context.logger.debug("Building snippet dependency map...");
-
-        try {
-            // Find all markdown files in the docs workspace directory
-            const markdownFiles = await this.findMarkdownFiles(docsWorkspace.absoluteFilePath);
-
-            for (const markdownFile of markdownFiles) {
-                try {
-                    const content = await readFile(markdownFile, "utf-8");
-                    const referencedFiles = this.extractReferences(
-                        content,
-                        markdownFile,
-                        docsWorkspace.absoluteFilePath
-                    );
-
-                    // Update page -> snippets mapping
-                    this.pageToSnippets.set(markdownFile, referencedFiles);
-
-                    // Update snippet -> pages mapping
-                    for (const referencedFile of referencedFiles) {
-                        if (!this.snippetToPages.has(referencedFile)) {
-                            this.snippetToPages.set(referencedFile, new Set());
-                        }
-                        this.snippetToPages.get(referencedFile)?.add(markdownFile);
-                    }
-                } catch (error) {
-                    this.context.logger.debug(`Failed to read markdown file ${markdownFile}: ${error}`);
-                }
-            }
-
-            this.context.logger.debug(
-                `Built dependency map: ${this.snippetToPages.size} snippets, ${this.pageToSnippets.size} pages`
-            );
-        } catch (error) {
-            this.context.logger.debug(`Failed to build dependency map: ${error}`);
-        }
-    }
-
-    /**
-     * Find all markdown files in the docs workspace directory
-     */
-    private async findMarkdownFiles(fernFolderPath: AbsoluteFilePath): Promise<AbsoluteFilePath[]> {
-        try {
-            // Get .md files
-            const mdFiles = await listFiles(fernFolderPath, "md");
-            // Get .mdx files
-            const mdxFiles = await listFiles(fernFolderPath, "mdx");
-            // Combine both lists
-            return [...mdFiles, ...mdxFiles];
-        } catch (error) {
-            this.context.logger.debug(`Failed to list files in ${fernFolderPath}: ${error}`);
-            return [];
-        }
-    }
-
-    /**
-     * Given a list of changed files, return all files that need to be reloaded (including dependent pages)
-     */
-    getFilesToReload(changedFiles: AbsoluteFilePath[]): AbsoluteFilePath[] {
-        const filesToReload = new Set<string>();
-
-        // Add all originally changed files
-        for (const file of changedFiles) {
-            filesToReload.add(file);
-        }
-
-        // For each changed file, check if it's a snippet that other pages depend on
-        for (const changedFile of changedFiles) {
-            const dependentPages = this.snippetToPages.get(changedFile);
-            if (dependentPages) {
-                this.context.logger.debug(`Snippet ${changedFile} affects ${dependentPages.size} pages`);
-                for (const dependentPage of dependentPages) {
-                    filesToReload.add(dependentPage);
-                }
-            }
-        }
-
-        return Array.from(filesToReload).map(AbsoluteFilePath.of);
-    }
-
-    /**
-     * Check if any of the changed files are snippets that affect other pages
-     */
-    hasSnippetDependencies(changedFiles: AbsoluteFilePath[]): boolean {
-        for (const file of changedFiles) {
-            const pages = this.snippetToPages.get(file);
-            if (pages && pages.size > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Get debug info about current dependencies
-     */
-    getDebugInfo(): { snippetCount: number; pageCount: number; totalDependencies: number } {
-        let totalDependencies = 0;
-        for (const pages of this.snippetToPages.values()) {
-            totalDependencies += pages.size;
-        }
-        return {
-            snippetCount: this.snippetToPages.size,
-            pageCount: this.pageToSnippets.size,
-            totalDependencies
-        };
-    }
-}
-
-/**
  * Resolves the path to the Fern Docs cache directory within the standalone server bundle.
  * The standalone server runs from `<bundleRoot>/standalone/packages/fern-docs/bundle/server.js`,
  * so its runtime cache is written to `<bundleRoot>/standalone/packages/fern-docs/bundle/.next/cache/`.
@@ -489,7 +304,10 @@ export async function runAppPreviewServer({
     port,
     bundlePath,
     backendPort,
-    forceDownload
+    forceDownload,
+    cacheDir,
+    logsDir,
+    includePrivate
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -499,9 +317,13 @@ export async function runAppPreviewServer({
     bundlePath?: string;
     backendPort: number;
     forceDownload?: boolean;
+    cacheDir?: AbsoluteFilePath;
+    logsDir?: AbsoluteFilePath;
+    /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
+    includePrivate?: boolean;
 }): Promise<void> {
     if (forceDownload) {
-        const appPreviewFolder = getPathToPreviewFolder({ app: true });
+        const appPreviewFolder = getPathToPreviewFolder({ app: true, cacheDir });
         if (await doesPathExist(appPreviewFolder)) {
             context.logger.info("Force download requested. Deleting cached bundle...");
             await rm(appPreviewFolder, { recursive: true });
@@ -524,7 +346,8 @@ export async function runAppPreviewServer({
                 logger: context.logger,
                 preferCached: true,
                 app: true,
-                tryTar: true
+                tryTar: true,
+                cacheDir
             });
         } catch (err) {
             if (err instanceof Error) {
@@ -547,10 +370,11 @@ export async function runAppPreviewServer({
                     logger: context.logger,
                     preferCached: true,
                     app: true,
-                    tryTar: false
+                    tryTar: false,
+                    cacheDir
                 });
             } catch (err) {
-                if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
+                if (await doesPathExist(getPathToBundleFolder({ app: true, cacheDir }))) {
                     context.logger.warn("Falling back to cached bundle...");
                 } else {
                     context.logger.warn("Please reach out to support@buildwithfern.com.");
@@ -560,17 +384,20 @@ export async function runAppPreviewServer({
         }
     }
 
-    const bundleRoot = bundlePath || getPathToBundleFolder({ app: true });
+    const bundleRoot = bundlePath || getPathToBundleFolder({ app: true, cacheDir });
     const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
 
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     // Initialize the debug logger for metrics collection
     const debugLogger = new DebugLogger();
-    await debugLogger.initialize({
-        debug: (msg) => context.logger.debug(msg),
-        info: (msg) => context.logger.info(msg)
-    });
+    await debugLogger.initialize(
+        {
+            debug: (msg) => context.logger.debug(msg),
+            info: (msg) => context.logger.info(msg)
+        },
+        logsDir
+    );
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
@@ -716,160 +543,12 @@ export async function runAppPreviewServer({
 
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
-    const RELOAD_DEBOUNCE_MS = 1000;
+    const RELOAD_DEBOUNCE_MS = 500;
 
-    /**
-     * Computes translated definitions for each locale.
-     * Similar to what publishDocs.ts does for production, but for local preview.
-     */
-    async function computeTranslatedDefinitions(
-        result: PreviewDocsResult
-    ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
-        const translations = new Map<string, DocsV1Read.DocsDefinition>();
-        const { docsDefinition, translationPages, translationNavigationOverlays, collectedFileIds, docsWorkspacePath } =
-            result;
-
-        if (translationPages == null || Object.keys(translationPages).length === 0) {
-            return translations;
-        }
-
-        const defaultLocale = docsDefinition.config.translations?.defaultLocale;
-
-        for (const [locale, localePages] of Object.entries(translationPages)) {
-            // Skip the default locale - we use the base definition for that
-            if (locale === defaultLocale) {
-                continue;
-            }
-
-            try {
-                // Locale-aware file loaders that prefer translated snippets when available
-                const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
-                    const relPath = relative(docsWorkspacePath, filepath);
-                    const translatedPath = resolve(
-                        docsWorkspacePath,
-                        RelativeFilePath.of(`translations/${locale}/${relPath}`)
-                    );
-                    return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
-                };
-
-                const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-                    const pathToRead = await resolveLocalePath(filepath);
-                    const raw = await readFile(pathToRead, "utf-8");
-                    const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
-                    return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
-                };
-
-                const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-                    const pathToRead = await resolveLocalePath(filepath);
-                    return readFile(pathToRead, "utf-8");
-                };
-
-                // Build translated pages by merging base pages with locale-specific pages
-                // Start by copying all defined pages from the base definition
-                const translatedPages: Record<string, DocsV1Read.PageContent> = {};
-                for (const [pageId, page] of Object.entries(docsDefinition.pages)) {
-                    if (page != null) {
-                        translatedPages[pageId] = page;
-                    }
-                }
-
-                for (const [pagePath, rawMarkdown] of Object.entries(localePages)) {
-                    try {
-                        const basePage = translatedPages[pagePath];
-                        const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
-
-                        // Resolve <Markdown src="..."/> snippets (locale-aware)
-                        const { markdown: markdownResolved } = await replaceReferencedMarkdown({
-                            markdown: rawMarkdown,
-                            absolutePathToFernFolder: docsWorkspacePath,
-                            absolutePathToMarkdownFile,
-                            context,
-                            markdownLoader: localeAwareMarkdownLoader
-                        });
-
-                        // Resolve <Code src="..."/> references (locale-aware)
-                        const codeResolved = await replaceReferencedCode({
-                            markdown: markdownResolved,
-                            absolutePathToFernFolder: docsWorkspacePath,
-                            absolutePathToMarkdownFile,
-                            context,
-                            fileLoader: localeAwareFileLoader
-                        });
-
-                        // Transform @/ prefix imports to relative paths
-                        const importsResolved = transformAtPrefixImports({
-                            markdown: codeResolved,
-                            absolutePathToFernFolder: docsWorkspacePath,
-                            absolutePathToMarkdownFile
-                        });
-
-                        // Strip MDX comments
-                        let processedMarkdown = stripMdxComments(importsResolved);
-
-                        // Replace image paths using collected file IDs
-                        processedMarkdown = replaceImagePathsAndUrls(
-                            processedMarkdown,
-                            collectedFileIds,
-                            {}, // markdownFilesToPathName not needed for translations
-                            {
-                                absolutePathToMarkdownFile,
-                                absolutePathToFernFolder: docsWorkspacePath
-                            },
-                            context
-                        );
-
-                        translatedPages[pagePath] = {
-                            markdown: processedMarkdown,
-                            rawMarkdown: processedMarkdown,
-                            editThisPageUrl: basePage?.editThisPageUrl,
-                            editThisPageLaunch: basePage?.editThisPageLaunch
-                        };
-                    } catch (pageError) {
-                        context.logger.warn(
-                            `Failed to process translated page "${pagePath}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
-                        );
-                    }
-                }
-
-                // Apply translated frontmatter to nav tree
-                let updatedRoot = applyTranslatedFrontmatterToNavTree(
-                    docsDefinition.config.root,
-                    localePages as Record<string, string>,
-                    context
-                );
-
-                // Apply navigation overlay (translated display-names, titles, etc.)
-                const localeNavOverlay = translationNavigationOverlays?.[locale];
-                let translatedAnnouncement = docsDefinition.config.announcement;
-                let translatedNavbarLinks = docsDefinition.config.navbarLinks;
-                if (localeNavOverlay != null) {
-                    updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
-                    translatedAnnouncement = getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
-                    if (localeNavOverlay.navbarLinks != null) {
-                        translatedNavbarLinks = localeNavOverlay.navbarLinks;
-                    }
-                }
-
-                const translatedDefinition: DocsV1Read.DocsDefinition = {
-                    ...docsDefinition,
-                    pages: translatedPages,
-                    config: {
-                        ...docsDefinition.config,
-                        root: updatedRoot,
-                        announcement: translatedAnnouncement,
-                        navbarLinks: translatedNavbarLinks
-                    }
-                };
-
-                translations.set(locale, translatedDefinition);
-                context.logger.debug(`Computed translated definition for locale "${locale}"`);
-            } catch (error) {
-                context.logger.warn(`Failed to compute translation for locale "${locale}": ${String(error)}`);
-            }
-        }
-
-        return translations;
-    }
+    // Generation counter backed by a temp file so the Next.js process can
+    // detect stale cache entries without an HTTP round-trip.
+    const genFilePath = path.join(os.tmpdir(), `fern-docs-dev-gen-${backendPort}`);
+    const generationManager = new GenerationFileManager(genFilePath);
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
@@ -878,28 +557,43 @@ export async function runAppPreviewServer({
         // Log CLI reload start
         void debugLogger.logCliReloadStart();
 
+        const contentOnlyEdit = isContentOnlyEdit(editedAbsoluteFilepaths);
+
         try {
-            project = await reloadProject();
+            if (contentOnlyEdit) {
+                // Content-only (.md/.mdx) edits never touch docs.yml, navigation YAML,
+                // or API specs, and page markdown is always re-read from disk during
+                // resolution — so reuse the already-loaded project and skip re-parsing
+                // every API/OpenAPI workspace, which dominates reload time on large
+                // projects. Only the changed pages' dependency edges need updating.
+                context.logger.debug("Content-only edit; reusing loaded project (skipping full reload).");
+                await snippetTracker.updateDependencyMapForFiles(editedAbsoluteFilepaths ?? [], project);
+            } else {
+                project = await reloadProject();
 
-            // Rebuild dependency map after reloading project
-            await snippetTracker.buildDependencyMap(project);
+                // Rebuild dependency map after reloading project
+                await snippetTracker.buildDependencyMap(project);
+            }
 
-            // Start validation in background - don't block the reload
-            const validationStartTime = Date.now();
-            void validateProject(project)
-                .then(() => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, true);
-                })
-                .catch((err) => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
-                    // Still log validation errors to help developers
-                    if (err instanceof Error && err.stack) {
-                        context.logger.debug(`Validation error stack: ${err.stack}`);
-                    }
-                });
+            if (!contentOnlyEdit) {
+                // Start validation in background - don't block the reload
+                const validationStartTime = Date.now();
+                void validateProject(project)
+                    .then(() => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, true);
+                    })
+                    .catch((err) => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, false);
+                        context.logger.error(
+                            `Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`
+                        );
+                        if (err instanceof Error && err.stack) {
+                            context.logger.debug(`Validation error stack: ${err.stack}`);
+                        }
+                    });
+            }
 
             const docsGenStartTime = Date.now();
             const newPreviewResult = await getPreviewDocsDefinition({
@@ -908,7 +602,8 @@ export async function runAppPreviewServer({
                 context,
                 previousDocsDefinition: previewResult?.docsDefinition,
                 editedAbsoluteFilepaths,
-                previousPreviewResult: previewResult
+                previousPreviewResult: previewResult,
+                includePrivate
             });
             const docsGenTime = Date.now() - docsGenStartTime;
 
@@ -957,7 +652,7 @@ export async function runAppPreviewServer({
 
     // Compute translated definitions after loading
     if (previewResult != null) {
-        translatedDefinitions = await computeTranslatedDefinitions(previewResult);
+        translatedDefinitions = await computeTranslatedDefinitions(previewResult, context);
         if (translatedDefinitions.size > 0) {
             context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
         }
@@ -970,12 +665,25 @@ export async function runAppPreviewServer({
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
+    // Watch directories containing docs files referenced from outside the fern folder
+    // (e.g., `path: ../docs/page.mdx` or `redirects: ../redirects.yml` in docs.yml)
+    if (previewResult != null) {
+        const externalDocsPaths = getExternalDocsWatchPaths(
+            absoluteFilePathToFern,
+            previewResult.docsDefinition,
+            project.docsWorkspaces?.config._absoluteFilepathsToRedirectsFiles
+        );
+        if (externalDocsPaths.length > 0) {
+            context.logger.debug(`Watching external docs directories: ${externalDocsPaths.join(", ")}`);
+            additionalFilepaths.push(...externalDocsPaths);
+        }
+    }
+
     // Create watcher but don't attach the event handler yet - we'll do that after the Next.js server starts
-    const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
-        recursive: true,
-        ignoreInitial: true,
-        debounce: 100,
-        renameDetection: true
+    const watcher = await createDocsPreviewWatcher({
+        absoluteFilePathToFern,
+        additionalFilepaths,
+        context
     });
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
@@ -1092,14 +800,28 @@ export async function runAppPreviewServer({
 
     // Now start Next.js after backend is ready
 
+    // Node.js >= 26 on Linux enables io_uring by default in libuv, which has a
+    // busy-loop bug: worker threads spin on an internal eventfd, starving the
+    // main event loop and causing the server to hang during startup.
+    // Setting UV_USE_IO_URING=0 falls back to epoll and avoids the hang.
+    const nodeMajor = parseInt(process.versions.node.split(".")[0] ?? "0", 10);
+    const needsIoUringWorkaround = process.platform === "linux" && nodeMajor >= 26;
+    if (needsIoUringWorkaround) {
+        context.logger.debug(
+            `Node.js v${process.versions.node} on Linux detected — disabling io_uring to avoid libuv busy-loop`
+        );
+    }
+
     const env = {
         ...process.env,
+        ...(needsIoUringWorkaround ? { UV_USE_IO_URING: "0" } : {}),
         PORT: port.toString(),
         HOSTNAME: "0.0.0.0",
         NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
         NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
         NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
         NEXT_PUBLIC_IS_LOCAL: "1",
+        FERN_DOCS_DEV_GEN_FILE: genFilePath,
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
@@ -1199,18 +921,13 @@ export async function runAppPreviewServer({
             `Docs preview server failed to start: ${extractErrorMessage(err)}. ` +
                 `Run with --log-level debug for more details.`,
             undefined,
-            { code: CliError.Code.InternalError }
+            { code: CliError.Code.EnvironmentError }
         );
     }
 
     // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        // Ignore changes to .fern/logs/ directory (contains debug logs)
-        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
-            return;
-        }
-
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
 
         if (isReloading) {
@@ -1227,57 +944,77 @@ export async function runAppPreviewServer({
             void (async () => {
                 isReloading = true;
 
-                // Expand the list of files to include pages that depend on changed snippets
-                const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
-                const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
-
-                if (hasSnippetDependencies) {
-                    context.logger.info(
-                        `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
-                    );
-                }
-
                 sendData({
                     version: 1,
                     type: "startReload"
                 });
 
-                const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
+                try {
+                    // Expand the list of files to include pages that depend on changed snippets
+                    const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
+                    const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
 
-                editedAbsoluteFilepaths.length = 0;
-
-                isReloading = false;
-
-                sendData({
-                    version: 1,
-                    type: "finishReload"
-                });
-
-                if (reloadedPreviewResult != null) {
-                    // Detect slug changes before updating the docs definition
-                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
-
-                    previewResult = reloadedPreviewResult;
-
-                    // Recompute translated definitions
-                    translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
-                    if (translatedDefinitions.size > 0) {
-                        context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                    if (hasSnippetDependencies) {
+                        context.logger.info(
+                            `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
+                        );
                     }
 
-                    // Send navigateToSlug events for any slug changes
-                    if (slugChanges.length > 0) {
-                        slugChanges.forEach((change) => {
-                            const eventData = {
-                                version: 1,
-                                type: "navigateToSlug",
-                                oldSlug: change.oldSlug,
-                                newSlug: change.newSlug
-                            };
+                    const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
 
-                            sendData(eventData);
+                    // Update the docs definition BEFORE notifying the browser,
+                    // so the backend serves fresh data when the browser refreshes.
+                    if (reloadedPreviewResult != null) {
+                        // Detect slug changes before updating the docs definition
+                        const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
+
+                        previewResult = reloadedPreviewResult;
+
+                        // Recompute translated definitions
+                        translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult, context);
+                        if (translatedDefinitions.size > 0) {
+                            context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                        }
+
+                        await generationManager.increment();
+
+                        sendData({
+                            version: 1,
+                            type: "finishReload"
+                        });
+
+                        // Send navigateToSlug events for any slug changes
+                        if (slugChanges.length > 0) {
+                            slugChanges.forEach((change) => {
+                                const eventData = {
+                                    version: 1,
+                                    type: "navigateToSlug",
+                                    oldSlug: change.oldSlug,
+                                    newSlug: change.newSlug
+                                };
+
+                                sendData(eventData);
+                            });
+                        }
+                    } else {
+                        await generationManager.increment();
+
+                        sendData({
+                            version: 1,
+                            type: "finishReload"
                         });
                     }
+                } catch (err) {
+                    context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
+                    await generationManager.increment();
+
+                    sendData({
+                        version: 1,
+                        type: "finishReload"
+                    });
+                } finally {
+                    editedAbsoluteFilepaths.length = 0;
+                    isReloading = false;
                 }
             })();
         }, RELOAD_DEBOUNCE_MS);

@@ -11,7 +11,7 @@ import type {
     CppTypeInfoPartsItem,
     CppTypeRef
 } from "../../../src/types/CppLibraryDocsIr.js";
-import { buildLinkPath, getShortName, lookupMemberPath } from "../context.js";
+import { buildLinkPath, getShortName, lookupMemberPath, stripTemplateArgs } from "../context.js";
 import { escapeMdxText, protectSafeTags, restoreSafeTags } from "./shared.js";
 
 // ---------------------------------------------------------------------------
@@ -133,6 +133,61 @@ export function resolveCompoundRef(text: string, refid: string): string {
     return lookupMemberPath(text) ?? lookupMemberPath(getShortName(text)) ?? decodeDoxygenRefid(refid) ?? text;
 }
 
+/**
+ * Resolve a member reference (`kindref="member"`) to a relative link path.
+ *
+ * Tries (in order):
+ * 1. The decoded Doxygen refid, appending the member's short name when the refid
+ *    decodes to its enclosing scope (e.g., a namespace) rather than the member itself.
+ * 2. The reference text by name, via `buildScopedLinkPath` (enclosing scopes of the
+ *    current page first, then global). Doxygen assigns members of a `\defgroup` a
+ *    `group__*` refid that cannot be decoded, so free functions, typedefs, and enums
+ *    documented in groups (the norm for C libraries) are only reachable by name.
+ *
+ * Returns `undefined` when the target has no page or is the current page.
+ */
+export function resolveMemberRefLink(rawText: string, refid: string): string | undefined {
+    const text = /(?:^|::)operator\(\)$/.test(rawText) ? rawText : rawText.replace(/\(\)$/, "");
+    const shortName = text.split("::").pop() ?? text;
+    const decodedPath = decodeDoxygenRefid(refid);
+    let linkPath: string | undefined;
+    if (decodedPath) {
+        const qualifiedName =
+            decodedPath.endsWith("::" + shortName) || decodedPath.endsWith(shortName)
+                ? decodedPath
+                : decodedPath + "::" + shortName;
+        linkPath = buildLinkPath(qualifiedName);
+    }
+    linkPath ??= buildScopedLinkPath(text);
+    return linkPath === "." ? undefined : linkPath;
+}
+
+/**
+ * Look a name up the way C++ unqualified lookup would: each enclosing scope of the
+ * current page (innermost first), then the global scope. Qualified names are looked
+ * up as written.
+ */
+export function buildScopedLinkPath(name: string): string | undefined {
+    if (!name.includes("::")) {
+        for (const scope of enclosingScopes(currentPagePath)) {
+            const scoped = buildLinkPath(`${scope}::${name}`);
+            if (scoped != null) {
+                return scoped;
+            }
+        }
+    }
+    return buildLinkPath(name);
+}
+
+/** `a::b::C` → `["a::b", "a"]`: the namespaces/classes a page's symbol is nested in, innermost first. */
+function enclosingScopes(qualifiedPath: string | undefined): string[] {
+    const scopes = stripTemplateArgs(qualifiedPath ?? "")
+        .split("::")
+        .filter(Boolean)
+        .slice(0, -1);
+    return scopes.map((_, i) => scopes.slice(0, scopes.length - i).join("::"));
+}
+
 // ---------------------------------------------------------------------------
 // Inline segment rendering
 // ---------------------------------------------------------------------------
@@ -174,23 +229,10 @@ function renderSegment(segment: CppDocSegment): string {
                 }
                 return `\`${codeText}\`${possessiveSuffix}`;
             }
-            // For member refs, try to decode the refid to get a qualified name.
-            // Some member refs point to concepts, classes, or methods that have API pages.
-            // When the refid decodes to a namespace (not a full member path), append the
-            // member's code text to form the full qualified name.
-            if (segment.kindref === "member" && segment.refid) {
-                const decodedPath = decodeDoxygenRefid(segment.refid);
-                if (decodedPath) {
-                    let qualifiedName = decodedPath;
-                    const shortName = codeText.split("::").pop() ?? codeText;
-                    // If decoded path doesn't already end with the short name, append it
-                    if (!decodedPath.endsWith("::" + shortName) && !decodedPath.endsWith(shortName)) {
-                        qualifiedName = decodedPath + "::" + shortName;
-                    }
-                    const linkPath = buildLinkPath(qualifiedName);
-                    if (linkPath) {
-                        return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
-                    }
+            if (segment.kindref === "member") {
+                const linkPath = resolveMemberRefLink(codeText, segment.refid);
+                if (linkPath) {
+                    return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
                 }
             }
             // Fallback: render as inline code
@@ -216,19 +258,10 @@ function renderSegment(segment: CppDocSegment): string {
                 }
                 return `\`${text}\``;
             }
-            // For member refs, also try to resolve as a link
-            if (segment.kindref === "member" && segment.refid) {
-                const decodedPath = decodeDoxygenRefid(segment.refid);
-                if (decodedPath) {
-                    let qualifiedName = decodedPath;
-                    const shortName = segment.text.trim().split("::").pop() ?? segment.text.trim();
-                    if (!decodedPath.endsWith("::" + shortName) && !decodedPath.endsWith(shortName)) {
-                        qualifiedName = decodedPath + "::" + shortName;
-                    }
-                    const linkPath = buildLinkPath(qualifiedName);
-                    if (linkPath) {
-                        return `[${escapeAngleBrackets(segment.text.trim())}](${linkPath})`;
-                    }
+            if (segment.kindref === "member") {
+                const linkPath = resolveMemberRefLink(segment.text.trim(), segment.refid);
+                if (linkPath) {
+                    return `[${escapeAngleBrackets(segment.text.trim())}](${linkPath})`;
                 }
             }
             // For unresolvable member refs, render as plain text
@@ -480,10 +513,17 @@ function renderBlock(block: CppDocBlock, options?: RenderBlockOptions): string {
             return [`\`\`\`${lang} showLineNumbers={false}`, block.code, "```"].join("\n");
         }
         case "verbatim": {
-            // Verbatim blocks: pass through raw content with MDX escaping.
-            // RST verbatim processing has been removed -- RST content is now
-            // pre-processed into structured IR fields by the parser.
-            return escapeMultilineMdxSpecials(block.content);
+            // RST verbatim is pre-processed into structured IR fields by the parser;
+            // anything left here that carries its own fences is passed through.
+            if (block.format === "rst" || /^```/m.test(block.content)) {
+                return escapeMultilineMdxSpecials(block.content);
+            }
+            // Doxygen @verbatim is preformatted text: render it as a plain code block.
+            const content = block.content.replace(/^\n+|\s+$/g, "");
+            if (!content) {
+                return "";
+            }
+            return ["```text showLineNumbers={false}", content, "```"].join("\n");
         }
         case "list": {
             return renderList(block.ordered, block.items, options);

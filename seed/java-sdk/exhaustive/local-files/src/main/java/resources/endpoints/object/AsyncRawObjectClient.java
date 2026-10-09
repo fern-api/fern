@@ -6,10 +6,12 @@ package com.fern.sdk.resources.endpoints.object;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.RetryInterceptor;
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.core.SeedExhaustiveHttpResponse;
@@ -74,7 +76,7 @@ public class AsyncRawObjectClient {
       }
       RequestBody body;
       try {
-        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
       }
       catch(JsonProcessingException e) {
         throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -90,8 +92,12 @@ public class AsyncRawObjectClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
+      if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+        okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+      }
       CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
-      client.newCall(okhttpRequest).enqueue(new Callback() {
+      RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+      okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
@@ -104,6 +110,9 @@ public class AsyncRawObjectClient {
             future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
           }
+          catch (JsonProcessingException e) {
+            future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+          }
           catch (IOException e) {
             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
           }
@@ -112,6 +121,11 @@ public class AsyncRawObjectClient {
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+        }
+      });
+      future.whenComplete((result_, throwable_) -> {
+        if (future.isCancelled()) {
+          okhttpCall.cancel();
         }
       });
       return future;
@@ -133,7 +147,7 @@ public class AsyncRawObjectClient {
         }
         RequestBody body;
         try {
-          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
         }
         catch(JsonProcessingException e) {
           throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -149,8 +163,12 @@ public class AsyncRawObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
           client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+          okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+        }
         CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
           @Override
           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
             try (ResponseBody responseBody = response.body()) {
@@ -163,6 +181,9 @@ public class AsyncRawObjectClient {
               future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
               return;
             }
+            catch (JsonProcessingException e) {
+              future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+            }
             catch (IOException e) {
               future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
             }
@@ -171,6 +192,11 @@ public class AsyncRawObjectClient {
           @Override
           public void onFailure(@NotNull Call call, @NotNull IOException e) {
             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          }
+        });
+        future.whenComplete((result_, throwable_) -> {
+          if (future.isCancelled()) {
+            okhttpCall.cancel();
           }
         });
         return future;
@@ -192,7 +218,7 @@ public class AsyncRawObjectClient {
           }
           RequestBody body;
           try {
-            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
           }
           catch(JsonProcessingException e) {
             throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -208,8 +234,12 @@ public class AsyncRawObjectClient {
           if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
           }
+          if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+          }
           CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMapOfMap>> future = new CompletableFuture<>();
-          client.newCall(okhttpRequest).enqueue(new Callback() {
+          RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+          okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
               try (ResponseBody responseBody = response.body()) {
@@ -222,6 +252,9 @@ public class AsyncRawObjectClient {
                 future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                 return;
               }
+              catch (JsonProcessingException e) {
+                future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+              }
               catch (IOException e) {
                 future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
               }
@@ -230,6 +263,11 @@ public class AsyncRawObjectClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
               future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            }
+          });
+          future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+              okhttpCall.cancel();
             }
           });
           return future;
@@ -261,7 +299,7 @@ public class AsyncRawObjectClient {
             }
             RequestBody body;
             try {
-              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
             }
             catch(JsonProcessingException e) {
               throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -277,8 +315,12 @@ public class AsyncRawObjectClient {
             if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
               client = clientOptions.httpClientWithTimeout(requestOptions);
             }
+            if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+              okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+            }
             CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>> future = new CompletableFuture<>();
-            client.newCall(okhttpRequest).enqueue(new Callback() {
+            RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+            okhttpCall.enqueue(new Callback() {
               @Override
               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -291,6 +333,9 @@ public class AsyncRawObjectClient {
                   future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                   return;
                 }
+                catch (JsonProcessingException e) {
+                  future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                }
                 catch (IOException e) {
                   future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                 }
@@ -299,6 +344,11 @@ public class AsyncRawObjectClient {
               @Override
               public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+              }
+            });
+            future.whenComplete((result_, throwable_) -> {
+              if (future.isCancelled()) {
+                okhttpCall.cancel();
               }
             });
             return future;
@@ -321,7 +371,7 @@ public class AsyncRawObjectClient {
               }
               RequestBody body;
               try {
-                body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
               }
               catch(JsonProcessingException e) {
                 throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -337,8 +387,12 @@ public class AsyncRawObjectClient {
               if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
               }
+              if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+                okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+              }
               CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>> future = new CompletableFuture<>();
-              client.newCall(okhttpRequest).enqueue(new Callback() {
+              RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+              okhttpCall.enqueue(new Callback() {
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                   try (ResponseBody responseBody = response.body()) {
@@ -351,6 +405,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                   }
+                  catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                  }
                   catch (IOException e) {
                     future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                   }
@@ -359,6 +416,11 @@ public class AsyncRawObjectClient {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
                   future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                }
+              });
+              future.whenComplete((result_, throwable_) -> {
+                if (future.isCancelled()) {
+                  okhttpCall.cancel();
                 }
               });
               return future;
@@ -380,7 +442,7 @@ public class AsyncRawObjectClient {
                 }
                 RequestBody body;
                 try {
-                  body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                  body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                 }
                 catch(JsonProcessingException e) {
                   throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -396,8 +458,12 @@ public class AsyncRawObjectClient {
                 if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                   client = clientOptions.httpClientWithTimeout(requestOptions);
                 }
+                if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+                  okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+                }
                 CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>> future = new CompletableFuture<>();
-                client.newCall(okhttpRequest).enqueue(new Callback() {
+                RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+                okhttpCall.enqueue(new Callback() {
                   @Override
                   public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     try (ResponseBody responseBody = response.body()) {
@@ -410,6 +476,9 @@ public class AsyncRawObjectClient {
                       future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                       return;
                     }
+                    catch (JsonProcessingException e) {
+                      future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                    }
                     catch (IOException e) {
                       future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                     }
@@ -418,6 +487,11 @@ public class AsyncRawObjectClient {
                   @Override
                   public void onFailure(@NotNull Call call, @NotNull IOException e) {
                     future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                  }
+                });
+                future.whenComplete((result_, throwable_) -> {
+                  if (future.isCancelled()) {
+                    okhttpCall.cancel();
                   }
                 });
                 return future;
@@ -439,7 +513,7 @@ public class AsyncRawObjectClient {
                   }
                   RequestBody body;
                   try {
-                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                   }
                   catch(JsonProcessingException e) {
                     throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -455,8 +529,12 @@ public class AsyncRawObjectClient {
                   if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                     client = clientOptions.httpClientWithTimeout(requestOptions);
                   }
+                  if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+                    okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+                  }
                   CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithUnknownField>> future = new CompletableFuture<>();
-                  client.newCall(okhttpRequest).enqueue(new Callback() {
+                  RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+                  okhttpCall.enqueue(new Callback() {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                       try (ResponseBody responseBody = response.body()) {
@@ -469,6 +547,9 @@ public class AsyncRawObjectClient {
                         future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                         return;
                       }
+                      catch (JsonProcessingException e) {
+                        future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                      }
                       catch (IOException e) {
                         future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                       }
@@ -477,6 +558,11 @@ public class AsyncRawObjectClient {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                       future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                    }
+                  });
+                  future.whenComplete((result_, throwable_) -> {
+                    if (future.isCancelled()) {
+                      okhttpCall.cancel();
                     }
                   });
                   return future;
@@ -498,7 +584,7 @@ public class AsyncRawObjectClient {
                     }
                     RequestBody body;
                     try {
-                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                     }
                     catch(JsonProcessingException e) {
                       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -514,8 +600,12 @@ public class AsyncRawObjectClient {
                     if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                       client = clientOptions.httpClientWithTimeout(requestOptions);
                     }
+                    if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+                      okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+                    }
                     CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDocumentedUnknownType>> future = new CompletableFuture<>();
-                    client.newCall(okhttpRequest).enqueue(new Callback() {
+                    RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+                    okhttpCall.enqueue(new Callback() {
                       @Override
                       public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         try (ResponseBody responseBody = response.body()) {
@@ -528,6 +618,9 @@ public class AsyncRawObjectClient {
                           future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                           return;
                         }
+                        catch (JsonProcessingException e) {
+                          future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                        }
                         catch (IOException e) {
                           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                         }
@@ -536,6 +629,11 @@ public class AsyncRawObjectClient {
                       @Override
                       public void onFailure(@NotNull Call call, @NotNull IOException e) {
                         future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                      }
+                    });
+                    future.whenComplete((result_, throwable_) -> {
+                      if (future.isCancelled()) {
+                        okhttpCall.cancel();
                       }
                     });
                     return future;
@@ -557,7 +655,7 @@ public class AsyncRawObjectClient {
                       }
                       RequestBody body;
                       try {
-                        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                       }
                       catch(JsonProcessingException e) {
                         throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -573,8 +671,12 @@ public class AsyncRawObjectClient {
                       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                         client = clientOptions.httpClientWithTimeout(requestOptions);
                       }
+                      if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+                        okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+                      }
                       CompletableFuture<SeedExhaustiveHttpResponse<Map<String, Object>>> future = new CompletableFuture<>();
-                      client.newCall(okhttpRequest).enqueue(new Callback() {
+                      RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+                      okhttpCall.enqueue(new Callback() {
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                           try (ResponseBody responseBody = response.body()) {
@@ -587,6 +689,9 @@ public class AsyncRawObjectClient {
                             future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                             return;
                           }
+                          catch (JsonProcessingException e) {
+                            future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                          }
                           catch (IOException e) {
                             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                           }
@@ -595,6 +700,11 @@ public class AsyncRawObjectClient {
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
                           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                        }
+                      });
+                      future.whenComplete((result_, throwable_) -> {
+                        if (future.isCancelled()) {
+                          okhttpCall.cancel();
                         }
                       });
                       return future;
@@ -625,7 +735,7 @@ public class AsyncRawObjectClient {
                         }
                         RequestBody body;
                         try {
-                          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                         }
                         catch(JsonProcessingException e) {
                           throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -641,8 +751,12 @@ public class AsyncRawObjectClient {
                         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                           client = clientOptions.httpClientWithTimeout(requestOptions);
                         }
+                        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+                          okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+                        }
                         CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMixedRequiredAndOptionalFields>> future = new CompletableFuture<>();
-                        client.newCall(okhttpRequest).enqueue(new Callback() {
+                        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+                        okhttpCall.enqueue(new Callback() {
                           @Override
                           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                             try (ResponseBody responseBody = response.body()) {
@@ -655,6 +769,9 @@ public class AsyncRawObjectClient {
                               future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                               return;
                             }
+                            catch (JsonProcessingException e) {
+                              future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                            }
                             catch (IOException e) {
                               future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                             }
@@ -663,6 +780,11 @@ public class AsyncRawObjectClient {
                           @Override
                           public void onFailure(@NotNull Call call, @NotNull IOException e) {
                             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                          }
+                        });
+                        future.whenComplete((result_, throwable_) -> {
+                          if (future.isCancelled()) {
+                            okhttpCall.cancel();
                           }
                         });
                         return future;
@@ -696,7 +818,7 @@ public class AsyncRawObjectClient {
                           }
                           RequestBody body;
                           try {
-                            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                           }
                           catch(JsonProcessingException e) {
                             throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -712,8 +834,12 @@ public class AsyncRawObjectClient {
                           if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                             client = clientOptions.httpClientWithTimeout(requestOptions);
                           }
+                          if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+                            okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+                          }
                           CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredNestedObject>> future = new CompletableFuture<>();
-                          client.newCall(okhttpRequest).enqueue(new Callback() {
+                          RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+                          okhttpCall.enqueue(new Callback() {
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                               try (ResponseBody responseBody = response.body()) {
@@ -726,6 +852,9 @@ public class AsyncRawObjectClient {
                                 future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                                 return;
                               }
+                              catch (JsonProcessingException e) {
+                                future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                              }
                               catch (IOException e) {
                                 future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                               }
@@ -734,6 +863,11 @@ public class AsyncRawObjectClient {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                               future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                            }
+                          });
+                          future.whenComplete((result_, throwable_) -> {
+                            if (future.isCancelled()) {
+                              okhttpCall.cancel();
                             }
                           });
                           return future;
@@ -765,7 +899,7 @@ public class AsyncRawObjectClient {
                             }
                             RequestBody body;
                             try {
-                              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                             }
                             catch(JsonProcessingException e) {
                               throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -781,8 +915,12 @@ public class AsyncRawObjectClient {
                             if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                               client = clientOptions.httpClientWithTimeout(requestOptions);
                             }
+                            if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+                              okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+                            }
                             CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> future = new CompletableFuture<>();
-                            client.newCall(okhttpRequest).enqueue(new Callback() {
+                            RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+                            okhttpCall.enqueue(new Callback() {
                               @Override
                               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                                 try (ResponseBody responseBody = response.body()) {
@@ -795,6 +933,9 @@ public class AsyncRawObjectClient {
                                   future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                                   return;
                                 }
+                                catch (JsonProcessingException e) {
+                                  future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+                                }
                                 catch (IOException e) {
                                   future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                                 }
@@ -803,6 +944,11 @@ public class AsyncRawObjectClient {
                               @Override
                               public void onFailure(@NotNull Call call, @NotNull IOException e) {
                                 future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                              }
+                            });
+                            future.whenComplete((result_, throwable_) -> {
+                              if (future.isCancelled()) {
+                                okhttpCall.cancel();
                               }
                             });
                             return future;

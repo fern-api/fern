@@ -51,6 +51,11 @@ class HomepageClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->homepage->getHomepageProblems();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -96,6 +101,16 @@ class HomepageClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->homepage->setHomepageProblems(
+     *     [
+     *         'string',
+     *         'string',
+     *     ],
+     * );
+     * ```
+     *
      * @param array<string> $request
      * @param ?array{
      *   baseUrl?: string,

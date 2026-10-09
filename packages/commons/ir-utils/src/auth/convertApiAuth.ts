@@ -51,8 +51,17 @@ export function convertApiAuth({
         }),
         endpointSecurity: () => ({
             docs,
+            // Under endpoint-security, every declared scheme is available for endpoints to
+            // reference from their own `security`. The schemes must still be converted here,
+            // otherwise consumers have no definition to resolve those references against.
             requirement: AuthSchemesRequirement.EndpointSecurity,
-            schemes: []
+            schemes: Object.keys(rawApiFileSchema["auth-schemes"] ?? {}).map((schemeName) =>
+                convertSchemeReference({
+                    reference: schemeName,
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
+                    casingsGenerator
+                })
+            )
         })
     });
 }
@@ -72,11 +81,13 @@ function convertSchemeReference({
             throw new Error("Unknown auth scheme: " + reference);
         }
         const effectiveDocs = docs ?? (typeof declaration === "object" ? declaration.docs : undefined);
+        const playgroundDocs = typeof declaration === "object" ? declaration["playground-docs"] : undefined;
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
                 AuthScheme.header({
                     key: reference,
                     docs: effectiveDocs,
+                    playgroundDocs,
                     name: casingsGenerator.generateNameAndWireValue({
                         name: rawHeader.name ?? reference,
                         wireValue: rawHeader.header
@@ -94,6 +105,7 @@ function convertSchemeReference({
                     key: reference,
                     casingsGenerator,
                     docs: effectiveDocs,
+                    playgroundDocs,
                     rawScheme
                 }),
             tokenBearer: (rawScheme) =>
@@ -101,6 +113,7 @@ function convertSchemeReference({
                     key: reference,
                     casingsGenerator,
                     docs: effectiveDocs,
+                    playgroundDocs,
                     rawScheme
                 }),
             inferredBearer(authScheme) {
@@ -109,6 +122,7 @@ function convertSchemeReference({
                     key: reference,
                     casingsGenerator,
                     docs: effectiveDocs,
+                    playgroundDocs,
                     rawScheme: undefined
                 });
             },
@@ -119,6 +133,7 @@ function convertSchemeReference({
                     key: reference,
                     casingsGenerator,
                     docs: effectiveDocs,
+                    playgroundDocs,
                     rawScheme: undefined
                 })
         });
@@ -133,6 +148,7 @@ function convertSchemeReference({
                 key: scheme,
                 casingsGenerator,
                 docs: undefined,
+                playgroundDocs: undefined,
                 rawScheme: undefined
             });
         case "basic":
@@ -140,6 +156,7 @@ function convertSchemeReference({
                 key: scheme,
                 casingsGenerator,
                 docs: undefined,
+                playgroundDocs: undefined,
                 rawScheme: undefined
             });
         default:
@@ -151,16 +168,19 @@ function generateBearerAuth({
     key,
     casingsGenerator,
     docs,
+    playgroundDocs,
     rawScheme
 }: {
     key: string;
     casingsGenerator: CasingsGenerator;
     docs: string | undefined;
+    playgroundDocs: string | undefined;
     rawScheme: RawSchemas.TokenBearerAuthSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         key,
         docs,
+        playgroundDocs,
         token: casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env,
         tokenPlaceholder: rawScheme?.token?.placeholder
@@ -171,16 +191,19 @@ function generateBasicAuth({
     key,
     casingsGenerator,
     docs,
+    playgroundDocs,
     rawScheme
 }: {
     key: string;
     casingsGenerator: CasingsGenerator;
     docs: string | undefined;
+    playgroundDocs: string | undefined;
     rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined;
 }): AuthScheme.Basic {
     return AuthScheme.basic({
         key,
         docs,
+        playgroundDocs,
         username: casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
         usernameOmit: rawScheme?.username?.omit,

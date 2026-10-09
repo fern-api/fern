@@ -6,9 +6,12 @@ import {
     AgentsConfig,
     AiChatConfig,
     AnnouncementConfig,
+    ApiSpecImportSettings,
     Availability,
     DocsInstance,
+    EmbeddingConfig,
     ExperimentalConfig,
+    ExternalSitemap,
     LibraryLanguage,
     PlaygroundSettings,
     Target,
@@ -36,15 +39,26 @@ export interface ParsedPageActionsConfig {
         cursor: boolean;
         claudeCode: boolean;
         vscode: boolean;
+        mcp: boolean;
         custom: ParsedCustomPageAction[];
+        skills: CjsFdrSdk.docs.v1.commons.PageActionOptions["skills"];
     };
 }
 
 // TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
-interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
+interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language" | "search"> {
     language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
+    embedding: EmbeddingConfig | undefined;
+    showHeadersInExamples: boolean | undefined;
+    search:
+        | {
+              prioritizeCurrentProduct: boolean | undefined;
+              defaultFilterByCurrentProduct: boolean | undefined;
+              externalSitemaps: ExternalSitemap[] | undefined;
+          }
+        | undefined;
 }
 
 export interface ParsedDocsConfiguration {
@@ -121,8 +135,14 @@ export interface AbsoluteJsFileConfig {
     strategy?: CjsFdrSdk.docs.v1.commons.JsScriptStrategy;
 }
 
+// Extends the published FDR remote-script shape with `disableSri` until the
+// generated @fern-api/fdr-sdk type carries the field natively.
+export type ParsedJsRemoteConfig = CjsFdrSdk.docs.v1.commons.JsRemoteConfig & {
+    disableSri?: boolean;
+};
+
 export interface JavascriptConfig {
-    remote?: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[];
+    remote?: ParsedJsRemoteConfig[];
     files: AbsoluteJsFileConfig[];
 }
 
@@ -226,6 +246,8 @@ export interface VersionedDocsNavigation {
 export interface ProductGroupDocsNavigation {
     type: "productgroup";
     products: ProductInfo[];
+    /** Site-level changelog shared by all products, slugged off the root rather than any product. */
+    changelog: DocsNavigationItem.Changelog | undefined;
 }
 
 export interface VersionInfo
@@ -238,6 +260,32 @@ export interface VersionInfo
     slug: string | undefined;
     hidden: boolean | undefined;
     announcement: AnnouncementConfig | undefined;
+    /**
+     * Present when this version's content is built from a git ref rather than the
+     * working tree. API sections and libraries for this version resolve against
+     * {@link VersionContentSource.absolutePathToFernFolder} instead of the current
+     * branch's fern folder.
+     */
+    contentSource: VersionContentSource | undefined;
+}
+
+/**
+ * Describes where a git-ref-backed version's content is materialized. The version
+ * metadata (slug, availability, ordering) still comes from the current branch's
+ * docs.yml; only the content (pages, navigation, api definitions, libraries) is
+ * read from the ref.
+ */
+export interface VersionContentSource {
+    /** The version's display name, used for actionable error messages. */
+    displayVersion: string;
+    /** The ref as declared in docs.yml (a git tag, branch, or commit SHA). */
+    ref: string;
+    /** The commit SHA that `ref` resolved to. */
+    sha: string;
+    /** Absolute path to the fern folder within the materialized checkout at `sha`. */
+    absolutePathToFernFolder: AbsoluteFilePath;
+    /** Libraries declared in the ref's docs.yml, used to resolve library sections at the ref. */
+    libraries: Record<string, ParsedLibraryConfiguration> | undefined;
 }
 
 export type ProductInfo = InternalProduct | ExternalProduct;
@@ -376,6 +424,7 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         apiName: string | undefined;
+        specs: ParsedApiSpecConfiguration[] | undefined;
         openrpc: string | undefined;
         audiences: Audiences;
         availability: Availability | undefined;
@@ -442,6 +491,17 @@ export declare namespace DocsNavigationItem {
         swift: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
+
+export interface ParsedApiSpecConfiguration {
+    type: ApiSpecType;
+    absolutePath: AbsoluteFilePath;
+    namespace: string | undefined;
+    absoluteOverlayPaths: AbsoluteFilePath[];
+    absoluteOverridePaths: AbsoluteFilePath[];
+    settings: ApiSpecImportSettings | undefined;
+}
+
+export type ApiSpecType = "openapi" | "asyncapi" | "graphql";
 
 export declare namespace ParsedApiReferenceLayoutItem {
     export interface Section
@@ -518,17 +578,33 @@ export type ParsedApiReferenceLayoutItem =
     | DocsNavigationItem.Link;
 
 /**
+ * Parsed configuration for the source location of a library documentation source.
+ * A `git` input can be generated remotely or resolved locally with `--local`;
+ * a `path` input points at a local checkout and requires `--local`.
+ */
+export type ParsedLibraryInputConfiguration =
+    | {
+          type: "git";
+          /** GitHub URL to the repository containing the library source code */
+          git: string;
+          /** Optional path within the repository to the library source */
+          subpath: string | undefined;
+          /** Optional git ref (branch, tag, or commit SHA) to check out */
+          ref: string | undefined;
+      }
+    | {
+          type: "path";
+          /** Path (relative to docs.yml) to a local checkout of the library source */
+          path: string;
+      };
+
+/**
  * Parsed configuration for a library documentation source.
  * Used by `fern docs md generate` to generate MDX files from library source code.
  */
 export interface ParsedLibraryConfiguration {
     /** Configuration for the library source location */
-    input: {
-        /** GitHub URL to the repository containing the library source code */
-        git: string;
-        /** Optional path within the repository to the library source */
-        subpath: string | undefined;
-    };
+    input: ParsedLibraryInputConfiguration;
     /** Configuration for the library documentation output */
     output: {
         /** The output directory where MDX files will be generated */
@@ -600,6 +676,10 @@ export interface AnnouncementOverlay {
 export type NavigationItemOverlay =
     | NavigationItemOverlay.Page
     | NavigationItemOverlay.Section
+    | NavigationItemOverlay.Link
+    | NavigationItemOverlay.ApiReference
+    | NavigationItemOverlay.ApiPackage
+    | NavigationItemOverlay.Endpoint
     | NavigationItemOverlay.Tab
     | NavigationItemOverlay.Variant;
 
@@ -614,6 +694,33 @@ export declare namespace NavigationItemOverlay {
         title: string | undefined;
         slug: string | undefined;
         contents: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ link: "Translated label" }` — matched positionally among sibling links. */
+    export interface Link {
+        type: "link";
+        title: string | undefined;
+    }
+    /** `{ api: "Translated title", slug?: ..., layout?: [...] }` */
+    export interface ApiReference {
+        type: "apiReference";
+        title: string | undefined;
+        slug: string | undefined;
+        layout: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ <package-name>: { title?: ..., slug?: ..., contents?: [...] } }` inside an `api` layout. */
+    export interface ApiPackage {
+        type: "apiPackage";
+        packageName: string;
+        title: string | undefined;
+        slug: string | undefined;
+        contents: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ endpoint: "POST /path", title?: ..., slug?: ... }` inside an `api` layout. */
+    export interface Endpoint {
+        type: "endpoint";
+        endpoint: string;
+        title: string | undefined;
+        slug: string | undefined;
     }
     export interface Tab {
         type: "tab";

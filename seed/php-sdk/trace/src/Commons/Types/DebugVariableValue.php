@@ -4,7 +4,6 @@ namespace Seed\Commons\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
-use Seed\Core\Json\JsonDecoder;
 
 class DebugVariableValue extends JsonSerializableType
 {
@@ -583,18 +582,6 @@ class DebugVariableValue extends JsonSerializableType
         }
 
         return $result;
-    }
-
-    /**
-     * @param string $json
-     */
-    public static function fromJson(string $json): static
-    {
-        $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
-            throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
-        }
-        return self::jsonDeserialize($decodedJson);
     }
 
     /**

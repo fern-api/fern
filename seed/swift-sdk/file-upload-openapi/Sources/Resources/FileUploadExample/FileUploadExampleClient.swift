@@ -9,6 +9,22 @@ public final class FileUploadExampleClient: Sendable {
 
     /// Upload a file to the database
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.fileUploadExample.uploadFile(request: .init(
+    ///         name: "name",
+    ///         file: .init(data: Data("".utf8))
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func uploadFile(request: Requests.UploadFileRequest, requestOptions: RequestOptions? = nil) async throws -> FileId {
         return try await httpClient.performRequest(

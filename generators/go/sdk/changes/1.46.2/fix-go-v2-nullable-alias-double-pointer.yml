@@ -1,0 +1,4 @@
+- summary: |
+    Fix double-pointer types for nullable $ref alias fields in v2 GoTypeMapper and DynamicTypeMapper,
+    consistent with the v1 fix in model.go.
+  type: fix

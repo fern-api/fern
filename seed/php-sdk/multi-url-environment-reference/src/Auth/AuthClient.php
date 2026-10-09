@@ -50,6 +50,16 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->gettoken(
+     *     new AuthGetTokenRequest([
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *     ]),
+     * );
+     * ```
+     *
      * @param AuthGetTokenRequest $request
      * @param ?array{
      *   maxRetries?: int,

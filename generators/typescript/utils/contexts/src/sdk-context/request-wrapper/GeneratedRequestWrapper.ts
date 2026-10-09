@@ -28,6 +28,7 @@ export interface GeneratedRequestWrapper extends GeneratedFile<FileContext> {
     getAllQueryParameters: () => FernIr.QueryParameter[];
     getNonBodyKeys: (context: FileContext) => RequestWrapperNonBodyProperty[];
     getNonBodyKeysWithData: (context: FileContext) => RequestWrapperNonBodyPropertyWithData[];
+    getCollidingPathParameterPropertyNames: (context: FileContext) => Set<string>;
     getInlinedRequestBodyPropertyKey: (property: FernIr.InlinedRequestBodyProperty) => RequestWrapperBodyProperty;
     getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperBodyProperty;
     shouldInlinePathParameters: (context: FileContext) => boolean;

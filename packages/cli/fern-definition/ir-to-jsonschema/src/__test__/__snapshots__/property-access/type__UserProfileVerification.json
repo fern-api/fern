@@ -2,12 +2,14 @@
   "type": "object",
   "properties": {
     "verified": {
-      "type": "string"
+      "type": "string",
+      "description": "User profile verification status"
     }
   },
   "required": [
     "verified"
   ],
   "additionalProperties": false,
+  "description": "User profile verification object",
   "definitions": {}
 }

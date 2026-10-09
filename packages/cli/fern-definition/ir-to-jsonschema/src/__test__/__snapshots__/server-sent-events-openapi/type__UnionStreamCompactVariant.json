@@ -9,13 +9,16 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether to stream the response."
     },
     "prompt": {
-      "type": "string"
+      "type": "string",
+      "description": "The input prompt."
     },
     "data": {
-      "type": "string"
+      "type": "string",
+      "description": "Compact data payload."
     }
   },
   "required": [
@@ -23,5 +26,6 @@
     "data"
   ],
   "additionalProperties": false,
+  "description": "Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.",
   "definitions": {}
 }

@@ -23,6 +23,9 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedVariablesError}
+     * @throws {@link errors.SeedVariablesTimeoutError}
+     *
      * @example
      *     await client.service.post()
      */

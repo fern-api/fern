@@ -10,7 +10,7 @@ type FernRcAiProvider = schemas.FernRcAiProvider;
 const KEYRING_ACCOUNT: Record<FernRcAiProvider, string | undefined> = {
     anthropic: "ai:anthropic",
     openai: "ai:openai",
-    bedrock: undefined // Bedrock uses AWS credentials chain, no API key stored here.
+    "aws-bedrock": undefined // Bedrock uses AWS credentials chain, no API key stored here.
 };
 
 /**

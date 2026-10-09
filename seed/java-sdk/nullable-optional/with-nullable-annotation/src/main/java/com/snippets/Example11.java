@@ -14,9 +14,9 @@ public class Example11 {
                 .updateTags(
                         "userId",
                         UpdateTagsRequest.builder()
-                                .tags(Optional.of(Arrays.asList("tags", "tags")))
+                                .tags(Arrays.asList("tags", "tags"))
                                 .categories(Optional.of(Arrays.asList("categories", "categories")))
-                                .labels(Optional.of(Arrays.asList("labels", "labels")))
+                                .labels(Arrays.asList("labels", "labels"))
                                 .build());
     }
 }

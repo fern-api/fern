@@ -55,6 +55,11 @@ class FolderClient implements FolderClientInterface
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->foo();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

@@ -18,13 +18,17 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.retries.get_users
+      #
       # @return [Array[Seed::Retries::Types::User]]
       def get_users(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
-          request_options: request_options
+          request_options: request_options,
+          max_retries: 0
         )
         begin
           response = @client.send(request)
@@ -32,10 +36,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Retries::Types::User], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
     end
   end

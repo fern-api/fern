@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `applyQueryDefaultsOnNilRequest` option, which applies query parameter defaults
+    when a request is `nil`. `internal.QueryValuesWithDefaults` returns early for a `nil`
+    request, so defaults declared via `x-fern-default` are silently dropped and the request is
+    sent without them. When the option is enabled, a `nil` request behaves like a zero-value
+    request struct, which matters most for paginated endpoints whose response shape depends on
+    a defaulted query parameter. The option defaults to `false` to preserve today's behavior.
+  type: feat

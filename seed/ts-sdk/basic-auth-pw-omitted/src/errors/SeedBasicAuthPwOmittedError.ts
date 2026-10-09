@@ -28,13 +28,17 @@ export class SeedBasicAuthPwOmittedError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedBasicAuthPwOmittedError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
         if (cause != null) {
             this.cause = cause;
         }
+    }
+
+    public get requestId(): string | undefined {
+        return this.rawResponse?.headers?.get("x-request-id") ?? undefined;
     }
 }
 

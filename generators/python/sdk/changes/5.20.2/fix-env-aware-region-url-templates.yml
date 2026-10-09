@@ -1,0 +1,9 @@
+- summary: |
+    When a client is constructed with both an `environment` and server URL
+    variables (e.g. `region`), the generated client now renders the selected
+    environment's URL template instead of always using the default (first)
+    environment's template. For example, `Client(environment=Environment.STAGING,
+    region="ie1")` now resolves to the Staging template
+    (`https://api.stage.ie1.example.com`) rather than the Production one.
+    An explicitly provided `base_url` is no longer overridden by URL variables.
+  type: fix

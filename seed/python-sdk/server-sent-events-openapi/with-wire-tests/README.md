@@ -59,7 +59,8 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.stream_protocol_no_collision()
+    async for chunk in client.stream_protocol_no_collision(...):
+        print(chunk)
 
 
 asyncio.run(main())
@@ -152,7 +153,7 @@ client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.stream_protocol_no_collision(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

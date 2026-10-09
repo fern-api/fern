@@ -138,7 +138,6 @@ public final class UploadWithQueryParamsRequest {
 
         /**
          * <p>The model to use for processing</p>
-         * <p>The model to use for processing</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

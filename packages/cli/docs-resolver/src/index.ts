@@ -8,15 +8,29 @@ export {
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
+export {
+    applyTranslatedApiTitlesToNavTree,
+    findIncompatibleTranslatedApiIds
+} from "./applyTranslatedApiTitlesToNavTree.js";
 export { applyTranslatedFrontmatterToNavTree } from "./applyTranslatedFrontmatterToNavTree.js";
 export {
     applyTranslatedNavigationOverlays,
     getTranslatedAnnouncement
 } from "./applyTranslatedNavigationOverlays.js";
+export { markUntranslatedNavNodesNoindex } from "./markUntranslatedNavNodesNoindex.js";
 export type TranslationNavigationOverlay = docsYml.TranslationNavigationOverlay;
-export { DocsDefinitionResolver, type UploadedFile } from "./DocsDefinitionResolver.js";
-export { stitchGlobalTheme } from "./stitchGlobalTheme.js";
+export { bundleMdxComponents } from "./bundleMdxComponents.js";
+export {
+    DocsDefinitionResolver,
+    getApiRegistrationConcurrency,
+    type OnApiRegistrationQueuedFn,
+    type RegisterApiFn,
+    type TranslatedApiSpec,
+    type UploadedFile
+} from "./DocsDefinitionResolver.js";
+export { resolveThemeFileUrls, stitchGlobalTheme } from "./stitchGlobalTheme.js";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 export { filterOssWorkspaces } from "./utils/filterOssWorkspaces.js";
 export { generateFdrFromOpenApiWorkspaceV3 } from "./utils/generateFdrFromOpenAPIWorkspaceV3.js";
+export { updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 export { wrapWithHttps } from "./wrapWithHttps.js";

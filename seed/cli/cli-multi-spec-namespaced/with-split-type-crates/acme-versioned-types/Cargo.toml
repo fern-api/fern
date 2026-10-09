@@ -1,0 +1,18 @@
+[package]
+name = "acme_versioned_types"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+doctest = false
+
+[dependencies]
+
+[dependencies.acme_versioned_types_core]
+path = "crates/acme-versioned-types-core"
+
+[dependencies.acme_versioned_types_v1]
+path = "crates/acme-versioned-types-v1"
+
+[dependencies.acme_versioned_types_v2]
+path = "crates/acme-versioned-types-v2"

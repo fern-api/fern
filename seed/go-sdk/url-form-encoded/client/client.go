@@ -27,13 +27,24 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.PostSubmitRequest{
+//	    Username: "johndoe",
+//	    Email: "john@example.com",
+//	}
+//	client.SubmitFormData(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SubmitFormData(
 	ctx context.Context,
 	request *fern.PostSubmitRequest,
@@ -50,6 +61,16 @@ func (c *Client) SubmitFormData(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.TokenRequest{
+//	    ClientID: "client_id",
+//	    ClientSecret: "client_secret",
+//	}
+//	client.GetToken(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetToken(
 	ctx context.Context,
 	request *fern.TokenRequest,

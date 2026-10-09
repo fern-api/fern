@@ -1,7 +1,15 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Endpoint, EndpointExample, Request, RetriesConfiguration, Schema, SchemaId } from "@fern-api/openapi-ir";
+import {
+    Endpoint,
+    EndpointExample,
+    ObjectProperty,
+    Request,
+    RetriesConfiguration,
+    Schema,
+    SchemaId
+} from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { CliError } from "@fern-api/task-context";
 import { buildEndpointExample } from "./buildEndpointExample.js";
@@ -9,23 +17,125 @@ import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefin
 import { buildHeader } from "./buildHeader.js";
 import { buildPathParameter } from "./buildPathParameter.js";
 import { buildQueryParameter } from "./buildQueryParameter.js";
-import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration.js";
+import { getAllParentSchemasToInline, getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration.js";
 import { buildTypeReference } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { State } from "./State.js";
 import { convertAvailability } from "./utils/convertAvailability.js";
 import { convertFullExample } from "./utils/convertFullExample.js";
 import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils/convertSdkGroupName.js";
+import { convertXmlPropertyToEncodingSchema } from "./utils/convertToEncodingSchema.js";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
-import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
+import { getEndpointNamespace, getErrorNamespace } from "./utils/getNamespaceFromGroup.js";
 import {
     getDocsFromTypeReference,
     getTypeFromTypeReference,
     stripNullableWrapperForExtends
 } from "./utils/getTypeFromTypeReference.js";
 import { isWriteMethod } from "./utils/isWriteMethod.js";
+
+const PATH_PARAM_DECONFLICT_SUFFIX = "PathParam";
+
+/**
+ * Collects the SDK-facing names of all non-path request properties (query parameters,
+ * headers, and request body properties) for an endpoint. Path parameters whose names
+ * collide with these are automatically renamed (see deconflictPathParameterName), which
+ * is wire-safe because path parameter names never appear on the wire.
+ */
+function getReservedRequestPropertyNames({
+    endpoint,
+    context,
+    namespace
+}: {
+    endpoint: Endpoint;
+    context: OpenApiIrConverterContext;
+    namespace: string | undefined;
+}): Set<string> {
+    const reservedNames = new Set<string>();
+
+    for (const queryParameter of endpoint.queryParameters) {
+        reservedNames.add(queryParameter.name);
+    }
+    for (const header of endpoint.headers) {
+        reservedNames.add(header.parameterNameOverride ?? header.name);
+    }
+
+    const request = endpoint.request;
+    if (request == null) {
+        return reservedNames;
+    }
+    switch (request.type) {
+        case "multipart":
+            for (const property of request.properties) {
+                reservedNames.add(property.key);
+            }
+            break;
+        case "json":
+        case "formUrlEncoded": {
+            const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
+            const resolvedSchema =
+                request.schema.type === "reference"
+                    ? context.getSchema(request.schema.schema, namespace)
+                    : request.schema;
+            if (
+                resolvedSchema?.type !== "object" ||
+                (maybeSchemaId != null && context.isResponseReachable(maybeSchemaId))
+            ) {
+                // the request body is emitted as a single referenced `body` property
+                reservedNames.add("body");
+                break;
+            }
+            for (const property of resolvedSchema.properties) {
+                reservedNames.add(property.nameOverride ?? property.key);
+            }
+            for (const allOfRef of resolvedSchema.allOf) {
+                const { properties: allOfProperties } = getProperties(context, allOfRef.schema, namespace);
+                for (const property of allOfProperties) {
+                    reservedNames.add(property.nameOverride ?? property.key);
+                }
+            }
+            break;
+        }
+        case "octetStream":
+            break;
+        default:
+            assertNever(request);
+    }
+
+    return reservedNames;
+}
+
+/**
+ * Returns a deterministic, non-colliding SDK name for a path parameter whose name
+ * collides with another request property (e.g. `idType` -> `idTypePathParam`).
+ * The wire format is unchanged: path parameter names never appear on the wire.
+ */
+function deconflictPathParameterName({
+    pathParameterName,
+    reservedNames,
+    pathParameters
+}: {
+    pathParameterName: string;
+    reservedNames: Set<string>;
+    pathParameters: Endpoint["pathParameters"];
+}): string {
+    const otherPathParameterNames = new Set<string>();
+    for (const pathParameter of pathParameters) {
+        const name = pathParameter.parameterNameOverride ?? pathParameter.name;
+        if (name !== pathParameterName) {
+            otherPathParameterNames.add(name);
+        }
+    }
+    let candidate = `${pathParameterName}${PATH_PARAM_DECONFLICT_SUFFIX}`;
+    let counter = 2;
+    while (reservedNames.has(candidate) || otherPathParameterNames.has(candidate)) {
+        candidate = `${pathParameterName}${PATH_PARAM_DECONFLICT_SUFFIX}${counter}`;
+        counter++;
+    }
+    return candidate;
+}
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -49,18 +159,33 @@ export function buildEndpoint({
 
     const maybeEndpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
 
+    const reservedRequestPropertyNames = getReservedRequestPropertyNames({
+        endpoint,
+        context,
+        namespace: maybeEndpointNamespace
+    });
+
+    const pathParameterRenames: Record<string, string> = {};
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        if (pathParameter.parameterNameOverride) {
-            path = path.replace(pathParameter.name, pathParameter.parameterNameOverride);
+        let parameterNameOverride = pathParameter.parameterNameOverride;
+        if (parameterNameOverride == null && reservedRequestPropertyNames.has(pathParameter.name)) {
+            parameterNameOverride = deconflictPathParameterName({
+                pathParameterName: pathParameter.name,
+                reservedNames: reservedRequestPropertyNames,
+                pathParameters: endpoint.pathParameters
+            });
+            pathParameterRenames[pathParameter.name] = parameterNameOverride;
         }
-        pathParameters[pathParameter.parameterNameOverride ?? pathParameter.name] = buildPathParameter({
+        if (parameterNameOverride) {
+            path = path.replace(`{${pathParameter.name}}`, `{${parameterNameOverride}}`);
+        }
+        pathParameters[parameterNameOverride ?? pathParameter.name] = buildPathParameter({
             pathParameter,
             context,
             fileContainingReference: declarationFile,
             namespace: maybeEndpointNamespace
         });
-        names.add(pathParameter.name);
     }
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
@@ -139,6 +264,10 @@ export function buildEndpoint({
         convertedEndpoint["display-name"] = endpoint.summary;
     }
 
+    if (endpoint.subtitle != null) {
+        convertedEndpoint["subtitle"] = endpoint.subtitle;
+    }
+
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
     const alreadyUsedHeaders = context.builder.getGlobalHeaderNames();
     const authHeaderName = context.builder.getAuthHeaderName();
@@ -213,7 +342,11 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant:
+                        context.options.respectReadonlySchemas && context.options.useReadVariantForResponses
+                            ? "read"
+                            : undefined
                 });
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
@@ -232,7 +365,11 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant:
+                        context.options.respectReadonlySchemas && context.options.useReadVariantForResponses
+                            ? "read"
+                            : undefined
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -247,13 +384,18 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant:
+                        context.options.respectReadonlySchemas && context.options.useReadVariantForResponses
+                            ? "read"
+                            : undefined
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
                     format: "sse",
-                    terminator: jsonResponse.terminator ?? undefined
+                    terminator: jsonResponse.terminator ?? undefined,
+                    resumable: jsonResponse.resumable ?? undefined
                 };
             },
             file: (fileResponse) => {
@@ -280,7 +422,8 @@ export function buildEndpoint({
                 convertedEndpoint.response = {
                     docs: textResponse.description ?? undefined,
                     type: "text",
-                    "status-code": textResponse.statusCode
+                    "status-code": textResponse.statusCode,
+                    "content-type": textResponse.contentType ?? undefined
                 };
             },
             _other: () => {
@@ -329,12 +472,16 @@ export function buildEndpoint({
         }
 
         const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
-            "status-code": parseInt(statusCode)
+            "status-code": httpError.isWildcardStatusCode === true ? statusCode : parseInt(statusCode)
         };
 
+        const errorNamespace = getErrorNamespace({
+            endpointNamespace: maybeEndpointNamespace,
+            error: httpError
+        });
         const errorDeclarationFile = resolveLocationWithNamespace({
             location: ERROR_DECLARATIONS_FILENAME,
-            namespaceOverride: maybeEndpointNamespace
+            namespaceOverride: errorNamespace
         });
 
         if (httpError.schema != null) {
@@ -343,7 +490,7 @@ export function buildEndpoint({
                 context,
                 fileContainingReference: errorDeclarationFile,
                 declarationFile: errorDeclarationFile,
-                namespace: maybeEndpointNamespace,
+                namespace: errorNamespace,
                 declarationDepth: 0
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
@@ -352,7 +499,10 @@ export function buildEndpoint({
 
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
-            schema: context.isErrorUnknownSchema(parseInt(statusCode))
+            schema: context.isErrorUnknownSchema({
+                statusCode,
+                namespace: httpError.namespace
+            })
                 ? { ...errorDeclaration, type: "unknown" }
                 : errorDeclaration
         });
@@ -386,7 +536,8 @@ export function buildEndpoint({
     if (endpoint.examples.length > 0) {
         convertedEndpoint.examples = convertEndpointExamples({
             endpointExamples: endpoint.examples,
-            context
+            context,
+            pathParameterRenames
         });
     }
 
@@ -394,6 +545,10 @@ export function buildEndpoint({
         convertedEndpoint.retries = convertEndpointRetries({
             retries: endpoint.retries
         });
+    }
+
+    if (endpoint.globalParameterIds != null && endpoint.globalParameterIds.length > 0) {
+        convertedEndpoint["global-parameters"] = endpoint.globalParameterIds;
     }
 
     // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
@@ -450,14 +605,16 @@ function convertEndpointAuth({
 
 function convertEndpointExamples({
     endpointExamples,
-    context
+    context,
+    pathParameterRenames
 }: {
     endpointExamples: EndpointExample[];
     context: OpenApiIrConverterContext;
+    pathParameterRenames: Record<string, string>;
 }): RawSchemas.ExampleEndpointCallSchema[] {
     return endpointExamples.map((endpointExample) => {
         try {
-            return buildEndpointExample({ endpointExample, context });
+            return buildEndpointExample({ endpointExample, context, pathParameterRenames });
         } catch (e) {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.error(`Error building endpoint example: ${e}`);
@@ -485,7 +642,7 @@ function convertEndpointRetries({
 }
 
 interface ConvertedRequest {
-    value: RawSchemas.HttpRequestSchema;
+    value: RawSchemas.HttpRequestSchema | string;
     schemaIdsToExclude?: string[];
 }
 
@@ -537,11 +694,8 @@ function getRequest({
                 declarationDepth: 0,
                 variant
             });
-            const convertedRequest: ConvertedRequest = {
-                schemaIdsToExclude: [],
-                value: {
-                    body: requestTypeReference
-                }
+            const requestValue: RawSchemas.HttpRequestSchema = {
+                body: requestTypeReference
             };
 
             const hasPathParams = Object.keys(pathParameters ?? {}).length > 0;
@@ -549,27 +703,57 @@ function getRequest({
             const hasHeaders = Object.keys(headers ?? {}).length > 0;
 
             if (hasPathParams) {
-                convertedRequest.value["path-parameters"] = pathParameters;
+                requestValue["path-parameters"] = pathParameters;
             }
             if (hasQueryParams) {
-                convertedRequest.value["query-parameters"] = queryParameters;
+                requestValue["query-parameters"] = queryParameters;
             }
             if (hasHeaders) {
-                convertedRequest.value.headers = headers;
+                requestValue.headers = headers;
             }
             if (hasPathParams || hasQueryParams || hasHeaders) {
-                convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
+                requestValue.name = requestNameOverride ?? generatedRequestName;
             }
 
             if (request.contentType != null) {
-                convertedRequest.value["content-type"] = request.contentType;
+                requestValue["content-type"] = request.contentType;
             }
 
             if (request.description != null) {
-                convertedRequest.value.docs = request.description;
+                requestValue.docs = request.description;
             }
 
-            return convertedRequest;
+            // Collapse `{ body: <ref> }` to the scalar shorthand `request: <ref>`
+            // when nothing else is present and the content-type is the SDK default.
+            const canCollapse =
+                typeof requestValue.body === "string" &&
+                requestValue["path-parameters"] == null &&
+                requestValue["query-parameters"] == null &&
+                requestValue.headers == null &&
+                requestValue.name == null &&
+                requestValue.docs == null &&
+                (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
+
+            // A body the spec marks as not required may be omitted by the caller. That is spelled
+            // as `optional` on the referenced body, which the IR carries as `required: false`; the
+            // body's own type is left alone. Generators only act on it when they opt in.
+            const mayOmitBody = isOptionalJsonBody(request);
+            if (mayOmitBody) {
+                if (canCollapse) {
+                    // `optional` has no scalar shorthand, so keep the object form — minus the
+                    // content-type that collapsing would have dropped as the default anyway.
+                    delete requestValue["content-type"];
+                }
+                requestValue.body =
+                    typeof requestTypeReference === "string"
+                        ? { type: requestTypeReference, optional: true }
+                        : { ...requestTypeReference, optional: true };
+            }
+
+            return {
+                schemaIdsToExclude: [],
+                value: canCollapse && !mayOmitBody ? (requestValue.body as string) : requestValue
+            };
         }
 
         // Build a map from property key to the declaration file of its source allOf schema.
@@ -589,81 +773,6 @@ function getRequest({
             }
         }
 
-        const properties = Object.fromEntries(
-            resolvedSchema.properties
-                .filter((property) => {
-                    if (property.readonly == null) {
-                        return true;
-                    }
-                    const writeEndpoint = isWriteMethod(endpoint.method);
-                    if (writeEndpoint && property.readonly) {
-                        return false;
-                    }
-                    return true;
-                })
-                .map((property) => {
-                    // Use the declaration file from the source allOf schema if the property comes from one,
-                    // otherwise use the endpoint's declaration file.
-                    const propDeclarationFile = propertyToDeclarationFile.get(property.key) ?? declarationFile;
-                    const propertyTypeReference = buildTypeReference({
-                        schema: property.schema,
-                        fileContainingReference: declarationFile,
-                        declarationFile: propDeclarationFile,
-                        context,
-                        namespace,
-                        declarationDepth: 1 // 1 level deep for request body properties
-                    });
-
-                    // TODO: clean up conditional logic
-                    const name = property.nameOverride ?? property.key;
-                    const availability = convertAvailability(property.availability);
-                    if (!usedNames.has(name) && property.audiences.length <= 0) {
-                        usedNames.add(name);
-                        if (property.nameOverride != null) {
-                            return [
-                                property.key,
-                                {
-                                    type: getTypeFromTypeReference(propertyTypeReference),
-                                    docs: getDocsFromTypeReference(propertyTypeReference),
-                                    name: property.nameOverride,
-                                    availability
-                                }
-                            ];
-                        }
-                        return [
-                            property.key,
-                            availability
-                                ? {
-                                      ...(typeof propertyTypeReference === "string"
-                                          ? { type: propertyTypeReference }
-                                          : propertyTypeReference),
-                                      availability
-                                  }
-                                : propertyTypeReference
-                        ];
-                    }
-
-                    const typeReference: RawSchemas.ObjectPropertySchema = {
-                        type: getTypeFromTypeReference(propertyTypeReference),
-                        docs: getDocsFromTypeReference(propertyTypeReference)
-                    };
-
-                    if (usedNames.has(name)) {
-                        typeReference.name = property.generatedName;
-                    }
-
-                    if (property.audiences.length > 0) {
-                        typeReference.audiences = property.audiences;
-                    }
-
-                    if (availability != null) {
-                        typeReference.availability = availability;
-                    }
-
-                    usedNames.add(name);
-                    return [property.key, typeReference];
-                })
-        );
         // Determine which schemas need to be inlined due to property conflicts
         const schemasToInline = new Set<SchemaId>();
         const propertiesToSetToUnknown = new Set<string>();
@@ -674,6 +783,104 @@ function getRequest({
             }
         }
 
+        const writeEndpoint = isWriteMethod(endpoint.method) === true;
+        const shouldSkipProperty = (property: ObjectProperty): boolean => writeEndpoint && property.readonly === true;
+
+        for (const property of resolvedSchema.properties) {
+            if (shouldSkipProperty(property)) {
+                continue;
+            }
+            const conflicts = Object.entries(property.conflict);
+            if (conflicts.every(([_, conflict]) => !conflict.differentSchema)) {
+                continue;
+            }
+            for (const [schemaId] of conflicts) {
+                for (const schemaToInline of getAllParentSchemasToInline({
+                    property: property.key,
+                    schemaId,
+                    context,
+                    namespace
+                })) {
+                    schemasToInline.add(schemaToInline);
+                }
+            }
+        }
+
+        const buildRequestBodyProperty = (
+            property: ObjectProperty,
+            propDeclarationFile: RelativeFilePath
+        ): RawSchemas.ObjectPropertySchema => {
+            const propertyTypeReference = buildTypeReference({
+                schema: property.schema,
+                fileContainingReference: declarationFile,
+                declarationFile: propDeclarationFile,
+                context,
+                namespace,
+                declarationDepth: 1 // 1 level deep for request body properties
+            });
+
+            const encoding = property.xml != null ? convertXmlPropertyToEncodingSchema(property.xml) : undefined;
+            const withEncoding = (schema: RawSchemas.ObjectPropertySchema): RawSchemas.ObjectPropertySchema =>
+                encoding == null ? schema : { ...(typeof schema === "string" ? { type: schema } : schema), encoding };
+
+            // TODO: clean up conditional logic
+            const name = property.nameOverride ?? property.key;
+            const availability = convertAvailability(property.availability);
+            if (!usedNames.has(name) && property.audiences.length <= 0) {
+                usedNames.add(name);
+                if (property.nameOverride != null) {
+                    return withEncoding({
+                        type: getTypeFromTypeReference(propertyTypeReference),
+                        docs: getDocsFromTypeReference(propertyTypeReference),
+                        name: property.nameOverride,
+                        availability
+                    });
+                }
+                return withEncoding(
+                    availability
+                        ? {
+                              ...(typeof propertyTypeReference === "string"
+                                  ? { type: propertyTypeReference }
+                                  : propertyTypeReference),
+                              availability
+                          }
+                        : propertyTypeReference
+                );
+            }
+
+            const typeReference: RawSchemas.ObjectPropertySchema = {
+                type: getTypeFromTypeReference(propertyTypeReference),
+                docs: getDocsFromTypeReference(propertyTypeReference)
+            };
+
+            if (usedNames.has(name)) {
+                typeReference.name = property.generatedName;
+            }
+
+            if (property.audiences.length > 0) {
+                typeReference.audiences = property.audiences;
+            }
+
+            if (availability != null) {
+                typeReference.availability = availability;
+            }
+
+            usedNames.add(name);
+            return withEncoding(typeReference);
+        };
+
+        const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
+        for (const property of resolvedSchema.properties) {
+            if (shouldSkipProperty(property)) {
+                continue;
+            }
+            // Use the declaration file from the source allOf schema if the property comes from one,
+            // otherwise use the endpoint's declaration file.
+            properties[property.key] = buildRequestBodyProperty(
+                property,
+                propertyToDeclarationFile.get(property.key) ?? declarationFile
+            );
+        }
         // Build extended schemas, skipping those that need to be inlined
         const extendedSchemas: string[] = [];
         for (const referencedSchema of resolvedSchema.allOf) {
@@ -711,20 +918,20 @@ function getRequest({
                     ? convertSdkGroupNameToFile(getGroupNameForSchema(inlinedSchema))
                     : declarationFile;
             for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
-                if (properties[propertyToInline.key] == null) {
-                    if (propertiesToSetToUnknown.has(propertyToInline.key)) {
-                        properties[propertyToInline.key] = "unknown";
-                    } else {
-                        properties[propertyToInline.key] = buildTypeReference({
-                            schema: propertyToInline.schema,
-                            fileContainingReference: declarationFile,
-                            declarationFile: inlinedSchemaDeclarationFile,
-                            context,
-                            namespace,
-                            declarationDepth: 1
-                        });
-                    }
+                if (properties[propertyToInline.key] != null) {
+                    continue;
                 }
+                if (shouldSkipProperty(propertyToInline)) {
+                    continue;
+                }
+                if (propertiesToSetToUnknown.has(propertyToInline.key)) {
+                    properties[propertyToInline.key] = "unknown";
+                    continue;
+                }
+                properties[propertyToInline.key] = buildRequestBodyProperty(
+                    propertyToInline,
+                    inlinedSchemaDeclarationFile
+                );
             }
             // Also extend from any non-conflicting parents of the inlined schema
             for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
@@ -755,6 +962,9 @@ function getRequest({
         }
         if (request.additionalProperties) {
             requestBodySchema["extra-properties"] = true;
+        }
+        if (isOptionalJsonBody(request)) {
+            requestBodySchema.optional = true;
         }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
@@ -861,6 +1071,16 @@ function getRequest({
     } else {
         assertNever(request);
     }
+}
+
+/**
+ * Whether the endpoint may be called without a request body.
+ *
+ * Only JSON requests carry `requestBody.required` in the OpenAPI IR, and per the OpenAPI spec
+ * the flag defaults to false when absent.
+ */
+function isOptionalJsonBody(request: Request): boolean {
+    return request.type === "json" && request.required !== true;
 }
 
 function endpointRequestSupportsInlinedPathParameters({

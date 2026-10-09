@@ -68,6 +68,18 @@ types:
         docs: |
           Defaults to body-only (components: [body], delimiter: "").
       timestamp: optional<WebhookTimestampSchema>
+      body-hash-binding:
+        type: optional<WebhookBodyHashBindingSchema>
+        docs: |
+          When set, the raw body is not signed directly; instead a hash of the body is
+          transmitted separately (e.g. Twilio's "bodySHA256" query parameter for JSON
+          bodies) and verification also recomputes and compares the body hash.
+      url-normalization:
+        type: optional<WebhookUrlNormalizationSchema>
+        docs: |
+          When set, the signature is verified against multiple normalized forms of the
+          notification URL (e.g. with/without port, legacy query encoding), succeeding if any
+          candidate matches. Required by providers like Twilio.
 
   AsymmetricSignatureSchema:
     properties:
@@ -86,6 +98,11 @@ types:
       key-id-header:
         type: optional<string>
         docs: HTTP header containing the key ID for JWKS key selection.
+      payload-format:
+        type: optional<WebhookPayloadFormatSchema>
+        docs: |
+          Describes how the signed payload is constructed.
+          Defaults to body-only (components: [body], delimiter: "").
       timestamp: optional<WebhookTimestampSchema>
 
   WebhookSignatureAlgorithmSchema:
@@ -135,6 +152,20 @@ types:
     enum:
       - alphabetical
 
+  WebhookUrlNormalizationSchema:
+    properties:
+      port-variants:
+        type: optional<boolean>
+        docs: |
+          Try the URL both with the scheme's standard port added (:443 for https, :80 for
+          http) if absent, and with the port removed. All Twilio libraries do this.
+      legacy-query-encoding:
+        type: optional<boolean>
+        docs: |
+          Additionally try each port variant with the query string re-encoded using legacy
+          form-encoding, reversing percent-encoding differences introduced by WHATWG URL
+          parsing. Twilio's Node library does this; the others do not.
+
   WebhookPayloadComponentSchema:
     enum:
       - body
@@ -143,6 +174,32 @@ types:
         value: notification-url
       - name: messageId
         value: message-id
+
+  WebhookBodyHashBindingSchema:
+    properties:
+      algorithm: WebhookBodyHashAlgorithmSchema
+      encoding:
+        type: optional<WebhookSignatureEncodingSchema>
+        docs: Defaults to base64.
+      location: WebhookBodyHashLocationSchema
+
+  WebhookBodyHashAlgorithmSchema:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookBodyHashLocationSchema:
+    discriminant: type
+    union:
+      query-parameter: WebhookBodyHashQueryParameterLocationSchema
+
+  WebhookBodyHashQueryParameterLocationSchema:
+    properties:
+      name:
+        type: string
+        docs: The query-parameter name that carries the body hash (e.g. "bodySHA256").
 
   AsymmetricAlgorithmSchema:
     enum:

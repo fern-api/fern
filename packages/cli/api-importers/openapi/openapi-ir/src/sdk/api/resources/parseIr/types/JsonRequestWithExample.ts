@@ -8,6 +8,11 @@ export interface JsonRequestWithExample
         FernOpenapiIr.WithSdkMethodName {
     schema: FernOpenapiIr.SchemaWithExample;
     contentType: string | undefined;
+    /**
+     * Whether the request body must be sent. Populated from the OpenAPI
+     * `requestBody.required` field, which defaults to false.
+     */
+    required: boolean | undefined;
     fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;
     additionalProperties: boolean;
 }

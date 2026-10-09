@@ -1,0 +1,6 @@
+- summary: |
+    Replace sed-based magic version replacement with pure Node.js implementation.
+    Uses recursive directory walking and binary file detection instead of shelling
+    out to OS-specific sed commands, fixing "illegal byte sequence" errors on
+    binary files and eliminating platform-specific behavior.
+  type: fix

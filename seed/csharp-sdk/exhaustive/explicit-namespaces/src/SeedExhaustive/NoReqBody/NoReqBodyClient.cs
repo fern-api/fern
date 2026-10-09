@@ -19,6 +19,9 @@ public partial class NoReqBodyClient : INoReqBodyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/no-req-body",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -48,7 +52,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 return new WithRawResponse<ObjectWithOptionalField>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -62,7 +66,13 @@ public partial class NoReqBodyClient : INoReqBodyClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -73,7 +83,13 @@ public partial class NoReqBodyClient : INoReqBodyClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -83,6 +99,9 @@ public partial class NoReqBodyClient : INoReqBodyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -95,6 +114,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 {
                     Method = HttpMethod.Post,
                     Path = "/no-req-body",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -112,7 +132,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -126,7 +146,13 @@ public partial class NoReqBodyClient : INoReqBodyClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -137,7 +163,13 @@ public partial class NoReqBodyClient : INoReqBodyClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

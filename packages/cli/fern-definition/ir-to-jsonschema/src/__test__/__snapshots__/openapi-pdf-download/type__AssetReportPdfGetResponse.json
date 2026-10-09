@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "description": "AssetReportPDFGetResponse defines the response schema for `/asset_report/pdf/get`",
+  "definitions": {}
+}

@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>$client-&gt;completions-&gt;stream($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;stream($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -44,7 +44,7 @@ $client->completions->stream(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;completions-&gt;streamWithoutTerminator($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;streamWithoutTerminator($request) -> SseStream</code></summary>
 <dl>
 <dd>
 

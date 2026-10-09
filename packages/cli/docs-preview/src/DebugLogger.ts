@@ -135,22 +135,29 @@ export class DebugLogger {
     /**
      * Initialize the debug logger by creating the log file
      */
-    async initialize(consoleLogger?: { debug: (msg: string) => void; info: (msg: string) => void }): Promise<void> {
+    async initialize(
+        consoleLogger?: { debug: (msg: string) => void; info: (msg: string) => void },
+        logsDir?: AbsoluteFilePath
+    ): Promise<void> {
         if (this.initialized) {
             return;
         }
         this.consoleLogger = consoleLogger;
 
-        const localStorageFolder = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
-        const logsDir = join(localStorageFolder, RelativeFilePath.of(LOGS_FOLDER_NAME));
+        const resolvedLogsDir =
+            logsDir ??
+            join(
+                join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER)),
+                RelativeFilePath.of(LOGS_FOLDER_NAME)
+            );
 
-        if (!(await doesPathExist(logsDir))) {
-            await mkdir(logsDir, { recursive: true });
+        if (!(await doesPathExist(resolvedLogsDir))) {
+            await mkdir(resolvedLogsDir, { recursive: true });
         }
 
         const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
         const logFileName = `${timestamp}.debug.log`;
-        this.logFilePath = join(logsDir, RelativeFilePath.of(logFileName));
+        this.logFilePath = join(resolvedLogsDir, RelativeFilePath.of(logFileName));
 
         const header = [
             "================================================================================",
@@ -165,7 +172,7 @@ export class DebugLogger {
         this.initialized = true;
 
         // Enforce the 100 MB cap on the logs directory (fire-and-forget)
-        void this.enforceLogSizeLimit(logsDir);
+        void this.enforceLogSizeLimit(resolvedLogsDir);
     }
 
     /**

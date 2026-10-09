@@ -10,10 +10,19 @@ export enum AsIsFiles {
     BaseApiRequest = "Client/BaseApiRequest.Template.php",
     HttpMethod = "Client/HttpMethod.Template.php",
     RawClient = "Client/RawClient.Template.php",
+    IdempotencyKey = "Client/IdempotencyKey.Template.php",
     RetryDecoratingClient = "Client/RetryDecoratingClient.Template.php",
     HttpClientBuilder = "Client/HttpClientBuilder.Template.php",
     RawClientTest = "Client/RawClientTest.Template.php",
+    StreamTest = "Client/StreamTest.Template.php",
     MockHttpClient = "Client/MockHttpClient.Template.php",
+    Stream = "Client/Stream.Template.php",
+    StreamFormat = "Client/StreamFormat.Template.php",
+    SseStream = "Client/SseStream.Template.php",
+    SseEvent = "Client/SseEvent.Template.php",
+    JsonStream = "Client/JsonStream.Template.php",
+    UrlEncodedApiRequest = "Client/UrlEncodedApiRequest.Template.php",
+    TextStream = "Client/TextStream.Template.php",
 
     // Core/Json files.
     JsonApiRequest = "Json/JsonApiRequest.Template.php",
@@ -42,6 +51,7 @@ export enum AsIsFiles {
     AdditionalPropertiesTest = "Json/AdditionalPropertiesTest.Template.php",
     DateArrayTest = "Json/DateArrayTest.Template.php",
     EmptyArrayTest = "Json/EmptyArrayTest.Template.php",
+    EmptyObjectTest = "Json/EmptyObjectTest.Template.php",
     EnumTest = "Json/EnumTest.Template.php",
     ExhaustiveTest = "Json/ExhaustiveTest.Template.php",
     InvalidTest = "Json/InvalidTest.Template.php",
@@ -68,6 +78,17 @@ export enum AsIsFiles {
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
     Union = "Types/Union.Template.php",
+    WebhookSignature = "WebhookSignature.Template.php",
+    WebhookSignatureTest = "WebhookSignatureTest.Template.php",
+
+    // Core/Xml files.
+    XmlElement = "Xml/XmlElement.Template.php",
+    XmlNode = "Xml/XmlNode.Template.php",
+    XmlText = "Xml/XmlText.Template.php",
+    XmlComment = "Xml/XmlComment.Template.php",
+    XmlSerializableType = "Xml/XmlSerializableType.Template.php",
+    XmlUtils = "Xml/XmlUtils.Template.php",
+    XmlElementTest = "Xml/XmlElementTest.Template.php",
 
     // Utils files.
     // TODO: Should add explicit "core" and "utils" prefixes to organize better

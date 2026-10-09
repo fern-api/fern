@@ -7,7 +7,13 @@ import {
     NopFormatter
 } from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
-import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
+import {
+    ast,
+    CsharpConfigSchema,
+    escapeForCSharpString,
+    Generation,
+    getSdkVariableOptionName
+} from "@fern-api/csharp-codegen";
 
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
@@ -17,8 +23,20 @@ import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent.js";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { exampleOmitsRequestBody } from "./utils/exampleUtils.js";
+
+/** A client-level SDK variable (`variables` in `api.yml` / `x-fern-sdk-variables` in OpenAPI). */
+export interface SdkVariableOption {
+    variable: FernIr.VariableDeclaration;
+    /** The PascalCase ClientOptions property name exposed to the user. */
+    optionName: string;
+    /** Whether the variable is a plain string, in which case the `envVar` fallback applies. */
+    isString: boolean;
+}
 
 export class SdkGeneratorContext extends GeneratorContext {
+    private sdkVariableOptions: SdkVariableOption[] | undefined;
+    private sdkVariableOptionsById: Map<string, SdkVariableOption> | undefined;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
@@ -129,6 +147,50 @@ export class SdkGeneratorContext extends GeneratorContext {
             : this.names.variables.client;
     }
 
+    /**
+     * Returns the SDK variables declared on the API, paired with the ClientOptions property
+     * each is exposed under. Path parameters bound to a variable are read from the client
+     * options instead of being accepted on every endpoint method.
+     */
+    public getSdkVariableOptions(): SdkVariableOption[] {
+        if (this.sdkVariableOptions == null) {
+            this.sdkVariableOptions = (this.ir.variables ?? []).map((variable) => ({
+                variable,
+                optionName: getSdkVariableOptionName(
+                    typeof variable.name === "string"
+                        ? this.generation.case.pascalSafe(variable.name)
+                        : variable.name.pascalCase.safeName
+                ),
+                isString: variable.type.type === "primitive" && variable.type.primitive.v1 === "STRING"
+            }));
+            this.sdkVariableOptionsById = new Map(
+                this.sdkVariableOptions.map((option) => [option.variable.id, option])
+            );
+        }
+        return this.sdkVariableOptions;
+    }
+
+    public getSdkVariableForPathParameter(pathParameter: FernIr.PathParameter): SdkVariableOption | undefined {
+        if (pathParameter.variable == null) {
+            return undefined;
+        }
+        this.getSdkVariableOptions();
+        return this.sdkVariableOptionsById?.get(pathParameter.variable);
+    }
+
+    /**
+     * Returns the expression an endpoint uses to read a bound SDK variable from the client
+     * options, throwing a clear error when it was neither set on the client nor (for string
+     * variables that declare one) resolved from the environment variable.
+     */
+    public getSdkVariableValueExpression(option: SdkVariableOption): string {
+        const envHint =
+            option.variable.envVar != null && option.isString
+                ? ` or set the ${escapeForCSharpString(option.variable.envVar)} environment variable`
+                : "";
+        return `(_client.Options.${option.optionName} ?? throw new global::System.ArgumentException("The '${option.optionName}' SDK variable is required. Set ClientOptions.${option.optionName}${envHint}."))`;
+    }
+
     public includePathParametersInWrappedRequest({
         endpoint,
         wrapper
@@ -138,13 +200,27 @@ export class SdkGeneratorContext extends GeneratorContext {
     }): boolean {
         const inlinePathParameters = this.settings.shouldInlinePathParameters;
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
-        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+        const hasPerCallPathParameters = endpoint.allPathParameters.some(
+            (pathParameter) => this.getSdkVariableForPathParameter(pathParameter) == null
+        );
+        return hasPerCallPathParameters && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
     public hasFormUrlEncodedEndpoints(): boolean {
         return Object.values(this.ir.services).some((service) =>
             service.endpoints.some(
                 (endpoint) => endpoint.requestBody?.contentType === "application/x-www-form-urlencoded"
+            )
+        );
+    }
+
+    public hasWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
+        return Object.values(this.ir.webhookGroups).some((webhookGroup) =>
+            webhookGroup.some(
+                (webhook) => webhook.signatureVerification != null && webhook.signatureVerification.type === "hmac"
             )
         );
     }
@@ -188,6 +264,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.MultipartFormRequest,
                 // AsIsFiles.NdJsonContent,
                 // AsIsFiles.NdJsonRequest,
+                AsIsFiles.DefaultHttpClientFactory,
                 AsIsFiles.QueryStringBuilder,
                 AsIsFiles.QueryStringConverter,
                 AsIsFiles.RawClient,
@@ -200,12 +277,22 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasFormUrlEncodedEndpoints()) {
             files.push(AsIsFiles.FormRequest);
         }
+        if (this.isIdempotencyKeyAutoGenerationEnabled()) {
+            files.push(AsIsFiles.IdempotencyHeaderExtensions);
+        }
+
+        if (this.hasWebhookSignatureVerification()) {
+            files.push(AsIsFiles.WebhookSignature);
+        }
 
         if (this.settings.includeExceptionHandler) {
             files.push(AsIsFiles.ExceptionHandler);
         }
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
+        }
+        if (this.hasResumableSseEndpoints) {
+            files.push(AsIsFiles.SseReconnectHelper);
         }
         if (this.hasPagination()) {
             files.push(AsIsFiles.Page);
@@ -220,6 +307,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         );
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
+        }
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Xml.XmlUtils);
         }
         return files;
     }
@@ -237,6 +327,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.QueryStringBuilderTests,
             AsIsFiles.Test.QueryStringConverterTests,
             AsIsFiles.Test.WithRawResponseTests,
+            AsIsFiles.Test.RawClientTests.GzipResponseTests,
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests
@@ -245,11 +336,21 @@ export class SdkGeneratorContext extends GeneratorContext {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
         files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
+        files.push(AsIsFiles.Test.Json.SerializeWithAdditionalPropertiesTests);
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Test.Xml.XmlElementTests);
+        }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }
+        if (this.hasWebhookSignatureVerification()) {
+            files.push(AsIsFiles.Test.WebhookSignatureTests);
+        }
         if (this.hasWebSocketEndpoints) {
             Object.values(AsIsFiles.Test.WebSockets).forEach((file) => files.push(file));
+        }
+        if (this.hasResumableSseEndpoints) {
+            Object.values(AsIsFiles.Test.Sse).forEach((file) => files.push(file));
         }
 
         return files;
@@ -291,21 +392,25 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.FileParameter,
             AsIsFiles.RawResponse,
             AsIsFiles.WithRawResponse,
-            AsIsFiles.WithRawResponseTask
+            AsIsFiles.WithRawResponseTask,
+            AsIsFiles.WithRawResponseStream
         ];
         files.push(AsIsFiles.Json.AdditionalProperties);
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.GrpcRequestOptions);
         }
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Xml.IXmlNode, AsIsFiles.Xml.XmlComment, AsIsFiles.Xml.XmlElement);
+        }
         return files;
     }
 
     public getExampleEndpointCallIfExists(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | undefined {
-        if (endpoint.userSpecifiedExamples.length > 0) {
-            const exampleEndpointCall = endpoint.userSpecifiedExamples[0]?.example;
-            if (exampleEndpointCall != null) {
-                return exampleEndpointCall;
-            }
+        const userSpecifiedExample = endpoint.userSpecifiedExamples
+            .map(({ example }) => example)
+            .find((example) => example != null && !exampleOmitsRequestBody({ context: this, endpoint, example }));
+        if (userSpecifiedExample != null) {
+            return userSpecifiedExample;
         }
         const exampleEndpointCall = endpoint.autogeneratedExamples[0]?.example;
         if (exampleEndpointCall == null) {
@@ -339,12 +444,13 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getOauth(): FernIr.OAuthScheme | undefined {
-        if (
-            this.ir.auth.schemes[0] != null &&
-            this.ir.auth.schemes[0].type === "oauth" &&
-            this.config.generateOauthClients
-        ) {
-            return this.ir.auth.schemes[0];
+        if (!this.config.generateOauthClients) {
+            return undefined;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return scheme;
+            }
         }
         return undefined;
     }

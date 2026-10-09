@@ -16,6 +16,12 @@ types:
       specialChars:
         type: optional<string>
         docs: "Special characters: &nbsp; &hellip; &middot; &copy;"
+      documentationLink:
+        type: optional<string>
+        docs: 'See <a href="https://example.com/docs?a=1&b=2">see here</a> for details'
+      escapedDocumentationLink:
+        type: optional<string>
+        docs: 'See <a href="https://example.com/docs?a=1&amp;b=2">see here</a> for details'
 
 service:
   auth: false

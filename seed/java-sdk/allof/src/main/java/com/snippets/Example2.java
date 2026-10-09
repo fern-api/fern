@@ -2,7 +2,7 @@ package com.snippets;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.RuleCreateRequest;
-import com.seed.api.types.RuleExecutionContext;
+import com.seed.api.types.RuleCreateRequestExecutionContext;
 
 public class Example2 {
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class Example2 {
 
         client.createRule(RuleCreateRequest.builder()
                 .name("name")
-                .executionContext(RuleExecutionContext.PROD)
+                .executionContext(RuleCreateRequestExecutionContext.PROD)
                 .build());
     }
 }

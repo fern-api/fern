@@ -19,6 +19,9 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new Contoso.Net.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +35,7 @@ public partial class SystemClient : ISystemClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -49,7 +53,7 @@ public partial class SystemClient : ISystemClient
                 return new WithRawResponse<User>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new Contoso.Net.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -63,7 +67,13 @@ public partial class SystemClient : ISystemClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new Contoso.Net.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -74,7 +84,13 @@ public partial class SystemClient : ISystemClient
             throw new ContosoClientApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new Contoso.Net.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -85,6 +101,9 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new Contoso.Net.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -98,6 +117,7 @@ public partial class SystemClient : ISystemClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -115,7 +135,7 @@ public partial class SystemClient : ISystemClient
                 return new WithRawResponse<Task>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new Contoso.Net.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -129,7 +149,13 @@ public partial class SystemClient : ISystemClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new Contoso.Net.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -140,7 +166,13 @@ public partial class SystemClient : ISystemClient
             throw new ContosoClientApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new Contoso.Net.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -151,6 +183,9 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new Contoso.Net.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -163,6 +198,7 @@ public partial class SystemClient : ISystemClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format("/users/{0}", ValueConvert.ToPathParameterString(userId)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -180,7 +216,7 @@ public partial class SystemClient : ISystemClient
                 return new WithRawResponse<User>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new Contoso.Net.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -194,7 +230,13 @@ public partial class SystemClient : ISystemClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new Contoso.Net.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -205,7 +247,13 @@ public partial class SystemClient : ISystemClient
             throw new ContosoClientApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new Contoso.Net.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

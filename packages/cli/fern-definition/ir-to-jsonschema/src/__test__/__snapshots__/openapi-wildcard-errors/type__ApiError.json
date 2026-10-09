@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "error_type": {
+      "type": "string"
+    },
+    "error_code": {
+      "type": "string"
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "request_id": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "error_type",
+    "error_code",
+    "error_message"
+  ],
+  "additionalProperties": false,
+  "description": "The shared error body returned for every 4XX and 5XX status.",
+  "definitions": {}
+}

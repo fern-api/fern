@@ -1,0 +1,3 @@
+- summary: |
+    Add body-hash binding verification for HMAC webhooks that transmit a hash of the raw request body in the notification URL.
+  type: feat

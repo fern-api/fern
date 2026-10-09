@@ -23,6 +23,9 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 ## Requirements
 
 This SDK requires:
+- .NET 8 and above
+- .NET Framework 4.6.2 and above
+- .NET Standard 2.0 and above
 
 ## Installation
 
@@ -52,7 +55,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedApi;
 
-var client = new SeedApiClient(new ClientOptions
+var client = new SeedApiClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedApiEnvironment.Default
 });
@@ -71,6 +74,17 @@ try {
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+
+    // Access the raw HTTP response (status code, URL, headers) off the exception
+    var rawResponse = e.RawResponse;
+    if (rawResponse != null)
+    {
+        System.Console.WriteLine(rawResponse.Url);
+        if (rawResponse.Headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            System.Console.WriteLine($"Request ID: {requestId}");
+        }
+    }
 }
 ```
 
@@ -102,7 +116,7 @@ Use the `MaxRetries` request option to configure this behavior.
 var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
-        MaxRetries: 0 // Override MaxRetries at the request level
+        MaxRetries = 0 // Override MaxRetries at the request level
     }
 );
 ```
@@ -115,7 +129,7 @@ The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure t
 var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
-        Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+        Timeout = TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
 ```

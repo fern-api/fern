@@ -1,0 +1,3 @@
+- summary: |
+    Add X-Request-Id header to all CLI v2 HTTP requests for request tracing and debugging.
+  type: feat

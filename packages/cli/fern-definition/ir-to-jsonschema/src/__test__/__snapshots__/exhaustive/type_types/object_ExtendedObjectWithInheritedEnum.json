@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "requiredEnum": {
+      "$ref": "#/definitions/types.enum.WeatherReport"
+    },
+    "requiredString": {
+      "type": "string"
+    },
+    "optionalDescription": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "requiredEnum",
+    "requiredString"
+  ],
+  "additionalProperties": false,
+  "description": "Extends ObjectWithInheritedRequiredEnum, inheriting the required enum field.\nThis type should NOT derive Default in Rust because the parent type\nhas a required enum field.",
+  "definitions": {
+    "types.enum.WeatherReport": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    }
+  }
+}

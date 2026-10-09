@@ -13,5 +13,10 @@ export interface AsymmetricSignatureSchema {
     "jwks-url"?: string;
     /** HTTP header containing the key ID for JWKS key selection. */
     "key-id-header"?: string;
+    /**
+     * Describes how the signed payload is constructed.
+     * Defaults to body-only (components: [body], delimiter: "").
+     */
+    "payload-format"?: FernDefinition.WebhookPayloadFormatSchema;
     timestamp?: FernDefinition.WebhookTimestampSchema;
 }

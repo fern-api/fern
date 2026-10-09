@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "adjusted_start_date": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "end_date": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "interval": {
+      "$ref": "#/definitions/PaymentScheduleInterval"
+    },
+    "interval_execution_day": {
+      "type": "integer"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "description": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "adjusted_start_date",
+    "end_date",
+    "interval",
+    "interval_execution_day",
+    "start_date"
+  ],
+  "additionalProperties": false,
+  "description": "Nullable schema whose `required` sits at the top level (not inside a branch),\nwith an empty `type: object` branch, naming only parent-defined properties.",
+  "definitions": {
+    "PaymentScheduleInterval": {
+      "type": "string",
+      "enum": [
+        "WEEKLY",
+        "MONTHLY"
+      ]
+    }
+  }
+}

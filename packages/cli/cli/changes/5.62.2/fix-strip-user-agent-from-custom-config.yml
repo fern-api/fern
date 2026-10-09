@@ -1,0 +1,5 @@
+- summary: |
+    Strip CLI-only config keys (e.g. `user-agent`) from the custom config
+    before forwarding to generator containers, preventing strict validation
+    errors in generators that reject unknown keys.
+  type: fix

@@ -39,10 +39,12 @@ func (a *ActiveDiamond) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActiveDiamond) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -123,10 +125,12 @@ func (a *AttractiveScript) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AttractiveScript) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -212,6 +216,8 @@ type BigUnion struct {
 	PotableBad         *PotableBad
 	TriangularRepair   *TriangularRepair
 	GaseousRoad        *GaseousRoad
+
+	rawJSON json.RawMessage
 }
 
 func (b *BigUnion) GetType() string {
@@ -638,6 +644,7 @@ func (b *BigUnion) UnmarshalJSON(data []byte) error {
 		}
 		b.GaseousRoad = value
 	}
+	b.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -731,6 +738,9 @@ func (b BigUnion) MarshalJSON() ([]byte, error) {
 	}
 	if b.GaseousRoad != nil {
 		return internal.MarshalJSONWithExtraProperty(b.GaseousRoad, "type", "gaseousRoad")
+	}
+	if len(b.rawJSON) > 0 {
+		return b.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", b)
 }
@@ -952,6 +962,9 @@ func (b *BigUnion) validate() error {
 	}
 	if len(fields) == 0 {
 		if b.Type != "" {
+			if len(b.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", b, b.Type)
 		}
 		return fmt.Errorf("type %T is empty", b)
@@ -1002,10 +1015,12 @@ func (c *CircularCard) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CircularCard) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1086,10 +1101,12 @@ func (c *ColorfulCover) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ColorfulCover) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1170,10 +1187,12 @@ func (d *DiligentDeal) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DiligentDeal) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1254,10 +1273,12 @@ func (d *DisloyalValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DisloyalValue) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1338,10 +1359,12 @@ func (d *DistinctFailure) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DistinctFailure) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1422,10 +1445,12 @@ func (f *FalseMirror) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FalseMirror) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1506,10 +1531,12 @@ func (f *FrozenSleep) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FrozenSleep) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1590,10 +1617,12 @@ func (g *GaseousRoad) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GaseousRoad) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1674,10 +1703,12 @@ func (g *GruesomeCoach) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GruesomeCoach) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1758,10 +1789,12 @@ func (h *HarmoniousPlay) GetExtraProperties() map[string]interface{} {
 }
 
 func (h *HarmoniousPlay) require(field *big.Int) {
-	if h.explicitFields == nil {
-		h.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if h.explicitFields != nil {
+		next.Set(h.explicitFields)
 	}
-	h.explicitFields.Or(h.explicitFields, field)
+	next.Or(next, field)
+	h.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1842,10 +1875,12 @@ func (h *HastyPain) GetExtraProperties() map[string]interface{} {
 }
 
 func (h *HastyPain) require(field *big.Int) {
-	if h.explicitFields == nil {
-		h.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if h.explicitFields != nil {
+		next.Set(h.explicitFields)
 	}
-	h.explicitFields.Or(h.explicitFields, field)
+	next.Or(next, field)
+	h.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1926,10 +1961,12 @@ func (h *HoarseMouse) GetExtraProperties() map[string]interface{} {
 }
 
 func (h *HoarseMouse) require(field *big.Int) {
-	if h.explicitFields == nil {
-		h.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if h.explicitFields != nil {
+		next.Set(h.explicitFields)
 	}
-	h.explicitFields.Or(h.explicitFields, field)
+	next.Or(next, field)
+	h.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2010,10 +2047,12 @@ func (j *JumboEnd) GetExtraProperties() map[string]interface{} {
 }
 
 func (j *JumboEnd) require(field *big.Int) {
-	if j.explicitFields == nil {
-		j.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if j.explicitFields != nil {
+		next.Set(j.explicitFields)
 	}
-	j.explicitFields.Or(j.explicitFields, field)
+	next.Or(next, field)
+	j.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2094,10 +2133,12 @@ func (l *LimpingStep) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LimpingStep) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2178,10 +2219,12 @@ func (m *MistySnow) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *MistySnow) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2262,10 +2305,12 @@ func (n *NormalSweet) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NormalSweet) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2346,10 +2391,12 @@ func (p *PopularLimit) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PopularLimit) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2430,10 +2477,12 @@ func (p *PotableBad) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PotableBad) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2514,10 +2563,12 @@ func (p *PracticalPrinciple) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PracticalPrinciple) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2598,10 +2649,12 @@ func (p *PrimaryBlock) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PrimaryBlock) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2682,10 +2735,12 @@ func (r *RotatingRatio) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RotatingRatio) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2766,10 +2821,12 @@ func (t *ThankfulFactor) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *ThankfulFactor) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2850,10 +2907,12 @@ func (t *TotalWork) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TotalWork) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -2934,10 +2993,12 @@ func (t *TriangularRepair) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TriangularRepair) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -3018,10 +3079,12 @@ func (u *UniqueStress) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UniqueStress) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -3102,10 +3165,12 @@ func (u *UnwillingSmoke) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UnwillingSmoke) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -3186,10 +3251,12 @@ func (v *VibrantExcitement) GetExtraProperties() map[string]interface{} {
 }
 
 func (v *VibrantExcitement) require(field *big.Int) {
-	if v.explicitFields == nil {
-		v.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if v.explicitFields != nil {
+		next.Set(v.explicitFields)
 	}
-	v.explicitFields.Or(v.explicitFields, field)
+	next.Or(next, field)
+	v.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;

@@ -10,6 +10,7 @@ type HttpMethod = FernIr.HttpMethod;
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { EndpointRequest } from "../request/EndpointRequest.js";
 import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody.js";
+import { normalizePathSlashes } from "../utils/normalizePath.js";
 
 export declare namespace RawClient {
     export type RequestBodyType = "json" | "bytes" | "multipartform" | "urlencoded";
@@ -37,6 +38,8 @@ export declare namespace RawClient {
         request: ast.CodeBlock | ast.ClassInstantiation;
         /** Cancellation token */
         cancellationToken: ast.CodeBlock;
+        /** whether retries are disabled for the endpoint */
+        retriesDisabled?: boolean;
     }
 
     export interface CreateHttpRequestWrapperArgs {
@@ -142,6 +145,12 @@ export class RawClient extends WithGeneration {
             args.push({
                 name: "Options",
                 assignment: this.csharp.codeblock(this.names.parameters.requestOptions)
+            });
+        }
+        if (this.context.areRetriesDisabled(endpoint)) {
+            args.push({
+                name: "RetriesDisabled",
+                assignment: this.csharp.codeblock("true")
             });
         }
         switch (requestType) {
@@ -319,12 +328,18 @@ export class RawClient extends WithGeneration {
         clientReference,
         options,
         request,
-        cancellationToken
+        cancellationToken,
+        retriesDisabled
     }: RawClient.SendRequestWithHttpRequestArgs): ast.MethodInvocation {
         return this.csharp.invokeMethod({
             on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [request, options, this.csharp.codeblock(this.names.parameters.cancellationToken)],
+            arguments_: [
+                request,
+                options,
+                this.csharp.codeblock(this.names.parameters.cancellationToken),
+                ...(retriesDisabled === true ? [this.csharp.codeblock("true")] : [])
+            ],
             async: true
         });
     }
@@ -371,14 +386,14 @@ export class RawClient extends WithGeneration {
     }): void {
         const hasPathParameters = endpoint.fullPath.parts.some((part) => part.pathParameter != null);
         if (!hasPathParameters) {
-            writer.write(`"${endpoint.fullPath.head}"`);
+            writer.write(`"${normalizePathSlashes(endpoint.fullPath.head)}"`);
             return;
         }
-        writer.write(`string.Format("${endpoint.fullPath.head}`);
         const formatParams: ast.AstNode[] = [];
         let counter = 0;
+        let formatString = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts) {
-            writer.write(`{${counter++}}`);
+            formatString += `{${counter++}}`;
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
                 throw GeneratorError.internalError(
@@ -391,9 +406,9 @@ export class RawClient extends WithGeneration {
                     writer.write(`.ToPathParameterString(${reference})`);
                 })
             );
-            writer.write(part.tail);
+            formatString += part.tail;
         }
-        writer.write('"');
+        writer.write(`string.Format("${normalizePathSlashes(formatString)}"`);
         if (formatParams.length > 0) {
             writer.write(", ");
             for (let i = 0; i < formatParams.length; i++) {

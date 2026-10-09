@@ -87,3 +87,83 @@ jobs:
       - name: Unit Test - Pydantic V2
         working-directory: ./generators/python
         run: poetry run pytest -sv
+
+  # Lean cross-OS gate for the platform-guarded TCP keepalive socket-option
+  # builder. It runs ONLY the keepalive test file (no Docker model generation)
+  # so we can afford to run it on Linux/macOS/Windows and prove the per-platform
+  # socket-constant guards behave correctly on real OSes.
+  keepalive-cross-os:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-14, windows-latest]
+    runs-on: ${{ matrix.os }}
+    # Run every step under bash (Git Bash on Windows) so `poetry` resolves on PATH
+    # consistently across all three OSes; the default Windows shell (pwsh) does not
+    # pick up the snok/install-poetry PATH entry, causing "poetry: not recognized".
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 2.1.4
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Unit Test - TCP keepalive socket options
+        working-directory: ./generators/python
+        run: poetry run pytest -sv tests/utils/test_keepalive_socket_options.py
+
+  # Verify the keepalive socket options are accepted by both the pinned floor
+  # (httpx>=0.25, the version required when tcp_keepalive is opted in) and the
+  # latest httpx. Mirrors the intent of the pydantic v1/v2 floor-vs-latest
+  # matrix, kept as a dedicated job so it does not run across every seed fixture.
+  keepalive-httpx-matrix:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        httpx: ["0.25.0", "latest"]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 2.1.4
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Pin httpx (floor)
+        if: ${{ matrix.httpx != 'latest' }}
+        working-directory: ./generators/python
+        run: poetry run pip install "httpx==${{ matrix.httpx }}"
+
+      - name: Pin httpx (latest)
+        if: ${{ matrix.httpx == 'latest' }}
+        working-directory: ./generators/python
+        run: poetry run pip install --upgrade httpx
+
+      - name: Unit Test - TCP keepalive socket options
+        working-directory: ./generators/python
+        run: poetry run pytest -sv tests/utils/test_keepalive_socket_options.py

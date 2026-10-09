@@ -19,7 +19,10 @@ public partial class SeedOauthClientCredentialsReferenceClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedOauthClientCredentialsReference" },
-                { "X-Fern-SDK-Version", Version.Current },
+                {
+                    "X-Fern-SDK-Version",
+                    global::SeedOauthClientCredentialsReference.Version.Current
+                },
                 { "User-Agent", "Fernoauth-client-credentials-reference/0.0.1" },
             }
         );

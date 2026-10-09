@@ -1,0 +1,12 @@
+- summary: |
+    Add `output_directory` custom config, mirroring the Java generator's flag.
+    `project-root` (default behavior when unset) preserves today's `src/<package>/...`
+    layout with full project scaffolding. `source-root` writes the source tree
+    directly without the `src/` prefix and skips project scaffolding
+    (`pyproject.toml`, `requirements.txt`, `README.md`, `py.typed`, LICENSE,
+    `.github/workflows`, `.gitignore`, `tests/` scaffolds, `CONTRIBUTING.md`,
+    `reference.md`) — designed for embedding generated code into an existing
+    Python project. Composes with `package_path`; combine with `package_name`
+    to drop the `<package>` wrapper entirely. The legacy `flat_layout` flag is
+    preserved as a deprecated alias with bit-exact behavior.
+  type: feat

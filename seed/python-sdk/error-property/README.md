@@ -137,7 +137,7 @@ client = SeedErrorProperty(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.property_based_error.throw_error(request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

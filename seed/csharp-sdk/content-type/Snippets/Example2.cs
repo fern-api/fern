@@ -10,8 +10,8 @@ public partial class Examples
         );
 
         await client.Service.NamedPatchWithMixedAsync(
-            "id",
-            new NamedMixedPatchRequest {
+            id: "id",
+            request: new NamedMixedPatchRequest {
                 AppId = "appId",
                 Instructions = "instructions",
                 Active = true

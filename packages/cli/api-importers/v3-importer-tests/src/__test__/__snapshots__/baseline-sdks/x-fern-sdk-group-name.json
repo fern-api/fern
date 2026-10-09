@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-sdk-group-name` for schemas",
   "auth": {
@@ -888,7 +889,8 @@
       ],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false
     },
     "subpackage_auth": {
       "fernFilepath": {
@@ -905,7 +907,8 @@
       "subpackages": [
         "subpackage_auth/user"
       ],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_auth/user": {
       "fernFilepath": {
@@ -923,7 +926,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_ids": {
       "fernFilepath": {
@@ -941,7 +945,8 @@
         "subpackage_ids/user",
         "subpackage_ids/person"
       ],
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false
     },
     "subpackage_ids/user": {
       "fernFilepath": {
@@ -960,7 +965,8 @@
       ],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false
     },
     "subpackage_ids/person": {
       "fernFilepath": {
@@ -979,7 +985,8 @@
       ],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -996,7 +1003,8 @@
       "subpackage_auth",
       "subpackage_ids"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

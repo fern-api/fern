@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: Auth API
+  version: 1.0.0
+servers:
+  - url: https://oauth.{region}.acme.com
+    x-fern-server-name: Production
+    x-fern-default-url: https://oauth.acme.com
+    variables:
+      region:
+        default: us1
+  - url: https://oauth.stage.{region}.acme.com
+    x-fern-server-name: Staging
+    x-fern-default-url: https://oauth.stage.acme.com
+    variables:
+      region:
+        default: us1
+  - url: https://oauth.dev.{region}.acme.com
+    x-fern-server-name: Development
+    x-fern-default-url: https://oauth.dev.acme.com
+    variables:
+      region:
+        default: us1
+paths:
+  /token:
+    post:
+      operationId: getToken
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string

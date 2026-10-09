@@ -25,13 +25,19 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Items.ListItems(
+//	    context.TODO(),
+//	)
 func (c *Client) ListItems(
 	ctx context.Context,
 	opts ...option.RequestOption,

@@ -1,0 +1,7 @@
+- summary: |
+    Fix asymmetric webhook signature verification to support `payload-format`
+    configuration. When `payload-format.components` includes `timestamp`, the
+    timestamp header value is now included in the data verified by the asymmetric
+    signature, closing a replay-protection gap where the timestamp was
+    unauthenticated.
+  type: fix

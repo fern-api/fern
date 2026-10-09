@@ -22,6 +22,30 @@ impl OrganizationClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_mixed_file_directory::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .organization
+    ///         .create(
+    ///             &CreateOrganizationRequest {
+    ///                 name: "name".to_string(),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create(
         &self,
         request: &CreateOrganizationRequest,

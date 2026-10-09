@@ -144,7 +144,6 @@ public final class SharedCompletionRequest {
 
         /**
          * <p>The prompt to complete.</p>
-         * <p>The prompt to complete.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -155,7 +154,6 @@ public final class SharedCompletionRequest {
         }
 
         /**
-         * <p>The model to use.</p>
          * <p>The model to use.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

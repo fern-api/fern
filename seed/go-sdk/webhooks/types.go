@@ -56,10 +56,12 @@ func (o *OrderCompletedPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrderCompletedPayload) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetOrderID sets the OrderID field and marks it as non-optional;
@@ -172,10 +174,12 @@ func (p *PaymentNotificationPayload) GetExtraProperties() map[string]interface{}
 }
 
 func (p *PaymentNotificationPayload) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetPaymentID sets the PaymentID field and marks it as non-optional;
@@ -288,10 +292,12 @@ func (r *RefundProcessedPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RefundProcessedPayload) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetRefundID sets the RefundID field and marks it as non-optional;
@@ -358,6 +364,108 @@ func (r *RefundProcessedPayload) String() string {
 }
 
 var (
+	smsStatusPayloadFieldMessageSid = big.NewInt(1 << 0)
+	smsStatusPayloadFieldStatus     = big.NewInt(1 << 1)
+)
+
+type SmsStatusPayload struct {
+	MessageSid string `json:"messageSid" url:"messageSid"`
+	Status     string `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SmsStatusPayload) GetMessageSid() string {
+	if s == nil {
+		return ""
+	}
+	return s.MessageSid
+}
+
+func (s *SmsStatusPayload) GetStatus() string {
+	if s == nil {
+		return ""
+	}
+	return s.Status
+}
+
+func (s *SmsStatusPayload) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SmsStatusPayload) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetMessageSid sets the MessageSid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SmsStatusPayload) SetMessageSid(messageSid string) {
+	s.MessageSid = messageSid
+	s.require(smsStatusPayloadFieldMessageSid)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SmsStatusPayload) SetStatus(status string) {
+	s.Status = status
+	s.require(smsStatusPayloadFieldStatus)
+}
+
+func (s *SmsStatusPayload) UnmarshalJSON(data []byte) error {
+	type unmarshaler SmsStatusPayload
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SmsStatusPayload(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SmsStatusPayload) MarshalJSON() ([]byte, error) {
+	type embed SmsStatusPayload
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SmsStatusPayload) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
 	userCreatedPayloadFieldUserID    = big.NewInt(1 << 0)
 	userCreatedPayloadFieldEmail     = big.NewInt(1 << 1)
 	userCreatedPayloadFieldCreatedAt = big.NewInt(1 << 2)
@@ -404,10 +512,12 @@ func (u *UserCreatedPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserCreatedPayload) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;

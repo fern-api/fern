@@ -1,0 +1,5 @@
+- summary: |
+    Fix `reference.md` endpoint titles to show path parameters in keyword-argument form
+    (e.g. `fetch_store(store_id:)` instead of `fetch_store(store_id)`). Generated Ruby methods
+    only accept keyword arguments, so the previous positional-looking titles were misleading.
+  type: fix

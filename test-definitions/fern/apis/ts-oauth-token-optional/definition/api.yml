@@ -1,0 +1,14 @@
+name: ts-oauth-token-optional
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.CreateOauth2Token
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in

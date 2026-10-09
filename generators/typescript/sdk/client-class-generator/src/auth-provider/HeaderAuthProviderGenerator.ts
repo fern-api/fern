@@ -13,6 +13,7 @@ import {
 } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import { emitEnvVarPresenceCheck, emitEnvVarValue } from "./processEnvAccess.js";
 
 export declare namespace HeaderAuthProviderGenerator {
     export interface Init {
@@ -21,6 +22,8 @@ export declare namespace HeaderAuthProviderGenerator {
         neverThrowErrors: boolean;
         isAuthMandatory: boolean;
         shouldUseWrapper: boolean;
+        optionalAuth?: boolean;
+        guardProcessEnvAccess?: boolean;
     }
 }
 
@@ -36,6 +39,8 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
+    private readonly optionalAuth: boolean;
+    private readonly guardProcessEnvAccess: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: HeaderAuthProviderGenerator.Init) {
@@ -44,6 +49,8 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
+        this.optionalAuth = init.optionalAuth ?? false;
+        this.guardProcessEnvAccess = init.guardProcessEnvAccess ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -137,6 +144,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         const headerEnvVar = this.authScheme.headerEnvVar;
         const headerName = getWireValue(this.authScheme.name);
         const wrapperPropertyName = this.getWrapperPropertyName();
+        const prefix = this.authScheme.prefix;
 
         const constants: string[] = [];
 
@@ -147,6 +155,9 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
             constants.push(`const ENV_HEADER_KEY = "${headerEnvVar}" as const;`);
         }
         constants.push(`const HEADER_NAME = "${headerName}" as const;`);
+        if (prefix != null) {
+            constants.push(`const HEADER_PREFIX = "${prefix} " as const;`);
+        }
 
         for (const constant of constants.filter((c) => c !== "")) {
             context.sourceFile.addStatements(constant);
@@ -230,7 +241,10 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         const headerEnvVar = this.authScheme.headerEnvVar;
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        const envCheck = headerEnvVar != null ? " || process.env?.[ENV_HEADER_KEY] != null" : "";
+        const envCheck =
+            headerEnvVar != null
+                ? ` || ${emitEnvVarPresenceCheck({ envConstant: "ENV_HEADER_KEY", guarded: this.guardProcessEnvAccess })}`
+                : "";
         return `return options?.${wrapperAccess}[PARAM_KEY] != null${envCheck};`;
     }
 
@@ -269,11 +283,13 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
         const envFallback =
             headerEnvVar != null
-                ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_HEADER_KEY]`
+                ? `\n            (${supplierGetCode}) ??\n            ${emitEnvVarValue({ envConstant: "ENV_HEADER_KEY", guarded: this.guardProcessEnvAccess })}`
                 : supplierGetCode;
 
-        if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if header value is missing
+        const headerValueExpr = this.authScheme.prefix != null ? `\`\${HEADER_PREFIX}\${${headerVar}}\`` : headerVar;
+
+        if (this.neverThrowErrors || this.optionalAuth) {
+            // Return empty headers if the header value is missing, so requests are sent unauthenticated
             return `
         const ${headerVar} = ${envFallback};
         if (${headerVar} == null) {
@@ -281,7 +297,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         return {
-            headers: { [HEADER_NAME]: ${headerVar} },
+            headers: { [HEADER_NAME]: ${headerValueExpr} },
         };
         `;
         } else {
@@ -299,7 +315,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         return {
-            headers: { [HEADER_NAME]: ${headerVar} },
+            headers: { [HEADER_NAME]: ${headerValueExpr} },
         };
         `;
         }

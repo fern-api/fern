@@ -26,13 +26,19 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.NoReqBody.GetWithNoRequestBody(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithNoRequestBody(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -47,6 +53,11 @@ func (c *Client) GetWithNoRequestBody(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.NoReqBody.PostWithNoRequestBody(
+//	    context.TODO(),
+//	)
 func (c *Client) PostWithNoRequestBody(
 	ctx context.Context,
 	opts ...option.RequestOption,

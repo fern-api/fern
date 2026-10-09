@@ -14,7 +14,7 @@ public partial class SeedPathParametersClient : ISeedPathParametersClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPathParameters" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedPathParameters.Version.Current },
                 { "User-Agent", "Fernpath-parameters/0.0.1" },
             }
         );

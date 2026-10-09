@@ -68,6 +68,53 @@ describe("convertSpecsOverrideToSpecs", () => {
         expect(specs[0]?.absoluteFilepathToOverrides).toBeUndefined();
     });
 
+    it("resolves the effective per-generator source selection", async () => {
+        const specs = await workspace.getAllSpecsForGenerator([
+            { openapi: "target-api.yml", namespace: "target", overrides: "target-overrides.yml" }
+        ]);
+
+        expect(specs).toHaveLength(1);
+        expect(specs[0]).toMatchObject({
+            type: "openapi",
+            absoluteFilepath: join(baseDir, "target-api.yml"),
+            absoluteFilepathToOverrides: join(baseDir, "target-overrides.yml"),
+            namespace: "target"
+        });
+    });
+
+    it("resolves each override entry's own OpenAPI settings", async () => {
+        const specs = await workspace.getAllSpecsForGenerator([
+            {
+                openapi: "first.yml",
+                settings: {
+                    "respect-nullable-schemas": false,
+                    "path-parameter-order": "spec-order"
+                }
+            },
+            {
+                openapi: "second.yml",
+                settings: {
+                    "respect-nullable-schemas": true,
+                    "path-parameter-order": "url-order"
+                }
+            }
+        ]);
+
+        const first = specs[0];
+        const second = specs[1];
+        if (first?.type !== "openapi" || second?.type !== "openapi") {
+            throw new Error("Expected resolved OpenAPI overrides");
+        }
+        expect(first.settings).toMatchObject({
+            respectNullableSchemas: false,
+            pathParameterOrder: "spec-order"
+        });
+        expect(second.settings).toMatchObject({
+            respectNullableSchemas: true,
+            pathParameterOrder: "url-order"
+        });
+    });
+
     it("throws for conjure (non-array) input", async () => {
         const conjureInput: generatorsYml.ConjureSchema = { conjure: "some-conjure-spec" };
         await expect(workspace.callConvertSpecsOverrideToSpecs(conjureInput)).rejects.toThrow(

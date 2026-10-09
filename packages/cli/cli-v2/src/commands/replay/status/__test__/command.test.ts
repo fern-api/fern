@@ -58,6 +58,8 @@ function makeStatusResult(overrides: Partial<StatusResult> = {}): StatusResult {
         patches: [],
         unresolvedCount: 0,
         excludePatterns: [],
+        dismissed: [],
+        legacyDismissedCount: 0,
         ...overrides
     };
 }

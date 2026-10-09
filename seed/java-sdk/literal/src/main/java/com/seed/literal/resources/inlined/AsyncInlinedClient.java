@@ -5,6 +5,7 @@ package com.seed.literal.resources.inlined;
 
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.RequestOptions;
+import com.seed.literal.core.SeedLiteralHttpResponse;
 import com.seed.literal.resources.inlined.requests.SendLiteralsInlinedRequest;
 import com.seed.literal.types.SendResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,25 @@ public class AsyncInlinedClient {
     }
 
     public CompletableFuture<SendResponse> send(SendLiteralsInlinedRequest request) {
-        return this.rawClient.send(request).thenApply(response -> response.body());
+        CompletableFuture<SeedLiteralHttpResponse<SendResponse>> rawFuture = this.rawClient.send(request);
+        CompletableFuture<SendResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SendResponse> send(SendLiteralsInlinedRequest request, RequestOptions requestOptions) {
-        return this.rawClient.send(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedLiteralHttpResponse<SendResponse>> rawFuture =
+                this.rawClient.send(request, requestOptions);
+        CompletableFuture<SendResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

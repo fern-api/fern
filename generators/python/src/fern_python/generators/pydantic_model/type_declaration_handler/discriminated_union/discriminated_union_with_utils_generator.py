@@ -372,6 +372,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             )
 
             if self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
+                # skip_declaration=True because _add_conditional_base_methods already
+                # emitted the __root__ variable declaration; we only need to register
+                # the root type for validator generation.
                 external_pydantic_model.set_root_type_unsafe_v1_or_v2_only(
                     is_forward_ref=True,
                     root_type=root_type,
@@ -392,6 +395,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     # https://github.com/pydantic/pydantic/pull/3639
                     if len(internal_single_union_types) != 1
                     else None,
+                    skip_declaration=True,
                 )
 
     def _create_body_writer(

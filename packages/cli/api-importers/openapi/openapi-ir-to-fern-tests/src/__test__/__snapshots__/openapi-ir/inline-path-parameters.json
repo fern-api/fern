@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Inlined path parameters",
   "servers": [],
   "websocketServers": [],
@@ -260,6 +261,7 @@
           }
         },
         {
+          "description": "Bookmark ID",
           "name": "id",
           "schema": {
             "description": "Bookmark ID",
@@ -329,6 +331,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {

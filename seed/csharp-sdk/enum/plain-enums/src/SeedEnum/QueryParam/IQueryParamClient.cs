@@ -2,13 +2,13 @@ namespace SeedEnum;
 
 public partial interface IQueryParamClient
 {
-    Task SendAsync(
+    WithRawResponseTask SendAsync(
         SendEnumAsQueryParamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task SendListAsync(
+    WithRawResponseTask SendListAsync(
         SendEnumListAsQueryParamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

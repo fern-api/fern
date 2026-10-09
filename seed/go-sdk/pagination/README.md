@@ -13,6 +13,7 @@ The Seed Go library provides convenient access to the Seed APIs from Go.
 - [Errors](#errors)
 - [Request Options](#request-options)
 - [Advanced](#advanced)
+  - [Additional Body Properties](#additional-body-properties)
   - [Response Headers](#response-headers)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -97,7 +98,7 @@ is the only attribute you will need for most use cases. But if need be, several 
 ```go
 // Loop over the items using the provided iterator.
 ctx := context.TODO()
-page, err := client.Complex.Search(
+page, err := client.InlineUsers.InlineUsers.ListWithCursorPagination(
     ctx,
     ...
 )
@@ -128,8 +129,7 @@ for page != nil {
 }
 
 // Paginated endpoints return a Page with directly accessible headers, status code, and full response
-ctx := context.TODO()
-page, err := client.Complex.Search(
+page, err = client.InlineUsers.InlineUsers.ListWithCursorPagination(
     ctx,
     ...
 )
@@ -157,7 +157,7 @@ with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 response, err := client.Complex.Search(...)
 if err != nil {
     var apiError *core.APIError
-    if errors.As(err, apiError) {
+    if errors.As(err, &apiError) {
         // Do something with the API error ...
     }
     return err
@@ -196,6 +196,23 @@ response, err := client.Complex.Search(
 
 ## Advanced
 
+### Additional Body Properties
+
+If you need to send a request body property that isn't part of the generated request type (e.g. an
+undocumented or beta field), use the `option.WithBodyProperties` request option. Keys are sent exactly as
+provided (use the API's wire-format names), and they override any generated field with the same name. If the
+endpoint has no request body, a JSON body is created from the given properties. Body properties are applied to
+JSON and form URL encoded request bodies; they are not applied to multipart file upload or raw byte requests.
+
+```go
+response, err := client.Complex.Search(
+    ...,
+    option.WithBodyProperties(map[string]interface{}{
+        "custom_field": "custom-value",
+    }),
+)
+```
+
 ### Response Headers
 
 You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
@@ -228,11 +245,19 @@ The SDK is instrumented with automatic retries with exponential backoff. A reque
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+Which status codes are retried depends on the `retryStatusCodes` generator configuration:
 
+**`legacy`** (current default): retries on
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 
 If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
 over the default exponential backoff.

@@ -14,9 +14,8 @@
 
 ```go
 client.Service.Endpoint(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

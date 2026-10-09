@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump IR to 67.2.0 to publish the optional `resumable` field added to
+    `SseStreamChunk` in PR #15795. Without the IR version bump, no new
+    `@fern-fern/ir-sdk` minor was published and the field stayed invisible
+    to downstream consumers.
+  type: chore

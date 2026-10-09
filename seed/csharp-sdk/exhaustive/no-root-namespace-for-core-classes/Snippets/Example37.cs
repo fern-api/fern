@@ -12,10 +12,16 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndQueryAsync(
-            "param",
-            new GetWithPathAndQuery {
-                Query = "query"
+        await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
+            new GetWithMultipleQuery {
+                Query = new List<string>(){
+                    "query",
+                }
+                ,
+                Number = new List<int>(){
+                    1,
+                }
+
             }
         );
     }

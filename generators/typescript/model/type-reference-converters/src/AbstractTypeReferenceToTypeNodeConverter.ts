@@ -367,27 +367,35 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     protected override mapWithNonEnumKeys(map: FernIr.MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const keyTypeNode = this.convert({ ...params, typeReference: map.keyType });
         const valueTypeNode = this.convert({ ...params, typeReference: map.valueType });
+        // Preserve `| undefined` for genuinely optional map value types (e.g. optional
+        // additionalProperties → `Record<K, V | undefined>`), but strip the redundant
+        // `| undefined` from `unknown`/`any` values (`unknown | undefined` === `unknown`).
+        const stripUndefined = this.isTypeReferenceUnknown(map.valueType);
+        const valueTypeNodeForRecord = stripUndefined ? valueTypeNode.typeNodeWithoutUndefined : valueTypeNode.typeNode;
+        const valueRequestTypeNodeForRecord = stripUndefined
+            ? (valueTypeNode.requestTypeNodeWithoutUndefined ??
+              valueTypeNode.requestTypeNode ??
+              valueTypeNode.typeNodeWithoutUndefined)
+            : (valueTypeNode.requestTypeNode ?? valueTypeNode.typeNode);
+        const valueResponseTypeNodeForRecord = stripUndefined
+            ? (valueTypeNode.responseTypeNodeWithoutUndefined ??
+              valueTypeNode.responseTypeNode ??
+              valueTypeNode.typeNodeWithoutUndefined)
+            : (valueTypeNode.responseTypeNode ?? valueTypeNode.typeNode);
         return this.generateNonOptionalTypeReferenceNode({
-            typeNode: ts.factory.createTypeReferenceNode("Record", [
-                keyTypeNode.typeNode,
-                valueTypeNode.typeNodeWithoutUndefined
-            ]),
+            typeNode: ts.factory.createTypeReferenceNode("Record", [keyTypeNode.typeNode, valueTypeNodeForRecord]),
             requestTypeNode:
                 keyTypeNode.requestTypeNode || valueTypeNode.requestTypeNode
                     ? ts.factory.createTypeReferenceNode("Record", [
                           keyTypeNode.requestTypeNode ?? keyTypeNode.typeNode,
-                          valueTypeNode.requestTypeNodeWithoutUndefined ??
-                              valueTypeNode.requestTypeNode ??
-                              valueTypeNode.typeNodeWithoutUndefined
+                          valueRequestTypeNodeForRecord
                       ])
                     : undefined,
             responseTypeNode:
                 keyTypeNode.responseTypeNode || valueTypeNode.responseTypeNode
                     ? ts.factory.createTypeReferenceNode("Record", [
                           keyTypeNode.responseTypeNode ?? keyTypeNode.typeNode,
-                          valueTypeNode.responseTypeNodeWithoutUndefined ??
-                              valueTypeNode.responseTypeNode ??
-                              valueTypeNode.typeNodeWithoutUndefined
+                          valueResponseTypeNodeForRecord
                       ])
                     : undefined
         });

@@ -26,13 +26,21 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Organizations.GetOrganization(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "organization_id",
+//	)
 func (c *Client) GetOrganization(
 	ctx context.Context,
 	tenantID string,
@@ -51,6 +59,17 @@ func (c *Client) GetOrganization(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &path.GetOrganizationUserRequest{
+//	    TenantID: "tenant_id",
+//	    OrganizationID: "organization_id",
+//	    UserID: "user_id",
+//	}
+//	client.Organizations.GetOrganizationUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetOrganizationUser(
 	ctx context.Context,
 	request *path.GetOrganizationUserRequest,
@@ -67,6 +86,19 @@ func (c *Client) GetOrganizationUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &path.SearchOrganizationsRequest{
+//	    Limit: path.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Organizations.SearchOrganizations(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "organization_id",
+//	    request,
+//	)
 func (c *Client) SearchOrganizations(
 	ctx context.Context,
 	tenantID string,

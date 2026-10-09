@@ -25,7 +25,7 @@ type Client struct {
 	caller  *internal.Caller
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
+func NewAcmeClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		File:            client.NewClient(options),
@@ -36,13 +36,20 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Echo(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Echo(
 	ctx context.Context,
 	request string,
@@ -59,6 +66,15 @@ func (c *Client) Echo(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.Type{
+//	    BasicType: fern.BasicTypePrimitive,
+//	}
+//	client.CreateType(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateType(
 	ctx context.Context,
 	request *fern.Type,

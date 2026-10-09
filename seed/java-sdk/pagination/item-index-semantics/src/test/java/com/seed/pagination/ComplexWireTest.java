@@ -30,6 +30,7 @@ public class ComplexWireTest {
         server.start();
         client = SeedPaginationClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .token("test-token")
                 .build();
     }

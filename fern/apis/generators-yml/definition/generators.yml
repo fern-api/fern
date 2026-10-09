@@ -316,8 +316,8 @@ types:
         type: optional<string>
         docs: The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`).
       root:
-        type: string
-        docs: The path to the `.proto` directory root (e.g. `proto`).
+        type: SpecSourceSchema
+        docs: The path to the `.proto` directory root (e.g. `proto`), or a git remote reference.
       overrides:
         type: optional<OverridesSchema>
         docs: Paths to the overrides configuration. Can be a single path or an array of paths applied sequentially.
@@ -373,6 +373,49 @@ types:
       Individual spec settings in specs[].settings will override these defaults.
       Generator settings in groups.generators[].api.settings will override both.
       Settings hierarchy (highest to lowest priority): generator > spec > api.
+    properties:
+      auto-generate-idempotency-key:
+        type: optional<unknown>
+        docs: |
+          Enable idempotency-key auto-generation for every generator in this API, so it
+          does not have to be set on each generator's `config`. When enabled, generators
+          auto-generate an idempotency key header on retry-unsafe (POST/PUT) requests
+          unless the caller supplies one.
+
+          Accepts either a boolean shorthand or an object with an optional custom
+          header name and eligible-method list:
+          ```yaml
+          api:
+            settings:
+              auto-generate-idempotency-key: true
+              # or
+              auto-generate-idempotency-key:
+                header-name: "Idempotency-Key"
+                methods: ["POST", "PUT"]
+          ```
+          A generator's own `config.auto-generate-idempotency-key` overrides this
+          value for that generator.
+      webhook-signature:
+        type: optional<unknown>
+        docs: |
+          Webhook signature scheme for the whole API, declared once here instead of in the
+          API definition. Every generator in this API emits a shared webhook verification
+          helper (e.g. `WebhooksHelper.verifySignature`) built from this scheme, even when
+          the spec models no webhooks. Uses the same shape as a webhook's `signature` block
+          in a Fern definition:
+          ```yaml
+          api:
+            settings:
+              webhook-signature:
+                type: hmac
+                header: X-Twilio-Signature
+                algorithm: sha1
+                encoding: base64
+                payload-format:
+                  components: [notification-url, body]
+                  delimiter: ""
+                  body-sort: alphabetical
+          ```
 
   APIConfigurationV2SpecsSchema:
     discriminated: false
@@ -498,6 +541,9 @@ types:
       respect-forward-compatible-enums:
         type: optional<boolean>
         docs: Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false.
+      respect-optional-request-body:
+        type: optional<boolean>
+        docs: Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration.
       use-bytes-for-binary-response:
         type: optional<boolean>
         docs: Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream.
@@ -526,6 +572,26 @@ types:
         docs: |
           If true, preserve oneOf structures with a single schema.
           If false, unwrap oneOf structures with a single schema.
+          Defaults to false.
+        default: false
+      preserve-one-of-in-all-of:
+        type: optional<boolean>
+        docs: |
+          If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+          variant is the union member merged with the remaining allOf members.
+          If false, the variants' properties are flattened into a single object and marked optional.
+          Defaults to false.
+        default: false
+      any-of-sibling-properties-as-object:
+        type: optional<boolean>
+        docs: |
+          Applies when a schema declares `properties` alongside an `anyOf` whose branches
+          only re-declare some of those same properties as required. Per JSON Schema such an
+          `anyOf` is an "at least one of" constraint rather than a set of variants.
+          If true, the schema is converted as an object carrying all of its declared
+          properties.
+          If false, the schema is converted to an undiscriminated union, which discards the
+          sibling `properties` and makes the branches mutually exclusive.
           Defaults to false.
         default: false
       inline-all-of-schemas:
@@ -560,6 +626,125 @@ types:
           so SDKs can expose them directly on the union type without casting.
           Defaults to false.
         default: false
+      disambiguate-request-names:
+        type: optional<boolean>
+        docs: |
+          If true, disambiguate generated request wrapper names that collide with
+          component schema names by replacing the "Request" suffix with "Body".
+          If false, keep the original "Request" suffix regardless of collisions.
+          Defaults to true.
+        default: true
+      ignore-tags:
+        type: optional<boolean>
+        docs: |
+          If true, ignore operation-level tags when determining the SDK structure.
+          Endpoints fall back to the root package (or their namespace) and method
+          names are derived from each operation's operationId.
+          Defaults to false.
+        default: false
+      respect-parameter-content:
+        type: optional<boolean>
+        docs: |
+          If true, header parameters that declare their schema under `content` (e.g. a header
+          whose value is a JSON-encoded object) are typed from that schema instead of falling
+          back to a string.
+          Defaults to false.
+        default: false
+      respect-per-spec-base-path:
+        type: optional<boolean>
+        docs: |
+          If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
+          Defaults to false.
+        default: false
+      respect-operation-id-word-boundaries:
+        type: optional<boolean>
+        docs: |
+          If true, operation ids are split on every word boundary (camelCase transitions and digits)
+          when deriving endpoint names, so a redundant tag prefix is stripped and the remaining words
+          are preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields
+          `listFolderMembers` rather than `listfoldermembers`).
+          This applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names
+          from the legacy importer are unaffected. Changing it changes existing API reference URLs.
+          Defaults to false.
+        default: false
+      namespaced-errors:
+        type: optional<boolean>
+        docs: |
+          If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
+          within, that namespace instead of the endpoint's namespace. Lets error types be scoped per
+          namespace while endpoints and other types stay at the root.
+          Defaults to false.
+        default: false
+      error-responses:
+        type: optional<OpenAPIErrorResponsesSchema>
+        docs: |
+          Standardize the body of every 4xx/5xx response on a single schema (for example an
+          RFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a
+          per-spec overlay that rewrites each error response by hand.
+
+  OpenAPIErrorResponsesSchema:
+    properties:
+      schema:
+        type: OpenAPIErrorResponsesSchemaSource
+        docs: |
+          The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file
+          (relative to this generators.yml) or an inline schema object. It is registered under
+          `components.schemas` and every affected response references it. Any `$ref` inside the
+          schema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to.
+      name:
+        type: optional<string>
+        docs: |
+          Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`.
+          If the spec already defines a different schema under this name, it is replaced as long as
+          nothing references it once the error responses have been rewritten (e.g. a legacy error
+          body only used by 4xx/5xx responses under `apply-to: all`); otherwise `fern check` fails.
+      apply-to:
+        type: optional<OpenAPIErrorResponsesApplyTo>
+        docs: |
+          `all` replaces the body of every 4xx/5xx response with the configured schema.
+          `untyped` only fills in 4xx/5xx responses that declare no body schema, leaving existing
+          typed error responses untouched.
+          Defaults to `all`.
+        default: all
+      ensure:
+        type: optional<list<OpenAPIErrorResponsesEnsureSchema>>
+        docs: |
+          Error responses to add to operations that do not already declare them
+          (e.g. a `422` on every `post`, `put` and `patch`).
+
+  OpenAPIErrorResponsesSchemaSource:
+    discriminated: false
+    union:
+      - string
+      - map<string, unknown>
+
+  OpenAPIErrorResponsesApplyTo:
+    enum:
+      - all
+      - untyped
+
+  OpenAPIErrorResponsesEnsureSchema:
+    properties:
+      status-code:
+        type: integer
+        docs: The 4xx/5xx status code to add when an operation does not declare it.
+        validation:
+          min: 400
+          max: 599
+      methods:
+        type: optional<list<OpenAPIErrorResponsesHttpMethod>>
+        docs: HTTP methods whose operations receive the response. Defaults to all methods.
+
+  OpenAPIErrorResponsesHttpMethod:
+    enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      - head
+      - options
+      - trace
 
   ResolveAliases:
     discriminated: false
@@ -602,9 +787,40 @@ types:
         docs: Endpoints to include in the generated SDK (e.g. "POST /users").
         type: optional<list<string>>
 
+  GitRemoteSchema:
+    docs: |
+      A reference to a file or directory in a remote git repository.
+      The CLI will shallow-clone the repo at the specified ref and resolve the path locally.
+    properties:
+      repo:
+        type: string
+        docs: The git repository URL (e.g., https://github.com/org/repo.git).
+      ref:
+        type: optional<string>
+        docs: Branch, tag, or commit SHA. Defaults to the repository's default branch.
+      path:
+        type: string
+        docs: Path to the spec file or directory within the repository.
+
+  SpecGitSourceSchema:
+    docs: |
+      A wrapper that identifies the spec source as a remote git reference.
+      Contains the git repository details under the `git` key.
+    properties:
+      git: GitRemoteSchema
+
+  SpecSourceSchema:
+    discriminated: false
+    docs: |
+      A spec source can be either a local file path (string) or a remote git reference.
+    union:
+      - type: string
+        docs: A local file path relative to the Fern workspace.
+      - SpecGitSourceSchema
+
   OpenAPISpecSchema:
     properties:
-      openapi: string
+      openapi: SpecSourceSchema
       origin: optional<string>
       overrides: optional<OverridesSchema>
       overlays: optional<string>
@@ -627,7 +843,7 @@ types:
 
   AsyncAPISpecSchema:
     properties:
-      asyncapi: string
+      asyncapi: SpecSourceSchema
       origin: optional<string>
       overrides: optional<OverridesSchema>
       namespace: optional<string>
@@ -654,6 +870,7 @@ types:
       graphql: string
       origin: optional<string>
       overrides: optional<string>
+      examples: optional<string>
       name: optional<string>
 
   ProtobufSpecSchema:

@@ -7,6 +7,32 @@ types:
       foo: map<string, string>
       3d: integer
 
+  # Union with keyword-named variants to test escaping in generated constructors
+  SipHeaderAction:
+    union:
+      static: CustomSipHeader
+      dynamic: CustomSipHeader
+  CustomSipHeader:
+    properties:
+      key: string
+      value: string
+
+  BackupConfig:
+    union:
+      override: BackupOverride
+      fallback: BackupOverride
+  BackupOverride:
+    properties:
+      model: string
+
+  DependencyItem:
+    union:
+      known: KnownDependency
+      unknown: KnownDependency
+  KnownDependency:
+    properties:
+      name: string
+
 service:
   base-path: /
   auth: false

@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from .foo_extended import FooExtended
     from .second_item_type import SecondItemType
     from .type_with_optional_map import TypeWithOptionalMap
+    from .type_with_optional_reference_map import TypeWithOptionalReferenceMap
     from .union import BarUnion, FooUnion, Union
     from .union_with_base_properties import (
         FooUnionWithBaseProperties,
@@ -36,6 +37,12 @@ if typing.TYPE_CHECKING:
         FirstItemTypeUnionWithDuplicativeDiscriminants,
         SecondItemTypeUnionWithDuplicativeDiscriminants,
         UnionWithDuplicativeDiscriminants,
+    )
+    from .union_with_global_name_collisions import (
+        AimUnionWithGlobalNameCollisions,
+        DateUnionWithGlobalNameCollisions,
+        ErrorUnionWithGlobalNameCollisions,
+        UnionWithGlobalNameCollisions,
     )
     from .union_with_literal import FernUnionWithLiteral, UnionWithLiteral
     from .union_with_multiple_no_properties import (
@@ -78,6 +85,7 @@ if typing.TYPE_CHECKING:
     from .union_with_time import DateUnionWithTime, DatetimeUnionWithTime, UnionWithTime, ValueUnionWithTime
     from .union_without_key import BarUnionWithoutKey, FooUnionWithoutKey, UnionWithoutKey
 _dynamic_imports: typing.Dict[str, str] = {
+    "AimUnionWithGlobalNameCollisions": ".union_with_global_name_collisions",
     "AnyNumberUnionWithSameNumberTypes": ".union_with_same_number_types",
     "Bar": ".bar",
     "BarUnion": ".union",
@@ -86,6 +94,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BarUnionWithOptionalReference": ".union_with_optional_reference",
     "BarUnionWithoutKey": ".union_without_key",
     "CustomFormatUnionWithSameStringTypes": ".union_with_same_string_types",
+    "DateUnionWithGlobalNameCollisions": ".union_with_global_name_collisions",
     "DateUnionWithOptionalTime": ".union_with_optional_time",
     "DateUnionWithTime": ".union_with_time",
     "DatetimeUnionWithOptionalTime": ".union_with_optional_time",
@@ -93,6 +102,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Empty1UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "Empty2UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "EmptyUnionWithNoProperties": ".union_with_no_properties",
+    "ErrorUnionWithGlobalNameCollisions": ".union_with_global_name_collisions",
     "FernUnionWithLiteral": ".union_with_literal",
     "FirstItemType": ".first_item_type",
     "FirstItemTypeUnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
@@ -126,12 +136,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StringUnionWithBaseProperties": ".union_with_base_properties",
     "StringUnionWithPrimitive": ".union_with_primitive",
     "TypeWithOptionalMap": ".type_with_optional_map",
+    "TypeWithOptionalReferenceMap": ".type_with_optional_reference_map",
     "Union": ".union",
     "UnionWithBaseProperties": ".union_with_base_properties",
     "UnionWithDiscriminant": ".union_with_discriminant",
     "UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
     "UnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
+    "UnionWithGlobalNameCollisions": ".union_with_global_name_collisions",
     "UnionWithLiteral": ".union_with_literal",
     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "UnionWithNoProperties": ".union_with_no_properties",
@@ -171,6 +183,7 @@ def __dir__():
 
 
 __all__ = [
+    "AimUnionWithGlobalNameCollisions",
     "AnyNumberUnionWithSameNumberTypes",
     "Bar",
     "BarUnion",
@@ -179,6 +192,7 @@ __all__ = [
     "BarUnionWithOptionalReference",
     "BarUnionWithoutKey",
     "CustomFormatUnionWithSameStringTypes",
+    "DateUnionWithGlobalNameCollisions",
     "DateUnionWithOptionalTime",
     "DateUnionWithTime",
     "DatetimeUnionWithOptionalTime",
@@ -186,6 +200,7 @@ __all__ = [
     "Empty1UnionWithMultipleNoProperties",
     "Empty2UnionWithMultipleNoProperties",
     "EmptyUnionWithNoProperties",
+    "ErrorUnionWithGlobalNameCollisions",
     "FernUnionWithLiteral",
     "FirstItemType",
     "FirstItemTypeUnionWithDuplicativeDiscriminants",
@@ -219,12 +234,14 @@ __all__ = [
     "StringUnionWithBaseProperties",
     "StringUnionWithPrimitive",
     "TypeWithOptionalMap",
+    "TypeWithOptionalReferenceMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",
     "UnionWithDuplicatePrimitive",
     "UnionWithDuplicateTypes",
     "UnionWithDuplicativeDiscriminants",
+    "UnionWithGlobalNameCollisions",
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",

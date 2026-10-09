@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Plumb `verify`, `verifyRunner`, and `verifyValidatorVersion` flags through
+    `GenerationRunner.RunArgs` so the seed runner can invoke
+    `PostGenerationPipeline` with `VerificationStep` and exercise the same
+    validator-container code path that `fern generate --local --verify` uses.
+    No customer-facing CLI behavior change — the flags are opt-in and used only
+    by the seed test runner today.
+  type: internal

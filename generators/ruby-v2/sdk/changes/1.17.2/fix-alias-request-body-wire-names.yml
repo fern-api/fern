@@ -1,0 +1,6 @@
+- summary: |
+    Serialize request bodies declared as aliases of objects through the aliased
+    class so wire names are applied. Previously the raw params hash was sent,
+    so properties whose Ruby name differs from the API wire name (e.g.
+    `display_name` vs. `displayName`) were sent with the wrong key.
+  type: fix

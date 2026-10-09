@@ -1,0 +1,8 @@
+- summary: |
+    Fix invalid `<see cref="..."/>` documentation comments generated for union types. Type names
+    are now converted to documentation comment identifiers (`List<string>` becomes
+    `List{String}`, `object?` becomes `object`), and types that cannot be expressed as an
+    identifier (arrays, nested generic arguments) are rendered as escaped inline code instead.
+    This removes CS1570/CS1584/CS1658 warnings from generated SDKs that contain unions when XML
+    documentation is enabled.
+  type: fix

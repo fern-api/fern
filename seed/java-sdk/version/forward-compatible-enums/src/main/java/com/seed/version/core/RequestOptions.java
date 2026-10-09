@@ -4,6 +4,7 @@
 package com.seed.version.core;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -13,6 +14,8 @@ public final class RequestOptions {
     private final Optional<Integer> timeout;
 
     private final TimeUnit timeoutTimeUnit;
+
+    private final Optional<Integer> maxRetries;
 
     /**
      * version.get().toString() is sent as the "X-API-Version" header, overriding client options if present.
@@ -27,21 +30,27 @@ public final class RequestOptions {
 
     private final Map<String, Supplier<String>> queryParameterSuppliers;
 
+    private final Map<String, Object> bodyProperties;
+
     private RequestOptions(
             Optional<Integer> timeout,
             TimeUnit timeoutTimeUnit,
+            Optional<Integer> maxRetries,
             Optional<ApiVersion> version,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             Map<String, String> queryParameters,
-            Map<String, Supplier<String>> queryParameterSuppliers) {
+            Map<String, Supplier<String>> queryParameterSuppliers,
+            Map<String, Object> bodyProperties) {
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
+        this.maxRetries = maxRetries;
         this.version = version;
         this.headers = headers;
         this.headerSuppliers = headerSuppliers;
         this.queryParameters = queryParameters;
         this.queryParameterSuppliers = queryParameterSuppliers;
+        this.bodyProperties = bodyProperties;
     }
 
     public Optional<Integer> getTimeout() {
@@ -50,6 +59,10 @@ public final class RequestOptions {
 
     public TimeUnit getTimeoutTimeUnit() {
         return timeoutTimeUnit;
+    }
+
+    public Optional<Integer> getMaxRetries() {
+        return maxRetries;
     }
 
     /**
@@ -79,6 +92,13 @@ public final class RequestOptions {
         return queryParameters;
     }
 
+    /**
+     * Additional properties merged into the request body, keyed by their wire names.
+     */
+    public Map<String, Object> getBodyProperties() {
+        return new LinkedHashMap<>(this.bodyProperties);
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -87,6 +107,8 @@ public final class RequestOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
+        private Optional<Integer> maxRetries = Optional.empty();
 
         private Optional<ApiVersion> version = Optional.empty();
 
@@ -97,6 +119,8 @@ public final class RequestOptions {
         private final Map<String, String> queryParameters = new HashMap<>();
 
         private final Map<String, Supplier<String>> queryParameterSuppliers = new HashMap<>();
+
+        private final Map<String, Object> bodyProperties = new LinkedHashMap<>();
 
         /**
          * version.get().toString() is sent as the "X-API-Version" header, overriding client options if present.
@@ -114,6 +138,11 @@ public final class RequestOptions {
         public Builder timeout(Integer timeout, TimeUnit timeoutTimeUnit) {
             this.timeout = Optional.of(timeout);
             this.timeoutTimeUnit = timeoutTimeUnit;
+            return this;
+        }
+
+        public Builder maxRetries(Integer maxRetries) {
+            this.maxRetries = Optional.of(maxRetries);
             return this;
         }
 
@@ -137,15 +166,33 @@ public final class RequestOptions {
             return this;
         }
 
+        /**
+         * Adds a property to the JSON or form-urlencoded request body, keyed by its wire name. It overrides any request body property with the same key, and is sent as the whole body for endpoints without one. Multipart (file upload) bodies are not supported.
+         */
+        public Builder addBodyProperty(String key, Object value) {
+            this.bodyProperties.put(key, value);
+            return this;
+        }
+
+        /**
+         * Adds each entry as a request body property. See {@link #addBodyProperty}.
+         */
+        public Builder bodyProperties(Map<String, Object> bodyProperties) {
+            this.bodyProperties.putAll(bodyProperties);
+            return this;
+        }
+
         public RequestOptions build() {
             return new RequestOptions(
                     timeout,
                     timeoutTimeUnit,
+                    maxRetries,
                     version,
                     headers,
                     headerSuppliers,
                     queryParameters,
-                    queryParameterSuppliers);
+                    queryParameterSuppliers,
+                    bodyProperties);
         }
     }
 }

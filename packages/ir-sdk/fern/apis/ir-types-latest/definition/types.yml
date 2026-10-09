@@ -15,12 +15,60 @@ types:
     properties:
       json: optional<JsonEncoding>
       proto: optional<ProtoEncoding>
+      xml: optional<XmlEncoding>
 
   JsonEncoding:
     properties: {}
 
   ProtoEncoding:
     properties: {}
+
+  XmlEncoding:
+    docs: |
+      Present when an object type is an XML element (e.g. a markup document such as
+      Twilio's TwiML, which the generated SDK builds and serializes rather than sends
+      as JSON). Populated from the OpenAPI `xml` object on the schema.
+    properties:
+      name:
+        type: string
+        docs: The XML element name, exactly as it appears on the wire (casing preserved).
+      namespace:
+        type: optional<string>
+        docs: The XML namespace URI, if any.
+      prefix:
+        type: optional<string>
+        docs: The namespace prefix to use for the element name.
+
+  XmlPropertyEncoding:
+    docs: |
+      How an object property serializes when its parent object is an XML element.
+      Only populated on properties of objects with an `XmlEncoding`.
+    properties:
+      kind: XmlPropertyKind
+      name:
+        type: optional<string>
+        docs: |
+          The attribute or element name on the wire. Falls back to the property's
+          wire value when absent.
+      wrapped:
+        type: optional<boolean>
+        docs: |
+          For list properties: whether the items are wrapped in a container element
+          named `name`. Absent or false means items are emitted directly as children.
+      listSeparator:
+        type: optional<string>
+        docs: |
+          For list-valued attributes or text: the string used to join items into a
+          single value (e.g. `" "` for space-delimited lists).
+
+  XmlPropertyKind:
+    enum:
+      - value: ATTRIBUTE
+        docs: Serialized as an attribute on the parent element.
+      - value: TEXT
+        docs: Serialized as the text content of the parent element.
+      - value: ELEMENT
+        docs: Serialized as a child element (or ordered list of child elements).
 
   TypeDeclaration:
     docs: "A type, which is a name and a shape"
@@ -118,6 +166,15 @@ types:
       extra-properties:
         docs: Whether to allow extra properties on the object.
         type: boolean
+      deferredUnionBaseProperties:
+        docs: |
+          Populated only when this object is used exclusively as a `samePropertiesAsObject`
+          variant of one or more discriminated unions. Lists the wire values this object declares
+          that every owning union also declares as a base property with a structurally-equal type,
+          i.e. the fields a leaf-dropping generator may omit from this object and defer to the union
+          envelope. Absent/empty for any object referenced outside a union variant. Computed by the
+          IR generator; consumers must not recompute it.
+        type: optional<list<commons.NameAndWireValue>>
 
   ObjectProperty:
     extends: commons.Declaration
@@ -135,6 +192,9 @@ types:
           arrays) since the existing primitive `default` lives on the
           `PrimitiveType` and cannot represent container defaults.
       v2Examples: optional<examples.V2SchemaExamples>
+      xml:
+        type: optional<XmlPropertyEncoding>
+        docs: Present only when the enclosing object type has an `XmlEncoding`.
 
   ObjectPropertyAccess:
     enum:
@@ -149,6 +209,15 @@ types:
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
+      inheritedBaseProperties:
+        docs: |
+          Base properties that every `samePropertiesAsObject` variant of this union redeclares
+          with a structurally-equal type (resolving `extends` and alias chains). These are the
+          properties that are duplicated on both the union and every variant. Generators may
+          collapse the duplication — e.g. by owning the field solely on the union envelope and
+          delegating to the active variant. Empty when the union has no such redundant base
+          properties. Computed by the IR generator; consumers must not recompute it.
+        type: optional<list<commons.NameAndWireValue>>
       default:
         docs: |
           The default union variant to use when the discriminant field is missing from input.

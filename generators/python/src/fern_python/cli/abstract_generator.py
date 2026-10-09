@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 from .publisher import Publisher
-from fern_python.codegen.project import Project, ProjectConfig
+from fern_python.codegen.project import OutputDirectory, Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.utils import configure_smart_casing
@@ -39,6 +39,8 @@ class AbstractGenerator(ABC):
         # Configure smart-casing from the IR's casingsConfig (driven by the customer's
         # `smart-casing` flag in generators.yml). Must run before any name resolution
         # so _smart_snake matches the IR server's pre-computed snake_case values.
+        # The digit/word boundary opt-in (`smart-casing-digit-word-boundary`) is not wired up
+        # yet: the pinned IR package (67.11.0) does not carry `smartCasingDigitWordBoundary`.
         smart_casing = ir.casings_config.smart_casing if ir.casings_config is not None else True
         configure_smart_casing(smart_casing)
 
@@ -134,6 +136,10 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "package_path" in generator_config.custom_config:
             package_path = generator_config.custom_config.get("package_path")
 
+        output_directory: Optional[OutputDirectory] = None
+        if generator_config.custom_config is not None and "output_directory" in generator_config.custom_config:
+            output_directory = OutputDirectory(generator_config.custom_config.get("output_directory"))
+
         mypy_exclude = None
         if generator_config.custom_config is not None and "mypy_exclude" in generator_config.custom_config:
             mypy_exclude = generator_config.custom_config.get("mypy_exclude")
@@ -142,21 +148,24 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "import_paths" in generator_config.custom_config:
             import_paths = generator_config.custom_config.get("import_paths")
 
+        license_header = None
+        if generator_config.custom_config is not None and "license_header" in generator_config.custom_config:
+            license_header = generator_config.custom_config.get("license_header")
+
         with Project(
             filepath=generator_config.output.path,
-            relative_path_to_project=os.path.join(
-                *self.get_relative_path_to_project_for_publish(
-                    generator_config=generator_config,
-                    ir=ir,
-                )
-            )
-            if project_config is not None
-            else generator_config.organization,
+            relative_path_to_project=self._get_relative_path_for_project(
+                generator_config=generator_config,
+                ir=ir,
+                project_config=project_config,
+            ),
             package_path=package_path,
             project_config=project_config,
             sorted_modules=self.get_sorted_modules(),
             flat_layout=self.is_flat_layout(generator_config=generator_config),
+            output_directory=output_directory,
             whitelabel=generator_config.whitelabel,
+            license_header=license_header,
             python_version=python_version,
             pypi_metadata=self._get_pypi_metadata(generator_config=generator_config),
             github_output_mode=maybe_github_output_mode,
@@ -184,19 +193,22 @@ class AbstractGenerator(ABC):
                 and generator_config.custom_config.get("include_legacy_wire_tests", False)
             )
 
-            generator_config.output.mode.visit(
-                download_files=lambda: None,
-                github=lambda github_output_mode: self._write_files_for_github_repo(
-                    project=project,
-                    output_mode=github_output_mode,
-                    publish_config=generator_config.publish,
-                    write_unit_tests=(
-                        self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
+            if project.should_emit_scaffolding:
+                generator_config.output.mode.visit(
+                    download_files=lambda: None,
+                    github=lambda github_output_mode: self._write_files_for_github_repo(
+                        project=project,
+                        output_mode=github_output_mode,
+                        publish_config=generator_config.publish,
+                        write_unit_tests=(
+                            self.project_type() == "sdk"
+                            and include_legacy_wire_tests
+                            and generator_config.write_unit_tests
+                        ),
+                        python_version_constraint=python_version,
                     ),
-                    python_version_constraint=python_version,
-                ),
-                publish=lambda x: None,
-            )
+                    publish=lambda x: None,
+                )
 
         publisher = Publisher(
             should_fix=self.should_fix_files(),
@@ -208,16 +220,26 @@ class AbstractGenerator(ABC):
         output_mode: OutputMode = generator_config.output.mode
         output_mode_union = output_mode.get_as_union()
 
+        # source-root mode emits only source files (no pyproject.toml / ruff config),
+        # so poetry lock and ruff must be skipped.
+        is_source_root = output_directory is OutputDirectory.SOURCE_ROOT
+
         if output_mode_union.type == "downloadFiles":
             # since download files does not contain a pyproject.toml
             # we run ruff using the fern_python poetry.toml (copied into the docker)
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_poetry_lock()
-            publisher.run_ruff_check_fix()
-            publisher.run_ruff_format()
+            if not is_source_root:
+                publisher.run_poetry_lock()
+                publisher.run_ruff_check_fix()
+                publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
+            if is_source_root:
+                raise RuntimeError(
+                    "output_directory='source-root' is incompatible with publish output mode "
+                    "(no pyproject.toml is emitted)"
+                )
             publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
@@ -240,9 +262,14 @@ class AbstractGenerator(ABC):
         # when publishing to github, we always need a project config, so that
         # we generate a pyproject.toml
         if output_mode.publish_info is None:
+            custom_package_name = (
+                generator_config.custom_config.get("package_name")
+                if generator_config.custom_config is not None
+                else None
+            )
             return ProjectConfig(
-                package_name=generator_config.organization,
-                package_version="0.0.0",
+                package_name=custom_package_name or generator_config.organization,
+                package_version=output_mode.version or "0.0.0",
             )
         publish_info_union = output_mode.publish_info.get_as_union()
         if publish_info_union.type != "pypi":
@@ -558,7 +585,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/${{{{ github.event.repository.name }}}}
+      url: https://pypi.org/p/{publish_info_union.package_name}
     permissions:
       contents: read   # Required for checkout
       id-token: write  # Required for OIDC
@@ -628,6 +655,29 @@ def test_client() -> None:
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
     ) -> Tuple[str, ...]: ...
+
+    def _get_relative_path_for_project(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+        project_config: Optional[ProjectConfig],
+    ) -> str:
+        """Return the relative path used as the project's module root.
+
+        Defaults to ``get_relative_path_to_project_for_publish`` when
+        *project_config* is set, otherwise falls back to the raw organization
+        name. Subclasses may override to change the download-mode behavior
+        (e.g. to always respect ``package_name`` from custom config).
+        """
+        if project_config is not None:
+            return os.path.join(
+                *self.get_relative_path_to_project_for_publish(
+                    generator_config=generator_config,
+                    ir=ir,
+                )
+            )
+        return generator_config.organization
 
     @abstractmethod
     def is_flat_layout(

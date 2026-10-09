@@ -21,6 +21,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Commons::Types::Language] :language
       #
+      # @example
+      #   client.submission.create_execution_session(language: "JAVA")
+      #
       # @return [Seed::Submission::Types::ExecutionSessionResponse]
       def create_execution_session(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -37,7 +40,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Submission::Types::ExecutionSessionResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Submission::Types::ExecutionSessionResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -55,6 +58,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :session_id
       #
+      # @example
+      #   client.submission.get_execution_session(session_id: "sessionId")
+      #
       # @return [Seed::Submission::Types::ExecutionSessionResponse, nil]
       def get_execution_session(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -70,10 +76,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Seed::Submission::Types::ExecutionSessionResponse.load(response.body))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Stops execution session.
@@ -86,6 +94,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :session_id
+      #
+      # @example
+      #   client.submission.stop_execution_session(session_id: "sessionId")
       #
       # @return [untyped]
       def stop_execution_session(request_options: {}, **params)
@@ -116,6 +127,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.submission.get_execution_sessions_state
+      #
       # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
       def get_execution_sessions_state(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -131,7 +145,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Submission::Types::GetExecutionSessionStateResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Submission::Types::GetExecutionSessionStateResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

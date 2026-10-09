@@ -17,6 +17,9 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedErrorProperty.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedErrorProperty.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +32,7 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
                 {
                     Method = HttpMethod.Get,
                     Path = "property-based-error",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -46,7 +50,7 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedErrorProperty.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -60,7 +64,13 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedErrorProperty.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -71,7 +81,13 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
             throw new SeedErrorPropertyApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedErrorProperty.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

@@ -18,6 +18,11 @@ public partial class AuthClient : IAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedOauthClientCredentialsDefault.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedOauthClientCredentialsDefault.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +36,7 @@ public partial class AuthClient : IAuthClient
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -48,7 +54,7 @@ public partial class AuthClient : IAuthClient
                 return new WithRawResponse<TokenResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedOauthClientCredentialsDefault.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -62,7 +68,13 @@ public partial class AuthClient : IAuthClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedOauthClientCredentialsDefault.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -73,7 +85,13 @@ public partial class AuthClient : IAuthClient
             throw new SeedOauthClientCredentialsDefaultApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedOauthClientCredentialsDefault.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

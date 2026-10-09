@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "event")]
+#[non_exhaustive]
 pub enum StreamProtocolCollisionResponse {
     #[serde(rename = "heartbeat")]
     #[non_exhaustive]
@@ -30,6 +31,12 @@ pub enum StreamProtocolCollisionResponse {
         #[serde(default)]
         data: ObjectPayloadWithEventField,
     },
+
+    /// Catch-all variant for unrecognized discriminant values.
+    /// If the server sends a discriminant not recognized by the current SDK
+    /// version, the raw payload is captured here so callers can still inspect it.
+    #[serde(untagged)]
+    __Unknown(serde_json::Value),
 }
 
 impl StreamProtocolCollisionResponse {
@@ -47,5 +54,9 @@ impl StreamProtocolCollisionResponse {
 
     pub fn object_data(data: ObjectPayloadWithEventField) -> Self {
         Self::ObjectData { data }
+    }
+
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
     }
 }

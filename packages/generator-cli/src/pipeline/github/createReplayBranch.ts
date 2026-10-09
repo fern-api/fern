@@ -30,12 +30,25 @@ export async function createReplayBranch(
     // Tag commit: pure generation tree + previousGenerationSha as parent.
     // Not used as branch content — only pushed as the fern-generation-base tag
     // so that the next run's sync detection works.
-    const genTreeHash = await repository.getCommitTreeHash(replayConflictInfo.currentGenerationSha);
-    const tagCommitSha = await repository.commitTree(
-        genTreeHash,
-        parentSha,
-        `[fern-generated] ${commitMessage ?? "Update SDK"}`
-    );
-
-    return tagCommitSha;
+    //
+    // previousGenerationSha can become unreachable after a squash-merge + branch delete:
+    // the old fern-bot commit only existed on the now-deleted PR branch, and `git fetch
+    // --unshallow` doesn't pull dangling objects. When that happens, `git commit-tree -p
+    // <sha>` fails fatal. Skip the tag update in that case — the branch was already created
+    // from HEAD so the SDK still ships; we just lose the moving tag for this run.
+    try {
+        const genTreeHash = await repository.getCommitTreeHash(replayConflictInfo.currentGenerationSha);
+        const tagCommitSha = await repository.commitTree(
+            genTreeHash,
+            parentSha,
+            `[fern-generated] ${commitMessage ?? "Update SDK"}`
+        );
+        return tagCommitSha;
+    } catch (error) {
+        logger.warn(
+            `Could not create fern-generation-base tag commit: parent ${parentSha} is unreachable in this clone ` +
+                `(likely on a squash-merged + deleted branch). Continuing without tag update. Underlying error: ${String(error)}`
+        );
+        return undefined;
+    }
 }

@@ -19,6 +19,21 @@ impl UndiscriminatedUnionWithResponsePropertyClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_union_with_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionWithResponsePropertyClient::new(config)
+    ///         .expect("Failed to build client");
+    ///     client.get_union(None).await;
+    /// }
+    /// ```
     pub async fn get_union(
         &self,
         options: Option<RequestOptions>,
@@ -28,6 +43,21 @@ impl UndiscriminatedUnionWithResponsePropertyClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_union_with_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionWithResponsePropertyClient::new(config)
+    ///         .expect("Failed to build client");
+    ///     client.list_unions(None).await;
+    /// }
+    /// ```
     pub async fn list_unions(
         &self,
         options: Option<RequestOptions>,

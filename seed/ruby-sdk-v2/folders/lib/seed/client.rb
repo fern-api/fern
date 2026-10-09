@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.foo
+    #
     # @return [untyped]
     def foo(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -31,15 +34,19 @@ module Seed
     end
 
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_folders/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

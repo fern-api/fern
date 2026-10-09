@@ -2,7 +2,7 @@ namespace SeedAlias;
 
 public partial interface ISeedAliasClient
 {
-    Task GetAsync(
+    WithRawResponseTask GetAsync(
         string typeId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

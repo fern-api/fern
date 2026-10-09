@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "a2ac24a",
+            "example_identifier": "f8eaaeaa",
             "id": {
                 "method": "GET",
                 "path": "/api/users/{userId}/insurance",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "c4328437",
+            "example_identifier": "9a2fb4a7",
             "id": {
                 "method": "GET",
                 "path": "/api/policies/search",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "61c06522",
+            "example_identifier": "2d340502",
             "id": {
                 "method": "GET",
                 "path": "/api/policies",

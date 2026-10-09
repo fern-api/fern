@@ -21,7 +21,19 @@ export function getEndpointReturnType({
             const type = context.phpTypeMapper.convert({ reference: reference.responseBodyType });
             return type.isOptional() ? type : php.Type.optional(type);
         },
-        streaming: () => undefined,
+        streaming: (streamingResponse) =>
+            streamingResponse._visit({
+                sse: (sseChunk) => {
+                    const eventType = context.phpTypeMapper.convert({ reference: sseChunk.payload });
+                    return php.Type.reference(context.getSseStreamClassReference(eventType));
+                },
+                json: (jsonChunk) => {
+                    const chunkType = context.phpTypeMapper.convert({ reference: jsonChunk.payload });
+                    return php.Type.reference(context.getJsonStreamClassReference(chunkType));
+                },
+                text: () => php.Type.reference(context.getTextStreamClassReference()),
+                _other: () => undefined
+            }),
         text: () => php.Type.string(),
         _other: () => undefined
     });

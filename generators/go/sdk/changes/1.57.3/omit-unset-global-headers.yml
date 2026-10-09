@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Omit global headers (declared under `api.headers`) from requests when they are
+    left unset, instead of sending them with an empty value. This matches the
+    behavior of auth scheme headers, which were already guarded. This applies to
+    string, UUID, bytes, date, datetime, and enum headers; boolean and numeric
+    headers are unchanged, since `false` and `0` are meaningful values that
+    cannot be distinguished from an unset field. Unset UUID, date, and datetime
+    headers are no longer sent as `00000000-0000-0000-0000-000000000000` and
+    `0001-01-01` either.
+  type: fix

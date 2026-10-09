@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Response Headers Without respect-parameter-content
+servers:
+  - url: https://api.test.com
+    description: Test API
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: List all users
+      responses:
+        "200":
+          description: A list of users
+          headers:
+            X-Account-Info:
+              description: JSON-encoded account metadata
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/AccountInfo"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+components:
+  schemas:
+    AccountInfo:
+      type: object
+      properties:
+        accountId:
+          type: string

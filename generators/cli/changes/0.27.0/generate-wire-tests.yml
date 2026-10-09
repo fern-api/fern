@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `generateWireTests` config flag. When enabled, the generator
+    emits an automated wire-test suite alongside the CLI: `wiremock/wire-test-cases.json`
+    (one case per endpoint example, derived from the IR) and `tests/wire_test.rs`
+    (a generic harness). Each test stands up an in-process mock server, drives the
+    compiled CLI binary against it (`--base-url` + `--params` + `--json`), and
+    asserts the CLI issued the expected request and rendered the mocked response.
+    The suite runs under a plain `cargo test` — no docker, no network. Defaults to
+    off so existing generations are unaffected.
+  type: feat

@@ -11,14 +11,24 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :id
     #
+    # @example
+    #   client.echo(
+    #     id: "id-ksfd9c1",
+    #     name: "Hello world!",
+    #     size: 20
+    #   )
+    #
     # @return [String]
     def echo(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
+      path_param_names = %i[id]
+      body_params = params.except(*path_param_names)
+
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "/#{URI.encode_uri_component(params[:id].to_s)}/",
-        body: Seed::Types::EchoRequest.new(params).to_h,
+        body: Seed::Types::EchoRequest.new(body_params).to_h,
         request_options: request_options
       )
       begin
@@ -27,22 +37,28 @@ module Seed
         raise Seed::Errors::TimeoutError
       end
       code = response.code.to_i
-      return if code.between?(200, 299)
-
-      error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-      raise error_class.new(response.body, code: code)
+      if code.between?(200, 299)
+        (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
     end
 
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_package-yml/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

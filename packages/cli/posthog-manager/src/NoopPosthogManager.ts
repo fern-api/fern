@@ -4,6 +4,11 @@ export class NoopPosthogManager implements PosthogManager {
     async sendEvent(): Promise<void> {
         // no-op
     }
+
+    async sendAutomationEvent(): Promise<void> {
+        // no-op
+    }
+
     async identify(): Promise<void> {
         // no-op
     }

@@ -19,6 +19,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.enum.get_and_return_enum(request: "SUNNY")
+        #
         # @return [Seed::Types::Enum::Types::WeatherReport]
         def get_and_return_enum(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -26,7 +29,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/enum",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -36,7 +39,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Enum::Types::WeatherReport.load(response.body)
+            (response.body.to_s.empty? ? nil : Seed::Types::Enum::Types::WeatherReport.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

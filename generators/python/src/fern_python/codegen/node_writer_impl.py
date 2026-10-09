@@ -16,6 +16,7 @@ class NodeWriterImpl(AST.NodeWriter, WriterImpl):
         should_include_header: bool = True,
         reference_resolver: ReferenceResolver,
         whitelabel: bool = False,
+        license_header: Optional[str] = None,
     ):
         super().__init__(
             should_format=should_format,
@@ -23,6 +24,7 @@ class NodeWriterImpl(AST.NodeWriter, WriterImpl):
             should_format_as_snippet=should_format_as_snippet,
             should_include_header=should_include_header,
             whitelabel=whitelabel,
+            license_header=license_header,
         )
         self._reference_resolver = reference_resolver
 

@@ -267,7 +267,7 @@ public readonly struct Optional<T> : IOptional, IEquatable<Optional<T>>
 }
 
 /// <summary>
-/// Extension methods for Optional<T> to simplify common operations.
+/// Extension methods for <c>Optional&lt;T&gt;</c> to simplify common operations.
 /// </summary>
 public static class OptionalExtensions
 {
@@ -345,7 +345,7 @@ public static class OptionalExtensions
     /// Adds a nullable value to a dictionary only if it is not null.
     /// This is useful for regular nullable properties where null means "omit from request".
     /// </summary>
-    /// <typeparam name="T">The type of the value (must be a reference type or Nullable<T>).</typeparam>
+    /// <typeparam name="T">The type of the value (must be a reference type or <c>Nullable&lt;T&gt;</c>).</typeparam>
     /// <param name="value">The nullable value to add.</param>
     /// <param name="dictionary">The dictionary to add to.</param>
     /// <param name="key">The key to use in the dictionary.</param>
@@ -400,7 +400,7 @@ public static class OptionalExtensions
 
 
 /// <summary>
-/// JSON converter factory for Optional<T> that handles undefined vs null correctly.
+/// JSON converter factory for <c>Optional&lt;T&gt;</c> that handles undefined vs null correctly.
 /// Uses a TypeInfoResolver to conditionally include/exclude properties based on Optional.IsDefined.
 /// </summary>
 public class OptionalJsonConverterFactory : JsonConverterFactory
@@ -425,7 +425,7 @@ public class OptionalJsonConverterFactory : JsonConverterFactory
 }
 
 /// <summary>
-/// JSON converter for Optional<T> that unwraps the value during serialization.
+/// JSON converter for <c>Optional&lt;T&gt;</c> that unwraps the value during serialization.
 /// The actual property skipping is handled by the OptionalTypeInfoResolver.
 /// </summary>
 public class OptionalJsonConverter<T> : JsonConverter<Optional<T>>

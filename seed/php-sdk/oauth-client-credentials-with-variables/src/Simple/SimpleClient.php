@@ -19,6 +19,7 @@ class SimpleClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
@@ -36,6 +37,7 @@ class SimpleClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options
      */
     public function __construct(
@@ -47,6 +49,11 @@ class SimpleClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->simple->getSomething();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -54,6 +61,7 @@ class SimpleClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
+     *   rootVariable?: string,
      * } $options
      * @throws SeedException
      * @throws SeedApiException

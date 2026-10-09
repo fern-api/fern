@@ -27,6 +27,8 @@ export type BaseClientOptions = {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
+    /** Default options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints. */
+    stream?: { reconnectionEnabled?: boolean; maxReconnectionAttempts?: number };
     /** Override auth. Pass false to disable, a function returning auth headers, an AuthProvider, or auth options. */
     auth?: AuthOption;
 } & BearerAuthProvider.AuthOptions;
@@ -40,8 +42,12 @@ export interface BaseRequestOptions {
     abortSignal?: AbortSignal;
     /** Additional query string parameters to include in the request. */
     queryParams?: Record<string, unknown>;
+    /** A dictionary containing additional parameters to spread into the request's body. */
+    additionalBodyParameters?: Record<string, unknown>;
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
+    /** Options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints. */
+    stream?: { reconnectionEnabled?: boolean; maxReconnectionAttempts?: number };
 }
 
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add webhook signature verification. For APIs that configure HMAC webhook signature
+    verification, the C# SDK now generates a static `WebhooksHelper.VerifySignature`
+    helper (plus per-config override helpers when webhooks use distinct configs) backed
+    by a stdlib-only `WebhookSignature` core utility for HMAC computation and
+    constant-time comparison.
+  type: feat

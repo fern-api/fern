@@ -77,6 +77,11 @@ class SeedClient implements SeedClientInterface
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->foo();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

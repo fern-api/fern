@@ -5,7 +5,7 @@ info:
   description: >
     Exercises allOf schema composition patterns, covering array items narrowing,
     primitive constraint narrowing, required propagation, metadata inheritance,
-    and multi-parent property merging.
+    multi-parent property merging, and nested $ref resolution.
 
 servers:
   - url: https://api.example.com
@@ -81,6 +81,49 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Organization"
+
+  /plants:
+    post:
+      operationId: createPlant
+      summary: Create a plant (nested allOf with $ref chain)
+      description: >
+        Tests three-level allOf chain where a parent schema itself uses allOf
+        with $ref elements. The grandparent's properties must be resolved
+        through the nested $ref.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlantPost"
+      responses:
+        "200":
+          description: Created plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantStrict"
+
+  /trees:
+    post:
+      operationId: createTree
+      summary: Create a tree (multiple nested $ref in parent allOf)
+      description: >
+        Tests that when a parent's allOf contains multiple $ref entries,
+        all of them are resolved and their properties merged.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TreeRecord"
+      responses:
+        "200":
+          description: Created tree
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TreeRecord"
 
 components:
   schemas:
@@ -348,3 +391,125 @@ components:
           properties:
             name:
               type: string
+
+    # -----------------------------------------------------------------------
+    # Case 7: Three-level allOf chain with nested $ref (BigCommerce pattern)
+    #
+    # PlantPost -> PlantBase -> PlantStrict, where PlantBase uses allOf
+    # with a $ref to PlantStrict. The v3 parser must recursively resolve
+    # the nested $ref to include grandparent properties.
+    #
+    # Expected: PlantPost includes all properties from PlantStrict,
+    # PlantBase sibling, and its own inline child.
+    # -----------------------------------------------------------------------
+    PlantStrict:
+      type: object
+      required:
+        - species
+        - family
+        - genus
+      properties:
+        species:
+          type: string
+          description: The botanical species name.
+        family:
+          type: string
+          description: The botanical family.
+        genus:
+          type: string
+          description: The botanical genus.
+
+    PlantBase:
+      allOf:
+        - $ref: "#/components/schemas/PlantStrict"
+        - type: object
+          properties:
+            commonName:
+              type: string
+              description: The common name of the plant.
+            wateringFrequency:
+              type: string
+              enum:
+                - daily
+                - weekly
+                - biweekly
+                - monthly
+
+    PlantPost:
+      allOf:
+        - $ref: "#/components/schemas/PlantBase"
+        - required:
+            - species
+            - family
+            - genus
+            - commonName
+            - wateringFrequency
+            - sunExposure
+          properties:
+            sunExposure:
+              type: string
+              enum:
+                - full
+                - partial
+                - shade
+              description: Required sun exposure level.
+            plantedAt:
+              type: string
+              format: date
+              description: Date the plant was planted.
+            soilType:
+              type: string
+              description: Preferred soil type.
+
+    # -----------------------------------------------------------------------
+    # Case 8: Parent allOf with multiple $ref entries
+    #
+    # TreeBase uses allOf with two $ref entries (Identifiable + Describable)
+    # plus an inline schema. TreeRecord extends TreeBase and adds its own
+    # required + properties. All three $ref targets must be resolved.
+    # -----------------------------------------------------------------------
+    TreeIdentifiable:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique tree identifier.
+
+    TreeDescribable:
+      type: object
+      properties:
+        treeName:
+          type: string
+          description: Display name of the tree.
+        treeDescription:
+          type: string
+          description: A description of the tree.
+
+    TreeBase:
+      allOf:
+        - $ref: "#/components/schemas/TreeIdentifiable"
+        - $ref: "#/components/schemas/TreeDescribable"
+        - type: object
+          properties:
+            treeSpecies:
+              type: string
+              description: The species of tree.
+            heightInFeet:
+              type: number
+              description: Height of the tree in feet.
+
+    TreeRecord:
+      allOf:
+        - $ref: "#/components/schemas/TreeBase"
+        - required:
+            - id
+            - treeName
+            - treeSpecies
+          properties:
+            plantedDate:
+              type: string
+              format: date
+              description: Date the tree was planted.

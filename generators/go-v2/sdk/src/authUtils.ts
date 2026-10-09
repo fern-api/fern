@@ -1,4 +1,4 @@
-import { CaseConverter, NameInput } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
@@ -14,6 +14,15 @@ export function getClientAccessPath(service: FernIr.HttpService, caseConverter: 
 /**
  * Gets the OAuth client credentials scheme from the IR auth configuration.
  */
+/**
+ * Whether the API applies auth per-endpoint (each endpoint declares its own
+ * schemes) rather than flatly on every request. In this mode auth headers are
+ * routed per-endpoint via RequestOptions.AuthHeadersForEndpoint.
+ */
+export function isEndpointSecurity(ir: FernIr.IntermediateRepresentation): boolean {
+    return ir.auth != null && ir.auth.requirement === "ENDPOINT_SECURITY";
+}
+
 export function getOAuthClientCredentialsScheme(ir: FernIr.IntermediateRepresentation): FernIr.OAuthScheme | undefined {
     if (ir.auth == null) {
         return undefined;
@@ -58,11 +67,27 @@ export function getRequestPropertyFieldName(
     return "ClientId";
 }
 
+const GRANT_TYPE_WIRE_VALUE = "grant_type";
+
 /**
- * Checks if a request property is optional (pointer type).
+ * The client-credentials grant type is synthesized in the token request
+ * rather than surfaced as a client option.
  */
-export function isRequestPropertyOptional(requestProperty: FernIr.RequestProperty): boolean {
-    return isTypeReferenceOptional(getRequestPropertyValueType(requestProperty));
+export function isGrantTypeRequestProperty(requestProperty: FernIr.RequestProperty): boolean {
+    if (requestProperty.property.type === "body" || requestProperty.property.type === "query") {
+        return getOriginalName(requestProperty.property.name) === GRANT_TYPE_WIRE_VALUE;
+    }
+    return false;
+}
+
+/**
+ * Checks if a request property is generated as a pointer type.
+ */
+export function isRequestPropertyPointer(
+    requestProperty: FernIr.RequestProperty,
+    irTypes: Record<string, FernIr.TypeDeclaration>
+): boolean {
+    return isTypeReferencePointer(getRequestPropertyValueType(requestProperty), irTypes);
 }
 
 /**
@@ -94,14 +119,74 @@ export function isPlainStringType(typeRef: FernIr.TypeReference): boolean {
 }
 
 /**
- * Checks if a type reference is optional.
+ * Returns true if the given type reference is a non-optional, non-nullable boolean primitive.
  */
-export function isTypeReferenceOptional(typeRef: FernIr.TypeReference | undefined): boolean {
+export function isPlainBooleanType(typeRef: FernIr.TypeReference): boolean {
+    if (typeRef.type === "primitive") {
+        return typeRef.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
+    }
+    return false;
+}
+
+export function isTypeReferencePointer(
+    typeRef: FernIr.TypeReference | undefined,
+    irTypes: Record<string, FernIr.TypeDeclaration>,
+    seen: Set<string> = new Set()
+): boolean {
+    if (typeRef == null) {
+        return false;
+    }
+    if (typeRef.type === "container") {
+        return typeRef.container.type === "optional" || typeRef.container.type === "nullable";
+    }
+    if (typeRef.type === "named") {
+        if (seen.has(typeRef.typeId)) {
+            return false;
+        }
+        seen.add(typeRef.typeId);
+        const declaration = irTypes[typeRef.typeId];
+        return declaration?.shape.type === "alias" && isTypeReferencePointer(declaration.shape.aliasOf, irTypes, seen);
+    }
+    return false;
+}
+
+function isTypeReferenceOptional(
+    typeRef: FernIr.TypeReference | undefined,
+    irTypes: Record<string, FernIr.TypeDeclaration>,
+    seen: Set<string> = new Set()
+): boolean {
     if (typeRef == null) {
         return false;
     }
     if (typeRef.type === "container") {
         return typeRef.container.type === "optional";
+    }
+    if (typeRef.type === "named") {
+        if (seen.has(typeRef.typeId)) {
+            return false;
+        }
+        seen.add(typeRef.typeId);
+        const declaration = irTypes[typeRef.typeId];
+        return declaration?.shape.type === "alias" && isTypeReferenceOptional(declaration.shape.aliasOf, irTypes, seen);
+    }
+    return false;
+}
+
+export function isTypeReferenceLiteral(
+    typeRef: FernIr.TypeReference,
+    irTypes: Record<string, FernIr.TypeDeclaration>,
+    seen: Set<string> = new Set()
+): boolean {
+    if (typeRef.type === "container") {
+        return typeRef.container.type === "literal";
+    }
+    if (typeRef.type === "named") {
+        if (seen.has(typeRef.typeId)) {
+            return false;
+        }
+        seen.add(typeRef.typeId);
+        const declaration = irTypes[typeRef.typeId];
+        return declaration?.shape.type === "alias" && isTypeReferenceLiteral(declaration.shape.aliasOf, irTypes, seen);
     }
     return false;
 }
@@ -154,17 +239,17 @@ export function getInferredAuthCredentialParams(
     tokenEndpoint: FernIr.HttpEndpoint,
     irTypes: Record<string, FernIr.TypeDeclaration>,
     context: { getFieldName(name: NameInput): string }
-): Array<{ fieldName: string; isOptional: boolean }> {
-    const params: Array<{ fieldName: string; isOptional: boolean }> = [];
+): Array<{ fieldName: string; isPointer: boolean }> {
+    const params: Array<{ fieldName: string; isPointer: boolean }> = [];
 
     // Add non-literal endpoint headers
     for (const header of tokenEndpoint.headers) {
-        if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
+        if (isTypeReferenceLiteral(header.valueType, irTypes)) {
             continue;
         }
         params.push({
             fieldName: context.getFieldName(header.name),
-            isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
+            isPointer: isTypeReferencePointer(header.valueType, irTypes)
         });
     }
 
@@ -172,16 +257,15 @@ export function getInferredAuthCredentialParams(
     // Handles both inlined request bodies and referenced type declarations.
     const bodyProperties = resolveTokenEndpointBodyProperties(tokenEndpoint, irTypes);
     for (const prop of bodyProperties) {
-        if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
+        if (isTypeReferenceLiteral(prop.valueType, irTypes)) {
             continue;
         }
-        const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
-        if (isOptional) {
+        if (isTypeReferenceOptional(prop.valueType, irTypes)) {
             continue;
         }
         params.push({
             fieldName: context.getFieldName(prop.name),
-            isOptional: false
+            isPointer: isTypeReferencePointer(prop.valueType, irTypes)
         });
     }
 

@@ -4,11 +4,13 @@
 package com.seed.exhaustive.resources.endpoints.contenttype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.exhaustive.core.BodyProperties;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.RetryInterceptor;
 import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
@@ -54,7 +56,8 @@ public class RawContentTypeClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/json-patch+json"));
         } catch (JsonProcessingException e) {
             throw new CustomException("Failed to serialize request", e);
@@ -69,6 +72,15 @@ public class RawContentTypeClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -78,6 +90,8 @@ public class RawContentTypeClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new CustomApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new CustomException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new CustomException("Network error executing HTTP request", e);
         }
@@ -111,7 +125,8 @@ public class RawContentTypeClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/json-patch+json; charset=utf-8"));
         } catch (JsonProcessingException e) {
             throw new CustomException("Failed to serialize request", e);
@@ -126,6 +141,15 @@ public class RawContentTypeClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -135,6 +159,8 @@ public class RawContentTypeClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new CustomApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new CustomException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new CustomException("Network error executing HTTP request", e);
         }

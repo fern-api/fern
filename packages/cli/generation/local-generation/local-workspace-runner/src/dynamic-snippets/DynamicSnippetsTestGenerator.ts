@@ -19,7 +19,8 @@ interface DynamicSnippetsGenerator {
     new (
         context: TaskContext,
         ir: dynamic.DynamicIntermediateRepresentation,
-        config: FernGeneratorExec.GeneratorConfig
+        config: FernGeneratorExec.GeneratorConfig,
+        inlineTypeIds?: Set<string>
     ): {
         generateTests(params: { outputDir: AbsoluteFilePath; requests: DynamicSnippetsTestRequest[] }): Promise<void>;
     };
@@ -68,7 +69,12 @@ export class DynamicSnippetsTestGenerator {
             this.context.logger.debug(`Skipping dynamic snippets test generation for language "${language}"`);
             return;
         }
-        return new config.generator(this.context, this.testSuite.ir, this.testSuite.config).generateTests({
+        return new config.generator(
+            this.context,
+            this.testSuite.ir,
+            this.testSuite.config,
+            this.testSuite.inlineTypeIds
+        ).generateTests({
             outputDir,
             requests: this.testSuite.requests
         });

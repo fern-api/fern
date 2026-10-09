@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `test_aiohttp_autodetect.py` and `_default_clients.py` to use the
+    configured `package_name` instead of the raw organization name. Previously,
+    when `package_name` in `generators.yml` differed from `organization` in
+    `fern.config.json`, the generated aiohttp test used incorrect import paths
+    and the pip install error message contained a hardcoded literal "package"
+    instead of the actual package name.
+  type: fix

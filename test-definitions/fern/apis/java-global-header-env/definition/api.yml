@@ -1,0 +1,7 @@
+name: java-global-header-env
+headers:
+  X-API-Version:
+    name: version
+    type: optional<string>
+    env: MY_API_VERSION
+    client-default: "2024-01-01"

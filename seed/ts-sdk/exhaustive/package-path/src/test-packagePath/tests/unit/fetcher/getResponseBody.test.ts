@@ -1,4 +1,4 @@
-import { getResponseBody } from "../../../core/fetcher/getResponseBody";
+import { getResponseBody, isResponseBodyError } from "../../../core/fetcher/getResponseBody";
 
 import { RUNTIME } from "../../../core/runtime";
 
@@ -73,6 +73,21 @@ describe("Test getResponseBody", () => {
         }
     });
 
+    it("should retain a reference to the parent Response for sse responses", async () => {
+        if (RUNTIME.type === "node") {
+            const mockStream = new ReadableStream();
+            const mockResponse = new Response(mockStream);
+            const result = (await getResponseBody(mockResponse, "sse")) as ReadableStream & {
+                __fern_response_ref?: Response;
+            };
+            // Pins the parent Response so undici's FinalizationRegistry can't GC it and cancel the stream.
+            expect(result.__fern_response_ref).toBe(mockResponse);
+            // The pin must be non-enumerable so it does not leak through JSON.stringify or Object.keys.
+            const descriptor = Object.getOwnPropertyDescriptor(result, "__fern_response_ref");
+            expect(descriptor?.enumerable).toBe(false);
+        }
+    });
+
     it("should handle streaming response type", async () => {
         const encoder = new TextEncoder();
         const testData = "test stream data";
@@ -93,5 +108,28 @@ describe("Test getResponseBody", () => {
         const { value } = await reader.read();
         const streamContent = decoder.decode(value);
         expect(streamContent).toBe(testData);
+    });
+
+    it("should retain a reference to the parent Response for streaming responses", async () => {
+        const mockStream = new ReadableStream();
+        const mockResponse = new Response(mockStream);
+        const result = (await getResponseBody(mockResponse, "streaming")) as ReadableStream & {
+            __fern_response_ref?: Response;
+        };
+        expect(result.__fern_response_ref).toBe(mockResponse);
+        const descriptor = Object.getOwnPropertyDescriptor(result, "__fern_response_ref");
+        expect(descriptor?.enumerable).toBe(false);
+    });
+
+    it("should mark malformed JSON as a response body error", async () => {
+        const result = await getResponseBody(new Response("invalid json"));
+        expect(isResponseBodyError(result)).toBe(true);
+    });
+
+    it("should not treat a JSON body shaped like a failure record as a response body error", async () => {
+        const lookalike = { ok: false, error: { reason: "non-json", statusCode: 200, rawBody: "x" } };
+        const result = await getResponseBody(new Response(JSON.stringify(lookalike)));
+        expect(result).toEqual(lookalike);
+        expect(isResponseBodyError(result)).toBe(false);
     });
 });

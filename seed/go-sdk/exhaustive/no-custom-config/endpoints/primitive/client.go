@@ -27,13 +27,20 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnString(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnString(
 	ctx context.Context,
 	request string,
@@ -50,6 +57,12 @@ func (c *Client) GetAndReturnString(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnInt(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnInt(
 	ctx context.Context,
 	request int,
@@ -66,6 +79,12 @@ func (c *Client) GetAndReturnInt(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnLong(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnLong(
 	ctx context.Context,
 	request int64,
@@ -82,6 +101,12 @@ func (c *Client) GetAndReturnLong(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnDouble(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnDouble(
 	ctx context.Context,
 	request float64,
@@ -98,6 +123,12 @@ func (c *Client) GetAndReturnDouble(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnBool(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnBool(
 	ctx context.Context,
 	request bool,
@@ -114,6 +145,12 @@ func (c *Client) GetAndReturnBool(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnDatetime(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnDatetime(
 	ctx context.Context,
 	request time.Time,
@@ -130,6 +167,12 @@ func (c *Client) GetAndReturnDatetime(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnDate(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnDate(
 	ctx context.Context,
 	request time.Time,
@@ -146,6 +189,12 @@ func (c *Client) GetAndReturnDate(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnUUID(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnUUID(
 	ctx context.Context,
 	request uuid.UUID,
@@ -162,6 +211,12 @@ func (c *Client) GetAndReturnUUID(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.Primitive.GetAndReturnBase64(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnBase64(
 	ctx context.Context,
 	request []byte,

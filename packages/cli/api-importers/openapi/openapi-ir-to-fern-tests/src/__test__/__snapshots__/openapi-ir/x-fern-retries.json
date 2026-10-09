@@ -8,6 +8,7 @@
       "Latest"
     ]
   },
+  "specVersion": "1.0.0",
   "title": "Test extension `x-fern-retries`.",
   "servers": [],
   "websocketServers": [],

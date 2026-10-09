@@ -43,7 +43,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
 
-const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedServerSentEventsClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.completions.stream({
     query: ""
 });
@@ -93,7 +93,7 @@ The SDK uses async iterators, so you can consume the responses using a `for awai
 ```typescript
 import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
 
-const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedServerSentEventsClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.completions.stream({
     query: ""
 });

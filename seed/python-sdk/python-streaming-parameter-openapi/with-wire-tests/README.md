@@ -61,9 +61,8 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.chat_stream(
-        prompt="prompt",
-    )
+    async for chunk in client.chat_stream(...):
+        print(chunk)
 
 
 asyncio.run(main())
@@ -158,7 +157,7 @@ client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.chat_stream(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

@@ -108,6 +108,14 @@ Generators are processes that take your API Definition as input and output artif
 | `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [Changelog](https://buildwithfern.com/learn/sdks/generators/swift/changelog)                                    |
 | `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/rust/changelog)                                     |
 
+### CLI Generators
+
+Fern's CLI generator produces a standalone command-line interface for your API.
+
+| Generator ID                   | Latest Version                                                                             | Changelog                                              |
+| ------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `fernapi/fern-cli-generator`   | ![CLI Generator Version](https://img.shields.io/docker/v/fernapi/fern-cli-generator)      | [versions.yml](./generators/cli/versions.yml)          |
+
 ### Spec Generators
 
 Fern's spec generators can output an OpenAPI spec.
@@ -126,9 +134,17 @@ Here's a quick look at the most popular CLI commands. View the documentation for
 
 `fern check`: validate your API definition and Fern configuration.
 
-`fern generate`: run the generators specified in `generators.yml` in the cloud.
+`fern generate`: generate the default legacy group and all targets in the default `sdk-config.yml` in the cloud.
 
-`fern generate --local`: run the generators specified in `generators.yml` in docker locally.
+`fern generate --group <name>`: generate a legacy group from `generators.yml` or `generators.legacy.yml`.
+
+`fern generate --target <language>`: generate a language target from `sdk-config.yml`.
+
+`fern generate --group <name> --target <language>`: generate legacy and SDK Config selections together.
+
+`fern generate --sdk-config <path> --target <language>`: generate from an alternate SDK Config file.
+
+`fern generate --local`: run legacy generator groups in Docker locally. SDK Config targets use remote generation.
 
 `fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
 

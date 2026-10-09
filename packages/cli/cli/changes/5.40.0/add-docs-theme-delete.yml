@@ -1,0 +1,3 @@
+- summary: |
+    Add hidden `fern docs theme delete --name <theme name>` CLI command to delete a named theme from an org. Includes a confirmation prompt (skippable with `--yes`).
+  type: feat

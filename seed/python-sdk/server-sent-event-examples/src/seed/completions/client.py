@@ -196,7 +196,7 @@ class AsyncCompletionsClient:
 
 
         async def main() -> None:
-            response = await client.completions.stream(
+            response = client.completions.stream(
                 query="foo",
             )
             async for chunk in response:
@@ -236,7 +236,7 @@ class AsyncCompletionsClient:
 
 
         async def main() -> None:
-            response = await client.completions.stream_events(
+            response = client.completions.stream_events(
                 query="query",
             )
             async for chunk in response:
@@ -276,7 +276,7 @@ class AsyncCompletionsClient:
 
 
         async def main() -> None:
-            response = await client.completions.stream_events_discriminant_in_data(
+            response = client.completions.stream_events_discriminant_in_data(
                 query="query",
             )
             async for chunk in response:
@@ -318,7 +318,7 @@ class AsyncCompletionsClient:
 
 
         async def main() -> None:
-            response = await client.completions.stream_events_context_protocol(
+            response = client.completions.stream_events_context_protocol(
                 query="query",
             )
             async for chunk in response:

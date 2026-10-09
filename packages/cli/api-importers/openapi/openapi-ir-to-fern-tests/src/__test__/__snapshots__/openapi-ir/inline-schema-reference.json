@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Sample API",
   "servers": [],
   "websocketServers": [],
@@ -21,39 +22,6 @@
           "value": {
             "generatedName": "GetExampleResponse",
             "schemas": [
-              {
-                "allOf": [],
-                "properties": [
-                  {
-                    "conflict": {},
-                    "generatedName": "notFoundMessage",
-                    "key": "message",
-                    "schema": {
-                      "generatedName": "NotFoundMessage",
-                      "value": {
-                        "schema": {
-                          "type": "string"
-                        },
-                        "generatedName": "NotFoundMessage",
-                        "groupName": [],
-                        "type": "primitive"
-                      },
-                      "groupName": [],
-                      "type": "optional"
-                    },
-                    "audiences": []
-                  }
-                ],
-                "allOfPropertyConflicts": [],
-                "generatedName": "NotFound",
-                "groupName": [],
-                "additionalProperties": false,
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
-                },
-                "type": "object"
-              },
               {
                 "generatedName": "GetExampleResponseOne",
                 "schema": "Schema1",
@@ -136,9 +104,16 @@
           "response": {
             "value": {
               "properties": {
-                "message": {
+                "id": {
                   "value": {
-                    "value": "message",
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
                     "type": "string"
                   },
                   "type": "primitive"

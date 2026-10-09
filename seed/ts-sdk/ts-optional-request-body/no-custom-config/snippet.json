@@ -1,0 +1,50 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/refunds/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsOptionalRequestBodyClient } from \"@fern/ts-optional-request-body\";\n\nconst client = new SeedTsOptionalRequestBodyClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.refund(\"refund-id\", {\n    amount: 60\n});\n"
+            },
+            "example_identifier": "Split refund"
+        },
+        {
+            "id": {
+                "path": "/refunds",
+                "method": "POST",
+                "identifier_override": "endpoint_.bulkRefund"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsOptionalRequestBodyClient } from \"@fern/ts-optional-request-body\";\n\nconst client = new SeedTsOptionalRequestBodyClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.bulkRefund({\n    amount: 1.1\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/refunds/with-header",
+                "method": "POST",
+                "identifier_override": "endpoint_.refundWithHeader"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsOptionalRequestBodyClient } from \"@fern/ts-optional-request-body\";\n\nconst client = new SeedTsOptionalRequestBodyClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.refundWithHeader({\n    \"X-Idempotency-Key\": \"X-Idempotency-Key\",\n    body: {\n        amount: 1.1\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/refunds/{id}/required",
+                "method": "POST",
+                "identifier_override": "endpoint_.requiredRefund"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsOptionalRequestBodyClient } from \"@fern/ts-optional-request-body\";\n\nconst client = new SeedTsOptionalRequestBodyClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.requiredRefund(\"id\", {\n    amount: 1.1\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

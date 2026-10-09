@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "Plain JSON response",
+            "id": {
+                "path": "/clients",
+                "method": "POST",
+                "identifier_override": "endpoint_clients.create"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Clients.CreateAsync(\n    new ClientRequest\n    {\n        Client = new Client { Name = \"Acme Corp\", Email = \"contact@acme.com\" },\n    }\n);\n"
+            }
+        }
+    ]
+}

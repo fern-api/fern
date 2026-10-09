@@ -1,0 +1,4 @@
+- summary: |
+    You can now keep your redirects in their own files instead of listing them all in `docs.yml`.
+    Point `redirects` at one file or several, and Fern combines them in the order you list them.
+  type: feat

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema.js";
 import { DefaultIntegerFormatSchema } from "./DefaultIntegerFormatSchema.js";
 import { FormParameterEncodingSchema } from "./FormParameterEncodingSchema.js";
+import { OpenApiErrorResponsesSchema } from "./OpenApiErrorResponsesSchema.js";
 import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema.js";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema.js";
 import { ResolveAliasesSchema } from "./ResolveAliasesSchema.js";
@@ -26,8 +27,14 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     /** Enables exploring readonly schemas in OpenAPI specifications. */
     respectReadonlySchemas: z.boolean().optional(),
 
+    /** If true, endpoint response types will use the Read variant of schemas when respect-readonly-schemas is enabled. Defaults to false. */
+    useReadVariantForResponses: z.boolean().optional(),
+
     /** Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false. */
     respectForwardCompatibleEnums: z.boolean().optional(),
+
+    /** Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration. */
+    respectOptionalRequestBody: z.boolean().optional(),
 
     /** Enables using the `bytes` type for binary responses in OpenAPI specifications. Defaults to a file stream. */
     useBytesForBinaryResponse: z.boolean().optional(),
@@ -57,6 +64,23 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * Defaults to false.
      */
     preserveSingleSchemaOneof: z.boolean().optional(),
+
+    /**
+     * If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members.
+     * If false, the variants' properties are flattened into a single object and marked optional.
+     * Defaults to false.
+     */
+    preserveOneOfInAllOf: z.boolean().optional(),
+
+    /**
+     * When a schema declares `properties` alongside an `anyOf` that only marks
+     * some of those same properties required, the `anyOf` is a constraint rather
+     * than a set of variants. Set to true to convert such a schema as an object.
+     * Defaults to false, converting it to a union, which drops the sibling
+     * `properties`.
+     */
+    anyOfSiblingPropertiesAsObject: z.boolean().optional(),
 
     /**
      * Whether to inline allOf schemas. If false, allOf schemas will be
@@ -89,7 +113,60 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * so SDKs can expose them directly on the union type without casting.
      * Defaults to false.
      */
-    inferDiscriminatedUnionBaseProperties: z.boolean().optional()
+    inferDiscriminatedUnionBaseProperties: z.boolean().optional(),
+
+    /**
+     * If true, disambiguate generated request wrapper names that collide with
+     * component schema names by replacing the "Request" suffix with "Body".
+     * If false, keep the original "Request" suffix regardless of collisions.
+     * Defaults to true.
+     */
+    "disambiguate-request-names": z.boolean().optional(),
+
+    /**
+     * If true, ignore operation-level tags when determining the SDK structure.
+     * Endpoints fall back to the root package (or their namespace) and method
+     * names are derived from each operation's operationId.
+     * Defaults to false.
+     */
+    "ignore-tags": z.boolean().optional(),
+
+    /**
+     * If true, header parameters that declare their schema under `content` (e.g. a header
+     * whose value is a JSON-encoded object) are typed from that schema instead of falling
+     * back to a string.
+     * Defaults to false.
+     */
+    "respect-parameter-content": z.boolean().optional(),
+
+    /**
+     * If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
+     * Defaults to false.
+     */
+    "respect-per-spec-base-path": z.boolean().optional(),
+
+    /**
+     * If true, operation ids are split on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields
+     * `listFolderMembers` rather than `listfoldermembers`).
+     * This changes endpoint names, and therefore SDK method names and docs URLs.
+     * Defaults to false.
+     */
+    "respect-operation-id-word-boundaries": z.boolean().optional(),
+
+    /**
+     * If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
+     * within, that namespace instead of the endpoint's namespace.
+     * Defaults to false.
+     */
+    "namespaced-errors": z.boolean().optional(),
+
+    /**
+     * Standardize the body of every 4xx/5xx response on a single schema (for example an
+     * RFC 9457 Problem Details object) before the spec is parsed.
+     */
+    errorResponses: OpenApiErrorResponsesSchema.optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

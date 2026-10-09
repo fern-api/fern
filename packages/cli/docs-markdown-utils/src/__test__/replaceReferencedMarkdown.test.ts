@@ -214,6 +214,105 @@ describe("replaceReferencedMarkdown", () => {
         `);
     });
 
+    it("should substitute variables whose values contain angle brackets", async () => {
+        const markdown = `
+            <Markdown src="test.md" returnType="Promise<void>" single='Map<string, number>' expr={"Array<T>"} />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "`run(): {{returnType}}`, {{single}}, {{expr}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`run(): Promise<void>\`, Map<string, number>, Array<T>
+        `);
+    });
+
+    it("should replace each tag separately when tags with angle-bracket values share a line", async () => {
+        const markdown = `<Markdown src="a.md" t="A<B>" /> and <Markdown src="b.md" t="C<D>" />`;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/a.md")) {
+                    return "first {{t}}";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/b.md")) {
+                    return "second {{t}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe("first A<B> and second C<D>");
+    });
+
+    it("should keep the other quote style inside a quoted value", async () => {
+        const markdown = `<Markdown src="test.md" a="Map<'key', string>" b='Record<"id", number>' />`;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "{{a}} | {{b}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`Map<'key', string> | Record<"id", number>`);
+    });
+
+    it("should handle escaped quotes and nested braces inside expression values", async () => {
+        const markdown = String.raw`<Markdown src="test.md" label={'Bob\'s'} obj={{ a: 1 }} />`;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "Welcome {{label}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe("Welcome Bob's");
+    });
+
+    it("should leave an unterminated tag untouched without hanging", async () => {
+        const markdown = `<Markdown src="test.md" ${"a ".repeat(50_000)}`;
+        const markdownLoader = vi.fn().mockResolvedValue("test content");
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader
+        });
+
+        expect(result).toBe(markdown);
+        expect(markdownLoader).not.toHaveBeenCalled();
+    });
+
     it("should leave unreplaced variables as-is when no matching prop exists", async () => {
         const markdown = `
             <Markdown src="test.md" plan="pro" />
@@ -749,5 +848,98 @@ describe("replaceReferencedMarkdown", () => {
                 }
             ])
         );
+    });
+
+    it("should indent multi-line snippet continuation lines to the list item content column", async () => {
+        const markdown = [
+            "9. Water the fern.",
+            '10. <Markdown src="/snippets/repot.mdx" />',
+            "11. Trim dead fronds."
+        ].join("\n");
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () =>
+                [
+                    "Choose a pot. You can pick:",
+                    "",
+                    "    * A **clay** pot.",
+                    "    * A plastic pot.",
+                    "",
+                    "Add soil."
+                ].join("\n")
+        });
+
+        expect(result).toBe(
+            [
+                "9. Water the fern.",
+                "10. Choose a pot. You can pick:",
+                "    ",
+                "        * A **clay** pot.",
+                "        * A plastic pot.",
+                "    ",
+                "    Add soil.",
+                "11. Trim dead fronds."
+            ].join("\n")
+        );
+    });
+
+    it("should indent continuation lines for bullet list items", async () => {
+        const markdown = '- <Markdown src="/snippets/care.mdx" />\n- Next tip.';
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () => "First line.\n\nSecond paragraph."
+        });
+
+        expect(result).toBe("- First line.\n  \n  Second paragraph.\n- Next tip.");
+    });
+
+    it("should keep blockquote markers and list indentation for a blockquoted list item", async () => {
+        const markdown = '> 1. <Markdown src="/snippets/care.mdx" />\n> 2. Next tip.';
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () => "First\n\nSecond"
+        });
+
+        expect(result).toBe("> 1. First\n>    \n>    Second\n> 2. Next tip.");
+    });
+
+    it("should keep nested blockquote markers when the tag is directly inside a blockquote", async () => {
+        const markdown = '> > <Markdown src="/snippets/care.mdx" />';
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () => "First\n\nSecond"
+        });
+
+        expect(result).toBe("> > First\n> > \n> > Second");
+    });
+
+    it("should keep leading-whitespace indentation when the tag is not inside a list item", async () => {
+        const markdown = 'Intro text <Markdown src="/snippets/care.mdx" />';
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () => "First line.\nSecond line."
+        });
+
+        expect(result).toBe("Intro text First line.\n Second line.");
     });
 });

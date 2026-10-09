@@ -1,0 +1,7 @@
+- summary: |
+    `fern check` now errors when a path parameter shares a name with another request
+    property (an inlined request body property, query parameter, or header), including
+    collisions that only appear after camelCase normalization. These collisions produce
+    broken or ambiguous generated SDK code; use `x-fern-parameter-name` (OpenAPI) or the
+    `name` property (Fern definition) to deconflict.
+  type: fix

@@ -15,7 +15,9 @@ import {
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
+import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
+import { resolveRemoteSpecs } from "./resolveRemoteSpecs.js";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -45,8 +47,15 @@ export async function loadSingleNamespaceAPIWorkspace({
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
                 : undefined;
         if (definition.schema.type === "protobuf") {
-            const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
-            const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot);
+            // Resolved git sources produce absolute paths; use them directly
+            const absoluteFilepathToProtobufRoot: AbsoluteFilePath =
+                path.isAbsolute(definition.schema.root) && definition.resolvedAbsolutePath
+                    ? AbsoluteFilePath.of(definition.schema.root)
+                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.root));
+            const relativeFilepathToProtobufRoot =
+                path.isAbsolute(definition.schema.root) && definition.resolvedAbsolutePath
+                    ? RelativeFilePath.of(path.basename(definition.schema.root))
+                    : RelativeFilePath.of(definition.schema.root);
             if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
                 return {
                     didSucceed: false,
@@ -62,14 +71,20 @@ export async function loadSingleNamespaceAPIWorkspace({
             const absoluteFilepathToTarget: AbsoluteFilePath | undefined =
                 definition.schema.target.length === 0
                     ? undefined
-                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
+                    : path.isAbsolute(definition.schema.target) && definition.resolvedAbsolutePath
+                      ? AbsoluteFilePath.of(definition.schema.target)
+                      : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
 
             if (absoluteFilepathToTarget != null) {
                 if (!(await doesPathExist(absoluteFilepathToTarget))) {
+                    const displayTarget =
+                        path.isAbsolute(definition.schema.target) && definition.resolvedAbsolutePath
+                            ? RelativeFilePath.of(path.basename(definition.schema.target))
+                            : RelativeFilePath.of(definition.schema.target);
                     return {
                         didSucceed: false,
                         failures: {
-                            [RelativeFilePath.of(definition.schema.target)]: {
+                            [displayTarget]: {
                                 type: WorkspaceLoaderFailureType.FILE_MISSING
                             }
                         }
@@ -120,21 +135,59 @@ export async function loadSingleNamespaceAPIWorkspace({
                     }
                 };
             }
+            const absoluteFilepathToExamples =
+                definition.schema.examples != null
+                    ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.examples))
+                    : undefined;
+            if (
+                definition.schema.examples != null &&
+                absoluteFilepathToExamples != null &&
+                !(await doesPathExist(absoluteFilepathToExamples))
+            ) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(definition.schema.examples)]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
             specs.push({
                 type: "graphql",
                 absoluteFilepath: absoluteFilepathToGraphQL,
                 absoluteFilepathToOverrides,
+                absoluteFilepathToExamples,
                 namespace
             });
             continue;
         }
 
-        const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
-        if (!(await doesPathExist(absoluteFilepath))) {
+        // Reject user-specified absolute paths (only allow absolute paths from git source resolution)
+        if (path.isAbsolute(definition.schema.path) && !definition.resolvedAbsolutePath) {
             return {
                 didSucceed: false,
                 failures: {
-                    [RelativeFilePath.of(definition.schema.path)]: {
+                    [RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)]: {
+                        type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+                        filepath: definition.schema.path
+                    }
+                }
+            };
+        }
+
+        const absoluteFilepath: AbsoluteFilePath = path.isAbsolute(definition.schema.path)
+            ? AbsoluteFilePath.of(definition.schema.path)
+            : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
+
+        if (!(await doesPathExist(absoluteFilepath))) {
+            const relativeFilepath = path.isAbsolute(definition.schema.path)
+                ? RelativeFilePath.of(path.basename(definition.schema.path))
+                : RelativeFilePath.of(definition.schema.path);
+            return {
+                didSucceed: false,
+                failures: {
+                    [relativeFilepath]: {
                         type: WorkspaceLoaderFailureType.FILE_MISSING
                     }
                 }
@@ -179,6 +232,24 @@ export async function loadSingleNamespaceAPIWorkspace({
             };
         }
         const apiSettings = getAPIDefinitionSettings(definition.settings);
+        const errorResponses = apiSettings.errorResponses;
+        if (errorResponses != null && typeof errorResponses.schema === "string") {
+            const absoluteFilepathToErrorResponsesSchema = join(
+                absolutePathToWorkspace,
+                RelativeFilePath.of(errorResponses.schema)
+            );
+            if (!(await doesPathExist(absoluteFilepathToErrorResponsesSchema))) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(errorResponses.schema)]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
+            apiSettings.errorResponses = { ...errorResponses, schema: absoluteFilepathToErrorResponsesSchema };
+        }
         specs.push({
             type: "openapi",
             absoluteFilepath,
@@ -189,7 +260,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 audiences: definition.audiences ?? []
             },
             source: {
-                type: "openapi",
+                type: definition.schema.sourceType ?? "openapi",
                 file: absoluteFilepath
             },
             namespace
@@ -246,10 +317,14 @@ export async function loadAPIWorkspace({
         const specs: Spec[] = [];
 
         if (generatorsConfiguration.api.type === "singleNamespace") {
+            const resolvedDefinitions = await resolveRemoteSpecs({
+                definitions: generatorsConfiguration.api.definitions,
+                context
+            });
             const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
                 absolutePathToWorkspace,
                 namespace: undefined,
-                definitions: generatorsConfiguration.api.definitions
+                definitions: resolvedDefinitions
             });
             if (!Array.isArray(maybeSpecs)) {
                 return maybeSpecs;
@@ -258,13 +333,17 @@ export async function loadAPIWorkspace({
         } else {
             const namespaceEntries = Object.entries(generatorsConfiguration.api.definitions);
             const namespaceResults = await Promise.all(
-                namespaceEntries.map(([namespace, definitions]) =>
-                    loadSingleNamespaceAPIWorkspace({
+                namespaceEntries.map(async ([namespace, definitions]) => {
+                    const resolvedDefinitions = await resolveRemoteSpecs({
+                        definitions,
+                        context
+                    });
+                    return loadSingleNamespaceAPIWorkspace({
                         absolutePathToWorkspace,
                         namespace,
-                        definitions
-                    })
-                )
+                        definitions: resolvedDefinitions
+                    });
+                })
             );
             for (const maybeSpecs of namespaceResults) {
                 if (!Array.isArray(maybeSpecs)) {
@@ -274,10 +353,14 @@ export async function loadAPIWorkspace({
             }
 
             if (generatorsConfiguration.api.rootDefinitions != null) {
+                const resolvedRootDefinitions = await resolveRemoteSpecs({
+                    definitions: generatorsConfiguration.api.rootDefinitions,
+                    context
+                });
                 const maybeRootSpecs = await loadSingleNamespaceAPIWorkspace({
                     absolutePathToWorkspace,
                     namespace: undefined,
-                    definitions: generatorsConfiguration.api.rootDefinitions
+                    definitions: resolvedRootDefinitions
                 });
                 if (!Array.isArray(maybeRootSpecs)) {
                     return maybeRootSpecs;

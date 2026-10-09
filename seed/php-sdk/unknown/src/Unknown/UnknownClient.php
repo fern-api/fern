@@ -50,6 +50,15 @@ class UnknownClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->unknown->post(
+     *     [
+     *         'key' => "value",
+     *     ],
+     * );
+     * ```
+     *
      * @param mixed $request
      * @param ?array{
      *   baseUrl?: string,
@@ -97,6 +106,17 @@ class UnknownClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->unknown->postObject(
+     *     new MyObject([
+     *         'unknown' => [
+     *             'key' => "value",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param MyObject $request
      * @param ?array{
      *   baseUrl?: string,

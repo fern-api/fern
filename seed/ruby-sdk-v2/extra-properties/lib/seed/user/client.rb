@@ -18,6 +18,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.user.create_user(
+      #     type: "CreateUserRequest",
+      #     version: "v1",
+      #     name: "Alice"
+      #   )
+      #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -35,7 +42,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::User::Types::User.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

@@ -25,13 +25,19 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Endpoints.URLs.WithMixedCase(
+//	    context.TODO(),
+//	)
 func (c *Client) WithMixedCase(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -46,6 +52,11 @@ func (c *Client) WithMixedCase(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.URLs.NoEndingSlash(
+//	    context.TODO(),
+//	)
 func (c *Client) NoEndingSlash(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -60,6 +71,11 @@ func (c *Client) NoEndingSlash(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.URLs.WithEndingSlash(
+//	    context.TODO(),
+//	)
 func (c *Client) WithEndingSlash(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -74,6 +90,11 @@ func (c *Client) WithEndingSlash(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.URLs.WithUnderscores(
+//	    context.TODO(),
+//	)
 func (c *Client) WithUnderscores(
 	ctx context.Context,
 	opts ...option.RequestOption,

@@ -71,6 +71,18 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'page' => 1,
+     *         'perPage' => 1,
+     *         'order' => Order::Asc->value,
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -98,6 +110,15 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithMixedTypeCursorPagination(
+     *     new ListUsersMixedTypeCursorPaginationRequest([
+     *         'cursor' => 'cursor',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersMixedTypeCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -125,6 +146,13 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithMixedTypeCursorPagination(
+     *     new ListUsersMixedTypeCursorPaginationRequest([]),
+     * );
+     * ```
+     *
      * @param ListUsersBodyCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -152,6 +180,18 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'page' => 1,
+     *         'perPage' => 1,
+     *         'order' => Order::Asc->value,
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -182,6 +222,18 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'page' => 1.1,
+     *         'perPage' => 1.1,
+     *         'order' => Order::Asc->value,
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersDoubleOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -212,6 +264,13 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithMixedTypeCursorPagination(
+     *     new ListUsersMixedTypeCursorPaginationRequest([]),
+     * );
+     * ```
+     *
      * @param ListUsersBodyOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -242,6 +301,17 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithOffsetStepPagination(
+     *     new ListUsersOffsetStepPaginationRequest([
+     *         'page' => 1,
+     *         'limit' => 1,
+     *         'order' => Order::Asc->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersOffsetStepPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -273,6 +343,17 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithOffsetStepPagination(
+     *     new ListUsersOffsetStepPaginationRequest([
+     *         'page' => 1,
+     *         'limit' => 1,
+     *         'order' => Order::Asc->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListWithOffsetPaginationHasNextPageRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -304,6 +385,15 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithExtendedResults(
+     *     new ListUsersExtendedRequest([
+     *         'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersExtendedRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -331,6 +421,15 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithExtendedResults(
+     *     new ListUsersExtendedRequest([
+     *         'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersExtendedRequestForOptionalData $request
      * @param ?array{
      *   baseUrl?: string,
@@ -358,6 +457,15 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsernamesRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -385,6 +493,15 @@ class InlineUsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlineUsers->inlineUsers->listWithGlobalConfig(
+     *     new ListWithGlobalConfigRequest([
+     *         'offset' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListWithGlobalConfigRequest $request
      * @param ?array{
      *   baseUrl?: string,

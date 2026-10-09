@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `--format jsonl` now emits errors as a single line. The envelope was
+    pretty-printed regardless of format, so a line-delimited consumer — the only
+    reason to pick NDJSON — read a bare `{` and failed on the first line. Errors
+    under `jsonl` are compact; `json` and `yaml` keep the readable multi-line
+    rendering.
+  type: fix
+
+- summary: |
+    A request that fails to build is now a validation error rather than an
+    internal one. `reqwest`'s `build()` fails on a malformed URL or header
+    value, which comes from `--base-url` or a flag the user typed, but the
+    failure was reported as `code: 500` / `reason: "internalError"` with exit 5.
+    A mistyped `--base-url` claimed a server status for a request that was never
+    sent and buried a fixable input error under an internal-error exit code. It
+    now reports `code: 400` / `reason: "validationError"` with exit 3.
+  type: fix
+
+- summary: |
+    `<cli> --help --format json` now emits the operation catalog, as the
+    generated README has always documented. It printed the human help instead,
+    so the README's own example (`--help --format json | jq …`) failed with a
+    jq parse error. It now returns exactly what `--schema` returns for the same
+    scope.
+
+    Only an *explicit* machine `--format` triggers this — the piped default does
+    not, so `<cli> --help | less` still shows help. A path with no catalog entry
+    (`auth login`, `completion`, `man` — built-ins, not API operations) falls
+    back to prose rather than erroring; `--schema` on such a path still reports
+    `discoveryError`, since asking for a document that does not exist is a real
+    error. The README example was also
+    corrected: the catalog is an object with `globalFlags` and `operations`, so
+    counting operations is `jq '.operations | length'`, not `jq 'length'` (which
+    counted the two top-level keys).
+  type: fix
+
+- summary: |
+    Removed `error::print_error_json` from the vendored runtime. It wrote the
+    JSON envelope to stdout unconditionally — the exact double-output behaviour
+    the rest of this release removes — so it was a working copy of the bug left
+    reachable under an inviting name. It had no callers in the runtime, in the
+    generator's emitted code, or in any generated CLI. `write_error_json`, which
+    honours the resolved format, is the entry point.
+  type: fix

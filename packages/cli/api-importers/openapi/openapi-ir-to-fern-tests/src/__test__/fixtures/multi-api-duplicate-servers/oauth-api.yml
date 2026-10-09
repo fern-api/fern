@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: OAuth API
+  version: 1.0.0
+servers:
+  - url: https://oauth.stage.example.com
+    x-fern-server-name: Staging
+paths:
+  /token:
+    post:
+      operationId: createToken
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string

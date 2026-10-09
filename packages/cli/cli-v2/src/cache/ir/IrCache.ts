@@ -16,7 +16,7 @@ import { formatBytes } from "../../ui/format.js";
  *
  * Stores IR files organized by version and content hash:
  * ```
- * ~/.cache/fern/v1/ir/
+ * ~/.fern/v1/ir/
  * ├── v63/
  * │   └── sha256/
  * │       ├── 0a/
@@ -69,7 +69,7 @@ export declare namespace IrCache {
 }
 
 export class IrCache {
-    /** Absolute file path to the IR cache directory (e.g. ~/.cache/fern/v1/ir) */
+    /** Absolute file path to the IR cache directory (e.g. ~/.fern/v1/ir) */
     public readonly absoluteFilePath: AbsoluteFilePath;
 
     private readonly tempPath: AbsoluteFilePath;

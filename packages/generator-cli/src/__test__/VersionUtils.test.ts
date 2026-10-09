@@ -1,5 +1,42 @@
 import { describe, expect, it } from "vitest";
-import { extractLanguageFromGeneratorName } from "../autoversion/VersionUtils.js";
+import {
+    extractLanguageFromGeneratorName,
+    incrementVersion,
+    isPlaceholderVersion,
+    VersionBump
+} from "../autoversion/VersionUtils.js";
+
+describe("isPlaceholderVersion", () => {
+    it("recognizes the canonical placeholder and its language-mapped variants", () => {
+        expect(isPlaceholderVersion("0.0.0-fern-placeholder")).toBe(true);
+        expect(isPlaceholderVersion("v0.0.0-fern-placeholder")).toBe(true);
+        expect(isPlaceholderVersion("0.0.0.dev0")).toBe(true);
+    });
+
+    it("recognizes a placeholder that a previous run already advanced", () => {
+        expect(isPlaceholderVersion("0.0.0-fern-placeholder.0")).toBe(true);
+        expect(isPlaceholderVersion("0.0.0-fern-placeholder.1")).toBe(true);
+    });
+
+    it("does not match real versions, including pre-releases", () => {
+        expect(isPlaceholderVersion("1.2.3")).toBe(false);
+        expect(isPlaceholderVersion("v1.2.3")).toBe(false);
+        expect(isPlaceholderVersion("4.0.0-rc.2")).toBe(false);
+        expect(isPlaceholderVersion("0.0.0")).toBe(false);
+    });
+});
+
+describe("incrementVersion", () => {
+    it("refuses to advance the placeholder's pre-release counter", () => {
+        expect(() => incrementVersion("0.0.0-fern-placeholder", VersionBump.PATCH)).toThrow(/placeholder version/);
+        expect(() => incrementVersion("v0.0.0-fern-placeholder", VersionBump.MINOR)).toThrow(/placeholder version/);
+    });
+
+    it("still advances real pre-release lines", () => {
+        expect(incrementVersion("4.0.0-rc.2", VersionBump.MINOR)).toBe("4.0.0-rc.3");
+        expect(incrementVersion("1.2.3", VersionBump.MINOR)).toBe("1.3.0");
+    });
+});
 
 describe("extractLanguageFromGeneratorName", () => {
     it("extracts 'typescript' from 'fernapi/fern-typescript-node-sdk'", () => {

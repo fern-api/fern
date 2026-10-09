@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "OpenAPI overlays resolution",
   "servers": [],
   "websocketServers": [],
@@ -26,6 +27,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -180,6 +182,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {

@@ -42,6 +42,11 @@ export abstract class EndpointRequest extends WithGeneration {
 
     public abstract getParameterType(): ast.Type;
 
+    /** The default the request parameter takes, which lets the caller leave it out of the call. */
+    public getParameterInitializer(): string | undefined {
+        return undefined;
+    }
+
     public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;
 
     public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;

@@ -26,13 +26,24 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetUsersRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	}
+//	client.User.GetUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	request *fern.GetUsersRequest,
@@ -49,6 +60,20 @@ func (c *Client) GetUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.User{
+//	    Name: "name",
+//	    Tags: []string{
+//	        "tags",
+//	        "tags",
+//	    },
+//	}
+//	client.User.CreateUser(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	tenantID string,
@@ -67,6 +92,23 @@ func (c *Client) CreateUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.UpdateUserRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	    Body: &fern.User{
+//	        Name: "name",
+//	        Tags: []string{
+//	            "tags",
+//	            "tags",
+//	        },
+//	    },
+//	}
+//	client.User.UpdateUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateUser(
 	ctx context.Context,
 	request *fern.UpdateUserRequest,
@@ -83,6 +125,19 @@ func (c *Client) UpdateUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.SearchUsersRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.User.SearchUsers(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SearchUsers(
 	ctx context.Context,
 	request *fern.SearchUsersRequest,
@@ -100,6 +155,18 @@ func (c *Client) SearchUsers(
 }
 
 // Test endpoint with path parameter that has a text prefix (v{version})
+//
+// Example:
+//
+//	request := &fern.GetUserMetadataRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	    Version: 1,
+//	}
+//	client.User.GetUserMetadata(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUserMetadata(
 	ctx context.Context,
 	request *fern.GetUserMetadataRequest,
@@ -117,6 +184,19 @@ func (c *Client) GetUserMetadata(
 }
 
 // Test endpoint with path parameters listed in different order than found in path
+//
+// Example:
+//
+//	request := &fern.GetUserSpecificsRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	    Version: 1,
+//	    Thought: "thought",
+//	}
+//	client.User.GetUserSpecifics(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUserSpecifics(
 	ctx context.Context,
 	request *fern.GetUserSpecificsRequest,

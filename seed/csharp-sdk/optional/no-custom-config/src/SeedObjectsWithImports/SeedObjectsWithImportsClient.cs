@@ -14,7 +14,7 @@ public partial class SeedObjectsWithImportsClient : ISeedObjectsWithImportsClien
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedObjectsWithImports" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedObjectsWithImports.Version.Current },
                 { "User-Agent", "Fernoptional/0.0.1" },
             }
         );

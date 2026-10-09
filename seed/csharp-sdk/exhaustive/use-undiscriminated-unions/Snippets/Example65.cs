@@ -10,7 +10,12 @@ public partial class Examples
             }
         );
 
-        await client.NoReqBody.PostWithNoRequestBodyAsync();
+        await client.NoAuth.PostWithNoAuthAsync(
+            new Dictionary<string, object>()
+            {
+                ["key"] = "value",
+            }
+        );
     }
 
 }

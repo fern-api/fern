@@ -13,15 +13,14 @@
 
 ```go
 request := &fern.EchoRequest{
-        Name: "Hello world!",
-        Size: 20,
-    }
-client.Echo(
-        context.TODO(),
-        "id-ksfd9c1",
-        request,
-    )
+    Name: "Hello world!",
+    Size: 20,
 }
+client.Echo(
+    context.TODO(),
+    "id-ksfd9c1",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -71,11 +70,10 @@ client.Echo(
 
 ```go
 client.Service.Nop(
-        context.TODO(),
-        "id-a2ijs82",
-        "id-219xca8",
-    )
-}
+    context.TODO(),
+    "id-a2ijs82",
+    "id-219xca8",
+)
 ```
 </dd>
 </dl>

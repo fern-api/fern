@@ -31,7 +31,7 @@ abstract class JsonSerializableType implements \JsonSerializable
     public function toJson(): string
     {
         $serializedObject = $this->jsonSerialize();
-        $encoded = JsonEncoder::encode($serializedObject);
+        $encoded = JsonEncoder::encode(empty($serializedObject) ? new \stdClass() : $serializedObject);
         if (!$encoded) {
             throw new Exception("Could not encode type");
         }
@@ -78,8 +78,8 @@ abstract class JsonSerializableType implements \JsonSerializable
                 $value = JsonSerializer::serializeArray($value, $arrayType);
             }
 
-            // Handle object
-            if (is_object($value)) {
+            // Handle object (skip stdClass since it's already serialized, e.g. from union processing)
+            if (is_object($value) && !($value instanceof \stdClass)) {
                 $value = JsonSerializer::serializeObject($value);
             }
 
@@ -106,7 +106,8 @@ abstract class JsonSerializableType implements \JsonSerializable
             throw new JsonException("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         /** @var array<string, mixed> $decodedJson */
-        return self::jsonDeserialize($decodedJson);
+        // static:: (not self::) so subclasses' typed jsonDeserialize overrides are dispatched via late static binding.
+        return static::jsonDeserialize($decodedJson);
     }
 
     /**
@@ -145,12 +146,14 @@ abstract class JsonSerializableType implements \JsonSerializable
             $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
             if ($dateTypeAttr) {
                 $dateType = $dateTypeAttr->newInstance()->type;
-                if (!is_string($value)) {
-                    throw new JsonException("Unexpected non-string type for date.");
+                if ($value !== null) {
+                    if (!is_string($value)) {
+                        throw new JsonException("Unexpected non-string type for date.");
+                    }
+                    $value = ($dateType === Date::TYPE_DATE)
+                        ? JsonDeserializer::deserializeDate($value)
+                        : JsonDeserializer::deserializeDateTime($value);
                 }
-                $value = ($dateType === Date::TYPE_DATE)
-                    ? JsonDeserializer::deserializeDate($value)
-                    : JsonDeserializer::deserializeDateTime($value);
             }
 
             // Handle Array annotation

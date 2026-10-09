@@ -6,7 +6,7 @@ import ObjectsWithImports
     @Test func sendOptionalBody1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -31,7 +31,7 @@ import ObjectsWithImports
     @Test func sendOptionalTypedBody1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -54,7 +54,7 @@ import ObjectsWithImports
     @Test func sendOptionalNullableWithAllOptionalProperties1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "success": true

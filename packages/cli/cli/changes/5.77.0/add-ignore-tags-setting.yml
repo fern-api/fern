@@ -1,0 +1,14 @@
+- summary: |
+    Add an `ignore-tags` OpenAPI setting to `generators.yml`. When enabled,
+    operation-level tags are ignored when determining the SDK structure:
+    endpoints fall back to the root package (or their namespace) and method
+    names are derived from each operation's `operationId`.
+
+    ```yaml
+    api:
+      specs:
+        - openapi: ./openapi.yml
+          settings:
+            ignore-tags: true
+    ```
+  type: feat

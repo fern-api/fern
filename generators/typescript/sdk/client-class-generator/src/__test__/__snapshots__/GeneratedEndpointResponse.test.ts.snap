@@ -47,9 +47,27 @@ exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset paginati
 
 exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > returns offset pagination info without step 2`] = `"response?.items ?? []"`;
 
-exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > returns offset-step pagination info with step and item-index semantics 1`] = `"(response?.items ?? []).length >= Math.floor((request?.limit ?? 1))"`;
+exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > returns offset pagination info without step 3`] = `
+"const _nextOffset = _offset + 1;
+return core.HttpResponsePromise.fromPromise(list(core.setObjectProperty(request, "page", _nextOffset)).withRawResponse().then(_pageResponse => {
+    _offset = _nextOffset;
+    return _pageResponse;
+}));"
+`;
+
+exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > returns offset-step pagination info with step and item-index semantics 1`] = `"(response?.items ?? []).length > 0 && (request?.limit == null || (response?.items ?? []).length >= request?.limit)"`;
+
+exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > returns offset-step pagination info with step and item-index semantics 2`] = `
+"const _nextOffset = _offset + (response?.items != null ? (response?.items).length : 1);
+return core.HttpResponsePromise.fromPromise(list(core.setObjectProperty(request, "offset", _nextOffset)).withRawResponse().then(_pageResponse => {
+    _offset = _nextOffset;
+    return _pageResponse;
+}));"
+`;
 
 exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > uses hasNextPage property when available 1`] = `"response?.hasMore ?? (response?.items ?? []).length > 0"`;
+
+exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > wraps baseHasNextPage in parens when combined with hasNextPage via ?? 1`] = `"response?.hasMore ?? ((response?.items ?? []).length > 0 && (request?.limit == null || (response?.items ?? []).length >= request?.limit))"`;
 
 exports[`GeneratedThrowingEndpointResponse > getReturnResponseStatements > generates HEAD method response with headers 1`] = `
 "if (_response.ok) {

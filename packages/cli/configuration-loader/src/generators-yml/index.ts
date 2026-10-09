@@ -2,7 +2,8 @@ export { addGenerator } from "./addGenerator.js";
 export {
     isGithubSelfhosted,
     mergeSettings,
-    parseBaseApiDefinitionSettingsSchema
+    parseBaseApiDefinitionSettingsSchema,
+    parseOpenApiDefinitionSettingsSchema
 } from "./convertGeneratorsConfiguration.js";
 export { GeneratorName } from "./GeneratorName.js";
 export { GENERATOR_INVOCATIONS } from "./generatorInvocations.js";

@@ -93,6 +93,7 @@ function createMockClientClass(): any {
             ts.factory.createPropertyAccessExpression(referenceToRootClient, ts.factory.createIdentifier("service")),
         hasAuthProvider: () => false,
         getGenerateEndpointMetadata: () => false,
+        getGuardProcessEnvAccess: () => false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getEnvironment: () => undefined
     };
@@ -171,7 +172,7 @@ function createImpl(opts?: {
     request?: GeneratedEndpointRequest;
     response?: GeneratedEndpointResponse;
     includeCredentialsOnCrossOriginRequests?: boolean;
-    defaultTimeoutInSeconds?: number | "infinity" | undefined;
+    defaultTimeout?: number | "infinity" | undefined;
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
     omitUndefined?: boolean;
@@ -188,7 +189,7 @@ function createImpl(opts?: {
         response: opts?.response ?? createMockResponse(),
         generatedSdkClientClass: opts?.generatedSdkClientClass ?? createMockClientClass(),
         includeCredentialsOnCrossOriginRequests: opts?.includeCredentialsOnCrossOriginRequests ?? false,
-        defaultTimeoutInSeconds: opts?.defaultTimeoutInSeconds,
+        defaultTimeout: opts?.defaultTimeout,
         includeSerdeLayer: opts?.includeSerdeLayer ?? true,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
@@ -395,6 +396,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                     FernIr.StreamingResponse.sse({
                         payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         terminator: undefined,
+                        resumable: undefined,
                         docs: undefined,
                         v2Examples: undefined
                     })
@@ -417,6 +419,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                     streamResponse: FernIr.StreamingResponse.sse({
                         payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         terminator: undefined,
+                        resumable: undefined,
                         docs: undefined,
                         v2Examples: undefined
                     }),
@@ -428,6 +431,52 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                         })
                     )
                 }),
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
+            const impl = createImpl({ endpoint });
+            const context = createMockFileContext();
+            const stmts = impl.invokeFetcher(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates reconnect function for resumable SSE streaming endpoints", () => {
+            const endpoint = createHttpEndpoint();
+            endpoint.response = {
+                body: FernIr.HttpResponseBody.streaming(
+                    FernIr.StreamingResponse.sse({
+                        payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        terminator: "[[DONE]]",
+                        resumable: true,
+                        docs: undefined,
+                        v2Examples: undefined
+                    })
+                ),
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
+            const impl = createImpl({ endpoint });
+            const context = createMockFileContext();
+            const stmts = impl.invokeFetcher(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("does not generate reconnect function for non-resumable SSE endpoints", () => {
+            const endpoint = createHttpEndpoint();
+            endpoint.response = {
+                body: FernIr.HttpResponseBody.streaming(
+                    FernIr.StreamingResponse.sse({
+                        payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        terminator: "[[DONE]]",
+                        resumable: false,
+                        docs: undefined,
+                        v2Examples: undefined
+                    })
+                ),
                 statusCode: undefined,
                 isWildcardStatusCode: undefined,
                 docs: undefined

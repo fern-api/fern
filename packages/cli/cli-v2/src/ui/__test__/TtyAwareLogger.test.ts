@@ -95,6 +95,27 @@ describe("TtyAwareLogger", () => {
         });
     });
 
+    describe("stream errors", () => {
+        it("swallows EPIPE from stdout and stderr", () => {
+            const stdout = createStream({ isTTY: false });
+            const stderr = createStream({ isTTY: false });
+            new TtyAwareLogger(stdout.stream, stderr.stream);
+
+            const error = Object.assign(new Error("write EPIPE"), { code: "EPIPE" });
+
+            expect(() => stdout.stream.emit("error", error)).not.toThrow();
+            expect(() => stderr.stream.emit("error", error)).not.toThrow();
+        });
+
+        it("rethrows non-EPIPE stream errors", () => {
+            const stdout = createStream({ isTTY: false });
+            const stderr = createStream({ isTTY: false });
+            new TtyAwareLogger(stdout.stream, stderr.stream);
+
+            expect(() => stdout.stream.emit("error", new Error("boom"))).toThrow("boom");
+        });
+    });
+
     describe("register", () => {
         it("does not start a paint loop on non-TTY streams", () => {
             const stdout = createStream({ isTTY: false });

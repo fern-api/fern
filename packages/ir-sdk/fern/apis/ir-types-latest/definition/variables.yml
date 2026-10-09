@@ -11,3 +11,13 @@ types:
       id: VariableId
       name: commons.NameOrString
       type: types.TypeReference
+      envVar:
+        type: optional<string>
+        docs: |
+          The name of an environment variable the generated SDK reads at client
+          construction when the caller does not pass the variable explicitly.
+          When present, the variable becomes optional in the client constructor
+          and generators should fail with a clear error if neither a value nor
+          the environment variable is provided. Populated from `env` on a
+          detailed `variables` declaration in `api.yml`, or from `x-fern-env`
+          on an `x-fern-sdk-variables` entry in OpenAPI specs.

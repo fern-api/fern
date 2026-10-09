@@ -44,6 +44,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/RuleResponse"
 
+  /v1/preview/1/plants:
+    post:
+      operationId: createPlant
+      summary: Create a plant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+      responses:
+        "200":
+          description: Created plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+
 components:
   schemas:
     # -----------------------------------------------------------------------
@@ -176,3 +194,30 @@ components:
             - draft
         executionContext:
           $ref: "#/components/schemas/RuleExecutionContext"
+
+    # -----------------------------------------------------------------------
+    # Case D: Property-level allOf combining a $ref to a primitive with an
+    # inline constraint, where the base primitive carries a description.
+    #
+    # The property `slug` composes a $ref to PlantName (a string with a
+    # description and length constraints) with an inline {pattern}. The base
+    # description must survive the merge alongside the merged validation.
+    #
+    # Expected: slug docs == PlantName description; validation from both sides
+    # Bug: the description sourced from the base schema was dropped
+    # -----------------------------------------------------------------------
+    PlantName:
+      type: string
+      minLength: 1
+      maxLength: 100
+      description: The unique name of the plant.
+
+    Plant:
+      type: object
+      required:
+        - slug
+      properties:
+        slug:
+          allOf:
+            - $ref: "#/components/schemas/PlantName"
+            - pattern: "^[a-z0-9_-]+$"

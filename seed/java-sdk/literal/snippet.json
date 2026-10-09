@@ -14,6 +14,19 @@
             }
         },
         {
+            "example_identifier": "3ebef11e",
+            "id": {
+                "method": "POST",
+                "path": "/headers/literals-only",
+                "identifier_override": "endpoint_headers.sendLiteralsOnly"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.headers().sendLiteralsOnly();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.headers().sendLiteralsOnly();\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "27d83728",
             "id": {
                 "method": "POST",

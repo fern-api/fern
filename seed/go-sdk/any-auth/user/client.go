@@ -45,13 +45,19 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.User.Get(
+//	    context.TODO(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -66,6 +72,11 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.User.GetAdmins(
+//	    context.TODO(),
+//	)
 func (c *Client) GetAdmins(
 	ctx context.Context,
 	opts ...option.RequestOption,

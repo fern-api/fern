@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Added a `generate-documentation-file` config option (default `true`) so the
+    generated csproj emits XML documentation and the published NuGet package ships
+    `lib/<tfm>/<Namespace>.xml`, giving consumers IntelliSense. CS1591 is
+    suppressed so enabling documentation does not introduce warnings for
+    undocumented members.
+  type: feat
+
+- summary: |
+    Added a `package-metadata` config block for NuGet metadata written into the
+    generated csproj: `description`, `authors`, `tags`, `copyright`, `icon`,
+    `project-url`, `repository-url`, `repository-type`, `include-source-link`
+    (adds `Microsoft.SourceLink.GitHub`) and `include-symbols` (produces a
+    `.snupkg`).
+  type: feat

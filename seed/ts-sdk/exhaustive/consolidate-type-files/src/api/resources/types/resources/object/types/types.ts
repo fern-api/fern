@@ -101,3 +101,30 @@ export interface ObjectWithRequiredNestedObject {
     requiredString: string;
     requiredObject: SeedExhaustive.types.NestedObjectWithRequiredField;
 }
+
+/**
+ * A base object that has a required enum field, preventing Default derive
+ * in Rust because enums don't implement Default.
+ */
+export interface ObjectWithInheritedRequiredEnum {
+    requiredEnum: SeedExhaustive.types.WeatherReport;
+    requiredString: string;
+}
+
+/**
+ * Extends ObjectWithInheritedRequiredEnum, inheriting the required enum field.
+ * This type should NOT derive Default in Rust because the parent type
+ * has a required enum field.
+ */
+export interface ExtendedObjectWithInheritedEnum extends SeedExhaustive.types.ObjectWithInheritedRequiredEnum {
+    optionalDescription?: string | undefined;
+}
+
+/**
+ * Tests that a struct with a required field whose type extends a non-Default
+ * base type does NOT incorrectly derive Default in Rust. Reproduces the bug
+ * where namedTypeSupportsDefault only checked properties but not extends.
+ */
+export interface ObjectWithRequiredExtendedField {
+    requiredExtended: SeedExhaustive.types.ExtendedObjectWithInheritedEnum;
+}

@@ -5,11 +5,12 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.TestGetRequest;
 import com.seed.api.types.TestGetResponse;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -27,20 +28,60 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<TestGetResponse> testGet(String region) {
-        return this.rawClient.testGet(region).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TestGetResponse>> rawFuture = this.rawClient.testGet(region);
+        CompletableFuture<TestGetResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TestGetResponse> testGet(String region, RequestOptions requestOptions) {
-        return this.rawClient.testGet(region, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TestGetResponse>> rawFuture =
+                this.rawClient.testGet(region, requestOptions);
+        CompletableFuture<TestGetResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TestGetResponse> testGet(String region, TestGetRequest request) {
-        return this.rawClient.testGet(region, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TestGetResponse>> rawFuture = this.rawClient.testGet(region, request);
+        CompletableFuture<TestGetResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TestGetResponse> testGet(
             String region, TestGetRequest request, RequestOptions requestOptions) {
-        return this.rawClient.testGet(region, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TestGetResponse>> rawFuture =
+                this.rawClient.testGet(region, request, requestOptions);
+        CompletableFuture<TestGetResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

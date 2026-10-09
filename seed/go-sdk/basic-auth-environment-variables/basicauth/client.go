@@ -32,14 +32,21 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // GET request with basic auth scheme
+//
+// Example:
+//
+//	client.BasicAuth.GetWithBasicAuth(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithBasicAuth(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -55,6 +62,16 @@ func (c *Client) GetWithBasicAuth(
 }
 
 // POST request with basic auth scheme
+//
+// Example:
+//
+//	request := map[string]any{
+//	    "key": "value",
+//	}
+//	client.BasicAuth.PostWithBasicAuth(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) PostWithBasicAuth(
 	ctx context.Context,
 	request any,

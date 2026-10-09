@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "prod",
+    "staging",
+    "dev"
+  ],
+  "description": "Execution context for the rule, excluding the prod environment.",
+  "definitions": {}
+}

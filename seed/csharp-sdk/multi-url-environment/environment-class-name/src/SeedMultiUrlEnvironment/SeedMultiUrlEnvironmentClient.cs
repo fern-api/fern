@@ -14,7 +14,7 @@ public partial class SeedMultiUrlEnvironmentClient : ISeedMultiUrlEnvironmentCli
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedMultiUrlEnvironment" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedMultiUrlEnvironment.Version.Current },
                 { "User-Agent", "Fernmulti-url-environment/0.0.1" },
             }
         );

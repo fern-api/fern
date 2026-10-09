@@ -3,9 +3,11 @@
  */
 package com.seed.bearerTokenEnvironmentVariable.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
+import com.seed.bearerTokenEnvironmentVariable.core.RetryInterceptor;
 import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableApiException;
 import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableException;
 import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableHttpResponse;
@@ -53,6 +55,15 @@ public class RawServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -63,6 +74,9 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedBearerTokenEnvironmentVariableApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedBearerTokenEnvironmentVariableException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedBearerTokenEnvironmentVariableException("Network error executing HTTP request", e);
         }

@@ -12,10 +12,14 @@ export const AsIsFiles = {
     ResponseError: "errors/response_error.Template.rb",
     ServerError: "errors/server_error.Template.rb",
     TimeoutError: "errors/timeout_error.Template.rb",
+    ConnectionError: "errors/connection_error.Template.rb",
 
     // Internal error classes
     ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
     ErrorsType: "internal/errors/type_error.Template.rb",
+
+    // Idempotency
+    IdempotencyKey: "internal/idempotency_key.Template.rb",
 
     // Iterator classes
     ItemIterator: "internal/iterators/item_iterator.Template.rb",
@@ -29,9 +33,21 @@ export const AsIsFiles = {
     HttpBaseRequest: "internal/http/base_request.Template.rb",
     HttpRawClient: "internal/http/raw_client.Template.rb",
 
+    // Webhooks
+    WebhookSignature: "internal/webhook_signature.Template.rb",
+    WebhookBodyHash: "internal/webhook_body_hash.Template.rb",
+
     // JSON
     JsonRequest: "internal/json/request.Template.rb",
     JsonSerializable: "internal/json/serializable.Template.rb",
+
+    // URL-encoded forms
+    UrlEncodedRequest: "internal/url_encoded/request.Template.rb",
+
+    // XML
+    XmlElement: "internal/xml/element.Template.rb",
+    XmlUtils: "internal/xml/utils.Template.rb",
+    XmlSerializable: "internal/xml/serializable.Template.rb",
 
     // Multipart
     MultipartEncoder: "internal/multipart/multipart_encoder.Template.rb",
@@ -67,7 +83,22 @@ export const AsIsFiles = {
     TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb",
 
     // HTTP tests
-    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb"
+    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb",
+
+    // JSON tests
+    TestJsonRequest: "test/unit/internal/json/test_request.Template.rb",
+
+    // URL-encoded tests
+    TestUrlEncodedRequest: "test/unit/internal/url_encoded/test_request.Template.rb",
+
+    // Multipart tests
+    TestMultipartFormData: "test/unit/internal/multipart/test_form_data.Template.rb",
+
+    // XML tests
+    TestXmlElement: "test/unit/internal/xml/test_element.Template.rb",
+
+    // Webhook tests
+    TestWebhookBodyHash: "test/unit/internal/test_webhook_body_hash.Template.rb"
 } as const;
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
@@ -113,5 +144,19 @@ const asIsTopoValue = {
     [AsIsFiles.OffsetItemIterator]: 28,
     [AsIsFiles.CursorPageIterator]: 29,
     [AsIsFiles.OffsetPageIterator]: 30,
-    [AsIsFiles.CustomPager]: 31
+    [AsIsFiles.CustomPager]: 31,
+    [AsIsFiles.IdempotencyKey]: 32,
+    [AsIsFiles.WebhookSignature]: 33,
+    [AsIsFiles.WebhookBodyHash]: 34,
+    // Only constraint is that this loads after HttpBaseRequest (6), which its
+    // Request class extends. Ordered last (max value) so introducing it does not
+    // shift the position of any pre-existing require in the generated root file.
+    [AsIsFiles.UrlEncodedRequest]: 35,
+    // Xml::Serializable references Types::Utils/Enum/Boolean lazily (at call time), so the only
+    // hard constraint is that these load after the types they are mixed into.
+    [AsIsFiles.XmlElement]: 36,
+    [AsIsFiles.XmlUtils]: 37,
+    [AsIsFiles.XmlSerializable]: 38,
+    // Only needs ApiError (20). Ordered last so it does not shift any pre-existing require.
+    [AsIsFiles.ConnectionError]: 39
 };

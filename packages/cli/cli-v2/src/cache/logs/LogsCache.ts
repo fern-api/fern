@@ -22,7 +22,7 @@ export declare namespace LogsCache {
 }
 
 export class LogsCache {
-    /** Absolute file path to the log cache directory (e.g. ~/.cache/fern/v1/logs) */
+    /** Absolute file path to the log cache directory (e.g. ~/.fern/v1/logs) */
     public readonly absoluteFilePath: AbsoluteFilePath;
 
     constructor({ absoluteFilePath }: { absoluteFilePath: AbsoluteFilePath }) {

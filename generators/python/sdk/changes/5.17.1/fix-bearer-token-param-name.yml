@@ -1,0 +1,5 @@
+- summary: |
+    Generated code snippets (README, OAuth token override examples) now use
+    the custom bearer token parameter name from the API spec (e.g. `api_key`)
+    instead of always using the default `token`.
+  type: fix

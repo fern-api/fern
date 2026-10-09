@@ -5,6 +5,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { mergeAdditionalBodyParameters } from "./core/requestBody.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
@@ -24,6 +25,9 @@ export class SeedObjectClient {
     /**
      * @param {SeedObject.PostRootRequest} request
      * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedObjectError}
+     * @throws {@link errors.SeedObjectTimeoutError}
      *
      * @example
      *     await client.getRoot({
@@ -56,7 +60,7 @@ export class SeedObjectClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -81,6 +85,9 @@ export class SeedObjectClient {
     /**
      * @param {SeedObject.GetDiscriminatedUnionRequest} request
      * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedObjectError}
+     * @throws {@link errors.SeedObjectTimeoutError}
      *
      * @example
      *     await client.getDiscriminatedUnion({
@@ -123,7 +130,7 @@ export class SeedObjectClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -148,6 +155,9 @@ export class SeedObjectClient {
     /**
      * @param {SeedObject.GetUndiscriminatedUnionRequest} request
      * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedObjectError}
+     * @throws {@link errors.SeedObjectTimeoutError}
      *
      * @example
      *     await client.getUndiscriminatedUnion({
@@ -189,7 +199,7 @@ export class SeedObjectClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

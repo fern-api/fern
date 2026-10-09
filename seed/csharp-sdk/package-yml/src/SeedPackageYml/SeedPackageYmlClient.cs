@@ -15,7 +15,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPackageYml" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedPackageYml.Version.Current },
                 { "User-Agent", "Fernpackage-yml/0.0.1" },
             }
         );
@@ -39,6 +39,9 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPackageYml.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPackageYml.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -52,6 +55,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                     Method = HttpMethod.Post,
                     Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -69,7 +73,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedPackageYml.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -83,7 +87,13 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedPackageYml.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -94,7 +104,13 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             throw new SeedPackageYmlApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedPackageYml.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

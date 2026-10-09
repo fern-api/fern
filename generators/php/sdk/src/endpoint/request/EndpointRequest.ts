@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 
 export interface QueryParameterCodeBlock {
     code: php.CodeBlock;
@@ -69,7 +70,7 @@ export abstract class EndpointRequest {
                 case "fileUpload":
                     return this.fileUploadRequestBodyHasRequiredProperties(requestBody);
                 case "reference":
-                    return false;
+                    return mayOmitRequestBody({ context: this.context, endpoint: this.endpoint });
                 case "bytes":
                     return false;
                 default:
@@ -80,6 +81,11 @@ export abstract class EndpointRequest {
     }
 
     public abstract getRequestParameterType(): php.Type;
+
+    /** The default the request parameter takes, which lets the caller leave it out of the call. */
+    public getRequestParameterInitializer(): php.CodeBlock | undefined {
+        return undefined;
+    }
 
     public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;
 

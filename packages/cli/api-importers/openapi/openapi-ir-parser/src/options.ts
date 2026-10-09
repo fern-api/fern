@@ -1,5 +1,14 @@
 import { generatorsYml } from "@fern-api/configuration";
 
+/**
+ * Which `x-twilio.*Visibility` tiers to keep.
+ * - `all`: no filtering.
+ * - `public`: keep only `public` elements.
+ * - `private`: keep `public` and `private` elements.
+ * `hidden` elements are never kept when filtering is enabled.
+ */
+export type VisibilityFilter = "all" | "public" | "private";
+
 export interface ParseOpenAPIOptions {
     /* Whether or not to disable OpenAPI example generation */
     disableExamples: boolean;
@@ -46,6 +55,20 @@ export interface ParseOpenAPIOptions {
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
 
+    /**
+     * Filters elements by their `x-twilio.libraryVisibility` (operation -> path item -> info, then
+     * schema/property/parameter level). Defaults to `all`; SDK generation uses `public`
+     * (`fern generate`) or `private` (`fern generate --private`).
+     */
+    libraryVisibility: VisibilityFilter;
+
+    /**
+     * Filters elements by their `x-twilio.docsVisibility`, with the same resolution rules as
+     * `libraryVisibility`. Defaults to `all`; docs generation uses `public`
+     * (`fern generate --docs`, `fern docs dev`) or `private` (`--private`).
+     */
+    docsVisibility: VisibilityFilter;
+
     // For now, we include an AsyncAPI-specific option here, but this is better
     // handled with a discriminated union.
     asyncApiNaming: "v1" | "v2";
@@ -67,6 +90,24 @@ export interface ParseOpenAPIOptions {
      * If true, preserve the oneOf structure when there is only one schema in the oneOf array.
      */
     preserveSingleSchemaOneOf: boolean;
+
+    /**
+     * If true, an allOf whose members include a oneOf/anyOf is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members. If false, the variants'
+     * properties are flattened into a single object and marked optional.
+     */
+    preserveOneOfInAllOf: boolean;
+
+    /**
+     * A schema may declare `properties` alongside an `anyOf` whose branches only
+     * re-declare those same properties as required. The `anyOf` is then a
+     * validation constraint ("at least one of these"), not a set of variants.
+     *
+     * If true, such a schema is converted as an object from its own `properties`.
+     * If false, it is converted to a union, which discards the sibling
+     * `properties`. Defaults to false.
+     */
+    anyOfSiblingPropertiesAsObject: boolean;
 
     /**
      * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
@@ -141,6 +182,63 @@ export interface ParseOpenAPIOptions {
      * Defaults to false.
      */
     shouldInferDiscriminatedUnionBaseProperties: boolean;
+
+    /**
+     * If true, disambiguate generated request wrapper names that collide with
+     * component schema names by replacing the "Request" suffix with "Body".
+     * If false, keep the original "Request" suffix regardless of collisions.
+     * Defaults to true.
+     */
+    disambiguateRequestNames: boolean;
+
+    /**
+     * If true, ignore operation-level tags when determining the SDK structure.
+     * Endpoints fall back to the root package (or their namespace) and method
+     * names are derived from each operation's operationId.
+     * Defaults to false.
+     */
+    ignoreTags: boolean;
+
+    /**
+     * If true, header parameters that declare their schema under `content` (e.g. a header
+     * whose value is a JSON-encoded object) are typed from that schema instead of falling
+     * back to a string.
+     * Defaults to false.
+     */
+    respectParameterContent: boolean;
+
+    /**
+     * If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
+     * Defaults to false.
+     */
+    respectPerSpecBasePath: boolean;
+
+    /**
+     * If true, operation ids are tokenized on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so that a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + `Sharing_ListFolderMembers` -> `listFolderMembers`).
+     * If false, only separator-delimited chunks are tokenized, so operation ids containing an
+     * underscore or a digit keep their tag prefix and lose their internal word boundaries
+     * (e.g. `listfoldermembers`).
+     *
+     * Only the v3 OpenAPI parser reads this, so it changes generated API reference URLs. Changing it
+     * renames already published pages, so it defaults to false.
+     */
+    respectOperationIdWordBoundaries: boolean;
+
+    /**
+     * If true, an error whose response object (`components.responses[...]`) carries `x-fern-sdk-namespace`
+     * is declared in, and shared within, that namespace instead of the endpoint's namespace. Errors without
+     * the extension are unaffected. Defaults to false.
+     */
+    namespacedErrors: boolean;
+
+    /**
+     * Standardizes every 4xx/5xx response body on a single configured schema (e.g. RFC 9457 Problem
+     * Details) and optionally adds missing error responses. Applied by the workspace loader to the
+     * OpenAPI document before it reaches either parser. Undefined disables it.
+     */
+    errorResponses: generatorsYml.OpenApiErrorResponsesSchema | undefined;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -159,6 +257,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     shouldUseUndiscriminatedUnionsWithLiterals: false,
     shouldUseIdiomaticRequestNames: true,
     filter: undefined,
+    libraryVisibility: "all",
+    docsVisibility: "all",
     asyncApiNaming: "v1",
     exampleGeneration: undefined,
     defaultFormParameterEncoding: "json",
@@ -167,6 +267,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     additionalPropertiesDefaultsTo: false,
     typeDatesAsStrings: false,
     preserveSingleSchemaOneOf: false,
+    preserveOneOfInAllOf: false,
+    anyOfSiblingPropertiesAsObject: false,
     inlineAllOfSchemas: false,
     resolveAliases: false,
     groupMultiApiEnvironments: false,
@@ -180,7 +282,14 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     inferForwardCompatible: false,
     coerceConstsTo: "enums-coerceable-to-literals",
     respectByteFormat: false,
-    shouldInferDiscriminatedUnionBaseProperties: false
+    shouldInferDiscriminatedUnionBaseProperties: false,
+    disambiguateRequestNames: true,
+    ignoreTags: false,
+    respectParameterContent: false,
+    respectPerSpecBasePath: false,
+    respectOperationIdWordBoundaries: false,
+    namespacedErrors: false,
+    errorResponses: undefined
 };
 
 function mergeOptions<T extends object>(params: {

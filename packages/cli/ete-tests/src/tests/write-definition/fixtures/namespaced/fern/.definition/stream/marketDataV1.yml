@@ -84,6 +84,10 @@ channel:
   messages:
     marketData:
       body: streamRoot.Market
+      docs: >
+        The initial response message will show the existing state of the order
+        book. Subsequent messages will show all executed trades, as well as all
+        other changes to the order book from orders placed or canceled.
       origin: client
   path: /v1/marketdata/{symbol}
   query-parameters:

@@ -25,13 +25,13 @@ export class RevokeTokenCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusService({ token: token.value });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
 
         const tokenId = args.tokenId;
 
         const response = await withSpinner({
             message: `Revoking token "${tokenId}"`,
-            operation: () => venus.apiKeys.revokeTokenById(tokenId)
+            operation: () => venus.apiKeys.revokeTokenById({ tokenId })
         });
 
         if (response.ok) {
@@ -43,23 +43,19 @@ export class RevokeTokenCommand {
             return;
         }
 
-        response.error._visit({
-            unauthorizedError: () => {
-                context.stderr.error(`${Icons.error} You are not authorized to revoke this token.`);
-                throw new CliError({ code: CliError.Code.AuthError });
-            },
-            tokenNotFoundError: () => {
-                context.stderr.error(`${Icons.error} Token "${tokenId}" was not found.`);
-                throw CliError.notFound();
-            },
-            _other: () => {
-                context.stderr.error(
-                    `${Icons.error} Failed to revoke token.\n` +
-                        `\n  Please contact support@buildwithfern.com for assistance.`
-                );
-                throw CliError.internalError();
-            }
-        });
+        const status = response.rawResponse.status;
+        if (status === 401 || status === 403) {
+            context.stderr.error(`${Icons.error} You are not authorized to revoke this token.`);
+            throw new CliError({ code: CliError.Code.AuthError });
+        }
+        if (status === 404) {
+            context.stderr.error(`${Icons.error} Token "${tokenId}" was not found.`);
+            throw CliError.notFound();
+        }
+        context.stderr.error(
+            `${Icons.error} Failed to revoke token.\n` + `\n  Please contact support@buildwithfern.com for assistance.`
+        );
+        throw CliError.internalError();
     }
 }
 

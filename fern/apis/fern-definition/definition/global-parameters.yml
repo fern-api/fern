@@ -1,0 +1,45 @@
+imports:
+  commons: commons.yml
+
+types:
+  GlobalParameterDeclarationSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      in:
+        type: optional<string>
+        docs: |
+          The location of the parameter: body, query, header, or path.
+          Defaults to body if not specified.
+      target:
+        type: optional<string>
+        docs: |
+          The wire-level injection path for the parameter.
+          If not specified, defaults to the parameter name.
+      type:
+        type: optional<string>
+        docs: |
+          The type of the parameter: string, integer, double, boolean.
+          Defaults to string if not specified.
+      env:
+        type: optional<string>
+        docs: Environment variable to read the default value from.
+      default:
+        type: optional<unknown>
+        docs: |
+          Client-side default value for the parameter.
+      optional:
+        type: optional<boolean>
+        docs: Whether the parameter is optional.
+      apply:
+        type: optional<string>
+        docs: |
+          How the parameter is applied: explicit or auto.
+          explicit requires per-operation opt-in via x-fern-global-parameter.
+          auto injects on every operation with the target field.
+      parameter-name:
+        type: optional<string>
+        docs: |
+          SDK/CLI alias for the parameter name.
+          If specified, this name is used in generated SDKs and CLIs
+          instead of the parameter name key.

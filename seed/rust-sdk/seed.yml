@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -55,6 +55,13 @@ fixtures:
         clientClassName: CustomSimpleClient
         enableWireTests: true
       outputFolder: basic-custom-config
+    - customConfig:
+        userAgentFromPlatformHeaders: true
+      outputFolder: user-agent-from-platform-headers
+    - customConfig:
+        crateName: seed-simple-api-sdk
+        preserveCrateNameHyphens: true
+      outputFolder: preserve-crate-name-hyphens
   imdb:
     - customConfig:
         clientName: ImdbClient
@@ -123,6 +130,10 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  endpoint-security-auth:
+    - customConfig:
+        enableWireTests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enableWireTests: true
@@ -139,6 +150,12 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+  respect-optional-request-body:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        respectOptionalRequestBody: true
+      outputFolder: respect-optional-request-body
   websocket:
     - customConfig:
         enableWebsockets: true
@@ -164,5 +181,6 @@ fixtures:
         packageLicense: "Apache-2.0"
         packageLicenseFile: "LICENSE.md"
       outputFolder: both-license-options
-allowedFailures:
-  - server-sent-events-openapi
+    - license:
+        custom: LICENSE
+      outputFolder: custom-license-from-config

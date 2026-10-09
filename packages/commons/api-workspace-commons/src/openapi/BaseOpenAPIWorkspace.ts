@@ -12,6 +12,7 @@ export declare namespace BaseOpenAPIWorkspace {
         objectQueryParameters: boolean | undefined;
         onlyIncludeReferencedSchemas: boolean | undefined;
         respectReadonlySchemas: boolean | undefined;
+        useReadVariantForResponses: boolean | undefined;
         respectNullableSchemas: boolean | undefined;
         wrapReferencesToNullableInOptional: boolean | undefined;
         coerceOptionalSchemasToNullable: boolean | undefined;
@@ -19,6 +20,7 @@ export declare namespace BaseOpenAPIWorkspace {
         exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
         useBytesForBinaryResponse: boolean | undefined;
         respectForwardCompatibleEnums: boolean | undefined;
+        respectOptionalRequestBody: boolean | undefined;
         inlineAllOfSchemas: boolean | undefined;
         resolveAliases: generatorsYml.ResolveAliases | undefined;
         groupEnvironmentsByHost: boolean | undefined;
@@ -28,6 +30,7 @@ export declare namespace BaseOpenAPIWorkspace {
         defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
         pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
         coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
+        respectOperationIdWordBoundaries: boolean | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -38,6 +41,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly objectQueryParameters: boolean | undefined;
     public readonly onlyIncludeReferencedSchemas: boolean | undefined;
     public readonly respectReadonlySchemas: boolean | undefined;
+    public readonly useReadVariantForResponses: boolean | undefined;
     public readonly respectNullableSchemas: boolean | undefined;
     public readonly wrapReferencesToNullableInOptional: boolean | undefined;
     public readonly coerceOptionalSchemasToNullable: boolean | undefined;
@@ -45,6 +49,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     public readonly useBytesForBinaryResponse: boolean | undefined;
     public readonly respectForwardCompatibleEnums: boolean | undefined;
+    public readonly respectOptionalRequestBody: boolean | undefined;
     public readonly inlineAllOfSchemas: boolean | undefined;
     public readonly resolveAliases: generatorsYml.ResolveAliases | undefined;
     public readonly groupEnvironmentsByHost: boolean | undefined;
@@ -54,6 +59,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public readonly pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     public readonly coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
+    public readonly respectOperationIdWordBoundaries: boolean | undefined;
     private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -62,6 +68,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.objectQueryParameters = args.objectQueryParameters;
         this.onlyIncludeReferencedSchemas = args.onlyIncludeReferencedSchemas;
         this.respectReadonlySchemas = args.respectReadonlySchemas;
+        this.useReadVariantForResponses = args.useReadVariantForResponses;
         this.respectNullableSchemas = args.respectNullableSchemas;
         this.wrapReferencesToNullableInOptional = args.wrapReferencesToNullableInOptional;
         this.coerceOptionalSchemasToNullable = args.coerceOptionalSchemasToNullable;
@@ -69,6 +76,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.exampleGeneration = args.exampleGeneration;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
+        this.respectOptionalRequestBody = args.respectOptionalRequestBody;
         this.inlineAllOfSchemas = args.inlineAllOfSchemas;
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
@@ -78,6 +86,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.pathParameterOrder = args.pathParameterOrder;
         this.coerceConstsTo = args.coerceConstsTo;
+        this.respectOperationIdWordBoundaries = args.respectOperationIdWordBoundaries;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -141,6 +150,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public respectReadonlySchemas: boolean | undefined;
     public useBytesForBinaryResponse: boolean | undefined;
     public respectForwardCompatibleEnums: boolean | undefined;
+    public respectOptionalRequestBody: boolean | undefined;
     public resolveAliases: generatorsYml.ResolveAliases | undefined;
     public groupEnvironmentsByHost: boolean | undefined;
     public multiServerStrategy: generatorsYml.MultiServerStrategy | undefined;
@@ -149,6 +159,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     public coerceEnumsToLiterals: boolean | undefined;
     public coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
+    public respectOperationIdWordBoundaries: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -159,6 +170,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.respectReadonlySchemas = args.respectReadonlySchemas;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
+        this.respectOptionalRequestBody = args.respectOptionalRequestBody;
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
         this.multiServerStrategy = args.multiServerStrategy;
@@ -167,6 +179,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.coerceEnumsToLiterals = args.coerceEnumsToLiterals;
         this.pathParameterOrder = args.pathParameterOrder;
         this.coerceConstsTo = args.coerceConstsTo;
+        this.respectOperationIdWordBoundaries = args.respectOperationIdWordBoundaries;
         this.converter = new FernDefinitionConverter(args);
     }
 

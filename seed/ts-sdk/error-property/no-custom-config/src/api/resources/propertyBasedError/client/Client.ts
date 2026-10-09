@@ -27,6 +27,8 @@ export class PropertyBasedErrorClient {
      * @param {PropertyBasedErrorClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
+     * @throws {@link errors.SeedErrorPropertyError}
+     * @throws {@link errors.SeedErrorPropertyTimeoutError}
      *
      * @example
      *     await client.propertyBasedError.throwError()

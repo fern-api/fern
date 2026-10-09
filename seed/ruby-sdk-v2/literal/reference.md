@@ -68,6 +68,67 @@ client.headers.send_(
 </dl>
 </details>
 
+<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_literals_only</a>() -> Seed::Types::SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.headers.send_literals_only(request_options: {
+  additional_headers: {
+    "X-Endpoint-Version" => "02-12-2024",
+    "X-Async" => "true"
+  }
+})
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**endpoint_version:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Headers::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.inlined.<a href="/lib/seed/inlined/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
@@ -83,18 +144,18 @@ client.headers.send_(
 
 ```ruby
 client.inlined.send_(
-  temperature: 10.1,
   prompt: "You are a helpful assistant",
   context: "You're super wise",
+  query: "What is the weather today",
+  temperature: 10.1,
+  stream: false,
   aliased_context: "You're super wise",
   maybe_context: "You're super wise",
   object_with_literal: {
     nested_literal: {
       my_literal: "How super cool"
     }
-  },
-  stream: false,
-  query: "What is the weather today"
+  }
 )
 ```
 </dd>
@@ -134,7 +195,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**temperature:** `Integer` 
+**temperature:** `Float` 
     
 </dd>
 </dl>
@@ -187,7 +248,7 @@ client.inlined.send_(
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id:) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -254,11 +315,11 @@ client.query.send_(
   optional_prompt: "You are a helpful assistant",
   alias_prompt: "You are a helpful assistant",
   alias_optional_prompt: "You are a helpful assistant",
+  query: "What is the weather today",
   stream: false,
   optional_stream: false,
   alias_stream: false,
-  alias_optional_stream: false,
-  query: "What is the weather today"
+  alias_optional_stream: false
 )
 ```
 </dd>

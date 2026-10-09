@@ -6,7 +6,7 @@ import PathParameters
     @Test func getUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -30,6 +30,7 @@ import PathParameters
             ]
         )
         let response = try await client.user.getUser(
+            tenantId: "tenant_id",
             userId: "user_id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -39,7 +40,7 @@ import PathParameters
     @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -79,7 +80,7 @@ import PathParameters
     @Test func updateUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -103,6 +104,7 @@ import PathParameters
             ]
         )
         let response = try await client.user.updateUser(
+            tenantId: "tenant_id",
             userId: "user_id",
             request: User(
                 name: "name",
@@ -119,7 +121,7 @@ import PathParameters
     @Test func searchUsers1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -161,6 +163,7 @@ import PathParameters
             )
         ]
         let response = try await client.user.searchUsers(
+            tenantId: "tenant_id",
             userId: "user_id",
             limit: 1,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -171,7 +174,7 @@ import PathParameters
     @Test func getUserMetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -195,8 +198,9 @@ import PathParameters
             ]
         )
         let response = try await client.user.getUserMetadata(
+            tenantId: "tenant_id",
             userId: "user_id",
-            version: 1,
+            version: "1",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -205,7 +209,7 @@ import PathParameters
     @Test func getUserSpecifics1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -229,8 +233,9 @@ import PathParameters
             ]
         )
         let response = try await client.user.getUserSpecifics(
+            tenantId: "tenant_id",
             userId: "user_id",
-            version: 1,
+            version: "1",
             thought: "thought",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

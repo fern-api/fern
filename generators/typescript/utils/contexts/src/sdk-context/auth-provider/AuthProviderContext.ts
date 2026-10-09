@@ -1,6 +1,17 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getPropertyKey } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { FileContext } from "../file-context/FileContext.js";
+import { getClientCredentialsOrThrow } from "./getClientCredentials.js";
+
+const REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
+// Request parameters of the OAuth 2.0 refresh token grant (RFC 6749 section 6), plus client authentication.
+const REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES = new Set(["refreshtoken", "scope", "clientid", "clientsecret"]);
+
+function normalizePropertyName(name: string): string {
+    return name.replace(/["'_-]/g, "").toLowerCase();
+}
 
 export class AuthProviderContext {
     private readonly context: FileContext;
@@ -43,7 +54,7 @@ export class AuthProviderContext {
     }
 
     public getOAuthTokenEndpoint(scheme: FernIr.OAuthScheme): FernIr.HttpEndpoint {
-        const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
+        const tokenEndpointReference = getClientCredentialsOrThrow(scheme).tokenEndpoint.endpointReference;
         const endpoint = this.getOAuthTokenService(scheme).endpoints.find(
             (endpoint: FernIr.HttpEndpoint) => endpoint.id === tokenEndpointReference.endpointId
         );
@@ -54,17 +65,16 @@ export class AuthProviderContext {
     }
 
     public getOAuthTokenService(scheme: FernIr.OAuthScheme): FernIr.HttpService {
-        const service = this.context.ir.services[scheme.configuration.tokenEndpoint.endpointReference.serviceId];
+        const tokenEndpointReference = getClientCredentialsOrThrow(scheme).tokenEndpoint.endpointReference;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
         if (!service) {
-            throw new Error(
-                `failed to find service with id ${scheme.configuration.tokenEndpoint.endpointReference.serviceId}`
-            );
+            throw new Error(`failed to find service with id ${tokenEndpointReference.serviceId}`);
         }
         return service;
     }
 
     public getOAuthRefreshEndpoint(scheme: FernIr.OAuthScheme): FernIr.HttpEndpoint | undefined {
-        const refreshEndpointReference = scheme.configuration.refreshEndpoint?.endpointReference;
+        const refreshEndpointReference = getClientCredentialsOrThrow(scheme).refreshEndpoint?.endpointReference;
         if (!refreshEndpointReference) {
             return undefined;
         }
@@ -78,21 +88,20 @@ export class AuthProviderContext {
     }
 
     public getOAuthRefreshService(scheme: FernIr.OAuthScheme): FernIr.HttpService | undefined {
-        if (!scheme.configuration.refreshEndpoint?.endpointReference) {
+        const refreshEndpointReference = getClientCredentialsOrThrow(scheme).refreshEndpoint?.endpointReference;
+        if (!refreshEndpointReference) {
             return undefined;
         }
-        const service = this.context.ir.services[scheme.configuration.refreshEndpoint.endpointReference.serviceId];
+        const service = this.context.ir.services[refreshEndpointReference.serviceId];
         if (!service) {
-            throw new Error(
-                `failed to find service with id ${scheme.configuration.refreshEndpoint.endpointReference.serviceId}`
-            );
+            throw new Error(`failed to find service with id ${refreshEndpointReference.serviceId}`);
         }
         return service;
     }
 
     public getPropertiesForAuthTokenParams(
         authScheme: FernIr.AuthScheme
-    ): Array<{ name: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
+    ): Array<{ name: string; wireKey: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
         if (authScheme.type !== "inferred") {
             return [];
         }
@@ -113,22 +122,92 @@ export class AuthProviderContext {
                 endpoint.name
             );
             const requestProperties = generatedRequestWrapper.getRequestProperties(this.context);
-            return requestProperties.map((property) => ({
-                name: property.safeName,
-                type: property.type,
-                isOptional: property.isOptional,
-                docs: property.docs
-            }));
+            const grantTypeKey = this.getInferredAuthGrantType(authScheme)?.requestKey;
+            return requestProperties
+                .filter((property) => getPropertyKey(property.name) !== grantTypeKey)
+                .filter((property) => this.isUsedByInferredAuthGrantType(authScheme, property))
+                .map((property) => ({
+                    name: property.safeName,
+                    wireKey: property.name,
+                    type: property.type,
+                    isOptional: property.isOptional,
+                    docs: property.docs
+                }));
         }
 
         // For justRequestBody endpoints (e.g. form-encoded token endpoints),
         // extract properties directly from the request body type.
-        return this.getPropertiesFromRequestBody(endpoint);
+        const grantTypeKey = this.getInferredAuthGrantType(authScheme)?.requestKey;
+        return this.getPropertiesFromRequestBody(endpoint).filter(
+            (property) =>
+                getPropertyKey(property.wireKey) !== grantTypeKey &&
+                this.isUsedByInferredAuthGrantType(authScheme, {
+                    name: property.wireKey,
+                    isOptional: property.isOptional
+                })
+        );
+    }
+
+    /**
+     * Token endpoints shared by several grants list fields of every grant. With a fixed `refresh_token`
+     * grant, optional fields that belong to other grants (e.g. `code`, `redirect_uri`) are neither
+     * exposed as auth options nor sent.
+     */
+    public isUsedByInferredAuthGrantType(
+        authScheme: FernIr.InferredAuthScheme,
+        property: { name: string; isOptional: boolean }
+    ): boolean {
+        if (authScheme.tokenEndpoint.grantType?.value !== REFRESH_TOKEN_GRANT_TYPE || !property.isOptional) {
+            return true;
+        }
+        return REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES.has(normalizePropertyName(property.name));
+    }
+
+    /**
+     * For inferred auth with a fixed grant type (`type: refresh-token`), returns the key of the
+     * grant type property in the token endpoint request object and the value the SDK sends for it.
+     */
+    public getInferredAuthGrantType(
+        authScheme: FernIr.InferredAuthScheme
+    ): { requestKey: string; value: string } | undefined {
+        const grantType = authScheme.tokenEndpoint.grantType;
+        if (grantType == null || (grantType.requestProperty.propertyPath?.length ?? 0) > 0) {
+            return undefined;
+        }
+        const property = grantType.requestProperty.property;
+        const endpoint = this.getInferredAuthTokenEndpoint(authScheme);
+        const hasWrappedRequest = endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper";
+
+        let requestKey: string;
+        if (hasWrappedRequest) {
+            const generatedRequestWrapper = this.context.requestWrapper.getGeneratedRequestWrapper(
+                authScheme.tokenEndpoint.endpoint.subpackageId
+                    ? { isRoot: false, subpackageId: authScheme.tokenEndpoint.endpoint.subpackageId }
+                    : { isRoot: true },
+                endpoint.name
+            );
+            requestKey =
+                property.type === "query"
+                    ? generatedRequestWrapper.getPropertyNameOfQueryParameterFromName(property.name).propertyName
+                    : generatedRequestWrapper.getInlinedRequestBodyPropertyKeyFromName(property.name).propertyName;
+        } else {
+            const wireValue = getWireValue(property.name);
+            const requestKeyFromBody = this.getPropertiesFromRequestBody(endpoint).find(
+                (bodyProperty) =>
+                    bodyProperty.wireKey === wireValue ||
+                    bodyProperty.wireKey === this.context.case.camelSafe(property.name)
+            )?.wireKey;
+            if (requestKeyFromBody == null) {
+                return undefined;
+            }
+            requestKey = requestKeyFromBody;
+        }
+        return { requestKey: getPropertyKey(requestKey), value: grantType.value };
     }
 
     private getPropertiesFromRequestBody(
         endpoint: FernIr.HttpEndpoint
-    ): Array<{ name: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
+    ): Array<{ name: string; wireKey: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
         const requestBody = endpoint.requestBody;
         if (requestBody == null) {
             return [];
@@ -136,6 +215,7 @@ export class AuthProviderContext {
 
         const properties: Array<{
             name: string;
+            wireKey: string;
             type: ts.TypeNode;
             isOptional: boolean;
             docs: string[] | undefined;
@@ -146,6 +226,7 @@ export class AuthProviderContext {
                 const typeRef = this.context.type.getReferenceToType(prop.valueType);
                 properties.push({
                     name: this.context.case.camelSafe(prop.name),
+                    wireKey: this.context.case.camelSafe(prop.name),
                     type: typeRef.typeNodeWithoutUndefined,
                     isOptional: typeRef.isOptional,
                     docs: prop.docs ? [prop.docs] : undefined
@@ -153,11 +234,20 @@ export class AuthProviderContext {
             }
         } else if (requestBody.type === "reference" && requestBody.requestBodyType.type === "named") {
             const typeDeclaration = this.context.type.getTypeDeclaration(requestBody.requestBodyType);
+            const generatedType = this.context.type.getGeneratedType(requestBody.requestBodyType);
             if (typeDeclaration.shape.type === "object") {
                 for (const prop of typeDeclaration.shape.properties) {
                     const typeRef = this.context.type.getReferenceToType(prop.valueType);
+                    // The key sent to the token endpoint must match the generated request body
+                    // type's property key, which is the wire value when the serde layer is
+                    // disabled (or original casing is retained) and camelCase otherwise.
+                    const wireKey =
+                        generatedType.type === "object"
+                            ? generatedType.getPropertyKey({ propertyWireKey: getWireValue(prop.name) })
+                            : this.context.case.camelSafe(prop.name);
                     properties.push({
                         name: this.context.case.camelSafe(prop.name),
+                        wireKey,
                         type: typeRef.typeNodeWithoutUndefined,
                         isOptional: typeRef.isOptional,
                         docs: prop.docs ? [prop.docs] : undefined

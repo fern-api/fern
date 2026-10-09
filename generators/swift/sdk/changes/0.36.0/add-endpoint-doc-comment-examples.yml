@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Endpoint methods now include a usage code example in their doc comments,
+    so IDEs like Xcode surface a ready-to-use snippet in Quick Help on hover.
+  type: feat

@@ -7,14 +7,14 @@ extension Requests {
         /// The model to use.
         public let model: String
         /// Whether to stream the response.
-        public let stream: JSONValue
+        public let stream: Bool
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
             prompt: String,
             model: String,
-            stream: JSONValue,
+            stream: Bool,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.prompt = prompt
@@ -27,7 +27,7 @@ extension Requests {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.prompt = try container.decode(String.self, forKey: .prompt)
             self.model = try container.decode(String.self, forKey: .model)
-            self.stream = try container.decode(JSONValue.self, forKey: .stream)
+            self.stream = try container.decode(Bool.self, forKey: .stream)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

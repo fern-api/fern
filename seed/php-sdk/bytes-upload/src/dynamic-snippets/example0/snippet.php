@@ -9,6 +9,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->upload(
-    ,
-);
+$client->service->upload();

@@ -11,6 +11,7 @@ export const WebsocketMessageSchema: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.string(),
     displayName: core.serialization.string().optional(),
+    description: core.serialization.string().optional(),
     origin: WebsocketMessageOrigin,
     body: core.serialization.lazy(() => serializers.Schema),
     methodName: core.serialization.string().optional(),
@@ -20,6 +21,7 @@ export declare namespace WebsocketMessageSchema {
     export interface Raw {
         name: string;
         displayName?: string | null;
+        description?: string | null;
         origin: WebsocketMessageOrigin.Raw;
         body: serializers.Schema.Raw;
         methodName?: string | null;

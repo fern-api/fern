@@ -1,0 +1,472 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:AssetReportPdfGetRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "AssetReportPdfGetRequest",
+                    "camelCase": {
+                        "unsafeName": "assetReportPdfGetRequest",
+                        "safeName": "assetReportPdfGetRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "asset_report_pdf_get_request",
+                        "safeName": "asset_report_pdf_get_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ASSET_REPORT_PDF_GET_REQUEST",
+                        "safeName": "ASSET_REPORT_PDF_GET_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AssetReportPdfGetRequest",
+                        "safeName": "AssetReportPdfGetRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "asset_report_token",
+                        "name": {
+                            "originalName": "asset_report_token",
+                            "camelCase": {
+                                "unsafeName": "assetReportToken",
+                                "safeName": "assetReportToken"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "asset_report_token",
+                                "safeName": "asset_report_token"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ASSET_REPORT_TOKEN",
+                                "safeName": "ASSET_REPORT_TOKEN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AssetReportToken",
+                                "safeName": "AssetReportToken"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:AssetReportGetResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "AssetReportGetResponse",
+                    "camelCase": {
+                        "unsafeName": "assetReportGetResponse",
+                        "safeName": "assetReportGetResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "asset_report_get_response",
+                        "safeName": "asset_report_get_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ASSET_REPORT_GET_RESPONSE",
+                        "safeName": "ASSET_REPORT_GET_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AssetReportGetResponse",
+                        "safeName": "AssetReportGetResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "request_id",
+                        "name": {
+                            "originalName": "request_id",
+                            "camelCase": {
+                                "unsafeName": "requestID",
+                                "safeName": "requestID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request_id",
+                                "safeName": "request_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST_ID",
+                                "safeName": "REQUEST_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RequestID",
+                                "safeName": "RequestID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:PlaidError": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "PlaidError",
+                    "camelCase": {
+                        "unsafeName": "plaidError",
+                        "safeName": "plaidError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "plaid_error",
+                        "safeName": "plaid_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PLAID_ERROR",
+                        "safeName": "PLAID_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PlaidError",
+                        "safeName": "PlaidError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "error_type",
+                        "name": {
+                            "originalName": "error_type",
+                            "camelCase": {
+                                "unsafeName": "errorType",
+                                "safeName": "errorType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "error_type",
+                                "safeName": "error_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERROR_TYPE",
+                                "safeName": "ERROR_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ErrorType",
+                                "safeName": "ErrorType"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "error_code",
+                        "name": {
+                            "originalName": "error_code",
+                            "camelCase": {
+                                "unsafeName": "errorCode",
+                                "safeName": "errorCode"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "error_code",
+                                "safeName": "error_code"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERROR_CODE",
+                                "safeName": "ERROR_CODE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ErrorCode",
+                                "safeName": "ErrorCode"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "error_message",
+                        "name": {
+                            "originalName": "error_message",
+                            "camelCase": {
+                                "unsafeName": "errorMessage",
+                                "safeName": "errorMessage"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "error_message",
+                                "safeName": "error_message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERROR_MESSAGE",
+                                "safeName": "ERROR_MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ErrorMessage",
+                                "safeName": "ErrorMessage"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:AssetReportPdfGetResponse": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "AssetReportPdfGetResponse",
+                    "camelCase": {
+                        "unsafeName": "assetReportPdfGetResponse",
+                        "safeName": "assetReportPdfGetResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "asset_report_pdf_get_response",
+                        "safeName": "asset_report_pdf_get_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ASSET_REPORT_PDF_GET_RESPONSE",
+                        "safeName": "ASSET_REPORT_PDF_GET_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AssetReportPdfGetResponse",
+                        "safeName": "AssetReportPdfGetResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_assetReport.getPdf": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getPdf",
+                    "camelCase": {
+                        "unsafeName": "getPdf",
+                        "safeName": "getPdf"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_pdf",
+                        "safeName": "get_pdf"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_PDF",
+                        "safeName": "GET_PDF"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetPdf",
+                        "safeName": "GetPdf"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "assetReport",
+                            "camelCase": {
+                                "unsafeName": "assetReport",
+                                "safeName": "assetReport"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "asset_report",
+                                "safeName": "asset_report"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ASSET_REPORT",
+                                "safeName": "ASSET_REPORT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AssetReport",
+                                "safeName": "AssetReport"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "assetReport",
+                        "camelCase": {
+                            "unsafeName": "assetReport",
+                            "safeName": "assetReport"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "asset_report",
+                            "safeName": "asset_report"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ASSET_REPORT",
+                            "safeName": "ASSET_REPORT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "AssetReport",
+                            "safeName": "AssetReport"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/asset_report/pdf/get"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:AssetReportPdfGetRequest"
+                    }
+                },
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "fileDownload"
+            },
+            "examples": null
+        },
+        "endpoint_assetReport.get": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "get",
+                    "camelCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET",
+                        "safeName": "GET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Get",
+                        "safeName": "Get"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "assetReport",
+                            "camelCase": {
+                                "unsafeName": "assetReport",
+                                "safeName": "assetReport"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "asset_report",
+                                "safeName": "asset_report"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ASSET_REPORT",
+                                "safeName": "ASSET_REPORT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AssetReport",
+                                "safeName": "AssetReport"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "assetReport",
+                        "camelCase": {
+                            "unsafeName": "assetReport",
+                            "safeName": "assetReport"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "asset_report",
+                            "safeName": "asset_report"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ASSET_REPORT",
+                            "safeName": "ASSET_REPORT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "AssetReport",
+                            "safeName": "AssetReport"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/asset_report/get"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:AssetReportPdfGetRequest"
+                    }
+                },
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

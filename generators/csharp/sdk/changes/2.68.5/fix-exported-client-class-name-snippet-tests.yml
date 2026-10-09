@@ -1,0 +1,6 @@
+- summary: |
+    Fixed compilation of generated dynamic-snippet tests when `exported-client-class-name` is set.
+    The exported client class name is a docs-only override that names a customer-provided wrapper
+    class which is not part of generator output, so the compiled snippet tests now reference the
+    internal generated client while documentation snippets continue to use the exported name.
+  type: fix

@@ -43,6 +43,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -83,6 +84,13 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                             ClassName.get(String.class),
                             ParameterizedTypeName.get(Supplier.class, String.class)),
                     "queryParameterSuppliers",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec BODY_PROPERTIES_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(Map.class, String.class, Object.class),
+                    "bodyProperties",
                     Modifier.PRIVATE,
                     Modifier.FINAL)
             .build();
@@ -159,6 +167,11 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         FieldSpec.Builder timeoutTimeUnitFieldBuilder =
                 FieldSpec.builder(ParameterizedTypeName.get(TimeUnit.class), "timeoutTimeUnit", Modifier.PRIVATE);
 
+        FieldSpec.Builder maxRetriesFieldBuilder = FieldSpec.builder(
+                ParameterizedTypeName.get(ClassName.get(Optional.class), TypeName.get(Integer.class)),
+                "maxRetries",
+                Modifier.PRIVATE);
+
         // Add in the other (static) fields for request options
         createRequestOptionField(
                 "getTimeout",
@@ -171,6 +184,13 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 "getTimeoutTimeUnit",
                 timeoutTimeUnitFieldBuilder,
                 CodeBlock.of("$T.SECONDS", TimeUnit.class),
+                requestOptionsTypeSpec,
+                builderTypeSpec,
+                fields);
+        createRequestOptionField(
+                "getMaxRetries",
+                maxRetriesFieldBuilder,
+                CodeBlock.of("$T.empty()", Optional.class),
                 requestOptionsTypeSpec,
                 builderTypeSpec,
                 fields);
@@ -197,15 +217,26 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .returns(builderClassName)
                 .build());
 
+        FieldSpec maxRetriesField = maxRetriesFieldBuilder.build();
+        builderTypeSpec.addMethod(MethodSpec.methodBuilder(maxRetriesField.name)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(Integer.class, maxRetriesField.name)
+                .addStatement("this.$L = Optional.of($L)", maxRetriesField.name, maxRetriesField.name)
+                .addStatement("return this")
+                .returns(builderClassName)
+                .build());
+
         addHeaderBuilder(builderTypeSpec);
         addHeaderSupplierBuilder(builderTypeSpec);
         addQueryParameterBuilder(builderTypeSpec);
         addQueryParameterSupplierBuilder(builderTypeSpec);
+        addBodyPropertyBuilders(builderTypeSpec);
 
         requestOptionsTypeSpec.addField(HEADERS_FIELD);
         requestOptionsTypeSpec.addField(HEADER_SUPPLIERS_FIELD);
         requestOptionsTypeSpec.addField(QUERY_PARAMETERS_FIELD);
         requestOptionsTypeSpec.addField(QUERY_PARAMETER_SUPPLIERS_FIELD);
+        requestOptionsTypeSpec.addField(BODY_PROPERTIES_FIELD);
 
         builderTypeSpec.addField(HEADERS_FIELD.toBuilder()
                 .initializer(CodeBlock.of("new $T<>()", HashMap.class))
@@ -219,11 +250,15 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         builderTypeSpec.addField(QUERY_PARAMETER_SUPPLIERS_FIELD.toBuilder()
                 .initializer(CodeBlock.of("new $T<>()", HashMap.class))
                 .build());
+        builderTypeSpec.addField(BODY_PROPERTIES_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", LinkedHashMap.class))
+                .build());
 
         fields.add(new RequestOption(HEADERS_FIELD, HEADERS_FIELD));
         fields.add(new RequestOption(HEADER_SUPPLIERS_FIELD, HEADER_SUPPLIERS_FIELD));
         fields.add(new RequestOption(QUERY_PARAMETERS_FIELD, QUERY_PARAMETERS_FIELD));
         fields.add(new RequestOption(QUERY_PARAMETER_SUPPLIERS_FIELD, QUERY_PARAMETER_SUPPLIERS_FIELD));
+        fields.add(new RequestOption(BODY_PROPERTIES_FIELD, BODY_PROPERTIES_FIELD));
 
         getHeadersCodeBlock
                 .addStatement("headers.putAll(this.$L)", HEADERS_FIELD.name)
@@ -269,6 +304,12 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .endControlFlow(")")
                 .addStatement("return $N", QUERY_PARAMETERS_FIELD.name)
                 .returns(QUERY_PARAMETERS_FIELD.type)
+                .build());
+        requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder("getBodyProperties")
+                .addJavadoc("Additional properties merged into the request body, keyed by their wire names.\n")
+                .addModifiers(Modifier.PUBLIC)
+                .addStatement("return new $T<>(this.$L)", LinkedHashMap.class, BODY_PROPERTIES_FIELD.name)
+                .returns(BODY_PROPERTIES_FIELD.type)
                 .build());
         requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder("builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -427,6 +468,31 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(String.class, "key")
                 .addParameter(ParameterizedTypeName.get(Supplier.class, String.class), "value")
                 .addStatement("this.$L.put($L, $L)", HEADER_SUPPLIERS_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build());
+    }
+
+    private void addBodyPropertyBuilders(TypeSpec.Builder builder) {
+        CodeBlock javadoc = CodeBlock.builder()
+                .add("Adds a property to the JSON or form-urlencoded request body, keyed by its wire name. ")
+                .add("It overrides any request body property with the same key, and is sent as the whole body ")
+                .add("for endpoints without one. Multipart (file upload) bodies are not supported.\n")
+                .build();
+        builder.addMethod(MethodSpec.methodBuilder("addBodyProperty")
+                .addJavadoc(javadoc)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(Object.class, "value")
+                .addStatement("this.$L.put($L, $L)", BODY_PROPERTIES_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build());
+        builder.addMethod(MethodSpec.methodBuilder("bodyProperties")
+                .addJavadoc("Adds each entry as a request body property. See {@link #addBodyProperty}.\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(BODY_PROPERTIES_FIELD.type, "bodyProperties")
+                .addStatement("this.$L.putAll($L)", BODY_PROPERTIES_FIELD.name, "bodyProperties")
                 .addStatement("return this")
                 .build());
     }

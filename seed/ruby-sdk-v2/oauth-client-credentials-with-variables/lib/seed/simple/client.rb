@@ -4,10 +4,12 @@ module Seed
   module Simple
     class Client
       # @param client [Seed::Internal::Http::RawClient]
+      # @param root_variable [String, nil]
       #
       # @return [void]
-      def initialize(client:)
+      def initialize(client:, root_variable: nil)
         @client = client
+        @root_variable = root_variable
       end
 
       # @param request_options [Hash]
@@ -17,6 +19,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.simple.get_something
       #
       # @return [untyped]
       def get_something(request_options: {}, **_params)

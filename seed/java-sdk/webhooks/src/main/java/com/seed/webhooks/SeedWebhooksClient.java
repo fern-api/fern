@@ -5,11 +5,21 @@ package com.seed.webhooks;
 
 import com.seed.webhooks.core.ClientOptions;
 
-public class SeedWebhooksClient {
+public class SeedWebhooksClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     public SeedWebhooksClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedWebhooksClientBuilder builder() {

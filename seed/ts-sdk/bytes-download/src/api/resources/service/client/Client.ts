@@ -23,6 +23,9 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedBytesDownloadError}
+     * @throws {@link errors.SeedBytesDownloadTimeoutError}
+     *
      * @example
      *     await client.service.simple()
      */
@@ -62,6 +65,10 @@ export class ServiceClient {
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/snippet");
     }
 
+    /**
+     * @throws {@link errors.SeedBytesDownloadError}
+     * @throws {@link errors.SeedBytesDownloadTimeoutError}
+     */
     public download(
         id: string,
         requestOptions?: ServiceClient.RequestOptions,

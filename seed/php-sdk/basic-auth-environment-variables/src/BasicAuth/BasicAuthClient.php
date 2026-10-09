@@ -51,6 +51,11 @@ class BasicAuthClient
     /**
      * GET request with basic auth scheme
      *
+     * Example:
+     * ```php
+     * $client->basicAuth->getWithBasicAuth();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -97,6 +102,15 @@ class BasicAuthClient
 
     /**
      * POST request with basic auth scheme
+     *
+     * Example:
+     * ```php
+     * $client->basicAuth->postWithBasicAuth(
+     *     [
+     *         'key' => "value",
+     *     ],
+     * );
+     * ```
      *
      * @param mixed $request
      * @param ?array{

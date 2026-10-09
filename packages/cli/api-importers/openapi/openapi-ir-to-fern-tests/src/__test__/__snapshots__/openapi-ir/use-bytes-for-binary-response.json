@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Streaming API w/ use-bytes-for-binary-response",
   "servers": [],
   "websocketServers": [],

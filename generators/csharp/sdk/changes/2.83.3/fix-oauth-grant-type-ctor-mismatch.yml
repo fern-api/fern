@@ -1,0 +1,7 @@
+- summary: |
+    Fix the generated root client passing a `grantType` argument to `OAuthTokenProvider`
+    when the token endpoint declares a required, non-literal `grant_type` property.
+    `OAuthTokenProvider` hardcodes `grant_type: "client_credentials"` and never took that
+    parameter, so the generated SDK failed to compile with
+    `'OAuthTokenProvider' does not contain a constructor that takes 4 arguments`.
+  type: fix

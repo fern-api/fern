@@ -3,7 +3,7 @@
 //! This module provides the client implementations for all available services.
 
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, SseStream};
 use reqwest::Method;
 
 pub struct ApiClient {
@@ -27,7 +27,29 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_protocol_no_collision(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_protocol_no_collision(
         &self,
         request: &StreamRequest,
@@ -43,6 +65,12 @@ impl ApiClient {
                 None,
             )
             .await
+            .map(|stream| {
+                stream.with_event_discriminator(
+                    "event",
+                    &["string_data", "number_data", "object_data"],
+                )
+            })
     }
 
     /// Same as endpoint 1, but the object data payload contains its own "event" property, which collides with the SSE envelope's "event" discriminator field. Tests whether generators correctly separate the protocol-level discriminant from the data-level field when context=protocol is specified.
@@ -53,7 +81,29 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_protocol_collision(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_protocol_collision(
         &self,
         request: &StreamRequest,
@@ -69,6 +119,12 @@ impl ApiClient {
                 None,
             )
             .await
+            .map(|stream| {
+                stream.with_event_discriminator(
+                    "event",
+                    &["string_data", "number_data", "object_data"],
+                )
+            })
     }
 
     /// x-fern-discriminator-context is explicitly set to "data" (the default value). Each variant uses allOf to extend a payload schema and adds the "event" discriminant property at the same level. There is no "data" wrapper. The discriminant and payload fields coexist in a single flat object. This matches the real-world pattern used by customers with context=data.
@@ -79,7 +135,29 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_data_context(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_data_context(
         &self,
         request: &StreamRequest,
@@ -105,7 +183,29 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_no_context(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_no_context(
         &self,
         request: &StreamRequest,
@@ -131,7 +231,29 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_protocol_with_flat_schema(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_protocol_with_flat_schema(
         &self,
         request: &StreamRequest,
@@ -147,6 +269,56 @@ impl ApiClient {
                 None,
             )
             .await
+            .map(|stream| stream.with_event_discriminator("event", &[]))
+    }
+
+    /// context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_protocol_mixed_schema(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
+    pub async fn stream_protocol_mixed_schema(
+        &self,
+        request: &StreamRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<SseStream<StreamProtocolMixedSchemaResponse>, ApiError> {
+        self.http_client
+            .execute_sse_request(
+                Method::POST,
+                "stream/protocol-mixed-schema",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+                None,
+            )
+            .await
+            .map(|stream| stream.with_event_discriminator("event", &["object_data"]))
     }
 
     /// Mismatched combination: context=data with the envelope+data schema pattern that is normally used with context=protocol. Shows what happens when the discriminant is declared as data-level but the schema separates the event field and data field into an envelope structure.
@@ -157,7 +329,29 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_data_context_with_envelope_schema(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_data_context_with_envelope_schema(
         &self,
         request: &StreamRequest,
@@ -183,7 +377,29 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_oas_spec_native(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_oas_spec_native(
         &self,
         request: &StreamRequest,
@@ -210,6 +426,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// Complete JSON response (fetched at once, not streaming)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_condition_stream(
+    ///             &StreamXFernStreamingConditionStreamRequest {
+    ///                 query: "query".to_string(),
+    ///                 stream: true,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_condition_stream(
         &self,
         request: &StreamXFernStreamingConditionStreamRequest,
@@ -235,6 +474,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_condition(
+    ///             &StreamXFernStreamingConditionRequest {
+    ///                 query: "query".to_string(),
+    ///                 stream: false,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_condition(
         &self,
         request: &StreamXFernStreamingConditionRequest,
@@ -260,6 +522,30 @@ impl ApiClient {
     /// # Returns
     ///
     /// Complete JSON response (fetched at once, not streaming)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_shared_schema_stream(
+    ///             &StreamXFernStreamingSharedSchemaStreamRequest {
+    ///                 prompt: "prompt".to_string(),
+    ///                 model: "model".to_string(),
+    ///                 stream: true,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_shared_schema_stream(
         &self,
         request: &StreamXFernStreamingSharedSchemaStreamRequest,
@@ -285,6 +571,30 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_shared_schema(
+    ///             &StreamXFernStreamingSharedSchemaRequest {
+    ///                 prompt: "prompt".to_string(),
+    ///                 model: "model".to_string(),
+    ///                 stream: false,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_shared_schema(
         &self,
         request: &StreamXFernStreamingSharedSchemaRequest,
@@ -310,6 +620,30 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .validate_completion(
+    ///             &SharedCompletionRequest {
+    ///                 prompt: "prompt".to_string(),
+    ///                 model: "model".to_string(),
+    ///                 stream: None,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn validate_completion(
         &self,
         request: &SharedCompletionRequest,
@@ -336,6 +670,36 @@ impl ApiClient {
     /// # Returns
     ///
     /// Complete JSON response (fetched at once, not streaming)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_union_stream(
+    ///             &StreamXFernStreamingUnionStreamRequest::Message {
+    ///                 data: UnionStreamMessageVariant {
+    ///                     union_stream_request_base_fields: UnionStreamRequestBase {
+    ///                         stream_response: Some(true),
+    ///                         prompt: "prompt".to_string(),
+    ///                         ..Default::default()
+    ///                     },
+    ///                     message: "message".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_union_stream(
         &self,
         request: &StreamXFernStreamingUnionStreamRequest,
@@ -362,6 +726,36 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_union_stream(
+    ///             &StreamXFernStreamingUnionStreamRequest::Message {
+    ///                 data: UnionStreamMessageVariant {
+    ///                     union_stream_request_base_fields: UnionStreamRequestBase {
+    ///                         stream_response: Some(false),
+    ///                         prompt: "prompt".to_string(),
+    ///                         ..Default::default()
+    ///                     },
+    ///                     message: "message".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_union(
         &self,
         request: &StreamXFernStreamingUnionRequest,
@@ -387,6 +781,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .validate_union_request(
+    ///             &UnionStreamRequestBase {
+    ///                 prompt: "prompt".to_string(),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn validate_union_request(
         &self,
         request: &UnionStreamRequestBase,
@@ -412,6 +829,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// Complete JSON response (fetched at once, not streaming)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_nullable_condition_stream(
+    ///             &StreamXFernStreamingNullableConditionStreamRequest {
+    ///                 query: "query".to_string(),
+    ///                 stream: true,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_nullable_condition_stream(
         &self,
         request: &StreamXFernStreamingNullableConditionStreamRequest,
@@ -437,6 +877,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_nullable_condition(
+    ///             &StreamXFernStreamingNullableConditionRequest {
+    ///                 query: "query".to_string(),
+    ///                 stream: false,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_nullable_condition(
         &self,
         request: &StreamXFernStreamingNullableConditionRequest,
@@ -461,7 +924,29 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_sse_only(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_sse_only(
         &self,
         request: &StreamRequest,

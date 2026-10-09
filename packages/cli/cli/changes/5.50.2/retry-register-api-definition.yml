@@ -1,0 +1,6 @@
+- summary: |
+    Add retry with exponential backoff to registerApiDefinition during docs
+    publish. Large docs sites (e.g. 30+ API versions) could hit transient
+    connection aborts from FDR; the CLI now retries up to 3 times with
+    1 s / 2 s / 4 s delays before failing.
+  type: fix

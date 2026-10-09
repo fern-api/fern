@@ -1,0 +1,8 @@
+- summary: |
+    Fix pages losing their sidebar when a top-level `landing-page` shares a slug
+    with a page in versioned navigation. Reverts a 5.58.0 change: the top-level
+    `landing-page` is no longer copied into each version, and product-level
+    `landing-page` config is no longer applied to products inside product groups
+    (restoring pre-5.58.0 rendering). `landing-page` in version files is
+    unaffected.
+  type: fix

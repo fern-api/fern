@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/thing",
+                "method": "GET",
+                "identifier_override": "endpoint_things.getThing"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-nullable-wire-tests/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Things.GetThing(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

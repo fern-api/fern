@@ -1,18 +1,58 @@
+import type { DocsConfigurationWithResolvedRedirects, docsYml } from "@fern-api/configuration-loader";
 import { describe, expect, it } from "vitest";
 
+import type { RuleContext } from "../../../Rule.js";
 import {
     CHANGELOG_FEED_ALLOWED_SLUGS,
     getEffectiveChangelogSlugLastSegment,
     getEffectiveChangelogSlugSegments,
     hasAllowedChangelogSegment,
-    isAllowedChangelogSlug
+    isAllowedChangelogSlug,
+    ValidChangelogSlugRule
 } from "../valid-changelog-slug.js";
+
+async function violationsFor(config: DocsConfigurationWithResolvedRedirects): Promise<string[]> {
+    const visitor = await ValidChangelogSlugRule.create({} as RuleContext);
+    const fileVisitor = visitor.file;
+    if (fileVisitor == null) {
+        throw new Error("Expected the rule to define a `file` visitor");
+    }
+    const violations = await fileVisitor({ config });
+    return violations.map((violation) => violation.message);
+}
+
+async function productViolationsFor(product: docsYml.RawSchemas.InternalProduct, content: unknown): Promise<string[]> {
+    const visitor = await ValidChangelogSlugRule.create({} as RuleContext);
+    const productFileVisitor = visitor.productFile;
+    if (productFileVisitor == null) {
+        throw new Error("Expected the rule to define a `productFile` visitor");
+    }
+    const violations = await productFileVisitor({ path: product.path, content, product });
+    return violations.map((violation) => violation.message);
+}
+
+async function versionViolationsFor(
+    version: docsYml.RawSchemas.VersionConfig,
+    content: unknown,
+    product?: docsYml.RawSchemas.InternalProduct
+): Promise<string[]> {
+    const visitor = await ValidChangelogSlugRule.create({} as RuleContext);
+    const versionFileVisitor = visitor.versionFile;
+    if (versionFileVisitor == null) {
+        throw new Error("Expected the rule to define a `versionFile` visitor");
+    }
+    const violations = await versionFileVisitor({ path: version.path ?? "", content, version, product });
+    return violations.map((violation) => violation.message);
+}
 
 describe("CHANGELOG_FEED_ALLOWED_SLUGS", () => {
     it("contains the canonical names", () => {
         expect(CHANGELOG_FEED_ALLOWED_SLUGS).toEqual([
+            "blog",
+            "blogs",
             "changelog",
             "changelogs",
+            "posts",
             "release-notes",
             "releasenotes",
             "whats-new",
@@ -124,6 +164,10 @@ describe("hasAllowedChangelogSegment", () => {
 });
 
 describe("integration: ancestors + changelog", () => {
+    it("slug 'blog' is allowlisted", () => {
+        expect(hasAllowedChangelogSegment(getEffectiveChangelogSlugSegments({ slug: "blog" }))).toBe(true);
+    });
+
     it("default config (no slug, no title) is allowlisted", () => {
         expect(hasAllowedChangelogSegment(getEffectiveChangelogSlugSegments({}))).toBe(true);
     });
@@ -154,6 +198,12 @@ describe("integration: ancestors + changelog", () => {
         expect(hasAllowedChangelogSegment([...ancestors, ...own])).toBe(true);
     });
 
+    it("slug 'product-updates' becomes allowlisted under a 'blog' tab ancestor", () => {
+        const ancestors = ["blog"];
+        const own = getEffectiveChangelogSlugSegments({ slug: "product-updates" });
+        expect(hasAllowedChangelogSegment([...ancestors, ...own])).toBe(true);
+    });
+
     it("a deeply nested changelog under an allowlisted tab is allowed", () => {
         const ancestors = ["whats-new", "permissions-changelogs", "aws"];
         const own = getEffectiveChangelogSlugSegments({ slug: "aws-source-permissions" });
@@ -164,5 +214,233 @@ describe("integration: ancestors + changelog", () => {
         const ancestors = ["api"];
         const own = getEffectiveChangelogSlugSegments({ slug: "feed" });
         expect(hasAllowedChangelogSegment([...ancestors, ...own])).toBe(false);
+    });
+});
+
+describe("blog navigation aliases", () => {
+    it("allows a top-level blog navigation item with an allowlisted slug", async () => {
+        expect(
+            await violationsFor({
+                instances: [],
+                navigation: [{ blog: "blog", slug: "changelog" }]
+            })
+        ).toEqual([]);
+    });
+
+    it("rejects a top-level blog navigation item with a non-allowlisted slug", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            navigation: [{ blog: "blog", slug: "product-updates" }]
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/product-updates"');
+    });
+
+    it("uses the Blog default title for an untitled top-level blog navigation item", async () => {
+        // The folder name is not part of the URL, so the only reason this resolves
+        // to the allowlisted "/blog" is the Blog default title
+        expect(
+            await violationsFor({
+                instances: [],
+                navigation: [{ blog: "content/entries" }]
+            })
+        ).toEqual([]);
+    });
+
+    it("allows a tab-level blog navigation item with an allowlisted slug", async () => {
+        expect(
+            await violationsFor({
+                instances: [],
+                tabs: {
+                    posts: {
+                        displayName: "Posts",
+                        blog: "blog",
+                        slug: "changelog"
+                    }
+                },
+                navigation: [{ tab: "posts" }]
+            })
+        ).toEqual([]);
+    });
+
+    it("rejects a tab-level blog navigation item with a non-allowlisted slug", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            tabs: {
+                posts: {
+                    displayName: "Posts",
+                    blog: "blog",
+                    slug: "product-updates"
+                }
+            },
+            navigation: [{ tab: "posts" }]
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/product-updates"');
+    });
+
+    it("derives a tab-level blog navigation item's slug from the tab displayName", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            tabs: {
+                entries: {
+                    displayName: "Entries",
+                    blog: "content/entries"
+                }
+            },
+            navigation: [{ tab: "entries" }]
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/entries"');
+    });
+});
+
+describe("product and version ancestors", () => {
+    const updatesTabContent = {
+        tabs: { updates: { "display-name": "Updates", changelog: "../../changelog/release-notes" } },
+        navigation: [{ tab: "updates" }]
+    };
+
+    it("allows a changelog tab whose product display-name kebab-cases to an allowlisted slug", async () => {
+        expect(
+            await productViolationsFor(
+                { displayName: "Release Notes", path: "./products/release-notes/release-notes.yml" },
+                updatesTabContent
+            )
+        ).toEqual([]);
+    });
+
+    it("allows a changelog tab whose explicit product slug is allowlisted", async () => {
+        expect(
+            await productViolationsFor(
+                { displayName: "Updates", slug: "changelog", path: "./products/updates/updates.yml" },
+                updatesTabContent
+            )
+        ).toEqual([]);
+    });
+
+    it("rejects a changelog tab when neither the product nor the tab is allowlisted, reporting the full path", async () => {
+        const messages = await productViolationsFor(
+            { displayName: "Platform", path: "./products/platform/platform.yml" },
+            updatesTabContent
+        );
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/platform/updates"');
+    });
+
+    it("allows a changelog under a version whose slug is allowlisted", async () => {
+        expect(
+            await versionViolationsFor(
+                { displayName: "v2", slug: "release-notes", path: "./versions/v2.yml" },
+                { navigation: [{ changelog: "./changelog", title: "Updates" }] }
+            )
+        ).toEqual([]);
+    });
+
+    it("rejects a changelog under a version when no segment is allowlisted, reporting the full path", async () => {
+        const messages = await versionViolationsFor(
+            { displayName: "Legacy", path: "./versions/legacy.yml" },
+            { navigation: [{ changelog: "./changelog", title: "Updates" }] }
+        );
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/legacy/updates"');
+    });
+});
+
+describe("versions nested under a product", () => {
+    const releaseNotesVersion: docsYml.RawSchemas.VersionConfig = {
+        displayName: "Release Notes",
+        path: "./products/platform/versions/release-notes.yml"
+    };
+    const platformProduct: docsYml.RawSchemas.InternalProduct = {
+        displayName: "Platform",
+        path: "./products/platform/platform.yml",
+        versions: [releaseNotesVersion]
+    };
+    const updatesTabContent = {
+        tabs: { updates: { "display-name": "Updates", changelog: "../../changelog/release-notes" } },
+        navigation: [{ tab: "updates" }]
+    };
+
+    it("allows a changelog when the nested version slug is allowlisted but the product slug is not", async () => {
+        expect(await versionViolationsFor(releaseNotesVersion, updatesTabContent, platformProduct)).toEqual([]);
+    });
+
+    it("allows a changelog when the product slug is allowlisted but the nested version slug is not", async () => {
+        const version: docsYml.RawSchemas.VersionConfig = { displayName: "v1", path: "./versions/v1.yml" };
+        expect(
+            await versionViolationsFor(version, updatesTabContent, {
+                displayName: "Changelog",
+                path: "./products/changelog/changelog.yml",
+                versions: [version]
+            })
+        ).toEqual([]);
+    });
+
+    it("rejects a changelog when neither product, version nor tab is allowlisted, reporting /product/version/tab", async () => {
+        const version: docsYml.RawSchemas.VersionConfig = { displayName: "Legacy", path: "./versions/legacy.yml" };
+        const messages = await versionViolationsFor(version, updatesTabContent, {
+            displayName: "Platform",
+            path: "./products/platform/platform.yml",
+            versions: [version]
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/platform/legacy/updates"');
+    });
+
+    it("does not validate the product file's own navigation when the product declares versions", async () => {
+        expect(
+            await productViolationsFor(
+                { displayName: "Platform", path: "./products/platform/platform.yml", versions: [releaseNotesVersion] },
+                updatesTabContent
+            )
+        ).toEqual([]);
+    });
+});
+
+describe("site-level changelog alongside products", () => {
+    const products: docsYml.RawSchemas.ProductConfig[] = [
+        { displayName: "Ferns", path: "./products/ferns.yml" },
+        { displayName: "Cacti", path: "./products/cacti.yml" }
+    ];
+
+    it("allows the default root changelog slug", async () => {
+        expect(
+            await violationsFor({
+                instances: [],
+                products,
+                changelog: { changelog: "./changelog" }
+            })
+        ).toEqual([]);
+    });
+
+    it("allows an explicitly allowlisted root changelog slug", async () => {
+        expect(
+            await violationsFor({
+                instances: [],
+                products,
+                changelog: { changelog: "./changelog", slug: "release-notes" }
+            })
+        ).toEqual([]);
+    });
+
+    it("rejects a disallowed root changelog slug, reporting the root-level path", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            products,
+            changelog: { changelog: "./changelog", slug: "updates" }
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/updates"');
+    });
+
+    it("rejects a disallowed root changelog title when no slug is set", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            products,
+            changelog: { changelog: "./changelog", title: "Updates" }
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/updates"');
     });
 });

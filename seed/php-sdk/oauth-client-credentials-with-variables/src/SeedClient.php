@@ -45,6 +45,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
@@ -62,17 +63,20 @@ class SeedClient
     /**
      * @param ?string $clientId The client ID for OAuth authentication.
      * @param ?string $clientSecret The client secret for OAuth authentication.
+     * @param ?string $rootVariable The rootVariable SDK variable substituted into request paths.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options
      */
     public function __construct(
         ?string $clientId = null,
         ?string $clientSecret = null,
+        ?string $rootVariable = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -83,8 +87,11 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
+        if ($rootVariable !== null) {
+            $this->options['rootVariable'] = $rootVariable;
+        }
 
-        $authRawClient = new RawClient(['headers' => []]);
+        $authRawClient = new RawClient(isset($this->options['baseUrl']) ? ['baseUrl' => $this->options['baseUrl'], 'headers' => []] : ['headers' => []]);
         $authClient = new AuthClient($authRawClient);
         $this->oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $authClient);
 

@@ -20,6 +20,12 @@ module Seed
       # @option params [String] :tenant_id
       # @option params [String] :organization_id
       #
+      # @example
+      #   client.organizations.get_organization(
+      #     tenant_id: "tenant_id",
+      #     organization_id: "organization_id"
+      #   )
+      #
       # @return [Seed::Organizations::Types::Organization]
       def get_organization(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -36,7 +42,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Organizations::Types::Organization.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Organizations::Types::Organization.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -54,6 +60,13 @@ module Seed
       # @option params [String] :organization_id
       # @option params [String] :user_id
       #
+      # @example
+      #   client.organizations.get_organization_user(
+      #     tenant_id: "tenant_id",
+      #     organization_id: "organization_id",
+      #     user_id: "user_id"
+      #   )
+      #
       # @return [Seed::User::Types::User]
       def get_organization_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -70,7 +83,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::User::Types::User.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -87,6 +100,13 @@ module Seed
       # @option params [String] :tenant_id
       # @option params [String] :organization_id
       # @option params [Integer, nil] :limit
+      #
+      # @example
+      #   client.organizations.search_organizations(
+      #     tenant_id: "tenant_id",
+      #     organization_id: "organization_id",
+      #     limit: 1
+      #   )
       #
       # @return [Array[Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)
@@ -107,10 +127,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Organizations::Types::Organization], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
     end
   end

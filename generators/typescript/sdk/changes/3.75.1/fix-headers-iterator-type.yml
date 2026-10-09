@@ -1,0 +1,4 @@
+- summary: |
+    Use `IterableIterator<T>` instead of `HeadersIterator<T>` in the generated `Headers.ts` shim.
+    `HeadersIterator` was added in TypeScript 5.6; the previous annotations broke compilation on TS < 5.6.
+  type: fix

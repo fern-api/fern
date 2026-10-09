@@ -23,7 +23,8 @@ export function createMockTypeContext() {
                 properties: [],
                 extends: [],
                 extraProperties: false,
-                extendedProperties: undefined
+                extendedProperties: undefined,
+                deferredUnionBaseProperties: undefined
             })
         }),
         getReferenceToType: () => ({ isOptional: false })
@@ -111,11 +112,13 @@ export function createMockGeneratedSdkClientClass(opts?: {
     hasAuthProvider?: boolean;
     generateEndpointMetadata?: boolean;
     alwaysSendAuth?: boolean;
+    guardProcessEnvAccess?: boolean;
 }) {
     return {
         hasAuthProvider: () => opts?.hasAuthProvider ?? false,
         getGenerateEndpointMetadata: () => opts?.generateEndpointMetadata ?? false,
         getAlwaysSendAuth: () => opts?.alwaysSendAuth ?? false,
+        getGuardProcessEnvAccess: () => opts?.guardProcessEnvAccess ?? false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata")
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface

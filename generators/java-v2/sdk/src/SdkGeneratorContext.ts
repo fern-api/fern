@@ -1,12 +1,12 @@
 import { GeneratorError, GeneratorNotificationService, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { java } from "@fern-api/java-ast";
+import { escapeJavaKeyword, java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { camelCase } from "lodash-es";
 
-import { TYPES_DIRECTORY } from "./constants.js";
+import { ERRORS_DIRECTORY, TYPES_DIRECTORY } from "./constants.js";
 import { JavaGeneratorAgent } from "./JavaGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
@@ -78,27 +78,26 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             case "bytes":
                 throw GeneratorError.internalError("Returning bytes is not supported");
             case "streaming":
-                switch (responseBody.value.type) {
-                    case "text":
-                        throw GeneratorError.internalError("Returning streamed text is not supported");
-                    case "json":
-                        return java.Type.iterable(
-                            this.javaTypeMapper.convert({ reference: responseBody.value.payload })
-                        );
-                    case "sse":
-                        return java.Type.iterable(
-                            this.javaTypeMapper.convert({ reference: responseBody.value.payload })
-                        );
-                    default:
-                        assertNever(responseBody.value);
-                        throw GeneratorError.internalError("Unknown streaming type");
-                }
+                return this.getStreamingReturnType(responseBody.value);
             case "fileDownload":
                 return java.Type.inputStream();
             case "streamParameter":
-                throw GeneratorError.internalError("Returning stream parameter is not supported");
+                return this.getStreamingReturnType(responseBody.streamResponse);
             default:
                 assertNever(responseBody);
+        }
+    }
+
+    private getStreamingReturnType(streamingResponse: FernIr.StreamingResponse): java.Type {
+        switch (streamingResponse.type) {
+            case "text":
+                throw GeneratorError.internalError("Returning streamed text is not supported");
+            case "json":
+            case "sse":
+                return java.Type.iterable(this.javaTypeMapper.convert({ reference: streamingResponse.payload }));
+            default:
+                assertNever(streamingResponse);
+                throw GeneratorError.internalError("Unknown streaming type");
         }
     }
 
@@ -239,6 +238,13 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         });
     }
 
+    public getErrorClassReference(errorDeclaration: FernIr.ErrorDeclaration): java.ClassReference {
+        return java.classReference({
+            name: this.caseConverter.pascalSafe(errorDeclaration.name.name),
+            packageName: this.getResourcesPackage(errorDeclaration.name.fernFilepath, ERRORS_DIRECTORY)
+        });
+    }
+
     public getApiExceptionClassName(): string {
         return (
             this.customConfig?.["base-api-exception-class-name"] ??
@@ -271,7 +277,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getRootClientClassReference(): java.ClassReference {
         return java.classReference({
-            name: this.getRootClientClassName(),
+            name: this.getRootClientClassNameForSnippets(),
             packageName: this.getRootPackageName()
         });
     }
@@ -285,13 +291,27 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.customConfig?.["client-class-name"] ?? `${this.getBaseNamePrefix()}Client`;
     }
 
+    /**
+     * The client class name surfaced in documentation snippets (README, reference.md).
+     * Customers may export the generated root client under a different, hand-written class name; this
+     * accessor reflects that exported name. Falls back to the internal client class name when unset, so
+     * output is unchanged for users who have not configured `exported-client-class-name`.
+     *
+     * Note: wire tests compile against the generated code and must continue to use the internal
+     * `getRootClientClassName()`; the exported class is hand-written by customers and does not exist
+     * in generator output.
+     */
+    public getRootClientClassNameForSnippets(): string {
+        return this.customConfig?.["exported-client-class-name"] ?? this.getRootClientClassName();
+    }
+
     public isSelfHosted(): boolean {
         return this.ir.selfHosted ?? false;
     }
 
     private joinPackageTokens(tokens: string[]): string {
         const sanitizedTokens = tokens.map((token) => {
-            return this.startsWithNumber(token) ? "_" + token : token;
+            return this.startsWithNumber(token) ? "_" + token : escapeJavaKeyword(token);
         });
         return sanitizedTokens.join(".");
     }

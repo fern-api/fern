@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `cli-generator` to the allowed PR title scopes enforced by the lint-pr-title workflow.
+  type: chore

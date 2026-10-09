@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/url-form-encoded";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.submitFormData({
     username: "johndoe",
     email: "john@example.com"

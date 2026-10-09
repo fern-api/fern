@@ -9,6 +9,7 @@ import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSn
 import { convertIr } from "../utils/convertIr.js";
 import { TestClassBuilder } from "./builders/TestClassBuilder.js";
 import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
+import { buildWireTestSnippetsConfig } from "./buildWireTestSnippetsConfig.js";
 import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
 import { TestResourceWriter } from "./resources/TestResourceWriter.js";
@@ -56,7 +57,9 @@ export class SdkWireTestGenerator {
         const convertedIr: any = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertedIr,
-            config: this.context.config
+            // Wire tests compile against the generated SDK, so their snippets must use the
+            // internal client class name — docs-only overrides are stripped here.
+            config: buildWireTestSnippetsConfig(this.context.config)
         });
 
         await this.generateTestFiles(dynamicIr, dynamicSnippetsGenerator);
@@ -163,11 +166,16 @@ export class SdkWireTestGenerator {
         const testDataExtractor = new WireTestDataExtractor(this.context);
         const snippetExtractor = new SnippetExtractor(this.context);
 
-        const endpointTests = new Map<string, { snippet: string; testExample: WireTestExample }>();
+        const endpointTests = new Map<string, WireTestCase[]>();
         const allImports = new Set<string>();
         const skippedEndpoints: Array<{ endpointId: string; endpointName: string; reason: string }> = [];
 
         this.testMethodBuilder.setCurrentTestClassName(className);
+
+        // Each endpoint's first example keeps the plain `test<Endpoint>` name, so reserve those first.
+        const usedTestMethodNames = new Set<string>(
+            endpoints.map((endpoint) => this.testMethodBuilder.getTestMethodName(endpoint))
+        );
 
         for (const endpoint of endpoints) {
             const testExamples = testDataExtractor.getTestExamples(endpoint);
@@ -178,10 +186,37 @@ export class SdkWireTestGenerator {
             this.context.logger.debug(`Processing endpoint ${endpoint.id} with ${testExamples.length} test examples`);
 
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
-            if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstDynamicExample = dynamicEndpoint.examples[0];
-                if (firstDynamicExample) {
-                    try {
+            const dynamicExamples = dynamicEndpoint?.examples ?? [];
+            const baseTestMethodName = this.testMethodBuilder.getTestMethodName(endpoint);
+            const testCases: WireTestCase[] = [];
+            const skipReasons: string[] = [];
+
+            for (const [index, testExample] of testExamples.entries()) {
+                const isFirstExample = index === 0;
+                const skip = (reason: string) => {
+                    this.context.logger.debug(
+                        `Skipping example ${testExample.dynamicExampleId} of endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): ${reason}`
+                    );
+                    skipReasons.push(reason);
+                };
+
+                let fullSnippet: string;
+                try {
+                    if (dynamicEndpoint != null && dynamicExamples.length > 0) {
+                        let dynamicExample = dynamicExamples.find(
+                            (example) => example.id === testExample.dynamicExampleId
+                        );
+                        if (dynamicExample == null && isFirstExample) {
+                            // Same pairing as before multi-example support: first test example with first dynamic example.
+                            this.context.logger.debug(
+                                `No dynamic example with id ${testExample.dynamicExampleId} for endpoint ${endpoint.id}, using the first dynamic example`
+                            );
+                            dynamicExample = dynamicExamples[0];
+                        }
+                        if (dynamicExample == null) {
+                            skip(`No dynamic example with id ${testExample.dynamicExampleId}`);
+                            continue;
+                        }
                         this.context.logger.debug(
                             `Generating snippet for endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}) with FernIr.dynamic endpoint ${getOriginalName(dynamicEndpoint.declaration.name)}`
                         );
@@ -200,106 +235,85 @@ export class SdkWireTestGenerator {
                             endpoint,
                             expectedServiceName,
                             dynamicServiceName,
-                            firstDynamicExample,
+                            dynamicExample,
                             dynamicIr,
                             dynamicSnippetsGenerator,
                             serviceName
                         );
 
-                        const { snippet: fullSnippet, imports: endpointImports } = this.applyAllSnippetTransformations(
-                            rawSnippet,
-                            serviceName,
-                            endpoint
-                        );
-
-                        endpointImports.forEach((imp) => allImports.add(imp));
-
-                        // Check if method call extraction will fail and skip this endpoint
-                        const testMethodCall = snippetExtractor.extractMethodCall(fullSnippet);
-                        if (testMethodCall === null) {
-                            this.context.logger.debug(
-                                `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Could not extract method call from snippet`
-                            );
-                            skippedEndpoints.push({
-                                endpointId: endpoint.id,
-                                endpointName: getOriginalName(endpoint.name),
-                                reason: `Could not extract method call from snippet - likely service mismatch or invalid snippet format`
-                            });
-                            continue;
-                        }
-
-                        const imports = snippetExtractor.extractImports(fullSnippet);
-                        imports.forEach((imp) => allImports.add(imp));
-
-                        const firstTestExample = testExamples[0];
-                        if (firstTestExample) {
-                            endpointTests.set(endpoint.id, {
-                                snippet: fullSnippet,
-                                testExample: firstTestExample
-                            });
-                        }
-
-                        const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
-                        returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
-                    } catch (error) {
-                        const errorMessage = extractErrorMessage(error);
+                        const transformed = this.applyAllSnippetTransformations(rawSnippet, serviceName, endpoint);
+                        fullSnippet = transformed.snippet;
+                        transformed.imports.forEach((imp) => allImports.add(imp));
+                    } else {
+                        // No FernIr.dynamic examples, but we have test examples from static IR
                         this.context.logger.debug(
-                            `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Failed to generate snippet - ${errorMessage}`
+                            `No FernIr.dynamic examples for endpoint ${endpoint.id}, creating default snippet for service ${serviceName}`
                         );
-                        skippedEndpoints.push({
-                            endpointId: endpoint.id,
-                            endpointName: getOriginalName(endpoint.name),
-                            reason: `Snippet generation failed: ${errorMessage}`
-                        });
+                        const rawSnippet = this.generateDefaultSnippet(endpoint, serviceName, testExample);
+                        fullSnippet = this.applyServiceNameCorrections(rawSnippet, serviceName);
                     }
+                } catch (error) {
+                    skip(`Snippet generation failed: ${extractErrorMessage(error)}`);
+                    continue;
                 }
-            } else {
-                // No FernIr.dynamic examples, but we have test examples from static IR
-                this.context.logger.debug(
-                    `No FernIr.dynamic examples for endpoint ${endpoint.id}, creating default snippet for service ${serviceName}`
-                );
 
-                const firstTestExample = testExamples[0];
-                if (firstTestExample) {
-                    try {
-                        const rawSnippet = this.generateDefaultSnippet(endpoint, serviceName, firstTestExample);
-                        const fullSnippet = this.applyServiceNameCorrections(rawSnippet, serviceName);
+                // Check if method call extraction will fail and skip this example
+                if (snippetExtractor.extractMethodCall(fullSnippet) === null) {
+                    skip(
+                        "Could not extract method call from snippet - likely service mismatch or invalid snippet format"
+                    );
+                    continue;
+                }
 
-                        // Check if method call extraction will fail and skip this endpoint
-                        const testMethodCall = snippetExtractor.extractMethodCall(fullSnippet);
-                        if (testMethodCall === null) {
-                            this.context.logger.debug(
-                                `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Could not extract method call from default snippet`
-                            );
-                            skippedEndpoints.push({
-                                endpointId: endpoint.id,
-                                endpointName: getOriginalName(endpoint.name),
-                                reason: `Could not extract method call from default snippet - likely service mismatch or invalid snippet format`
-                            });
-                            continue;
-                        }
+                snippetExtractor.extractImports(fullSnippet).forEach((imp) => allImports.add(imp));
 
-                        const imports = snippetExtractor.extractImports(fullSnippet);
-                        imports.forEach((imp) => allImports.add(imp));
+                testCases.push({
+                    snippet: fullSnippet,
+                    testExample,
+                    testMethodName: isFirstExample
+                        ? baseTestMethodName
+                        : this.getUniqueTestMethodName(baseTestMethodName, testExample, usedTestMethodNames)
+                });
+            }
 
-                        endpointTests.set(endpoint.id, {
-                            snippet: fullSnippet,
-                            testExample: firstTestExample
-                        });
+            if (testCases.length > 0) {
+                endpointTests.set(endpoint.id, testCases);
+                const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
+                returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
+            } else if (skipReasons.length > 0) {
+                skippedEndpoints.push({
+                    endpointId: endpoint.id,
+                    endpointName: getOriginalName(endpoint.name),
+                    reason: skipReasons.join("; ")
+                });
+            }
+        }
 
-                        const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
-                        returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
-                    } catch (error) {
-                        const errorMessage = extractErrorMessage(error);
-                        this.context.logger.debug(
-                            `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Failed to generate default snippet - ${errorMessage}`
-                        );
-                        skippedEndpoints.push({
-                            endpointId: endpoint.id,
-                            endpointName: getOriginalName(endpoint.name),
-                            reason: `Default snippet generation failed: ${errorMessage}`
-                        });
-                    }
+        // Import expected exception classes unless their simple name clashes with another import.
+        // Simple names imported more than once map to undefined, so exceptions with that name are fully qualified.
+        const importedSimpleNames = new Map<string, string | undefined>();
+        for (const imp of allImports) {
+            const simpleName = imp.substring(imp.lastIndexOf(".") + 1);
+            importedSimpleNames.set(simpleName, importedSimpleNames.has(simpleName) ? undefined : imp);
+        }
+        for (const testCases of endpointTests.values()) {
+            for (const testCase of testCases) {
+                const expectedError = testCase.testExample.expectedError;
+                if (expectedError == null) {
+                    continue;
+                }
+                const qualifiedName = `${expectedError.packageName}.${expectedError.className}`;
+                const importedAs = importedSimpleNames.get(expectedError.className);
+                if (
+                    (!importedSimpleNames.has(expectedError.className) || importedAs === qualifiedName) &&
+                    expectedError.className !== className &&
+                    expectedError.className !== clientClassName
+                ) {
+                    allImports.add(qualifiedName);
+                    importedSimpleNames.set(expectedError.className, qualifiedName);
+                    testCase.exceptionClassReference = expectedError.className;
+                } else {
+                    testCase.exceptionClassReference = qualifiedName;
                 }
             }
         }
@@ -315,16 +329,20 @@ export class SdkWireTestGenerator {
             });
         }
 
-        const successCount = endpointTests.size;
+        const successCount = [...endpointTests.values()].reduce((count, testCases) => count + testCases.length, 0);
         const hasAuth = this.context.ir.auth?.schemes && this.context.ir.auth.schemes.length > 0;
+
+        this.testMethodBuilder.setTestClassImports(allImports);
 
         const testClass = java.codeblock((writer) => {
             this.testClassBuilder.createTestClassBoilerplate(className, clientClassName, hasAuth, allImports)(writer);
 
             for (const endpoint of endpoints) {
-                const testData = endpointTests.get(endpoint.id);
-                if (testData) {
-                    this.testMethodBuilder.createTestMethod(endpoint, testData.snippet, testData.testExample)(writer);
+                for (const testCase of endpointTests.get(endpoint.id) ?? []) {
+                    this.testMethodBuilder.createTestMethod(endpoint, testCase.snippet, testCase.testExample, {
+                        testMethodName: testCase.testMethodName,
+                        exceptionClassReference: testCase.exceptionClassReference
+                    })(writer);
                 }
             }
 
@@ -338,6 +356,29 @@ export class SdkWireTestGenerator {
             }),
             successCount
         };
+    }
+
+    /**
+     * Names tests for additional examples after the endpoint, e.g. `testGetFileThrowsNotFoundError`
+     * for error examples and `testGetFile<ExampleName>` for named success examples.
+     */
+    private getUniqueTestMethodName(
+        baseTestMethodName: string,
+        testExample: WireTestExample,
+        usedTestMethodNames: Set<string>
+    ): string {
+        const suffix =
+            testExample.expectedError != null
+                ? `Throws${testExample.expectedError.className}`
+                : (testExample.methodNameSuffix ?? "");
+        const candidate = `${baseTestMethodName}${suffix}`;
+        let testMethodName = candidate;
+        let counter = 2;
+        while (usedTestMethodNames.has(testMethodName)) {
+            testMethodName = `${candidate}${counter++}`;
+        }
+        usedTestMethodNames.add(testMethodName);
+        return testMethodName;
     }
 
     private async generateSnippetForExample(
@@ -677,4 +718,11 @@ export class SdkWireTestGenerator {
         const packagePath = this.context.getRootPackageName().replace(/\./g, "/");
         return `src/test/java/${packagePath}`;
     }
+}
+
+interface WireTestCase {
+    snippet: string;
+    testExample: WireTestExample;
+    testMethodName: string;
+    exceptionClassReference?: string;
 }

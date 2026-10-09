@@ -51,6 +51,11 @@ class PropertyBasedErrorClient
     /**
      * GET request that always throws an error
      *
+     * Example:
+     * ```php
+     * $client->propertyBasedError->throwError();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

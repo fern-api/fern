@@ -11,7 +11,6 @@ import com.seed.nullableOptional.resources.nullableoptional.types.UserRole;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserStatus;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
-import java.util.Optional;
 
 public class Example7 {
     public static void main(String[] args) {
@@ -46,7 +45,7 @@ public class Example7 {
                                                 .tenantId("tenantId")
                                                 .build())
                                         .build()))
-                                .nullableArray(Optional.of(Arrays.asList("nullableArray", "nullableArray")))
+                                .nullableArray(Arrays.asList("nullableArray", "nullableArray"))
                                 .build());
     }
 }

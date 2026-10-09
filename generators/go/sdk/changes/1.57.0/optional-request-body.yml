@@ -1,0 +1,7 @@
+- summary: |
+    Add a `respectOptionalRequestBody` option. When enabled, an endpoint whose request body the API
+    does not require sends no body and no `Content-Type` header once the caller leaves that body out,
+    including when the request wrapper is passed with a nil `Body`. Examples that supply no body stop
+    rendering an empty body such as `Body: &acme.RefundRequest{}`. The option defaults to false, so
+    existing SDKs send exactly what they always have.
+  type: feat

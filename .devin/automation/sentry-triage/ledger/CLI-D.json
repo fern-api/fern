@@ -1,0 +1,9 @@
+{
+  "title": "Invalid BAML provider bedrock",
+  "disposition": "shipped",
+  "rationale": "Unsupported BAML provider comes from user AI configuration in generators.yml.",
+  "fixSummary": "Wrap BAML client setup failures at the local-generation AI config boundary as CliError(ConfigError).",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "AI configuration selected an unsupported BAML provider and surfaced as InternalError; should be config semantics."
+}

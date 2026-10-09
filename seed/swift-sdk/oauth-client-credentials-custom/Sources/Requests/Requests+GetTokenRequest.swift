@@ -9,6 +9,7 @@ extension Requests {
         public let audience: HttpsApiExampleCom
         public let grantType: ClientCredentials
         public let scope: String?
+        public let permissions: [String]?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
@@ -20,6 +21,7 @@ extension Requests {
             audience: HttpsApiExampleCom,
             grantType: ClientCredentials,
             scope: String? = nil,
+            permissions: [String]? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.cid = cid
@@ -29,6 +31,7 @@ extension Requests {
             self.audience = audience
             self.grantType = grantType
             self.scope = scope
+            self.permissions = permissions
             self.additionalProperties = additionalProperties
         }
 
@@ -41,6 +44,7 @@ extension Requests {
             self.audience = try container.decode(HttpsApiExampleCom.self, forKey: .audience)
             self.grantType = try container.decode(ClientCredentials.self, forKey: .grantType)
             self.scope = try container.decodeIfPresent(String.self, forKey: .scope)
+            self.permissions = try container.decodeIfPresent([String].self, forKey: .permissions)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -54,6 +58,7 @@ extension Requests {
             try container.encode(self.audience, forKey: .audience)
             try container.encode(self.grantType, forKey: .grantType)
             try container.encodeIfPresent(self.scope, forKey: .scope)
+            try container.encodeIfPresent(self.permissions, forKey: .permissions)
         }
 
         public enum ClientCredentials: String, Codable, Hashable, CaseIterable, Sendable {
@@ -73,6 +78,7 @@ extension Requests {
             case audience
             case grantType = "grant_type"
             case scope
+            case permissions
         }
     }
 }

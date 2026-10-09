@@ -20,6 +20,7 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
+import { writeEndpointAuthHeaderAdd } from "./endpointAuthHeaders.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -96,9 +97,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 ? `${baseReference}.IsDefined ? ${baseReference}.Value : null`
                 : baseReference;
 
+        // Multi-value query parameters (allowMultiple=true) are repeated as flat key=value pairs
+        // (one per element), so they use Add() even when the element type is complex. Deep-object
+        // notation only applies to a single complex object value.
         const isComplexType = this.isComplexType(query.valueType);
 
-        if (isComplexType) {
+        if (isComplexType && !query.allowMultiple) {
             writer.write(`.AddDeepObject("${getWireValue(query.name)}", ${queryParameterReference})`);
         } else {
             writer.write(`.Add("${getWireValue(query.name)}", ${queryParameterReference})`);
@@ -202,9 +206,20 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.writeLine();
                 writer.write(".Add(_client.Options.Headers)");
 
+                // In endpoint-security mode, route this endpoint's declared auth scheme(s) here.
+                writeEndpointAuthHeaderAdd({ writer, context: this.context, endpoint: this.endpoint });
+
                 // Add client-level additional headers
                 writer.writeLine();
                 writer.write(".Add(_client.Options.AdditionalHeaders)");
+
+                // Fallback auto-generated idempotency-key header for the eligible HTTP methods carried
+                // in the IR. Emitted before the declared idempotency headers and request-option headers
+                // so a caller-provided value wins.
+                if (this.context.shouldAutoGenerateIdempotencyKey(this.endpoint)) {
+                    writer.writeLine();
+                    writer.write(".AddIdempotencyHeader()");
+                }
 
                 // For idempotent requests, add idempotency headers (as Dictionary<string, string>)
                 if (this.endpoint.idempotent) {

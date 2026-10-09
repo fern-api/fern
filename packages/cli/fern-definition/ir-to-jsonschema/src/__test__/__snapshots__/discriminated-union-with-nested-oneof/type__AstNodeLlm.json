@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "model": {
+      "type": "string"
+    },
+    "value_schema": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "prompt": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "model"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

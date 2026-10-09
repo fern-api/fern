@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedCsharpUnionBaseProperties.Test/SeedCsharpUnionBaseProperties.Test.csproj" />
+  <Project Path="src/SeedCsharpUnionBaseProperties/SeedCsharpUnionBaseProperties.csproj" />
+</Solution>

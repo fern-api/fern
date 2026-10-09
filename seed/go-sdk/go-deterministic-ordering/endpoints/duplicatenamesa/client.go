@@ -27,14 +27,26 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // Create endpoint for service A
+//
+// Example:
+//
+//	request := &fern.CreateRequestA{
+//	    Name: "name",
+//	    Value: 1,
+//	}
+//	client.Endpoints.DuplicateNamesA.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *fern.CreateRequestA,
@@ -52,6 +64,19 @@ func (c *Client) Create(
 }
 
 // Get endpoint for service A
+//
+// Example:
+//
+//	request := &fern.GetRequestA{
+//	    ID: "id",
+//	    Filter: fern.String(
+//	        "filter",
+//	    ),
+//	}
+//	client.Endpoints.DuplicateNamesA.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *fern.GetRequestA,
@@ -69,6 +94,21 @@ func (c *Client) Get(
 }
 
 // List endpoint for service A
+//
+// Example:
+//
+//	request := &fern.ListRequestA{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Endpoints.DuplicateNamesA.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *fern.ListRequestA,

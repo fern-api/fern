@@ -9,6 +9,22 @@ public final class FileServiceClient: Sendable {
 
     /// This endpoint returns a file by its name.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Examples
+    ///
+    /// private func main() async throws {
+    ///     let client = ExamplesClient(token: "<token>")
+    ///
+    ///     _ = try await client.file.service.getFile(
+    ///         filename: "file.txt",
+    ///         xFileApiVersion: "0.0.2"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter filename: This is a filename
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getFile(filename: String, xFileApiVersion: String, requestOptions: RequestOptions? = nil) async throws -> File {

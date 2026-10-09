@@ -1,0 +1,3 @@
+rootProject.name = 'java-multi-env-url-templating'
+
+include 'sample-app'

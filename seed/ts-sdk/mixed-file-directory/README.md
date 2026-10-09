@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 
-const client = new SeedMixedFileDirectoryClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedMixedFileDirectoryClient({ baseUrl: "YOUR_BASE_URL" });
 await client.organization.create({
     name: "name"
 });

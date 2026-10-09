@@ -8,6 +8,7 @@ types:
     enum:
       - openai
       - anthropic
-      - bedrock
+      - value: aws-bedrock
+        name: AwsBedrock
 
   ModelName: string

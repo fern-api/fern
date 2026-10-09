@@ -39,6 +39,19 @@ describe("no-conflicting-parameter-names", () => {
         expect(violations[0]?.nodePath).toEqual(["paths", "/plants/{plant_id}", "get"]);
     }, 10_000);
 
+    it("should not report violations when x-fern-parameter-name resolves the collision", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoConflictingParameterNamesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("fern-parameter-name-override")
+            )
+        });
+
+        expect(violations).toEqual([]);
+    }, 10_000);
+
     it("should not report violations when parameters have different normalized names", async () => {
         const violations = await getViolationsForRule({
             rule: NoConflictingParameterNamesRule,

@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Warn when `generators.yml` declares `auth-schemes` but no `api.auth` to select them. The
+    workspace only reads the `auth-schemes` block when `api.auth` is set, so declaring schemes
+    without it silently discards the whole block — `env:` overrides included — before the importer
+    sees it. Auth is then re-derived from the spec's `securitySchemes`, which carries no
+    environment variable, and each generator falls back to its own default name (the CLI
+    generator to `<BINARY>_TOKEN`). Nothing is invalid, so `fern check` stayed clean and
+    generation succeeded while producing a client that read an environment variable the user
+    never configured. The warning names the schemes being dropped and the `auth:` line that
+    applies them.
+  type: fix

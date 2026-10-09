@@ -1,0 +1,41 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/identity/token",
+                "method": "POST",
+                "identifier_override": "endpoint_identity.getToken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"client_id\", \"client_secret\");\nawait client.Identity.GetTokenAsync(\n    new GetTokenIdentityRequest { Username = \"username\", Password = \"password\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/plants",
+                "method": "GET",
+                "identifier_override": "endpoint_plants.list"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"client_id\", \"client_secret\");\nawait client.Plants.ListAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "GET",
+                "identifier_override": "endpoint_plants.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"client_id\", \"client_secret\");\nawait client.Plants.GetAsync(new GetPlantsRequest { PlantId = \"plantId\" });\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  types: types.yml
+
+types:
+  GlobalParameterId: string
+
+  GlobalParameterLocation:
+    docs: |
+      The wire location where the global parameter value is injected.
+    enum:
+      - header
+      - query
+      - body
+      - path
+
+  GlobalParameterApplyMode:
+    docs: |
+      Controls how the global parameter is applied to operations.
+      `explicit`: only applied to operations that opt in via
+      the per-operation `x-fern-global-parameter` extension.
+      `auto`: applied to every operation whose request schema
+      contains the target field.
+    enum:
+      - explicit
+      - auto
+
+  GlobalParameter:
+    docs: |
+      A parameter that is set once at the SDK client level (typed
+      constructor param / client option) or the CLI config level
+      (top-level flag, env-var fallback, optional client-side default)
+      and injected into every relevant request at the declared wire
+      location. Per-call values always win over the global value.
+    extends: commons.WithDocs
+    properties:
+      id: GlobalParameterId
+      name:
+        type: commons.NameAndWireValueOrString
+        docs: |
+          The parameter name. `wireValue` is the canonical identifier
+          (matches the extension entry's `name` field and the id used
+          in per-operation opt-in). `name` is the SDK-facing identifier
+          (from `parameter-name` if provided, otherwise derived from
+          `wireValue` via casing rules). CLIs use `wireValue` as the
+          flag name; SDKs use `name` as the constructor parameter name.
+      location: GlobalParameterLocation
+      target:
+        type: string
+        docs: |
+          The wire-level target where the value is injected at runtime.
+          For `body`: a dotted path into the request body (e.g. `config.currency`).
+          For `query`: the query parameter name.
+          For `header`: the HTTP header name.
+          For `path`: the path parameter name.
+      valueType: types.TypeReference
+      env:
+        type: optional<string>
+        docs: Environment variable fallback.
+      clientDefault:
+        type: optional<types.Literal>
+        docs: |
+          Client-side default value when neither the caller nor the
+          environment variable provides a value. Populated from the
+          `x-fern-default` or `default` field on the extension entry.
+      optional:
+        type: optional<boolean>
+        docs: |
+          Whether the parameter is optional. Defaults to false when
+          not specified, meaning the CLI / SDK will error if no value
+          is provided and no default or env var is set.
+      apply:
+        type: optional<GlobalParameterApplyMode>
+        docs: |
+          Defaults to `explicit` when not specified.

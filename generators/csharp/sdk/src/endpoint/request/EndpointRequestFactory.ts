@@ -38,9 +38,9 @@ export function createEndpointRequest({
         },
         justRequestBody: (value) => {
             if (value.type === "bytes") {
-                return new BytesOnlyEndpointRequest(context, sdkRequest, endpoint);
+                return new BytesOnlyEndpointRequest(context, sdkRequest, endpoint, serviceId);
             } else {
-                return new ReferencedEndpointRequest(context, sdkRequest, endpoint, value.requestBodyType);
+                return new ReferencedEndpointRequest(context, sdkRequest, endpoint, value.requestBodyType, serviceId);
             }
         },
         _other: () => {

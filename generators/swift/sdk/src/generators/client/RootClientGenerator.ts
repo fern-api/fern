@@ -1,6 +1,7 @@
 import { getWireValue } from "@fern-api/base-generator";
 import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
+import { LiteralEnumGenerator } from "@fern-api/swift-model";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
@@ -114,11 +115,20 @@ export class RootClientGenerator {
             ],
             initializers: this.generateInitializers(),
             methods: this.generateMethods(),
+            nestedTypes: this.generateNestedLiteralEnums(),
             docs: swift.docComment({
                 summary:
                     "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions."
             })
         });
+    }
+
+    private generateNestedLiteralEnums(): swift.EnumWithRawValues[] {
+        return this.sdkGeneratorContext.project.nameRegistry
+            .getAllNestedLiteralEnumSymbolsOrThrow(this.symbol)
+            .map(({ symbol, literalValue }) =>
+                new LiteralEnumGenerator({ name: symbol.name, literalValue }).generate()
+            );
     }
 
     private generateInitializers(): swift.Initializer[] {

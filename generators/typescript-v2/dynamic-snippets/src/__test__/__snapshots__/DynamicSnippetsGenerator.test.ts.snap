@@ -48,16 +48,10 @@ async function main() {
     });
     await client.service.createBigEntity({
         castMember: {
-            id: "john.doe",
             name: "John Doe",
+            id: "john.doe",
         },
         extendedMovie: {
-            cast: [
-                "John Travolta",
-                "Samuel L. Jackson",
-                "Uma Thurman",
-                "Bruce Willis",
-            ],
             id: "movie-sda231x",
             title: "Pulp Fiction",
             from: "Quentin Tarantino",
@@ -65,21 +59,27 @@ async function main() {
             type: "movie",
             tag: "tag-12efs9dv",
             metadata: {
-                "academyAward": true,
-                "releaseDate": "2023-12-08",
-                "ratings": {
+                academyAward: true,
+                releaseDate: "2023-12-08",
+                ratings: {
                     rottenTomatoes: 97,
                     imdb: 7.6,
                 },
             },
             revenue: BigInt("1000000"),
+            cast: [
+                "John Travolta",
+                "Samuel L. Jackson",
+                "Uma Thurman",
+                "Bruce Willis",
+            ],
         },
         eventInfo: {
             type: "metadata",
             id: "event-12345",
             data: {
-                "key1": "val1",
-                "key2": "val2",
+                key1: "val1",
+                key2: "val2",
             },
             jsonString: "abc",
         },
@@ -122,13 +122,13 @@ async function main() {
         type: "movie",
         tag: "development",
         metadata: {
-            "actors": [
+            actors: [
                 "Christian Bale",
                 "Florence Pugh",
                 "Willem Dafoe",
             ],
-            "releaseDate": "2023-12-08",
-            "ratings": {
+            releaseDate: "2023-12-08",
+            ratings: {
                 rottenTomatoes: 97,
                 imdb: 7.6,
             },
@@ -251,10 +251,10 @@ async function main() {
         token: "<YOUR_API_KEY>",
     });
     await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
-        "test": 0,
-        "test2": true,
-        "test3": "Test",
-        "test4": [
+        test: 0,
+        test2: true,
+        test3: "Test",
+        test4: [
             "1",
             "1",
             "1",
@@ -318,7 +318,9 @@ async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    await client.imdb.getMovie("movie_xyz");
+    await client.imdb.getMovie({
+        movieID: "movie_xyz",
+    });
 }
 main();
 "
@@ -464,6 +466,23 @@ async function main() {
             null,
         ],
         extra: null,
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        tenantID: "my_tenant",
+    });
+    await client.user.getUserSpecifics({
+        userID: "my_user",
+        version: 7,
+        thought: "my_thought",
     });
 }
 main();

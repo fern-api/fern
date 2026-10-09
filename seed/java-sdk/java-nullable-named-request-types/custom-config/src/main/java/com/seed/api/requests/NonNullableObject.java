@@ -20,7 +20,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = NonNullableObject.Builder.class)
 public final class NonNullableObject {
-    private final Optional<String> nonNullableObjectId;
+    private final Optional<String> id;
 
     private final Optional<String> name;
 
@@ -29,19 +29,19 @@ public final class NonNullableObject {
     private final Map<String, Object> additionalProperties;
 
     private NonNullableObject(
-            Optional<String> nonNullableObjectId,
+            Optional<String> id,
             Optional<String> name,
             Optional<Integer> age,
             Map<String, Object> additionalProperties) {
-        this.nonNullableObjectId = nonNullableObjectId;
+        this.id = id;
         this.name = name;
         this.age = age;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
-    public Optional<String> getNonNullableObjectId() {
-        return nonNullableObjectId;
+    public Optional<String> getId() {
+        return id;
     }
 
     @JsonProperty("name")
@@ -66,14 +66,12 @@ public final class NonNullableObject {
     }
 
     private boolean equalTo(NonNullableObject other) {
-        return nonNullableObjectId.equals(other.nonNullableObjectId)
-                && name.equals(other.name)
-                && age.equals(other.age);
+        return id.equals(other.id) && name.equals(other.name) && age.equals(other.age);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.nonNullableObjectId, this.name, this.age);
+        return Objects.hash(this.id, this.name, this.age);
     }
 
     @java.lang.Override
@@ -87,7 +85,7 @@ public final class NonNullableObject {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> nonNullableObjectId = Optional.empty();
+        private Optional<String> id = Optional.empty();
 
         private Optional<String> name = Optional.empty();
 
@@ -99,20 +97,20 @@ public final class NonNullableObject {
         private Builder() {}
 
         public Builder from(NonNullableObject other) {
-            nonNullableObjectId(other.getNonNullableObjectId());
+            id(other.getId());
             name(other.getName());
             age(other.getAge());
             return this;
         }
 
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
-        public Builder nonNullableObjectId(Optional<String> nonNullableObjectId) {
-            this.nonNullableObjectId = nonNullableObjectId;
+        public Builder id(Optional<String> id) {
+            this.id = id;
             return this;
         }
 
-        public Builder nonNullableObjectId(String nonNullableObjectId) {
-            this.nonNullableObjectId = Optional.ofNullable(nonNullableObjectId);
+        public Builder id(String id) {
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
@@ -139,7 +137,7 @@ public final class NonNullableObject {
         }
 
         public NonNullableObject build() {
-            return new NonNullableObject(nonNullableObjectId, name, age, additionalProperties);
+            return new NonNullableObject(id, name, age, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

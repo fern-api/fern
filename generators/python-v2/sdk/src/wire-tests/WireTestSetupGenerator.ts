@@ -31,9 +31,11 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        // ir-sdk versions may differ between python-sdk and mock-utils;
-        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
-        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
+        // ir-sdk versions may differ between python-sdk and mock-utils. The newer IR only adds
+        // optional fields and OAuth configuration variants that WireMock ignores, but the added
+        // union variants stop the two IntermediateRepresentations from overlapping structurally,
+        // so the assertion has to go through `unknown`.
+        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     /**
@@ -205,7 +207,7 @@ export class WireTestSetupGenerator {
       - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
-    command: ["--global-response-templating", "--verbose"]
+    command: ["--verbose"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
       interval: 2s
@@ -243,6 +245,15 @@ export class WireTestSetupGenerator {
         const clientImport = this.getClientImport();
         const clientConstructorParams = this.buildClientConstructorParams();
         const environmentSetup = this.buildEnvironmentSetup();
+        // The per-endpoint auth-header assertion helper (and its `re`/`List` imports) is
+        // only used by endpoint-security wire tests, so it is emitted only in that mode to
+        // avoid introducing an unused helper into every other fixture's conftest.
+        const isEndpointSecurity = this.ir.auth?.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+        const typingImport = isEndpointSecurity
+            ? "from typing import Any, Dict, List, Optional"
+            : "from typing import Any, Dict, Optional";
+        const reImport = isEndpointSecurity ? "import re\n" : "";
+        const authHeadersHelper = isEndpointSecurity ? this.buildVerifyAuthHeadersHelper() : "";
 
         return `"""
 Pytest configuration for wire tests.
@@ -257,7 +268,7 @@ per test run, even when using pytest-xdist.
 
 import inspect
 import os
-from typing import Any, Dict, Optional
+${reImport}${typingImport}
 
 import httpx
 
@@ -330,6 +341,71 @@ def verify_request_count(
     result = response.json()
     requests_found = len(result.get("requests", []))
     assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
+${authHeadersHelper}`;
+    }
+
+    /**
+     * Builds the endpoint-security-only `verify_auth_headers` helper appended to conftest.py.
+     * Kept out of the base template so non-endpoint-security fixtures see zero churn.
+     */
+    private buildVerifyAuthHeadersHelper(): string {
+        return `
+
+def verify_auth_headers(
+    test_id: str,
+    method: str,
+    url_path: str,
+    present_headers: Dict[str, str],
+    absent_headers: List[str],
+) -> None:
+    """Verifies the auth headers on the recorded request(s) for endpoint-security routing.
+
+    'present_headers' maps a header name to a regex the header value must fully
+    match; 'absent_headers' lists header names that must NOT be present. Header
+    names are compared case-insensitively per HTTP semantics.
+
+    This proves per-endpoint auth routing on the wire: only the scheme(s) declared
+    for the endpoint send a header, and no other scheme's header leaks through.
+    """
+    wiremock_admin_url = f"{_get_wiremock_base_url()}/__admin"
+    request_body: Dict[str, Any] = {
+        "method": method,
+        "urlPath": url_path,
+        "headers": {"X-Test-Id": {"equalTo": test_id}},
+    }
+    response = httpx.post(f"{wiremock_admin_url}/requests/find", json=request_body)
+    assert response.status_code == 200, "Failed to query WireMock requests"
+    result = response.json()
+    requests = result.get("requests", [])
+    assert len(requests) >= 1, f"Expected at least one recorded request for test_id={test_id}"
+
+    for recorded in requests:
+        raw_headers = recorded.get("headers", {}) or {}
+        # WireMock may serialize a header value as a string or a list of strings;
+        # normalize to a single string and index case-insensitively.
+        normalized: Dict[str, str] = {}
+        for name, value in raw_headers.items():
+            if isinstance(value, list):
+                value = value[0] if value else ""
+            normalized[name.lower()] = str(value)
+
+        for name, pattern in present_headers.items():
+            actual = normalized.get(name.lower())
+            assert actual is not None, (
+                f"Expected auth header '{name}' to be present for test_id={test_id}, "
+                f"but it was missing. Present headers: {sorted(normalized)}"
+            )
+            assert re.fullmatch(pattern, actual) is not None, (
+                f"Auth header '{name}'='{actual}' did not match expected pattern "
+                f"'{pattern}' for test_id={test_id}"
+            )
+
+        for name in absent_headers:
+            assert name.lower() not in normalized, (
+                f"Expected auth header '{name}' to be ABSENT for test_id={test_id} "
+                f"(endpoint-security routing must not leak other schemes), "
+                f"but found '{normalized.get(name.lower())}'"
+            )
 `;
     }
 
@@ -622,12 +698,31 @@ def pytest_unconfigure(config: pytest.Config) -> None:
      */
     private buildClientConstructorParams(): string {
         const params: string[] = [];
+        // Track kwarg names already emitted so we never produce a duplicate keyword
+        // argument (a Python SyntaxError). Multiple auth schemes can resolve to the
+        // same constructor kwarg — e.g. an `ApiKey` header scheme and an inferred-auth
+        // scheme both map to `api_key` — so dedup across all sources.
+        const seenParamNames = new Set<string>();
+        const addParam = (line: string): void => {
+            const match = /^\s*([A-Za-z_][A-Za-z0-9_]*)=/.exec(line);
+            const paramName = match?.[1];
+            if (paramName != null) {
+                if (seenParamNames.has(paramName)) {
+                    return;
+                }
+                seenParamNames.add(paramName);
+            }
+            params.push(line);
+        };
 
         // Process auth schemes from the IR
+        const isEndpointSecurity = this.ir.auth?.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+        const hasOAuthScheme = (this.ir.auth?.schemes ?? []).some((scheme) => scheme.type === "oauth");
         if (this.ir.auth && this.ir.auth.schemes) {
             for (const scheme of this.ir.auth.schemes) {
-                const schemeParams = this.getAuthSchemeParams(scheme);
-                params.push(...schemeParams);
+                for (const schemeParam of this.getAuthSchemeParams(scheme, { isEndpointSecurity, hasOAuthScheme })) {
+                    addParam(schemeParam);
+                }
             }
         }
 
@@ -635,10 +730,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         if (this.ir.headers) {
             for (const header of this.ir.headers) {
                 const paramName = this.context.caseConverter.snakeSafe(getNameFromWireValue(header.name));
-                // Only add if not already added by auth schemes
-                if (!params.some((p) => p.startsWith(`        ${paramName}=`))) {
-                    params.push(`        ${paramName}="test_${paramName}",`);
-                }
+                addParam(`        ${paramName}="test_${paramName}",`);
             }
         }
 
@@ -647,14 +739,38 @@ def pytest_unconfigure(config: pytest.Config) -> None:
 
     /**
      * Gets the constructor parameters for a specific auth scheme.
+     *
+     * In endpoint-security mode a single client must carry credentials for EVERY
+     * scheme so per-endpoint routing has something to route. Bearer and OAuth share
+     * the client's single token slot, and the generated constructor overloads make
+     * `token` mutually exclusive with `client_id`/`client_secret`. When an OAuth
+     * scheme is present we drive the shared token slot (and the inferred-auth token
+     * endpoint) via `client_id`/`client_secret`, so the bearer scheme contributes no
+     * separate `token` kwarg. If there is no OAuth scheme, the bearer token slot is
+     * fed directly via a `token` callable.
      */
-    private getAuthSchemeParams(scheme: FernIr.AuthScheme): string[] {
+    private getAuthSchemeParams(
+        scheme: FernIr.AuthScheme,
+        options: { isEndpointSecurity: boolean; hasOAuthScheme: boolean }
+    ): string[] {
+        const { isEndpointSecurity, hasOAuthScheme } = options;
         const params: string[] = [];
 
         switch (scheme.type) {
             case "bearer":
-                // Bearer auth uses a token parameter
-                params.push(`        ${this.context.caseConverter.snakeSafe(scheme.token)}="test_token",`);
+                // With OAuth present the shared token slot is populated by the OAuth
+                // provider (via client_id/client_secret) and the generated constructor
+                // overloads make token mutually exclusive with client credentials, so
+                // bearer adds nothing.
+                if (hasOAuthScheme) {
+                    break;
+                }
+                if (isEndpointSecurity) {
+                    params.push(`        token=lambda: "test_token",`);
+                } else {
+                    // Bearer auth uses a token parameter
+                    params.push(`        ${this.context.caseConverter.snakeSafe(scheme.token)}="test_token",`);
+                }
                 break;
 
             case "basic":
@@ -676,8 +792,11 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "oauth":
-                // OAuth uses either client credentials or a token provider
-                if (scheme.configuration?.type === "clientCredentials") {
+                // OAuth uses either client credentials or a token provider. Under
+                // endpoint-security we always take the client-credentials path so the
+                // shared token slot and the inferred-auth token endpoint can both be
+                // driven by client_id/client_secret.
+                if (scheme.configuration?.type === "clientCredentials" || isEndpointSecurity) {
                     // For client credentials OAuth, use client_id and client_secret
                     params.push(`        client_id="test_client_id",`);
                     params.push(`        client_secret="test_client_secret",`);
@@ -688,11 +807,66 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "inferred":
-                // Inferred auth - use api_key instead of _token_getter_override
-                params.push(`        api_key="test_api_key",`);
+                params.push(...this.getInferredAuthParams(scheme));
                 break;
         }
 
         return params;
+    }
+
+    /**
+     * The inferred auth client constructor takes the token endpoint's non-literal headers and
+     * body properties, so pass a fake value for each required one.
+     */
+    private getInferredAuthParams(scheme: FernIr.InferredAuthScheme): string[] {
+        // The Python root client only takes inferred auth credentials when inferred is the sole scheme.
+        if (this.ir.auth.schemes.length !== 1) {
+            return [];
+        }
+        const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
+        const endpoint = this.ir.services[tokenEndpointRef.serviceId]?.endpoints.find(
+            (e) => e.id === tokenEndpointRef.endpointId
+        );
+        if (endpoint == null) {
+            return [];
+        }
+
+        const properties: { name: FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }[] = [
+            ...endpoint.headers
+        ];
+        const requestBody = endpoint.requestBody;
+        if (requestBody?.type === "inlinedRequestBody") {
+            properties.push(...requestBody.properties);
+        } else if (requestBody?.type === "reference" && requestBody.requestBodyType.type === "named") {
+            const shape = this.resolveAliasedShape(requestBody.requestBodyType.typeId);
+            if (shape?.type === "object") {
+                properties.push(...(shape.extendedProperties ?? []), ...shape.properties);
+            }
+        }
+
+        return properties
+            .filter((property) => this.isRequiredNonLiteral(property.valueType))
+            .map((property) => {
+                const paramName = this.context.caseConverter.snakeSafe(getNameFromWireValue(property.name));
+                return `        ${paramName}="test_${paramName}",`;
+            });
+    }
+
+    private resolveAliasedShape(typeId: FernIr.TypeId): FernIr.Type | undefined {
+        const visited = new Set<FernIr.TypeId>();
+        let shape = this.ir.types[typeId]?.shape;
+        while (shape?.type === "alias" && shape.aliasOf.type === "named" && !visited.has(shape.aliasOf.typeId)) {
+            visited.add(shape.aliasOf.typeId);
+            shape = this.ir.types[shape.aliasOf.typeId]?.shape;
+        }
+        return shape;
+    }
+
+    private isRequiredNonLiteral(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type !== "container") {
+            return true;
+        }
+        const containerType = typeReference.container.type;
+        return containerType !== "optional" && containerType !== "literal";
     }
 }

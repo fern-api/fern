@@ -13,6 +13,7 @@ export {
     createInlinedRequestBodyProperty,
     createMinimalIR,
     createNamedTypeReference,
+    createOAuthScheme,
     createObjectProperty,
     createPathParameter,
     createQueryParameter,

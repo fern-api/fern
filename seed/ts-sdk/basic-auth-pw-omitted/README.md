@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBasicAuthPwOmittedClient } from "@fern/basic-auth-pw-omitted";
 
-const client = new SeedBasicAuthPwOmittedClient({ environment: "YOUR_BASE_URL", username: "YOUR_USERNAME" });
+const client = new SeedBasicAuthPwOmittedClient({ baseUrl: "YOUR_BASE_URL", username: "YOUR_USERNAME" });
 await client.basicAuth.postWithBasicAuth({
     "key": "value"
 });

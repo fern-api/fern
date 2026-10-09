@@ -14,7 +14,7 @@ public partial class SeedWebhooksClient : ISeedWebhooksClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedWebhooks" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedWebhooks.Version.Current },
                 { "User-Agent", "Fernwebhooks/0.0.1" },
             }
         );

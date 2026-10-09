@@ -15,7 +15,10 @@ public partial class SeedOauthClientCredentialsMandatoryAuthClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedOauthClientCredentialsMandatoryAuth" },
-                { "X-Fern-SDK-Version", Version.Current },
+                {
+                    "X-Fern-SDK-Version",
+                    global::SeedOauthClientCredentialsMandatoryAuth.Version.Current
+                },
                 { "User-Agent", "Fernoauth-client-credentials-mandatory-auth/0.0.1" },
             }
         );

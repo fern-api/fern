@@ -5,6 +5,8 @@ import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export class ObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
+    public declare readonly body: SeedExhaustive.types.ObjectWithOptionalField;
+
     constructor(body: SeedExhaustive.types.ObjectWithOptionalField, rawResponse?: core.RawResponse) {
         super({
             message: "ObjectWithOptionalFieldError",
@@ -17,6 +19,6 @@ export class ObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "ObjectWithOptionalFieldError";
     }
 }

@@ -11,9 +11,9 @@ public partial class Examples
         );
 
         await client.Playlist.UpdatePlaylistAsync(
-            1,
-            "playlistId",
-            new UpdatePlaylistRequest {
+            serviceParam: 1,
+            playlistId: "playlistId",
+            request: new UpdatePlaylistRequest {
                 Name = "name",
                 Problems = new List<string>(){
                     "problems",

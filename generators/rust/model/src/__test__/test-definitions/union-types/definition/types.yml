@@ -100,3 +100,62 @@ types:
       - CSV
       - XML
       - YAML
+
+  # Union whose variants inherit their fields via extends. The variant types are each
+  # referenced once, so they are inlining candidates, but inlining would drop everything
+  # they inherit.
+  PlantEvent:
+    discriminant: event
+    union:
+      sprouted:
+        type: SproutedEvent
+      watered:
+        type: WateredEvent
+
+  PlantEventBase:
+    properties:
+      occurred_at: string
+
+  SproutedEvent:
+    extends:
+      - PlantEventBase
+
+  WateredEvent:
+    extends:
+      - PlantEventBase
+    properties:
+      liters: double
+
+  # SSE stream-response shape (Anduril Lattice entities/stream): a discriminated union
+  # whose variants inherit their entire payload from a base via `extends` and contribute
+  # only the discriminant. Pre-fix these variants were inlined to their own (empty)
+  # properties, producing `Heartbeat {}` / `Entity {}` and silently dropping the inherited
+  # payload. They must keep the `#[serde(flatten)]` wrapper so the payload survives.
+  EntityStreamResponse:
+    discriminant: event
+    union:
+      heartbeat:
+        type: EntityStreamHeartbeat
+      entity:
+        type: EntityStreamEvent
+
+  EntityEvent:
+    properties:
+      time: string
+      entity: StreamEntity
+
+  StreamEntity:
+    properties:
+      entity_id: string
+
+  HeartbeatData:
+    properties:
+      timestamp: string
+
+  EntityStreamHeartbeat:
+    extends:
+      - HeartbeatData
+
+  EntityStreamEvent:
+    extends:
+      - EntityEvent

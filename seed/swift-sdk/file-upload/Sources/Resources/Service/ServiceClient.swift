@@ -17,6 +17,20 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import FileUpload
+    ///
+    /// private func main() async throws {
+    ///     let client = FileUploadClient()
+    ///
+    ///     _ = try await client.service.justFile(request: .init(file: .init(data: Data("".utf8))))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func justFile(request: Requests.JustFileRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
@@ -27,7 +41,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: String, optionalListOfStrings: String? = nil, request: Requests.JustFileWithQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: [String], optionalListOfStrings: [String]? = nil, request: Requests.JustFileWithQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file-with-query-params",
@@ -36,8 +50,8 @@ public final class ServiceClient: Sendable {
                 "maybeString": maybeString.map { .string($0) }, 
                 "integer": .int(integer), 
                 "maybeInteger": maybeInteger.map { .int($0) }, 
-                "listOfStrings": .string(listOfStrings), 
-                "optionalListOfStrings": optionalListOfStrings.map { .string($0) }
+                "listOfStrings": .stringArray(listOfStrings), 
+                "optionalListOfStrings": optionalListOfStrings.map { .stringArray($0) }
             ],
             body: request.asMultipartFormData(),
             requestOptions: requestOptions
@@ -88,6 +102,20 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import FileUpload
+    ///
+    /// private func main() async throws {
+    ///     let client = FileUploadClient()
+    ///
+    ///     _ = try await client.service.optionalArgs(request: .init(imageFile: .init(data: Data("".utf8))))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func optionalArgs(request: Requests.OptionalArgsRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
@@ -121,6 +149,25 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import FileUpload
+    ///
+    /// private func main() async throws {
+    ///     let client = FileUploadClient()
+    ///
+    ///     _ = try await client.service.withRefBody(request: .init(
+    ///         imageFile: .init(data: Data("".utf8)),
+    ///         request: MyObject(
+    ///             foo: "bar"
+    ///         )
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func withRefBody(request: Requests.WithRefBodyRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
@@ -132,6 +179,20 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import FileUpload
+    ///
+    /// private func main() async throws {
+    ///     let client = FileUploadClient()
+    ///
+    ///     _ = try await client.service.simple()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func simple(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

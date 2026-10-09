@@ -8,10 +8,10 @@ import { addResolveCommand } from "./resolve/index.js";
 import { addStatusCommand } from "./status/index.js";
 
 export function addReplayCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "replay", "Manage Replay customization tracking", [
-        addInitCommand,
-        addResolveCommand,
-        addStatusCommand,
-        addForgetCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "replay",
+        description: "Manage Replay customization tracking",
+        subcommands: [addInitCommand, addResolveCommand, addStatusCommand, addForgetCommand]
+    });
 }

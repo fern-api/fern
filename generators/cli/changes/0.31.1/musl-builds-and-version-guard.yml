@@ -1,0 +1,19 @@
+- summary: |
+    Select the TLS and credential-store backends per target in Cargo.toml instead
+    of via build flags, so musl targets build with a plain `cargo build`. Previously
+    the default `native-tls` feature pulled in `openssl-sys` and `keyring`'s
+    secret-service backend pulled in `libdbus-sys`, both of which fail for
+    `*-linux-musl` under cargo-dist's release workflow (which has no per-target
+    feature configuration). musl builds now use rustls and the file-backed
+    credential store.
+  type: fix
+- summary: |
+    Fail the npm publish workflow when the release tag and the crate version in
+    Cargo.toml disagree, instead of publishing packages whose binary reports a
+    `--version` that is not on the registry.
+  type: fix
+- summary: |
+    Fail the publish workflow's version guard with a clear, actionable error when
+    the crate version can't be resolved from `cargo metadata`, instead of
+    reporting a misleading empty-string version mismatch or silently passing.
+  type: fix

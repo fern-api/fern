@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test API",
   "auth": {
@@ -236,6 +237,7 @@
       "messages": [
         {
           "type": "testChannel_sendMessage",
+          "docs": "Message with marked data information.",
           "origin": "client",
           "body": {
             "bodyType": {
@@ -296,6 +298,7 @@
       "messages": [
         {
           "type": "testChannel2_sendMessage",
+          "docs": "Message with marked data information.",
           "origin": "client",
           "body": {
             "bodyType": {
@@ -356,6 +359,7 @@
       "messages": [
         {
           "type": "testChannels_sendMessage",
+          "docs": "Message with marked data information.",
           "origin": "client",
           "body": {
             "bodyType": {
@@ -416,6 +420,7 @@
       "messages": [
         {
           "type": "testChannels2_sendMessage",
+          "docs": "Message with marked data information.",
           "origin": "client",
           "body": {
             "bodyType": {
@@ -847,7 +852,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_beta": {
       "fernFilepath": {
@@ -862,7 +868,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_testChannel": {
       "fernFilepath": {
@@ -877,7 +884,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_testChannel",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     },
     "subpackage_testChannel2": {
       "fernFilepath": {
@@ -892,7 +900,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_testChannel2",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     },
     "subpackage_testChannels": {
       "fernFilepath": {
@@ -907,7 +916,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_testChannels",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     },
     "subpackage_testChannels2": {
       "fernFilepath": {
@@ -922,7 +932,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_testChannels2",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     }
   },
   "rootPackage": {
@@ -940,7 +951,8 @@
       "subpackage_testChannels",
       "subpackage_testChannels2"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": true
   },
   "sdkConfig": {
     "isAuthMandatory": false,

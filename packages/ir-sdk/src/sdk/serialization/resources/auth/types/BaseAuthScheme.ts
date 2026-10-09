@@ -10,11 +10,13 @@ export const BaseAuthScheme: core.serialization.ObjectSchema<serializers.BaseAut
     core.serialization
         .objectWithoutOptionalProperties({
             key: AuthSchemeKey,
+            playgroundDocs: core.serialization.string().optional(),
         })
         .extend(WithDocs);
 
 export declare namespace BaseAuthScheme {
     export interface Raw extends WithDocs.Raw {
         key: AuthSchemeKey.Raw;
+        playgroundDocs?: string | null;
     }
 }

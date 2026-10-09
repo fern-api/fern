@@ -27,23 +27,22 @@ Creates a plant with example JSON but no request body schema.
 
 ```go
 request := map[string]any{
-        "care": map[string]any{
-            "humidity": "high",
-            "light": "full sun",
-            "water": "distilled only",
-        },
-        "name": "Venus Flytrap",
-        "species": "Dionaea muscipula",
-        "tags": []any{
-            "carnivorous",
-            "tropical",
-        },
-    }
-client.CreatePlant(
-        context.TODO(),
-        request,
-    )
+    "care": map[string]any{
+        "humidity": "high",
+        "light": "full sun",
+        "water": "distilled only",
+    },
+    "name": "Venus Flytrap",
+    "species": "Dionaea muscipula",
+    "tags": []any{
+        "carnivorous",
+        "tropical",
+    },
 }
+client.CreatePlant(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -98,19 +97,18 @@ Updates a plant with example JSON but no request body schema.
 
 ```go
 request := &fern.UpdatePlantRequest{
-        PlantID: "plantId",
-        Body: map[string]any{
-            "care": map[string]any{
-                "light": "partial shade",
-            },
-            "name": "Updated Venus Flytrap",
+    PlantID: "plantId",
+    Body: map[string]any{
+        "care": map[string]any{
+            "light": "partial shade",
         },
-    }
-client.UpdatePlant(
-        context.TODO(),
-        request,
-    )
+        "name": "Updated Venus Flytrap",
+    },
 }
+client.UpdatePlant(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -173,18 +171,17 @@ A control endpoint that has both schema and example defined.
 
 ```go
 request := &fern.CreatePlantWithSchemaRequest{
-        Name: fern.String(
-            "Sundew",
-        ),
-        Species: fern.String(
-            "Drosera capensis",
-        ),
-    }
-client.CreatePlantWithSchema(
-        context.TODO(),
-        request,
-    )
+    Name: fern.String(
+        "Sundew",
+    ),
+    Species: fern.String(
+        "Drosera capensis",
+    ),
 }
+client.CreatePlantWithSchema(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

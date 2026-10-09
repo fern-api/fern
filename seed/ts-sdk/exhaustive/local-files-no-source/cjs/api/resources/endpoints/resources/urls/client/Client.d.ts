@@ -12,6 +12,9 @@ export declare class UrlsClient {
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.urls.withMixedCase()
      */
@@ -19,6 +22,9 @@ export declare class UrlsClient {
     private __withMixedCase;
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.urls.noEndingSlash()
@@ -28,6 +34,9 @@ export declare class UrlsClient {
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.urls.withEndingSlash()
      */
@@ -35,6 +44,9 @@ export declare class UrlsClient {
     private __withEndingSlash;
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.urls.withUnderscores()

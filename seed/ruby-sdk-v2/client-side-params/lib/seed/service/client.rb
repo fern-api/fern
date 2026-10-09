@@ -27,6 +27,17 @@ module Seed
       # @option params [String, nil] :fields
       # @option params [String, nil] :search
       #
+      # @example
+      #   client.service.list_resources(
+      #     page: 1,
+      #     per_page: 1,
+      #     sort: "created_at",
+      #     order: "desc",
+      #     include_totals: true,
+      #     fields: "fields",
+      #     search: "search"
+      #   )
+      #
       # @return [Array[Seed::Types::Types::Resource]]
       def list_resources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -52,10 +63,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Types::Types::Resource], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Get a single resource
@@ -70,6 +83,13 @@ module Seed
       # @option params [String] :resource_id
       # @option params [Boolean] :include_metadata
       # @option params [String] :format
+      #
+      # @example
+      #   client.service.get_resource(
+      #     resource_id: "resourceId",
+      #     include_metadata: true,
+      #     format: "json"
+      #   )
       #
       # @return [Seed::Types::Types::Resource]
       def get_resource(request_options: {}, **params)
@@ -92,7 +112,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Resource.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::Resource.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -110,6 +130,18 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :limit
       # @option params [Integer] :offset
+      #
+      # @example
+      #   client.service.search_resources(
+      #     limit: 1,
+      #     offset: 1,
+      #     query: "query",
+      #     filters: {
+      #       filters: {
+      #         key: "value"
+      #       }
+      #     }
+      #   )
       #
       # @return [Seed::Types::Types::SearchResponse]
       def search_resources(request_options: {}, **params)
@@ -137,7 +169,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::SearchResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::SearchResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -161,6 +193,18 @@ module Seed
       # @option params [String, nil] :q
       # @option params [String, nil] :search_engine
       # @option params [String, nil] :fields
+      #
+      # @example
+      #   client.service.list_users(
+      #     page: 1,
+      #     per_page: 1,
+      #     include_totals: true,
+      #     sort: "sort",
+      #     connection: "connection",
+      #     q: "q",
+      #     search_engine: "search_engine",
+      #     fields: "fields"
+      #   )
       #
       # @return [Seed::Types::Types::PaginatedUserResponse]
       def list_users(request_options: {}, **params)
@@ -189,7 +233,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::PaginatedUserResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::PaginatedUserResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -208,6 +252,13 @@ module Seed
       # @option params [String] :user_id
       # @option params [String, nil] :fields
       # @option params [Boolean, nil] :include_fields
+      #
+      # @example
+      #   client.service.get_user_by_id(
+      #     user_id: "userId",
+      #     fields: "fields",
+      #     include_fields: true
+      #   )
       #
       # @return [Seed::Types::Types::User]
       def get_user_by_id(request_options: {}, **params)
@@ -230,7 +281,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::User.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::User.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -246,6 +297,27 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.create_user(
+      #     email: "email",
+      #     email_verified: true,
+      #     username: "username",
+      #     password: "password",
+      #     phone_number: "phone_number",
+      #     phone_verified: true,
+      #     user_metadata: {
+      #       user_metadata: {
+      #         key: "value"
+      #       }
+      #     },
+      #     app_metadata: {
+      #       app_metadata: {
+      #         key: "value"
+      #       }
+      #     },
+      #     connection: "connection"
+      #   )
       #
       # @return [Seed::Types::Types::User]
       def create_user(request_options: {}, **params)
@@ -264,7 +336,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::User.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::User.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -282,14 +354,39 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
+      # @example
+      #   client.service.update_user(
+      #     user_id: "userId",
+      #     email: "email",
+      #     email_verified: true,
+      #     username: "username",
+      #     phone_number: "phone_number",
+      #     phone_verified: true,
+      #     user_metadata: {
+      #       user_metadata: {
+      #         key: "value"
+      #       }
+      #     },
+      #     app_metadata: {
+      #       app_metadata: {
+      #         key: "value"
+      #       }
+      #     },
+      #     password: "password",
+      #     blocked: true
+      #   )
+      #
       # @return [Seed::Types::Types::User]
       def update_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[user_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
-          body: Seed::Types::Types::UpdateUserRequest.new(params).to_h,
+          body: Seed::Types::Types::UpdateUserRequest.new(body_params).to_h,
           request_options: request_options
         )
         begin
@@ -299,7 +396,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::User.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::User.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -316,6 +413,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
+      #
+      # @example
+      #   client.service.delete_user(user_id: "userId")
       #
       # @return [untyped]
       def delete_user(request_options: {}, **params)
@@ -351,6 +451,13 @@ module Seed
       # @option params [String, nil] :name
       # @option params [String, nil] :fields
       #
+      # @example
+      #   client.service.list_connections(
+      #     strategy: "strategy",
+      #     name: "name",
+      #     fields: "fields"
+      #   )
+      #
       # @return [Array[Seed::Types::Types::Connection]]
       def list_connections(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -372,10 +479,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Types::Types::Connection], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Get a connection by ID
@@ -389,6 +498,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :connection_id
       # @option params [String, nil] :fields
+      #
+      # @example
+      #   client.service.get_connection(
+      #     connection_id: "connectionId",
+      #     fields: "fields"
+      #   )
       #
       # @return [Seed::Types::Types::Connection]
       def get_connection(request_options: {}, **params)
@@ -410,7 +525,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Connection.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::Connection.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -434,6 +549,18 @@ module Seed
       # @option params [Boolean, nil] :is_global
       # @option params [Boolean, nil] :is_first_party
       # @option params [Array[String], nil] :app_type
+      #
+      # @example
+      #   client.service.list_clients(
+      #     fields: "fields",
+      #     include_fields: true,
+      #     page: 1,
+      #     per_page: 1,
+      #     include_totals: true,
+      #     is_global: true,
+      #     is_first_party: true,
+      #     app_type: %w[app_type app_type]
+      #   )
       #
       # @return [Seed::Types::Types::PaginatedClientResponse]
       def list_clients(request_options: {}, **params)
@@ -462,7 +589,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::PaginatedClientResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::PaginatedClientResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -481,6 +608,13 @@ module Seed
       # @option params [String] :client_id
       # @option params [String, nil] :fields
       # @option params [Boolean, nil] :include_fields
+      #
+      # @example
+      #   client.service.get_client(
+      #     client_id: "clientId",
+      #     fields: "fields",
+      #     include_fields: true
+      #   )
       #
       # @return [Seed::Types::Types::Client]
       def get_client(request_options: {}, **params)
@@ -503,7 +637,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Client.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Types::Client.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

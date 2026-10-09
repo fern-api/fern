@@ -4,10 +4,12 @@
 package com.seed.errors.resources.simple;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.errors.core.BodyProperties;
 import com.seed.errors.core.ClientOptions;
 import com.seed.errors.core.MediaTypes;
 import com.seed.errors.core.ObjectMappers;
 import com.seed.errors.core.RequestOptions;
+import com.seed.errors.core.RetryInterceptor;
 import com.seed.errors.core.SeedErrorsApiException;
 import com.seed.errors.core.SeedErrorsException;
 import com.seed.errors.core.SeedErrorsHttpResponse;
@@ -52,7 +54,9 @@ public class RawSimpleClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedErrorsException("Failed to serialize request", e);
         }
@@ -66,6 +70,15 @@ public class RawSimpleClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -92,6 +105,8 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedErrorsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedErrorsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedErrorsException("Network error executing HTTP request", e);
         }
@@ -113,7 +128,9 @@ public class RawSimpleClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedErrorsException("Failed to serialize request", e);
         }
@@ -127,6 +144,15 @@ public class RawSimpleClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -156,6 +182,8 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedErrorsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedErrorsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedErrorsException("Network error executing HTTP request", e);
         }
@@ -177,7 +205,9 @@ public class RawSimpleClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedErrorsException("Failed to serialize request", e);
         }
@@ -191,6 +221,15 @@ public class RawSimpleClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -220,6 +259,8 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedErrorsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedErrorsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedErrorsException("Network error executing HTTP request", e);
         }

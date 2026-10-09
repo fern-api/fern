@@ -54,7 +54,16 @@ export class RequestBodyParameter extends AbstractRequestParameter {
 
     public isOptional({ context }: { context: FileContext }): boolean {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
-        return type.isOptional;
+        return type.isOptional || this.mayBeOmitted(context);
+    }
+
+    /**
+     * Whether the caller may leave the body out of the call entirely. Absent `required` means
+     * required, which is what every endpoint predating the field relies on, and reading the field
+     * at all is opt-in so that existing SDKs keep their signatures.
+     */
+    private mayBeOmitted(context: FileContext): boolean {
+        return context.respectOptionalRequestBody && this.requestBodyReference.required === false;
     }
 
     public generateExample({
@@ -77,7 +86,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
         return {
             type: type.requestTypeNodeWithoutUndefined ?? type.typeNodeWithoutUndefined,
-            hasQuestionToken: type.isOptional
+            hasQuestionToken: type.isOptional || this.mayBeOmitted(context)
         };
     }
 }

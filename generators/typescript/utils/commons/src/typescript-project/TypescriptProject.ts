@@ -9,6 +9,7 @@ import tmp from "tmp-promise";
 import { Project } from "ts-morph";
 import { PackageDependencies } from "../dependency-manager/DependencyManager.js";
 import { JSR } from "./JSR.js";
+import { PackageJsonMergeStrategy } from "./mergeExtraConfigs.js";
 import { PersistedTypescriptProject } from "./PersistedTypescriptProject.js";
 
 export declare namespace TypescriptProject {
@@ -24,6 +25,7 @@ export declare namespace TypescriptProject {
         npmPackage: NpmPackage | undefined;
         dependencies: PackageDependencies;
         extraConfigs: Record<string, unknown> | undefined;
+        extraConfigsMergeStrategy?: PackageJsonMergeStrategy;
         outputJsr: boolean;
         exportSerde: boolean;
         packagePath?: string;
@@ -33,6 +35,7 @@ export declare namespace TypescriptProject {
         linter: "biome" | "oxlint" | "none";
         generateSubpackageExports?: boolean;
         subpackageExportPaths?: Array<{ key: string; relPath: string }>;
+        extraExportPaths?: string[];
     }
 }
 
@@ -51,9 +54,9 @@ type COMMON_SCRIPTS = (typeof COMMON_SCRIPTS)[keyof typeof COMMON_SCRIPTS];
 const TOOL_VERSIONS = {
     BIOME: "2.4.10",
     PRETTIER: "3.8.1",
-    OXFMT: "0.48.0",
-    OXLINT: "1.63.0",
-    OXLINT_TSGOLINT: "0.22.1"
+    OXFMT: "0.57.0",
+    OXLINT: "1.72.0",
+    OXLINT_TSGOLINT: "0.24.0"
 } as const;
 
 export abstract class TypescriptProject {
@@ -104,6 +107,7 @@ export abstract class TypescriptProject {
     protected readonly npmPackage: NpmPackage | undefined;
     protected readonly dependencies: PackageDependencies;
     protected readonly extraConfigs: Record<string, unknown> | undefined;
+    protected readonly extraConfigsMergeStrategy: PackageJsonMergeStrategy;
     protected readonly outputJsr: boolean;
     protected readonly volume = new Volume();
     public readonly tsMorphProject: Project;
@@ -120,6 +124,7 @@ export abstract class TypescriptProject {
     private readonly linter: "biome" | "oxlint" | "none";
     protected readonly generateSubpackageExports: boolean;
     protected readonly subpackageExportPaths: Array<{ key: string; relPath: string }>;
+    protected readonly extraExportPaths: string[];
 
     private readonly runScripts: boolean;
 
@@ -137,13 +142,15 @@ export abstract class TypescriptProject {
         outputJsr,
         exportSerde,
         extraConfigs,
+        extraConfigsMergeStrategy,
         packagePath,
         testPath,
         packageManager,
         formatter,
         linter,
         generateSubpackageExports,
-        subpackageExportPaths
+        subpackageExportPaths,
+        extraExportPaths
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
         this.runScripts = runScripts;
@@ -158,6 +165,7 @@ export abstract class TypescriptProject {
         this.outputJsr = outputJsr ?? false;
         this.exportSerde = exportSerde;
         this.extraConfigs = extraConfigs;
+        this.extraConfigsMergeStrategy = extraConfigsMergeStrategy ?? "shallow";
         this.packagePath = packagePath ?? TypescriptProject.DEFAULT_SRC_DIRECTORY;
         this.testPath = testPath;
         this.packageManager = packageManager;
@@ -165,6 +173,7 @@ export abstract class TypescriptProject {
         this.linter = linter;
         this.generateSubpackageExports = generateSubpackageExports ?? false;
         this.subpackageExportPaths = subpackageExportPaths ?? [];
+        this.extraExportPaths = extraExportPaths ?? [];
     }
 
     protected async addCommonFilesToVolume(): Promise<void> {
@@ -188,6 +197,7 @@ export abstract class TypescriptProject {
         if (this.generateSubpackageExports) {
             exports.push(...this.subpackageExportPaths.map((p) => p.relPath));
         }
+        exports.push(...this.extraExportPaths);
         return exports;
     }
 
@@ -432,7 +442,7 @@ export abstract class TypescriptProject {
 
     protected getCommonDevDependencies(): Record<string, string> {
         const deps: Record<string, string> = {
-            "@types/node": "^18.19.70",
+            "@types/node": "^20.0.0",
             typescript: "~5.9.3"
         };
         if (this.linter === "biome" || this.formatter === "biome") {

@@ -47,9 +47,12 @@ export function parse({
 }): OpenApiIntermediateRepresentation {
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
+        specVersion: undefined,
+        baseUrlEnv: undefined,
         title: undefined,
         description: undefined,
         basePath: undefined,
+        basePathParameters: undefined,
         servers: [],
         websocketServers: [],
         tags: {
@@ -69,6 +72,7 @@ export function parse({
         securitySchemes: {},
         security: undefined,
         globalHeaders: [],
+        globalParameters: undefined,
         idempotencyHeaders: [],
         groups: {}
     };
@@ -85,7 +89,12 @@ export function parse({
                         source,
                         namespace: document.namespace
                     });
-                    ir = merge(ir, openapiIr, getParseOptions({ options: document.settings, overrides: options }));
+                    ir = merge(
+                        ir,
+                        openapiIr,
+                        getParseOptions({ options: document.settings, overrides: options }),
+                        context
+                    );
                     documentIndex++;
                     break;
                 }
@@ -208,9 +217,15 @@ interface MultiApiEndpoint extends Endpoint {
 
 type TypedEndpoint = StandardEndpoint | MultiApiEndpoint;
 
-function getEnvironmentName(server: SingleServerInput): string {
-    const rawName = String(server.description || server.name || server["x-fern-server-name"] || "default").trim();
+function getRawEnvironmentName(server: SingleServerInput): string {
+    return String(server.description || server.name || server["x-fern-server-name"] || "default").trim();
+}
 
+function getEnvironmentName(server: SingleServerInput): string {
+    return normalizeEnvironmentName(getRawEnvironmentName(server));
+}
+
+function normalizeEnvironmentName(rawName: string): string {
     const normalized = rawName.toUpperCase();
 
     // Map common variations to standard names
@@ -270,6 +285,13 @@ function extractApiNameFromUrl(url: string): string {
  * Merges two security arrays and removes duplicates.
  * Security items are considered equal if they have the same keys and values.
  */
+function mergeOptionalArrays<T>(a: T[] | undefined, b: T[] | undefined): T[] | undefined {
+    if (a == null && b == null) {
+        return undefined;
+    }
+    return [...(a ?? []), ...(b ?? [])];
+}
+
 function mergeDistinctSecurity(
     security1: GlobalSecurity | undefined,
     security2: GlobalSecurity | undefined
@@ -343,6 +365,27 @@ function detectMultipleBaseUrls(servers1: AnyServerInput[], servers2: AnyServerI
     return allMatch && allDifferent;
 }
 
+/**
+ * Removes duplicate single servers that share the same environment name and URL.
+ * Without deduplication, merging many specs with identical servers accumulates
+ * duplicates, which prevents detectMultipleBaseUrls from matching server lists
+ * on subsequent merges.
+ */
+function dedupeServers(servers: AnyServerInput[]): AnyServerInput[] {
+    const seen = new Set<string>();
+    return servers.filter((server) => {
+        if (server.type === "grouped") {
+            return true;
+        }
+        const key = `${getEnvironmentName(server)}\u0000${server.url}`;
+        if (seen.has(key)) {
+            return false;
+        }
+        seen.add(key);
+        return true;
+    });
+}
+
 function getPreferredUrlForNameExtraction(server: SingleServerInput): string {
     return server.defaultUrl ?? server.url;
 }
@@ -366,11 +409,37 @@ function hasGroupedServers(servers: AnyServerInput[]): boolean {
     return servers.some((server) => server.type === "grouped");
 }
 
+function mergeBasePath(
+    ir1: OpenApiIntermediateRepresentation,
+    ir2: OpenApiIntermediateRepresentation,
+    options: ParseOpenAPIOptions | undefined,
+    context: TaskContext
+): Pick<OpenApiIntermediateRepresentation, "basePath" | "basePathParameters"> {
+    if (
+        options?.respectPerSpecBasePath === true &&
+        ir1.basePath != null &&
+        ir2.basePath != null &&
+        ir1.basePath !== ir2.basePath
+    ) {
+        context.failWithoutThrowing(
+            `Conflicting parameterized x-fern-base-path values: '${ir1.basePath}' and '${ir2.basePath}'.`
+        );
+    }
+
+    return {
+        basePath: ir1.basePath ?? ir2.basePath,
+        basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters
+    };
+}
+
 function merge(
     ir1: OpenApiIntermediateRepresentation,
     ir2: OpenApiIntermediateRepresentation,
-    options?: ParseOpenAPIOptions
+    options: ParseOpenAPIOptions | undefined,
+    context: TaskContext
 ): OpenApiIntermediateRepresentation {
+    const mergedBasePath = mergeBasePath(ir1, ir2, options, context);
+
     // Only perform multi-API environment grouping if the feature flag is enabled
     const shouldGroupEnvironments = options?.groupMultiApiEnvironments === true;
 
@@ -378,9 +447,12 @@ function merge(
     if (!shouldGroupEnvironments) {
         return {
             apiVersion: ir1.apiVersion ?? ir2.apiVersion,
+            specVersion: ir1.specVersion ?? ir2.specVersion,
+            baseUrlEnv: ir1.baseUrlEnv ?? ir2.baseUrlEnv,
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
-            basePath: ir1.basePath ?? ir2.basePath,
+            basePath: mergedBasePath.basePath,
+            basePathParameters: mergedBasePath.basePathParameters,
             servers: [...ir1.servers, ...ir2.servers],
             websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
             tags: {
@@ -415,6 +487,7 @@ function merge(
             },
             security: mergeDistinctSecurity(ir1.security, ir2.security),
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+            globalParameters: mergeOptionalArrays(ir1.globalParameters, ir2.globalParameters),
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
                     ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])]
@@ -434,12 +507,22 @@ function merge(
         const api2Name = extractApiNameFromServers(ir2.servers);
 
         const environmentMap = new Map<string, Record<string, ApiServerConfig>>();
+        // Preserve the first user-facing name seen for each normalized environment
+        // (e.g. keep "Production" instead of the normalized "PRD" matching key)
+        const environmentDisplayNames = new Map<string, string>();
 
         // Process servers from first API - handle already-grouped servers from previous merges
+        // The API name must be constant across all of the first API's servers (each server is
+        // the same API in a different environment), so derive it once from the first server.
+        const api1Name = extractApiNameFromServers(ir1.servers);
         for (const server of ir1.servers as AnyServerInput[]) {
             if (server.type === "grouped") {
                 // Preserve existing grouped URLs from previous merges
-                const envName = server.name ?? "default";
+                const rawEnvName = server.name ?? "default";
+                const envName = normalizeEnvironmentName(rawEnvName);
+                if (!environmentDisplayNames.has(envName)) {
+                    environmentDisplayNames.set(envName, rawEnvName);
+                }
                 if (!environmentMap.has(envName)) {
                     environmentMap.set(envName, {});
                 }
@@ -452,8 +535,10 @@ function merge(
                 }
             } else {
                 // Handle single server (first merge case)
-                const api1Name = extractApiNameFromUrl(getPreferredUrlForNameExtraction(server));
                 const envName = getEnvironmentName(server);
+                if (!environmentDisplayNames.has(envName)) {
+                    environmentDisplayNames.set(envName, getRawEnvironmentName(server));
+                }
                 if (!environmentMap.has(envName)) {
                     environmentMap.set(envName, {});
                 }
@@ -473,6 +558,9 @@ function merge(
         // Process servers from second API (always single servers from fresh IR)
         for (const server of ir2.servers) {
             const envName = getEnvironmentName(server);
+            if (!environmentDisplayNames.has(envName)) {
+                environmentDisplayNames.set(envName, getRawEnvironmentName(server));
+            }
             if (!environmentMap.has(envName)) {
                 environmentMap.set(envName, {});
             }
@@ -489,10 +577,11 @@ function merge(
         }
 
         for (const [envName, urls] of environmentMap.entries()) {
+            const displayName = environmentDisplayNames.get(envName) ?? envName;
             const groupedServer: GroupedServerInput = {
                 type: "grouped",
-                name: envName,
-                description: `${envName} environment`,
+                name: displayName,
+                description: `${displayName} environment`,
                 urls: urls
             };
             mergedServers.push(groupedServer);
@@ -512,11 +601,6 @@ function merge(
                 };
             }
             // First merge - derive API name from the first server
-            const firstServer = ir1.servers[0] as AnyServerInput | undefined;
-            const api1Name =
-                firstServer != null && firstServer.type !== "grouped"
-                    ? extractApiNameFromUrl(getPreferredUrlForNameExtraction(firstServer))
-                    : "api";
             return {
                 ...endpoint,
                 type: "multi-api" as const,
@@ -537,9 +621,12 @@ function merge(
         // Return with grouped servers and endpoints
         return {
             apiVersion: ir1.apiVersion ?? ir2.apiVersion,
+            specVersion: ir1.specVersion ?? ir2.specVersion,
+            baseUrlEnv: ir1.baseUrlEnv ?? ir2.baseUrlEnv,
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
-            basePath: ir1.basePath ?? ir2.basePath,
+            basePath: mergedBasePath.basePath,
+            basePathParameters: mergedBasePath.basePathParameters,
             // Cast grouped servers to Server[] - buildEnvironments.ts handles the grouped structure
             // biome-ignore lint/suspicious/noExplicitAny: Required to preserve grouped server metadata through type system
             servers: mergedServers as any as Server[],
@@ -583,6 +670,7 @@ function merge(
             },
             security: mergeDistinctSecurity(ir1.security, ir2.security),
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+            globalParameters: mergeOptionalArrays(ir1.globalParameters, ir2.globalParameters),
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
                     ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])]
@@ -594,13 +682,17 @@ function merge(
         };
     }
 
-    // When not grouping, just concatenate without modification
+    // When not grouping, concatenate while deduplicating identical servers so
+    // that repeated servers across specs don't block grouping on later merges
     return {
         apiVersion: ir1.apiVersion ?? ir2.apiVersion,
+        specVersion: ir1.specVersion ?? ir2.specVersion,
+        baseUrlEnv: ir1.baseUrlEnv ?? ir2.baseUrlEnv,
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
-        basePath: ir1.basePath ?? ir2.basePath,
-        servers: [...ir1.servers, ...ir2.servers],
+        basePath: mergedBasePath.basePath,
+        basePathParameters: mergedBasePath.basePathParameters,
+        servers: dedupeServers([...ir1.servers, ...ir2.servers] as AnyServerInput[]) as Server[],
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {
@@ -631,6 +723,7 @@ function merge(
         },
         security: mergeDistinctSecurity(ir1.security, ir2.security),
         globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+        globalParameters: mergeOptionalArrays(ir1.globalParameters, ir2.globalParameters),
         idempotencyHeaders:
             ir1.idempotencyHeaders != null ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])] : undefined,
         groups: {

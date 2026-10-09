@@ -3,6 +3,7 @@ import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 interface RustCustomConfigSchema {
     crateName?: string;
     clientName?: string;
+    respectOptionalRequestBody?: boolean;
 }
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {

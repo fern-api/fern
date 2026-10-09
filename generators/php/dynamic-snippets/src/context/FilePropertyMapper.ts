@@ -59,7 +59,7 @@ export class FilePropertyMapper {
         property,
         record
     }: {
-        property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
+        property: FernIr.dynamic.FileUploadRequestBodyProperty.File;
         record: Record<string, unknown>;
     }): php.TypeLiteral {
         let fileValue = this.context.getSingleFileValue({ property, record });

@@ -8,5 +8,11 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.no_req_body.get_with_no_request_body(None).await;
+    client
+        .inlined_requests
+        .post_with_array_body_and_headers(
+            &vec!["string".to_string(), "string".to_string()],
+            Some(RequestOptions::new().additional_header("X-Custom-Header", "X-Custom-Header")),
+        )
+        .await;
 }

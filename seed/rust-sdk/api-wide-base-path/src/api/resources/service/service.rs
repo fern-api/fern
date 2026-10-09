@@ -12,6 +12,29 @@ impl ServiceClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api_wide_base_path::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiWideBasePathClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .post(
+    ///             &"pathParam".to_string(),
+    ///             &"serviceParam".to_string(),
+    ///             1,
+    ///             &"resourceParam".to_string(),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn post(
         &self,
         path_param: &str,

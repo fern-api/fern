@@ -25,6 +25,11 @@ export interface Endpoint
      */
     path: string;
     summary: string | undefined;
+    /**
+     * A short subtitle for the endpoint, populated from `x-fern-subtitle`.
+     * Rendered below the endpoint title in the docs UI.
+     */
+    subtitle: string | undefined;
     operationId: string | undefined;
     tags: FernOpenapiIr.TagId[];
     pathParameters: FernOpenapiIr.PathParameter[];
@@ -39,11 +44,17 @@ export interface Endpoint
     response: FernOpenapiIr.Response | undefined;
     /**
      * Expected error status codes for this endpoint, and their corresponding schema and examples.
+     * Keys are concrete status codes (e.g. "404") or wildcard patterns ("4XX", "5XX").
      * SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
      */
-    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpError>;
+    errors: Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpError>;
     servers: FernOpenapiIr.HttpEndpointServer[];
     examples: FernOpenapiIr.EndpointExample[];
     pagination: FernOpenapiIr.Pagination | undefined;
     retries: FernOpenapiIr.RetriesConfiguration | undefined;
+    /**
+     * Per-operation opt-in IDs for global parameters with apply: explicit.
+     * Populated from x-fern-global-parameter on an operation.
+     */
+    globalParameterIds: string[] | undefined;
 }

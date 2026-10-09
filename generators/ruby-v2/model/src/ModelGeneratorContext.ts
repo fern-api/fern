@@ -26,7 +26,7 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
 
     public getFileNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return this.caseConverter.snakeSafe(typeDeclaration.name.name) + ".rb";
+        return this.buildTypeFileName(typeDeclaration.name.name);
     }
 
     public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
@@ -73,7 +73,10 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
             AsIsFiles.TypesType,
             AsIsFiles.TypesUnion,
             AsIsFiles.TypesUnknown,
-            AsIsFiles.TypesUtils
+            AsIsFiles.TypesUtils,
+
+            // XML
+            ...(this.hasXmlTypes() ? [AsIsFiles.XmlElement, AsIsFiles.XmlUtils, AsIsFiles.XmlSerializable] : [])
         ];
 
         return files;

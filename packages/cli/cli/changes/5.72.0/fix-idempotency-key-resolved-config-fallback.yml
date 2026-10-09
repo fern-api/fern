@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Resolve the `auto-generate-idempotency-key` config from a generator invocation's resolved
+    `config` when no raw `generators.yml` block is present. This restores idempotency-key
+    auto-generation for synthetic invocations (e.g. the seed test harness) that populate `config`
+    directly without a `raw` block.
+  type: fix

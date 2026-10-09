@@ -16,6 +16,8 @@ const CONSTRUCTOR_PARAMETER_NAME = "values";
 export declare namespace DataClass {
     interface Args extends Class.Args {
         constructorAccess?: Access;
+        /* Whether to render each documented field as a bullet above the constructor's `$values` @param */
+        documentConstructorKeys?: boolean;
     }
 }
 
@@ -23,13 +25,24 @@ export class DataClass extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     private readonly constructorAccess: Access;
+    private readonly documentConstructorKeys: boolean;
     private class_: Class;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, traits, constructorAccess }: DataClass.Args) {
+    constructor({
+        name,
+        namespace,
+        abstract,
+        docs,
+        parentClassReference,
+        traits,
+        constructorAccess,
+        documentConstructorKeys
+    }: DataClass.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.constructorAccess = constructorAccess ?? "public";
+        this.documentConstructorKeys = documentConstructorKeys ?? false;
         this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, traits });
     }
 
@@ -57,16 +70,45 @@ export class DataClass extends AstNode {
             parameters: this.getConstructorParameters({ orderedFields }),
             body: php.codeblock((writer) => {
                 if (orderedFields.length > 0) {
-                    for (const field of orderedFields) {
-                        writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
-                        if (field.type.isOptional()) {
-                            writer.write(" ?? null");
-                        } else if (field.initializer != null) {
-                            writer.write(" ?? ");
-                            field.initializer.write(writer);
+                    orderedFields.forEach((field, index) => {
+                        const rawValue = `$${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`;
+                        if (field.constructorValueWrapper != null) {
+                            // assign through a typed local so static analysis keeps the field's declared type
+                            const local =
+                                field.name === CONSTRUCTOR_PARAMETER_NAME ? `$_${field.name}` : `$${field.name}`;
+                            if (index > 0) {
+                                writer.newLine();
+                            }
+                            writer.write("/** @var ");
+                            field.type.write(writer, { comment: true });
+                            writer.writeLine(` ${local} */`);
+                            const defaulted = php.codeblock((inner) => {
+                                inner.write(rawValue);
+                                if (field.type.isOptional()) {
+                                    inner.write(" ?? null");
+                                } else if (field.initializer != null) {
+                                    inner.write(" ?? ");
+                                    field.initializer.write(inner);
+                                }
+                            });
+                            writer.write(`${local} = `);
+                            writer.writeNode(field.constructorValueWrapper(defaulted));
+                            writer.writeLine(";");
+                            writer.write(`$this->${field.name} = ${local};`);
+                            if (index < orderedFields.length - 1) {
+                                writer.newLine();
+                            }
+                        } else {
+                            writer.write(`$this->${field.name} = ${rawValue}`);
+                            if (field.type.isOptional()) {
+                                writer.write(" ?? null");
+                            } else if (field.initializer != null) {
+                                writer.write(" ?? ");
+                                field.initializer.write(writer);
+                            }
+                            writer.write(";");
                         }
-                        writer.write(";");
-                    }
+                    });
                 } else {
                     writer.writeLine(`unset($${CONSTRUCTOR_PARAMETER_NAME});`);
                 }
@@ -86,15 +128,34 @@ export class DataClass extends AstNode {
                 type: Type.typeDict(
                     orderedFields.map((field) => ({
                         key: field.name,
-                        valueType: field.type,
+                        valueType: field.constructorType ?? field.type,
                         optional: field.type.isOptional() || field.initializer != null
                     })),
                     {
                         multiline: true
                     }
                 ),
-                initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined
+                initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined,
+                detailDocs: this.documentConstructorKeys ? getFieldKeyDocs(orderedFields) : undefined
             })
         ];
     }
+}
+
+/* Collapses docs to a single trimmed line; undefined when empty. */
+export function normalizeDocs(docs: string | undefined): string | undefined {
+    const trimmed = docs?.trim();
+    if (trimmed == null || trimmed === "") {
+        return undefined;
+    }
+    return trimmed.split(/\r?\n/).join(" ");
+}
+
+/* One `- \`key\`: docs` bullet per documented field, for use as a tag's detailDocs. */
+export function getFieldKeyDocs(fields: { name: string; docs?: string }[]): string[] | undefined {
+    const lines = fields.flatMap((field) => {
+        const docs = normalizeDocs(field.docs);
+        return docs != null ? [`- \`${field.name}\`: ${docs}`] : [];
+    });
+    return lines.length > 0 ? lines : undefined;
 }

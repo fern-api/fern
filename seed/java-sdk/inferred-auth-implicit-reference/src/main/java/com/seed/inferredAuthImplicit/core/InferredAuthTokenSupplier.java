@@ -15,32 +15,54 @@ import java.util.function.Supplier;
 public final class InferredAuthTokenSupplier implements Supplier<Map<String, String>> {
     private static final long BUFFER_IN_MINUTES = 2;
 
+    private final String clientId;
+
+    private final String clientSecret;
+
+    private final String scope;
+
     private final AuthClient authClient;
 
-    private Map<String, String> cachedHeaders;
+    private final Object tokenLock = new Object();
 
-    private Instant expiresAt;
+    private volatile Map<String, String> cachedHeaders;
 
-    public InferredAuthTokenSupplier(AuthClient authClient) {
+    private volatile Instant expiresAt;
+
+    public InferredAuthTokenSupplier(String clientId, String clientSecret, String scope, AuthClient authClient) {
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.scope = scope;
         this.authClient = authClient;
         this.expiresAt = Instant.now();
     }
 
     private TokenResponse fetchToken() {
-        GetTokenRequest getTokenRequest = GetTokenRequest.builder().build();
+        GetTokenRequest getTokenRequest = GetTokenRequest.builder()
+                .clientId(clientId)
+                .clientSecret(clientSecret)
+                .scope(scope)
+                .build();
         return authClient.getTokenWithClientCredentials(getTokenRequest);
     }
 
     @java.lang.Override
     public Map<String, String> get() {
-        if (cachedHeaders == null || expiresAt.isBefore(Instant.now())) {
-            TokenResponse tokenResponse = fetchToken();
-            Map<String, String> headers = new HashMap<>();
-            headers.put("Authorization", "Bearer " + tokenResponse.getAccessToken());
-            this.cachedHeaders = headers;
-            this.expiresAt = getExpiresAt(tokenResponse.getExpiresIn());
+        Map<String, String> cachedHeadersSnapshot = this.cachedHeaders;
+        Instant cachedExpiresAt = this.expiresAt;
+        if (cachedHeadersSnapshot != null && cachedExpiresAt != null && !cachedExpiresAt.isBefore(Instant.now())) {
+            return cachedHeadersSnapshot;
         }
-        return cachedHeaders;
+        synchronized (tokenLock) {
+            if (cachedHeaders == null || expiresAt.isBefore(Instant.now())) {
+                TokenResponse tokenResponse = fetchToken();
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + tokenResponse.getAccessToken());
+                this.cachedHeaders = headers;
+                this.expiresAt = getExpiresAt(tokenResponse.getExpiresIn());
+            }
+            return cachedHeaders;
+        }
     }
 
     private Instant getExpiresAt(long expiresInSeconds) {

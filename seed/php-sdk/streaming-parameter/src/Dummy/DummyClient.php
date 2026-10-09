@@ -48,6 +48,16 @@ class DummyClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->dummy->generate(
+     *     new GenerateRequest([
+     *         'stream' => false,
+     *         'numEvents' => 5,
+     *     ]),
+     * );
+     * ```
+     *
      * @param GenerateRequest $request
      * @param ?array{
      *   baseUrl?: string,

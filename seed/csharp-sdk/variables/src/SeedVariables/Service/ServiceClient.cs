@@ -11,15 +11,14 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.PostAsync("endpointParam");
-    /// </code></example>
-    public async Task PostAsync(
-        string endpointParam,
+    private async Task<RawResponse> PostAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedVariables.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedVariables.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,7 +30,18 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(endpointParam)),
+                    Path = string.Format(
+                        "/{0}",
+                        ValueConvert.ToPathParameterString(
+                            (
+                                _client.Options.RootVariable
+                                ?? throw new global::System.ArgumentException(
+                                    "The 'RootVariable' SDK variable is required. Set ClientOptions.RootVariable or set the ROOT_VARIABLE environment variable."
+                                )
+                            )
+                        )
+                    ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -40,7 +50,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedVariables.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -49,8 +64,25 @@ public partial class ServiceClient : IServiceClient
             throw new SeedVariablesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedVariables.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.PostAsync();
+    /// </code></example>
+    public WithRawResponseTask PostAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(PostAsyncCore(options, cancellationToken));
     }
 }

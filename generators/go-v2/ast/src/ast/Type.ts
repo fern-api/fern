@@ -163,6 +163,11 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
+    /** Whether a value of this type can be compared to nil, and so can express its own absence. */
+    public isNilable(): boolean {
+        return this.internalType.type === "optional" || NILABLE_TYPES.has(this.internalType.type);
+    }
+
     public isIterable(): boolean {
         return this.internalType.type === "slice" || this.internalType.type === "variadic";
     }
@@ -305,7 +310,7 @@ export class Type extends AstNode {
     }
 
     private static isAlreadyOptional(value: Type) {
-        return value.internalType.type === "optional" || NILABLE_TYPES.has(value.internalType.type);
+        return value.isNilable();
     }
 
     private static isAlreadyVariadic(value: Type) {

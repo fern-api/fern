@@ -50,6 +50,15 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->getToken(
+     *     new GetTokenRequest([
+     *         'apiKey' => 'api_key',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,

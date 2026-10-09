@@ -1,0 +1,197 @@
+{
+  "mappings": [
+    {
+      "id": "de9b8ea7-80fd-4704-a808-fd18442015cc",
+      "name": "send - default",
+      "request": {
+        "urlPathTemplate": "/headers",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"message\": \"The weather is sunny\",\n  \"status\": 200,\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "de9b8ea7-80fd-4704-a808-fd18442015cc",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "6588cc75-6424-4481-a3ca-f37fe3cc2237",
+      "name": "sendLiteralsOnly - default",
+      "request": {
+        "urlPathTemplate": "/headers/literals-only",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"message\": \"The weather is sunny\",\n  \"status\": 200,\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6588cc75-6424-4481-a3ca-f37fe3cc2237",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "5def0234-457c-416b-a447-ff5fb0166b6a",
+      "name": "send - default",
+      "request": {
+        "urlPathTemplate": "/inlined",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"message\": \"The weather is sunny\",\n  \"status\": 200,\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "5def0234-457c-416b-a447-ff5fb0166b6a",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "c99a3bc0-3332-45b6-b7e2-438212338ba0",
+      "name": "send - default",
+      "request": {
+        "urlPathTemplate": "/path/{id}",
+        "method": "POST",
+        "pathParameters": {
+          "id": {
+            "equalTo": "123"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"message\": \"The weather is sunny\",\n  \"status\": 200,\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c99a3bc0-3332-45b6-b7e2-438212338ba0",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "4d8a9c2c-55e2-423f-9d28-4f966acd9400",
+      "name": "send - default",
+      "request": {
+        "urlPathTemplate": "/query",
+        "method": "POST",
+        "queryParameters": {
+          "prompt": {
+            "equalTo": "You are a helpful assistant"
+          },
+          "optional_prompt": {
+            "equalTo": "You are a helpful assistant"
+          },
+          "alias_prompt": {
+            "equalTo": "You are a helpful assistant"
+          },
+          "alias_optional_prompt": {
+            "equalTo": "You are a helpful assistant"
+          },
+          "stream": {
+            "equalTo": "false"
+          },
+          "optional_stream": {
+            "equalTo": "false"
+          },
+          "alias_stream": {
+            "equalTo": "false"
+          },
+          "alias_optional_stream": {
+            "equalTo": "false"
+          },
+          "query": {
+            "equalTo": "What is the weather today"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"message\": \"The weather is sunny\",\n  \"status\": 200,\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4d8a9c2c-55e2-423f-9d28-4f966acd9400",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "5686347f-e375-49de-944d-ffd75d94d5d7",
+      "name": "send - default",
+      "request": {
+        "urlPathTemplate": "/reference",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"message\": \"The weather is sunny\",\n  \"status\": 200,\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "5686347f-e375-49de-944d-ffd75d94d5d7",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 6
+  }
+}

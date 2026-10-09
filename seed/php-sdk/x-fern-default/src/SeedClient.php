@@ -69,6 +69,14 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->testGet(
+     *     'region',
+     *     new TestGetRequest([]),
+     * );
+     * ```
+     *
      * @param string $region
      * @param TestGetRequest $request
      * @param ?array{

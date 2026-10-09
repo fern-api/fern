@@ -61,9 +61,8 @@ client = AsyncSeedServerSentEvents(
 
 
 async def main() -> None:
-    await client.completions.stream(
-        query="foo",
-    )
+    async for chunk in client.completions.stream(...):
+        print(chunk)
 
 
 asyncio.run(main())
@@ -158,7 +157,7 @@ client = SeedServerSentEvents(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.completions.stream(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

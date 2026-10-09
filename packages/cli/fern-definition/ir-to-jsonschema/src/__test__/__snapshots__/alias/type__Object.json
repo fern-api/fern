@@ -1,8 +1,10 @@
 {
   "$ref": "#/definitions/Type",
+  "description": "Object is an alias for a type.",
   "definitions": {
     "TypeId": {
-      "type": "string"
+      "type": "string",
+      "description": "An alias for type IDs."
     },
     "Type": {
       "type": "object",
@@ -18,7 +20,8 @@
         "id",
         "name"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A simple type with just a name."
     }
   }
 }

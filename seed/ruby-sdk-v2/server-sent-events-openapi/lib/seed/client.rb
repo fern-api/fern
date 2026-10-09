@@ -14,6 +14,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_protocol_no_collision
+    #
     # @return [untyped]
     def stream_protocol_no_collision(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -47,6 +50,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_protocol_collision
     #
     # @return [untyped]
     def stream_protocol_collision(request_options: {}, **params)
@@ -83,6 +89,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_data_context
+    #
     # @return [untyped]
     def stream_data_context(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -115,6 +124,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_no_context
     #
     # @return [untyped]
     def stream_no_context(request_options: {}, **params)
@@ -150,6 +162,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_protocol_with_flat_schema
+    #
     # @return [untyped]
     def stream_protocol_with_flat_schema(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -157,6 +172,43 @@ module Seed
         base_url: request_options[:base_url],
         method: "POST",
         path: "stream/protocol-with-flat-schema",
+        body: Seed::Types::StreamRequest.new(params).to_h,
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      return if code.between?(200, 299)
+
+      error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+      raise error_class.new(response.body, code: code)
+    end
+
+    # context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope
+    # variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant
+    # injected.
+    #
+    # @param request_options [Hash]
+    # @param params [Seed::Types::StreamRequest]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_protocol_mixed_schema
+    #
+    # @return [untyped]
+    def stream_protocol_mixed_schema(request_options: {}, **params)
+      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url],
+        method: "POST",
+        path: "stream/protocol-mixed-schema",
         body: Seed::Types::StreamRequest.new(params).to_h,
         request_options: request_options
       )
@@ -183,6 +235,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_data_context_with_envelope_schema
     #
     # @return [untyped]
     def stream_data_context_with_envelope_schema(request_options: {}, **params)
@@ -219,6 +274,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_oas_spec_native
+    #
     # @return [untyped]
     def stream_oas_spec_native(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -252,6 +310,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_condition_stream(
+    #     query: "query",
+    #     stream: true
+    #   )
     #
     # @return [untyped]
     def stream_x_fern_streaming_condition_stream(request_options: {}, **params)
@@ -287,6 +351,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_condition_stream(
+    #     query: "query",
+    #     stream: false
+    #   )
+    #
     # @return [Seed::Types::CompletionFullResponse]
     def stream_x_fern_streaming_condition(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -304,7 +374,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CompletionFullResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::CompletionFullResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -322,6 +392,13 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_shared_schema_stream(
+    #     prompt: "prompt",
+    #     model: "model",
+    #     stream: true
+    #   )
     #
     # @return [untyped]
     def stream_x_fern_streaming_shared_schema_stream(request_options: {}, **params)
@@ -357,6 +434,13 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_shared_schema_stream(
+    #     prompt: "prompt",
+    #     model: "model",
+    #     stream: false
+    #   )
+    #
     # @return [Seed::Types::CompletionFullResponse]
     def stream_x_fern_streaming_shared_schema(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -374,7 +458,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CompletionFullResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::CompletionFullResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -391,6 +475,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.validate_completion(
+    #     prompt: "prompt",
+    #     model: "model"
+    #   )
     #
     # @return [Seed::Types::CompletionFullResponse]
     def validate_completion(request_options: {}, **params)
@@ -409,7 +499,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CompletionFullResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::CompletionFullResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -427,6 +517,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_union_stream
     #
     # @return [untyped]
     def stream_x_fern_streaming_union_stream(request_options: {}, **params)
@@ -462,6 +555,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_union_stream
+    #
     # @return [Seed::Types::CompletionFullResponse]
     def stream_x_fern_streaming_union(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -479,7 +575,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CompletionFullResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::CompletionFullResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -498,6 +594,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.validate_union_request(prompt: "prompt")
+    #
     # @return [Seed::Types::ValidateUnionRequestResponse]
     def validate_union_request(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -515,7 +614,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::ValidateUnionRequestResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::ValidateUnionRequestResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -534,6 +633,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_nullable_condition_stream(
+    #     query: "query",
+    #     stream: true
+    #   )
     #
     # @return [untyped]
     def stream_x_fern_streaming_nullable_condition_stream(request_options: {}, **params)
@@ -570,6 +675,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_nullable_condition_stream(
+    #     query: "query",
+    #     stream: false
+    #   )
+    #
     # @return [Seed::Types::CompletionFullResponse]
     def stream_x_fern_streaming_nullable_condition(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -587,7 +698,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CompletionFullResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::CompletionFullResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -604,6 +715,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_sse_only
     #
     # @return [untyped]
     def stream_x_fern_streaming_sse_only(request_options: {}, **params)
@@ -628,15 +742,19 @@ module Seed
     end
 
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_server-sent-events-openapi/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

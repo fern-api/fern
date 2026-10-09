@@ -34,6 +34,12 @@ export interface DocsConfiguration {
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
     products?: FernDocsConfig.ProductConfig[];
+    /**
+     * A site-level changelog shared by every product. Only valid alongside `products`.
+     * It is served at the root (e.g. `/changelog`) rather than under any product slug,
+     * and does not appear in the product switcher.
+     */
+    changelog?: FernDocsConfig.ChangelogConfiguration;
     /** Creates a landing page for your documentation website. */
     landingPage?: FernDocsConfig.PageConfiguration;
     /** The navigation config is skipped when multiple versions are present. */
@@ -93,7 +99,7 @@ export interface DocsConfiguration {
     /** Configuration for agent-serving endpoints. */
     agents?: FernDocsConfig.AgentsConfig;
     metadata?: FernDocsConfig.MetadataConfig;
-    redirects?: FernDocsConfig.RedirectConfig[];
+    redirects?: FernDocsConfig.RedirectsConfiguration;
     check?: FernDocsConfig.CheckConfig;
     logo?: FernDocsConfig.LogoConfiguration;
     /** Relative filepath to the favicon. */

@@ -1,4 +1,1307 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.40.0
+  changelogEntry:
+    - summary: |
+        Support inferred bearer auth with `type: refresh-token`. The generated `InferredAuthTokenProvider`
+        always sends `grant_type="refresh_token"` to the get-token endpoint, and `grant_type` is no longer
+        a client constructor parameter. Users pass only the refresh token (and any other non-literal
+        token endpoint parameters).
+      type: feat
+    - summary: |
+        Inferred auth now works next to other auth schemes (`auth: any` and endpoint-security) when it has
+        credentials of its own, e.g. a `type: refresh-token` scheme next to OAuth client credentials.
+        The client takes the inferred credentials as optional constructor parameters (shared ones such as
+        `client_id` are added once) and uses the inferred token provider when they are passed, so
+        `Client(refresh_token=...)` and `Client(client_id=..., client_secret=...)` both work.
+      type: feat
+    - summary: |
+        With `type: refresh-token`, inferred auth only exposes and sends the token endpoint parameters used by
+        the OAuth refresh token grant (`refresh_token`, `scope`, `client_id`, `client_secret`) plus any
+        required ones. Optional parameters of other grants on a shared token endpoint, such as `code`,
+        `code_verifier` and `redirect_uri`, are no longer client constructor parameters.
+      type: feat
+    - summary: |
+        Add the `omit_unset_inferred_auth_params` config option (default `false`). When enabled, the inferred auth
+        token provider leaves unset optional token request parameters out of the get-token request instead of
+        sending them as `null` (JSON) or empty values (form-encoded).
+      type: feat
+    - summary: |
+        Inferred auth with `type: refresh-token` now rotates the refresh token. When the token response returns a new
+        `refresh_token`, the provider uses it for the next refresh, and the client calls the optional
+        `on_refresh_token_rotated` callback with it so it can be persisted.
+      type: feat
+    - summary: |
+        Fix wire test setup for inferred auth. `tests/wire/conftest.py` now passes a test value for each
+        required token endpoint parameter (e.g. `client_id`, `client_secret`) instead of always passing
+        `api_key`, which raised `TypeError` when the client had no `api_key` parameter.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.5
+  changelogEntry:
+    - summary: |
+        Fix the root client docstring example for global headers and root path parameters
+        that have a `client-default`. The example now passes the default as a keyword
+        argument (e.g. `version="2024-01-01"`) instead of a bare positional value, which
+        was a `SyntaxError` when it followed another keyword argument.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.4
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now parse
+        both variant styles: envelope variants (`{event, data: Payload}`) are built from the `data:` JSON,
+        and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.3
+  changelogEntry:
+    - summary: |
+        Stop automatically replaying requests after server disconnects or incomplete responses (`httpx.RemoteProtocolError`), which could duplicate non-idempotent POST/PATCH operations, even after a 200 status was received. Connection-establishment failures and HTTP-status retries are unchanged. Set `request_options={"retry_remote_protocol_errors": True}` only when replaying the request is safe to explicitly restore the previous behavior.
+      type: fix
+    - summary: |
+        With `pydantic_config.skip_validation: true`, a union value that matches no known member is now
+        returned as its original data (the raw dict) instead of `None`. Previously a response carrying a
+        union variant added after the SDK was generated (e.g. a new `product` on a discriminated union), or
+        one missing its discriminant, silently decoded to `None` and its fields were lost. Known variants
+        still decode to their classes.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.2
+  changelogEntry:
+    - summary: |
+        Generated `core/pydantic_utilities.py` now type-checks under pydantic 2.14, which made mypy report
+        `var-annotated` on the module-level `TypeAdapter` instances.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.1
+  changelogEntry:
+    - summary: |
+        XML (TwiML) fluent child methods (`response.say(...)`, `gather.play(...)`, ...) keep document order on
+        Python 3.12+. The ordered content list is a pydantic private attribute, and the `runtime_checkable`
+        Protocol used to find it stopped matching on 3.12 (where `isinstance` uses `inspect.getattr_static`),
+        so children appended by the fluent methods were ordered after text and `add_child(...)` elements, e.g.
+        `r.say("a"); r.add_child(XmlElement("Custom")); r.say("b")` rendered `<Custom/><Say>a</Say><Say>b</Say>`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) models can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `add_text` segments and child elements), while
+        `comment_before(text)` / `comment_after(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `from_xml` and round-trip through `to_xml`; `XmlElement.add_comment`
+        and the new `XmlComment` node expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.38.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.37.2
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builders keep their legacy names when they collide with the element's text
+        field: `dial.number("+15551234567")` and `message.body("b")` now work instead of raising
+        `TypeError: 'NoneType' object is not callable`. The text is still passed as the same constructor
+        keyword (`Dial(number="+1555")`) but is stored under a trailing underscore (`dial.number_`) so the
+        builder method stays callable; `add_number`/`add_body` are no longer generated.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.37.1
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        a list, matching the legacy call style: `response.gather(input="speech dtmf")` no longer
+        raises a validation error and serializes as `input="speech dtmf"`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.37.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `user_agent_only` config (also accepted as `userAgentOnly`). When enabled,
+        generated clients send the `User-Agent` header (including the structured form from
+        `include_platform_headers`) but omit the `X-Fern-Language`, `X-Fern-SDK-Name`,
+        `X-Fern-SDK-Version`, `X-Fern-Runtime`, and `X-Fern-Platform` headers. Disabled by default,
+        so existing generated output is unchanged. `omit_fern_headers` still takes precedence and
+        drops the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.36.1
+  changelogEntry:
+    - summary: |
+        With endpoint-security auth, the client now fetches an OAuth or inferred-auth token only when the
+        endpoint's security requirements reference that scheme. Previously every authenticated call fetched
+        one first, so an endpoint that doesn't use it (e.g. the token endpoint itself) made an extra token
+        request and failed if that fetch failed.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.36.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.35.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) models keep text segments, typed children and undeclared `XmlElement` children in one
+        ordered content sequence, so `to_xml()` writes them in insertion order (`say("a")`, `add_child(...)`,
+        `say("b")` renders `<Say>a</Say><Custom /><Say>b</Say>`) and `from_xml()` preserves document order,
+        including nested mixed content in undeclared children. Builders gain `add_text(text)` for mixed
+        content such as `Say("Hi ").break_(...).add_text(" world")`. Typed child properties and
+        `add_child()` keep working as before.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.34.5
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.34.4
+  changelogEntry:
+    - summary: |
+        On Python 3.10 and older, `str()` on a generated enum member now returns its value (e.g. `WALMART_US`)
+        instead of `ClassName.WALMART_US`, matching `enum.StrEnum` on Python 3.11+. Previously, enum query
+        parameters were sent as `ClassName.MEMBER` on those versions when `enum_type: forward_compatible_python_enums`
+        or `python_enums` was used.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.34.3
+  changelogEntry:
+    - summary: |
+        Redact every header auth scheme's header (e.g. `PLAID-SECRET`) in debug logs, in addition to
+        `Authorization` and API-key headers, and merge request headers case-insensitively so a
+        `plaid-secret` override replaces `PLAID-SECRET` instead of sending both.
+      type: fix
+    - summary: |
+        Map `4XX`/`5XX` wildcard error responses to their typed error classes (concrete status codes
+        still win) and keep the real HTTP status code on the raised error.
+      type: fix
+    - summary: |
+        Fix offset pagination when the offset is an omitted body parameter (no more `OMIT + 1`), and
+        advance nested offsets such as `$request.options.offset` on each page, creating `options` when
+        it was omitted (through its model, so aliased fields keep their wire names) and preserving its
+        other fields.
+      type: fix
+    - summary: |
+        Read environment-variable-backed client parameters (e.g. API keys) when the client is
+        constructed instead of when the module is imported. Passing `api_key=None` explicitly now
+        falls back to the environment variable, the same as omitting the argument.
+      type: fix
+    - summary: |
+        Generate README.md for GitHub output even when no snippet path is configured (e.g. `fern generate --local`),
+        and document binary (`format: binary`) body parameters as `bytes` in reference.md.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.34.2
+  changelogEntry:
+    - summary: |
+        Accept an `async_token` callable on the async root client when OAuth client credentials are
+        configured with a token override. Previously only a synchronous `token` callable could be
+        supplied in token mode, so resolving the token blocked the event loop on every request. The
+        async client now exposes `async_token: Optional[Callable[[], Awaitable[str]]]`, adds a
+        constructor overload for it, and forwards it to `AsyncClientWrapper`.
+      type: fix
+    - summary: |
+        When `async_token` is set on an async client, the synchronous `token` is no longer resolved
+        for async requests. `AsyncClientWrapper.async_get_headers()` now calls
+        `get_headers(include_token=False)` and uses only the awaited token, so a blocking `token`
+        callable never runs on the event loop.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.34.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.34.0
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) models now carry inline documentation on their user-facing APIs: the
+        `__init__` of text-bearing models and every fluent child method (`say.break_(...)`) document
+        each parameter from the API definition's property descriptions, plus `**extra_attributes`.
+      type: feat
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.33.2
+  changelogEntry:
+    - summary: |
+        Also emit the SPDX `license` in `[tool.poetry]` alongside the PEP 639 `[project]` license. Poetry 1.x
+        (including the `poetry` version pinned in the generated publish workflow) ignores the `[project]`
+        table, so since 5.32.0 packages built with it were published to PyPI without any license metadata.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.33.1
+  changelogEntry:
+    - summary: |
+        Annotate generated WebSocket `__iter__` / `__aiter__` methods with `typing.Iterator[<Socket>Response]` /
+        `typing.AsyncIterator[<Socket>Response]` so type checkers infer iterated messages as the response union
+        (matching `recv()`) instead of `bytes | <Response>`.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.33.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.32.1
+  changelogEntry:
+    - summary: |
+        Stop emitting deprecated `License ::` PyPI classifiers alongside the PEP 639 `[project] license`
+        expression; modern setuptools rejects the combination. Inline `metadata.license: "MIT"` /
+        `"Apache-2.0"` now also writes the standard license text to `LICENSE` and declares it via
+        `license-files = ["LICENSE"]`.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.32.0
+  changelogEntry:
+    - summary: |
+        License metadata is now emitted in the `[project]` table of the generated `pyproject.toml`
+        following PEP 639: `metadata.license: "MIT"` / `"Apache-2.0"` produce `license = "<SPDX>"`,
+        and `metadata.license: { custom: "./LICENSE" }` produces `license-files = ["LICENSE"]`.
+        When the custom license file is recognized (Apache-2.0, MIT, BSD, GPL, MPL, ISC — same
+        heuristics as the Java generator), `license = "<SPDX>"` and the matching PyPI classifier are
+        emitted alongside `license-files`.
+      type: feat
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.31.2
+  changelogEntry:
+    - summary: |
+        Fix multipart requests where a `list<file>` property declares a `content-type`. The generated
+        client now applies `core.with_content_type` to each file in the list instead of passing the
+        whole list to a single call, which failed mypy and would have sent the list as one part.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.31.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 5.31.0
+  changelogEntry:
+    - summary: |
+        Object types carrying IR `encoding.xml` metadata (e.g. Twilio TwiML verbs imported from an OpenAPI
+        `xml` object) now generate a `to_xml()` method (and `__str__`) that serializes the model as an XML
+        element: properties marked as attributes become XML attributes, the text property becomes the element
+        body, and remaining properties are emitted as ordered child elements, honoring wire names,
+        namespaces/prefixes, wrapped lists and attribute list separators. A `core/xml_utilities.py` helper is
+        emitted only when the API contains XML-encoded types.
+      type: feat
+    - summary: |
+        XML-encoded object types with a list-valued child element property also generate fluent builder
+        methods: `append(child)` and one `<tag>(text, *, attributes...)` method per child element type that
+        constructs the child, appends it and returns it (e.g. `response.say("Hello", voice="Polly.Joanna")`,
+        `say.break_(time="100ms")`). Method names derive from the XML tag; on a clash with a field they get an
+        `add_` prefix (`Dial.add_number`, `Message.add_body`).
+      type: feat
+    - summary: |
+        XML-encoded types match the ergonomics of hand-written XML helper libraries: text-bearing elements
+        accept their body positionally (`Say("Hello", voice="man")`), constructors and builder methods accept
+        arbitrary `**extra_attributes: str` that are rendered as XML attributes (`Say("Hi", foo="bar")` ->
+        `<Say foo="bar">Hi</Say>`), and `str()` of a root element (one never nested in another XML type)
+        includes the `<?xml version="1.0" encoding="UTF-8"?>` declaration. `to_xml(xml_declaration=...)` is unchanged.
+      type: feat
+    - summary: |
+        XML-encoded object types also generate a `from_xml(xml)` classmethod that parses an XML string (or a
+        parsed element) back into the model: the root element name is validated, attributes/text/child
+        elements map to their properties (honoring namespaces, wrapped lists and list separators), child
+        unions dispatch on the element name, and scalar/enum values are converted by the model's normal
+        validation. Attributes the schema does not declare are kept as extra attributes and child elements it
+        does not declare are preserved as `XmlElement` nodes (also addable via `add_child(...)`), so
+        `Model.from_xml(model.to_xml())` round-trips. Parsing uses the standard library with DOCTYPE
+        declarations rejected; malformed input raises `ValueError`.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 5.30.2
+  changelogEntry:
+    - summary: |
+        Fix the generated OIDC publish workflow in `ci.yml` so the `pypi` GitHub Environment URL
+        points to the configured `package-name` (`https://pypi.org/p/<package-name>`) instead of
+        `github.event.repository.name`.
+      type: fix
+  createdAt: "2026-09-15"
+  irVersion: 67
+- version: 5.30.1
+  changelogEntry:
+    - summary: |
+        The generated README only documents pagination (`SyncPager`, `iter_pages()`) when paginated
+        clients are actually generated, so the README and `list()` return types stay in sync.
+      type: fix
+  createdAt: "2026-09-14"
+  irVersion: 67
+- version: 5.30.0
+  changelogEntry:
+    - summary: |
+        Add a `license_header` custom config option that emits the configured text as a comment
+        at the top of every generated Python file, above the auto-generated notice.
+
+        ```yaml
+        config:
+          license_header: |
+            Copyright 2024 Acme, Inc.
+            Licensed under the Apache License, Version 2.0.
+        ```
+      type: feat
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 5.29.4
+  changelogEntry:
+    - summary: |
+        Fix the generated `tests/utils/test_http_client.py` failing when `retry_status_codes: recommended`
+        is configured. The retry-status expectations in the test are now derived from the configured mode
+        instead of always asserting the legacy set (which includes 500, 501 and 599).
+      type: fix
+  createdAt: "2026-09-04"
+  irVersion: 67
+- version: 5.29.3
+  changelogEntry:
+    - summary: |
+        Cache Pydantic field alias metadata per model class instead of rebuilding the field name to alias maps on
+        every validation. The `mode="before"` validator now skips copying the input mapping when no key needs to be
+        rewritten, and `parse_obj_as` reuses the cached metadata instead of rescanning fields on each call. This
+        roughly halves the parsing cost of streaming responses, where the validator runs once per nested model per
+        event. As a result the validator can now hand the caller's own `dict` to Pydantic rather than a copy of it;
+        Pydantic does not mutate or retain that mapping, so parsed models are unaffected.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
+- version: 5.29.2
+  changelogEntry:
+    - summary: |
+        Respect custom OAuth token headers and prefixes for client credentials authentication.
+      type: fix
+  createdAt: "2026-08-26"
+  irVersion: 67
+- version: 5.29.1
+  changelogEntry:
+    - summary: |
+        Fixed generated WireMock stubs for OAuth client credentials APIs whose token endpoint is
+        itself marked as authenticated: the token (and refresh) endpoint stub no longer requires
+        an `Authorization` header, since the token request is made to obtain the token and cannot
+        carry one yet.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 5.29.0
+  changelogEntry:
+    - summary: |
+        Add `stream_abstraction`. With it enabled, streaming endpoints return a `Stream[T]`
+        (`AsyncStream[T]` for async clients) rather than a plain iterator, mirroring the TypeScript SDK's
+        `core.Stream`. Iterating the stream still yields the parsed payloads, while `with_metadata()`
+        yields them wrapped in a `StreamEvent` that also exposes the server-sent event `id`, `event` and
+        `retry` fields — `for event in client.completions.stream(...).with_metadata()` — so reading an
+        event id no longer requires dropping down to `with_raw_response`. The request is still only
+        issued once the stream is iterated, the stream owns the underlying response and releases it when
+        exhausted, closed or exited as a (asynchronous) context manager, and the raw client's `data` is
+        the same stream. `AsyncStream` is awaitable, so `await client.completions.stream(...)` and
+        `async for chunk in client.completions.stream(...)` both work. Defaults to `false`, so signatures
+        and snippets are unchanged until you opt in.
+      type: feat
+    - summary: |
+        Server-sent events carrying no data, such as comment-only and retry-only frames, are skipped
+        instead of being parsed as a payload, which previously failed model construction and logged a
+        warning.
+      type: fix
+    - summary: |
+        `HttpResponse` and `AsyncHttpResponse` expose the underlying `httpx.Response` through a public
+        `response` property.
+      type: feat
+    - summary: |
+        Fix the generated async examples for streaming endpoints, which awaited the method call —
+        `response = await client.completions.stream(...)` — even though it returns an async generator and
+        raises `TypeError: 'async_generator' object can't be awaited`.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 5.28.0
+  changelogEntry:
+    - summary: |
+        Add `respect_optional_request_body`. With it enabled, an endpoint whose request body the API does
+        not require defaults that body to the `OMIT` sentinel — `batch_refund(request: Sequence[RefundRequest] = OMIT)`
+        rather than `request: Optional[Sequence[RefundRequest]]` — so "not passed" stays distinct from an
+        explicit `None`, and a body left out means the request carries no content and no `Content-Type`.
+        Examples that supply no body render as `client.batch_refund()`. When the body inlines into keyword
+        arguments instead, leaving all of them out sends no body rather than an empty `{}`. Defaults to
+        `false`, so signatures and snippets are unchanged until you opt in.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 5.27.1
+  changelogEntry:
+    - summary: |
+        Accept a plain string for the root client's `token` parameter when OAuth client credentials
+        are configured with a token override. The constructor overload, implementation signature, and
+        docstring previously typed `token` as `typing.Callable[[], str]` only, even though the client
+        wrapper accepts `typing.Union[str, typing.Callable[[], str]]` at runtime and the generated
+        example passes a string literal, so type checkers rejected the documented usage.
+      type: fix
+  createdAt: "2026-08-10"
+  irVersion: 67
+- version: 5.27.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `prefer_explicit_auth` configuration option. When enabled (and the API composes
+        OAuth client-credentials with basic auth via `auth: any`), auth credentials passed
+        explicitly to the client constructor take precedence over environment-variable
+        defaults when selecting the auth scheme — e.g. explicitly provided basic auth
+        credentials win over OAuth client ID/secret environment variables. Disabled by
+        default, so existing generated output and runtime behavior are unchanged.
+      type: feat
+  createdAt: "2026-08-09"
+  irVersion: 67
+- version: 5.26.1
+  changelogEntry:
+    - summary: |
+        Fixed WireMock stubs for wire tests of APIs with `auth: any` combining Basic and
+        OAuth/Bearer schemes: stubs now accept either Authorization form instead of
+        requiring the exact Basic header the client may not send.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
+- version: 5.26.0
+  changelogEntry:
+    - summary: |
+        Add an `encode_path_params` config option (default `false`). When enabled, path parameter
+        values are percent-encoded when substituted into the request path, so a value containing `/`
+        or `..` can no longer change which endpoint the request resolves to. The default `false`
+        preserves the existing (unencoded) behavior; TypeScript, Go, Java, and C# already encode path
+        params.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.25.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allow_user_agent_app_info` config (camelCase alias `allowUserAgentAppInfo`).
+        When enabled, the generated client accepts an optional `app_info`
+        (`{"name": ..., "version"?: ..., "comment"?: ...}`) constructor argument whose product
+        token is appended to the `User-Agent` header
+        (`{sdk}/{version} ... {product}/{product-version} ({comment})`), following RFC 9110.
+        Disabled by default, so existing generated output is unchanged. It composes with
+        `include_platform_headers`, the `user-agent` template config, and the default
+        `{package}/{version}` value, and survives the `runtime_version` path. Caller-supplied
+        values are sanitized (name/version token-encoded, comment delimiters and control
+        characters escaped), and it is still overridable by an explicit `User-Agent` header and
+        suppressed by `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.24.2
+  changelogEntry:
+    - summary: |
+        Fix two issues with the opt-in `allow_user_agent_app_info` client option:
+        - The `app_info` constructor parameter no longer leaks a bare positional `None`
+          into generated usage snippets and docstrings, which produced invalid Python
+          (a positional argument after keyword arguments). It remains an optional keyword
+          argument defaulting to `None`.
+        - Non-ASCII characters in the `app_info` comment are now percent-encoded (UTF-8).
+          Previously they were passed through into the `User-Agent` header, causing httpx
+          to raise `UnicodeEncodeError` on every request.
+      type: fix
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.24.1
+  changelogEntry:
+    - summary: |
+        Respect the `user-agent` config template when `include_platform_headers` or
+        `runtime_version` is enabled. The structured User-Agent previously always used the
+        package name and version, ignoring the configured template.
+      type: fix
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 5.24.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `optional-auth` config flag. When enabled, client auth
+        parameters (bearer token, basic auth username/password, header auth) are
+        made optional even when the API spec mandates auth on all endpoints
+        (`isAuthMandatory=true`). Auth headers are only sent when credentials are
+        provided. Useful for hand-maintained wrapper clients that authenticate via
+        external means (e.g. cloud provider credentials). Defaults to `false`, so
+        existing behavior is unchanged.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.23.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `runtime_version` config flag. When enabled, the SDK version
+        reported in the telemetry headers (`X-Fern-SDK-Version` and the version segment
+        of `User-Agent`) is resolved at runtime via `importlib.metadata.version(<dist>)`
+        instead of being baked in as a literal at generation time. This lets the reported
+        version track the actually-installed package version — for example when an
+        external tool such as release-please sets the published version after generation —
+        rather than a version the SDK may never publish. Falls back to the generation-time
+        version when the distribution is not installed (e.g. running from source). Disabled
+        by default, so existing generated output is unchanged, and subject to
+        `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.22.2
+  changelogEntry:
+    - summary: |
+        Fix multipart form list-of-primitive body properties being sent as a single
+        JSON-encoded field instead of repeated form fields. A property such as
+        `Optional[List[str]]` was serialized as `json.dumps(jsonable_encoder(value))`,
+        producing one field whose value was the whole JSON array (e.g.
+        `keyterms=["a","b"]`); servers that validate each item then rejected it. Such
+        properties are now passed through `jsonable_encoder` and handed directly to
+        httpx's `data=`, emitting repeated fields (`keyterms=a`, `keyterms=b`). Lists of
+        objects, maps, and other complex types remain JSON-encoded as before.
+      type: fix
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.22.1
+  changelogEntry:
+    - summary: |
+        Loosen the generated `httpx-aiohttp` optional dependency constraint from an exact
+        pin (`0.1.8`) to a caret range (`^0.1.8`, i.e. `>=0.1.8,<0.2.0`). This lets the
+        aiohttp extra coexist with other packages that require a newer 0.1.x of
+        `httpx-aiohttp` (e.g. `>0.1.9`) without introducing a breaking major bump.
+      type: fix
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.22.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+        Inferred (token-endpoint) auth is now also wired under `ENDPOINT_SECURITY` when other
+        schemes are present, and generated wire tests assert per endpoint that only the declared
+        scheme's header is sent.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.21.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding support to `verify_signature`. When a webhook's HMAC
+        signature declares a `bodyHashBinding` in the IR, the generated helper first recomputes
+        the raw request body's hash (using the binding's own algorithm/encoding), extracts the
+        configured query parameter from the notification URL, and timing-safe-compares them
+        (failing closed on a missing or mismatched hash) before performing the existing HMAC
+        verification over the verbatim notification URL. Adds stdlib-only `compute_hash` (unkeyed
+        digest) and read-only `get_webhook_query_parameter` core utilities. Output is unchanged
+        when no body-hash binding is present.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated SDK now emits a `WebhooksHelper` with a static
+        `verify_signature` method that validates the signature (and optional timestamp) using a
+        new stdlib-only core utility (`hmac`/`hashlib`/`base64` with constant-time comparison).
+      type: feat
+    - summary: |
+        Extend `verify_signature` with Twilio-compatible webhook verification. The generated
+        helper now (1) accepts either a raw string or a multi-value form map for `request_body`
+        when the IR sets `payloadFormat.bodySort`, sorting and deduping keys and per-key values
+        before signing; (2) branches at runtime on a `bodyHashBinding`: a JSON request (body-hash
+        query parameter present) recomputes and timing-safe-compares the raw-body hash and signs
+        the notification URL only, while a classic form request signs the URL plus the sorted
+        params with no body-hash check; (3) verifies against several normalized notification-URL
+        forms when `notificationUrlNormalization` is set, succeeding on the first constant-time
+        match; and (4) is a pure boolean that fails closed with `False` on invalid inputs
+        (missing parameters, malformed timestamps, unparseable URLs) rather than raising. Adds a
+        stdlib-only `notification_url_candidates` core utility (port and legacy-query-encoding
+        variants via `urllib.parse`). Output is unchanged for webhooks that do not configure these
+        fields, aside from the no-throw behavior on the verification path.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.20.2
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both an `environment` and server URL
+        variables (e.g. `region`), the generated client now renders the selected
+        environment's URL template instead of always using the default (first)
+        environment's template. For example, `Client(environment=Environment.STAGING,
+        region="ie1")` now resolves to the Staging template
+        (`https://api.stage.ie1.example.com`) rather than the Production one.
+        An explicitly provided `base_url` is no longer overridden by URL variables.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 5.20.1
+  changelogEntry:
+    - summary: |
+        Stop passing required literal query parameters as keyword arguments in generated
+        snippets and wire tests. Required literals (e.g. `response_type="code"`) are
+        hardcoded inside the generated method and omitted from its signature, so passing
+        them raised `TypeError: got an unexpected keyword argument`. Optional literal
+        query parameters remain in the signature and are still included.
+      type: fix
+  createdAt: "2026-07-17"
+  irVersion: 67
+- version: 5.20.0
+  changelogEntry:
+    - summary: |
+        Add opt-in, platform-guarded TCP keepalive for the generated default HTTP
+        transport. Enable it via the new `tcp_keepalive` custom config
+        (`enabled`, `idle_seconds`, `interval_seconds`, `count`); it is disabled by
+        default so existing generated output is unchanged. When enabled, the default
+        httpx transport applies `SO_KEEPALIVE` plus the platform's idle/interval/count
+        knobs (with a macOS `TCP_KEEPIDLE` -> `TCP_KEEPALIVE` fallback and guards for
+        older/minimal platforms) so long, non-streaming requests survive
+        idle-connection reaping by a firewall/load balancer/NAT. A user-supplied
+        `httpx_client` or a `custom_transport` `http_client` always takes precedence
+        over the keepalive default. Opting in requires `httpx>=0.25`.
+      type: feat
+    - summary: |
+        Fix the async default client dropping a `custom_transport` `http_client`.
+        `_make_default_async_client` now threads the supplied transport through to the
+        underlying `httpx.AsyncClient` (the httpx-aiohttp path remains a documented
+        no-op, since aiohttp manages its own connector).
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 5.19.3
+  changelogEntry:
+    - summary: |
+        Revert the smart-casing digit/word boundary behavior introduced in 5.18.4. snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-5.18.4 output. The behavior will become opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml` once the generator
+        consumes the IR version that carries the setting.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 5.19.2
+  changelogEntry:
+    - summary: |
+        Fix the OAuth token provider crashing with "Access token not present in OAuth response"
+        when the token response does not include a refresh token. Client-credentials token
+        responses often omit `refresh_token`; the provider now treats it as optional instead
+        of raising.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 5.19.1
+  changelogEntry:
+    - summary: |
+        OAuth client credentials token requests now send `grant_type: "client_credentials"`
+        when the token endpoint declares a non-literal `grant_type` request property. The
+        property is synthesized in the token request and is no longer surfaced as a
+        user-supplied option.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 5.19.0
+  changelogEntry:
+    - summary: |
+        Add automatic idempotency-key generation, driven by the centralized
+        `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+        UUIDv4 idempotency-key header to requests whose HTTP method is listed in the IR. A
+        caller-supplied key still takes precedence.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.18.4
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Sub-client accessors and methods like `ConversationsV2Configuration` now generate
+        `conversations_v2_configuration` instead of `conversations_v2configuration`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.18.3
+  changelogEntry:
+    - summary: |
+        Expose basic auth credentials (e.g. `account_sid` / `auth_token`) on the top-level
+        client when the API also configures OAuth (`auth: any`). Previously the root client
+        constructor only accepted OAuth client credentials or a bearer token, even though the
+        underlying client wrapper supported basic auth. The credentials are now optional
+        constructor parameters that are forwarded to the client wrapper, and the client can be
+        instantiated with basic auth alone without raising an error.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.18.2
+  changelogEntry:
+    - summary: |
+        Preserve leading and trailing underscores in generated namespace/module names.
+        Previously a subpackage named `_agents` (via `x-fern-sdk-group-name: _agents`)
+        was transformed to `agents`, stripping the underscore. Now it generates a
+        private `_agents/` Python module with a matching `client._agents` accessor,
+        enabling the pattern of hiding autogenerated clients behind a hand-written
+        public layer.
+
+        This is scoped to namespace/module names only. Parameter, field, and property
+        casing is unchanged, so existing SDK method signatures are unaffected.
+
+        Note: if you already use a group name that begins or ends with an underscore
+        (e.g. `x-fern-sdk-group-name: _agents`), the generated module and accessor now
+        preserve that underscore (`_agents/` and `client._agents`) instead of stripping
+        it (`agents/` / `client.agents`). Regenerating will change those import paths.
+      type: fix
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 5.18.1
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `include_platform_headers` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 5.18.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header of the form
+        `{sdkName}/{version} ({os}; {arch}) Python/{pythonVersion}`, matching the
+        Twilio helper-library shape. This is gated behind the `include_platform_headers`
+        config option and is disabled by default. When enabled, the platform + runtime
+        information is consolidated into the `User-Agent` header, superseding the
+        default `{package}/{version}` value, and the discrete `X-Fern-Runtime` /
+        `X-Fern-Platform` headers are no longer emitted. The platform group and runtime
+        segment are dropped gracefully when they cannot be determined, and the header
+        remains subject to `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 5.17.1
+  changelogEntry:
+    - summary: |
+        Generated code snippets (README, OAuth token override examples) now use
+        the custom bearer token parameter name from the API spec (e.g. `api_key`)
+        instead of always using the default `token`.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 5.17.0
+  changelogEntry:
+    - summary: |
+        Add a `timeout` config option as an alias for `timeout_in_seconds`. Both keys
+        are in seconds and `timeout_in_seconds` continues to work, with `timeout`
+        taking precedence when both are set.
+      type: feat
+    - summary: |
+        Add a `timeout` key to the generated SDK's `RequestOptions` as an alias for the
+        per-request `timeout_in_seconds`. Both are in seconds; `timeout_in_seconds` keeps
+        working, with `timeout` taking precedence when both are provided.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.16.1
+  changelogEntry:
+    - summary: |
+        Emit attribute docstrings for aliased Pydantic model fields (e.g. fields renamed
+        from camelCase wire names to snake_case) so IDEs surface the field description
+        on hover, matching the behavior of non-aliased fields.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 5.16.0
+  changelogEntry:
+    - summary: |
+        Implement transparent SSE stream auto-reconnection for `resumable: true`
+        endpoints, bringing the Python SDK to parity with TypeScript and Go. When a
+        resumable stream ends prematurely, `EventSource` now re-issues the original
+        request with a `Last-Event-ID` header and resumes from the last *dispatched*
+        event id (never a parsed-but-undispatched id, avoiding silent event loss).
+        Reconnection is gated on a configured stream terminator, honors
+        `stream_reconnection_enabled` and `max_stream_reconnection_attempts` (with
+        reset-on-progress), backs off 1s by default (or the server `retry:` value,
+        clamped to 30s), guards against empty reconnect bodies, and remains
+        cancellable during the backoff delay. Supported for both sync and async
+        clients.
+      type: feat
+  createdAt: "2026-07-05"
+  irVersion: 67
+- version: 5.15.2
+  changelogEntry:
+    - summary: |
+        Fix `ImportError` when a type uses `extends` to inherit from a base type that
+        is part of a circular reference cycle (e.g. `Acai extends Berry` where
+        `Berry → Animal → Cat → Fruit → Acai`). Python inheritance requires a
+        top-level import of the base class, which cannot coexist with the ghost
+        reference imports needed for circular forward-ref resolution. The generator
+        now automatically falls back to inlining the base type's properties instead
+        of using Python class inheritance when it detects a circular extends chain.
+      type: fix
+    - summary: |
+        When a custom `httpx.Client` or `httpx.AsyncClient` is passed to the generated SDK client,
+        the timeout configured on that httpx client is now respected. Previously, the SDK would
+        extract only the `read` timeout component and pass it explicitly to each request, which
+        overrode the full timeout configuration (including separate connect/read/write/pool timeouts).
+        Now, when no explicit `timeout` is provided to the SDK constructor, requests defer to the
+        httpx client's own timeout settings via `httpx.USE_CLIENT_DEFAULT`.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.15.1
+  changelogEntry:
+    - summary: |
+        Fix pydantic-v2 generator failing to find `.gitignore.Template` at runtime by
+        copying the `asIs` directory into the dist bundle.
+      type: fix
+    - summary: |
+        Fix pydantic-v2 WrappedAliasGenerator producing invalid Python: add missing
+        `self` parameter to getter methods, use correct return type instead of
+        hardcoded `UUID`, quote forward-reference return types in builder methods,
+        and add missing `return` statement in builder method bodies.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.15.0
+  changelogEntry:
+    - summary: |
+        Support `resumable` flag in SSE streaming endpoints. When an endpoint has
+        `x-fern-streaming.resumable: true`, the generated SDK now passes `resumable=True`
+        to `EventSource`, plumbing the flag through to the runtime for use by
+        reconnection logic. Adds `stream_reconnection_enabled` and
+        `max_stream_reconnection_attempts` request options for runtime control of
+        reconnection behavior.
+      type: feat
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 5.14.21
+  changelogEntry:
+    - summary: |
+        Fix `pyproject.toml` distribution name for github-output SDKs without a PyPI publish target
+        to prefer `config.package_name` over the organization name. Also use `output_mode.version`
+        instead of hardcoding `0.0.0`.
+      type: fix
+  createdAt: "2026-06-20"
+  irVersion: 67
+- version: 5.14.20
+  changelogEntry:
+    - summary: |
+        Bump the Python SDK generator container's base image from `python:3.13.7-slim`
+        to `python:3.13.14-slim` to pull in CPython security fixes, clearing
+        CVE-2025-13836, CVE-2026-3644, and CVE-2026-4224 (plus several lower-severity
+        CPython advisories).
+      type: chore
+  createdAt: "2026-06-17"
+  irVersion: 67
+- version: 5.14.19
+  changelogEntry:
+    - summary: |
+        Bump aiohttp lower bound from >=3.14.0 to >=3.14.1 to fix CVE-2026-54274.
+      type: fix
+  createdAt: "2026-06-16"
+  irVersion: 67
+- version: 5.14.18
+  changelogEntry:
+    - summary: |
+        Fixed the generated legacy wire test `conftest.py` so the test suite no longer fails when
+        no mock server is configured. The client fixtures now skip wire tests when `TESTS_BASE_URL`
+        is unset (instead of issuing requests to an invalid URL), and the conftest re-declares the
+        hook that auto-skips `@pytest.mark.aiohttp` tests when the optional `httpx_aiohttp`
+        dependency is not installed.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
+- version: 5.14.17
+  changelogEntry:
+    - summary: |
+        Fix OAuth token provider to use correct parameter names from request-properties mapping
+        for custom OAuth endpoints, and pass additional required parameters (scopes, custom properties)
+        through the client constructor to the token provider.
+      type: fix
+    - summary: |
+        Enforce required additional OAuth parameters with an explicit runtime check that raises
+        an `ApiError` instead of `assert`, so the validation is not stripped under Python's
+        optimized mode (`-O`).
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
+- version: 5.14.16
+  changelogEntry:
+    - summary: |
+        Fix discriminated union snippet generation to include base properties (e.g. extra, tags)
+        inherited from the union's base type. Also fix conftest generation to skip non-string
+        constructor parameters like headers from os.getenv() wrapping.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
+- version: 5.14.15
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.9.39 (Replay 0.18.0) for more reliable
+        customization detection during regeneration.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.14.14
+  changelogEntry:
+    - summary: |
+        Add MAX_LINE_SIZE guard (1 MiB) to SSE iter_sse/aiter_sse to prevent
+        unbounded memory growth from non-newline-terminated streams
+        (GHSA-7w2x-r9r4-7v8r).
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 5.14.13
+  changelogEntry:
+    - summary: |
+        Fix mypy errors in raw client for stream-condition endpoints by removing
+        `@contextmanager` decorator and correcting overload return types.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 5.14.12
+  changelogEntry:
+    - summary: |
+        Bump pip from 26.1 to 26.1.2 in the container to fix CVE-2026-8643
+        (directory traversal via malicious wheel entry-point names).
+      type: chore
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 5.14.11
+  changelogEntry:
+    - summary: |
+        Bump aiohttp lower bound from >=3.13.4 to >=3.14.0 and tighten Python
+        marker to >=3.10 to address CVE-2026-47265 and CVE-2026-47266.
+      type: chore
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.14.10
+  changelogEntry:
+    - summary: |
+        Fix the typing of endpoints that extract a property from an optional response body. The
+        `HttpResponse`/`AsyncHttpResponse` generic (and the corresponding client return type) is now
+        wrapped in `Optional` when the underlying response body resolves to an optional type, so an
+        empty response (`data=None`) no longer fails type checking.
+      type: fix
+    - summary: |
+        Fix the generated OAuth token provider to respect the auth scheme's `request-properties`
+        mapping. The token endpoint is now invoked using the actual request parameter names
+        (e.g. `username`/`password` or custom names) instead of always hard-coding
+        `client_id`/`client_secret`.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.14.9
+  changelogEntry:
+    - summary: |
+        Fix generation failure in `output_directory: source-root` mode by skipping
+        `poetry lock` and `ruff` commands that require a pyproject.toml which is not
+        emitted in source-root mode.
+      type: fix
+    - summary: |
+        Fix duplicate `__root__` field declaration in Pydantic v1 discriminated unions
+        with `include_union_utils: true`.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.14.8
+  changelogEntry:
+    - summary: |
+        Fix `construct_type` crash on bare unparameterized `dict`, `list`, and `set` types.
+        Previously, `get_args()` on a bare container returned an empty tuple, causing
+        `ValueError` (dict) or `IndexError` (list/set). Now falls back to returning
+        the object unchanged, matching `Dict[Any, Any]` / `List[Any]` / `Set[Any]` semantics.
+      type: fix
+  createdAt: "2026-06-01"
+  irVersion: 67
+- version: 5.14.7
+  changelogEntry:
+    - summary: |
+        Fix offset pagination so generated `list` endpoints emit a real `_has_next` instead of the
+        literal `True`. When the API declares `has-next-page` on the pagination config, the
+        generator now reads that response field (`bool(_parsed_response.<path>)`); otherwise it
+        falls back to `len(_items or []) > 0`, matching the TypeScript generator's
+        `(r?.data ?? []).length > 0` semantics.
+
+        Previously every offset-paginated method hardcoded `_has_next = True`, so
+        `while pager.has_next: pager = pager.next_page()` loops never terminated. `for x in pager`
+        worked only because the core paginator stops iteration when `get_next()` returns an empty
+        page.
+
+        Also harden the offset paginator against two latent crashes: nested `has-next-page` paths
+        (e.g. `$response.metadata.hasNext`) are now wrapped in a `_parsed_response.metadata is
+        not None` guard mirroring the cursor paginator, and `_has_next`/`_get_next` are
+        pre-initialized so endpoints with an optional response type no longer raise `NameError`
+        when the server returns a null body.
+      type: fix
+  createdAt: "2026-06-01"
+  irVersion: 67
+- version: 5.14.6
+  changelogEntry:
+    - summary: |
+        Improve SSE event parsing and deserialization performance by caching resolved type hints
+        and short-circuiting `convert_and_respect_annotation_metadata` when a type has no aliased
+        fields. Previously every call recomputed `typing.get_type_hints` and walked the entire type
+        graph, which was very expensive for streams parsing many events against large discriminated
+        unions. Output is unchanged.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 67
+- version: 5.14.5
+  changelogEntry:
+    - summary: |
+        Fix TypedDict alias generation when `use_typeddict_requests: true` so that
+        container element types (`List[T]`, `Dict[K, V]`, `Set[T]`) and direct aliases
+        (`Alias = T`) reach for the request-side `TParams` variant rather than the
+        Pydantic model `T`. Without this, request parameters typed as such aliases
+        rejected dict-literal values at type-check time even though the runtime accepted
+        them.
+
+        Note: list-typed alias bodies now resolve to `typing.Sequence[…]` instead of
+        `typing.List[…]` under `use_typeddict_requests`, consistent with how endpoint
+        parameters are already typed. Existing call sites that pass lists continue to
+        work.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 67
+- version: 5.14.4
+  changelogEntry:
+    - summary: |
+        Fix SSE union discrimination for both data-level and protocol-level contexts.
+
+        Data-level: Simplify `parse_sse_obj` to always parse the SSE `data` field as
+        JSON instead of using runtime heuristics. This fixes incorrect routing when the
+        discriminant field name (e.g., `event`) collides with an SSE envelope field.
+
+        Protocol-level: Generate an if/elif dispatch chain at code-generation time that
+        routes on `_sse.event`, parsing each variant's data payload into its concrete
+        type. No runtime heuristic — the generator decides the code path statically.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 67
+- version: 5.14.3
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 67
+- version: 5.14.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.35, which disables minimatch negation
+        on `.fernignore` patterns so a stray `!pattern` no longer silently inverts
+        the match and discards generator output.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 67
+- version: 5.14.1
+  changelogEntry:
+    - summary: |
+        Fix SSE streaming performance regression by caching `pydantic.TypeAdapter` instances
+        in `parse_obj_as()`. Previously, a new TypeAdapter was constructed on every call, which
+        is extremely expensive for discriminated union types. This caused ~8x slowdown in SSE
+        event parsing introduced in v4.51.0 (`parse_sse_obj`).
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 5.14.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-base-path` OpenAPI extension. Root path
+        parameters declared on the base path are hoisted to the client
+        constructor; endpoint methods no longer take them as arguments and
+        URL substitution reads them from the client wrapper.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 5.13.1
+  changelogEntry:
+    - summary: |
+        Use `hasWebSocketInTree` IR field to wire WebSocket sub-clients into the
+        root client, even when the WebSocket channel lives on a nested sub-resource
+        rather than the top-level namespace package.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 5.13.0
+  changelogEntry:
+    - summary: |
+        Add `output_directory` custom config, mirroring the Java generator's flag.
+        `project-root` (default behavior when unset) preserves today's `src/<package>/...`
+        layout with full project scaffolding. `source-root` writes the source tree
+        directly without the `src/` prefix and skips project scaffolding
+        (`pyproject.toml`, `requirements.txt`, `README.md`, `py.typed`, LICENSE,
+        `.github/workflows`, `.gitignore`, `tests/` scaffolds, `CONTRIBUTING.md`,
+        `reference.md`) — designed for embedding generated code into an existing
+        Python project. Composes with `package_path`; combine with `package_name`
+        to drop the `<package>` wrapper entirely. The legacy `flat_layout` flag is
+        preserved as a deprecated alias with bit-exact behavior.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 67
+- version: 5.12.12
+  changelogEntry:
+    - summary: |
+        Fix `test_aiohttp_autodetect.py` and `_default_clients.py` to use the
+        configured `package_name` instead of the raw organization name. Previously,
+        when `package_name` in `generators.yml` differed from `organization` in
+        `fern.config.json`, the generated aiohttp test used incorrect import paths
+        and the pip install error message contained a hardcoded literal "package"
+        instead of the actual package name.
+      type: fix
+  createdAt: "2026-05-18"
+  irVersion: 67
+- version: 5.12.11
+  changelogEntry:
+    - summary: |
+        Update OS packages in the Python SDK generator container from Debian sid to fix
+        krb5 (CVE-2026-40355, CVE-2026-40356), curl (CVE-2026-1965, CVE-2026-4873,
+        CVE-2026-5545, CVE-2026-6253, CVE-2026-6429), gnutls28 (CVE-2026-3832),
+        and expat (CVE-2026-45186).
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.12.10
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+    - summary: |
+        Dynamic snippets now pass root-level path parameters to the endpoint method instead
+        of the client constructor (which does not accept them), and include them alongside
+        endpoint-level path parameters so the rendered call matches the generated Python SDK
+        method signature.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 5.12.9
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.28, which sets explicit author and
+        committer on API-created commits to the Fern bot identity. Fixes commit
+        attribution on GitHub Enterprise where PAT-based authentication previously
+        attributed commits to the PAT-owning service account instead of fern-api[bot].
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 5.12.8
+  changelogEntry:
+    - summary: |
+        Bump Poetry from 1.8.5 to 2.4.1 in the python-sdk and pydantic-model
+        container images. Clears CVE-2026-34591 (Poetry `<2.3.3` stored credentials
+        in cleartext when keyring storage was unavailable). pyproject.toml's
+        `poetry-core` constraint moves from `^1.9.0` to `^2.0.0` to stay in
+        lockstep with Poetry 2.4.1's bundled `poetry-core 2.4.0` under
+        `virtualenvs.create=false`. `poetry.lock` regenerated under Poetry 2.4.1.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.12.7
+  changelogEntry:
+    - summary: |
+        Patch the bundled `ip-address` to v10.2.0 in the python-sdk container to
+        address CVE-2026-42338 / GHSA-v2v4-37r5-5v8g (XSS in `Address6` HTML-
+        emitting methods). npm 11.12.1 (shipped with `node:24.15`) bundles
+        `ip-address@10.1.0` via `socks`; this overlays the published 10.2.0
+        tarball in place at image build time. Also bumps the container-level
+        `pip` to 26.1 to clear CVE-2025-8869, CVE-2026-3219, CVE-2026-6357, and
+        CVE-2026-1703 (self-update flaw running after wheel install). Poetry
+        stays at 1.8.5 because pyproject.toml's `virtualenvs.create=false` flow
+        requires `poetry-core ^1.9.0`.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.12.6
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` (e.g. FHIR/IPS template strings) are now served verbatim instead
+        of being passed through WireMock's Handlebars transformer, which would
+        fail to resolve them as helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 5.12.5
+  changelogEntry:
+    - summary: |
+        Patch Python SDK generator container CVEs flagged in the AWS ECR / grype
+        scan. Patch npm's bundled `picomatch@4.0.3 -> 4.0.4`
+        (GHSA-c2c7-rcm5-vvqj, GHSA-3v7f-55p6-f55p) and
+        `brace-expansion@5.0.4 -> 5.0.5` (CVE-2026-33750) via tarball replacement
+        so the published image no longer ships the vulnerable bundled JS
+        dependencies that grype flags.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 5.12.4
+  changelogEntry:
+    - summary: |
+        Bump the Python SDK generator container's Node base image from
+        `node:22.22-bookworm-slim` to `node:24.15-trixie-slim`. Aligns the
+        generator with the rest of the Fern generator containers on a single
+        Node major version (Node 24) and Debian release (trixie). Trixie ships
+        patched versions of glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+        krb5, curl, and expat that are not available on bookworm, clearing the
+        AWS Inspector findings that dist-upgrade alone could not.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 5.12.3
+  changelogEntry:
+    - summary: |
+        Bump the python-sdk container's Node.js stage from `node:20.19.4-slim`
+        (Node 20 went EOL March 24, 2026) to `node:22.22-bookworm-slim`, and
+        apply latest Debian trixie security updates at build time so OS-level
+        package CVEs are picked up. Addresses CVE-2025-55130 (Node 20.19.4
+        permission-model symlink bypass) and the OS-level CVE-2026-31789
+        against `openssl 3.5.1-1`.
+      type: chore
+  createdAt: "2026-05-08"
+  irVersion: 66
 - version: 5.12.2
   changelogEntry:
     - summary: |
@@ -566,6 +1869,7 @@
       type: feat
   createdAt: "2026-03-27"
   irVersion: 65
+
 
 - version: 5.0.8
   changelogEntry:

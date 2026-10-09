@@ -10,5 +10,6 @@
       "type": "string"
     }
   ],
+  "description": "Mix of primitives where some resolve to the same Java type.",
   "definitions": {}
 }

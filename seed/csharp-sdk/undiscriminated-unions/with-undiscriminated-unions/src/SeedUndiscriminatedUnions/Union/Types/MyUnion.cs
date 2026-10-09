@@ -33,33 +33,33 @@ public class MyUnion
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a string value.
+    /// Factory method to create a union from a <see cref="string"/> value.
     /// </summary>
     public static MyUnion FromString(string value) => new("string", value);
 
     /// <summary>
-    /// Factory method to create a union from a IEnumerable<string> value.
+    /// Factory method to create a union from a <see cref="IEnumerable{String}"/> value.
     /// </summary>
     public static MyUnion FromListOfString(IEnumerable<string> value) => new("list", value);
 
     /// <summary>
-    /// Factory method to create a union from a int value.
+    /// Factory method to create a union from a <see cref="int"/> value.
     /// </summary>
     public static MyUnion FromInt(int value) => new("int", value);
 
     /// <summary>
-    /// Factory method to create a union from a IEnumerable<int> value.
+    /// Factory method to create a union from a <see cref="IEnumerable{Int32}"/> value.
     /// </summary>
     public static MyUnion FromListOfInt(IEnumerable<int> value) => new("list_1", value);
 
     /// <summary>
-    /// Factory method to create a union from a IEnumerable<IEnumerable<int>> value.
+    /// Factory method to create a union from a <c>IEnumerable&lt;IEnumerable&lt;int&gt;&gt;</c> value.
     /// </summary>
     public static MyUnion FromListOfListOfInt(IEnumerable<IEnumerable<int>> value) =>
         new("list_2", value);
 
     /// <summary>
-    /// Factory method to create a union from a HashSet<string> value.
+    /// Factory method to create a union from a <see cref="HashSet{String}"/> value.
     /// </summary>
     public static MyUnion FromSetOfString(HashSet<string> value) => new("set", value);
 
@@ -103,7 +103,7 @@ public class MyUnion
             : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<string>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable{String}"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
     /// </summary>
     /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list'.</exception>
     public IEnumerable<string> AsListOfString() =>
@@ -121,7 +121,7 @@ public class MyUnion
             : throw new SeedUndiscriminatedUnionsException("Union type is not 'int'");
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<int>"/> if <see cref="Type"/> is 'list_1', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable{Int32}"/> if <see cref="Type"/> is 'list_1', otherwise throws an exception.
     /// </summary>
     /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list_1'.</exception>
     public IEnumerable<int> AsListOfInt() =>
@@ -130,7 +130,7 @@ public class MyUnion
             : throw new SeedUndiscriminatedUnionsException("Union type is not 'list_1'");
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<IEnumerable<int>>"/> if <see cref="Type"/> is 'list_2', otherwise throws an exception.
+    /// Returns the value as a <c>IEnumerable&lt;IEnumerable&lt;int&gt;&gt;</c> if <see cref="Type"/> is 'list_2', otherwise throws an exception.
     /// </summary>
     /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list_2'.</exception>
     public IEnumerable<IEnumerable<int>> AsListOfListOfInt() =>
@@ -139,7 +139,7 @@ public class MyUnion
             : throw new SeedUndiscriminatedUnionsException("Union type is not 'list_2'");
 
     /// <summary>
-    /// Returns the value as a <see cref="HashSet<string>"/> if <see cref="Type"/> is 'set', otherwise throws an exception.
+    /// Returns the value as a <see cref="HashSet{String}"/> if <see cref="Type"/> is 'set', otherwise throws an exception.
     /// </summary>
     /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'set'.</exception>
     public HashSet<string> AsSetOfString() =>
@@ -162,7 +162,7 @@ public class MyUnion
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<string>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable{String}"/> and returns true if successful.
     /// </summary>
     public bool TryGetListOfString(out IEnumerable<string>? value)
     {
@@ -190,7 +190,7 @@ public class MyUnion
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<int>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable{Int32}"/> and returns true if successful.
     /// </summary>
     public bool TryGetListOfInt(out IEnumerable<int>? value)
     {
@@ -204,7 +204,7 @@ public class MyUnion
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<IEnumerable<int>>"/> and returns true if successful.
+    /// Attempts to cast the value to a <c>IEnumerable&lt;IEnumerable&lt;int&gt;&gt;</c> and returns true if successful.
     /// </summary>
     public bool TryGetListOfListOfInt(out IEnumerable<IEnumerable<int>>? value)
     {
@@ -218,7 +218,7 @@ public class MyUnion
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="HashSet<string>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="HashSet{String}"/> and returns true if successful.
     /// </summary>
     public bool TryGetSetOfString(out HashSet<string>? value)
     {

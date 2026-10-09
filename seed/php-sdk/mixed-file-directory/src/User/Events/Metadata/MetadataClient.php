@@ -52,6 +52,15 @@ class MetadataClient
     /**
      * Get event metadata.
      *
+     * Example:
+     * ```php
+     * $client->user->events->metadata->getMetadata(
+     *     new GetEventMetadataRequest([
+     *         'id' => 'id',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetEventMetadataRequest $request
      * @param ?array{
      *   baseUrl?: string,

@@ -27,13 +27,23 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &sse.StreamCompletionRequest{
+//	    Query: "foo",
+//	}
+//	client.Completions.Stream(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Stream(
 	ctx context.Context,
 	request *sse.StreamCompletionRequest,
@@ -59,6 +69,7 @@ func (c *Client) Stream(
 			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -72,6 +83,15 @@ func (c *Client) Stream(
 	)
 }
 
+// Example:
+//
+//	request := &sse.StreamEventsRequest{
+//	    Query: "query",
+//	}
+//	client.Completions.StreamEvents(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) StreamEvents(
 	ctx context.Context,
 	request *sse.StreamEventsRequest,
@@ -97,6 +117,7 @@ func (c *Client) StreamEvents(
 			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -110,6 +131,15 @@ func (c *Client) StreamEvents(
 	)
 }
 
+// Example:
+//
+//	request := &sse.StreamEventsDiscriminantInDataRequest{
+//	    Query: "query",
+//	}
+//	client.Completions.StreamEventsDiscriminantInData(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) StreamEventsDiscriminantInData(
 	ctx context.Context,
 	request *sse.StreamEventsDiscriminantInDataRequest,
@@ -135,6 +165,7 @@ func (c *Client) StreamEventsDiscriminantInData(
 			Method:             http.MethodPost,
 			Headers:            headers,
 			MaxAttempts:        options.MaxAttempts,
+			DisableRetries:     options.DisableRetries,
 			BodyProperties:     options.BodyProperties,
 			QueryParameters:    options.QueryParameters,
 			Client:             options.HTTPClient,
@@ -149,6 +180,15 @@ func (c *Client) StreamEventsDiscriminantInData(
 	)
 }
 
+// Example:
+//
+//	request := &sse.StreamEventsContextProtocolRequest{
+//	    Query: "query",
+//	}
+//	client.Completions.StreamEventsContextProtocol(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) StreamEventsContextProtocol(
 	ctx context.Context,
 	request *sse.StreamEventsContextProtocolRequest,
@@ -174,6 +214,7 @@ func (c *Client) StreamEventsContextProtocol(
 			Method:             http.MethodPost,
 			Headers:            headers,
 			MaxAttempts:        options.MaxAttempts,
+			DisableRetries:     options.DisableRetries,
 			BodyProperties:     options.BodyProperties,
 			QueryParameters:    options.QueryParameters,
 			Client:             options.HTTPClient,

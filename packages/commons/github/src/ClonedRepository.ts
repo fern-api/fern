@@ -75,6 +75,12 @@ export class ClonedRepository {
         await this.git.raw([...args, ...(Array.isArray(files) ? files : [files])]);
     }
 
+    public async listTrackedFiles(): Promise<string[]> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["ls-tree", "-r", "HEAD", "--name-only"]);
+        return result.split("\n").filter((line) => line.length > 0);
+    }
+
     public async restoreFilesFromCommit(commitSha: string, files: string | string[]): Promise<void> {
         await this.git.cwd(this.clonePath);
         const fileList = Array.isArray(files) ? files : [files];
@@ -352,6 +358,34 @@ export class ClonedRepository {
         await this.git.cwd(this.clonePath);
         const result = await this.git.raw(["rev-parse", `${commitSha}^{tree}`]);
         return result.trim();
+    }
+
+    public async getCommitMessage(commitSha: string): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["log", "-1", "--format=%B", commitSha]);
+        // git log appends a trailing newline; strip exactly one to preserve any intentional blank lines.
+        return result.replace(/\n$/, "");
+    }
+
+    public async getCommitParents(commitSha: string): Promise<string[]> {
+        await this.git.cwd(this.clonePath);
+        // `git rev-list --parents -n 1 <sha>` prints "<commit> <parent1> <parent2> ..." (empty parents for root commit).
+        const result = await this.git.raw(["rev-list", "--parents", "-n", "1", commitSha]);
+        const parts = result.trim().split(/\s+/);
+        return parts.slice(1);
+    }
+
+    /**
+     * Returns the SHAs of commits reachable from HEAD but not from any remote-tracking ref,
+     * ordered oldest-first. These are the commits created locally that have not been pushed.
+     */
+    public async getLocalOnlyCommits(): Promise<string[]> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["rev-list", "--reverse", "HEAD", "--not", "--remotes=origin"]);
+        return result
+            .trim()
+            .split("\n")
+            .filter((line) => line.length > 0);
     }
 
     /**

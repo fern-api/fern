@@ -117,6 +117,12 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                                                 on: go.codeblock("options"),
                                                 selector: go.codeblock("MaxAttempts")
                                             })
+                                        ),
+                                        disableRetries: go.TypeInstantiation.reference(
+                                            go.selector({
+                                                on: go.codeblock("options"),
+                                                selector: go.codeblock("DisableRetries")
+                                            })
                                         )
                                     })
                                 )

@@ -13,9 +13,8 @@
 
 ```go
 client.Foo(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -41,10 +40,9 @@ client.Foo(
 <dd>
 
 ```go
-client.Foo(
-        context.TODO(),
-    )
-}
+client.A.B.Foo(
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -70,10 +68,9 @@ client.Foo(
 <dd>
 
 ```go
-client.Foo(
-        context.TODO(),
-    )
-}
+client.A.C.Foo(
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -99,10 +96,9 @@ client.Foo(
 <dd>
 
 ```go
-client.Foo(
-        context.TODO(),
-    )
-}
+client.Folder.Foo(
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -129,9 +125,8 @@ client.Foo(
 
 ```go
 client.Folder.Service.Endpoint(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -157,13 +152,12 @@ client.Folder.Service.Endpoint(
 
 ```go
 request := map[string]any{
-        "key": "value",
-    }
-client.Folder.Service.UnknownRequest(
-        context.TODO(),
-        request,
-    )
+    "key": "value",
 }
+client.Folder.Service.UnknownRequest(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

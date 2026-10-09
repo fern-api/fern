@@ -8,6 +8,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import { join as pathJoin } from "path";
 import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs.js";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
+import { hasEndpointWithRetriesDisabled } from "../utils/retries.js";
 import { RubocopFile } from "./RubocopFile.js";
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
@@ -208,8 +209,21 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     rootFolderName: this.rubyContext.getRootFolderName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName,
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
+                    includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
+                    allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
+                    // Only drops the default X-Fern-* headers when a User-Agent is emitted.
+                    userAgentOnly:
+                        this.rubyContext.customConfig.userAgentOnly === true &&
+                        this.rubyContext.ir.sdkConfig.platformHeaders.userAgent != null,
+                    allowCustomHttpClient: this.rubyContext.customConfig.allowCustomHttpClient,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
-                    retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes
+                    retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
+                    respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
+                    respectNullableUnionFields: this.rubyContext.customConfig.respectNullableUnionFields,
+                    endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY",
+                    requestLevelMaxRetries: hasEndpointWithRetriesDisabled(
+                        Object.values(this.rubyContext.ir.services).flatMap((service) => service.endpoints)
+                    )
                 })
             );
         }
@@ -221,16 +235,32 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         rootFolderName,
         customPagerClassName,
         omitFernHeaders,
+        includePlatformHeaders,
+        allowUserAgentAppInfo,
+        userAgentOnly,
+        allowCustomHttpClient,
         maxRetries,
-        retryStatusCodes
+        retryStatusCodes,
+        respectOptionalRequestBody,
+        respectNullableUnionFields,
+        endpointSecurity,
+        requestLevelMaxRetries
     }: {
         filename: string;
         gemNamespace: string;
         rootFolderName: string;
         customPagerClassName?: string;
         omitFernHeaders?: boolean;
+        includePlatformHeaders?: boolean;
+        allowUserAgentAppInfo?: boolean;
+        userAgentOnly?: boolean;
+        allowCustomHttpClient?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
+        respectOptionalRequestBody?: boolean;
+        respectNullableUnionFields?: boolean;
+        endpointSecurity?: boolean;
+        requestLevelMaxRetries?: boolean;
     }): Promise<File> {
         let rendered = replaceTemplate({
             contents: (await readFile(getAsIsFilepath(filename))).toString(),
@@ -239,15 +269,33 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 rootFolderName,
                 customPagerClassName,
                 omitFernHeaders,
-                maxRetries
+                includePlatformHeaders,
+                allowUserAgentAppInfo,
+                userAgentOnly,
+                allowCustomHttpClient,
+                maxRetries,
+                respectOptionalRequestBody,
+                respectNullableUnionFields,
+                endpointSecurity,
+                requestLevelMaxRetries
             })
         });
 
-        const retryStatusCodesArray =
+        const retryStatuses =
             retryStatusCodes === "recommended"
-                ? "[408, 429, 502, 503, 504].freeze"
-                : "[408, 429, 500, 502, 503, 504, 521, 522, 524].freeze";
-        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+                ? [408, 429, 502, 503, 504]
+                : [408, 429, 500, 502, 503, 504, 521, 522, 524];
+        const tested5xxStatuses = [500, 501, 502, 503, 504, 505, 510, 521, 522, 524, 599];
+        const toRubyArray = (statuses: number[]) => `[${statuses.join(", ")}]`;
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, `${toRubyArray(retryStatuses)}.freeze`);
+        rendered = rendered.replace(
+            /\{\{RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => retryStatuses.includes(status)))
+        );
+        rendered = rendered.replace(
+            /\{\{NON_RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => !retryStatuses.includes(status)))
+        );
 
         return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
@@ -299,13 +347,29 @@ function getTemplateVariables({
     rootFolderName,
     customPagerClassName,
     omitFernHeaders,
-    maxRetries
+    includePlatformHeaders,
+    allowUserAgentAppInfo,
+    userAgentOnly,
+    allowCustomHttpClient,
+    maxRetries,
+    respectOptionalRequestBody,
+    respectNullableUnionFields,
+    endpointSecurity,
+    requestLevelMaxRetries
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
     omitFernHeaders?: boolean;
+    includePlatformHeaders?: boolean;
+    allowUserAgentAppInfo?: boolean;
+    userAgentOnly?: boolean;
+    allowCustomHttpClient?: boolean;
     maxRetries?: number;
+    respectOptionalRequestBody?: boolean;
+    respectNullableUnionFields?: boolean;
+    endpointSecurity?: boolean;
+    requestLevelMaxRetries?: boolean;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -315,7 +379,29 @@ function getTemplateVariables({
         rootFolderName,
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
         omitFernHeaders: omitFernHeaders ?? false,
-        defaultMaxRetries: maxRetries ?? 2
+        includePlatformHeaders: includePlatformHeaders ?? false,
+        // Emits the RawClient.append_app_info helper only when the opt-in flag is on,
+        // so flag-off raw_client.rb stays byte-identical.
+        allowUserAgentAppInfo: allowUserAgentAppInfo ?? false,
+        // Drops the default X-Fern-Language/SDK-Name/SDK-Version headers.
+        userAgentOnly: userAgentOnly ?? false,
+        // Emits the RawClient `http_client:` transport override only when the opt-in
+        // flag is on, so flag-off raw_client.rb stays byte-identical.
+        allowCustomHttpClient: allowCustomHttpClient ?? false,
+        defaultMaxRetries: maxRetries ?? 2,
+        // Emits the JSON::Request omit_content_type_without_body parameter only when the
+        // opt-in flag is on, so flag-off json/request.rb stays byte-identical.
+        respectOptionalRequestBody: respectOptionalRequestBody ?? false,
+        // Consults `nullable` in the union matcher's required-field check only when
+        // the opt-in flag is on, so flag-off internal/types/union.rb stays
+        // byte-identical.
+        respectNullableUnionFields: respectNullableUnionFields ?? false,
+        // Emits the RawClient#auth_headers_for_endpoint delegator only for
+        // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
+        endpointSecurity: endpointSecurity ?? false,
+        // Emits the request-level `max_retries` override only for APIs with an endpoint
+        // that disables retries, so every other SDK's core files stay byte-identical.
+        requestLevelMaxRetries: requestLevelMaxRetries ?? false
     };
 }
 
@@ -336,9 +422,12 @@ class GemspecFile {
 
     public constructor({ context, project }: GemspecFile.Args) {
         this.context = context;
-        this.baseDependencies = hasBasicAuth(context.ir)
-            ? [...BASE_DEPENDENCIES, { name: "base64" }]
-            : BASE_DEPENDENCIES;
+        this.baseDependencies = [
+            ...BASE_DEPENDENCIES,
+            ...(hasBasicAuth(context.ir) ? [{ name: "base64" }] : []),
+            // rexml is a bundled (not default) gem since Ruby 3.0, so it must be declared explicitly.
+            ...(context.hasXmlTypes() ? [{ name: "rexml", versionConstraint: ">= 3.3.9" }] : [])
+        ];
     }
 
     public async toString(): Promise<string> {
@@ -371,12 +460,25 @@ class GemspecFile {
 
               # Specify which files should be added to the gem when it is released.
               # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
+              # When the gem is built outside a git checkout (e.g. generated output), fall back to
+              # globbing the filesystem.
               gemspec = File.basename(__FILE__)
-              spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
-                ls.readlines("\x0", chomp: true).reject do |f|
-                  (f == gemspec) ||
-                    f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
+              tracked_files = begin
+                IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
+                  ls.readlines("\x0", chomp: true)
                 end
+              rescue SystemCallError
+                []
+              end || []
+              if tracked_files.empty?
+                tracked_files = Dir.chdir(__dir__) do
+                  Dir.glob("{lib,exe,sig}/**/*", File::FNM_DOTMATCH).select { |f| File.file?(f) } +
+                    Dir.glob("*").select { |f| File.file?(f) }
+                end
+              end
+              spec.files = tracked_files.reject do |f|
+                (f == gemspec) ||
+                  f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
               end
               spec.bindir = "exe"
               spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
@@ -659,6 +761,9 @@ class ModuleFile {
         const requires = ['"json"', '"net/http"', '"securerandom"'];
         if (hasBasicAuth) {
             requires.push('"base64"');
+        }
+        if (this.context.hasXmlTypes()) {
+            requires.push('"rexml/document"');
         }
         return dedent`
             # frozen_string_literal: true

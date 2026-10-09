@@ -3,9 +3,11 @@
  */
 package com.seed.headerToken.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.headerToken.core.ClientOptions;
 import com.seed.headerToken.core.ObjectMappers;
 import com.seed.headerToken.core.RequestOptions;
+import com.seed.headerToken.core.RetryInterceptor;
 import com.seed.headerToken.core.SeedHeaderTokenApiException;
 import com.seed.headerToken.core.SeedHeaderTokenException;
 import com.seed.headerToken.core.SeedHeaderTokenHttpResponse;
@@ -57,8 +59,18 @@ public class AsyncRawServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedHeaderTokenHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -72,6 +84,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedHeaderTokenApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedHeaderTokenException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedHeaderTokenException("Network error executing HTTP request", e));
@@ -81,6 +96,11 @@ public class AsyncRawServiceClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedHeaderTokenException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

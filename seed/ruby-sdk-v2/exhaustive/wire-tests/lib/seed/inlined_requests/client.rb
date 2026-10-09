@@ -20,6 +20,29 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.inlined_requests.post_with_object_bodyand_response(
+      #     string: "string",
+      #     integer: 1,
+      #     nested_object: {
+      #       string: "string",
+      #       integer: 1,
+      #       long: 1000000,
+      #       double: 1.1,
+      #       bool: true,
+      #       datetime: "2024-01-15T09:30:00Z",
+      #       date: "2023-01-15",
+      #       uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       base64: "SGVsbG8gd29ybGQh",
+      #       list: %w[list list],
+      #       set: Set.new(["set"]),
+      #       map: {
+      #         1 => "map"
+      #       },
+      #       bigint: "1000000"
+      #     }
+      #   )
+      #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def post_with_object_bodyand_response(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -37,7 +60,56 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_types = {
+            400 => Seed::GeneralErrors::Types::BadObjectRequestInfo
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
+        end
+      end
+
+      # POST with root-level array body and header params
+      #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String, nil] :x_custom_header
+      #
+      # @example
+      #   client.inlined_requests.post_with_array_body_and_headers(
+      #     x_custom_header: "X-Custom-Header",
+      #     body: %w[string string]
+      #   )
+      #
+      # @return [String]
+      def post_with_array_body_and_headers(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        headers = {}
+        headers["X-Custom-Header"] = params[:x_custom_header] if params[:x_custom_header]
+
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "/req-bodies/array-body-with-headers",
+          headers: headers,
+          body: params[:body],
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

@@ -27,6 +27,7 @@ public class OptionalWireTest {
         server.start();
         client = SeedObjectsWithImportsClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .build();
     }
 
@@ -196,7 +197,7 @@ public class OptionalWireTest {
                 .sendOptionalNullableWithAllOptionalProperties(
                         "actionId",
                         "id",
-                        DeployParams.builder().updateDraft(true).build());
+                        Optional.of(DeployParams.builder().updateDraft(true).build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());

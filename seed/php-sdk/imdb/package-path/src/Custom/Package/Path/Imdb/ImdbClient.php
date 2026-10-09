@@ -4,7 +4,7 @@ namespace Custom\Package\Path\Imdb;
 
 use Psr\Http\Client\ClientInterface;
 use Custom\Package\Path\Core\Client\RawClient;
-use Custom\Package\Path\Imdb\Types\CreateMovieRequest;
+use Custom\Package\Path\Imdb\Requests\CreateMovieRequest;
 use Custom\Package\Path\Exceptions\SeedException;
 use Custom\Package\Path\Exceptions\SeedApiException;
 use Custom\Package\Path\Core\Json\JsonApiRequest;
@@ -12,7 +12,7 @@ use Custom\Package\Path\Core\Client\HttpMethod;
 use Custom\Package\Path\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Custom\Package\Path\Imdb\Types\Movie;
+use Custom\Package\Path\Types\Movie;
 
 class ImdbClient
 {
@@ -53,6 +53,16 @@ class ImdbClient
     /**
      * Add a movie to the database using the movies/* /... path.
      *
+     * Example:
+     * ```php
+     * $client->imdb->createMovie(
+     *     new CreateMovieRequest([
+     *         'title' => 'title',
+     *         'rating' => 1.1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateMovieRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -73,7 +83,7 @@ class ImdbClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movies/create-movie",
+                    path: "movies/create-movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -100,6 +110,13 @@ class ImdbClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->imdb->getMovie(
+     *     'movieId',
+     * );
+     * ```
+     *
      * @param string $movieId
      * @param ?array{
      *   baseUrl?: string,
@@ -120,7 +137,7 @@ class ImdbClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movies/{$movieId}",
+                    path: "movies/{$movieId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

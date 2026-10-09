@@ -15,7 +15,7 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPropertyAccess" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedPropertyAccess.Version.Current },
                 { "User-Agent", "Fernproperty-access/0.0.1" },
             }
         );
@@ -35,6 +35,9 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPropertyAccess.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPropertyAccess.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -48,6 +51,7 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -65,7 +69,7 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
                 return new WithRawResponse<User>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedPropertyAccess.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -79,7 +83,13 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedPropertyAccess.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -90,7 +100,13 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
             throw new SeedPropertyAccessApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedPropertyAccess.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

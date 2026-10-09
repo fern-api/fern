@@ -25,6 +25,9 @@ export class SeedApiClient {
      * @param {string} account_id
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.getAccount("account_id")
      */

@@ -95,6 +95,47 @@ class InlinedRequestsClient:
         )
         return _response.data
 
+    def post_with_array_body_and_headers(
+        self,
+        *,
+        request: typing.Sequence[str],
+        x_custom_header: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        POST with root-level array body and header params
+
+        Parameters
+        ----------
+        request : typing.Sequence[str]
+
+        x_custom_header : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import Exhaustive
+
+        client = Exhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.inlined_requests.post_with_array_body_and_headers(
+            x_custom_header="X-Custom-Header",
+            request=["string", "string"],
+        )
+        """
+        _response = self._raw_client.post_with_array_body_and_headers(
+            request=request, x_custom_header=x_custom_header, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncInlinedRequestsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -184,5 +225,54 @@ class AsyncInlinedRequestsClient:
         """
         _response = await self._raw_client.post_with_object_bodyand_response(
             string=string, integer=integer, nested_object=nested_object, request_options=request_options
+        )
+        return _response.data
+
+    async def post_with_array_body_and_headers(
+        self,
+        *,
+        request: typing.Sequence[str],
+        x_custom_header: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        POST with root-level array body and header params
+
+        Parameters
+        ----------
+        request : typing.Sequence[str]
+
+        x_custom_header : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncExhaustive
+
+        client = AsyncExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.inlined_requests.post_with_array_body_and_headers(
+                x_custom_header="X-Custom-Header",
+                request=["string", "string"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.post_with_array_body_and_headers(
+            request=request, x_custom_header=x_custom_header, request_options=request_options
         )
         return _response.data

@@ -27,8 +27,8 @@ $client->admin->storeTracedTestCase(
     new StoreTracedTestCaseRequest([
         'result' => new TestCaseResultWithStdout([
             'result' => new TestCaseResult([
-                'expectedResult' => VariableValue::integerValue(),
-                'actualResult' => ActualResult::value(),
+                'expectedResult' => VariableValue::integerValue(1),
+                'actualResult' => ActualResult::value(VariableValue::integerValue(1)),
                 'passed' => true,
             ]),
             'stdout' => 'stdout',
@@ -37,7 +37,7 @@ $client->admin->storeTracedTestCase(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => DebugVariableValue::integerValue(),
+                'returnValue' => DebugVariableValue::integerValue(1),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -50,12 +50,12 @@ $client->admin->storeTracedTestCase(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                         ],
@@ -66,7 +66,7 @@ $client->admin->storeTracedTestCase(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => DebugVariableValue::integerValue(),
+                'returnValue' => DebugVariableValue::integerValue(1),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -79,12 +79,12 @@ $client->admin->storeTracedTestCase(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                         ],

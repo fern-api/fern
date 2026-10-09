@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedLiteralClient } from "@fern/literal";
 
-const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedLiteralClient({ baseUrl: "YOUR_BASE_URL" });
 await client.headers.send({
     query: "What is the weather today"
 });

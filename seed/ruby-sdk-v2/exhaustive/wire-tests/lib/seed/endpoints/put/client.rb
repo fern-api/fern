@@ -20,6 +20,9 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :id
         #
+        # @example
+        #   client.endpoints.put.add(id: "id")
+        #
         # @return [Seed::Endpoints::Put::Types::PutResponse]
         def add(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -36,7 +39,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Endpoints::Put::Types::PutResponse.load(response.body)
+            (response.body.to_s.empty? ? nil : Seed::Endpoints::Put::Types::PutResponse.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

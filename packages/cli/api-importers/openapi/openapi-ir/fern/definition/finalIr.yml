@@ -11,9 +11,27 @@ types:
           This is intentionally typed as `unknown` so that we can
           simply echo the Fern configuration as-is.
         type: optional<unknown>
+      specVersion:
+        docs: |
+          The document version from the OpenAPI `info.version` field.
+          Preserved as-is (supports semver, CalVer, or any free-form string).
+        type: optional<string>
       title: optional<string>
       description: optional<string>
+      baseUrlEnv:
+        docs: |
+          Environment variable name populated via `x-fern-base-url-env` that
+          generated SDKs read to override the base URL.
+        type: optional<string>
       basePath: optional<string>
+      basePathParameters:
+        type: optional<list<PathParameter>>
+        docs: |
+          Root-level path parameters declared by the structured form of
+          `x-fern-base-path`. When present, these are emitted at the root of
+          the generated Fern Definition (under `path-parameters`) and the
+          base path is preserved on the root API file instead of being
+          inlined onto every endpoint.
       servers: list<commons.Server>
       websocketServers: list<commons.Server>
       groups:
@@ -26,14 +44,25 @@ types:
       webhooks: list<Webhook>
       channels: map<string, WebsocketChannel>
       groupedSchemas: Schemas
-      variables: map<string, PrimitiveSchema>
+      variables: map<string, SdkVariable>
       nonRequestReferencedSchemas:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
       security: optional<GlobalSecurity>
       globalHeaders: optional<list<GlobalHeader>>
+      globalParameters: optional<list<GlobalParameter>>
       idempotencyHeaders: optional<list<IdempotencyHeader>>
+
+  SdkVariable:
+    docs: A client-level SDK variable declared with `x-fern-sdk-variables`.
+    properties:
+      schema: PrimitiveSchema
+      envVar:
+        type: optional<string>
+        docs: |
+          Environment variable the generated SDK falls back to when the variable is not
+          passed to the client constructor (from the `x-fern-env` key on the variable).
 
   GlobalSecurity: list<map<commons.SecuritySchemeId, list<string>>>
 
@@ -65,6 +94,39 @@ types:
         docs: |
           A client-side default value populated by `x-fern-default` on an `x-fern-global-headers` entry.
 
+  GlobalParameter:
+    properties:
+      name:
+        type: string
+        docs: The canonical name / identifier of the parameter.
+      parameterName:
+        type: optional<string>
+        docs: SDK/CLI alias for the parameter. If specified, used instead of name in generated code.
+      in:
+        type: optional<string>
+        docs: "Location: body, query, header, or path. Defaults to body."
+      target:
+        type: optional<string>
+        docs: Wire-level injection path. Defaults to name if not specified.
+      type:
+        type: optional<string>
+        docs: "Type: string, integer, double, boolean. Defaults to string."
+      env:
+        type: optional<string>
+        docs: Environment variable to read the default value from.
+      default:
+        type: optional<unknown>
+        docs: Client-side default value.
+      optional:
+        type: optional<boolean>
+        docs: Whether the parameter is optional.
+      apply:
+        type: optional<string>
+        docs: "Apply mode: explicit or auto."
+      docs:
+        type: optional<string>
+        docs: Documentation string for the parameter.
+
   IdempotencyHeader:
     properties:
       header: string
@@ -83,8 +145,14 @@ types:
       - commons.WithName
       - commons.WithSource
     properties:
+      isWildcardStatusCode:
+        type: optional<boolean>
+        docs: True when this error was declared with a 4XX or 5XX wildcard response.
       schema: optional<Schema>
       examples: optional<list<ErrorExample>>
+      namespace:
+        type: optional<string>
+        docs: Namespace declared via `x-fern-sdk-namespace` on the response object itself.
 
   Webhook:
     extends:
@@ -151,6 +219,7 @@ types:
     properties:
       name: string
       displayName: optional<string>
+      description: optional<string>
       origin: WebsocketMessageOrigin
       body: Schema
       methodName: optional<string>
@@ -201,6 +270,8 @@ types:
       signaturePrefix: optional<string>
       payloadFormat: optional<WebhookPayloadFormat>
       timestamp: optional<WebhookTimestamp>
+      bodyHashBinding: optional<WebhookBodyHashBinding>
+      notificationUrlNormalization: optional<WebhookNotificationUrlNormalization>
 
   AsymmetricWebhookSignatureVerification:
     properties:
@@ -210,6 +281,7 @@ types:
       signaturePrefix: optional<string>
       jwksUrl: optional<string>
       keyIdHeader: optional<string>
+      payloadFormat: optional<WebhookPayloadFormat>
       timestamp: optional<WebhookTimestamp>
 
   WebhookSignatureAlgorithm:
@@ -249,6 +321,11 @@ types:
     enum:
       - alphabetical
 
+  WebhookNotificationUrlNormalization:
+    properties:
+      portVariants: boolean
+      legacyQueryEncoding: boolean
+
   WebhookPayloadComponent:
     enum:
       - body
@@ -257,6 +334,28 @@ types:
         value: notification-url
       - name: messageId
         value: message-id
+
+  WebhookBodyHashBinding:
+    properties:
+      algorithm: WebhookBodyHashAlgorithm
+      encoding: optional<WebhookSignatureEncoding>
+      location: WebhookBodyHashLocation
+
+  WebhookBodyHashAlgorithm:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookBodyHashLocation:
+    discriminant: type
+    union:
+      queryParameter: WebhookBodyHashQueryParameterLocation
+
+  WebhookBodyHashQueryParameterLocation:
+    properties:
+      name: string
 
   AsymmetricAlgorithm:
     enum:
@@ -318,6 +417,11 @@ types:
           This string includes templated path parameters.
           For example, `/users/{userId}` is a valid value.
       summary: optional<string>
+      subtitle:
+        type: optional<string>
+        docs: |
+          A short subtitle for the endpoint, populated from `x-fern-subtitle`.
+          Rendered below the endpoint title in the docs UI.
       operationId: optional<string>
       tags: list<commons.TagId>
       pathParameters: list<PathParameter>
@@ -335,14 +439,20 @@ types:
       request: optional<Request>
       response: optional<Response>
       errors:
-        type: map<commons.StatusCode, HttpError>
+        type: map<commons.ErrorStatusCodeKey, HttpError>
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
+          Keys are concrete status codes (e.g. "404") or wildcard patterns ("4XX", "5XX").
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       servers: list<HttpEndpointServer>
       examples: list<EndpointExample>
       pagination: optional<Pagination>
       retries: optional<RetriesConfiguration>
+      globalParameterIds:
+        type: optional<list<string>>
+        docs: |
+          Per-operation opt-in IDs for global parameters with apply: explicit.
+          Populated from x-fern-global-parameter on an operation.
 
   EndpointSecurity: list<map<commons.SecuritySchemeId, list<string>>>
 
@@ -631,6 +741,11 @@ types:
     properties:
       schema: Schema
       contentType: optional<string>
+      required:
+        docs: |
+          Whether the request body must be sent. Populated from the OpenAPI
+          `requestBody.required` field, which defaults to false.
+        type: optional<boolean>
       additionalProperties: boolean
 
   MultipartRequest:
@@ -698,6 +813,10 @@ types:
       - commons.WithDescription
       - commons.WithSource
       - commons.WithStatusCode
+    properties:
+      contentType:
+        type: optional<string>
+        docs: The original media type (e.g. text/csv, text/xml). Defaults to text/plain.
 
   JsonResponse:
     extends:
@@ -708,6 +827,12 @@ types:
       schema: Schema
       responseProperty: optional<string>
       terminator: optional<string>
+      resumable:
+        type: optional<boolean>
+        docs: |
+          For `streamingSse` responses, when true, the endpoint participates in
+          client-side reconnection using SSE primitives (`Last-Event-ID` /
+          `retry:`). Unset/false on non-SSE variants.
 
   Schema:
     union:
@@ -879,6 +1004,9 @@ types:
         docs: |
           An optional name override populated via `x-fern-property-name`.
       audiences: list<string>
+      xml:
+        type: optional<commons.XmlPropertyEncoding>
+        docs: Present only when the enclosing object schema is an XML element.
 
   ObjectPropertyConflictInfo:
     properties:

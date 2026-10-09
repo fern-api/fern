@@ -6,7 +6,7 @@ import Api
     @Test func outboundCall1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "conversation_id": {
@@ -39,7 +39,7 @@ import Api
     @Test func outboundCall2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "conversation_id": {

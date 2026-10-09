@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"context"
 	"crypto/rand"
 	"math/big"
 	"net/http"
@@ -28,10 +29,34 @@ func WithMaxAttempts(attempts uint) RetryOption {
 	}
 }
 
+// WithDisableRetries disables retry attempts entirely. The request is issued
+// exactly once. Distinct from WithMaxAttempts(0), which falls through to the
+// default.
+func WithDisableRetries() RetryOption {
+	return func(opts *retryOptions) {
+		opts.disabled = true
+	}
+}
+
+func buildRetryOptions(maxAttempts uint, disableRetries bool) []RetryOption {
+	var opts []RetryOption
+	if maxAttempts > 0 {
+		opts = append(opts, WithMaxAttempts(maxAttempts))
+	}
+	if disableRetries {
+		opts = append(opts, WithDisableRetries())
+	}
+	return opts
+}
+
 // Retrier retries failed requests a configurable number of times with an
 // exponential back-off between each retry.
 type Retrier struct {
 	attempts uint
+	disabled bool
+
+	// sleep waits between attempts; tests override it to avoid real delays.
+	sleep func(ctx context.Context, delay time.Duration) error
 }
 
 // NewRetrier constructs a new *Retrier with the given options, if any.
@@ -46,6 +71,8 @@ func NewRetrier(opts ...RetryOption) *Retrier {
 	}
 	return &Retrier{
 		attempts: attempts,
+		disabled: options.disabled,
+		sleep:    sleepWithContext,
 	}
 }
 
@@ -64,8 +91,17 @@ func (r *Retrier) Run(
 		opt(options)
 	}
 	maxRetryAttempts := r.attempts
+	disabled := r.disabled
 	if options.attempts > 0 {
+		// Request-scoped attempts take precedence over the client-scoped configuration.
 		maxRetryAttempts = options.attempts
+		disabled = false
+	}
+	if options.disabled {
+		disabled = true
+	}
+	if disabled {
+		maxRetryAttempts = 1
 	}
 	var (
 		retryAttempt  uint
@@ -115,12 +151,25 @@ func (r *Retrier) run(
 	if r.shouldRetry(response) {
 		defer func() { _ = response.Body.Close() }()
 
+		body, err := decompressedResponseBody(response)
+		if err != nil {
+			return nil, err
+		}
+		retryError := decodeError(response, body, errorDecoder)
+
+		// Don't wait on a backoff if no attempts remain.
+		if retryAttempt+1 >= maxRetryAttempts {
+			return nil, retryError
+		}
+
 		delay, err := r.retryDelay(response, retryAttempt)
 		if err != nil {
 			return nil, err
 		}
 
-		time.Sleep(delay)
+		if err := r.sleep(request.Context(), delay); err != nil {
+			return nil, err
+		}
 
 		return r.run(
 			fn,
@@ -128,11 +177,24 @@ func (r *Retrier) run(
 			errorDecoder,
 			maxRetryAttempts,
 			retryAttempt+1,
-			decodeError(response, errorDecoder),
+			retryError,
 		)
 	}
 
 	return response, nil
+}
+
+// sleepWithContext waits for the given delay, returning the context's error as
+// soon as it is cancelled or its deadline is exceeded.
+func sleepWithContext(ctx context.Context, delay time.Duration) error {
+	timer := time.NewTimer(delay)
+	defer timer.Stop()
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-timer.C:
+		return nil
+	}
 }
 
 // shouldRetry returns true if the request should be retried based on the given
@@ -209,19 +271,28 @@ func (r *Retrier) exponentialBackoff(retryAttempt uint) (time.Duration, error) {
 // minPercent and maxPercent define the jitter range (e.g., 100, 120 for +0% to +20%).
 func (r *Retrier) addJitterWithRange(delay time.Duration, minPercent, maxPercent int) (time.Duration, error) {
 	jitterRange := big.NewInt(int64(delay * time.Duration(maxPercent-minPercent) / 100))
+	if jitterRange.Sign() <= 0 {
+		// The delay is too small to jitter; rand.Int panics on a non-positive max.
+		return clampRetryDelay(delay), nil
+	}
 	jitter, err := rand.Int(rand.Reader, jitterRange)
 	if err != nil {
 		return 0, err
 	}
 
 	jitteredDelay := delay + time.Duration(jitter.Int64()) + delay*time.Duration(minPercent-100)/100
-	if jitteredDelay < minRetryDelay {
-		jitteredDelay = minRetryDelay
+	return clampRetryDelay(jitteredDelay), nil
+}
+
+// clampRetryDelay bounds the given delay to [minRetryDelay, maxRetryDelay].
+func clampRetryDelay(delay time.Duration) time.Duration {
+	if delay < minRetryDelay {
+		return minRetryDelay
 	}
-	if jitteredDelay > maxRetryDelay {
-		jitteredDelay = maxRetryDelay
+	if delay > maxRetryDelay {
+		return maxRetryDelay
 	}
-	return jitteredDelay, nil
+	return delay
 }
 
 // addPositiveJitter applies positive jitter to the given delay (100%-120% range).
@@ -236,4 +307,5 @@ func (r *Retrier) addSymmetricJitter(delay time.Duration) (time.Duration, error)
 
 type retryOptions struct {
 	attempts uint
+	disabled bool
 }

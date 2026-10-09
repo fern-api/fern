@@ -5,10 +5,14 @@ import {
     createBasicAuthScheme,
     createBearerAuthScheme,
     createHeaderAuthScheme,
-    createMinimalIR
+    createHttpEndpoint,
+    createHttpService,
+    createMinimalIR,
+    createOAuthScheme
 } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
+import { AuthProvidersGenerator } from "../AuthProvidersGenerator.js";
 import { AnyAuthProviderInstance } from "../auth-provider/AnyAuthProviderInstance.js";
 import { BasicAuthProviderGenerator } from "../auth-provider/BasicAuthProviderGenerator.js";
 import { BasicAuthProviderInstance } from "../auth-provider/BasicAuthProviderInstance.js";
@@ -17,6 +21,7 @@ import { BearerAuthProviderInstance } from "../auth-provider/BearerAuthProviderI
 import { HeaderAuthProviderGenerator } from "../auth-provider/HeaderAuthProviderGenerator.js";
 import { HeaderAuthProviderInstance } from "../auth-provider/HeaderAuthProviderInstance.js";
 import { InferredAuthProviderInstance } from "../auth-provider/InferredAuthProviderInstance.js";
+import { OAuthAuthProviderGenerator } from "../auth-provider/OAuthAuthProviderGenerator.js";
 import { OAuthAuthProviderInstance } from "../auth-provider/OAuthAuthProviderInstance.js";
 import { RoutingAuthProviderInstance } from "../auth-provider/RoutingAuthProviderInstance.js";
 
@@ -87,7 +92,22 @@ function createMockGeneratorContext(project: Project, fileName: string) {
         },
         genericAPISdkError: {
             getReferenceToGenericAPISdkError: () => ({
-                getExpression: () => ts.factory.createIdentifier("errors.SeedApiError")
+                getExpression: () => ts.factory.createIdentifier("errors.SeedApiError"),
+                getEntityName: () => ts.factory.createIdentifier("errors.SeedApiError")
+            })
+        },
+        type: {
+            getReferenceToType: () => ({
+                typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                typeNodeWithoutUndefined: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+            }),
+            resolveTypeReference: (typeReference: unknown) => typeReference,
+            isOptional: () => false,
+            generateGetterForResponsePropertyAsString: ({ variable }: { variable: string }) => `${variable}.accessToken`
+        },
+        sdkClientClass: {
+            getReferenceToClientClass: () => ({
+                getExpression: () => ts.factory.createIdentifier("SeedClient")
             })
         },
         case: caseConverter
@@ -483,6 +503,25 @@ describe("BearerAuthProviderGenerator", () => {
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
 
+        it("generates bearer auth provider that skips the auth header when optionalAuth is enabled", () => {
+            const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
+            const ir = createMinimalIR({ authSchemes: [authScheme] });
+            const generator = new BearerAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: false,
+                shouldUseWrapper: false,
+                optionalAuth: true
+            });
+            const project = new Project({ useInMemoryFileSystem: true });
+            const context = createMockGeneratorContext(project, "BearerAuthProvider.ts");
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).not.toContain("AUTH_CONFIG_ERROR_MESSAGE,");
+            expect(text).toMatchSnapshot();
+        });
+
         it("generates bearer auth provider with env var + neverThrowErrors", () => {
             const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
             const ir = createMinimalIR({ authSchemes: [authScheme] });
@@ -721,7 +760,7 @@ describe("HeaderAuthProviderGenerator", () => {
                 createHeaderAuthScheme({
                     name: "authorization",
                     wireValue: "Authorization",
-                    prefix: "Bearer "
+                    prefix: "Bearer"
                 })
             );
             const ir = createMinimalIR({ authSchemes: [authScheme] });
@@ -737,5 +776,317 @@ describe("HeaderAuthProviderGenerator", () => {
             generator.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
+    });
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Regression: FER-11540
+    //
+    // Under multi-scheme `auth: any` (e.g. OAuth client-credentials + ApiKey), the
+    // generated `BaseClientOptions` nests each scheme's credentials under a wrapper
+    // key (e.g. `apiKeyAuth: { apiKey }`). Passing the OLD flat single-scheme shape
+    // (`{ apiKey: "..." }`) must NOT silently type-check: previously it compiled,
+    // sent no auth header, and produced a live 401 at runtime.
+    //
+    // These tests pin the exact-object typing of the emitted `AnyAuthProvider.AuthOptions`
+    // type so a regression that re-opens the silent no-op is caught at build time.
+    // We reconstruct the type as emitted by `AnyAuthProviderGenerator.writeOptions()`
+    // (the `AtLeastOneOf` / `UnionToIntersection` utilities) plus representative
+    // per-scheme `AuthOptions`, then type-check real usages.
+    // ──────────────────────────────────────────────────────────────────────────
+    describe("multi-scheme (any) auth options typing [FER-11540]", () => {
+        // Mirrors AnyAuthProviderGenerator.writeOptions() + BaseClientTypeGenerator output
+        // for `auth: any: [OAuth (client-credentials), ApiKey]` with wrapper keys
+        // `bearerAuth` (oauth) and `apiKeyAuth` (api key).
+        const AUTH_OPTIONS_SOURCE = `
+type Supplier<T> = T | Promise<T> | (() => T | Promise<T>);
+
+type UnionToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
+type AtLeastOneOf<T extends readonly any[]> = {
+    [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;
+}[number];
+
+type OAuthClientCredentials = {
+    bearerAuth?: { clientId?: Supplier<string> | undefined; clientSecret?: Supplier<string> | undefined };
+};
+type OAuthTokenOverride = { bearerAuth?: { token?: Supplier<string> } };
+type OAuthAuthOptions = OAuthClientCredentials | OAuthTokenOverride;
+type HeaderAuthOptions = { apiKeyAuth?: { apiKey?: Supplier<string> } };
+
+type AnyAuthOptions = AtLeastOneOf<[OAuthAuthOptions, HeaderAuthOptions]>;
+
+export type BaseClientOptions = {
+    environment?: Supplier<string>;
+    timeoutInSeconds?: number;
+    headers?: Record<string, string | undefined>;
+} & AnyAuthOptions;
+`;
+
+        function diagnosticsForUsage(usage: string): string[] {
+            const project = new Project({
+                useInMemoryFileSystem: true,
+                compilerOptions: {
+                    strict: true,
+                    noEmit: true,
+                    skipLibCheck: true,
+                    target: ts.ScriptTarget.ES2020,
+                    lib: ["lib.es2020.d.ts"]
+                }
+            });
+            project.createSourceFile("options.ts", AUTH_OPTIONS_SOURCE);
+            project.createSourceFile("usage.ts", `import type { BaseClientOptions } from "./options";\n${usage}\n`);
+            return project.getPreEmitDiagnostics().map((d) => {
+                const message = d.getMessageText();
+                return typeof message === "string" ? message : message.getMessageText();
+            });
+        }
+
+        it("accepts the nested per-scheme wrapper shape", () => {
+            const diagnostics = diagnosticsForUsage(
+                `const ok: BaseClientOptions = { environment: "x", apiKeyAuth: { apiKey: "k" } };`
+            );
+            expect(diagnostics).toEqual([]);
+        });
+
+        it("accepts the nested oauth client-credentials shape", () => {
+            const diagnostics = diagnosticsForUsage(
+                `const ok: BaseClientOptions = { bearerAuth: { clientId: "id", clientSecret: "secret" } };`
+            );
+            expect(diagnostics).toEqual([]);
+        });
+
+        it("rejects the flat single-scheme apiKey shape as an inline literal", () => {
+            const diagnostics = diagnosticsForUsage(
+                `const bad: BaseClientOptions = { environment: "x", apiKey: "k" };`
+            );
+            // Must be a type error rather than a silent no-op.
+            expect(diagnostics.length).toBeGreaterThan(0);
+            expect(diagnostics.some((d) => d.includes("apiKey"))).toBe(true);
+        });
+
+        it("rejects the flat bearer token shape", () => {
+            const diagnostics = diagnosticsForUsage(`const bad: BaseClientOptions = { environment: "x", token: "k" };`);
+            expect(diagnostics.length).toBeGreaterThan(0);
+            expect(diagnostics.some((d) => d.includes("token"))).toBe(true);
+        });
+
+        it("rejects an entirely unknown option key", () => {
+            const diagnostics = diagnosticsForUsage(
+                `const bad: BaseClientOptions = { environment: "x", nonsense: 123 };`
+            );
+            expect(diagnostics.length).toBeGreaterThan(0);
+            expect(diagnostics.some((d) => d.includes("nonsense"))).toBe(true);
+        });
+    });
+});
+
+// ─── optional-auth custom config ─────────────────────────────────────────────
+//
+// When `optional-auth` is enabled, AuthProvidersGenerator treats auth as
+// non-mandatory even if the IR reports isAuthMandatory=true, so the generated
+// client can be constructed without credentials (matching the behavior of a
+// spec where auth is not mandatory).
+
+describe("AuthProvidersGenerator optionalAuth", () => {
+    function renderBearer({
+        isAuthMandatory,
+        optionalAuth
+    }: {
+        isAuthMandatory: boolean;
+        optionalAuth?: boolean;
+    }): string {
+        const authScheme = createAuthScheme("bearer", createBearerAuthScheme());
+        const ir = createMinimalIR({ authSchemes: [authScheme], isAuthMandatory });
+        const generator = new AuthProvidersGenerator({
+            ir,
+            authScheme: authScheme as AnyScheme,
+            neverThrowErrors: false,
+            includeSerdeLayer: true,
+            shouldUseWrapper: false,
+            optionalAuth
+        });
+        const project = new Project({ useInMemoryFileSystem: true });
+        const context = createMockGeneratorContext(project, "BearerAuthProvider.ts");
+        generator.writeToFile(context);
+        return context.sourceFile.getFullText();
+    }
+
+    it("keeps the token required when auth is mandatory and optionalAuth is off", () => {
+        const output = renderBearer({ isAuthMandatory: true, optionalAuth: false });
+        expect(output).not.toContain("[TOKEN_PARAM]?:");
+        expect(output).toContain("[TOKEN_PARAM]:");
+    });
+
+    it("makes the token optional when optionalAuth is on despite mandatory auth", () => {
+        const output = renderBearer({ isAuthMandatory: true, optionalAuth: true });
+        expect(output).toContain("[TOKEN_PARAM]?:");
+    });
+
+    it("sends the request unauthenticated instead of throwing when optionalAuth is on", () => {
+        const output = renderBearer({ isAuthMandatory: true, optionalAuth: true });
+        expect(output).toContain("return { headers: {} };");
+        expect(output).not.toContain("AUTH_CONFIG_ERROR_MESSAGE,");
+    });
+
+    it("still throws on a missing token when auth is non-mandatory but optionalAuth is off", () => {
+        const output = renderBearer({ isAuthMandatory: false, optionalAuth: false });
+        expect(output).toContain("AUTH_CONFIG_ERROR_MESSAGE,");
+    });
+});
+
+// ──────────────────────────────────────────────────────────────────────────────
+// With `guardProcessEnvAccess` enabled, env var reads must never touch a bare
+// `process` global: optional chaining (`process.env?.[KEY]`) still throws a
+// ReferenceError when `process` itself is undeclared, which is the case in
+// browsers/Vite, Cloudflare Workers and Deno. With the flag off (the default),
+// the reads stay unguarded so existing generated SDKs do not change.
+// ──────────────────────────────────────────────────────────────────────────────
+describe.each([true, false])("environment variable fallbacks (guardProcessEnvAccess: %s)", (guarded) => {
+    function render(
+        generator: {
+            writeToFile: (context: ReturnType<typeof createMockGeneratorContext>) => void;
+        },
+        fileName: string
+    ): string {
+        const project = new Project({ useInMemoryFileSystem: true });
+        const context = createMockGeneratorContext(project, fileName);
+        generator.writeToFile(context);
+        return context.sourceFile.getFullText();
+    }
+
+    function renderOAuth(): string {
+        const authScheme = createOAuthScheme({
+            clientIdEnvVar: "PLANT_CLIENT_ID",
+            clientSecretEnvVar: "PLANT_CLIENT_SECRET"
+        });
+        const service = createHttpService();
+        const ir = createMinimalIR({
+            authSchemes: [createAuthScheme("oauth", authScheme)],
+            services: { service_test: { ...service, endpoints: [createHttpEndpoint()] } }
+        });
+        return render(
+            new OAuthAuthProviderGenerator({
+                ir,
+                authScheme,
+                neverThrowErrors: false,
+                includeSerdeLayer: true,
+                shouldUseWrapper: false,
+                guardProcessEnvAccess: guarded
+            }),
+            "OAuthAuthProvider.ts"
+        );
+    }
+
+    const GUARD = 'typeof process !== "undefined"';
+
+    function countOccurrences(haystack: string, needle: string): number {
+        return haystack.split(needle).length - 1;
+    }
+
+    /**
+     * Counts `process.env` reads in the generated output, and how many of them sit behind the
+     * `typeof process` guard. Whitespace is collapsed first so the counts survive line wrapping
+     * introduced by formatting (the guard and the read do not stay on one line once formatted).
+     */
+    function countProcessEnvReads(output: string): { total: number; guarded: number } {
+        const normalized = output.replace(/\s+/g, " ");
+        return {
+            total: countOccurrences(normalized, "process.env"),
+            guarded:
+                countOccurrences(normalized, `${GUARD} && process.env`) +
+                countOccurrences(normalized, `${GUARD} ? process.env`)
+        };
+    }
+
+    /** Every read is guarded when the flag is on, and none of them when it is off. */
+    function expectedReads(total: number): { total: number; guarded: number } {
+        return { total, guarded: guarded ? total : 0 };
+    }
+
+    it("handles the bearer token env var", () => {
+        const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
+        const ir = createMinimalIR({ authSchemes: [authScheme] });
+        const output = render(
+            new BearerAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: true,
+                shouldUseWrapper: false,
+                guardProcessEnvAccess: guarded
+            }),
+            "BearerAuthProvider.ts"
+        );
+        // one read in canCreate, one in the getAuthRequest fallback
+        expect(countProcessEnvReads(output)).toEqual(expectedReads(2));
+    });
+
+    it("handles the header auth env var", () => {
+        const authScheme = createAuthScheme("header", createHeaderAuthScheme({ headerEnvVar: "PLANT_API_KEY" }));
+        const ir = createMinimalIR({ authSchemes: [authScheme] });
+        const output = render(
+            new HeaderAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: true,
+                shouldUseWrapper: false,
+                guardProcessEnvAccess: guarded
+            }),
+            "HeaderAuthProvider.ts"
+        );
+        // one read in canCreate, one in the getAuthRequest fallback
+        expect(countProcessEnvReads(output)).toEqual(expectedReads(2));
+    });
+
+    it("handles the basic auth username and password env vars", () => {
+        const authScheme = createAuthScheme(
+            "basic",
+            createBasicAuthScheme({ usernameEnvVar: "PLANT_USERNAME", passwordEnvVar: "PLANT_PASSWORD" })
+        );
+        const ir = createMinimalIR({ authSchemes: [authScheme] });
+        const output = render(
+            new BasicAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: true,
+                shouldUseWrapper: false,
+                guardProcessEnvAccess: guarded
+            }),
+            "BasicAuthProvider.ts"
+        );
+        // username and password, each read in canCreate and again in the getAuthRequest fallback
+        expect(countProcessEnvReads(output)).toEqual(expectedReads(4));
+    });
+
+    it("handles the oauth client id and client secret env vars", () => {
+        // client id and client secret, each read in canCreate and again in its supplier fallback
+        expect(countProcessEnvReads(renderOAuth())).toEqual(expectedReads(4));
+    });
+
+    it("handles the oauth canCreate env var checks", () => {
+        const normalized = renderOAuth().replace(/\s+/g, " ");
+        const clientId = guarded
+            ? `|| (${GUARD} && process.env?.[ENV_CLIENT_ID] != null)`
+            : "|| process.env?.[ENV_CLIENT_ID] != null";
+        const clientSecret = guarded
+            ? `|| (${GUARD} && process.env?.[ENV_CLIENT_SECRET] != null)`
+            : "|| process.env?.[ENV_CLIENT_SECRET] != null";
+        expect(normalized).toContain(clientId);
+        expect(normalized).toContain(clientSecret);
+    });
+
+    it("handles the oauth client id and client secret supplier fallbacks", () => {
+        const normalized = renderOAuth().replace(/\s+/g, " ");
+        // the supplier fallbacks are only reached when no credential was supplied: each read is
+        // preceded by an early return on the supplier, so the guard protects the fallback path
+        const clientId = guarded
+            ? `const envClientId = (${GUARD} ? process.env?.[ENV_CLIENT_ID] : undefined)`
+            : "const envClientId = process.env?.[ENV_CLIENT_ID]";
+        const clientSecret = guarded
+            ? `const envClientSecret = (${GUARD} ? process.env?.[ENV_CLIENT_SECRET] : undefined)`
+            : "const envClientSecret = process.env?.[ENV_CLIENT_SECRET]";
+        expect(countOccurrences(normalized, clientId)).toBe(1);
+        expect(countOccurrences(normalized, clientSecret)).toBe(1);
     });
 });

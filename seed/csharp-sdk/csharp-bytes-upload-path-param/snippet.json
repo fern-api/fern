@@ -1,0 +1,41 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "Curl example",
+            "id": {
+                "path": "/upload-content/{tenantId}/{objectPath}/{revision}/{uploadedAt}/{region}",
+                "method": "POST",
+                "identifier_override": "endpoint_service.uploadWithPathParam"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpBytesUploadPathParam;\nusing global::System.Text;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UploadWithPathParamAsync(\n    \"objectPath\",\n    1000000,\n    new DateTime(2024, 01, 15, 09, 30, 00, 000),\n    BucketRegion.UsEast,\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\"))\n);\n"
+            }
+        },
+        {
+            "example_identifier": "Complete example",
+            "id": {
+                "path": "/upload-content/{tenantId}/{objectPath}/metadata",
+                "method": "POST",
+                "identifier_override": "endpoint_service.updateMetadataWithPathParam"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpBytesUploadPathParam;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UpdateMetadataWithPathParamAsync(\n    new UpdateMetadataRequest\n    {\n        TenantId = \"acme\",\n        ObjectPath = \"path/to/object.txt\",\n        Label = \"primary\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": "Curl example",
+            "id": {
+                "path": "/upload-content/{tenantId}/{objectPath}/metadata",
+                "method": "POST",
+                "identifier_override": "endpoint_service.updateMetadataWithPathParam"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpBytesUploadPathParam;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UpdateMetadataWithPathParamAsync(\n    new UpdateMetadataRequest { ObjectPath = \"objectPath\" }\n);\n"
+            }
+        }
+    ]
+}

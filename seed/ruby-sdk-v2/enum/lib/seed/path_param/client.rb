@@ -20,6 +20,12 @@ module Seed
       # @option params [Seed::Types::Operand] :operand
       # @option params [Seed::Types::ColorOrOperand] :operand_or_color
       #
+      # @example
+      #   client.path_param.send_(
+      #     operand: ">",
+      #     operand_or_color: "red"
+      #   )
+      #
       # @return [untyped]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

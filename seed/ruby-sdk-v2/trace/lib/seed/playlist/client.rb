@@ -23,6 +23,15 @@ module Seed
       # @option params [String] :datetime
       # @option params [String, nil] :optional_datetime
       #
+      # @example
+      #   client.playlist.create_playlist(
+      #     service_param: 1,
+      #     datetime: "2024-01-15T09:30:00Z",
+      #     optional_datetime: "2024-01-15T09:30:00Z",
+      #     name: "name",
+      #     problems: %w[problems problems]
+      #   )
+      #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -50,7 +59,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Playlist::Types::Playlist.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -72,6 +81,14 @@ module Seed
       # @option params [String] :multi_line_docs
       # @option params [String, nil] :optional_multiple_field
       # @option params [String] :multiple_field
+      #
+      # @example
+      #   client.playlist.get_playlists(
+      #     service_param: 1,
+      #     limit: 1,
+      #     other_field: "otherField",
+      #     multi_line_docs: "multiLineDocs"
+      #   )
       #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
@@ -96,10 +113,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Playlist::Types::Playlist], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Returns a playlist
@@ -113,6 +132,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
+      #
+      # @example
+      #   client.playlist.get_playlist(
+      #     service_param: 1,
+      #     playlist_id: "playlistId"
+      #   )
       #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
@@ -130,10 +155,14 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Playlist::Types::Playlist.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            404 => Seed::Playlist::Types::PlaylistIDNotFoundErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 
@@ -149,6 +178,16 @@ module Seed
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
+      # @example
+      #   client.playlist.update_playlist(
+      #     service_param: 1,
+      #     playlist_id: "playlistId",
+      #     request: {
+      #       name: "name",
+      #       problems: %w[problems problems]
+      #     }
+      #   )
+      #
       # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -156,7 +195,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
-          body: params,
+          body: params[:request]&.then { |value| Seed::Playlist::Types::UpdatePlaylistRequest.new(value).to_h },
           request_options: request_options
         )
         begin
@@ -165,10 +204,16 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_types = {
+            404 => Seed::Playlist::Types::PlaylistIDNotFoundErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
+        end
       end
 
       # Deletes a playlist
@@ -182,6 +227,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
+      #
+      # @example
+      #   client.playlist.delete_playlist(
+      #     service_param: 1,
+      #     playlist_id: "playlist_id"
+      #   )
       #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)

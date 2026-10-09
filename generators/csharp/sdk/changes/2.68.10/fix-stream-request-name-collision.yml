@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a compile error in the generated raw-client retry tests when an API
+    defines a model named `StreamRequest`. The test now references the Core
+    streaming request type via its fully qualified name so it no longer
+    collides with the generated model.
+  type: fix

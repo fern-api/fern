@@ -69,7 +69,8 @@
         {
           "$ref": "#/definitions/VariantC"
         }
-      ]
+      ],
+      "description": "Undiscriminated union with multiple object variants.\nThis reproduces the Pipedream issue where Emitter is a union of\nDeployedComponent, HttpInterface, and TimerInterface."
     }
   }
 }

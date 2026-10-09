@@ -74,7 +74,7 @@ client.get_foo(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">update_foo</a>(id, request) -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">update_foo</a>(id:, request) -> Seed::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -92,7 +92,8 @@ client.update_foo(
   x_idempotency_key: "X-Idempotency-Key",
   nullable_text: "nullable_text",
   nullable_number: 1.1,
-  non_nullable_text: "non_nullable_text"
+  non_nullable_text: "non_nullable_text",
+  required_nullable_text: "required_nullable_text"
 )
 ```
 </dd>
@@ -132,7 +133,7 @@ client.update_foo(
 <dl>
 <dd>
 
-**nullable_number:** `Integer` — Can be explicitly set to null to clear the value
+**nullable_number:** `Float` — Can be explicitly set to null to clear the value
     
 </dd>
 </dl>
@@ -141,6 +142,14 @@ client.update_foo(
 <dd>
 
 **non_nullable_text:** `String` — Regular non-nullable field
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**required_nullable_text:** `String` — Must be sent, but may be null to clear the value
     
 </dd>
 </dl>

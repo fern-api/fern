@@ -4,6 +4,7 @@ import {
     FernWorkspace,
     GraphQLSpec,
     getOpenAPISettings,
+    groupGraphQLSpecsByNamespace,
     IdentifiableSource,
     OpenAPISettings,
     OpenAPISpec,
@@ -13,10 +14,12 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { mergeSettings, parseOpenApiDefinitionSettingsSchema } from "@fern-api/configuration-loader";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
@@ -46,6 +49,35 @@ export declare namespace OSSWorkspace {
     }
 
     export type Settings = BaseOpenAPIWorkspace.Settings;
+}
+
+// `structuredClone` rejects IR union values, which carry `_visit` methods; copy those by reference.
+function cloneIntermediateRepresentation<T>(value: T): T {
+    if (Array.isArray(value)) {
+        return value.map(cloneIntermediateRepresentation) as T;
+    }
+    if (value == null || typeof value !== "object") {
+        return value;
+    }
+    const clone: Record<string, unknown> = {};
+    for (const [key, entry] of Object.entries(value)) {
+        clone[key] = cloneIntermediateRepresentation(entry);
+    }
+    return clone as T;
+}
+
+function getOrCreateCached<T>(cache: Map<string, Promise<T>>, key: string, create: () => Promise<T>): Promise<T> {
+    let cached = cache.get(key);
+    if (cached == null) {
+        cached = create();
+        cache.set(key, cached);
+        cached.catch(() => {
+            if (cache.get(key) === cached) {
+                cache.delete(key);
+            }
+        });
+    }
+    return cached;
 }
 
 /**
@@ -101,6 +133,7 @@ function convertRemoveDiscriminantsFromSchemas(
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public type: string = "oss";
+    public readonly exposesSourceSpecs = true;
     public allSpecs: Spec[];
     public specs: (OpenAPISpec | ProtobufSpec)[];
     public sources: IdentifiableSource[];
@@ -116,12 +149,18 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     // This avoids running buf generate twice when both toFernWorkspace() and
     // validateOSSWorkspace() need the same OpenAPI specs.
     private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
+    /** Guards the orphaned-`auth-schemes` warning so one command warns once. */
+    private hasWarnedOrphanedAuthSchemes = false;
+    // Set by `enableResultCaching()`, keyed by the call's arguments.
+    private intermediateRepresentationCache: Map<string, Promise<IntermediateRepresentation>> | undefined;
+    private fernWorkspaceCache: Map<string, Promise<FernWorkspace>> | undefined;
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
         super({
             ...superArgs,
             respectReadonlySchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectReadonlySchemas),
+            useReadVariantForResponses: collapseSpecBooleanSetting(specs, (s) => s?.useReadVariantForResponses),
             respectNullableSchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectNullableSchemas),
             wrapReferencesToNullableInOptional: collapseSpecBooleanSetting(
                 specs,
@@ -141,6 +180,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 openapiSpecs,
                 (s) => s?.respectForwardCompatibleEnums
             ),
+            respectOptionalRequestBody: collapseSpecBooleanSetting(openapiSpecs, (s) => s?.respectOptionalRequestBody),
             inlineAllOfSchemas: collapseSpecBooleanSetting(specs, (s) => s?.inlineAllOfSchemas),
             resolveAliases: (() => {
                 // Only collapse if at least one spec explicitly defines resolveAliases
@@ -167,7 +207,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             inferDefaultEnvironment: collapseSpecBooleanSetting(specs, (s) => s?.inferDefaultEnvironment),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
             pathParameterOrder: specs[0]?.settings?.pathParameterOrder,
-            coerceConstsTo: specs[0]?.settings?.coerceConstsTo
+            coerceConstsTo: specs[0]?.settings?.coerceConstsTo,
+            respectOperationIdWordBoundaries: collapseSpecBooleanSetting(
+                specs,
+                (s) => s?.respectOperationIdWordBoundaries
+            )
         });
         this.specs = specs;
         this.allSpecs = allSpecs;
@@ -219,11 +263,23 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const { GraphQLConverter } = await import("@fern-api/graphql-to-fdr");
         const graphqlSpecs = this.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
 
-        for (const spec of graphqlSpecs) {
+        // Specs that share a namespace describe one schema (e.g. federated subgraphs owned by
+        // different teams), so they are converted together rather than as independent schemas.
+        for (const [, specs] of groupGraphQLSpecsByNamespace(graphqlSpecs)) {
+            const filePaths = specs.map((spec) => spec.absoluteFilepath);
             try {
+                const examples = (
+                    await Promise.all(
+                        specs.map((spec) => loadGraphQlExamples(spec.absoluteFilepathToExamples, context))
+                    )
+                )
+                    .filter(isNonNullish)
+                    .flat();
                 const converter = new GraphQLConverter({
                     context,
-                    filePath: spec.absoluteFilepath
+                    filePath: filePaths,
+                    namespace: specs[0]?.namespace,
+                    examples
                 });
                 const result = await converter.convert();
 
@@ -232,7 +288,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 Object.assign(this.graphqlTypes, result.types);
             } catch (error) {
                 context.logger.error(
-                    `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                    `Failed to process GraphQL spec(s) ${filePaths.join(", ")}:`,
                     extractErrorMessage(error)
                 );
             }
@@ -289,22 +345,91 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     }
 
     /**
+     * The OpenAPI tags declared across this workspace's specs, keyed by tag name; when two
+     * specs declare the same tag, the later spec wins. Equals `getOpenAPIIr().tags.tagsById`
+     * but skips parsing the specs, which is what makes that call slow on large specs.
+     */
+    public async getOpenAPITags({
+        context
+    }: {
+        context: TaskContext;
+    }): Promise<OpenApiIntermediateRepresentation["tags"]["tagsById"]> {
+        const specs = await this.getOpenAPISpecsCached({ context });
+        const documents = await this.loader.loadDocuments({ context, specs });
+        return Object.fromEntries(
+            documents.flatMap((document) =>
+                document.type === "openapi"
+                    ? (document.value.tags ?? []).map((tag) => [
+                          tag.name,
+                          { id: tag.name, description: tag.description }
+                      ])
+                    : []
+            )
+        );
+    }
+
+    /**
      * @internal
      * @owner dsinghvi
      */
-    public async getIntermediateRepresentation({
-        context,
-        audiences,
-        enableUniqueErrorsPerEndpoint,
-        generateV1Examples,
-        logWarnings
-    }: {
-        context: TaskContext;
-        audiences: Audiences;
-        enableUniqueErrorsPerEndpoint: boolean;
-        generateV1Examples: boolean;
-        logWarnings: boolean;
-    }): Promise<IntermediateRepresentation> {
+    /**
+     * Memoizes `getIntermediateRepresentation()` and `toFernWorkspace()` on this workspace
+     * for the rest of the process, so a command that resolves the same docs more than once
+     * (`fern generate --docs` validates, then publishes) builds each API once. Only IR calls that
+     * pass `cacheResult: true` are cached, so one-off IRs aren't kept in memory. Specs must not
+     * change on disk while caching is enabled. Each IR caller gets its own clone, since the
+     * docs resolver rewrites IR descriptions in place. Failed calls are not cached.
+     */
+    public enableResultCaching(): void {
+        this.intermediateRepresentationCache ??= new Map();
+        this.fernWorkspaceCache ??= new Map();
+    }
+
+    /** Drops the results cached by `enableResultCaching()` (so they can be garbage-collected) and stops caching. */
+    public disableResultCaching(): void {
+        this.intermediateRepresentationCache = undefined;
+        this.fernWorkspaceCache = undefined;
+    }
+
+    public async getIntermediateRepresentation(
+        args: {
+            context: TaskContext;
+            audiences: Audiences;
+            enableUniqueErrorsPerEndpoint: boolean;
+            generateV1Examples: boolean;
+            logWarnings: boolean;
+            /** Reuse the result across calls once `enableResultCaching()` is on. */
+            cacheResult?: boolean;
+        },
+        settings?: OSSWorkspace.Settings
+    ): Promise<IntermediateRepresentation> {
+        const cache = this.intermediateRepresentationCache;
+        if (cache == null || args.cacheResult !== true) {
+            return this.buildIntermediateRepresentation(args, settings);
+        }
+        const { context, cacheResult, ...cacheArgs } = args;
+        const ir = await getOrCreateCached(cache, JSON.stringify({ ...cacheArgs, settings }), () =>
+            this.buildIntermediateRepresentation(args, settings)
+        );
+        return cloneIntermediateRepresentation(ir);
+    }
+
+    private async buildIntermediateRepresentation(
+        {
+            context,
+            audiences,
+            enableUniqueErrorsPerEndpoint,
+            generateV1Examples,
+            logWarnings
+        }: {
+            context: TaskContext;
+            audiences: Audiences;
+            enableUniqueErrorsPerEndpoint: boolean;
+            generateV1Examples: boolean;
+            logWarnings: boolean;
+        },
+        settings?: OSSWorkspace.Settings
+    ): Promise<IntermediateRepresentation> {
         // Start protobuf IR generation in parallel with OpenAPI processing
         const protobufIRResultsPromise = this.generateAllProtobufIRs({ context });
 
@@ -313,6 +438,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         let authOverrides: RawSchemas.WithAuthSchema | undefined =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
+
+        // This gate reads `auth`, not `auth-schemes` — see
+        // `getOrphanedAuthSchemeWarning` for what that silently discards.
+        this.warnOnOrphanedAuthSchemes(context);
 
         // Fallback: read auth/auth-schemes from the spec's overrides file if not in generators.yml
         if (authOverrides == null) {
@@ -367,7 +496,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         globalHeaderOverrides,
                         enableUniqueErrorsPerEndpoint,
                         generateV1Examples,
-                        settings: getOpenAPISettings({ options: document.settings }),
+                        settings: getOpenAPISettings({ options: document.settings, overrides: settings }),
                         documentBaseDir: dirname(absoluteFilepathToSpec)
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
@@ -552,16 +681,61 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return results;
     }
 
+    /**
+     * Emit the orphaned-`auth-schemes` warning, at most once per workspace.
+     *
+     * Called from BOTH `toFernWorkspace` and `getIntermediateRepresentation`,
+     * because they are different entry points: `fern generate` and plain
+     * `fern check` go through the former, and only `fern check --from-openapi`
+     * reaches the latter (see `validateWorkspaces.ts`, where that branch is
+     * gated on `directFromOpenapi`). Warning from only one of them meant the
+     * customer who hits this bug — silently, on `fern generate` — saw nothing,
+     * which is the entire failure mode.
+     */
+    private warnOnOrphanedAuthSchemes(context: TaskContext): void {
+        if (this.hasWarnedOrphanedAuthSchemes) {
+            return;
+        }
+        const warning = getOrphanedAuthSchemeWarning(this.generatorsConfiguration?.api);
+        if (warning != null) {
+            this.hasWarnedOrphanedAuthSchemes = true;
+            context.logger.warn(warning);
+        }
+    }
+
     public async toFernWorkspace(
         { context }: { context: TaskContext },
         settings?: OSSWorkspace.Settings,
         specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<FernWorkspace> {
+        // Before the `specsOverride` early return, not after: both generation
+        // paths pass `generatorInvocation.apiOverride?.specs` into this method
+        // (`runLocalGenerationForWorkspace.ts`, `runRemoteGenerationForAPIWorkspace.ts`),
+        // so warning after the return meant any generator declaring
+        // `apiOverride.specs` silently skipped it — the same class of
+        // unreachability this change set out to fix. Safe here: the override
+        // branch builds a temporary workspace and calls `getDefinition` on it,
+        // never `toFernWorkspace`, so this cannot double-warn through the copy.
+        this.warnOnOrphanedAuthSchemes(context);
+
         // If specs override is provided, create a temporary workspace with the override specs
         if (specsOverride != null) {
             return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
         }
 
+        const cache = this.fernWorkspaceCache;
+        if (cache == null) {
+            return this.buildFernWorkspace({ context }, settings);
+        }
+        return getOrCreateCached(cache, JSON.stringify(settings ?? null), () =>
+            this.buildFernWorkspace({ context }, settings)
+        );
+    }
+
+    private async buildFernWorkspace(
+        { context }: { context: TaskContext },
+        settings?: OSSWorkspace.Settings
+    ): Promise<FernWorkspace> {
         // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files
         let effectiveSettings = settings;
         if (this.generatorsConfiguration?.api?.auth == null && settings?.auth == null) {
@@ -591,6 +765,20 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             cliVersion: this.cliVersion,
             sources: this.sources
         });
+    }
+
+    public async getSourceSpecs(): Promise<Spec[]> {
+        return this.allSpecs;
+    }
+
+    public async getAllSpecsForGenerator(
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined
+    ): Promise<Spec[]> {
+        if (specsOverride == null) {
+            return this.allSpecs;
+        }
+        const overrideSpecs = await this.convertSpecsOverrideToSpecs(specsOverride);
+        return overrideSpecs.filter((spec) => spec.type !== "protobuf" || !spec.fromOpenAPI);
     }
 
     private async createWorkspaceWithSpecsOverride(
@@ -647,7 +835,14 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
-                const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(spec.openapi, "openapi"));
+                if (typeof spec.openapi !== "string") {
+                    throw new Error(
+                        "Git remote sources are not supported in specs overrides. " +
+                            `Please use a local path instead of the git source for repo '${spec.openapi.git.repo}'.`
+                    );
+                }
+                const specPath = spec.openapi;
+                const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(specPath, "openapi"));
                 // Handle both single override path and array of override paths
                 let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
                 const specOverridePaths: AbsoluteFilePath[] = [];
@@ -682,8 +877,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     absoluteFilepath,
                     absoluteFilepathToOverrides,
                     absoluteFilepathToOverlays,
-                    // Use default settings from existing specs for compatibility
-                    settings: this.specs.length > 0 ? this.specs[0]?.settings : undefined,
+                    settings: getOpenAPISettings({
+                        options: mergeSettings(
+                            this.generatorsConfiguration?.api?.settings ??
+                                parseOpenApiDefinitionSettingsSchema(undefined),
+                            parseOpenApiDefinitionSettingsSchema(spec.settings)
+                        )
+                    }),
                     source: {
                         type: "openapi",
                         file: absoluteFilepath
@@ -717,7 +917,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         : spec.absoluteFilepathToOverrides != null
                           ? [spec.absoluteFilepathToOverrides]
                           : [];
-                    return [mainPath, ...overridePaths];
+                    const examplesPath = spec.type === "graphql" ? spec.absoluteFilepathToExamples : undefined;
+                    return [mainPath, ...overridePaths, ...(examplesPath != null ? [examplesPath] : [])];
                 })
                 .filter(isNonNullish)
         ];
@@ -746,6 +947,82 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
             return acc;
         }, result);
+    }
+}
+
+async function loadGraphQlExamples(
+    absoluteFilepathToExamples: AbsoluteFilePath | undefined,
+    context: TaskContext
+): Promise<GraphQlOperationExamplesInput[] | undefined> {
+    if (absoluteFilepathToExamples == null) {
+        return undefined;
+    }
+    try {
+        const contents = (await readFile(absoluteFilepathToExamples)).toString();
+        const parsed = yaml.load(contents);
+        if (!Array.isArray(parsed)) {
+            return undefined;
+        }
+        for (const entry of parsed) {
+            if (typeof entry !== "object" || entry == null) {
+                context.logger.warn(
+                    `Skipping invalid entry in GraphQL examples file ${absoluteFilepathToExamples}: expected object`
+                );
+                continue;
+            }
+            if (typeof entry.operation !== "string") {
+                context.logger.warn(
+                    `Skipping entry in GraphQL examples file ${absoluteFilepathToExamples}: missing or invalid 'operation' field`
+                );
+                continue;
+            }
+            if (!Array.isArray(entry.examples)) {
+                context.logger.warn(
+                    `Skipping entry for operation '${entry.operation}' in ${absoluteFilepathToExamples}: 'examples' must be an array`
+                );
+                continue;
+            }
+        }
+        const validEntries = parsed
+            .filter(
+                (entry): entry is { operation: string; operationType?: string; examples: unknown[] } =>
+                    typeof entry === "object" &&
+                    entry != null &&
+                    typeof entry.operation === "string" &&
+                    Array.isArray(entry.examples)
+            )
+            .map((entry) => {
+                const validExamples = entry.examples.filter((ex: unknown) => {
+                    if (
+                        typeof ex !== "object" ||
+                        ex == null ||
+                        typeof (ex as Record<string, unknown>).query !== "string"
+                    ) {
+                        context.logger.warn(
+                            `Skipping malformed example for operation '${entry.operation}' in ${absoluteFilepathToExamples}: missing or invalid 'query' field`
+                        );
+                        return false;
+                    }
+                    return true;
+                });
+                if (entry.operationType != null) {
+                    const lower = entry.operationType.toLowerCase();
+                    if (lower !== "query" && lower !== "mutation" && lower !== "subscription") {
+                        context.logger.warn(
+                            `Invalid operationType '${entry.operationType}' for operation '${entry.operation}' in ${absoluteFilepathToExamples}: must be 'query', 'mutation', or 'subscription'`
+                        );
+                    }
+                }
+                return { ...entry, examples: validExamples } as GraphQlOperationExamplesInput;
+            })
+            .filter((entry) => entry.examples.length > 0);
+        return validEntries.length > 0 ? validEntries : undefined;
+    } catch (error) {
+        context.logger.error(
+            `Failed to load GraphQL examples from ${absoluteFilepathToExamples}:`,
+            extractErrorMessage(error)
+        );
+        return undefined;
     }
 }
 
@@ -779,4 +1056,47 @@ async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithA
         }
     }
     return undefined;
+}
+
+/**
+ * Warning text for an `auth-schemes` block that no `api.auth` selects, or
+ * `undefined` when the configuration is fine.
+ *
+ * `getIntermediateRepresentation` only reads the `auth-schemes` block when
+ * `api.auth` is set, so declaring schemes without selecting them discards the
+ * whole block — `env:` overrides included — before the importer sees it. The
+ * importer then re-derives auth from `components.securitySchemes`, which
+ * carries no environment variable, and each generator applies its own default
+ * name (the CLI generator `<BINARY>_TOKEN`). The result is a client reading an
+ * environment variable the user never configured.
+ *
+ * Nothing about the config is invalid, so `fern check` stays clean and
+ * generation succeeds — the bug is invisible by construction, which makes this
+ * warning the only thing between the user and that outcome. Hence it is pulled
+ * out here: the condition and the guidance are testable without standing up a
+ * workspace.
+ *
+ * Warning rather than widening the gate is deliberate. `buildAuthSchemes`
+ * returns early on the override path without selecting a scheme when `auth` is
+ * absent, so admitting this config there would trade a wrong environment
+ * variable for no auth at all; making it work needs the selection logic
+ * settled, which changes behavior for every generator.
+ */
+export function getOrphanedAuthSchemeWarning(api: generatorsYml.APIDefinition | undefined): string | undefined {
+    if (api?.auth != null) {
+        return undefined;
+    }
+    const names = Object.keys(api?.["auth-schemes"] ?? {});
+    const first = names[0];
+    if (first == null) {
+        return undefined;
+    }
+    return (
+        `generators.yml declares auth-schemes (${names.join(", ")}) but no \`api.auth\`, ` +
+        "so the entire auth-schemes block is ignored — including any `env:` overrides. " +
+        `Add \`auth: ${first}\` under \`api\`` +
+        (names.length > 1 ? ", or list them all under an `auth.any` key" : "") +
+        ". Without it, auth is re-derived from the spec's securitySchemes and each " +
+        "generator falls back to its own default environment variable name."
+    );
 }

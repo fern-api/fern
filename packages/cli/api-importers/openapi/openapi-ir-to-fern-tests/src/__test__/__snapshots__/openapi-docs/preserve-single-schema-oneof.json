@@ -23,8 +23,10 @@
               "pagination": undefined,
               "path": "/test",
               "request": {
-                "body": "OuterOneOf",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "OuterOneOf",
+                },
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -84,8 +86,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: OuterOneOf
-        content-type: application/json
+        body:
+          type: OuterOneOf
+          optional: true
       examples:
         - request:
             value: value
@@ -129,4 +132,5 @@ error-discrimination:
 display-name: Preserve Single Schema OneOf Test
 ",
   },
+  "specVersion": "1.0.0",
 }

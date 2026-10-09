@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .generated_root_client import GeneratedRootClient
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
@@ -18,7 +19,10 @@ from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.constants import (
     CHUNK_VARIABLE,
+    EVENT_VARIABLE,
+    EVENTS_FUNCTION_NAME,
     RESPONSE_VARIABLE,
+    SSE_RECONNECT_VARIABLE,
 )
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
@@ -43,9 +47,18 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
-from fern_python.generators.sdk.names import get_variable_member_name
+from fern_python.generators.sdk.names import (
+    get_root_path_parameter_member_name,
+    get_variable_member_name,
+)
 from fern_python.snippet import SnippetWriter
-from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
+from fern_python.utils.name_resolver import (
+    get_name_from_wire_value,
+    get_original_name,
+    get_wire_value,
+    resolve_name,
+    resolve_name_preserving_underscores,
+)
 
 import fern.ir.resources as ir_types
 
@@ -157,7 +170,7 @@ class EndpointFunctionGenerator:
         self._path_parameter_names = dict()
         _named_parameter_names: List[str] = [param.name for param in self._named_parameters_raw]
 
-        for path_parameter in self._endpoint.all_path_parameters:
+        for path_parameter in filter_root_path_parameters(self._endpoint.all_path_parameters):
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
                 _named_parameter_names.append(name)
@@ -171,8 +184,11 @@ class EndpointFunctionGenerator:
             return
 
         # Consolidate the named parameters and path parameters in a single list.
+        # Root path parameters are hoisted to the client constructor, so exclude them here.
         parameters: List[AST.NamedFunctionParameter] = []
-        parameters = self._named_parameters_from_path_parameters(self._endpoint.all_path_parameters)
+        parameters = self._named_parameters_from_path_parameters(
+            filter_root_path_parameters(self._endpoint.all_path_parameters)
+        )
         parameters.extend(self._named_parameters_raw)
 
         for param in parameters:
@@ -256,16 +272,20 @@ class EndpointFunctionGenerator:
                     cleaned_parameters.append(param)
             named_parameters = cleaned_parameters
 
+        # Root path parameters are hoisted to the root client constructor; exclude them
+        # from the endpoint signature.
+        non_root_path_parameters = filter_root_path_parameters(self._endpoint.all_path_parameters)
+
         if self._context.custom_config.inline_path_params:
             named_path_parameters: List[AST.NamedFunctionParameter] = self._named_parameters_from_path_parameters(
-                self._endpoint.all_path_parameters
+                non_root_path_parameters
             )
             # path parameters go first because it's important that request options is the last parameter
             named_parameters = named_path_parameters + named_parameters
         else:
             # Even when not inlining path params, path params with client_default
             # need to be added as named parameters since they were skipped from unnamed params
-            non_variable_path_params = filter_variable_path_parameters(self._endpoint.all_path_parameters)
+            non_variable_path_params = filter_variable_path_parameters(non_root_path_parameters)
             client_default_path_params = [p for p in non_variable_path_params if p.client_default is not None]
             if client_default_path_params:
                 named_path_parameters = self._named_parameters_from_path_parameters(client_default_path_params)
@@ -302,8 +322,14 @@ class EndpointFunctionGenerator:
                     )
                 )
             )
-        # Add contextmanager decorators for streaming endpoints in raw clients
-        elif self._is_raw_client and is_streaming_endpoint(self._endpoint):
+        # Add contextmanager decorators for streaming endpoints in raw clients.
+        # Skip for overloaded streaming methods (stream-condition endpoints) since
+        # the non-streaming path returns directly instead of yielding.
+        elif (
+            self._is_raw_client
+            and is_streaming_endpoint(self._endpoint)
+            and not is_overloaded_streaming_method(self._endpoint)
+        ):
             if self._is_async:
                 decorators.append(
                     AST.Expression(
@@ -329,7 +355,7 @@ class EndpointFunctionGenerator:
             docstring=self._get_docstring_for_endpoint(
                 endpoint=self._endpoint,
                 named_parameters=named_parameters,
-                path_parameters=self._endpoint.all_path_parameters,
+                path_parameters=filter_root_path_parameters(self._endpoint.all_path_parameters),
                 snippet=(
                     endpoint_snippets[0].snippet
                     if endpoint_snippets is not None and len(endpoint_snippets) > 0 and include_snippet
@@ -362,13 +388,29 @@ class EndpointFunctionGenerator:
             snippets=endpoint_snippets or [],
         )
 
+    @property
+    def _stream_abstraction(self) -> bool:
+        return self._context.custom_config.stream_abstraction
+
+    def _raw_data_is_stream(self) -> bool:
+        return self._stream_abstraction and raw_data_is_stream(self._endpoint)
+
+    def _returns_stream_object(self) -> bool:
+        return self._stream_abstraction and returns_stream_object(self._endpoint)
+
     def _get_stream_func_return_type(self) -> AST.TypeHint:
         underlying_type = self._get_response_body_underlying_type(
-            response_body=self._endpoint.response.body if self._endpoint.response is not None else None,
+            response_body=(self._endpoint.response.body if self._endpoint.response is not None else None),
             is_async=self._is_async,
         )
         underlying_type_wrapped = (
-            AST.TypeHint.async_iterator(underlying_type) if self._is_async else AST.TypeHint.iterator(underlying_type)
+            self._context.core_utilities.get_stream_type(underlying_type, is_async=self._is_async)
+            if self._raw_data_is_stream()
+            else (
+                AST.TypeHint.async_iterator(underlying_type)
+                if self._is_async
+                else AST.TypeHint.iterator(underlying_type)
+            )
         )
         return self._get_http_response_wrapper_type(self._is_async, underlying_type_wrapped)
 
@@ -394,7 +436,9 @@ class EndpointFunctionGenerator:
         parameters: List[AST.FunctionParameter] = []
 
         if not self._context.custom_config.inline_path_params:
-            non_variable_path_parameters = filter_variable_path_parameters(self._endpoint.all_path_parameters)
+            non_variable_path_parameters = filter_variable_path_parameters(
+                filter_root_path_parameters(self._endpoint.all_path_parameters)
+            )
             for path_parameter in non_variable_path_parameters:
                 if not self._is_type_literal(path_parameter.value_type):
                     # Path parameters with client defaults are moved to named parameters
@@ -604,13 +648,21 @@ class EndpointFunctionGenerator:
                     page_param_name = request_property_to_name(param.property)
                     page_param_default = retrieve_pagination_default(param.property.root.value_type)
 
-                    if any(named_param.name == page_param_name for named_param in named_parameters):
+                    if not param.property_path and any(
+                        named_param.name == page_param_name for named_param in named_parameters
+                    ):
+                        # Omitted body properties default to the OMIT sentinel rather than None.
+                        page_param_is_set = (
+                            f"{page_param_name} is not None and {page_param_name} is not {DEFAULT_BODY_PARAMETER_VALUE}"
+                            if param.property.get_as_union().type == "body"
+                            else f"{page_param_name} is not None"
+                        )
                         writer.write_node(
                             AST.VariableDeclaration(
                                 name=page_param_name,
                                 initializer=AST.Expression(
                                     AST.ConditionalExpression(
-                                        test=AST.Expression(f"{page_param_name} is not None"),
+                                        test=AST.Expression(page_param_is_set),
                                         left=AST.Expression(page_param_name),
                                         right=AST.Expression(str(page_param_default)),
                                     )
@@ -623,6 +675,11 @@ class EndpointFunctionGenerator:
             if named_parameters and len(named_parameters) > 0:
                 last_param = named_parameters[-1]
                 request_options_variable_name = last_param.name
+
+            # The actual request-options parameter name (before any retries
+            # override below), used by the response-body code writer to read
+            # option keys like ``chunk_size``/``stream_reconnection_enabled``.
+            request_options_parameter_name = request_options_variable_name
 
             if endpoint.retries is not None:
                 if isinstance(endpoint.retries, ir_types.RetriesDisabledSchema) and endpoint.retries.disabled:
@@ -675,12 +732,17 @@ class EndpointFunctionGenerator:
                         f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
                     ),
                     is_default_body_parameter_used=self.is_default_body_parameter_used,
+                    is_body_optional=(
+                        request_body_parameters is not None and request_body_parameters.is_body_optional()
+                    ),
                     force_multipart=(
                         True
                         if endpoint.request_body is not None
                         and endpoint.request_body.get_as_union().type == "fileUpload"
                         else False
                     ),
+                    emit_sse_reconnect=is_resumable_sse_endpoint(endpoint),
+                    reconnect_variable_name=SSE_RECONNECT_VARIABLE,
                 )
 
             if self._endpoint.sdk_request is not None and self._endpoint.sdk_request.stream_parameter is not None:
@@ -703,6 +765,7 @@ class EndpointFunctionGenerator:
                         is_raw_client=self._is_raw_client,
                         http_method=method,
                         client_wrapper_member_name=self._client_wrapper_member_name,
+                        request_options_variable_name=request_options_parameter_name,
                     )
                     streaming_request = get_httpx_request(
                         is_streaming=True,
@@ -742,6 +805,7 @@ class EndpointFunctionGenerator:
                     is_raw_client=self._is_raw_client,
                     http_method=method,
                     client_wrapper_member_name=self._client_wrapper_member_name,
+                    request_options_variable_name=request_options_parameter_name,
                 )
                 non_streaming_request = get_httpx_request(
                     is_streaming=False,
@@ -767,6 +831,7 @@ class EndpointFunctionGenerator:
                     is_raw_client=self._is_raw_client,
                     http_method=method,
                     client_wrapper_member_name=self._client_wrapper_member_name,
+                    request_options_variable_name=request_options_parameter_name,
                 )
 
                 httpx_request = get_httpx_request(
@@ -874,6 +939,17 @@ class EndpointFunctionGenerator:
             endpoint_snippet = endpoint_snippet_generator.generate_snippet()
             response_name = "response"
             endpoint_usage = endpoint_snippet_generator.generate_usage(is_async=is_async, response_name=response_name)
+            # Async streaming methods are async generator functions, which cannot be awaited, so the
+            # snippet iterates what they return directly. Methods returning an `AsyncStream` are
+            # plain functions and the stream is awaitable, so those snippets keep the `await`.
+            returns_async_generator = (
+                is_async
+                and not self._is_raw_client
+                and not self._returns_stream_object()
+                and endpoint.response is not None
+                and endpoint.response.body is not None
+                and (endpoint.response.body.get_as_union().type == "streaming" or streaming_parameter == "streaming")
+            )
 
             # HACK: IR should provide stable ids for example
             example_id = "default"
@@ -890,6 +966,7 @@ class EndpointFunctionGenerator:
                             endpoint_usage=endpoint_usage,
                             generated_root_client=generated_root_client,
                             package=package,
+                            write_await=not returns_async_generator,
                         )
                     ),
                 )
@@ -905,10 +982,11 @@ class EndpointFunctionGenerator:
         endpoint_snippet: AST.Expression,
         response_name: str,
         package: ir_types.Package,
+        write_await: bool = True,
     ) -> None:
         if endpoint_usage is not None:
             writer.write(f"{response_name} = ")
-        if is_async:
+        if is_async and write_await:
             writer.write("await ")
 
         writer.write("client.")
@@ -930,6 +1008,7 @@ class EndpointFunctionGenerator:
         response_name: str,
         generated_root_client: GeneratedRootClient,
         package: ir_types.Package,
+        write_await: bool = True,
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             if is_async:
@@ -948,6 +1027,7 @@ class EndpointFunctionGenerator:
                         endpoint_snippet=endpoint_snippet,
                         response_name=response_name,
                         package=package,
+                        write_await=write_await,
                     )
 
                 writer.write_node(Asyncio.run(AST.Expression("main()")), should_write_as_snippet=False)
@@ -959,6 +1039,7 @@ class EndpointFunctionGenerator:
                     endpoint_snippet=endpoint_snippet,
                     response_name=response_name,
                     package=package,
+                    write_await=write_await,
                 )
 
         return AST.CodeWriter(write)
@@ -972,7 +1053,10 @@ class EndpointFunctionGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
+        return (
+            ".".join([resolve_name_preserving_underscores(component).snake_case.safe_name for component in components])
+            + "."
+        )
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
@@ -1061,6 +1145,11 @@ class EndpointFunctionGenerator:
                     if variable is None:
                         raise RuntimeError(f"Variable does not exist: {path_parameter.variable}")
                     member_name = get_variable_member_name(variable)
+                    return f"self.{self._client_wrapper_member_name}.{member_name}"
+                elif path_parameter.location == ir_types.PathParameterLocation.ROOT:
+                    # Root path parameters live on the client wrapper, hoisted from the
+                    # root client constructor.
+                    member_name = get_root_path_parameter_member_name(path_parameter)
                     return f"self.{self._client_wrapper_member_name}.{member_name}"
                 else:
                     return self._path_parameter_names[path_parameter.name]
@@ -1160,17 +1249,34 @@ class EndpointFunctionGenerator:
             # Check if this is custom pagination
             is_custom_pagination = self.pagination is not None and self.pagination.get_as_union().type == "custom"
             return self._context.core_utilities.get_paginator_type(
-                underlying_type_hint, type_hint, is_async=is_async, is_custom=is_custom_pagination
+                underlying_type_hint,
+                type_hint,
+                is_async=is_async,
+                is_custom=is_custom_pagination,
             )
 
         # Handle streaming case
         is_streaming = response_body and is_streaming_endpoint(self._endpoint)
+        # For non-streaming overloads of stream-condition endpoints in raw client,
+        # skip the streaming wrapper so the return type is HttpResponse[T] directly
+        if is_streaming and streaming_parameter == "non-streaming" and self._is_raw_client:
+            is_streaming = False
         if is_streaming:
             if self._is_raw_client:
                 stream_type = self._get_stream_func_return_type()
                 streaming_type = (
                     AST.TypeHint.async_iterator(stream_type) if is_async else AST.TypeHint.iterator(stream_type)
                 )
+                # For the base implementation of overloaded streaming methods (stream-condition),
+                # return Union[streaming_type, HttpResponse[T]] so mypy accepts both paths
+                if streaming_parameter is None and is_overloaded_streaming_method(self._endpoint):
+                    non_stream_underlying = self._get_response_body_underlying_type(
+                        response_body, is_async, "non-streaming"
+                    )
+                    non_stream_return = self._get_http_response_wrapper_type(is_async, non_stream_underlying)
+                    return AST.TypeHint.union(streaming_type, non_stream_return)
+            elif self._returns_stream_object():
+                streaming_type = self._context.core_utilities.get_stream_type(type_hint, is_async=is_async)
             else:
                 streaming_type = (
                     AST.TypeHint.async_iterator(type_hint) if is_async else AST.TypeHint.iterator(type_hint)
@@ -1237,8 +1343,10 @@ class EndpointFunctionGenerator:
                 json=lambda json_response: self._write_standard_return(
                     writer, response_hint, json_response.get_as_union().docs
                 ),
-                streaming=lambda stream_response: self._write_yielding_return(
-                    writer, response_hint, stream_response.get_as_union().docs
+                streaming=lambda stream_response: (
+                    self._write_standard_return(writer, response_hint, stream_response.get_as_union().docs)
+                    if self._returns_stream_object() and not self._is_raw_client
+                    else self._write_yielding_return(writer, response_hint, stream_response.get_as_union().docs)
                 ),
                 text=lambda t: self._write_standard_return(writer, response_hint, t.docs),
                 stream_parameter=lambda _: None,
@@ -1274,15 +1382,14 @@ class EndpointFunctionGenerator:
         )
 
     def _get_nested_json_response_type(self, response: ir_types.JsonResponseBodyWithProperty) -> AST.TypeHint:
-        response_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-            response.response_body_type
-        )
         property_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
             response.response_property.value_type
             if response.response_property is not None
             else response.response_body_type
         )
-        if response_type.is_optional:
+        # When the response body resolves to an optional type (including named aliases such as
+        # optional<...>), an empty response yields data=None, so the property type must be optional.
+        if self._context.resolved_schema_is_optional_or_unknown(response.response_body_type):
             return AST.TypeHint.optional(property_type)
         return property_type
 
@@ -1386,6 +1493,19 @@ class EndpointFunctionGenerator:
     ) -> Optional[AST.Expression]:
         headers: List[Tuple[str, AST.Expression]] = []
 
+        # In endpoint-security mode, compute this endpoint's routed auth headers and
+        # merge them into the request headers (the flat get_headers() no longer emits
+        # any auth). Returns the name of a variable holding the computed headers.
+        endpoint_auth_headers_var = self._write_endpoint_auth_headers_var(
+            endpoint=endpoint, parent_writer=parent_writer
+        )
+
+        idempotency_key_generation = self._context.ir.sdk_config.idempotency_key_generation
+        auto_generate_idempotency_key = (
+            idempotency_key_generation is not None and endpoint.method in idempotency_key_generation.methods
+        )
+        wrapped_declared_idempotency_key = False
+
         ir_headers = service.headers + endpoint.headers
         if endpoint.idempotent:
             ir_headers += idempotency_headers
@@ -1412,18 +1532,43 @@ class EndpointFunctionGenerator:
                     )
                 )
             else:
+                wire_value = get_wire_value(header.name)
                 param_name = get_parameter_name(get_name_from_wire_value(header.name))
                 if self._is_enum_type_with_value(header.value_type, allow_optional=True):
-                    expr = AST.Expression(f"{param_name}.value if {param_name} is not None else None")
+                    provided_value = f"{param_name}.value"
                 else:
-                    expr = AST.Expression(f"str({param_name}) if {param_name} is not None else None")
-                headers.append((get_wire_value(header.name), expr))
+                    provided_value = f"str({param_name})"
+                if (
+                    auto_generate_idempotency_key
+                    and idempotency_key_generation is not None
+                    and wire_value.lower() == idempotency_key_generation.header_name.lower()
+                ):
+                    # Caller-supplied value wins; the generated UUID is the fallback.
+                    expr = self._get_idempotency_key_header_value(provided_value=provided_value, param_name=param_name)
+                    wrapped_declared_idempotency_key = True
+                else:
+                    expr = AST.Expression(f"{provided_value} if {param_name} is not None else None")
+                headers.append((wire_value, expr))
 
-        if len(headers) == 0:
+        if (
+            auto_generate_idempotency_key
+            and idempotency_key_generation is not None
+            and not wrapped_declared_idempotency_key
+        ):
+            headers.append(
+                (
+                    idempotency_key_generation.header_name,
+                    self._generate_idempotency_key_expression(),
+                )
+            )
+
+        if len(headers) == 0 and endpoint_auth_headers_var is None:
             return None
 
         def write_headers_dict(writer: AST.NodeWriter) -> None:
             writer.write("{")
+            if endpoint_auth_headers_var is not None:
+                writer.write(f"**{endpoint_auth_headers_var}, ")
             for _, (header_key, header_value) in enumerate(headers):
                 writer.write(f'"{header_key}": ')
                 writer.write_node(header_value)
@@ -1438,6 +1583,56 @@ class EndpointFunctionGenerator:
             return AST.Expression(request_headers_var)
         else:
             return AST.Expression(AST.CodeWriter(write_headers_dict))
+
+    def _generate_idempotency_key_expression(self) -> AST.Expression:
+        generate_reference = self._context.core_utilities.get_reference_to_generate_idempotency_key()
+
+        def write(writer: NodeWriter) -> None:
+            writer.write_reference(generate_reference)
+            writer.write("()")
+
+        return AST.Expression(AST.CodeWriter(write))
+
+    def _get_idempotency_key_header_value(self, *, provided_value: str, param_name: str) -> AST.Expression:
+        generate_reference = self._context.core_utilities.get_reference_to_generate_idempotency_key()
+
+        def write(writer: NodeWriter) -> None:
+            writer.write(f"{provided_value} if {param_name} is not None else ")
+            writer.write_reference(generate_reference)
+            writer.write("()")
+
+        return AST.Expression(AST.CodeWriter(write))
+
+    def _write_endpoint_auth_headers_var(
+        self, *, endpoint: ir_types.HttpEndpoint, parent_writer: AST.NodeWriter
+    ) -> Optional[str]:
+        if self._context.ir.auth.requirement != ir_types.AuthSchemesRequirement.ENDPOINT_SECURITY:
+            return None
+
+        variable_name = "_endpoint_auth_headers"
+        security_literal = self._get_endpoint_security_literal(endpoint)
+        method_name = (
+            ClientWrapperGenerator.ASYNC_GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME
+            if self._is_async
+            else ClientWrapperGenerator.GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME
+        )
+        call = f"self.{self._client_wrapper_member_name}.{method_name}(security={security_literal})"
+        if self._is_async:
+            call = f"await {call}"
+        parent_writer.write_line(f"{variable_name} = {call}")
+        return variable_name
+
+    def _get_endpoint_security_literal(self, endpoint: ir_types.HttpEndpoint) -> str:
+        if endpoint.security is None:
+            return "None"
+        requirement_literals: List[str] = []
+        for requirement in endpoint.security:
+            scheme_literals: List[str] = []
+            for scheme_key, scopes in requirement.items():
+                scopes_literal = "[" + ", ".join(f'"{scope}"' for scope in scopes) + "]"
+                scheme_literals.append(f'"{scheme_key}": {scopes_literal}')
+            requirement_literals.append("{" + ", ".join(scheme_literals) + "}")
+        return "[" + ", ".join(requirement_literals) + "]"
 
     def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
@@ -1527,7 +1722,10 @@ class EndpointFunctionGenerator:
             (
                 get_wire_value(query_parameter.name),
                 (
-                    self._wrap_with_comma_join(self._get_query_parameter_reference(query_parameter), query_parameter)
+                    self._wrap_with_comma_join(
+                        self._get_query_parameter_reference(query_parameter),
+                        query_parameter,
+                    )
                     if self._should_comma_join_query_parameter(query_parameter)
                     else self._get_query_parameter_reference(query_parameter)
                 ),
@@ -1563,7 +1761,12 @@ class EndpointFunctionGenerator:
     ) -> bool:
         return self._does_type_reference_match_primitives(
             type_reference,
-            expected=set([ir_types.PrimitiveTypeV1.DATE_TIME, ir_types.PrimitiveTypeV1.DATE_TIME_RFC_2822]),
+            expected=set(
+                [
+                    ir_types.PrimitiveTypeV1.DATE_TIME,
+                    ir_types.PrimitiveTypeV1.DATE_TIME_RFC_2822,
+                ]
+            ),
             allow_optional=allow_optional,
             allow_enum=False,
         )
@@ -1815,6 +2018,66 @@ class EndpointFunctionGenerator:
             type_parameters=type_params,
         )
 
+    def _write_stream_method_body(self, *, writer: AST.NodeWriter, raw_client_invocation: AST.Expression) -> None:
+        """Write a method body that returns a lazily-opened `Stream` over the raw client's events.
+
+        The events generator is only started once the stream is iterated, which preserves the
+        behavior of the generator functions these methods used to be: no request is issued (and no
+        error is raised) until the caller starts consuming the stream. Closing the stream closes the
+        generator, which exits the raw client's context manager and releases the connection.
+        """
+        response_variable = "r"
+        event_type = self._context.core_utilities.get_stream_event_type(
+            self._get_response_body_underlying_type(
+                response_body=self._endpoint.response.body if self._endpoint.response is not None else None,
+                is_async=self._is_async,
+            )
+        )
+        events_expression = f"{response_variable}.data.with_metadata()"
+        if self._is_async:
+            with_body: List[AST.AstNode] = [
+                AST.ForStatement(
+                    target=EVENT_VARIABLE,
+                    iterable=AST.Expression(events_expression),
+                    is_async=True,
+                    body=[AST.YieldStatement(AST.Expression(EVENT_VARIABLE))],
+                )
+            ]
+        else:
+            with_body = [AST.YieldStatement(AST.Expression(events_expression), is_yield_from=True)]
+
+        writer.write_node(
+            AST.FunctionDeclaration(
+                name=EVENTS_FUNCTION_NAME,
+                is_async=self._is_async,
+                signature=AST.FunctionSignature(
+                    return_type=AST.TypeHint.async_generator(event_type)
+                    if self._is_async
+                    else AST.TypeHint.generator(event_type)
+                ),
+                body=[
+                    AST.WithStatement(
+                        context_managers=[
+                            AST.WithContextManager(
+                                expression=raw_client_invocation,
+                                as_variable=response_variable,
+                            )
+                        ],
+                        body=with_body,
+                        is_async=self._is_async,
+                    )
+                ],
+            )
+        )
+        writer.write_node(
+            AST.ReturnStatement(
+                self._context.core_utilities.instantiate_stream(
+                    events=AST.Expression(EVENTS_FUNCTION_NAME),
+                    is_async=self._is_async,
+                )
+            )
+        )
+
     def generate_wrapper_function(self) -> AST.FunctionDeclaration:
         """Create a wrapper method that delegates to the raw client and extracts the data property."""
 
@@ -1839,7 +2102,9 @@ class EndpointFunctionGenerator:
                 )
             )
             data_attribute = "data"
-            if is_streaming_endpoint(self._endpoint):
+            if self._returns_stream_object():
+                self._write_stream_method_body(writer=writer, raw_client_invocation=func_invocation_expr)
+            elif is_streaming_endpoint(self._endpoint):
                 response_variable = "r"
                 body: list[AST.AstNode] = []
                 if self._is_async:
@@ -1893,11 +2158,39 @@ class EndpointFunctionGenerator:
 
         return AST.FunctionDeclaration(
             name=get_endpoint_name(self._endpoint),
-            is_async=self._is_async,
+            # Methods returning an `AsyncStream` are plain functions, so that the returned stream can
+            # be consumed with `async for` directly as well as awaited (`AsyncStream` is awaitable).
+            is_async=self._is_async and not self._returns_stream_object(),
             signature=function.signature,
             docstring=function.docstring,
             body=AST.CodeWriter(write_method_body),
         )
+
+
+def raw_data_is_stream(endpoint: ir_types.HttpEndpoint) -> bool:
+    """Whether the raw client's `data` would be a `Stream` (SSE, JSON lines and text streams).
+
+    Only relevant when `stream_abstraction` is enabled; file downloads keep yielding raw `bytes`
+    chunks either way.
+    """
+    return (
+        endpoint.response is not None
+        and endpoint.response.body is not None
+        and endpoint.response.body.get_as_union().type in ("streaming", "streamParameter")
+    )
+
+
+def returns_stream_object(endpoint: ir_types.HttpEndpoint) -> bool:
+    """Whether the endpoint's public method would return the `Stream` itself.
+
+    Only relevant when `stream_abstraction` is enabled. Stream-condition endpoints keep returning an
+    iterator, because their overloads are generated through a separate code path.
+    """
+    return (
+        endpoint.response is not None
+        and endpoint.response.body is not None
+        and endpoint.response.body.get_as_union().type == "streaming"
+    )
 
 
 def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
@@ -1914,6 +2207,32 @@ def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
             )
         )
     )
+
+
+def _get_streaming_response(
+    endpoint: ir_types.HttpEndpoint,
+) -> Optional[ir_types.StreamingResponse]:
+    if endpoint.response is None or endpoint.response.body is None:
+        return None
+    return endpoint.response.body.visit(
+        json=lambda _: None,
+        file_download=lambda _: None,
+        text=lambda _: None,
+        bytes=lambda _: None,
+        streaming=lambda stream_response: stream_response,
+        stream_parameter=lambda stream_param_response: stream_param_response.stream_response,
+    )
+
+
+def is_resumable_sse_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
+    # A terminator is required: without it a dropped connection cannot be
+    # distinguished from a clean end, so reconnection is never attempted and
+    # emitting the ``_reconnect`` closure would be dead code.
+    stream_response = _get_streaming_response(endpoint)
+    if stream_response is None:
+        return False
+    union = stream_response.get_as_union()
+    return union.type == "sse" and union.resumable is True and union.terminator is not None
 
 
 def is_overloaded_streaming_method(endpoint: ir_types.HttpEndpoint) -> bool:
@@ -2274,7 +2593,10 @@ class EndpointFunctionSnippetGenerator:
 
     def _is_header_literal(self, header_wire_value: str, disqualify_optionals: bool) -> bool:
         param = next(
-            filter(lambda h: get_wire_value(h.name) == header_wire_value, self.endpoint.headers),
+            filter(
+                lambda h: get_wire_value(h.name) == header_wire_value,
+                self.endpoint.headers,
+            ),
             None,
         )
         if param is not None:
@@ -2350,5 +2672,14 @@ def unwrap_optional_type(
     return type_reference
 
 
-def filter_variable_path_parameters(path_parameters: List[ir_types.PathParameter]) -> List[ir_types.PathParameter]:
+def filter_variable_path_parameters(
+    path_parameters: List[ir_types.PathParameter],
+) -> List[ir_types.PathParameter]:
     return [param for param in path_parameters if param.variable is None]
+
+
+def filter_root_path_parameters(
+    path_parameters: List[ir_types.PathParameter],
+) -> List[ir_types.PathParameter]:
+    """Filter out root-level path parameters; they're hoisted to the client constructor."""
+    return [param for param in path_parameters if param.location != ir_types.PathParameterLocation.ROOT]

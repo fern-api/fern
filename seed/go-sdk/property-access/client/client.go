@@ -27,13 +27,32 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.User{
+//	    ID: "id",
+//	    Email: "email",
+//	    Password: "password",
+//	    Profile: &fern.UserProfile{
+//	        Name: "name",
+//	        Verification: &fern.UserProfileVerification{
+//	            Verified: "verified",
+//	        },
+//	        Ssn: "ssn",
+//	    },
+//	}
+//	client.CreateUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	request *fern.User,

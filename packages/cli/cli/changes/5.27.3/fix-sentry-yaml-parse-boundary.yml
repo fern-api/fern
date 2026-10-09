@@ -1,0 +1,6 @@
+- summary: |
+    Wrap `yaml.load` calls in `getVersionedNavigationConfiguration` and `getNavigationConfiguration`
+    with try/catch boundaries that convert YAML parse failures to `CliError(ParseError)`, preventing
+    user-authored YAML syntax errors in version and product config files from reaching Sentry as
+    false-positive InternalErrors.
+  type: fix

@@ -1,0 +1,9 @@
+{
+  "title": "Unsupported OpenAPI version 3.2.0",
+  "disposition": "keep_sentry",
+  "rationale": "Redocly threw for unsupported OpenAPI 3.2.0; the CLI should either support it or classify as ParseError at the OpenAPI loading boundary. Needs product decision.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Redocly rejected user OpenAPI spec version 3.2.0 as unsupported; needs product decision on classification or support."
+}

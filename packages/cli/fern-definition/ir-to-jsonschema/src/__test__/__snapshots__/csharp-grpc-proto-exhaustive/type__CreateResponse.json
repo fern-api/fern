@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The created resource."
     },
     "success": {
       "oneOf": [
@@ -19,7 +20,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Indicates successful creation."
     },
     "error_message": {
       "oneOf": [
@@ -29,7 +31,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Error message if creation failed."
     }
   },
   "additionalProperties": false,

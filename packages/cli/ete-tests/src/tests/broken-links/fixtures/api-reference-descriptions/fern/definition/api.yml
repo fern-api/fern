@@ -1,0 +1,4 @@
+name: my-api
+default-environment: Production
+environments:
+  Production: https://api.example.com

@@ -28,6 +28,9 @@ export class SyspropClient {
      * @param {number} numWarmInstances
      * @param {SyspropClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
@@ -91,6 +94,9 @@ export class SyspropClient {
 
     /**
      * @param {SyspropClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.sysprop.getNumWarmInstances()

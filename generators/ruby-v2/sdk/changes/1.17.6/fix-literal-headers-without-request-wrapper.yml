@@ -1,0 +1,7 @@
+- summary: |
+    Endpoints now send service- and endpoint-level headers whose types are literals
+    (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers were silently
+    dropped for endpoints without a request wrapper, and service-level literal headers
+    were never sent at all. Caller-supplied values via the request params still take
+    precedence over the literal defaults.
+  type: fix

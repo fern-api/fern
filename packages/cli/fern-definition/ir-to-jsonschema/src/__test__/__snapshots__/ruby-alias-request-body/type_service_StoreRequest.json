@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "displayName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "displayName"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

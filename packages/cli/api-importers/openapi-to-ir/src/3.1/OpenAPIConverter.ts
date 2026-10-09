@@ -1,6 +1,9 @@
-import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { isEndpointSecurityAuthSchemes } from "@fern-api/fern-definition-schema";
+import { AuthScheme, FernIr, IntermediateRepresentation, Literal } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
+import { applyTwilioVisibility, stripBasePathFromPaths } from "@fern-api/openapi-ir-parser";
 import {
+    AbstractConverter,
     AbstractSpecConverter,
     Converters,
     ServersConverter,
@@ -8,9 +11,12 @@ import {
 } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { FernBasePathExtension } from "../extensions/x-fern-base-path.js";
+import { FernBaseUrlEnvExtension } from "../extensions/x-fern-base-url-env.js";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
+import { FernGlobalParametersExtension } from "../extensions/x-fern-global-parameters.js";
 import { convertGlobalHeaderOverrides } from "../utils/convertGlobalHeaderOverrides.js";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension.js";
+import { convertGlobalParametersExtension } from "../utils/convertGlobalParametersExtension.js";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1.js";
 import { WebhookConverter } from "./paths/operations/WebhookConverter.js";
 import { PathConverter } from "./paths/PathConverter.js";
@@ -36,6 +42,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             spec: this.context.spec
         })) as OpenAPIV3_1.Document;
 
+        this.context.spec = applyTwilioVisibility({
+            document: this.context.spec,
+            options: this.context.settings,
+            logger: this.context.logger
+        });
+
         validateOpenApiSpec({
             spec: this.context.spec,
             errorCollector: this.context.errorCollector
@@ -46,6 +58,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.convertSecuritySchemes();
 
         this.convertGlobalHeaders();
+
+        this.convertGlobalParameters();
 
         this.convertBasePath();
 
@@ -97,15 +111,91 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
+    private convertGlobalParameters(): void {
+        const globalParametersExtension = new FernGlobalParametersExtension({
+            breadcrumbs: ["x-fern-global-parameters"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const convertedGlobalParameters = globalParametersExtension.convert();
+        if (convertedGlobalParameters != null) {
+            const globalParameters = convertGlobalParametersExtension({
+                globalParameters: convertedGlobalParameters,
+                context: this.context
+            });
+            this.ir.globalParameters = globalParameters;
+
+            // Warn about overlapping header names between x-fern-global-parameters
+            // and x-fern-global-headers — the former takes precedence.
+            // Compare on target (the actual wire header name), not the SDK name.
+            if (this.ir.headers.length > 0) {
+                const globalHeaderWireValues = new Set(
+                    this.ir.headers.map((h) => {
+                        const name = h.name;
+                        return (typeof name === "string" ? name : name.wireValue).toLowerCase();
+                    })
+                );
+                for (const param of convertedGlobalParameters) {
+                    const wireTarget = (param.target ?? param.name).toLowerCase();
+                    if (param.in === "header" && globalHeaderWireValues.has(wireTarget)) {
+                        this.context.logger.warn(
+                            `Global parameter "${param.name}" (in: header, target: "${param.target ?? param.name}") ` +
+                                `overlaps with an x-fern-global-headers entry. The x-fern-global-parameters ` +
+                                `definition takes precedence.`
+                        );
+                    }
+                }
+            }
+        }
+    }
+
     private convertBasePath(): void {
         const basePathExtension = new FernBasePathExtension({
             breadcrumbs: ["x-fern-base-path"],
             document: this.context.spec,
             context: this.context
         });
-        const basePath = basePathExtension.convert();
-        if (basePath != null) {
-            this.ir.basePath = constructHttpPath(basePath);
+        const parsed = basePathExtension.convert();
+        if (parsed == null) {
+            return;
+        }
+
+        this.ir.basePath = constructHttpPath(parsed.path);
+
+        for (const param of parsed.parameters) {
+            if (param.type !== "string") {
+                this.context.errorCollector.collect({
+                    message: `x-fern-base-path parameter '${param.name}' uses type '${param.type}' which is not yet supported; treating as string`,
+                    path: ["x-fern-base-path", "parameters", param.name]
+                });
+            }
+            this.ir.pathParameters.push({
+                name: this.context.casingsGenerator.generateName(param.name),
+                valueType: AbstractConverter.STRING,
+                docs: param.docs,
+                location: FernIr.PathParameterLocation.Root,
+                variable: undefined,
+                clientDefault: convertExtensionDefaultToLiteral(param.default),
+                v2Examples: {
+                    userSpecifiedExamples: {},
+                    autogeneratedExamples: {}
+                },
+                explode: undefined
+            });
+        }
+
+        if (parsed.pathsIncludeBasePath) {
+            const stripErrors = stripBasePathFromPaths({
+                openApi: this.context.spec,
+                basePath: parsed.path,
+                rootPathParameterNames: new Set(parsed.parameters.map((p) => p.name))
+            });
+            for (const message of stripErrors) {
+                this.context.errorCollector.collect({
+                    message,
+                    path: ["x-fern-base-path", "paths-include-base-path"]
+                });
+            }
         }
     }
 
@@ -182,6 +272,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): {
         defaultUrl: string | undefined;
     } {
+        const baseUrlEnvExtension = new FernBaseUrlEnvExtension({
+            breadcrumbs: ["x-fern-base-url-env"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const specBaseUrlEnvVar = baseUrlEnvExtension.convert();
+
         if (this.context.environmentOverrides) {
             const convertedEnvironments = convertEnvironments({
                 rawApiFileSchema: this.context.environmentOverrides,
@@ -189,7 +286,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
             if (convertedEnvironments != null) {
                 this.addEnvironmentsToIr({
-                    environmentConfig: convertedEnvironments.environmentsConfig,
+                    environmentConfig: {
+                        ...convertedEnvironments.environmentsConfig,
+                        // `base-url-env` in generators.yml wins, but an environments override
+                        // shouldn't silently discard the spec's `x-fern-base-url-env`.
+                        baseUrlEnvVar: convertedEnvironments.environmentsConfig.baseUrlEnvVar ?? specBaseUrlEnvVar
+                    },
                     audiences: convertedEnvironments.audiences
                 });
             }
@@ -202,7 +304,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             context: this.context,
             breadcrumbs: ["servers"],
             servers: this.context.spec.servers,
-            endpointLevelServers
+            endpointLevelServers,
+            baseUrlEnvVar: specBaseUrlEnvVar
         });
         const convertedServers = serversConverter.convert();
         this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value });
@@ -262,7 +365,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     webhook: convertedWebHook.webhook,
                     operationId,
                     audiences: convertedWebHook.audiences,
-                    group: convertedWebHook.group
+                    group: convertedWebHook.group,
+                    inlinedPayloadPropertiesByAudience: convertedWebHook.inlinedPayloadPropertiesByAudience
                 });
                 this.addTypesToIr(convertedWebHook.inlinedTypes);
             }
@@ -276,6 +380,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
         const errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
+        const declaredGlobalParameterIds =
+            this.ir.globalParameters != null ? new Set(this.ir.globalParameters.map((p) => p.id)) : undefined;
+
         for (const [path, pathItem] of Object.entries(this.context.spec.paths ?? {})) {
             if (pathItem == null) {
                 continue;
@@ -286,7 +393,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 breadcrumbs: ["paths", path],
                 topLevelServers: this.context.spec.servers,
                 pathItem,
-                path
+                path,
+                declaredGlobalParameterIds
             });
             const convertedPath = pathConverter.convert();
             if (convertedPath != null) {
@@ -296,7 +404,10 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                             endpoint: endpoint.streamEndpoint,
                             audiences: endpoint.audiences,
                             endpointGroup: endpoint.group,
-                            endpointGroupDisplayName: endpoint.groupDisplayName
+                            endpointGroupDisplayName: endpoint.groupDisplayName,
+                            endpointGroupDescription: endpoint.groupDescription,
+                            inlinedRequestPropertiesByAudience: endpoint.inlinedRequestPropertiesByAudience,
+                            queryParametersByAudience: endpoint.queryParametersByAudience
                         });
                     }
 
@@ -304,7 +415,10 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         endpoint: endpoint.endpoint,
                         audiences: endpoint.audiences,
                         endpointGroup: endpoint.group,
-                        endpointGroupDisplayName: endpoint.groupDisplayName
+                        endpointGroupDisplayName: endpoint.groupDisplayName,
+                        endpointGroupDescription: endpoint.groupDescription,
+                        inlinedRequestPropertiesByAudience: endpoint.inlinedRequestPropertiesByAudience,
+                        queryParametersByAudience: endpoint.queryParametersByAudience
                     });
 
                     if (endpoint.servers) {
@@ -337,7 +451,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         webhook: webhook.webhook,
                         operationId: group.join("."),
                         group,
-                        audiences: webhook.audiences
+                        audiences: webhook.audiences,
+                        inlinedPayloadPropertiesByAudience: webhook.inlinedPayloadPropertiesByAudience
                     });
                 }
                 this.addTypesToIr(convertedPath.inlinedTypes);
@@ -348,6 +463,14 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private overrideOpenApiAuthWithGeneratorsAuth(): void {
         if (!this.context.authOverrides?.["auth-schemes"]) {
+            return;
+        }
+
+        // Under endpoint-security, `auth-schemes` only supplies scheme definitions (OAuth
+        // configuration, header names). The requirements stay with each operation, so the
+        // spec's security must be left alone.
+        const auth = this.context.authOverrides.auth;
+        if (auth != null && isEndpointSecurityAuthSchemes(auth)) {
             return;
         }
 
@@ -382,4 +505,17 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             }
         }
     }
+}
+
+function convertExtensionDefaultToLiteral(value: unknown): Literal | undefined {
+    if (value == null) {
+        return undefined;
+    }
+    if (typeof value === "string") {
+        return Literal.string(value);
+    }
+    if (typeof value === "boolean") {
+        return Literal.boolean(value);
+    }
+    return undefined;
 }

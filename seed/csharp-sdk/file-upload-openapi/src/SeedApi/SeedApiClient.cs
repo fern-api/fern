@@ -14,7 +14,7 @@ public partial class SeedApiClient : ISeedApiClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedApi" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedApi.Version.Current },
                 { "User-Agent", "Fernfile-upload-openapi/0.0.1" },
             }
         );

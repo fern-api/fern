@@ -62,6 +62,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly enableUniqueErrorsPerEndpoint: boolean;
     public readonly generateV1Examples: boolean;
     public readonly documentBaseDir?: string;
+    private readonly externalDocuments = new Map<string, Promise<unknown>>();
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -260,24 +261,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
             }
             baseUrl = url;
 
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                return { resolved: false };
-            }
-            try {
-                const responseText = await response.text();
-                try {
-                    externalDoc = JSON.parse(responseText);
-                    resolvedReference = externalDoc;
-                } catch {
-                    externalDoc = yaml.load(responseText);
-                    resolvedReference = externalDoc;
-                }
-                if (resolvedReference == null) {
-                    return { resolved: false };
-                }
-            } catch (error) {
+            externalDoc = await this.loadExternalDocument(url);
+            resolvedReference = externalDoc;
+            if (resolvedReference == null) {
                 return { resolved: false };
             }
 
@@ -321,6 +307,36 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         return { resolved: true, value: resolvedReference as unknown as T };
+    }
+
+    /**
+     * Fetches and parses the JSON or YAML document at `url`, or returns undefined if the response
+     * isn't ok or can't be parsed. Each document is fetched once per conversion, however many refs
+     * point into it. Every caller gets its own copy because refs are resolved by mutating the
+     * document. Failures aren't cached, so the next ref to the same URL fetches it again.
+     */
+    private async loadExternalDocument(url: string): Promise<unknown> {
+        let document = this.externalDocuments.get(url);
+        if (document == null) {
+            document = fetchExternalDocument(url);
+            this.externalDocuments.set(url, document);
+        }
+        try {
+            const value = await document;
+            if (value == null) {
+                this.forgetExternalDocument(url, document);
+            }
+            return structuredClone(value);
+        } catch (error) {
+            this.forgetExternalDocument(url, document);
+            throw error;
+        }
+    }
+
+    private forgetExternalDocument(url: string, document: Promise<unknown>): void {
+        if (this.externalDocuments.get(url) === document) {
+            this.externalDocuments.delete(url);
+        }
     }
 
     /**
@@ -642,10 +658,20 @@ export abstract class AbstractConverterContext<Spec extends object> {
             | OpenAPIV3_1.ReferenceObject
             | OpenAPIV3_1.SchemaObject
             | OpenAPIV3_1.OperationObject
-            | OpenAPIV3_1.ParameterObject;
+            | OpenAPIV3_1.ParameterObject
+            | OpenAPIV3_1.HeaderObject;
         breadcrumbs: string[];
     }): Availability | undefined {
+        const visitedReferences = new Set<string>();
         while (this.isReferenceObject(node)) {
+            const declared = this.getDeclaredAvailability({ node, breadcrumbs });
+            if (declared != null) {
+                return declared;
+            }
+            if (visitedReferences.has(node.$ref)) {
+                return undefined;
+            }
+            visitedReferences.add(node.$ref);
             const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: node });
             if (!resolved.resolved) {
                 return undefined;
@@ -653,6 +679,21 @@ export abstract class AbstractConverterContext<Spec extends object> {
             node = resolved.value;
         }
 
+        return this.getDeclaredAvailability({ node, breadcrumbs });
+    }
+
+    /**
+     * Reads the availability declared directly on a node, without resolving references.
+     * Annotations written alongside a `$ref` describe that particular usage, so callers
+     * consult them before falling back to the referenced schema.
+     */
+    private getDeclaredAvailability({
+        node,
+        breadcrumbs
+    }: {
+        node: object;
+        breadcrumbs: string[];
+    }): Availability | undefined {
         const availabilityExtension = new Extensions.FernAvailabilityExtension({
             node,
             breadcrumbs,
@@ -666,7 +707,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             };
         }
 
-        if (node.deprecated === true) {
+        if (isMarkedDeprecated(node)) {
             return {
                 status: AvailabilityStatus.Deprecated,
                 message: undefined
@@ -909,5 +950,26 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public isObjectSchemaType(schema: OpenAPIV3_1.SchemaObject): boolean {
         return schema.type === "object" || schema.properties != null;
+    }
+}
+
+function isMarkedDeprecated(node: object): boolean {
+    return "deprecated" in node && node.deprecated === true;
+}
+
+async function fetchExternalDocument(url: string): Promise<unknown> {
+    const response = await fetch(url);
+    if (!response.ok) {
+        return undefined;
+    }
+    try {
+        const responseText = await response.text();
+        try {
+            return JSON.parse(responseText);
+        } catch {
+            return yaml.load(responseText);
+        }
+    } catch {
+        return undefined;
     }
 }

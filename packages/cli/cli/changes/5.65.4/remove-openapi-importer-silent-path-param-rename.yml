@@ -1,0 +1,5 @@
+- summary: |
+    The OpenAPI importer no longer silently renames a request body property that
+    collides with a path parameter. These collisions now surface as `fern check`
+    errors, forcing explicit deconfliction (e.g. via `x-fern-parameter-name`).
+  type: fix

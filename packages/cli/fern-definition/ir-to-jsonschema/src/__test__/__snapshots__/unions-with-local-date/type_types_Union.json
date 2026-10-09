@@ -37,6 +37,7 @@
       ]
     }
   ],
+  "description": "This is a simple union.",
   "definitions": {
     "types.Foo": {
       "type": "object",

@@ -1,0 +1,3 @@
+- summary: |
+    Fix `--instance` flag silently publishing to the wrong docs instance when the provided URL does not match any configured instance. Previously the CLI would fall back to the first configured instance; now it fails with an error listing available instances.
+  type: fix

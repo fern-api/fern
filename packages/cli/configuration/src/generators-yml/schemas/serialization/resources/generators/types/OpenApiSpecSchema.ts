@@ -5,12 +5,13 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { OpenApiSettingsSchema } from "./OpenApiSettingsSchema.js";
 import { OverridesSchema } from "./OverridesSchema.js";
+import { SpecSourceSchema } from "./SpecSourceSchema.js";
 
 export const OpenApiSpecSchema: core.serialization.ObjectSchema<
     serializers.OpenApiSpecSchema.Raw,
     GeneratorsYml.OpenApiSpecSchema
 > = core.serialization.object({
-    openapi: core.serialization.string(),
+    openapi: SpecSourceSchema,
     origin: core.serialization.string().optional(),
     overrides: OverridesSchema.optional(),
     overlays: core.serialization.string().optional(),
@@ -20,7 +21,7 @@ export const OpenApiSpecSchema: core.serialization.ObjectSchema<
 
 export declare namespace OpenApiSpecSchema {
     export interface Raw {
-        openapi: string;
+        openapi: SpecSourceSchema.Raw;
         origin?: string | null;
         overrides?: OverridesSchema.Raw | null;
         overlays?: string | null;

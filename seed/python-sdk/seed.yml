@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -56,6 +56,15 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  any-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enable_wire_tests: true
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        prefer_explicit_auth: true
+      outputFolder: prefer-explicit-auth
   basic-auth-pw-omitted:
     - customConfig:
         enable_wire_tests: true
@@ -75,6 +84,8 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
   circular-references-advanced:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
@@ -95,6 +106,20 @@ fixtures:
     - customConfig:
         omit_fern_headers: true
       outputFolder: omit-fern-headers
+    - customConfig:
+        include_platform_headers: true
+      outputFolder: include-platform-headers
+    - customConfig:
+        allow_user_agent_app_info: true
+      outputFolder: allow-user-agent-app-info
+    - customConfig:
+        include_platform_headers: true
+        allow_user_agent_app_info: true
+      outputFolder: include-platform-headers-app-info
+    - customConfig:
+        include_platform_headers: true
+        user_agent_only: true
+      outputFolder: user-agent-only
     - customConfig:
         additional_init_exports:
           - from: types.types
@@ -160,10 +185,20 @@ fixtures:
         pydantic_config:
           enum_type: "python_enums"
       outputFolder: real-enum
+  endpoint-security-auth:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true
       outputFolder: no-custom-config
+    - license:
+        custom: LICENSE
+      outputFolder: custom-license
+    - customConfig:
+        runtime_version: true
+      outputFolder: runtime-version
     - customConfig:
         enable_wire_tests: true
         client:
@@ -179,6 +214,9 @@ fixtures:
     - customConfig:
         timeout_in_seconds: 5
       outputFolder: five-second-timeout
+    - customConfig:
+        retry_status_codes: recommended
+      outputFolder: recommended-retry-status-codes
     - customConfig:
         pydantic_config:
           include_union_utils: true
@@ -235,6 +273,8 @@ fixtures:
         extra_dependencies:
           boto3: 1.35.76
       outputFolder: deps_with_min_python_version
+      skipScripts:
+        - test-pydantic-v1
     - customConfig:
         extra_dev_dependencies:
           requests_mock: 1.12.1
@@ -263,6 +303,9 @@ fixtures:
               - myCustomFunction
               - AnotherCustomClient
       outputFolder: additional_init_exports
+      # client_additions is a user-provided module that doesn't exist in the
+      # test environment; skip build scripts (mypy would fail on the missing import).
+      skipScripts: true
     - customConfig:
         improved_imports: true
       outputFolder: improved_imports
@@ -292,6 +335,32 @@ fixtures:
         package_path: matryoshka/doll/structure
       outputFolder: package-path
     - customConfig:
+        license_header: |
+          Copyright 2024 Acme, Inc.
+          Licensed under the Apache License, Version 2.0.
+        package_path: matryoshka/doll/structure
+      outputFolder: license-header
+    - customConfig:
+        output_directory: project-root
+      outputFolder: output-directory-project-root
+    # source-root mode intentionally skips pyproject.toml/requirements.txt emission
+    # (it's designed for embedding into an existing project), so the build/test
+    # scripts — which run `poetry install` — have nothing to operate on. Skip them.
+    - customConfig:
+        output_directory: source-root
+      outputFolder: output-directory-source-root
+      skipScripts: true
+    - customConfig:
+        output_directory: source-root
+        package_path: my_org/my_sdk
+      outputFolder: output-directory-source-root-with-package-path
+      skipScripts: true
+    - customConfig:
+        output_directory: source-root
+        package_name: sub.dir
+      outputFolder: output-directory-source-root-no-package-root
+      skipScripts: true
+    - customConfig:
         import_paths:
           - custom_integration
           - sentry_integration
@@ -300,8 +369,25 @@ fixtures:
         custom_transport: true
       outputFolder: custom-transport
     - customConfig:
+        tcp_keepalive:
+          enabled: true
+      outputFolder: tcp-keepalive
+    - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
+  idempotency-headers:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
+  inferred-auth-implicit:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -327,6 +413,12 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use_typeddict_requests
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: wire-tests
+  literal-user-agent:
+    - customConfig: null
+      outputFolder: no-custom-config
   mixed-file-directory:
     - customConfig: null
       outputFolder: no-custom-config
@@ -343,6 +435,12 @@ fixtures:
     - customConfig:
         offsetSemantics: "page-index"
       outputFolder: page-index-semantics
+  path-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        encode_path_params: true
+      outputFolder: encode-path-params
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
@@ -352,6 +450,10 @@ fixtures:
   query-parameters-openapi-as-objects:
     - customConfig: null
       outputFolder: no-custom-config
+  simple-api:
+    - customConfig:
+        optional-auth: true
+      outputFolder: optional-auth
   simple-fhir:
     - customConfig:
         use_inheritance_for_extended_models: false
@@ -371,10 +473,16 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+    - customConfig:
+        stream_abstraction: true
+      outputFolder: stream-abstraction
   server-sent-events-openapi:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  python-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config
@@ -418,6 +526,25 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  oauth-client-credentials-custom-prefix-openapi:
+    - customConfig: null
+      outputFolder: .
+  oauth-client-credentials-openapi:
+    - customConfig: null
+      outputFolder: .
+  python-oauth-token-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
+  python-inferred-auth-refresh-token:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        omit_unset_inferred_auth_params: true
+      outputFolder: omit-unset-inferred-auth-params
+  oauth-pkce:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: wire-tests
   python-mypy-exclude:
     - customConfig: null
       outputFolder: no-custom-config
@@ -433,6 +560,24 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
+  python-file-upload-array-content-type:
+    - customConfig: null
+      outputFolder: no-custom-config
+  python-optional-request-body:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        respect_optional_request_body: true
+      outputFolder: respect-optional-request-body
+  python-xml-twiml:
+    - customConfig: null
+      outputFolder: no-custom-config
+  openapi-per-spec-base-path:
+    - customConfig: null
+      outputFolder: no-custom-config
+  openapi-per-spec-base-path-disabled:
+    - customConfig: null
+      outputFolder: no-custom-config
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2
@@ -471,27 +616,3 @@ scripts:
         - poetry run pytest -rP .
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
-allowedFailures:
-  - schemaless-request-body-examples
-  - allof:no-custom-config
-  - allof-inline:no-custom-config
-  - any-auth
-  - endpoint-security-auth
-  - examples:legacy-wire-tests
-  - exhaustive:additional_init_exports
-  - exhaustive:deps_with_min_python_version
-  - exhaustive:pydantic-v1-with-utils
-  - oauth-client-credentials-custom
-  - oauth-client-credentials-openapi
-  - pagination-custom
-  - response-property
-  - streaming-parameter
-  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
-  - trace
-  - multi-url-environment-reference
-  # The unions API has two services (`union` and `bigunion`) that both expose
-  # `GET /{id}` on the root base-path, which causes a WireMock stub collision at
-  # test runtime. Code generation and imports are verified; one wire test
-  # assertion fails due to the colliding mocks. This is pre-existing and unrelated
-  # to the union_naming v1 fix this fixture regression-tests.
-  - unions:union-naming-v1-wire-tests

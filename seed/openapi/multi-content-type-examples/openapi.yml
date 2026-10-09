@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Multi Content Type Examples
+  version: 0.0.0
+paths:
+  /clients:
+    post:
+      operationId: clients_create
+      tags:
+        - Clients
+      parameters: []
+      responses:
+        '201':
+          description: Client created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+              examples:
+                Plain JSON response:
+                  value:
+                    client:
+                      id: client-123
+                      name: Acme Corp
+                      email: contact@acme.com
+      summary: Create client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  anyOf:
+                    - $ref: '#/components/schemas/Client'
+                    - type: 'null'
+            examples:
+              Plain JSON response:
+                value:
+                  client:
+                    name: Acme Corp
+                    email: contact@acme.com
+components:
+  schemas:
+    ClientResponse:
+      title: ClientResponse
+      type: object
+      properties:
+        client:
+          anyOf:
+            - $ref: '#/components/schemas/ClientWithId'
+            - type: 'null'
+    Client:
+      title: Client
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      required:
+        - name
+        - email
+    ClientWithId:
+      title: ClientWithId
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+      required:
+        - id
+        - name
+        - email
+  securitySchemes: {}

@@ -26,13 +26,23 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetPresignedURLRequest{
+//	    S3Key: "s3Key",
+//	}
+//	client.S3.GetPresignedURL(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetPresignedURL(
 	ctx context.Context,
 	request *fern.GetPresignedURLRequest,

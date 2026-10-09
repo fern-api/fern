@@ -6,7 +6,7 @@ import Api
     @Test func uploadFile1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -19,8 +19,8 @@ import Api
         let expectedResponse = "string"
         let response = try await client.fileUploadExample.uploadFile(
             request: .init(
-                file: .init(data: Data("".utf8)),
-                name: "name"
+                name: "name",
+                file: .init(data: Data("".utf8))
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

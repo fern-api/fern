@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/MovieId"
+    },
+    "title": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "description": "The rating scale is one to five stars"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "rating"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "MovieId": {
+      "type": "string"
+    }
+  }
+}

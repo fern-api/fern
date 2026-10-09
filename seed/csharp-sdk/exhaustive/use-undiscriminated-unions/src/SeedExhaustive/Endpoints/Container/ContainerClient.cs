@@ -20,6 +20,9 @@ public partial class ContainerClient : IContainerClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -33,6 +36,7 @@ public partial class ContainerClient : IContainerClient
                     Method = HttpMethod.Post,
                     Path = "/container/list-of-primitives",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -50,7 +54,7 @@ public partial class ContainerClient : IContainerClient
                 return new WithRawResponse<IEnumerable<string>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -64,7 +68,13 @@ public partial class ContainerClient : IContainerClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -75,7 +85,13 @@ public partial class ContainerClient : IContainerClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -88,6 +104,9 @@ public partial class ContainerClient : IContainerClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -101,6 +120,7 @@ public partial class ContainerClient : IContainerClient
                     Method = HttpMethod.Post,
                     Path = "/container/list-of-objects",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -120,7 +140,7 @@ public partial class ContainerClient : IContainerClient
                 return new WithRawResponse<IEnumerable<ObjectWithRequiredField>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -134,7 +154,13 @@ public partial class ContainerClient : IContainerClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -145,7 +171,13 @@ public partial class ContainerClient : IContainerClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -156,6 +188,9 @@ public partial class ContainerClient : IContainerClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -169,6 +204,7 @@ public partial class ContainerClient : IContainerClient
                     Method = HttpMethod.Post,
                     Path = "/container/set-of-primitives",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -186,7 +222,7 @@ public partial class ContainerClient : IContainerClient
                 return new WithRawResponse<HashSet<string>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -200,7 +236,13 @@ public partial class ContainerClient : IContainerClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -211,7 +253,13 @@ public partial class ContainerClient : IContainerClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -224,6 +272,9 @@ public partial class ContainerClient : IContainerClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -237,6 +288,7 @@ public partial class ContainerClient : IContainerClient
                     Method = HttpMethod.Post,
                     Path = "/container/set-of-objects",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -256,7 +308,7 @@ public partial class ContainerClient : IContainerClient
                 return new WithRawResponse<HashSet<ObjectWithRequiredField>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -270,7 +322,13 @@ public partial class ContainerClient : IContainerClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -281,7 +339,13 @@ public partial class ContainerClient : IContainerClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -294,6 +358,9 @@ public partial class ContainerClient : IContainerClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -307,6 +374,7 @@ public partial class ContainerClient : IContainerClient
                     Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-prim",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -324,7 +392,7 @@ public partial class ContainerClient : IContainerClient
                 return new WithRawResponse<Dictionary<string, string>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -338,7 +406,13 @@ public partial class ContainerClient : IContainerClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -349,7 +423,13 @@ public partial class ContainerClient : IContainerClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -362,6 +442,9 @@ public partial class ContainerClient : IContainerClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -375,6 +458,7 @@ public partial class ContainerClient : IContainerClient
                     Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-object",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -394,7 +478,7 @@ public partial class ContainerClient : IContainerClient
                 return new WithRawResponse<Dictionary<string, ObjectWithRequiredField>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -408,7 +492,13 @@ public partial class ContainerClient : IContainerClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -419,7 +509,13 @@ public partial class ContainerClient : IContainerClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -432,6 +528,9 @@ public partial class ContainerClient : IContainerClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -445,6 +544,7 @@ public partial class ContainerClient : IContainerClient
                     Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-union",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -464,7 +564,7 @@ public partial class ContainerClient : IContainerClient
                 return new WithRawResponse<Dictionary<string, MixedType>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -478,7 +578,13 @@ public partial class ContainerClient : IContainerClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -489,7 +595,99 @@ public partial class ContainerClient : IContainerClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<Dictionary<int, ObjectWithRequiredField>>
+    > GetAndReturnMapOfIntegerToObjectAsyncCore(
+        Dictionary<int, ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/container/map-integer-to-object",
+                    Body = request,
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<Dictionary<int, ObjectWithRequiredField>>(
+                    responseBody
+                )!;
+                return new WithRawResponse<Dictionary<int, ObjectWithRequiredField>>()
+                {
+                    Data = responseData,
+                    RawResponse = new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -500,6 +698,9 @@ public partial class ContainerClient : IContainerClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -513,6 +714,7 @@ public partial class ContainerClient : IContainerClient
                     Method = HttpMethod.Post,
                     Path = "/container/opt-objects",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -530,7 +732,7 @@ public partial class ContainerClient : IContainerClient
                 return new WithRawResponse<ObjectWithRequiredField?>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -544,7 +746,13 @@ public partial class ContainerClient : IContainerClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -555,7 +763,13 @@ public partial class ContainerClient : IContainerClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -687,6 +901,30 @@ public partial class ContainerClient : IContainerClient
                 options,
                 cancellationToken
             )
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnMapOfIntegerToObjectAsync(
+    ///     new Dictionary&lt;int, ObjectWithRequiredField&gt;()
+    ///     {
+    ///         {
+    ///             1,
+    ///             new ObjectWithRequiredField { String = "string" }
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<
+        Dictionary<int, ObjectWithRequiredField>
+    > GetAndReturnMapOfIntegerToObjectAsync(
+        Dictionary<int, ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Dictionary<int, ObjectWithRequiredField>>(
+            GetAndReturnMapOfIntegerToObjectAsyncCore(request, options, cancellationToken)
         );
     }
 

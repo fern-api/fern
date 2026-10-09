@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "ccadd52b",
+            "example_identifier": "ed2addbb",
             "id": {
                 "method": "GET",
                 "path": "/api/resources",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "d75c4d95",
+            "example_identifier": "b3ed9185",
             "id": {
                 "method": "GET",
                 "path": "/api/resources/{resourceId}",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "139c0b1",
+            "example_identifier": "9d1c0881",
             "id": {
                 "method": "POST",
                 "path": "/api/resources/search",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "576cb192",
+            "example_identifier": "2fddd692",
             "id": {
                 "method": "GET",
                 "path": "/api/users",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "f34e3b3e",
+            "example_identifier": "bed039de",
             "id": {
                 "method": "GET",
                 "path": "/api/users/{userId}",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "5b6eef41",
+            "example_identifier": "1ae50051",
             "id": {
                 "method": "POST",
                 "path": "/api/users",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "cc0e7c52",
+            "example_identifier": "506b5072",
             "id": {
                 "method": "PATCH",
                 "path": "/api/users/{userId}",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "185c468d",
+            "example_identifier": "ae76111d",
             "id": {
                 "method": "DELETE",
                 "path": "/api/users/{userId}",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "ed77e01c",
+            "example_identifier": "a0aebd5c",
             "id": {
                 "method": "GET",
                 "path": "/api/connections",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "a201664e",
+            "example_identifier": "7541747e",
             "id": {
                 "method": "GET",
                 "path": "/api/connections/{connectionId}",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "ed4d07f",
+            "example_identifier": "59a55b7f",
             "id": {
                 "method": "GET",
                 "path": "/api/clients",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "375ed54d",
+            "example_identifier": "7d0f8e3d",
             "id": {
                 "method": "GET",
                 "path": "/api/clients/{clientId}",

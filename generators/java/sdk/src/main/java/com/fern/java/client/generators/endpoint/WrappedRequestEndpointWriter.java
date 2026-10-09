@@ -51,6 +51,8 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.nio.file.Files;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import okhttp3.*;
 
@@ -157,13 +159,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         Optional.of(CodeBlock.of("$L.build()", variables.getMultipartBodyPropertiesName()));
             }
         } else {
-            if (httpEndpoint.getMethod().equals(HttpMethod.POST)
-                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)
-                    || httpEndpoint.getMethod().equals(HttpMethod.PATCH)) {
-                inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$T.create($S, null)", RequestBody.class, ""));
-            } else {
-                inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("null"));
-            }
+            inlinedRequestBodyBuilder = Optional.of(noRequestBodyCodeBlock(httpEndpoint.getMethod()));
         }
         if (clientGeneratorContext.isEndpointSecurity()) {
             requestBodyCodeBlock.add(
@@ -201,14 +197,17 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         }
         Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
         if (clientGeneratorContext.isEndpointSecurity()) {
-            requestBodyCodeBlock.add(".headers($T.of(_headers))", Headers.class);
+            requestBodyCodeBlock.add(
+                    ".headers($T.of($L))", Headers.class, maybeWrapHeadersWithIdempotencyKey(CodeBlock.of("_headers")));
         } else {
             requestBodyCodeBlock.add(
-                    ".headers($T.of($L.$L($L)))",
+                    ".headers($T.of($L))",
                     Headers.class,
-                    clientOptionsMember.name,
-                    ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                    maybeWrapHeadersWithIdempotencyKey(CodeBlock.of(
+                            "$L.$L($L)",
+                            clientOptionsMember.name,
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)));
         }
         if (sendContentType && !isFileUpload) {
             requestBodyCodeBlock.add("\n.addHeader($S, $S)", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
@@ -307,7 +306,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             // Set a default empty response body and begin a conditional, prior to parsing the RequestBody
             requestBodyCodeBlock
                     .addStatement("$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
-                    .beginControlFlow("if ($N.isPresent())", variableToJsonify);
+                    .beginControlFlow("if ($N.isPresent() || $L)", variableToJsonify, hasBodyPropertiesCodeBlock());
         }
         CodeBlock requestBodyContentType = CodeBlock.of(
                 "$T.$L",
@@ -320,12 +319,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
         requestBodyCodeBlock
                 .addStatement(
-                        "$L = $T.create($T.$L.writeValueAsBytes($L), $L)",
+                        "$L = $T.create($T.$L.writeValueAsBytes($T.merge($L, $L)), $L)",
                         variables.getOkhttpRequestBodyName(),
                         RequestBody.class,
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
+                        bodyPropertiesClassName(),
                         variableToJsonify,
+                        bodyPropertiesCodeBlock(),
                         requestBodyContentType)
                 .endControlFlow();
         if (isOptional) {
@@ -350,112 +351,13 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.beginControlFlow("try");
         for (FileUploadProperty fileUploadProperty : fileUploadRequest.properties()) {
             if (fileUploadProperty instanceof JsonFileUploadProperty) {
-                EnrichedObjectProperty jsonProperty = ((JsonFileUploadProperty) fileUploadProperty).objectProperty();
-                Optional<FileUploadBodyPropertyEncoding> style = ((JsonFileUploadProperty) fileUploadProperty)
-                        .rawProperty()
-                        .getStyle();
-                boolean isOptional = typeNameIsOptional(jsonProperty.poetTypeName());
-                boolean formStyle = style.isPresent() && style.get().equals(FileUploadBodyPropertyEncoding.FORM);
-                boolean isCollection = ((JsonFileUploadProperty) fileUploadProperty)
-                        .rawProperty()
-                        .getValueType()
-                        .visit(new TypeReferenceIsCollection(clientGeneratorContext));
-
-                CodeBlock addDataPart;
-
-                if (formStyle) {
-                    addDataPart = CodeBlock.of(
-                            "$T.addFormDataPart($L, $S, $L, false)",
-                            clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
-                            variables.getMultipartBodyPropertiesName(),
-                            jsonProperty.wireKey().get(),
-                            requestParameterName + "." + jsonProperty.getterProperty().name + "()"
-                                    + (isOptional ? ".get()" : ""));
-                } else {
-                    // Determine if this type needs JSON serialization or can use simple string conversion.
-                    // Simple types (strings, primitives, enums) should NOT be JSON-serialized in multipart
-                    // form data because writeValueAsString() wraps strings in quotes.
-                    boolean needsJsonSerialization = ((JsonFileUploadProperty) fileUploadProperty)
-                            .rawProperty()
-                            .getValueType()
-                            .visit(new TypeReferenceNeedsJsonSerialization(clientGeneratorContext));
-
-                    CodeBlock.Builder dataPartBuilder = CodeBlock.builder();
-                    String writeValueParameter = requestParameterName + "." + jsonProperty.getterProperty().name + "()"
-                            + (isOptional ? ".get()" : "");
-
-                    if (isCollection) {
-                        String collection = writeValueParameter;
-                        // Only way a collection is named is being an alias.
-                        boolean collectionIsAlias = ((JsonFileUploadProperty) fileUploadProperty)
-                                .rawProperty()
-                                .getValueType()
-                                .isNamed();
-                        if (clientGeneratorContext.getCustomConfig().wrappedAliases() && collectionIsAlias) {
-                            collection += ".get()";
-                        }
-                        writeValueParameter = "item";
-                        dataPartBuilder.add("$L.forEach($L -> {\n", collection, writeValueParameter);
-                        dataPartBuilder.indent();
-                        if (needsJsonSerialization) {
-                            dataPartBuilder.beginControlFlow("try");
-                        }
-                    }
-
-                    if (needsJsonSerialization) {
-                        dataPartBuilder.add(
-                                "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))" + (isCollection ? ";\n" : ""),
-                                variables.getMultipartBodyPropertiesName(),
-                                jsonProperty.wireKey().get(),
-                                generatedObjectMapper.getClassName(),
-                                generatedObjectMapper.jsonMapperStaticField().name,
-                                writeValueParameter);
-                    } else if (isCollection) {
-                        // For collection items of simple types, use String.valueOf()
-                        dataPartBuilder.add(
-                                "$L.addFormDataPart($S, $T.valueOf($L));\n",
-                                variables.getMultipartBodyPropertiesName(),
-                                jsonProperty.wireKey().get(),
-                                String.class,
-                                writeValueParameter);
-                    } else {
-                        // For non-collection simple types, use PoetTypeNameStringifier
-                        TypeName rawTypeName = jsonProperty.poetTypeName();
-                        if (isOptional) {
-                            rawTypeName = ((ParameterizedTypeName) rawTypeName).typeArguments.get(0);
-                        }
-                        dataPartBuilder.add(
-                                "$L.addFormDataPart($S, $L)",
-                                variables.getMultipartBodyPropertiesName(),
-                                jsonProperty.wireKey().get(),
-                                PoetTypeNameStringifier.stringify(writeValueParameter, rawTypeName));
-                    }
-
-                    if (isCollection) {
-                        if (needsJsonSerialization) {
-                            dataPartBuilder.endControlFlow();
-                            dataPartBuilder.beginControlFlow("catch ($T e)", JsonProcessingException.class);
-                            dataPartBuilder.add(
-                                    "throw new $T($S, e);\n", RuntimeException.class, "Failed to write value as JSON");
-                            dataPartBuilder.endControlFlow();
-                        }
-                        dataPartBuilder.unindent();
-                        dataPartBuilder.add("})");
-                    }
-
-                    addDataPart = dataPartBuilder.build();
-                }
-
-                if (isOptional) {
-                    requestBodyCodeBlock.beginControlFlow(
-                            "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty());
-                }
-
-                requestBodyCodeBlock.addStatement(addDataPart);
-
-                if (isOptional) {
-                    requestBodyCodeBlock.endControlFlow();
-                }
+                addJsonFileUploadFormDataParts(
+                        clientGeneratorContext,
+                        generatedObjectMapper,
+                        variables.getMultipartBodyPropertiesName(),
+                        requestParameterName,
+                        (JsonFileUploadProperty) fileUploadProperty,
+                        requestBodyCodeBlock);
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
                 NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
@@ -523,6 +425,118 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 .endControlFlow();
     }
 
+    static void addJsonFileUploadFormDataParts(
+            ClientGeneratorContext clientGeneratorContext,
+            GeneratedObjectMapper generatedObjectMapper,
+            String multipartBodyPropertiesName,
+            String requestParameterName,
+            JsonFileUploadProperty jsonFileUploadProperty,
+            CodeBlock.Builder requestBodyCodeBlock) {
+        EnrichedObjectProperty jsonProperty = jsonFileUploadProperty.objectProperty();
+        Optional<FileUploadBodyPropertyEncoding> style =
+                jsonFileUploadProperty.rawProperty().getStyle();
+        boolean isOptional = typeNameIsOptional(jsonProperty.poetTypeName());
+        boolean formStyle = style.isPresent() && style.get().equals(FileUploadBodyPropertyEncoding.FORM);
+        boolean isCollection = jsonFileUploadProperty
+                .rawProperty()
+                .getValueType()
+                .visit(new TypeReferenceIsCollection(clientGeneratorContext));
+
+        CodeBlock addDataPart;
+
+        if (formStyle) {
+            addDataPart = CodeBlock.of(
+                    "$T.addFormDataPart($L, $S, $L, false)",
+                    clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                    multipartBodyPropertiesName,
+                    jsonProperty.wireKey().get(),
+                    requestParameterName + "." + jsonProperty.getterProperty().name + "()"
+                            + (isOptional ? ".get()" : ""));
+        } else {
+            // Determine if this type needs JSON serialization or can use simple string conversion.
+            // Simple types (strings, primitives, enums) should NOT be JSON-serialized in multipart
+            // form data because writeValueAsString() wraps strings in quotes.
+            boolean needsJsonSerialization = jsonFileUploadProperty
+                    .rawProperty()
+                    .getValueType()
+                    .visit(new TypeReferenceNeedsJsonSerialization(clientGeneratorContext));
+
+            CodeBlock.Builder dataPartBuilder = CodeBlock.builder();
+            String writeValueParameter = requestParameterName + "." + jsonProperty.getterProperty().name + "()"
+                    + (isOptional ? ".get()" : "");
+
+            if (isCollection) {
+                String collection = writeValueParameter;
+                // Only way a collection is named is being an alias.
+                boolean collectionIsAlias =
+                        jsonFileUploadProperty.rawProperty().getValueType().isNamed();
+                if (clientGeneratorContext.getCustomConfig().wrappedAliases() && collectionIsAlias) {
+                    collection += ".get()";
+                }
+                writeValueParameter = "item";
+                dataPartBuilder.add("$L.forEach($L -> {\n", collection, writeValueParameter);
+                dataPartBuilder.indent();
+                if (needsJsonSerialization) {
+                    dataPartBuilder.beginControlFlow("try");
+                }
+            }
+
+            if (needsJsonSerialization) {
+                dataPartBuilder.add(
+                        "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))" + (isCollection ? ";\n" : ""),
+                        multipartBodyPropertiesName,
+                        jsonProperty.wireKey().get(),
+                        generatedObjectMapper.getClassName(),
+                        generatedObjectMapper.jsonMapperStaticField().name,
+                        writeValueParameter);
+            } else if (isCollection) {
+                // For collection items of simple types, use String.valueOf()
+                dataPartBuilder.add(
+                        "$L.addFormDataPart($S, $T.valueOf($L));\n",
+                        multipartBodyPropertiesName,
+                        jsonProperty.wireKey().get(),
+                        String.class,
+                        writeValueParameter);
+            } else {
+                // For non-collection simple types, use PoetTypeNameStringifier
+                TypeName rawTypeName = jsonProperty.poetTypeName();
+                if (isOptional) {
+                    rawTypeName = ((ParameterizedTypeName) rawTypeName).typeArguments.get(0);
+                }
+                dataPartBuilder.add(
+                        "$L.addFormDataPart($S, $L)",
+                        multipartBodyPropertiesName,
+                        jsonProperty.wireKey().get(),
+                        PoetTypeNameStringifier.stringify(writeValueParameter, rawTypeName));
+            }
+
+            if (isCollection) {
+                if (needsJsonSerialization) {
+                    dataPartBuilder.endControlFlow();
+                    dataPartBuilder.beginControlFlow("catch ($T e)", JsonProcessingException.class);
+                    dataPartBuilder.add(
+                            "throw new $T($S, e);\n", RuntimeException.class, "Failed to write value as JSON");
+                    dataPartBuilder.endControlFlow();
+                }
+                dataPartBuilder.unindent();
+                dataPartBuilder.add("})");
+            }
+
+            addDataPart = dataPartBuilder.build();
+        }
+
+        if (isOptional) {
+            requestBodyCodeBlock.beginControlFlow(
+                    "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty());
+        }
+
+        requestBodyCodeBlock.addStatement(addDataPart);
+
+        if (isOptional) {
+            requestBodyCodeBlock.endControlFlow();
+        }
+    }
+
     private void initializeUrlFormEncodedBody(
             GeneratedWrappedRequest.UrlFormEncodedGetters urlFormEncodedGetters,
             CodeBlock.Builder requestBodyCodeBlock) {
@@ -532,6 +546,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 variables.getOkhttpRequestBodyName(),
                 FormBody.class);
         requestBodyCodeBlock.beginControlFlow("try");
+        requestBodyCodeBlock.addStatement(
+                "$T<$T, $T> formParams = new $T<>()", Map.class, String.class, Object.class, LinkedHashMap.class);
 
         for (EnrichedObjectProperty property : urlFormEncodedGetters.properties()) {
             String propertyGetter = requestParameterName + "." + property.getterProperty().name + "()";
@@ -541,21 +557,29 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 requestBodyCodeBlock
                         .beginControlFlow("if ($L.isPresent())", propertyGetter)
                         .addStatement(
-                                "$L.add($S, String.valueOf($L.get()))",
-                                variables.getOkhttpRequestBodyName(),
+                                "formParams.put($S, $L.get())",
                                 property.wireKey().get(),
                                 propertyGetter)
                         .endControlFlow();
             } else {
                 requestBodyCodeBlock.addStatement(
-                        "$L.add($S, String.valueOf($L))",
-                        variables.getOkhttpRequestBodyName(),
-                        property.wireKey().get(),
-                        propertyGetter);
+                        "formParams.put($S, $L)", property.wireKey().get(), propertyGetter);
             }
         }
 
         requestBodyCodeBlock
+                .beginControlFlow(
+                        "for ($T.Entry<$T, $T> entry : $T.mergeFormParams(formParams, $L).entrySet())",
+                        Map.class,
+                        String.class,
+                        Object.class,
+                        bodyPropertiesClassName(),
+                        bodyPropertiesCodeBlock())
+                .addStatement(
+                        "$L.add(entry.getKey(), $T.valueOf(entry.getValue()))",
+                        variables.getOkhttpRequestBodyName(),
+                        String.class)
+                .endControlFlow()
                 .endControlFlow()
                 .beginControlFlow("catch($T e)", Exception.class)
                 .addStatement("throw new $T(e)", RuntimeException.class)

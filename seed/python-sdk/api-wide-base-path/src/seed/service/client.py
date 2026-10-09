@@ -24,7 +24,6 @@ class ServiceClient:
 
     def post(
         self,
-        path_param: str,
         service_param: str,
         endpoint_param: int,
         resource_param: str,
@@ -34,8 +33,6 @@ class ServiceClient:
         """
         Parameters
         ----------
-        path_param : str
-
         service_param : str
 
         endpoint_param : int
@@ -54,6 +51,7 @@ class ServiceClient:
         from seed import SeedApiWideBasePath
 
         client = SeedApiWideBasePath(
+            path_param="YOUR_PATH_PARAM",
             base_url="https://yourhost.com/path/to/api",
         )
         client.service.post(
@@ -63,7 +61,7 @@ class ServiceClient:
         )
         """
         _response = self._raw_client.post(
-            path_param, service_param, endpoint_param, resource_param, request_options=request_options
+            service_param, endpoint_param, resource_param, request_options=request_options
         )
         return _response.data
 
@@ -85,7 +83,6 @@ class AsyncServiceClient:
 
     async def post(
         self,
-        path_param: str,
         service_param: str,
         endpoint_param: int,
         resource_param: str,
@@ -95,8 +92,6 @@ class AsyncServiceClient:
         """
         Parameters
         ----------
-        path_param : str
-
         service_param : str
 
         endpoint_param : int
@@ -117,6 +112,7 @@ class AsyncServiceClient:
         from seed import AsyncSeedApiWideBasePath
 
         client = AsyncSeedApiWideBasePath(
+            path_param="YOUR_PATH_PARAM",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -132,6 +128,6 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.post(
-            path_param, service_param, endpoint_param, resource_param, request_options=request_options
+            service_param, endpoint_param, resource_param, request_options=request_options
         )
         return _response.data

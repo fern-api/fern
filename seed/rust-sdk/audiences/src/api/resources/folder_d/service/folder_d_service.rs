@@ -13,6 +13,20 @@ impl ServiceClient2 {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_audiences::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = AudiencesClient::new(config).expect("Failed to build client");
+    ///     client.folder_d.service.get_direct_thread(None).await;
+    /// }
+    /// ```
     pub async fn get_direct_thread(
         &self,
         options: Option<RequestOptions>,

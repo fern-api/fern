@@ -1,3 +1,4 @@
+import { getTargetFrameworkRequirements } from "@fern-api/csharp-base";
 import { CsharpConfigSchema } from "@fern-api/csharp-codegen";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -43,10 +44,13 @@ export class ReadmeConfigBuilder {
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
+            apiName: context.ir.readmeConfig?.apiName,
+            disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
+            whiteLabel: context.ir.readmeConfig?.whiteLabel,
             referenceMarkdownPath: "./reference.md",
             customSections: getCustomSections(context),
             features,
-            requirements: []
+            requirements: getTargetFrameworkRequirements()
         };
     }
 

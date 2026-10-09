@@ -49,6 +49,13 @@ interface Builder {
 export interface BuilderParameter {
     name: string;
     value: TypeLiteral;
+    /**
+     * Whether this property is a required stage in the generated staged builder. When set, it takes
+     * precedence over inferring required-ness from the emitted value. This matters because a nullable
+     * property may be emitted as a raw (non-Optional) value yet still belong on the builder's final
+     * stage rather than the required staged chain.
+     */
+    isRequired?: boolean;
 }
 
 interface Bytes {
@@ -526,7 +533,7 @@ export class TypeLiteral extends AstNode {
     }
 
     public orderBuilderParameters(parameters: java.BuilderParameter[]): java.BuilderParameter[] {
-        const hasRequiredFields = parameters.some((p) => !p.value.isOptional() && !this.isCollection(p.value));
+        const hasRequiredFields = parameters.some((p) => this.isRequiredBuilderParameter(p));
 
         if (!hasRequiredFields) {
             return parameters.sort((a, b) => {
@@ -545,8 +552,8 @@ export class TypeLiteral extends AstNode {
         }
 
         return parameters.sort((a, b) => {
-            const aIsNonRequired = this.isNonRequired(a.value);
-            const bIsNonRequired = this.isNonRequired(b.value);
+            const aIsNonRequired = !this.isRequiredBuilderParameter(a);
+            const bIsNonRequired = !this.isRequiredBuilderParameter(b);
 
             if (aIsNonRequired && !bIsNonRequired) {
                 return 1;
@@ -562,6 +569,13 @@ export class TypeLiteral extends AstNode {
     private isCollection(value: TypeLiteral): boolean {
         const internalType = value.internalType.type;
         return internalType === "list" || internalType === "set" || internalType === "map";
+    }
+
+    private isRequiredBuilderParameter(parameter: java.BuilderParameter): boolean {
+        if (parameter.isRequired != null) {
+            return parameter.isRequired;
+        }
+        return !this.isNonRequired(parameter.value);
     }
 
     private isNonRequired(value: TypeLiteral): boolean {

@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Tree API",
   "auth": {
@@ -599,7 +600,6 @@
               "typeId": "type_:TreeCreate",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
@@ -2610,7 +2610,8 @@
     ],
     "errors": [],
     "subpackages": [],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

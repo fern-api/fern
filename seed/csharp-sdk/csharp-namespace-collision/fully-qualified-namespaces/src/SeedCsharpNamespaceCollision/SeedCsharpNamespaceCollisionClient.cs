@@ -43,6 +43,9 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -56,6 +59,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -87,7 +91,13 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -98,7 +108,13 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             throw new SeedCsharpNamespaceCollisionApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -109,6 +125,9 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -122,6 +141,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -153,7 +173,13 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -164,7 +190,13 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             throw new SeedCsharpNamespaceCollisionApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

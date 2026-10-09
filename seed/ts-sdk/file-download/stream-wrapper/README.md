@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedFileDownloadClient } from "@fern/file-download";
 
-const client = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedFileDownloadClient({ baseUrl: "YOUR_BASE_URL" });
 await client.service.simple();
 ```
 

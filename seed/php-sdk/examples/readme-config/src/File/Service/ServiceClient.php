@@ -52,6 +52,16 @@ class ServiceClient
     /**
      * This endpoint returns a file by its name.
      *
+     * Example:
+     * ```php
+     * $client->file->service->getFile(
+     *     'file.txt',
+     *     new GetFileRequest([
+     *         'xFileApiVersion' => '0.0.2',
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $filename This is a filename
      * @param GetFileRequest $request
      * @param ?array{

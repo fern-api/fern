@@ -14,7 +14,7 @@ public partial class SeedClientSideParamsClient : ISeedClientSideParamsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedClientSideParams" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedClientSideParams.Version.Current },
                 { "User-Agent", "Fernclient-side-params/0.0.1" },
             }
         );

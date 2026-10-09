@@ -6,7 +6,7 @@ import Trace
     @Test func getAttemptedMigrations1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -29,14 +29,17 @@ import Trace
         let expectedResponse = [
             Migration(
                 name: "name",
-                status: .running
+                status: MigrationStatus.running
             ),
             Migration(
                 name: "name",
-                status: .running
+                status: MigrationStatus.running
             )
         ]
-        let response = try await client.migration.getAttemptedMigrations(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.migration.getAttemptedMigrations(
+            adminKeyHeader: "admin-key-header",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "next_cursor": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/users.User"
+      }
+    }
+  },
+  "required": [
+    "next_cursor",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

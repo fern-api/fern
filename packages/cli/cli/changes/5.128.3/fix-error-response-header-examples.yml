@@ -1,0 +1,4 @@
+- summary: |
+    Register error-status endpoint examples carrying the error response headers' example values
+    (e.g. a 429's `Retry-After`), so docs render them when `show-headers-in-examples` is enabled.
+  type: fix

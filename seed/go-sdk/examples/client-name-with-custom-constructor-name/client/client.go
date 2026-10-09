@@ -36,13 +36,20 @@ func New(opts ...option.RequestOption) *Acme {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Echo(
+//	    context.TODO(),
+//	    request,
+//	)
 func (a *Acme) Echo(
 	ctx context.Context,
 	request string,
@@ -59,6 +66,15 @@ func (a *Acme) Echo(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.Type{
+//	    BasicType: fern.BasicTypePrimitive,
+//	}
+//	client.CreateType(
+//	    context.TODO(),
+//	    request,
+//	)
 func (a *Acme) CreateType(
 	ctx context.Context,
 	request *fern.Type,

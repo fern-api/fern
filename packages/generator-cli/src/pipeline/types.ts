@@ -5,6 +5,7 @@ export interface PipelineConfig {
     replay?: ReplayStepConfig;
     autoVersion?: AutoVersionStepConfig;
     fernignore?: FernignoreStepConfig; // PHASE 2: not implemented yet
+    verify?: VerifyStepConfig;
     github?: GithubStepConfig;
 
     // Global metadata
@@ -19,6 +20,7 @@ export interface PipelineContext {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        verify?: VerificationStepResult;
     };
 }
 
@@ -41,7 +43,6 @@ export interface GenerationCommitStepResult extends StepResult {
     preparedReplay?: import("../replay/replay-run").PreparedReplay | null;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
-    baseBranchHead?: string;
     /** Flow selected by the replay service during prepare. */
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
     /**
@@ -67,14 +68,20 @@ export interface AutoVersionStepConfig {
     /** Fallback version when no prior generation exists (first run). Defaults to "0.0.1" (or "v0.0.1" for Go). */
     baseVersion?: string;
     /**
-     * BAML AI service configuration (provider + model). Required when `enabled: true` — without it,
-     * AnalyzeSdkDiff calls will fail and the step will fall back to a PATCH bump.
+     * BAML AI service configuration (provider + model). When absent, the step calls the
+     * hosted FAI service using `fernToken` instead. If neither is supplied, AI analysis
+     * fails and the step falls back to a PATCH bump with a neutral message.
      * Shape matches `generatorsYml.AiServicesSchema` from @fern-api/configuration; typed structurally
      * to avoid pulling the configuration package into generator-cli's dep graph.
      */
     ai?: AutoVersionAiConfig;
-    /** Optional Fern API token passed through to BAML client configuration if needed by the provider. */
+    /**
+     * Fern API token used to call the hosted FAI service (`/sdks/analyze-commit-diff`)
+     * when no `ai` config is supplied — the remote-generation (fiddle) path.
+     */
     fernToken?: string;
+    /** Override for the FAI service base URL. Defaults to https://fai.buildwithfern.com. */
+    faiBaseUrl?: string;
     /** Spec repository commit message included as additional AI context. */
     specCommitMessage?: string;
     /** When true, strips "🌿 Generated with Fern" trailers from commit messages (whitelabel customers). */
@@ -95,6 +102,12 @@ export interface FernignoreStepConfig {
     customContents?: string;
 }
 
+export interface VerifyStepConfig {
+    enabled: boolean;
+    /** Container runtime to use. Defaults to "docker". */
+    runner?: "docker" | "podman";
+}
+
 export interface GithubStepConfig {
     enabled: boolean;
     /** GitHub repository URI (e.g. "owner/repo") */
@@ -102,7 +115,7 @@ export interface GithubStepConfig {
     /** GitHub auth token */
     token: string;
     /** Output mode */
-    mode: "push" | "pull-request";
+    mode: "push" | "pull-request" | "commit-and-release";
     /** Target branch (base branch for PRs, push target for push mode) */
     branch?: string;
     /** Commit message for the generation */
@@ -121,6 +134,12 @@ export interface GithubStepConfig {
     versionBump?: string;
     /** Skip push/PR creation, just prepare branches locally */
     previewMode?: boolean;
+    /**
+     * Whether generated `.github/workflows/*` files are delivered. Defaults to true. When false,
+     * newly generated workflow files are dropped and tracked ones are restored from HEAD before
+     * any commit, so the delivery never touches workflow files (no `workflows` permission needed).
+     */
+    workflows?: boolean;
     /** Generator name for namespaced fern-generation-base tag */
     generatorName?: string;
     /** Explicit override: whether replay already created commits (derived from replay context if omitted) */
@@ -144,6 +163,11 @@ export interface GithubStepConfig {
     runId?: string;
     /** GitHub API base URL for GitHub Enterprise (e.g. "https://github.intuit.com/api/v3"). Omit for github.com. */
     apiBaseUrl?: string;
+    /** Override the commit author/committer identity for API-created commits. Defaults to the Fern bot identity. */
+    author?: {
+        name: string;
+        email: string;
+    };
 }
 
 export interface PipelineResult {
@@ -153,6 +177,7 @@ export interface PipelineResult {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        verify?: VerificationStepResult;
         github?: GithubStepResult;
     };
     errors?: string[];
@@ -200,7 +225,6 @@ export interface ReplayStepResult extends StepResult {
     patchesRefreshed?: number;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
-    baseBranchHead?: string;
     unresolvedPatches?: Array<{
         patchId: string;
         patchMessage: string;
@@ -215,6 +239,13 @@ export interface ReplayStepResult extends StepResult {
 
 export interface FernignoreStepResult extends StepResult {
     pathsPreserved?: string[];
+}
+
+export interface VerificationStepResult extends StepResult {
+    /** True when no `.fern/verify.sh` was emitted by the generator — the step short-circuits silently. */
+    skipped: boolean;
+    /** Captured stderr from the verification script when it fails. */
+    stderr?: string;
 }
 
 export interface AutoVersionStepResult extends StepResult {
@@ -232,6 +263,13 @@ export interface AutoVersionStepResult extends StepResult {
     prDescription?: string;
     /** One-sentence justification for WHY the version bump was chosen. */
     versionBumpReason?: string;
+    /**
+     * Set when FAI analysis was unavailable (request failed, diff over the size cap; the
+     * step falls back to a PATCH bump) or incomplete (some hosted chunks failed or were
+     * dropped by the chunk cap). The bump level may be too low; GithubStep surfaces this
+     * in the PR body and never automerges such a PR.
+     */
+    analysisWarning?: string;
     /** SHA of the `[fern-autoversion]` commit once it's been made. TS-only; no fiddle counterpart. */
     commitSha?: string;
 }
@@ -247,6 +285,8 @@ export interface GithubStepResult extends StepResult {
     skippedNoDiff?: boolean;
     /** True when automerge was enabled on the PR */
     autoMergeEnabled?: boolean;
+    /** URL of the GitHub release created in commit-and-release mode */
+    releaseUrl?: string;
 }
 
 export interface StepResult {

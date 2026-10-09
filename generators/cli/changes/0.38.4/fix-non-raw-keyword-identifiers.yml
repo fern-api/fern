@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated CLI failing to compile when a property is named `self`, `Self`, `crate` or `super`.
+    Rust rejects these as raw identifiers, so they are now suffixed with an underscore (`self_`)
+    and given an explicit `#[serde(rename = "self")]` to preserve the wire name.
+  type: fix

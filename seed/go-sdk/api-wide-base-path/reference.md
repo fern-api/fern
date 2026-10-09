@@ -14,13 +14,12 @@
 
 ```go
 client.Service.Post(
-        context.TODO(),
-        "pathParam",
-        "serviceParam",
-        1,
-        "resourceParam",
-    )
-}
+    context.TODO(),
+    "pathParam",
+    "serviceParam",
+    1,
+    "resourceParam",
+)
 ```
 </dd>
 </dl>

@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+import com.seed.api.resources.imdb.requests.CreateMovieRequest;
 
 public class Example0 {
     public static void main(String[] args) {

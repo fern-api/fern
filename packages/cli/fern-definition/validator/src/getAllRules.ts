@@ -28,13 +28,16 @@ import { NoUndefinedVariableReferenceRule } from "./rules/no-undefined-variable-
 import { NoUnusedGenericRule } from "./rules/no-unused-generic/index.js";
 import { OnlyObjectExtensionsRule } from "./rules/only-object-extensions/index.js";
 import { ValidBasePathRule } from "./rules/valid-base-path/index.js";
+import { ValidBaseUrlEnvRule } from "./rules/valid-base-url-env/index.js";
 import { ValidDefaultEnvironmentRule } from "./rules/valid-default-environment/index.js";
 import { ValidEndpointPathRule } from "./rules/valid-endpoint-path/index.js";
+import { ValidErrorStatusCodeRule } from "./rules/valid-error-status-code/index.js";
 import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-call/index.js";
 import { ValidExampleErrorRule } from "./rules/valid-example-error/index.js";
 import { ValidExampleTypeRule } from "./rules/valid-example-type/index.js";
 import { ValidFieldNamesRule } from "./rules/valid-field-names/index.js";
 import { ValidGenericRule } from "./rules/valid-generic/index.js";
+import { ValidGlobalParametersRule } from "./rules/valid-global-parameters/index.js";
 import { ValidNavigationRule } from "./rules/valid-navigation/index.js";
 import { ValidOauthRule } from "./rules/valid-oauth/index.js";
 import { ValidPaginationRule } from "./rules/valid-pagination/index.js";
@@ -61,9 +64,11 @@ export function getAllRules(): Rule[] {
         NoGetRequestBodyRule,
         NoComplexQueryParamsRule,
         ValidDefaultEnvironmentRule,
+        ValidBaseUrlEnvRule,
         NoMissingErrorDiscriminantRule,
         ValidExampleTypeRule,
         NoErrorStatusCodeConflictRule,
+        ValidErrorStatusCodeRule,
         NoMissingAuthRule,
         NoMissingRequestNameRule,
         NoConflictingEndpointParametersRule,
@@ -93,7 +98,8 @@ export function getAllRules(): Rule[] {
         ContentTypeOnlyForMultipartRule,
         ValidPathParametersConfigurationRule,
         ExplodedFormDataIsArrayRule,
-        ValidWebhookSignatureRule
+        ValidWebhookSignatureRule,
+        ValidGlobalParametersRule
     ];
 }
 

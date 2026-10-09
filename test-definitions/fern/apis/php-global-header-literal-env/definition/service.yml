@@ -1,0 +1,9 @@
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    getWithLiteralVersionHeader:
+      docs: GET request with a literal version header
+      path: /version
+      method: GET
+      response: string

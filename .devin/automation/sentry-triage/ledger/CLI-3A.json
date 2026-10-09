@@ -1,0 +1,9 @@
+{
+  "title": "EINTR interrupted syscall in uv_cwd",
+  "disposition": "shipped",
+  "rationale": "EINTR is a clear errno-style environment signal, not a Fern product bug.",
+  "fixSummary": "Add EINTR to USER_ENVIRONMENT_ERRNOS so resolveErrorCode maps it to EnvironmentError.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Filesystem or syscall errno from user environment (EINTR interrupted syscall) surfaced as InternalError instead of environment-style CLI error."
+}

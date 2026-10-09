@@ -13,6 +13,7 @@ export function createBearerAuthScheme(opts?: {
 }): FernIr.BearerAuthScheme {
     return {
         docs: opts?.docs,
+        playgroundDocs: undefined,
         token: casingsGenerator.generateName(opts?.tokenName ?? "token"),
         tokenEnvVar: opts?.tokenEnvVar,
         tokenPlaceholder: opts?.tokenPlaceholder,
@@ -34,6 +35,7 @@ export function createBasicAuthScheme(opts?: {
 }): FernIr.BasicAuthScheme {
     return {
         docs: opts?.docs,
+        playgroundDocs: undefined,
         username: casingsGenerator.generateName(opts?.username ?? "username"),
         usernameEnvVar: opts?.usernameEnvVar,
         usernameOmit: undefined,
@@ -60,12 +62,66 @@ export function createHeaderAuthScheme(opts?: {
 }): FernIr.HeaderAuthScheme {
     return {
         docs: opts?.docs,
+        playgroundDocs: undefined,
         name: createNameAndWireValue(opts?.name ?? "apiKey", opts?.wireValue ?? "X-API-Key"),
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
         prefix: opts?.prefix,
         headerEnvVar: opts?.headerEnvVar,
         headerPlaceholder: opts?.headerPlaceholder,
         key: opts?.key ?? "ApiKey"
+    };
+}
+
+/**
+ * Creates an OAuthScheme IR object (client credentials grant) for use in tests.
+ * The token endpoint points at the endpoint created by {@link createHttpEndpoint}.
+ */
+export function createOAuthScheme(opts?: {
+    clientIdEnvVar?: string;
+    clientSecretEnvVar?: string;
+    tokenPrefix?: string;
+    tokenHeader?: string;
+    endpointId?: string;
+    docs?: string;
+}): FernIr.OAuthScheme {
+    const stringType = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
+    const bodyProperty = (name: string, valueType: FernIr.TypeReference): FernIr.RequestProperty => ({
+        propertyPath: undefined,
+        property: FernIr.RequestPropertyValue.body(createObjectProperty(name, valueType))
+    });
+    return {
+        docs: opts?.docs,
+        playgroundDocs: undefined,
+        key: "OAuth",
+        configuration: FernIr.OAuthConfiguration.clientCredentials({
+            clientIdEnvVar: opts?.clientIdEnvVar,
+            clientSecretEnvVar: opts?.clientSecretEnvVar,
+            tokenPrefix: opts?.tokenPrefix,
+            tokenHeader: opts?.tokenHeader,
+            scopes: undefined,
+            refreshEndpoint: undefined,
+            tokenEndpoint: {
+                endpointReference: {
+                    endpointId: opts?.endpointId ?? "endpoint_test",
+                    serviceId: "service_test",
+                    subpackageId: undefined
+                },
+                requestProperties: {
+                    clientId: bodyProperty("clientId", stringType),
+                    clientSecret: bodyProperty("clientSecret", stringType),
+                    scopes: undefined,
+                    customProperties: undefined
+                },
+                responseProperties: {
+                    accessToken: {
+                        propertyPath: undefined,
+                        property: createObjectProperty("accessToken", stringType)
+                    },
+                    expiresIn: undefined,
+                    refreshToken: undefined
+                }
+            }
+        })
     };
 }
 
@@ -167,7 +223,8 @@ export function createQueryParameter(
         docs: undefined,
         availability: undefined,
         explode: undefined,
-        clientDefault: undefined
+        clientDefault: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -178,8 +235,8 @@ export function createQueryParameter(
  * to find their scheme in the IR's auth.schemes array.
  */
 export function createAuthScheme(
-    type: "bearer" | "basic" | "header",
-    scheme: FernIr.BearerAuthScheme | FernIr.BasicAuthScheme | FernIr.HeaderAuthScheme,
+    type: "bearer" | "basic" | "header" | "oauth",
+    scheme: FernIr.BearerAuthScheme | FernIr.BasicAuthScheme | FernIr.HeaderAuthScheme | FernIr.OAuthScheme,
     key?: string
 ): FernIr.AuthScheme {
     // We must create the union variant and then mutate the key onto the same object
@@ -195,9 +252,13 @@ export function createAuthScheme(
         case "header":
             authScheme = FernIr.AuthScheme.header(scheme as FernIr.HeaderAuthScheme);
             break;
+        case "oauth":
+            authScheme = FernIr.AuthScheme.oauth(scheme as FernIr.OAuthScheme);
+            break;
     }
+    const defaultKeys = { bearer: "Bearer", basic: "BasicAuth", header: "ApiKey", oauth: "OAuth" } as const;
     // biome-ignore lint/suspicious/noExplicitAny: AuthScheme union type doesn't include key in its type definition but IR objects have it at runtime
-    (authScheme as any).key = key ?? (type === "bearer" ? "Bearer" : type === "basic" ? "BasicAuth" : "ApiKey");
+    (authScheme as any).key = key ?? defaultKeys[type];
     return authScheme;
 }
 
@@ -216,7 +277,8 @@ export function createHttpHeader(
         v2Examples: undefined,
         docs: opts?.docs,
         availability: undefined,
-        clientDefault: undefined
+        clientDefault: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -234,7 +296,8 @@ export function createInlinedRequestBodyProperty(
         docs: opts?.docs,
         availability: undefined,
         v2Examples: undefined,
-        propertyAccess: undefined
+        propertyAccess: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -290,6 +353,7 @@ export function createHttpEndpoint(opts?: {
     allPathParameters?: FernIr.PathParameter[];
     requestBody?: FernIr.HttpRequestBody;
     sdkRequest?: FernIr.SdkRequest;
+    userSpecifiedExamples?: FernIr.UserSpecifiedEndpointExample[];
     docs?: string;
 }): FernIr.HttpEndpoint {
     return {
@@ -298,6 +362,7 @@ export function createHttpEndpoint(opts?: {
         displayName: undefined,
         method: "POST",
         headers: opts?.headers ?? [],
+        globalParameters: undefined,
         responseHeaders: undefined,
         baseUrl: undefined,
         v2BaseUrls: undefined,
@@ -317,7 +382,7 @@ export function createHttpEndpoint(opts?: {
         security: undefined,
         idempotent: false,
         pagination: undefined,
-        userSpecifiedExamples: [],
+        userSpecifiedExamples: opts?.userSpecifiedExamples ?? [],
         autogeneratedExamples: [],
         v2Examples: undefined,
         transport: undefined,
@@ -326,7 +391,8 @@ export function createHttpEndpoint(opts?: {
         retries: undefined,
         apiPlayground: undefined,
         docs: opts?.docs,
-        availability: undefined
+        availability: undefined,
+        subtitle: undefined
     };
 }
 
@@ -372,7 +438,9 @@ export function createObjectProperty(
         docs: opts?.docs,
         availability: undefined,
         v2Examples: undefined,
-        propertyAccess: undefined
+        propertyAccess: undefined,
+        defaultValue: undefined,
+        xml: undefined
     };
 }
 
@@ -382,6 +450,8 @@ export function createObjectProperty(
 export function createSdkRequestBody(opts?: {
     requestBodyType?: FernIr.TypeReference;
     contentType?: string;
+    /** Absent means required, matching the IR. */
+    required?: boolean;
 }): FernIr.SdkRequest {
     return {
         streamParameter: undefined,
@@ -390,6 +460,7 @@ export function createSdkRequestBody(opts?: {
             FernIr.SdkRequestBodyType.typeReference({
                 requestBodyType:
                     opts?.requestBodyType ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                required: opts?.required,
                 contentType: opts?.contentType,
                 docs: undefined,
                 v2Examples: undefined

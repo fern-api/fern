@@ -31,5 +31,6 @@
     "createdAt"
   ],
   "additionalProperties": false,
+  "description": "User entity",
   "definitions": {}
 }

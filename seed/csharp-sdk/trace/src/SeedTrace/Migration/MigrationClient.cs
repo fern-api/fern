@@ -18,6 +18,9 @@ public partial class MigrationClient : IMigrationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add("admin-key-header", request.AdminKeyHeader)
             .Add(_client.Options.Headers)
@@ -31,6 +34,7 @@ public partial class MigrationClient : IMigrationClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/migration-info/all",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -48,7 +52,7 @@ public partial class MigrationClient : IMigrationClient
                 return new WithRawResponse<IEnumerable<Migration>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedTrace.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -62,7 +66,13 @@ public partial class MigrationClient : IMigrationClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedTrace.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -73,7 +83,13 @@ public partial class MigrationClient : IMigrationClient
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

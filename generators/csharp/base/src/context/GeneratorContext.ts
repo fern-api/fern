@@ -8,7 +8,7 @@ import {
     getOriginalName
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
+import { ast, CsharpConfigSchema, Generation, getFilesystemNugetPublishTarget } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -118,6 +118,16 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
      */
     private _inlineTypeChildrenMap?: Map<TypeId, Set<TypeId>>;
 
+    /**
+     * The SDK version to stamp into generated code (`Version.cs`, `.csproj`,
+     * dynamic snippets). Prefers the version from the generator output mode
+     * (github/publish) and falls back to the nuget filesystem publish target
+     * carried by the IR for local-file-system output.
+     */
+    public get sdkVersion(): string | undefined {
+        return this.version ?? getFilesystemNugetPublishTarget(this.ir)?.version;
+    }
+
     /** Provides access to C# code generation utilities */
     public get csharp(): Generation["csharp"] {
         return this.generation.csharp;
@@ -209,11 +219,45 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return Object.values(this.ir.services).some((service) => service.transport?.type === "grpc");
     }
 
+    public hasXmlTypes(): boolean {
+        return Object.values(this.ir.types).some((type) => type.encoding?.xml != null);
+    }
+
     public getIdempotencyHeaders(): HttpHeader[] {
         return this.ir.idempotencyHeaders;
     }
     public hasIdempotencyHeaders(): boolean {
         return this.getIdempotencyHeaders().length > 0;
+    }
+
+    /**
+     * Returns true when the IR requests idempotency-key auto-generation and the endpoint's HTTP
+     * method is one of the eligible methods carried in the IR. Whether the feature is enabled, which
+     * methods are eligible, and the wire header name are all resolved once by the CLI and carried in
+     * `sdkConfig.idempotencyKeyGeneration` so every generator applies it identically instead of
+     * re-deriving it from its own config. Callers use this to decide whether to emit a fallback
+     * idempotency-key header set to a freshly generated UUID.
+     */
+    public shouldAutoGenerateIdempotencyKey(endpoint: HttpEndpoint): boolean {
+        const idempotencyKeyGeneration = this.ir.sdkConfig.idempotencyKeyGeneration;
+        return idempotencyKeyGeneration != null && idempotencyKeyGeneration.methods.includes(endpoint.method);
+    }
+
+    /**
+     * Returns true when the IR requests idempotency-key auto-generation for the SDK (regardless of a
+     * particular endpoint's method). Used to decide whether to emit the shared
+     * `AddIdempotencyHeader` helper.
+     */
+    public isIdempotencyKeyAutoGenerationEnabled(): boolean {
+        return this.ir.sdkConfig.idempotencyKeyGeneration != null;
+    }
+
+    /**
+     * The wire header name used for the auto-generated idempotency key, sourced from the IR. Defaults
+     * to `Idempotency-Key` when the IR does not supply one.
+     */
+    public getIdempotencyKeyGenerationHeaderName(): string {
+        return this.ir.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key";
     }
 
     public hasBaseUrl(): boolean {
@@ -342,6 +386,56 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         );
     }
 
+    /**
+     * Checks if the API has any resumable SSE streaming endpoints.
+     * @returns True if the API has any SSE endpoints with `resumable: true`.
+     */
+    public get hasResumableSseEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => this.endpointHasResumableSseResult(endpoint))
+        );
+    }
+
+    /**
+     * Checks if the API has any endpoints that disable retries.
+     * @returns True if the API has any endpoints configured with `retries: { disabled: true }`.
+     */
+    public get hasRetriesDisabledEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => this.areRetriesDisabled(endpoint))
+        );
+    }
+
+    /**
+     * Checks if the endpoint disables retries, regardless of the client or per-request options.
+     */
+    public areRetriesDisabled(endpoint: HttpEndpoint): boolean {
+        return endpoint.retries?.disabled === true;
+    }
+
+    /**
+     * Checks if the endpoint has a resumable SSE streaming result.
+     */
+    public endpointHasResumableSseResult(endpoint: HttpEndpoint): boolean {
+        return (
+            endpoint.response?.body?._visit({
+                streaming: (svc) =>
+                    svc._visit({
+                        json: () => false,
+                        text: () => false,
+                        sse: (sseChunk) => sseChunk.resumable === true,
+                        _other: () => false
+                    }),
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                streamParameter: () => false,
+                _other: () => false
+            }) ?? false
+        );
+    }
+
     public getWebsocketChannel(name?: string) {
         return name ? this.ir.websocketChannels?.[name] : undefined;
     }
@@ -449,11 +543,24 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         });
     }
 
-    public getCurrentVersionValueAccess(): ast.CodeBlock {
+    /**
+     * @param inInterpolatedString wraps the access in parentheses, required inside an
+     * interpolated string hole where an unparenthesized `::` would otherwise start a
+     * format specifier
+     */
+    public getCurrentVersionValueAccess({ inInterpolatedString = false } = {}): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.Types.Version);
+            if (inInterpolatedString) {
+                writer.write("(");
+            }
+            // qualify globally so the reference cannot be shadowed by a constructor
+            // parameter or local named `Version`
+            writer.writeNode(this.Types.Version.asGloballyQualified());
             writer.write(".");
             writer.write(this.model.getPropertyNameFor(this.Types.Version.explicit("Current")));
+            if (inInterpolatedString) {
+                writer.write(")");
+            }
         });
     }
 
@@ -1076,6 +1183,32 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         this.buildInlineTypeMaps();
         // buildInlineTypeMaps always initializes the maps, so this is safe after the call
         return this._inlineTypeChildrenMap ?? new Map();
+    }
+
+    /**
+     * Returns the set of property wire names to suppress when generating the object type for the
+     * given typeId, because it is a discriminated-union variant whose owning union(s) already declare
+     * those fields as base properties.
+     *
+     * The decision is read directly from the IR fact `ObjectTypeDeclaration.deferredUnionBaseProperties`,
+     * which the IR generator computes once with structural type equality and an exclusive-variant guard
+     * (an object referenced anywhere other than as a union variant carries no deferred set). This
+     * generator does not re-derive it — so a same-named-but-differently-typed field is never dropped,
+     * and an object used standalone is never stripped.
+     *
+     * Empty when the opt-in `dedupeUnionBaseProperties` flag is off, or for any type that is not an
+     * exclusively-variant object with deferred properties. Removing the duplicated leaf fields is a
+     * breaking change to the generated surface, so existing users keep them until they opt in.
+     */
+    public getBasePropertyWireNamesToOmitForType(typeId: TypeId): Set<string> {
+        if (!this.settings.dedupeUnionBaseProperties) {
+            return new Set();
+        }
+        const typeDeclaration = this.ir.types[typeId];
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "object") {
+            return new Set();
+        }
+        return new Set((typeDeclaration.shape.deferredUnionBaseProperties ?? []).map((property) => property.wireValue));
     }
 
     /**

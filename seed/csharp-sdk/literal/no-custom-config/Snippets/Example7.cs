@@ -9,18 +9,8 @@ public partial class Examples
             }
         );
 
-        await client.Query.SendAsync(
-            new SendLiteralsInQueryRequest {
-                Prompt = "You are a helpful assistant",
-                OptionalPrompt = "You are a helpful assistant",
-                AliasPrompt = "You are a helpful assistant",
-                AliasOptionalPrompt = "You are a helpful assistant",
-                Query = "query",
-                Stream = false,
-                OptionalStream = false,
-                AliasStream = false,
-                AliasOptionalStream = false
-            }
+        await client.Path.SendAsync(
+            "123"
         );
     }
 

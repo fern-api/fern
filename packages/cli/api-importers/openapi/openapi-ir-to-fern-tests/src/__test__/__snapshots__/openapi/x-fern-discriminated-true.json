@@ -143,4 +143,5 @@ error-discrimination:
 display-name: Test x-fern-discriminated override with unions v1
 ",
   },
+  "specVersion": "1.0.0",
 }

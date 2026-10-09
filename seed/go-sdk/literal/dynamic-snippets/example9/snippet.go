@@ -14,26 +14,28 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SendRequest{
+    request := &fern.SendLiteralsInQueryRequest{
+        OptionalPrompt: fern.String(
+            "You are a helpful assistant",
+        ),
+        AliasPrompt: fern.AliasToPrompt(
+            "You are a helpful assistant",
+        ),
+        AliasOptionalPrompt: fern.String(
+            "You are a helpful assistant",
+        ),
         Query: "query",
-        Context: fern.SomeLiteral(
-            "You're super wise",
+        OptionalStream: fern.Bool(
+            false,
         ),
-        MaybeContext: fern.String(
-            "You're super wise",
+        AliasStream: fern.AliasToStream(
+            false,
         ),
-        ContainerObject: &fern.ContainerObject{
-            NestedObjects: []*fern.NestedObjectWithLiterals{
-                &fern.NestedObjectWithLiterals{
-                    StrProp: "strProp",
-                },
-                &fern.NestedObjectWithLiterals{
-                    StrProp: "strProp",
-                },
-            },
-        },
+        AliasOptionalStream: fern.Bool(
+            false,
+        ),
     }
-    client.Reference.Send(
+    client.Query.Send(
         context.TODO(),
         request,
     )

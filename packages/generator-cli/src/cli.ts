@@ -478,7 +478,7 @@ void yargs(hideBin(process.argv))
                                 description: "Search pattern (file path, glob, or commit message substring)"
                             });
                     },
-                    (argv) => {
+                    async (argv) => {
                         try {
                             const outputDir = resolve(cwd(), ".");
                             const args = argv.args ?? [];
@@ -486,23 +486,23 @@ void yargs(hideBin(process.argv))
 
                             let result;
                             if (argv.all) {
-                                result = replayForget({ outputDir, options: { all: true, dryRun } });
+                                result = await replayForget({ outputDir, options: { all: true, dryRun } });
                             } else if (argv.pattern) {
-                                result = replayForget({ outputDir, options: { pattern: argv.pattern, dryRun } });
+                                result = await replayForget({ outputDir, options: { pattern: argv.pattern, dryRun } });
                             } else if (args.length > 0) {
                                 // Check if args look like patch IDs
                                 const allPatchIds = args.every((a) => a.startsWith("patch-"));
                                 if (allPatchIds) {
-                                    result = replayForget({ outputDir, options: { patchIds: args, dryRun } });
+                                    result = await replayForget({ outputDir, options: { patchIds: args, dryRun } });
                                 } else {
                                     // Treat single arg as pattern
-                                    result = replayForget({
+                                    result = await replayForget({
                                         outputDir,
                                         options: { pattern: args[0], dryRun }
                                     });
                                 }
                             } else {
-                                result = replayForget({ outputDir, options: { dryRun } });
+                                result = await replayForget({ outputDir, options: { dryRun } });
                             }
 
                             process.stdout.write(JSON.stringify(result, null, 2) + "\n");

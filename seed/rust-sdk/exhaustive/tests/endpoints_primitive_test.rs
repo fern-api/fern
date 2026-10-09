@@ -14,7 +14,6 @@ async fn test_endpoints_primitive_get_and_return_string_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -41,7 +40,6 @@ async fn test_endpoints_primitive_get_and_return_int_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -68,7 +66,6 @@ async fn test_endpoints_primitive_get_and_return_long_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -95,7 +92,6 @@ async fn test_endpoints_primitive_get_and_return_double_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -122,7 +118,6 @@ async fn test_endpoints_primitive_get_and_return_bool_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -149,7 +144,6 @@ async fn test_endpoints_primitive_get_and_return_datetime_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -179,7 +173,6 @@ async fn test_endpoints_primitive_get_and_return_date_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -209,7 +202,6 @@ async fn test_endpoints_primitive_get_and_return_uuid_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -239,7 +231,6 @@ async fn test_endpoints_primitive_get_and_return_base64_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

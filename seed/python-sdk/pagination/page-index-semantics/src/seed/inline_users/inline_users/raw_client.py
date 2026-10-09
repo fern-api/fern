@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pagination import AsyncPager, SyncPager
+from ...core.pagination import AsyncPager, SyncPager, get_nested_page_value, with_nested_page_value
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
@@ -269,7 +269,7 @@ class RawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_with_offset_pagination(
                     page=page + 1,
                     per_page=per_page,
@@ -342,7 +342,7 @@ class RawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_with_double_offset_pagination(
                     page=page + 1,
                     per_page=per_page,
@@ -399,9 +399,14 @@ class RawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_with_body_offset_pagination(
-                    pagination=pagination,
+                    pagination=with_nested_page_value(
+                        pagination,
+                        ["page"],
+                        get_nested_page_value(pagination, ["page"], 1) + 1,
+                        typing.Optional[WithPage],
+                    ),
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -465,7 +470,7 @@ class RawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_with_offset_step_pagination(
                     page=page + 1,
                     limit=limit,
@@ -533,7 +538,7 @@ class RawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = bool(_parsed_response.has_next_page)
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
                     page=page + 1,
                     limit=limit,
@@ -740,7 +745,7 @@ class RawInlineUsersClient:
                     ),
                 )
                 _items = _parsed_response.results
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_with_global_config(
                     offset=offset + 1,
                     request_options=request_options,
@@ -1007,7 +1012,7 @@ class AsyncRawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list_with_offset_pagination(
@@ -1083,7 +1088,7 @@ class AsyncRawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list_with_double_offset_pagination(
@@ -1143,11 +1148,16 @@ class AsyncRawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list_with_body_offset_pagination(
-                        pagination=pagination,
+                        pagination=with_nested_page_value(
+                            pagination,
+                            ["page"],
+                            get_nested_page_value(pagination, ["page"], 1) + 1,
+                            typing.Optional[WithPage],
+                        ),
                         request_options=request_options,
                     )
 
@@ -1212,7 +1222,7 @@ class AsyncRawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list_with_offset_step_pagination(
@@ -1283,7 +1293,7 @@ class AsyncRawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = True
+                _has_next = bool(_parsed_response.has_next_page)
 
                 async def _get_next():
                     return await self.list_with_offset_pagination_has_next_page(
@@ -1502,7 +1512,7 @@ class AsyncRawInlineUsersClient:
                     ),
                 )
                 _items = _parsed_response.results
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list_with_global_config(

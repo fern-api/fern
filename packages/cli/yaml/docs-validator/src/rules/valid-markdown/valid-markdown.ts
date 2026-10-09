@@ -37,7 +37,9 @@ export const ValidMarkdownRule: Rule = {
                             : "Markdown failed to parse";
                     return [
                         {
-                            severity: "fatal",
+                            // Surfaced as a warning (not an error) so re-enabling this rule does not
+                            // suddenly break existing `fern check` runs on repos with latent MDX issues.
+                            severity: "warning",
                             message
                         }
                     ];

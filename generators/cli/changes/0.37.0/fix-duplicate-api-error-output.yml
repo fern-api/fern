@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed API errors being printed twice and with the server's JSON body escaped
+    inside the `message` string. An error is now rendered in exactly one
+    representation — the JSON envelope on stdout for machine formats
+    (`json`/`jsonl`/`yaml`, which includes the piped/non-TTY default), or a single
+    `error[api]: <message>` line on stderr for `table`/`csv` — and the server's
+    body is parsed rather than stringified: a sentence lands in `message`, the
+    parsed body in `error.details`, and `reason` is derived from the HTTP status
+    (`internalServerError` for 500) instead of always `httpError`. Top-level
+    shapes such as `{"status", "message"}`, `{"error": "<message>"}`, RFC 7807
+    `detail`/`title`, and OAuth 2.0 `error_description` are now recognized. Two
+    consequences worth noting for anyone scripting against these fields: 429 now
+    always reports `reason: "rateLimited"`. Previously a generated CLI reported
+    either that or `tooManyRequests` for the same status depending on which code
+    path produced the error — the runtime's `sdk_executor` already said
+    `rateLimited`, while the generated request adapter said `tooManyRequests`.
+    Both now come from one mapping. Also,
+    `error.code` is always the HTTP status the server answered with. A body's own
+    `code` never overrides it — not an internal numbering (`{"code": 100234}`,
+    which used to truncate into a nonsense status), and not one that merely looks
+    like a status, which could disagree with what was actually served and point
+    the docs link at the wrong page. The body's `code` is still available under
+    `error.details`.
+  type: fix
+
+- summary: |
+    Added a global `--human` flag, shorthand for `--format table`, for the one
+    case TTY detection gets wrong: a person piping into a pager or a file still
+    wants the interactive rendering. Without it the existing TTY-aware default
+    applies (`table` on a terminal, `json` when piped), and passing it alongside
+    `--format` is rejected. There is deliberately no `--json` counterpart:
+    endpoints with a request body already spell that flag `--json <JSON>`, so
+    the name cannot mean "render JSON" everywhere; use `--format json`.
+  type: feat

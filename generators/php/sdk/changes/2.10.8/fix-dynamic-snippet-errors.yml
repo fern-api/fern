@@ -1,0 +1,5 @@
+- summary: |
+    Fix dynamic snippet generation: filter out unsupported bytes body arguments
+    that produced syntax errors, and reorder IR-level path parameters (which have
+    defaults) after required body parameters to match the SDK method signatures.
+  type: fix

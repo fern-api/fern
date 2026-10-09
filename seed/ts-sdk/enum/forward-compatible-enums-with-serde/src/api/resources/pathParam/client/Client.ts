@@ -27,6 +27,9 @@ export class PathParamClient {
      * @param {SeedEnum.ColorOrOperand} operandOrColor
      * @param {PathParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedEnumError}
+     * @throws {@link errors.SeedEnumTimeoutError}
+     *
      * @example
      *     await client.pathParam.send(">", "red")
      */

@@ -61,6 +61,16 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->extendedInlineRequestBody(
+     *     new InlinedChildRequest([
+     *         'parent' => 'parent',
+     *         'child' => 'child',
+     *     ]),
+     * );
+     * ```
+     *
      * @param InlinedChildRequest $request
      * @param ?array{
      *   baseUrl?: string,

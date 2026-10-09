@@ -196,6 +196,107 @@ Some content here.
 <Banner />`);
     });
 
+    it("should not transform imports inside fenced code blocks", () => {
+        const markdown = `---
+title: Tutorial
+---
+
+import { Banner } from '@/components/Banner'
+
+Update the imports:
+
+\`\`\`jsx showLineNumbers={false} title="content-fallback.tsx"
+import { Flex, ProgressCircle } from "@/components/ui/big-design";
+\`\`\`
+
+<Banner />`;
+        const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/guides/test.mdx");
+
+        const result = transformAtPrefixImports({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile
+        });
+
+        expect(result).toBe(`---
+title: Tutorial
+---
+
+import { Banner } from '../../components/Banner'
+
+Update the imports:
+
+\`\`\`jsx showLineNumbers={false} title="content-fallback.tsx"
+import { Flex, ProgressCircle } from "@/components/ui/big-design";
+\`\`\`
+
+<Banner />`);
+    });
+
+    it("should not transform imports inside inline code", () => {
+        const markdown = `Write \`import { Flex } from "@/components/ui/big-design"\` at the top.`;
+        const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
+
+        const result = transformAtPrefixImports({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile
+        });
+
+        expect(result).toBe(markdown);
+    });
+
+    it("should resolve real imports when the body opens with a thematic break", () => {
+        // `---` immediately after the frontmatter makes gray-matter non-idempotent, so stripping
+        // frontmatter twice shifts every code-block offset. The shift only misaligns at certain
+        // body lengths, so sweep padding widths rather than hard-coding one that happens to break.
+        const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
+
+        for (let pad = 0; pad < 60; pad++) {
+            const markdown = [
+                "---",
+                "title: X",
+                "---",
+                "---",
+                "a".repeat(pad),
+                "---",
+                "",
+                "import { Banner } from '@/components/Banner'",
+                "",
+                "```jsx",
+                'import { Flex } from "@/components/ui/big-design";',
+                "```"
+            ].join("\n");
+
+            const result = transformAtPrefixImports({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile
+            });
+
+            // the page-level import resolves, the code sample is left verbatim
+            expect(result, `pad=${pad}`).toContain("import { Banner } from '../components/Banner'");
+            expect(result, `pad=${pad}`).toContain('import { Flex } from "@/components/ui/big-design";');
+        }
+    });
+
+    it("should not throw on malformed frontmatter", () => {
+        const markdown = `---
+title: "unterminated
+---
+
+import { Banner } from '@/components/Banner'`;
+        const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
+
+        expect(() =>
+            transformAtPrefixImports({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile
+            })
+        ).not.toThrow();
+    });
+
     it("should handle imports in sibling directories", () => {
         const markdown = `import { Banner } from '@/docs/components/Banner'`;
         const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/guides/test.mdx");

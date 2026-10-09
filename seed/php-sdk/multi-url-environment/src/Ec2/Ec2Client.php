@@ -48,6 +48,15 @@ class Ec2Client
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->ec2->bootInstance(
+     *     new BootInstanceRequest([
+     *         'size' => 'size',
+     *     ]),
+     * );
+     * ```
+     *
      * @param BootInstanceRequest $request
      * @param ?array{
      *   maxRetries?: int,

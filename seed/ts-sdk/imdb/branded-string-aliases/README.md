@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -41,11 +42,24 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/imdb";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.imdb.createMovie({
     title: "title",
     rating: 1.1
 });
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedApi } from "@fern/imdb";
+
+const request: SeedApi.CreateMovieRequest = {
+    ...
+};
 ```
 
 ## Exception Handling

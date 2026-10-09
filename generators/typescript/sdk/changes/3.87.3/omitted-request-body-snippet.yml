@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix dynamic snippets emitting a dangling argument delimiter (e.g. `client.refunds.refund("id", )`)
+    when an example omits the request body.
+  type: fix

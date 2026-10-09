@@ -14,7 +14,7 @@ public partial class Seed : ISeed
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Seed.CsharpNamespaceConflict" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::Seed.CsharpNamespaceConflict.Version.Current },
                 { "User-Agent", "Ferncsharp-namespace-conflict/0.0.1" },
             }
         );

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add support for webhook signature schemes that transmit a hash of the raw request
+    body separately rather than signing the body directly (for example, Twilio's
+    `bodySHA256` query parameter for JSON bodies). HMAC webhook signatures now accept a
+    `body-hash-binding` with an `algorithm`, `encoding`, and a `location` (currently a
+    `query-parameter` on the notification URL). The field is threaded through the Fern
+    Definition schema, the IR, and the OpenAPI importer, and validation requires
+    `notification-url` in `payload-format.components` when a query-parameter binding is
+    configured.
+  type: feat

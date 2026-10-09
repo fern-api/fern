@@ -5,8 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ModelProvider: core.serialization.Schema<serializers.ModelProvider.Raw, GeneratorsYml.ModelProvider> =
-    core.serialization.enum_(["openai", "anthropic", "bedrock"]);
+    core.serialization.enum_(["openai", "anthropic", "aws-bedrock"]);
 
 export declare namespace ModelProvider {
-    export type Raw = "openai" | "anthropic" | "bedrock";
+    export type Raw = "openai" | "anthropic" | "aws-bedrock";
 }

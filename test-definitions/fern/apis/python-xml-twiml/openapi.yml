@@ -1,0 +1,141 @@
+openapi: 3.0.3
+info:
+  title: TwiML-style XML encoding
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Response:
+      type: object
+      description: Root TwiML element.
+      xml:
+        name: Response
+      properties:
+        children:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/Say"
+              - $ref: "#/components/schemas/Dial"
+              - $ref: "#/components/schemas/Pause"
+              - $ref: "#/components/schemas/Hangup"
+              - $ref: "#/components/schemas/Redirect"
+    Say:
+      type: object
+      description: <Say> TwiML Verb
+      xml:
+        name: Say
+      properties:
+        message:
+          type: string
+          description: Message to say
+          x-fern-xml-text: true
+        voice:
+          type: string
+          description: Voice to use
+          xml:
+            attribute: true
+        loop:
+          type: integer
+          description: Times to loop message
+          xml:
+            attribute: true
+        children:
+          type: array
+          description: Nested TwiML elements, rendered in order.
+          items:
+            $ref: "#/components/schemas/Break"
+    Break:
+      type: object
+      description: Adding a Pause in <Say>
+      xml:
+        name: break
+      properties:
+        strength:
+          type: string
+          description: Set a pause based on strength
+          enum: [none, x-weak, weak, medium, strong, x-strong]
+          xml:
+            attribute: true
+        time:
+          type: string
+          description: "Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms"
+          xml:
+            attribute: true
+    Dial:
+      type: object
+      xml:
+        name: Dial
+        namespace: https://www.twilio.com/twiml
+        prefix: tw
+      properties:
+        number:
+          type: string
+          x-fern-xml-text: true
+        status_callback_event:
+          type: array
+          items:
+            type: string
+          xml:
+            name: statusCallbackEvent
+            attribute: true
+          x-fern-xml-list-separator: " "
+        numbers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Number"
+          xml:
+            name: Numbers
+            wrapped: true
+    Number:
+      type: object
+      xml:
+        name: Number
+      properties:
+        phone_number:
+          type: string
+          x-fern-xml-text: true
+        send_digits:
+          type: string
+          xml:
+            name: sendDigits
+            attribute: true
+    Pause:
+      type: object
+      description: XML element without an explicit xml.name; falls back to the schema name.
+      xml: {}
+      properties:
+        length:
+          type: integer
+          xml:
+            attribute: true
+    Hangup:
+      type: object
+      xml:
+        name: Hangup
+      properties: {}
+    Redirect:
+      type: object
+      description: Text element with a required attribute.
+      xml:
+        name: Redirect
+      required: [url, method]
+      properties:
+        url:
+          type: string
+          x-fern-xml-text: true
+        method:
+          type: string
+          xml:
+            attribute: true
+        kind:
+          type: string
+          x-fern-type: literal<"redirect">
+          xml:
+            attribute: true
+    PlainObject:
+      type: object
+      description: Not XML-encoded; properties must not carry xml metadata.
+      properties:
+        id:
+          type: string

@@ -1,0 +1,8 @@
+- summary: |
+    Fix the built-in `auth login` / `logout` / `status` commands shadowing a spec-owned
+    `auth` resource group, which made every `<bin> auth <op>` operation undispatchable
+    ("unrecognized subcommand") even though `--schema` and `reference.md` advertised it.
+    Built-in commands are now folded into a same-named generated group instead of
+    replacing it, so `<bin> auth login` and `<bin> auth me` both work; only
+    `login` / `logout` / `status` are intercepted by the framework.
+  type: fix

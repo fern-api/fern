@@ -1,0 +1,7 @@
+- summary: |
+    Global headers now honor their `env` and `client-default` values. The
+    builder initializes the header from the environment variable when set,
+    otherwise the client default, and an explicitly provided value still takes
+    precedence. Previously a global header was only sent when the caller set it
+    explicitly.
+  type: fix

@@ -57,6 +57,24 @@ class PlaylistClient
     /**
      * Create a new playlist
      *
+     * Example:
+     * ```php
+     * $client->playlist->createPlaylist(
+     *     1,
+     *     new CreatePlaylistRequest([
+     *         'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+     *         'optionalDatetime' => new DateTime('2024-01-15T09:30:00Z'),
+     *         'body' => new PlaylistCreateRequest([
+     *             'name' => 'name',
+     *             'problems' => [
+     *                 'problems',
+     *                 'problems',
+     *             ],
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param int $serviceParam
      * @param CreatePlaylistRequest $request
      * @param ?array{
@@ -112,6 +130,24 @@ class PlaylistClient
 
     /**
      * Returns the user's playlists
+     *
+     * Example:
+     * ```php
+     * $client->playlist->getPlaylists(
+     *     1,
+     *     new GetPlaylistsRequest([
+     *         'limit' => 1,
+     *         'otherField' => 'otherField',
+     *         'multiLineDocs' => 'multiLineDocs',
+     *         'optionalMultipleField' => [
+     *             'optionalMultipleField',
+     *         ],
+     *         'multipleField' => [
+     *             'multipleField',
+     *         ],
+     *     ]),
+     * );
+     * ```
      *
      * @param int $serviceParam
      * @param GetPlaylistsRequest $request
@@ -173,6 +209,14 @@ class PlaylistClient
     /**
      * Returns a playlist
      *
+     * Example:
+     * ```php
+     * $client->playlist->getPlaylist(
+     *     1,
+     *     'playlistId',
+     * );
+     * ```
+     *
      * @param int $serviceParam
      * @param string $playlistId
      * @param ?array{
@@ -221,6 +265,21 @@ class PlaylistClient
 
     /**
      * Updates a playlist
+     *
+     * Example:
+     * ```php
+     * $client->playlist->updatePlaylist(
+     *     1,
+     *     'playlistId',
+     *     new UpdatePlaylistRequest([
+     *         'name' => 'name',
+     *         'problems' => [
+     *             'problems',
+     *             'problems',
+     *         ],
+     *     ]),
+     * );
+     * ```
      *
      * @param int $serviceParam
      * @param string $playlistId
@@ -272,6 +331,14 @@ class PlaylistClient
 
     /**
      * Deletes a playlist
+     *
+     * Example:
+     * ```php
+     * $client->playlist->deletePlaylist(
+     *     1,
+     *     'playlist_id',
+     * );
+     * ```
      *
      * @param int $serviceParam
      * @param string $playlistId

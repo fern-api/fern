@@ -1,5 +1,5 @@
 import { fail } from "node:assert";
-import { getWireValue, NameInput } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
@@ -16,6 +16,7 @@ type TypeReference = FernIr.TypeReference;
 
 import { DefaultValueExtractor, ExtractedDefault } from "../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../utils/requestBodyUtils.js";
 
 export declare namespace WrappedRequestGenerator {
     export interface Args {
@@ -88,6 +89,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             })
         ) {
             for (const pathParameter of this.endpoint.allPathParameters) {
+                // Path parameters bound to an SDK variable are read from the client options.
+                if (this.context.getSdkVariableForPathParameter(pathParameter) != null) {
+                    continue;
+                }
                 // Skip adding a [JsonIgnore] field for this path param if a body property
                 // with the same PascalCase name exists — the body property will serve both roles.
                 if (bodyPropertyPascalNames.has(this.case.pascalSafe(pathParameter.name))) {
@@ -183,9 +188,12 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
-                const type = this.context.csharpTypeMapper.convert({
+                const convertedType = this.context.csharpTypeMapper.convert({
                     reference: reference.requestBodyType
                 });
+                const type = mayOmitRequestBody(this.context, this.endpoint.requestBody)
+                    ? convertedType.asOptional()
+                    : convertedType;
                 const useRequired = !type.isOptional;
                 class_.addField({
                     origin: this.case.resolveNameOrString(this.wrapper.bodyKey),
@@ -309,11 +317,19 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 wrapper: this.wrapper
             })
         ) {
+            const sdkVariablePathParameterNames = new Set(
+                this.endpoint.allPathParameters
+                    .filter((pathParameter) => this.context.getSdkVariableForPathParameter(pathParameter) != null)
+                    .map((pathParameter) => getOriginalName(pathParameter.name))
+            );
             for (const pathParameter of [
                 ...example.rootPathParameters,
                 ...example.servicePathParameters,
                 ...example.endpointPathParameters
             ]) {
+                if (sdkVariablePathParameterNames.has(getOriginalName(pathParameter.name))) {
+                    continue;
+                }
                 // Skip path param snippet if a body property with the same name exists;
                 // the body property snippet will provide the value for both.
                 if (snippetBodyPropertyPascalNames.has(this.case.pascalSafe(pathParameter.name))) {

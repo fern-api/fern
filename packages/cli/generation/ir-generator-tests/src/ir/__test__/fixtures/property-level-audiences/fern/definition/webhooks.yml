@@ -1,0 +1,22 @@
+# Webhook with inline payload + property-level audiences. Filter [external]
+# should keep `userId` and drop `internalReason`. The user-specified example
+# below intentionally references the excluded `internalReason` so we can
+# regression-check that the example payload is scrubbed alongside the schema.
+webhooks:
+  userAdded:
+    audiences:
+      - external
+    display-name: User Added
+    method: POST
+    payload:
+      name: UserAddedPayload
+      properties:
+        userId: string
+        internalReason:
+          type: string
+          audiences:
+            - internal
+    examples:
+      - payload:
+          userId: user_123
+          internalReason: created via internal admin tool

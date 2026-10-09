@@ -2,7 +2,7 @@ namespace SeedEnum;
 
 public partial interface IInlinedRequestClient
 {
-    Task SendAsync(
+    WithRawResponseTask SendAsync(
         SendEnumInlinedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

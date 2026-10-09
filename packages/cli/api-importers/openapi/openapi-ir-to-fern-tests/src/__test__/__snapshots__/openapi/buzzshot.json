@@ -2061,4 +2061,5 @@ imports:
   root: __package__.yml
 ",
   },
+  "specVersion": undefined,
 }

@@ -257,6 +257,12 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     ): Zurg.Schema {
         const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         const isCircular = typeDeclaration.referencedTypes.has(typeName.typeId);
+        const wouldCollide = isGeneratingSchema && !isCircular && this.wouldCauseDirectImportCollision(typeName);
+        // A named type is referenced through the `serializers` namespace barrel when it is
+        // either circular or would cause a direct-import collision. Reading off that barrel
+        // eagerly at module-init time is unsafe because the referenced package may not have
+        // been initialized yet, so these references must be wrapped with lazy().
+        const referencedThroughNamespace = isGeneratingSchema && (isCircular || wouldCollide);
 
         const referenceToSchema = this.typeSchemaDeclarationReferencer
             .getReferenceToType({
@@ -266,7 +272,6 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                         // Circular references should be imported from the root.
                         return { type: "fromRoot", useDynamicImport: false, namespaceImport: "serializers" };
                     } else if (isGeneratingSchema) {
-                        const wouldCollide = this.wouldCauseDirectImportCollision(typeName);
                         if (wouldCollide) {
                             // Use namespace import to avoid duplicate identifier issues
                             // when different packages define types with the same name.
@@ -289,8 +294,8 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
 
         // when generating schemas, wrap named types with lazy() to prevent issues with circular imports
-        // we only do this when we know there is a circular reference, because lazy is expensive
-        if (isGeneratingSchema && isCircular) {
+        // or out-of-order initialization when referencing types through the serializers namespace barrel
+        if (referencedThroughNamespace) {
             return this.wrapSchemaWithLazy(schema, typeName);
         }
 

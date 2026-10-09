@@ -96,4 +96,36 @@ export interface LayoutConfig {
     hideFeedback?: boolean;
     /** If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages. */
     mobileToc?: boolean;
+    /**
+     * Sets which layout to use for changelog pages.
+     *
+     * @default: `timeline`
+     *
+     * - `timeline` renders the searchable timeline-of-cards layout.
+     * - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
+     */
+    changelogLayout?: FernDocsConfig.ChangelogLayout;
+    /**
+     * Sets how nested object fields are rendered in the API reference.
+     *
+     * @default: `indented`
+     *
+     * - `indented` renders each nested level as an indented branch with a connector line and a color-coded path breadcrumb.
+     * - `cards` renders each nested level as a bordered card.
+     */
+    apiReferenceLayout?: FernDocsConfig.ApiReferenceLayout;
+    /**
+     * If `api-reference-expand-properties` is set to true, the first level of nested object
+     * and union fields in the API reference is expanded on page load instead of hidden behind
+     * a "Show N properties" button. Deeper levels stay collapsed. Defaults to false.
+     */
+    apiReferenceExpandProperties?: boolean;
+    /**
+     * If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
+     * are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
+     * availability badge is unaffected by this setting.
+     */
+    showNavAvailabilityBadges?: boolean;
+    /** Configures the breadcrumb trail rendered above the page title. */
+    breadcrumbs?: FernDocsConfig.BreadcrumbsConfig;
 }

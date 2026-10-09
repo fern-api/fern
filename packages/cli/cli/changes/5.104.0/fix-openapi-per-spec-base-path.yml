@@ -1,0 +1,4 @@
+- summary: |
+    Add the opt-in respect-per-spec-base-path setting to apply each OpenAPI document's plain x-fern-base-path
+    to that document's own endpoints instead of collapsing to one API-wide base path.
+  type: feat

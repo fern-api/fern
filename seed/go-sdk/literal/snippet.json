@@ -13,6 +13,17 @@
         },
         {
             "id": {
+                "path": "/headers/literals-only",
+                "method": "POST",
+                "identifier_override": "endpoint_headers.sendLiteralsOnly"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Headers.SendLiteralsOnly(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/inlined",
                 "method": "POST",
                 "identifier_override": "endpoint_inlined.send"

@@ -8,5 +8,18 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints.urls.no_ending_slash(None).await;
+    client
+        .endpoints
+        .union_
+        .get_and_return_union(
+            &Animal::Dog {
+                data: Dog {
+                    name: "name".to_string(),
+                    likes_to_woof: true,
+                    ..Default::default()
+                },
+            },
+            None,
+        )
+        .await;
 }

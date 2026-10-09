@@ -32,6 +32,7 @@ import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.AsyncRootClientGenerator;
 import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
+import com.fern.java.client.generators.BodyPropertiesGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.ConsoleLoggerGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
@@ -40,6 +41,7 @@ import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.FileStreamGenerator;
 import com.fern.java.client.generators.HttpResponseGenerator;
 import com.fern.java.client.generators.ILoggerGenerator;
+import com.fern.java.client.generators.IdempotencyUtilsGenerator;
 import com.fern.java.client.generators.InferredAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
 import com.fern.java.client.generators.LogConfigGenerator;
@@ -50,6 +52,7 @@ import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
+import com.fern.java.client.generators.ResponseDecompressionInterceptorGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.client.generators.StreamTestGenerator;
@@ -57,6 +60,9 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
+import com.fern.java.client.generators.WebhookBodyHashGenerator;
+import com.fern.java.client.generators.WebhookSignatureGenerator;
+import com.fern.java.client.generators.WebhooksHelperGenerator;
 import com.fern.java.client.generators.auth.AuthProviderGenerator;
 import com.fern.java.client.generators.auth.BasicAuthProviderGenerator;
 import com.fern.java.client.generators.auth.BearerAuthProviderGenerator;
@@ -83,6 +89,7 @@ import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.generators.WrappedAliasGenerator;
+import com.fern.java.generators.XmlCoreGenerator;
 import com.fern.java.generators.tests.QueryStringMapperTestGenerator;
 import com.fern.java.generators.tests.UndiscriminatedUnionDeserializationTestGenerator;
 import com.fern.java.output.GeneratedFile;
@@ -95,6 +102,7 @@ import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.fern.java.utils.NameUtils;
+import com.fern.java.utils.XmlTypeUtils;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -172,6 +180,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             JavaSdkDownloadFilesCustomConfig customConfig) {
         JavaSdkCustomConfig sdkCustomConfig = JavaSdkCustomConfig.builder()
                 .wrappedAliases(customConfig.wrappedAliases())
+                .packagePrefix(customConfig.packagePrefix())
+                .packageLayout(customConfig.packageLayout())
                 .clientClassName(customConfig.clientClassName())
                 .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
                 .baseExceptionClassName(customConfig.baseExceptionClassName())
@@ -184,6 +194,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .customInterceptors(customConfig.customInterceptors())
                 .customPlugins(customConfig.customPlugins())
                 .enableForwardCompatibleEnum(customConfig.enableForwardCompatibleEnums())
+                .includePlatformHeaders(customConfig.includePlatformHeaders())
+                .allowUserAgentAppInfo(customConfig.allowUserAgentAppInfo())
+                .userAgentOnly(customConfig.userAgentOnly())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -281,6 +294,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
         this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
 
+        if (XmlTypeUtils.hasXmlTypes(ir)) {
+            new XmlCoreGenerator(context).generateFiles().forEach(this::addGeneratedFile);
+        }
+
         boolean hasUnknownAliasTypes = ir.getTypes().values().stream()
                 .anyMatch(typeDeclaration -> typeDeclaration.getShape().isAlias()
                         && typeDeclaration
@@ -365,6 +382,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         LoggingInterceptorGenerator loggingInterceptorGenerator = new LoggingInterceptorGenerator(context);
         this.addGeneratedFile(loggingInterceptorGenerator.generateFile());
 
+        ResponseDecompressionInterceptorGenerator responseDecompressionInterceptorGenerator =
+                new ResponseDecompressionInterceptorGenerator(context);
+        this.addGeneratedFile(responseDecompressionInterceptorGenerator.generateFile());
+
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);
         this.addGeneratedFile(responseBodyInputStreamGenerator.generateFile());
@@ -377,6 +398,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         ResponseBodyReaderGenerator responseBodyReaderGenerator = new ResponseBodyReaderGenerator(context);
         this.addGeneratedFile(responseBodyReaderGenerator.generateFile());
+
+        if (context.getIr().getSdkConfig().getIdempotencyKeyGeneration().isPresent()) {
+            IdempotencyUtilsGenerator idempotencyUtilsGenerator = new IdempotencyUtilsGenerator(context);
+            this.addGeneratedFile(idempotencyUtilsGenerator.generateFile());
+        }
 
         ClientOptionsGenerator clientOptionsGenerator =
                 new ClientOptionsGenerator(context, generatedEnvironmentsClass, generatedRequestOptions);
@@ -405,6 +431,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                             new com.fern.java.client.generators.websocket.ReconnectingWebSocketListenerGenerator(
                                     corePackageName);
             this.addGeneratedFile(reconnectingListenerGenerator.generateListener());
+
+            com.fern.java.client.generators.websocket.WebSocketLifecycleTestGenerator webSocketLifecycleTestGenerator =
+                    new com.fern.java.client.generators.websocket.WebSocketLifecycleTestGenerator(context);
+            this.addGeneratedFile(webSocketLifecycleTestGenerator.generateFile());
 
             // Generate shared WebSocket types in core package
             com.fern.java.client.generators.websocket.DisconnectReasonGenerator disconnectReasonGenerator =
@@ -536,6 +566,20 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         CoreMediaTypesGenerator mediaTypesGenerator = new CoreMediaTypesGenerator(context);
         GeneratedResourcesJavaFile generatedMediaTypesFile = mediaTypesGenerator.generateFile();
         this.addGeneratedFile(generatedMediaTypesFile);
+
+        BodyPropertiesGenerator bodyPropertiesGenerator = new BodyPropertiesGenerator(context);
+        this.addGeneratedFile(bodyPropertiesGenerator.generateFile());
+
+        List<GeneratedJavaFile> generatedWebhooksHelpers = WebhooksHelperGenerator.generateFiles(context);
+        if (!generatedWebhooksHelpers.isEmpty()) {
+            WebhookSignatureGenerator webhookSignatureGenerator = new WebhookSignatureGenerator(context);
+            this.addGeneratedFile(webhookSignatureGenerator.generateFile());
+            if (WebhooksHelperGenerator.requiresBodyHashUtility(context)) {
+                WebhookBodyHashGenerator webhookBodyHashGenerator = new WebhookBodyHashGenerator(context);
+                this.addGeneratedFile(webhookBodyHashGenerator.generateFile());
+            }
+            generatedWebhooksHelpers.forEach(this::addGeneratedFile);
+        }
 
         // types
         log(generatorExecClient, "Generating data types and models");
@@ -808,6 +852,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             return ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
         }
         return JavaSdkCustomConfig.builder().build();
+    }
+
+    @Override
+    protected boolean shouldEmitImplementationVersionInManifest(GeneratorConfig generatorConfig) {
+        return getCustomConfig(generatorConfig).runtimeVersion();
     }
 
     private void runInProjectModeHook(

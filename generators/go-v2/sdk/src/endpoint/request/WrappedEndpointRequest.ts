@@ -4,7 +4,11 @@ import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../../utils/mayOmitRequestBody.js";
 import { EndpointRequest } from "./EndpointRequest.js";
+
+/** The local the wrapper's body is unpacked into when the caller may leave that body out. */
+const OPTIONAL_REQUEST_BODY_VARIABLE_NAME = "requestBody";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -45,8 +49,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
         switch (requestBody.type) {
             case "fileUpload":
                 return go.codeblock("writer.Buffer()");
-            case "inlinedRequestBody":
             case "reference":
+                if (this.mayOmitRequestBody()) {
+                    return go.codeblock(OPTIONAL_REQUEST_BODY_VARIABLE_NAME);
+                }
+                return super.getRequestReference();
+            case "inlinedRequestBody":
             case "bytes":
                 return super.getRequestReference();
             default:
@@ -62,13 +70,39 @@ export class WrappedEndpointRequest extends EndpointRequest {
         switch (requestBody.type) {
             case "fileUpload":
                 return this.getRequestBodyBlockForFileUpload(requestBody);
-            case "inlinedRequestBody":
             case "reference":
+                return this.mayOmitRequestBody() ? this.getOptionalRequestBodyBlock() : undefined;
+            case "inlinedRequestBody":
             case "bytes":
                 return undefined;
             default:
                 assertNever(requestBody);
         }
+    }
+
+    private mayOmitRequestBody(): boolean {
+        return (
+            mayOmitRequestBody({ context: this.context, endpoint: this.endpoint }) &&
+            !this.wrapper.onlyPathParameters &&
+            !this.context.shouldSkipWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })
+        );
+    }
+
+    /**
+     * Sends the wrapper on only when it carries a body. The wrapper marshals to its body alone, so a
+     * wrapper holding a nil body would otherwise go out as the JSON literal `null`.
+     */
+    private getOptionalRequestBodyBlock(): go.AstNode {
+        const request = this.getRequestParameterName();
+        const bodyField = this.context.getFieldName(this.wrapper.bodyKey);
+        return go.codeblock((writer) => {
+            writer.writeLine(`var ${OPTIONAL_REQUEST_BODY_VARIABLE_NAME} interface{}`);
+            writer.writeLine(`if ${request} != nil && ${request}.${bodyField} != nil {`);
+            writer.indent();
+            writer.writeLine(`${OPTIONAL_REQUEST_BODY_VARIABLE_NAME} = ${request}`);
+            writer.dedent();
+            writer.writeLine("}");
+        });
     }
 
     private getRequestBodyBlockForFileUpload(fileUploadRequest: FernIr.FileUploadRequest): go.AstNode {

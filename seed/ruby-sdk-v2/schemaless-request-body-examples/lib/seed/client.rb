@@ -12,6 +12,18 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.create_plant(request: {
+    #     name: "Venus Flytrap",
+    #     species: "Dionaea muscipula",
+    #     care: {
+    #       light: "full sun",
+    #       water: "distilled only",
+    #       humidity: "high"
+    #     },
+    #     tags: %w[carnivorous tropical]
+    #   })
+    #
     # @return [Seed::Types::CreatePlantResponse]
     def create_plant(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -19,7 +31,7 @@ module Seed
         base_url: request_options[:base_url],
         method: "POST",
         path: "plants",
-        body: params,
+        body: params[:request],
         request_options: request_options
       )
       begin
@@ -29,7 +41,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CreatePlantResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::CreatePlantResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -47,17 +59,25 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :plant_id
     #
+    # @example
+    #   client.update_plant(
+    #     plant_id: "plantId",
+    #     body: {
+    #       name: "Updated Venus Flytrap",
+    #       care: {
+    #         light: "partial shade"
+    #       }
+    #     }
+    #   )
+    #
     # @return [Seed::Types::UpdatePlantResponse]
     def update_plant(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      path_param_names = %i[plant_id]
-      body_params = params.except(*path_param_names)
-
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "PUT",
         path: "plants/#{URI.encode_uri_component(params[:plant_id].to_s)}",
-        body: body_params,
+        body: params[:body],
         request_options: request_options
       )
       begin
@@ -67,7 +87,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::UpdatePlantResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::UpdatePlantResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -83,6 +103,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.create_plant_with_schema(
+    #     name: "Sundew",
+    #     species: "Drosera capensis"
+    #   )
     #
     # @return [Seed::Types::CreatePlantWithSchemaResponse]
     def create_plant_with_schema(request_options: {}, **params)
@@ -101,7 +127,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CreatePlantWithSchemaResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::CreatePlantWithSchemaResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -109,15 +135,19 @@ module Seed
     end
 
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_schemaless-request-body-examples/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

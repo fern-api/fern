@@ -1,5 +1,6 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.java.client.ClientGeneratorContext;
@@ -11,7 +12,6 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -60,19 +60,10 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec.Builder endpointWithoutRequestBuilder,
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBody,
-            ParameterSpec bodyParameterSpec) {
-        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
-        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
-            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
-            endpointWithoutRequestBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                    paramType.rawType,
-                    paramType.typeArguments.get(0));
-        } else {
-            endpointWithoutRequestBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                    bodyParameterSpec.type);
-        }
+            List<Object> bodyValueFormatArgs) {
+        endpointWithoutRequestBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                bodyValueFormatArgs.toArray());
     }
 
     @Override
@@ -80,21 +71,11 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder,
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBodyWithRequestOptions,
-            ParameterSpec bodyParameterSpec) {
-        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
-        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
-            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
-            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "("
-                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
-                    paramType.rawType,
-                    paramType.typeArguments.get(0));
-        } else {
-            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "("
-                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
-                    bodyParameterSpec.type);
-        }
+            List<Object> bodyValueFormatArgs) {
+        endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBodyWithRequestOptions)
+                        + ")",
+                bodyValueFormatArgs.toArray());
     }
 
     @Override
@@ -271,6 +252,10 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     @Override
     public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder
+                .beginControlFlow("catch ($T e)", JsonProcessingException.class)
+                .addStatement(
+                        "throw new $T($S + e.getMessage(), e)", baseErrorClassName, "Failed to deserialize response: ")
+                .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
                 .endControlFlow()

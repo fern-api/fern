@@ -33,6 +33,9 @@ export class UserClient {
      * @param {SeedMixedFileDirectory.ListUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedMixedFileDirectoryError}
+     * @throws {@link errors.SeedMixedFileDirectoryTimeoutError}
+     *
      * @example
      *     await client.user.list({
      *         limit: 1

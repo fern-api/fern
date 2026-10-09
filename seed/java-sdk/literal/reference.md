@@ -61,6 +61,54 @@ client.headers().send(
 </dl>
 </details>
 
+<details><summary><code>client.headers.sendLiteralsOnly() -> SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.headers().sendLiteralsOnly();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**endpointVersion:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async:** `Boolean` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.inlined.send(request) -> SendResponse</code></summary>
 <dl>

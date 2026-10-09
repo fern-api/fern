@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test inheritance from undiscrimnated union objects",
   "auth": {
@@ -752,7 +753,8 @@
     ],
     "errors": [],
     "subpackages": [],
-    "hasEndpointsInTree": false
+    "hasEndpointsInTree": false,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

@@ -1,0 +1,12 @@
+{
+  "oneOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "description": "A named alias that resolves to a nullable string, which is also a pointer in Go.",
+  "definitions": {}
+}

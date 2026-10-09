@@ -6,7 +6,8 @@
  *         "X-Idempotency-Key": "X-Idempotency-Key",
  *         nullable_text: "nullable_text",
  *         nullable_number: 1.1,
- *         non_nullable_text: "non_nullable_text"
+ *         non_nullable_text: "non_nullable_text",
+ *         required_nullable_text: "required_nullable_text"
  *     }
  */
 export interface UpdateFooRequest {
@@ -17,4 +18,6 @@ export interface UpdateFooRequest {
     nullable_number?: number | null;
     /** Regular non-nullable field */
     non_nullable_text?: string;
+    /** Must be sent, but may be null to clear the value */
+    required_nullable_text: string | null;
 }

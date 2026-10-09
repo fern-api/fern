@@ -17,6 +17,8 @@ export declare class InlinedRequestsClient {
      * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.inlinedRequests.postWithObjectBodyandResponse({
@@ -43,4 +45,21 @@ export declare class InlinedRequestsClient {
      */
     postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __postWithObjectBodyandResponse;
+    /**
+     * POST with root-level array body and header params
+     *
+     * @param {SeedExhaustive.PostWithArrayBodyAndHeaders} request
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
+     * @example
+     *     await client.inlinedRequests.postWithArrayBodyAndHeaders({
+     *         "X-Custom-Header": "X-Custom-Header",
+     *         body: ["string", "string"]
+     *     })
+     */
+    postWithArrayBodyAndHeaders(request: SeedExhaustive.PostWithArrayBodyAndHeaders, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<string>;
+    private __postWithArrayBodyAndHeaders;
 }

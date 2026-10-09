@@ -5,6 +5,7 @@ import { CodeBlock, Expression, rust, Statement, UseStatement, Writer } from "@f
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
@@ -20,8 +21,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     private static ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
+    private static ADDITIONAL_BODY_PROPERTIES_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_BODY_PROPERTIES";
     private static WEBSOCKETS_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKETS";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static CUSTOM_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_CLIENT";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
@@ -75,11 +78,18 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
 
+        // Additional body properties
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID] =
+            this.buildAdditionalBodyPropertiesSnippets();
+
         // WebSocket
         const wsSnippets = this.buildWebSocketSnippets();
         if (wsSnippets.length > 0) {
             snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = wsSnippets;
         }
+
+        // Custom reqwest client
+        snippets[ReadmeSnippetBuilder.CUSTOM_CLIENT_FEATURE_ID] = this.buildCustomClientSnippets();
 
         // Environments
         if (this.context.ir.environments != null) {
@@ -171,6 +181,30 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             const codeString = this.buildAdditionalQueryParamsCode(endpoint);
             return this.writeCode(codeString);
         });
+    }
+
+    private buildAdditionalBodyPropertiesSnippets(): string[] {
+        const bodyEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID);
+        return bodyEndpoints.map((endpoint) => {
+            const codeString = this.buildAdditionalBodyPropertiesCode(endpoint);
+            return this.writeCode(codeString);
+        });
+    }
+
+    private buildCustomClientSnippets(): string[] {
+        const codeString = `use ${this.crateName}::prelude::*;
+
+let certificate = reqwest::Certificate::from_pem(&std::fs::read("ca.pem")?)?;
+let reqwest_client = reqwest::Client::builder()
+    .add_root_certificate(certificate)
+    .build()
+    .expect("Failed to build reqwest client");
+let config = ClientConfig {
+    reqwest_client: Some(reqwest_client),
+    ..Default::default()
+};
+let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.context.getClientName()}::new(config).expect("Failed to build client");`;
+        return [this.writeCode(codeString)];
     }
 
     private buildPaginationSnippets(): string[] {
@@ -520,14 +554,41 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return writer.toString().trim();
     }
 
+    private buildAdditionalBodyPropertiesCode(endpoint: EndpointWithFilepath): string {
+        const writer = new Writer();
+        const methodCall = this.getMethodCall(endpoint);
+
+        // Manually format using Writer for proper multi-line method chain formatting
+        writer.write(`let response = ${methodCall}(`);
+        writer.newLine();
+        writer.indent();
+        writer.write("Some(");
+        writer.newLine();
+        writer.indent();
+        writer.write("RequestOptions::new()");
+        writer.newLine();
+        writer.indent();
+        writer.write('.additional_body_param("beta_feature", true)');
+        writer.newLine();
+        writer.write('.additional_body_param("metadata", serde_json::json!({ "source": "sdk" }))');
+        writer.dedent();
+        writer.newLine();
+        writer.dedent();
+        writer.write(")");
+        writer.newLine();
+        writer.dedent();
+        writer.write(")?");
+        writer.newLine();
+        writer.write(".await;");
+
+        return writer.toString().trim();
+    }
+
     private buildPaginationCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
 
         // Use prelude for all imports
-        const useStatements = [
-            new UseStatement({ path: `${this.crateName}::prelude`, items: ["*"] }),
-            new UseStatement({ path: "futures", items: ["StreamExt"] })
-        ];
+        const useStatements = [new UseStatement({ path: `${this.crateName}::prelude`, items: ["*"] })];
 
         // Write use statements
         useStatements.forEach((useStmt) => {
@@ -829,8 +890,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
 
         const environmentEnumName = this.context.customConfig.environmentEnumName || "Environment";
-        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
-        if (defaultEnvName == null) {
+        const defaultEnvironment = this.getDefaultEnvironment(envConfig);
+        if (defaultEnvironment == null) {
             return [];
         }
 
@@ -847,7 +908,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         writer.write(`let config = ClientConfig {`);
         writer.newLine();
         writer.indent();
-        writer.write(`base_url: ${environmentEnumName}::${defaultEnvName}.url().to_string(),`);
+        writer.write(this.buildEnvironmentConfigField(environmentEnumName, defaultEnvironment));
         writer.newLine();
         writer.write(`..Default::default()`);
         writer.newLine();
@@ -859,18 +920,31 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return [this.writeCode(writer.toString().trim())];
     }
 
-    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
-        const defaultEnvId = envConfig.defaultEnvironment;
-        const envs = envConfig.environments.environments;
-
-        if (defaultEnvId != null) {
-            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-            if (defaultEnv != null) {
-                return this.context.case.pascalSafe(defaultEnv.name);
+    /**
+     * A multi-URL environment is selected through `environment`, whose constructor carries every
+     * URL; `base_url` there is an override of all of them, and `Environment::Production.url()` does
+     * not compile against a tuple variant.
+     */
+    private buildEnvironmentConfigField(
+        environmentEnumName: string,
+        environment: FernIr.SingleBaseUrlEnvironment | FernIr.MultipleBaseUrlsEnvironment
+    ): string {
+        if (this.context.hasMultipleBaseUrls()) {
+            const selector = new EnvironmentGenerator({ context: this.context }).getMultiUrlEnvironmentSelector(
+                environment.id
+            );
+            if (selector != null) {
+                return `environment: Some(${selector}),`;
             }
         }
-        const firstName = envs[0]?.name;
-        return firstName != null ? this.context.case.pascalSafe(firstName) : undefined;
+        return `base_url: ${environmentEnumName}::${this.context.case.pascalSafe(environment.name)}.url().to_string(),`;
+    }
+
+    private getDefaultEnvironment(
+        envConfig: FernIr.EnvironmentsConfig
+    ): FernIr.SingleBaseUrlEnvironment | FernIr.MultipleBaseUrlsEnvironment | undefined {
+        const envs = envConfig.environments.environments;
+        return envs.find((e) => e.id === envConfig.defaultEnvironment) ?? envs[0];
     }
 
     private writeCode(code: string): string {

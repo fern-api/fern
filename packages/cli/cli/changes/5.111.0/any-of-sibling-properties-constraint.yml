@@ -1,0 +1,15 @@
+- summary: |
+    Add the `any-of-sibling-properties-as-object` OpenAPI setting. When enabled, a
+    schema that declares `properties` alongside an `anyOf` whose branches only
+    re-declare some of those same properties as required is converted as the object
+    it declares, rather than as an undiscriminated union. Per JSON Schema such an
+    `anyOf` is an "at least one of" constraint over sibling properties, not a set of
+    variants, so converting it to a union discards the declared `properties` and
+    makes the fields mutually exclusive -- a request body setting two of them
+    silently sent only one.
+
+    A branch that introduces a property, that narrows one to a different value, or
+    that is a reference, is a real variant and continues to produce a union even
+    with the setting enabled. The setting defaults to false, so conversion output is
+    unchanged unless you opt in.
+  type: feat

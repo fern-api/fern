@@ -23,6 +23,7 @@ class AuthClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
@@ -40,6 +41,7 @@ class AuthClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options
      */
     public function __construct(
@@ -51,6 +53,19 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->getTokenWithClientCredentials(
+     *     new GetTokenRequest([
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'client_credentials',
+     *         'scope' => 'scope',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -59,6 +74,7 @@ class AuthClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
+     *   rootVariable?: string,
      * } $options
      * @return ?TokenResponse
      * @throws SeedException
@@ -98,6 +114,20 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->refreshToken(
+     *     new RefreshTokenRequest([
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *         'refreshToken' => 'refresh_token',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'refresh_token',
+     *         'scope' => 'scope',
+     *     ]),
+     * );
+     * ```
+     *
      * @param RefreshTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -106,6 +136,7 @@ class AuthClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
+     *   rootVariable?: string,
      * } $options
      * @return ?TokenResponse
      * @throws SeedException

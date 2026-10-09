@@ -124,4 +124,5 @@ error-discrimination:
 display-name: Test spec for `uint` types specified as number formats.
 ",
   },
+  "specVersion": "1.0.0",
 }

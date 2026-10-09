@@ -1,0 +1,6 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.52. Under `--version AUTO`, the AI-authored
+    `changelog.md` no longer reports routine version bumps (e.g. the `User-Agent` /
+    `X-Fern-SDK-Version` headers) as changed or removed, and the Go `/vN` module suffix
+    is retained in the `X-Fern-SDK-Name` header value and README install/import samples.
+  type: fix

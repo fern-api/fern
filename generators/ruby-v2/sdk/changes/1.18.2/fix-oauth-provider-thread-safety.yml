@@ -1,0 +1,7 @@
+- summary: |
+    Fix a thread-safety bug in the generated `OAuthProvider` and
+    `InferredAuthProvider`. The token cache is now guarded by a `Mutex` with
+    double-checked locking, so only one thread refreshes the token under
+    concurrent load (e.g. multi-threaded servers like Puma or Sidekiq). The
+    cache-hit path stays lock-free.
+  type: fix

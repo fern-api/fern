@@ -300,6 +300,11 @@ export class ExampleTypeFactory {
                 }
                 return undefined;
             case "unknown":
+                // An explicit null in the example is a valid value for an unknown schema,
+                // and must not be replaced with a generated placeholder.
+                if (example === null) {
+                    return FullExample.null({});
+                }
                 if (example != null) {
                     const fullExample = convertToFullExample(example);
                     if (fullExample != null) {
@@ -869,7 +874,8 @@ export class ExampleTypeFactory {
         let requiredProperties: Record<string, SchemaWithExample> = {};
         for (const property of object.properties) {
             const resolvedSchema = this.getResolvedSchema(property.schema);
-            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
+            // A nullable property is still required; optional properties are wrapped with `optional`.
+            if (resolvedSchema.type !== "optional") {
                 requiredProperties[property.key] = property.schema;
             }
         }

@@ -266,7 +266,7 @@ public record DebugVariableValue
             : throw new global::System.Exception("DebugVariableValue.Type is not 'mapValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<DebugVariableValue>"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable{DebugVariableValue}"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'listValue'.</exception>
     public IEnumerable<DebugVariableValue> AsListValue() =>
@@ -311,7 +311,7 @@ public record DebugVariableValue
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'undefinedValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'undefinedValue'.</exception>
-    public object AsUndefinedValue() =>
+    public object? AsUndefinedValue() =>
         IsUndefinedValue
             ? Value!
             : throw new global::System.Exception("DebugVariableValue.Type is not 'undefinedValue'");
@@ -320,7 +320,7 @@ public record DebugVariableValue
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nullValue'.</exception>
-    public object AsNullValue() =>
+    public object? AsNullValue() =>
         IsNullValue
             ? Value!
             : throw new global::System.Exception("DebugVariableValue.Type is not 'nullValue'");
@@ -345,8 +345,8 @@ public record DebugVariableValue
         Func<SeedTrace.BinaryTreeNodeAndTreeValue, T> onBinaryTreeNodeValue,
         Func<SeedTrace.SinglyLinkedListNodeAndListValue, T> onSinglyLinkedListNodeValue,
         Func<SeedTrace.DoublyLinkedListNodeAndListValue, T> onDoublyLinkedListNodeValue,
-        Func<object, T> onUndefinedValue,
-        Func<object, T> onNullValue,
+        Func<object?, T> onUndefinedValue,
+        Func<object?, T> onNullValue,
         Func<SeedTrace.GenericValue, T> onGenericValue,
         Func<string, object?, T> onUnknown_
     )
@@ -385,8 +385,8 @@ public record DebugVariableValue
         Action<SeedTrace.BinaryTreeNodeAndTreeValue> onBinaryTreeNodeValue,
         Action<SeedTrace.SinglyLinkedListNodeAndListValue> onSinglyLinkedListNodeValue,
         Action<SeedTrace.DoublyLinkedListNodeAndListValue> onDoublyLinkedListNodeValue,
-        Action<object> onUndefinedValue,
-        Action<object> onNullValue,
+        Action<object?> onUndefinedValue,
+        Action<object?> onNullValue,
         Action<SeedTrace.GenericValue> onGenericValue,
         Action<string, object?> onUnknown_
     )
@@ -523,7 +523,7 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<DebugVariableValue>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable{DebugVariableValue}"/> and returns true if successful.
     /// </summary>
     public bool TryAsListValue(out IEnumerable<DebugVariableValue>? value)
     {
@@ -739,8 +739,8 @@ public record DebugVariableValue
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.DoublyLinkedListNodeAndListValue"
                         ),
-                "undefinedValue" => new { },
-                "nullValue" => new { },
+                "undefinedValue" => null,
+                "nullValue" => null,
                 "genericValue" => jsonWithoutDiscriminator.Deserialize<SeedTrace.GenericValue?>(
                     options
                 ) ?? throw new JsonException("Failed to deserialize SeedTrace.GenericValue"),
@@ -1016,9 +1016,9 @@ public record DebugVariableValue
     [Serializable]
     public record UndefinedValue
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -1027,9 +1027,9 @@ public record DebugVariableValue
     [Serializable]
     public record NullValue
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>

@@ -13,7 +13,7 @@ public record GetTokenRequest
     public required string ClientId { get; set; }
 
     [JsonPropertyName("client_secret")]
-    public required string ClientSecret { get; set; }
+    public string? ClientSecret { get; set; }
 
     [JsonPropertyName("audience")]
     public string Audience { get; set; } = "https://api.example.com";

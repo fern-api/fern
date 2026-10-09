@@ -1,0 +1,123 @@
+openapi: 3.1.0
+info:
+  title: oauth-pkce
+  version: 0.0.0
+  description: >-
+    Reproduces the OAuth authorization-code + PKCE wire-test bugs: a required
+    literal
+
+    query parameter (response_type=code) that is hardcoded in the generated
+    method, and
+
+    a direct optional literal query parameter (code_challenge_method=S256) that
+    must be
+
+    materialized on the wire.
+paths:
+  /oauth/authorize:
+    get:
+      description: >-
+        Authorization-code grant with PKCE. `response_type` is a required
+        literal that is
+
+        hardcoded by the generated method; `code_challenge_method` is an
+        optional literal
+
+        that must still be sent on the wire when provided.
+      operationId: oauth_authorize
+      tags:
+        - Oauth
+      parameters:
+        - name: response_type
+          in: query
+          required: true
+          schema:
+            type: string
+            const: code
+          examples:
+            Example1:
+              value: code
+        - name: client_id
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: client_abc123
+        - name: redirect_uri
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: https://example.com/callback
+        - name: code_challenge
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM
+        - name: code_challenge_method
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+            const: S256
+          examples:
+            Example1:
+              value: S256
+        - name: scope
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+          examples:
+            Example1:
+              value: read write
+        - name: state
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+          examples:
+            Example1:
+              value: xyz
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizeResponse'
+              examples:
+                Example1:
+                  value:
+                    code: auth_code_xyz
+                    state: xyz
+components:
+  schemas:
+    AuthorizeResponse:
+      title: AuthorizeResponse
+      type: object
+      properties:
+        code:
+          type: string
+          examples:
+            - auth_code_xyz
+        state:
+          type:
+            - string
+            - 'null'
+      required:
+        - code
+  securitySchemes: {}

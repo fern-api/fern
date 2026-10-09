@@ -3,6 +3,7 @@
   "additionalProperties": {
     "$ref": "#/definitions/types.object.DocumentedUnknownType"
   },
+  "description": "Tests that map value types with unknown types don't get spurious | undefined.",
   "definitions": {
     "types.object.DocumentedUnknownType": {
       "type": [
@@ -12,7 +13,8 @@
         "object",
         "array",
         "null"
-      ]
+      ],
+      "description": "Tests that unknown types are able to preserve their docstrings."
     }
   }
 }

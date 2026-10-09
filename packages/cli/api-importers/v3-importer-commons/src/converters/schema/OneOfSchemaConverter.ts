@@ -32,6 +32,44 @@ export declare namespace OneOfSchemaConverter {
     }
 }
 
+interface DiscriminatedVariant {
+    discriminant: string;
+    typeId: TypeId;
+    /** Undefined when the variant is inlined in the `oneOf`/`anyOf` rather than $ref'd. */
+    ref?: string;
+    /** The variant's schema, resolved if it is a $ref */
+    schema: OpenAPIV3_1.SchemaObject | undefined;
+    breadcrumbs: string[];
+}
+
+function isUnionWithoutVariants(type: Type): boolean {
+    return type.type === "union" && type.types.length === 0;
+}
+
+/**
+ * The value a schema pins its discriminant property to, if any.
+ */
+function getLiteralDiscriminant({
+    schema,
+    discriminantProperty
+}: {
+    schema: OpenAPIV3_1.SchemaObject;
+    discriminantProperty: string;
+}): string | undefined {
+    const discriminantSchema = schema.properties?.[discriminantProperty];
+    if (discriminantSchema == null || "$ref" in discriminantSchema) {
+        return undefined;
+    }
+    const constValue = discriminantSchema.const;
+    if (typeof constValue === "string") {
+        return constValue;
+    }
+    if (discriminantSchema.enum?.length === 1 && typeof discriminantSchema.enum[0] === "string") {
+        return discriminantSchema.enum[0];
+    }
+    return undefined;
+}
+
 export class OneOfSchemaConverter extends AbstractConverter<
     AbstractConverterContext<object>,
     OneOfSchemaConverter.Output | undefined
@@ -65,7 +103,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
         // This properly handles OpenAPI oneOf with discriminator where the discriminant
         // property is defined in each variant schema
         if (this.schema.discriminator != null) {
-            return this.convertAsDiscriminatedUnion();
+            const discriminatedUnion = this.convertAsDiscriminatedUnion();
+            if (discriminatedUnion != null && !isUnionWithoutVariants(discriminatedUnion.type)) {
+                return discriminatedUnion;
+            }
+            // A discriminator whose variants cannot be resolved (e.g. inline oneOf members, which
+            // have no $ref for the mapping to be inferred from) produces a union with no variants.
+            // The undiscriminated conversion preserves the variants' shapes instead.
+            return this.convertAsUndiscriminatedUnion() ?? discriminatedUnion;
         }
 
         // Infer open-ended enums: oneOf/anyOf with [enum, string] pattern
@@ -177,6 +222,90 @@ export class OneOfSchemaConverter extends AbstractConverter<
         };
     }
 
+    /**
+     * The variants of the union, from `discriminator.mapping` when it is declared and otherwise
+     * inferred from the `oneOf`/`anyOf` members.
+     *
+     * Per the OpenAPI 3.x spec, if no mapping is provided the discriminant values are derived from
+     * the schema names in the $ref paths. We also check the discriminant property of each member
+     * for `const` or single-element `enum` values, which take precedence over the schema name and
+     * are the only way to name a member that is inlined rather than $ref'd.
+     *
+     * Returns no variants when a member's discriminant value cannot be determined, since a union
+     * missing that member is worse than an undiscriminated one.
+     */
+    private getVariants(discriminantProperty: string): DiscriminatedVariant[] {
+        const mapping = this.schema.discriminator?.mapping;
+        if (mapping != null) {
+            const variants: DiscriminatedVariant[] = [];
+            for (const [discriminant, ref] of Object.entries(mapping)) {
+                const typeId = this.context.getTypeIdFromSchemaReference({ $ref: ref });
+                if (typeId == null) {
+                    continue;
+                }
+                variants.push({
+                    discriminant,
+                    typeId,
+                    ref,
+                    schema: this.resolveVariantSchema({ $ref: ref }),
+                    breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
+                });
+            }
+            return variants;
+        }
+
+        const subSchemas = this.schema.oneOf ?? this.schema.anyOf ?? [];
+        const variants: DiscriminatedVariant[] = [];
+        for (const [index, subSchema] of subSchemas.entries()) {
+            const schema = this.resolveVariantSchema(subSchema);
+            const literalDiscriminant =
+                schema != null ? getLiteralDiscriminant({ schema, discriminantProperty }) : undefined;
+
+            if (!this.context.isReferenceObject(subSchema)) {
+                if (literalDiscriminant == null) {
+                    return [];
+                }
+                variants.push({
+                    discriminant: literalDiscriminant,
+                    typeId: this.context.convertBreadcrumbsToName([`${this.id}_${index}`]),
+                    schema,
+                    breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`]
+                });
+                continue;
+            }
+
+            const ref = subSchema.$ref;
+            const schemaName = ref.split("/").pop();
+            const typeId = this.context.getTypeIdFromSchemaReference(subSchema);
+            const discriminant = literalDiscriminant ?? schemaName;
+            if (typeId == null || discriminant == null) {
+                return [];
+            }
+            variants.push({
+                discriminant,
+                typeId,
+                ref,
+                schema,
+                breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
+            });
+        }
+        return variants;
+    }
+
+    private resolveVariantSchema(
+        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    ): OpenAPIV3_1.SchemaObject | undefined {
+        if (!this.context.isReferenceObject(schemaOrReference)) {
+            return schemaOrReference;
+        }
+        const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+            reference: schemaOrReference,
+            breadcrumbs: this.breadcrumbs,
+            skipErrorCollector: true
+        });
+        return resolved.resolved ? resolved.value : undefined;
+    }
+
     private convertAsDiscriminatedUnion(): OneOfSchemaConverter.Output | undefined {
         if (this.schema.discriminator == null) {
             return undefined;
@@ -187,28 +316,20 @@ export class OneOfSchemaConverter extends AbstractConverter<
         let referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
-        for (const [discriminant, reference] of Object.entries(this.schema.discriminator.mapping ?? {})) {
-            const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference });
-            const breadcrumbs = [...this.breadcrumbs, "discriminator", "mapping", discriminant];
-
-            // Resolve the reference to check if it contains the discriminant property
-            const resolvedSchema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
-                reference: { $ref: reference },
-                breadcrumbs
-            });
-
-            let schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = { $ref: reference };
+        for (const { discriminant, typeId, ref, schema: variantSchema, breadcrumbs } of this.getVariants(
+            discriminantProperty
+        )) {
+            let schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined =
+                ref != null ? { $ref: ref } : variantSchema;
 
             // If the variant schema contains the discriminant property, filter it out
             // and convert as an inlined schema with the original type ID
-            if (
-                resolvedSchema.resolved &&
-                resolvedSchema.value.properties != null &&
-                discriminantProperty in resolvedSchema.value.properties
-            ) {
+            if (variantSchema?.properties != null && discriminantProperty in variantSchema.properties) {
                 // Create a filtered schema without the discriminant property
-                const filteredSchema = this.filterDiscriminantFromSchema(resolvedSchema.value, discriminantProperty);
-                schemaOrReference = filteredSchema;
+                schemaOrReference = this.filterDiscriminantFromSchema(variantSchema, discriminantProperty);
+            }
+            if (schemaOrReference == null) {
+                continue;
             }
 
             const singleUnionTypeSchemaConverter = new SchemaOrReferenceConverter({
@@ -235,11 +356,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 });
 
                 // Extract raw schema name for display (not namespaced)
-                const rawSchemaName = reference.split("/").pop() ?? typeId;
+                const rawSchemaName = ref?.split("/").pop() ?? typeId;
 
                 // Extract schema title once for reuse
-                const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
-                const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
+                const schemaTitle = variantSchema?.title;
+                const schemaDescription = variantSchema?.description;
 
                 // Determine variant display name with fallback priority:
                 // 1. Schema's title field (explicit user intention)
@@ -326,6 +447,9 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return {
             type: Type.union({
                 baseProperties,
+                // Populated by the computeUnionBasePropertyDedupe post-build pass once the full
+                // types map is assembled; initialized empty here.
+                inheritedBaseProperties: [],
                 discriminant: this.context.casingsGenerator.generateNameAndWireValue({
                     name: this.schema.discriminator.propertyName,
                     wireValue: this.schema.discriminator.propertyName
@@ -451,6 +575,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         ...convertedSchema.inlinedTypes,
                         [namespacedSchemaId]: convertedSchema.convertedSchema
                     };
+                    referencedTypes.add(namespacedSchemaId);
+                    for (const inlinedTypeId of Object.keys(convertedSchema.inlinedTypes)) {
+                        referencedTypes.add(inlinedTypeId);
+                    }
                 }
                 convertedSchema.convertedSchema.typeDeclaration.referencedTypes.forEach((referencedType) => {
                     referencedTypes.add(referencedType);

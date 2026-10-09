@@ -66,7 +66,7 @@ await client.imdb.createMovie({
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client/Client.ts">getMovie</a>(movieId) -> SeedApi.Movie</code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client/Client.ts">getMovie</a>({ ...params }) -> SeedApi.Movie</code></summary>
 <dl>
 <dd>
 
@@ -79,7 +79,9 @@ await client.imdb.createMovie({
 <dd>
 
 ```typescript
-await client.imdb.getMovie(SeedApi.MovieId("movieId"));
+await client.imdb.getMovie({
+    movieId: SeedApi.MovieId("movieId")
+});
 
 ```
 </dd>
@@ -95,7 +97,7 @@ await client.imdb.getMovie(SeedApi.MovieId("movieId"));
 <dl>
 <dd>
 
-**movieId:** `SeedApi.MovieId` 
+**request:** `SeedApi.GetMovieImdbRequest` 
     
 </dd>
 </dl>

@@ -3,9 +3,14 @@ import {
     computeSemanticVersion,
     detectCiProvider,
     detectInvocationSource,
+    getFilesystemPublishTarget,
+    getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
-    getPackageNameFromGeneratorConfig
+    getPackageNameFromGeneratorConfig,
+    getUserAgentTemplateFromGeneratorConfig,
+    getWebhookSignatureFromGeneratorConfig,
+    VisibilityFilter
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
@@ -14,7 +19,13 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AutoVersioningCache, isAutoVersion } from "@fern-api/generator-cli/autoversion";
+import {
+    AutoVersioningCache,
+    extractLanguageFromGeneratorName,
+    isAutoVersion,
+    MAGIC_VERSION,
+    mapMagicVersionForLanguage
+} from "@fern-api/generator-cli/autoversion";
 import {
     buildReplayTelemetryProps,
     logReplaySummary,
@@ -37,6 +48,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { generatorWantsSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -62,7 +74,11 @@ export async function runLocalGenerationForWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
-    disableTelemetry
+    generateTests,
+    generateFullProject,
+    verify,
+    disableTelemetry,
+    libraryVisibility
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -78,6 +94,8 @@ export async function runLocalGenerationForWorkspace({
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
     validateWorkspace?: boolean;
+    /** When true, run `.fern/verify.sh` (if emitted by the generator) inside a validator container after replay and before any GitHub push. Local generation only — remote/Fiddle pipelines do not honor this flag. */
+    verify?: boolean;
     requireEnvVars?: boolean;
     skipFernignore?: boolean;
     publishToRegistry?: boolean;
@@ -85,7 +103,19 @@ export async function runLocalGenerationForWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    generateTests?: boolean;
+    /**
+     * When true, filesystem (local-file-system) outputs are generated as full, packageable
+     * projects (pyproject.toml, README.md, etc.) instead of source-only output. Set by
+     * `fern generate --pack` so the emitted SDK can be built into a package artifact.
+     */
+    generateFullProject?: boolean;
     disableTelemetry?: boolean;
+    /**
+     * Which `x-twilio.libraryVisibility` tiers of an OpenAPI spec to include in the generated SDK.
+     * `public` (default for `fern generate`) or `private` (`fern generate --private`); `hidden` is always dropped.
+     */
+    libraryVisibility?: VisibilityFilter;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -133,7 +163,10 @@ export async function runLocalGenerationForWorkspace({
 
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
-                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
+                    {
+                        ...getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
+                        libraryVisibility
+                    },
                     generatorInvocation.apiOverride?.specs
                 );
 
@@ -153,7 +186,20 @@ export async function runLocalGenerationForWorkspace({
                 });
 
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                const userAgentTemplate = getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
+                const idempotencyKeyGeneration = getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation);
                 version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
+                // When version is AUTO, stamp the language-mapped magic placeholder into the IR
+                // instead of the literal "AUTO". The IR version drives the User-Agent header and
+                // X-Fern-SDK-Version; the post-generation step replaces the placeholder with the
+                // real computed version, whereas a literal "AUTO" would ship unreplaced.
+                const irLanguage =
+                    generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
+                const effectiveIrVersion =
+                    version != null && isAutoVersion(version)
+                        ? mapMagicVersionForLanguage(MAGIC_VERSION, irLanguage)
+                        : version;
 
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
@@ -161,13 +207,18 @@ export async function runLocalGenerationForWorkspace({
                     generationLanguage: generatorInvocation.language,
                     keywords: generatorInvocation.keywords,
                     smartCasing: generatorInvocation.smartCasing,
+                    smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
                     exampleGeneration: {
                         includeOptionalRequestPropertyExamples: false,
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                    version: effectiveIrVersion,
                     packageName,
+                    userAgentTemplate,
+                    idempotencyKeyGeneration,
+                    webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, context),
+                    organization: projectConfig.organization,
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),
                     dynamicGeneratorConfig,
@@ -184,8 +235,6 @@ export async function runLocalGenerationForWorkspace({
                     }
                 });
 
-                const venus = createVenusService({ token: token?.value });
-
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     token ??= await getAccessToken();
                     if (token == null) {
@@ -198,35 +247,47 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                const organization = await venus.organization.get(projectConfig.organization);
+                let orgBody: FernVenusApi.Organization | undefined;
+                if (token != null) {
+                    const venus = createVenusService({ token: token.value });
+                    const organization = await venus.organization.get({
+                        orgId: projectConfig.organization
+                    });
 
-                if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
-                    interactiveTaskContext.failWithoutThrowing(
-                        `Failed to load details for organization ${projectConfig.organization}.`,
-                        undefined,
-                        { code: CliError.Code.NetworkError }
-                    );
-                    return;
+                    if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
+                        interactiveTaskContext.failWithoutThrowing(
+                            `Failed to load details for organization ${projectConfig.organization}.`,
+                            undefined,
+                            { code: CliError.Code.NetworkError }
+                        );
+                        return;
+                    }
+
+                    if (organization.ok) {
+                        orgBody = organization.body;
+                    }
                 }
 
-                if (organization.ok) {
-                    if (organization.body.isWhitelabled) {
+                if (orgBody != null) {
+                    if (orgBody.isWhitelabled) {
                         if (intermediateRepresentation.readmeConfig == null) {
                             intermediateRepresentation.readmeConfig = emptyReadmeConfig;
                         }
                         intermediateRepresentation.readmeConfig.whiteLabel = true;
                     }
-                    intermediateRepresentation.selfHosted = organization.body.selfHostedSdKs;
+                    intermediateRepresentation.selfHosted = orgBody.selfHostedSdKs;
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
-                    org: organization.ok ? organization.body : undefined,
+                    org: orgBody,
                     version,
                     userProvidedVersion,
                     packageName,
-                    context: interactiveTaskContext
+                    context: interactiveTaskContext,
+                    generateTests,
+                    generateFullProject
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -301,12 +362,15 @@ export async function runLocalGenerationForWorkspace({
                             timeoutMs: 30000 // 30 seconds timeout for credential/network issues
                         });
 
-                        // For push mode and pull-request mode with a target branch,
+                        // For push, commit-and-release, and pull-request mode with a target branch,
                         // checkout the target branch while the working tree is clean.
                         // This prevents non-fast-forward errors that occur when trying to checkout
                         // after files have been generated (dirty working tree).
                         const mode = selfhostedGithubConfig.mode ?? "push";
-                        if ((mode === "push" || mode === "pull-request") && selfhostedGithubConfig.branch != null) {
+                        if (
+                            (mode === "push" || mode === "pull-request" || mode === "commit-and-release") &&
+                            selfhostedGithubConfig.branch != null
+                        ) {
                             interactiveTaskContext.logger.debug(
                                 `Checking out branch ${selfhostedGithubConfig.branch} before generation`
                             );
@@ -349,6 +413,10 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
+                const wantsRawSpecs =
+                    workspace instanceof OSSWorkspace &&
+                    generatorWantsSpecs(generatorInvocation.name, generatorInvocation.version);
+
                 const {
                     shouldCommit,
                     autoVersioningCommitMessage,
@@ -375,26 +443,31 @@ export async function runLocalGenerationForWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: version,
                     writeUnitTests: true,
-                    generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
-                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
+                    generateOauthClients: orgBody?.oauthClientEnabled ?? true,
+                    generatePaginatedClients: orgBody?.paginationEnabled ?? true,
                     includeOptionalRequestPropertyExamples: false,
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
-                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                    whiteLabel: orgBody?.isWhitelabled ?? false,
                     publishToRegistry,
                     runner,
                     ai,
                     autoVersioningCache,
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
-                    disableTelemetry
+                    disableTelemetry,
+                    rawApiSpecs: wantsRawSpecs ? workspace.allSpecs : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
-                // Run post-generation pipeline (replay + GitHub) when outputting to a self-hosted GitHub repo
-                if (selfhostedGithubConfig != null && shouldCommit) {
+                // Run post-generation pipeline when:
+                //   - outputting to a self-hosted GitHub repo (full replay + GitHub flow), or
+                //   - `--verify` is set (verify-only flow; no replay, no GitHub).
+                const githubPipelineEnabled = selfhostedGithubConfig != null && shouldCommit;
+                const verifyOnlyPipelineEnabled = !githubPipelineEnabled && verify === true;
+                if (githubPipelineEnabled || verifyOnlyPipelineEnabled) {
                     const pipelineLogger: PipelineLogger = {
                         debug: (msg) => interactiveTaskContext.logger.debug(msg),
                         info: (msg) => interactiveTaskContext.logger.info(msg),
@@ -407,30 +480,39 @@ export async function runLocalGenerationForWorkspace({
                     const pipeline = new PostGenerationPipeline(
                         {
                             outputDir: absolutePathToLocalOutput,
-                            replay: { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false },
-                            github: {
-                                enabled: true,
-                                uri: selfhostedGithubConfig.uri,
-                                token: selfhostedGithubConfig.token,
-                                mode: selfhostedGithubConfig.mode ?? "push",
-                                branch: selfhostedGithubConfig.branch,
-                                commitMessage: autoVersioningCommitMessage,
-                                changelogEntry: autoVersioningChangelogEntry,
-                                prDescription: autoVersioningPrDescription,
-                                versionBumpReason: autoVersioningVersionBumpReason,
-                                previousVersion: autoVersioningPreviousVersion,
-                                newVersion: autoVersioningNewVersion,
-                                versionBump: autoVersioningVersionBump,
-                                previewMode: selfhostedGithubConfig.previewMode,
-                                generatorName: generatorInvocation.name,
-                                automationMode,
-                                autoMerge,
-                                skipIfNoDiff,
-                                hasBreakingChanges,
-                                breakingChangesSummary: hasBreakingChanges ? autoVersioningPrDescription : undefined,
-                                runId: process.env.FERN_RUN_ID,
-                                apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
-                            },
+                            replay: githubPipelineEnabled
+                                ? { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false }
+                                : undefined,
+                            verify: { enabled: verify === true, runner },
+                            github:
+                                githubPipelineEnabled && selfhostedGithubConfig != null
+                                    ? {
+                                          enabled: true,
+                                          uri: selfhostedGithubConfig.uri,
+                                          token: selfhostedGithubConfig.token,
+                                          mode: selfhostedGithubConfig.mode ?? "push",
+                                          branch: selfhostedGithubConfig.branch,
+                                          commitMessage: autoVersioningCommitMessage,
+                                          changelogEntry: autoVersioningChangelogEntry,
+                                          prDescription: autoVersioningPrDescription,
+                                          versionBumpReason: autoVersioningVersionBumpReason,
+                                          previousVersion: autoVersioningPreviousVersion,
+                                          newVersion: autoVersioningNewVersion ?? version,
+                                          versionBump: autoVersioningVersionBump,
+                                          previewMode: selfhostedGithubConfig.previewMode,
+                                          workflows: selfhostedGithubConfig.workflows ?? true,
+                                          generatorName: generatorInvocation.name,
+                                          automationMode,
+                                          autoMerge,
+                                          skipIfNoDiff,
+                                          hasBreakingChanges,
+                                          breakingChangesSummary: hasBreakingChanges
+                                              ? autoVersioningPrDescription
+                                              : undefined,
+                                          runId: process.env.FERN_RUN_ID,
+                                          apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
+                                      }
+                                    : undefined,
                             cliVersion: workspace.cliVersion ?? "unknown",
                             generatorVersions: {
                                 [generatorInvocation.name]: generatorInvocation.version
@@ -445,7 +527,7 @@ export async function runLocalGenerationForWorkspace({
                     const pipelineDurationMs = Date.now() - pipelineStart;
 
                     // Log replay summary
-                    if (pipelineResult.steps.replay != null) {
+                    if (pipelineResult.steps.replay != null && selfhostedGithubConfig != null) {
                         logReplaySummary(pipelineResult.steps.replay, {
                             debug: (msg) => interactiveTaskContext.logger.debug(msg),
                             info: (msg) => {
@@ -549,13 +631,15 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
     });
 }
 
-function getPublishConfig({
+export function getPublishConfig({
     generatorInvocation,
     org,
     version,
     userProvidedVersion,
     packageName,
-    context
+    context,
+    generateTests,
+    generateFullProject
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
@@ -563,7 +647,22 @@ function getPublishConfig({
     userProvidedVersion?: string;
     packageName?: string;
     context: TaskContext;
+    generateTests?: boolean;
+    generateFullProject?: boolean;
 }): FernIr.PublishingConfig | undefined {
+    // When version is AUTO, substitute the language-mapped magic placeholder
+    // ("0.0.0-fern-placeholder") so the version stamped into the generated SDK's
+    // publish target (and therefore package.json, version.ts, the User-Agent header,
+    // and X-Fern-SDK-Version) is a safe placeholder that the post-generation step can
+    // cleanly replace — instead of the literal "AUTO" string.
+    const publishLanguage = generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
+    const substituteAutoVersion = (candidate: string | undefined): string | undefined =>
+        candidate != null && isAutoVersion(candidate)
+            ? mapMagicVersionForLanguage(MAGIC_VERSION, publishLanguage)
+            : candidate;
+    const effectiveVersion = substituteAutoVersion(version);
+    const effectiveUserProvidedVersion = substituteAutoVersion(userProvidedVersion);
+
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         const parsed = parseRepository(generatorInvocation.raw.github.uri);
 
@@ -576,130 +675,25 @@ function getPublishConfig({
             token: generatorInvocation.raw.github.token,
             mode: irMode,
             branch: generatorInvocation.raw.github.branch,
-            target: getPublishTarget({ outputSchema: generatorInvocation.raw.output, version, packageName })
+            target: getPublishTarget({
+                outputSchema: generatorInvocation.raw.output,
+                version: effectiveVersion,
+                packageName
+            })
         });
     }
 
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
-        let publishTarget: PublishTarget | undefined = undefined;
-        if (generatorInvocation.language === "python") {
-            publishTarget = PublishTarget.pypi({
-                version,
-                packageName
-            });
-            context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
-        } else if (generatorInvocation.language === "typescript") {
-            // Only populate the npm publish target when the user explicitly passed
-            // `--version`. We intentionally do NOT thread auto-computed versions or
-            // package names on their own — doing so would cause unrelated behavior
-            // changes (e.g. auto-bumping a version from the npm registry) for users
-            // who rely on managing `package.json` themselves.
-            if (userProvidedVersion != null) {
-                const tsPackageName =
-                    packageName ??
-                    (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
-                        ? (generatorInvocation.raw.config as { packageJson?: { name?: string } }).packageJson?.name
-                        : undefined);
-                publishTarget = PublishTarget.npm({
-                    version: userProvidedVersion,
-                    packageName: tsPackageName,
-                    tokenEnvironmentVariable: ""
-                });
-                context.logger.debug(
-                    `Created NpmPublishTarget: version ${userProvidedVersion} package name: ${tsPackageName}`
-                );
-            }
-        } else if (generatorInvocation.language === "rust") {
-            // Use Crates publish target for Rust (Cargo/crates.io)
-            publishTarget = PublishTarget.crates({
-                version,
-                packageName
-            });
-            context.logger.debug(`Created CratesPublishTarget: version ${version} package name: ${packageName}`);
-        } else if (generatorInvocation.language === "go") {
-            // Only populate the go publish target when the user explicitly passed
-            // `--version`. We intentionally do NOT thread auto-computed versions
-            // here — Go SDKs do not ship a version file managed by the generator
-            // (module versions are set via git tags), so the only reason to
-            // populate this is when the user asked us to stamp the SDK with a
-            // specific version (e.g. for the `X-Fern-SDK-Version` header).
-            if (userProvidedVersion != null) {
-                const goModulePath = (() => {
-                    const config = generatorInvocation.raw?.config;
-                    if (typeof config !== "object" || config === null) {
-                        return undefined;
-                    }
-                    const module = (config as { module?: { path?: unknown } }).module;
-                    if (module == null || typeof module.path !== "string") {
-                        return undefined;
-                    }
-                    return module.path;
-                })();
-                publishTarget = PublishTarget.go({
-                    version: userProvidedVersion,
-                    modulePath: goModulePath
-                });
-                context.logger.debug(
-                    `Created GoPublishTarget: version ${userProvidedVersion} module path: ${goModulePath}`
-                );
-            }
-        } else if (generatorInvocation.language === "java") {
-            const config = generatorInvocation.raw?.config;
-
-            interface JavaGeneratorConfig {
-                group?: unknown;
-                artifact?: unknown;
-                "package-prefix"?: unknown;
-                [key: string]: unknown;
-            }
-
-            // Support both styles: package-prefix/package_name and group/artifact
-            const mavenCoordinate = (() => {
-                if (!config || typeof config !== "object" || config === null) {
-                    return undefined;
-                }
-
-                const configObj = config as JavaGeneratorConfig;
-
-                if (typeof configObj.group === "string" && typeof configObj.artifact === "string") {
-                    return {
-                        groupId: configObj.group,
-                        artifactId: configObj.artifact
-                    };
-                } else if (typeof configObj["package-prefix"] === "string" && packageName) {
-                    return {
-                        groupId: configObj["package-prefix"],
-                        artifactId: packageName
-                    };
-                } else if (typeof configObj["package-prefix"] === "string" && !packageName) {
-                    context.logger.warn("Java generator has package-prefix configured but packageName is missing");
-                }
-
-                return undefined;
-            })();
-
-            const coordinate = mavenCoordinate ? `${mavenCoordinate.groupId}:${mavenCoordinate.artifactId}` : undefined;
-
-            if (coordinate) {
-                const mavenVersion = version ?? "0.0.0";
-                publishTarget = PublishTarget.maven({
-                    coordinate,
-                    version: mavenVersion,
-                    usernameEnvironmentVariable: "MAVEN_USERNAME",
-                    passwordEnvironmentVariable: "MAVEN_PASSWORD",
-                    mavenUrlEnvironmentVariable: "MAVEN_PUBLISH_REGISTRY_URL"
-                });
-                context.logger.debug(`Created MavenPublishTarget: coordinate ${coordinate} version ${mavenVersion}`);
-            } else if (config && typeof config === "object") {
-                context.logger.debug(
-                    "Java generator config provided but could not construct Maven coordinate. " +
-                        "Expected either 'group' and 'artifact' or 'package-prefix' with packageName."
-                );
-            }
-        }
+        const publishTarget = getFilesystemPublishTarget({
+            generatorInvocation,
+            version: effectiveVersion,
+            userProvidedVersion: effectiveUserProvidedVersion,
+            packageName,
+            context
+        });
 
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: org?.selfHostedSdKs ?? false,
+            generateFullProject: generateTests || generateFullProject || org?.selfHostedSdKs || false,
             publishTarget
         });
     }
@@ -707,7 +701,7 @@ function getPublishConfig({
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => {
             return FernIr.PublishingConfig.filesystem({
-                generateFullProject: org?.selfHostedSdKs ?? false,
+                generateFullProject: generateTests || generateFullProject || org?.selfHostedSdKs || false,
                 publishTarget: undefined
             });
         },

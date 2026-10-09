@@ -1287,7 +1287,7 @@ export const is = {
 
     // V2HttpEndpointResponseBody
     V2HttpEndpointResponseBody: {
-        Error_: (value: unknown): value is FernIr.V2HttpEndpointResponseBody.Error_ =>
+        Error: (value: unknown): value is FernIr.V2HttpEndpointResponseBody.Error =>
             isObject(value) && "type" in value && value.type === "error",
         Json: (value: unknown): value is FernIr.V2HttpEndpointResponseBody.Json =>
             isObject(value) && "type" in value && value.type === "json",
@@ -1335,13 +1335,13 @@ export const is = {
     ExampleResponse: {
         Ok: (value: unknown): value is FernIr.ExampleResponse.Ok =>
             isObject(value) && "type" in value && value.type === "ok",
-        Error_: (value: unknown): value is FernIr.ExampleResponse.Error_ =>
+        Error: (value: unknown): value is FernIr.ExampleResponse.Error =>
             is.ExampleEndpointErrorResponse(value) && "type" in value && value.type === "error"
     },
 
     // FileProperty
     FileProperty: {
-        File_: (value: unknown): value is FernIr.FileProperty.File_ =>
+        File: (value: unknown): value is FernIr.FileProperty.File =>
             is.FilePropertySingle(value) && "type" in value && value.type === "file",
         FileArray: (value: unknown): value is FernIr.FileProperty.FileArray =>
             is.FilePropertyArray(value) && "type" in value && value.type === "fileArray"
@@ -1349,7 +1349,7 @@ export const is = {
 
     // FileUploadRequestProperty
     FileUploadRequestProperty: {
-        File_: (value: unknown): value is FernIr.FileUploadRequestProperty.File_ =>
+        File: (value: unknown): value is FernIr.FileUploadRequestProperty.File =>
             isObject(value) && "type" in value && value.type === "file",
         BodyProperty: (value: unknown): value is FernIr.FileUploadRequestProperty.BodyProperty =>
             is.FileUploadBodyProperty(value) && "type" in value && value.type === "bodyProperty"
@@ -1631,7 +1631,7 @@ export const is = {
             isObject(value) && "type" in value && value.type === "boolean",
         String: (value: unknown): value is FernIr.ExamplePrimitive.String =>
             isObject(value) && "type" in value && value.type === "string",
-        Date_: (value: unknown): value is FernIr.ExamplePrimitive.Date_ =>
+        Date: (value: unknown): value is FernIr.ExamplePrimitive.Date =>
             isObject(value) && "type" in value && value.type === "date",
         Datetime: (value: unknown): value is FernIr.ExamplePrimitive.Datetime =>
             is.ExampleDatetime(value) && "type" in value && value.type === "datetime",
@@ -1673,7 +1673,7 @@ export const is = {
             is.ExampleAliasType(value) && "type" in value && value.type === "alias",
         Enum: (value: unknown): value is FernIr.ExampleTypeShape.Enum =>
             is.ExampleEnumType(value) && "type" in value && value.type === "enum",
-        Object_: (value: unknown): value is FernIr.ExampleTypeShape.Object_ =>
+        Object: (value: unknown): value is FernIr.ExampleTypeShape.Object =>
             is.ExampleObjectType(value) && "type" in value && value.type === "object",
         Union: (value: unknown): value is FernIr.ExampleTypeShape.Union =>
             is.ExampleUnionType(value) && "type" in value && value.type === "union",
@@ -1713,7 +1713,7 @@ export const is = {
             is.BooleanType(value) && "type" in value && value.type === "boolean",
         String: (value: unknown): value is FernIr.PrimitiveTypeV2.String =>
             is.StringType(value) && "type" in value && value.type === "string",
-        Date_: (value: unknown): value is FernIr.PrimitiveTypeV2.Date_ =>
+        Date: (value: unknown): value is FernIr.PrimitiveTypeV2.Date =>
             is.DateType(value) && "type" in value && value.type === "date",
         DateTime: (value: unknown): value is FernIr.PrimitiveTypeV2.DateTime =>
             is.DateTimeType(value) && "type" in value && value.type === "dateTime",
@@ -1749,7 +1749,7 @@ export const is = {
             is.AliasTypeDeclaration(value) && "type" in value && value.type === "alias",
         Enum: (value: unknown): value is FernIr.Type.Enum =>
             is.EnumTypeDeclaration(value) && "type" in value && value.type === "enum",
-        Object_: (value: unknown): value is FernIr.Type.Object_ =>
+        Object: (value: unknown): value is FernIr.Type.Object =>
             is.ObjectTypeDeclaration(value) && "type" in value && value.type === "object",
         Union: (value: unknown): value is FernIr.Type.Union =>
             is.UnionTypeDeclaration(value) && "type" in value && value.type === "union",

@@ -1,3 +1,4 @@
+import { getUserToken } from "@fern-api/auth";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
@@ -12,7 +13,9 @@ import {
     DocsDefinitionResolver,
     filterOssWorkspaces,
     stitchGlobalTheme,
-    type TranslationNavigationOverlay
+    type TranslatedApiSpec,
+    type TranslationNavigationOverlay,
+    type UploadedFile
 } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
@@ -150,6 +153,30 @@ export interface PreviewDocsResult {
      * Absolute path to the fern docs workspace folder.
      */
     docsWorkspacePath: AbsoluteFilePath;
+    /**
+     * Map of absolute file paths to their fully qualified slug pathnames,
+     * used to resolve relative .md/.mdx links in translated pages.
+     */
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>;
+    /**
+     * Per-locale translated API definitions, keyed by locale then by the base
+     * `apiDefinitionId` (shared with the default-locale definition) so they can be
+     * spliced into a per-locale docs definition's `apis` without touching the nav tree.
+     */
+    translatedApiDefinitions: Record<string, Record<string, APIV1Read.ApiDefinition>> | undefined;
+    /**
+     * Write-format inputs from the last full resolve, consumed by the Astro
+     * preview to build ledger publish input. Incremental (markdown-only)
+     * reloads carry the previous value forward.
+     */
+    ledgerSource: PreviewLedgerSource;
+}
+
+export interface PreviewLedgerSource {
+    writeDocsDefinition: DocsV1Write.DocsDefinition;
+    writeApiDefinitions: Map<string, APIV1Write.ApiDefinition>;
+    resolver: DocsDefinitionResolver;
+    uploadedFiles: UploadedFile[];
 }
 
 export async function getPreviewDocsDefinition({
@@ -158,13 +185,16 @@ export async function getPreviewDocsDefinition({
     context,
     previousDocsDefinition,
     editedAbsoluteFilepaths,
-    previousPreviewResult
+    previousPreviewResult,
+    includePrivate = false
 }: {
     domain: string;
     project: Project;
     context: TaskContext;
     previousDocsDefinition?: DocsV1Read.DocsDefinition;
     editedAbsoluteFilepaths?: AbsoluteFilePath[];
+    /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
+    includePrivate?: boolean;
     /**
      * Previous preview result (for incremental updates).
      * This is used to preserve translation data during incremental page updates.
@@ -243,7 +273,8 @@ export async function getPreviewDocsDefinition({
             const markdownReplacedMdAndCode = transformAtPrefixImports({
                 markdown: markdownReplacedCode,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: absoluteFilePath
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
             });
 
             let markdownWithAbsPaths: string;
@@ -283,16 +314,24 @@ export async function getPreviewDocsDefinition({
             }
 
             // Then replace image paths with file IDs
-            const finalMarkdown = replaceImagePathsAndUrls(
-                markdownWithAbsPaths,
-                fileIdsMap,
-                {}, // markdownFilesToPathName - empty object since we don't need it for images
-                {
-                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                    absolutePathToMarkdownFile: absoluteFilePath
-                },
-                context
-            );
+            let finalMarkdown: string;
+            try {
+                finalMarkdown = replaceImagePathsAndUrls(
+                    markdownWithAbsPaths,
+                    fileIdsMap,
+                    {}, // markdownFilesToPathName - empty object since we don't need it for images
+                    {
+                        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                        absolutePathToMarkdownFile: absoluteFilePath
+                    },
+                    context
+                );
+            } catch (error) {
+                throw new CliError({
+                    message: `Failed to replace image paths in ${absoluteFilePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
+            }
 
             previousDocsDefinition.pages[pageId] = {
                 markdown: stripMdxComments(finalMarkdown),
@@ -300,6 +339,13 @@ export async function getPreviewDocsDefinition({
                 editThisPageLaunch: previousValue?.editThisPageLaunch,
                 rawMarkdown: stripMdxComments(markdown)
             };
+            const previousWritePage = previousPreviewResult?.ledgerSource.writeDocsDefinition.pages[pageId];
+            if (previousPreviewResult != null && previousWritePage != null) {
+                previousPreviewResult.ledgerSource.writeDocsDefinition.pages[pageId] = {
+                    ...previousWritePage,
+                    markdown: stripMdxComments(finalMarkdown)
+                };
+            }
         }
 
         if (allMarkdownFiles && !navAffectingChange && previousPreviewResult != null) {
@@ -309,7 +355,10 @@ export async function getPreviewDocsDefinition({
                 translationPages: previousPreviewResult.translationPages,
                 translationNavigationOverlays: previousPreviewResult.translationNavigationOverlays,
                 collectedFileIds: previousPreviewResult.collectedFileIds,
-                docsWorkspacePath: previousPreviewResult.docsWorkspacePath
+                docsWorkspacePath: previousPreviewResult.docsWorkspacePath,
+                markdownFilesToPathName: previousPreviewResult.markdownFilesToPathName,
+                translatedApiDefinitions: previousPreviewResult.translatedApiDefinitions,
+                ledgerSource: previousPreviewResult.ledgerSource
             };
         }
     }
@@ -324,6 +373,7 @@ export async function getPreviewDocsDefinition({
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
+    const uploadedFiles: UploadedFile[] = [];
 
     const resolver = new DocsDefinitionResolver({
         domain,
@@ -339,14 +389,21 @@ export async function getPreviewDocsDefinition({
                     type: "url",
                     url: FernNavigation.Url(`/_local${convertToFernHostAbsoluteFilePath(file.absoluteFilePath)}`)
                 };
-                return {
+                const uploaded: UploadedFile = {
                     absoluteFilePath: file.absoluteFilePath,
                     relativeFilePath: file.relativeFilePath,
                     fileId
                 };
+                uploadedFiles.push(uploaded);
+                return uploaded;
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
-        targetAudiences: undefined
+        targetAudiences: undefined,
+        docsVisibility: includePrivate ? "private" : "public",
+        buildTranslatedApiDefinitions: true,
+        // `fern docs dev` previews the working-tree version only; git-ref-backed
+        // versions are materialized on the publish path.
+        buildRefVersions: false
     });
 
     const writeDocsDefinition = await resolver.resolve();
@@ -400,14 +457,81 @@ export async function getPreviewDocsDefinition({
     const translationPages = resolver.getTranslationPages();
     const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
     const collectedFileIds = resolver.getCollectedFileIds();
+    const markdownFilesToPathName = resolver.getMarkdownFilesToPathName();
+
+    const translatedApiSpecs = resolver.getTranslatedApiSpecs();
+    let translatedApiDefinitions: Record<string, Record<string, APIV1Read.ApiDefinition>> | undefined;
+    if (translatedApiSpecs.size > 0) {
+        translatedApiDefinitions = {};
+        for (const [locale, byApiId] of translatedApiSpecs) {
+            const localeApis: Record<string, APIV1Read.ApiDefinition> = {};
+            for (const [apiDefinitionId, spec] of byApiId) {
+                try {
+                    localeApis[apiDefinitionId] = convertTranslatedIrToReadApi(spec, apiDefinitionId, context);
+                } catch (error) {
+                    context.logger.warn(
+                        `Failed to convert translated API definition "${apiDefinitionId}" for locale "${locale}": ${extractErrorMessage(
+                            error
+                        )}. Falling back to the default-locale API.`
+                    );
+                }
+            }
+            if (Object.keys(localeApis).length > 0) {
+                translatedApiDefinitions[locale] = localeApis;
+            }
+        }
+        if (Object.keys(translatedApiDefinitions).length === 0) {
+            translatedApiDefinitions = undefined;
+        }
+    }
 
     return {
         docsDefinition,
         translationPages,
         translationNavigationOverlays,
         collectedFileIds,
-        docsWorkspacePath: docsWorkspace.absoluteFilePath
+        docsWorkspacePath: docsWorkspace.absoluteFilePath,
+        markdownFilesToPathName,
+        translatedApiDefinitions,
+        ledgerSource: {
+            writeDocsDefinition,
+            writeApiDefinitions: apiCollector.getWriteAPIsForDefinition(),
+            resolver,
+            uploadedFiles
+        }
     };
+}
+
+/**
+ * Converts a translated API IR into a V1 read API definition, reusing the base
+ * `apiDefinitionId` instead of minting a fresh one so the per-locale navigation
+ * tree resolves to the translated API.
+ */
+function convertTranslatedIrToReadApi(
+    spec: TranslatedApiSpec,
+    apiDefinitionId: string,
+    context: TaskContext
+): APIV1Read.ApiDefinition {
+    const dbApiDefinition = convertAPIDefinitionToDb(
+        convertIrToFdrApi({
+            ir: spec.ir,
+            snippetsConfig: spec.snippetsConfig,
+            playgroundConfig: spec.playgroundConfig,
+            graphqlOperations: spec.graphqlOperations ?? {},
+            graphqlTypes: spec.graphqlTypes ?? {},
+            context,
+            apiNameOverride: spec.apiName
+        }),
+        FdrAPI.ApiDefinitionId(apiDefinitionId),
+        new SDKSnippetHolder({
+            snippetsConfigWithSdkId: {},
+            snippetsBySdkId: {},
+            snippetTemplatesByEndpoint: {},
+            snippetTemplatesByEndpointId: {},
+            snippetsBySdkIdAndEndpointId: {}
+        })
+    );
+    return convertDbAPIDefinitionToRead(dbApiDefinition);
 }
 
 async function applyGlobalThemeIfNeeded(
@@ -419,7 +543,9 @@ async function applyGlobalThemeIfNeeded(
     if (themeName == null) {
         return docsWorkspace;
     }
-    const token = process.env.FERN_TOKEN;
+    // Prefer the stored fern login token; fall back to env var (used in CI).
+    const storedToken = await getUserToken();
+    const token = storedToken?.value ?? process.env.FERN_TOKEN;
     if (token == null) {
         context.logger.warn(
             `docs.yml declares global-theme "${themeName}" but FERN_TOKEN is not set — ` +
@@ -438,6 +564,7 @@ type APIDefinitionID = string;
 
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
+    private readonly writeApis = new Map<APIDefinitionID, APIV1Write.ApiDefinition>();
     private readonly apiNameToId: Record<string, string> = {};
 
     constructor(private readonly context: TaskContext) {}
@@ -460,16 +587,19 @@ class ReferencedAPICollector {
         try {
             const id = uuidv4();
 
+            const writeApiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
+                context: this.context,
+                apiNameOverride: apiName
+            });
+            this.writeApis.set(id, writeApiDefinition);
+
             const dbApiDefinition = convertAPIDefinitionToDb(
-                convertIrToFdrApi({
-                    ir,
-                    snippetsConfig,
-                    playgroundConfig,
-                    graphqlOperations,
-                    graphqlTypes,
-                    context: this.context,
-                    apiNameOverride: apiName
-                }),
+                writeApiDefinition,
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
                     snippetsConfigWithSdkId: {},
@@ -508,6 +638,10 @@ class ReferencedAPICollector {
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
         return this.apis;
+    }
+
+    public getWriteAPIsForDefinition(): Map<APIDefinitionID, APIV1Write.ApiDefinition> {
+        return this.writeApis;
     }
 
     public getApiNameToId(): Record<string, DocsV1Read.ApiDefinitionId> {

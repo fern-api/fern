@@ -819,4 +819,5 @@ environments:
 default-environment: PRD
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -36,6 +36,13 @@ World!\\\`\`"
 
 exports[`TypeLiteral > numberToString > Should generate a simple number 1`] = `"7"`;
 
+exports[`TypeLiteral > recordWithIdentifierKeysToString > Should emit valid identifier keys without quotes and quote the rest 1`] = `
+"let myRecord = {
+    validKey: 1,
+    "needs-quotes": 2,
+}"
+`;
+
 exports[`TypeLiteral > simpleObjectToString > Should generate a simple object 1`] = `
 "let myObj = {
     name: "John Smith",
@@ -48,3 +55,10 @@ exports[`TypeLiteral > stringToString > Should generate a simple string literal 
 exports[`TypeLiteral > stringWithDoubleQuotesToString > Should generate a simple string literal with escaped double quotes 1`] = `""\\"Hello, World!\\"""`;
 
 exports[`TypeLiteral > trueBooleanToString > Should generate a true boolean 1`] = `"true"`;
+
+exports[`TypeLiteral > unknownObjectToString > Should emit valid identifier keys without quotes and quote the rest 1`] = `
+"let myUnknown = {
+    validKey: "a",
+    "needs quotes": "b",
+}"
+`;

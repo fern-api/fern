@@ -10,11 +10,13 @@ export const GitLibraryInputSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     git: core.serialization.string(),
     subpath: core.serialization.string().optional(),
+    ref: core.serialization.string().optional(),
 });
 
 export declare namespace GitLibraryInputSchema {
     export interface Raw {
         git: string;
         subpath?: string | null;
+        ref?: string | null;
     }
 }

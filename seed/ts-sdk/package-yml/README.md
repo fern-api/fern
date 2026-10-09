@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPackageYmlClient } from "@fern/package-yml";
 
-const client = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedPackageYmlClient({ baseUrl: "YOUR_BASE_URL" });
 await client.echo({
     name: "Hello world!",
     size: 20

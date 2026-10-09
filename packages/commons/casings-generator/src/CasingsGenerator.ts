@@ -50,6 +50,12 @@ type CasingsGeneratorConfig = {
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    /**
+     * When true, smart-cased snake_case names keep the word boundary after a digit run
+     * ("ConversationsV2Configuration" => "conversations_v2_configuration"). Defaults to false,
+     * which keeps the digit run fused to the following word ("conversations_v2configuration").
+     */
+    smartCasingDigitWordBoundary?: boolean;
 };
 
 function computeName(
@@ -57,7 +63,7 @@ function computeName(
     opts: { preserveUnderscores?: boolean; casingOverrides?: RawSchemas.CasingOverridesSchema },
     config: CasingsGeneratorConfig
 ): Name {
-    const { generationLanguage, keywords, smartCasing } = config;
+    const { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary } = config;
     const name = preprocessName(inputName);
     const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
         unsafeName: unsafeString,
@@ -127,10 +133,27 @@ function computeName(
         // In smartCasing, manage numbers next to letters differently:
         // _.snakeCase("v2") = "v_2"
         // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
+        // With smartCasingDigitWordBoundary, a segment that starts a new word after a digit run
+        // keeps its word boundary: "ConversationsV2Configuration" => "conversations_v2_configuration"
         const smartSnakeFn = (n: string) =>
             n
                 .split(" ")
-                .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
+                .map((part) => {
+                    const segments = part.split(/(\d+)/);
+                    return segments
+                        .map((segment, index) => {
+                            const casedSegment = snakeCase(segment);
+                            const previousSegment = segments[index - 1];
+                            const startsNewWord =
+                                (smartCasingDigitWordBoundary ?? false) &&
+                                casedSegment !== "" &&
+                                previousSegment != null &&
+                                /^\d+$/.test(previousSegment) &&
+                                /^[^a-z0-9]/.test(segment);
+                            return startsNewWord ? `_${casedSegment}` : casedSegment;
+                        })
+                        .join("");
+                })
                 .join("_");
         snakeCaseName = preserve ? withUnderscorePreservation(name, smartSnakeFn) : smartSnakeFn(name);
     }
@@ -149,9 +172,10 @@ function computeName(
 export function constructCasingsGenerator({
     generationLanguage,
     keywords,
-    smartCasing
+    smartCasing,
+    smartCasingDigitWordBoundary
 }: CasingsGeneratorConfig): CasingsGenerator {
-    const config: CasingsGeneratorConfig = { generationLanguage, keywords, smartCasing };
+    const config: CasingsGeneratorConfig = { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary };
     return {
         generateName: (inputName, opts): NameOrString => {
             // Only compute full Name when casing overrides require it; otherwise compress to string.
@@ -178,9 +202,10 @@ export function constructCasingsGenerator({
 export function constructFullCasingsGenerator({
     generationLanguage,
     keywords,
-    smartCasing
+    smartCasing,
+    smartCasingDigitWordBoundary
 }: CasingsGeneratorConfig): FullCasingsGenerator {
-    const config: CasingsGeneratorConfig = { generationLanguage, keywords, smartCasing };
+    const config: CasingsGeneratorConfig = { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary };
     return {
         generateName: (inputName: string | Name | NameAndWireValue, opts?: { preserveUnderscores?: boolean }): Name => {
             if (typeof inputName === "string") {

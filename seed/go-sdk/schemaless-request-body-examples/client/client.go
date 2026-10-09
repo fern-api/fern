@@ -27,14 +27,35 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // Creates a plant with example JSON but no request body schema.
+//
+// Example:
+//
+//	request := map[string]any{
+//	    "care": map[string]any{
+//	        "humidity": "high",
+//	        "light": "full sun",
+//	        "water": "distilled only",
+//	    },
+//	    "name": "Venus Flytrap",
+//	    "species": "Dionaea muscipula",
+//	    "tags": []any{
+//	        "carnivorous",
+//	        "tropical",
+//	    },
+//	}
+//	client.CreatePlant(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreatePlant(
 	ctx context.Context,
 	request any,
@@ -52,6 +73,22 @@ func (c *Client) CreatePlant(
 }
 
 // Updates a plant with example JSON but no request body schema.
+//
+// Example:
+//
+//	request := &fern.UpdatePlantRequest{
+//	    PlantID: "plantId",
+//	    Body: map[string]any{
+//	        "care": map[string]any{
+//	            "light": "partial shade",
+//	        },
+//	        "name": "Updated Venus Flytrap",
+//	    },
+//	}
+//	client.UpdatePlant(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdatePlant(
 	ctx context.Context,
 	request *fern.UpdatePlantRequest,
@@ -69,6 +106,21 @@ func (c *Client) UpdatePlant(
 }
 
 // A control endpoint that has both schema and example defined.
+//
+// Example:
+//
+//	request := &fern.CreatePlantWithSchemaRequest{
+//	    Name: fern.String(
+//	        "Sundew",
+//	    ),
+//	    Species: fern.String(
+//	        "Drosera capensis",
+//	    ),
+//	}
+//	client.CreatePlantWithSchema(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreatePlantWithSchema(
 	ctx context.Context,
 	request *fern.CreatePlantWithSchemaRequest,

@@ -2,16 +2,19 @@
  * Main generator for C++ library documentation.
  *
  * Orchestrates the full pipeline:
- * 1. Collect compounds (classes, concepts, functions, enums, typedefs, variables) from the namespace tree
+ * 1. Collect compounds (classes, concepts, functions, enums, typedefs, variables, macros) from the namespace tree
  * 2. Compute page keys, resolving filename collisions for template specializations
  * 3. Render each compound page and stream to disk via MdxFileWriter
  * 4. Generate hierarchical index pages (namespace → category folders → entity pages)
+ * 5. Generate group pages from the library's Doxygen groups, linking to the entity pages
  *
  * Designed for sequential rendering: global state in the renderers (nameToPathMap,
  * currentPagePath) requires that pages are rendered one at a time.
  */
 
 import { CliError } from "@fern-api/task-context";
+import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
+import { dirname, join, relative } from "path";
 import type { CompoundMeta } from "../cpp/src/context.js";
 import {
     clearEntityRegistry,
@@ -19,11 +22,19 @@ import {
     OPERATOR_SYMBOL_MAP,
     setCurrentPageSlugPath,
     setEntityRegistry,
+    setTypedefSyntax,
     stripTemplateArgs
 } from "../cpp/src/context.js";
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderSegmentsPlainText } from "../cpp/src/renderers/DescriptionRenderer.js";
+import type { GroupListEntry } from "../cpp/src/renderers/GroupPageRenderer.js";
+import {
+    collectGroupSections,
+    groupHasContent,
+    renderGroupPage,
+    renderGroupsIndexPage
+} from "../cpp/src/renderers/GroupPageRenderer.js";
 import type {
     CategoryDefinition,
     CategoryWithEntries,
@@ -37,7 +48,14 @@ import {
     renderNamespacesIndexPage
 } from "../cpp/src/renderers/IndexPageRenderer.js";
 import { groupFunctionsByName, methodAnchorId } from "../cpp/src/renderers/MethodRenderer.js";
-import type { CppClassIr, CppDocstringIr, CppLibraryDocsIr, CppNamespaceIr } from "./types/CppLibraryDocsIr.js";
+import type {
+    CppClassIr,
+    CppDocstringIr,
+    CppFunctionIr,
+    CppGroupIr,
+    CppLibraryDocsIr,
+    CppNamespaceIr
+} from "./types/CppLibraryDocsIr.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 
 export interface CppGenerateOptions {
@@ -95,9 +113,16 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     // Build entity registry for cross-reference link resolution
     const registry = buildEntityRegistry(pageEntries);
     setEntityRegistry(registry);
+    setTypedefSyntax(isPlainCLibrary(ir.rootNamespace) ? "c" : "cpp");
+    // The generator owns the whole output tree, so pages are rendered into a sibling
+    // staging directory and swapped in wholesale once every page has been written;
+    // otherwise entities removed from the headers would leave stale pages behind.
+    mkdirSync(dirname(outputDir), { recursive: true });
+    const stagingDir = mkdtempSync(join(dirname(outputDir), ".library-docs-"));
+    const backupDir = `${stagingDir}.previous`;
     try {
         // Stage 3: Render & write sequentially (global state requires sequential processing)
-        const writer = new MdxFileWriter(outputDir);
+        const writer = new MdxFileWriter(stagingDir);
         for (const entry of pageEntries) {
             const slugPath = pageKeyToSlugPath(entry.pageKey);
             setCurrentPageSlugPath(slugPath);
@@ -106,20 +131,172 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
             writer.writePage(entry.pageKey, content);
         }
 
+        const groups = (ir.groups ?? []).filter((group) => groupHasContent(group));
+
         // Stage 4: Generate index pages for namespaces
         const slugBaseName = slug.includes("/") ? (slug.split("/").pop() ?? slug) : slug;
-        const libraryNs = ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName);
+        // Plain-C libraries have no namespaces, so their entities live on the unnamed root.
+        const libraryNs =
+            ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName) ??
+            (ir.rootNamespace.path === "" ? ir.rootNamespace : undefined);
         if (libraryNs) {
-            const title = LIBRARY_TITLES[libraryNs.name] ?? `${libraryNs.name} API Reference`;
+            const titleName = libraryNs.name || slugBaseName;
+            const title = LIBRARY_TITLES[titleName] ?? `${titleName} API Reference`;
             const outputFolderSlug = slugifySegment(outputDir.split("/").pop() || slug);
-            generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug);
+            generateIndexPages(
+                withRootMacros(libraryNs, ir.rootNamespace),
+                title,
+                writer,
+                rootNsName,
+                outputFolderSlug,
+                groups.length > 0
+            );
         }
 
-        return writer.result();
+        // Stage 5: Generate pages for the library's Doxygen groups
+        generateGroupPages(groups, writer, repo.trim() || (rootNsName ?? slug));
+
+        const result = writer.result();
+        swapIntoPlace(stagingDir, outputDir, backupDir);
+        rmSync(backupDir, { recursive: true, force: true });
+        return {
+            writtenFiles: result.writtenFiles.map((file) => join(outputDir, relative(stagingDir, file))),
+            pageCount: result.pageCount
+        };
     } finally {
+        rmSync(stagingDir, { recursive: true, force: true });
         clearEntityRegistry();
         setCurrentPageSlugPath(undefined);
+        setTypedefSyntax("cpp");
     }
+}
+
+/**
+ * Replace `target` with `staged` without a window where neither exists: the previous
+ * tree is renamed aside to `backup` (same filesystem), its `.fern/` metadata (the
+ * persisted library IR written before page generation) carried over, and the staged tree
+ * renamed in. If anything after the first rename fails, the previous tree is always
+ * restored to `target`. On success the caller owns `backup` and may delete it; if the
+ * restore itself fails, `backup` is left in place as the only copy of the previous pages
+ * and the thrown error names it. (The `.fern/` IR is rewritten on every run, so it is
+ * never the only copy of anything.)
+ */
+function swapIntoPlace(staged: string, target: string, backup: string): void {
+    if (!existsSync(target)) {
+        renameSync(staged, target);
+        return;
+    }
+    renameSync(target, backup);
+    const previousMetadata = join(backup, METADATA_DIR);
+    const stagedMetadata = join(staged, METADATA_DIR);
+    try {
+        if (existsSync(previousMetadata)) {
+            renameSync(previousMetadata, stagedMetadata);
+        }
+        renameSync(staged, target);
+    } catch (error) {
+        const restoreErrors: string[] = [];
+        if (existsSync(stagedMetadata)) {
+            try {
+                renameSync(stagedMetadata, previousMetadata);
+            } catch (metadataError) {
+                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessage(metadataError)}`);
+            }
+        }
+        try {
+            renameSync(backup, target);
+        } catch (pagesError) {
+            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessage(pagesError)}`);
+        }
+        if (restoreErrors.length > 0) {
+            throw new Error(
+                `Failed to replace ${target} and could not fully restore the previous output. ` +
+                    `Replace error: ${errorMessage(error)}. Restore errors: ${restoreErrors.join("; ")}`
+            );
+        }
+        throw error;
+    }
+}
+
+const METADATA_DIR = ".fern";
+
+function errorMessage(error: unknown): string {
+    return error instanceof Error ? error.message : String(error);
+}
+
+/**
+ * A library with no namespaces, concepts, templates or C++ class features
+ * (`class`, inheritance, member functions) is plain C, so its typedefs are
+ * rendered with `typedef` rather than `using` syntax. Plain `struct`/`union`
+ * aggregates are valid C and do not count as evidence of C++.
+ */
+function isPlainCLibrary(root: CppNamespaceIr): boolean {
+    return (
+        root.path === "" &&
+        root.namespaces.every((ns) => ns.name === "std" && isEmptyNamespace(ns)) &&
+        root.concepts.length === 0 &&
+        root.classes.every(isPlainCAggregate) &&
+        root.functions.every(isPlainCFunction) &&
+        root.typedefs.every((td) => td.templateParams.length === 0) &&
+        root.enums.every((e) => !e.isScoped && e.underlyingType === undefined) &&
+        root.variables.every((v) => v.templateParams.length === 0 && !v.isConstexpr && !v.isMutable)
+    );
+}
+
+function isPlainCFunction(fn: CppFunctionIr): boolean {
+    return (
+        fn.templateParams.length === 0 &&
+        !fn.isConstexpr &&
+        !fn.isNoexcept &&
+        !fn.isNoDiscard &&
+        !fn.isDeleted &&
+        fn.refQualifier === undefined &&
+        fn.requiresClause === undefined
+    );
+}
+
+/** Doxygen emits an empty `std` namespace for C headers that include `<stdint.h>`. */
+function isEmptyNamespace(ns: CppNamespaceIr): boolean {
+    return (
+        ns.namespaces.length === 0 &&
+        ns.classes.length === 0 &&
+        ns.functions.length === 0 &&
+        ns.enums.length === 0 &&
+        ns.typedefs.length === 0 &&
+        ns.variables.length === 0 &&
+        ns.concepts.length === 0
+    );
+}
+
+function isPlainCAggregate(cls: CppClassIr): boolean {
+    return (
+        cls.kind !== "class" &&
+        cls.templateParams.length === 0 &&
+        cls.baseClasses.length === 0 &&
+        cls.methods.length === 0 &&
+        cls.staticMethods.length === 0 &&
+        cls.friendFunctions.length === 0 &&
+        cls.typedefs.length === 0 &&
+        cls.enums.every((e) => !e.isScoped && e.underlyingType === undefined) &&
+        !cls.isAbstract &&
+        !cls.isFinal &&
+        cls.memberVariables.every(
+            (v) => v.templateParams.length === 0 && !v.isStatic && !v.isConstexpr && !v.isMutable
+        ) &&
+        cls.innerClasses.every(isPlainCAggregate)
+    );
+}
+
+/**
+ * Macros are unscoped and always land on the root namespace, but the library's
+ * index pages are built from the selected namespace. Attach the root macros so
+ * they show up in the Macros index even when that namespace is a named child.
+ */
+function withRootMacros(libraryNs: CppNamespaceIr, root: CppNamespaceIr): CppNamespaceIr {
+    if (libraryNs === root || (root.macros ?? []).length === 0) {
+        return libraryNs;
+    }
+    return { ...libraryNs, macros: [...(libraryNs.macros ?? []), ...(root.macros ?? [])] };
 }
 
 // ---------------------------------------------------------------------------
@@ -210,6 +387,16 @@ function collectCompounds(ns: CppNamespaceIr, rootPrefix: string): CollectedComp
         });
     }
 
+    // Macros are unscoped, so the root-prefix filter never applies to them.
+    for (const macro of ns.macros ?? []) {
+        result.push({
+            compound: { kind: "macro", data: macro },
+            path: macro.path,
+            namespacePath: [],
+            docstring: macro.docstring
+        });
+    }
+
     for (const childNs of ns.namespaces) {
         result.push(...collectCompounds(childNs, rootPrefix));
     }
@@ -243,6 +430,8 @@ function categoryFolderForCompound(collected: CollectedCompound): string {
             return "typedefs";
         case "variable":
             return "variables";
+        case "macro":
+            return "macros";
         default: {
             const _exhaustive: never = collected.compound;
             throw new CliError({
@@ -425,6 +614,56 @@ function computePageKeys(compounds: CollectedCompound[], rootNsName: string | un
         }
     }
 
+    return disambiguateSlugCollisions(result);
+}
+
+/**
+ * Page keys that differ on disk can still slugify to the same URL (e.g. `FOO_BAR`
+ * and `FOOBAR` both become `foobar`). Append a numeric `-N` suffix (which survives
+ * slugification) to every entry after the first in such a group, in a deterministic
+ * order, so every page has a unique URL. The `index` slug of every directory is
+ * reserved for the generated category/namespace index page.
+ */
+function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
+    const bySlug = new Map<string, PageEntry[]>();
+    const reserved = new Set<string>();
+    for (const entry of entries) {
+        const slug = pageKeyToSlugPath(entry.pageKey);
+        const dir = slug.includes("/") ? slug.substring(0, slug.lastIndexOf("/") + 1) : "";
+        reserved.add(`${dir}index`);
+        const existing = bySlug.get(slug);
+        if (existing) {
+            existing.push(entry);
+        } else {
+            bySlug.set(slug, [entry]);
+        }
+    }
+
+    const taken = new Set([...bySlug.keys(), ...reserved]);
+    const result: PageEntry[] = [];
+    for (const [slug, group] of bySlug) {
+        const isReserved = reserved.has(slug);
+        if (group.length === 1 && !isReserved) {
+            result.push(...group);
+            continue;
+        }
+        const sorted = [...group].sort((a, b) => (a.pageKey < b.pageKey ? -1 : a.pageKey > b.pageKey ? 1 : 0));
+        sorted.forEach((entry, index) => {
+            if (index === 0 && !isReserved) {
+                result.push(entry);
+                return;
+            }
+            const base = entry.pageKey.replace(/\.mdx$/, "");
+            let n = 2;
+            let candidate = `${base}-${n}`;
+            while (taken.has(pageKeyToSlugPath(`${candidate}.mdx`))) {
+                n += 1;
+                candidate = `${base}-${n}`;
+            }
+            taken.add(pageKeyToSlugPath(`${candidate}.mdx`));
+            result.push({ pageKey: `${candidate}.mdx`, collected: entry.collected });
+        });
+    }
     return result;
 }
 
@@ -494,7 +733,8 @@ function generateIndexPages(
     title: string,
     writer: MdxFileWriter,
     rootNsName: string | undefined,
-    outputFolderSlug: string
+    outputFolderSlug: string,
+    hasGroups: boolean
 ): void {
     if (!namespaceHasEntities(ns)) {
         return;
@@ -531,7 +771,8 @@ function generateIndexPages(
         title,
         categoriesForNsIndex,
         childrenWithEntities.length > 0,
-        nsLastSegment
+        nsLastSegment,
+        hasGroups
     );
     writer.writePage(nsIndexPageKey, indexContent);
 
@@ -570,6 +811,110 @@ function generateIndexPages(
 
     // 4. Recurse into child namespaces
     for (const child of ns.namespaces) {
-        generateIndexPages(child, `Namespace ${child.path}`, writer, rootNsName, outputFolderSlug);
+        // Groups are listed on the library's index page only, not on every namespace
+        generateIndexPages(child, `Namespace ${child.path}`, writer, rootNsName, outputFolderSlug, false);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Group page generation (Stage 5)
+// ---------------------------------------------------------------------------
+
+const GROUPS_FOLDER = "groups";
+
+function groupFolderName(group: CppGroupIr): string {
+    return sanitizeForFilename(group.name || group.title);
+}
+
+/**
+ * Sibling group folders whose names slugify to the same URL segment (e.g.
+ * `DOCA_GPUNETIO` and `DOCAGPUNETIO`) get a deterministic `-N` suffix so each
+ * group page has its own URL.
+ */
+function uniqueGroupFolderNames(groups: CppGroupIr[]): Map<CppGroupIr, string> {
+    const result = new Map<CppGroupIr, string>();
+    const takenSlugs = new Set<string>();
+    const sorted = [...groups].sort((a, b) => {
+        const fa = groupFolderName(a);
+        const fb = groupFolderName(b);
+        return fa < fb ? -1 : fa > fb ? 1 : 0;
+    });
+    for (const group of sorted) {
+        const base = groupFolderName(group);
+        let folder = base;
+        let n = 2;
+        while (takenSlugs.has(slugifySegment(folder))) {
+            folder = `${base}-${n}`;
+            n += 1;
+        }
+        takenSlugs.add(slugifySegment(folder));
+        result.set(group, folder);
+    }
+    return result;
+}
+
+function groupDisplayName(group: CppGroupIr): string {
+    return group.title || group.name;
+}
+
+/**
+ * Generate a page per Doxygen group, plus a groups/index.mdx listing them.
+ *
+ * Group pages link to the entity pages written in Stage 3 rather than
+ * re-rendering their members, so each symbol is documented in one place.
+ * Members that have no page (for example symbols the parser skipped) are
+ * listed without a link.
+ */
+function generateGroupPages(renderable: CppGroupIr[], writer: MdxFileWriter, libraryTitle: string): void {
+    if (renderable.length === 0) {
+        return;
+    }
+
+    const indexPageKey = `${GROUPS_FOLDER}/index.mdx`;
+    setCurrentPageSlugPath(pageKeyToSlugPath(indexPageKey));
+    const folders = uniqueGroupFolderNames(renderable);
+    const entries: GroupListEntry[] = renderable.map((group) => ({
+        displayName: groupDisplayName(group),
+        linkPath: `${GROUPS_FOLDER}/${slugifySegment(folders.get(group) ?? groupFolderName(group))}`
+    }));
+    writer.writePage(indexPageKey, renderGroupsIndexPage(entries, libraryTitle));
+
+    const written = new Set<string>();
+    for (const group of renderable) {
+        writeGroupPage(group, `${GROUPS_FOLDER}/${folders.get(group) ?? groupFolderName(group)}`, writer, written);
+    }
+}
+
+/**
+ * Write one group page at `<dir>/index.mdx` and recurse into its subgroups.
+ *
+ * Links are relative to the group's own folder, matching how Fern resolves
+ * links on a folder index page (the `/index` suffix is stripped from the URL).
+ *
+ * `written` tracks the groups already emitted so a group tree that references
+ * one of its ancestors terminates instead of recursing forever.
+ */
+function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter, written: Set<string>): void {
+    if (written.has(group.id)) {
+        return;
+    }
+    written.add(group.id);
+
+    const pageKey = `${dir}/index.mdx`;
+    setCurrentPageSlugPath(pageKeyToSlugPath(pageKey));
+
+    const sections = collectGroupSections(group);
+    const subgroups = group.subgroups.filter((subgroup) => !written.has(subgroup.id) && groupHasContent(subgroup));
+    const dirSegment = slugifySegment(dir.split("/").pop() ?? "");
+    const folders = uniqueGroupFolderNames(subgroups);
+    const subgroupEntries: GroupListEntry[] = subgroups.map((subgroup) => ({
+        displayName: groupDisplayName(subgroup),
+        linkPath: `${dirSegment}/${slugifySegment(folders.get(subgroup) ?? groupFolderName(subgroup))}`
+    }));
+
+    writer.writePage(pageKey, renderGroupPage(group, sections, subgroupEntries));
+
+    for (const subgroup of subgroups) {
+        writeGroupPage(subgroup, `${dir}/${folders.get(subgroup) ?? groupFolderName(subgroup)}`, writer, written);
     }
 }

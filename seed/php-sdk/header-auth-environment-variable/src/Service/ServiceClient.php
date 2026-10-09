@@ -51,6 +51,11 @@ class ServiceClient
     /**
      * GET request with custom api key
      *
+     * Example:
+     * ```php
+     * $client->service->getWithBearerToken();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

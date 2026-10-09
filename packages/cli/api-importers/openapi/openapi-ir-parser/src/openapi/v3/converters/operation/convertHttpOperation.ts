@@ -16,12 +16,12 @@ import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js"
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
 import { sanitizeSecurityScopes } from "../../../../utils/sanitizeSecurityScopes.js";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
-import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext.js";
 import { OpenAPIExtension } from "../../extensions/extensions.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension.js";
 import { getFernAvailability } from "../../extensions/getFernAvailability.js";
 import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension.js";
+import { getEndpointGlobalParameterIds } from "../../extensions/getGlobalParameters.js";
 import { OperationContext } from "../contexts.js";
 import { convertServer } from "../convertServer.js";
 import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters.js";
@@ -35,6 +35,7 @@ export function convertHttpOperation({
     suffix,
     streamFormat,
     streamTerminator,
+    streamResumable,
     source,
     streamRequestNameOverride
 }: {
@@ -44,6 +45,7 @@ export function convertHttpOperation({
     suffix?: string;
     streamFormat: "sse" | "json" | undefined;
     streamTerminator?: string;
+    streamResumable?: boolean;
     source: Source;
     streamRequestNameOverride?: string;
 }): EndpointWithExample[] {
@@ -201,16 +203,11 @@ export function convertHttpOperation({
                             mediaTypeObject,
                             description: resolvedRequestBody.description,
                             document,
-                            context: new DummyOpenAPIV3ParserContext({
-                                document: context.document,
-                                taskContext: context.taskContext,
-                                options: context.options,
-                                source: context.source,
-                                namespace: context.namespace
-                            }),
+                            context: context.DUMMY,
                             requestBreadcrumbs,
                             source,
-                            namespace: context.namespace
+                            namespace: context.namespace,
+                            bodyRequired: resolvedRequestBody.required
                         });
 
                         // if request has query params or headers and body is not an object, then use `Body`
@@ -229,7 +226,8 @@ export function convertHttpOperation({
                                 context,
                                 requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
                                 source,
-                                namespace: context.namespace
+                                namespace: context.namespace,
+                                bodyRequired: resolvedRequestBody.required
                             });
                         } else if (operation.requestBody != null) {
                             convertedRequest = convertRequest({
@@ -240,7 +238,8 @@ export function convertHttpOperation({
                                 context,
                                 requestBreadcrumbs: [...requestBreadcrumbs],
                                 source,
-                                namespace: context.namespace
+                                namespace: context.namespace,
+                                bodyRequired: resolvedRequestBody.required
                             });
                         }
 
@@ -257,16 +256,11 @@ export function convertHttpOperation({
                 content: resolvedRequestBody.content,
                 description: resolvedRequestBody.description,
                 document,
-                context: new DummyOpenAPIV3ParserContext({
-                    document: context.document,
-                    taskContext: context.taskContext,
-                    options: context.options,
-                    source: context.source,
-                    namespace: context.namespace
-                }),
+                context: context.DUMMY,
                 requestBreadcrumbs,
                 source,
-                namespace: context.namespace
+                namespace: context.namespace,
+                bodyRequired: resolvedRequestBody.required
             });
 
             // if request has query params or headers and body is not an object, then use `Body`
@@ -284,7 +278,8 @@ export function convertHttpOperation({
                     context,
                     requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
                     source,
-                    namespace: context.namespace
+                    namespace: context.namespace,
+                    bodyRequired: resolvedRequestBody.required
                 });
             } else if (operation.requestBody != null) {
                 convertedRequest = convertToSingleRequest({
@@ -294,7 +289,8 @@ export function convertHttpOperation({
                     context,
                     requestBreadcrumbs: [...requestBreadcrumbs],
                     source,
-                    namespace: context.namespace
+                    namespace: context.namespace,
+                    bodyRequired: resolvedRequestBody.required
                 });
             }
 
@@ -309,6 +305,7 @@ export function convertHttpOperation({
         operationContext,
         streamFormat,
         streamTerminator,
+        streamResumable,
         responses: operation.responses,
         context,
         responseBreadcrumbs,
@@ -320,8 +317,10 @@ export function convertHttpOperation({
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
+    const subtitle = getExtension<string>(operation, FernOpenAPIExtension.SUBTITLE);
     return convertedRequests.map((request) => ({
         summary: operation.summary,
+        subtitle: subtitle ?? undefined,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
         idempotent,
         audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
@@ -329,7 +328,7 @@ export function convertHttpOperation({
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix
                 : operation.operationId,
-        tags: context.resolveTagsToTagIds(operation.tags),
+        tags: context.options.ignoreTags ? [] : context.resolveTagsToTagIds(operation.tags),
         namespace: context.namespace,
         sdkName: createOperationSdkMethodName({ operationContext, request }),
         pathParameters: convertedParameters.pathParameters,
@@ -361,7 +360,8 @@ export function convertHttpOperation({
         examples,
         pagination: operationContext.pagination,
         source,
-        retries
+        retries,
+        globalParameterIds: getEndpointGlobalParameterIds(operation)
     }));
 }
 
@@ -462,6 +462,10 @@ function getDisambiguatedRequestName({
         ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })
         : requestBreadcrumbs;
     const computedName = getGeneratedTypeName(nameBreadcrumbs, context.options.preserveSchemaIds);
+
+    if (!context.options.disambiguateRequestNames) {
+        return computedName;
+    }
 
     const componentSchemas = context.document.components?.schemas;
     if (componentSchemas == null) {

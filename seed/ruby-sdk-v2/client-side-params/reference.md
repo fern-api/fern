@@ -118,7 +118,7 @@ client.service.list_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_resource</a>(resource_id) -> Seed::Types::Types::Resource</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_resource</a>(resource_id:) -> Seed::Types::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -231,7 +231,11 @@ client.service.search_resources(
   limit: 1,
   offset: 1,
   query: "query",
-  filters: {}
+  filters: {
+    filters: {
+      key: "value"
+    }
+  }
 )
 ```
 </dd>
@@ -418,7 +422,7 @@ client.service.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_user_by_id</a>(user_id) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_user_by_id</a>(user_id:) -> Seed::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -534,8 +538,16 @@ client.service.create_user(
   password: "password",
   phone_number: "phone_number",
   phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
+  user_metadata: {
+    user_metadata: {
+      key: "value"
+    }
+  },
+  app_metadata: {
+    app_metadata: {
+      key: "value"
+    }
+  },
   connection: "connection"
 )
 ```
@@ -572,7 +584,7 @@ client.service.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">update_user</a>(user_id, request) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">update_user</a>(user_id:, request) -> Seed::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -606,8 +618,16 @@ client.service.update_user(
   username: "username",
   phone_number: "phone_number",
   phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
+  user_metadata: {
+    user_metadata: {
+      key: "value"
+    }
+  },
+  app_metadata: {
+    app_metadata: {
+      key: "value"
+    }
+  },
   password: "password",
   blocked: true
 )
@@ -653,7 +673,7 @@ client.service.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">delete_user</a>(user_id) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">delete_user</a>(user_id:) -> </code></summary>
 <dl>
 <dd>
 
@@ -797,7 +817,7 @@ client.service.list_connections(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_connection</a>(connection_id) -> Seed::Types::Types::Connection</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_connection</a>(connection_id:) -> Seed::Types::Types::Connection</code></summary>
 <dl>
 <dd>
 
@@ -997,7 +1017,7 @@ client.service.list_clients(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_client</a>(client_id) -> Seed::Types::Types::Client</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_client</a>(client_id:) -> Seed::Types::Types::Client</code></summary>
 <dl>
 <dd>
 

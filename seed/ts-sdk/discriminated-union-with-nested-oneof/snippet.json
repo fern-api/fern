@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/ast",
+                "method": "POST",
+                "identifier_override": "endpoint_.createAst"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/discriminated-union-with-nested-oneof\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.createAst({\n    type: \"llm\",\n    model: \"model\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -7,7 +7,8 @@
  *         csr: "csr",
  *         scp: "scp",
  *         entity_id: "entity_id",
- *         scope: "scope"
+ *         scope: "scope",
+ *         permissions: ["permissions", "permissions"]
  *     }
  */
 export interface GetTokenRequest {
@@ -16,4 +17,5 @@ export interface GetTokenRequest {
     scp: string;
     entity_id: string;
     scope?: string;
+    permissions?: string[];
 }

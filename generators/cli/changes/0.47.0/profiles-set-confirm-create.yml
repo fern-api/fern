@@ -1,0 +1,9 @@
+- summary: |
+    `profiles set <name> …` no longer creates a missing profile silently. In a
+    terminal it asks first. When an existing profile has a similar name it asks
+    "Did you mean `<closest>`? [y/N]" (yes writes to that profile), then
+    "Create profile `<name>`? [y/N]"; otherwise only "Create it? [y/N]".
+    Answering no changes nothing. When stdin or stderr is not a terminal
+    (scripts, CI, agents), `set` on a missing profile now fails with a hint
+    instead of creating it; pass `--yes` to create it without asking.
+  type: feat

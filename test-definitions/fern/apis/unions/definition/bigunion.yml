@@ -195,7 +195,7 @@ types:
 
 service:
   auth: false
-  base-path: /
+  base-path: /bigunion
   endpoints:
     get:
       path: /{id}

@@ -388,7 +388,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         if (this.includeUtilsOnUnionMembers || this.includeConstBuilders) {
             statements.push(this.getVisitorInterface(context));
         }
-        if (this.hasBaseInterface()) {
+        if (this.hasBaseInterface(context)) {
             const baseInterface = this.getBaseInterface(context);
             statements.push(baseInterface.normal);
             if (baseInterface.request || baseInterface.response) {
@@ -564,12 +564,50 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         };
     }
 
+    /**
+     * Property names that every variant already inherits via its `extends` chain.
+     * The OpenAPI parser lifts these onto the union's `baseProperties` so that
+     * generators without structural typing (Go, C#) can expose them directly, but
+     * for TypeScript re-emitting them on `_Base` would conflict with the real
+     * parent interface — TS2320 if optionality disagrees. Suppress them here.
+     */
+    private getInheritedPropertyNamesSharedByAllVariants(context: Context): Set<string> {
+        if (this.shape == null || this.shape.types.length === 0) {
+            return new Set();
+        }
+        let intersection: Set<string> | undefined;
+        for (const variant of this.shape.types) {
+            const variantInherited = new Set<string>();
+            if (variant.shape.propertiesType === "samePropertiesAsObject") {
+                const declaration = context.type.getTypeDeclaration(variant.shape);
+                if (declaration.shape.type === "object") {
+                    for (const property of declaration.shape.extendedProperties ?? []) {
+                        variantInherited.add(getWireValue(property.name));
+                    }
+                }
+            }
+            if (intersection == null) {
+                intersection = variantInherited;
+            } else {
+                for (const name of intersection) {
+                    if (!variantInherited.has(name)) {
+                        intersection.delete(name);
+                    }
+                }
+            }
+            if (intersection.size === 0) {
+                return intersection;
+            }
+        }
+        return intersection ?? new Set();
+    }
+
     private getBaseInterface(context: Context): {
         normal: InterfaceDeclarationStructure;
         request: InterfaceDeclarationStructure | undefined;
         response: InterfaceDeclarationStructure | undefined;
     } {
-        const properties = this.baseProperties.map((p) => {
+        const properties = this.getEffectiveBaseProperties(context).map((p) => {
             const type = context.type.getReferenceToType(p.valueType);
             const property = {
                 name: getPropertyKey(this._getBasePropertyKey(p)),
@@ -739,7 +777,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     }
 
     private addBuilderProperties(context: Context, writer: ObjectWriter) {
-        if (this.hasBaseInterface()) {
+        if (this.hasBaseInterface(context)) {
             throw new Error("Cannot create builders because union has base properties");
         }
 
@@ -870,8 +908,16 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return [...this.parsedSingleUnionTypes, this.unknownSingleUnionType];
     }
 
-    private hasBaseInterface(): boolean {
-        return this.baseProperties.length > 0 || (this.shape?.extends ?? []).length > 0;
+    public getEffectiveBaseProperties(context: Context): FernIr.ObjectProperty[] {
+        const suppressed = this.getInheritedPropertyNamesSharedByAllVariants(context);
+        if (suppressed.size === 0) {
+            return this.baseProperties;
+        }
+        return this.baseProperties.filter((p) => !suppressed.has(getWireValue(p.name)));
+    }
+
+    private hasBaseInterface(context: Context): boolean {
+        return this.getEffectiveBaseProperties(context).length > 0 || (this.shape?.extends ?? []).length > 0;
     }
 
     private hasBaseInterfaces(context: Context): {
@@ -879,7 +925,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         request: boolean;
         response: boolean;
     } {
-        const hasNormal = this.baseProperties.length > 0 || (this.shape?.extends ?? []).length > 0;
+        const effectiveBaseProperties = this.getEffectiveBaseProperties(context);
+        const hasNormal = effectiveBaseProperties.length > 0 || (this.shape?.extends ?? []).length > 0;
         if (!this.generateReadWriteOnlyTypes) {
             return {
                 normal: hasNormal,
@@ -891,7 +938,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         let hasRequest = false;
         let hasResponse = false;
         if (hasNormal && this.shape) {
-            const properties = this.baseProperties.map((p) => {
+            const properties = effectiveBaseProperties.map((p) => {
                 const type = context.type.getReferenceToType(p.valueType);
                 return {
                     requestProperty: type.requestTypeNode ? true : false,
@@ -946,18 +993,49 @@ const GLOBAL_TS_TYPES: string[] = ["Date", "Error", "Object", "File", "Record", 
  * versions in a type text string. For example, if "Date" is shadowed, `"Date"` becomes
  * `"globalThis.Date"` while `"SeedApi.Date"` and `"DateRange"` are left unchanged.
  */
-function qualifyShadowedGlobalTypeText(typeText: string, shadowedGlobalTypes: string[]): string {
-    if (shadowedGlobalTypes.length === 0) {
-        return typeText;
-    }
+/**
+ * Applies globalThis-qualification to a span of type text known to contain no
+ * string literals.
+ */
+function qualifyOutsideStringLiterals(span: string, shadowedGlobalTypes: string[]): string {
     for (const globalType of shadowedGlobalTypes) {
         // Replace standalone occurrences of the global type name with globalThis-qualified version.
         // Uses word boundaries to avoid replacing partial matches (e.g., "DateRange" stays unchanged).
         // Negative lookbehind `(?<!\.)` prevents matching already-qualified references (e.g., "SeedApi.Date").
         const pattern = new RegExp(`(?<!\\.)\\b${globalType}\\b`, "g");
-        typeText = typeText.replace(pattern, `globalThis.${globalType}`);
+        span = span.replace(pattern, `globalThis.${globalType}`);
     }
-    return typeText;
+    return span;
+}
+
+function qualifyShadowedGlobalTypeText(typeText: string, shadowedGlobalTypes: string[]): string {
+    if (shadowedGlobalTypes.length === 0) {
+        return typeText;
+    }
+    // Qualify type *references* only, never values. This receives whole
+    // rendered TS — property types, visitor signatures, builder expressions —
+    // so a string literal can appear in any of them, and rewriting one changes
+    // what the SDK sends on the wire (a discriminant `"Date"` became
+    // `"globalThis.Date"`).
+    //
+    // Template literals are treated as opaque, so an interpolated reference
+    // inside one goes unqualified. That is the safe direction: failing to
+    // qualify is a compiler error, while rewriting a value is silent.
+    //
+    // The literal matcher is built per call rather than hoisted: a `g`-flagged
+    // RegExp carries mutable `lastIndex`, and while `matchAll` clones it today,
+    // a later `.exec`/`.test` on a shared constant would silently start
+    // mid-string.
+    const stringLiteral = /(['"`])(?:\\.|(?!\1)[^\\])*\1/g;
+    let qualified = "";
+    let cursor = 0;
+    for (const literal of typeText.matchAll(stringLiteral)) {
+        const start = literal.index ?? 0;
+        qualified += qualifyOutsideStringLiterals(typeText.slice(cursor, start), shadowedGlobalTypes);
+        qualified += literal[0];
+        cursor = start + literal[0].length;
+    }
+    return qualified + qualifyOutsideStringLiterals(typeText.slice(cursor), shadowedGlobalTypes);
 }
 
 function qualifyShadowedGlobalTypes(

@@ -9,6 +9,24 @@ public final class TestGroupClient: Sendable {
 
     /// Post a nullable request body
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.testGroup.testMethodName(
+    ///         pathParam: "path_param",
+    ///         request: .value(PlainObject(
+    ///
+    ///         ))
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func testMethodName(pathParam: String, queryParamObject: Nullable<PlainObject>? = nil, queryParamInteger: Nullable<Int>? = nil, request: Nullable<PlainObject>, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
         return try await httpClient.performRequest(

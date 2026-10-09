@@ -4,16 +4,19 @@
 package com.seed.api.resources.imdb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.imdb.errors.MovieDoesNotExistError;
-import com.seed.api.resources.imdb.types.CreateMovieRequest;
-import com.seed.api.resources.imdb.types.Movie;
+import com.seed.api.errors.NotFoundError;
+import com.seed.api.resources.imdb.requests.CreateMovieRequest;
+import com.seed.api.resources.imdb.requests.GetMovieImdbRequest;
+import com.seed.api.types.Movie;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -43,8 +46,7 @@ public class RawImdbClient {
     public SeedApiHttpResponse<String> createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("movies")
-                .addPathSegments("create-movie");
+                .addPathSegments("movies/create-movie");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -53,7 +55,9 @@ public class RawImdbClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }
@@ -68,6 +72,15 @@ public class RawImdbClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -78,16 +91,27 @@ public class RawImdbClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
     public SeedApiHttpResponse<Movie> getMovie(String movieId) {
-        return getMovie(movieId, null);
+        return getMovie(movieId, GetMovieImdbRequest.builder().build());
     }
 
     public SeedApiHttpResponse<Movie> getMovie(String movieId, RequestOptions requestOptions) {
+        return getMovie(movieId, GetMovieImdbRequest.builder().build(), requestOptions);
+    }
+
+    public SeedApiHttpResponse<Movie> getMovie(String movieId, GetMovieImdbRequest request) {
+        return getMovie(movieId, request, null);
+    }
+
+    public SeedApiHttpResponse<Movie> getMovie(
+            String movieId, GetMovieImdbRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movies")
@@ -97,15 +121,24 @@ public class RawImdbClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -116,7 +149,7 @@ public class RawImdbClient {
             }
             try {
                 if (response.code() == 404) {
-                    throw new MovieDoesNotExistError(
+                    throw new NotFoundError(
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
                 }
             } catch (JsonProcessingException ignored) {
@@ -125,6 +158,8 @@ public class RawImdbClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }

@@ -28,25 +28,24 @@ Rerank documents based on relevance to a query
 
 ```go
 request := &fern.RerankRequest{
-        Documents: []*fern.DocumentItem{
-            &fern.DocumentItem{
-                DocumentObject: &fern.DocumentObject{
-                    Text: "Carson City is the capital city of the American state of Nevada.",
-                },
-            },
-            &fern.DocumentItem{
-                DocumentObject: &fern.DocumentObject{
-                    Text: "Washington, D.C. is the capital of the United States.",
-                },
+    Documents: []*fern.DocumentItem{
+        &fern.DocumentItem{
+            DocumentObject: &fern.DocumentObject{
+                Text: "Carson City is the capital city of the American state of Nevada.",
             },
         },
-        Query: "What is the capital of the United States?",
-    }
-client.Service.Rerank(
-        context.TODO(),
-        request,
-    )
+        &fern.DocumentItem{
+            DocumentObject: &fern.DocumentObject{
+                Text: "Washington, D.C. is the capital of the United States.",
+            },
+        },
+    },
+    Query: "What is the capital of the United States?",
 }
+client.Service.Rerank(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

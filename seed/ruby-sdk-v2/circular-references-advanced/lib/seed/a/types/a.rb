@@ -3,7 +3,9 @@
 module Seed
   module A
     module Types
-      class A < Internal::Types::Model; end
+      class A < Internal::Types::Model
+        field :s, -> { String }, optional: false, nullable: false
+      end
     end
   end
 end

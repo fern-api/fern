@@ -14,7 +14,7 @@ public partial class SeedEnumClient : ISeedEnumClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedEnum" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedEnum.Version.Current },
                 { "User-Agent", "Fernenum/0.0.1" },
             }
         );

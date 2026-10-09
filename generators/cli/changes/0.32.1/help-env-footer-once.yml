@@ -1,0 +1,6 @@
+- summary: |
+    Print the `Environment variables:` block once in the root `--help`. `build_cli`
+    already set it as the command's `after_help`, and `decorate_command` appended it
+    a second time when composing the global-header, global-parameter, and auth
+    sections.
+  type: fix

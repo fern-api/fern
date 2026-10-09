@@ -1,7 +1,9 @@
 import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
+import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import {
@@ -10,9 +12,10 @@ import {
     type SeverityOverride
 } from "./createDocsConfigFileAstVisitorForRules.js";
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
+import { formatInitError } from "./formatInitError.js";
 import { getAllRules } from "./getAllRules.js";
 import { Rule } from "./Rule.js";
-import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
+import { findMissingRedirects, MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
@@ -63,6 +66,16 @@ function buildSeverityOverrides(
     return severityOverrides;
 }
 
+export function getRuleNamesConfiguredAsErrors(checkConfig: docsYml.RawSchemas.CheckConfig | undefined): Set<string> {
+    const ruleNames = new Set<string>();
+    for (const [ruleName, severity] of buildSeverityOverrides(checkConfig)) {
+        if (severity === "error") {
+            ruleNames.add(ruleName);
+        }
+    }
+    return ruleNames;
+}
+
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,
     context: TaskContext,
@@ -75,6 +88,45 @@ export async function validateDocsWorkspace(
     // For right now, the only use case is to check for broken links, so only expose a choice to run that rule.
     const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks] : getAllRules(excludeRules);
     return runRulesOnDocsWorkspace({ workspace, rules, context, apiWorkspaces, ossWorkspaces });
+}
+
+/**
+ * Runs the `missing-redirects` rule against docs that the caller already resolved, so a publish
+ * doesn't build the docs navigation a second time. Callers should exclude the rule from
+ * `validateDocsWorkspace` when they use this. Severity follows `check.rules.missing-redirects`
+ * in docs.yml: "error" when configured as error, otherwise "warning".
+ */
+export async function validateMissingRedirects({
+    workspace,
+    docsDefinition,
+    instanceUrl,
+    token,
+    logger
+}: {
+    workspace: DocsWorkspace;
+    docsDefinition: DocsV1Write.DocsDefinition;
+    /** URL of the docs instance being published; its live pages are the ones compared. */
+    instanceUrl: string;
+    token: string;
+    logger: Logger;
+}): Promise<ValidationViolation[]> {
+    const violations = await findMissingRedirects({
+        workspace,
+        logger,
+        instanceUrl,
+        token,
+        resolveLocalDocs: async () => docsDefinition
+    });
+    const severity = getRuleNamesConfiguredAsErrors(workspace.config.check).has(MissingRedirectsRule.name)
+        ? "error"
+        : "warning";
+    return violations.map((violation) => ({
+        name: MissingRedirectsRule.name,
+        severity,
+        relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
+        nodePath: [],
+        message: violation.message
+    }));
 }
 
 // exported for testing
@@ -127,17 +179,24 @@ export async function runRulesOnDocsWorkspace({
     const allRulesWithVisitors: RuleWithVisitor[] = [];
     for (const result of ruleCreationResults) {
         if ("error" in result) {
-            const message = result.error instanceof Error ? result.error.message : String(result.error);
+            const message = formatInitError(result.error);
+            const severityOverride = severityOverrides.get(result.ruleName);
+            // Honor the user's configured severity for init failures. When a
+            // rule is configured at `warn` we should surface the failure as a
+            // warning rather than a fatal — otherwise the override is
+            // silently bypassed whenever the rule throws during setup.
+            const severity: ValidationViolation["severity"] =
+                severityOverride === "warning" ? "warning" : severityOverride === "error" ? "error" : "fatal";
             violations.push({
                 name: result.ruleName,
-                severity: "fatal",
+                severity,
                 relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
                 nodePath: [],
                 message: `Rule "${result.ruleName}" failed to initialize: ${message}`
             });
             context.logger.debug(
                 `Rule "${result.ruleName}" failed to initialize: ${
-                    result.error instanceof Error ? (result.error.stack ?? result.error.message) : String(result.error)
+                    result.error instanceof Error ? (result.error.stack ?? result.error.message) : message
                 }`
             );
         } else {

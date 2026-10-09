@@ -30,13 +30,25 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.EchoRequest{
+//	    Name: "Hello world!",
+//	    Size: 20,
+//	}
+//	client.Echo(
+//	    context.TODO(),
+//	    "id-ksfd9c1",
+//	    request,
+//	)
 func (c *Client) Echo(
 	ctx context.Context,
 	id string,

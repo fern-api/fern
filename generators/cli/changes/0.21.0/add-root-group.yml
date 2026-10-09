@@ -1,0 +1,7 @@
+- summary: |
+    Add `rootGroup` custom config field. When set in `generators.yml`,
+    emits `.command_namespace("<rootGroup>")` on the generated
+    `OpenApiBinding`, mounting all spec-derived commands under a
+    configurable namespace prefix (e.g. `cli api users list` instead of
+    `cli users list`). Requires cli-sdk >= 0.19.0.
+  type: feat

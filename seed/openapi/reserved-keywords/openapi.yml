@@ -40,4 +40,100 @@ components:
       required:
         - foo
         - 3d
+    SipHeaderAction:
+      title: SipHeaderAction
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: static
+            - $ref: '#/components/schemas/CustomSipHeader'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: dynamic
+            - $ref: '#/components/schemas/CustomSipHeader'
+          required:
+            - type
+    CustomSipHeader:
+      title: CustomSipHeader
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      required:
+        - key
+        - value
+    BackupConfig:
+      title: BackupConfig
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: override
+            - $ref: '#/components/schemas/BackupOverride'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: fallback
+            - $ref: '#/components/schemas/BackupOverride'
+          required:
+            - type
+    BackupOverride:
+      title: BackupOverride
+      type: object
+      properties:
+        model:
+          type: string
+      required:
+        - model
+    DependencyItem:
+      title: DependencyItem
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: known
+            - $ref: '#/components/schemas/KnownDependency'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: unknown
+            - $ref: '#/components/schemas/KnownDependency'
+          required:
+            - type
+    KnownDependency:
+      title: KnownDependency
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
   securitySchemes: {}

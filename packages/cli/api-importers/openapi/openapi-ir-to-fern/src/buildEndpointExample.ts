@@ -13,10 +13,12 @@ import { convertEndpointResponseExample, convertFullExample } from "./utils/conv
 
 export function buildEndpointExample({
     endpointExample,
-    context
+    context,
+    pathParameterRenames
 }: {
     endpointExample: EndpointExample;
     context: OpenApiIrConverterContext;
+    pathParameterRenames?: Record<string, string>;
 }): RawSchemas.ExampleEndpointCallSchema {
     const example: RawSchemas.ExampleEndpointCallSchema = {};
     if (endpointExample.type !== "full") {
@@ -31,8 +33,27 @@ export function buildEndpointExample({
         example.docs = endpointExample.description;
     }
 
+    const pathParametersForExample: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
+    // Seed with values for any root-level path parameters declared via the
+    // structured `x-fern-base-path` extension. Use `clientDefault` when set;
+    // otherwise fall back to the parameter name so the emitted example is a
+    // valid string segment that satisfies the validator's required-param check.
+    if (context.ir.basePathParameters != null) {
+        for (const param of context.ir.basePathParameters) {
+            const value = param.clientDefault ?? param.name;
+            if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+                pathParametersForExample[param.name] = value;
+            }
+        }
+    }
     if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
-        example["path-parameters"] = convertPathParameterExample(endpointExample.pathParameters);
+        Object.assign(
+            pathParametersForExample,
+            convertPathParameterExample(endpointExample.pathParameters, pathParameterRenames)
+        );
+    }
+    if (Object.keys(pathParametersForExample).length > 0) {
+        example["path-parameters"] = pathParametersForExample;
     }
 
     if (endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0) {
@@ -166,13 +187,18 @@ interface NamedFullExample {
 }
 
 function convertPathParameterExample(
-    pathParameterExamples: PathParameterExample[]
+    pathParameterExamples: PathParameterExample[],
+    pathParameterRenames?: Record<string, string>
 ): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     pathParameterExamples.forEach((pathParameterExample) => {
         const convertedExample = convertFullExample(pathParameterExample.value);
         if (convertedExample != null) {
-            result[pathParameterExample.parameterNameOverride ?? pathParameterExample.name] = convertedExample;
+            const name =
+                pathParameterExample.parameterNameOverride ??
+                pathParameterRenames?.[pathParameterExample.name] ??
+                pathParameterExample.name;
+            result[name] = convertedExample;
         }
     });
     return result;

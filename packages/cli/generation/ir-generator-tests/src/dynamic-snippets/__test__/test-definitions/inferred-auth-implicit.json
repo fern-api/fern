@@ -163,7 +163,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -256,8 +257,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -295,7 +299,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -522,8 +527,11 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -727,8 +735,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -766,7 +777,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -1228,8 +1240,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -1267,7 +1282,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -1379,7 +1395,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1474,8 +1491,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -1513,7 +1533,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -1625,7 +1646,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1720,8 +1742,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -1759,7 +1784,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -1832,7 +1858,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1843,5 +1870,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

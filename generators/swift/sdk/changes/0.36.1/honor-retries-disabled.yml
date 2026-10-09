@@ -1,0 +1,6 @@
+- summary: |
+    Endpoints configured with `x-fern-retries: { disabled: true }` (or `retries: { disabled: true }` in a Fern
+    definition) are no longer retried. The generated endpoint method passes `retriesDisabled: true` to the
+    HTTP client, which takes precedence over both the client-level `maxRetries` and the per-request
+    `RequestOptions.maxRetries`.
+  type: fix

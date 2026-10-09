@@ -26,13 +26,23 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.BootInstanceRequest{
+//	    Size: "size",
+//	}
+//	client.Ec2.BootInstance(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) BootInstance(
 	ctx context.Context,
 	request *fern.BootInstanceRequest,

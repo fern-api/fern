@@ -13,6 +13,7 @@ export const HttpInlineRequestBodySchema: core.serialization.ObjectSchema<
     extends: ObjectExtendsSchema.optional(),
     "extra-properties": core.serialization.boolean().optional(),
     properties: core.serialization.record(core.serialization.string(), HttpInlineRequestBodyPropertySchema).optional(),
+    optional: core.serialization.boolean().optional(),
 });
 
 export declare namespace HttpInlineRequestBodySchema {
@@ -20,5 +21,6 @@ export declare namespace HttpInlineRequestBodySchema {
         extends?: ObjectExtendsSchema.Raw | null;
         "extra-properties"?: boolean | null;
         properties?: Record<string, HttpInlineRequestBodyPropertySchema.Raw> | null;
+        optional?: boolean | null;
     }
 }

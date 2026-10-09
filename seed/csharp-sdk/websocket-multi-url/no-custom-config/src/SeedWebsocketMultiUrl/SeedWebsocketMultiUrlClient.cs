@@ -14,7 +14,7 @@ public partial class SeedWebsocketMultiUrlClient : ISeedWebsocketMultiUrlClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedWebsocketMultiUrl" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedWebsocketMultiUrl.Version.Current },
                 { "User-Agent", "Fernwebsocket-multi-url/0.0.1" },
             }
         );

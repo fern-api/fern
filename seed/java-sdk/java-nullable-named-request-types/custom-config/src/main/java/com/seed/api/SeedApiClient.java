@@ -9,7 +9,7 @@ import com.seed.api.requests.NonNullableObject;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
 import com.seed.api.types.ResponseBody;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -27,38 +27,50 @@ public class SeedApiClient {
     }
 
     public ResponseBody postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request) {
-        return this.rawClient.postWithNullableNamedRequestBodyType(id, request).body();
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request) {
+        return this.rawClient
+                .postWithNullableNamedRequestBodyType(pathId, request)
+                .body();
     }
 
     public ResponseBody postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         return this.rawClient
-                .postWithNullableNamedRequestBodyType(id, request, requestOptions)
+                .postWithNullableNamedRequestBodyType(pathId, request, requestOptions)
                 .body();
     }
 
-    public ResponseBody postWithNonNullableNamedRequestBodyType(String id) {
-        return this.rawClient.postWithNonNullableNamedRequestBodyType(id).body();
+    public ResponseBody postWithNonNullableNamedRequestBodyType(String pathId) {
+        return this.rawClient.postWithNonNullableNamedRequestBodyType(pathId).body();
     }
 
-    public ResponseBody postWithNonNullableNamedRequestBodyType(String id, RequestOptions requestOptions) {
+    public ResponseBody postWithNonNullableNamedRequestBodyType(String pathId, RequestOptions requestOptions) {
         return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, requestOptions)
+                .postWithNonNullableNamedRequestBodyType(pathId, requestOptions)
                 .body();
     }
 
-    public ResponseBody postWithNonNullableNamedRequestBodyType(String id, NonNullableObject request) {
+    public ResponseBody postWithNonNullableNamedRequestBodyType(String pathId, NonNullableObject request) {
         return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, request)
+                .postWithNonNullableNamedRequestBodyType(pathId, request)
                 .body();
     }
 
     public ResponseBody postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String pathId, NonNullableObject request, RequestOptions requestOptions) {
         return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, request, requestOptions)
+                .postWithNonNullableNamedRequestBodyType(pathId, request, requestOptions)
                 .body();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

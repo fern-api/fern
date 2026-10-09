@@ -1,0 +1,6 @@
+- summary: |
+    Improve `fern docs dev` reload performance for content edits (35s → 4-5s).
+    Reduces debounce from 1000ms to 300ms, skips background validation for
+    markdown-only changes, and writes a generation counter file for the docs
+    bundle to detect stale cache entries without HTTP round-trips.
+  type: fix

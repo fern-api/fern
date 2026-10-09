@@ -13,7 +13,11 @@
 <dd>
 
 ```ruby
-client.optional.send_optional_body(request: {})
+client.optional.send_optional_body(request: {
+  string: {
+    key: "value"
+  }
+})
 ```
 </dd>
 </dl>
@@ -98,7 +102,7 @@ client.optional.send_optional_typed_body(request: {
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">send_optional_nullable_with_all_optional_properties</a>(action_id, id, request) -> Seed::Optional::Types::DeployResponse</code></summary>
+<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">send_optional_nullable_with_all_optional_properties</a>(action_id:, id:, request) -> Seed::Optional::Types::DeployResponse</code></summary>
 <dl>
 <dd>
 

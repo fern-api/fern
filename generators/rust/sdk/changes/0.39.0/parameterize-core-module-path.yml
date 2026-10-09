@@ -1,0 +1,4 @@
+- summary: |
+    Parameterize core module path in model generator to support
+    standalone types crate usage.
+  type: internal

@@ -26,13 +26,40 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.SearchRequest{
+//	    Pagination: &fern.StartingAfterPaging{
+//	        PerPage: 1,
+//	        StartingAfter: fern.String(
+//	            "starting_after",
+//	        ),
+//	    },
+//	    Query: &fern.SearchRequestQuery{
+//	        SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{
+//	            Field: fern.String(
+//	                "field",
+//	            ),
+//	            Operator: fern.SingleFilterSearchRequestOperatorEquals.Ptr(),
+//	            Value: fern.String(
+//	                "value",
+//	            ),
+//	        },
+//	    },
+//	}
+//	client.Complex.Search(
+//	    context.TODO(),
+//	    "index",
+//	    request,
+//	)
 func (c *Client) Search(
 	ctx context.Context,
 	index string,

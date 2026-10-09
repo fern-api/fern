@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix discriminated union variants silently dropping inherited properties. When a variant's
+    referenced object type got all of its properties from `extends`, the variant was inlined to
+    an empty struct, so the payload deserialized successfully but every field was discarded.
+    Such types are no longer inlined and keep their `#[serde(flatten)]` wrapper.
+
+    Note: this changes the generated public API for affected unions. A variant that was inlined
+    (e.g. `FooExtended { age }`, constructor `foo_extended(age: i64)`) now wraps the referenced
+    type (`FooExtended { data: FooExtended }`, constructor `foo_extended(data: FooExtended)`), so
+    consumers on a prior version with `extends`-based union variants may need to update call sites
+    when regenerating.
+  type: fix

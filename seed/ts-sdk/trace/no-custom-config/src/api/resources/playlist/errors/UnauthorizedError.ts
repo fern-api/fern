@@ -15,6 +15,6 @@ export class UnauthorizedError extends errors.SeedTraceError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "UnauthorizedError";
     }
 }

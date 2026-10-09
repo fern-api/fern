@@ -1,0 +1,6 @@
+landing-page:
+  page: Welcome to Sunflower
+  path: ../pages/sunflower-landing.mdx
+navigation:
+  - page: Growing Guide
+    path: ../pages/sunflower-guide.mdx

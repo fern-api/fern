@@ -7,30 +7,36 @@
       "$ref": "#/definitions/Admin"
     }
   ],
+  "description": "Example of an undiscriminated union",
   "definitions": {
     "UserProfileVerification": {
       "type": "object",
       "properties": {
         "verified": {
-          "type": "string"
+          "type": "string",
+          "description": "User profile verification status"
         }
       },
       "required": [
         "verified"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "User profile verification object"
     },
     "UserProfile": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the user."
         },
         "verification": {
-          "$ref": "#/definitions/UserProfileVerification"
+          "$ref": "#/definitions/UserProfileVerification",
+          "description": "User profile verification object"
         },
         "ssn": {
-          "type": "string"
+          "type": "string",
+          "description": "The social security number of the user."
         }
       },
       "required": [
@@ -38,22 +44,27 @@
         "verification",
         "ssn"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "User profile object"
     },
     "User": {
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "The unique identifier for the user."
         },
         "email": {
-          "type": "string"
+          "type": "string",
+          "description": "The email address of the user."
         },
         "password": {
-          "type": "string"
+          "type": "string",
+          "description": "The password for the user."
         },
         "profile": {
-          "$ref": "#/definitions/UserProfile"
+          "$ref": "#/definitions/UserProfile",
+          "description": "User profile object"
         }
       },
       "required": [
@@ -62,25 +73,31 @@
         "password",
         "profile"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "User object"
     },
     "Admin": {
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "The unique identifier for the user."
         },
         "email": {
-          "type": "string"
+          "type": "string",
+          "description": "The email address of the user."
         },
         "password": {
-          "type": "string"
+          "type": "string",
+          "description": "The password for the user."
         },
         "profile": {
-          "$ref": "#/definitions/UserProfile"
+          "$ref": "#/definitions/UserProfile",
+          "description": "User profile object"
         },
         "adminLevel": {
-          "type": "string"
+          "type": "string",
+          "description": "The level of admin privileges."
         }
       },
       "required": [
@@ -90,7 +107,8 @@
         "profile",
         "adminLevel"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Admin user object"
     }
   }
 }

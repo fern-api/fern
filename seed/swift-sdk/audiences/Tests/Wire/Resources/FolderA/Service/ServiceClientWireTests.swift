@@ -6,7 +6,7 @@ import Audiences
     @Test func getDirectThread1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "foo": {
@@ -29,7 +29,15 @@ import Audiences
                 ))
             ))
         )
-        let response = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.folderA.service.getDirectThread(
+            ids: [
+                "ids"
+            ],
+            tags: [
+                "tags"
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

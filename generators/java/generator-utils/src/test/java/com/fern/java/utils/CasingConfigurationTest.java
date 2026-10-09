@@ -259,54 +259,79 @@ public class CasingConfigurationTest {
 
         @Test
         void toSmartSnakeCase_v2() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("v2")).isEqualTo("v2");
+            assertThat(CasingConfiguration.toSmartSnakeCase("v2", false)).isEqualTo("v2");
         }
 
         @Test
         void toSmartSnakeCase_ec2() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("ec2")).isEqualTo("ec2");
+            assertThat(CasingConfiguration.toSmartSnakeCase("ec2", false)).isEqualTo("ec2");
         }
 
         @Test
         void toSmartSnakeCase_applicationV1() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("applicationV1")).isEqualTo("application_v1");
+            assertThat(CasingConfiguration.toSmartSnakeCase("applicationV1", false))
+                    .isEqualTo("application_v1");
         }
 
         @Test
         void toSmartSnakeCase_test2This2() {
             // "test2This2" -> splitByDigits: "test", "2", "This", "2"
-            // non-digit parts: basicSnake("test") = "test", basicSnake("This") = "this"
-            // result: "test2this2"
-            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2")).isEqualTo("test2this2");
+            // By default the digit run stays fused to the following word
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2", false))
+                    .isEqualTo("test2this2");
+            // With digitWordBoundary, "This" keeps its boundary after the digit run
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2", true)).isEqualTo("test2_this2");
         }
 
         @Test
         void toSmartSnakeCase_test2This2_2v22() {
             // "test2This2 2v22" -> space split: ["test2This2", "2v22"]
-            // "test2This2" -> "test2this2"
-            // "2v22" -> splitByDigits: "2", "v", "22" -> "2v22"
-            // join with "_": "test2this2_2v22"
-            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22")).isEqualTo("test2this2_2v22");
+            // "test2This2" -> "test2_this2" (with digitWordBoundary)
+            // "2v22" -> splitByDigits: "2", "v", "22" -> "2v22" (lowercase after digits stays fused)
+            // join with "_": "test2_this2_2v22"
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22", true))
+                    .isEqualTo("test2_this2_2v22");
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22", false))
+                    .isEqualTo("test2this2_2v22");
+        }
+
+        @Test
+        void toSmartSnakeCase_capitalizedWordAfterDigits() {
+            // Default keeps the digit run fused to the following word
+            assertThat(CasingConfiguration.toSmartSnakeCase("ConversationsV2Configuration", false))
+                    .isEqualTo("conversations_v2configuration");
+            assertThat(CasingConfiguration.toSmartSnakeCase("CreateOauth2Token", false))
+                    .isEqualTo("create_oauth2token");
+            // Opt-in digit/word boundary preserves the boundary after a digit run
+            assertThat(CasingConfiguration.toSmartSnakeCase("ConversationsV2Configuration", true))
+                    .isEqualTo("conversations_v2_configuration");
+            assertThat(CasingConfiguration.toSmartSnakeCase("CreateOauth2Token", true))
+                    .isEqualTo("create_oauth2_token");
+            assertThat(CasingConfiguration.toSmartSnakeCase("Mode5InterrogationResponse", true))
+                    .isEqualTo("mode5_interrogation_response");
+            assertThat(CasingConfiguration.toSmartSnakeCase("Int32Value", true)).isEqualTo("int32_value");
         }
 
         @Test
         void toSmartSnakeCase_simpleWord() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("hello")).isEqualTo("hello");
+            assertThat(CasingConfiguration.toSmartSnakeCase("hello", false)).isEqualTo("hello");
         }
 
         @Test
         void toSmartSnakeCase_camelCase() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("helloWorld")).isEqualTo("hello_world");
+            assertThat(CasingConfiguration.toSmartSnakeCase("helloWorld", false))
+                    .isEqualTo("hello_world");
         }
 
         @Test
         void toSmartSnakeCase_withSpaces() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("hello world")).isEqualTo("hello_world");
+            assertThat(CasingConfiguration.toSmartSnakeCase("hello world", false))
+                    .isEqualTo("hello_world");
         }
 
         @Test
         void toSmartSnakeCase_numbersOnly() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("123")).isEqualTo("123");
+            assertThat(CasingConfiguration.toSmartSnakeCase("123", false)).isEqualTo("123");
         }
     }
 

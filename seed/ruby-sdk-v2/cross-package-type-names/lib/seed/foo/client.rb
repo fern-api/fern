@@ -19,6 +19,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Foo::Types::OptionalString] :optional_string
       #
+      # @example
+      #   client.foo.find(
+      #     optional_string: "optionalString",
+      #     public_property: "publicProperty",
+      #     private_property: 1
+      #   )
+      #
       # @return [Seed::Foo::Types::ImportingType]
       def find(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -44,7 +51,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Foo::Types::ImportingType.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Foo::Types::ImportingType.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

@@ -14,7 +14,7 @@ public partial class SeedUnknownAsAnyClient : ISeedUnknownAsAnyClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedUnknownAsAny" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedUnknownAsAny.Version.Current },
                 { "User-Agent", "Fernunknown/0.0.1" },
             }
         );

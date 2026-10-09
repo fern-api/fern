@@ -4,7 +4,6 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
-use Seed\Core\Json\JsonDecoder;
 
 class WorkspaceSubmissionStatus extends JsonSerializableType
 {
@@ -24,7 +23,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
      * @var (
      *    null
      *   |ErrorInfo
-     *   |value-of<RunningSubmissionState>
+     *   |RunningSubmissionState
      *   |WorkspaceRunDetails
      *   |mixed
      * ) $value
@@ -44,7 +43,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
      *   value: (
      *    null
      *   |ErrorInfo
-     *   |value-of<RunningSubmissionState>
+     *   |RunningSubmissionState
      *   |WorkspaceRunDetails
      *   |mixed
      * ),
@@ -81,10 +80,10 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param value-of<RunningSubmissionState> $running
+     * @param RunningSubmissionState $running
      * @return WorkspaceSubmissionStatus
      */
-    public static function running(string $running): WorkspaceSubmissionStatus
+    public static function running(RunningSubmissionState $running): WorkspaceSubmissionStatus
     {
         return new WorkspaceSubmissionStatus([
             'type' => 'running',
@@ -155,9 +154,9 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @return value-of<RunningSubmissionState>
+     * @return RunningSubmissionState
      */
-    public function asRunning(): string
+    public function asRunning(): RunningSubmissionState
     {
         if (!($this->value instanceof RunningSubmissionState && $this->type === 'running')) {
             throw new Exception(
@@ -240,7 +239,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
                 $result['errored'] = $value;
                 break;
             case 'running':
-                $value = $this->value;
+                $value = $this->asRunning()->value;
                 $result['running'] = $value;
                 break;
             case 'ran':
@@ -265,18 +264,6 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
         }
 
         return $result;
-    }
-
-    /**
-     * @param string $json
-     */
-    public static function fromJson(string $json): static
-    {
-        $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
-            throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
-        }
-        return self::jsonDeserialize($decodedJson);
     }
 
     /**
@@ -323,7 +310,12 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
                     );
                 }
 
-                $args['value'] = $data['running'];
+                if (!(is_string($data['running']))) {
+                    throw new Exception(
+                        "Expected property 'running' in JSON data to be string, instead received " . get_debug_type($data['running']),
+                    );
+                }
+                $args['value'] = RunningSubmissionState::from($data['running']);
                 break;
             case 'ran':
                 $args['value'] = WorkspaceRunDetails::jsonDeserialize($data);

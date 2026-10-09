@@ -1,0 +1,8 @@
+- summary: |
+    Fixed an issue where the client builder rendered the first environment's URL
+    template instead of the selected environment's template when both a named
+    environment and server URL variables (e.g. `region`) were provided. The
+    builder now resolves the template(s) from the selected environment, falls
+    back to the first templated environment when no environment is selected, and
+    no longer overrides a custom environment or explicitly provided base URL.
+  type: fix

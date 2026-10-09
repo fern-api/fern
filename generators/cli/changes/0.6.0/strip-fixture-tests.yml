@@ -1,0 +1,2 @@
+- summary: Strip fixture-dependent inline tests from vendored cli-sdk so `cargo test` passes in both the SDK and generated CLIs
+  type: fix

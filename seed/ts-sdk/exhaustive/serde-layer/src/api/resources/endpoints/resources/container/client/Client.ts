@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
@@ -25,6 +26,9 @@ export class ContainerClient {
     /**
      * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
@@ -57,10 +61,13 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -103,6 +110,9 @@ export class ContainerClient {
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnListOfObjects([{
      *             string: "string"
@@ -138,10 +148,13 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -176,6 +189,9 @@ export class ContainerClient {
      * @param {Set<string>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
@@ -207,10 +223,13 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -248,6 +267,9 @@ export class ContainerClient {
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnSetOfObjects([{
      *             string: "string"
@@ -281,10 +303,13 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -319,6 +344,9 @@ export class ContainerClient {
      * @param {Record<string, string>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnMapPrimToPrim({
      *         "string": "string"
@@ -352,10 +380,13 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -389,6 +420,9 @@ export class ContainerClient {
     /**
      * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
@@ -425,10 +459,13 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -471,6 +508,9 @@ export class ContainerClient {
      * @param {Record<string, SeedExhaustive.types.MixedType>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
      *         "string": 1.1
@@ -506,9 +546,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Request.jsonOrThrow(
-                request,
-                { unrecognizedObjectKeys: "strip", omitUndefined: true },
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Request.jsonOrThrow(
+                    request,
+                    { unrecognizedObjectKeys: "strip", omitUndefined: true },
+                ),
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -544,8 +587,98 @@ export class ContainerClient {
     }
 
     /**
+     * @param {Record<number, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnMapOfIntegerToObject({
+     *         1: {
+     *             string: "string"
+     *         }
+     *     })
+     */
+    public getAndReturnMapOfIntegerToObject(
+        request: Record<number, SeedExhaustive.types.ObjectWithRequiredField>,
+        requestOptions?: ContainerClient.RequestOptions,
+    ): core.HttpResponsePromise<Record<number, SeedExhaustive.types.ObjectWithRequiredField>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfIntegerToObject(request, requestOptions));
+    }
+
+    private async __getAndReturnMapOfIntegerToObject(
+        request: Record<number, SeedExhaustive.types.ObjectWithRequiredField>,
+        requestOptions?: ContainerClient.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<number, SeedExhaustive.types.ObjectWithRequiredField>>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-integer-to-object",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnMapOfIntegerToObject.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.endpoints.container.getAndReturnMapOfIntegerToObject.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    },
+                ),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/container/map-integer-to-object",
+        );
+    }
+
+    /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.container.getAndReturnOptional({
@@ -580,10 +713,13 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

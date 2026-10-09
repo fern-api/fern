@@ -12,18 +12,21 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Additional Body Properties](#additional-body-properties)
 - [Contributing](#contributing)
 
 ## Requirements
 
 This SDK requires:
+- .NET 8 and above
+- .NET Framework 4.6.2 and above
+- .NET Standard 2.0 and above
 
 ## Installation
 
@@ -43,12 +46,7 @@ Instantiate and use the client with the following:
 using SeedPaginationUriPath;
 
 var client = new SeedPaginationUriPathClient("TOKEN");
-var items = await client.Users.ListWithUriPaginationAsync();
-
-await foreach (var item in items)
-{
-    // do something with item
-}
+await client.Users.ListWithUriPaginationAsync();
 ```
 
 ## Exception Handling
@@ -64,22 +62,17 @@ try {
 } catch (SeedPaginationUriPathApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
-}
-```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
-
-```csharp
-using SeedPaginationUriPath;
-
-var client = new SeedPaginationUriPathClient("TOKEN");
-var items = await client.Users.ListWithUriPaginationAsync();
-
-await foreach (var item in items)
-{
-    // do something with item
+    // Access the raw HTTP response (status code, URL, headers) off the exception
+    var rawResponse = e.RawResponse;
+    if (rawResponse != null)
+    {
+        System.Console.WriteLine(rawResponse.Url);
+        if (rawResponse.Headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            System.Console.WriteLine($"Request ID: {requestId}");
+        }
+    }
 }
 ```
 
@@ -111,7 +104,7 @@ Use the `MaxRetries` request option to configure this behavior.
 var response = await client.Users.ListWithUriPaginationAsync(
     ...,
     new RequestOptions {
-        MaxRetries: 0 // Override MaxRetries at the request level
+        MaxRetries = 0 // Override MaxRetries at the request level
     }
 );
 ```
@@ -124,7 +117,7 @@ The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure t
 var response = await client.Users.ListWithUriPaginationAsync(
     ...,
     new RequestOptions {
-        Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+        Timeout = TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
 ```
@@ -154,7 +147,10 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Users.ListWithUriPaginationAsync(...);
+var parsedData = await client.Users.ListWithUriPaginationAsync(...);
+
+// .WithRawResponse() also works on streaming endpoints (returns IAsyncEnumerable<T> + RawResponse)
+// and on endpoints with no response body (returns RawResponse only).
 ```
 
 ### Additional Headers
@@ -184,6 +180,26 @@ var response = await client.Users.ListWithUriPaginationAsync(
         AdditionalQueryParameters = new Dictionary<string, string>
         {
             { "custom_param", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Body Properties
+
+If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
+These properties are merged into the serialized JSON body using their wire-format names; on a key collision the additional
+property wins, and nested objects are merged recursively. If the endpoint has no request body, the additional properties
+are sent as the JSON body. Form-urlencoded requests merge the additional properties the same way before encoding;
+multipart (file upload) requests are not supported.
+
+```csharp
+var response = await client.Users.ListWithUriPaginationAsync(
+    ...,
+    new RequestOptions {
+        AdditionalBodyProperties = new Dictionary<string, object>
+        {
+            { "custom_field", "custom-value" }
         }
     }
 );

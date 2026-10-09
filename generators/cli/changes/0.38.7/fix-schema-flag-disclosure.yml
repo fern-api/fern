@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Every settable property in `--schema` now discloses the flag to type.
+    Property keys are wire names and diverge from flags more often than they
+    look: a header `Idempotency-Key` becomes `--idempotency-key`, an
+    `x-fern-parameter-name` rename changes it outright, and a name colliding
+    with a builtin gets a `-param` suffix — so a spec parameter called `query`
+    is registered as `--query-param` because `--query` is the JMESPath global.
+    That last case made the contract unfollowable: `required` named `query` and
+    no such flag existed. The name is derived from the same
+    `resolve_param_flag_name` the command builder uses, and is absent when no
+    flag exists for that property — either the name cannot be sanitized into a
+    flag, or another wire name claimed the same flag first and the builder
+    skipped this one — meaning that property is reachable via `--params` alone.
+  type: fix

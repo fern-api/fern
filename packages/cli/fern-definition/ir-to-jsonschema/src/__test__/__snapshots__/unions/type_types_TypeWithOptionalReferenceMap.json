@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "references": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/types.Foo"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    }
+  },
+  "required": [
+    "references",
+    "metadata"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "types.Foo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

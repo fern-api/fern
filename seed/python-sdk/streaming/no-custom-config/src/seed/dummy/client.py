@@ -127,7 +127,7 @@ class AsyncDummyClient:
 
 
         async def main() -> None:
-            response = await client.dummy.generate_stream(
+            response = client.dummy.generate_stream(
                 num_events=1,
             )
             async for chunk in response:

@@ -10,21 +10,23 @@ import (
 )
 
 var (
-	getTokenRequestFieldCid      = big.NewInt(1 << 0)
-	getTokenRequestFieldCsr      = big.NewInt(1 << 1)
-	getTokenRequestFieldScp      = big.NewInt(1 << 2)
-	getTokenRequestFieldEntityID = big.NewInt(1 << 3)
-	getTokenRequestFieldScope    = big.NewInt(1 << 4)
+	getTokenRequestFieldCid         = big.NewInt(1 << 0)
+	getTokenRequestFieldCsr         = big.NewInt(1 << 1)
+	getTokenRequestFieldScp         = big.NewInt(1 << 2)
+	getTokenRequestFieldEntityID    = big.NewInt(1 << 3)
+	getTokenRequestFieldScope       = big.NewInt(1 << 4)
+	getTokenRequestFieldPermissions = big.NewInt(1 << 5)
 )
 
 type GetTokenRequest struct {
-	Cid       string  `json:"cid" url:"-"`
-	Csr       string  `json:"csr" url:"-"`
-	Scp       string  `json:"scp" url:"-"`
-	EntityID  string  `json:"entity_id" url:"-"`
-	Scope     *string `json:"scope,omitempty" url:"-"`
-	audience  string
-	grantType string
+	Cid         string   `json:"cid" url:"-"`
+	Csr         string   `json:"csr" url:"-"`
+	Scp         string   `json:"scp" url:"-"`
+	EntityID    string   `json:"entity_id" url:"-"`
+	Scope       *string  `json:"scope,omitempty" url:"-"`
+	Permissions []string `json:"permissions,omitempty" url:"-"`
+	audience    string
+	grantType   string
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -39,10 +41,12 @@ func (g *GetTokenRequest) GrantType() string {
 }
 
 func (g *GetTokenRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetCid sets the Cid field and marks it as non-optional;
@@ -78,6 +82,13 @@ func (g *GetTokenRequest) SetEntityID(entityID string) {
 func (g *GetTokenRequest) SetScope(scope *string) {
 	g.Scope = scope
 	g.require(getTokenRequestFieldScope)
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenRequest) SetPermissions(permissions []string) {
+	g.Permissions = permissions
+	g.require(getTokenRequestFieldPermissions)
 }
 
 func (g *GetTokenRequest) UnmarshalJSON(data []byte) error {
@@ -135,10 +146,12 @@ func (r *RefreshTokenRequest) GrantType() string {
 }
 
 func (r *RefreshTokenRequest) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -196,13 +209,13 @@ func (r *RefreshTokenRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-// An OAuth token response.
 var (
 	tokenResponseFieldAccessToken  = big.NewInt(1 << 0)
 	tokenResponseFieldExpiresIn    = big.NewInt(1 << 1)
 	tokenResponseFieldRefreshToken = big.NewInt(1 << 2)
 )
 
+// An OAuth token response.
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
@@ -244,10 +257,12 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

@@ -109,6 +109,17 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.New(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Health.Service.Ping(\n\tcontext.TODO(),\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/refresh-token",
+                "method": "POST",
+                "identifier_override": "endpoint_service.refreshToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.New(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nerr := client.Service.RefreshToken(\n\tcontext.TODO(),\n\tnil,\n)\n"
+            }
         }
     ]
 }

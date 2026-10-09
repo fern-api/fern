@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedLicense/SeedLicenseClient.cs">GetAsync</a>()</code></summary>
+<details><summary><code>client.<a href="/src/SeedLicense/SeedLicenseClient.cs">GetAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

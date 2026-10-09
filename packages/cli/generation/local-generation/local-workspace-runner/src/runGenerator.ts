@@ -1,13 +1,16 @@
+import { Spec, stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { Audiences, generatorsYml, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import {
     AutoVersioningCache,
     extractLanguageFromGeneratorName,
+    isAutoVersion,
+    MAGIC_VERSION,
     mapMagicVersionForLanguage
 } from "@fern-api/generator-cli/autoversion";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/serialization";
@@ -15,6 +18,7 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
+import { applyTypeRelocations } from "./applyTypeRelocations.js";
 import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
@@ -24,13 +28,22 @@ import {
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
     CONTAINER_SOURCES_DIRECTORY,
+    CONTAINER_SPECS_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
-    IR_FILENAME
+    generatorWantsSdkConfigIr,
+    getConfiguredGeneratorNetwork,
+    IR_FILENAME,
+    resolveGeneratorImage,
+    SPECS_DIRECTORY_NAME,
+    SPECS_MANIFEST_FILENAME
 } from "./constants.js";
-import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
+import { resolveSdkConfigIr } from "./postman/resolveSdkConfigIr.js";
+import { serializeSdkConfigIrForGenerator } from "./postman/serializeSdkConfigIrForGenerator.js";
+import { collectRawSpecs, type RawSpecsManifest } from "./rawSpecs.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -84,7 +97,8 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningCache,
     absolutePathToSpecRepo,
     skipFernignore,
-    disableTelemetry
+    disableTelemetry,
+    rawApiSpecs
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -115,6 +129,7 @@ export async function writeFilesToDiskAndRunGenerator({
     absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     skipFernignore?: boolean;
     disableTelemetry?: boolean;
+    rawApiSpecs?: Spec[];
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -127,6 +142,11 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningNewVersion?: string;
     autoVersioningPreviousVersion?: string;
 }> {
+    // When version is AUTO, pass the magic placeholder to the IR so that any
+    // version strings embedded in generated code (e.g., User-Agent header) use
+    // the safe placeholder that will be correctly replaced post-generation.
+    const irVersion = version ?? outputVersionOverride;
+    const effectiveIrVersion = irVersion != null && isAutoVersion(irVersion) ? MAGIC_VERSION : irVersion;
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
@@ -134,7 +154,7 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
-        version: version ?? outputVersionOverride,
+        version: effectiveIrVersion,
         sourceConfig: getSourceConfig(workspace, executionEnvironment?.usesContainerPaths ?? true),
         includeOptionalRequestPropertyExamples,
         ir
@@ -177,11 +197,11 @@ export async function writeFilesToDiskAndRunGenerator({
     const environment =
         executionEnvironment ??
         new ContainerExecutionEnvironment({
-            containerImage: generatorInvocation.containerImage
-                ? `${generatorInvocation.containerImage}:${generatorInvocation.version}`
-                : `${generatorInvocation.name}:${generatorInvocation.version}`,
+            containerImage: resolveGeneratorImage(generatorInvocation),
             keepContainer: keepDocker,
-            disableTelemetry
+            disableTelemetry,
+            declaredVersion: generatorInvocation.version,
+            ...(getConfiguredGeneratorNetwork() != null ? { network: getConfiguredGeneratorNetwork() } : {})
         });
 
     const paths = environment.usesContainerPaths
@@ -205,14 +225,20 @@ export async function writeFilesToDiskAndRunGenerator({
     const generatorLanguage =
         generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
     const mappedVersion = version != null ? mapMagicVersionForLanguage(version, generatorLanguage) : version;
+    // When outputVersionOverride is AUTO, substitute the magic version constant so the
+    // generator produces code with a safe placeholder ("0.0.0-fern-placeholder") instead
+    // of the literal "AUTO" string — which would corrupt identifiers containing "AUTO"
+    // during the post-generation sed replacement.
+    const effectiveOutputVersion =
+        outputVersionOverride != null && isAutoVersion(outputVersionOverride) ? MAGIC_VERSION : outputVersionOverride;
     const mappedOutputVersionOverride =
-        outputVersionOverride != null
-            ? mapMagicVersionForLanguage(outputVersionOverride, generatorLanguage)
-            : outputVersionOverride;
+        effectiveOutputVersion != null
+            ? mapMagicVersionForLanguage(effectiveOutputVersion, generatorLanguage)
+            : effectiveOutputVersion;
 
     const config = getGeneratorConfig({
         generatorInvocation,
-        customConfig: generatorInvocation.config,
+        customConfig: stripCliConfigKeys(generatorInvocation.config),
         workspaceName: workspace.definition.rootApiFile.contents.name,
         outputVersion: mappedOutputVersionOverride,
         organization,
@@ -227,21 +253,82 @@ export async function writeFilesToDiskAndRunGenerator({
         paths
     });
 
-    await writeFile(
-        absolutePathToWriteConfigJson,
-        JSON.stringify(await GeneratorConfig.jsonOrThrow(config), undefined, 4)
-    );
+    // The adapter is configured by sdk-config.yml and reads SDK Config IR at this same path, so for
+    // those invocations the document is written further down instead. Skipped rather than written
+    // and overwritten, so this file is written exactly once whichever generator is running.
+    const wantsSdkConfigIr = generatorWantsSdkConfigIr(generatorInvocation.name, generatorInvocation.version);
+    if (!wantsSdkConfigIr) {
+        await writeFile(
+            absolutePathToWriteConfigJson,
+            JSON.stringify(await GeneratorConfig.jsonOrThrow(config), undefined, 4)
+        );
+    }
 
     // Extract LICENSE file path for Docker mounting
     const absolutePathToLicenseFile = extractLicenseFilePath(generatorInvocation, absolutePathToFernConfig);
 
-    const sourceMounts = workspace
+    const sourceMounts: SourceMount[] = workspace
         .getSources()
         .filter((source): source is IdentifiableSource & { type: "protobuf" } => source.type === "protobuf")
         .map((source) => ({
             hostPath: source.absoluteFilePath,
             containerPath: `${CONTAINER_SOURCES_DIRECTORY}/${source.id}`
         }));
+
+    // Pre-process and mount raw API spec files when provided. OpenAPI/AsyncAPI specs are
+    // bundled (all $refs resolved), overrides merged, and overlays applied before mounting.
+    // Protobuf and GraphQL specs are copied as-is.
+    let rawSpecsManifest: RawSpecsManifest | undefined;
+    if (rawApiSpecs != null && rawApiSpecs.length > 0) {
+        const rawSpecsDir = join(workspaceTempDir.path, SPECS_DIRECTORY_NAME);
+        await mkdir(rawSpecsDir, { recursive: true });
+
+        // In native (non-container) mode, the manifest's specPath entries must reference
+        // the actual host paths since there is no Docker volume mount to remap them.
+        const containerSpecsDir = environment.usesContainerPaths ? CONTAINER_SPECS_DIRECTORY : rawSpecsDir;
+
+        rawSpecsManifest = await collectRawSpecs({
+            specs: rawApiSpecs,
+            hostOutputDir: AbsoluteFilePath.of(rawSpecsDir),
+            containerBaseDir: containerSpecsDir,
+            context,
+            audiences
+        });
+
+        await writeFile(join(rawSpecsDir, SPECS_MANIFEST_FILENAME), JSON.stringify(rawSpecsManifest, undefined, 4));
+        context.logger.debug(
+            `Wrote raw specs manifest with ${rawSpecsManifest.specs.length} spec(s) to ${rawSpecsDir}`
+        );
+
+        sourceMounts.push({
+            hostPath: AbsoluteFilePath.of(rawSpecsDir),
+            containerPath: CONTAINER_SPECS_DIRECTORY
+        });
+    }
+
+    // The Postman adapter reads SDK Config IR, not a Fern generator config. Writing it at the same
+    // path keeps the container contract unchanged -- that path is still handed over as the sole
+    // container argument -- so only the document at that path differs.
+    //
+    // This builds the IR from the workspace's existing sdk-config.yml. It does not migrate anything:
+    // a workspace without that file is refused here, with the `fern sdk migrate` command to run.
+    if (wantsSdkConfigIr) {
+        const built = await resolveSdkConfigIr({
+            generatorInvocation,
+            absolutePathToFernConfig,
+            organization,
+            outputPath: paths.outputDirectory,
+            rawSpecsManifest
+        });
+        if (!built.success) {
+            throw new CliError({ message: built.message, code: CliError.Code.ConfigError });
+        }
+        for (const warning of built.warnings) {
+            context.logger.warn(warning);
+        }
+        await writeFile(absolutePathToWriteConfigJson, serializeSdkConfigIrForGenerator(built.sdkConfigIr));
+        context.logger.debug(`Wrote SDK Config IR for ${generatorInvocation.name} to ${absolutePathToWriteConfigJson}`);
+    }
 
     await environment.execute({
         generatorName: generatorInvocation.name,
@@ -255,6 +342,16 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         inspect,
         runner
+    });
+
+    // If the generator relocated any types to break import cycles, apply those
+    // relocations to the IR powering host-side dynamic snippet generation so it
+    // references the moved types from the same package the generator declares
+    // them in. Deletes the relocations file so it never reaches the SDK output.
+    await applyTypeRelocations({
+        ir: latest,
+        tmpOutputDirectory: absolutePathToTmpOutputDirectory,
+        context
     });
 
     const taskHandler = new LocalTaskHandler({

@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :api_key
       #
+      # @example
+      #   client.auth.get_token(api_key: "api_key")
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -39,7 +42,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Auth::Types::TokenResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Auth::Types::TokenResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

@@ -241,7 +241,6 @@ public final class ListResourcesRequest {
 
         /**
          * <p>Zero-indexed page number</p>
-         * <p>Zero-indexed page number</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

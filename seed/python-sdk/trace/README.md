@@ -161,7 +161,7 @@ client = SeedTrace(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.admin.update_test_submission_status(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

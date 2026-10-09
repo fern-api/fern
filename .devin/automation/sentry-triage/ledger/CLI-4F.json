@@ -1,0 +1,9 @@
+{
+  "title": "Global theme \"dark\" not found for org \"asi\"",
+  "disposition": "shipped",
+  "rationale": "User references a global theme that does not exist. stitchGlobalTheme already passes ConfigError to failAndThrow for 404 and NOT_FOUND responses.",
+  "fixSummary": "Already fixed: failAndThrow passes { code: ConfigError } for theme-not-found.",
+  "prOrIssue": "This PR (ledger only)",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Global theme 404/NOT_FOUND classified as ConfigError by stitchGlobalTheme."
+}

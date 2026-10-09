@@ -24,8 +24,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -47,6 +48,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response testPackageName.MovieID
 	raw, err := r.caller.Call(
 		ctx,
@@ -55,6 +57,7 @@ func (r *RawClient) CreateMovie(
 			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -74,7 +77,7 @@ func (r *RawClient) CreateMovie(
 
 func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieID testPackageName.MovieID,
+	request *testPackageName.GetMovieImdbRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*testPackageName.Movie], error) {
 	options := core.NewRequestOptions(opts...)
@@ -85,7 +88,7 @@ func (r *RawClient) GetMovie(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/movies/%v",
-		movieID,
+		request.MovieID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -93,7 +96,7 @@ func (r *RawClient) GetMovie(
 	)
 	errorCodes := internal.ErrorCodes{
 		404: func(apiError *core.APIError) error {
-			return &testPackageName.MovieDoesNotExistError{
+			return &testPackageName.NotFoundError{
 				APIError: apiError,
 			}
 		},
@@ -106,6 +109,7 @@ func (r *RawClient) GetMovie(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

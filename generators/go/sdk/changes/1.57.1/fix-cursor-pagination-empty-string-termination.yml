@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Cursor pagination now stops when a string cursor is an empty string, in addition to null. Previously an
+    optional string cursor was only terminal when it was null, so an API that signals the last page with
+    `"next_cursor": ""` caused an extra request, or looped indefinitely when it also kept returning results.
+    This matches the TypeScript, Python, and C# generators. Non-string cursors (e.g. uuid, int) are unchanged.
+  type: fix

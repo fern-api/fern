@@ -27,5 +27,6 @@
     "requiredLong"
   ],
   "additionalProperties": false,
+  "description": "Tests that dynamic snippets include all required properties even when\nthe example data only provides a subset. In C#, properties marked as\n`required` must be set in the object initializer.",
   "definitions": {}
 }

@@ -13,6 +13,7 @@ import {
     NonStreamHttpResponseBody,
     StreamingResponse
 } from "@fern-api/ir-sdk";
+import { CliError } from "@fern-api/task-context";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
@@ -121,9 +122,11 @@ export function convertNonStreamHttpResponseBody({
                     v2Examples: undefined
                 });
             } else if (parseRawTextType(responseType) != null) {
+                const contentType = typeof response !== "string" ? response["content-type"] : undefined;
                 return HttpResponseBody.text({
                     docs,
-                    v2Examples: undefined
+                    v2Examples: undefined,
+                    contentType: contentType ?? undefined
                 });
             } else if (parseRawBytesType(responseType) != null) {
                 return HttpResponseBody.bytes({
@@ -164,6 +167,7 @@ export function convertStreamHttpResponseBody({
                 docs,
                 payload: file.parseTypeReference(typeReference),
                 terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+                resumable: typeof responseStream !== "string" ? responseStream.resumable : undefined,
                 v2Examples: undefined
             });
         } else {
@@ -189,13 +193,8 @@ function convertJsonResponse(
     if (responseTypeReference == null) {
         return undefined;
     }
-    const responseBodyType = file.parseTypeReference(
-        typeof response === "string" ? response : { ...response, type: responseTypeReference }
-    );
-    const resolvedType = typeResolver.resolveTypeOrThrow({
-        type: responseTypeReference,
-        file
-    });
+    const responseBodyType = parseJsonResponseTypeReference({ response, responseTypeReference, file });
+    const resolvedType = resolveJsonResponseType({ responseTypeReference, file, typeResolver });
     const responseProperty = typeof response !== "string" ? response.property : undefined;
     if (responseProperty != null) {
         return HttpResponseBody.json(
@@ -219,4 +218,57 @@ function convertJsonResponse(
             v2Examples: undefined
         })
     );
+}
+
+function parseJsonResponseTypeReference({
+    response,
+    responseTypeReference,
+    file
+}: {
+    response: RawSchemas.HttpResponseSchema | string;
+    responseTypeReference: string;
+    file: FernFileContext;
+}): ReturnType<FernFileContext["parseTypeReference"]> {
+    try {
+        return file.parseTypeReference(
+            typeof response === "string" ? response : { ...response, type: responseTypeReference }
+        );
+    } catch (error) {
+        throw toResponseTypeValidationError({ error, responseTypeReference });
+    }
+}
+
+function resolveJsonResponseType({
+    responseTypeReference,
+    file,
+    typeResolver
+}: {
+    responseTypeReference: string;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}) {
+    try {
+        return typeResolver.resolveTypeOrThrow({
+            type: responseTypeReference,
+            file
+        });
+    } catch (error) {
+        throw toResponseTypeValidationError({ error, responseTypeReference });
+    }
+}
+
+function toResponseTypeValidationError({
+    error,
+    responseTypeReference
+}: {
+    error: unknown;
+    responseTypeReference: string;
+}): unknown {
+    if (error instanceof CliError && error.code === CliError.Code.ResolutionError) {
+        return new CliError({
+            message: `Response type ${responseTypeReference} is not defined.`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    return error;
 }

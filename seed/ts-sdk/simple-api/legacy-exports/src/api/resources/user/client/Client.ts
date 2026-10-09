@@ -25,6 +25,9 @@ export class UserClient {
      * @param {string} id
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedSimpleApiError}
+     * @throws {@link errors.SeedSimpleApiTimeoutError}
+     *
      * @example
      *     await client.user.get("id")
      */

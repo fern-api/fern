@@ -58,7 +58,7 @@ public record ContainerValue
     public bool IsOptional => Type == "optional";
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<FieldValue>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable{FieldValue}"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'list'.</exception>
     public IEnumerable<FieldValue> AsList() =>
@@ -67,7 +67,7 @@ public record ContainerValue
             : throw new global::System.Exception("ContainerValue.Type is not 'list'");
 
     /// <summary>
-    /// Returns the value as a <see cref="FieldValue?"/> if <see cref="Type"/> is 'optional', otherwise throws an exception.
+    /// Returns the value as a <see cref="FieldValue"/> if <see cref="Type"/> is 'optional', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'optional'.</exception>
     public FieldValue? AsOptional() =>
@@ -110,7 +110,7 @@ public record ContainerValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<FieldValue>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable{FieldValue}"/> and returns true if successful.
     /// </summary>
     public bool TryAsList(out IEnumerable<FieldValue>? value)
     {
@@ -124,7 +124,7 @@ public record ContainerValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="FieldValue?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="FieldValue"/> and returns true if successful.
     /// </summary>
     public bool TryAsOptional(out FieldValue? value)
     {

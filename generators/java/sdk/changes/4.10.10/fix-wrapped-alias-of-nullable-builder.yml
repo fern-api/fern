@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix compilation of generated models that have a wrapped-alias property whose alias resolves to a nullable type. The builder now declares the backing field and a default setter for these properties, so the model compiles.
+  type: fix

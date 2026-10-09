@@ -11,8 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->container->getAndReturnOptional(
-    new ObjectWithRequiredField([
-        'string' => 'string',
-    ]),
+$client->endpoints->container->getAndReturnMapOfIntegerToObject(
+    [
+        1 => new ObjectWithRequiredField([
+            'string' => 'string',
+        ]),
+    ],
 );

@@ -1,0 +1,128 @@
+{
+  "mappings": [
+    {
+      "id": "ceac88e3-5e93-4a24-879e-476e9e296525",
+      "name": "getToken - default",
+      "request": {
+        "urlPathTemplate": "/token",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"access_token\": \"access_token\",\n  \"expires_in\": 1,\n  \"refresh_token\": \"refresh_token\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ceac88e3-5e93-4a24-879e-476e9e296525",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "0b2ff940-094c-459a-a15b-6a8e6d8eca41",
+      "name": "get - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "(Bearer|Basic) .+"
+          },
+          "X-API-Key": {
+            "matches": ".+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0b2ff940-094c-459a-a15b-6a8e6d8eca41",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "502d7a90-5195-47c0-9363-e139452ebb74",
+      "name": "getAdmins - default",
+      "request": {
+        "urlPathTemplate": "/admins",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "(Bearer|Basic) .+"
+          },
+          "X-API-Key": {
+            "matches": ".+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "502d7a90-5195-47c0-9363-e139452ebb74",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "0c485345-a95c-4093-82b5-aa9e0a79fe69",
+      "name": "OAuth Token Endpoint - get token",
+      "request": {
+        "urlPathTemplate": "/token",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"access_token\":\"test_access_token\",\"token_type\":\"Bearer\",\"expires_in\":3600,\"scope\":\"api\"}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0c485345-a95c-4093-82b5-aa9e0a79fe69",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 4
+  }
+}

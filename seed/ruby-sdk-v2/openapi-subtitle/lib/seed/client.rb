@@ -1,0 +1,94 @@
+# frozen_string_literal: true
+
+module Seed
+  class Client
+    # Returns a paginated list of all plants currently in the store inventory.
+    #
+    # @param request_options [Hash]
+    # @param _params [Hash]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.list_plants
+    #
+    # @return [Array[Seed::Types::Plant]]
+    def list_plants(request_options: {}, **_params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url],
+        method: "GET",
+        path: "plants",
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      if code.between?(200, 299)
+        Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Types::Plant], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
+    end
+
+    # Retrieve details about a specific plant by its unique identifier.
+    #
+    # @param request_options [Hash]
+    # @param params [Hash]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    # @option params [String] :plant_id
+    #
+    # @example
+    #   client.get_plant(plant_id: "plantId")
+    #
+    # @return [Seed::Types::Plant]
+    def get_plant(request_options: {}, **params)
+      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url],
+        method: "GET",
+        path: "plants/#{URI.encode_uri_component(params[:plant_id].to_s)}",
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      if code.between?(200, 299)
+        (response.body.to_s.empty? ? nil : Seed::Types::Plant.load(response.body))
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
+    end
+
+    # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
+    #
+    # @return [void]
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
+      @raw_client = Seed::Internal::Http::RawClient.new(
+        base_url: base_url,
+        headers: {
+          "User-Agent" => "fern_openapi-subtitle/0.0.1",
+          "X-Fern-Language" => "Ruby"
+        },
+        max_retries: max_retries,
+        timeout: timeout
+      )
+    end
+  end
+end

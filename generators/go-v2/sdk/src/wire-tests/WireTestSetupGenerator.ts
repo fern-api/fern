@@ -26,9 +26,11 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        // ir-sdk versions may differ between go-sdk (66.3.0) and mock-utils (66.0.0);
-        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
-        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
+        // ir-sdk versions may differ between go-sdk and mock-utils. The newer IR only adds
+        // optional fields and OAuth configuration variants that WireMock ignores, but the added
+        // union variants stop the two IntermediateRepresentations from overlapping structurally,
+        // so the assertion has to go through `unknown`.
+        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     private generateWireMockConfigFile(): void {
@@ -71,7 +73,7 @@ export class WireTestSetupGenerator {
       - "0:8080"
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
-    command: ["--global-response-templating", "--verbose"]
+    command: ["--verbose"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
       interval: 2s

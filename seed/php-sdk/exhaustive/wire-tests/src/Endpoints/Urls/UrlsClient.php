@@ -49,6 +49,11 @@ class UrlsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->urls->withMixedCase();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -94,6 +99,11 @@ class UrlsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->urls->noEndingSlash();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -139,6 +149,11 @@ class UrlsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->urls->withEndingSlash();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -184,6 +199,11 @@ class UrlsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->urls->withUnderscores();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

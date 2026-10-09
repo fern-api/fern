@@ -58,4 +58,5 @@ error-discrimination:
 display-name: Test extension `x-fern-enum` for enums
 ",
   },
+  "specVersion": "1.0.0",
 }

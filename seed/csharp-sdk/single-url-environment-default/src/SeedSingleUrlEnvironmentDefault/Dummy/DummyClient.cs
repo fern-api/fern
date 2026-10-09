@@ -17,6 +17,11 @@ public partial class DummyClient : IDummyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedSingleUrlEnvironmentDefault.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedSingleUrlEnvironmentDefault.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +34,7 @@ public partial class DummyClient : IDummyClient
                 {
                     Method = HttpMethod.Get,
                     Path = "dummy",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -46,7 +52,7 @@ public partial class DummyClient : IDummyClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedSingleUrlEnvironmentDefault.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -60,7 +66,13 @@ public partial class DummyClient : IDummyClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedSingleUrlEnvironmentDefault.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -71,7 +83,13 @@ public partial class DummyClient : IDummyClient
             throw new SeedSingleUrlEnvironmentDefaultApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedSingleUrlEnvironmentDefault.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

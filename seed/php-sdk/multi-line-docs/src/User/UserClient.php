@@ -53,6 +53,13 @@ class UserClient
      * Retrieve a user.
      * This endpoint is used to retrieve a user.
      *
+     * Example:
+     * ```php
+     * $client->user->getUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * The ID of the user to retrieve.
      * This ID is unique to each user.
      *
@@ -97,6 +104,16 @@ class UserClient
     /**
      * Create a new user.
      * This endpoint is used to create a new user.
+     *
+     * Example:
+     * ```php
+     * $client->user->createUser(
+     *     new CreateUserRequest([
+     *         'name' => 'name',
+     *         'age' => 1,
+     *     ]),
+     * );
+     * ```
      *
      * @param CreateUserRequest $request
      * @param ?array{

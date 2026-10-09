@@ -1,6 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types;
 
 public partial class Examples
 {
@@ -12,13 +11,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog {
-                    Name = "name",
-                    LikesToWoof = true
-                }
-            )
+        await client.Endpoints.Primitive.GetAndReturnBase64Async(
+            "SGVsbG8gd29ybGQh"
         );
     }
 

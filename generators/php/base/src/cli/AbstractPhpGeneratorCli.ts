@@ -24,7 +24,7 @@ export abstract class AbstractPhpGeneratorCli<
     protected async generateMetadata(context: PhpGeneratorContext): Promise<void> {
         const metadata = {
             ...context.ir.generationMetadata,
-            sdkVersion: context.version
+            sdkVersion: context.getSdkVersion()
         };
         const content = JSON.stringify(metadata, null, 2);
         context.project.addRawFiles(

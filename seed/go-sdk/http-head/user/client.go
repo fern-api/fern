@@ -26,13 +26,19 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.User.Head(
+//	    context.TODO(),
+//	)
 func (c *Client) Head(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -47,6 +53,15 @@ func (c *Client) Head(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.ListUsersRequest{
+//	    Limit: 1,
+//	}
+//	client.User.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *fern.ListUsersRequest,

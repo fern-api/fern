@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve required-nullable fields that arrive as `null` when a decoded model is
+    marshaled again. Generated `UnmarshalJSON` now records which required-nullable
+    keys were present in the incoming JSON (via a per-type wire-name-to-field-bit
+    table) so that `MarshalJSON` re-emits them as `null` instead of dropping them.
+    Fields absent from the input stay absent, and freshly constructed values
+    (e.g. request bodies) serialize exactly as before.
+  type: fix

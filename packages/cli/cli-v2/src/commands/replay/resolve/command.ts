@@ -55,7 +55,7 @@ export class ResolveCommand {
                         } else {
                             throw new CliError({
                                 message: `Resolve failed: ${result.reason ?? "unknown error"}`,
-                                code: CliError.Code.InternalError
+                                code: CliError.Code.UserError
                             });
                         }
                     }

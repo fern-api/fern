@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :admin_key_header
       #
+      # @example
+      #   client.migration.get_attempted_migrations(admin_key_header: "admin-key-header")
+      #
       # @return [Array[Seed::Migration::Types::Migration]]
       def get_attempted_migrations(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -38,10 +41,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Migration::Types::Migration], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
     end
   end

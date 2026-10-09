@@ -13,6 +13,8 @@ type ContainerValue struct {
 	Type     string
 	List     []*FieldValue
 	Optional *FieldValue
+
+	rawJSON json.RawMessage
 }
 
 func (c *ContainerValue) GetType() string {
@@ -65,6 +67,7 @@ func (c *ContainerValue) UnmarshalJSON(data []byte) error {
 		}
 		c.Optional = valueUnmarshaler.Optional
 	}
+	c.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -91,6 +94,9 @@ func (c ContainerValue) MarshalJSON() ([]byte, error) {
 			Optional: c.Optional,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(c.rawJSON) > 0 {
+		return c.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", c)
 }
@@ -123,6 +129,9 @@ func (c *ContainerValue) validate() error {
 	}
 	if len(fields) == 0 {
 		if c.Type != "" {
+			if len(c.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", c, c.Type)
 		}
 		return fmt.Errorf("type %T is empty", c)
@@ -149,6 +158,8 @@ type FieldValue struct {
 	PrimitiveValue PrimitiveValue
 	ObjectValue    *ObjectValue
 	ContainerValue *ContainerValue
+
+	rawJSON json.RawMessage
 }
 
 func (f *FieldValue) GetType() string {
@@ -214,6 +225,7 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 		}
 		f.ContainerValue = valueUnmarshaler.ContainerValue
 	}
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -243,6 +255,9 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 			ContainerValue: f.ContainerValue,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
@@ -282,6 +297,9 @@ func (f *FieldValue) validate() error {
 	}
 	if len(fields) == 0 {
 		if f.Type != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Type)
 		}
 		return fmt.Errorf("type %T is empty", f)
@@ -570,10 +588,12 @@ func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectValue) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 func (o *ObjectValue) UnmarshalJSON(data []byte) error {
@@ -669,10 +689,12 @@ func (t *T) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *T) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetChild sets the Child field and marks it as non-optional;
@@ -746,6 +768,38 @@ func (t *TorU) GetU() *U {
 }
 
 func (t *TorU) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"child"}, []string{"child"}) {
+		valueT := new(T)
+		if err := json.Unmarshal(data, &valueT); err == nil {
+			t.typ = "T"
+			t.T = valueT
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"child"}, []string{"child"}) {
+		valueU := new(U)
+		if err := json.Unmarshal(data, &valueU); err == nil {
+			t.typ = "U"
+			t.U = valueU
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"child"}) {
+		valueT := new(T)
+		if err := json.Unmarshal(data, &valueT); err == nil {
+			t.typ = "T"
+			t.T = valueT
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"child"}) {
+		valueU := new(U)
+		if err := json.Unmarshal(data, &valueU); err == nil {
+			t.typ = "U"
+			t.U = valueU
+			return nil
+		}
+	}
 	valueT := new(T)
 	if err := json.Unmarshal(data, &valueT); err == nil {
 		t.typ = "T"
@@ -815,10 +869,12 @@ func (u *U) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *U) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetChild sets the Child field and marks it as non-optional;

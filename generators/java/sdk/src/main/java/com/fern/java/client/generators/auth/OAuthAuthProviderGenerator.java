@@ -18,18 +18,22 @@ package com.fern.java.client.generators.auth;
 
 import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
@@ -81,10 +85,13 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
         FieldSpec authClientField = FieldSpec.builder(
                         authClientClassName, "authClient", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
-        FieldSpec accessTokenField =
-                FieldSpec.builder(String.class, "accessToken", Modifier.PRIVATE).build();
-        FieldSpec expiresAtField =
-                FieldSpec.builder(Instant.class, "expiresAt", Modifier.PRIVATE).build();
+        // accessToken/expiresAt are volatile: getToken() reads them on a lock-free fast path (outside
+        // refreshLock), so the writes made under the lock in refresh() must be safely published to other
+        // threads. Without volatile the double-checked locking below is the classic broken-DCL idiom.
+        FieldSpec accessTokenField = FieldSpec.builder(String.class, "accessToken", Modifier.PRIVATE, Modifier.VOLATILE)
+                .build();
+        FieldSpec expiresAtField = FieldSpec.builder(Instant.class, "expiresAt", Modifier.PRIVATE, Modifier.VOLATILE)
+                .build();
         FieldSpec refreshLockField = FieldSpec.builder(Object.class, "refreshLock", Modifier.PRIVATE, Modifier.FINAL)
                 .initializer("new Object()")
                 .build();
@@ -93,7 +100,8 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 clientCredentials.getClientIdEnvVar().map(ev -> ev.get()).orElse(null);
         String clientSecretEnvVar =
                 clientCredentials.getClientSecretEnvVar().map(ev -> ev.get()).orElse(null);
-        String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
+        Optional<String> tokenPrefix = OAuthTokenSupplierGenerator.getTokenPrefixWithSpace(clientCredentials);
+        String tokenHeader = OAuthTokenSupplierGenerator.getTokenHeader(clientCredentials);
 
         StringBuilder errorMessageBuilder = new StringBuilder("Please provide ");
         if (clientIdEnvVar != null && clientSecretEnvVar != null) {
@@ -136,9 +144,9 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .addField(expiresAtField)
                 .addField(refreshLockField)
                 .addMethod(buildConstructor(clientIdSupplierField, clientSecretSupplierField, authClientField))
-                .addMethod(buildGetAuthHeaders(endpointMetadataClassName, tokenPrefix))
+                .addMethod(buildGetAuthHeaders(endpointMetadataClassName, tokenHeader, tokenPrefix))
                 .addMethod(buildGetTokenMethod())
-                .addMethod(buildRefreshMethod(oauthTokenSupplierClassName))
+                .addMethod(buildRefreshMethod(oauthTokenSupplierClassName, tokenPrefix))
                 .addMethod(buildGetExpiresAtMethod())
                 .addMethod(buildCanCreateMethod(clientIdEnvVar, clientSecretEnvVar));
 
@@ -168,17 +176,21 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec buildGetAuthHeaders(ClassName endpointMetadataClassName, String tokenPrefix) {
-        return MethodSpec.methodBuilder("getAuthHeaders")
+    private MethodSpec buildGetAuthHeaders(
+            ClassName endpointMetadataClassName, String tokenHeader, Optional<String> tokenPrefix) {
+        MethodSpec.Builder method = MethodSpec.methodBuilder("getAuthHeaders")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameter(endpointMetadataClassName, "endpointMetadata")
                 .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
                 .addStatement("String token = getToken()")
-                .addStatement("$T<String, String> headers = new $T<>()", Map.class, HashMap.class)
-                .addStatement("headers.put($S, $S + token)", "Authorization", tokenPrefix + " ")
-                .addStatement("return headers")
-                .build();
+                .addStatement("$T<String, String> headers = new $T<>()", Map.class, HashMap.class);
+        if (tokenPrefix.isEmpty()) {
+            method.addStatement("headers.put($S, token)", tokenHeader);
+        } else {
+            method.addStatement("headers.put($S, $S + token)", tokenHeader, tokenPrefix.get());
+        }
+        return method.addStatement("return headers").build();
     }
 
     private MethodSpec buildGetTokenMethod() {
@@ -200,10 +212,29 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec buildRefreshMethod(ClassName oauthTokenSupplierClassName) {
+    private MethodSpec buildRefreshMethod(ClassName oauthTokenSupplierClassName, Optional<String> tokenPrefix) {
+        // The generated OAuthTokenSupplier constructor takes an extra parameter for each non-literal
+        // custom token-request property (scopes, custom body properties, headers), inserted between
+        // clientSecret and authClient. This provider only has clientId/clientSecret, so it passes a
+        // default for each extra property: Optional.empty() for optional properties, null otherwise.
+        CodeBlock.Builder tokenSupplierArgs = CodeBlock.builder().add("clientId, clientSecret");
+        for (OAuthTokenSupplierGenerator.OAuthTokenSupplierProperty property :
+                OAuthTokenSupplierGenerator.computeCustomProperties(clientGeneratorContext, clientCredentials)) {
+            if (property.isHardcoded()) {
+                continue;
+            }
+            tokenSupplierArgs.add(", ");
+            if (isOptionalType(property.getType())) {
+                tokenSupplierArgs.add("$T.empty()", Optional.class);
+            } else {
+                tokenSupplierArgs.add("null");
+            }
+        }
+        tokenSupplierArgs.add(", this.authClient");
+
         // Get the token response type - we'll use the OAuthTokenSupplier pattern
         // The refresh method calls the token endpoint and updates cached values
-        return MethodSpec.methodBuilder("refresh")
+        MethodSpec.Builder method = MethodSpec.methodBuilder("refresh")
                 .addModifiers(Modifier.PRIVATE)
                 .returns(String.class)
                 .addStatement("String clientId = this.clientIdSupplier.get()")
@@ -213,22 +244,32 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .endControlFlow()
                 .addComment("Create a temporary token supplier to fetch the token")
                 .addStatement(
-                        "$T tokenSupplier = new $T(clientId, clientSecret, this.authClient)",
+                        "$T tokenSupplier = new $T($L)",
                         oauthTokenSupplierClassName,
-                        oauthTokenSupplierClassName)
-                .addComment("The token supplier's get() method handles fetching and returns the full auth header value")
-                .addStatement("String authHeader = tokenSupplier.get()")
-                .addComment("Extract just the token part (remove 'Bearer ' prefix)")
-                .beginControlFlow("if (authHeader.startsWith($S))", "Bearer ")
-                .addStatement("this.accessToken = authHeader.substring(7)")
-                .nextControlFlow("else")
-                .addStatement("this.accessToken = authHeader")
-                .endControlFlow()
-                .addComment(
+                        oauthTokenSupplierClassName,
+                        tokenSupplierArgs.build())
+                .addStatement("String authHeader = tokenSupplier.get()");
+        if (tokenPrefix.isEmpty()) {
+            method.addStatement("this.accessToken = authHeader");
+        } else {
+            method.beginControlFlow("if (authHeader.startsWith($S))", tokenPrefix.get())
+                    .addStatement(
+                            "this.accessToken = authHeader.substring($L)",
+                            tokenPrefix.get().length())
+                    .nextControlFlow("else")
+                    .addStatement("this.accessToken = authHeader")
+                    .endControlFlow();
+        }
+        return method.addComment(
                         "Set expiration with buffer (we don't have access to expires_in here, so use 1 hour default)")
                 .addStatement("this.expiresAt = getExpiresAt(3600)")
                 .addStatement("return this.accessToken")
                 .build();
+    }
+
+    private static boolean isOptionalType(TypeName type) {
+        return type instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) type).rawType.equals(ClassName.get("java.util", "Optional"));
     }
 
     private MethodSpec buildGetExpiresAtMethod() {

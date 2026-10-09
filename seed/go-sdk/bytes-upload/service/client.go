@@ -27,13 +27,20 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Service.Upload(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Upload(
 	ctx context.Context,
 	request io.Reader,
@@ -50,6 +57,16 @@ func (c *Client) Upload(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.UploadWithQueryParamsRequest{
+//	    Model: "nova-2",
+//	    Body: []byte(""),
+//	}
+//	client.Service.UploadWithQueryParams(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UploadWithQueryParams(
 	ctx context.Context,
 	request *fern.UploadWithQueryParamsRequest,

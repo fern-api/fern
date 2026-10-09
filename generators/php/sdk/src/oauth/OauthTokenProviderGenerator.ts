@@ -6,6 +6,12 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getClientCredentialsOrThrow } from "./getClientCredentials.js";
+import {
+    getOAuthTokenRequestProperties,
+    isGrantTypeProperty,
+    OAuthTokenRequestProperty
+} from "./oauthTokenRequestProperties.js";
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -17,18 +23,20 @@ export declare namespace OauthTokenProviderGenerator {
 export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly CLASS_NAME = "OAuthTokenProvider";
     private static readonly BUFFER_IN_MINUTES = 2;
+    private static readonly CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
     private readonly case: CaseConverter;
-    private scheme: FernIr.OAuthScheme;
+    private configuration: FernIr.OAuthClientCredentials;
     private tokenEndpointHttpService: FernIr.HttpService;
     private tokenEndpointReference: FernIr.EndpointReference;
     private tokenEndpoint: FernIr.HttpEndpoint;
+    private extraRequestProperties: OAuthTokenRequestProperty[];
 
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
         this.case = context.case;
-        this.scheme = scheme;
-        this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;
+        this.configuration = getClientCredentialsOrThrow(scheme);
+        this.tokenEndpointReference = this.configuration.tokenEndpoint.endpointReference;
 
         const service = this.context.ir.services[this.tokenEndpointReference.serviceId];
         if (service == null) {
@@ -43,6 +51,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             throw GeneratorError.referenceError(`Endpoint with id ${this.tokenEndpointReference.endpointId} not found`);
         }
         this.tokenEndpoint = endpoint;
+        this.extraRequestProperties = getOAuthTokenRequestProperties(
+            this.context,
+            this.configuration.tokenEndpoint.requestProperties
+        );
     }
 
     public doGenerate(): PhpFile {
@@ -57,7 +69,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         class_.addMethod(this.getGetTokenMethod());
         class_.addMethod(this.getRefreshMethod());
 
-        const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+        const expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
         if (expiresIn != null) {
             class_.addMethod(this.getExpiresAtMethod());
         }
@@ -100,6 +112,16 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             })
         );
 
+        for (const property of this.extraRequestProperties) {
+            class_.addField(
+                php.field({
+                    name: `$${property.parameterName}`,
+                    access: "private",
+                    type: this.context.phpTypeMapper.convert({ reference: property.valueType })
+                })
+            );
+        }
+
         class_.addField(
             php.field({
                 name: "$authClient",
@@ -116,7 +138,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             })
         );
 
-        const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+        const expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
         if (expiresIn != null) {
             class_.addField(
                 php.field({
@@ -140,6 +162,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 type: php.Type.string(),
                 docs: "The client secret for OAuth authentication."
             }),
+            ...this.extraRequestProperties.map((property) =>
+                php.parameter({
+                    name: property.parameterName,
+                    type: this.context.phpTypeMapper.convert({ reference: property.valueType }),
+                    docs: "A property required by the OAuth token endpoint."
+                })
+            ),
             php.parameter({
                 name: "authClient",
                 type: php.Type.reference(this.getAuthClientClassReference()),
@@ -152,10 +181,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             body: php.codeblock((writer) => {
                 writer.writeLine("$this->clientId = $clientId;");
                 writer.writeLine("$this->clientSecret = $clientSecret;");
+                for (const property of this.extraRequestProperties) {
+                    writer.writeLine(`$this->${property.parameterName} = $${property.parameterName};`);
+                }
                 writer.writeLine("$this->authClient = $authClient;");
                 writer.writeLine("$this->accessToken = null;");
 
-                const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+                const expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
                 if (expiresIn != null) {
                     writer.writeLine("$this->expiresAt = null;");
                 }
@@ -164,7 +196,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getGetTokenMethod(): php.Method {
-        const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+        const expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
 
         return php.method({
             name: "getToken",
@@ -193,8 +225,8 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getRefreshMethod(): php.Method {
-        const requestProperties = this.scheme.configuration.tokenEndpoint.requestProperties;
-        const responseProperties = this.scheme.configuration.tokenEndpoint.responseProperties;
+        const requestProperties = this.configuration.tokenEndpoint.requestProperties;
+        const responseProperties = this.configuration.tokenEndpoint.responseProperties;
 
         const clientIdProperty = this.getRequestPropertyName(requestProperties.clientId);
         const clientSecretProperty = this.getRequestPropertyName(requestProperties.clientSecret);
@@ -226,6 +258,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                     const literal = this.context.maybeLiteral(customProperty.property.valueType);
                     if (literal != null) {
                         writer.writeLine(`'${propName}' => ${this.context.getLiteralAsString(literal)},`);
+                    } else if (isGrantTypeProperty(customProperty)) {
+                        writer.writeLine(
+                            `'${propName}' => '${OauthTokenProviderGenerator.CLIENT_CREDENTIALS_GRANT_TYPE}',`
+                        );
                     }
                 }
 
@@ -235,6 +271,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                     if (scopesLiteral != null) {
                         writer.writeLine(`'${scopesPropName}' => ${this.context.getLiteralAsString(scopesLiteral)},`);
                     }
+                }
+
+                for (const property of this.extraRequestProperties) {
+                    writer.writeLine(`'${property.parameterName}' => $this->${property.parameterName},`);
                 }
 
                 writer.dedent();
@@ -293,6 +333,15 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 name: this.case.pascalSafe(sdkRequest.shape.wrapperName),
                 namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
             });
+        }
+        const requestBody = this.tokenEndpoint.requestBody;
+        if (requestBody != null && requestBody.type === "reference") {
+            const internalType = this.context.phpTypeMapper
+                .convert({ reference: requestBody.requestBodyType })
+                .underlyingType().internalType;
+            if (internalType.type === "reference") {
+                return internalType.value;
+            }
         }
         return undefined;
     }

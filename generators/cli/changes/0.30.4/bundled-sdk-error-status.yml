@@ -1,0 +1,10 @@
+- summary: |
+    The Rust SDK crate bundled into generated CLIs (`api-sdk/src/core/http_client.rs`)
+    no longer reports non-2xx responses as successes. Its `parse_response` /
+    `parse_response_raw` consulted the status code only for empty bodies, so an error
+    response carrying a payload was deserialized into the success type and returned
+    `Ok`. This did not affect commands driven by the OpenAPI binding — that path
+    checks the status in the CLI's own executor — but it did affect custom commands
+    and any code calling the bundled SDK crate directly. Picked up from
+    `@fern-api/rust-sdk`; see its changelog for details.
+  type: fix

@@ -19,11 +19,6 @@ public partial class Examples
                     Id = "id"
                 },
                 ExtendedMovie = new ExtendedMovie {
-                    Cast = new List<string>(){
-                        "cast",
-                        "cast",
-                    }
-                    ,
                     Id = "id",
                     Prequel = "prequel",
                     Title = "title",
@@ -40,7 +35,12 @@ public partial class Examples
                         ,
                     }
                     ,
-                    Revenue = 1000000L
+                    Revenue = 1000000L,
+                    Cast = new List<string>(){
+                        "cast",
+                        "cast",
+                    }
+
                 },
                 Entity = new Entity {
                     Type = BasicType.Primitive,

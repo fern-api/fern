@@ -1,0 +1,10 @@
+name: callback-redirect-url-control-character
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: authorization-code
+    client-id: "public-client-id"
+    authorization-url: https://auth.example.com/authorize
+    token-url: https://auth.example.com/token
+    success-redirect-url: "https://acme.com/cli/\rwelcome"

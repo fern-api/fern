@@ -357,6 +357,59 @@ await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfIntegerToObject</a>({ ...params }) -> Record&lt;number, SeedExhaustive.ObjectWithRequiredField&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.container.getAndReturnMapOfIntegerToObject({
+    1: {
+        string: "string"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<number, SeedExhaustive.ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField | undefined</code></summary>
 <dl>
 <dd>
@@ -1684,7 +1737,7 @@ let page = await client.endpoints.pagination.listItems({
     limit: 1
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -2313,6 +2366,74 @@ await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "
 <dd>
 
 **param:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">createWithBodyAndQuery</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.createWithBodyAndQuery({
+    fields: "_fields",
+    body: {
+        string: "string"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.CreateWithBodyAndQuery` 
     
 </dd>
 </dl>
@@ -3236,6 +3357,72 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 <dd>
 
 **request:** `SeedExhaustive.PostWithObjectBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlinedRequestsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlinedRequests.<a href="/src/api/resources/inlinedRequests/client/Client.ts">postWithArrayBodyAndHeaders</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inlinedRequests.postWithArrayBodyAndHeaders({
+    xCustomHeader: "X-Custom-Header",
+    body: ["string", "string"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.PostWithArrayBodyAndHeaders` 
     
 </dd>
 </dl>

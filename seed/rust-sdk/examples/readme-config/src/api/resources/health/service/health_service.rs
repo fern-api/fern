@@ -22,6 +22,26 @@ impl ServiceClient3 {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_examples::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExamplesClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .health
+    ///         .service
+    ///         .check(&"id-2sdx82h".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn check(&self, id: &str, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::GET, &format!("/check/{}", id), None, None, options)
@@ -37,6 +57,22 @@ impl ServiceClient3 {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_examples::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExamplesClient::new(config).expect("Failed to build client");
+    ///     client.health.service.ping(None).await;
+    /// }
+    /// ```
     pub async fn ping(&self, options: Option<RequestOptions>) -> Result<bool, ApiError> {
         self.http_client
             .execute_request(Method::GET, "/ping", None, None, options)

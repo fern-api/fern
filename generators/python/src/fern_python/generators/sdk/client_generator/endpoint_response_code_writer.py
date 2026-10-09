@@ -1,10 +1,14 @@
-from typing import Any, Callable, Optional
+from typing import Any, Callable, List, Optional, Sequence, Tuple
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.pydantic import Pydantic
-from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
+from fern_python.generators.sdk.client_generator.constants import (
+    CHUNK_VARIABLE,
+    RESPONSE_VARIABLE,
+    SSE_RECONNECT_VARIABLE,
+)
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
 )
@@ -52,6 +56,7 @@ class EndpointResponseCodeWriter:
         is_raw_client: bool = False,
         http_method: str = "GET",
         client_wrapper_member_name: str = "_client_wrapper",
+        request_options_variable_name: str = "request_options",
     ):
         self._context = context
         self._response = response
@@ -64,6 +69,7 @@ class EndpointResponseCodeWriter:
         self._is_raw_client = is_raw_client
         self._http_method = http_method
         self._client_wrapper_member_name = client_wrapper_member_name
+        self._request_options_variable_name = request_options_variable_name
 
     def get_writer(self) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
@@ -98,6 +104,34 @@ class EndpointResponseCodeWriter:
             ],
         )
 
+    @property
+    def _stream_abstraction(self) -> bool:
+        return self._context.custom_config.stream_abstraction
+
+    def _wrap_in_stream_event(self, *, data: AST.Expression, from_sse: bool) -> AST.Expression:
+        """Wrap a parsed payload in a `StreamEvent`, carrying the server-sent event metadata along.
+
+        Without `stream_abstraction` the payload is yielded on its own, as it always was.
+        """
+        if not self._stream_abstraction:
+            return data
+        kwargs = [("data", data)]
+        if from_sse:
+            sse = EndpointResponseCodeWriter.SSE_VARIABLE
+            kwargs.extend(
+                [
+                    ("id", AST.Expression(f"{sse}.id or None")),
+                    ("event", AST.Expression(f"{sse}.event")),
+                    ("retry", AST.Expression(f"{sse}.retry")),
+                ]
+            )
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self._context.core_utilities.get_stream_event_reference(),
+                kwargs=kwargs,
+            )
+        )
+
     def _handle_success_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
         iter_func_body = []
 
@@ -108,6 +142,49 @@ class EndpointResponseCodeWriter:
 
         stream_response_union = stream_response.get_as_union()
         if stream_response_union.type == "sse":
+            protocol_info = self._get_protocol_discriminated_union_info(stream_response_union.payload)
+            sse_for_body = self._build_sse_for_body(
+                stream_response=stream_response,
+                stream_response_union=stream_response_union,
+                protocol_info=protocol_info,
+            )
+            event_source_kwargs: list[tuple[str, AST.Expression]] = []
+            # The stream terminator gates reconnection: without it, a dropped
+            # connection is indistinguishable from a clean end, so the whole
+            # reconnection machinery (including the ``_reconnect`` closure) is
+            # only emitted when a terminator is configured.
+            if stream_response_union.resumable is True and stream_response_union.terminator is not None:
+                event_source_kwargs.append(("resumable", AST.Expression("True")))
+                event_source_kwargs.append(
+                    (
+                        "stream_reconnection_enabled",
+                        AST.Expression(
+                            f'{self._request_options_variable_name}.get("stream_reconnection_enabled", self.{self._client_wrapper_member_name}.get_stream_reconnection_enabled()) if {self._request_options_variable_name} is not None else self.{self._client_wrapper_member_name}.get_stream_reconnection_enabled()'
+                        ),
+                    )
+                )
+                event_source_kwargs.append(
+                    (
+                        "max_stream_reconnection_attempts",
+                        AST.Expression(
+                            f'{self._request_options_variable_name}.get("max_stream_reconnection_attempts", self.{self._client_wrapper_member_name}.get_max_stream_reconnection_attempts()) if {self._request_options_variable_name} is not None else self.{self._client_wrapper_member_name}.get_max_stream_reconnection_attempts()'
+                        ),
+                    )
+                )
+                event_source_kwargs.append(
+                    (
+                        "stream_terminator",
+                        AST.Expression(repr(stream_response_union.terminator)),
+                    )
+                )
+                # Closure that re-issues the request with a Last-Event-ID header;
+                # emitted alongside the streaming call for resumable endpoints.
+                event_source_kwargs.append(
+                    (
+                        "reconnect",
+                        AST.Expression(SSE_RECONNECT_VARIABLE),
+                    )
+                )
             iter_func_body.extend(
                 [
                     AST.VariableDeclaration(
@@ -124,6 +201,7 @@ class EndpointResponseCodeWriter:
                                     ),
                                 ),
                                 args=[AST.Expression(RESPONSE_VARIABLE)],
+                                kwargs=event_source_kwargs,
                             )
                         ),
                     ),
@@ -151,85 +229,21 @@ class EndpointResponseCodeWriter:
                                 ],
                                 else_code=None,
                             ),
-                            AST.TryStatement(
-                                body=[
-                                    AST.YieldStatement(
-                                        self._context.core_utilities.get_construct_sse(
-                                            self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
+                            # Comment-only and retry-only frames are legal SSE and carry no payload,
+                            # so they are skipped instead of being parsed as a model.
+                            AST.ConditionalTree(
+                                conditions=[
+                                    AST.IfConditionLeaf(
+                                        condition=AST.Expression(
+                                            f"len({EndpointResponseCodeWriter.SSE_VARIABLE}.data) == 0"
                                         ),
+                                        code=[AST.ContinueStatement()],
                                     ),
                                 ],
-                                handlers=[
-                                    AST.ExceptHandler(
-                                        body=[
-                                            AST.Expression(
-                                                AST.FunctionInvocation(
-                                                    function_definition=AST.Reference(
-                                                        qualified_name_excluding_import=(),
-                                                        import_=AST.ReferenceImport(
-                                                            module=AST.Module.built_in(("logging",)),
-                                                            named_import="warning",
-                                                        ),
-                                                    ),
-                                                    args=[
-                                                        AST.Expression(
-                                                            f'f"Skipping SSE event with invalid JSON: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
-                                                        )
-                                                    ],
-                                                )
-                                            ),
-                                        ],
-                                        exception_type="JSONDecodeError",
-                                        name="e",
-                                    ),
-                                    AST.ExceptHandler(
-                                        body=[
-                                            AST.Expression(
-                                                AST.FunctionInvocation(
-                                                    function_definition=AST.Reference(
-                                                        qualified_name_excluding_import=(),
-                                                        import_=AST.ReferenceImport(
-                                                            module=AST.Module.built_in(("logging",)),
-                                                            named_import="warning",
-                                                        ),
-                                                    ),
-                                                    args=[
-                                                        AST.Expression(
-                                                            f'f"Skipping SSE event due to model construction error: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
-                                                        )
-                                                    ],
-                                                )
-                                            ),
-                                        ],
-                                        exception_type="(TypeError, ValueError, KeyError, AttributeError)",
-                                        name="e",
-                                    ),
-                                    AST.ExceptHandler(
-                                        body=[
-                                            AST.Expression(
-                                                AST.FunctionInvocation(
-                                                    function_definition=AST.Reference(
-                                                        qualified_name_excluding_import=(),
-                                                        import_=AST.ReferenceImport(
-                                                            module=AST.Module.built_in(("logging",)),
-                                                            named_import="error",
-                                                        ),
-                                                    ),
-                                                    args=[
-                                                        AST.Expression(
-                                                            f'f"Unexpected error processing SSE event: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
-                                                        )
-                                                    ],
-                                                )
-                                            ),
-                                        ],
-                                        exception_type="Exception",
-                                        name="e",
-                                    ),
-                                ],
+                                else_code=None,
                             ),
-                        ],
+                        ]
+                        + sse_for_body,
                         is_async=self._is_async,
                     ),
                 ]
@@ -264,9 +278,14 @@ class EndpointResponseCodeWriter:
                         else_code=None,
                     ),
                     AST.YieldStatement(
-                        self._context.core_utilities.get_construct(
-                            self._get_streaming_response_data_type(stream_response),
-                            AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
+                        self._wrap_in_stream_event(
+                            data=self._context.core_utilities.get_construct(
+                                self._get_streaming_response_data_type(stream_response),
+                                AST.Expression(
+                                    Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))
+                                ),
+                            ),
+                            from_sse=False,
                         )
                     ),
                 ]
@@ -298,29 +317,42 @@ class EndpointResponseCodeWriter:
 
         iter_func_body.append(AST.ReturnStatement())
 
+        data: AST.Expression
+        if self._stream_abstraction:
+            event_type = self._context.core_utilities.get_stream_event_type(
+                self._get_streaming_response_data_type(stream_response)
+            )
+            iter_signature = AST.FunctionSignature(
+                return_type=AST.TypeHint.async_generator(event_type)
+                if self._is_async
+                else AST.TypeHint.generator(event_type)
+            )
+            # The stream starts `_iter` itself, so nothing is consumed until the stream is iterated.
+            data = self._context.core_utilities.instantiate_stream(
+                events=AST.Expression("_iter"),
+                is_async=self._is_async,
+            )
+        else:
+            iter_signature = AST.FunctionSignature()
+            data = AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        qualified_name_excluding_import=("_iter",),
+                    ),
+                    args=[],
+                )
+            )
+
         writer.write_node(
             AST.FunctionDeclaration(
                 name="_iter",
-                signature=AST.FunctionSignature(),
+                signature=iter_signature,
                 body=iter_func_body,
                 is_async=self._is_async,
             )
         )
 
-        writer.write_node(
-            AST.ReturnStatement(
-                self._instantiate_http_response(
-                    data=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=AST.Reference(
-                                qualified_name_excluding_import=("_iter",),
-                            ),
-                            args=[],
-                        )
-                    )
-                )
-            )
-        )
+        writer.write_node(AST.ReturnStatement(self._instantiate_http_response(data=data)))
 
     def _get_iter_lines_method(self, *, is_async: bool) -> str:
         if is_async:
@@ -524,7 +556,7 @@ class EndpointResponseCodeWriter:
         defaulted_chunk_size_default = maybe_chunk_size_default if maybe_chunk_size_default is not None else "None"
         chunk_size_variable = "_chunk_size"
         writer.write_line(
-            f'{chunk_size_variable} = request_options.get("chunk_size", {defaulted_chunk_size_default}) if request_options is not None else {defaulted_chunk_size_default}'
+            f'{chunk_size_variable} = {self._request_options_variable_name}.get("chunk_size", {defaulted_chunk_size_default}) if {self._request_options_variable_name} is not None else {defaulted_chunk_size_default}'
         )
 
         # For raw clients, wrap the generator in an HttpResponse
@@ -640,31 +672,44 @@ class EndpointResponseCodeWriter:
                     f"await {RESPONSE_VARIABLE}.aread()" if self._is_async else f"{RESPONSE_VARIABLE}.read()"
                 )
 
-            for error in self._errors:
+            # Concrete status codes take precedence over 4XX/5XX wildcard ranges.
+            sorted_errors = sorted(
+                self._errors,
+                key=lambda e: self._context.ir.errors[e.error.error_id].is_wildcard_status_code is True,
+            )
+            for error in sorted_errors:
                 error_declaration = self._context.ir.errors[error.error.error_id]
+                is_wildcard = error_declaration.is_wildcard_status_code is True
 
-                writer.write_line(f"if {RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:")
+                if is_wildcard:
+                    writer.write_line(
+                        f"if {error_declaration.status_code} <= {RESPONSE_VARIABLE}.status_code < {error_declaration.status_code + 100}:"
+                    )
+                else:
+                    writer.write_line(f"if {RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:")
                 with writer.indent():
+                    kwargs: List[Tuple[str, AST.Expression]] = [
+                        ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
+                    ]
+                    if error_declaration.type is not None:
+                        kwargs.append(
+                            (
+                                "body",
+                                self._context.core_utilities.get_construct(
+                                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                        error_declaration.type
+                                    ),
+                                    AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
+                                ),
+                            )
+                        )
+                    if is_wildcard:
+                        kwargs.append(("status_code", AST.Expression(f"{RESPONSE_VARIABLE}.status_code")))
                     writer.write("raise ")
                     writer.write_node(
                         AST.ClassInstantiation(
                             class_=self._context.get_reference_to_error(error.error),
-                            kwargs=[
-                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
-                                (
-                                    "body",
-                                    self._context.core_utilities.get_construct(
-                                        self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                            error_declaration.type
-                                        ),
-                                        AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
-                                    ),
-                                ),
-                            ]
-                            if error_declaration.type is not None
-                            else [
-                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
-                            ],
+                            kwargs=kwargs,
                         ),
                     )
                     writer.write_newline_if_last_line_not()
@@ -871,3 +916,228 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
+
+    def _get_protocol_discriminated_union_info(
+        self, payload: ir_types.TypeReference
+    ) -> Optional[Sequence[Tuple[str, ir_types.SingleUnionType, bool]]]:
+        """Check if payload is a protocol-discriminated union and return variant info.
+
+        Returns a list of (wire_value, SingleUnionType, is_envelope) tuples if the payload is
+        a named union type with discriminator_context == "protocol", else None. is_envelope is True
+        for variants that model the SSE envelope ({data, id?, retry?}) rather than the data payload.
+        """
+        payload_union = payload.get_as_union()
+        if payload_union.type != "named":
+            return None
+        type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(payload_union.type_id)
+        shape_union = type_declaration.shape.get_as_union()
+        if shape_union.type != "union":
+            return None
+        union_decl: ir_types.UnionTypeDeclaration = shape_union
+        if union_decl.discriminator_context is None or union_decl.discriminator_context.value != "protocol":
+            return None
+        discriminant = get_wire_value(union_decl.discriminant)
+        return [
+            (
+                get_wire_value(variant.discriminant_value),
+                variant,
+                self._is_sse_envelope_variant(variant, discriminant),
+            )
+            for variant in union_decl.types
+        ]
+
+    def _is_sse_envelope_variant(self, variant: ir_types.SingleUnionType, discriminant: str) -> bool:
+        shape_union = variant.shape.get_as_union()
+        if shape_union.properties_type != "samePropertiesAsObject":
+            return False
+        declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(shape_union.type_id)
+        object_shape = declaration.shape.get_as_union()
+        if object_shape.type != "object":
+            return False
+        property_names = [
+            get_wire_value(property.name)
+            for property in [*(object_shape.extended_properties or []), *object_shape.properties]
+            if get_wire_value(property.name) != discriminant
+        ]
+        return "data" in property_names and all(name in ("data", "id", "retry") for name in property_names)
+
+    def _get_variant_type_hint(self, variant: ir_types.SingleUnionType) -> AST.TypeHint:
+        """Get the type hint for a single union variant's data shape."""
+        shape_union = variant.shape.get_as_union()
+        if shape_union.properties_type == "samePropertiesAsObject":
+            named_type = ir_types.NamedType(
+                type_id=shape_union.type_id,
+                fern_filepath=shape_union.fern_filepath,
+                name=shape_union.name,
+            )
+            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                ir_types.TypeReference.factory.named(named_type)
+            )
+        if shape_union.properties_type == "singleProperty":
+            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(shape_union.type)
+        # noProperties — yield the raw parsed data as the overall union type
+        return AST.TypeHint.any()
+
+    def _build_sse_for_body(
+        self,
+        *,
+        stream_response: ir_types.StreamingResponse,
+        stream_response_union: Any,
+        protocol_info: Optional[Sequence[Tuple[str, ir_types.SingleUnionType, bool]]],
+    ) -> list[AST.AstNode]:
+        """Build the list of AST nodes inside the SSE for-loop body.
+
+        For data-level discrimination (protocol_info is None) this uses
+        parse_sse_obj.  For protocol-level discrimination it emits an
+        if/elif chain that dispatches on _sse.event.
+        """
+        if protocol_info is None:
+            return self._build_data_level_sse_body(stream_response)
+        return self._build_protocol_level_sse_body(protocol_info)
+
+    def _build_data_level_sse_body(
+        self,
+        stream_response: ir_types.StreamingResponse,
+    ) -> list[AST.AstNode]:
+        """Generate a try/yield block using parse_sse_obj for data-level discrimination."""
+        return [
+            AST.TryStatement(
+                body=[
+                    AST.YieldStatement(
+                        self._wrap_in_stream_event(
+                            data=self._context.core_utilities.get_construct_sse(
+                                self._get_streaming_response_data_type(stream_response),
+                                AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
+                            ),
+                            from_sse=True,
+                        ),
+                    ),
+                ],
+                handlers=[
+                    AST.ExceptHandler(
+                        body=[
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        qualified_name_excluding_import=(),
+                                        import_=AST.ReferenceImport(
+                                            module=AST.Module.built_in(("logging",)),
+                                            named_import="warning",
+                                        ),
+                                    ),
+                                    args=[
+                                        AST.Expression(
+                                            f'f"Skipping SSE event with invalid JSON: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
+                                        )
+                                    ],
+                                )
+                            ),
+                        ],
+                        exception_type="JSONDecodeError",
+                        name="e",
+                    ),
+                    AST.ExceptHandler(
+                        body=[
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        qualified_name_excluding_import=(),
+                                        import_=AST.ReferenceImport(
+                                            module=AST.Module.built_in(("logging",)),
+                                            named_import="warning",
+                                        ),
+                                    ),
+                                    args=[
+                                        AST.Expression(
+                                            f'f"Skipping SSE event due to model construction error: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
+                                        )
+                                    ],
+                                )
+                            ),
+                        ],
+                        exception_type="(TypeError, ValueError, KeyError, AttributeError)",
+                        name="e",
+                    ),
+                    AST.ExceptHandler(
+                        body=[
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        qualified_name_excluding_import=(),
+                                        import_=AST.ReferenceImport(
+                                            module=AST.Module.built_in(("logging",)),
+                                            named_import="error",
+                                        ),
+                                    ),
+                                    args=[
+                                        AST.Expression(
+                                            f'f"Unexpected error processing SSE event: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
+                                        )
+                                    ],
+                                )
+                            ),
+                        ],
+                        exception_type="Exception",
+                        name="e",
+                    ),
+                ],
+            ),
+        ]
+
+    def _build_protocol_level_sse_body(
+        self,
+        protocol_info: Sequence[Tuple[str, ir_types.SingleUnionType, bool]],
+    ) -> list[AST.AstNode]:
+        """Generate an if/elif chain dispatching on _sse.event for protocol-level discrimination."""
+        conditions: list[AST.IfConditionLeaf] = []
+        for wire_value, variant, is_envelope in protocol_info:
+            variant_type_hint = self._get_variant_type_hint(variant)
+            parsed_data = AST.Expression(Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data")))
+            yield_expr = self._context.core_utilities.get_construct(
+                variant_type_hint,
+                (
+                    AST.Expression(AST.DictionaryInstantiation([(AST.Expression('"data"'), parsed_data)]))
+                    if is_envelope
+                    else parsed_data
+                ),
+            )
+            conditions.append(
+                AST.IfConditionLeaf(
+                    condition=AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.event == {repr(wire_value)}"),
+                    code=[
+                        AST.TryStatement(
+                            body=[AST.YieldStatement(self._wrap_in_stream_event(data=yield_expr, from_sse=True))],
+                            handlers=[
+                                AST.ExceptHandler(
+                                    body=[
+                                        AST.Expression(
+                                            AST.FunctionInvocation(
+                                                function_definition=AST.Reference(
+                                                    qualified_name_excluding_import=(),
+                                                    import_=AST.ReferenceImport(
+                                                        module=AST.Module.built_in(("logging",)),
+                                                        named_import="warning",
+                                                    ),
+                                                ),
+                                                args=[
+                                                    AST.Expression(
+                                                        f'f"Failed to parse SSE event {repr(wire_value)}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
+                                                    )
+                                                ],
+                                            )
+                                        ),
+                                    ],
+                                    exception_type="Exception",
+                                    name="e",
+                                ),
+                            ],
+                        ),
+                    ],
+                )
+            )
+        return [
+            AST.ConditionalTree(
+                conditions=conditions,
+                else_code=None,
+            ),
+        ]

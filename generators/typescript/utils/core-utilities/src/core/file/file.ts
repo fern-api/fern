@@ -37,6 +37,11 @@ async function getFileWithMetadata(
     file: Uploadable,
     { noSniffFileSize }: { noSniffFileSize?: boolean } = {},
 ): Promise<Uploadable.WithMetadata> {
+    if (file == null) {
+        throw new Error(
+            `Expected file to be a Blob, Buffer, ReadableStream, or an object with a "path" or "data" property, but received ${file === null ? "null" : "undefined"}.`,
+        );
+    }
     if (isFileLike(file)) {
         return getFileWithMetadata(
             {

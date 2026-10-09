@@ -5,11 +5,12 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.BulkUpdateTasksRequest;
 import com.seed.api.types.BulkUpdateTasksResponse;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -27,20 +28,61 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<BulkUpdateTasksResponse> bulkUpdateTasks() {
-        return this.rawClient.bulkUpdateTasks().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<BulkUpdateTasksResponse>> rawFuture = this.rawClient.bulkUpdateTasks();
+        CompletableFuture<BulkUpdateTasksResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<BulkUpdateTasksResponse> bulkUpdateTasks(RequestOptions requestOptions) {
-        return this.rawClient.bulkUpdateTasks(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<BulkUpdateTasksResponse>> rawFuture =
+                this.rawClient.bulkUpdateTasks(requestOptions);
+        CompletableFuture<BulkUpdateTasksResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<BulkUpdateTasksResponse> bulkUpdateTasks(BulkUpdateTasksRequest request) {
-        return this.rawClient.bulkUpdateTasks(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<BulkUpdateTasksResponse>> rawFuture =
+                this.rawClient.bulkUpdateTasks(request);
+        CompletableFuture<BulkUpdateTasksResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<BulkUpdateTasksResponse> bulkUpdateTasks(
             BulkUpdateTasksRequest request, RequestOptions requestOptions) {
-        return this.rawClient.bulkUpdateTasks(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<BulkUpdateTasksResponse>> rawFuture =
+                this.rawClient.bulkUpdateTasks(request, requestOptions);
+        CompletableFuture<BulkUpdateTasksResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

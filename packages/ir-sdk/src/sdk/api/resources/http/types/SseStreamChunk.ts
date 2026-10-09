@@ -5,4 +5,12 @@ import type * as FernIr from "../../../index.js";
 export interface SseStreamChunk extends FernIr.WithDocs, FernIr.WithV2Examples {
     payload: FernIr.TypeReference;
     terminator: string | undefined;
+    /**
+     * When true, the endpoint participates in client-side reconnection
+     * using SSE primitives (`Last-Event-ID` / `retry:`). Generators that
+     * support reconnection emit the reconnect loop only when this is true.
+     * Defaults to false; opt-in via `x-fern-streaming.resumable` (OpenAPI)
+     * or `response-stream.resumable` (Fern definition).
+     */
+    resumable: boolean | undefined;
 }

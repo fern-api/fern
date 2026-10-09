@@ -82,6 +82,95 @@ function makeEnumSchema(values: string[]): SchemaWithExample {
     });
 }
 
+function makeNullableStringSchema(): SchemaWithExample {
+    return SchemaWithExample.nullable({
+        value: makePrimitiveSchema(
+            PrimitiveSchemaValueWithExample.string({
+                default: undefined,
+                pattern: undefined,
+                format: undefined,
+                minLength: undefined,
+                maxLength: undefined,
+                example: undefined
+            })
+        ),
+        description: undefined,
+        availability: undefined,
+        generatedName: "TestNullable",
+        nameOverride: undefined,
+        groupName: undefined,
+        namespace: undefined,
+        title: undefined,
+        inline: undefined
+    });
+}
+
+function makeOptionalSchema(value: SchemaWithExample): SchemaWithExample {
+    return SchemaWithExample.optional({
+        value,
+        description: undefined,
+        availability: undefined,
+        generatedName: "TestOptional",
+        nameOverride: undefined,
+        groupName: undefined,
+        namespace: undefined,
+        title: undefined,
+        inline: undefined
+    });
+}
+
+function makeStringSchema(): SchemaWithExample {
+    return makePrimitiveSchema(
+        PrimitiveSchemaValueWithExample.string({
+            default: undefined,
+            pattern: undefined,
+            format: undefined,
+            minLength: undefined,
+            maxLength: undefined,
+            example: undefined
+        })
+    );
+}
+
+function makeObjectSchema({
+    properties,
+    additionalProperties
+}: {
+    properties: Record<string, SchemaWithExample>;
+    additionalProperties: boolean;
+}): SchemaWithExample {
+    return SchemaWithExample.object({
+        allOf: [],
+        properties: Object.entries(properties).map(([key, schema]) => ({
+            key,
+            schema,
+            readonly: undefined,
+            writeonly: undefined,
+            audiences: [],
+            conflict: {},
+            nameOverride: undefined,
+            generatedName: key,
+            availability: undefined,
+            xml: undefined
+        })),
+        allOfPropertyConflicts: [],
+        fullExamples: undefined,
+        additionalProperties,
+        minProperties: undefined,
+        maxProperties: undefined,
+        description: undefined,
+        availability: undefined,
+        generatedName: "TestObject",
+        nameOverride: undefined,
+        groupName: undefined,
+        namespace: undefined,
+        title: undefined,
+        inline: undefined,
+        encoding: undefined,
+        source: undefined
+    });
+}
+
 const DEFAULT_OPTIONS: ExampleTypeFactory.Options = {
     ignoreOptionals: false,
     isParameter: false
@@ -390,6 +479,140 @@ describe("ExampleTypeFactory", () => {
 
             expect(mockLogger.debug).toHaveBeenCalledOnce();
             expect(result).toBeDefined();
+        });
+    });
+
+    describe("explicit null examples", () => {
+        it("should keep an explicit null for an unknown schema instead of generating a placeholder map", () => {
+            const schema = SchemaWithExample.unknown({
+                example: null,
+                description: undefined,
+                availability: undefined,
+                generatedName: "TestUnknown",
+                nameOverride: undefined,
+                groupName: undefined,
+                namespace: undefined,
+                title: undefined
+            });
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: null,
+                options: DEFAULT_OPTIONS
+            });
+
+            expect(result?.type).toBe("null");
+        });
+
+        it("should not turn a null nullable property into an object on a schema with additionalProperties", () => {
+            const schema = makeObjectSchema({
+                properties: {
+                    id: makePrimitiveSchema(
+                        PrimitiveSchemaValueWithExample.string({
+                            default: undefined,
+                            pattern: undefined,
+                            format: undefined,
+                            minLength: undefined,
+                            maxLength: undefined,
+                            example: undefined
+                        })
+                    ),
+                    logo: makeNullableStringSchema()
+                },
+                additionalProperties: true
+            });
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: { id: "abc", logo: null },
+                options: DEFAULT_OPTIONS
+            });
+
+            expect(result?.type).toBe("object");
+            if (result?.type === "object") {
+                // The property must be preserved as an explicit null, not replaced with a
+                // placeholder map and not dropped from the example altogether.
+                expect(result.properties.logo).toMatchObject({ type: "null" });
+                expect(result.properties.id).toMatchObject({ type: "primitive" });
+            }
+        });
+    });
+
+    describe("required nullable properties", () => {
+        const REQUEST_OPTIONS: ExampleTypeFactory.Options = { ignoreOptionals: true, isParameter: false };
+        const RESPONSE_OPTIONS: ExampleTypeFactory.Options = {
+            ignoreOptionals: false,
+            isParameter: false,
+            maxDepth: 3
+        };
+
+        it("should emit an explicit null for a required nullable property in a request example", () => {
+            const schema = makeObjectSchema({
+                properties: {
+                    processor_token: makeStringSchema(),
+                    webhook: makeNullableStringSchema()
+                },
+                additionalProperties: false
+            });
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: undefined,
+                options: REQUEST_OPTIONS
+            });
+
+            expect(result?.type).toBe("object");
+            if (result?.type === "object") {
+                expect(result.properties.processor_token).toMatchObject({ type: "primitive" });
+                expect(result.properties.webhook).toMatchObject({ type: "null" });
+            }
+        });
+
+        it("should omit an optional nullable property from a request example", () => {
+            const schema = makeObjectSchema({
+                properties: {
+                    processor_token: makeStringSchema(),
+                    webhook: makeOptionalSchema(makeNullableStringSchema())
+                },
+                additionalProperties: false
+            });
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: undefined,
+                options: REQUEST_OPTIONS
+            });
+
+            expect(result?.type).toBe("object");
+            if (result?.type === "object") {
+                expect(Object.keys(result.properties)).toEqual(["processor_token"]);
+            }
+        });
+
+        it("should include a required nullable property in a response example", () => {
+            const schema = makeObjectSchema({
+                properties: {
+                    request_id: makeStringSchema(),
+                    webhook: makeNullableStringSchema()
+                },
+                additionalProperties: false
+            });
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: undefined,
+                options: RESPONSE_OPTIONS
+            });
+
+            expect(result?.type).toBe("object");
+            if (result?.type === "object") {
+                expect(Object.keys(result.properties).sort()).toEqual(["request_id", "webhook"]);
+            }
         });
     });
 

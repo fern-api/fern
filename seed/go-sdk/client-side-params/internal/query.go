@@ -67,6 +67,11 @@ func QueryValues(v interface{}) (url.Values, error) {
 	return values, err
 }
 
+// applyQueryDefaultsOnNilRequest reports whether query parameter defaults are applied when the
+// request is nil. It is enabled by the applyQueryDefaultsOnNilRequest generator option, which
+// emits an init function that sets it to true.
+var applyQueryDefaultsOnNilRequest = false
+
 // QueryValuesWithDefaults encodes url.Values from request objects
 // and default values, merging the defaults into the request.
 // It's expected that the values of defaults are wire names.
@@ -76,6 +81,12 @@ func QueryValuesWithDefaults(v interface{}, defaults map[string]interface{}) (ur
 		return values, err
 	}
 	if !val.IsValid() {
+		if applyQueryDefaultsOnNilRequest {
+			// A nil request carries no explicit values, so every default applies.
+			for wireName, defaultVal := range defaults {
+				values.Set(wireName, valueString(reflect.ValueOf(defaultVal), tagOptions{}, reflect.StructField{}))
+			}
+		}
 		return values, nil
 	}
 

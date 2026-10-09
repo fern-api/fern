@@ -14,6 +14,24 @@ impl SyspropClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .sysprop
+    ///         .set_num_warm_instances(&Language::Java, 1, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn set_num_warm_instances(
         &self,
         language: &Language,
@@ -34,6 +52,21 @@ impl SyspropClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client.sysprop.get_num_warm_instances(None).await;
+    /// }
+    /// ```
     pub async fn get_num_warm_instances(
         &self,
         options: Option<RequestOptions>,

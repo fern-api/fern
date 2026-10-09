@@ -14,13 +14,12 @@
 
 ```go
 request := &fern.FooRequest{
-        Bar: "bar",
-    }
-client.Simple.FooWithoutEndpointError(
-        context.TODO(),
-        request,
-    )
+    Bar: "bar",
 }
+client.Simple.FooWithoutEndpointError(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -61,13 +60,12 @@ client.Simple.FooWithoutEndpointError(
 
 ```go
 request := &fern.FooRequest{
-        Bar: "bar",
-    }
-client.Simple.Foo(
-        context.TODO(),
-        request,
-    )
+    Bar: "bar",
 }
+client.Simple.Foo(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -108,13 +106,12 @@ client.Simple.Foo(
 
 ```go
 request := &fern.FooRequest{
-        Bar: "hello",
-    }
-client.Simple.FooWithExamples(
-        context.TODO(),
-        request,
-    )
+    Bar: "hello",
 }
+client.Simple.FooWithExamples(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

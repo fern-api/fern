@@ -7,6 +7,7 @@ import { Declaration } from "../../commons/types/Declaration.js";
 import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 import { ObjectPropertyAccess } from "./ObjectPropertyAccess.js";
+import { XmlPropertyEncoding } from "./XmlPropertyEncoding.js";
 
 export const ObjectProperty: core.serialization.ObjectSchema<serializers.ObjectProperty.Raw, FernIr.ObjectProperty> =
     core.serialization
@@ -16,6 +17,7 @@ export const ObjectProperty: core.serialization.ObjectSchema<serializers.ObjectP
             propertyAccess: ObjectPropertyAccess.optional(),
             defaultValue: core.serialization.unknown().optional(),
             v2Examples: V2SchemaExamples.optional(),
+            xml: XmlPropertyEncoding.optional(),
         })
         .extend(Declaration);
 
@@ -26,5 +28,6 @@ export declare namespace ObjectProperty {
         propertyAccess?: ObjectPropertyAccess.Raw | null;
         defaultValue?: unknown | null;
         v2Examples?: V2SchemaExamples.Raw | null;
+        xml?: XmlPropertyEncoding.Raw | null;
     }
 }

@@ -11,7 +11,8 @@ const StreamingExtensionObjectSchema = z.object({
     "stream-request-name": z.string().optional(),
     "response-stream": z.any(),
     response: z.any(),
-    terminator: z.string().optional()
+    terminator: z.string().optional(),
+    resumable: z.boolean().optional()
 });
 
 const StreamingExtensionSchema = z.union([z.boolean(), StreamingExtensionObjectSchema]);
@@ -20,6 +21,7 @@ type OnlyStreamingEndpoint = {
     type: "stream";
     format: "sse" | "json";
     terminator: string | undefined;
+    resumable: boolean;
 };
 
 type StreamConditionEndpoint = {
@@ -31,10 +33,12 @@ type StreamConditionEndpoint = {
     streamRequestName: string | undefined;
     responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    resumable: boolean;
 };
 
 export declare namespace FernStreamingExtension {
     export interface Args extends AbstractExtension.Args {
+        document: object;
         operation: object;
     }
 
@@ -42,11 +46,13 @@ export declare namespace FernStreamingExtension {
 }
 
 export class FernStreamingExtension extends AbstractExtension<FernStreamingExtension.Output> {
+    private readonly document: object;
     private readonly operation: object;
     public readonly key = "x-fern-streaming";
 
-    constructor({ breadcrumbs, operation, context }: FernStreamingExtension.Args) {
+    constructor({ breadcrumbs, document, operation, context }: FernStreamingExtension.Args) {
         super({ breadcrumbs, context });
+        this.document = document;
         this.operation = operation;
     }
 
@@ -66,11 +72,17 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
         }
 
         if (typeof result.data === "boolean") {
-            return result.data ? { type: "stream", format: "json", terminator: undefined } : undefined;
+            // Boolean shorthand emits format: "json", which has no Last-Event-ID semantics —
+            // do not inherit resumable from the document for this case.
+            return result.data
+                ? { type: "stream", format: "json", terminator: undefined, resumable: false }
+                : undefined;
         }
 
+        const resumable = result.data.resumable ?? getDocumentLevelResumable(this.document) ?? false;
+
         if (result.data["stream-condition"] == null && result.data.format != null) {
-            return { type: "stream", format: result.data.format, terminator: result.data.terminator };
+            return { type: "stream", format: result.data.format, terminator: result.data.terminator, resumable };
         }
 
         if (result.data["stream-condition"] == null) {
@@ -92,7 +104,17 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
             ),
             streamRequestName: result.data["stream-request-name"],
             responseStream: result.data["response-stream"],
-            response: result.data.response
+            response: result.data.response,
+            resumable
         };
     }
+}
+
+export function getDocumentLevelResumable(document: object): boolean | undefined {
+    const docStreaming = (document as Record<string, unknown>)["x-fern-streaming"];
+    if (docStreaming == null || typeof docStreaming === "boolean") {
+        return undefined;
+    }
+    const resumable = (docStreaming as Record<string, unknown>).resumable;
+    return typeof resumable === "boolean" ? resumable : undefined;
 }

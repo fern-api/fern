@@ -1,1 +1,1 @@
-export type AiProvider = "openai" | "anthropic" | "bedrock";
+export type AiProvider = "openai" | "anthropic" | "aws-bedrock";

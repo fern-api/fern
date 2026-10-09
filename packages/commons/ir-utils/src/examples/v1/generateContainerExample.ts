@@ -102,9 +102,16 @@ export function generateContainerExample({
             };
         }
         case "nullable": {
-            // Should this be here? Why would we skip a nullable property?
+            // A nullable property is still required, so it is emitted as an explicit null rather than omitted.
             if (skipOptionalProperties) {
-                return generateEmptyContainerExample({ containerType });
+                return {
+                    type: "success",
+                    example: ExampleContainer.nullable({
+                        nullable: undefined,
+                        valueType: containerType.nullable
+                    }),
+                    jsonExample: null
+                };
             }
             const example = generateTypeReferenceExample({
                 fieldName,

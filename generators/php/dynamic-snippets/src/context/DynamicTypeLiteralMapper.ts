@@ -14,7 +14,13 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = "key";
+    //
+    // - "key": the value is used as a map key (enums are emitted as their backing
+    //   string value, since PHP array keys must be int|string).
+    // - "nativeEnum": the value is passed to a slot typed as the native PHP enum
+    //   (e.g. a discriminated-union factory argument), so an enum is emitted as the
+    //   enum case itself rather than its backing string value.
+    type ConvertedAs = "key" | "nativeEnum";
 }
 
 export class DynamicTypeLiteralMapper {
@@ -156,11 +162,11 @@ export class DynamicTypeLiteralMapper {
                     value
                 });
             case "enum":
-                return this.convertEnum({ enum_: named, value });
+                return this.convertEnum({ enum_: named, value, as });
             case "object":
                 return this.convertObject({ object_: named, value });
             case "undiscriminatedUnion":
-                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value, as });
             default:
                 assertNever(named);
         }
@@ -196,7 +202,7 @@ export class DynamicTypeLiteralMapper {
                             name: this.context.getClassName(discriminatedUnion.declaration.name),
                             namespace: this.context.getTypesNamespace(discriminatedUnion.declaration.fernFilepath)
                         }),
-                        method: this.context.getMethodName(unionVariant.discriminantValue.name),
+                        method: this.context.getPropertyName(unionVariant.discriminantValue.name),
                         arguments_: this.convertDiscriminatedUnionVariantArgs({
                             discriminatedUnionTypeInstance,
                             unionVariant,
@@ -245,17 +251,21 @@ export class DynamicTypeLiteralMapper {
                                 name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                                 value: this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: discriminatedUnionTypeInstance.value
+                                    value: discriminatedUnionTypeInstance.value,
+                                    as: "nativeEnum"
                                 })
                             }
                         ];
                     }
+                    const wireValue = unionVariant.discriminantValue.wireValue;
+                    const singlePropertyValue = record[wireValue] ?? record["value"];
                     return [
                         {
                             name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
-                                value: record[unionVariant.discriminantValue.wireValue]
+                                value: singlePropertyValue,
+                                as: "nativeEnum"
                             })
                         }
                     ];
@@ -279,21 +289,14 @@ export class DynamicTypeLiteralMapper {
         unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
         unionProperties: php.ConstructorField[];
     }): php.AstNode[] {
-        const baseFields = this.getBaseFields({
+        const { required: requiredBaseFields, optional: optionalBaseFields } = this.getBaseFields({
             discriminatedUnionTypeInstance,
             singleDiscriminatedUnionType: unionVariant
         });
         if (unionVariant.type === "singleProperty") {
-            const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
-            if (record == null && unionProperties.length === 1) {
-                // The union is a single value without any base properties, e.g.
-                return [
-                    ...baseFields,
-                    this.convert({
-                        typeReference: unionVariant.typeReference,
-                        value: discriminatedUnionTypeInstance.value
-                    })
-                ];
+            const singleProperty = unionProperties[0];
+            if (singleProperty != null) {
+                return [...requiredBaseFields, singleProperty.value, ...optionalBaseFields];
             }
         }
         if (unionVariant.type === "samePropertiesAsObject") {
@@ -304,17 +307,18 @@ export class DynamicTypeLiteralMapper {
                 return [];
             }
             return [
-                ...baseFields,
+                ...requiredBaseFields,
                 php.TypeLiteral.class_({
                     reference: php.classReference({
                         name: this.context.getClassName(named.declaration.name),
                         namespace: this.context.getTypesNamespace(named.declaration.fernFilepath)
                     }),
                     fields: unionProperties
-                })
+                }),
+                ...optionalBaseFields
             ];
         }
-        return baseFields;
+        return [...requiredBaseFields, ...optionalBaseFields];
     }
 
     private getBaseFields({
@@ -323,7 +327,7 @@ export class DynamicTypeLiteralMapper {
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
-    }): php.AstNode[] {
+    }): { required: php.AstNode[]; optional: php.AstNode[] } {
         const properties = this.context.associateByWireValue({
             parameters: singleDiscriminatedUnionType.properties ?? [],
             values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
@@ -332,14 +336,22 @@ export class DynamicTypeLiteralMapper {
             // are handled by the union variant.
             ignoreMissingParameters: true
         });
-        return properties.map((property) => {
+        const required: php.AstNode[] = [];
+        const optional: php.AstNode[] = [];
+        for (const property of properties) {
             this.context.errors.scope(property.name.wireValue);
             try {
-                return this.convert(property);
+                const converted = this.convert(property);
+                if (this.isOptionalOrNullable(property.typeReference)) {
+                    optional.push(converted);
+                } else {
+                    required.push(converted);
+                }
             } finally {
                 this.context.errors.unscope();
             }
-        });
+        }
+        return { required, optional };
     }
 
     private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): php.TypeLiteral {
@@ -520,7 +532,15 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): php.TypeLiteral {
+    private convertEnum({
+        enum_,
+        value,
+        as
+    }: {
+        enum_: FernIr.dynamic.EnumType;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): php.TypeLiteral {
         const name = this.getEnumValueName({ enum_, value });
         if (name == null) {
             return php.TypeLiteral.nop();
@@ -535,7 +555,11 @@ export class DynamicTypeLiteralMapper {
                 );
                 writer.write("::");
                 writer.write(name);
-                writer.write("->value");
+                // A slot typed as the native PHP enum expects the enum case itself; every
+                // other slot (object property, map key, etc.) expects the backing value.
+                if (as !== "nativeEnum") {
+                    writer.write("->value");
+                }
             })
         );
     }
@@ -561,14 +585,17 @@ export class DynamicTypeLiteralMapper {
 
     private convertUndiscriminatedUnion({
         undiscriminatedUnion,
-        value
+        value,
+        as
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): php.TypeLiteral {
         const result = this.findMatchingUndiscriminatedUnionType({
             undiscriminatedUnion,
-            value
+            value,
+            as
         });
         if (result == null) {
             return php.TypeLiteral.nop();
@@ -578,15 +605,17 @@ export class DynamicTypeLiteralMapper {
 
     private findMatchingUndiscriminatedUnionType({
         undiscriminatedUnion,
-        value
+        value,
+        as
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): php.TypeLiteral | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             const errorsBefore = this.context.errors.size();
             try {
-                const result = this.convert({ typeReference, value });
+                const result = this.convert({ typeReference, value, as });
                 if (php.TypeLiteral.isNop(result)) {
                     this.context.errors.truncate(errorsBefore);
                     continue;

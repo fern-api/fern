@@ -1,0 +1,9 @@
+{
+  "title": "git rm -rf command failed",
+  "disposition": "shipped",
+  "rationale": "Generated-output cleanup failed because the user's git worktree/submodule state rejected git rm.",
+  "fixSummary": "Wrap local generated-output git command failures as CliError(UserError).",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "Git subprocess failure during generated output cleanup reported as InternalError; should be user/worktree semantics."
+}

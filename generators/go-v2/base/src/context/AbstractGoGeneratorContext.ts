@@ -575,6 +575,51 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
+    public maybeUndiscriminatedUnion(
+        typeReference: FernIr.TypeReference
+    ): FernIr.UndiscriminatedUnionTypeDeclaration | undefined {
+        switch (typeReference.type) {
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                switch (declaration.shape.type) {
+                    case "undiscriminatedUnion":
+                        return declaration.shape;
+                    case "alias":
+                        return this.maybeUndiscriminatedUnion(declaration.shape.aliasOf);
+                    case "enum":
+                    case "object":
+                    case "union":
+                        return undefined;
+                    default:
+                        assertNever(declaration.shape);
+                }
+                break;
+            }
+            case "container": {
+                const container = typeReference.container;
+                switch (container.type) {
+                    case "optional":
+                        return this.maybeUndiscriminatedUnion(container.optional);
+                    case "nullable":
+                        return this.maybeUndiscriminatedUnion(container.nullable);
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
+                }
+                break;
+            }
+            case "primitive":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
     public maybePrimitive(typeReference: FernIr.TypeReference): FernIr.PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
             case "container": {

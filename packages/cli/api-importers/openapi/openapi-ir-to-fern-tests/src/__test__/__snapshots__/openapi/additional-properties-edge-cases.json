@@ -32,8 +32,10 @@
               "pagination": undefined,
               "path": "/array-map",
               "request": {
-                "body": "ArrayMap",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "ArrayMap",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -66,8 +68,10 @@
               "pagination": undefined,
               "path": "/extended-with-any",
               "request": {
-                "body": "ExtendedWithAdditionalPropertiesAny",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "ExtendedWithAdditionalPropertiesAny",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -102,8 +106,10 @@
               "pagination": undefined,
               "path": "/extended-with-ref",
               "request": {
-                "body": "ExtendedWithAdditionalPropertiesRef",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "ExtendedWithAdditionalPropertiesRef",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -135,8 +141,10 @@
               "pagination": undefined,
               "path": "/extended-with-typed",
               "request": {
-                "body": "ExtendedWithAdditionalPropertiesTyped",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "ExtendedWithAdditionalPropertiesTyped",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -165,8 +173,10 @@
               "pagination": undefined,
               "path": "/flexible",
               "request": {
-                "body": "FlexibleObject",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "FlexibleObject",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -199,8 +209,10 @@
               "pagination": undefined,
               "path": "/object-map",
               "request": {
-                "body": "ObjectMap",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "ObjectMap",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -229,8 +241,10 @@
               "pagination": undefined,
               "path": "/strict",
               "request": {
-                "body": "StrictObject",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "StrictObject",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -258,8 +272,10 @@
               "pagination": undefined,
               "path": "/string-map",
               "request": {
-                "body": "StringMap",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "StringMap",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -292,8 +308,10 @@
               "pagination": undefined,
               "path": "/user-map",
               "request": {
-                "body": "UserMap",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "UserMap",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -443,8 +461,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: FlexibleObject
-        content-type: application/json
+        body:
+          type: FlexibleObject
+          optional: true
       response:
         docs: Success
         type: FlexibleObject
@@ -461,8 +480,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: StrictObject
-        content-type: application/json
+        body:
+          type: StrictObject
+          optional: true
       response:
         docs: Success
         type: StrictObject
@@ -479,8 +499,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: StringMap
-        content-type: application/json
+        body:
+          type: StringMap
+          optional: true
       response:
         docs: Success
         type: StringMap
@@ -496,8 +517,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: ObjectMap
-        content-type: application/json
+        body:
+          type: ObjectMap
+          optional: true
       response:
         docs: Success
         type: ObjectMap
@@ -516,8 +538,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: UserMap
-        content-type: application/json
+        body:
+          type: UserMap
+          optional: true
       response:
         docs: Success
         type: UserMap
@@ -536,8 +559,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: ArrayMap
-        content-type: application/json
+        body:
+          type: ArrayMap
+          optional: true
       response:
         docs: Success
         type: ArrayMap
@@ -556,8 +580,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: ExtendedWithAdditionalPropertiesAny
-        content-type: application/json
+        body:
+          type: ExtendedWithAdditionalPropertiesAny
+          optional: true
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesAny
@@ -577,8 +602,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: ExtendedWithAdditionalPropertiesTyped
-        content-type: application/json
+        body:
+          type: ExtendedWithAdditionalPropertiesTyped
+          optional: true
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesTyped
@@ -597,8 +623,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: ExtendedWithAdditionalPropertiesRef
-        content-type: application/json
+        body:
+          type: ExtendedWithAdditionalPropertiesRef
+          optional: true
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesRef
@@ -705,4 +732,5 @@ error-discrimination:
 display-name: Additional Properties Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

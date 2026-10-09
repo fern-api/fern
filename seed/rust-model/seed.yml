@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Rust Model
 image: fernapi/fern-rust-model
 # This generator is no longer actively supported. The workspace is retained for
@@ -57,5 +57,3 @@ fixtures:
     - customConfig:
         generateBuilders: true
       outputFolder: with-builders
-allowedFailures:
-  - server-sent-events-openapi

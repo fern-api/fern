@@ -13,6 +13,20 @@ impl ServiceClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    ///     client.service.get_movie(&"string".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_movie(
         &self,
         request: &str,
@@ -29,6 +43,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    ///     client.service.get_movie(&"string".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_movie_docs(
         &self,
         request: &str,
@@ -45,6 +73,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    ///     client.service.get_movie(&"string".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_movie_name(
         &self,
         request: &str,
@@ -61,6 +103,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    ///     client.service.get_movie(&"string".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_movie_metadata(
         &self,
         request: &str,
@@ -77,6 +133,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    ///     client.service.get_movie(&"string".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_optional_movie(
         &self,
         request: &str,
@@ -93,6 +163,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    ///     client.service.get_movie(&"string".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_optional_movie_docs(
         &self,
         request: &str,
@@ -109,6 +193,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_response_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    ///     client.service.get_movie(&"string".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_optional_movie_name(
         &self,
         request: &str,

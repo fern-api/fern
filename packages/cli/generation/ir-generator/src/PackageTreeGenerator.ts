@@ -17,8 +17,8 @@ import { FilteredIr, getOriginalName, IdGenerator } from "@fern-api/ir-utils";
 import { CliError } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 
-type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
-type UnprocessedSubpackage = Omit<Subpackage, "hasEndpointsInTree">;
+type UnprocessedPackage = Omit<Package, "hasEndpointsInTree" | "hasWebSocketInTree">;
+type UnprocessedSubpackage = Omit<Subpackage, "hasEndpointsInTree" | "hasWebSocketInTree">;
 
 export class PackageTreeGenerator {
     private subpackages: Record<SubpackageId, UnprocessedSubpackage> = {};
@@ -151,14 +151,20 @@ export class PackageTreeGenerator {
             };
         }
         const allSubpackagesWithEndpoints = new Set(this.getAllChildrenWithEndpoints(this.rootPackage));
+        const allSubpackagesWithWebSocket = new Set(this.getAllChildrenWithWebSocket(this.rootPackage));
         return {
             subpackages: mapValues(this.subpackages, (subpackage, subpackageId) => ({
                 ...subpackage,
-                hasEndpointsInTree: allSubpackagesWithEndpoints.has(subpackageId)
+                hasEndpointsInTree: allSubpackagesWithEndpoints.has(subpackageId),
+                hasWebSocketInTree: allSubpackagesWithWebSocket.has(subpackageId) || subpackage.websocket != null
             })),
             rootPackage: {
                 ...this.rootPackage,
-                hasEndpointsInTree: allSubpackagesWithEndpoints.size > 0 || this.rootPackage.service != null
+                hasEndpointsInTree: allSubpackagesWithEndpoints.size > 0 || this.rootPackage.service != null,
+                hasWebSocketInTree:
+                    allSubpackagesWithWebSocket.size > 0 ||
+                    this.rootPackage.websocket != null ||
+                    Object.values(this.subpackages).some((s) => s.websocket != null)
             }
         };
     }
@@ -207,6 +213,26 @@ export class PackageTreeGenerator {
     private getAllChildrenWithEndpoints(package_: UnprocessedPackage): SubpackageId[] {
         return package_.subpackages.flatMap((child) => {
             return [...this.getAllSubpackagesWithEndpoints(child)];
+        });
+    }
+
+    private getAllSubpackagesWithWebSocket(root: SubpackageId): SubpackageId[] {
+        const subpackage = this.subpackages[root];
+        if (subpackage == null) {
+            throw new CliError({ message: "Subpackage does not exist: " + root, code: CliError.Code.ResolutionError });
+        }
+
+        const subpackagesWithWebSocket = this.getAllChildrenWithWebSocket(subpackage);
+        if (subpackagesWithWebSocket.length > 0 || subpackage.websocket != null) {
+            subpackagesWithWebSocket.push(root);
+        }
+
+        return subpackagesWithWebSocket;
+    }
+
+    private getAllChildrenWithWebSocket(package_: UnprocessedPackage): SubpackageId[] {
+        return package_.subpackages.flatMap((child) => {
+            return [...this.getAllSubpackagesWithWebSocket(child)];
         });
     }
 

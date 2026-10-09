@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/Profiles/{profileId}/Identifiers/{idTypePathParam}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_.updateProfileIdentifier"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-path-param-body-collision\";\n\nconst client = new SeedApiClient;\nawait client.updateProfileIdentifier({\n    profileId: \"profile_123\",\n    idTypePathParam: \"email\",\n    idType: \"phone\",\n    oldValue: \"+13175556789\",\n    newValue: \"+13175556798\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

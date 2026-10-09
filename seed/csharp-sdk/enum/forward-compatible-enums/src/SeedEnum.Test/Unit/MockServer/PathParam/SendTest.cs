@@ -12,7 +12,7 @@ public class SendTest : BaseMockServerTest
     public void MockServerTest_1()
     {
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/path/%3E/red").UsingPost())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/path/>/red").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
@@ -24,7 +24,7 @@ public class SendTest : BaseMockServerTest
     public void MockServerTest_2()
     {
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/path/%3E/red").UsingPost())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/path/>/red").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>

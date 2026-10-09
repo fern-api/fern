@@ -4,10 +4,12 @@
 package com.seed.literal.resources.inlined;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.literal.core.BodyProperties;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.MediaTypes;
 import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.RequestOptions;
+import com.seed.literal.core.RetryInterceptor;
 import com.seed.literal.core.SeedLiteralApiException;
 import com.seed.literal.core.SeedLiteralException;
 import com.seed.literal.core.SeedLiteralHttpResponse;
@@ -50,7 +52,9 @@ public class AsyncRawInlinedClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedLiteralException("Failed to serialize request", e);
         }
@@ -65,8 +69,18 @@ public class AsyncRawInlinedClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedLiteralHttpResponse<SendResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -80,6 +94,9 @@ public class AsyncRawInlinedClient {
                     future.completeExceptionally(new SeedLiteralApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedLiteralException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedLiteralException("Network error executing HTTP request", e));
                 }
@@ -88,6 +105,11 @@ public class AsyncRawInlinedClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedLiteralException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

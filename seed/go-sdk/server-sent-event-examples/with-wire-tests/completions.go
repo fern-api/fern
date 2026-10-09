@@ -21,10 +21,12 @@ type StreamCompletionRequest struct {
 }
 
 func (s *StreamCompletionRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -67,10 +69,12 @@ type StreamEventsRequest struct {
 }
 
 func (s *StreamEventsRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -113,10 +117,12 @@ type StreamEventsContextProtocolRequest struct {
 }
 
 func (s *StreamEventsContextProtocolRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -159,10 +165,12 @@ type StreamEventsDiscriminantInDataRequest struct {
 }
 
 func (s *StreamEventsDiscriminantInDataRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -222,10 +230,12 @@ func (c *CompletionEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CompletionEvent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetContent sets the Content field and marks it as non-optional;
@@ -315,10 +325,12 @@ func (e *ErrorEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *ErrorEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetError sets the Error field and marks it as non-optional;
@@ -415,10 +427,12 @@ func (e *EventEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EventEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEvent sets the Event field and marks it as non-optional;
@@ -515,10 +529,12 @@ func (g *GroupCreatedEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GroupCreatedEvent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -615,10 +631,12 @@ func (g *GroupDeletedEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GroupDeletedEvent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -681,6 +699,8 @@ type StreamEvent struct {
 	Event      string
 	Completion *CompletionEvent
 	Error      *ErrorEvent
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamEvent) GetEvent() string {
@@ -729,6 +749,7 @@ func (s *StreamEvent) UnmarshalJSON(data []byte) error {
 		}
 		s.Error = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -741,6 +762,9 @@ func (s StreamEvent) MarshalJSON() ([]byte, error) {
 	}
 	if s.Error != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Error, "event", "error")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -773,6 +797,9 @@ func (s *StreamEvent) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Event != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -795,17 +822,19 @@ func (s *StreamEvent) validate() error {
 }
 
 type StreamEventContextProtocol struct {
-	Event      string
+	EventType  string
 	Completion *CompletionEvent
 	Error      *ErrorEvent
 	Event      *EventEvent
+
+	rawJSON json.RawMessage
 }
 
-func (s *StreamEventContextProtocol) GetEvent() string {
+func (s *StreamEventContextProtocol) GetEventType() string {
 	if s == nil {
 		return ""
 	}
-	return s.Event
+	return s.EventType
 }
 
 func (s *StreamEventContextProtocol) GetCompletion() *CompletionEvent {
@@ -831,16 +860,16 @@ func (s *StreamEventContextProtocol) GetEvent() *EventEvent {
 
 func (s *StreamEventContextProtocol) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Event string `json:"event"`
+		EventType string `json:"event"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	s.Event = unmarshaler.Event
-	if unmarshaler.Event == "" {
+	s.EventType = unmarshaler.EventType
+	if unmarshaler.EventType == "" {
 		return fmt.Errorf("%T did not include discriminant event", s)
 	}
-	switch unmarshaler.Event {
+	switch unmarshaler.EventType {
 	case "completion":
 		value := new(CompletionEvent)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -860,6 +889,7 @@ func (s *StreamEventContextProtocol) UnmarshalJSON(data []byte) error {
 		}
 		s.Event = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -875,6 +905,9 @@ func (s StreamEventContextProtocol) MarshalJSON() ([]byte, error) {
 	}
 	if s.Event != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Event, "event", "event")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -913,21 +946,24 @@ func (s *StreamEventContextProtocol) validate() error {
 		fields = append(fields, "event")
 	}
 	if len(fields) == 0 {
-		if s.Event != "" {
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
+		if s.EventType != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.EventType)
 		}
 		return fmt.Errorf("type %T is empty", s)
 	}
 	if len(fields) > 1 {
 		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
 	}
-	if s.Event != "" {
+	if s.EventType != "" {
 		field := fields[0]
-		if s.Event != field {
+		if s.EventType != field {
 			return fmt.Errorf(
 				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
 				s,
-				s.Event,
+				s.EventType,
 				s,
 			)
 		}
@@ -939,6 +975,8 @@ type StreamEventDiscriminantInData struct {
 	Type         string
 	GroupCreated *GroupCreatedEvent
 	GroupDeleted *GroupDeletedEvent
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamEventDiscriminantInData) GetType() string {
@@ -987,6 +1025,7 @@ func (s *StreamEventDiscriminantInData) UnmarshalJSON(data []byte) error {
 		}
 		s.GroupDeleted = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -999,6 +1038,9 @@ func (s StreamEventDiscriminantInData) MarshalJSON() ([]byte, error) {
 	}
 	if s.GroupDeleted != nil {
 		return internal.MarshalJSONWithExtraProperty(s.GroupDeleted, "type", "group.deleted")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -1031,6 +1073,9 @@ func (s *StreamEventDiscriminantInData) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Type != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -1090,10 +1135,12 @@ func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *StreamedCompletion) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetDelta sets the Delta field and marks it as non-optional;

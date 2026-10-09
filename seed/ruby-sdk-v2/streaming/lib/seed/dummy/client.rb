@@ -18,6 +18,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.dummy.generate_stream(
+      #     stream: true,
+      #     num_events: 1
+      #   )
+      #
       # @return [untyped]
       def generate_stream(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -48,6 +54,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.dummy.generate(
+      #     stream: false,
+      #     num_events: 5
+      #   )
+      #
       # @return [Seed::Dummy::Types::StreamResponse]
       def generate(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -65,7 +77,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Dummy::Types::StreamResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Dummy::Types::StreamResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

@@ -9,14 +9,8 @@ public partial class Examples
             }
         );
 
-        await client.Query.SendAsync(
-            new SendLiteralsInQueryRequest {
-                AliasPrompt = new AliasToPrompt(),
-                AliasOptionalPrompt = new AliasToPrompt(),
-                AliasStream = new AliasToStream(),
-                AliasOptionalStream = new AliasToStream(),
-                Query = "What is the weather today"
-            }
+        await client.Path.SendAsync(
+            "123"
         );
     }
 

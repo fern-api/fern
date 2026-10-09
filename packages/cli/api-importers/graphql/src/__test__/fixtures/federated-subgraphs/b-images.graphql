@@ -1,0 +1,42 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@shareable", "@external", "@inaccessible"])
+
+extend type Query {
+  profileImages(profileId: ID!): ProfileImages
+}
+
+extend type Mutation {
+  updateProfileImage(profileId: ID!, input: ImageInput!): ProfileImages
+}
+
+extend type UserProfile @key(fields: "id") {
+  id: ID! @external
+  avatarUrl: String @shareable
+}
+
+type ProfileImages @key(fields: "profileId") {
+  profileId: ID!
+  """Square avatar rendition."""
+  avatar: Image
+  cover: Image
+  """Not part of the composed API, and neither is the type it returns."""
+  storage: ImageStorage
+}
+
+type ImageStorage @inaccessible {
+  bucket: String!
+}
+
+type Image {
+  url: String!
+  width: Int
+  height: Int
+  checksum: String @inaccessible
+}
+
+input ImageInput {
+  url: String!
+}
+
+input ImageFilter {
+  hasAvatar: Boolean
+}

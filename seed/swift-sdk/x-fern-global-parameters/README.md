@@ -1,0 +1,180 @@
+# Seed Swift Library
+
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FSwift)
+![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange.svg)
+
+The Seed Swift library provides convenient access to the Seed APIs from Swift.
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Additional Body Properties](#additional-body-properties)
+  - [Timeouts](#timeouts)
+  - [Custom Networking Client](#custom-networking-client)
+- [Contributing](#contributing)
+
+## Requirements
+
+This SDK requires:
+- Swift 5.7+
+- iOS 15+
+- macOS 12+
+- tvOS 15+
+- watchOS 8+
+
+## Installation
+
+With Swift Package Manager (SPM), add the following to the top-level `dependencies` array within your `Package.swift` file:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/x-fern-global-parameters/fern", from: "0.0.1"),
+]
+```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Foundation
+import Api
+
+private func main() async throws {
+    let client = ApiClient()
+
+    _ = try await client.products.search(
+        regionId: "regionId",
+        request: .init()
+    )
+}
+
+try await main()
+```
+
+## Errors
+
+The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
+
+```swift
+import Api
+
+let client = ApiClient(...)
+
+do {
+    let response = try await client.products.search(...)
+    // Handle successful response
+} catch let error as ApiError {
+    switch error {
+    case .httpError(let httpError):
+        print("Status code:", httpError.statusCode)
+        print("Kind:", httpError.kind)
+        print("Message:", httpError.body?.message ?? httpError.localizedDescription)
+    case .encodingError(let underlying):
+        print("Encoding error:", underlying)
+    case .networkError(let underlying):
+        print("Network error:", underlying)
+    default:
+        print("Other client error:", error)
+    }
+} catch {
+    print("Unexpected error:", error)
+}
+```
+
+## Request Types
+
+The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+
+```swift
+import Api
+
+let request = Requests.SearchProductsRequest(
+    ...
+)
+```
+
+## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
+
+```swift
+try await client.products.search(..., requestOptions: .init(
+    additionalHeaders: [
+        "X-Custom-Header": "custom value"
+    ]
+))
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
+
+```swift
+try await client.products.search(..., requestOptions: .init(
+    additionalQueryParameters: [
+        "custom_query_param_key": "custom_query_param_value"
+    ]
+))
+```
+
+### Additional Body Properties
+
+If you would like to send additional properties as part of a JSON request body (for example, undocumented or beta fields), use the `additionalBodyProperties` request option. Keys are sent as-is, values can be any JSON value, and they override any generated fields with the same name. If the endpoint has no request body, a JSON body is created from these properties (except for GET and HEAD requests, which are sent without a body). Multipart and raw binary request bodies are not modified. The `additionalBodyParameters` request option accepts string values only and is merged the same way; if both options set the same key, `additionalBodyProperties` wins.
+
+```swift
+try await client.products.search(..., requestOptions: .init(
+    additionalBodyProperties: [
+        "beta_feature": true, 
+        "beta_options": ["mode": "fast"]
+    ]
+))
+```
+
+### Timeouts
+
+The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
+
+```swift
+try await client.products.search(..., requestOptions: .init(
+    timeout: 30
+))
+```
+
+### Custom Networking Client
+
+The SDK allows you to customize the underlying `URLSession` used for HTTP requests. Use the `urlSession` option to provide your own configured `URLSession` instance.
+
+```swift
+import Foundation
+import Api
+
+let client = ApiClient(
+    ...,
+    urlSession: // Provide your implementation here
+)
+```
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!

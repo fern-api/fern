@@ -24,6 +24,9 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
     /**
      * @param {SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUndiscriminatedUnionWithResponsePropertyError}
+     * @throws {@link errors.SeedUndiscriminatedUnionWithResponsePropertyTimeoutError}
+     *
      * @example
      *     await client.getUnion()
      */
@@ -72,6 +75,9 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
 
     /**
      * @param {SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionWithResponsePropertyError}
+     * @throws {@link errors.SeedUndiscriminatedUnionWithResponsePropertyTimeoutError}
      *
      * @example
      *     await client.listUnions()

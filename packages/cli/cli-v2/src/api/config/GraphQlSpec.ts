@@ -16,6 +16,9 @@ export interface GraphQlSpec {
     /** Path to the overrides file(s) */
     overrides?: AbsoluteFilePath | AbsoluteFilePath[];
 
+    /** Path to a YAML/JSON file containing named examples for GraphQL operations */
+    examples?: AbsoluteFilePath;
+
     /** Name used to group this GraphQL spec in the docs (rendered as a top-level section) */
     name?: string;
 }

@@ -26,6 +26,9 @@ export class UserClient {
      * @param {SeedQueryParameters.GetUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedQueryParametersError}
+     * @throws {@link errors.SeedQueryParametersTimeoutError}
+     *
      * @example
      *     await client.user.getUsername({
      *         limit: 1,

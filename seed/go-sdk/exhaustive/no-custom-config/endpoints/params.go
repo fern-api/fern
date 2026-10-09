@@ -4,8 +4,51 @@ package endpoints
 
 import (
 	json "encoding/json"
+	internal "github.com/exhaustive/fern/internal"
+	types "github.com/exhaustive/fern/types"
 	big "math/big"
 )
+
+var (
+	createWithBodyAndQueryFieldFields = big.NewInt(1 << 0)
+)
+
+type CreateWithBodyAndQuery struct {
+	Fields *string                        `json:"-" url:"_fields,omitempty"`
+	Body   *types.ObjectWithRequiredField `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateWithBodyAndQuery) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWithBodyAndQuery) SetFields(fields *string) {
+	c.Fields = fields
+	c.require(createWithBodyAndQueryFieldFields)
+}
+
+func (c *CreateWithBodyAndQuery) UnmarshalJSON(data []byte) error {
+	body := new(types.ObjectWithRequiredField)
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	c.Body = body
+	return nil
+}
+
+func (c *CreateWithBodyAndQuery) MarshalJSON() ([]byte, error) {
+	return json.Marshal(c.Body)
+}
 
 var (
 	getWithMultipleQueryFieldQuery  = big.NewInt(1 << 0)
@@ -21,10 +64,12 @@ type GetWithMultipleQuery struct {
 }
 
 func (g *GetWithMultipleQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -53,10 +98,12 @@ type GetWithInlinePath struct {
 }
 
 func (g *GetWithInlinePath) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -80,10 +127,12 @@ type GetWithInlinePathAndQuery struct {
 }
 
 func (g *GetWithInlinePathAndQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -112,10 +161,12 @@ type GetWithPathAndQuery struct {
 }
 
 func (g *GetWithPathAndQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -139,10 +190,12 @@ type GetWithQuery struct {
 }
 
 func (g *GetWithQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -172,10 +225,12 @@ type ModifyResourceAtInlinedPath struct {
 }
 
 func (m *ModifyResourceAtInlinedPath) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -196,4 +251,53 @@ func (m *ModifyResourceAtInlinedPath) UnmarshalJSON(data []byte) error {
 
 func (m *ModifyResourceAtInlinedPath) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m.Body)
+}
+
+var (
+	uploadBytesWithQueryFieldFields = big.NewInt(1 << 0)
+)
+
+type UploadBytesWithQuery struct {
+	Fields *string `json:"-" url:"_fields,omitempty"`
+	Body   []byte  `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UploadBytesWithQuery) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UploadBytesWithQuery) SetFields(fields *string) {
+	u.Fields = fields
+	u.require(uploadBytesWithQueryFieldFields)
+}
+
+func (u *UploadBytesWithQuery) UnmarshalJSON(data []byte) error {
+	type unmarshaler UploadBytesWithQuery
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UploadBytesWithQuery(body)
+	return nil
+}
+
+func (u *UploadBytesWithQuery) MarshalJSON() ([]byte, error) {
+	type embed UploadBytesWithQuery
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

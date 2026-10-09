@@ -3,12 +3,14 @@
  */
 package com.seed.builderExtension.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.builderExtension.core.BaseClientApiException;
 import com.seed.builderExtension.core.BaseClientException;
 import com.seed.builderExtension.core.BaseClientHttpResponse;
 import com.seed.builderExtension.core.ClientOptions;
 import com.seed.builderExtension.core.ObjectMappers;
 import com.seed.builderExtension.core.RequestOptions;
+import com.seed.builderExtension.core.RetryInterceptor;
 import com.seed.builderExtension.resources.service.types.HelloResponse;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -49,6 +51,15 @@ public class RawServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -59,6 +70,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BaseClientApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BaseClientException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BaseClientException("Network error executing HTTP request", e);
         }

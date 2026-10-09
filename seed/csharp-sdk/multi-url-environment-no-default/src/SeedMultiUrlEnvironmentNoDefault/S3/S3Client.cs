@@ -18,6 +18,11 @@ public partial class S3Client : IS3Client
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedMultiUrlEnvironmentNoDefault.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedMultiUrlEnvironmentNoDefault.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +37,7 @@ public partial class S3Client : IS3Client
                     Method = HttpMethod.Post,
                     Path = "/s3/presigned-url",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -49,7 +55,7 @@ public partial class S3Client : IS3Client
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedMultiUrlEnvironmentNoDefault.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -63,7 +69,13 @@ public partial class S3Client : IS3Client
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedMultiUrlEnvironmentNoDefault.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -74,7 +86,13 @@ public partial class S3Client : IS3Client
             throw new SeedMultiUrlEnvironmentNoDefaultApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedMultiUrlEnvironmentNoDefault.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

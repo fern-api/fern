@@ -16,4 +16,6 @@ export interface ObjectProperty extends FernIr.Declaration {
      */
     defaultValue: unknown | undefined;
     v2Examples: FernIr.V2SchemaExamples | undefined;
+    /** Present only when the enclosing object type has an `XmlEncoding`. */
+    xml: FernIr.XmlPropertyEncoding | undefined;
 }

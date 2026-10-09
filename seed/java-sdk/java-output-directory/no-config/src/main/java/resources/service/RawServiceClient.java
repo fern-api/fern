@@ -4,9 +4,11 @@
 
 package com.test.sdk.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.ObjectMappers;
 import com.test.sdk.core.RequestOptions;
+import com.test.sdk.core.RetryInterceptor;
 import com.test.sdk.core.SeedApiApiException;
 import com.test.sdk.core.SeedApiException;
 import com.test.sdk.core.SeedApiHttpResponse;
@@ -51,6 +53,9 @@ public class RawServiceClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
+      if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+        okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+      }
       try (Response response = client.newCall(okhttpRequest).execute()) {
         ResponseBody responseBody = response.body();
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -59,6 +64,9 @@ public class RawServiceClient {
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
         throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+      }
+      catch (JsonProcessingException e) {
+        throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
       }
       catch (IOException e) {
         throw new SeedApiException("Network error executing HTTP request", e);

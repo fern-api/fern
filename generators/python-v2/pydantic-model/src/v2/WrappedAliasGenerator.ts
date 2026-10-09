@@ -37,7 +37,7 @@ export class WrappedAliasGenerator {
             })
         );
 
-        class_.add(this.getGetterMethod());
+        class_.add(this.getGetterMethod(valueType));
 
         class_.add(this.getBuilderMethod());
 
@@ -89,10 +89,16 @@ export class WrappedAliasGenerator {
         return configClass;
     }
 
-    private getGetterMethod(): python.Method {
+    private getGetterMethod(valueType: python.Type): python.Method {
         const method = python.method({
             name: this.getGetterName(this.aliasDeclaration.aliasOf),
-            return_: python.Type.uuid()
+            parameters: [
+                python.parameter({
+                    name: "self",
+                    type: undefined
+                })
+            ],
+            return_: valueType
         });
         method.addStatement(python.codeBlock("return self.root"));
         return method;
@@ -181,13 +187,13 @@ export class WrappedAliasGenerator {
             ],
             return_: python.Type.reference(
                 new python.Reference({
-                    name: this.className
+                    name: `"${this.className}"`
                 })
             )
         });
         method.addStatement(
             python.codeBlock((writer) => {
-                writer.write(`${this.className}(root=value)`);
+                writer.write(`return ${this.className}(root=value)`);
             })
         );
         return method;

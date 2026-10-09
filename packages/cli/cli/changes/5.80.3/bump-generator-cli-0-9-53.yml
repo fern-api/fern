@@ -1,0 +1,7 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.53. Under `--version AUTO`, a purely additive Go
+    change (inserting a new field into a struct) is no longer misclassified as a breaking
+    MAJOR bump. The generated `explicitFields` bit-constant reindexing that a field
+    insertion produces is now stripped before AI diff analysis, so real additions stay
+    MINOR and real removals stay MAJOR.
+  type: fix

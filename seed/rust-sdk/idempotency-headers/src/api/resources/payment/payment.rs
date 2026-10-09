@@ -14,6 +14,30 @@ impl PaymentClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_idempotency_headers::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .payment
+    ///         .create(
+    ///             &CreatePaymentRequest {
+    ///                 amount: 1,
+    ///                 currency: Currency::Usd,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create(
         &self,
         request: &CreatePaymentRequest,
@@ -30,6 +54,21 @@ impl PaymentClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_idempotency_headers::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
+    ///     client.payment.delete(&"paymentId".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn delete(
         &self,
         payment_id: &str,

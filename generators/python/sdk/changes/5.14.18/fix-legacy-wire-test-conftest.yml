@@ -1,0 +1,7 @@
+- summary: |
+    Fixed the generated legacy wire test `conftest.py` so the test suite no longer fails when
+    no mock server is configured. The client fixtures now skip wire tests when `TESTS_BASE_URL`
+    is unset (instead of issuing requests to an invalid URL), and the conftest re-declares the
+    hook that auto-skips `@pytest.mark.aiohttp` tests when the optional `httpx_aiohttp`
+    dependency is not installed.
+  type: fix

@@ -55,8 +55,10 @@
               "pagination": undefined,
               "path": "/status",
               "request": {
-                "body": "root.Update",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "root.Update",
+                },
               },
               "retries": {
                 "disabled": true,
@@ -83,8 +85,9 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.Update
-        content-type: application/json
+        body:
+          type: root.Update
+          optional: true
       examples:
         - headers:
             X-API-Key: X-API-Key
@@ -126,8 +129,10 @@ service:
               "pagination": undefined,
               "path": "/status2",
               "request": {
-                "body": "root.Update",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "root.Update",
+                },
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -151,8 +156,9 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.Update
-        content-type: application/json
+        body:
+          type: root.Update
+          optional: true
       examples:
         - headers:
             X-API-Key: X-API-Key
@@ -223,4 +229,5 @@ headers:
     name: apiKey
 ",
   },
+  "specVersion": "1.0.0",
 }

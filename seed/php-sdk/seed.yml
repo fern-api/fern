@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -30,6 +30,15 @@ language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  any-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: prefer-explicit-auth
+      customConfig:
+        preferExplicitAuth: true
   basic-auth:
     - outputFolder: wire-tests
       customConfig:
@@ -38,6 +47,13 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enable-wire-tests: true
+  endpoint-security-auth:
+    - outputFolder: .
+      customConfig:
+        enable-wire-tests: true
+  php-xml-twiml:
+    - outputFolder: .
+      customConfig: null
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null
@@ -79,6 +95,12 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
@@ -102,6 +124,20 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        allowUserAgentAppInfo: true
+    - outputFolder: include-platform-headers-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
+    - outputFolder: user-agent-only
+      customConfig:
+        includePlatformHeaders: true
+        userAgentOnly: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
@@ -114,6 +150,12 @@ fixtures:
     - outputFolder: with-interfaces
       customConfig:
         generateClientInterfaces: true
+  php-optional-request-body:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-optional-request-body
+      customConfig:
+        respectOptionalRequestBody: true
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -124,6 +166,9 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         propertyAccess: private
+    - outputFolder: encode-path-params
+      customConfig:
+        encode-path-params: true
   request-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -171,6 +216,15 @@ fixtures:
             - "@php -l tests"
             analyze: echo skip
             hello: echo hello
+  php-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
 scripts:
   - image: fernapi/php-seed
     commands:
@@ -182,50 +236,22 @@ scripts:
       test:
         - composer test
 allowedFailures:
-  - exhaustive:no-custom-config
-  - exhaustive:wire-tests
-  - pagination-custom
-  - endpoint-security-auth
-  - inferred-auth-implicit
-  - inferred-auth-implicit-reference
-  # Dynamic snippets need to add support for global headers included in the client constructor.
-  - header-auth-environment-variable
-  # TODO: Add support for bytes upload.
-  - bytes-upload
-  # Basic auth wire-tests are enabled in fixtures section.
-  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
-  - examples:no-custom-config
-  - examples:readme-config
-  - trace
-  - circular-references
-  - circular-references-advanced
-  # Add support for literals and confirm that string literal examples are being generated.
-  - literal
-  # Add support for OAuth.
-  - oauth-client-credentials
-  - oauth-client-credentials-custom
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
-  - oauth-client-credentials-reference
-  # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
-  - pagination:no-custom-config
-  - pagination:property-accessors
-  # Fix union dynamic snippets (i.e. BigUnion).
-  - unions:no-custom-config
-  - unions:property-accessors
-  # Java-specific fixture for LocalDate support
-  - unions-with-local-date
-  # unknown
-  - file-upload
-  - http-head
-  - oauth-client-credentials-with-variables
-  - variables
-  # Java-specific fixture for staged builder ordering
-  - java-staged-builder-ordering
-  - server-sent-events-openapi
-  - any-auth
-  - circular-references
-  - file-upload
+  # Dynamic snippet: a base-path parameter with a clientDefault is optional in the
+  # generated SDK and is ordered after the request body, but the snippet emits it as a
+  # required argument before the body, producing a type mismatch. Fixing this requires the
+  # dynamic IR to carry the parameter's `clientDefault` (it currently drops the field), which
+  # is an additive IR change that must ship via the separate IR-publish flow before the
+  # generator can consume it. Tracked separately; left here until the IR change lands.
+  # CLI-specific OAuth fixture: the full IR client-credentials contract (custom
+  # token request properties) produces PHP OAuth-provider code that doesn't compile.
+  # Exercised by the CLI generator.
+  - cli-oauth
+  - api-wide-base-path-with-default
+  # OpenAPI per-spec base path fixtures: mandatory OAuth client credentials make the
+  # generated PHP root client take non-nullable $clientId/$clientSecret, while the OAuth
+  # provider construction still emits `$clientId ?? ''`, which phpstan (level max) rejects
+  # during `composer analyze`. Same latent generator issue as cli-oauth.
+  - openapi-per-spec-base-path
+  - openapi-per-spec-base-path-disabled
 
 

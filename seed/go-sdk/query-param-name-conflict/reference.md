@@ -14,10 +14,9 @@
 ```go
 request := &fern.BulkUpdateTasksRequest{}
 client.BulkUpdateTasks(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

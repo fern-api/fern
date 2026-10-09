@@ -5,9 +5,15 @@ features:
 
   - id: ENVIRONMENTS
 
+  - id: OAUTH
+    description: |
+      The SDK supports OAuth 2.0 client-credentials authentication. Provide your `client_id` and
+      `client_secret` when constructing the client, and the SDK will automatically fetch an access
+      token from the configured token endpoint, cache it, and refresh it before it expires.
+
   - id: PAGINATION
     description: |
-      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+      List endpoints are paginated. A paginated method returns an iterator, not the response object: loop over it to get the items of every page, or call `pages` on it to get each page's full response, including fields besides the items. Each page is requested when it is needed, and an API error is raised where that request is sent.
 
   - id: ERRORS
     description: |
@@ -46,3 +52,10 @@ features:
     advanced: true
     description: |
       If you would like to send additional query parameters as part of the request, use the `additional_query_parameters` request option.
+
+  - id: ADDITIONAL_BODY_PROPERTIES
+    advanced: true
+    description: |
+      If you would like to send additional body properties as part of the request, use the `additional_body_parameters` request option.
+      Properties are merged into the serialized request body using their API (wire-format) names and override any field the SDK sets with the same name. If the endpoint has no body, one is created from these properties, except for GET and HEAD requests, which are always sent without a body (the properties are ignored).
+      This applies to JSON and form-urlencoded requests; it is not applied to multipart (file upload) requests.

@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "static",
+        "dynamic"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "static"
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "key",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "dynamic"
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "key",
+        "value"
+      ]
+    }
+  ],
+  "definitions": {}
+}

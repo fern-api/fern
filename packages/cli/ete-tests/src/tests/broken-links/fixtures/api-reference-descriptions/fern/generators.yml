@@ -1,0 +1,4 @@
+default-group: public
+groups:
+  public:
+    generators: []

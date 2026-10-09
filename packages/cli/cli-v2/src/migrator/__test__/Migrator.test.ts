@@ -231,7 +231,7 @@ navigation:
         expect(result.success).toBe(true);
         const fernYmlContent = await readFile(join(projectDir, "fern.yml"), "utf-8");
         expect(fernYmlContent).toContain("docs:");
-        expect(fernYmlContent).toContain("$ref: ./docs.yml");
+        expect(fernYmlContent).toContain("$ref: ./fern/docs.yml");
         // docs.yml itself should not be deleted or modified
         const docsYmlContent = await readFile(join(fernDir, "docs.yml"), "utf-8");
         expect(docsYmlContent).toContain("instances:");
@@ -287,7 +287,7 @@ tabs:
         expect(fernYmlContent).not.toContain("navigation:");
         expect(fernYmlContent).not.toContain("tabs:");
         // Should only contain the $ref pointer
-        expect(fernYmlContent).toContain("$ref: ./docs.yml");
+        expect(fernYmlContent).toContain("$ref: ./fern/docs.yml");
     });
 
     // ── Multi-API migrations ─────────────────────────────────────────────────
@@ -446,8 +446,37 @@ navigation:
 
         expect(result.success).toBe(true);
         const fernYmlContent = await readFile(join(projectDir, "fern.yml"), "utf-8");
-        expect(fernYmlContent).toContain("$ref: ./docs.yml");
+        expect(fernYmlContent).toContain("$ref: ./fern/docs.yml");
         expect(fernYmlContent).toContain("apis:");
+    });
+
+    it("adjusts spec paths to be root-relative in single-API migration", async () => {
+        const projectDir = await createProjectDir(base);
+        const fernDir = join(projectDir, "fern");
+        await mkdir(fernDir, { recursive: true });
+        await writeFernConfig(fernDir, "payroc");
+        await writeFile(
+            join(fernDir, "generators.yml"),
+            `api:
+  specs:
+    - openapi: ../external/universal-api-v1.yaml
+      overrides: openapi-overrides.yml
+groups: {}
+`
+        );
+
+        const migrator = new Migrator({
+            cwd: AbsoluteFilePath.of(projectDir),
+            logger: makeLogger(),
+            deleteOriginals: false
+        });
+        await migrator.migrate();
+
+        const fernYmlContent = await readFile(join(projectDir, "fern.yml"), "utf-8");
+        expect(fernYmlContent).toContain("./external/universal-api-v1.yaml");
+        expect(fernYmlContent).toContain("./fern/openapi-overrides.yml");
+        expect(fernYmlContent).not.toContain("../external");
+        expect(fernYmlContent).not.toContain("overrides: openapi-overrides.yml");
     });
 
     it("adjusts spec paths to be root-relative in multi-API migration", async () => {

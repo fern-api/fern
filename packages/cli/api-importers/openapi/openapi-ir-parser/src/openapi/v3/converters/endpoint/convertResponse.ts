@@ -8,7 +8,11 @@ import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { OperationContext } from "../contexts.js";
-import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError.js";
+import {
+    ERROR_NAMES_BY_STATUS_CODE,
+    parseWildcardStatusCode,
+    WILDCARD_ERROR_NAMES_BY_STATUS_CODE
+} from "../convertToHttpError.js";
 import {
     getApplicationJsonSchemaMediaObjectFromContent,
     getSchemaMediaObject,
@@ -21,7 +25,7 @@ const SUCCESSFUL_STATUS_CODES = ["200", "201", "202", "204"];
 
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined;
-    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample>;
+    errors: Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpErrorWithExample>;
 }
 
 export function convertResponse({
@@ -32,11 +36,13 @@ export function convertResponse({
     responseStatusCode,
     streamFormat,
     streamTerminator,
+    streamResumable,
     source
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
     streamTerminator?: string;
+    streamResumable?: boolean;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -67,6 +73,7 @@ export function convertResponse({
                 responseBreadcrumbs,
                 streamFormat,
                 streamTerminator,
+                streamResumable,
                 source,
                 namespace: context.namespace,
                 statusCode: statusCodeNum
@@ -78,17 +85,24 @@ export function convertResponse({
                 hasNoContentResponse = true;
             }
         } else if (statusCodeNum === 204) {
-            // We already have a response body from another status code,
-            // but also have a 204 no-content response
+            // We already have a response body from another status code, but also have a 204
+            // response. A 204 (No Content) response never carries a body at runtime (RFC 9110
+            // §15.3.5), even when the spec erroneously declares one. Normalize it to a no-content
+            // response so the success body is wrapped optional, and warn about the spec error so
+            // authors can fix it upstream.
             const resolved = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
             const jsonMedia = getApplicationJsonSchemaMediaObjectFromContent({
                 context,
                 content: resolved.content ?? {}
             });
-            // Only mark as no-content if 204 has no JSON body
-            if (jsonMedia == null) {
-                hasNoContentResponse = true;
+            if (jsonMedia != null) {
+                context.logger.warn(
+                    `${operationContext.method.toUpperCase()} ${operationContext.path}: the 204 response declares a body, ` +
+                        `but a 204 (No Content) response cannot include one. Ignoring the declared 204 body and treating ` +
+                        `the success response as optional.`
+                );
             }
+            hasNoContentResponse = true;
         }
     }
 
@@ -124,6 +138,7 @@ export function convertResponse({
             responseBreadcrumbs,
             streamFormat,
             streamTerminator,
+            streamResumable,
             source,
             namespace: context.namespace
         });
@@ -165,6 +180,7 @@ function convertResolvedResponse({
     operationContext,
     streamFormat,
     streamTerminator,
+    streamResumable,
     response,
     context,
     responseBreadcrumbs,
@@ -175,6 +191,7 @@ function convertResolvedResponse({
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
     streamTerminator?: string;
+    streamResumable?: boolean;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -220,6 +237,7 @@ function convertResolvedResponse({
                         FernOpenAPIExtension.RESPONSE_PROPERTY
                     ),
                     terminator: streamTerminator,
+                    resumable: undefined,
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
@@ -237,6 +255,7 @@ function convertResolvedResponse({
                     description: resolvedResponse.description,
                     responseProperty: undefined,
                     terminator: streamTerminator,
+                    resumable: streamResumable,
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
@@ -265,6 +284,7 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         terminator: streamTerminator,
+                        resumable: undefined,
                         fullExamples: jsonMediaObject.examples,
                         schema: convertSchema(
                             jsonMediaObject.schema,
@@ -283,6 +303,7 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         terminator: streamTerminator,
+                        resumable: streamResumable,
                         fullExamples: jsonMediaObject.examples,
                         schema: convertSchema(
                             jsonMediaObject.schema,
@@ -311,6 +332,7 @@ function convertResolvedResponse({
             ),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
             terminator: undefined,
+            resumable: undefined,
             fullExamples: jsonMediaObject.examples,
             source,
             statusCode
@@ -336,8 +358,14 @@ function convertResolvedResponse({
 
         if (mimeType.isText() && !mediaType.includes("event-stream")) {
             const textPlainSchema = mediaObject.schema;
+            const contentType = !mimeType.isPlainText() ? mediaType : undefined;
             if (textPlainSchema == null) {
-                return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode });
+                return ResponseWithExample.text({
+                    description: resolvedResponse.description,
+                    source,
+                    statusCode,
+                    contentType
+                });
             }
             const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
                 ? context.resolveSchemaReference(textPlainSchema)
@@ -345,7 +373,12 @@ function convertResolvedResponse({
             if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
                 return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
             }
-            return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode });
+            return ResponseWithExample.text({
+                description: resolvedResponse.description,
+                source,
+                statusCode,
+                contentType
+            });
         }
     }
 
@@ -362,26 +395,35 @@ function markErrorSchemas({
     context: AbstractOpenAPIV3ParserContext;
     source: Source;
     namespace: string | undefined;
-}): Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> {
-    const errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> = {};
+}): Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpErrorWithExample> {
+    const errors: Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpErrorWithExample> = {};
     for (const [statusCode, response] of Object.entries(responses)) {
         if (statusCode === "default") {
             continue;
         }
-        const parsedStatusCode = parseInt(statusCode);
+        const wildcardStatusCode = parseWildcardStatusCode(statusCode);
+        const isWildcardStatusCode = wildcardStatusCode != null;
+        const parsedStatusCode = wildcardStatusCode ?? parseInt(statusCode);
         if (parsedStatusCode < 400 || parsedStatusCode > 600) {
             // if status code is not between [400, 600], then it won't count as an error
             continue;
         }
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
         const mediaObject = getSchemaMediaObject(resolvedResponse.content ?? {}, context);
-        const errorName = ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode];
+        const errorName = isWildcardStatusCode
+            ? WILDCARD_ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode]
+            : ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode];
         if (errorName == null) {
             context.logger.warn(`No error name found for status code ${statusCode}`);
             continue;
         }
-        errors[parsedStatusCode] = {
+        const responseNamespace = context.options.namespacedErrors
+            ? getExtension<string>(resolvedResponse, FernOpenAPIExtension.SDK_NAMESPACE)
+            : undefined;
+        const errorKey = isWildcardStatusCode ? statusCode.toUpperCase() : parsedStatusCode.toString();
+        errors[errorKey] = {
             statusCode: parsedStatusCode,
+            isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
             nameOverride: undefined,
             generatedName: errorName,
             description: resolvedResponse.description,
@@ -392,9 +434,10 @@ function markErrorSchemas({
                 context,
                 [errorName, "Body"],
                 source,
-                namespace
+                responseNamespace ?? namespace
             ),
             fullExamples: mediaObject?.examples,
+            namespace: responseNamespace,
             source
         };
     }

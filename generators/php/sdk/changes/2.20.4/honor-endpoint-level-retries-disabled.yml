@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Honor endpoint-level `retries: { disabled: true }` (`x-fern-retries`). Requests for those
+    endpoints pin `maxRetries` to 0, so they are never retried regardless of the client-level or
+    per-request retry options.
+  type: fix

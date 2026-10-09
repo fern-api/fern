@@ -1,6 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;
+import java.util.Arrays;
 
 public class Example64 {
     public static void main(String[] args) {
@@ -9,6 +11,10 @@ public class Example64 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.noReqBody().getWithNoRequestBody();
+        client.inlinedRequests()
+                .postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders.builder()
+                        .body(Arrays.asList("string", "string"))
+                        .xCustomHeader("X-Custom-Header")
+                        .build());
     }
 }

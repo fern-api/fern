@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	http "net/http"
 	url "net/url"
+	strings "strings"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -22,20 +23,24 @@ type TokenGetter func() (string, error)
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL         string
-	HTTPClient      HTTPClient
-	HTTPHeader      http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	MaxAttempts     uint
-	MaxBufSize      int
-	tokenGetter     TokenGetter
-	Token           string
-	APIKey          string
-	ClientID        string
-	ClientSecret    string
-	Username        string
-	Password        string
+	BaseURL                    string
+	HTTPClient                 HTTPClient
+	HTTPHeader                 http.Header
+	BodyProperties             map[string]interface{}
+	QueryParameters            url.Values
+	MaxAttempts                uint
+	MaxBufSize                 int
+	MaxStreamReconnectAttempts uint
+	DisableStreamReconnection  bool
+	DisableRetries             bool
+	tokenGetter                TokenGetter
+	Token                      string
+	TokenFunc                  func() (string, error)
+	APIKey                     string
+	ClientID                   string
+	ClientSecret               string
+	Username                   string
+	Password                   string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -58,21 +63,82 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	if r.Token != "" {
-		header.Set("Authorization", "Bearer "+r.Token)
+	return header
+}
+
+// AuthHeadersForEndpoint returns the auth headers to apply for an endpoint,
+// given the endpoint's static security requirements. It routes to the first
+// requirement whose schemes all have credentials available (OR across the
+// list, AND within a requirement).
+func (r *RequestOptions) AuthHeadersForEndpoint(security [][]string) (http.Header, error) {
+	if len(security) == 0 {
+		return make(http.Header), nil
 	}
-	if r.APIKey != "" {
-		header.Set("X-API-Key", fmt.Sprintf("%v", r.APIKey))
-	}
-	if r.Username != "" || r.Password != "" {
-		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
-	}
-	if r.tokenGetter != nil {
-		if token, err := r.tokenGetter(); err == nil && token != "" {
-			header.Set("Authorization", "Bearer "+token)
+	availableAuthHeaders := make(map[string]http.Header)
+	token := r.Token
+	if token == "" && r.TokenFunc != nil {
+		if value, err := r.TokenFunc(); err == nil {
+			token = value
 		}
 	}
-	return header
+	if token != "" {
+		tokenHeaders := make(http.Header)
+		tokenHeaders.Set("Authorization", "Bearer "+token)
+		availableAuthHeaders["Bearer"] = tokenHeaders
+		availableAuthHeaders["OAuth"] = tokenHeaders
+	}
+	if r.APIKey != "" {
+		headerValues := make(http.Header)
+		headerValues.Set("X-API-Key", fmt.Sprintf("%v", r.APIKey))
+		availableAuthHeaders["ApiKey"] = headerValues
+	}
+	if r.Username != "" || r.Password != "" {
+		basicHeaders := make(http.Header)
+		basicHeaders.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
+		availableAuthHeaders["Basic"] = basicHeaders
+	}
+	if r.tokenGetter != nil {
+		if inferredToken, err := r.tokenGetter(); err == nil && inferredToken != "" {
+			inferredHeaders := make(http.Header)
+			inferredHeaders.Set("Authorization", "Bearer "+inferredToken)
+			availableAuthHeaders["InferredAuth"] = inferredHeaders
+		}
+	}
+	for _, requirement := range security {
+		satisfied := true
+		for _, schemeKey := range requirement {
+			if _, ok := availableAuthHeaders[schemeKey]; !ok {
+				satisfied = false
+				break
+			}
+		}
+		if !satisfied {
+			continue
+		}
+		combined := make(http.Header)
+		for _, schemeKey := range requirement {
+			for name, values := range availableAuthHeaders[schemeKey] {
+				for _, value := range values {
+					combined.Set(name, value)
+				}
+			}
+		}
+		return combined, nil
+	}
+	missing := make([]string, 0, len(security))
+	for _, requirement := range security {
+		var missingSchemes []string
+		for _, schemeKey := range requirement {
+			if _, ok := availableAuthHeaders[schemeKey]; !ok {
+				missingSchemes = append(missingSchemes, schemeKey)
+			}
+		}
+		missing = append(missing, strings.Join(missingSchemes, " AND "))
+	}
+	return nil, fmt.Errorf(
+		"no authentication credentials provided that satisfy the endpoint's security requirements; please provide credentials for: %s",
+		strings.Join(missing, " OR "),
+	)
 }
 
 func (r *RequestOptions) cloneHeader() http.Header {
@@ -147,6 +213,29 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
+// MaxStreamReconnectAttemptsOption implements the RequestOption interface.
+type MaxStreamReconnectAttemptsOption struct {
+	MaxStreamReconnectAttempts uint
+}
+
+func (m *MaxStreamReconnectAttemptsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxStreamReconnectAttempts = m.MaxStreamReconnectAttempts
+}
+
+// WithoutStreamReconnectionOption implements the RequestOption interface.
+type WithoutStreamReconnectionOption struct{}
+
+func (w *WithoutStreamReconnectionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.DisableStreamReconnection = true
+}
+
+// WithoutRetriesOption implements the RequestOption interface.
+type WithoutRetriesOption struct{}
+
+func (w *WithoutRetriesOption) applyRequestOptions(opts *RequestOptions) {
+	opts.DisableRetries = true
+}
+
 // TokenOption implements the RequestOption interface.
 type TokenOption struct {
 	Token string
@@ -154,6 +243,15 @@ type TokenOption struct {
 
 func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Token = t.Token
+}
+
+// TokenFuncOption implements the RequestOption interface.
+type TokenFuncOption struct {
+	TokenFunc func() (string, error)
+}
+
+func (t *TokenFuncOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TokenFunc = t.TokenFunc
 }
 
 // APIKeyOption implements the RequestOption interface.

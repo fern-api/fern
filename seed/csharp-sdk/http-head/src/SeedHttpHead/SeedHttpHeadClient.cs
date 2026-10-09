@@ -14,7 +14,7 @@ public partial class SeedHttpHeadClient : ISeedHttpHeadClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedHttpHead" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedHttpHead.Version.Current },
                 { "User-Agent", "Fernhttp-head/0.0.1" },
             }
         );

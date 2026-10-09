@@ -11,7 +11,10 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type ServiceId = FernIr.ServiceId;
 
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
+import { isPagerPagination } from "../../endpoint/utils/isPagerPagination.js";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { generateMockServerClientInstantiation } from "./generateMockServerClientInstantiation.js";
 import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export declare namespace TestClass {
@@ -25,6 +28,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     private readonly classReference: ast.ClassReference;
     private readonly endpointGenerator: HttpEndpointGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
+    private rootClientGenerator: RootClientGenerator | undefined;
 
     constructor(
         context: SdkGeneratorContext,
@@ -42,6 +46,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.endpointGenerator = new HttpEndpointGenerator({ context });
         this.mockEndpointGenerator = new MockEndpointGenerator(context);
+    }
+
+    private getRootClientGenerator(): RootClientGenerator {
+        this.rootClientGenerator ??= new RootClientGenerator(this.context);
+        return this.rootClientGenerator;
     }
 
     public override shouldGenerate(): boolean {
@@ -62,7 +71,16 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
      * non-IAsyncEnumerable return type.
      */
     private hasPaginationEnabled(): boolean {
-        return this.context.config.generatePaginatedClients === true && this.endpoint.pagination != null;
+        if (this.context.config.generatePaginatedClients !== true) {
+            return false;
+        }
+        const pagination = this.endpoint.pagination;
+        if (pagination == null) {
+            return false;
+        }
+        // Only pager pagination types (offset/cursor/custom) are iterated with `await foreach`;
+        // uri/path are emitted as regular unpaged methods.
+        return isPagerPagination(pagination);
     }
 
     private getServiceNamespaceSegments(): string[] {
@@ -120,10 +138,31 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
                 writer.newLine();
 
+                // SDK variables bound to the endpoint's path parameters live on the client, so a
+                // test that needs them constructs its own client with the example values.
+                const sdkVariableClientOptions = this.endpointGenerator.getSdkVariableClientOptionArguments({
+                    endpoint: this.endpoint,
+                    example,
+                    parseDatetimes: true
+                });
+                let clientVariableName = "Client";
+                if (sdkVariableClientOptions.length > 0) {
+                    clientVariableName = "client";
+                    writer.write("var client = ");
+                    writer.writeNodeStatement(
+                        generateMockServerClientInstantiation({
+                            context: this.context,
+                            rootClientGenerator: this.getRootClientGenerator(),
+                            additionalClientOptions: sdkVariableClientOptions
+                        })
+                    );
+                    writer.newLine();
+                }
+
                 const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
                     example,
                     endpoint: this.endpoint,
-                    clientVariableName: "Client",
+                    clientVariableName,
                     serviceId: this.serviceId,
                     getResult: true,
                     parseDatetimes: true
@@ -245,14 +284,16 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
     private getDateTime(exampleTypeReference: ExampleTypeReference): Date | undefined {
         switch (exampleTypeReference.shape.type) {
-            case "container":
-                if (exampleTypeReference.shape.container.type !== "optional") {
-                    return undefined;
+            case "container": {
+                const container = exampleTypeReference.shape.container;
+                if (container.type === "optional") {
+                    return container.optional == null ? undefined : this.getDateTime(container.optional);
                 }
-                if (exampleTypeReference.shape.container.optional == null) {
-                    return undefined;
+                if (container.type === "nullable") {
+                    return container.nullable == null ? undefined : this.getDateTime(container.nullable);
                 }
-                return this.getDateTime(exampleTypeReference.shape.container.optional);
+                return undefined;
+            }
             case "named":
                 if (exampleTypeReference.shape.shape.type !== "alias") {
                     return undefined;

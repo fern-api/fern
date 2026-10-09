@@ -7,6 +7,7 @@ import { WithAuthSchema } from "../../auth/types/WithAuthSchema.js";
 import { WithDisplayName } from "../../commons/types/WithDisplayName.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { WithEnvironmentsSchema } from "../../environments/types/WithEnvironmentsSchema.js";
+import { GlobalParameterDeclarationSchema } from "../../globalParameters/types/GlobalParameterDeclarationSchema.js";
 import { PaginationSchema } from "../../pagination/types/PaginationSchema.js";
 import { ProductDeclarationSchema } from "../../products/types/ProductDeclarationSchema.js";
 import { HttpHeaderSchema } from "../../service/types/HttpHeaderSchema.js";
@@ -30,6 +31,9 @@ export const RootApiFileSchema: core.serialization.ObjectSchema<
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
         "idempotency-headers": core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
         variables: core.serialization.record(core.serialization.string(), VariableDeclarationSchema).optional(),
+        "global-parameters": core.serialization
+            .record(core.serialization.string(), GlobalParameterDeclarationSchema)
+            .optional(),
         pagination: PaginationSchema.optional(),
         product: ProductDeclarationSchema.optional(),
         version: VersionDeclarationSchema.optional(),
@@ -56,6 +60,7 @@ export declare namespace RootApiFileSchema {
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
         "idempotency-headers"?: Record<string, HttpHeaderSchema.Raw> | null;
         variables?: Record<string, VariableDeclarationSchema.Raw> | null;
+        "global-parameters"?: Record<string, GlobalParameterDeclarationSchema.Raw> | null;
         pagination?: PaginationSchema.Raw | null;
         product?: ProductDeclarationSchema.Raw | null;
         version?: VersionDeclarationSchema.Raw | null;

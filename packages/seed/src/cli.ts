@@ -994,11 +994,28 @@ function addPublishCommands(cli: Argv) {
                             default: false,
                             demandOption: false
                         })
+                        .option("beta", {
+                            type: "boolean",
+                            default: false,
+                            demandOption: false
+                        })
+                        .option("pre-prod", {
+                            type: "boolean",
+                            default: false,
+                            demandOption: false
+                        })
                         .check((argv) => {
-                            return (
-                                // Check: Either version or changelog and previousChangelog must be provided
-                                argv.ver || (argv.changelog && argv.previousChangelog)
-                            );
+                            const selectedReleaseFlags = [argv.dev, argv.beta, argv.preProd].filter(Boolean).length;
+                            if (selectedReleaseFlags > 1) {
+                                throw new Error("Arguments --dev, --beta, and --pre-prod are mutually exclusive");
+                            }
+                            // Either version or changelog and previousChangelog must be provided
+                            if (!argv.ver && !(argv.changelog && argv.previousChangelog)) {
+                                throw new Error(
+                                    "Either --ver or both --changelog and --previousChangelog must be provided"
+                                );
+                            }
+                            return true;
                         }),
                 async (argv) => {
                     const taskContextFactory = new TaskContextFactory(argv["log-level"]);
@@ -1016,7 +1033,9 @@ function addPublishCommands(cli: Argv) {
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context,
-                        isDevRelease: argv.dev
+                        isDevRelease: argv.dev,
+                        isBetaRelease: argv.beta,
+                        isPreProdRelease: argv.preProd
                     });
                 }
             )
@@ -1053,7 +1072,7 @@ function addPublishCommands(cli: Argv) {
                         })
                         .check((argv) => {
                             return (
-                                // Check: Either version or changelog and previousChangelog must be provided
+                                // Check: Either version or changelog and previousChangelog must be provided-
                                 argv.ver || (argv.changelog && argv.previousChangelog)
                             );
                         }),

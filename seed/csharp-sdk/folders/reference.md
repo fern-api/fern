@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">FooAsync</a>()</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">FooAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ await client.FooAsync();
 </details>
 
 ## A B
-<details><summary><code>client.A.B.<a href="/src/SeedApi/A/B/BClient.cs">FooAsync</a>()</code></summary>
+<details><summary><code>client.A.B.<a href="/src/SeedApi/A/B/BClient.cs">FooAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ await client.A.B.FooAsync();
 </details>
 
 ## A C
-<details><summary><code>client.A.C.<a href="/src/SeedApi/A/C/CClient.cs">FooAsync</a>()</code></summary>
+<details><summary><code>client.A.C.<a href="/src/SeedApi/A/C/CClient.cs">FooAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -77,7 +77,7 @@ await client.A.C.FooAsync();
 </details>
 
 ## Folder
-<details><summary><code>client.Folder.<a href="/src/SeedApi/Folder/FolderClient.cs">FooAsync</a>()</code></summary>
+<details><summary><code>client.Folder.<a href="/src/SeedApi/Folder/FolderClient.cs">FooAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -103,7 +103,7 @@ await client.Folder.FooAsync();
 </details>
 
 ## Folder Service
-<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">EndpointAsync</a>()</code></summary>
+<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">EndpointAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -128,7 +128,7 @@ await client.Folder.Service.EndpointAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">UnknownRequestAsync</a>(object { ... })</code></summary>
+<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">UnknownRequestAsync</a>(object { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

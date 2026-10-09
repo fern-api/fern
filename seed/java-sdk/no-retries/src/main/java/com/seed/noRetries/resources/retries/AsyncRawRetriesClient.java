@@ -3,10 +3,12 @@
  */
 package com.seed.noRetries.resources.retries;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.noRetries.core.ClientOptions;
 import com.seed.noRetries.core.ObjectMappers;
 import com.seed.noRetries.core.RequestOptions;
+import com.seed.noRetries.core.RetryInterceptor;
 import com.seed.noRetries.core.SeedNoRetriesApiException;
 import com.seed.noRetries.core.SeedNoRetriesException;
 import com.seed.noRetries.core.SeedNoRetriesHttpResponse;
@@ -54,8 +56,13 @@ public class AsyncRawRetriesClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        okhttpRequest = okhttpRequest
+                .newBuilder()
+                .tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(0))
+                .build();
         CompletableFuture<SeedNoRetriesHttpResponse<List<User>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -71,6 +78,9 @@ public class AsyncRawRetriesClient {
                     future.completeExceptionally(new SeedNoRetriesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedNoRetriesException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedNoRetriesException("Network error executing HTTP request", e));
                 }
@@ -79,6 +89,11 @@ public class AsyncRawRetriesClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedNoRetriesException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

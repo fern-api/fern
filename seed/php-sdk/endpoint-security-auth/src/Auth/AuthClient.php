@@ -4,6 +4,7 @@ namespace Seed\Auth;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Core\RoutingAuthProvider;
 use Seed\Auth\Requests\GetTokenRequest;
 use Seed\Auth\Types\TokenResponse;
 use Seed\Exceptions\SeedException;
@@ -32,6 +33,11 @@ class AuthClient
     private RawClient $client;
 
     /**
+     * @var ?RoutingAuthProvider $routingAuthProvider @phpstan-ignore-next-line Property is read in endpoint methods and passed to subclients
+     */
+    private ?RoutingAuthProvider $routingAuthProvider;
+
+    /**
      * @param RawClient $client
      * @param ?array{
      *   baseUrl?: string,
@@ -40,16 +46,31 @@ class AuthClient
      *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
+     * @param ?RoutingAuthProvider $routingAuthProvider
      */
     public function __construct(
         RawClient $client,
         ?array $options = null,
+        ?RoutingAuthProvider $routingAuthProvider = null,
     ) {
         $this->client = $client;
+        $this->routingAuthProvider = $routingAuthProvider;
         $this->options = $options ?? [];
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->getToken(
+     *     new GetTokenRequest([
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'client_credentials',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,

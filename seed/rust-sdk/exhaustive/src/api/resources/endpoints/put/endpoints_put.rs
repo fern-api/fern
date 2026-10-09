@@ -13,6 +13,21 @@ impl PutClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client.endpoints.put.add(&"id".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn add(
         &self,
         id: &str,

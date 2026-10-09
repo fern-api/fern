@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test API",
   "auth": {
@@ -137,6 +138,7 @@
       "messages": [
         {
           "type": "testChannel_sendMessage",
+          "docs": "Message with marked data information.",
           "origin": "client",
           "body": {
             "bodyType": {
@@ -197,6 +199,7 @@
       "messages": [
         {
           "type": "testChannel2_sendMessage",
+          "docs": "Message with marked data information.",
           "origin": "client",
           "body": {
             "bodyType": {
@@ -412,7 +415,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_testChannel",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     },
     "subpackage_testChannel2": {
       "fernFilepath": {
@@ -427,7 +431,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_testChannel2",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     }
   },
   "rootPackage": {
@@ -442,7 +447,8 @@
       "subpackage_testChannel",
       "subpackage_testChannel2"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": true
   },
   "sdkConfig": {
     "isAuthMandatory": false,

@@ -3,10 +3,10 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/go-base";
-
+import { getSdkVariableNames } from "@fern-api/go-dynamic-snippets";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getInferredAuthScheme, getOAuthClientCredentialsScheme } from "./authUtils.js";
+import { getInferredAuthScheme, getOAuthClientCredentialsScheme, isPlainStringType } from "./authUtils.js";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
 import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType.js";
 import { GoGeneratorAgent } from "./GoGeneratorAgent.js";
@@ -16,7 +16,19 @@ import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
+export interface SdkVariableOption {
+    variable: FernIr.VariableDeclaration;
+    /** Exported identifier used for the RequestOptions field and With<Name> helper. */
+    fieldName: string;
+    /** Unexported identifier used for local variables. */
+    localName: string;
+    /** Whether the variable is a plain string, which enables env var fallback and "" checks. */
+    isString: boolean;
+}
+
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
+    private sdkVariableOptions: SdkVariableOption[] | undefined;
+    private sdkVariableOptionsById: Map<string, SdkVariableOption> | undefined;
     public readonly caller: Caller;
     public readonly streamer: Streamer;
     public readonly endpointGenerator: EndpointGenerator;
@@ -58,12 +70,24 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.CustomPagination);
         }
 
-        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+        if (this.hasStreamingEndpoints()) {
             files.push(AsIsFiles.Stream, AsIsFiles.StreamTest);
         }
 
         if (getOAuthClientCredentialsScheme(this.ir) != null || getInferredAuthScheme(this.ir) != null) {
             files.push(AsIsFiles.TokenProvider);
+        }
+
+        if (this.ir.sdkConfig.idempotencyKeyGeneration != null) {
+            files.push(AsIsFiles.Idempotency);
+        }
+
+        if (this.hasHmacWebhookSignatureVerification()) {
+            files.push(AsIsFiles.WebhookSignature);
+        }
+
+        if (this.hasWebhookBodyHashBinding()) {
+            files.push(AsIsFiles.WebhookBodyHash, AsIsFiles.WebhookBodyHashTest);
         }
 
         return files;
@@ -83,7 +107,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Pager, AsIsFiles.PagerTest);
         }
 
-        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+        if (this.hasStreamingEndpoints()) {
             files.push(AsIsFiles.Streamer);
         }
 
@@ -101,6 +125,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (subpackage == null) {
             if (this.customConfig.clientConstructorName != null) {
                 return this.customConfig.clientConstructorName;
+            }
+            if (this.customConfig.exportedClientName != null) {
+                return `New${this.customConfig.exportedClientName}`;
             }
             if (this.customConfig.clientName != null) {
                 return `New${this.customConfig.clientName}`;
@@ -324,6 +351,26 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    /**
+     * Returns the Go expression used as the ErrorCodes map key for the given error:
+     * the literal status code for concrete errors, or the internal wildcard constant
+     * (matching any 4XX/5XX status without a concrete entry) for wildcard errors.
+     */
+    public getErrorCodesKey({
+        errorDeclaration,
+        writer
+    }: {
+        errorDeclaration: FernIr.ErrorDeclaration;
+        writer: go.Writer;
+    }): string {
+        if (errorDeclaration.isWildcardStatusCode !== true) {
+            return errorDeclaration.statusCode.toString();
+        }
+        const alias = writer.addImport(this.getInternalImportPath());
+        const constant = errorDeclaration.statusCode >= 500 ? "ServerErrorWildcard" : "ClientErrorWildcard";
+        return `${alias}.${constant}`;
+    }
+
     public getCoreApiErrorTypeReference(): go.TypeReference {
         return go.typeReference({
             name: "APIError",
@@ -428,6 +475,22 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             arguments_: [argument],
             multiline: false
         });
+    }
+
+    public callSetIdempotencyKeyHeader(headers: go.AstNode): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "SetIdempotencyKeyHeader",
+                importPath: this.getCoreImportPath()
+            }),
+            arguments_: [headers],
+            multiline: false
+        });
+    }
+
+    public getIdempotencyKeyGeneration(endpoint: FernIr.HttpEndpoint): FernIr.IdempotencyKeyGeneration | undefined {
+        const idempotencyKeyGeneration = this.ir.sdkConfig.idempotencyKeyGeneration;
+        return idempotencyKeyGeneration?.methods.includes(endpoint.method) ? idempotencyKeyGeneration : undefined;
     }
 
     public callSprintf(arguments_: go.AstNode[]): go.FuncInvocation {
@@ -568,11 +631,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public isEnabledPaginationEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
-        if (this.isPaginationWithRequestBodyEndpoint(endpoint)) {
-            // TODO: The original Go generator did not handle pagination endpoints with request body properties.
-            // To preserve compatibility, we generate a delegating endpoint for these cases.
-            //
-            // We'll need to add an opt-in feature flag to resolve this gap.
+        if (this.isUnsupportedRequestBodyPaginationEndpoint(endpoint)) {
             return false;
         }
         const pagination = this.getPagination(endpoint);
@@ -593,6 +652,47 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                 return pagination.page.property.type === "body";
             case "custom":
                 return false;
+            case "uri":
+            case "path":
+                return false;
+            default:
+                assertNever(pagination);
+        }
+    }
+
+    /**
+     * The original Go generator did not handle pagination endpoints with request body properties, so
+     * enabling them by default would change the return type of endpoints that already ship without a
+     * pager. These endpoints opt in with the enableRequestBodyPagination configuration option, and
+     * otherwise generate a delegating endpoint.
+     *
+     * Nested page properties (e.g. `cursor: $request.options.cursor`) shipped without a pager even with
+     * enableRequestBodyPagination set, so they additionally opt in with
+     * enableNestedRequestBodyPagination to keep the return types of existing endpoints stable.
+     */
+    public isUnsupportedRequestBodyPaginationEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        if (!this.isPaginationWithRequestBodyEndpoint(endpoint)) {
+            return false;
+        }
+        if (this.customConfig.enableRequestBodyPagination !== true) {
+            return true;
+        }
+        if (!this.hasNestedPageProperty(endpoint)) {
+            return false;
+        }
+        return this.customConfig.enableNestedRequestBodyPagination !== true;
+    }
+
+    private hasNestedPageProperty(endpoint: FernIr.HttpEndpoint): boolean {
+        const pagination = this.getPagination(endpoint);
+        if (pagination == null) {
+            return false;
+        }
+        switch (pagination.type) {
+            case "cursor":
+            case "offset":
+                return (pagination.page.propertyPath ?? []).length > 0;
+            case "custom":
             case "uri":
             case "path":
                 return false;
@@ -711,7 +811,49 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             return false;
         }
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
-        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+        const hasPerCallPathParameters = endpoint.allPathParameters.some(
+            (pathParameter) => this.getSdkVariableForPathParameter(pathParameter) == null
+        );
+        return hasPerCallPathParameters && inlinePathParameters && wrapperShouldIncludePathParameters;
+    }
+
+    /**
+     * Returns the SDK variables declared on the API (bound to path parameters via
+     * x-fern-sdk-variable), each paired with the client option it is exposed under.
+     */
+    public getSdkVariableOptions(): SdkVariableOption[] {
+        if (this.sdkVariableOptions != null) {
+            return this.sdkVariableOptions;
+        }
+        this.sdkVariableOptions = this.ir.variables.map((variable) => {
+            const { fieldName, localName } = getSdkVariableNames({
+                pascal: this.caseConverter.pascalUnsafe(variable.name),
+                camel: this.caseConverter.camelSafe(variable.name)
+            });
+            return {
+                variable,
+                fieldName,
+                localName,
+                isString: isPlainStringType(variable.type)
+            };
+        });
+        this.sdkVariableOptionsById = new Map(
+            this.sdkVariableOptions.map((option) => [option.variable.id, option] as const)
+        );
+        return this.sdkVariableOptions;
+    }
+
+    /**
+     * Returns the SDK variable the path parameter is bound to, if any. Bound path
+     * parameters are removed from endpoint signatures and resolved from the client
+     * option instead.
+     */
+    public getSdkVariableForPathParameter(pathParameter: FernIr.PathParameter): SdkVariableOption | undefined {
+        if (pathParameter.variable == null) {
+            return undefined;
+        }
+        this.getSdkVariableOptions();
+        return this.sdkVariableOptionsById?.get(pathParameter.variable);
     }
 
     private fileUploadRequestHasProperties(fileUploadRequest: FernIr.FileUploadRequest): boolean {
@@ -866,6 +1008,52 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public isSelfHosted(): boolean {
         return this.ir.selfHosted ?? false;
+    }
+
+    private hasStreamingEndpoints(): boolean {
+        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+            return true;
+        }
+        // `hasStreamingEndpoints` is only set for pure `streaming` responses, not
+        // for `streamParameter` endpoints, which also rely on the streamer helpers.
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (this.isStreamingEndpoint(endpoint)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public hasHmacWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                if (webhook.signatureVerification?.type === "hmac") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public hasWebhookBodyHashBinding(): boolean {
+        const apiWide = this.ir.sdkConfig.webhookSignatureVerification;
+        if (apiWide?.type === "hmac" && apiWide.bodyHashBinding != null) {
+            return true;
+        }
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                const verification = webhook.signatureVerification;
+                if (verification?.type === "hmac" && verification.bodyHashBinding != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private needsPaginationHelpers(): boolean {

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Upload Agent Skills bundles placed under `.well-known/skills/` or `.well-known/agent-skills/`
+    in the docs folder when publishing docs, so Fern-hosted docs sites serve them and
+    `npx skills add https://<docs-domain>` installs them. `fern check` now validates skill
+    bundles: the `index.json` discovery manifest must exist and parse, and each skill's
+    `SKILL.md` frontmatter needs a kebab-case `name` (max 64 characters) matching its parent
+    directory and a non-empty `description` (max 1024 characters).
+  type: feat

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "be027004",
+            "example_identifier": "5e845b44",
             "id": {
                 "method": "POST",
                 "path": "/token",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "6cae8dfc",
+            "example_identifier": "28bf3b8c",
             "id": {
                 "method": "POST",
                 "path": "/token",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "GET",
                 "path": "/nested-no-auth/get-something",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "GET",
                 "path": "/nested/get-something",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "75519417",
+            "example_identifier": "770ab567",
             "id": {
                 "method": "POST",
                 "path": "/service/{endpointParam}",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "GET",
                 "path": "/get-something",

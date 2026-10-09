@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
-const client = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedNurseryApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.package.test({
     "for": "for"
 });

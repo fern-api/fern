@@ -24,6 +24,9 @@ export class ServiceClient {
      * @param {string} nestedId
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPackageYmlError}
+     * @throws {@link errors.SeedPackageYmlTimeoutError}
+     *
      * @example
      *     await client.service.nop("id-219xca8")
      */
@@ -40,7 +43,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.id)}//${core.url.encodePathParam(nestedId)}`,
+                `/${core.url.encodePathParam(this._options.id)}/${core.url.encodePathParam(nestedId)}`,
             ),
             method: "GET",
             headers: _headers,

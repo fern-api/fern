@@ -1,8 +1,10 @@
+import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
+import { stripCustomDomainProtocol, validateBasepathAlignment } from "./customDomainValidation.js";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
 
 const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
@@ -36,7 +38,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     cliVersion,
     ciSource,
     deployerAuthor,
-    loginCommand
+    loginCommand,
+    docsVisibility
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -57,6 +60,8 @@ export async function runRemoteGenerationForDocsWorkspace({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
+    docsVisibility?: VisibilityFilter;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -96,29 +101,29 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    const maybeInstance = instances.find((instance) => instance.url === instanceUrl) ?? instances[0];
+    const maybeInstance =
+        instanceUrl != null ? instances.find((instance) => instance.url === instanceUrl) : instances[0];
 
     if (maybeInstance == null) {
-        context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`, undefined, {
-            code: CliError.Code.ConfigError
-        });
+        const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
+        context.failAndThrow(
+            instanceUrl != null
+                ? `No docs instance found matching '${instanceUrl}'.\n\nAvailable instances:\n${available}`
+                : `No docs instance found. Failed to register.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
         return;
     }
 
-    // TODO: validate custom domains
-    const customDomains: string[] = [];
+    const customDomains = (
+        typeof maybeInstance.customDomain === "string"
+            ? [maybeInstance.customDomain]
+            : (maybeInstance.customDomain ?? [])
+    ).map(stripCustomDomainProtocol);
 
-    if (maybeInstance.customDomain != null) {
-        if (typeof maybeInstance.customDomain === "string") {
-            customDomains.push(maybeInstance.customDomain);
-        } else if (Array.isArray(maybeInstance.customDomain)) {
-            customDomains.push(...maybeInstance.customDomain);
-        }
-    }
-
-    if (maybeInstance.multiSource === true) {
-        validateMultiSourceBasepaths(maybeInstance.url, customDomains, context);
-    }
+    // The Fern instance url and every custom domain must share the same basepath.
+    validateBasepathAlignment(maybeInstance.url, customDomains, context);
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
     context.logger.debug(
@@ -143,8 +148,6 @@ export async function runRemoteGenerationForDocsWorkspace({
                 editThisPage: maybeInstance.editThisPage,
                 disableTemplates,
                 skipUpload,
-                withAiExamples:
-                    docsWorkspace.config.aiExamples?.enabled ?? docsWorkspace.config.experimental?.aiExamples ?? true,
                 excludeApis: docsWorkspace.config.experimental?.excludeApis ?? false,
                 targetAudiences: maybeInstance.audiences
                     ? Array.isArray(maybeInstance.audiences)
@@ -156,7 +159,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 ciSource,
                 deployerAuthor,
                 loginCommand,
-                multiSource: maybeInstance.multiSource ?? false
+                multiSource: maybeInstance.multiSource ?? false,
+                docsVisibility
             });
 
         for (let attempt = 0; ; attempt++) {
@@ -193,28 +197,4 @@ export async function runRemoteGenerationForDocsWorkspace({
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);
     });
     return publishedUrl;
-}
-
-function getBasepath(domain: string): string {
-    try {
-        const url = domain.startsWith("https://") || domain.startsWith("http://") ? domain : `https://${domain}`;
-        return new URL(url).pathname;
-    } catch {
-        return "/";
-    }
-}
-
-function validateMultiSourceBasepaths(instanceUrl: string, customDomains: string[], context: TaskContext): void {
-    const urlBasepath = getBasepath(instanceUrl);
-    for (const customDomain of customDomains) {
-        const customDomainBasepath = getBasepath(customDomain);
-        if (customDomainBasepath !== "/" && urlBasepath !== customDomainBasepath) {
-            context.failAndThrow(
-                `When multi-source is enabled, the url and custom-domain must share the same basepath. ` +
-                    `Instance url '${instanceUrl}' has basepath '${urlBasepath}' but custom-domain '${customDomain}' has basepath '${customDomainBasepath}'.`,
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
-        }
-    }
 }

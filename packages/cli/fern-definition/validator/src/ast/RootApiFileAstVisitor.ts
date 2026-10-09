@@ -11,6 +11,7 @@ export interface RootApiFileAstNodeTypes {
         oauth: RawSchemas.OAuthSchemeSchema;
     };
     defaultEnvironment: string | null | undefined;
+    baseUrlEnv: string | null | undefined;
     environment: {
         environmentId: string;
         environment: string | RawSchemas.SingleBaseUrlEnvironmentSchema | RawSchemas.MultipleBaseUrlsEnvironmentSchema;

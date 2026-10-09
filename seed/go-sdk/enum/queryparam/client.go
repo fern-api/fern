@@ -26,13 +26,26 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.SendEnumAsQueryParamRequest{
+//	    Operand: fern.OperandGreaterThan,
+//	    OperandOrColor: &fern.ColorOrOperand{
+//	        Color: fern.ColorRed,
+//	    },
+//	}
+//	client.QueryParam.Send(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Send(
 	ctx context.Context,
 	request *fern.SendEnumAsQueryParamRequest,
@@ -49,6 +62,30 @@ func (c *Client) Send(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.SendEnumListAsQueryParamRequest{
+//	    Operand: []fern.Operand{
+//	        fern.OperandGreaterThan,
+//	    },
+//	    MaybeOperand: []*fern.Operand{
+//	        fern.OperandGreaterThan.Ptr(),
+//	    },
+//	    OperandOrColor: []*fern.ColorOrOperand{
+//	        &fern.ColorOrOperand{
+//	            Color: fern.ColorRed,
+//	        },
+//	    },
+//	    MaybeOperandOrColor: []*fern.ColorOrOperand{
+//	        &fern.ColorOrOperand{
+//	            Color: fern.ColorRed,
+//	        },
+//	    },
+//	}
+//	client.QueryParam.SendList(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SendList(
 	ctx context.Context,
 	request *fern.SendEnumListAsQueryParamRequest,

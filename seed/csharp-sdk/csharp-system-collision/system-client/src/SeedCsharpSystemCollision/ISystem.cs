@@ -14,7 +14,7 @@ public partial interface ISystem
         CancellationToken cancellationToken = default
     );
 
-    global::System.Threading.Tasks.Task EmptyResponseAsync(
+    WithRawResponseTask EmptyResponseAsync(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

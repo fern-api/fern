@@ -1,0 +1,8 @@
+- summary: |
+    Honor the OAuth client-credentials token endpoint's declared request content-type
+    instead of unconditionally forcing `application/x-www-form-urlencoded`. Token
+    endpoints that consume `application/json` now send `Content-Type: application/json`,
+    while form-urlencoded remains the default when the spec does not declare a content-type
+    (per RFC 6749 §4.4.2). Previously a JSON token endpoint received an HTTP 415 that
+    surfaced as a generic 401.
+  type: fix

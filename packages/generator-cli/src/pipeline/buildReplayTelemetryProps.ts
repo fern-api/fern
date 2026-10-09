@@ -48,7 +48,7 @@ export function buildReplayTelemetryProps(input: {
     versionBump: string | undefined;
     replayConfigEnabled: boolean;
     noReplayFlag: boolean;
-    githubMode: "pull-request" | "push";
+    githubMode: "pull-request" | "push" | "commit-and-release";
     previewMode: boolean;
     durationMs: number;
 }): TelemetryProps {

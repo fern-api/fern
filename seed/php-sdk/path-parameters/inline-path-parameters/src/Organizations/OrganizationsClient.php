@@ -53,6 +53,14 @@ class OrganizationsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->organizations->getOrganization(
+     *     'tenant_id',
+     *     'organization_id',
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param string $organizationId
      * @param ?array{
@@ -100,6 +108,17 @@ class OrganizationsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->organizations->getOrganizationUser(
+     *     new GetOrganizationUserRequest([
+     *         'tenantId' => 'tenant_id',
+     *         'organizationId' => 'organization_id',
+     *         'userId' => 'user_id',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetOrganizationUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -146,6 +165,17 @@ class OrganizationsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->organizations->searchOrganizations(
+     *     'tenant_id',
+     *     'organization_id',
+     *     new SearchOrganizationsRequest([
+     *         'limit' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param string $organizationId
      * @param SearchOrganizationsRequest $request

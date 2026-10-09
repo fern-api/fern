@@ -78,6 +78,10 @@ function resolveOAuthScheme({
     }
 
     const tokenEndpointConfig = oauthScheme["get-token"];
+    if (tokenEndpointConfig == null) {
+        // `get-token` is optional on the shared OAuth schema but required for client-credentials.
+        return undefined;
+    }
     const resolved = resolveEndpointFromReference({ ir, endpointRef: tokenEndpointConfig.endpoint });
     if (resolved == null) {
         return undefined;
@@ -110,6 +114,7 @@ function resolveOAuthScheme({
     return AuthScheme.oauth({
         key,
         docs: oauthScheme.docs,
+        playgroundDocs: oauthScheme["playground-docs"],
         configuration: OAuthConfiguration.clientCredentials({
             clientIdEnvVar: oauthScheme["client-id-env"],
             clientSecretEnvVar: oauthScheme["client-secret-env"],
@@ -287,7 +292,7 @@ function findRequestBodyProperty({
 
     let properties: FernIr.ObjectProperty[] | undefined;
     if (endpoint.requestBody.type === "inlinedRequestBody") {
-        properties = endpoint.requestBody.properties;
+        properties = endpoint.requestBody.properties.map((prop) => ({ ...prop, xml: undefined }));
     } else if (endpoint.requestBody.type === "reference" && endpoint.requestBody.requestBodyType.type === "named") {
         properties = getObjectPropertiesForNamedType(ir, endpoint.requestBody.requestBodyType.typeId);
     }
@@ -317,7 +322,7 @@ function findCustomRequestProperties({
 
     let properties: FernIr.ObjectProperty[] | undefined;
     if (endpoint.requestBody.type === "inlinedRequestBody") {
-        properties = endpoint.requestBody.properties;
+        properties = endpoint.requestBody.properties.map((prop) => ({ ...prop, xml: undefined }));
     } else if (endpoint.requestBody.type === "reference" && endpoint.requestBody.requestBodyType.type === "named") {
         properties = getObjectPropertiesForNamedType(ir, endpoint.requestBody.requestBodyType.typeId);
     }

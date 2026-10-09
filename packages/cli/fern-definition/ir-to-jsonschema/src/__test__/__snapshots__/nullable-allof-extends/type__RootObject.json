@@ -23,5 +23,6 @@
     }
   },
   "additionalProperties": false,
+  "description": "Object inheriting from a nullable schema via allOf.",
   "definitions": {}
 }

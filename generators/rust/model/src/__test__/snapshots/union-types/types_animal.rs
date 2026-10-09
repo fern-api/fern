@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
+#[non_exhaustive]
 pub enum Animal {
         #[serde(rename = "dog")]
         #[non_exhaustive]
@@ -37,6 +38,12 @@ pub enum Animal {
             #[serde(with = "crate::core::number_serializers::option")]
             wing_span: Option<f64>,
         },
+
+        /// Catch-all variant for unrecognized discriminant values.
+        /// If the server sends a discriminant not recognized by the current SDK
+        /// version, the raw payload is captured here so callers can still inspect it.
+        #[serde(untagged)]
+        __Unknown(serde_json::Value),
 }
 
 impl Animal {
@@ -54,5 +61,9 @@ impl Animal {
 
     pub fn bird_with_wing_span(name: String, can_fly: bool, wing_span: f64) -> Self {
         Self::Bird { name, can_fly, wing_span: Some(wing_span) }
+    }
+
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
     }
 }

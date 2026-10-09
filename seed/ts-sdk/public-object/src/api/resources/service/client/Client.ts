@@ -20,6 +20,10 @@ export class ServiceClient {
         this._options = normalizeClientOptions(options);
     }
 
+    /**
+     * @throws {@link errors.SeedPublicObjectError}
+     * @throws {@link errors.SeedPublicObjectTimeoutError}
+     */
     public get(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
         return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }

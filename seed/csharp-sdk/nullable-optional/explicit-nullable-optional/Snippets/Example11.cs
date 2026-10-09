@@ -10,8 +10,8 @@ public partial class Examples
         );
 
         await client.NullableOptional.UpdateTagsAsync(
-            "userId",
-            new UpdateTagsRequest {
+            userId: "userId",
+            request: new UpdateTagsRequest {
                 Tags = new List<string>(){
                     "tags",
                     "tags",

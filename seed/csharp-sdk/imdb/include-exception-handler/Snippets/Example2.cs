@@ -11,7 +11,9 @@ public partial class Examples
         );
 
         await client.Imdb.GetMovieAsync(
-            "movieId"
+            new GetMovieImdbRequest {
+                MovieId = "movieId"
+            }
         );
     }
 

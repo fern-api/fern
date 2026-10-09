@@ -117,6 +117,7 @@ export class FileUploadRequestBodyGenerator {
                                 docs: fileSingle.docs,
                                 availability: undefined,
                                 propertyAccess: undefined,
+                                defaultValue: undefined,
                                 v2Examples: undefined
                             };
 
@@ -144,6 +145,7 @@ export class FileUploadRequestBodyGenerator {
                                 docs: fileArray.docs,
                                 availability: undefined,
                                 propertyAccess: undefined,
+                                defaultValue: undefined,
                                 v2Examples: undefined
                             };
 

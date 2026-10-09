@@ -1,0 +1,17 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@external"])
+
+extend type Query {
+  productUsage(profileId: ID!): ProductUsage
+}
+
+type ProductUsage @key(fields: "profileId") {
+  profileId: ID!
+  """Number of sessions in the requested period."""
+  sessions: Int
+  period: UsagePeriod
+}
+
+enum UsagePeriod {
+  DAILY
+  MONTHLY
+}

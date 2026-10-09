@@ -6,7 +6,7 @@ from .example_models.types.core.unchecked_base_model import construct_type
 from .example_models.types.resources.types import ObjectWithOptionalField
 
 from tests.utils.example_models.types.resources.types.circle import Circle
-from tests.utils.example_models.types.resources.types.shape import Shape_Circle, Shape_Square
+from tests.utils.example_models.types.resources.types.shape import Shape, Shape_Circle, Shape_Square
 from tests.utils.example_models.types.resources.types.square import Square
 
 
@@ -1135,3 +1135,48 @@ def test_empty_details_does_not_greedily_match_figure() -> None:
     # An empty dict should NOT become a FigureDetails (or TextDetails)
     # because the Literal 'type' field is absent
     assert not isinstance(block.details, FigureDetails), "Empty dict should not greedily match FigureDetails"
+
+
+def test_construct_bare_dict() -> None:
+    """Bare `dict` (no type params) should pass through without raising."""
+    input_dict = {"a": 1, "b": "two"}
+    result = construct_type(type_=dict, object_=input_dict)
+    assert result == input_dict
+
+
+def test_construct_bare_list() -> None:
+    """Bare `list` (no type params) should pass through without raising."""
+    input_list = [1, "two", 3.0]
+    result = construct_type(type_=list, object_=input_list)
+    assert result == input_list
+
+
+def test_construct_bare_set() -> None:
+    """Bare `set` (no type params) should pass through without raising."""
+    input_set = {1, 2, 3}
+    result = construct_type(type_=set, object_=input_set)
+    assert result == input_set
+
+
+def test_discriminated_union_unknown_or_missing_discriminant_keeps_data() -> None:
+    known = {"type": "circle", "radius": 1.0}
+    unknown = {"type": "triangle", "base": 2.0, "height": 3.0}
+    missing = {"radius": 4.0, "note": "no discriminant"}
+
+    shapes = construct_type(type_=List[Shape], object_=[known, unknown, missing])  # type: ignore
+
+    assert isinstance(shapes[0], Shape_Circle)
+    assert shapes[1] == unknown
+    assert not isinstance(shapes[1], (Shape_Circle, Shape_Square))
+    assert shapes[2] == missing
+    assert not isinstance(shapes[2], (Shape_Circle, Shape_Square))
+
+
+def test_undiscriminated_union_no_match_keeps_data() -> None:
+    assert construct_type(type_=Union[int, Shape_Square], object_={"foo": "bar"}) == {"foo": "bar"}  # type: ignore
+
+
+def test_undiscriminated_union_later_member_still_matches() -> None:
+    result = construct_type(type_=Union[int, Shape_Square], object_={"type": "square", "length": 2.0})  # type: ignore
+    assert isinstance(result, Shape_Square)
+    assert result.length == 2.0

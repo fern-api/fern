@@ -42,9 +42,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: FileContext;
-    private readonly isPaginationEnabled: boolean;
     private readonly allowCustomFetcher: boolean;
     private readonly generateSubpackageExports: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<FernIr.EndpointId, string> = {};
     private readonly defaultEndpointId: FernIr.EndpointId;
@@ -59,20 +59,22 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         endpointSnippets,
         fileResponseType,
         allowCustomFetcher,
-        generateSubpackageExports
+        generateSubpackageExports,
+        requireBaseUrl
     }: {
         context: FileContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
         allowCustomFetcher: boolean;
         generateSubpackageExports: boolean;
+        requireBaseUrl: boolean;
     }) {
         super({ endpointSnippets });
         this.context = context;
         this.fileResponseType = fileResponseType;
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.allowCustomFetcher = allowCustomFetcher;
         this.generateSubpackageExports = generateSubpackageExports;
+        this.requireBaseUrl = requireBaseUrl;
 
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
@@ -107,15 +109,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.CUSTOM_FETCH_FEATURE_ID] = this.buildCustomFetchSnippets();
         snippets[ReadmeSnippetBuilder.CUSTOM_FETCHER_FEATURE_ID] = this.buildCustomFetcherSnippets();
 
-        if (this.context.ir.environments != null) {
+        if (this.context.ir.environments != null && !this.requireBaseUrl) {
             snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
         }
 
-        if (this.isPaginationEnabled) {
-            const paginationSnippets = this.buildPaginationSnippets();
-            if (paginationSnippets.length > 0) {
-                snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = paginationSnippets;
-            }
+        const paginationSnippets = this.buildPaginationSnippets();
+        if (paginationSnippets.length > 0) {
+            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = paginationSnippets;
         }
 
         const requestAndResponseTypesSnippets = this.buildRequestAndResponseTypesSnippets();

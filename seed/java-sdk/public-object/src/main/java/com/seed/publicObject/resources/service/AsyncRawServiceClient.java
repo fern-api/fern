@@ -3,10 +3,12 @@
  */
 package com.seed.publicObject.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.publicObject.core.ClientOptions;
 import com.seed.publicObject.core.ObjectMappers;
 import com.seed.publicObject.core.RequestOptions;
 import com.seed.publicObject.core.ResponseBodyInputStream;
+import com.seed.publicObject.core.RetryInterceptor;
 import com.seed.publicObject.core.SeedPublicObjectApiException;
 import com.seed.publicObject.core.SeedPublicObjectException;
 import com.seed.publicObject.core.SeedPublicObjectHttpResponse;
@@ -52,8 +54,18 @@ public class AsyncRawServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedPublicObjectHttpResponse<InputStream>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try {
@@ -68,6 +80,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedPublicObjectApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPublicObjectException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPublicObjectException("Network error executing HTTP request", e));
@@ -77,6 +92,11 @@ public class AsyncRawServiceClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedPublicObjectException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

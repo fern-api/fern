@@ -119,6 +119,11 @@ export const ENTITY_CATEGORIES: readonly CategoryDefinition[] = [
         folderName: "variables",
         heading: "Variables",
         collectEntries: (ns) => collectEntityEntries(ns.variables)
+    },
+    {
+        folderName: "macros",
+        heading: "Macros",
+        collectEntries: (ns) => collectEntityEntries(ns.macros ?? [])
     }
 ];
 
@@ -151,12 +156,14 @@ export function namespaceHasEntities(ns: CppNamespaceIr): boolean {
  * @param categories - Pre-computed non-empty categories with their entries
  * @param hasChildNamespaces - Whether child namespaces with entities exist
  * @param nsLastSegment - Last segment of the namespace directory path (used as link prefix)
+ * @param hasGroups - Whether the library has Doxygen group pages to link to
  */
 export function renderNamespaceIndexPage(
     title: string,
     categories: CategoryWithEntries[],
     hasChildNamespaces: boolean,
-    nsLastSegment: string
+    nsLastSegment: string,
+    hasGroups = false
 ): string {
     const lines: string[] = [];
 
@@ -173,6 +180,10 @@ export function renderNamespaceIndexPage(
     // Link to namespaces index if there are child namespaces with entities
     if (hasChildNamespaces) {
         lines.push(`- [Namespaces](${nsLastSegment}/namespaces)`);
+    }
+
+    if (hasGroups) {
+        lines.push(`- [Groups](${nsLastSegment}/groups)`);
     }
 
     trimTrailingBlankLines(lines);
@@ -201,7 +212,9 @@ export function renderCategoryIndexPage(
     const lines: string[] = [];
 
     const title = `${nsTitle} — ${category.heading}`;
-    const description = `${category.heading} in the ${nsPath} namespace.`;
+    const description = nsPath
+        ? `${category.heading} in the ${nsPath} namespace.`
+        : `${category.heading} at global scope.`;
     lines.push(...renderFrontmatter(title, description));
     lines.push("");
 

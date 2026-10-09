@@ -1,11 +1,13 @@
 # Small RHEL base image
 FROM redhat/ubi9:9.7
 
-# Install dependencies
+# Install dependencies and remove python3-urllib3 (CVE-2026-44431,
+# CVE-2026-44432; not needed at runtime in this Java-only container)
 RUN yum update -y && \
     yum -y install git zip unzip && \
     yum clean all && \
-    rm -rf /var/cache/yum
+    rm -rf /var/cache/yum && \
+    rpm -e --nodeps python3-urllib3 2>/dev/null || true
 RUN git clone https://github.com/jenv/jenv.git ~/.jenv
 RUN echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(jenv init -)"' >> ~/.bash_profile

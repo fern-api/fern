@@ -15,7 +15,7 @@ import com.seed.trace.resources.sysprop.AsyncSyspropClient;
 import com.seed.trace.resources.v2.AsyncV2Client;
 import java.util.function.Supplier;
 
-public class AsyncSeedTraceClient {
+public class AsyncSeedTraceClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncV2Client> v2Client;
@@ -76,6 +76,16 @@ public class AsyncSeedTraceClient {
 
     public AsyncSyspropClient sysprop() {
         return this.syspropClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedTraceClientBuilder builder() {

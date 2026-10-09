@@ -1,0 +1,9 @@
+{
+  "title": "Failed to fetch global theme \"nvidia\": HTTP 403",
+  "disposition": "shipped",
+  "rationale": "HTTP 403 from FDR when fetching a global theme the org lacks access to. stitchGlobalTheme already passes ConfigError to failAndThrow for non-ok HTTP responses.",
+  "fixSummary": "Already fixed: failAndThrow passes { code: ConfigError } for non-ok HTTP status.",
+  "prOrIssue": "This PR (ledger only)",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Global theme HTTP 403 classified as ConfigError by stitchGlobalTheme."
+}

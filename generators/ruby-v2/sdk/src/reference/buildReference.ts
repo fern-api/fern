@@ -4,6 +4,7 @@ import { ruby } from "@fern-api/ruby-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getItemIteratorDocs, getItemIteratorReturnType } from "../endpoint/utils/itemIteratorPagination.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
@@ -88,7 +89,7 @@ function getEndpointReference({
             ],
             returnValue
         },
-        description: endpoint.docs,
+        description: getEndpointDescription({ context, endpoint }),
         snippet: singleEndpointSnippet.endpointCall.trim(),
         parameters: getEndpointParameters({ context, serviceId, endpoint })
     };
@@ -156,7 +157,10 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(context.caseConverter.snakeSafe(pathParam.name));
+        if (context.getSdkVariableForPathParameter(pathParam) != null) {
+            return;
+        }
+        parameters.push(`${context.caseConverter.snakeSafe(pathParam.name)}:`);
     });
 
     if (endpoint.requestBody != null) {
@@ -186,9 +190,23 @@ function getReturnValue({
     context: SdkGeneratorContext;
     endpoint: FernIr.HttpEndpoint;
 }): { text: string } | undefined {
-    const returnType = context.getReturnTypeForEndpoint(endpoint);
+    const returnType = getItemIteratorReturnType({ context, endpoint }) ?? context.getReturnTypeForEndpoint(endpoint);
     const returnTypeString = getSimpleTypeName(returnType, context);
     return { text: returnTypeString };
+}
+
+function getEndpointDescription({
+    context,
+    endpoint
+}: {
+    context: SdkGeneratorContext;
+    endpoint: FernIr.HttpEndpoint;
+}): string | undefined {
+    const paginationDocs = getItemIteratorDocs({ context, endpoint });
+    if (paginationDocs == null) {
+        return endpoint.docs;
+    }
+    return endpoint.docs != null && endpoint.docs !== "" ? `${endpoint.docs}\n\n${paginationDocs}` : paginationDocs;
 }
 
 function getRubyTypeString({
@@ -228,6 +246,9 @@ function getEndpointParameters({
     const parameters: FernGeneratorCli.ParameterReference[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
+        if (context.getSdkVariableForPathParameter(pathParam) != null) {
+            return;
+        }
         parameters.push({
             name: context.caseConverter.snakeSafe(pathParam.name),
             type: getRubyTypeString({ context, typeReference: pathParam.valueType }),

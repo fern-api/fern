@@ -27,7 +27,7 @@ $client->admin->storeTracedWorkspaceV2(
                 'filename' => 'filename',
                 'directory' => 'directory',
             ]),
-            'returnValue' => DebugVariableValue::integerValue(),
+            'returnValue' => DebugVariableValue::integerValue(1),
             'expressionLocation' => new ExpressionLocation([
                 'start' => 1,
                 'offset' => 1,
@@ -40,12 +40,12 @@ $client->admin->storeTracedWorkspaceV2(
                     'scopes' => [
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                     ],
@@ -60,7 +60,7 @@ $client->admin->storeTracedWorkspaceV2(
                 'filename' => 'filename',
                 'directory' => 'directory',
             ]),
-            'returnValue' => DebugVariableValue::integerValue(),
+            'returnValue' => DebugVariableValue::integerValue(1),
             'expressionLocation' => new ExpressionLocation([
                 'start' => 1,
                 'offset' => 1,
@@ -73,12 +73,12 @@ $client->admin->storeTracedWorkspaceV2(
                     'scopes' => [
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                     ],

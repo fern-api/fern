@@ -20,6 +20,12 @@ module Seed
       # @option params [String] :id
       # @option params [String] :nested_id
       #
+      # @example
+      #   client.service.nop(
+      #     id: "id-a2ijs82",
+      #     nested_id: "id-219xca8"
+      #   )
+      #
       # @return [untyped]
       def nop(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

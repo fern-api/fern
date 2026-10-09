@@ -33,8 +33,8 @@ if TYPE_CHECKING:
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
-    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
+    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined,var-annotated]
+    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined,var-annotated]
 
     def parse_datetime(value: Any) -> dt.datetime:  # type: ignore[misc]
         if isinstance(value, dt.datetime):
@@ -294,10 +294,22 @@ def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
         return parse_obj_as(type_, sse_event)
 
 
+_type_adapter_cache: Dict[int, Any] = {}
+
+
+def _get_type_adapter(type_: Type[Any]) -> Any:
+    key = id(type_)
+    adapter = _type_adapter_cache.get(key)
+    if adapter is None:
+        adapter = pydantic.TypeAdapter(type_)  # type: ignore[attr-defined]
+        _type_adapter_cache[key] = adapter
+    return adapter
+
+
 def parse_obj_as(type_: Type[T], object_: Any) -> T:
     if IS_PYDANTIC_V2:
-        adapter = pydantic.TypeAdapter(type_)  # type: ignore[attr-defined]
-        return adapter.validate_python(object_)
+        adapter = _get_type_adapter(type_)
+        return adapter.validate_python(object_)  # type: ignore[no-any-return]
     return pydantic.parse_obj_as(type_, object_)
 
 

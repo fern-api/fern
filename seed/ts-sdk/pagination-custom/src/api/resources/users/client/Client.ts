@@ -25,6 +25,9 @@ export class UsersClient {
      * @param {SeedPagination.ListWithCustomPagerRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithCustomPager({
      *         limit: 1,

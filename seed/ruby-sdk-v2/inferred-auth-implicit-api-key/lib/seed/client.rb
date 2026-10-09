@@ -4,16 +4,19 @@ module Seed
   class Client
     # @param api_key [String]
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(api_key:, base_url: nil)
+    def initialize(api_key:, base_url: nil, max_retries: 2, timeout: 60)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "X-Fern-Language" => "Ruby",
           "X-Api-Key" => api_key
-        }
+        },
+        timeout: timeout
       )
 
       # Create the auth client for token retrieval
@@ -30,7 +33,10 @@ module Seed
         headers: {
           "User-Agent" => "fern_inferred-auth-implicit-api-key/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }.merge(@auth_provider.auth_headers)
+        },
+        auth_provider: @auth_provider,
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

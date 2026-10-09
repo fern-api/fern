@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from .foo_extended import FooExtended
     from .second_item_type import SecondItemType
     from .type_with_optional_map import TypeWithOptionalMap
+    from .type_with_optional_reference_map import TypeWithOptionalReferenceMap
     from .union import Union, Union_Bar, Union_Foo
     from .union_with_base_properties import (
         UnionWithBaseProperties,
@@ -36,6 +37,12 @@ if typing.TYPE_CHECKING:
         UnionWithDuplicativeDiscriminants,
         UnionWithDuplicativeDiscriminants_FirstItemType,
         UnionWithDuplicativeDiscriminants_SecondItemType,
+    )
+    from .union_with_global_name_collisions import (
+        UnionWithGlobalNameCollisions,
+        UnionWithGlobalNameCollisions_Aim,
+        UnionWithGlobalNameCollisions_Date,
+        UnionWithGlobalNameCollisions_Error,
     )
     from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
     from .union_with_multiple_no_properties import (
@@ -84,6 +91,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FooExtended": ".foo_extended",
     "SecondItemType": ".second_item_type",
     "TypeWithOptionalMap": ".type_with_optional_map",
+    "TypeWithOptionalReferenceMap": ".type_with_optional_reference_map",
     "Union": ".union",
     "UnionWithBaseProperties": ".union_with_base_properties",
     "UnionWithBaseProperties_Foo": ".union_with_base_properties",
@@ -103,6 +111,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
     "UnionWithDuplicativeDiscriminants_FirstItemType": ".union_with_duplicative_discriminants",
     "UnionWithDuplicativeDiscriminants_SecondItemType": ".union_with_duplicative_discriminants",
+    "UnionWithGlobalNameCollisions": ".union_with_global_name_collisions",
+    "UnionWithGlobalNameCollisions_Aim": ".union_with_global_name_collisions",
+    "UnionWithGlobalNameCollisions_Date": ".union_with_global_name_collisions",
+    "UnionWithGlobalNameCollisions_Error": ".union_with_global_name_collisions",
     "UnionWithLiteral": ".union_with_literal",
     "UnionWithLiteral_Fern": ".union_with_literal",
     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
@@ -177,6 +189,7 @@ __all__ = [
     "FooExtended",
     "SecondItemType",
     "TypeWithOptionalMap",
+    "TypeWithOptionalReferenceMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithBaseProperties_Foo",
@@ -196,6 +209,10 @@ __all__ = [
     "UnionWithDuplicativeDiscriminants",
     "UnionWithDuplicativeDiscriminants_FirstItemType",
     "UnionWithDuplicativeDiscriminants_SecondItemType",
+    "UnionWithGlobalNameCollisions",
+    "UnionWithGlobalNameCollisions_Aim",
+    "UnionWithGlobalNameCollisions_Date",
+    "UnionWithGlobalNameCollisions_Error",
     "UnionWithLiteral",
     "UnionWithLiteral_Fern",
     "UnionWithMultipleNoProperties",

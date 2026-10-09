@@ -2,6 +2,7 @@ import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
@@ -24,7 +25,16 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestParameterType(): php.Type {
-        return this.context.phpTypeMapper.convert({ reference: this.requestBodyShape });
+        const type = this.context.phpTypeMapper.convert({ reference: this.requestBodyShape });
+        return this.mayBeOmitted() ? php.Type.optional(type) : type;
+    }
+
+    public override getRequestParameterInitializer(): php.CodeBlock | undefined {
+        return this.mayBeOmitted() ? php.codeblock("null") : undefined;
+    }
+
+    private mayBeOmitted(): boolean {
+        return mayOmitRequestBody({ context: this.context, endpoint: this.endpoint });
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {

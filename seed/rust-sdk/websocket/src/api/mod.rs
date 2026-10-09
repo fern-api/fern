@@ -13,6 +13,6 @@ pub mod resources;
 pub mod types;
 pub mod websocket;
 
-pub use resources::{EmptyClient, WebsocketClient};
+pub use resources::{EmptyClient, StatusClient, WebsocketClient};
 pub use types::{*};
 

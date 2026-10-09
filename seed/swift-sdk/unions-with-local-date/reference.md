@@ -264,7 +264,7 @@ private func main() async throws {
     let client = UnionsClient()
 
     _ = try await client.types.update(request: UnionWithTime.date(
-
+        CalendarDate("1994-01-01")!
     ))
 }
 

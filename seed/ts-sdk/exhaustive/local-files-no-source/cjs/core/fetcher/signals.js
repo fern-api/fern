@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIMEOUT = void 0;
 exports.getTimeoutSignal = getTimeoutSignal;
 exports.anySignal = anySignal;
-const TIMEOUT = "timeout";
+exports.TIMEOUT = "timeout";
 function getTimeoutSignal(timeoutMs) {
     const controller = new AbortController();
-    const abortId = setTimeout(() => controller.abort(TIMEOUT), timeoutMs);
+    const abortId = setTimeout(() => controller.abort(exports.TIMEOUT), timeoutMs);
     return { signal: controller.signal, abortId };
 }
 function anySignal(...args) {
@@ -14,11 +15,19 @@ function anySignal(...args) {
     for (const signal of signals) {
         if (signal.aborted) {
             controller.abort(signal === null || signal === void 0 ? void 0 : signal.reason);
-            break;
+            return controller.signal;
         }
         signal.addEventListener("abort", () => controller.abort(signal === null || signal === void 0 ? void 0 : signal.reason), {
             signal: controller.signal,
         });
+        // Re-check after adding listener: the signal may have aborted
+        // between the initial `signal.aborted` check and the `addEventListener`
+        // call above. If it did, the abort event was already dispatched and
+        // the listener will never fire — we must manually abort.
+        if (signal.aborted) {
+            controller.abort(signal === null || signal === void 0 ? void 0 : signal.reason);
+            return controller.signal;
+        }
     }
     return controller.signal;
 }

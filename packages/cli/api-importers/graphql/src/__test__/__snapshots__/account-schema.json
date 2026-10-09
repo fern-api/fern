@@ -81,6 +81,9 @@
       "operationType": "MUTATION",
       "name": "addUserToAccount",
       "description": "Adds a user to an account.",
+      "fieldPath": [
+        "account"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -103,6 +106,9 @@
       "operationType": "MUTATION",
       "name": "removeUserFromAccount",
       "description": "Removes a user from an account and all associated entities.",
+      "fieldPath": [
+        "account"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -125,6 +131,9 @@
       "operationType": "MUTATION",
       "name": "createCheckout",
       "description": "Creates a Checkout for a Merchant.",
+      "fieldPath": [
+        "checkout"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -147,6 +156,9 @@
       "operationType": "MUTATION",
       "name": "cancelSubscription",
       "description": "Cancels a Subscription for a Merchant.",
+      "fieldPath": [
+        "subscription"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -168,7 +180,11 @@
       "id": "mutation_createUserWithPassword",
       "operationType": "MUTATION",
       "name": "createUserWithPassword",
-      "description": "Creates a user with password.",
+      "description": "Creates a user with password.\n\n**Deprecated:** This mutation is deprecated and will be removed in a future release. Use `createUser` instead.",
+      "availability": "Deprecated",
+      "fieldPath": [
+        "user"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -191,6 +207,9 @@
       "operationType": "MUTATION",
       "name": "createUser",
       "description": "Creates a user.",
+      "fieldPath": [
+        "user"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -213,6 +232,9 @@
       "operationType": "MUTATION",
       "name": "addUserToStore",
       "description": "Adds a user to a store.",
+      "fieldPath": [
+        "user"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -235,6 +257,9 @@
       "operationType": "MUTATION",
       "name": "removeUserFromStore",
       "description": "Removes user from a store.",
+      "fieldPath": [
+        "user"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -257,6 +282,9 @@
       "operationType": "MUTATION",
       "name": "createEventSource",
       "description": "Creates an Amazon EventSource.",
+      "fieldPath": [
+        "app"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -279,6 +307,9 @@
       "operationType": "MUTATION",
       "name": "deleteEventSource",
       "description": "Deletes an Amazon EventSource.",
+      "fieldPath": [
+        "app"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -301,6 +332,9 @@
       "operationType": "MUTATION",
       "name": "addUsersToUserGroups",
       "description": "Adds users to user groups.",
+      "fieldPath": [
+        "userGroup"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -323,6 +357,9 @@
       "operationType": "MUTATION",
       "name": "removeUsersFromUserGroup",
       "description": "Removes users from a user group.",
+      "fieldPath": [
+        "userGroup"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -362,7 +399,57 @@
               "type": "id",
               "value": "AppsConnection"
             },
-            "description": "Apps owned by the account."
+            "description": "Apps owned by the account.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "checkout",
@@ -373,7 +460,19 @@
                 "value": "Checkout"
               }
             },
-            "description": "Allows for billing a Merchant for Products on a one-time or recurring basis."
+            "description": "Allows for billing a Merchant for Products on a one-time or recurring basis.",
+            "arguments": [
+              {
+                "name": "id",
+                "description": "The ID of the object.",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "id",
@@ -399,7 +498,68 @@
               "type": "id",
               "value": "StoreConnection"
             },
-            "description": "The stores related to an account."
+            "description": "The stores related to an account.",
+            "arguments": [
+              {
+                "name": "filter",
+                "description": "Filter stores by IDs or store hashes.",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "StoreFilterInput"
+                  }
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "subscriptions",
@@ -407,7 +567,67 @@
               "type": "id",
               "value": "SubscriptionConnection"
             },
-            "description": "Subscriptions belonging to the account."
+            "description": "Subscriptions belonging to the account.",
+            "arguments": [
+              {
+                "name": "filters",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "SubscriptionFiltersInput"
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "userGroups",
@@ -415,7 +635,57 @@
               "type": "id",
               "value": "UserGroupConnection"
             },
-            "description": "User groups belonging to the account."
+            "description": "User groups belonging to the account.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "users",
@@ -423,7 +693,57 @@
               "type": "id",
               "value": "UserConnection"
             },
-            "description": "Users belonging to the account."
+            "description": "Users belonging to the account.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -464,7 +784,16 @@
                 "value": "AddUserToAccountResult"
               }
             },
-            "description": "Adds a user to an account."
+            "description": "Adds a user to an account.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "AddUserToAccountInput"
+                }
+              }
+            ]
           },
           {
             "key": "removeUserFromAccount",
@@ -475,7 +804,16 @@
                 "value": "RemoveUserFromAccountResult"
               }
             },
-            "description": "Removes a user from an account and all associated entities."
+            "description": "Removes a user from an account and all associated entities.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "RemoveUserFromAccountInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -652,7 +990,57 @@
               "type": "id",
               "value": "AwsEventSourcesConnection"
             },
-            "description": "Amazon EventSources."
+            "description": "Amazon EventSources.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -673,7 +1061,16 @@
                 "value": "CreateEventSourceResult"
               }
             },
-            "description": "Creates an Amazon EventSource."
+            "description": "Creates an Amazon EventSource.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CreateEventSourceInput"
+                }
+              }
+            ]
           },
           {
             "key": "deleteEventSource",
@@ -684,7 +1081,16 @@
                 "value": "DeleteEventSourceResult"
               }
             },
-            "description": "Deletes an Amazon EventSource."
+            "description": "Deletes an Amazon EventSource.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "DeleteEventSourceInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -810,12 +1216,8 @@
           {
             "key": "webhooksCount",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "Long",
-                "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
-              }
+              "type": "id",
+              "value": "Long"
             },
             "description": "Number of webhooks attached to an Amazon EventSource."
           }
@@ -1003,6 +1405,19 @@
       },
       "description": "The Amazon EventSource region."
     },
+    "BigDecimal": {
+      "name": "BigDecimal",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "The `BigDecimal` scalar type represents signed fractional values with arbitrary precision."
+    },
     "CancelSubscriptionInput": {
       "name": "CancelSubscriptionInput",
       "shape": {
@@ -1046,12 +1461,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "The date the subscription will be cancelled."
@@ -1063,7 +1474,9 @@
       "name": "Checkout",
       "shape": {
         "type": "object",
-        "extends": [],
+        "extends": [
+          "Node"
+        ],
         "properties": [
           {
             "key": "id",
@@ -1101,7 +1514,57 @@
               "type": "id",
               "value": "CheckoutItemConnection"
             },
-            "description": "The item(s) associated with the checkout."
+            "description": "The item(s) associated with the checkout.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "status",
@@ -1636,7 +2099,16 @@
                 "value": "CreateCheckoutResult"
               }
             },
-            "description": "Creates a Checkout for a Merchant."
+            "description": "Creates a Checkout for a Merchant.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CreateCheckoutInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -1674,12 +2146,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "Long",
-                  "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
-                }
+                "type": "id",
+                "value": "Long"
               }
             },
             "description": "The total number of items in the collection."
@@ -2515,6 +2983,19 @@
       },
       "description": "Currency Code."
     },
+    "DateTime": {
+      "name": "DateTime",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "datetime"
+          }
+        }
+      },
+      "description": "ISO-8601 formatted date in UTC"
+    },
     "DeleteEventSourceInput": {
       "name": "DeleteEventSourceInput",
       "shape": {
@@ -2576,6 +3057,19 @@
         ]
       }
     },
+    "Long": {
+      "name": "Long",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "long"
+          }
+        }
+      },
+      "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+    },
     "Money": {
       "name": "Money",
       "shape": {
@@ -2595,12 +3089,8 @@
           {
             "key": "value",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "BigDecimal",
-                "description": "The `BigDecimal` scalar type represents signed fractional values with arbitrary precision."
-              }
+              "type": "id",
+              "value": "BigDecimal"
             },
             "description": "The amount of money."
           }
@@ -2625,12 +3115,8 @@
           {
             "key": "value",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "BigDecimal",
-                "description": "The `BigDecimal` scalar type represents signed fractional values with arbitrary precision."
-              }
+              "type": "id",
+              "value": "BigDecimal"
             },
             "description": "The monetary amount. Must be a positive decimal number. For example, 10.10 with a currency code of USD represents $10.10."
           }
@@ -2641,25 +3127,18 @@
     "Node": {
       "name": "Node",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [],
+        "properties": [
           {
-            "typeName": "Checkout",
-            "displayName": "Checkout",
-            "type": {
-              "type": "id",
-              "value": "Checkout"
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             },
-            "description": "A container for all information needed to charge a Merchant for products on a one-time or recurring basis."
-          },
-          {
-            "typeName": "Subscription",
-            "displayName": "Subscription",
-            "type": {
-              "type": "id",
-              "value": "Subscription"
-            },
-            "description": "A one-time or recurring charge for a Product created as a result of a Merchant completing a Checkout."
+            "description": "The ID of the object."
           }
         ]
       },
@@ -2928,7 +3407,57 @@
               "type": "id",
               "value": "UserConnection"
             },
-            "description": "The users removed from the user group."
+            "description": "The users removed from the user group.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "pollingId",
@@ -2961,7 +3490,17 @@
                 "value": "StoreStatus"
               }
             },
-            "description": "Get the status for a store for add users to user groups operation."
+            "description": "Get the status for a store for add users to user groups operation.",
+            "arguments": [
+              {
+                "name": "pollingId",
+                "description": "The unique identifier used to poll the status of the asynchronous operation.",
+                "type": {
+                  "type": "id",
+                  "value": "UUID"
+                }
+              }
+            ]
           }
         ]
       },
@@ -2989,7 +3528,57 @@
               "type": "id",
               "value": "AppsConnection"
             },
-            "description": "The list of store apps."
+            "description": "The list of store apps.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "name",
@@ -3017,7 +3606,57 @@
               "type": "id",
               "value": "StoreUserConnection"
             },
-            "description": "Users belonging to the store."
+            "description": "Users belonging to the store.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -3199,7 +3838,57 @@
               "type": "id",
               "value": "AppsConnection"
             },
-            "description": "Apps accessible by the user on the store."
+            "description": "Apps accessible by the user on the store.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "email",
@@ -3226,12 +3915,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "When the user last logged in."
@@ -3285,12 +3970,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "When was the user last updated."
@@ -3394,7 +4075,9 @@
       "name": "Subscription",
       "shape": {
         "type": "object",
-        "extends": [],
+        "extends": [
+          "Node"
+        ],
         "properties": [
           {
             "key": "id",
@@ -3419,12 +4102,8 @@
           {
             "key": "activationDate",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "DateTime",
-                "description": "ISO-8601 formatted date in UTC"
-              }
+              "type": "id",
+              "value": "DateTime"
             },
             "description": "The date when the Subscription becomes active, ending any trial period, and billing the Merchant for the first time."
           },
@@ -3439,12 +4118,8 @@
           {
             "key": "createdAt",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "DateTime",
-                "description": "ISO-8601 formatted date in UTC"
-              }
+              "type": "id",
+              "value": "DateTime"
             },
             "description": "The date the subscription was created."
           },
@@ -3453,12 +4128,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "The end of the current billing interval for the Merchant."
@@ -3504,12 +4175,8 @@
           {
             "key": "updatedAt",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "DateTime",
-                "description": "ISO-8601 formatted date in UTC"
-              }
+              "type": "id",
+              "value": "DateTime"
             },
             "description": "The date the subscription was last updated."
           }
@@ -3699,12 +4366,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "A date for filtering the query."
@@ -3727,7 +4390,16 @@
                 "value": "CancelSubscriptionResult"
               }
             },
-            "description": "Cancels a Subscription for a Merchant."
+            "description": "Cancels a Subscription for a Merchant.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CancelSubscriptionInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -3865,12 +4537,8 @@
           {
             "key": "time",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "Long",
-                "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
-              }
+              "type": "id",
+              "value": "Long"
             },
             "description": "The current time."
           }
@@ -4004,6 +4672,20 @@
       },
       "description": "The type of target."
     },
+    "UUID": {
+      "name": "UUID",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "description": "The UUID scalar type represents a universally unique identifier."
+    },
     "User": {
       "name": "User",
       "shape": {
@@ -4066,7 +4748,57 @@
               "type": "id",
               "value": "UserGroupByUserConnection"
             },
-            "description": "User groups the user belongs to."
+            "description": "User groups the user belongs to.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -4180,7 +4912,57 @@
               "type": "id",
               "value": "UserConnection"
             },
-            "description": "The users belonging to a user group."
+            "description": "The users belonging to a user group.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "targets",
@@ -4188,7 +4970,57 @@
               "type": "id",
               "value": "TargetConnection"
             },
-            "description": "The targets belonging to a user group."
+            "description": "The targets belonging to a user group.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -4400,7 +5232,16 @@
                 "value": "AddUsersToUserGroupsResult"
               }
             },
-            "description": "Adds users to user groups."
+            "description": "Adds users to user groups.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "AddUsersToUserGroupsInput"
+                }
+              }
+            ]
           },
           {
             "key": "removeUsersFromUserGroup",
@@ -4411,7 +5252,16 @@
                 "value": "RemoveUsersFromUserGroupResult"
               }
             },
-            "description": "Removes users from a user group."
+            "description": "Removes users from a user group.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "RemoveUsersFromUserGroupInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -4468,7 +5318,17 @@
                 "value": "CreateUserWithPasswordResult"
               }
             },
-            "description": "Creates a user with password."
+            "description": "Creates a user with password.\n\n**Deprecated:** This mutation is deprecated and will be removed in a future release. Use `createUser` instead.",
+            "availability": "Deprecated",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CreateUserWithPasswordInput"
+                }
+              }
+            ]
           },
           {
             "key": "createUser",
@@ -4479,7 +5339,16 @@
                 "value": "CreateUserResult"
               }
             },
-            "description": "Creates a user."
+            "description": "Creates a user.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CreateUserInput"
+                }
+              }
+            ]
           },
           {
             "key": "addUserToStore",
@@ -4490,7 +5359,16 @@
                 "value": "AddUserToStoreResult"
               }
             },
-            "description": "Adds a user to a store."
+            "description": "Adds a user to a store.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "AddUserToStoreInput"
+                }
+              }
+            ]
           },
           {
             "key": "removeUserFromStore",
@@ -4501,11 +5379,117 @@
                 "value": "RemoveUserFromStoreResult"
               }
             },
-            "description": "Removes user from a store."
+            "description": "Removes user from a store.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "RemoveUserFromStoreInput"
+                }
+              }
+            ]
           }
         ]
       },
       "description": "User mutations."
     }
+  },
+  "typeCategories": {
+    "Account": "object",
+    "AccountInfo": "object",
+    "AddUserToAccountInput": "input",
+    "AddUserToAccountResult": "object",
+    "AddUserToStoreInput": "input",
+    "AddUserToStoreResult": "object",
+    "AddUsersToUserGroupsInput": "input",
+    "AddUsersToUserGroupsResult": "object",
+    "App": "object",
+    "AppsConnection": "object",
+    "AppsEdge": "object",
+    "AwsEventSource": "object",
+    "AwsEventSourcesConnection": "object",
+    "AwsEventSourcesEdge": "object",
+    "AwsRegion": "enum",
+    "BigDecimal": "scalar",
+    "CancelSubscriptionInput": "input",
+    "CancelSubscriptionResult": "object",
+    "Checkout": "object",
+    "CheckoutItem": "object",
+    "CheckoutItemConnection": "object",
+    "CheckoutItemEdge": "object",
+    "CheckoutItemInput": "input",
+    "CheckoutItemPricingInterval": "enum",
+    "CheckoutItemPricingPlan": "object",
+    "CheckoutItemProduct": "object",
+    "CheckoutItemProductInput": "input",
+    "CheckoutItemProductType": "enum",
+    "CheckoutItemScope": "object",
+    "CheckoutItemScopeInput": "input",
+    "CheckoutItemScopeType": "enum",
+    "CheckoutItemStatus": "enum",
+    "CheckoutStatus": "enum",
+    "CollectionInfo": "object",
+    "CreateCheckoutInput": "input",
+    "CreateCheckoutResult": "object",
+    "CreateEventSourceInput": "input",
+    "CreateEventSourceResult": "object",
+    "CreateUserInput": "input",
+    "CreateUserResult": "object",
+    "CreateUserWithPasswordInput": "input",
+    "CreateUserWithPasswordResult": "object",
+    "CurrencyCode": "enum",
+    "DateTime": "scalar",
+    "DeleteEventSourceInput": "input",
+    "DeleteEventSourceResult": "object",
+    "Long": "scalar",
+    "Money": "object",
+    "MoneyInput": "input",
+    "Node": "interface",
+    "PageInfo": "object",
+    "PricingPlanInput": "input",
+    "RemoveUserFromAccountInput": "input",
+    "RemoveUserFromAccountResult": "object",
+    "RemoveUserFromStoreInput": "input",
+    "RemoveUserFromStoreResult": "object",
+    "RemoveUsersFromUserGroupInput": "input",
+    "RemoveUsersFromUserGroupResult": "object",
+    "Status": "object",
+    "Store": "object",
+    "StoreConnection": "object",
+    "StoreEdge": "object",
+    "StoreFilterInput": "input",
+    "StoreStatus": "object",
+    "StoreStatusEnum": "enum",
+    "StoreUser": "object",
+    "StoreUserConnection": "object",
+    "StoreUserEdge": "object",
+    "StoreUserStatus": "enum",
+    "Subscription": "object",
+    "SubscriptionBillingInterval": "enum",
+    "SubscriptionConnection": "object",
+    "SubscriptionEdge": "object",
+    "SubscriptionFiltersInput": "input",
+    "SubscriptionProduct": "object",
+    "SubscriptionProductType": "enum",
+    "SubscriptionScope": "object",
+    "SubscriptionScopeType": "enum",
+    "SubscriptionStatus": "enum",
+    "System": "object",
+    "TargetByUserGroup": "object",
+    "TargetConnection": "object",
+    "TargetEdge": "object",
+    "TargetType": "enum",
+    "UUID": "scalar",
+    "User": "object",
+    "UserConnection": "object",
+    "UserEdge": "object",
+    "UserGroup": "object",
+    "UserGroupByUser": "object",
+    "UserGroupByUserConnection": "object",
+    "UserGroupByUserEdge": "object",
+    "UserGroupConnection": "object",
+    "UserGroupEdge": "object",
+    "UserIdentifierInput": "input"
   }
 }

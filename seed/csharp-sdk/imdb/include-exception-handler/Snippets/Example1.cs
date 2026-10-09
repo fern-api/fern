@@ -10,8 +10,11 @@ public partial class Examples
             }
         );
 
-        await client.Imdb.GetMovieAsync(
-            "movieId"
+        await client.Imdb.CreateMovieAsync(
+            new CreateMovieRequest {
+                Title = "title",
+                Rating = 1.1
+            }
         );
     }
 

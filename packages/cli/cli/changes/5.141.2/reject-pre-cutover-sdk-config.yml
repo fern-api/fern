@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Reject `fern generate --sdk-config` when a selected target pins a generator version from before that language's SDK Config cutover.
+  type: fix

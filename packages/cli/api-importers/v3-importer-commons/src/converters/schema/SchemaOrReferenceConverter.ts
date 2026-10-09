@@ -74,7 +74,11 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             if (response.ok) {
                 return {
                     type: this.wrapTypeReference(response.reference),
-                    inlinedTypes: response.inlinedTypes ?? {}
+                    inlinedTypes: response.inlinedTypes ?? {},
+                    availability: this.context.getAvailability({
+                        node: schemaOrReference,
+                        breadcrumbs: this.breadcrumbs
+                    })
                 };
             }
         }
@@ -97,7 +101,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 if (response.ok) {
                     return {
                         type: this.wrapTypeReference(response.reference),
-                        inlinedTypes: response.inlinedTypes ?? {}
+                        inlinedTypes: response.inlinedTypes ?? {},
+                        availability: this.getAvailabilityOfSelfOrReference(allOfReference)
                     };
                 }
             }
@@ -106,22 +111,18 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
 
         // When allOf has exactly one $ref to a non-object type (e.g. enum) and the
         // remaining elements are inline primitive constraints (no properties, no enum,
-        // no composition keywords), reference the $ref type directly instead of
-        // creating a synthetic merged copy.
-        const refElements = this.schemaOrReference.allOf.filter((s) => this.context.isReferenceObject(s));
+        // no composition keywords, no additional validation rules), reference the $ref
+        // type directly instead of creating a synthetic merged copy.
+        const refElements = this.schemaOrReference.allOf.filter((s): s is OpenAPIV3_1.ReferenceObject =>
+            this.context.isReferenceObject(s)
+        );
         const inlineElements = this.schemaOrReference.allOf.filter(
             (s): s is OpenAPIV3_1.SchemaObject =>
                 typeof s === "object" && s !== null && !this.context.isReferenceObject(s)
         );
         const singleRef = refElements.length === 1 ? refElements[0] : undefined;
 
-        if (
-            singleRef != null &&
-            inlineElements.every(
-                (s) => !s.properties && !s.enum && !s.oneOf && !s.anyOf && !s.allOf && !s.format && !("items" in s)
-            ) &&
-            !inlineElements.some((s) => s.type === "null" || (Array.isArray(s.type) && s.type.includes("null")))
-        ) {
+        if (singleRef != null && inlineElements.every((s) => isMetadataOnlySchema(s))) {
             const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                 schemaOrReference: singleRef,
                 breadcrumbs: this.breadcrumbs
@@ -136,19 +137,49 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 !resolved.format
             ) {
                 const response = this.context.convertReferenceToTypeReference({
-                    reference: singleRef as OpenAPIV3_1.ReferenceObject,
+                    reference: singleRef,
                     breadcrumbs: this.breadcrumbs
                 });
                 if (response.ok) {
                     return {
                         type: this.wrapTypeReference(response.reference),
-                        inlinedTypes: response.inlinedTypes ?? {}
+                        inlinedTypes: response.inlinedTypes ?? {},
+                        availability: this.getAvailabilityOfSelfOrReference(singleRef)
                     };
                 }
             }
         }
 
         return undefined;
+    }
+
+    /**
+     * Availability declared alongside the `allOf` takes precedence over the availability
+     * of the referenced schema, since the outer schema is the more specific declaration.
+     * Inline `allOf` siblings are consulted next: when the sibling carries nothing but
+     * metadata we short-circuit to the `$ref`, so a `deprecated` written there would
+     * otherwise be dropped.
+     */
+    private getAvailabilityOfSelfOrReference(reference: OpenAPIV3_1.ReferenceObject): Availability | undefined {
+        for (const node of [...this.getSelfAndInlineAllOfElements(), reference]) {
+            const availability = this.context.getAvailability({ node, breadcrumbs: this.breadcrumbs });
+            if (availability != null) {
+                return availability;
+            }
+        }
+        return undefined;
+    }
+
+    private getSelfAndInlineAllOfElements(): (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] {
+        if (this.context.isReferenceObject(this.schemaOrReference) || this.schemaOrReference.allOf == null) {
+            return [this.schemaOrReference];
+        }
+        return [
+            this.schemaOrReference,
+            ...this.schemaOrReference.allOf.filter(
+                (element): element is OpenAPIV3_1.SchemaObject => !this.context.isReferenceObject(element)
+            )
+        ];
     }
 
     private convertSchemaObject({
@@ -212,4 +243,31 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     private wrapInNullable(type: TypeReference): TypeReference {
         return TypeReference.container(ContainerType.nullable(type));
     }
+}
+
+/**
+ * When an allOf has a single $ref to a non-object type (e.g. an enum or
+ * primitive), these annotation-only fields on the inline sibling cannot alter
+ * the type shape, so we short-circuit to the $ref directly. Any field NOT in
+ * this set (e.g. properties, pattern, enum) is assumed to carry meaningful
+ * content and forces a proper allOf merge.
+ *
+ * Notably, `type` is excluded: it can express nullability (e.g. `type: "null"`
+ * or `type: ["string", "null"]`) which changes the semantics of the allOf.
+ * Since `type` is not in this set, any inline element that carries nullability
+ * will always fail this check and force a full merge.
+ */
+const METADATA_ONLY_FIELDS = new Set([
+    "description",
+    "title",
+    "deprecated",
+    "readOnly",
+    "writeOnly",
+    "xml",
+    "externalDocs",
+    "x-fern-type-name"
+]);
+
+function isMetadataOnlySchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+    return Object.keys(schema).every((key) => METADATA_ONLY_FIELDS.has(key));
 }

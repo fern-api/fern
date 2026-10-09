@@ -109,7 +109,8 @@ public class SendTest : BaseMockServerTest
                     "strProp": "strProp"
                   }
                 ]
-              }
+              },
+              "ending": "$ending"
             }
             """;
 

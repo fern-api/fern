@@ -84,8 +84,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
         clazz.addMethod(this.jsonSerializeMethod());
 
-        clazz.addMethod(this.fromJsonMethod());
-
         clazz.addMethod(this.jsonDeserializeMethod());
 
         return new PhpFile({
@@ -301,12 +299,33 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "samePropertiesAsObject":
                 return php.Type.reference(this.context.phpTypeMapper.convertToClassReference(variant.shape));
             case "singleProperty":
-                return this.context.phpTypeMapper.convert({ reference: variant.shape.type });
+                return this.context.phpTypeMapper.convert({ reference: variant.shape.type, preserveEnums: true });
             case "noProperties":
                 return php.Type.null();
             default:
                 assertNever(variant.shape);
         }
+    }
+
+    private isVariantEnumType(variant: FernIr.SingleUnionType): boolean {
+        if (variant.shape.propertiesType !== "singleProperty") {
+            return false;
+        }
+        return this.isEnumTypeRef(variant.shape.type);
+    }
+
+    private isEnumTypeRef(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type !== "named") {
+            return false;
+        }
+        const decl = this.context.getTypeDeclarationOrThrow(typeRef.typeId);
+        if (decl.shape.type === "enum") {
+            return true;
+        }
+        if (decl.shape.type === "alias") {
+            return this.isEnumTypeRef(decl.shape.aliasOf);
+        }
+        return false;
     }
 
     private getTypeCheckConditional(
@@ -783,6 +802,13 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 if (declaredVariableName != null) {
                     argument = php.codeblock(declaredVariableName);
                 }
+                if (this.isVariantEnumType(variant)) {
+                    return php.codeblock((writer) => {
+                        writer.write("$value = ");
+                        writer.writeNode(argument);
+                        writer.writeTextStatement("->value");
+                    });
+                }
                 return php.codeblock((writer) => {
                     writer.write("$value = ");
                     writer.writeNodeStatement(
@@ -944,60 +970,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             );
 
             writer.endControlFlow();
-        });
-    }
-
-    private fromJsonMethod(): php.Method {
-        return php.method({
-            name: "fromJson",
-            access: "public",
-            parameters: [
-                php.parameter({
-                    name: "json",
-                    type: php.Type.string()
-                })
-            ],
-            return_: STATIC,
-            body: php.codeblock((writer) => {
-                writer.write("$decodedJson = ");
-                writer.writeNodeStatement(
-                    php.invokeMethod({
-                        method: "decode",
-                        arguments_: [php.codeblock("$json")],
-                        static_: true,
-                        on: this.context.getJsonDecoderClassReference()
-                    })
-                );
-
-                const negation = php.codeblock((_writer) => {
-                    _writer.write("!");
-                    _writer.writeNode(
-                        php.invokeMethod({
-                            method: "is_array",
-                            arguments_: [php.codeblock("$decodedJson")],
-                            static_: true
-                        })
-                    );
-                });
-                writer.controlFlow("if", negation);
-                writer.writeNodeStatement(
-                    php.throwException({
-                        classReference: this.context.getExceptionClassReference(),
-                        arguments_: [php.codeblock('"Unexpected non-array decoded type: " . gettype($decodedJson)')]
-                    })
-                );
-                writer.endControlFlow();
-                writer.write("return ");
-                writer.writeNodeStatement(
-                    php.invokeMethod({
-                        method: "jsonDeserialize",
-                        arguments_: [php.codeblock("$decodedJson")],
-                        static_: true,
-                        on: php.codeblock("self")
-                    })
-                );
-            }),
-            static_: true
         });
     }
 
@@ -1205,6 +1177,43 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         const discriminantGetter = php.codeblock(`$data['${getWireValue(variant.discriminantValue)}']`);
         switch (type.internalType.type) {
             case "reference":
+                if (this.isVariantEnumType(variant)) {
+                    return php.codeblock((writer) => {
+                        const typeCheck = this.getTypeCheck(discriminantGetter, php.Type.string());
+
+                        const isNotType = php.codeblock((_writer) => {
+                            _writer.write("!");
+                            _writer.write("(");
+                            _writer.writeNode(typeCheck);
+                            _writer.write(")");
+                        });
+
+                        writer.writeNode(
+                            php.codeblock((_writer) => {
+                                _writer.controlFlow("if", isNotType);
+                                _writer.writeNodeStatement(
+                                    this.getErrorThrow(
+                                        this.getDeserializationTypeCheckErrorMessage(
+                                            variant.discriminantValue,
+                                            php.Type.string()
+                                        )
+                                    )
+                                );
+                                _writer.endControlFlow();
+                            })
+                        );
+
+                        writer.write(`$args['${this.getValueFieldName()}'] = `);
+                        writer.writeNodeStatement(
+                            php.invokeMethod({
+                                method: "from",
+                                arguments_: [discriminantGetter],
+                                static_: true,
+                                on: type.getClassReference()
+                            })
+                        );
+                    });
+                }
                 return php.codeblock((writer) => {
                     const typeCheck = this.getTypeCheck(discriminantGetter, php.Type.array(php.Type.mixed()));
 

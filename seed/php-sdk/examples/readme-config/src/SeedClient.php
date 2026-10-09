@@ -92,6 +92,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->echo_(
+     *     'Hello world!\n\nwith\n\tnewlines',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -139,6 +146,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->echo_(
+     *     'primitive',
+     * );
+     * ```
+     *
      * @param (
      *    value-of<BasicType>
      *   |value-of<ComplexType>

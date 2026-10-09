@@ -12,6 +12,7 @@ import {
 } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import { emitEnvVarPresenceCheck, emitEnvVarValue } from "./processEnvAccess.js";
 
 export declare namespace BearerAuthProviderGenerator {
     export interface Init {
@@ -20,6 +21,8 @@ export declare namespace BearerAuthProviderGenerator {
         neverThrowErrors: boolean;
         isAuthMandatory: boolean;
         shouldUseWrapper: boolean;
+        optionalAuth?: boolean;
+        guardProcessEnvAccess?: boolean;
     }
 }
 
@@ -35,6 +38,8 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
+    private readonly optionalAuth: boolean;
+    private readonly guardProcessEnvAccess: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: BearerAuthProviderGenerator.Init) {
@@ -43,6 +48,8 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
+        this.optionalAuth = init.optionalAuth ?? false;
+        this.guardProcessEnvAccess = init.guardProcessEnvAccess ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -227,7 +234,10 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         const tokenEnvVar = this.authScheme.tokenEnvVar;
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        const envCheck = tokenEnvVar != null ? " || process.env?.[ENV_TOKEN] != null" : "";
+        const envCheck =
+            tokenEnvVar != null
+                ? ` || ${emitEnvVarPresenceCheck({ envConstant: "ENV_TOKEN", guarded: this.guardProcessEnvAccess })}`
+                : "";
         return `return options?.${wrapperAccess}[TOKEN_PARAM] != null${envCheck};`;
     }
 
@@ -266,11 +276,11 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
 
         const envFallback =
             tokenEnvVar != null
-                ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_TOKEN]`
+                ? `\n            (${supplierGetCode}) ??\n            ${emitEnvVarValue({ envConstant: "ENV_TOKEN", guarded: this.guardProcessEnvAccess })}`
                 : supplierGetCode;
 
-        if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if token is missing
+        if (this.neverThrowErrors || this.optionalAuth) {
+            // Return empty headers if the token is missing, so requests are sent unauthenticated
             return `
         const ${tokenVar} = ${envFallback};
         if (${tokenVar} == null) {

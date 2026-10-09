@@ -18,6 +18,9 @@ public partial class ImdbClient : IImdbClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,9 +32,11 @@ public partial class ImdbClient : IImdbClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/movies/create-movie",
+                    Path = "movies/create-movie",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
+                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -48,7 +53,7 @@ public partial class ImdbClient : IImdbClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -62,7 +67,13 @@ public partial class ImdbClient : IImdbClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -73,17 +84,26 @@ public partial class ImdbClient : IImdbClient
             throw new CustomClientApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
 
     private async Task<WithRawResponse<Movie>> GetMovieAsyncCore(
-        string movieId,
+        GetMovieImdbRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -96,9 +116,10 @@ public partial class ImdbClient : IImdbClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/movies/{0}",
-                        ValueConvert.ToPathParameterString(movieId)
+                        "movies/{0}",
+                        ValueConvert.ToPathParameterString(request.MovieId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -116,7 +137,7 @@ public partial class ImdbClient : IImdbClient
                 return new WithRawResponse<Movie>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -130,7 +151,13 @@ public partial class ImdbClient : IImdbClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -143,8 +170,16 @@ public partial class ImdbClient : IImdbClient
                 switch (response.StatusCode)
                 {
                     case 404:
-                        throw new MovieDoesNotExistError(
-                            JsonUtils.Deserialize<string>(responseBody)
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<string>(responseBody),
+                            rawResponse: new SeedApi.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                 }
             }
@@ -155,7 +190,13 @@ public partial class ImdbClient : IImdbClient
             throw new CustomClientApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -178,16 +219,16 @@ public partial class ImdbClient : IImdbClient
     }
 
     /// <example><code>
-    /// await client.Imdb.GetMovieAsync("movieId");
+    /// await client.Imdb.GetMovieAsync(new GetMovieImdbRequest { MovieId = "movieId" });
     /// </code></example>
     public WithRawResponseTask<Movie> GetMovieAsync(
-        string movieId,
+        GetMovieImdbRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<Movie>(
-            GetMovieAsyncCore(movieId, options, cancellationToken)
+            GetMovieAsyncCore(request, options, cancellationToken)
         );
     }
 }

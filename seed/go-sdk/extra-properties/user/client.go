@@ -26,13 +26,23 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.CreateUserRequest{
+//	    Name: "Alice",
+//	}
+//	client.User.CreateUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	request *fern.CreateUserRequest,

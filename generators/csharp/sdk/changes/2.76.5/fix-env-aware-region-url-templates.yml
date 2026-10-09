@@ -1,0 +1,7 @@
+- summary: |
+    When a client is constructed with both a named environment and server URL
+    variables (e.g. `Region`), the generated client now renders the selected
+    environment's URL template(s) instead of always using the first (default)
+    environment's template. Explicitly provided custom base URLs and custom
+    environment values are never overridden.
+  type: fix

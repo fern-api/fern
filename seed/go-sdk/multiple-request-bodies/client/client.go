@@ -28,13 +28,21 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.UploadDocumentRequest{}
+//	client.UploadJSONDocument(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UploadJSONDocument(
 	ctx context.Context,
 	request *fern.UploadDocumentRequest,

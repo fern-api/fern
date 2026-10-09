@@ -2,8 +2,11 @@ import {
     detectCiProvider,
     detectInvocationSource,
     FernWorkspace,
+    getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
-    getOriginGitCommitIsDirty
+    getOriginGitCommitIsDirty,
+    getUserAgentTemplateFromGeneratorConfig,
+    getWebhookSignatureFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
@@ -31,6 +34,8 @@ export async function getIntermediateRepresentation({
     irVersionOverride,
     version,
     packageName,
+    userAgentTemplate,
+    organization,
     sourceConfig,
     includeOptionalRequestPropertyExamples,
     ir
@@ -42,10 +47,14 @@ export async function getIntermediateRepresentation({
     irVersionOverride: string | undefined;
     version: string | undefined;
     packageName: string | undefined;
+    userAgentTemplate?: string;
+    organization?: string;
     sourceConfig: SourceConfig | undefined;
     includeOptionalRequestPropertyExamples?: boolean;
     ir?: IntermediateRepresentation;
 }): Promise<getIntermediateRepresentation.Return> {
+    const resolvedUserAgentTemplate = userAgentTemplate ?? getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
+    const idempotencyKeyGeneration = getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation);
     const intermediateRepresentation =
         ir ??
         generateIntermediateRepresentation({
@@ -54,6 +63,7 @@ export async function getIntermediateRepresentation({
             generationLanguage: generatorInvocation.language,
             keywords: generatorInvocation.keywords,
             smartCasing: generatorInvocation.smartCasing,
+            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples,
                 disabled: generatorInvocation.disableExamples
@@ -61,6 +71,10 @@ export async function getIntermediateRepresentation({
             readme: generatorInvocation.readme,
             version,
             packageName,
+            userAgentTemplate: resolvedUserAgentTemplate,
+            idempotencyKeyGeneration,
+            webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, context),
+            organization,
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),
             generationMetadata: {

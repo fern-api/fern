@@ -58,6 +58,8 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@v6
+        with:
+          node-version: "lts/Krypton"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -70,21 +72,18 @@ jobs:
 
       - name: Publish to npm
         run: |
-          publish() {  # use latest npm to ensure OIDC support
-            npx -y npm@latest publish "$@"
-          }
           if [[ ${GITHUB_REF} == *alpha* ]]; then
-            publish --access public --tag alpha
+            npm publish --access public --tag alpha
           elif [[ ${GITHUB_REF} == *beta* ]]; then
-            publish --access public --tag beta
+            npm publish --access public --tag beta
           else
             PKG_NAME=$(node -p "require('./package.json').name")
             PKG_VERSION=$(node -p "require('./package.json').version")
             CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
-            if npx -y semver "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
+            if npx -y semver@7.8.1 "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
-              publish --access public --tag backport
+              npm publish --access public --tag backport
             else
-              publish --access public
+              npm publish --access public
             fi
           fi

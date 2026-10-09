@@ -1,0 +1,5 @@
+- summary: |
+    Respect the `user-agent` config template when `include-platform-headers` is enabled. The
+    structured User-Agent previously always used the NuGet package id, ignoring the
+    configured template.
+  type: fix

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Default an optional referenced request body to `nil` in the generated client
+    method, and omit the `request` argument from snippets and wire tests when an
+    example provides no body. Previously the parameter had no default value while
+    snippets emitted an empty initializer for the wrapped type, so endpoints with
+    an absent optional request body failed to compile.
+  type: fix

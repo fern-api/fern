@@ -1,0 +1,84 @@
+# `optional: true` on a referenced body says the *call* may omit the body, which the IR carries as
+# `required: false` on the request body reference. The body type itself is untouched, so these
+# endpoints pin that omittability makes the PHP parameter omittable and sends neither a body nor a
+# Content-Type header when the caller leaves it out.
+service:
+  base-path: /refunds
+  auth: false
+  endpoints:
+    # positional path parameter plus an omittable body: `refund($id)` or `refund($id, $request)`
+    refund:
+      docs: Refund a payment, optionally with a partial amount.
+      method: POST
+      path: /{id}
+      path-parameters:
+        id: string
+      request:
+        body:
+          type: RefundRequest
+          optional: true
+      response: Refund
+
+    # no other request properties, so the body is the only parameter: `bulkRefund()` or `bulkRefund($request)`
+    bulkRefund:
+      docs: Refund every payment, optionally with a partial amount.
+      method: POST
+      path: ""
+      request:
+        body:
+          type: RefundRequest
+          optional: true
+      response: list<Refund>
+
+    # an omittable body alongside a header, so the body lands in the request wrapper as an
+    # omittable property: `refundWithHeader(new RefundWithHeaderRequest())`
+    refundWithHeader:
+      docs: Refund a payment, passing the body alongside a header.
+      method: POST
+      path: /with-header
+      request:
+        name: RefundWithHeaderRequest
+        headers:
+          X-Idempotency-Key: optional<string>
+        body:
+          type: RefundRequest
+          optional: true
+      response: Refund
+
+    # the body has a required property, and stays constructible only with that property
+    refundExactAmount:
+      docs: Refund a payment, optionally with an exact amount.
+      method: POST
+      path: /{id}/exact
+      path-parameters:
+        id: string
+      request:
+        body:
+          type: ExactRefundRequest
+          optional: true
+      response: Refund
+
+    # baseline: a required body keeps the parameter required
+    requiredRefund:
+      docs: Refund a payment, always with an amount.
+      method: POST
+      path: /{id}/required
+      path-parameters:
+        id: string
+      request:
+        body: RefundRequest
+      response: Refund
+
+types:
+  RefundRequest:
+    properties:
+      amount: optional<double>
+
+  ExactRefundRequest:
+    properties:
+      amount: double
+
+  Refund:
+    properties:
+      id: string
+      amount: optional<double>

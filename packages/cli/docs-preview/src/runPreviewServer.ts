@@ -20,10 +20,11 @@ import express from "express";
 import { readFile } from "fs/promises";
 import http from "http";
 import path from "path";
-import Watcher from "watcher";
 import { type WebSocket, WebSocketServer } from "ws";
 
+import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle.js";
+import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -74,7 +75,9 @@ export async function runPreviewServer({
     validateProject,
     context,
     port,
-    bundlePath
+    bundlePath,
+    cacheDir,
+    includePrivate
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -82,6 +85,9 @@ export async function runPreviewServer({
     context: TaskContext;
     port: number;
     bundlePath?: string;
+    cacheDir?: AbsoluteFilePath;
+    /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
+    includePrivate?: boolean;
 }): Promise<void> {
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
@@ -94,9 +100,15 @@ export async function runPreviewServer({
                     code: CliError.Code.InternalError
                 });
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, tryTar: false });
+            await downloadBundle({
+                bucketUrl: url,
+                logger: context.logger,
+                preferCached: true,
+                tryTar: false,
+                cacheDir
+            });
         } catch (err) {
-            const pathToBundle = getPathToBundleFolder({});
+            const pathToBundle = getPathToBundleFolder({ cacheDir });
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
             }
@@ -152,8 +164,14 @@ export async function runPreviewServer({
         result: PreviewDocsResult
     ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
         const translations = new Map<string, DocsV1Read.DocsDefinition>();
-        const { docsDefinition, translationPages, translationNavigationOverlays, collectedFileIds, docsWorkspacePath } =
-            result;
+        const {
+            docsDefinition,
+            translationPages,
+            translationNavigationOverlays,
+            collectedFileIds,
+            docsWorkspacePath,
+            markdownFilesToPathName
+        } = result;
 
         if (translationPages == null || Object.keys(translationPages).length === 0) {
             return translations;
@@ -226,7 +244,8 @@ export async function runPreviewServer({
                         const importsResolved = transformAtPrefixImports({
                             markdown: codeResolved,
                             absolutePathToFernFolder: docsWorkspacePath,
-                            absolutePathToMarkdownFile
+                            absolutePathToMarkdownFile,
+                            context
                         });
 
                         // Strip MDX comments
@@ -236,7 +255,7 @@ export async function runPreviewServer({
                         processedMarkdown = replaceImagePathsAndUrls(
                             processedMarkdown,
                             collectedFileIds,
-                            {}, // markdownFilesToPathName not needed for translations
+                            markdownFilesToPathName,
                             {
                                 absolutePathToMarkdownFile,
                                 absolutePathToFernFolder: docsWorkspacePath
@@ -310,7 +329,8 @@ export async function runPreviewServer({
                 context,
                 previousDocsDefinition: previewResult?.docsDefinition,
                 editedAbsoluteFilepaths,
-                previousPreviewResult: previewResult
+                previousPreviewResult: previewResult,
+                includePrivate
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newPreviewResult;
@@ -342,13 +362,27 @@ export async function runPreviewServer({
     }
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
-    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({});
 
-    const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
-        recursive: true,
-        ignoreInitial: true,
-        debounce: 100,
-        renameDetection: true
+    // Watch directories containing docs files referenced from outside the fern folder
+    // (e.g., `path: ../docs/page.mdx` or `redirects: ../redirects.yml` in docs.yml)
+    if (previewResult != null) {
+        const externalDocsPaths = getExternalDocsWatchPaths(
+            absoluteFilePathToFern,
+            previewResult.docsDefinition,
+            project.docsWorkspaces?.config._absoluteFilepathsToRedirectsFiles
+        );
+        if (externalDocsPaths.length > 0) {
+            context.logger.debug(`Watching external docs directories: ${externalDocsPaths.join(", ")}`);
+            additionalFilepaths.push(...externalDocsPaths);
+        }
+    }
+
+    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({ cacheDir });
+
+    const watcher = await createDocsPreviewWatcher({
+        absoluteFilePathToFern,
+        additionalFilepaths,
+        context
     });
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];

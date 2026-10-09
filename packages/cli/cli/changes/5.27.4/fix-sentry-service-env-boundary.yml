@@ -1,0 +1,6 @@
+- summary: |
+    Classify service and environment errors at their boundary call sites: mark exhausted
+    429 retries as NetworkError, pass error objects through failWithoutThrowing in remote
+    generation so CliError codes propagate, and reclassify docs preview server startup
+    failures as EnvironmentError instead of InternalError.
+  type: fix

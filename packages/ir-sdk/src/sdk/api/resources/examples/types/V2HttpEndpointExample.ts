@@ -4,6 +4,12 @@ import type * as FernIr from "../../../index.js";
 
 export interface V2HttpEndpointExample {
     displayName: string | undefined;
+    /**
+     * The content type this example is associated with (e.g. "application/json",
+     * "application/ld+json"). When present, the docs UI can filter or auto-select
+     * this example when the user switches to the corresponding content type.
+     */
+    contentType: string | undefined;
     request: FernIr.V2HttpEndpointRequest | undefined;
     response: FernIr.V2HttpEndpointResponse | undefined;
     codeSamples: FernIr.V2HttpEndpointCodeSample[] | undefined;

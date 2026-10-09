@@ -21,6 +21,7 @@ export interface SdkCustomConfig {
     namespaceExport: string | undefined;
     naming: NamingConfig | undefined;
     outputEsm: boolean;
+    esmOnly: boolean;
     outputSourceFiles: boolean;
     outputSrcOnly: boolean;
     includeCredentialsOnCrossOriginRequests: boolean;
@@ -31,7 +32,14 @@ export interface SdkCustomConfig {
     includeOtherInUnionTypes: boolean;
     enableForwardCompatibleEnums: boolean;
     requireDefaultEnvironment: boolean;
-    defaultTimeoutInSeconds: number | "infinity" | undefined;
+    requireBaseUrl: boolean;
+    /**
+     * Effective default request timeout in milliseconds. Resolved from the
+     * `defaultTimeout` config key, falling back to the deprecated
+     * `defaultTimeoutInSeconds` / `timeoutInSeconds` keys (× 1000).
+     * `"infinity"` disables the timeout; `undefined` applies the built-in default.
+     */
+    defaultTimeout: number | "infinity" | undefined;
     skipResponseValidation: boolean;
     extraDependencies: Record<string, string>;
     extraDevDependencies: Record<string, string>;
@@ -49,6 +57,8 @@ export interface SdkCustomConfig {
     inlinePathParameters: boolean | undefined;
     enableInlineTypes: boolean | undefined;
     packageJson: Record<string, unknown> | undefined;
+    packageJsonMergeStrategy: "shallow" | "deep";
+    exactOptionalPropertyTypes: boolean;
     publishToJsr: boolean | undefined;
     omitUndefined: boolean | undefined;
     writeUnitTests: boolean | undefined;
@@ -63,10 +73,15 @@ export interface SdkCustomConfig {
     fetchSupport: "node-fetch" | "native";
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
+    includePlatformHeaders: boolean | undefined;
+    userAgentOnly: boolean | undefined;
+    allowUserAgentAppInfo: boolean | undefined;
     useDefaultRequestParameterValues: boolean | undefined;
     packageManager: "pnpm" | "yarn";
     generateReadWriteOnlyTypes: boolean;
     flattenRequestParameters: boolean | undefined;
+    respectOptionalRequestBody: boolean | undefined;
+    deepObjectMapQueryParameters: boolean | undefined;
     exportAllRequestsAtRoot: boolean | undefined;
     testFramework: "jest" | "vitest";
     consolidateTypeFiles: boolean | undefined;
@@ -81,5 +96,9 @@ export interface SdkCustomConfig {
     resolveQueryParameterNameConflicts: boolean;
     maxRetries: number | undefined;
     alwaysSendAuth: boolean;
+    optionalAuth: boolean;
+    guardProcessEnvAccess: boolean;
+    websocketHandlerMode: "replace" | "accumulate";
     retryStatusCodes: "legacy" | "recommended";
+    generateReactQueryHooks: boolean;
 }

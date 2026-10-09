@@ -1,4 +1,978 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.38.1
+  changelogEntry:
+    - summary: |
+        Fix paginated results silently skipping records. Every `each`/`map`/`to_a`/`first`/`any?`/`count`
+        over a pager (or its `pages`) now starts again from the first page, reading `pages` no longer
+        moves item iteration forward, items are no longer removed from fetched pages as they are read,
+        and `each` without a block returns an `Enumerator`. Manual `next_element`/`next_page` loops,
+        including retrying after a failed page, behave as before. Because each loop starts again,
+        reading the same pager more than once (or reading both `pages` and items) requests the pages
+        again, except a first page kept by `load_first_page` (or `fetchFirstPageOnCall`), which every
+        loop reuses.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.38.0
+  changelogEntry:
+    - summary: |
+        Cursor and offset paginated methods now document what they return. The YARD `@return` tag and
+        the `reference.md` signature name the `CursorItemIterator` / `OffsetItemIterator` instead of the
+        response type, the method docs say which items it yields, that `pages` gives each page's full
+        response, and when the request is sent and API errors are raised. The README pagination example
+        uses a paginated endpoint even when the default endpoint is not paginated, and shows `pages`
+        instead of the nonexistent `results` method. Iterators gain `load_first_page`, which sends the
+        first request immediately so its API error is raised at that call.
+      type: fix
+    - summary: |
+        Add opt-in `fetchFirstPageOnCall` config. When enabled, cursor and offset paginated methods send
+        the request for the first page before returning the iterator, so an API error for that page is
+        raised by the method call, as in non-paginated methods. Disabled by default because existing
+        callers may rescue errors around the loop, or build an iterator without iterating it.
+      type: feat
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.37.3
+  changelogEntry:
+    - summary: |
+        Connection-level failures now raise the SDK's new `Errors::ConnectionError` (a subclass of
+        `Errors::ApiError`) instead of leaking raw `Errno::ECONNREFUSED`, `Errno::ECONNRESET`,
+        `EOFError`, `SocketError` (DNS) or `OpenSSL::SSL::SSLError`, so `rescue Errors::ApiError`
+        catches every failed call as the README documents. The original exception is kept as `cause`.
+        `Errno::ETIMEDOUT` now raises `Errors::TimeoutError` like the other socket timeouts.
+        Other `SystemCallError`s (e.g. file errors) are not wrapped. Code that rescued the wrapped classes
+        directly should rescue `Errors::ConnectionError` instead (or inspect `cause`). Transport failures are still not retried. The README errors example shows the new class.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.37.2
+  changelogEntry:
+    - summary: |
+        Parsing an XML (TwiML) element without a text property keeps the text before its first child in the
+        ordered content, so `Gather.from_xml('<Gather>Press a key, then <Say>one</Say></Gather>')` round-trips
+        instead of dropping `Press a key, then `. Types with a text property (e.g. `Say`) are unchanged: that
+        text is still the property's value.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.37.1
+  changelogEntry:
+    - summary: |
+        Generate `float` and `double` fields and parameters as Ruby `Float` instead of `Integer`.
+        Decimal values (e.g. a balance of `100.57`) previously lost their fractional part when a
+        response was decoded or a request was sent. Integer types stay `Integer`.
+        Generated wire tests now also assert that numbers in request bodies reach the wire unchanged
+        and that numbers in mocked responses decode unchanged.
+        Integer and Float map keys nested in models now decode as numbers instead of staying symbols.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 1.37.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) models can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `add_text` segments and child elements), while
+        `comment_before(text)` / `comment_after(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `from_xml` and round-trip through `to_xml`; `Element#add_comment` and
+        the new `Internal::Xml::Comment` node expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 1.36.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 1.35.2
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes and text accept a space-separated String or a single
+        value (including a Symbol) in addition to an Array, matching the legacy call style:
+        `response.gather(input: "speech dtmf")` and `dial(status_callback_event: :answered)` no
+        longer raise `NoMethodError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.35.1
+  changelogEntry:
+    - summary: |
+        Fluent XML (TwiML) child methods accept the text content as a keyword as well as positionally,
+        matching the legacy call style: `response.say(message: "x")`, `response.dial(number: "+1555")` and
+        `response.message(body: "hi")` now emit the text instead of silently dropping it. Passing the text
+        both positionally and as a keyword raises `ArgumentError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.35.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types support the legacy twilio-ruby building style: constructors and fluent child methods yield the
+        new element to a block (`VoiceResponse.new { |r| r.say("hi") }`, `r.gather { |g| g.say("one") }`), and
+        `add_child` also accepts an element name with text and attributes (`r.add_child("Custom", "v", a: "1")`).
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.2
+  changelogEntry:
+    - summary: |
+        Enum-typed attributes and text on XML (TwiML) types are open on the wire: `from_xml` keeps a value the enum does
+        not declare (e.g. a voice added after the SDK was generated) instead of raising, and it round-trips through
+        `to_xml`. This matches how the same enums already behave in JSON.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.1
+  changelogEntry:
+    - summary: |
+        Endpoints whose request body is an array, set, map, primitive, enum, optional/nullable object, or an alias of
+        one of these now send the body argument itself (e.g. `[{"name":"Monstera"}]`) instead of wrapping it with the
+        other keyword arguments (e.g. `{"request": [...]}`). This also applies to such bodies on endpoints with headers
+        or query parameters, which no longer leak into the body. Objects inside these bodies (optional/nullable objects,
+        list and set items, and map values) are serialized through their model so fields use their wire names, sets are
+        sent as JSON arrays, and an omitted optional body is still sent without a body.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omitFernHeaders` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.33.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.32.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed child models and raw `Element` children in a single
+        ordered `content` list, so `to_xml` emits them in the order they were added
+        (`response.say("a"); response.add_child(Element.new("Custom")); response.say("b")` yields
+        `<Say>a</Say><Custom/><Say>b</Say>`) and `from_xml` preserves document order, including the
+        position of unknown elements. Adds `add_text(String)` to XML types and `Element` for mixed content
+        such as `<Say>Hi <break strength="weak"/> world</Say>`. Typed child properties and additional
+        children remain available and are reconciled into the content order on serialization.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.31.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.31.0
+  changelogEntry:
+    - summary: |
+        Add support for SDK variables (`x-fern-sdk-variables` / `variables` in `api.yml`).
+        Each variable is exposed as an optional keyword on the root client (e.g.
+        `Client.new(target_account_sid: "AC...")`); path parameters bound to a variable are
+        removed from the endpoint methods and request classes, and the value is read from
+        the client instead. String variables declared with an `env` fall back to
+        `ENV.fetch("<ENV_VAR>", nil)` when the keyword is omitted, and endpoints raise an
+        `ArgumentError` with a clear message when a required variable is still unset.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.30.1
+  changelogEntry:
+    - summary: |
+        The `additional_body_parameters` request option is now applied to request bodies. Previously it was
+        documented on every endpoint method but silently ignored. Extra properties are merged into the serialized
+        JSON (or form-urlencoded) body using their API wire-format names, override SDK-set fields with the same name,
+        and create a body when the endpoint has none
+        (except GET and HEAD requests, which are still sent without a body). Multipart (file upload) requests are not affected.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Fix pagination for endpoints whose cursor or offset lives in the request body
+        (e.g. `$request.cursor` or `$request.options.offset`). The generated iterators
+        previously referenced an undeclared `query_params` and raised `NameError` on first
+        use; they now read and advance the body property, creating omitted parent objects.
+      type: fix
+    - summary: |
+        Nil values are no longer serialized as `{}` (`nil.to_h`), and `optional<nullable<T>>`
+        fields keep their nullable metadata so explicit `nil` values are preserved, while
+        omitted optional fields are still left out of the request.
+      type: fix
+    - summary: |
+        Add a `timeout:` option to the root client and honor `request_options[:timeout_in_seconds]`
+        per request (an explicit `0` is respected). The timeout also applies to OAuth and inferred-auth
+        token requests. Net::HTTP open/read/write timeouts are raised as the SDK's `TimeoutError`.
+        README timeout snippets now show the real API.
+      type: fix
+    - summary: |
+        Endpoints returning text, bytes, or a file download now return the raw response body
+        instead of `nil`.
+      type: fix
+    - summary: |
+        Generated `.rubocop.yml` disables `Style/CommentAnnotation` (API docstrings such as
+        "Note:" tripped it), and the generated retry tests follow the `retryStatusCodes` setting.
+      type: fix
+    - summary: |
+        Error responses now expose the body parsed into the endpoint's declared error type
+        as `error.body` (exact status codes take precedence over `4XX`/`5XX` wildcards).
+        `error.message` and `error.code` are unchanged; `body` is `nil` when no error type
+        matches or the body is not valid JSON.
+      type: feat
+    - summary: |
+        Add the opt-in `wrapInvalidJsonResponses` config. When enabled, a 2xx response whose
+        body is not valid JSON raises `Errors::ResponseError` (with the raw body and status
+        code) instead of leaking `JSON::ParserError`.
+      type: feat
+    - summary: |
+        Add the opt-in `requireAuthCredentials` config. When enabled, the client
+        constructor raises `ArgumentError` if a bearer or header credential is neither
+        passed nor set in its environment variable, instead of sending an empty auth header.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `allowCustomHttpClient` config. When enabled, the generated client
+        accepts an `http_client:` keyword — any object responding to
+        `request(url, http_request)` and returning a `Net::HTTPResponse` — that replaces the
+        SDK's built-in `Net::HTTP` transport. This lets callers configure proxies, custom TLS,
+        connection reuse, or request/response interceptors (logging, signing, header
+        injection). Retries still wrap the custom client, and it is also used for OAuth /
+        inferred-auth token requests. The custom client owns its own connection settings,
+        including timeouts.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.28.3
+  changelogEntry:
+    - summary: |
+        The README's Environments example for a multi-URL SDK passes the environment constant through
+        the client's `environment:` keyword instead of `base_url:`. With more than one URL per
+        environment the constant is a hash of URLs, and `base_url:` expects a string, so the example
+        built a client that could not make a request. Single-URL SDKs keep `base_url:`.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.28.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 1.28.1
+  changelogEntry:
+    - summary: |
+        Enum values (and other screaming-snake constants) named `begin` or `end` are now emitted
+        as `BEGIN_` / `END_`, since `BEGIN` and `END` are Ruby reserved words and `END = "end"`
+        is a syntax error.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 1.28.0
+  changelogEntry:
+    - summary: |
+        Inline documentation on XML-encoded (TwiML) types: each `field` carries its property
+        description as a comment, and fluent child methods document the child type, the text
+        parameter's description, and every attribute via `@option attributes` entries.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.27.1
+  changelogEntry:
+    - summary: |
+        Cap generated request-wrapper filenames (`lib/<gem>/<service>/types/*_request.rb`) at
+        100 characters, matching the existing cap on type filenames, so `gem build` no longer
+        fails with `Gem::Package::TooLongFileName` for endpoints with long path-derived names
+        (e.g. operations without an `operationId`). Over-long names are truncated with a short
+        deterministic hash appended; the Ruby class name is unchanged.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.27.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 1.26.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 1.26.1
+  changelogEntry:
+    - summary: |
+        Honor the org-level whitelabel setting (`readmeConfig.whiteLabel`) and the `apiName`/`disabledSections` (IR `disabledFeatures`) readme
+        config options when generating README.md. Previously the "Built with Fern" badge was always emitted.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 1.26.0
+  changelogEntry:
+    - summary: |
+        Object types with an `xml` encoding (e.g. TwiML) now generate XML support: `to_xml`/`to_xml_element`,
+        `from_xml`/`from_xml_element`, fluent child builders (`response.say("Hello", voice: "alice")`, with an
+        `add_` prefix when a child tag collides with a field), and preservation of unknown attributes and child
+        elements (`additional_attributes`, `additional_children`, `add_child`). A REXML-based
+        `Internal::Xml` runtime (with DOCTYPE rejection) is emitted only when XML-encoded types exist.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 1.25.0
+  changelogEntry:
+    - summary: |
+        A 503 now raises a typed error instead of `ArgumentError`.
+        `ServiceUnavailableError` inherited from `ApiError`, which accepts 0..1
+        positional arguments, while it is raised with the `(msg, code:)` signature
+        its siblings use — so constructing it threw from inside the SDK and the
+        caller lost the response during exactly the outage they needed to see. Every
+        other 5xx mapped correctly; this was a one-word divergence from
+        `ResponseError`.
+      type: fix
+    - summary: |
+        Add `respectNullableUnionFields` (opt-in). The undiscriminated-union matcher
+        tested a member's required fields against `optional` alone, so a field that
+        is required *and* `nullable` and legitimately arrives as `nil` read as a
+        missing required field. The arm was rejected, no member matched, and the
+        union silently degraded to an untyped Hash while the SDK documented the
+        model — callers then hit `NoMethodError` on the documented accessors.
+        `Model#to_h` already pairs the two flags this way. Opt-in because a caller
+        of an already published gem may be reading that Hash by key; enabling it
+        changes the returned type.
+      type: feat
+    - summary: |
+        Add `coerceAliasResponses` (opt-in). A type alias to a named type generated a
+        `load` that did a bare `JSON.parse`, so an endpoint whose response schema is
+        a `$ref` to another schema returned a string-keyed Hash while the SDK
+        documented the aliased model — and it parsed without `symbolize_names`,
+        unlike `Model.load`, so even hash access used different keys. With the flag,
+        `load` delegates to the aliased type's own coercion. Aliases to primitives,
+        containers and `unknown` are unaffected: there is no named type to delegate
+        to. Opt-in because a caller of an already published gem may be reading that
+        Hash by key.
+      type: feat
+  createdAt: "2026-09-15"
+  irVersion: 67
+- version: 1.24.1
+  changelogEntry:
+    - summary: |
+        Fix file upload endpoints crashing with `NoMethodError`. Generated multipart code now
+        calls `FormData#add_file` instead of the non-existent `to_form_data_part`, file arrays
+        add one part per file, and declared MIME types are forwarded as `content_type:`.
+        `FormData#add_file` also accepts a file path `String` (matching the generated method
+        signatures), reading the file contents and deriving the filename from the path.
+        Non-file multipart properties are now added unless the value is `nil`, so `false` and
+        `0` are no longer silently dropped while an explicitly-passed `nil` is still omitted
+        rather than sent as an empty part.
+      type: fix
+    - summary: |
+        Deserialize non-object JSON response bodies. Endpoints whose response is a top-level
+        list, map, set, primitive, or unknown JSON value previously returned `nil`; they now
+        parse the body and coerce it to the declared type. Bodies are parsed with
+        `symbolize_names: true` to match `Model.load`, so an `unknown` value is symbol-keyed
+        wherever it appears; maps whose keys coerce to `Integer` keep string keys, since JSON
+        object keys are always strings and a `Symbol` cannot coerce to `Integer`. A named type
+        behind an `optional`/`nullable` wrapper now deserializes through `.load` like a bare
+        named type, so a union member is resolved instead of the body reaching the caller as
+        raw parsed JSON. Every successful response with an empty body (including named types)
+        returns `nil` instead of raising `JSON::ParserError`.
+      type: fix
+    - summary: |
+        Preserve `false` values in model fields. Previously `Model#initialize` used `||` to
+        coalesce values, so any boolean field set to `false` was dropped and never serialized
+        (e.g. `users.update(blocked: false)` sent an empty body).
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
+- version: 1.24.0
+  changelogEntry:
+    - summary: |
+        Added the `respectAuthSchemeNames` configuration option. With it enabled, credential
+        keyword arguments on the client follow the names configured on the auth schemes
+        (`token: { name: apiKey }` produces `api_key:` instead of `token:`), matching the
+        TypeScript and Python generators. Names that would shadow a built-in client keyword
+        (`base_url`, `environment`, `max_retries`, `app_info`, `client`, `request_options`) are
+        suffixed with `_auth`, and global headers that collide with a credential or built-in
+        keyword are prefixed with `header_`. The option defaults to `false`, since renaming a
+        keyword argument breaks callers of an already published gem; the default is expected to
+        flip in the next major version.
+      type: feat
+  createdAt: "2026-09-01"
+  irVersion: 67
+- version: 1.23.2
+  changelogEntry:
+    - summary: |
+        Respect endpoint-level disabled retries. Endpoints configured with
+        `retries: { disabled: true }` (`x-fern-retries` in OpenAPI) now pin the
+        generated request's retry count to zero, so they are never retried
+        regardless of the client-level or per-request retry settings.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 1.23.1
+  changelogEntry:
+    - summary: |
+        Fixed generated WireMock stubs for OAuth client credentials APIs whose token endpoint is
+        itself marked as authenticated: the token (and refresh) endpoint stub no longer requires
+        an `Authorization` header, since the token request is made to obtain the token and cannot
+        carry one yet.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 1.23.0
+  changelogEntry:
+    - summary: |
+        Endpoints whose request body is a referenced type no longer serialize path parameters into
+        the JSON body. With `respectOptionalRequestBody`, an omitted optional body on such an endpoint
+        now sends no body and no `Content-Type` instead of a body containing the path parameters.
+      type: fix
+    - summary: |
+        Add the `respectOptionalRequestBody` configuration option. When enabled, an endpoint whose
+        request body the API does not require lets callers omit the body: the request then carries
+        neither a body nor a `Content-Type` header, instead of sending `{}` as `application/json`.
+        Disabled by default.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 1.22.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `preferExplicitAuth` configuration option. When enabled (and the API composes
+        OAuth client-credentials with basic auth via `auth: any`), auth credentials passed
+        explicitly to the client constructor take precedence over environment-variable
+        defaults when selecting the auth scheme — e.g. explicitly provided basic auth
+        credentials win over OAuth client ID/secret environment variables. Disabled by
+        default, so existing generated output and runtime behavior are unchanged.
+      type: feat
+  createdAt: "2026-08-09"
+  irVersion: 67
+- version: 1.21.3
+  changelogEntry:
+    - summary: |
+        Wire tests no longer assert an exact `Basic` Authorization header when an OAuth
+        scheme is also configured: the test client is constructed with client credentials,
+        so the OAuth provider's dynamic Bearer token takes precedence over the static
+        Basic header at request time.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
+- version: 1.21.2
+  changelogEntry:
+    - summary: |
+        Fixed WireMock stubs for wire tests of APIs with `auth: any` combining Basic and
+        OAuth/Bearer schemes: stubs now accept either Authorization form instead of
+        requiring one exact value the client may not send.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
+- version: 1.21.1
+  changelogEntry:
+    - summary: |
+        Fix `additional_headers` in a request's options being unable to override a global header that was
+        set at client construction. Every default header was protected from `additional_headers`, so a
+        caller who configured a global header on the client (e.g. `X-Greenhouse-Id`) could not vary it per
+        request — the per-request value was silently dropped. The API's non-literal global headers are
+        now overridable per request, while SDK metadata (`User-Agent`, `X-Fern-*`), auth headers, and
+        literal headers stay protected as before.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
+- version: 1.21.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `allowUserAgentAppInfo` config (default `false`). When enabled, the
+        generated client accepts an optional `app_info` keyword
+        (`{ name:, version:, comment: }`) whose product token is appended to the
+        `User-Agent` header for all three branches (the structured platform value, the
+        configured `user-agent` template value, and the default `{package}/{version}`),
+        producing e.g. `acme/0.0.1 partner-app/3.1.0 (+https://partner.example)` per
+        RFC 9110. Caller-supplied values are sanitized (name/version percent-encoded to
+        RFC 7230 tchars; comment delimiters and control characters escaped) and trimmed
+        before encoding, so untrusted values cannot inject additional header content. The
+        header is still overridable by an explicit `User-Agent` and suppressed by
+        `omitFernHeaders`. Default-off output is byte-identical.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
+- version: 1.20.2
+  changelogEntry:
+    - summary: |
+        Fix `gem build` producing an empty gem when the generated SDK is not inside a git checkout:
+        the generated gemspec now falls back to filesystem globbing when `git ls-files` returns no
+        files. Also stamp the gem version and name from the IR's filesystem publish target
+        (populated by `fern generate --version <version>` for local-file-system output) instead of
+        always defaulting to `0.0.0`.
+      type: fix
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 1.20.1
+  changelogEntry:
+    - summary: |
+        Fix the generated client constructor requiring every auth credential under
+        `auth: endpoint-security`. A credential without a configured environment variable (e.g. an
+        apiKey header) was emitted as a required keyword argument, so a caller authenticating with a
+        single scheme (such as pure OAuth) could not construct the client without also passing the
+        other schemes' credentials. Under endpoint-security every credential now defaults to `nil`,
+        matching the per-endpoint auth model. Behavior outside endpoint-security is unchanged.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 1.20.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 1.19.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding verification before HMAC signature checks.
+      type: feat
+    - summary: |
+        Fix generated `verify_signature` webhook helper raising instead of returning `false`
+        when `signature_header` or `signature_key` is an empty string. An empty key was passed
+        to `OpenSSL::HMAC.digest`, which raises on OpenSSL 3.x; the input guard now fails
+        closed on empty (not just nil) signature header and key, matching the never-raise
+        contract.
+      type: fix
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generator now emits a `WebhooksHelper` (plus named
+        `<WebhookName>WebhooksHelper` overrides for distinct configs) exposing a static
+        `verify_signature` method, backed by a stdlib-only `Internal::WebhookSignature`
+        core utility (HMAC via OpenSSL, constant-time comparison). Supports timestamp
+        tolerance checks, signature prefixes, configurable payload components/delimiter,
+        and alphabetical body sorting. Asymmetric verification is not emitted.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.18.2
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated `OAuthProvider` and
+        `InferredAuthProvider`. The token cache is now guarded by a `Mutex` with
+        double-checked locking, so only one thread refreshes the token under
+        concurrent load (e.g. multi-threaded servers like Puma or Sidekiq). The
+        cache-hit path stays lock-free.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.18.1
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both an environment and server URL variables
+        (e.g. `region`), the generated client now renders the SELECTED environment's URL
+        template(s) instead of always using the first environment's template. For
+        multi-host environments, every host's URL is formatted from the selected
+        environment's templates. An explicitly provided custom base URL or environment
+        is never overridden.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.18.0
+  changelogEntry:
+    - summary: |
+        Endpoint methods now include a usage example in their YARD doc comment via the
+        `@example` tag, so IDEs surface a code snippet on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 1.17.8
+  changelogEntry:
+    - summary: |
+        Only emit the internal URL-encoded request module (and its root `require_relative`)
+        when an endpoint actually sends an `application/x-www-form-urlencoded` body.
+        Previously the `require_relative ".../internal/url_encoded/request"` line was emitted
+        unconditionally; SDKs generated with a build that shipped the require but not the
+        as-is file (e.g. an API with no form-urlencoded endpoints) failed to load with a
+        `LoadError`. The require and its file are now driven by the same usage check, so they
+        can never ship apart.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 1.17.7
+  changelogEntry:
+    - summary: |
+        Revert the smart-casing digit/word boundary behavior introduced in 1.15.5. snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-1.15.5 output. The behavior will become opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml` once the generator
+        consumes the IR version that carries the setting.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.6
+  changelogEntry:
+    - summary: |
+        Endpoints now send service- and endpoint-level headers whose types are literals
+        (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers were silently
+        dropped for endpoints without a request wrapper, and service-level literal headers
+        were never sent at all. Caller-supplied values via the request params still take
+        precedence over the literal defaults.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.5
+  changelogEntry:
+    - summary: |
+        Cap generated type filenames at 100 characters so `gem build` no longer fails
+        with `Gem::Package::TooLongFileName` (RubyGems packages into a tar format whose
+        header caps filenames at 100 chars). Deeply nested inline types — such as
+        anonymous `oneOf` variants — could previously overflow this limit. When a name
+        is too long it is truncated and a short deterministic hash is appended to keep
+        it unique. This changes only the filename and its `require_relative`; the
+        module/class name is unchanged, so it is non-breaking for consumers, who
+        reference the constant rather than the file.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.4
+  changelogEntry:
+    - summary: |
+        Send request bodies declared with the `application/x-www-form-urlencoded` content type
+        (e.g. OAuth token endpoints) as form-urlencoded instead of JSON. A new
+        `Internal::UrlEncoded::Request` encodes the body with `URI.encode_www_form` and sets the
+        `Content-Type: application/x-www-form-urlencoded` header.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.3
+  changelogEntry:
+    - summary: |
+        Expose non-literal global headers without a client default as root client
+        constructor parameters. Headers with a declared `env` default to that
+        environment variable (e.g. `version: ENV.fetch("MY_API_VERSION", nil)`), and
+        the header is only sent when the value is non-nil. Previously such headers
+        were omitted entirely and could only be sent via per-request
+        `additional_headers`.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.2
+  changelogEntry:
+    - summary: |
+        Serialize request bodies declared as aliases of objects through the aliased
+        class so wire names are applied. Previously the raw params hash was sent,
+        so properties whose Ruby name differs from the API wire name (e.g.
+        `display_name` vs. `displayName`) were sent with the wrong key.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.1
+  changelogEntry:
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the
+        token endpoint's `grant_type` property is a non-literal string. Previously the
+        property was omitted (when optional) or surfaced as a required constructor
+        parameter (when required), so token endpoints that require `grant_type`
+        rejected the request.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.0
+  changelogEntry:
+    - summary: |
+        Add support for auto-generating an idempotency-key request header. This is now driven
+        entirely by the IR (`SdkConfig.idempotencyKeyGeneration`), resolved once by the CLI from
+        the `auto-generate-idempotency-key` generator config key, so the header name and the set of
+        eligible HTTP methods are read identically across every generator. When enabled, the
+        generated SDK attaches the configured header (defaulting to `Idempotency-Key`) on the
+        configured methods (defaulting to `POST` and `PUT`) with a freshly generated UUIDv4
+        (`SecureRandom.uuid`) at request time. For endpoints that declare a matching idempotency
+        header the caller-supplied value wins and the generated UUID is only the fallback. When the
+        IR does not enable the feature, generated output is unchanged.
+      type: feat
+    - summary: |
+        Upgrade the generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.16.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (e.g. region/edge routing). Server variables
+        defined on the API's environments are now exposed as optional string keyword
+        arguments on the client initializer and interpolated into the base URL(s) when
+        provided, falling back to each variable's default. Reserved option names are
+        de-collided by prefixing with `server_url_` (e.g. a variable named `environment`
+        is exposed as `server_url_environment`).
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.5
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Sub-client accessors and methods like `ConversationsV2Configuration` now generate
+        `conversations_v2_configuration` instead of `conversations_v2configuration`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.4
+  changelogEntry:
+    - summary: |
+        Decompress gzip and deflate encoded response bodies when the `Accept-Encoding`
+        header is set explicitly on the request. `Net::HTTP` disables its transparent
+        response decoding as soon as the caller sets an `Accept-Encoding` header, so
+        responses to requests with a spec-defined `Accept-Encoding: gzip` header were
+        previously returned as raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.3
+  changelogEntry:
+    - summary: |
+        Fix `reference.md` endpoint titles to show path parameters in keyword-argument form
+        (e.g. `fetch_store(store_id:)` instead of `fetch_store(store_id)`). Generated Ruby methods
+        only accept keyword arguments, so the previous positional-looking titles were misleading.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.2
+  changelogEntry:
+    - summary: |
+        Fix OAuth (and inferred-auth) access tokens never being refreshed on expiry. The token was
+        resolved once at client construction and baked into the `RawClient`'s static default headers, so
+        every subsequent request kept sending the original (eventually stale) token until the client was
+        reconstructed. The `RawClient` now receives the auth provider and resolves its `auth_headers` on
+        every request, so the provider's existing refresh logic runs before each call. Api-key/basic/
+        bearer/no-auth flows are unaffected (no provider is passed, so header resolution is a no-op).
+      type: fix
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 1.15.1
+  changelogEntry:
+    - summary: |
+        Upgrade the generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 1.15.0
+  changelogEntry:
+    - summary: |
+        Add support for OAuth 2.0 client-credentials authentication. Clients configured with an
+        `oauth`/`client-credentials` scheme now accept `client_id`/`client_secret` (with environment
+        variable fallback) and generate an OAuth token provider that fetches, caches, and refreshes the
+        access token from the configured token endpoint.
+      type: feat
+    - summary: |
+        Send `client_id`/`client_secret` (and other required token-request properties) when the OAuth
+        token endpoint's request body is a named/referenced type. Previously only inlined request bodies
+        were handled, so a referenced body produced an empty token request and authentication failed.
+      type: fix
+    - summary: |
+        When both an inferred-auth scheme and an OAuth scheme are present (e.g. `auth: any`), instantiate
+        a single auth provider instead of emitting two `@auth_provider` assignments where the OAuth block
+        silently clobbered the inferred-auth block. The provider that appears first in the declared auth
+        order is selected.
+      type: fix
+    - summary: |
+        Fix a backward-compatibility regression under `any`-composed multi-scheme auth: the OAuth (and
+        inferred-auth) provider is now conditional on its credentials being present. Previously the client
+        unconditionally instantiated the provider and merged its `auth_headers` in `initialize`, firing a
+        synchronous token request at construction — so an existing api-key-only consumer calling
+        `Client.new(api_key: ...)` without OAuth credentials made a live network call and raised. The
+        provider is now only created (and merged) when its credentials are supplied; otherwise the client
+        falls back to the other `any` scheme (api key/basic/bearer) and never touches the token endpoint.
+        Auth parameters are also relaxed to optional under `any`-with-multiple-schemes. A single mandatory
+        OAuth scheme keeps its existing (eager) behavior. The credentials check treats a set-but-empty
+        string (e.g. `OAUTH_CLIENT_ID=""`) the same as absent, so an existing api-key-only consumer with
+        empty OAuth environment variables still falls back to the api-key path instead of firing a token
+        fetch at construction.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 1.14.1
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `includePlatformHeaders` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.14.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated clients.
+        When enabled it reports the SDK name/version, operating system, CPU
+        architecture, and Ruby runtime version, e.g.
+        `my-sdk/0.0.1 (linux; x86_64) Ruby/3.2.0`. The operating system, architecture,
+        and version are resolved at runtime; unknown components are omitted rather
+        than emitted as placeholders. This is gated behind a new
+        `includePlatformHeaders` config option and is disabled by default, so existing
+        generated output is unchanged. When enabled it is still subject to the
+        `omitFernHeaders` option.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.13.4
+  changelogEntry:
+    - summary: |
+        Revert the automatic renaming of path parameters that collide with request body
+        properties (introduced in 1.13.3). These collisions are now rejected at the CLI
+        level: `fern check` errors and asks the user to deconflict the names (e.g. via
+        `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 1.13.3
+  changelogEntry:
+    - summary: |
+        Rename inlined path parameters that collide with request body properties (e.g. an
+        `{idType}` path param and an `idType` body field) with a `_path_param` suffix so both
+        values remain independently settable and the body property is no longer stripped from
+        the serialized request body.
+      type: fix
+    - summary: |
+        Fix the wire test helper `verify_authorization_header` to read the Authorization header
+        from the correct path in WireMock's `/requests/find` response.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 66
+- version: 1.13.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets silently dropping values with unknown type references
+        (e.g. additionalProperties, free-form objects). Previously returned nop,
+        now properly serializes the raw value as a Ruby literal.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 66
+- version: 1.13.1
+  changelogEntry:
+    - summary: |
+        Generated model classes now include fields inherited from parent types
+        (Fern `extends` / OpenAPI `allOf`). Previously, derived models — including
+        discriminated union variants — only carried their own declared properties
+        and silently dropped fields contributed by their parents, leaving
+        deserialized responses without `id`, `name`, and other inherited common
+        fields.
+      type: fix
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 1.13.0
+  changelogEntry:
+    - summary: |
+        Add a `max_retries:` keyword argument to the generated root `Client`
+        constructor. Consumers can now configure the default retry count once
+        at client construction (e.g. `Client.new(max_retries: 5)`) instead of
+        relying on the generation-time `maxRetries` setting in `generators.yml`.
+        The constructor default still respects the configured value (or `2`
+        when unset), so existing behavior is preserved.
+      type: feat
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 1.12.11
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 1.12.10
+  changelogEntry:
+    - summary: |
+        Bump `addressable` from 2.8.10 to 2.9.0 in the ruby-v2 SDK generator
+        container to clear CVE-2026-35611 (ReDoS in URI template expansion).
+        Switch the post-install cleanup to `gem cleanup` so older 2.8.x copies
+        dragged in by rubocop's dependency graph are dropped from the final
+        image. `rexml` stays pinned at 3.4.4 (past the 3.3.6 CVE-2024-49761
+        fix). Also strip the vendored `Gemfile.lock` files inside cached
+        gems (lint_roller, rbs, typeprof, unicode-emoji) so grype stops
+        reading their pinned rexml / rdoc / addressable versions as
+        installed packages.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 1.12.9
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` are now served verbatim instead of being passed through
+        WireMock's Handlebars transformer, which would fail to resolve them as
+        helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 1.12.8
+  changelogEntry:
+    - summary: |
+        Fix `Layout/EmptyComment` RuboCop offense emitted for types with no
+        description. The AST `Comment` node now skips writing when `docs` is
+        empty or whitespace-only, so undocumented model classes no longer
+        produce a bare `#` line above their class definition.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 1.12.7
+  changelogEntry:
+    - summary: |
+        Fix `Layout/EmptyComment` RuboCop offense emitted for types with no
+        description. The AST `Comment` node now skips writing when `docs` is
+        empty or whitespace-only, so undocumented model classes no longer
+        produce a bare `#` line above their class definition.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 1.12.6
+  changelogEntry:
+    - summary: |
+        Patch Ruby SDK generator container CVEs flagged in the AWS ECR / grype
+        scan. Remove the unused `erb-4.0.3`, `net-imap-0.4.21`, `addressable-2.8.5`,
+        `rexml-3.2.5`, and `rexml-3.2.6` gem directories (in addition to the
+        gemspec stubs) and install patched `addressable-2.8.10` + `rexml-3.4.4`,
+        so grype no longer reports the vulnerable versions vendored alongside
+        Ruby 3.3's default gems and the rubocop dependency graph.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 1.12.5
   changelogEntry:
     - summary: |

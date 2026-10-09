@@ -1,0 +1,9 @@
+{
+  "title": "ENOTEMPTY rmdir generated output",
+  "disposition": "shipped",
+  "rationale": "ENOTEMPTY is a user-environment errno (directory not empty during rmdir of generated output); added to USER_ENVIRONMENT_ERRNOS.",
+  "fixSummary": "Add ENOTEMPTY to USER_ENVIRONMENT_ERRNOS in resolveErrorCode.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Filesystem errno ENOTEMPTY during generated-output cleanup surfaced as InternalError instead of EnvironmentError."
+}

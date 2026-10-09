@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    An `x-fern-global-headers` / `x-fern-global-parameters` entry whose flag
+    name collides with a per-operation parameter is now honored on custom
+    commands. Colliding globals are registered per-leaf rather than globally,
+    and the custom-command path resolves them from the root `ArgMatches`, so
+    the value was stamped on spec-derived requests and silently dropped on
+    hand-written ones. Such a global now falls back to its `env` var and
+    `default` (the CLI flag is not registered on those commands, so this is the
+    full chain that was ever reachable).
+  type: fix
+
+- summary: |
+    A body property spelled `anyOf: [$ref Model, null]` now emits the same
+    dot-notation leaf flags as a bare `$ref: Model` (e.g.
+    `--voice-settings.stability`), not just the JSON shorthand. The parent flag
+    keeps its `null` sentinel. Nullable *array* branches are unaffected — they
+    stay a single repeated flag, matching a plain `type: array` property.
+  type: fix

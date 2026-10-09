@@ -94,7 +94,8 @@
             "extends": [
                 "type_:Docs"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:NestedType": {
             "type": "object",
@@ -219,7 +220,8 @@
             "extends": [
                 "type_:JSON"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Docs": {
             "type": "object",
@@ -282,7 +284,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:JSON": {
             "type": "object",
@@ -377,7 +380,8 @@
             "extends": [
                 "type_:Docs"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -554,5 +558,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

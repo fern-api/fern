@@ -14,9 +14,8 @@
 
 ```go
 client.FolderA.Service.GetDirectThread(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -42,10 +41,9 @@ client.FolderA.Service.GetDirectThread(
 <dd>
 
 ```go
-client.FolderA.Service.GetDirectThread(
-        context.TODO(),
-    )
-}
+client.FolderD.Service.GetDirectThread(
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -72,21 +70,20 @@ client.FolderA.Service.GetDirectThread(
 
 ```go
 request := &fern.FindRequest{
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        PublicProperty: fern.String(
-            "publicProperty",
-        ),
-        PrivateProperty: fern.Int(
-            1,
-        ),
-    }
-client.Foo.Find(
-        context.TODO(),
-        request,
-    )
+    OptionalString: fern.String(
+        "optionalString",
+    ),
+    PublicProperty: fern.String(
+        "publicProperty",
+    ),
+    PrivateProperty: fern.Int(
+        1,
+    ),
 }
+client.Foo.Find(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

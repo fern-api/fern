@@ -6,3 +6,15 @@ service:
       path: /text
       method: POST
       response: text
+    getCsv:
+      path: /csv
+      method: GET
+      response:
+        type: text
+        content-type: text/csv
+    getXml:
+      path: /xml
+      method: GET
+      response:
+        type: text
+        content-type: text/xml

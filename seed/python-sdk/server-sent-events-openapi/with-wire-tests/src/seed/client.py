@@ -14,6 +14,7 @@ from .types.stream_data_context_response import StreamDataContextResponse
 from .types.stream_data_context_with_envelope_schema_response import StreamDataContextWithEnvelopeSchemaResponse
 from .types.stream_no_context_response import StreamNoContextResponse
 from .types.stream_protocol_collision_response import StreamProtocolCollisionResponse
+from .types.stream_protocol_mixed_schema_response import StreamProtocolMixedSchemaResponse
 from .types.stream_protocol_no_collision_response import StreamProtocolNoCollisionResponse
 from .types.stream_protocol_with_flat_schema_response import StreamProtocolWithFlatSchemaResponse
 from .types.stream_x_fern_streaming_union_request import StreamXFernStreamingUnionRequest
@@ -42,6 +43,12 @@ class SeedApi:
     max_retries : typing.Optional[int]
         The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
 
+    stream_reconnection_enabled : typing.Optional[bool]
+        Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value.
+
+    max_stream_reconnection_attempts : typing.Optional[int]
+        The maximum number of reconnection attempts for resumable streaming endpoints. Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value.
+
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
@@ -67,13 +74,13 @@ class SeedApi:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
@@ -85,6 +92,8 @@ class SeedApi:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
             max_retries=_defaulted_max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
@@ -258,6 +267,38 @@ class SeedApi:
             yield chunk
         """
         with self._raw_client.stream_protocol_with_flat_schema(query=query, request_options=request_options) as r:
+            yield from r.data
+
+    def stream_protocol_mixed_schema(
+        self, *, query: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[StreamProtocolMixedSchemaResponse]:
+        """
+        context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+
+        Parameters
+        ----------
+        query : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamProtocolMixedSchemaResponse]
+            SSE stream with protocol context and mixed variant schemas
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.stream_protocol_mixed_schema()
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_protocol_mixed_schema(query=query, request_options=request_options) as r:
             yield from r.data
 
     def stream_data_context_with_envelope_schema(
@@ -785,6 +826,12 @@ class AsyncSeedApi:
     max_retries : typing.Optional[int]
         The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
 
+    stream_reconnection_enabled : typing.Optional[bool]
+        Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value.
+
+    max_stream_reconnection_attempts : typing.Optional[int]
+        The maximum number of reconnection attempts for resumable streaming endpoints. Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value.
+
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
@@ -810,13 +857,13 @@ class AsyncSeedApi:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
@@ -826,6 +873,8 @@ class AsyncSeedApi:
             else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
             max_retries=_defaulted_max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
@@ -871,7 +920,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_protocol_no_collision()
+            response = client.stream_protocol_no_collision()
             async for chunk in response:
                 yield chunk
 
@@ -912,7 +961,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_protocol_collision()
+            response = client.stream_protocol_collision()
             async for chunk in response:
                 yield chunk
 
@@ -953,7 +1002,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_data_context()
+            response = client.stream_data_context()
             async for chunk in response:
                 yield chunk
 
@@ -994,7 +1043,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_no_context()
+            response = client.stream_no_context()
             async for chunk in response:
                 yield chunk
 
@@ -1035,7 +1084,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_protocol_with_flat_schema()
+            response = client.stream_protocol_with_flat_schema()
             async for chunk in response:
                 yield chunk
 
@@ -1043,6 +1092,47 @@ class AsyncSeedApi:
         asyncio.run(main())
         """
         async with self._raw_client.stream_protocol_with_flat_schema(query=query, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_protocol_mixed_schema(
+        self, *, query: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[StreamProtocolMixedSchemaResponse]:
+        """
+        context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+
+        Parameters
+        ----------
+        query : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamProtocolMixedSchemaResponse]
+            SSE stream with protocol context and mixed variant schemas
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = client.stream_protocol_mixed_schema()
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_protocol_mixed_schema(query=query, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
 
@@ -1076,7 +1166,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_data_context_with_envelope_schema()
+            response = client.stream_data_context_with_envelope_schema()
             async for chunk in response:
                 yield chunk
 
@@ -1119,7 +1209,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_oas_spec_native()
+            response = client.stream_oas_spec_native()
             async for chunk in response:
                 yield chunk
 
@@ -1161,7 +1251,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_condition_stream(
+            response = client.stream_x_fern_streaming_condition_stream(
                 query="query",
             )
             async for chunk in response:
@@ -1253,7 +1343,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_shared_schema_stream(
+            response = client.stream_x_fern_streaming_shared_schema_stream(
                 prompt="prompt",
                 model="model",
             )
@@ -1404,7 +1494,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_union_stream(
+            response = client.stream_x_fern_streaming_union_stream(
                 request=StreamXFernStreamingUnionStreamRequest_Message(
                     prompt="prompt",
                     message="message",
@@ -1550,7 +1640,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_nullable_condition_stream(
+            response = client.stream_x_fern_streaming_nullable_condition_stream(
                 query="query",
             )
             async for chunk in response:
@@ -1638,7 +1728,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_sse_only()
+            response = client.stream_x_fern_streaming_sse_only()
             async for chunk in response:
                 yield chunk
 

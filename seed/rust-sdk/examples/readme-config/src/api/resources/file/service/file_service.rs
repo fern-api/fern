@@ -23,6 +23,29 @@ impl ServiceClient2 {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_examples::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExamplesClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .file
+    ///         .service
+    ///         .get_file(
+    ///             &"file.txt".to_string(),
+    ///             Some(RequestOptions::new().additional_header("X-File-API-Version", "0.0.2")),
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_file(
         &self,
         filename: &str,

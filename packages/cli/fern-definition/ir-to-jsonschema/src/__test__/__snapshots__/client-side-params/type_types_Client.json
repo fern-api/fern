@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "client_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The unique client identifier"
     },
     "tenant": {
       "oneOf": [
@@ -12,10 +13,12 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The tenant name"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "description": "Name of the client"
     },
     "description": {
       "oneOf": [
@@ -25,7 +28,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Free text description of the client"
     },
     "global": {
       "oneOf": [
@@ -35,7 +39,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether this is a global client"
     },
     "client_secret": {
       "oneOf": [
@@ -45,7 +50,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The client secret (only for non-public clients)"
     },
     "app_type": {
       "oneOf": [
@@ -55,7 +61,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The type of application (spa, native, regular_web, non_interactive)"
     },
     "logo_uri": {
       "oneOf": [
@@ -65,7 +72,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "URL of the client logo"
     },
     "is_first_party": {
       "oneOf": [
@@ -75,7 +83,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether this client is a first party client"
     },
     "oidc_conformant": {
       "oneOf": [
@@ -85,7 +94,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether this client conforms to OIDC specifications"
     },
     "callbacks": {
       "oneOf": [
@@ -98,7 +108,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Allowed callback URLs"
     },
     "allowed_origins": {
       "oneOf": [
@@ -111,7 +122,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Allowed origins for CORS"
     },
     "web_origins": {
       "oneOf": [
@@ -124,7 +136,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Allowed web origins for CORS"
     },
     "grant_types": {
       "oneOf": [
@@ -137,7 +150,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Allowed grant types"
     },
     "jwt_configuration": {
       "oneOf": [
@@ -157,7 +171,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "JWT configuration for the client"
     },
     "signing_keys": {
       "oneOf": [
@@ -180,7 +195,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Client signing keys"
     },
     "encryption_key": {
       "oneOf": [
@@ -200,7 +216,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Encryption key"
     },
     "sso": {
       "oneOf": [
@@ -210,7 +227,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether SSO is enabled"
     },
     "sso_disabled": {
       "oneOf": [
@@ -220,7 +238,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether SSO is disabled"
     },
     "cross_origin_auth": {
       "oneOf": [
@@ -230,7 +249,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether to use cross-origin authentication"
     },
     "cross_origin_loc": {
       "oneOf": [
@@ -240,7 +260,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "URL for cross-origin authentication"
     },
     "custom_login_page_on": {
       "oneOf": [
@@ -250,7 +271,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether a custom login page is enabled"
     },
     "custom_login_page": {
       "oneOf": [
@@ -260,7 +282,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Custom login page URL"
     },
     "custom_login_page_preview": {
       "oneOf": [
@@ -270,7 +293,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Custom login page preview URL"
     },
     "form_template": {
       "oneOf": [
@@ -280,7 +304,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Form template for WS-Federation"
     },
     "is_heroku_app": {
       "oneOf": [
@@ -290,7 +315,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether this is a Heroku application"
     },
     "addons": {
       "oneOf": [
@@ -310,7 +336,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Addons enabled for this client"
     },
     "token_endpoint_auth_method": {
       "oneOf": [
@@ -320,7 +347,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Requested authentication method for the token endpoint"
     },
     "client_metadata": {
       "oneOf": [
@@ -340,7 +368,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Metadata associated with the client"
     },
     "mobile": {
       "oneOf": [
@@ -360,7 +389,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Mobile app settings"
     }
   },
   "required": [
@@ -368,5 +398,6 @@
     "name"
   ],
   "additionalProperties": false,
+  "description": "Represents a client application",
   "definitions": {}
 }

@@ -1,0 +1,6 @@
+- summary: |
+    Rename the `--pack` and `--pack-mode` flags on `fern generate` to `--package` and
+    `--package-mode`, and add `--package-only`, which builds the distributable artifact into
+    `fern-dist/` and removes the generated SDK source, leaving only the package in the output
+    directory.
+  type: feat

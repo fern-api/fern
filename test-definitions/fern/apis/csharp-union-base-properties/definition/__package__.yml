@@ -1,0 +1,61 @@
+# Exercises `dedupeUnionBaseProperties`: a discriminated union whose base properties are
+# also carried by its variants (via a shared `extends` parent), so with the flag enabled the
+# variant leaves drop them and the envelope owns them. Includes a required base property (`id`)
+# and an optional one (`createdAt`) so the generated serialization tests cover both.
+service:
+  base-path: /shapes
+  auth: false
+  endpoints:
+    create:
+      path: ""
+      method: POST
+      request: Shape
+      response: Shape
+      examples:
+        - request:
+            type: circle
+            id: shape-1
+            createdAt: "2024-01-01T00:00:00Z"
+            radius: 1.5
+          response:
+            body:
+              type: circle
+              id: shape-1
+              createdAt: "2024-01-01T00:00:00Z"
+              radius: 1.5
+
+types:
+  ShapeMetadata:
+    properties:
+      id: string
+      createdAt: optional<string>
+
+  Circle:
+    extends: ShapeMetadata
+    properties:
+      radius: double
+
+  Square:
+    extends: ShapeMetadata
+    properties:
+      side: double
+
+  Shape:
+    base-properties:
+      id: string
+      createdAt: optional<string>
+    union:
+      circle: Circle
+      square: Square
+    examples:
+      - name: CircleShape
+        value:
+          type: circle
+          id: shape-1
+          createdAt: "2024-01-01T00:00:00Z"
+          radius: 1.5
+      - name: SquareShape
+        value:
+          type: square
+          id: shape-2
+          side: 2

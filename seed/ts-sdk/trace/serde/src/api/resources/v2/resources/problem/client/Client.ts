@@ -28,6 +28,9 @@ export class ProblemClient {
      *
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.v2.problem.getLightweightProblems()
      */
@@ -97,6 +100,9 @@ export class ProblemClient {
      *
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.v2.problem.getProblems()
      */
@@ -161,6 +167,9 @@ export class ProblemClient {
      *
      * @param {SeedTrace.ProblemId} problemId
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.v2.problem.getLatestProblem("problemId")
@@ -234,6 +243,9 @@ export class ProblemClient {
      * @param {SeedTrace.ProblemId} problemId
      * @param {number} problemVersion
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.v2.problem.getProblemVersion("problemId", 1)

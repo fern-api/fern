@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "milliliters": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,61 @@
+types:
+  Plant:
+    properties:
+      id: integer
+      name: string
+
+  ListPlantsResponse:
+    properties:
+      total_count: integer
+      plants: list<Plant>
+
+service:
+  auth: false
+  base-path: /plants
+  display-name: Plants
+  endpoints:
+    # An optional offset, so the pager parses the initial offset from the query string.
+    list:
+      pagination:
+        offset: $request.offset
+        step: $request.count
+        results: $response.plants
+      method: GET
+      path: ""
+      request:
+        name: ListPlantsRequest
+        query-parameters:
+          offset: optional<integer>
+          count: optional<integer>
+      response: ListPlantsResponse
+
+    # A required offset, so the pager seeds the initial offset from the request.
+    listWithRequiredOffset:
+      pagination:
+        offset: $request.offset
+        step: $request.count
+        results: $response.plants
+      method: GET
+      path: /required-offset
+      request:
+        name: ListPlantsWithRequiredOffsetRequest
+        query-parameters:
+          offset: integer
+          count: integer
+      response: ListPlantsResponse
+
+    # An offset sent in the request body.
+    listWithBodyOffset:
+      pagination:
+        offset: $request.offset
+        step: $request.count
+        results: $response.plants
+      method: POST
+      path: /body-offset
+      request:
+        name: ListPlantsWithBodyOffsetRequest
+        body:
+          properties:
+            offset: optional<integer>
+            count: optional<integer>
+      response: ListPlantsResponse

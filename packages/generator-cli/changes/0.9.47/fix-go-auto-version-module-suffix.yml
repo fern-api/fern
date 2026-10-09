@@ -1,0 +1,7 @@
+- summary: |
+    Fix `--version AUTO` dropping the `/vN` Go module suffix from the
+    `X-Fern-SDK-Name` header value and README install/import samples. The suffix
+    retrofit now covers non-import module-path string literals and Markdown docs
+    in addition to imports and `go.mod`, while leaving the composite `User-Agent`
+    value and web URLs (e.g. `pkg.go.dev`) untouched.
+  type: fix

@@ -424,39 +424,46 @@ function extractRepoUriFromGenerator(generatorInvocation: generatorsYml.Generato
 }
 
 /**
- * Returns whether the configured GitHub mode opens a PR or pushes directly.
+ * Returns the configured GitHub mode for telemetry reporting.
  * Defaults to `"push"` to match generator-cli's GithubStep default.
  */
 function extractGithubModeFromGenerator(
     generatorInvocation: generatorsYml.GeneratorInvocation
-): "pull-request" | "push" {
+): "pull-request" | "push" | "commit-and-release" {
     const github = generatorInvocation.raw?.github;
-    if (github != null && "mode" in github && github.mode === "pull-request") {
-        return "pull-request";
+    if (github != null && "mode" in github) {
+        if (github.mode === "pull-request") {
+            return "pull-request";
+        }
+        if (github.mode === "commit-and-release") {
+            return "commit-and-release";
+        }
     }
     return "push";
 }
 
-async function downloadFilesForTask({
+export async function downloadFilesForTask({
     s3PreSignedReadUrl,
     absolutePathToLocalOutput,
-    context
+    context,
+    skipFernignore = false
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: InteractiveTaskContext;
-}) {
+    skipFernignore?: boolean;
+}): Promise<void> {
     try {
         const isFernIgnorePresent = await checkFernIgnorePresent(absolutePathToLocalOutput);
         const isExistingGitRepo = await checkIsGitRepository(absolutePathToLocalOutput);
 
-        if (isFernIgnorePresent && isExistingGitRepo) {
+        if (!skipFernignore && isFernIgnorePresent && isExistingGitRepo) {
             await downloadFilesWithFernIgnoreInExistingRepo({
                 s3PreSignedReadUrl,
                 absolutePathToLocalOutput,
                 context
             });
-        } else if (isFernIgnorePresent && !isExistingGitRepo) {
+        } else if (!skipFernignore && isFernIgnorePresent && !isExistingGitRepo) {
             await downloadFilesWithFernIgnoreInTempRepo({
                 s3PreSignedReadUrl,
                 absolutePathToLocalOutput,
@@ -475,6 +482,33 @@ async function downloadFilesForTask({
     }
 }
 
+/** Downloads the generated ZIP artifact without extracting it. */
+export async function downloadArchiveForTask({
+    s3PreSignedReadUrl,
+    absolutePathToLocalOutput,
+    context
+}: {
+    s3PreSignedReadUrl: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
+    context: InteractiveTaskContext;
+}): Promise<void> {
+    try {
+        const request = await axios.get(s3PreSignedReadUrl, {
+            responseType: "stream",
+            timeout: 60_000,
+            signal: AbortSignal.timeout(S3_DOWNLOAD_TIMEOUT_MS)
+        });
+        await mkdir(path.dirname(absolutePathToLocalOutput), { recursive: true });
+        await pipeline(request.data, createWriteStream(absolutePathToLocalOutput));
+        context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
+    } catch (error) {
+        context.failAndThrow("Failed to download archive", error, { code: CliError.Code.NetworkError });
+    }
+}
+
+/** Maximum time (ms) to wait for the S3 download to complete, including streaming. */
+const S3_DOWNLOAD_TIMEOUT_MS = 5 * 60 * 1_000;
+
 async function downloadZipForTask({
     s3PreSignedReadUrl,
     absolutePathToLocalOutput
@@ -484,7 +518,9 @@ async function downloadZipForTask({
 }): Promise<void> {
     // initiate request
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: "stream"
+        responseType: "stream",
+        timeout: 60_000,
+        signal: AbortSignal.timeout(S3_DOWNLOAD_TIMEOUT_MS)
     });
 
     // pipe to zip
@@ -650,7 +686,9 @@ async function downloadAndExtractZipToDirectory({
     outputPath: AbsoluteFilePath;
 }): Promise<void> {
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: "stream"
+        responseType: "stream",
+        timeout: 60_000,
+        signal: AbortSignal.timeout(S3_DOWNLOAD_TIMEOUT_MS)
     });
 
     const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });

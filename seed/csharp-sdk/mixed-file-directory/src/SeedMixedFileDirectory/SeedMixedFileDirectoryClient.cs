@@ -14,7 +14,7 @@ public partial class SeedMixedFileDirectoryClient : ISeedMixedFileDirectoryClien
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedMixedFileDirectory" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedMixedFileDirectory.Version.Current },
                 { "User-Agent", "Fernmixed-file-directory/0.0.1" },
             }
         );

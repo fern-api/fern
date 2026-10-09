@@ -1,12 +1,5 @@
 # Stage 1: Node.js
-# Pinned to 22.22-alpine3.23 to fix Node.js binary CVEs picked up by the
-# 2026-05-06 grype scan (CVE-2025-23166, CVE-2025-23083, CVE-2025-59465,
-# CVE-2026-21637, CVE-2025-55131, CVE-2026-21710, CVE-2025-59466,
-# CVE-2025-23085, CVE-2026-21717, CVE-2026-21713, CVE-2026-21714,
-# CVE-2025-55132, CVE-2025-23165, CVE-2026-21715, CVE-2026-21716,
-# CVE-2025-55130) and to upgrade npm-bundled deps cross-spawn (>=7.0.5),
-# minimatch (>=9.0.7), glob (>=10.5.0), tar (>=7.5.11), and diff (>=5.2.2).
-FROM node:22.22-alpine3.23 AS node
+FROM node:24.17-alpine3.23 AS node
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
 
@@ -37,7 +30,7 @@ RUN apk --no-cache upgrade && \
 # itself.
 RUN rm -rf /usr/share/powershell /usr/bin/pwsh
 
-RUN dotnet tool install -g csharpier --version "1.2.6"
+RUN dotnet tool install -g csharpier --version "1.3.0"
 
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/
@@ -76,18 +69,58 @@ RUN for dir in \
       fi; \
     done
 
-# Patch brace-expansion to 2.0.3 to fix GHSA-f886-m6hf-6m8v
-# (zero-step sequence causes process hang and memory exhaustion).
-# Location: npm bundles its own copy of brace-expansion.
+# Patch brace-expansion to 5.0.6 to fix GHSA-jxxr-4gwj-5jf2
+# (zero-step sequence hangs).
 RUN for dir in \
       /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
       if [ -d "$dir" ]; then \
         rm -rf "$dir" && \
         cd "$(dirname "$dir")" && \
-        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.3.tgz -o brace-expansion-2.0.3.tgz && \
-        tar -xzf brace-expansion-2.0.3.tgz && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
         mv package brace-expansion && \
-        rm brace-expansion-2.0.3.tgz; \
+        rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
+      fi; \
+    done
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tar; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/tar/-/tar-7.5.16.tgz -o tar-7.5.16.tgz && \
+        tar -xzf tar-7.5.16.tgz && \
+        mv package tar && \
+        rm tar-7.5.16.tgz; \
+      fi; \
+    done
+
+# Patch @sigstore/core to 3.2.1 to fix GHSA-jfc7-64v2-mr8c.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/@sigstore/core; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/@sigstore/core/-/core-3.2.1.tgz -o core-3.2.1.tgz && \
+        mkdir -p core && \
+        tar -xzf core-3.2.1.tgz --strip-components=1 -C core/ && \
+        rm core-3.2.1.tgz; \
       fi; \
     done
 

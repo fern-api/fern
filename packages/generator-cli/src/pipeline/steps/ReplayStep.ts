@@ -1,4 +1,6 @@
+import { execFileSync } from "child_process";
 import { replayApply, replayRun } from "../../replay/replay-run";
+import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "../github/constants";
 import type { PipelineLogger } from "../PipelineLogger";
 import type { PipelineContext, ReplayStepConfig, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
@@ -21,8 +23,7 @@ export class ReplayStep extends BaseStep {
         logger: PipelineLogger,
         private readonly config: ReplayStepConfig,
         private readonly cliVersion?: string,
-        private readonly generatorVersions?: Record<string, string>,
-        private readonly generatorName?: string
+        private readonly generatorVersions?: Record<string, string>
     ) {
         super(outputDir, logger);
     }
@@ -66,21 +67,39 @@ export class ReplayStep extends BaseStep {
             };
         }
 
+        const stageOnly = this.config.stageOnly ?? false;
         const result =
             prepared != null
                 ? await replayApply(prepared, {
-                      stageOnly: this.config.stageOnly ?? false,
+                      stageOnly,
                       logger: this.logger
                   })
                 : await replayRun({
                       outputDir: this.outputDir,
                       cliVersion: this.cliVersion,
                       generatorVersions: this.generatorVersions,
-                      stageOnly: this.config.stageOnly ?? false,
-                      generatorName: this.generatorName,
+                      stageOnly,
                       skipApplication: this.config.skipApplication,
                       logger: this.logger
                   });
+
+        // The replay service updates the lockfile's `current_generation` in
+        // memory during prepare and writes it to disk via `lockManager.save()`
+        // during apply. However, in the no-patches flow with zero new patches,
+        // no `[fern-replay]` commit is created — the lockfile update is left as
+        // an uncommitted change. Since `skipCommit = true` for non-first-
+        // generation flows, GithubStep won't commit it either, so the advance
+        // is silently lost. On the next run the stale `current_generation`
+        // causes `previousGenerationSha` to point at an old commit, producing
+        // cumulative diffs and duplicate changelog entries.
+        //
+        // Commit the lockfile here when it was modified but not committed by
+        // the replay service. This is safe even after a crash (best-effort:
+        // either the save happened and we commit, or it didn't and this is a
+        // no-op).
+        if (!stageOnly) {
+            this.commitLockfileIfUncommitted();
+        }
 
         if (result.failureReason != null) {
             // Prepare or apply crashed at runtime — surface via replayCrashed so
@@ -93,7 +112,6 @@ export class ReplayStep extends BaseStep {
                 errorMessage: result.failureReason,
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
-                baseBranchHead: result.baseBranchHead ?? undefined,
                 autoBootstrapped: result.autoBootstrapped,
                 bootstrapAttempted: result.bootstrapAttempted,
                 flow: "normal-regeneration",
@@ -109,7 +127,6 @@ export class ReplayStep extends BaseStep {
                 success: true,
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
-                baseBranchHead: result.baseBranchHead ?? undefined,
                 autoBootstrapped: result.autoBootstrapped,
                 bootstrapAttempted: result.bootstrapAttempted,
                 flow: "first-generation",
@@ -125,7 +142,6 @@ export class ReplayStep extends BaseStep {
             success: true,
             previousGenerationSha: result.previousGenerationSha ?? undefined,
             currentGenerationSha: result.currentGenerationSha ?? undefined,
-            baseBranchHead: result.baseBranchHead ?? undefined,
             autoBootstrapped: result.autoBootstrapped,
             bootstrapAttempted: result.bootstrapAttempted,
             flow: report.flow,
@@ -152,5 +168,44 @@ export class ReplayStep extends BaseStep {
             })),
             warnings: report.warnings
         };
+    }
+
+    /**
+     * Commits `.fern/replay.lock` when replay saved the lockfile to disk but
+     * didn't create a `[fern-replay]` commit (e.g. no-patches flow with zero
+     * new patches). Without this, `skipCommit = true` in GithubStep drops the
+     * lockfile advance, freezing `previousGenerationSha` across runs.
+     */
+    private commitLockfileIfUncommitted(): void {
+        try {
+            const status = execFileSync("git", ["status", "--porcelain", "--", ".fern/replay.lock"], {
+                cwd: this.outputDir,
+                encoding: "utf-8",
+                stdio: ["pipe", "pipe", "pipe"]
+            }).trim();
+            if (status.length === 0) {
+                return;
+            }
+            execFileSync("git", ["add", "--", ".fern/replay.lock"], {
+                cwd: this.outputDir,
+                stdio: "pipe"
+            });
+            execFileSync(
+                "git",
+                [
+                    "-c",
+                    `user.name=${FERN_BOT_NAME}`,
+                    "-c",
+                    `user.email=${FERN_BOT_EMAIL}`,
+                    "commit",
+                    "-m",
+                    "[fern-replay] advance lockfile"
+                ],
+                { cwd: this.outputDir, stdio: "pipe" }
+            );
+            this.logger.debug("ReplayStep: committed uncommitted lockfile advance.");
+        } catch (error) {
+            this.logger.debug("ReplayStep: failed to commit lockfile advance: " + String(error));
+        }
     }
 }

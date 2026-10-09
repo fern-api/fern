@@ -1,0 +1,10 @@
+- summary: |
+    Add webhook body-hash binding support to `verify_signature`. When a webhook's HMAC
+    signature declares a `bodyHashBinding` in the IR, the generated helper first recomputes
+    the raw request body's hash (using the binding's own algorithm/encoding), extracts the
+    configured query parameter from the notification URL, and timing-safe-compares them
+    (failing closed on a missing or mismatched hash) before performing the existing HMAC
+    verification over the verbatim notification URL. Adds stdlib-only `compute_hash` (unkeyed
+    digest) and read-only `get_webhook_query_parameter` core utilities. Output is unchanged
+    when no body-hash binding is present.
+  type: feat

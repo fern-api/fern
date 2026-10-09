@@ -26,13 +26,23 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.UpdateTeamMemberRequest{
+//	    TeamMemberID: "team_member_id",
+//	}
+//	client.TeamMember.UpdateTeamMember(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateTeamMember(
 	ctx context.Context,
 	request *fern.UpdateTeamMemberRequest,

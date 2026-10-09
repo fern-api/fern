@@ -78,6 +78,18 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'page' => 1,
+     *         'perPage' => 1,
+     *         'order' => Order::Asc->value,
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -105,6 +117,15 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithMixedTypeCursorPagination(
+     *     new ListUsersMixedTypeCursorPaginationRequest([
+     *         'cursor' => 'cursor',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersMixedTypeCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -132,6 +153,13 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithMixedTypeCursorPagination(
+     *     new ListUsersMixedTypeCursorPaginationRequest([]),
+     * );
+     * ```
+     *
      * @param ListUsersBodyCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -163,6 +191,16 @@ class UsersClient
      * This tests that the mock server correctly ignores cursor mismatches
      * when getNextPage() is called with a different cursor value.
      *
+     * Example:
+     * ```php
+     * $client->users->listWithTopLevelBodyCursorPagination(
+     *     new ListUsersTopLevelBodyCursorPaginationRequest([
+     *         'cursor' => 'initial_cursor',
+     *         'filter' => 'active',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersTopLevelBodyCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -190,6 +228,18 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'page' => 1,
+     *         'perPage' => 1,
+     *         'order' => Order::Asc->value,
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -220,6 +270,18 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'page' => 1.1,
+     *         'perPage' => 1.1,
+     *         'order' => Order::Asc->value,
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersDoubleOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -250,6 +312,13 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithMixedTypeCursorPagination(
+     *     new ListUsersMixedTypeCursorPaginationRequest([]),
+     * );
+     * ```
+     *
      * @param ListUsersBodyOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -280,6 +349,17 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithOffsetStepPagination(
+     *     new ListUsersOffsetStepPaginationRequest([
+     *         'page' => 1,
+     *         'limit' => 1,
+     *         'order' => Order::Asc->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersOffsetStepPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -311,6 +391,17 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithOffsetStepPagination(
+     *     new ListUsersOffsetStepPaginationRequest([
+     *         'page' => 1,
+     *         'limit' => 3,
+     *         'order' => Order::Asc->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListWithOffsetPaginationHasNextPageRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -342,6 +433,15 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithExtendedResults(
+     *     new ListUsersExtendedRequest([
+     *         'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersExtendedRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -369,6 +469,15 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithExtendedResults(
+     *     new ListUsersExtendedRequest([
+     *         'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersExtendedRequestForOptionalData $request
      * @param ?array{
      *   baseUrl?: string,
@@ -396,6 +505,15 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsernamesRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -423,6 +541,15 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithCursorPagination(
+     *     new ListUsersCursorPaginationRequest([
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsernamesWithOptionalResponseRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -450,6 +577,15 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithGlobalConfig(
+     *     new ListWithGlobalConfigRequest([
+     *         'offset' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListWithGlobalConfigRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -480,6 +616,15 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithOptionalData(
+     *     new ListUsersOptionalDataRequest([
+     *         'page' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersOptionalDataRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -510,6 +655,17 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithAliasedData(
+     *     new ListUsersAliasedDataRequest([
+     *         'page' => 1,
+     *         'perPage' => 1,
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersAliasedDataRequest $request
      * @param ?array{
      *   baseUrl?: string,

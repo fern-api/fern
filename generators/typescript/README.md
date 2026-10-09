@@ -197,13 +197,44 @@ const acme = new AcmeClient({
 });
 ```
 
-#### ✨ `defaultTimeoutInSeconds`
+#### ✨ `requireBaseUrl`
 
-**Type:** number
+**Type:** boolean
+
+**Default:** `false`
+
+When enabled, `baseUrl` becomes a required client option and `environment` becomes optional. Use this if your
+users always pass an explicit server URL and have no concept of named environments:
+
+```typescript
+const acme = new AcmeClient({
+  baseUrl: "https://acme.example.com"
+});
+```
+
+Ignored for APIs that define multiple base URLs, since those clients resolve each URL from `environment`.
+
+#### ✨ `defaultTimeout`
+
+**Type:** number | `"infinity"`
+
+**Default:** 60000
+
+The default timeout for network requests, in **milliseconds** (idiomatic for JavaScript/TypeScript,
+e.g. `setTimeout` and `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the timeout. In the
+generated client, this can be overridden at the request level.
+
+#### `defaultTimeoutInSeconds`
+
+> [!WARNING]
+> Deprecated. Use [`defaultTimeout`](#-defaulttimeout) (milliseconds) instead.
+
+**Type:** number | `"infinity"`
 
 **Default:** 60
 
-The default timeout for network requests. In the generated client, this can be overridden at the request level.
+The default timeout for network requests, in seconds. When set, it is converted to milliseconds
+(× 1000). `defaultTimeout` takes precedence when both are provided.
 
 #### ✨ `skipResponseValidation`
 
@@ -217,6 +248,51 @@ Fern Definition).
 
 If `skipResponseValidation` is enabled, the client will never throw if the response is misshapen. Rather, the client
 will log the issue using `console.warn` and return the data (casted to the expected response type).
+
+#### ✨ `guardProcessEnvAccess`
+
+**Type:** boolean
+
+**Default:** `false`
+
+By default, the generated auth providers read credentials from environment variables with
+`process.env?.[ENV_VAR]`, which throws `ReferenceError: process is not defined` in runtimes where
+`process` is an undeclared global (browsers/Vite, Cloudflare Workers, Deno).
+
+If `guardProcessEnvAccess` is enabled, those reads go through a `typeof process !== "undefined"`
+guard, so a caller who omits the credential in such a runtime gets the normal
+"please provide `<param>`, or set the `<ENV_VAR>` environment variable" error instead. Behavior on
+Node is unchanged.
+
+```yaml
+# generators.yml
+config:
+    guardProcessEnvAccess: true
+```
+
+#### ✨ `websocketHandlerMode`
+
+**Type:** `"replace" | "accumulate"`
+
+**Default:** `"replace"`
+
+Controls how the generated WebSocket `Socket` classes (see `generateWebSocketClients`) store handlers
+registered with `socket.on(event, callback)`.
+
+- `replace` (default): a second `on()` call for the same event replaces the previously registered
+  handler, so exactly one handler runs per event.
+- `accumulate`: handlers for the same event are appended and all run in registration order, matching
+  `EventEmitter`/`EventTarget` semantics.
+
+In both modes the socket also exposes `socket.off(event, callback)` to detach a handler previously
+registered with `on()`.
+
+```yaml
+# generators.yml
+config:
+    generateWebSocketClients: true
+    websocketHandlerMode: accumulate
+```
 
 #### ✨ `extraDependencies`
 
@@ -253,6 +329,80 @@ config:
   extraDevDependencies:
     jest: "29.0.7"
 ```
+
+#### ✨ `packageJson`
+
+**Type:** map\<string, unknown\>
+
+**Default:** `{}`
+
+Arbitrary overrides that are merged into the generated `package.json`. Values you specify win over
+generated ones; arrays (such as `files`) are unioned with your entries first. How nested objects are
+combined is controlled by `packageJsonMergeStrategy`.
+
+```yaml
+# generators.yml
+config:
+  packageJson:
+    license: "MIT"
+    engines:
+      node: ">=18"
+```
+
+#### ✨ `packageJsonMergeStrategy`
+
+**Type:** `"shallow" | "deep"`
+
+**Default:** `"shallow"`
+
+Controls how nested objects in `packageJson` are merged into the generated `package.json`.
+
+- `shallow` (default): nested objects one level below a top-level key are replaced wholesale. For
+  example, overriding `exports["."]` replaces the generated `import`/`require`/`default`
+  conditions with exactly what you wrote.
+- `deep`: nested objects are merged recursively. Your keys win at every level, keys you do not
+  mention are inherited from the generated output, and your keys are emitted first in the order you
+  wrote them (so a custom `exports` condition precedes the generated ones and Node matches it first).
+
+Use `deep` to add a custom export condition without redefining the whole subpath:
+
+```yaml
+# generators.yml
+config:
+  packageJsonMergeStrategy: deep
+  packageJson:
+    exports:
+      ".":
+        "my-dev-condition":
+          types: "./dist/cjs/index.d.ts"
+          default: "./src/index.ts"
+```
+
+Removing a generated key (for example dropping the `require` condition) is not expressible under
+either strategy.
+
+#### ✨ `exactOptionalPropertyTypes`
+
+**Type:** boolean
+
+**Default:** `false`
+
+Makes the generated SDK compile cleanly under TypeScript's `exactOptionalPropertyTypes`
+compiler option. When enabled, every optional property — model types, inlined request
+wrappers, client options, errors, and the `core/` utilities — is emitted as
+`prop?: T | undefined`, so consumers who enable `strict` + `exactOptionalPropertyTypes`
+can assign `undefined` explicitly (e.g. `client.list({ limit: possiblyUndefined })`).
+
+The generated `tsconfig` files also enable `exactOptionalPropertyTypes: true` so the
+package verifies itself under the stricter mode.
+
+```yaml
+# generators.yml
+config:
+  exactOptionalPropertyTypes: true
+```
+
+With the flag off (default), generated output is unchanged.
 
 #### ✨ `treatUnknownAsAny`
 

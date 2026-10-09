@@ -4,6 +4,7 @@ import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
+import { SdkFixer } from "../../../sdk/fixer/SdkFixer.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { type JsonOutput, toJsonViolation } from "../../_internal/toJsonViolation.js";
@@ -14,6 +15,8 @@ export declare namespace CheckCommand {
         strict: boolean;
         /** Output results as JSON to stdout */
         json: boolean;
+        /** Automatically fix issues that have a known resolution */
+        fix: boolean;
     }
 }
 
@@ -42,7 +45,17 @@ export class CheckCommand {
             }
         }
 
-        if (hasErrors) {
+        // Apply SDK fixes when --fix is specified.
+        let sdkFixedCount = 0;
+        if (args.fix && result.violations.length > 0) {
+            const sdkFixer = new SdkFixer({ context });
+            const fixResult = await sdkFixer.fix({ workspace, violations: result.violations });
+            sdkFixedCount = fixResult.fixedCount;
+        }
+
+        // Fail if there are errors and either --fix was not used, or --fix ran but
+        // could not resolve any violations (non-fixable errors remain).
+        if (hasErrors && (!args.fix || sdkFixedCount === 0)) {
             throw new CliError({ code: CliError.Code.ValidationError });
         }
 
@@ -92,6 +105,11 @@ export function addCheckCommand(cli: Argv<GlobalArgs>): void {
                 .option("json", {
                     type: "boolean",
                     description: "Output results as JSON to stdout",
+                    default: false
+                })
+                .option("fix", {
+                    type: "boolean",
+                    description: "Automatically fix issues that have a known resolution",
                     default: false
                 })
     );

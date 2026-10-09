@@ -2,6 +2,7 @@ package internal
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"net/url"
 
@@ -32,41 +33,91 @@ func NewStreamer[T any](caller *Caller) *Streamer[T] {
 
 // StreamParams represents the parameters used to issue an API streaming call.
 type StreamParams struct {
-	URL                string
-	Method             string
-	Prefix             string
-	Delimiter          string
-	Terminator         string
-	MaxAttempts        uint
-	Headers            http.Header
-	BodyProperties     map[string]interface{}
-	QueryParameters    url.Values
-	Client             HTTPClient
-	Request            interface{}
-	ErrorDecoder       ErrorDecoder
-	Format             core.StreamFormat
-	EventDiscriminator string
-	MaxBufSize         int
+	URL                        string
+	Method                     string
+	Prefix                     string
+	Delimiter                  string
+	Terminator                 string
+	MaxAttempts                uint
+	DisableRetries             bool
+	MaxStreamReconnectAttempts uint
+	DisableStreamReconnection  bool
+	Headers                    http.Header
+	BodyProperties             map[string]interface{}
+	QueryParameters            url.Values
+	Client                     HTTPClient
+	Request                    interface{}
+	ErrorDecoder               ErrorDecoder
+	Format                     core.StreamFormat
+	EventDiscriminator         string
+	EnvelopeEvents             []string
+	MaxBufSize                 int
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
 func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.Stream[T], error) {
+	return s.stream(ctx, params, false /* withReconnect */)
+}
+
+// StreamWithReconnect issues an API streaming call and returns a stream that
+// transparently reconnects mid-flight using SSE Last-Event-ID semantics.
+// Reconnection is bypassed when params.DisableStreamReconnection is true.
+func (s *Streamer[T]) StreamWithReconnect(ctx context.Context, params *StreamParams) (*core.Stream[T], error) {
+	return s.stream(ctx, params, true /* withReconnect */)
+}
+
+func (s *Streamer[T]) stream(ctx context.Context, params *StreamParams, withReconnect bool) (*core.Stream[T], error) {
+	resp, opts, err := s.streamOnce(ctx, params, "")
+	if err != nil {
+		return nil, err
+	}
+	if withReconnect && !params.DisableStreamReconnection {
+		opts = append(opts, core.WithReconnect(
+			func(ctx context.Context, lastEventID string) (*http.Response, error) {
+				next, _, err := s.streamOnce(ctx, params, lastEventID)
+				return next, err
+			},
+			params.MaxStreamReconnectAttempts,
+		))
+	}
+	return core.NewStream[T](ctx, resp, opts...), nil
+}
+
+// streamOnce builds and issues a single streaming HTTP request, returning the
+// response and the stream options derived from params. When lastEventID is
+// non-empty, it is set as the Last-Event-ID request header so the server can
+// resume from that point.
+func (s *Streamer[T]) streamOnce(
+	ctx context.Context,
+	params *StreamParams,
+	lastEventID string,
+) (*http.Response, []core.StreamOption, error) {
 	url := buildURL(params.URL, params.QueryParameters)
+	headers := params.Headers
+	if lastEventID != "" {
+		// Clone so reconnect attempts don't mutate the caller's header map.
+		if headers != nil {
+			headers = headers.Clone()
+		} else {
+			headers = http.Header{}
+		}
+		headers.Set("Last-Event-ID", lastEventID)
+	}
 	req, err := newRequest(
 		ctx,
 		url,
 		params.Method,
-		params.Headers,
+		headers,
 		params.Request,
 		params.BodyProperties,
 	)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	// If the call has been cancelled, don't issue the request.
 	if err := ctx.Err(); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	client := s.client
@@ -75,31 +126,41 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 		client = params.Client
 	}
 
-	var retryOptions []RetryOption
-	if params.MaxAttempts > 0 {
-		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
-	}
-
 	resp, err := s.retrier.Run(
 		client.Do,
 		req,
 		params.ErrorDecoder,
-		retryOptions...,
+		buildRetryOptions(params.MaxAttempts, params.DisableRetries)...,
 	)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
+	}
+
+	body, err := decompressedResponseBody(resp)
+	if err != nil {
+		defer func() { _ = resp.Body.Close() }()
+		return nil, nil, err
+	}
+	if body != io.Reader(resp.Body) {
+		// The response is handed off to the stream, which reads and closes
+		// resp.Body, so the decompressing reader must replace it while
+		// preserving the original body's Close.
+		resp.Body = struct {
+			io.Reader
+			io.Closer
+		}{body, resp.Body}
 	}
 
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
 	if err := ctx.Err(); err != nil {
 		defer func() { _ = resp.Body.Close() }()
-		return nil, err
+		return nil, nil, err
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		defer func() { _ = resp.Body.Close() }()
-		return nil, decodeError(resp, params.ErrorDecoder)
+		return nil, nil, decodeError(resp, resp.Body, params.ErrorDecoder)
 	}
 
 	var opts []core.StreamOption
@@ -116,11 +177,11 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 		opts = append(opts, core.WithFormat(params.Format))
 	}
 	if params.EventDiscriminator != "" {
-		opts = append(opts, core.WithEventDiscriminator(params.EventDiscriminator))
+		opts = append(opts, core.WithEventDiscriminator(params.EventDiscriminator, params.EnvelopeEvents...))
 	}
 	if params.MaxBufSize > 0 {
 		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))
 	}
 
-	return core.NewStream[T](ctx, resp, opts...), nil
+	return resp, opts, nil
 }

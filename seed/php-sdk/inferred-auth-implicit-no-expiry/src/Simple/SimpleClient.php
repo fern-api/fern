@@ -47,6 +47,11 @@ class SimpleClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->simple->getSomething();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

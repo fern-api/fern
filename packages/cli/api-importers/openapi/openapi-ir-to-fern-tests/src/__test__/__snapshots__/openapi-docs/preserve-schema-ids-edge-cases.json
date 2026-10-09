@@ -36,8 +36,10 @@
               "pagination": undefined,
               "path": "/user",
               "request": {
-                "body": "UserProfile",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "UserProfile",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -99,8 +101,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: UserProfile
-        content-type: application/json
+        body:
+          type: UserProfile
+          optional: true
       response:
         docs: Success
         type: UserProfile
@@ -158,4 +161,5 @@ error-discrimination:
 display-name: Preserve Schema IDs Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

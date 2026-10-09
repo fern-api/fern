@@ -1,0 +1,7 @@
+- summary: |
+    Fix generated snippets and wire tests omitting path parameters bound to
+    API-level variables. Path parameters are always required arguments on the
+    generated endpoint method, so a placeholder value (e.g. `<endpointParam>`) is
+    now emitted for any path parameter whose value is absent from the example,
+    keeping the generated SDK, snippets, and wire tests compiling.
+  type: fix

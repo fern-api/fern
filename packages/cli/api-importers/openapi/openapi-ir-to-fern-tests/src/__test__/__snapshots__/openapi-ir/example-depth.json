@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Tree API",
   "description": "API for working with tree data structures",
   "servers": [],

@@ -12,6 +12,30 @@
                 "type": "csharp",
                 "client": "using SeedPlainText;\n\nvar client = new SeedPlainTextClient();\nawait client.Service.GetTextAsync();\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/csv",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getCsv"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPlainText;\n\nvar client = new SeedPlainTextClient();\nawait client.Service.GetCsvAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/xml",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getXml"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPlainText;\n\nvar client = new SeedPlainTextClient();\nawait client.Service.GetXmlAsync();\n"
+            }
         }
     ]
 }

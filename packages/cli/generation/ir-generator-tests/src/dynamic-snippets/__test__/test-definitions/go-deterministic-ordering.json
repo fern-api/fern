@@ -175,7 +175,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_endpoints/put:Error": {
             "type": "object",
@@ -411,7 +412,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_endpoints/put:ErrorCategory": {
             "type": "enum",
@@ -1081,7 +1083,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_general-errors:BadObjectRequestInfo": {
             "type": "object",
@@ -1182,7 +1185,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/docs:ObjectWithDocs": {
             "type": "object",
@@ -1322,7 +1326,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/enum:WeatherReport": {
             "type": "enum",
@@ -2070,7 +2075,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithRequiredField": {
             "type": "object",
@@ -2210,7 +2216,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithMapOfMap": {
             "type": "object",
@@ -2364,7 +2371,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:NestedObjectWithOptionalField": {
             "type": "object",
@@ -2540,7 +2548,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:NestedObjectWithRequiredField": {
             "type": "object",
@@ -2710,7 +2719,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:DoubleOptional": {
             "type": "object",
@@ -2853,7 +2863,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:OptionalAlias": {
             "type": "alias",
@@ -3136,7 +3147,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithUnknownField": {
             "type": "object",
@@ -3275,7 +3287,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/union:Animal": {
             "type": "discriminatedUnion",
@@ -3404,6 +3417,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "dog": {
                     "type": "samePropertiesAsObject",
@@ -3629,7 +3643,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/union:Cat": {
             "type": "object",
@@ -3799,7 +3814,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/union:MixedType": {
             "type": "undiscriminatedUnion",
@@ -3952,7 +3968,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -4073,7 +4090,8 @@
                             "value": "STRING"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4101,7 +4119,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -4222,7 +4241,8 @@
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4250,7 +4270,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -4371,7 +4392,8 @@
                             "value": "STRING"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4399,7 +4421,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -4520,7 +4543,8 @@
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4548,7 +4572,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -4673,7 +4698,8 @@
                             "value": "STRING"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4701,7 +4727,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -4826,7 +4853,8 @@
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4854,7 +4882,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -4979,7 +5008,8 @@
                             "value": "type_types/union:MixedType"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5007,7 +5037,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -5128,7 +5159,8 @@
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5156,7 +5188,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -5274,7 +5307,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5302,7 +5336,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -5420,7 +5455,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5448,7 +5484,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -5761,7 +5798,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -6075,7 +6113,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -6391,7 +6430,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -6704,7 +6744,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -7018,7 +7059,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -7334,7 +7376,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -7647,7 +7690,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -7961,7 +8005,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -8277,7 +8322,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -8395,7 +8441,8 @@
                         "type": "named",
                         "value": "type_types/enum:WeatherReport"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8423,7 +8470,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -8566,7 +8614,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8594,7 +8643,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -8712,7 +8762,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8740,7 +8791,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -8889,7 +8941,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8917,7 +8970,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -9066,7 +9120,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9094,7 +9149,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -9237,7 +9293,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9265,7 +9322,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -9383,7 +9441,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9411,7 +9470,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -9529,7 +9589,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9557,7 +9618,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -9675,7 +9737,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithMapOfMap"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9703,7 +9766,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -9821,7 +9885,8 @@
                         "type": "named",
                         "value": "type_types/object:NestedObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9849,7 +9914,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -9998,7 +10064,8 @@
                         "type": "named",
                         "value": "type_types/object:NestedObjectWithRequiredField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10026,7 +10093,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -10147,7 +10215,8 @@
                             "value": "type_types/object:NestedObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10175,7 +10244,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -10293,7 +10363,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithUnknownField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10321,7 +10392,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -10439,7 +10511,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithDatetimeLikeString"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10467,7 +10540,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -10783,7 +10857,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -10926,7 +11001,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10954,7 +11030,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -11234,7 +11311,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -11544,7 +11622,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -11860,7 +11939,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -12171,7 +12251,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -12482,7 +12563,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -12631,7 +12713,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -12659,7 +12742,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -12967,7 +13051,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -13112,7 +13197,8 @@
                 ],
                 "body": {
                     "type": "bytes"
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13140,7 +13226,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -13258,7 +13345,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13286,7 +13374,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -13404,7 +13493,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13432,7 +13522,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -13550,7 +13641,8 @@
                         "type": "primitive",
                         "value": "LONG"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13578,7 +13670,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -13696,7 +13789,8 @@
                         "type": "primitive",
                         "value": "DOUBLE"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13724,7 +13818,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -13842,7 +13937,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13870,7 +13966,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -13988,7 +14085,8 @@
                         "type": "primitive",
                         "value": "DATE_TIME"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14016,7 +14114,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -14134,7 +14233,8 @@
                         "type": "primitive",
                         "value": "DATE"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14162,7 +14262,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -14280,7 +14381,8 @@
                         "type": "primitive",
                         "value": "UUID"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14308,7 +14410,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -14426,7 +14529,8 @@
                         "type": "primitive",
                         "value": "BASE_64"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14454,7 +14558,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -14734,7 +14839,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -14852,7 +14958,8 @@
                         "type": "named",
                         "value": "type_types/union:Animal"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14880,7 +14987,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -14992,7 +15100,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15020,7 +15129,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -15132,7 +15242,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15160,7 +15271,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -15272,7 +15384,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15300,7 +15413,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -15412,7 +15526,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15440,7 +15555,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -15705,7 +15821,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -15783,7 +15900,8 @@
                     "value": {
                         "type": "unknown"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15811,7 +15929,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -15884,7 +16003,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15912,7 +16032,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -15985,7 +16106,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -16013,7 +16135,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -16256,5 +16379,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

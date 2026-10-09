@@ -50,6 +50,26 @@ describe("OpenAPI 2xx no-content response preserves status code", () => {
         expect(endpoint?.response?.statusCode).toBe(200);
         expect(endpoint?.response?.body).toBeDefined();
     }, 90_000);
+
+    it("normalizes a 204 that erroneously declares a body, wrapping the 200 body optional", async () => {
+        const ir = await getIRForFixture("no-content-response-preserves-status-code");
+
+        // A 204 (No Content) can never carry a body at runtime, so even when the spec declares
+        // one the success response must be treated as optional — otherwise a real 204 fails to
+        // decode. Without the fix the 204 body is ignored *and* no optional wrap is applied.
+        const endpoint = findEndpointByOperationId(ir, "waterPlant");
+        expect(endpoint).toBeDefined();
+        expect(endpoint?.response?.statusCode).toBe(200);
+        const body = endpoint?.response?.body;
+        expect(body?.type).toBe("json");
+        if (body?.type === "json") {
+            const responseBodyType = body.value.responseBodyType;
+            expect(responseBodyType.type).toBe("container");
+            if (responseBodyType.type === "container") {
+                expect(responseBodyType.container.type).toBe("optional");
+            }
+        }
+    }, 90_000);
 });
 
 function findEndpointByOperationId(

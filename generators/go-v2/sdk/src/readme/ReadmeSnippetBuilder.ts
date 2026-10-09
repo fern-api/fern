@@ -1,4 +1,5 @@
 import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -11,12 +12,27 @@ interface EndpointWithFilepath {
     fernFilepath: FernIr.FernFilepath;
 }
 
+export const ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+
+/**
+ * features.yml describes environments in terms of `option.WithBaseURL`, which takes the
+ * string a single-URL environment constant is. A multi-URL environment is a struct with one
+ * URL per service, and the client takes it through `option.WithEnvironment`.
+ */
+export const MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION = [
+    "You can choose between different environments by passing one of the predefined `Environments` to the",
+    "`option.WithEnvironment` option. Each environment carries the base URL of every service the SDK talks to.",
+    "`option.WithBaseURL` points every request at one arbitrary base URL instead, which is particularly useful in",
+    "test environments.",
+    ""
+].join("\n");
+
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
-    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
     private static EXPLICIT_NULL_FEATURE_ID: FernGeneratorCli.FeatureId = "EXPLICIT_NULL";
+    private static ADDITIONAL_BODY_PROPERTIES_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_BODY_PROPERTIES";
     private static OAUTH_FEATURE_ID: FernGeneratorCli.FeatureId = "OAUTH";
 
     private readonly context: SdkGeneratorContext;
@@ -25,6 +41,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly rootPackageName: string;
     private readonly rootPackageClientName: string;
+    private readonly rootClientConstructorName: string;
     private readonly isPaginationEnabled: boolean;
 
     constructor({
@@ -46,7 +63,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
         this.rootPackageName = this.context.getRootPackageName();
-        this.rootPackageClientName = this.getRootPackageClientName();
+        this.rootPackageClientName = this.context.getRootClientPackageName();
+        this.rootClientConstructorName = this.context.getClientConstructorName();
     }
 
     public buildReadmeSnippetsByFeatureId(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -68,11 +86,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
-            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
+            [ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
             [ReadmeSnippetBuilder.RESPONSE_HEADERS_FEATURE_ID]: {
                 renderer: this.renderWithRawResponseHeadersSnippet.bind(this)
             },
             [ReadmeSnippetBuilder.EXPLICIT_NULL_FEATURE_ID]: { renderer: this.renderExplicitNullSnippet.bind(this) },
+            [ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID]: {
+                renderer: this.renderAdditionalBodyPropertiesSnippet.bind(this)
+            },
             [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
                 renderer: this.renderRequestOptionsSnippet.bind(this)
             },
@@ -90,7 +111,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
                           renderer: this.renderPaginationSnippet.bind(this),
-                          predicate: (endpoint: EndpointWithFilepath) => endpoint.endpoint.pagination != null
+                          predicate: (endpoint: EndpointWithFilepath) =>
+                              this.context.isEnabledPaginationEndpoint(endpoint.endpoint)
                       }
                   }
                 : undefined)
@@ -107,6 +129,73 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
 
         return snippetsByFeatureId;
+    }
+
+    public buildReadmeAddendumsByFeatureId(): Record<FernGeneratorCli.FeatureId, string> {
+        const addendums: Record<FernGeneratorCli.FeatureId, string> = {};
+        const environmentVariablesAddendum = this.buildEnvironmentVariablesAddendum();
+        if (environmentVariablesAddendum != null) {
+            addendums[FernGeneratorCli.StructuredFeatureId.RequestOptions] = environmentVariablesAddendum;
+        }
+        return addendums;
+    }
+
+    private buildEnvironmentVariablesAddendum(): string | undefined {
+        const environmentVariables = this.getAuthEnvironmentVariables();
+        if (environmentVariables.length === 0) {
+            return undefined;
+        }
+        const bulletedList = environmentVariables
+            .map((environmentVariable) => `- \`${environmentVariable}\``)
+            .join("\n");
+        return [
+            "",
+            "When credentials are not explicitly provided, the client reads them from the",
+            "following environment variables:",
+            "",
+            bulletedList
+        ].join("\n");
+    }
+
+    private getAuthEnvironmentVariables(): FernIr.EnvironmentVariable[] {
+        const environmentVariables: FernIr.EnvironmentVariable[] = [];
+        for (const scheme of this.context.ir.auth?.schemes ?? []) {
+            switch (scheme.type) {
+                case "bearer":
+                    if (scheme.tokenEnvVar != null) {
+                        environmentVariables.push(scheme.tokenEnvVar);
+                    }
+                    break;
+                case "header":
+                    if (scheme.headerEnvVar != null) {
+                        environmentVariables.push(scheme.headerEnvVar);
+                    }
+                    break;
+                case "basic":
+                    if (scheme.usernameEnvVar != null) {
+                        environmentVariables.push(scheme.usernameEnvVar);
+                    }
+                    if (scheme.passwordEnvVar != null) {
+                        environmentVariables.push(scheme.passwordEnvVar);
+                    }
+                    break;
+                case "oauth":
+                    if (scheme.configuration.type === "clientCredentials") {
+                        if (scheme.configuration.clientIdEnvVar != null) {
+                            environmentVariables.push(scheme.configuration.clientIdEnvVar);
+                        }
+                        if (scheme.configuration.clientSecretEnvVar != null) {
+                            environmentVariables.push(scheme.configuration.clientSecretEnvVar);
+                        }
+                    }
+                    break;
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return environmentVariables;
     }
 
     private getPrerenderedSnippetsForFeature(
@@ -134,10 +223,23 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
     private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.WithBaseURL(${this.getBaseUrlOptionValue()}),
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(
+                ${this.getEnvironmentOption()},
             )
         `);
+    }
+
+    /**
+     * A multi-URL environment is a struct carrying one URL per service, which the generated
+     * client takes through `option.WithEnvironment`; `option.WithBaseURL` takes a string, so it
+     * fits a single-URL environment constant or a custom URL only.
+     */
+    private getEnvironmentOption(): string {
+        const environment = this.getEnvironmentBaseUrlReference();
+        if (environment != null && this.context.isMultipleBaseUrlsEnvironment()) {
+            return `option.WithEnvironment(${environment})`;
+        }
+        return `option.WithBaseURL(${environment ?? '"https://example.com"'})`;
     }
 
     private renderWithRawResponseHeadersSnippet(endpoint: EndpointWithFilepath): string {
@@ -176,23 +278,82 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            // Specify default options applied on every request.
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder()}"),
+        const authOptions = this.getAuthOptions();
+        const clientOptions = [
+            ...authOptions,
+            dedent`
                 option.WithHTTPClient(
                     &http.Client{
                         Timeout: 5 * time.Second,
                     },
-                ),
-            )
+                )`
+        ];
+        const requestOption = authOptions[0] ?? "option.WithMaxAttempts(1)";
+        const lines: string[] = [
+            "// Specify default options applied on every request.",
+            `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(`,
+            ...clientOptions.map((option) => `${this.indent(option)},`),
+            ")",
+            "",
+            "// Specify options for an individual request.",
+            `response, err := ${this.getMethodCall(endpoint)}(`,
+            "    ...,",
+            `    ${requestOption},`,
+            ")"
+        ];
+        return this.writeCode(lines.join("\n"));
+    }
 
-            // Specify options for an individual request.
-            response, err := ${this.getMethodCall(endpoint)}(
-                ...,
-                option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder()}"),
-            )
-        `);
+    private getAuthOptions(): string[] {
+        const options: string[] = [];
+        for (const scheme of this.context.ir.auth?.schemes ?? []) {
+            switch (scheme.type) {
+                case "bearer":
+                    options.push(
+                        `option.With${this.context.caseConverter.pascalUnsafe(scheme.token)}("${
+                            scheme.tokenPlaceholder ?? "<YOUR_API_KEY>"
+                        }")`
+                    );
+                    break;
+                case "header":
+                    options.push(
+                        `option.With${this.context.caseConverter.pascalUnsafe(scheme.name)}("${
+                            scheme.headerPlaceholder ?? "<YOUR_API_KEY>"
+                        }")`
+                    );
+                    break;
+                case "basic": {
+                    const basicAuthArguments: string[] = [];
+                    if (scheme.usernameOmit !== true) {
+                        basicAuthArguments.push(`"${scheme.usernamePlaceholder ?? "<YOUR_USERNAME>"}"`);
+                    }
+                    if (scheme.passwordOmit !== true) {
+                        basicAuthArguments.push(`"${scheme.passwordPlaceholder ?? "<YOUR_PASSWORD>"}"`);
+                    }
+                    if (basicAuthArguments.length > 0) {
+                        options.push(`option.WithBasicAuth(${basicAuthArguments.join(", ")})`);
+                    }
+                    break;
+                }
+                case "oauth":
+                    options.push(
+                        `option.WithClientCredentials("${this.getOAuthClientIdPlaceholder()}", "${this.getOAuthClientSecretPlaceholder()}")`
+                    );
+                    break;
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return options;
+    }
+
+    private indent(s: string): string {
+        return s
+            .split("\n")
+            .map((line) => (line.length > 0 ? `    ${line}` : line))
+            .join("\n");
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
@@ -200,7 +361,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             response, err := ${this.getMethodCall(endpoint)}(...)
             if err != nil {
                 var apiError *core.APIError
-                if errors.As(err, apiError) {
+                if errors.As(err, &apiError) {
                     // Do something with the API error ...
                 }
                 return err
@@ -210,7 +371,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(
                 option.WithMaxAttempts(1),
             )
 
@@ -227,6 +388,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             defer cancel()
 
             response, err := ${this.getMethodCall(endpoint)}(ctx, ...)
+        `);
+    }
+
+    private renderAdditionalBodyPropertiesSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            response, err := ${this.getMethodCall(endpoint)}(
+                ...,
+                option.WithBodyProperties(map[string]interface{}{
+                    "custom_field": "custom-value",
+                }),
+            )
         `);
     }
 
@@ -282,8 +454,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
 
             // Paginated endpoints return a Page with directly accessible headers, status code, and full response
-            ctx := context.TODO()
-            page, err := ${this.getMethodCall(endpoint)}(
+            page, err = ${this.getMethodCall(endpoint)}(
                 ctx,
                 ...
             )
@@ -348,7 +519,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderOAuthSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
             // Option 1: Use client credentials (SDK will handle token fetching and refresh)
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(
                 option.WithClientCredentials(
                     "${this.getOAuthClientIdPlaceholder()}",
                     "${this.getOAuthClientSecretPlaceholder()}",
@@ -356,7 +527,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             )
 
             // Option 2: Use a pre-fetched token directly
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(
                 option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder({ defaultValue: "<YOUR_ACCESS_TOKEN>" })}"),
             )
         `);
@@ -407,8 +578,27 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
-        return endpointIds.map(this.lookupEndpointById.bind(this));
+        const configuredEndpointIds = this.getConfiguredEndpointIdsForFeature(featureId);
+        if (configuredEndpointIds != null) {
+            return configuredEndpointIds.map(this.lookupEndpointById.bind(this));
+        }
+        if (featureId === FernGeneratorCli.StructuredFeatureId.Pagination) {
+            const paginatedEndpoint = this.getEndpointWithPagination();
+            if (paginatedEndpoint != null) {
+                return [paginatedEndpoint];
+            }
+        }
+        return [this.lookupEndpointById(this.defaultEndpointId)];
+    }
+
+    private getEndpointWithPagination(): EndpointWithFilepath | undefined {
+        const defaultEndpoint = this.endpointsById[this.defaultEndpointId];
+        if (defaultEndpoint != null && this.context.isEnabledPaginationEndpoint(defaultEndpoint.endpoint)) {
+            return defaultEndpoint;
+        }
+        return Object.values(this.endpointsById).find((endpoint) =>
+            this.context.isEnabledPaginationEndpoint(endpoint.endpoint)
+        );
     }
 
     private getConfiguredEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {
@@ -455,10 +645,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         );
     }
 
-    private getBaseUrlOptionValue(): string {
-        return this.getEnvironmentBaseUrlReference() ?? '"https://example.com"';
-    }
-
     private getEnvironmentBaseUrlReference(): string | undefined {
         const defaultEnvironmentId = this.getDefaultEnvironmentId();
 
@@ -474,10 +660,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
 
         return `${this.rootPackageName}.Environments.${this.context.caseConverter.pascalUnsafe(defaultEnvironment.name)}`;
-    }
-
-    private getRootPackageClientName(): string {
-        return "client";
     }
 
     private writeCode(s: string): string {

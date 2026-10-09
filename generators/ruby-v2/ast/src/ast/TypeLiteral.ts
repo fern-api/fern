@@ -8,7 +8,7 @@ export interface NamedValue {
     value: AstNode;
 }
 
-type InternalTypeLiteral = Str | InterpolatedStr | Int | Float | Bool | Hash | Set_ | List_ | Nop | Nil;
+type InternalTypeLiteral = Str | InterpolatedStr | Int | Float | Bool | Hash | Set_ | List_ | Nop | Nil | Unknown;
 
 interface Str {
     type: "str";
@@ -61,6 +61,11 @@ interface Nop {
 
 interface Nil {
     type: "nil";
+}
+
+interface Unknown {
+    type: "unknown";
+    value: unknown;
 }
 
 export class TypeLiteral extends AstNode {
@@ -134,6 +139,10 @@ export class TypeLiteral extends AstNode {
 
     public static nil(): TypeLiteral {
         return new this({ type: "nil" });
+    }
+
+    public static unknown(value: unknown): TypeLiteral {
+        return new this({ type: "unknown", value });
     }
 
     public static isNop(typeLiteral: AstNode): boolean {
@@ -281,9 +290,88 @@ export class TypeLiteral extends AstNode {
             case "nil":
                 writer.write("nil");
                 break;
+            case "unknown":
+                this.writeUnknown({ writer, value: this.internalType.value });
+                break;
             default:
                 assertNever(this.internalType);
         }
+    }
+
+    private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
+        switch (typeof value) {
+            case "boolean":
+                writer.write(value ? "true" : "false");
+                return;
+            case "string":
+                TypeLiteral.string(value).write(writer);
+                return;
+            case "number":
+                writer.write(value.toString());
+                return;
+            case "object":
+                if (value == null) {
+                    writer.write("nil");
+                    return;
+                }
+                if (Array.isArray(value)) {
+                    this.writeUnknownArray({ writer, value });
+                    return;
+                }
+                this.writeUnknownObject({ writer, value });
+                return;
+            default:
+                writer.write("nil");
+                return;
+        }
+    }
+
+    private writeUnknownArray({ writer, value }: { writer: Writer; value: unknown[] }): void {
+        if (value.length === 0) {
+            writer.write("[]");
+            return;
+        }
+        // Use %w[] for arrays where every element is a simple string with no
+        // spaces, backslashes, or brackets that would break the syntax. Mirrors
+        // the list case so rubocop's Style/WordArray is satisfied.
+        if (
+            value.length >= 2 &&
+            value.every((element): element is string => typeof element === "string" && !/[\s\\[\]]/.test(element))
+        ) {
+            writer.write(`%w[${value.join(" ")}]`);
+            return;
+        }
+        writer.write("[");
+        value.forEach((element, index) => {
+            if (index > 0) {
+                writer.write(", ");
+            }
+            TypeLiteral.unknown(element).write(writer);
+        });
+        writer.write("]");
+    }
+
+    private writeUnknownObject({ writer, value }: { writer: Writer; value: object }): void {
+        const entries = Object.entries(value);
+        if (entries.length === 0) {
+            writer.write("{}");
+            return;
+        }
+        writer.write("{\n");
+        entries.forEach(([key, val], index) => {
+            if (index > 0) {
+                writer.writeLine(",");
+            }
+            writer.indent();
+            if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) {
+                writer.write(`${key}: `);
+            } else {
+                writer.write(`"${key}" => `);
+            }
+            TypeLiteral.unknown(val).write(writer);
+            writer.dedent();
+        });
+        writer.write("\n}");
     }
 }
 

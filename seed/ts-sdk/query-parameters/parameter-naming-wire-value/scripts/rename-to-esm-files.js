@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs").promises;
+const fsSync = require("fs");
 const path = require("path");
 
 const extensionMap = {
@@ -44,8 +45,32 @@ async function updateFiles(files) {
     console.log(`Updated imports in ${updatedFiles.length} files.`);
 }
 
+const KNOWN_EXTENSIONS = new Set([".js", ".mjs", ".cjs", ".jsx", ".json", ".ts", ".mts", ".cts", ".tsx", ".node"]);
+
+function hasFileExtension(importPath) {
+    const basename = path.basename(importPath);
+    const dotIndex = basename.lastIndexOf(".");
+    if (dotIndex <= 0) {
+        return false;
+    }
+    return KNOWN_EXTENSIONS.has(basename.slice(dotIndex).toLowerCase());
+}
+
+function resolveExtensionlessImport(dir, importPath) {
+    const resolvedPath = path.resolve(dir, importPath);
+    if (fsSync.existsSync(`${resolvedPath}.js`)) {
+        return `${importPath}.mjs`;
+    }
+    const indexPath = path.join(resolvedPath, "index.js");
+    if (fsSync.existsSync(indexPath)) {
+        return `${importPath}/index.mjs`;
+    }
+    return null;
+}
+
 async function updateFileContents(file) {
     const content = await fs.readFile(file, "utf8");
+    const dir = path.dirname(file);
 
     let newContent = content;
     // Update each extension type defined in the map
@@ -60,6 +85,46 @@ async function updateFileContents(file) {
             "g",
         );
         newContent = newContent.replace(dynamicRegex, `$1("$2${newExt}")`);
+    }
+
+    // Handle extensionless relative imports (e.g. from "./oauth" or from "../utils").
+    // These violate the ESM spec and break Node's ESM loader and Turbopack.
+    const staticExtensionless = /(import|export)(.+from\s+['"])(\.\.?\/[^'"]+?)(['"])/g;
+    const staticReplacements = [];
+    let match;
+    while ((match = staticExtensionless.exec(newContent)) !== null) {
+        const importPath = match[3];
+        if (hasFileExtension(importPath)) continue;
+        const resolved = resolveExtensionlessImport(dir, importPath);
+        if (resolved != null) {
+            staticReplacements.push({
+                start: match.index,
+                end: match.index + match[0].length,
+                replacement: `${match[1]}${match[2]}${resolved}${match[4]}`,
+            });
+        }
+    }
+    for (const { start, end, replacement } of staticReplacements.reverse()) {
+        newContent = newContent.slice(0, start) + replacement + newContent.slice(end);
+    }
+
+    // Handle extensionless dynamic imports
+    const dynamicExtensionless = /(yield\s+import|await\s+import|import)\s*\(\s*['"](\.\.?\/[^'"]+?)['"]\s*\)/g;
+    const dynamicReplacements = [];
+    while ((match = dynamicExtensionless.exec(newContent)) !== null) {
+        const importPath = match[2];
+        if (hasFileExtension(importPath)) continue;
+        const resolved = resolveExtensionlessImport(dir, importPath);
+        if (resolved != null) {
+            dynamicReplacements.push({
+                start: match.index,
+                end: match.index + match[0].length,
+                replacement: `${match[1]}("${resolved}")`,
+            });
+        }
+    }
+    for (const { start, end, replacement } of dynamicReplacements.reverse()) {
+        newContent = newContent.slice(0, start) + replacement + newContent.slice(end);
     }
 
     if (content !== newContent) {

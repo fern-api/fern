@@ -47,6 +47,7 @@ exports.ObjectClient = void 0;
 const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
+const requestBody_js_1 = require("../../../../../../core/requestBody.js");
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class ObjectClient {
@@ -56,6 +57,9 @@ class ObjectClient {
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
@@ -91,7 +95,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -118,6 +122,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithRequiredField({
      *         string: "string"
@@ -138,7 +145,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -165,6 +172,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithMapOfMap({
      *         map: {
@@ -189,7 +199,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -215,6 +225,9 @@ class ObjectClient {
     /**
      * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
@@ -253,7 +266,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -280,6 +293,9 @@ class ObjectClient {
      * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
@@ -318,7 +334,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -344,6 +360,9 @@ class ObjectClient {
     /**
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
@@ -401,7 +420,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -428,6 +447,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithUnknownField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithUnknownField({
      *         unknown: {
@@ -450,7 +472,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -477,6 +499,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
      *         documentedUnknownType: {
@@ -499,7 +524,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -526,6 +551,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.MapOfDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
      *         "string": {
@@ -548,7 +576,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -578,6 +606,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
      *         requiredString: "hello",
@@ -601,7 +632,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -633,6 +664,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithRequiredNestedObject} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithRequiredNestedObject({
      *         requiredString: "hello",
@@ -657,7 +691,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -688,6 +722,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithDatetimeLikeString} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithDatetimeLikeString({
      *         datetimeLikeString: "2023-08-31T14:15:22Z",
@@ -709,7 +746,7 @@ class ObjectClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,

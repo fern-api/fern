@@ -3,7 +3,7 @@
 namespace Example;
 
 use Custom\Package\Path\SeedClient;
-use Custom\Package\Path\Imdb\Types\CreateMovieRequest;
+use Custom\Package\Path\Imdb\Requests\CreateMovieRequest;
 
 $client = new SeedClient(
     token: '<token>',

@@ -32,4 +32,6 @@ export interface SdkContext {
     omitUndefined: boolean;
     neverThrowErrors: boolean;
     flattenRequestParameters: boolean;
+    respectOptionalRequestBody: boolean;
+    deepObjectMapQueryParameters: boolean;
 }

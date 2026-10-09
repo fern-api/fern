@@ -53,6 +53,17 @@ class OptionalClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->optional->sendOptionalBody(
+     *     [
+     *         'string' => [
+     *             'key' => "value",
+     *         ],
+     *     ],
+     * );
+     * ```
+     *
      * @param ?array<string, mixed> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -100,6 +111,15 @@ class OptionalClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->optional->sendOptionalTypedBody(
+     *     new SendOptionalBodyRequest([
+     *         'message' => 'message',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ?SendOptionalBodyRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -149,6 +169,17 @@ class OptionalClient
     /**
      * Tests optional(nullable(T)) where T has only optional properties.
      * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     *
+     * Example:
+     * ```php
+     * $client->optional->sendOptionalNullableWithAllOptionalProperties(
+     *     'actionId',
+     *     'id',
+     *     new DeployParams([
+     *         'updateDraft' => true,
+     *     ]),
+     * );
+     * ```
      *
      * @param string $actionId
      * @param string $id

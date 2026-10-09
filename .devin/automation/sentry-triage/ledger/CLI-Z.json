@@ -1,0 +1,10 @@
+{
+  "title": "ENOSPC no space left on device",
+  "disposition": "duplicate",
+  "rationale": "ENOSPC is already covered by the errno environment mapping.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-2X",
+  "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission, disk full) surfaced as InternalError instead of environment-style CLI error."
+}

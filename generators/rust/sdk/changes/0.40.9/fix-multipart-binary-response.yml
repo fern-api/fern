@@ -1,0 +1,6 @@
+- summary: |
+    Fix multipart file-upload endpoints with binary responses to use streaming method,
+    and fix file-upload endpoints with query parameters to bind the query-folded envelope
+    type instead of the bare body type. Both issues caused cargo build failures on
+    endpoints like ElevenLabs speech-to-speech (multipart + binary response + query params).
+  type: fix

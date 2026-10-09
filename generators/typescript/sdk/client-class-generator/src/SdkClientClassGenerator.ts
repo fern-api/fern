@@ -17,7 +17,8 @@ export declare namespace SdkClientClassGenerator {
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        requireBaseUrl: boolean;
+        defaultTimeout: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
@@ -34,6 +35,7 @@ export declare namespace SdkClientClassGenerator {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         alwaysSendAuth: boolean;
+        guardProcessEnvAccess?: boolean;
     }
 
     export namespace generateService {
@@ -56,7 +58,8 @@ export class SdkClientClassGenerator {
     private readonly allowCustomFetcher: boolean;
     private readonly generateWebSocketClients: boolean;
     private readonly requireDefaultEnvironment: boolean;
-    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly requireBaseUrl: boolean;
+    private readonly defaultTimeout: number | "infinity" | undefined;
     private readonly npmPackage: NpmPackage | undefined;
     private readonly includeContentHeadersOnFileDownloadResponse: boolean;
     private readonly includeSerdeLayer: boolean;
@@ -73,6 +76,7 @@ export class SdkClientClassGenerator {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly alwaysSendAuth: boolean;
+    private readonly guardProcessEnvAccess: boolean;
 
     constructor({
         caseConverter,
@@ -84,7 +88,8 @@ export class SdkClientClassGenerator {
         allowCustomFetcher,
         generateWebSocketClients,
         requireDefaultEnvironment,
-        defaultTimeoutInSeconds,
+        requireBaseUrl,
+        defaultTimeout,
         npmPackage,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
@@ -100,7 +105,8 @@ export class SdkClientClassGenerator {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        alwaysSendAuth
+        alwaysSendAuth,
+        guardProcessEnvAccess
     }: SdkClientClassGenerator.Init) {
         this.case = caseConverter;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -111,7 +117,8 @@ export class SdkClientClassGenerator {
         this.allowCustomFetcher = allowCustomFetcher;
         this.generateWebSocketClients = generateWebSocketClients;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
-        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+        this.requireBaseUrl = requireBaseUrl;
+        this.defaultTimeout = defaultTimeout;
         this.npmPackage = npmPackage;
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -128,6 +135,7 @@ export class SdkClientClassGenerator {
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
         this.alwaysSendAuth = alwaysSendAuth;
+        this.guardProcessEnvAccess = guardProcessEnvAccess ?? false;
     }
 
     public generateService({
@@ -151,7 +159,8 @@ export class SdkClientClassGenerator {
             allowCustomFetcher: this.allowCustomFetcher,
             generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
-            defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+            requireBaseUrl: this.requireBaseUrl,
+            defaultTimeout: this.defaultTimeout,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
@@ -165,7 +174,8 @@ export class SdkClientClassGenerator {
             generateEndpointMetadata: this.generateEndpointMetadata,
             parameterNaming: this.parameterNaming,
             offsetSemantics: this.offsetSemantics,
-            alwaysSendAuth: this.alwaysSendAuth
+            alwaysSendAuth: this.alwaysSendAuth,
+            guardProcessEnvAccess: this.guardProcessEnvAccess
         });
     }
 }

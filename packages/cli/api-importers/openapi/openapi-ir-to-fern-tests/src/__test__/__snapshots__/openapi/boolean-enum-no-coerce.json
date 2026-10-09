@@ -192,4 +192,5 @@ error-discrimination:
 display-name: Boolean Enum No Coerce Test
 ",
   },
+  "specVersion": "1.0.0",
 }

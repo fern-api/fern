@@ -34,13 +34,13 @@ public class NestedObjectUnion
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a SeedUndiscriminatedUnions.LeafTypeA value.
+    /// Factory method to create a union from a <see cref="SeedUndiscriminatedUnions.LeafTypeA"/> value.
     /// </summary>
     public static NestedObjectUnion FromLeafTypeA(SeedUndiscriminatedUnions.LeafTypeA value) =>
         new("leafTypeA", value);
 
     /// <summary>
-    /// Factory method to create a union from a SeedUndiscriminatedUnions.LeafTypeB value.
+    /// Factory method to create a union from a <see cref="SeedUndiscriminatedUnions.LeafTypeB"/> value.
     /// </summary>
     public static NestedObjectUnion FromLeafTypeB(SeedUndiscriminatedUnions.LeafTypeB value) =>
         new("leafTypeB", value);

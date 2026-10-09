@@ -16,7 +16,7 @@ public partial class SeedInferredAuthImplicitApiKeyClient : ISeedInferredAuthImp
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedInferredAuthImplicitApiKey" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedInferredAuthImplicitApiKey.Version.Current },
                 { "User-Agent", "Ferninferred-auth-implicit-api-key/0.0.1" },
             }
         );

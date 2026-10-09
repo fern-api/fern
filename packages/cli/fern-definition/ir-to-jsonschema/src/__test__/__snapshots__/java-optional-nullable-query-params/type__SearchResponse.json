@@ -56,13 +56,15 @@
     "totalCount"
   ],
   "additionalProperties": false,
+  "description": "Search response",
   "definitions": {
     "SortOrder": {
       "type": "string",
       "enum": [
         "ASC",
         "DESC"
-      ]
+      ],
+      "description": "Sort order enum"
     }
   }
 }

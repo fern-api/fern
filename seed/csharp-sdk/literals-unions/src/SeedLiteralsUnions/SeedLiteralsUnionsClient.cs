@@ -14,7 +14,7 @@ public partial class SeedLiteralsUnionsClient : ISeedLiteralsUnionsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedLiteralsUnions" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedLiteralsUnions.Version.Current },
                 { "User-Agent", "Fernliterals-unions/0.0.1" },
             }
         );

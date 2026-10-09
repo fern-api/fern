@@ -1,0 +1,6 @@
+- summary: |
+    Only reference `README.md` in the generated `.csproj` when the file actually exists. The
+    `<PackageReadmeFile>` property and the packed `<None Include>` item are now guarded with an
+    MSBuild `Exists` condition, so `dotnet pack` no longer fails with NU5019 for outputs that do
+    not include a README (e.g. local-file-system output).
+  type: fix

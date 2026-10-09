@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump `@fern-api/replay` to 0.19.0.
+  type: chore

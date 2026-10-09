@@ -18,6 +18,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.dummy.generate(
+      #     stream: false,
+      #     num_events: 5
+      #   )
+      #
       # @return [untyped]
       def generate(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

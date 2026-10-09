@@ -14,9 +14,13 @@ class RequestOptions(typing.TypedDict, total=False):
     This is used primarily as an optional final parameter for service functions.
 
     Attributes:
-        - timeout_in_seconds: int. The number of seconds to await an API call before timing out.
+        - timeout: float. The number of seconds to await an API call before timing out.
+
+        - timeout_in_seconds: int. Deprecated alias for `timeout`; both are in seconds. Prefer `timeout`.
 
         - max_retries: int. The max number of retries to attempt if the API call fails.
+
+        - retry_remote_protocol_errors: bool. Retry server disconnects and incomplete responses. Defaults to False, since the server may already have applied the request. Enable only when replaying the request is safe; bounded by max_retries.
 
         - additional_headers: typing.Dict[str, typing.Any]. A dictionary containing additional parameters to spread into the request's header dict
 
@@ -27,9 +31,13 @@ class RequestOptions(typing.TypedDict, total=False):
         - chunk_size: int. The size, in bytes, to process each chunk of data being streamed back within the response. This equates to leveraging `chunk_size` within `requests` or `httpx`, and is only leveraged for file downloads.
     """
 
+    timeout: NotRequired[float]
     timeout_in_seconds: NotRequired[int]
     max_retries: NotRequired[int]
+    retry_remote_protocol_errors: NotRequired[bool]
     additional_headers: NotRequired[typing.Dict[str, typing.Any]]
     additional_query_parameters: NotRequired[typing.Dict[str, typing.Any]]
     additional_body_parameters: NotRequired[typing.Dict[str, typing.Any]]
     chunk_size: NotRequired[int]
+    stream_reconnection_enabled: NotRequired[bool]
+    max_stream_reconnection_attempts: NotRequired[int]

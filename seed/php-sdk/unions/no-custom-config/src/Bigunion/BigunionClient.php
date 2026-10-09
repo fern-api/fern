@@ -51,6 +51,13 @@ class BigunionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->bigunion->get(
+     *     'id',
+     * );
+     * ```
+     *
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,
@@ -71,7 +78,7 @@ class BigunionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$id}",
+                    path: "/bigunion/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -97,6 +104,15 @@ class BigunionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->bigunion->update(
+     *     BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+     *         'value' => 'value',
+     *     ]), new DateTime('2024-01-15T09:30:00Z')),
+     * );
+     * ```
+     *
      * @param BigUnion $request
      * @param ?array{
      *   baseUrl?: string,
@@ -117,7 +133,7 @@ class BigunionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "",
+                    path: "/bigunion",
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
@@ -144,6 +160,20 @@ class BigunionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->bigunion->updateMany(
+     *     [
+     *         BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+     *             'value' => 'value',
+     *         ]), new DateTime('2024-01-15T09:30:00Z')),
+     *         BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+     *             'value' => 'value',
+     *         ]), new DateTime('2024-01-15T09:30:00Z')),
+     *     ],
+     * );
+     * ```
+     *
      * @param array<BigUnion> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -164,7 +194,7 @@ class BigunionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/many",
+                    path: "/bigunion/many",
                     method: HttpMethod::PATCH,
                     body: JsonSerializer::serializeArray($request, [BigUnion::class]),
                 ),

@@ -823,10 +823,12 @@ var (
 )
 
 type MultipleBaseUrlsEnvironment struct {
-	Docs *string                                 `json:"docs,omitempty" url:"docs,omitempty"`
-	Id   EnvironmentId                           `json:"id" url:"id"`
-	Name *Name                                   `json:"name" url:"name"`
-	Urls map[EnvironmentBaseUrlId]EnvironmentUrl `json:"urls" url:"urls"`
+	Docs         *string                                    `json:"docs,omitempty" url:"docs,omitempty"`
+	Id           EnvironmentId                              `json:"id" url:"id"`
+	Name         *Name                                      `json:"name" url:"name"`
+	Urls         map[EnvironmentBaseUrlId]EnvironmentUrl    `json:"urls" url:"urls"`
+	UrlTemplates map[EnvironmentBaseUrlId]string            `json:"urlTemplates,omitempty" url:"urlTemplates,omitempty"`
+	UrlVariables map[EnvironmentBaseUrlId][]*ServerVariable `json:"urlVariables,omitempty" url:"urlVariables,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -860,6 +862,20 @@ func (m *MultipleBaseUrlsEnvironment) GetUrls() map[EnvironmentBaseUrlId]Environ
 		return nil
 	}
 	return m.Urls
+}
+
+func (m *MultipleBaseUrlsEnvironment) GetUrlTemplates() map[EnvironmentBaseUrlId]string {
+	if m == nil {
+		return nil
+	}
+	return m.UrlTemplates
+}
+
+func (m *MultipleBaseUrlsEnvironment) GetUrlVariables() map[EnvironmentBaseUrlId][]*ServerVariable {
+	if m == nil {
+		return nil
+	}
+	return m.UrlVariables
 }
 
 func (m *MultipleBaseUrlsEnvironment) GetExtraProperties() map[string]interface{} {
@@ -1028,11 +1044,86 @@ var (
 	singleBaseUrlEnvironmentFieldUrl  = big.NewInt(1 << 3)
 )
 
+// ServerVariable is a variable that can be substituted into a URL template at
+// runtime (e.g. a region or edge identifier declared via OpenAPI server variables).
+type ServerVariable struct {
+	// Id is the unique identifier for this variable, matching the placeholder in
+	// the URL template.
+	Id string `json:"id" url:"id"`
+	// Name is the human-readable name of the variable.
+	Name *Name `json:"name" url:"name"`
+	// Default is the default value for this variable, if any.
+	Default *string `json:"default,omitempty" url:"default,omitempty"`
+	// Values are the allowed values for this variable, if constrained.
+	Values []string `json:"values,omitempty" url:"values,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *ServerVariable) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *ServerVariable) GetName() *Name {
+	if s == nil {
+		return nil
+	}
+	return s.Name
+}
+
+func (s *ServerVariable) GetDefault() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Default
+}
+
+func (s *ServerVariable) GetValues() []string {
+	if s == nil {
+		return nil
+	}
+	return s.Values
+}
+
+func (s *ServerVariable) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *ServerVariable) UnmarshalJSON(data []byte) error {
+	type unmarshaler ServerVariable
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = ServerVariable(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	return nil
+}
+
+func (s *ServerVariable) String() string {
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 type SingleBaseUrlEnvironment struct {
-	Docs *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	Id   EnvironmentId  `json:"id" url:"id"`
-	Name *Name          `json:"name" url:"name"`
-	Url  EnvironmentUrl `json:"url" url:"url"`
+	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Id           EnvironmentId     `json:"id" url:"id"`
+	Name         *Name             `json:"name" url:"name"`
+	Url          EnvironmentUrl    `json:"url" url:"url"`
+	UrlTemplate  *string           `json:"urlTemplate,omitempty" url:"urlTemplate,omitempty"`
+	UrlVariables []*ServerVariable `json:"urlVariables,omitempty" url:"urlVariables,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1066,6 +1157,20 @@ func (s *SingleBaseUrlEnvironment) GetUrl() EnvironmentUrl {
 		return ""
 	}
 	return s.Url
+}
+
+func (s *SingleBaseUrlEnvironment) GetUrlTemplate() *string {
+	if s == nil {
+		return nil
+	}
+	return s.UrlTemplate
+}
+
+func (s *SingleBaseUrlEnvironment) GetUrlVariables() []*ServerVariable {
+	if s == nil {
+		return nil
+	}
+	return s.UrlVariables
 }
 
 func (s *SingleBaseUrlEnvironment) GetExtraProperties() map[string]interface{} {

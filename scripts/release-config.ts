@@ -8,6 +8,7 @@ export interface SoftwareConfig {
     versionsFile: string;
     changelogFolder?: string;
     softwareDirectory?: string;
+    propagatesTo?: string[];
 }
 
 export interface ReleaseConfig {

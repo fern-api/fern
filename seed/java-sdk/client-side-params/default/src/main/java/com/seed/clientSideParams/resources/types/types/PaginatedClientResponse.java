@@ -198,7 +198,6 @@ public final class PaginatedClientResponse {
 
         /**
          * <p>Starting index (zero-based)</p>
-         * <p>Starting index (zero-based)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -210,7 +209,6 @@ public final class PaginatedClientResponse {
 
         /**
          * <p>Number of items requested</p>
-         * <p>Number of items requested</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -221,7 +219,6 @@ public final class PaginatedClientResponse {
         }
 
         /**
-         * <p>Number of items returned</p>
          * <p>Number of items returned</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

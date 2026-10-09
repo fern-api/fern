@@ -15,7 +15,8 @@
           "array",
           "null"
         ]
-      }
+      },
+      "description": "Current page of results from the requested resource."
     }
   },
   "required": [
@@ -28,7 +29,8 @@
       "type": "object",
       "properties": {
         "next": {
-          "type": "string"
+          "type": "string",
+          "description": "Cursor for the next page of results."
         },
         "previous": {
           "oneOf": [
@@ -38,7 +40,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Cursor for the previous page of results."
         }
       },
       "required": [

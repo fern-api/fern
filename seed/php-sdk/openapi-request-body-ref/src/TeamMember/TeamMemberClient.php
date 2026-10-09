@@ -50,6 +50,14 @@ class TeamMemberClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->teamMember->updateTeamMember(
+     *     'team_member_id',
+     *     new UpdateTeamMemberRequest([]),
+     * );
+     * ```
+     *
      * @param string $teamMemberId
      * @param UpdateTeamMemberRequest $request
      * @param ?array{

@@ -151,6 +151,9 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
  * 2. It is not referenced anywhere else in the IR (object fields, other unions,
  *    service endpoints, aliases, containers, etc.)
  * 3. It is an object type (not an enum, alias, or another union)
+ * 4. It does not inherit properties via `extends`. Inlining copies the object's own
+ *    properties only, so inheriting types would lose every inherited field; they keep
+ *    the `#[serde(flatten)]` wrapper struct, which preserves the full shape.
  */
 function computeInlinedUnionVariantTypeIds(context: ModelGeneratorContext): void {
     const ir = context.ir;
@@ -287,11 +290,12 @@ function computeInlinedUnionVariantTypeIds(context: ModelGeneratorContext): void
     // - Referenced exactly once (the samePropertiesAsObject reference)
     // - That one reference is as samePropertiesAsObject
     // - The type is an object (not enum, alias, or union)
+    // - The object declares no `extends` (inherited properties are not inlined)
     for (const typeId of samePropertiesRefs) {
         const count = referenceCount.get(typeId) ?? 0;
         if (count === 1) {
             const typeDecl = ir.types[typeId];
-            if (typeDecl?.shape.type === "object") {
+            if (typeDecl?.shape.type === "object" && typeDecl.shape.extends.length === 0) {
                 context.inlinedUnionVariantTypeIds.add(typeId);
             }
         }

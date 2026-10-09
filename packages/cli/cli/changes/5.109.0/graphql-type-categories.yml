@@ -1,0 +1,4 @@
+- summary: |
+    Record the GraphQL kind (object, input, enum, scalar, interface, union) of every named type
+    read from a GraphQL schema, so docs can render a Types section.
+  type: feat

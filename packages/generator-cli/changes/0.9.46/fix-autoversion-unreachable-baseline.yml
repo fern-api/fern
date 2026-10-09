@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix AUTO versioning shipping the `0.0.0-fern-placeholder` version when the previous
+    generation SHA recorded in `replay.lock` is unreachable. Signed-commit pushes recreate
+    the `[fern-generated]` commit with a new remote SHA, so the recorded SHA can be absent
+    from the next clone; `AutoVersionStep` now treats it as a hint, re-anchors the diff
+    baseline on the most recent reachable `[fern-generated]` commit, and always rewrites the
+    magic placeholder instead of crashing on a bad git object.
+  type: fix

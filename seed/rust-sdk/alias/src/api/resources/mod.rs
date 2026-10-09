@@ -19,6 +19,20 @@ impl AliasClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_alias::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = AliasClient::new(config).expect("Failed to build client");
+    ///     client.get(&TypeId("typeId".to_string()), None).await;
+    /// }
+    /// ```
     pub async fn get(
         &self,
         type_id: &TypeId,

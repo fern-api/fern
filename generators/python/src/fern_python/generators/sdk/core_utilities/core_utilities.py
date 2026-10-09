@@ -1,5 +1,6 @@
+import json
 import os
-from typing import Optional, Set
+from typing import List, Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
@@ -29,6 +30,11 @@ class CoreUtilities:
         has_custom_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
+        has_webhook_signature_verification: bool = False,
+        generates_idempotency_key: bool = False,
+        has_streaming_endpoints: bool = False,
+        has_xml_types: bool = False,
+        auth_header_names: Optional[List[str]] = None,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -38,9 +44,11 @@ class CoreUtilities:
         self._use_typeddict_requests = custom_config.pydantic_config.use_typeddict_requests
         self._has_standard_paginated_endpoints = has_standard_paginated_endpoints
         self._has_custom_paginated_endpoints = has_custom_paginated_endpoints
+        self._generates_idempotency_key = generates_idempotency_key
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
+        self._encode_path_params = custom_config.encode_path_params
         self._should_generate_websocket_clients = custom_config.should_generate_websocket_clients
         self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
@@ -49,6 +57,11 @@ class CoreUtilities:
         self._datetime_milliseconds = custom_config.datetime_milliseconds
         self._default_max_retries = custom_config.default_max_retries
         self._retry_status_codes = custom_config.retry_status_codes
+        self._has_webhook_signature_verification = has_webhook_signature_verification
+        self._stream_abstraction = custom_config.stream_abstraction
+        self._has_streaming_endpoints = has_streaming_endpoints
+        self._has_xml_types = has_xml_types
+        self._auth_header_names = sorted({name.lower() for name in (auth_header_names or [])})
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -128,6 +141,17 @@ class CoreUtilities:
             exports={"RequestOptions"} if not self._exclude_types_from_init_exports else set(),
         )
 
+        if self._generates_idempotency_key:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="idempotency.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="idempotency"),
+                ),
+                exports={"generate_idempotency_key"} if not self._exclude_types_from_init_exports else set(),
+            )
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="file.py",
@@ -162,6 +186,11 @@ class CoreUtilities:
             if self._retry_status_codes == "recommended"
             else "response.status_code >= 500 or response.status_code in [429, 408, 409]"
         )
+        auth_headers_placeholder = "_AUTH_HEADERS: typing.FrozenSet[str] = frozenset()  # {{AUTH_HEADERS}}"
+        http_client_source = os.path.join(self._resolve_core_utilities_path("http_client.py"), "http_client.py")
+        with open(http_client_source, "r") as http_client_file:
+            if auth_headers_placeholder not in http_client_file.read():
+                raise RuntimeError(f"{http_client_source} is missing the {{{{AUTH_HEADERS}}}} placeholder line")
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="http_client.py",
@@ -172,6 +201,11 @@ class CoreUtilities:
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
             string_replacements={
                 "return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}": f"return {retry_status_check}",
+                auth_headers_placeholder: (
+                    f"_AUTH_HEADERS: typing.FrozenSet[str] = frozenset({{{', '.join(json.dumps(name) for name in self._auth_header_names)}}})"
+                    if len(self._auth_header_names) > 0
+                    else "_AUTH_HEADERS: typing.FrozenSet[str] = frozenset()"
+                ),
             },
         )
 
@@ -185,6 +219,19 @@ class CoreUtilities:
             exports={"HttpResponse", "AsyncHttpResponse"} if not self._exclude_types_from_init_exports else set(),
         )
 
+        if self._has_streaming_endpoints and self._stream_abstraction:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="stream.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="stream"),
+                ),
+                exports={"AsyncStream", "Stream", "StreamEvent"}
+                if not self._exclude_types_from_init_exports
+                else set(),
+            )
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="force_multipart.py",
@@ -194,6 +241,17 @@ class CoreUtilities:
             ),
             exports=set(),
         )
+
+        if self._has_webhook_signature_verification:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="webhook_signature.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="webhook_signature"),
+                ),
+                exports=set(),
+            )
 
         is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
         utilities_path = (
@@ -258,6 +316,17 @@ class CoreUtilities:
             if not self._exclude_types_from_init_exports
             else set(),
         )
+
+        if self._has_xml_types:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="xml_utilities.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="xml_utilities"),
+                ),
+                exports=set(),
+            )
 
         if self._has_standard_paginated_endpoints:
             self._copy_file_to_project(
@@ -617,6 +686,24 @@ class CoreUtilities:
             )
         )
 
+    def get_reference_to_keepalive_socket_options(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "http_client"),
+                named_import="get_keepalive_socket_options",
+            ),
+        )
+
+    def get_reference_to_generate_idempotency_key(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "idempotency"),
+                named_import="generate_idempotency_key",
+            ),
+        )
+
     def jsonable_encoder(self, obj: AST.Expression) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
@@ -638,7 +725,7 @@ class CoreUtilities:
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
                         module=AST.Module.local(*self._module_path, "jsonable_encoder"),
-                        named_import="encode_path_param",
+                        named_import="quote_path_param" if self._encode_path_params else "encode_path_param",
                     ),
                 ),
                 args=[obj],
@@ -837,12 +924,60 @@ class CoreUtilities:
             ),
         )
 
+    def get_stream_reference(self, is_async: bool) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "stream"),
+                named_import="AsyncStream" if is_async else "Stream",
+            ),
+        )
+
+    def get_stream_type(self, inner_type: AST.TypeHint, is_async: bool) -> AST.TypeHint:
+        return AST.TypeHint(
+            type=self.get_stream_reference(is_async),
+            type_parameters=[AST.TypeParameter(inner_type)],
+        )
+
+    def get_stream_event_reference(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "stream"),
+                named_import="StreamEvent",
+            ),
+        )
+
+    def get_stream_event_type(self, inner_type: AST.TypeHint) -> AST.TypeHint:
+        return AST.TypeHint(
+            type=self.get_stream_event_reference(),
+            type_parameters=[AST.TypeParameter(inner_type)],
+        )
+
+    def instantiate_stream(self, events: AST.Expression, is_async: bool) -> AST.Expression:
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self.get_stream_reference(is_async),
+                args=[],
+                kwargs=[("events", events)],
+            )
+        )
+
     def get_paginator_reference(self, is_async: bool) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "pagination"),
                 named_import="AsyncPager" if is_async else "SyncPager",
+            ),
+        )
+
+    def get_reference_to_pagination_helper(self, name: str) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pagination"),
+                named_import=name,
             ),
         )
 

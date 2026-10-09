@@ -1,0 +1,8 @@
+- summary: |
+    Fixed wire tests for APIs with basic auth schemes that use custom parameter names
+    (e.g. `accountSid`/`authToken`): the generated test client constructor now uses the
+    scheme's actual parameter names instead of hardcoded `username`/`password`.
+    Also fixed WireMock stubs for `auth: any` APIs combining Basic and OAuth/Bearer:
+    stubs now expect the Bearer `Authorization` header the client actually sends instead
+    of the Basic header.
+  type: fix

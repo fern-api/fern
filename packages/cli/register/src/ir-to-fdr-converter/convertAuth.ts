@@ -41,13 +41,15 @@ function convertAuthScheme({
                 passwordName: getOriginalName(scheme.password),
                 usernameName: getOriginalName(scheme.username),
                 description: scheme.docs,
+                playgroundDescription: scheme.playgroundDocs,
                 passwordAlwaysEmpty: scheme.passwordOmit
             };
         case "bearer":
             return {
                 type: "bearerAuth",
                 tokenName: getOriginalName(scheme.token),
-                description: scheme.docs
+                description: scheme.docs,
+                playgroundDescription: scheme.playgroundDocs
             };
         case "header":
             return {
@@ -55,11 +57,25 @@ function convertAuthScheme({
                 headerWireValue: getWireValue(scheme.name),
                 nameOverride: getOriginalName(getInnerName(scheme.name)),
                 prefix: scheme.prefix,
-                description: scheme.docs
+                description: scheme.docs,
+                playgroundDescription: scheme.playgroundDocs
             };
         case "oauth": {
+            // FDR only models the client-credentials playground flow. The authorization-code
+            // (PKCE) flow is a public-client browser login handled by generated CLIs, not the
+            // docs playground, so it is surfaced to FDR as a plain bearer scheme.
+            const configuration = scheme.configuration;
+            if (configuration.type !== "clientCredentials") {
+                return {
+                    type: "bearerAuth",
+                    tokenName: "token",
+                    description: scheme.docs,
+                    playgroundDescription: scheme.playgroundDocs
+                };
+            }
+
             const tokenPath =
-                scheme.configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
+                configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
                     ?.map((p) => getOriginalName(p.name))
                     .join(".") || "$.body.access_token";
 
@@ -71,19 +87,21 @@ function convertAuthScheme({
                           value: {
                               type: "referencedEndpoint",
                               endpointId: FdrCjsSdk.EndpointId(
-                                  scheme.configuration.tokenEndpoint.endpointReference.endpointId
+                                  configuration.tokenEndpoint.endpointReference.endpointId
                               ),
                               accessTokenLocator: tokenPath,
-                              headerName: scheme.configuration.tokenHeader,
-                              tokenPrefix: scheme.configuration.tokenPrefix,
-                              description: scheme.docs
+                              headerName: configuration.tokenHeader,
+                              tokenPrefix: configuration.tokenPrefix,
+                              description: scheme.docs,
+                              playgroundDescription: scheme.playgroundDocs
                           }
                       }
                   }
                 : {
                       type: "bearerAuth",
                       tokenName: "token",
-                      description: scheme.docs
+                      description: scheme.docs,
+                      playgroundDescription: scheme.playgroundDocs
                   };
         }
         case "inferred": {
@@ -107,7 +125,8 @@ function convertAuthScheme({
                 return {
                     type: "bearerAuth",
                     tokenName: getWireValue(authHeader.responseProperty.property.name),
-                    description: scheme.docs
+                    description: scheme.docs,
+                    playgroundDescription: scheme.playgroundDocs
                 };
             }
             const firstHeader = scheme.tokenEndpoint.authenticatedRequestHeaders[0];
@@ -117,13 +136,15 @@ function convertAuthScheme({
                     headerWireValue: firstHeader.headerName,
                     prefix: firstHeader.valuePrefix,
                     nameOverride: undefined,
-                    description: scheme.docs
+                    description: scheme.docs,
+                    playgroundDescription: scheme.playgroundDocs
                 };
             }
             return {
                 type: "bearerAuth",
                 tokenName: "token",
-                description: scheme.docs
+                description: scheme.docs,
+                playgroundDescription: scheme.playgroundDocs
             };
         }
         default:

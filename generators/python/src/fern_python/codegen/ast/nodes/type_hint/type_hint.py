@@ -114,6 +114,24 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
+    def generator(yield_type: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("Generator"),
+            type_parameters=[
+                TypeParameter(yield_type),
+                TypeParameter(TypeHint.none()),
+                TypeParameter(TypeHint.none()),
+            ],
+        )
+
+    @staticmethod
+    def async_generator(yield_type: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("AsyncGenerator"),
+            type_parameters=[TypeParameter(yield_type), TypeParameter(TypeHint.none())],
+        )
+
+    @staticmethod
     def awaitable(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_import("Awaitable"),

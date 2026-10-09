@@ -1,0 +1,5 @@
+- summary: |
+    Forward edit-this-page GitHub config (owner/repo/branch/host) from docs.yml
+    into the ledger manifest so the docs reader can synthesize the correct
+    "Edit this page" URL without depending on runtime git provenance.
+  type: fix

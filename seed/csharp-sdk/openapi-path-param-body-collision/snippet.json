@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/Profiles/{profileId}/Identifiers/{idTypePathParam}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_.updateProfileIdentifier"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.UpdateProfileIdentifierAsync(\n    new IdentifierUpdate\n    {\n        ProfileId = \"profile_123\",\n        IdTypePathParam = \"email\",\n        IdType = \"phone\",\n        OldValue = \"+13175556789\",\n        NewValue = \"+13175556798\",\n    }\n);\n"
+            }
+        }
+    ]
+}

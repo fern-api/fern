@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const FernRcAiProviderSchema = z.enum(["anthropic", "openai", "bedrock"]);
+export const FernRcAiProviderSchema = z.enum(["anthropic", "openai", "aws-bedrock"]);
 export type FernRcAiProvider = z.infer<typeof FernRcAiProviderSchema>;
 
 export const FernRcAiSchema = z.object({

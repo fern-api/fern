@@ -1,12 +1,16 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { Audiences } from "@fern-api/configuration";
 import { noop } from "@fern-api/core-utils";
 import { replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { convertIrToApiDefinition, DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { createLogger } from "@fern-api/logger";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { createLogger, Logger } from "@fern-api/logger";
 import { CliError, createMockTaskContext, TaskContext } from "@fern-api/task-context";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 import chalk from "chalk";
 import { randomUUID } from "crypto";
@@ -69,9 +73,83 @@ function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
     return "type" in value && (value as { type: unknown }).type === "root";
 }
 
+/**
+ * Build the IR for an API section the same way the docs build does: prefer the OpenAPI
+ * (v3) parser unless it is disabled, and fall back to converting the workspace into a
+ * Fern definition.
+ *
+ * Link checking is best-effort — when neither path produces an IR we skip the section
+ * instead of failing validation, since the rules that own spec correctness
+ * (`valid-openapi-examples`, `example-validation`) report those problems themselves.
+ */
+async function getIntermediateRepresentation({
+    apiWorkspace,
+    ossWorkspaces,
+    useOpenApiParserV3,
+    audiences,
+    logger
+}: {
+    apiWorkspace: AbstractAPIWorkspace<unknown>;
+    ossWorkspaces: OSSWorkspace[];
+    useOpenApiParserV3: boolean;
+    audiences: Audiences;
+    logger: Logger;
+}): Promise<IntermediateRepresentation | undefined> {
+    const ossWorkspace = useOpenApiParserV3
+        ? ossWorkspaces.find((ossWorkspace) => ossWorkspace === apiWorkspace)
+        : undefined;
+    if (ossWorkspace != null) {
+        try {
+            return await ossWorkspace.getIntermediateRepresentation({
+                context: NOOP_CONTEXT,
+                audiences,
+                enableUniqueErrorsPerEndpoint: true,
+                generateV1Examples: false,
+                logWarnings: false
+            });
+        } catch (error) {
+            logger.debug(`Failed to load API definition with the OpenAPI parser: ${error}`);
+        }
+    }
+
+    try {
+        const fernWorkspace = await apiWorkspace.toFernWorkspace(
+            { context: NOOP_CONTEXT },
+            {
+                enableUniqueErrorsPerEndpoint: true,
+                detectGlobalHeaders: false,
+                objectQueryParameters: true,
+                preserveSchemaIds: true
+            }
+        );
+        return generateIntermediateRepresentation({
+            workspace: fernWorkspace,
+            audiences,
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: false,
+            exampleGeneration: {
+                disabled: false,
+                skipAutogenerationIfManualExamplesExist: true,
+                skipErrorAutogenerationIfManualErrorExamplesExist: true
+            },
+            readme: undefined,
+            version: undefined,
+            packageName: undefined,
+            context: NOOP_CONTEXT,
+            sourceResolver: new SourceResolverImpl(NOOP_CONTEXT, fernWorkspace)
+        });
+    } catch (error) {
+        logger.debug(`Failed to load API definition; skipping link validation for it: ${error}`);
+        return undefined;
+    }
+}
+
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
-    create: async ({ workspace, apiWorkspaces, ossWorkspaces }) => {
+    create: async ({ workspace, apiWorkspaces, ossWorkspaces, logger }) => {
+        // Mirror DocsDefinitionResolver: the v3 parser is used unless it is explicitly disabled.
+        const useOpenApiParserV3 = workspace.config.experimental?.openapiParserV3 !== false;
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
@@ -86,7 +164,9 @@ export const ValidMarkdownLinks: Rule = {
             editThisPage: undefined,
             uploadFiles: undefined,
             registerApi: undefined,
-            targetAudiences: undefined // not applicable for validation
+            targetAudiences: undefined, // not applicable for validation
+            // current-tree validation only; git-ref-backed versions are built at publish/preview time
+            buildRefVersions: false
         });
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
@@ -136,7 +216,16 @@ export const ValidMarkdownLinks: Rule = {
             .filter(FernNavigation.isInternalProductNode)
             .map((p) => p.slug);
 
-        const specialDocPages = ["/llms-full.txt", "/llms.txt"];
+        const specialDocPages = [
+            "/llms-full.txt",
+            "/llms.txt",
+            "/openapi.json",
+            "/openapi.yaml",
+            "/openapi.yml",
+            "/asyncapi.json",
+            "/asyncapi.yaml",
+            "/asyncapi.yml"
+        ];
 
         for (const specialPage of specialDocPages) {
             const pageWithBasePath = baseUrl.basePath
@@ -206,28 +295,23 @@ export const ValidMarkdownLinks: Rule = {
                 return [...violations, ...pathToCheckViolations.flat()];
             },
             apiSection: async ({ workspace: apiWorkspace, config }) => {
-                const fernWorkspace = await apiWorkspace.toFernWorkspace(
-                    { context: NOOP_CONTEXT },
-                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
-                );
-                const ir = generateIntermediateRepresentation({
-                    workspace: fernWorkspace,
-                    audiences: config.audiences
-                        ? {
-                              type: "select",
-                              audiences: Array.isArray(config.audiences) ? config.audiences : [config.audiences]
-                          }
-                        : { type: "all" },
-                    generationLanguage: undefined,
-                    keywords: undefined,
-                    smartCasing: false,
-                    exampleGeneration: { disabled: false },
-                    readme: undefined,
-                    version: undefined,
-                    packageName: undefined,
-                    context: NOOP_CONTEXT,
-                    sourceResolver: new SourceResolverImpl(NOOP_CONTEXT, fernWorkspace)
+                const audiences: Audiences = config.audiences
+                    ? {
+                          type: "select",
+                          audiences: Array.isArray(config.audiences) ? config.audiences : [config.audiences]
+                      }
+                    : { type: "all" };
+
+                const ir = await getIntermediateRepresentation({
+                    apiWorkspace,
+                    ossWorkspaces,
+                    useOpenApiParserV3,
+                    audiences,
+                    logger
                 });
+                if (ir == null) {
+                    return [];
+                }
                 const api = toLatest(
                     convertIrToApiDefinition({ ir, apiDefinitionId: randomUUID(), context: NOOP_CONTEXT })
                 );
@@ -250,6 +334,8 @@ export const ValidMarkdownLinks: Rule = {
                     }
                 }
 
+                const apiReferenceTitle = typeof config.api === "string" ? config.api : "API Reference";
+
                 // Batch-check all unique pathnames
                 const pathToCheckViolations = await Promise.all(
                     [...uniquePathnames.values()].map(async (pathnameToCheck) => {
@@ -269,17 +355,21 @@ export const ValidMarkdownLinks: Rule = {
                             return [];
                         }
 
-                        return exists.map((brokenPathname) => {
-                            const [message, relFilePath] = createLinkViolationMessage({
+                        // API descriptions have no source-page context, so `exists` may be an
+                        // empty array. Emit at least one violation either way; otherwise broken
+                        // links in endpoint, type, property, etc. docs are silently dropped
+                        // (see FER-10165).
+                        const numBrokenSourceContexts = exists.length > 0 ? exists.length : 1;
+                        return Array.from({ length: numBrokenSourceContexts }, () => {
+                            const [message, relFilePath] = createApiReferenceLinkViolationMessage({
                                 pathnameToCheck,
-                                targetPathname: brokenPathname,
-                                absoluteFilepathToWorkspace: workspace.absoluteFilePath
+                                apiReferenceTitle
                             });
                             return {
                                 name: ValidMarkdownLinks.name,
                                 severity: "error" as const,
                                 message,
-                                relFilepath: relFilePath
+                                relativeFilepath: relFilePath
                             };
                         });
                     })
@@ -316,6 +406,27 @@ function createLinkViolationMessage({
     const relativeFilepath = relative(absoluteFilepathToWorkspace, sourceFilepath);
     msg += `\n\tfix here: ${relativeFilepath}:${position.start.line}:${position.start.column}`;
     return [msg, relativeFilepath];
+}
+
+/**
+ * Build a violation message for a broken link found inside an API Reference
+ * description (e.g. an endpoint, type, property, or parameter `docs` / OpenAPI
+ * `description` field).
+ *
+ * Descriptions in API definitions are not tracked with source positions in the
+ * IR, so we can't point the user at a specific file:line:column the way we do
+ * for markdown pages. Surface the API Reference title instead so authors at
+ * least know which navigation section to look in.
+ */
+function createApiReferenceLinkViolationMessage({
+    pathnameToCheck,
+    apiReferenceTitle
+}: {
+    pathnameToCheck: PathnameToCheck;
+    apiReferenceTitle: string;
+}): [msg: string, relFilePath: RelativeFilePath] {
+    const msg = `broken link to ${chalk.bold(pathnameToCheck.pathname)} in ${apiReferenceTitle} description`;
+    return [msg, RelativeFilePath.of("")];
 }
 
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {

@@ -118,10 +118,74 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, emits a structured {@code User-Agent} header of the form {@code {sdkName}/{sdkVersion} ({os}; {arch})
+     * {runtime}/{runtimeVersion}}, with the os, arch, and runtime version resolved at runtime. Opt-in and disabled by
+     * default so existing generated output is unchanged. When enabled, the header is still subject to
+     * {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("includePlatformHeaders")
+    default Boolean includePlatformHeaders() {
+        return false;
+    }
+
+    /**
+     * If true, the SDK version reported in the telemetry headers ({@code X-Fern-SDK-Version} and the version segment of
+     * {@code User-Agent}) is resolved at runtime from the jar manifest's {@code Implementation-Version} attribute
+     * instead of being baked in as a literal at generation time. This lets the reported version track the
+     * actually-published artifact version (e.g. when an external tool such as release-please sets the published version
+     * after generation) rather than a version the SDK may never publish. Falls back to the generation-time version when
+     * the manifest attribute is absent (e.g. running from unpackaged classes). Opt-in and disabled by default so
+     * existing generated output is unchanged. When enabled, the header is still subject to {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("runtime-version")
+    default Boolean runtimeVersion() {
+        return false;
+    }
+
+    /**
+     * If true, the generated client exposes an optional {@code appInfo(name, version, comment)} builder option whose
+     * product token is appended to the {@code User-Agent} header the SDK would otherwise send (following RFC 9110
+     * §10.1.5), producing e.g. {@code {sdk}/{version} ... partner-app/3.1.0 (+https://partner.example)}.
+     * Caller-supplied values are sanitized (name/version percent-encoded to RFC 7230 {@code tchar}s; comment delimiters
+     * and control characters escaped). Opt-in and disabled by default so existing generated output is unchanged. The
+     * header is still overridable by an explicit {@code User-Agent} and suppressed by {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("allowUserAgentAppInfo")
+    default Boolean allowUserAgentAppInfo() {
+        return false;
+    }
+
+    /**
+     * If true, the generated client sends only the {@code User-Agent} platform header (in whatever form the other
+     * configs produce, e.g. the structured value from {@link #includePlatformHeaders()}) and omits the
+     * {@code X-Fern-Language}, {@code X-Fern-SDK-Name}, and {@code X-Fern-SDK-Version} headers. Opt-in and disabled by
+     * default so existing generated output is unchanged. Still subject to {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("userAgentOnly")
+    default Boolean userAgentOnly() {
+        return false;
+    }
+
     @Value.Default
     @JsonProperty("retry-status-codes")
     default String retryStatusCodes() {
         return "legacy";
+    }
+
+    /**
+     * When true, an endpoint whose request body the API does not require also gets an overload without the body
+     * parameter, and sends no body when that overload is called. The body parameter keeps its own type. Off by default,
+     * so existing signatures are unchanged.
+     */
+    @Value.Default
+    @JsonProperty("respect-optional-request-body")
+    default Boolean respectOptionalRequestBody() {
+        return false;
     }
 
     static ImmutableJavaSdkCustomConfig.Builder builder() {

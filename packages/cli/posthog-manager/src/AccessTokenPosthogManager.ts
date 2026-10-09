@@ -1,5 +1,5 @@
 import { getRunIdProperties } from "@fern-api/cli-telemetry";
-import { PosthogEvent } from "@fern-api/task-context";
+import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
 import { PosthogManager } from "./PosthogManager.js";
@@ -8,7 +8,8 @@ export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog;
 
     constructor({ posthogApiKey }: { posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey);
+        // isServer: false keeps posthog-node >=5.36 from tagging CLI events with `$is_server: true`.
+        this.posthog = new PostHog(posthogApiKey, { isServer: false });
     }
 
     public async identify(): Promise<void> {
@@ -29,6 +30,14 @@ export class AccessTokenPosthogManager implements PosthogManager {
                 }
             });
         }
+    }
+
+    public sendAutomationEvent(event: PosthogAutomationEvent): void {
+        this.posthog.capture({
+            distinctId: event.distinctId,
+            event: event.event,
+            properties: event.properties
+        });
     }
 
     public async flush(): Promise<void> {

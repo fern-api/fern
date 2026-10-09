@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Discriminator Shared Base Test",
   "servers": [],
   "websocketServers": [],
@@ -120,7 +121,26 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": "UNABLE_TO_AUTHENTICATE",
+                    "type": "enum"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -138,7 +158,26 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": "ACCESS_DENIED",
+                    "type": "enum"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "servers": [],
@@ -355,30 +394,24 @@
                 "differentSchema": true
               }
             },
-            "generatedName": "unauthorizedErrorCode",
+            "generatedName": "unauthorizedErrorBodyCode",
             "key": "code",
             "schema": {
-              "generatedName": "UnauthorizedErrorCode",
               "description": "Machine-readable error code",
-              "value": {
-                "description": "Machine-readable error code",
-                "generatedName": "UnauthorizedErrorCode",
-                "values": [
-                  {
-                    "generatedName": "UNABLE_TO_AUTHENTICATE",
-                    "value": "UNABLE_TO_AUTHENTICATE",
-                    "casing": {}
-                  }
-                ],
-                "groupName": [],
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
-                },
-                "type": "enum"
-              },
+              "generatedName": "UnauthorizedErrorBodyCode",
+              "values": [
+                {
+                  "generatedName": "UNABLE_TO_AUTHENTICATE",
+                  "value": "UNABLE_TO_AUTHENTICATE",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "optional"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           }
@@ -414,30 +447,24 @@
                 "differentSchema": true
               }
             },
-            "generatedName": "forbiddenErrorCode",
+            "generatedName": "forbiddenErrorBodyCode",
             "key": "code",
             "schema": {
-              "generatedName": "ForbiddenErrorCode",
               "description": "Machine-readable error code",
-              "value": {
-                "description": "Machine-readable error code",
-                "generatedName": "ForbiddenErrorCode",
-                "values": [
-                  {
-                    "generatedName": "ACCESS_DENIED",
-                    "value": "ACCESS_DENIED",
-                    "casing": {}
-                  }
-                ],
-                "groupName": [],
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
-                },
-                "type": "enum"
-              },
+              "generatedName": "ForbiddenErrorBodyCode",
+              "values": [
+                {
+                  "generatedName": "ACCESS_DENIED",
+                  "value": "ACCESS_DENIED",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "optional"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           }

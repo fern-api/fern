@@ -18,6 +18,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.optional.send_optional_body(request: {
+      #     string: {
+      #       key: "value"
+      #     }
+      #   })
+      #
       # @return [String]
       def send_optional_body(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -25,7 +32,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-body",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -34,10 +41,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # @param request_options [Hash]
@@ -48,6 +57,11 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.optional.send_optional_typed_body(request: {
+      #     message: "message"
+      #   })
+      #
       # @return [String]
       def send_optional_typed_body(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -55,7 +69,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-typed-body",
-          body: params,
+          body: params[:request]&.then { |value| Seed::Optional::Types::SendOptionalBodyRequest.new(value).to_h },
           request_options: request_options
         )
         begin
@@ -64,10 +78,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Tests optional(nullable(T)) where T has only optional properties.
@@ -83,6 +99,15 @@ module Seed
       # @option params [String] :action_id
       # @option params [String] :id
       #
+      # @example
+      #   client.optional.send_optional_nullable_with_all_optional_properties(
+      #     action_id: "actionId",
+      #     id: "id",
+      #     request: {
+      #       update_draft: true
+      #     }
+      #   )
+      #
       # @return [Seed::Optional::Types::DeployResponse]
       def send_optional_nullable_with_all_optional_properties(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -90,7 +115,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "deploy/#{URI.encode_uri_component(params[:action_id].to_s)}/versions/#{URI.encode_uri_component(params[:id].to_s)}",
-          body: params,
+          body: params[:request]&.then { |value| Seed::Optional::Types::DeployParams.new(value).to_h },
           request_options: request_options
         )
         begin
@@ -100,7 +125,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Optional::Types::DeployResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Optional::Types::DeployResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

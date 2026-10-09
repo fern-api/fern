@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "treeName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Display name of the tree."
+    },
+    "treeDescription": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A description of the tree."
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

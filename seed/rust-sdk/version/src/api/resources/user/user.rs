@@ -13,6 +13,23 @@ impl UserClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_version::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = VersionClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .get_user(&UserId("userId".to_string()), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_user(
         &self,
         user_id: &UserId,

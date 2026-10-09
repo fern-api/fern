@@ -1,0 +1,146 @@
+openapi: 3.1.0
+info:
+  title: Discriminated Union with Nested OneOf
+  version: 0.0.0
+paths:
+  /ast:
+    post:
+      operationId: createAst
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AstNode'
+              examples:
+                Example1:
+                  value:
+                    model: model
+                    value_schema:
+                      key: value
+                    prompt: prompt
+                    type: llm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AstNode'
+            examples:
+              Example1:
+                value:
+                  model: model
+                  type: llm
+components:
+  schemas:
+    AstNodeLlm:
+      title: AstNodeLlm
+      type: object
+      properties:
+        model:
+          type: string
+        value_schema:
+          type:
+            - object
+            - 'null'
+        prompt:
+          type:
+            - string
+            - 'null'
+      required:
+        - model
+    AstNode:
+      title: AstNode
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: llm
+            - $ref: '#/components/schemas/AstNodeLlm'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: text
+            - $ref: '#/components/schemas/AstTextNode'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: null_literal
+            - $ref: '#/components/schemas/AstNullNode'
+          required:
+            - type
+    AstllmNode:
+      title: AstllmNode
+      oneOf:
+        - $ref: '#/components/schemas/AstllmNodeWithSchema'
+        - $ref: '#/components/schemas/AstllmNodeWithPrompt'
+      description: |-
+        A node representing an LLM call. This is a oneOf of two object shapes
+        sharing the same discriminant value, to test that the importer merges
+        them into a single object rather than wrapping in a "value" property.
+    AstllmNodeWithSchemaType:
+      title: AstllmNodeWithSchemaType
+      type: string
+      const: llm
+    AstllmNodeWithSchema:
+      title: AstllmNodeWithSchema
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/AstllmNodeWithSchemaType'
+        model:
+          type: string
+        value_schema:
+          type: object
+      required:
+        - type
+        - model
+        - value_schema
+    AstllmNodeWithPromptType:
+      title: AstllmNodeWithPromptType
+      type: string
+      const: llm
+    AstllmNodeWithPrompt:
+      title: AstllmNodeWithPrompt
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/AstllmNodeWithPromptType'
+        model:
+          type: string
+        prompt:
+          type: string
+      required:
+        - type
+        - model
+        - prompt
+    AstTextNode:
+      title: AstTextNode
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+        - content
+    AstNullNode:
+      title: AstNullNode
+      type: object
+      properties: {}
+  securitySchemes: {}

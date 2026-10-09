@@ -21,14 +21,15 @@ export class UserClient {
 
     constructor(options: UserClient.Options) {
 
-
-                        this._options = normalizeClientOptionsWithAuth(options);
-                    
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
      * @param {string} id
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedSimpleApiError}
+     * @throws {@link errors.SeedSimpleApiTimeoutError}
      *
      * @example
      *     await client.user.get("id")

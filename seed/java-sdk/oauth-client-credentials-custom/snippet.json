@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "72a2286c",
+            "example_identifier": "ebfc24f9",
             "id": {
                 "method": "POST",
                 "path": "/token",
@@ -9,12 +9,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;\nimport com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .cid(\"cid\")\n                .csr(\"csr\")\n                .scp(\"scp\")\n                .entityId(\"entity_id\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;\nimport com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .cid(\"cid\")\n                .csr(\"csr\")\n                .scp(\"scp\")\n                .entityId(\"entity_id\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;\nimport com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .cid(\"cid\")\n                .csr(\"csr\")\n                .scp(\"scp\")\n                .entityId(\"entity_id\")\n                .scope(\"scope\")\n                .permissions(\n                    Optional.of(\n                        Arrays.asList(\"permissions\", \"permissions\")\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;\nimport com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .cid(\"cid\")\n                .csr(\"csr\")\n                .scp(\"scp\")\n                .entityId(\"entity_id\")\n                .scope(\"scope\")\n                .permissions(\n                    Optional.of(\n                        Arrays.asList(\"permissions\", \"permissions\")\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "6cae8dfc",
+            "example_identifier": "28bf3b8c",
             "id": {
                 "method": "POST",
                 "path": "/token",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "GET",
                 "path": "/nested-no-auth/get-something",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "GET",
                 "path": "/nested/get-something",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "GET",
                 "path": "/get-something",

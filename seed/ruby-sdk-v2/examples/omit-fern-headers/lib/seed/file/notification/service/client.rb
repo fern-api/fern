@@ -21,6 +21,9 @@ module Seed
           # @option request_options [Integer] :timeout_in_seconds
           # @option params [String] :notification_id
           #
+          # @example
+          #   client.file.notification.service.get_exception(notification_id: "notification-hsy129x")
+          #
           # @return [Seed::Types::Types::Exception]
           def get_exception(request_options: {}, **params)
             params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -37,7 +40,7 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::Types::Types::Exception.load(response.body)
+              (response.body.to_s.empty? ? nil : Seed::Types::Types::Exception.load(response.body))
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)

@@ -47,6 +47,16 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->post(
+     *     'pathParam',
+     *     'serviceParam',
+     *     1,
+     *     'resourceParam',
+     * );
+     * ```
+     *
      * @param string $pathParam
      * @param string $serviceParam
      * @param int $endpointParam

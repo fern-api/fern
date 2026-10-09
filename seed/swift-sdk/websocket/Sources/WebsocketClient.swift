@@ -4,6 +4,7 @@ import Foundation
 public final class WebsocketClient: Sendable {
     public let empty: EmptyClient
     public let realtime: RealtimeClient
+    public let status: StatusClient
     private let httpClient: HTTPClient
 
     /// Initialize the client with the specified configuration.
@@ -54,6 +55,7 @@ public final class WebsocketClient: Sendable {
         )
         self.empty = EmptyClient(config: config)
         self.realtime = RealtimeClient(config: config)
+        self.status = StatusClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 }

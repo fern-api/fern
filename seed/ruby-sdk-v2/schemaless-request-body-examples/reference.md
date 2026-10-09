@@ -26,7 +26,16 @@ Creates a plant with example JSON but no request body schema.
 <dd>
 
 ```ruby
-client.create_plant
+client.create_plant(request: {
+  name: "Venus Flytrap",
+  species: "Dionaea muscipula",
+  care: {
+    light: "full sun",
+    water: "distilled only",
+    humidity: "high"
+  },
+  tags: %w[carnivorous tropical]
+})
 ```
 </dd>
 </dl>
@@ -61,7 +70,7 @@ client.create_plant
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">update_plant</a>(plant_id, request) -> Seed::Types::UpdatePlantResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">update_plant</a>(plant_id:, request) -> Seed::Types::UpdatePlantResponse</code></summary>
 <dl>
 <dd>
 
@@ -88,7 +97,15 @@ Updates a plant with example JSON but no request body schema.
 <dd>
 
 ```ruby
-client.update_plant(plant_id: "plantId")
+client.update_plant(
+  plant_id: "plantId",
+  body: {
+    name: "Updated Venus Flytrap",
+    care: {
+      light: "partial shade"
+    }
+  }
+)
 ```
 </dd>
 </dl>

@@ -103,7 +103,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:TypeWithOptionalUnion": {
             "type": "object",
@@ -207,7 +208,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:MyUnion": {
             "type": "undiscriminatedUnion",
@@ -882,7 +884,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:OptionalMetadata": {
             "type": "alias",
@@ -1672,7 +1675,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:ConvertToken": {
             "type": "object",
@@ -1803,7 +1807,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:UnionWithReservedNames": {
             "type": "undiscriminatedUnion",
@@ -2244,7 +2249,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:LeafTypeB": {
             "type": "object",
@@ -2345,7 +2351,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:NestedObjectUnion": {
             "type": "undiscriminatedUnion",
@@ -2553,7 +2560,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:OuterNestedUnion": {
             "type": "undiscriminatedUnion",
@@ -2974,7 +2982,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:LeafObjectB": {
             "type": "object",
@@ -3075,7 +3084,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:AliasedObjectUnion": {
             "type": "undiscriminatedUnion",
@@ -3236,7 +3246,8 @@
                         "type": "named",
                         "value": "type_union:MyUnion"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -3316,7 +3327,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -3402,7 +3414,8 @@
                         "type": "named",
                         "value": "type_union:MetadataUnion"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -3488,7 +3501,8 @@
                         "type": "named",
                         "value": "type_union:Request"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -3574,7 +3588,8 @@
                         "type": "named",
                         "value": "type_union:UnionWithDuplicateTypes"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -3660,7 +3675,8 @@
                         "type": "named",
                         "value": "type_union:NestedUnionRoot"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -3746,7 +3762,8 @@
                         "type": "named",
                         "value": "type_union:OuterNestedUnion"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -3832,7 +3849,8 @@
                         "type": "named",
                         "value": "type_union:AliasedObjectUnion"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -3918,7 +3936,8 @@
                         "type": "named",
                         "value": "type_union:UnionWithBaseProperties"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4113,5 +4132,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

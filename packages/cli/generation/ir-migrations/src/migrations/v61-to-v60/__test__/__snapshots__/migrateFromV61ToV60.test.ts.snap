@@ -669,6 +669,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": true,
+    "idempotencyKeyGeneration": null,
     "isAuthMandatory": false,
     "platformHeaders": {
       "language": "X-Fern-Language",
@@ -676,6 +677,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
       "sdkVersion": "X-Fern-SDK-Version",
       "userAgent": null,
     },
+    "webhookSignatureVerification": null,
   },
   "selfHosted": false,
   "serviceTypeReferenceInfo": {
@@ -698,6 +700,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
       "encoding": {
         "json": {},
         "proto": null,
+        "xml": null,
       },
       "endpoints": [
         {
@@ -2727,6 +2730,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
       "encoding": {
         "json": {},
         "proto": null,
+        "xml": null,
       },
       "inline": null,
       "name": {

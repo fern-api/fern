@@ -1,0 +1,47 @@
+types:
+  Tag:
+    properties:
+      displayName:
+        type: string
+        # A wire name that differs from the TS property name, so the serde layer
+        # has something observable to do on the nested key.
+        name: display_name
+      createdAt:
+        type: datetime
+        name: created_at
+  Color:
+    enum:
+      - red
+      - blue
+  SearchResponse:
+    properties:
+      results: list<string>
+
+service:
+  base-path: /search
+  auth: false
+  endpoints:
+    search:
+      path: ""
+      method: GET
+      request:
+        name: SearchRequest
+        query-parameters:
+          # Primitive values: no serde needed, handed to the query builder as-is.
+          labels: map<string, string>
+          # Object values: routed through the generated schema so nested keys use
+          # wire names and datetimes become ISO strings.
+          metadata: map<string, Tag>
+          # Optional variant, to cover the null-guard branch.
+          optionalMetadata: optional<map<string, Tag>>
+          # Datetime values directly.
+          timestamps: map<string, datetime>
+          # Nested map and list values.
+          nested: map<string, map<string, Tag>>
+          grouped: map<string, list<Tag>>
+          # A set of primitives is a JS `Set` under the serde layer, so it must be
+          # normalized to an array before it reaches the query builder.
+          setValues: map<string, set<string>>
+          # Enum values.
+          colors: map<string, Color>
+      response: SearchResponse

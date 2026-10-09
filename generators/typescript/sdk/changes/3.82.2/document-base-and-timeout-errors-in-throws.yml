@@ -1,0 +1,6 @@
+- summary: |
+    Generated endpoint JSDoc now documents all thrown error paths: in addition to
+    the errors declared in the API definition, each method's `@throws` annotations
+    include the base API error class (thrown for any undeclared HTTP error status
+    code) and the timeout error class (thrown when the request times out).
+  type: fix

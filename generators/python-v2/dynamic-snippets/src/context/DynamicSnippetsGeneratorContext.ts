@@ -77,6 +77,20 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.snakeCase.safeName;
     }
 
+    /**
+     * Module/subpackage directory name, preserving any leading/trailing underscores
+     * from the original name that the casing functions would otherwise strip. This
+     * keeps snippet accessors and module paths consistent with the generated module
+     * directories (e.g. a group named `_agents` yields `client._agents`). It is scoped
+     * to namespace/module names and intentionally not applied to property or method names.
+     */
+    public getModuleName(name: FernIr.Name): string {
+        const leading = name.originalName.match(/^(_+)/)?.[1] ?? "";
+        const core = name.originalName.slice(leading.length);
+        const trailing = core.match(/(_+)$/)?.[1] ?? "";
+        return `${leading}${name.snakeCase.safeName}${trailing}`;
+    }
+
     public getRootClientClassReference(): python.Reference {
         return python.reference({
             name: this.getRootClientClassName(),
@@ -88,7 +102,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         const className = this.getClassName(declaration.name);
         const modulePath = [
             ...this.getRootModulePath(),
-            ...declaration.fernFilepath.allParts.map((part) => part.snakeCase.safeName)
+            ...declaration.fernFilepath.allParts.map((part) => this.getModuleName(part))
         ];
         return python.reference({ name: className, modulePath });
     }
@@ -104,7 +118,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         const variantName = discriminantValue.name.pascalCase.safeName;
         const modulePath = [
             ...this.getRootModulePath(),
-            ...unionDeclaration.fernFilepath.allParts.map((part) => part.snakeCase.safeName)
+            ...unionDeclaration.fernFilepath.allParts.map((part) => this.getModuleName(part))
         ];
         const name =
             this.customConfig.pydantic_config?.union_naming === "v1"

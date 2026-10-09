@@ -4,11 +4,13 @@
 package com.seed.endpointSecurityAuth.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.endpointSecurityAuth.core.BodyProperties;
 import com.seed.endpointSecurityAuth.core.ClientOptions;
 import com.seed.endpointSecurityAuth.core.EndpointMetadata;
 import com.seed.endpointSecurityAuth.core.MediaTypes;
 import com.seed.endpointSecurityAuth.core.ObjectMappers;
 import com.seed.endpointSecurityAuth.core.RequestOptions;
+import com.seed.endpointSecurityAuth.core.RetryInterceptor;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthApiException;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthException;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthHttpResponse;
@@ -49,7 +51,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedEndpointSecurityAuthException("Failed to serialize request", e);
         }
@@ -66,6 +70,15 @@ public class RawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -76,6 +89,8 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }

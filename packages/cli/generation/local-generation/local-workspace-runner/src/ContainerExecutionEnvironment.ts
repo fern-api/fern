@@ -7,9 +7,13 @@ import {
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
-    DEFAULT_NODE_DEBUG_PORT
+    DEFAULT_NODE_DEBUG_PORT,
+    TYPE_RELOCATIONS_FILENAME,
+    TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { getCaBundleMount, getJvmCaBundleWarning } from "./getCaBundleMount.js";
+import { verifyCaBundleMount } from "./verifyCaBundleMount.js";
 
 export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     public readonly usesContainerPaths = true;
@@ -17,12 +21,16 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     private readonly keepContainer: boolean;
     private readonly runner?: ContainerRunner;
     private readonly disableTelemetry: boolean;
+    private readonly network?: string;
+    private readonly declaredVersion?: string;
 
     constructor({
         containerImage,
         keepContainer,
         runner,
         disableTelemetry,
+        network,
+        declaredVersion,
         dockerImage,
         keepDocker
     }: {
@@ -31,6 +39,18 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         runner?: ContainerRunner;
         /** When true, disables telemetry collection inside the generator container. */
         disableTelemetry?: boolean;
+        /**
+         * Container network mode. `"none"` runs the generator with no network access, which is what
+         * an air-gapped generation requires: the guarantee has to hold for the customer's run, not
+         * only for a CI check.
+         */
+        network?: string;
+        /**
+         * The version the workspace asked for. Logged when the image reference does not carry it,
+         * which is what a digest pin looks like: the reference then identifies the artifact but says
+         * nothing about which generator release it is.
+         */
+        declaredVersion?: string;
         /** @deprecated Use containerImage instead */
         dockerImage?: string;
         /** @deprecated Use keepContainer instead */
@@ -40,6 +60,8 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         this.keepContainer = keepContainer ?? keepDocker ?? false;
         this.runner = runner;
         this.disableTelemetry = disableTelemetry ?? false;
+        this.network = network;
+        this.declaredVersion = declaredVersion;
     }
 
     public async execute({
@@ -55,7 +77,13 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         inspect,
         runner
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
-        context.logger.info(`Executing generator ${generatorName} using container image: ${this.containerImage}`);
+        const declaredVersionSuffix =
+            this.declaredVersion != null && !this.containerImage.endsWith(`:${this.declaredVersion}`)
+                ? ` (generators.yml version ${this.declaredVersion})`
+                : "";
+        context.logger.info(
+            `Executing generator ${generatorName} using container image: ${this.containerImage}${declaredVersionSuffix}`
+        );
 
         const binds = [
             `${configPath}:${CONTAINER_GENERATOR_CONFIG_PATH}:ro`,
@@ -78,7 +106,13 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             binds.push(`${sourceMount.hostPath}:${sourceMount.containerPath}:ro`);
         }
 
-        const envVars: Record<string, string> = {};
+        const envVars: Record<string, string> = {
+            // Generators that relocate types to break import cycles write the
+            // relocations here (inside the bind-mounted output dir, so it is
+            // host-readable). The host applies them to its dynamic snippet IR
+            // and deletes the file before copying generated output.
+            [TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR]: `${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}/${TYPE_RELOCATIONS_FILENAME}`
+        };
         const ports: Record<string, string> = {};
         if (inspect) {
             envVars["NODE_OPTIONS"] = `--inspect-brk=0.0.0.0:${DEFAULT_NODE_DEBUG_PORT}`;
@@ -86,6 +120,25 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         }
         if (this.disableTelemetry) {
             envVars["FERN_DISABLE_TELEMETRY"] = "true";
+        }
+
+        const caBundle = getCaBundleMount();
+        if (caBundle != null) {
+            context.logger.info(`Mounting CA bundle ${caBundle.hostPath} into the generator container`);
+            const jvmWarning = getJvmCaBundleWarning(generatorName);
+            if (jvmWarning != null) {
+                context.logger.warn(jvmWarning);
+            }
+            // Fail before generation rather than after: an unmountable bundle otherwise
+            // surfaces as an unrelated-looking TLS error deep inside the generator.
+            await verifyCaBundleMount({
+                hostPath: caBundle.hostPath,
+                imageName: this.containerImage,
+                runner: this.runner ?? runner ?? "docker",
+                logger: context.logger
+            });
+            binds.push(caBundle.bind);
+            Object.assign(envVars, caBundle.envVars);
         }
 
         try {
@@ -97,7 +150,8 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
                 envVars,
                 ports,
                 removeAfterCompletion: !this.keepContainer,
-                runner: this.runner ?? runner
+                runner: this.runner ?? runner,
+                ...(this.network != null ? { network: this.network } : {})
             });
         } catch (error) {
             if (error instanceof CliError) {

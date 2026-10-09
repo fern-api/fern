@@ -52,6 +52,12 @@ types:
       smart-casing:
         type: optional<boolean>
         docs: Feature flag used to enable better IR naming.
+      smart-casing-digit-word-boundary:
+        type: optional<boolean>
+        docs: |
+          When smart casing is enabled, preserves the word boundary after a digit run in
+          snake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).
+          Defaults to false, which keeps the digit run fused to the following word.
       api:
         type: optional<GeneratorAPISettingsSchema>
         docs: Override API import settings (this is applied across all specs)
@@ -121,6 +127,7 @@ types:
       pypi: PypiOutputLocationSchema
       postman: PostmanOutputLocationSchema
       local-file-system: LocalFileSystemOutputLocationSchema
+      fern-hosted: FernHostedOutputLocationSchema
       nuget: NugetOutputLocationSchema
       rubygems: RubyGemsOutputLocationSchema
       crates: CratesOutputLocationSchema
@@ -140,12 +147,17 @@ types:
       mode: optional<GithubSelfhostedMode>
       branch: optional<string>
       license: optional<license.GithubLicenseSchema>
+      workflows:
+        type: optional<boolean>
+        docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
 
   GithubSelfhostedMode:
     enum:
       - name: pullRequest
         value: pull-request
       - push
+      - name: commitAndRelease
+        value: commit-and-release
 
   GeneratorSnippetsSchema:
     properties:
@@ -169,6 +181,9 @@ types:
         docs: If specified, commits and tags the release on this branch instead of the default branch. The branch must exist.
       license: optional<license.GithubLicenseSchema>
       mode: optional<GithubCommitAndReleaseMode>
+      workflows:
+        type: optional<boolean>
+        docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
       # Add properties for commit and release configuration
 
   GithubCommitAndReleaseMode:
@@ -183,6 +198,9 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"pull-request">
       reviewers: optional<reviewers.ReviewersSchema>
+      workflows:
+        type: optional<boolean>
+        docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
       # Add properties for pull request configuration
 
   GithubPushSchema:
@@ -191,6 +209,9 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"push">
       branch: optional<string>
+      workflows:
+        type: optional<boolean>
+        docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
       # Add properties for push configuration
 
   NpmOutputLocationSchema:
@@ -238,6 +259,13 @@ types:
   LocalFileSystemOutputLocationSchema:
     properties:
       path: string
+
+  FernHostedOutputLocationSchema:
+    docs: Deploys the generated MCP server to Fern's hosted platform.
+    properties:
+      slug:
+        type: optional<string>
+        docs: Path of the hosted server, https://<org>.fernmcp.dev/<slug>. Defaults to "mcp".
 
   NugetOutputLocationSchema:
     properties:

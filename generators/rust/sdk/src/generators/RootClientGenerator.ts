@@ -201,6 +201,18 @@ export class RootClientGenerator {
         // Add HttpClient and RequestOptions imports if root service has endpoints
         if (this.rootServiceGenerator) {
             crateItems.push("HttpClient", "RequestOptions");
+
+            // Mirror SubClientGenerator: root-level endpoints may also need these
+            // crate-level re-exports for binary, SSE, and query-parameter endpoints.
+            if (this.rootServiceGenerator.hasBinaryEndpoints()) {
+                crateItems.push("ByteStream");
+            }
+            if (this.rootServiceGenerator.hasSseEndpoints()) {
+                crateItems.push("SseStream");
+            }
+            if (this.rootServiceGenerator.hasQueryParameters()) {
+                crateItems.push("QueryBuilder");
+            }
         }
 
         const imports: UseStatement[] = [
@@ -218,13 +230,14 @@ export class RootClientGenerator {
                     items: ["Method"]
                 })
             );
-            // Add crate::api::* for custom types used in endpoint parameters/responses
-            imports.push(
-                new UseStatement({
-                    path: "crate::api",
-                    items: ["*"]
-                })
-            );
+            if (this.rootServiceGenerator.needsApiTypesImport()) {
+                imports.push(
+                    new UseStatement({
+                        path: "crate::api",
+                        items: ["*"]
+                    })
+                );
+            }
         }
 
         // Import WebSocket connector types from the websocket module
@@ -307,14 +320,11 @@ export class RootClientGenerator {
     }
 
     /**
-     * Generates the Rust expression to resolve a URL from the environment,
-     * falling back to config.base_url when environment is None.
+     * Generates the Rust expression resolving a service's URL: an explicit config.base_url wins,
+     * otherwise the environment's URL for the service (see ClientConfig::service_url).
      */
     private resolveUrlExpression(urlMethod: string, configVar: string): string {
-        return (
-            `${configVar}.environment.as_ref()\n` +
-            `                    .map_or_else(|| ${configVar}.base_url.clone(), |env| env.${urlMethod}().to_string())`
-        );
+        return `${configVar}.service_url(|environment| environment.${urlMethod}()).to_string()`;
     }
 
     private generateConstructor(subpackages: FernIr.Subpackage[]): rust.Client.SimpleMethod {

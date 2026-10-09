@@ -9,7 +9,14 @@ as needing JSON serialization.
 
 import fern.ir.resources as ir_types
 
-from fern_python.generators.sdk.client_generator.type_utilities import is_type_primitive_for_multipart
+from fern_python.generators.sdk.client_generator.type_utilities import (
+    is_type_list_of_primitives_for_multipart,
+    is_type_primitive_for_multipart,
+)
+
+
+def _primitive(primitive: ir_types.PrimitiveTypeV1) -> ir_types.TypeReference:
+    return ir_types.TypeReference.factory.primitive(ir_types.PrimitiveType(v_1=primitive, v_2=None))
 
 
 def _no_declaration_lookup(type_id: ir_types.TypeId) -> ir_types.TypeDeclaration:
@@ -86,3 +93,65 @@ class TestPrimitiveTypeDetection:
             ir_types.ContainerType.factory.map_(ir_types.MapType(key_type=key, value_type=value))
         )
         assert is_type_primitive_for_multipart(type_ref, _no_declaration_lookup) is False
+
+
+class TestListOfPrimitivesDetection:
+    """
+    Tests for is_type_list_of_primitives_for_multipart: list/set of primitives must be
+    sent as repeated form fields (True), everything else JSON-serialized (False).
+    """
+
+    def test_list_of_strings_is_list_of_primitives(self) -> None:
+        type_ref = ir_types.TypeReference.factory.container(
+            ir_types.ContainerType.factory.list_(_primitive(ir_types.PrimitiveTypeV1.STRING))
+        )
+        assert is_type_list_of_primitives_for_multipart(type_ref, _no_declaration_lookup) is True
+
+    def test_set_of_integers_is_list_of_primitives(self) -> None:
+        type_ref = ir_types.TypeReference.factory.container(
+            ir_types.ContainerType.factory.set_(_primitive(ir_types.PrimitiveTypeV1.INTEGER))
+        )
+        assert is_type_list_of_primitives_for_multipart(type_ref, _no_declaration_lookup) is True
+
+    def test_optional_list_of_strings_is_list_of_primitives(self) -> None:
+        inner = ir_types.TypeReference.factory.container(
+            ir_types.ContainerType.factory.list_(_primitive(ir_types.PrimitiveTypeV1.STRING))
+        )
+        type_ref = ir_types.TypeReference.factory.container(ir_types.ContainerType.factory.optional(inner))
+        assert is_type_list_of_primitives_for_multipart(type_ref, _no_declaration_lookup) is True
+
+    def test_nullable_list_of_longs_is_list_of_primitives(self) -> None:
+        inner = ir_types.TypeReference.factory.container(
+            ir_types.ContainerType.factory.list_(_primitive(ir_types.PrimitiveTypeV1.LONG))
+        )
+        type_ref = ir_types.TypeReference.factory.container(ir_types.ContainerType.factory.nullable(inner))
+        assert is_type_list_of_primitives_for_multipart(type_ref, _no_declaration_lookup) is True
+
+    def test_scalar_string_is_not_list_of_primitives(self) -> None:
+        assert (
+            is_type_list_of_primitives_for_multipart(
+                _primitive(ir_types.PrimitiveTypeV1.STRING), _no_declaration_lookup
+            )
+            is False
+        )
+
+    def test_map_is_not_list_of_primitives(self) -> None:
+        key = _primitive(ir_types.PrimitiveTypeV1.STRING)
+        value = _primitive(ir_types.PrimitiveTypeV1.STRING)
+        type_ref = ir_types.TypeReference.factory.container(
+            ir_types.ContainerType.factory.map_(ir_types.MapType(key_type=key, value_type=value))
+        )
+        assert is_type_list_of_primitives_for_multipart(type_ref, _no_declaration_lookup) is False
+
+    def test_list_of_unknown_is_not_list_of_primitives(self) -> None:
+        type_ref = ir_types.TypeReference.factory.container(
+            ir_types.ContainerType.factory.list_(ir_types.TypeReference.factory.unknown())
+        )
+        assert is_type_list_of_primitives_for_multipart(type_ref, _no_declaration_lookup) is False
+
+    def test_list_of_lists_is_not_list_of_primitives(self) -> None:
+        inner_list = ir_types.TypeReference.factory.container(
+            ir_types.ContainerType.factory.list_(_primitive(ir_types.PrimitiveTypeV1.STRING))
+        )
+        type_ref = ir_types.TypeReference.factory.container(ir_types.ContainerType.factory.list_(inner_list))
+        assert is_type_list_of_primitives_for_multipart(type_ref, _no_declaration_lookup) is False

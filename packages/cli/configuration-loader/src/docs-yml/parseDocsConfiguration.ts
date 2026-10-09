@@ -10,7 +10,11 @@ import path from "path";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
 import { getAllPages, loadAllPages } from "./getAllPages.js";
+import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
+import { materializeGitRef } from "./git-versions/materializeGitRef.js";
+import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
+import { resolveRedirects } from "./resolveRedirects.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -42,12 +46,18 @@ export async function parseDocsConfiguration({
     rawDocsConfiguration,
     absolutePathToFernFolder,
     absoluteFilepathToDocsConfig,
-    context
+    context,
+    buildRefVersions = true
 }: {
     rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
+    /**
+     * When false, git-ref-backed versions are skipped rather than materialized.
+     * Set by `fern docs dev`, which previews only the working-tree version.
+     */
+    buildRefVersions?: boolean;
 }): Promise<WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>> {
     const {
         instances,
@@ -97,12 +107,14 @@ export async function parseDocsConfiguration({
     const convertedNavigationPromise = getNavigationConfiguration({
         tabs,
         products,
+        rootChangelog: rawDocsConfiguration.changelog,
         versions,
         navigation: rawNavigation,
         absolutePathToFernFolder,
         absolutePathToConfig: absoluteFilepathToDocsConfig,
         context,
-        folderTitleSource
+        folderTitleSource,
+        buildRefVersions
     });
 
     const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
@@ -125,6 +137,8 @@ export async function parseDocsConfiguration({
                   absoluteFilepathToDocsConfig
               })
             : undefined;
+
+    const redirectsPromise = resolveRedirects({ redirects, absoluteFilepathToDocsConfig });
 
     const cssPromise = convertCssConfig(rawCssConfig, absoluteFilepathToDocsConfig);
     const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
@@ -183,6 +197,7 @@ export async function parseDocsConfiguration({
         css,
         js,
         metadata,
+        resolvedRedirects,
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
@@ -196,6 +211,7 @@ export async function parseDocsConfiguration({
         cssPromise,
         jsPromise,
         metadataPromise,
+        redirectsPromise,
         context7FilePromise,
         llmsTxtFilePromise,
         llmsFullTxtFilePromise,
@@ -215,6 +231,14 @@ export async function parseDocsConfiguration({
             "Tabs alignment 'center' is not supported when tabs placement is 'sidebar'. The alignment will be ignored."
         );
     }
+
+    warnOnUnconfiguredExternalSitemapLocales({
+        externalSitemaps: experimental?.externalSitemaps,
+        siteLocales: rawDocsConfiguration.translations?.map(
+            (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
+        ) ?? [rawDocsConfiguration.settings?.language ?? "en"],
+        context
+    });
 
     return {
         title,
@@ -246,10 +270,7 @@ export async function parseDocsConfiguration({
 
         /* seo */
         metadata,
-        redirects: redirects?.map((redirect) => ({
-            ...redirect,
-            permanent: redirect?.permanent
-        })),
+        redirects: resolvedRedirects,
 
         /* branding */
         logo,
@@ -258,7 +279,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
-        settings: convertSettingsConfig(rawDocsConfiguration.settings),
+        settings: convertSettingsConfig(rawDocsConfiguration.settings, context),
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
@@ -316,6 +337,36 @@ export async function parseDocsConfiguration({
 
         experimental
     };
+}
+
+function warnOnUnconfiguredExternalSitemapLocales({
+    externalSitemaps,
+    siteLocales,
+    context
+}: {
+    externalSitemaps: docsYml.RawSchemas.ExternalSitemap[] | undefined;
+    siteLocales: string[];
+    context: TaskContext;
+}): void {
+    if (externalSitemaps == null) {
+        return;
+    }
+    const normalizedSiteLocales = siteLocales.map((l) => l.trim().toLowerCase());
+    for (const sitemap of externalSitemaps) {
+        if (typeof sitemap === "string" || sitemap.locale == null) {
+            continue;
+        }
+        const locale = sitemap.locale.trim().toLowerCase();
+        const language = locale.split(/[-_]/)[0];
+        const matches = normalizedSiteLocales.some(
+            (siteLocale) => siteLocale === locale || siteLocale.split(/[-_]/)[0] === language
+        );
+        if (!matches) {
+            context.logger.warn(
+                `external-sitemaps: locale '${sitemap.locale}' for ${sitemap.url} does not match any site locale (${siteLocales.join(", ")}); this sitemap will not be indexed.`
+            );
+        }
+    }
 }
 
 function convertLogoReference(
@@ -385,7 +436,7 @@ async function convertJsConfig(
     js: docsYml.RawSchemas.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<docsYml.JavascriptConfig> {
-    const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
+    const remote: docsYml.ParsedJsRemoteConfig[] = [];
     const files: docsYml.AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
@@ -401,7 +452,8 @@ async function convertJsConfig(
         } else if (isRemoteJsConfig(config)) {
             remote.push({
                 strategy: config.strategy,
-                url: CjsFdrSdk.Url(config.url)
+                url: CjsFdrSdk.Url(config.url),
+                disableSri: config.disableSri
             });
         } else if (isFileJsConfig(config)) {
             files.push({
@@ -434,11 +486,34 @@ function convertPageActions(
             claude: pageActions.options?.claude ?? true,
             cursor: pageActions.options?.cursor ?? true,
             claudeCode: pageActions.options?.claudeCode ?? true,
+            mcp: pageActions.options?.mcp ?? true,
             vscode: pageActions.options?.vscode ?? false,
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)
-            )
+            ),
+            skills: convertSkillsPageAction(pageActions.options?.skills)
         }
+    };
+}
+
+function convertSkillsPageAction(
+    skills: docsYml.RawSchemas.SkillsPageActionConfig | undefined
+): CjsFdrSdk.docs.v1.commons.PageActionOptions["skills"] {
+    // presence of the key (even as an empty object) enables the "Install skills" page action
+    if (skills == null) {
+        return undefined;
+    }
+    return {
+        title: skills.title,
+        description: skills.description,
+        learnMoreUrl: skills.learnMoreUrl,
+        repository: skills.repository,
+        installCommand: skills.installCommand,
+        skills: skills.skills?.map((skill) => ({
+            name: skill.name,
+            description: skill.description,
+            url: skill.url
+        }))
     };
 }
 
@@ -507,20 +582,40 @@ function convertThemeConfig(
         pageActions: theme.pageActions ?? "default",
         footerNav: theme.footerNav ?? "default",
         languageSwitcher: theme.languageSwitcher ?? "default",
-        productSwitcher: theme.productSwitcher ?? "default"
+        productSwitcher: theme.productSwitcher ?? "default",
+        siteSwitcher: theme.siteSwitcher
     };
 }
 
 function convertSettingsConfig(
-    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined
+    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined,
+    context: TaskContext
 ): docsYml.ParsedDocsConfiguration["settings"] {
     if (settings == null) {
         return undefined;
     }
 
+    if (settings.embedding != null) {
+        const embeddingErrors = docsYml.getEmbeddingOriginErrors(settings.embedding.allowedOrigins);
+        if (embeddingErrors.length > 0) {
+            context.failAndThrow(embeddingErrors.join("\n"));
+        }
+    }
+
+    // The legacy `default-search-filters` setting is preserved as an alias for
+    // `search.default-filter-by-current-product`. Either one enables the behavior.
+    const defaultFilterByCurrentProduct =
+        (settings.search?.defaultFilterByCurrentProduct ?? false) || (settings.defaultSearchFilters ?? false);
+    const prioritizeCurrentProduct = settings.search?.prioritizeCurrentProduct ?? false;
+
     return {
         darkModeCode: settings.darkModeCode ?? false,
-        defaultSearchFilters: settings.defaultSearchFilters ?? false,
+        defaultSearchFilters: defaultFilterByCurrentProduct,
+        search: {
+            prioritizeCurrentProduct,
+            defaultFilterByCurrentProduct,
+            externalSitemaps: undefined
+        },
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
@@ -530,7 +625,9 @@ function convertSettingsConfig(
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableEnvironmentEditing: settings.disableEnvironmentEditing ?? false,
         disableAnalytics: settings.disableAnalytics ?? false,
-        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined
+        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
+        embedding: settings.embedding,
+        showHeadersInExamples: settings.showHeadersInExamples ?? false
     };
 }
 
@@ -626,6 +723,29 @@ function convertLayoutConfig(
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false,
         mobileToc: layout.mobileToc ?? false,
+        // Passed through as-is (no default): omitted renders the searchable
+        // timeline, "classic" renders the legacy stacked layout. Resolved by the
+        // fern-platform companion PR. Part of the `as unknown as` cast below
+        // until the published FDR SDK adds `changelogLayout`.
+        changelogLayout: layout.changelogLayout,
+        // Passed through as-is (no default): omitted renders the indented
+        // connector-line tree, "cards" renders the legacy nested cards. Resolved
+        // by the fern-platform companion PR. Part of the `as unknown as` cast
+        // below until the published FDR SDK adds `apiReferenceLayout`.
+        apiReferenceLayout: layout.apiReferenceLayout,
+        // Opt-in (default off, resolved by the fern-platform companion PR): when
+        // true the first level of nested API reference fields renders expanded.
+        // Part of the `as unknown as` cast below until the published FDR SDK adds the field.
+        apiReferenceExpandProperties: layout.apiReferenceExpandProperties,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when true the sidebar renders inline availability badges. Part of the
+        // `as unknown as` cast below until the published FDR SDK adds the field.
+        showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when `breadcrumbs.current-page` is true the current page is appended to
+        // the breadcrumb trail as a non-clickable item. Part of the `as unknown as`
+        // cast below until the published FDR SDK adds the field.
+        breadcrumbs: layout.breadcrumbs != null ? { currentPage: layout.breadcrumbs.currentPage ?? false } : undefined,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
@@ -656,53 +776,163 @@ function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.co
     return undefined;
 }
 
+async function loadWorkingTreeVersion({
+    version,
+    absolutePathToFernFolder,
+    context,
+    folderTitleSource
+}: {
+    version: docsYml.RawSchemas.VersionConfig;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
+}): Promise<docsYml.VersionInfo> {
+    if (version.path == null) {
+        throw new CliError({
+            message: `Version '${version.displayName}' must specify a 'path' or 'ref'.`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, RelativeFilePath.of(version.path));
+    let versionContent: unknown;
+    try {
+        versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+    } catch (error) {
+        if (error instanceof yaml.YAMLException) {
+            throw new CliError({
+                message: `Failed to parse version file ${version.path}: ${error.message}`,
+                code: CliError.Code.ParseError
+            });
+        }
+        throw error;
+    }
+
+    // Sanitize null/undefined values before parsing
+    const removedPaths: string[][] = [];
+    const sanitizedVersionContent = sanitizeNullValues(versionContent, [], removedPaths);
+    if (removedPaths.length > 0) {
+        context.logger.warn(
+            `Version file ${version.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+        );
+    }
+
+    const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedVersionContent);
+    const versionNavigation = await convertNavigationConfiguration({
+        tabs: versionResult.tabs,
+        rawNavigationConfig: versionResult.navigation,
+        absolutePathToFernFolder,
+        absolutePathToConfig: absoluteFilepathToVersionFile,
+        context,
+        folderTitleSource
+    });
+    return {
+        landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
+        version: version.displayName,
+        navigation: versionNavigation,
+        availability: version.availability,
+        slug: version.slug,
+        hidden: version.hidden,
+        viewers: parseRoles(version.viewers),
+        orphaned: version.orphaned,
+        featureFlags: convertFeatureFlag(version.featureFlag),
+        announcement: version.announcement,
+        contentSource: undefined
+    };
+}
+
+async function loadRefVersion({
+    version,
+    ref,
+    absolutePathToFernFolder,
+    context,
+    folderTitleSource
+}: {
+    version: docsYml.RawSchemas.VersionConfig;
+    ref: string;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
+}): Promise<docsYml.VersionInfo> {
+    const materialized = await materializeGitRef({ ref, absolutePathToFernFolder, context });
+    const contentRoot = await resolveRefContentRoot({ materialized, context });
+
+    const versionNavigation = await convertNavigationConfiguration({
+        tabs: contentRoot.tabs,
+        rawNavigationConfig: contentRoot.navigation,
+        absolutePathToFernFolder: materialized.absolutePathToFernFolder,
+        absolutePathToConfig: contentRoot.absoluteFilepathToConfig,
+        context,
+        folderTitleSource
+    });
+
+    return {
+        landingPage: parsePageConfig(contentRoot.landingPage, contentRoot.absoluteFilepathToConfig),
+        version: version.displayName,
+        navigation: versionNavigation,
+        availability: version.availability,
+        slug: version.slug,
+        hidden: version.hidden,
+        viewers: parseRoles(version.viewers),
+        orphaned: version.orphaned,
+        featureFlags: convertFeatureFlag(version.featureFlag),
+        announcement: version.announcement,
+        contentSource: {
+            displayVersion: version.displayName,
+            ref: materialized.ref,
+            sha: materialized.sha,
+            absolutePathToFernFolder: materialized.absolutePathToFernFolder,
+            libraries: parseLibrariesConfiguration(contentRoot.rawLibraries)
+        }
+    };
+}
+
 async function getVersionedNavigationConfiguration({
     versions,
     absolutePathToFernFolder,
     context,
-    folderTitleSource
+    folderTitleSource,
+    buildRefVersions = true
 }: {
     versions: docsYml.RawSchemas.VersionConfig[];
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
     parentSlug?: string;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    buildRefVersions?: boolean;
 }): Promise<docsYml.VersionedDocsNavigation> {
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
-        const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
-        const versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-
-        // Sanitize null/undefined values before parsing
-        const removedPaths: string[][] = [];
-        const sanitizedVersionContent = sanitizeNullValues(versionContent, [], removedPaths);
-        if (removedPaths.length > 0) {
-            context.logger.warn(
-                `Version file ${version.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+        const ref = getVersionContentRef(version);
+        if (ref == null) {
+            versionedNavbars.push(
+                await loadWorkingTreeVersion({ version, absolutePathToFernFolder, context, folderTitleSource })
             );
+            continue;
         }
 
-        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedVersionContent);
-        const versionNavigation = await convertNavigationConfiguration({
-            tabs: versionResult.tabs,
-            rawNavigationConfig: versionResult.navigation,
-            absolutePathToFernFolder,
-            absolutePathToConfig: absoluteFilepathToVersionFile,
-            context,
-            folderTitleSource
-        });
-        versionedNavbars.push({
-            landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
-            version: version.displayName,
-            navigation: versionNavigation,
-            availability: version.availability,
-            slug: version.slug,
-            hidden: version.hidden,
-            viewers: parseRoles(version.viewers),
-            orphaned: version.orphaned,
-            featureFlags: convertFeatureFlag(version.featureFlag),
-            announcement: version.announcement
-        });
+        // A ref-backed version derives its content root from the ref itself
+        // (the ref's own `versions[0].path` or top-level `navigation:`), so a
+        // current-branch `path:` alongside `ref:` has no effect. Reject the
+        // combination instead of silently ignoring `path:`. Runs regardless of
+        // `buildRefVersions` so `fern check` surfaces it too.
+        if (version.path != null) {
+            throw new CliError({
+                message:
+                    `Version '${version.displayName}' declares both 'ref' and 'path'. ` +
+                    "A git-ref-backed version builds its content from the ref, so 'path' is not used. " +
+                    "Remove 'path' to build from the ref, or remove 'ref' to build from the working tree.",
+                code: CliError.Code.ConfigError
+            });
+        }
+
+        if (!buildRefVersions) {
+            context.logger.debug(`Skipping git-ref-backed version '${version.displayName}' (ref '${ref}').`);
+            continue;
+        }
+
+        versionedNavbars.push(
+            await loadRefVersion({ version, ref, absolutePathToFernFolder, context, folderTitleSource })
+        );
     }
     return {
         type: "versioned",
@@ -713,22 +943,35 @@ async function getVersionedNavigationConfiguration({
 async function getNavigationConfiguration({
     tabs,
     products,
+    rootChangelog,
     versions,
     navigation,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
-    folderTitleSource
+    folderTitleSource,
+    buildRefVersions = true
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     products?: docsYml.RawSchemas.ProductConfig[];
+    rootChangelog?: docsYml.RawSchemas.ChangelogConfiguration;
     versions?: docsYml.RawSchemas.VersionConfig[];
     navigation?: docsYml.RawSchemas.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    buildRefVersions?: boolean;
 }): Promise<docsYml.DocsNavigationConfiguration> {
+    if (rootChangelog != null && products == null) {
+        throw new CliError({
+            message:
+                "A top-level `changelog` in docs.yml is only supported alongside `products`. " +
+                "For a site using `versions`, add the changelog to each version's `navigation`; " +
+                "otherwise add it to the top-level `navigation`.",
+            code: CliError.Code.ConfigError
+        });
+    }
     if (navigation != null) {
         return await convertNavigationConfiguration({
             tabs,
@@ -748,7 +991,18 @@ async function getNavigationConfiguration({
                 let navigation: docsYml.DocsNavigationConfiguration;
                 const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
 
-                const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+                let content: unknown;
+                try {
+                    content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+                } catch (error) {
+                    if (error instanceof yaml.YAMLException) {
+                        throw new CliError({
+                            message: `Failed to parse product file ${product.path}: ${error.message}`,
+                            code: CliError.Code.ParseError
+                        });
+                    }
+                    throw error;
+                }
 
                 // Sanitize null/undefined values before parsing
                 const removedPaths: string[][] = [];
@@ -767,7 +1021,8 @@ async function getNavigationConfiguration({
                         versions: product.versions,
                         absolutePathToFernFolder,
                         context,
-                        folderTitleSource
+                        folderTitleSource,
+                        buildRefVersions
                     });
                 } else {
                     // Process as a regular navigation if no versions
@@ -818,14 +1073,19 @@ async function getNavigationConfiguration({
 
         return {
             type: "productgroup",
-            products: productNavbars
+            products: productNavbars,
+            changelog:
+                rootChangelog != null
+                    ? await convertChangelogConfiguration({ rawConfig: rootChangelog, absolutePathToConfig })
+                    : undefined
         };
     } else if (versions != null) {
         return await getVersionedNavigationConfiguration({
             versions,
             absolutePathToFernFolder,
             context,
-            folderTitleSource
+            folderTitleSource,
+            buildRefVersions
         });
     }
     throw new CliError({
@@ -1084,7 +1344,8 @@ async function convertNavigationTabConfiguration({
         };
     }
 
-    if (tab.changelog != null) {
+    const changelogPath = docsYml.getChangelogFolderFromTabConfig(tab);
+    if (changelogPath != null) {
         return {
             title: tab.displayName,
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
@@ -1093,7 +1354,7 @@ async function convertNavigationTabConfiguration({
             hidden: tab.hidden,
             child: {
                 type: "changelog",
-                changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
+                changelog: await listFiles(resolveFilepath(changelogPath, absolutePathToConfig), "{md,mdx}")
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -1230,7 +1491,7 @@ async function expandFolderConfiguration({
 }
 
 async function convertNavigationItem({
-    rawConfig,
+    rawConfig: rawConfigInput,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
@@ -1242,6 +1503,8 @@ async function convertNavigationItem({
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.DocsNavigationItem> {
+    const rawConfig = normalizeNavigationItem(rawConfigInput);
+
     if (isRawPageConfig(rawConfig)) {
         return parsePageConfig(rawConfig, absolutePathToConfig);
     }
@@ -1288,6 +1551,35 @@ async function convertNavigationItem({
             title: rawConfig.api,
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             apiName: rawConfig.apiName ?? undefined,
+            specs: rawConfig.specs?.map((spec) => ({
+                type: spec.type,
+                absolutePath: resolveFilepath(spec.path, absolutePathToConfig),
+                namespace: spec.namespace ?? undefined,
+                absoluteOverlayPaths:
+                    spec.overlays == null ? [] : [resolveFilepath(spec.overlays, absolutePathToConfig)],
+                absoluteOverridePaths:
+                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? [],
+                settings:
+                    spec.settings == null
+                        ? undefined
+                        : {
+                              ...spec.settings,
+                              ...(spec.settings.errorResponses == null
+                                  ? {}
+                                  : {
+                                        errorResponses: {
+                                            ...spec.settings.errorResponses,
+                                            schema:
+                                                typeof spec.settings.errorResponses.schema === "string"
+                                                    ? resolveFilepath(
+                                                          spec.settings.errorResponses.schema,
+                                                          absolutePathToConfig
+                                                      )
+                                                    : spec.settings.errorResponses.schema
+                                        }
+                                    })
+                          }
+            })),
             audiences:
                 rawConfig.audiences != null
                     ? { type: "select", audiences: parseAudiences(rawConfig.audiences) ?? [] }
@@ -1327,17 +1619,7 @@ async function convertNavigationItem({
         };
     }
     if (isRawChangelogConfig(rawConfig)) {
-        return {
-            type: "changelog",
-            changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
-            hidden: rawConfig.hidden ?? false,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-            title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
-            slug: rawConfig.slug,
-            viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
-        };
+        return await convertChangelogConfiguration({ rawConfig, absolutePathToConfig });
     }
     if (isRawFolderConfig(rawConfig)) {
         return await expandFolderConfiguration({
@@ -1562,6 +1844,45 @@ function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.Changel
     return isPlainObject(item) && typeof item.changelog === "string";
 }
 
+async function convertChangelogConfiguration({
+    rawConfig,
+    absolutePathToConfig
+}: {
+    rawConfig: docsYml.RawSchemas.ChangelogConfiguration;
+    absolutePathToConfig: AbsoluteFilePath;
+}): Promise<docsYml.DocsNavigationItem.Changelog> {
+    return {
+        type: "changelog",
+        changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
+        hidden: rawConfig.hidden ?? false,
+        icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+        title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
+        slug: rawConfig.slug,
+        viewers: parseRoles(rawConfig.viewers),
+        orphaned: rawConfig.orphaned,
+        featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+    };
+}
+
+function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfiguration {
+    return isPlainObject(item) && typeof item.blog === "string";
+}
+
+function normalizeNavigationItem(
+    rawConfig: docsYml.RawSchemas.NavigationItem
+): Exclude<docsYml.RawSchemas.NavigationItem, docsYml.RawSchemas.BlogConfiguration> {
+    if (!isRawBlogConfig(rawConfig)) {
+        return rawConfig;
+    }
+
+    const { blog, ...rest } = rawConfig;
+    return {
+        ...rest,
+        changelog: blog,
+        title: rawConfig.title ?? docsYml.DEFAULT_BLOG_TITLE
+    };
+}
+
 function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {
     return isPlainObject(item) && typeof item.folder === "string";
 }
@@ -1584,17 +1905,11 @@ function parseLibrariesConfiguration(
     }
     const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
     for (const [name, config] of Object.entries(libraries)) {
-        if (!isGitLibraryInput(config.input)) {
-            throw new CliError({
-                message: `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`,
-                code: CliError.Code.ConfigError
-            });
-        }
+        const input: docsYml.ParsedLibraryInputConfiguration = isGitLibraryInput(config.input)
+            ? { type: "git", git: config.input.git, subpath: config.input.subpath, ref: config.input.ref }
+            : { type: "path", path: config.input.path };
         result[name] = {
-            input: {
-                git: config.input.git,
-                subpath: config.input.subpath
-            },
+            input,
             output: {
                 path: config.output.path
             },
@@ -2014,12 +2329,14 @@ async function loadTranslationPages({
 
             if (!(await doesPathExist(langDir))) {
                 context.failAndThrow(
-                    `Translation directory for locale "${lang}" not found.`,
-                    `Expected a directory at: ${langDir}\n` +
+                    `Translation directory for locale "${lang}" not found.\n` +
+                        `Expected a directory at: ${langDir}\n` +
                         `Create the directory and add translated versions of your documentation pages.\n` +
                         `The directory should mirror the same relative paths referenced in your docs.yml navigation.\n` +
                         `Example: if your docs.yml references "pages/getting-started.mdx", add a translated\n` +
-                        `version at "translations/${lang}/pages/getting-started.mdx".`
+                        `version at "translations/${lang}/pages/getting-started.mdx".`,
+                    undefined,
+                    { code: CliError.Code.ValidationError }
                 );
                 return;
             }
@@ -2485,6 +2802,66 @@ function parseNavigationItemOverlays(items: unknown[]): docsYml.NavigationItemOv
             };
             result.push(pageOverlay);
             continue;
+        }
+
+        // A link item: { link: "Label", href: "..." }
+        if (typeof obj.link === "string") {
+            const linkOverlay: docsYml.NavigationItemOverlay.Link = {
+                type: "link",
+                title: obj.link
+            };
+            result.push(linkOverlay);
+            continue;
+        }
+
+        // An API reference item: { api: "Title", layout: [...] }
+        if (typeof obj.api === "string") {
+            const apiOverlay: docsYml.NavigationItemOverlay.ApiReference = {
+                type: "apiReference",
+                title: obj.api,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined,
+                layout: Array.isArray(obj.layout) ? parseNavigationItemOverlays(obj.layout) : undefined
+            };
+            result.push(apiOverlay);
+            continue;
+        }
+
+        // An endpoint item inside an api layout: { endpoint: "POST /path", title: "..." }
+        if (typeof obj.endpoint === "string") {
+            const endpointOverlay: docsYml.NavigationItemOverlay.Endpoint = {
+                type: "endpoint",
+                endpoint: obj.endpoint,
+                title: typeof obj.title === "string" ? obj.title : undefined,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined
+            };
+            result.push(endpointOverlay);
+            continue;
+        }
+
+        // A package item inside an api layout: { <package-name>: { title: "...", contents: [...] } }
+        const entries = Object.entries(obj);
+        if (entries.length === 1 && entries[0] != null) {
+            const [packageName, value] = entries[0];
+            if (isPlainObject(value) && ("title" in value || "slug" in value || "contents" in value)) {
+                const pkg = value as Record<string, unknown>;
+                const packageOverlay: docsYml.NavigationItemOverlay.ApiPackage = {
+                    type: "apiPackage",
+                    packageName,
+                    title: typeof pkg.title === "string" ? pkg.title : undefined,
+                    slug: typeof pkg.slug === "string" ? pkg.slug : undefined,
+                    contents: Array.isArray(pkg.contents) ? parseNavigationItemOverlays(pkg.contents) : undefined
+                };
+                result.push(packageOverlay);
+            } else if (Array.isArray(value)) {
+                const packageOverlay: docsYml.NavigationItemOverlay.ApiPackage = {
+                    type: "apiPackage",
+                    packageName,
+                    title: undefined,
+                    slug: undefined,
+                    contents: parseNavigationItemOverlays(value)
+                };
+                result.push(packageOverlay);
+            }
         }
     }
     return result;

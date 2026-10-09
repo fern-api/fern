@@ -11,6 +11,6 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_bool(&true, None)
+        .get_and_return_long(&1000000, None)
         .await;
 }

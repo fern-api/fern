@@ -1,0 +1,10 @@
+{
+  "title": "swagger2openapi unresolved reference",
+  "disposition": "duplicate",
+  "rationale": "Same OpenAPI v2 conversion failure family as CLI-13.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-13",
+  "problemSignature": "User OpenAPI v2 document fails swagger2openapi conversion to v3; conversion error treated as InternalError."
+}

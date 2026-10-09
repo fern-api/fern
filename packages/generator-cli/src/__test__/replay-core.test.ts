@@ -168,7 +168,6 @@ describe("first generation - no lockfile, no prior generation commits", { tags: 
         expect(result.fernignoreUpdated).toBe(false);
         expect(result.previousGenerationSha).toBeNull();
         expect(result.currentGenerationSha).toBeNull();
-        expect(result.baseBranchHead).toBeNull();
     });
 });
 

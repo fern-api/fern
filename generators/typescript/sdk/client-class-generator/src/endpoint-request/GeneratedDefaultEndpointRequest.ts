@@ -4,6 +4,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Fetcher,
     GetReferenceOpts,
+    getFullPathForEndpoint,
     getParameterNameForPositionalPathParameter,
     getPropertyKey,
     getTextOfTsNode,
@@ -13,7 +14,12 @@ import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import { getPathParameterExampleFallback } from "../endpoints/utils/getPathParameterExampleFallback.js";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
+import {
+    REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME,
+    REQUEST_OPTIONS_PARAMETER_NAME
+} from "../endpoints/utils/requestOptionsParameter.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter.js";
 import { RequestParameter } from "../request-parameter/RequestParameter.js";
@@ -156,7 +162,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 (param) => getOriginalName(param.name) === getOriginalName(pathParameter.name)
             );
             if (exampleParameter == null) {
-                result.push(ts.factory.createIdentifier("undefined"));
+                result.push(getPathParameterExampleFallback(pathParameter));
             } else {
                 const generatedExample = context.type.getGeneratedExample(exampleParameter.value);
                 result.push(generatedExample.build(context, opts));
@@ -268,7 +274,77 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             return undefined;
         }
 
-        return this.getSerializedRequestBodyWithoutNullCheck(this.requestBody, referenceToRequestBody, context);
+        const serializedRequestBody = this.getSerializedRequestBodyWithoutNullCheck(
+            this.requestBody,
+            referenceToRequestBody,
+            context
+        );
+        const needsNullCheck = this.mayOmitRequestBody(context) && serializedRequestBody !== referenceToRequestBody;
+        return this.mergeAdditionalBodyParameters(
+            needsNullCheck
+                ? this.skipSerializationWhenBodyIsOmitted(referenceToRequestBody, serializedRequestBody)
+                : serializedRequestBody,
+            context
+        );
+    }
+
+    /**
+     * Whether the caller may leave the body out of the call. Absent `required` means required,
+     * so endpoints predating the field keep serializing unconditionally, as do SDKs that have not
+     * opted into reading the field.
+     */
+    private mayOmitRequestBody(context: FileContext): boolean {
+        return (
+            context.respectOptionalRequestBody &&
+            this.requestBody?.type === "reference" &&
+            this.requestBody.required === false
+        );
+    }
+
+    /**
+     * An omittable body is typed as the body itself rather than `optional<Body>`, so its schema
+     * rejects `undefined`. Serialize only once the caller has supplied a body.
+     */
+    private skipSerializationWhenBodyIsOmitted(
+        referenceToRequestBody: ts.Expression,
+        serializedRequestBody: ts.Expression
+    ): ts.Expression {
+        return ts.factory.createConditionalExpression(
+            ts.factory.createBinaryExpression(
+                referenceToRequestBody,
+                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                ts.factory.createNull()
+            ),
+            undefined,
+            ts.factory.createIdentifier("undefined"),
+            undefined,
+            serializedRequestBody
+        );
+    }
+
+    /**
+     * Wraps the serialized request body so that caller-supplied `requestOptions.additionalBodyParameters`
+     * are spread on top of the endpoint body (per-call properties win). When the option is absent
+     * at runtime the helper returns the body unchanged, so this is a no-op for callers that don't
+     * use it. Only emitted for endpoints that carry a body, so bodyless requests are never
+     * fabricated into an object.
+     */
+    private mergeAdditionalBodyParameters(body: ts.Expression, context: FileContext): ts.Expression {
+        context.importsManager.addImportFromRoot("core/requestBody", {
+            namedImports: ["mergeAdditionalBodyParameters"]
+        });
+        return ts.factory.createCallExpression(
+            ts.factory.createIdentifier("mergeAdditionalBodyParameters"),
+            undefined,
+            [
+                body,
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    ts.factory.createIdentifier(REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME)
+                )
+            ]
+        );
     }
 
     private getSerializedRequestBodyWithoutNullCheck(
@@ -373,7 +449,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         if (this.queryParams == null) {
             this.queryParams = new GeneratedQueryParams({
                 queryParameters: this.requestParameter?.getAllQueryParameters(context),
-                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context),
+                endpointLabel: `${this.endpoint.method} ${getFullPathForEndpoint(this.endpoint)}`
             });
         }
         return this.queryParams;

@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "0.0.0",
   "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-type-name`.",
   "auth": {
@@ -983,7 +984,8 @@
     ],
     "errors": [],
     "subpackages": [],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

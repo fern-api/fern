@@ -66,4 +66,5 @@ error-discrimination:
 display-name: Inline allOf schemas with required property overrides
 ",
   },
+  "specVersion": "1.0.0",
 }

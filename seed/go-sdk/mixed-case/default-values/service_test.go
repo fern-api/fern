@@ -440,11 +440,11 @@ func TestSettersUser(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetExtraProperties", func(t *testing.T) {
+	t.Run("SetFieldExtraProperties", func(t *testing.T) {
 		obj := &User{}
-		var fernTestValueExtraProperties map[string]string
-		obj.SetExtraProperties(fernTestValueExtraProperties)
-		assert.Equal(t, fernTestValueExtraProperties, obj.ExtraProperties)
+		var fernTestValueFieldExtraProperties map[string]string
+		obj.SetFieldExtraProperties(fernTestValueFieldExtraProperties)
+		assert.Equal(t, fernTestValueFieldExtraProperties, obj.FieldExtraProperties)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -507,28 +507,28 @@ func TestGettersUser(t *testing.T) {
 		_ = obj.GetMetadataTags() // Should return zero value
 	})
 
-	t.Run("GetExtraProperties", func(t *testing.T) {
+	t.Run("GetFieldExtraProperties", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
 		var expected map[string]string
-		obj.ExtraProperties = expected
+		obj.FieldExtraProperties = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetExtraProperties(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFieldExtraProperties(), "getter should return the property value")
 	})
 
-	t.Run("GetExtraProperties_NilValue", func(t *testing.T) {
+	t.Run("GetFieldExtraProperties_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		obj.ExtraProperties = nil
+		obj.FieldExtraProperties = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetExtraProperties(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFieldExtraProperties(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+	t.Run("GetFieldExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *User
 		// Should not panic - getters should handle nil receiver gracefully
@@ -537,7 +537,7 @@ func TestGettersUser(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetExtraProperties() // Should return zero value
+		_ = obj.GetFieldExtraProperties() // Should return zero value
 	})
 
 }
@@ -605,14 +605,14 @@ func TestSettersMarkExplicitUser(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetExtraProperties_MarksExplicit", func(t *testing.T) {
+	t.Run("SetFieldExtraProperties_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		var fernTestValueExtraProperties map[string]string
+		var fernTestValueFieldExtraProperties map[string]string
 
 		// Act
-		obj.SetExtraProperties(fernTestValueExtraProperties)
+		obj.SetFieldExtraProperties(fernTestValueFieldExtraProperties)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

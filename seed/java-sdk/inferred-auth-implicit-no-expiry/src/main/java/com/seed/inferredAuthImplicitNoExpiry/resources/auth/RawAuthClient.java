@@ -3,10 +3,13 @@
  */
 package com.seed.inferredAuthImplicitNoExpiry.resources.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.inferredAuthImplicitNoExpiry.core.BodyProperties;
 import com.seed.inferredAuthImplicitNoExpiry.core.ClientOptions;
 import com.seed.inferredAuthImplicitNoExpiry.core.MediaTypes;
 import com.seed.inferredAuthImplicitNoExpiry.core.ObjectMappers;
 import com.seed.inferredAuthImplicitNoExpiry.core.RequestOptions;
+import com.seed.inferredAuthImplicitNoExpiry.core.RetryInterceptor;
 import com.seed.inferredAuthImplicitNoExpiry.core.SeedInferredAuthImplicitNoExpiryApiException;
 import com.seed.inferredAuthImplicitNoExpiry.core.SeedInferredAuthImplicitNoExpiryException;
 import com.seed.inferredAuthImplicitNoExpiry.core.SeedInferredAuthImplicitNoExpiryHttpResponse;
@@ -47,7 +50,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -63,6 +68,15 @@ public class RawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -73,6 +87,8 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedInferredAuthImplicitNoExpiryApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedInferredAuthImplicitNoExpiryException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedInferredAuthImplicitNoExpiryException("Network error executing HTTP request", e);
         }
@@ -95,7 +111,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -111,6 +129,15 @@ public class RawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -121,6 +148,8 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedInferredAuthImplicitNoExpiryApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedInferredAuthImplicitNoExpiryException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedInferredAuthImplicitNoExpiryException("Network error executing HTTP request", e);
         }

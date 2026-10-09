@@ -1,12 +1,13 @@
-import { getOriginalName, getWireValue, GeneratorError } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { RustFile } from "@fern-api/rust-base";
+import { escapeRustKeyword, RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 
 
@@ -27,6 +28,10 @@ interface ImportAnalysis {
 }
 
 export class SubClientGenerator {
+    // Appended to a paginated endpoint's method name so the pager sits ALONGSIDE the single-page
+    // method instead of replacing it.
+    private static readonly PAGINATED_METHOD_SUFFIX = "_paginated";
+
     private readonly context: SdkGeneratorContext;
     private readonly subpackage: FernIr.Subpackage;
     private readonly service?: FernIr.HttpService;
@@ -214,8 +219,6 @@ export class SubClientGenerator {
         const hasQueryParams = this.hasQueryParameters();
         const hasEndpoints = this.hasEndpoints();
         const typeAnalysis = this.analyzeRequiredImports();
-        const hasSubClients = this.hasSubClients();
-        const endpointsUseCustomTypes = this.endpointsUseCustomTypes();
         const hasBinaryEndpoints = this.hasBinaryEndpoints();
         const hasSseEndpoints = this.hasSseEndpoints();
         const hasJsonStreamingEndpoints = this.hasJsonStreamingEndpoints();
@@ -309,13 +312,23 @@ export class SubClientGenerator {
             );
         }
 
-        // Add crate::api imports if we have sub-clients OR if endpoints use custom types OR query request types
-        const hasQueryRequestTypes = this.hasQueryRequestTypes();
-        if (hasSubClients || endpointsUseCustomTypes || hasQueryRequestTypes) {
+        // Sub-client types are re-exported by the containing mod.rs, so only endpoint
+        // types (custom types and generated query request types) need crate::api.
+        if (this.needsApiTypesImport()) {
             imports.push(
                 new UseStatement({
                     path: "crate::api",
                     items: ["*"]
+                })
+            );
+        }
+
+        // Add pagination imports if there are paginated endpoints
+        if (this.hasPaginatedEndpoints()) {
+            imports.push(
+                new UseStatement({
+                    path: "crate",
+                    items: ["AsyncPaginator", "PaginationResult"]
                 })
             );
         }
@@ -411,8 +424,8 @@ export class SubClientGenerator {
         return endpoints.length > 0;
     }
 
-    private hasSubClients(): boolean {
-        return this.clientGeneratorContext.subClients.length > 0;
+    public needsApiTypesImport(): boolean {
+        return this.endpointsUseCustomTypes() || this.hasQueryRequestTypes();
     }
 
     private endpointsUseCustomTypes(): boolean {
@@ -484,8 +497,17 @@ export class SubClientGenerator {
             fileDownload: () => false,
             text: () => false,
             bytes: () => false,
-            streaming: () => false,
+            streaming: (streaming) => this.streamingResponseUsesCustomTypes(streaming),
             streamParameter: () => false,
+            _other: () => false
+        });
+    }
+
+    private streamingResponseUsesCustomTypes(streaming: FernIr.StreamingResponse): boolean {
+        return streaming._visit({
+            json: (jsonChunk) => this.isCustomType(jsonChunk.payload),
+            sse: (sseChunk) => this.isCustomType(sseChunk.payload),
+            text: () => false,
             _other: () => false
         });
     }
@@ -514,17 +536,17 @@ export class SubClientGenerator {
         return endpoints.some((endpoint) => endpoint.pagination != null);
     }
 
-    private hasQueryParameters(): boolean {
+    public hasQueryParameters(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => endpoint.queryParameters.length > 0);
     }
 
-    private hasBinaryEndpoints(): boolean {
+    public hasBinaryEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => this.isBinaryResponse(endpoint));
     }
 
-    private hasSseEndpoints(): boolean {
+    public hasSseEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => this.getResponseStreamType(endpoint) === "sse");
     }
@@ -851,7 +873,13 @@ export class SubClientGenerator {
         const methods: rust.Client.SimpleMethod[] = [];
 
         for (const endpoint of endpoints) {
+            // The single-page method is generated for every endpoint, paginated or not: it is the
+            // one that carries the endpoint's own response type, and a caller who wants one page
+            // should not have to go through a paginator to get it.
             methods.push(this.generateHttpMethod(endpoint));
+            if (endpoint.pagination) {
+                methods.push(...this.generatePaginatedMethods(endpoint));
+            }
         }
 
         return methods;
@@ -892,13 +920,20 @@ export class SubClientGenerator {
         let executeMethod = "execute_request";
         let typeParameter = "";
         let executeArgs = "";
+        let sseEventDiscriminatorSuffix = "";
 
         const isBytesRequest = this.isBytesEndpoint(endpoint);
 
         if (isFileUpload) {
             // Use multipart request for file uploads
-            executeMethod = "execute_multipart_request";
             const multipartBody = "request.clone().to_multipart()";
+            if (responseType === "binary") {
+                // Multipart upload with binary/streaming response (e.g., audio conversion)
+                executeMethod = "execute_multipart_stream_request";
+            } else {
+                // Multipart upload with JSON-deserializable response
+                executeMethod = "execute_multipart_request";
+            }
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
@@ -911,18 +946,42 @@ export class SubClientGenerator {
             const bytesBody = endpoint.queryParameters.length > 0
                 ? "Some(request.body.to_vec())"
                 : "Some(request.to_vec())";
+            // The declared media type, which the IR carries on the bytes body. The
+            // `application/octet-stream` fallback is load-bearing rather than defensive: an
+            // endpoint that declares no content-type has always sent that, and must keep sending it.
+            const bytesContentType =
+                endpoint.requestBody?.type === "bytes"
+                    ? (endpoint.requestBody.contentType ?? "application/octet-stream")
+                    : "application/octet-stream";
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
             ${bytesBody},
             ${this.buildQueryParameters(endpoint)},
+            ${JSON.stringify(bytesContentType)},
             options,`;
         } else {
+            // A JSON body whose DECLARED media type is not `application/json` -- a vendor type, or
+            // `application/merge-patch+json`. `execute_request` calls `.json()`, which stamps
+            // `application/json` over it, so those endpoints take the variant that sets the header.
+            const declaredJsonContentType = this.getNonDefaultJsonContentType(endpoint);
+            if (declaredJsonContentType != null) {
+                executeMethod = "execute_request_with_content_type";
+            }
+            // `application/x-www-form-urlencoded` needs the body FORM-encoded, not JSON under a
+            // form label, so it takes a variant of its own rather than the header override above.
+            if (this.isFormUrlEncodedEndpoint(endpoint)) {
+                executeMethod = "execute_form_request";
+            }
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
-            ${this.buildQueryParameters(endpoint)},
+            ${this.buildQueryParameters(endpoint)},${
+                declaredJsonContentType != null
+                    ? `\n            ${JSON.stringify(declaredJsonContentType)},`
+                    : ""
+            }
             options,`;
 
             if (responseType === "binary") {
@@ -931,6 +990,7 @@ export class SubClientGenerator {
                 executeMethod = "execute_sse_request";
                 const terminator = this.getSseTerminator(endpoint);
                 executeArgs += `\n            ${terminator},`;
+                sseEventDiscriminatorSuffix = this.getSseEventDiscriminatorSuffix(endpoint);
             } else if (responseType === "json") {
                 // JSON streaming needs explicit type parameter for inference
                 const innerType = this.getInnerResponseType(endpoint);
@@ -945,35 +1005,150 @@ export class SubClientGenerator {
         // Only apply to execute_request and execute_stream_request (we have _with_base_url variants for these).
         const urlMethodName = this.getEndpointUrlMethodName(endpoint);
         const supportsBaseUrlOverride = executeMethod === "execute_request" || executeMethod === "execute_stream_request";
+        const requestOptionsPrelude = this.buildRequestOptionsPrelude(endpoint);
         let body: string;
 
         if (urlMethodName && supportsBaseUrlOverride) {
-            // Multi-URL: resolve base URL at call time from environment
-            const baseUrlResolution =
-                `let base_url = self.http_client.config().environment.as_ref()\n` +
-                `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
-            body = `${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
+            // Multi-URL: resolve the URL at call time; an explicit base_url wins over the environment
+            const baseUrlResolution = `let base_url = self.http_client.config().service_url(|environment| environment.${urlMethodName}());\n`;
+            body = `${requestOptionsPrelude}${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
             base_url,${executeArgs}
         ).await`;
         } else {
-            body = `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
-        ).await`;
+            body = `${requestOptionsPrelude}self.http_client.${executeMethod}${typeParameter}(${executeArgs}
+        ).await${sseEventDiscriminatorSuffix}`;
         }
 
         return {
-            name: this.context.case.snakeSafe(endpoint.name),
+            // Escape Rust reserved keywords (e.g. an endpoint named "move"
+            // becomes `r#move`) so the generated `pub async fn` parses.
+            name: escapeRustKeyword(this.context.case.snakeSafe(endpoint.name)),
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
             body,
-            docs: endpoint.docs
-                ? rust.docComment({
-                      summary: endpoint.docs,
-                      parameters: this.extractParameterDocs(params, endpoint),
-                      returns: this.getReturnTypeDescription(endpoint)
-                  })
-                : undefined
+            docs: this.buildEndpointDocs(endpoint, params)
         };
+    }
+
+    private buildEndpointDocs(
+        endpoint: FernIr.HttpEndpoint,
+        params: EndpointParameter[]
+    ): rust.DocComment | undefined {
+        const snippet = this.context.getEndpointSnippet(endpoint.id);
+        const examples = snippet != null ? [snippet] : undefined;
+        if (endpoint.docs) {
+            return rust.docComment({
+                summary: endpoint.docs,
+                parameters: this.extractParameterDocs(params, endpoint),
+                returns: this.getReturnTypeDescription(endpoint),
+                examples
+            });
+        }
+        if (examples != null) {
+            return rust.docComment({ examples });
+        }
+        return undefined;
+    }
+
+    /**
+     * Builds a prelude that merges service- and endpoint-level literal headers
+     * (e.g. `Accept-Encoding: literal<"gzip">`) into the request options, and — in
+     * endpoint-security mode — the auth headers routed for this endpoint's declared
+     * `security` requirements. Caller-supplied literal headers take precedence over the
+     * literal defaults; routed auth headers are authoritative. Endpoints that declare
+     * `retries: { disabled: true }` also pin `max_retries` to zero, overriding both the
+     * client default and any caller-supplied value.
+     */
+    private buildRequestOptionsPrelude(endpoint: FernIr.HttpEndpoint): string {
+        const literalHeaders: { wireValue: string; value: string }[] = [];
+        for (const header of [...(this.context.ir.headers ?? []), ...(this.service?.headers ?? []), ...(endpoint.headers ?? [])]) {
+            const value = this.getLiteralHeaderValue(header.valueType);
+            if (value != null) {
+                literalHeaders.push({ wireValue: getWireValue(header.name), value });
+            }
+        }
+        const authRequirements = this.getEndpointSecurityRequirements(endpoint);
+        const needsAuthRouting = authRequirements != null && authRequirements.length > 0;
+        const retriesDisabled = endpoint.retries?.disabled === true;
+        if (literalHeaders.length === 0 && !needsAuthRouting && !retriesDisabled) {
+            return "";
+        }
+        const literalInserts = literalHeaders
+            .map(
+                ({ wireValue, value }) =>
+                    `            o.additional_headers.entry(${JSON.stringify(wireValue)}.to_string()).or_insert_with(|| ${JSON.stringify(value)}.to_string());\n`
+            )
+            .join("");
+        let prelude = "";
+        if (needsAuthRouting) {
+            const requirementsLiteral =
+                "&[" +
+                authRequirements
+                    .map(
+                        (group) =>
+                            "&[" + group.map((schemeKey) => JSON.stringify(schemeKey)).join(", ") + "] as &[&str]"
+                    )
+                    .join(", ") +
+                "]";
+            prelude +=
+                `let endpoint_auth_headers = self\n` +
+                `            .http_client\n` +
+                `            .resolve_endpoint_auth_headers(&options, ${requirementsLiteral})\n` +
+                `            .await?;\n        `;
+        }
+        prelude += `let options = {\n` + `            let mut o = options.unwrap_or_default();\n` + literalInserts;
+        if (needsAuthRouting) {
+            prelude +=
+                `            for (header_key, header_value) in endpoint_auth_headers {\n` +
+                `                o.additional_headers.insert(header_key, header_value);\n` +
+                `            }\n`;
+        }
+        if (retriesDisabled) {
+            prelude += `            o.max_retries = Some(0);\n`;
+        }
+        prelude += `            Some(o)\n` + `        };\n        `;
+        return prelude;
+    }
+
+    /**
+     * Returns this endpoint's auth requirements as an OR-list of AND-groups of auth scheme
+     * keys, or undefined when per-endpoint auth routing does not apply (not endpoint-security
+     * mode, or the endpoint declares no security → no auth).
+     */
+    private getEndpointSecurityRequirements(endpoint: FernIr.HttpEndpoint): string[][] | undefined {
+        if (!this.context.isEndpointSecurity()) {
+            return undefined;
+        }
+        if (endpoint.security == null) {
+            return undefined;
+        }
+        return endpoint.security.map((requirement) => Object.keys(requirement));
+    }
+
+    private getLiteralHeaderValue(typeReference: FernIr.TypeReference): string | undefined {
+        if (typeReference.type === "container") {
+            const container = typeReference.container;
+            switch (container.type) {
+                case "literal": {
+                    const literal = container.literal;
+                    return literal.type === "string" ? literal.string : String(literal.boolean);
+                }
+                case "optional":
+                    return this.getLiteralHeaderValue(container.optional);
+                case "nullable":
+                    return this.getLiteralHeaderValue(container.nullable);
+                default:
+                    return undefined;
+            }
+        }
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.context.ir.types[typeReference.typeId];
+            if (typeDeclaration != null && typeDeclaration.shape.type === "alias") {
+                return this.getLiteralHeaderValue(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return undefined;
     }
 
     private buildMethodParameters(params: EndpointParameter[], _endpoint: FernIr.HttpEndpoint): string[] {
@@ -1005,6 +1180,9 @@ export class SubClientGenerator {
             if (requestBodyParam.isRef) {
                 // Use &str instead of &String for idiomatic Rust
                 paramType = paramType === "String" ? "&str" : `&${paramType}`;
+            }
+            if (requestBodyParam.optional) {
+                paramType = `Option<${paramType}>`;
             }
             methodParams.push(`${requestBodyParam.name}: ${paramType}`);
         }
@@ -1100,8 +1278,10 @@ export class SubClientGenerator {
                     return generateRustTypeForTypeReference(reference.requestBodyType, this.context);
                 },
                 fileUpload: () => {
-                    // For file uploads, use a structured type instead of generic Value
-                    const requestTypeName = this.getRequestTypeName(endpoint);
+                    const requestTypeName =
+                        endpoint.queryParameters.length > 0
+                            ? this.context.getFileUploadRequestTypeName(endpoint.id)
+                            : this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
                 bytes: () => {
@@ -1124,7 +1304,7 @@ export class SubClientGenerator {
                 name: "request",
                 type: requestBodyType,
                 isRef: true,
-                optional: false
+                optional: mayOmitRequestBody({ context: this.context, endpoint })
             });
         }
     }
@@ -1382,6 +1562,17 @@ export class SubClientGenerator {
     private buildQueryParameterStatements(queryParams: FernIr.QueryParameter[], endpoint?: FernIr.HttpEndpoint): string {
         const builderChain = queryParams.map((queryParam) => {
             const wireValue = getWireValue(queryParam.name);
+
+            // `style: form` with `explode: false` is ONE comma-joined value, not a repeated key.
+            // The IR carries `explode` and the generator read it nowhere, so every array went out
+            // exploded regardless of what the endpoint declared. Joined HERE rather than by a new
+            // `QueryBuilder` method: that file is emitted verbatim into every SDK, so a method
+            // would land in 130 crates to change behaviour in the few that declare `explode:
+            // false`.
+            if (queryParam.allowMultiple && queryParam.explode === false) {
+                return `.string("${wireValue}", ${this.buildJoinedArrayExpression(queryParam, endpoint)})`;
+            }
+
             const method = this.getQueryBuilderMethod(queryParam);
 
             // Determine parameter source based on endpoint type
@@ -1395,6 +1586,30 @@ export class SubClientGenerator {
 
         return `QueryBuilder::new()${builderChain.join("")}
             .build()`;
+    }
+
+    /**
+     * `Option<String>` holding the array's elements joined with commas, or `None` when the array
+     * is absent or empty - an empty array must produce no parameter, since `key=` would claim the
+     * caller sent one empty element.
+     */
+    private buildJoinedArrayExpression(
+        queryParam: FernIr.QueryParameter,
+        endpoint?: FernIr.HttpEndpoint
+    ): string {
+        // `allowMultiple` makes the field a `Vec<Option<T>>`, not an `Option<Vec<T>>`, so the
+        // elements are flattened out of their `Option`s and the EMPTINESS test is on the joined
+        // string rather than on the vector.
+        const source = this.getQueryParameterSource(queryParam, endpoint).replace(/\.clone\(\)$/, "");
+        return `{
+                let joined = ${source}
+                    .iter()
+                    .flatten()
+                    .map(|value| value.to_string())
+                    .collect::<Vec<_>>()
+                    .join(",");
+                if joined.is_empty() { None } else { Some(joined) }
+            }`;
     }
 
     // Smart parameter source detection
@@ -1472,19 +1687,9 @@ export class SubClientGenerator {
                             /* no-op */
                         }
                     });
-                    if (offset.step) {
-                        offset.step.property._visit({
-                            query: (query) => {
-                                paginationParamNames.add(getWireValue(query.name));
-                            },
-                            body: (body) => {
-                                paginationParamNames.add(getWireValue(body.name));
-                            },
-                            _other: () => {
-                                /* no-op */
-                            }
-                        });
-                    }
+                    // `offset.step` is deliberately NOT excluded. It is the page size, which is
+                    // the same on every page, so every page request has to carry it - only the
+                    // offset itself is rewritten per page.
                 },
                 custom: () => {
                     /* no-op */
@@ -1561,7 +1766,27 @@ export class SubClientGenerator {
                 }
                 return paramName;
             },
-            container: () => paramName,
+            // A list- or set-typed path parameter cannot be interpolated directly: `Vec<T>` has no
+            // `Display`, so `format!("{}", ids)` does not compile (E0277) and the whole crate fails
+            // to build, not just that endpoint. OpenAPI's default path style is `simple`, which is
+            // comma-separated, so the elements are joined. `to_string()` per element rather than
+            // `Vec::join` because join is only available when the element is already a `String`;
+            // this form works for every `Display` element type, which is what a path parameter can be.
+            container: (containerType) =>
+                FernIr.ContainerType._visit(containerType, {
+                    list: () =>
+                        `${paramName}.iter().map(|element| element.to_string()).collect::<Vec<_>>().join(",")`,
+                    set: () =>
+                        `${paramName}.iter().map(|element| element.to_string()).collect::<Vec<_>>().join(",")`,
+                    // An optional or nullable path parameter is a contradiction — the path cannot be
+                    // built without it — and a map has no defined path serialization, so these keep
+                    // the previous behaviour rather than inventing one.
+                    optional: () => paramName,
+                    nullable: () => paramName,
+                    map: () => paramName,
+                    literal: () => paramName,
+                    _other: () => paramName
+                }),
             unknown: () => paramName,
             _other: () => paramName
         });
@@ -1570,6 +1795,10 @@ export class SubClientGenerator {
     private getRequestBody(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): string {
         const requestBodyParam = params.find((param) => param.name === "request");
         if (requestBodyParam && endpoint.requestBody) {
+            // An omitted optional body sends no body at all, and with it no Content-Type
+            if (requestBodyParam.optional) {
+                return "request.map(serde_json::to_value).transpose().map_err(ApiError::Serialization)?";
+            }
             // For referenced body with query parameters, serialize request.body
             if (endpoint.requestBody.type === "reference" && endpoint.queryParameters.length > 0) {
                 return "Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?)";
@@ -1753,6 +1982,62 @@ export class SubClientGenerator {
         });
     }
 
+    /**
+     * The endpoint's declared request media type, when it is a JSON one OTHER than
+     * `application/json` -- `application/vnd.foo+json`, `application/merge-patch+json`. Returns
+     * undefined for `application/json` itself and for anything that is not JSON, so only the
+     * endpoints that need the header override are routed away from `execute_request`.
+     *
+     * The IR has always carried this on the request body; the Rust generator read it nowhere.
+     */
+    private getNonDefaultJsonContentType(endpoint: FernIr.HttpEndpoint): string | undefined {
+        const contentType = endpoint.requestBody?._visit<string | undefined>({
+            inlinedRequestBody: (body) => body.contentType,
+            reference: (body) => body.contentType,
+            fileUpload: () => undefined,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+        if (contentType == null || contentType === "application/json") {
+            return undefined;
+        }
+        return contentType.endsWith("+json") || contentType.includes("json") ? contentType : undefined;
+    }
+
+    /** Whether the endpoint declares an `application/x-www-form-urlencoded` request body. */
+    private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        return (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded");
+    }
+
+    /**
+     * For protocol-discriminated SSE unions, the discriminant travels on the SSE `event:` line, so the
+     * stream must be told to expose it to deserialization.
+     */
+    private getSseEventDiscriminatorSuffix(endpoint: FernIr.HttpEndpoint): string {
+        const body = endpoint.response?.body;
+        if (body?.type !== "streaming" || body.value.type !== "sse" || body.value.payload.type !== "named") {
+            return "";
+        }
+        const union = this.context.ir.types[body.value.payload.typeId]?.shape;
+        if (union?.type !== "union" || union.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
+            return "";
+        }
+        const envelopeEvents = getSseEnvelopeEventNames({
+            union,
+            getObjectPropertyWireValues: (variant) => {
+                const variantShape = this.context.ir.types[variant.typeId]?.shape;
+                if (variantShape?.type !== "object") {
+                    return undefined;
+                }
+                return [...(variantShape.extendedProperties ?? []), ...variantShape.properties].map((property) =>
+                    getWireValue(property.name)
+                );
+            }
+        });
+        const envelopeEventsLiteral = envelopeEvents.map((event) => JSON.stringify(event)).join(", ");
+        return `\n        .map(|stream| stream.with_event_discriminator(${JSON.stringify(getWireValue(union.discriminant))}, &[${envelopeEventsLiteral}]))`;
+    }
+
     private getSseTerminator(endpoint: FernIr.HttpEndpoint): string {
         if (!endpoint.response?.body) {
             return "None";
@@ -1878,7 +2163,7 @@ export class SubClientGenerator {
 
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params, endpoint);
-        const baseName = this.context.case.snakeSafe(endpoint.name);
+        const baseName = `${this.context.case.snakeSafe(endpoint.name)}${SubClientGenerator.PAGINATED_METHOD_SUFFIX}`;
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
@@ -1902,11 +2187,31 @@ export class SubClientGenerator {
 
         return {
             name: baseName,
-            parameters,
+            parameters: this.underscoreParametersUnusedByPagination(parameters, params, paginationLogic),
             returnType: returnType.toString(),
             isAsync: true,
             body: paginationLogic
         };
+    }
+
+    /**
+     * An endpoint whose every query parameter IS a pagination parameter has nothing left to put in
+     * the base query string, so the paginated method never reads its request. The parameter stays
+     * in the signature - the paginated and single-page methods should be called the same way - and
+     * gets an underscore so the generated crate compiles warning-free.
+     */
+    private underscoreParametersUnusedByPagination(
+        parameters: string[],
+        params: EndpointParameter[],
+        body: string
+    ): string[] {
+        const unused = new Set(
+            params.filter((param) => !new RegExp(`\\b${param.name}\\b`).test(body)).map((param) => param.name)
+        );
+        return parameters.map((parameter) => {
+            const name = parameter.split(":")[0]?.trim();
+            return name != null && unused.has(name) ? `_${parameter}` : parameter;
+        });
     }
 
     private generatePaginationLogic(
@@ -1943,11 +2248,10 @@ export class SubClientGenerator {
         const queryParams = this.buildQueryParametersWithoutPagination(endpoint, FernIr.Pagination.cursor(cursor));
         const params = this.extractParametersFromEndpoint(endpoint);
 
-        // Generate cloning statements for reference parameters to avoid lifetime issues
-        const cloningStatements = params
-            .filter((param) => param.isRef)
-            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\n            ");
+        const asyncPath = this.buildPathExpressionForAsyncMove(pathExpression, params);
+        const asyncBody = this.buildRequestBodyForAsyncMove(requestBody, params);
+        const captured = params.filter((param) => this.isCapturedInAsyncMove(param, asyncPath, asyncBody));
+        const cloningStatements = this.generateCapturedVariableOwnership(captured);
 
         // Extract the cursor parameter name from the pagination configuration
         const cursorParamName = this.getCursorParamName(cursor);
@@ -1968,13 +2272,13 @@ export class SubClientGenerator {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    ${this.generateCapturedVariableCloningForAsyncMove(captured)}
                     
                     Box::pin(async move {
                         let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
-                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
-                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            ${asyncPath},
+                            ${asyncBody},
                             Some(query_params),
                             options_for_request,
                         ).await?;
@@ -2007,11 +2311,10 @@ export class SubClientGenerator {
         const queryParams = this.buildQueryParametersWithoutPagination(endpoint, FernIr.Pagination.offset(offset));
         const params = this.extractParametersFromEndpoint(endpoint);
 
-        // Generate cloning statements for reference parameters to avoid lifetime issues
-        const cloningStatements = params
-            .filter((param) => param.isRef)
-            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\n            ");
+        const asyncPath = this.buildPathExpressionForAsyncMove(pathExpression, params);
+        const asyncBody = this.buildRequestBodyForAsyncMove(requestBody, params);
+        const captured = params.filter((param) => this.isCapturedInAsyncMove(param, asyncPath, asyncBody));
+        const cloningStatements = this.generateCapturedVariableOwnership(captured);
 
         const pageProperty = offset.page?.property?.name;
         const pageParamName = pageProperty != null ? getWireValue(pageProperty) : "page";
@@ -2029,17 +2332,17 @@ export class SubClientGenerator {
                     // Use page_token as offset/page number (start from 0 if None)
                     let current_page = page_token.unwrap_or_else(|| "0".to_string());
                     query_params.push(("${pageParamName}".to_string(), current_page.clone()));
-                    
+                    ${this.generatePageSizeCapture(offset)}
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    ${this.generateCapturedVariableCloningForAsyncMove(captured)}
                     
                     Box::pin(async move {
                         let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
-                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
-                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            ${asyncPath},
+                            ${asyncBody},
                             Some(query_params),
                             options_for_request,
                         ).await?;
@@ -2072,11 +2375,10 @@ export class SubClientGenerator {
         const queryParams = this.buildQueryParameters(endpoint);
         const params = this.extractParametersFromEndpoint(endpoint);
 
-        // Generate cloning statements for reference parameters to avoid lifetime issues
-        const cloningStatements = params
-            .filter((param) => param.isRef)
-            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\n            ");
+        const asyncPath = this.buildPathExpressionForAsyncMove(pathExpression, params);
+        const asyncBody = this.buildRequestBodyForAsyncMove(requestBody, params);
+        const captured = params.filter((param) => this.isCapturedInAsyncMove(param, asyncPath, asyncBody));
+        const cloningStatements = this.generateCapturedVariableOwnership(captured);
 
         return `let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = ${queryParams};
@@ -2085,19 +2387,19 @@ export class SubClientGenerator {
             
             AsyncPaginator::new(
                 http_client,
-                move |client, cursor_value| {
+                move |client, _cursor_value| {
                     let query_params = base_query_params.clone();
                     let options_for_request = options_clone.clone();
                     // Custom pagination logic would go here
                     
                     // Clone captured variables to move into the async block
-                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    ${this.generateCapturedVariableCloningForAsyncMove(captured)}
                     
                     Box::pin(async move {
                         let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
-                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
-                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            ${asyncPath},
+                            ${asyncBody},
                             query_params,
                             options_for_request,
                         ).await?;
@@ -2124,6 +2426,35 @@ export class SubClientGenerator {
     // PAGINATION UTILITIES
     // =============================================================================
 
+    /**
+     * A query-only endpoint serializes nothing into the paginated request, so its `request`
+     * parameter would be captured and never read. Only capture what the rewritten path or body
+     * actually names.
+     */
+    private isCapturedInAsyncMove(param: EndpointParameter, asyncPath: string, asyncBody: string): boolean {
+        if (!param.isRef) {
+            return false;
+        }
+        return `${asyncPath} ${asyncBody}`.includes(`${param.name}_for_async`);
+    }
+
+    /**
+     * The paginator's page loader is an `Fn` closure that outlives the method call, so every
+     * reference parameter has to be captured as an OWNED value. `.clone()` on a `&str` clones the
+     * reference and leaves the borrow escaping, which is why a string reference takes
+     * `to_string()` instead.
+     */
+    private generateCapturedVariableOwnership(params: EndpointParameter[]): string {
+        return params
+            .filter((param) => param.isRef)
+            .map((param) => {
+                const isStringSlice = ["String", "&String", "&str", "str"].includes(param.type.toString());
+                const takeOwnership = isStringSlice ? "to_string()" : "clone()";
+                return `let ${param.name}_clone = ${param.name}.${takeOwnership};`;
+            })
+            .join("\n            ");
+    }
+
     private generateCapturedVariableCloningForAsyncMove(params: EndpointParameter[]): string {
         // Generate cloning statements for each captured variable inside the closure
         const cloningStatements = params
@@ -2143,7 +2474,7 @@ export class SubClientGenerator {
             .forEach((param) => {
                 const originalRef = param.name;
                 const asyncRef = `${param.name}_for_async`;
-                result = result.replace(new RegExp(`\\\\b${originalRef}\\\\b`, "g"), asyncRef);
+                result = result.replace(new RegExp(`\\b${originalRef}\\b`, "g"), asyncRef);
             });
 
         return result;
@@ -2158,7 +2489,7 @@ export class SubClientGenerator {
             .forEach((param) => {
                 const originalRef = param.name;
                 const asyncRef = `${param.name}_for_async`;
-                result = result.replace(new RegExp(`\\\\b${originalRef}\\\\b`, "g"), asyncRef);
+                result = result.replace(new RegExp(`\\b${originalRef}\\b`, "g"), asyncRef);
             });
 
         return result;
@@ -2205,12 +2536,17 @@ export class SubClientGenerator {
     private generateGenericOffsetExtraction(offset: FernIr.OffsetPagination, isInPaginationLoop: boolean = false): string {
         const resultsPath = this.buildResponseFieldPath(offset.results);
         const hasNextPath = offset.hasNextPage ? this.buildResponseFieldPath(offset.hasNextPage) : null;
-        const stepParamName = this.getStepParamName(offset);
 
-        // For hasNextPage path, it's already properly formatted with and_then chains
+        // A full page means there may be more; a SHORT page is the last one. Terminating only on an
+        // EMPTY page costs one wasted request at best, and never terminates at all against a server
+        // that keeps answering - which is what `!items.is_empty()` alone did.
+        const moreToCome =
+            offset.step != null
+                ? "match page_size { Some(size) => items.len() as i64 >= size, None => !items.is_empty() }"
+                : "!items.is_empty()";
         const hasNextPageCheck = hasNextPath
-            ? `response${hasNextPath}.and_then(|v| v.as_bool()).unwrap_or(!items.is_empty())`
-            : "!items.is_empty()";
+            ? `response${hasNextPath}.and_then(|v| v.as_bool()).unwrap_or(${moreToCome})`
+            : moreToCome;
 
         if (isInPaginationLoop) {
             return `// Generic field extraction for offset pagination
@@ -2221,15 +2557,9 @@ export class SubClientGenerator {
                             .unwrap_or_default();
                         
                         let has_next_page = ${hasNextPageCheck};
-                        // Calculate next page number for offset pagination
                         let next_cursor: Option<String> = if has_next_page {
-                            let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                            let step_size = if let Some(step) = response.get("${stepParamName}") {
-                                step.as_u64().unwrap_or(1)
-                            } else {
-                                1 // Default step size
-                            };
-                            Some((current_page_num + step_size).to_string())
+                            let current_offset: i64 = current_page.parse().unwrap_or(0);
+                            Some((current_offset + ${this.getOffsetAdvance(offset)}).to_string())
                         } else {
                             None
                         };`;
@@ -2317,16 +2647,35 @@ export class SubClientGenerator {
         });
     }
 
-    private getStepParamName(offset: FernIr.OffsetPagination): string {
-        // Extract step parameter name from pagination configuration
-        if (offset.step) {
-            return offset.step.property._visit({
-                query: (query) => getWireValue(query.name),
-                body: (body) => getWireValue(body.name),
-                _other: () => "step"
-            });
+    /**
+     * The page size the caller asked for, read out of the query string the loader is about to send.
+     * Only emitted when `step` is declared, since that is the only case the termination test uses it.
+     */
+    private generatePageSizeCapture(offset: FernIr.OffsetPagination): string {
+        if (offset.step == null) {
+            return "";
         }
-        return "per_page"; // Default fallback
+        const stepParamName = offset.step.property._visit({
+            query: (query) => getWireValue(query.name),
+            body: (body) => getWireValue(body.name),
+            _other: () => "limit"
+        });
+        return `let page_size: Option<i64> = query_params
+                        .iter()
+                        .find(|(name, _)| name == "${stepParamName}")
+                        .and_then(|(_, value)| value.parse::<i64>().ok());
+                    `;
+    }
+
+    /**
+     * How much an offset advances between pages. With `step` declared and the default
+     * `offsetSemantics: "item-index"` the offset addresses ITEMS, so it moves by however many the
+     * page returned; under `"page-index"`, or with no `step` at all, it is a page number and moves
+     * by one. This matches the TypeScript and Python generators.
+     */
+    private getOffsetAdvance(offset: FernIr.OffsetPagination): string {
+        const isItemIndex = this.context.customConfig.offsetSemantics !== "page-index";
+        return offset.step != null && isItemIndex ? "items.len() as i64" : "1";
     }
 
     // Helper methods for documentation generation
@@ -2383,7 +2732,7 @@ export class SubClientGenerator {
                 streaming: (streaming) => {
                     return streaming._visit({
                         json: () => "Complete JSON response (fetched at once, not streaming)",
-                        sse: () => "Server-Sent Events stream (use futures::StreamExt to iterate)",
+                        sse: () => "Server-Sent Events stream (use StreamExt from the prelude to iterate)",
                         text: () => "Text streaming response",
                         _other: () => "Streaming response"
                     });

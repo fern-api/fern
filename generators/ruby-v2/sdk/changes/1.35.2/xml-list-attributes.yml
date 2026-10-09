@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    List-valued XML (TwiML) attributes and text accept a space-separated String or a single
+    value (including a Symbol) in addition to an Array, matching the legacy call style:
+    `response.gather(input: "speech dtmf")` and `dial(status_callback_event: :answered)` no
+    longer raise `NoMethodError`.
+  type: fix

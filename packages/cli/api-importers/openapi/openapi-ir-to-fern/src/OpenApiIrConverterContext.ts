@@ -3,6 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { Logger } from "@fern-api/logger";
 import {
+    ErrorStatusCodeKey,
     HttpMethod,
     isSchemaEqual,
     ObjectSchema,
@@ -38,7 +39,7 @@ export class OpenApiIrConverterContext {
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
-    private unknownSchema: Set<number> = new Set();
+    private unknownSchema: Set<string> = new Set();
 
     /**
      * The set of referenced schema ids to include in the generated definition.
@@ -109,14 +110,14 @@ export class OpenApiIrConverterContext {
             this.builder.setDisplayName({ displayName: ir.title });
         }
 
-        const schemaByStatusCode: Record<number, Schema> = {};
+        const schemaByErrorKey: Record<string, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
             for (const endpoint of ir.endpoints) {
-                for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
-                    const statusCode = parseInt(statusCodeString);
-                    const existingSchema = schemaByStatusCode[statusCode];
+                for (const [statusCode, error] of Object.entries(endpoint.errors)) {
+                    const key = getErrorKey({ statusCode, namespace: error.namespace });
+                    const existingSchema = schemaByErrorKey[key];
                     if (existingSchema == null && error.schema != null) {
-                        schemaByStatusCode[statusCode] = error.schema;
+                        schemaByErrorKey[key] = error.schema;
                     } else if (
                         existingSchema != null &&
                         error.schema != null &&
@@ -124,7 +125,7 @@ export class OpenApiIrConverterContext {
                     ) {
                         // pass
                     } else {
-                        this.unknownSchema.add(statusCode);
+                        this.unknownSchema.add(key);
                     }
                 }
             }
@@ -176,8 +177,14 @@ export class OpenApiIrConverterContext {
     /**
      * Is error an unknown schema
      */
-    public isErrorUnknownSchema(statusCode: number): boolean {
-        return this.unknownSchema.has(statusCode);
+    public isErrorUnknownSchema({
+        statusCode,
+        namespace
+    }: {
+        statusCode: ErrorStatusCodeKey;
+        namespace: string | undefined;
+    }): boolean {
+        return this.unknownSchema.has(getErrorKey({ statusCode, namespace }));
     }
 
     /**
@@ -396,4 +403,14 @@ export class OpenApiIrConverterContext {
         }
         return this.schemaNameMapping.get(schemaId) ?? schemaId;
     }
+}
+
+function getErrorKey({
+    statusCode,
+    namespace
+}: {
+    statusCode: ErrorStatusCodeKey;
+    namespace: string | undefined;
+}): string {
+    return namespace != null ? `${namespace}:${statusCode}` : `${statusCode}`;
 }

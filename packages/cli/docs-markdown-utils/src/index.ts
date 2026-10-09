@@ -8,8 +8,8 @@ export {
     replaceImagePathsAndUrls,
     trimAnchor
 } from "./parseImagePaths.js";
-export { parseMarkdownToTree } from "./parseMarkdownToTree.js";
-export { replaceReferencedCode } from "./replaceReferencedCode.js";
+export { parseMarkdownBodyToTree, parseMarkdownToTree } from "./parseMarkdownToTree.js";
+export { collectCodeSrcUrls, prefetchCodeSrcUrls, replaceReferencedCode } from "./replaceReferencedCode.js";
 export {
     type ReferencedMarkdownFile,
     type ReplaceReferencedMarkdownResult,

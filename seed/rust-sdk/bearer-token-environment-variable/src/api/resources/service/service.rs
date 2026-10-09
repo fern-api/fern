@@ -21,10 +21,33 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_bearer_token_environment_variable::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("YOUR_API_KEY".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = BearerTokenEnvironmentVariableClient::new(config).expect("Failed to build client");
+    ///     client.service.get_with_bearer_token(None).await;
+    /// }
+    /// ```
     pub async fn get_with_bearer_token(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
+        let options = {
+            let mut o = options.unwrap_or_default();
+            o.additional_headers
+                .entry("X-API-Version".to_string())
+                .or_insert_with(|| "1.0.0".to_string());
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "apiKey", None, None, options)
             .await

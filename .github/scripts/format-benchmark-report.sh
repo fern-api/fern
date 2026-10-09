@@ -43,7 +43,10 @@ lookup_e2e_baseline() {
       local e2e_file="${run_dir}e2e/${generator}.jsonl"
       [ -f "$e2e_file" ] || continue
       local dur
-      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$e2e_file" 2>/dev/null || true)
+      # Only include runs that completed successfully (exit_code 0 or absent).
+      # Failed runs from partially-successful nightly workflows may have
+      # misleading timings.
+      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec and (.exit_code == 0 or .exit_code == null)) | .duration_seconds' "$e2e_file" 2>/dev/null || true)
       if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
         durations+=("$dur")
       fi
@@ -58,7 +61,7 @@ lookup_e2e_baseline() {
     local e2e_file="${MAIN_DIR}/e2e/${generator}.jsonl"
     if [ -f "$e2e_file" ]; then
       local dur
-      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$e2e_file" 2>/dev/null || true)
+      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec and (.exit_code == 0 or .exit_code == null)) | .duration_seconds' "$e2e_file" 2>/dev/null || true)
       if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
         E2E_BASELINE_VAL="$dur"
         E2E_BASELINE_RUNS=1
@@ -84,7 +87,7 @@ lookup_baseline() {
       local hist_file="${run_dir}/${generator}.jsonl"
       [ -f "$hist_file" ] || continue
       local dur
-      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$hist_file" 2>/dev/null || true)
+      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec and (.exit_code == 0 or .exit_code == null)) | .duration_seconds' "$hist_file" 2>/dev/null || true)
       if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
         durations+=("$dur")
       fi

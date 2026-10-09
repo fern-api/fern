@@ -1,11 +1,12 @@
-import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } from "@fern-api/csharp-base";
 import {
     generateModels,
     generateTests as generateModelTests,
     generateVersion,
-    generateWellKnownProtobufFiles
+    generateWellKnownProtobufFiles,
+    generateXmlTests
 } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -24,6 +25,7 @@ import { ErrorGenerator } from "./error/ErrorGenerator.js";
 import { generateSdkTests } from "./generateSdkTests.js";
 import { InferredAuthTokenProviderGenerator } from "./inferred-auth/InferredAuthTokenProviderGenerator.js";
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator.js";
+import { AppInfoGenerator } from "./options/AppInfoGenerator.js";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator.js";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator.js";
 import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator.js";
@@ -36,6 +38,7 @@ import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceG
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
 import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator.js";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
@@ -105,6 +108,126 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         });
     }
 
+    /**
+     * Generates webhook signature verification helpers. Webhooks are grouped by
+     * identical HMAC config: the most frequent config becomes the default
+     * `WebhooksHelper`, and each other distinct config becomes a named override
+     * helper `<PascalWebhookName>WebhooksHelper`. Asymmetric configs are skipped.
+     */
+    private generateWebhooksHelpers(context: SdkGeneratorContext): void {
+        interface WebhookVerificationEntry {
+            config: FernIr.HmacSignatureVerification;
+            webhookNames: FernIr.WebhookName[];
+        }
+
+        const grouped = new Map<string, WebhookVerificationEntry>();
+
+        // The API-wide scheme (api.settings.webhook-signature) is always the default helper,
+        // even when the definition models no webhooks.
+        const apiWideConfig = context.ir.sdkConfig.webhookSignatureVerification;
+        let apiWideEntry: WebhookVerificationEntry | undefined;
+        if (apiWideConfig != null && apiWideConfig.type === "hmac") {
+            apiWideEntry = { config: apiWideConfig, webhookNames: [] };
+            grouped.set(this.computeWebhookVerificationKey(apiWideConfig), apiWideEntry);
+        }
+
+        for (const webhookGroup of Object.values(context.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                const verification = webhook.signatureVerification;
+                if (verification == null || verification.type !== "hmac") {
+                    continue;
+                }
+                const key = this.computeWebhookVerificationKey(verification);
+                const existing = grouped.get(key);
+                if (existing != null) {
+                    existing.webhookNames.push(webhook.name);
+                } else {
+                    grouped.set(key, { config: verification, webhookNames: [webhook.name] });
+                }
+            }
+        }
+
+        if (grouped.size === 0) {
+            return;
+        }
+
+        // Pick the most frequent config as the default (ties broken by insertion order).
+        let defaultEntry: WebhookVerificationEntry | undefined = apiWideEntry;
+        let maxCount = 0;
+        if (defaultEntry == null) {
+            for (const entry of grouped.values()) {
+                if (entry.webhookNames.length > maxCount) {
+                    maxCount = entry.webhookNames.length;
+                    defaultEntry = entry;
+                }
+            }
+        }
+
+        if (defaultEntry == null) {
+            return;
+        }
+
+        const defaultGenerator = new WebhooksHelperGenerator({
+            context,
+            config: defaultEntry.config,
+            className: "WebhooksHelper"
+        });
+        context.project.addSourceFiles(defaultGenerator.generate());
+
+        // Override helper class names derive from the first webhook name in each config
+        // group. Two distinct configs whose first webhook names pascal-case to the same
+        // identifier would otherwise emit two files with the same class name and collide,
+        // so a numeric suffix is appended to disambiguate on the (unlikely) collision.
+        const usedClassNames = new Set<string>(["WebhooksHelper"]);
+        for (const entry of grouped.values()) {
+            if (entry === defaultEntry) {
+                continue;
+            }
+            const [firstWebhookName] = entry.webhookNames;
+            if (firstWebhookName == null) {
+                continue;
+            }
+            const baseClassName = `${context.generation.case.pascalSafe(firstWebhookName)}WebhooksHelper`;
+            let className = baseClassName;
+            let suffix = 2;
+            while (usedClassNames.has(className)) {
+                className = `${baseClassName}${suffix}`;
+                suffix += 1;
+            }
+            usedClassNames.add(className);
+            const overrideGenerator = new WebhooksHelperGenerator({
+                context,
+                config: entry.config,
+                className
+            });
+            context.project.addSourceFiles(overrideGenerator.generate());
+        }
+    }
+
+    private computeWebhookVerificationKey(verification: FernIr.HmacSignatureVerification): string {
+        return JSON.stringify({
+            algorithm: verification.algorithm,
+            encoding: verification.encoding,
+            signaturePrefix: verification.signaturePrefix,
+            signatureHeaderName: getWireValue(verification.signatureHeaderName),
+            timestamp:
+                verification.timestamp != null
+                    ? {
+                          headerName: getWireValue(verification.timestamp.headerName),
+                          format: verification.timestamp.format,
+                          tolerance: verification.timestamp.tolerance
+                      }
+                    : null,
+            payloadFormat: {
+                components: verification.payloadFormat.components,
+                delimiter: verification.payloadFormat.delimiter,
+                bodySort: verification.payloadFormat.bodySort
+            },
+            bodyHashBinding: verification.bodyHashBinding ?? null,
+            notificationUrlNormalization: verification.notificationUrlNormalization ?? null
+        });
+    }
+
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         const generateStartTime = Date.now();
         // generate names for everything up front.
@@ -136,6 +259,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             }
             const sdkTests = generateSdkTests({ context });
             for (const file of sdkTests) {
+                context.project.addTestFiles(file);
+            }
+        }
+        if (context.hasXmlTypes()) {
+            for (const file of generateXmlTests({ context })) {
                 context.project.addTestFiles(file);
             }
         }
@@ -185,6 +313,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         const clientOptions = new ClientOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(clientOptions.generate());
 
+        // Emit the public `AppInfo` record only when the opt-in
+        // `allow-user-agent-app-info` config is enabled, so default-off output is
+        // byte-identical.
+        if (context.settings.allowUserAgentAppInfo) {
+            const appInfo = new AppInfoGenerator(context);
+            context.project.addSourceFiles(appInfo.generate());
+        }
+
         const requestOptionsInterace = new RequestOptionsInterfaceGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(requestOptionsInterace.generate());
 
@@ -225,6 +361,8 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());
+
+        this.generateWebhooksHelpers(context);
 
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {

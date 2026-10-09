@@ -13,12 +13,40 @@ impl UserClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_http_head::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = HttpHeadClient::new(config).expect("Failed to build client");
+    ///     client.user.head(None).await;
+    /// }
+    /// ```
     pub async fn head(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::HEAD, "/users", None, None, options)
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_http_head::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = HttpHeadClient::new(config).expect("Failed to build client");
+    ///     client.user.list(&ListQueryRequest { limit: 1 }, None).await;
+    /// }
+    /// ```
     pub async fn list(
         &self,
         request: &ListQueryRequest,

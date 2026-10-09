@@ -20,6 +20,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.contacts.create(name: "name")
+      #
       # @return [Seed::Types::Contact, nil]
       def create(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -36,10 +39,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Seed::Types::Contact.load(response.body))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Gets a contact by ID. Returns 200 with the contact.
@@ -52,6 +57,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.contacts.get(id: "id")
       #
       # @return [Seed::Types::Contact]
       def get(request_options: {}, **params)
@@ -69,7 +77,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Contact.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Contact.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

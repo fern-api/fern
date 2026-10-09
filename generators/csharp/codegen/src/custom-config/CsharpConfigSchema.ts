@@ -27,6 +27,42 @@ export const OutputPathSchema = z.union([
 
 export type OutputPathSchema = z.infer<typeof OutputPathSchema>;
 
+/**
+ * Schema for NuGet package metadata written into the generated csproj.
+ *
+ * Every field is optional; unset fields are omitted from the csproj so NuGet
+ * falls back to its own defaults (or to values already derived from the IR,
+ * such as the license and the GitHub project URL).
+ */
+export const PackageMetadataSchema = z.object({
+    /** `<Description>` — the package description shown on nuget.org. */
+    description: z.string().optional(),
+    /** `<Authors>` — a single author or a list of authors. */
+    authors: z.union([z.string(), z.array(z.string())]).optional(),
+    /** `<PackageTags>` — search tags, either space-separated or a list. */
+    tags: z.union([z.string(), z.array(z.string())]).optional(),
+    /** `<Copyright>`. */
+    copyright: z.string().optional(),
+    /**
+     * `<PackageIcon>` — path to an image, relative to the project directory,
+     * that is packed into the nupkg. The file itself must be present in the
+     * output (e.g. committed and listed in `.fernignore`).
+     */
+    icon: z.string().optional(),
+    /** `<PackageProjectUrl>` — overrides the URL derived from the GitHub output location. */
+    "project-url": z.string().optional(),
+    /** `<RepositoryUrl>` — defaults to the GitHub output location when unset. */
+    "repository-url": z.string().optional(),
+    /** `<RepositoryType>`. Default: "git" when a repository URL is present. */
+    "repository-type": z.string().optional(),
+    /** When true, adds Microsoft.SourceLink.GitHub and enables deterministic, source-linked builds. Default: false. */
+    "include-source-link": z.boolean().optional(),
+    /** When true, produces a `.snupkg` symbol package alongside the `.nupkg`. Default: false. */
+    "include-symbols": z.boolean().optional()
+});
+
+export type PackageMetadataSchema = z.infer<typeof PackageMetadataSchema>;
+
 export const CsharpConfigSchema = z.object({
     // Influence dynamic snippets.
     namespace: z.string().optional(),
@@ -42,6 +78,11 @@ export const CsharpConfigSchema = z.object({
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),
     "use-undiscriminated-unions": z.boolean().optional(),
+    // When true, a discriminated union's base properties are owned solely by the union envelope:
+    // `samePropertiesAsObject` variant leaves that duplicate them (per the IR's
+    // deferredUnionBaseProperties fact) stop re-declaring them. Off by default so existing generated
+    // output is unchanged; opt in to drop the duplicated leaf fields.
+    "dedupe-union-base-properties": z.boolean().optional(),
     "experimental-fully-qualified-namespaces": z.boolean().optional(),
     "experimental-dotnet-format": z.boolean().optional(),
 
@@ -51,6 +92,7 @@ export const CsharpConfigSchema = z.object({
     "generate-literals": z.boolean().optional(),
     "experimental-explicit-nullable-optional": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
+    "respect-optional-request-body": z.boolean().optional(),
     "redact-response-body-on-error": z.boolean().optional(),
     "enable-inline-types": z.boolean().optional(),
 
@@ -92,13 +134,53 @@ export const CsharpConfigSchema = z.object({
     "enable-forward-compatible-enums": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
+    // When true, the generated csproj sets <GenerateDocumentationFile>, so the
+    // published nupkg ships `lib/<tfm>/<Namespace>.xml` and consumers get
+    // IntelliSense. CS1591 (missing XML comment for a public member) is
+    // suppressed so enabling docs does not add warnings for undocumented types.
+    "generate-documentation-file": z.boolean().optional(),
+    // NuGet package metadata written into the generated csproj.
+    "package-metadata": PackageMetadataSchema.optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "enable-wire-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),
     "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "omit-fern-headers": z.boolean().optional(),
+    // When true (and the API composes OAuth client-credentials with basic auth via
+    // `auth: any`), auth credentials passed explicitly to the client constructor take
+    // precedence over environment-variable defaults when selecting the auth scheme
+    // (e.g. explicit basic auth wins over OAuth env vars). Off by default so existing
+    // behavior is unchanged.
+    "prefer-explicit-auth": z.boolean().optional(),
+    // When true, emits the platform observability headers `X-Fern-Runtime`,
+    // `X-Fern-Runtime-Version`, and `X-Fern-Platform` on generated SDK requests.
+    // Off by default so existing generated output is unchanged. Still subject to
+    // `omit-fern-headers`.
+    "include-platform-headers": z.boolean().optional(),
+    // When true, generated clients accept an `AppInfo` client option (`Name`,
+    // `Version?`, `Comment?`) whose sanitized product token is appended to whatever
+    // `User-Agent` the SDK would otherwise send (`{sdk}/{version} ... {product}/{ver}
+    // ({comment})`), following RFC 9110. Off by default so existing generated output
+    // is unchanged. Independent of `include-platform-headers`; still overridable by an
+    // explicit `User-Agent` header and suppressed by `omit-fern-headers`.
+    "allow-user-agent-app-info": z.boolean().optional(),
+    // When true, generated clients send only the `User-Agent` platform header (in
+    // whatever form the other configs produce) and omit the `X-Fern-Language`,
+    // `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Off by default so existing
+    // generated output is unchanged. Still subject to `omit-fern-headers`.
+    "user-agent-only": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
+    // When true (default), server URL variables declared on the API's environments (e.g. region)
+    // are exposed as ClientOptions properties and interpolated into the environment URL template(s)
+    // at construction time. When false, these client options and the URL-template interpolation are
+    // suppressed and the SDK falls back to the pre-feature base-URL behavior.
+    "server-url-variables": z.boolean().optional(),
+    // When true, fall back to `$"<NuGetPackageId>/{Version.Current}"` for the
+    // `User-Agent` platform header when the IR's `platformHeaders.userAgent` is
+    // unset (e.g. SDKs imported from OpenAPI). Off by default to preserve the
+    // pre-existing behavior of emitting no `User-Agent` header in that case.
+    "user-agent-name-from-package": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z
@@ -117,7 +199,19 @@ export const CsharpConfigSchema = z.object({
     // "slnx" (default) generates only the modern .slnx format.
     "sln-format": z.enum(["sln", "slnx"]).optional(),
     maxRetries: z.number().int().min(0).optional(),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    "default-timeout-in-seconds": z
+        .union([z.number().positive(), z.literal("infinity")])
+        .optional()
+        .describe(
+            "(Deprecated) The default timeout for network requests, in seconds. Use `default-timeout-in-milliseconds` instead. Set to `infinity` to disable the default timeout. SDK users can still override this per-request via request options."
+        ),
+    "default-timeout-in-milliseconds": z
+        .union([z.number().positive(), z.literal("infinity")])
+        .optional()
+        .describe(
+            "The default timeout for network requests, in milliseconds. Set to `infinity` to disable the default timeout. Takes precedence over the deprecated `default-timeout-in-seconds`. SDK users can still override this per-request via request options."
+        )
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

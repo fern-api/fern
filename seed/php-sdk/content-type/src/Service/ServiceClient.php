@@ -52,6 +52,16 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->patch(
+     *     new PatchProxyRequest([
+     *         'application' => 'application',
+     *         'requireAuth' => true,
+     *     ]),
+     * );
+     * ```
+     *
      * @param PatchProxyRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -97,6 +107,36 @@ class ServiceClient
      * - optional<T> fields (can be present or absent, but not null)
      * - optional<nullable<T>> fields (can be present, absent, or null)
      *
+     * Example:
+     * ```php
+     * $client->service->patchComplex(
+     *     'id',
+     *     new PatchComplexRequest([
+     *         'name' => 'name',
+     *         'age' => 1,
+     *         'active' => true,
+     *         'metadata' => [
+     *             'metadata' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *         'tags' => [
+     *             'tags',
+     *             'tags',
+     *         ],
+     *         'email' => 'email',
+     *         'nickname' => 'nickname',
+     *         'bio' => 'bio',
+     *         'profileImageUrl' => 'profileImageUrl',
+     *         'settings' => [
+     *             'settings' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $id
      * @param PatchComplexRequest $request
      * @param ?array{
@@ -140,6 +180,18 @@ class ServiceClient
     /**
      * Named request with mixed optional/nullable fields and merge-patch content type.
      * This should trigger the NPE issue when optional fields aren't initialized.
+     *
+     * Example:
+     * ```php
+     * $client->service->namedPatchWithMixed(
+     *     'id',
+     *     new NamedMixedPatchRequest([
+     *         'appId' => 'appId',
+     *         'instructions' => 'instructions',
+     *         'active' => true,
+     *     ]),
+     * );
+     * ```
      *
      * @param string $id
      * @param NamedMixedPatchRequest $request
@@ -187,6 +239,19 @@ class ServiceClient
      * 1. Not NPE when fields are not provided (tests initialization)
      * 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
      *
+     * Example:
+     * ```php
+     * $client->service->optionalMergePatchTest(
+     *     new OptionalMergePatchRequest([
+     *         'requiredField' => 'requiredField',
+     *         'optionalString' => 'optionalString',
+     *         'optionalInteger' => 1,
+     *         'optionalBoolean' => true,
+     *         'nullableString' => 'nullableString',
+     *     ]),
+     * );
+     * ```
+     *
      * @param OptionalMergePatchRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -228,6 +293,17 @@ class ServiceClient
 
     /**
      * Regular PATCH endpoint without merge-patch semantics
+     *
+     * Example:
+     * ```php
+     * $client->service->regularPatch(
+     *     'id',
+     *     new RegularPatchRequest([
+     *         'field1' => 'field1',
+     *         'field2' => 1,
+     *     ]),
+     * );
+     * ```
      *
      * @param string $id
      * @param RegularPatchRequest $request

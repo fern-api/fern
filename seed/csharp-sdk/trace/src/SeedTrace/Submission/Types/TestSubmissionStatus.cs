@@ -89,7 +89,7 @@ public record TestSubmissionStatus
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
-    public object AsStopped() =>
+    public object? AsStopped() =>
         IsStopped
             ? Value!
             : throw new global::System.Exception("TestSubmissionStatus.Type is not 'stopped'");
@@ -113,7 +113,7 @@ public record TestSubmissionStatus
             : throw new global::System.Exception("TestSubmissionStatus.Type is not 'running'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Dictionary<string, SubmissionStatusForTestCase>"/> if <see cref="Type"/> is 'testCaseIdToState', otherwise throws an exception.
+    /// Returns the value as a <see cref="Dictionary{String, SubmissionStatusForTestCase}"/> if <see cref="Type"/> is 'testCaseIdToState', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'testCaseIdToState'.</exception>
     public Dictionary<string, SubmissionStatusForTestCase> AsTestCaseIdToState() =>
@@ -124,7 +124,7 @@ public record TestSubmissionStatus
             );
 
     public T Match<T>(
-        Func<object, T> onStopped,
+        Func<object?, T> onStopped,
         Func<SeedTrace.ErrorInfo, T> onErrored,
         Func<SeedTrace.RunningSubmissionState, T> onRunning,
         Func<Dictionary<string, SubmissionStatusForTestCase>, T> onTestCaseIdToState,
@@ -142,7 +142,7 @@ public record TestSubmissionStatus
     }
 
     public void Visit(
-        Action<object> onStopped,
+        Action<object?> onStopped,
         Action<SeedTrace.ErrorInfo> onErrored,
         Action<SeedTrace.RunningSubmissionState> onRunning,
         Action<Dictionary<string, SubmissionStatusForTestCase>> onTestCaseIdToState,
@@ -212,7 +212,7 @@ public record TestSubmissionStatus
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Dictionary<string, SubmissionStatusForTestCase>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Dictionary{String, SubmissionStatusForTestCase}"/> and returns true if successful.
     /// </summary>
     public bool TryAsTestCaseIdToState(out Dictionary<string, SubmissionStatusForTestCase>? value)
     {
@@ -272,7 +272,7 @@ public record TestSubmissionStatus
 
             var value = discriminator switch
             {
-                "stopped" => new { },
+                "stopped" => null,
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "running" => json.GetProperty("value")
@@ -346,9 +346,9 @@ public record TestSubmissionStatus
     [Serializable]
     public record Stopped
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>

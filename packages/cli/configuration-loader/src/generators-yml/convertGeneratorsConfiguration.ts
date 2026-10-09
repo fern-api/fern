@@ -10,6 +10,23 @@ import path from "path";
 
 import { addDefaultDockerOrgIfNotPresent, correctIncorrectDockerOrgWithWarning } from "./getGeneratorName.js";
 
+function parseSpecSource(source: generatorsYml.SpecSourceSchema): {
+    path: string;
+    gitSource: generatorsYml.GitSource | undefined;
+} {
+    if (typeof source === "string") {
+        return { path: source, gitSource: undefined };
+    }
+    return {
+        path: source.git.path,
+        gitSource: {
+            repo: source.git.repo,
+            ref: source.git.ref,
+            path: source.git.path
+        }
+    };
+}
+
 /**
  * Union type representing any spec-level settings schema.
  * Used for parsing global api.settings which may contain settings from any spec type.
@@ -29,16 +46,20 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     coerceEnumsToLiterals: undefined,
     objectQueryParameters: undefined,
     respectReadonlySchemas: undefined,
+    useReadVariantForResponses: undefined,
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
     useBytesForBinaryResponse: undefined,
     respectForwardCompatibleEnums: undefined,
+    respectOptionalRequestBody: undefined,
     filter: undefined,
     exampleGeneration: undefined,
     defaultFormParameterEncoding: undefined,
     additionalPropertiesDefaultsTo: undefined,
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
+    preserveOneOfInAllOf: undefined,
+    anyOfSiblingPropertiesAsObject: undefined,
     inlineAllOfSchemas: undefined,
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
@@ -53,7 +74,14 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveSchemaCollisions: undefined,
     inferForwardCompatible: undefined,
     coerceConstsTo: undefined,
-    shouldInferDiscriminatedUnionBaseProperties: undefined
+    shouldInferDiscriminatedUnionBaseProperties: undefined,
+    disambiguateRequestNames: undefined,
+    ignoreTags: undefined,
+    respectParameterContent: undefined,
+    respectPerSpecBasePath: undefined,
+    respectOperationIdWordBoundaries: undefined,
+    namespacedErrors: undefined,
+    errorResponses: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -70,6 +98,18 @@ export async function convertGeneratorsConfiguration({
     warnForDeprecatedConfiguration(context, rawGeneratorsConfiguration);
 
     const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
+    // API-level idempotency-key default (`api.settings.auto-generate-idempotency-key`): applied to
+    // every generator in this API unless the generator overrides it in its own `config`. Resolved
+    // into the IR downstream.
+    const apiConfiguration = rawGeneratorsConfiguration.api;
+    const globalIdempotencyKeyGeneration =
+        apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
+            ? apiConfiguration.settings?.["auto-generate-idempotency-key"]
+            : undefined;
+    const globalWebhookSignature =
+        apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
+            ? apiConfiguration.settings?.["webhook-signature"]
+            : undefined;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
@@ -88,6 +128,8 @@ export async function convertGeneratorsConfiguration({
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
                               maybeRootAutomation: rawGeneratorsConfiguration.automation,
+                              globalIdempotencyKeyGeneration,
+                              globalWebhookSignature,
                               readme,
                               context
                           })
@@ -126,7 +168,7 @@ function parseDeprecatedApiDefinitionSettingsSchema(
     };
 }
 
-function parseOpenApiDefinitionSettingsSchema(
+export function parseOpenApiDefinitionSettingsSchema(
     settings: generatorsYml.OpenApiSettingsSchema | undefined
 ): generatorsYml.APIDefinitionSettings {
     return {
@@ -135,15 +177,19 @@ function parseOpenApiDefinitionSettingsSchema(
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         objectQueryParameters: settings?.["object-query-parameters"],
         respectReadonlySchemas: settings?.["respect-readonly-schemas"],
+        useReadVariantForResponses: settings?.["use-read-variant-for-responses"],
         inlinePathParameters: settings?.["inline-path-parameters"],
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
         defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
         useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
         respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
+        respectOptionalRequestBody: settings?.["respect-optional-request-body"],
         additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
+        preserveOneOfInAllOf: settings?.["preserve-one-of-in-all-of"],
+        anyOfSiblingPropertiesAsObject: settings?.["any-of-sibling-properties-as-object"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
@@ -151,7 +197,14 @@ function parseOpenApiDefinitionSettingsSchema(
         multiServerStrategy: settings?.["multi-server-strategy"],
         defaultIntegerFormat: settings?.["default-integer-format"],
         pathParameterOrder: settings?.["path-parameter-order"],
-        shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"]
+        shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"],
+        disambiguateRequestNames: settings?.["disambiguate-request-names"],
+        ignoreTags: settings?.["ignore-tags"],
+        respectParameterContent: settings?.["respect-parameter-content"],
+        respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
+        respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
+        namespacedErrors: settings?.["namespaced-errors"],
+        errorResponses: settings?.["error-responses"]
     };
 }
 
@@ -189,8 +242,15 @@ export function parseBaseApiDefinitionSettingsSchema(
         pathParameterOrder: settings?.["path-parameter-order"],
         resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
         inferForwardCompatible: settings?.["infer-forward-compatible"],
-        coerceConstsTo: settings?.["coerce-consts-to"]
+        coerceConstsTo: settings?.["coerce-consts-to"],
+        errorResponses: hasErrorResponsesSetting(settings) ? settings["error-responses"] : undefined
     };
+}
+
+function hasErrorResponsesSetting(
+    settings: AnySpecSettingsSchema | undefined
+): settings is generatorsYml.OpenApiSettingsSchema {
+    return settings != null && "error-responses" in settings;
 }
 
 function parseRemoveDiscriminantsFromSchemas(
@@ -247,10 +307,11 @@ async function parseAPIConfigurationToApiLocations(
                 settings: rootSettings
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
+            const { path: rootPath, gitSource } = parseSpecSource(apiConfiguration.proto.root);
             apiDefinitions.push({
                 schema: {
                     type: "protobuf",
-                    root: apiConfiguration.proto.root,
+                    root: rootPath,
                     target: apiConfiguration.proto.target ?? "",
                     localGeneration: apiConfiguration.proto["local-generation"] ?? false,
                     fromOpenAPI: apiConfiguration.proto["from-openapi"] ?? false,
@@ -260,7 +321,8 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: apiConfiguration.proto.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: rootSettings
+                settings: rootSettings,
+                gitSource
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -277,10 +339,11 @@ async function parseAPIConfigurationToApiLocations(
                         settings: rootSettings
                     });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
+                    const { path: rootPath, gitSource } = parseSpecSource(definition.proto.root);
                     apiDefinitions.push({
                         schema: {
                             type: "protobuf",
-                            root: definition.proto.root,
+                            root: rootPath,
                             target: definition.proto.target ?? "",
                             localGeneration: definition.proto["local-generation"] ?? false,
                             fromOpenAPI: definition.proto["from-openapi"] ?? false,
@@ -290,7 +353,8 @@ async function parseAPIConfigurationToApiLocations(
                         overrides: definition.proto.overrides,
                         overlays: undefined,
                         audiences: [],
-                        settings: rootSettings
+                        settings: rootSettings,
+                        gitSource
                     });
                 } else {
                     apiDefinitions.push({
@@ -366,7 +430,8 @@ async function parseAPIConfigurationToApiLocations(
             apiDefinitions.push({
                 schema: {
                     type: "oss",
-                    path: asyncapi
+                    path: asyncapi,
+                    sourceType: "asyncapi"
                 },
                 origin: apiOrigin,
                 overrides: undefined,
@@ -409,34 +474,40 @@ async function parseApiConfigurationV2Schema({
     for (const spec of apiConfiguration.specs ?? []) {
         let definitionLocation: generatorsYml.APIDefinitionLocation;
         if (generatorsYml.isOpenApiSpecSchema(spec)) {
+            const { path: specPath, gitSource } = parseSpecSource(spec.openapi);
             definitionLocation = {
                 schema: {
                     type: "oss",
-                    path: spec.openapi
+                    path: specPath
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
                 overlays: spec.overlays,
                 audiences: [],
-                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings))
+                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings)),
+                gitSource
             };
         } else if (generatorsYml.isAsyncApiSpecSchema(spec)) {
+            const { path: specPath, gitSource } = parseSpecSource(spec.asyncapi);
             definitionLocation = {
                 schema: {
                     type: "oss",
-                    path: spec.asyncapi
+                    path: specPath,
+                    sourceType: "asyncapi"
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: mergeSettings(apiSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings))
+                settings: mergeSettings(apiSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings)),
+                gitSource
             };
         } else if (generatorsYml.isProtoSpecSchema(spec)) {
+            const { path: rootPath, gitSource } = parseSpecSource(spec.proto.root);
             definitionLocation = {
                 schema: {
                     type: "protobuf",
-                    root: spec.proto.root,
+                    root: rootPath,
                     target: spec.proto.target ?? "",
                     localGeneration: spec.proto["local-generation"] ?? false,
                     fromOpenAPI: spec.proto["from-openapi"] ?? false,
@@ -446,7 +517,8 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.proto.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: apiSettings
+                settings: apiSettings,
+                gitSource
             };
         } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
             definitionLocation = {
@@ -464,7 +536,8 @@ async function parseApiConfigurationV2Schema({
             definitionLocation = {
                 schema: {
                     type: "graphql",
-                    path: spec.graphql
+                    path: spec.graphql,
+                    examples: spec.examples
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
@@ -564,6 +637,8 @@ async function convertGroup({
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
     maybeRootAutomation,
+    globalIdempotencyKeyGeneration,
+    globalWebhookSignature,
     readme,
     context
 }: {
@@ -573,6 +648,8 @@ async function convertGroup({
     maybeTopLevelMetadata: FernFiddle.OutputMetadata | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
+    globalIdempotencyKeyGeneration: unknown;
+    globalWebhookSignature: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -592,12 +669,45 @@ async function convertGroup({
                     maybeGroupLevelReviewers: group.reviewers,
                     maybeRootAutomation,
                     maybeGroupAutomation: group.automation,
+                    globalIdempotencyKeyGeneration,
+                    globalWebhookSignature,
                     readme,
                     context
                 })
             )
         )
     };
+}
+
+/**
+ * Separates an optional `@sha256:...` digest from an image name.
+ *
+ * Pinning by digest is how an immutable deployment is expressed: a tag can be repointed, a digest
+ * cannot. The digest is carried on the image reference while the generator name stays clean, because
+ * the name is also what IR version resolution is keyed on.
+ */
+export function splitImageDigest(
+    imageName: string,
+    context: TaskContext
+): { name: string; digest: string | undefined } {
+    const atIndex = imageName.indexOf("@");
+    if (atIndex === -1) {
+        return { name: imageName, digest: undefined };
+    }
+
+    const name = imageName.slice(0, atIndex);
+    const digest = imageName.slice(atIndex + 1);
+
+    // Rejected rather than passed through: an unusable digest that reaches the container runtime
+    // fails with a runtime error that does not name generators.yml as the cause.
+    if (!/^sha256:[0-9a-f]{64}$/.test(digest)) {
+        context.failAndThrow(
+            `Invalid image digest "${digest}" in generators.yml. ` +
+                "A digest must look like sha256: followed by 64 lowercase hex characters."
+        );
+    }
+
+    return { name, digest };
 }
 
 function getGeneratorNameAndImage(
@@ -612,19 +722,29 @@ function getGeneratorNameAndImage(
         // (FDR expects fully-qualified names like "fernapi/fern-typescript-sdk"), but use the
         // corrected (non-prefixed) name for the containerImage since the fernapi/ Docker Hub
         // org should not appear in custom registry paths.
-        const correctedImageName = correctIncorrectDockerOrgWithWarning(generator.image.name, context);
+        //
+        // A digest is split off before normalization: it belongs to the image reference, not to the
+        // generator identity, and IR version resolution must still see a clean name.
+        const { name: imageNameWithoutDigest, digest } = splitImageDigest(generator.image.name, context);
+        const correctedImageName = correctIncorrectDockerOrgWithWarning(imageNameWithoutDigest, context);
         const normalizedImageName = addDefaultDockerOrgIfNotPresent(correctedImageName);
         return {
             normalizedName: normalizedImageName,
-            containerImage: `${generator.image.registry}/${correctedImageName}`
+            containerImage: `${generator.image.registry}/${correctedImageName}${digest != null ? `@${digest}` : ""}`
         };
     }
-    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization
-    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
+    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization.
+    //
+    // The digest is split off here too, and for the same reason as above: `normalizedName` is what
+    // IR version resolution and the on-prem adapter cutover check are keyed on, and both match
+    // exactly. A digest left glued to the name would miss every lookup, so a pinned adapter image
+    // would run while being handed Fern's `GeneratorConfig` instead of SDK Config IR.
+    const { name: nameWithoutDigest, digest } = splitImageDigest(generator.name, context);
+    const correctedName = correctIncorrectDockerOrgWithWarning(nameWithoutDigest, context);
     const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
     return {
         normalizedName,
-        containerImage: undefined
+        containerImage: digest != null ? `${normalizedName}@${digest}` : undefined
     };
 }
 
@@ -637,6 +757,8 @@ async function convertGenerator({
     maybeTopLevelReviewers,
     maybeRootAutomation,
     maybeGroupAutomation,
+    globalIdempotencyKeyGeneration,
+    globalWebhookSignature,
     readme,
     context
 }: {
@@ -648,12 +770,20 @@ async function convertGenerator({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
+    globalIdempotencyKeyGeneration: unknown;
+    globalWebhookSignature: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
     const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
+    const perGeneratorIdempotencyKeyGeneration =
+        typeof generator.config === "object" && generator.config !== null
+            ? (generator.config as { "auto-generate-idempotency-key"?: unknown })["auto-generate-idempotency-key"]
+            : undefined;
     return {
         raw: generator,
+        idempotencyKeyGenerationConfig: perGeneratorIdempotencyKeyGeneration ?? globalIdempotencyKeyGeneration,
+        webhookSignatureConfig: globalWebhookSignature,
         automation: generatorsYml.resolveAutomationConfig({
             rootAutomation: maybeRootAutomation,
             groupAutomation: maybeGroupAutomation,
@@ -673,11 +803,13 @@ async function convertGenerator({
         }),
         keywords: generator.keywords,
         smartCasing: generator["smart-casing"] ?? true,
+        smartCasingDigitWordBoundary: generator["smart-casing-digit-word-boundary"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
+        fernHostedOutput: generator.output?.location === "fern-hosted" ? { slug: generator.output.slug } : undefined,
         absolutePathToLocalSnippets:
             generator.snippets?.path != null
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
@@ -815,7 +947,19 @@ async function convertOutputMode({
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github) {
         const repoString = isGithubSelfhosted(generator.github) ? generator.github.uri : generator.github.repository;
-        const { owner, repo } = parseRepository(repoString);
+        let owner: string;
+        let repo: string;
+        let remote: string;
+        try {
+            ({ owner, repo, remote } = parseRepository(repoString));
+        } catch {
+            throw new CliError({
+                message: `Invalid GitHub repository "${repoString}" in generators.yml. Expected a repository like "owner/repo", "github.com/owner/repo", or "https://github.com/owner/repo.git".`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        const host = remote !== "github.com" ? remote : undefined;
+
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
@@ -828,20 +972,25 @@ async function convertOutputMode({
                       githubLicense: licenseSchema
                   })
                 : undefined;
+        const workflows = generator.github.workflows ?? true;
         const mode = generator.github.mode ?? "release";
         switch (mode) {
             case "commit":
-            case "release": {
+            case "release":
+            case "commit-and-release": {
                 const releaseConfig = generator.github as generatorsYml.GithubCommitAndReleaseSchema;
+                const commitAndReleaseValue = {
+                    owner,
+                    repo,
+                    host,
+                    branch: releaseConfig.branch,
+                    license,
+                    publishInfo,
+                    downloadSnippets,
+                    workflows
+                };
                 return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.commitAndRelease({
-                        owner,
-                        repo,
-                        branch: releaseConfig.branch,
-                        license,
-                        publishInfo,
-                        downloadSnippets
-                    })
+                    FernFiddle.GithubOutputModeV2.commitAndRelease(commitAndReleaseValue)
                 );
             }
             case "pull-request": {
@@ -851,29 +1000,32 @@ async function convertOutputMode({
                     groupLevelReviewers: maybeGroupLevelReviewers,
                     outputModeReviewers: pullRequestConfig.reviewers
                 });
-                return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.pullRequest({
-                        owner,
-                        repo,
-                        license,
-                        publishInfo,
-                        downloadSnippets,
-                        reviewers,
-                        branch: pullRequestConfig.branch
-                    })
-                );
+                const pullRequestValue = {
+                    owner,
+                    repo,
+                    host,
+                    license,
+                    publishInfo,
+                    downloadSnippets,
+                    reviewers,
+                    branch: pullRequestConfig.branch,
+                    workflows
+                };
+                return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest(pullRequestValue));
             }
-            case "push":
-                return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({
-                        owner,
-                        repo,
-                        branch: generator.github.mode === "push" ? generator.github.branch : undefined,
-                        license,
-                        publishInfo,
-                        downloadSnippets
-                    })
-                );
+            case "push": {
+                const pushValue = {
+                    owner,
+                    repo,
+                    host,
+                    branch: generator.github.mode === "push" ? generator.github.branch : undefined,
+                    license,
+                    publishInfo,
+                    downloadSnippets,
+                    workflows
+                };
+                return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push(pushValue));
+            }
             default:
                 assertNever(mode);
         }
@@ -883,6 +1035,7 @@ async function convertOutputMode({
     }
     switch (generator.output.location) {
         case "local-file-system":
+        case "fern-hosted":
             return FernFiddle.OutputMode.downloadFiles({
                 downloadSnippets
             });
@@ -925,7 +1078,7 @@ async function convertOutputMode({
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
-                    username: generator.output.token != null ? "__token__" : (generator.output.password ?? ""),
+                    username: generator.output.token != null ? "__token__" : (generator.output.username ?? ""),
                     password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
                     downloadSnippets,
@@ -1009,6 +1162,11 @@ function getGithubPublishInfo(
         case "local-file-system":
             throw new CliError({
                 message: "Cannot use local-file-system with github publishing",
+                code: CliError.Code.ConfigError
+            });
+        case "fern-hosted":
+            throw new CliError({
+                message: "Cannot use fern-hosted with github publishing",
                 code: CliError.Code.ConfigError
             });
         case "npm":

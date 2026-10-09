@@ -1,0 +1,3 @@
+- summary: |
+    Fix product-level landing pages being dropped for unversioned products within a product group, and propagate top-level landing page to versioned navigation nodes as a fallback.
+  type: fix

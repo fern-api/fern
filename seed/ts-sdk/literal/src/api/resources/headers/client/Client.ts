@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedLiteral from "../../../index.js";
@@ -24,6 +25,9 @@ export class HeadersClient {
     /**
      * @param {SeedLiteral.SendLiteralsInHeadersRequest} request
      * @param {HeadersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
      *
      * @example
      *     await client.headers.send({
@@ -62,7 +66,7 @@ export class HeadersClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -82,5 +86,63 @@ export class HeadersClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/headers");
+    }
+
+    /**
+     * @param {HeadersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
+     *
+     * @example
+     *     await client.headers.sendLiteralsOnly()
+     */
+    public sendLiteralsOnly(
+        requestOptions?: HeadersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__sendLiteralsOnly(requestOptions));
+    }
+
+    private async __sendLiteralsOnly(
+        requestOptions?: HeadersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Endpoint-Version": "02-12-2024",
+                "X-Async": "true",
+                "X-API-Version": requestOptions?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "headers/literals-only",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedLiteralError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/headers/literals-only");
     }
 }

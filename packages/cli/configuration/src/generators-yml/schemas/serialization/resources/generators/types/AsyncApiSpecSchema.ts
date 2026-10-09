@@ -5,12 +5,13 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { AsyncApiSettingsSchema } from "./AsyncApiSettingsSchema.js";
 import { OverridesSchema } from "./OverridesSchema.js";
+import { SpecSourceSchema } from "./SpecSourceSchema.js";
 
 export const AsyncApiSpecSchema: core.serialization.ObjectSchema<
     serializers.AsyncApiSpecSchema.Raw,
     GeneratorsYml.AsyncApiSpecSchema
 > = core.serialization.object({
-    asyncapi: core.serialization.string(),
+    asyncapi: SpecSourceSchema,
     origin: core.serialization.string().optional(),
     overrides: OverridesSchema.optional(),
     namespace: core.serialization.string().optional(),
@@ -19,7 +20,7 @@ export const AsyncApiSpecSchema: core.serialization.ObjectSchema<
 
 export declare namespace AsyncApiSpecSchema {
     export interface Raw {
-        asyncapi: string;
+        asyncapi: SpecSourceSchema.Raw;
         origin?: string | null;
         overrides?: OverridesSchema.Raw | null;
         namespace?: string | null;

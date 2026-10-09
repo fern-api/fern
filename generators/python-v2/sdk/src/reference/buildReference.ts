@@ -139,7 +139,7 @@ function getAccessFromRootClient({
     service: FernIr.HttpService;
 }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
+    const servicePath = service.name.fernFilepath.allParts.map((part) => context.getModuleName(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
@@ -268,6 +268,10 @@ function getTypeString(context: SdkGeneratorContext, typeReference: FernIr.TypeR
     switch (typeReference.type) {
         case "primitive": {
             const primitiveType = typeReference.primitive.v1;
+            const primitiveV2 = typeReference.primitive.v2;
+            if (primitiveV2?.type === "string" && primitiveV2.validation?.format === "binary") {
+                return "bytes";
+            }
             switch (primitiveType) {
                 case "STRING":
                 case "BASE_64":
@@ -331,7 +335,7 @@ function getSourceFilePath({
     service: FernIr.HttpService;
 }): string | undefined {
     const modulePath = context.getModulePath().replace(/-/g, "_");
-    const pathParts = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
+    const pathParts = service.name.fernFilepath.allParts.map((part) => context.getModuleName(part));
     if (pathParts.length === 0) {
         return `src/${modulePath}/client.py`;
     }

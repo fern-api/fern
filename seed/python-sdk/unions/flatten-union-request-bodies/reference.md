@@ -211,7 +211,7 @@ client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.bigunion.get(
+client.union.get(
     id="id",
 )
 

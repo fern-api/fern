@@ -26,7 +26,7 @@ export class ForgetCommand {
         try {
             // --all mode
             if (args.all) {
-                const result = replayForget({ outputDir, options: { all: true, dryRun } });
+                const result = await replayForget({ outputDir, options: { all: true, dryRun } });
 
                 if (!result.initialized) {
                     context.stderr.info("Replay is not initialized. Nothing to forget.");
@@ -54,7 +54,7 @@ export class ForgetCommand {
 
             // Patch ID mode: all args start with "patch-"
             if (positionalArgs.length > 0 && positionalArgs.every((a) => a.startsWith("patch-"))) {
-                const result = replayForget({ outputDir, options: { patchIds: positionalArgs, dryRun } });
+                const result = await replayForget({ outputDir, options: { patchIds: positionalArgs, dryRun } });
 
                 if (!result.initialized) {
                     context.stderr.info("Replay is not initialized. Nothing to forget.");
@@ -84,7 +84,7 @@ export class ForgetCommand {
                 });
             }
             const pattern = positionalArgs.length === 1 ? positionalArgs[0] : undefined;
-            const result = replayForget({ outputDir, options: { pattern } });
+            const result = await replayForget({ outputDir, options: { pattern } });
 
             if (!result.initialized) {
                 context.stderr.info("Replay is not initialized. Nothing to forget.");
@@ -136,7 +136,7 @@ export class ForgetCommand {
 
             // Actually remove the matched patches
             const patchIds = matched.map((p) => p.id);
-            const removeResult = replayForget({ outputDir, options: { patchIds, dryRun: false } });
+            const removeResult = await replayForget({ outputDir, options: { patchIds, dryRun: false } });
 
             context.stderr.info(
                 `Removed ${removeResult.removed.length} patch(es). ${removeResult.remaining} remaining.`

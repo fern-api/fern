@@ -3,7 +3,7 @@
 import type * as GeneratorsYml from "../../../index.js";
 
 export interface OpenApiSpecSchema {
-    openapi: string;
+    openapi: GeneratorsYml.SpecSourceSchema;
     origin?: string;
     overrides?: GeneratorsYml.OverridesSchema;
     overlays?: string;

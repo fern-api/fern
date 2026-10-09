@@ -13,6 +13,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { AsIsFiles } from "../AsIs.js";
 import { TRAITS_DIRECTORY } from "../constants.js";
 import { PhpProject } from "../project/PhpProject.js";
+import { getFilesystemPackagistPublishTarget } from "./filesystem-packagist-publish-target.js";
 import { PhpAttributeMapper } from "./PhpAttributeMapper.js";
 import { PhpTypeMapper } from "./PhpTypeMapper.js";
 
@@ -55,7 +56,20 @@ export abstract class AbstractPhpGeneratorContext<
         if (this.customConfig.packageName != null) {
             return this.customConfig.packageName;
         }
+        const filesystemPackageName = getFilesystemPackagistPublishTarget(this.ir)?.packageName;
+        if (filesystemPackageName != null) {
+            return filesystemPackageName;
+        }
         return `${this.config.organization}/${this.config.organization}`;
+    }
+
+    /**
+     * The SDK version to stamp into generated metadata (e.g. `composer.json`).
+     * Resolves from the output mode's version (github/publish) and falls back to
+     * the `packagist` filesystem publish target for local-file-system output.
+     */
+    public getSdkVersion(): string | undefined {
+        return this.version ?? getFilesystemPackagistPublishTarget(this.ir)?.version;
     }
 
     public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
@@ -122,6 +136,54 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getCoreTestsNamespace(): string {
         return `${this.rootNamespace}\\Tests\\Core`;
+    }
+
+    public getCoreXmlNamespace(): string {
+        return `${this.getCoreNamespace()}\\Xml`;
+    }
+
+    public hasXmlTypes(): boolean {
+        return Object.values(this.ir.types).some((type) => type.encoding?.xml != null);
+    }
+
+    public getCoreXmlAsIsFiles(): string[] {
+        return this.hasXmlTypes()
+            ? [
+                  AsIsFiles.XmlNode,
+                  AsIsFiles.XmlText,
+                  AsIsFiles.XmlComment,
+                  AsIsFiles.XmlElement,
+                  AsIsFiles.XmlSerializableType,
+                  AsIsFiles.XmlUtils
+              ]
+            : [];
+    }
+
+    public getCoreXmlTestAsIsFiles(): string[] {
+        return this.hasXmlTypes() ? [AsIsFiles.XmlElementTest] : [];
+    }
+
+    public getCoreXmlClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreXmlNamespace()
+        });
+    }
+
+    public getXmlSerializableTypeClassReference(): php.ClassReference {
+        return this.getCoreXmlClassReference("XmlSerializableType");
+    }
+
+    public getXmlElementClassReference(): php.ClassReference {
+        return this.getCoreXmlClassReference("XmlElement");
+    }
+
+    public getXmlNodeClassReference(): php.ClassReference {
+        return this.getCoreXmlClassReference("XmlNode");
+    }
+
+    public getXmlUtilsClassReference(): php.ClassReference {
+        return this.getCoreXmlClassReference("XmlUtils");
     }
 
     public getUtilsTypesNamespace(): string {
@@ -427,7 +489,25 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public hasToJsonMethod(typeReference: FernIr.TypeReference): boolean {
-        return typeReference.type === "named" && !this.isPrimitive(typeReference) && !this.isEnum(typeReference);
+        return (
+            typeReference.type === "named" &&
+            !this.isPrimitive(typeReference) &&
+            !this.isEnum(typeReference) &&
+            !this.isLiteral(typeReference)
+        );
+    }
+
+    public isLiteral(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
+            return true;
+        }
+        if (typeReference.type === "named") {
+            const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+            if (declaration.shape.type === "alias") {
+                return this.isLiteral(declaration.shape.aliasOf);
+            }
+        }
+        return false;
     }
 
     public isEnum(typeReference: FernIr.TypeReference): boolean {
@@ -638,7 +718,7 @@ export abstract class AbstractPhpGeneratorContext<
      * Returns extra template variables for a given filename.
      * Override this method to provide custom template variables for specific files.
      */
-    public getExtraTemplateVarsForFile(_filename: string): Record<string, string> | undefined {
+    public getExtraTemplateVarsForFile(_filename: string): Record<string, string | boolean> | undefined {
         return undefined;
     }
 
@@ -663,6 +743,7 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.AdditionalPropertiesTest,
             AsIsFiles.DateArrayTest,
             AsIsFiles.EmptyArrayTest,
+            AsIsFiles.EmptyObjectTest,
             AsIsFiles.EnumTest,
             AsIsFiles.ExhaustiveTest,
             AsIsFiles.InvalidTest,

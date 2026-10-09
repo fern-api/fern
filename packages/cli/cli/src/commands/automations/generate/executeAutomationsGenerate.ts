@@ -76,6 +76,7 @@ export async function executeAutomationsGenerate({
                         cliContext,
                         version: options.version,
                         groupNames: options.group != null ? [options.group] : undefined,
+                        targetNames: undefined,
                         generatorName,
                         generatorIndex,
                         shouldLogS3Url: false,
@@ -92,6 +93,7 @@ export async function executeAutomationsGenerate({
                         dynamicIrOnly: false,
                         outputDir: undefined,
                         noReplay: false,
+                        verify: false,
                         // Automation runs are unattended; transient 429s should be retried
                         // automatically rather than failing the run and asking a human to
                         // re-trigger with a flag. The retry policy is bounded (5 attempts,

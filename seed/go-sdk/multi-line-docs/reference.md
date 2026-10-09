@@ -29,10 +29,9 @@ This endpoint is used to retrieve a user.
 
 ```go
 client.User.GetUser(
-        context.TODO(),
-        "userId",
-    )
-}
+    context.TODO(),
+    "userId",
+)
 ```
 </dd>
 </dl>
@@ -91,16 +90,15 @@ This endpoint is used to create a new user.
 
 ```go
 request := &fern.CreateUserRequest{
-        Name: "name",
-        Age: fern.Int(
-            1,
-        ),
-    }
-client.User.CreateUser(
-        context.TODO(),
-        request,
-    )
+    Name: "name",
+    Age: fern.Int(
+        1,
+    ),
 }
+client.User.CreateUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

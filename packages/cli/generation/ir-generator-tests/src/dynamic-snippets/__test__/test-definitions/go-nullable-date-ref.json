@@ -1,0 +1,876 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:Iso8601Date": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "Iso8601Date",
+                    "camelCase": {
+                        "unsafeName": "iso8601Date",
+                        "safeName": "iso8601Date"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "iso8601date",
+                        "safeName": "iso8601date"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ISO8601DATE",
+                        "safeName": "ISO8601DATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Iso8601Date",
+                        "safeName": "Iso8601Date"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "DATE"
+            }
+        },
+        "type_:Iso8601DateNullable": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "Iso8601DateNullable",
+                    "camelCase": {
+                        "unsafeName": "iso8601DateNullable",
+                        "safeName": "iso8601DateNullable"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "iso8601date_nullable",
+                        "safeName": "iso8601date_nullable"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ISO8601DATE_NULLABLE",
+                        "safeName": "ISO8601DATE_NULLABLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Iso8601DateNullable",
+                        "safeName": "Iso8601DateNullable"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "primitive",
+                    "value": "DATE"
+                }
+            }
+        },
+        "type_:Iso8601DateTimeNullable": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "Iso8601DateTimeNullable",
+                    "camelCase": {
+                        "unsafeName": "iso8601DateTimeNullable",
+                        "safeName": "iso8601DateTimeNullable"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "iso8601date_time_nullable",
+                        "safeName": "iso8601date_time_nullable"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ISO8601DATE_TIME_NULLABLE",
+                        "safeName": "ISO8601DATE_TIME_NULLABLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Iso8601DateTimeNullable",
+                        "safeName": "Iso8601DateTimeNullable"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "primitive",
+                    "value": "DATE_TIME"
+                }
+            }
+        },
+        "type_:NullableString": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableString",
+                    "camelCase": {
+                        "unsafeName": "nullableString",
+                        "safeName": "nullableString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_string",
+                        "safeName": "nullable_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_STRING",
+                        "safeName": "NULLABLE_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableString",
+                        "safeName": "NullableString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            }
+        },
+        "type_:NullableTags": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableTags",
+                    "camelCase": {
+                        "unsafeName": "nullableTags",
+                        "safeName": "nullableTags"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_tags",
+                        "safeName": "nullable_tags"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_TAGS",
+                        "safeName": "NULLABLE_TAGS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableTags",
+                        "safeName": "NullableTags"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "list",
+                    "value": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            }
+        },
+        "type_:NullableMetadata": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableMetadata",
+                    "camelCase": {
+                        "unsafeName": "nullableMetadata",
+                        "safeName": "nullableMetadata"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_metadata",
+                        "safeName": "nullable_metadata"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_METADATA",
+                        "safeName": "NULLABLE_METADATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableMetadata",
+                        "safeName": "NullableMetadata"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "map",
+                    "key": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "value": {
+                        "type": "unknown"
+                    }
+                }
+            }
+        },
+        "type_:TagsAlias": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "TagsAlias",
+                    "camelCase": {
+                        "unsafeName": "tagsAlias",
+                        "safeName": "tagsAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "tags_alias",
+                        "safeName": "tags_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TAGS_ALIAS",
+                        "safeName": "TAGS_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TagsAlias",
+                        "safeName": "TagsAlias"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "named",
+                    "value": "type_:NullableTags"
+                }
+            }
+        },
+        "type_:MetadataAlias": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "MetadataAlias",
+                    "camelCase": {
+                        "unsafeName": "metadataAlias",
+                        "safeName": "metadataAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "metadata_alias",
+                        "safeName": "metadata_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "METADATA_ALIAS",
+                        "safeName": "METADATA_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MetadataAlias",
+                        "safeName": "MetadataAlias"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "named",
+                    "value": "type_:NullableMetadata"
+                }
+            }
+        },
+        "type_:AnyValue": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "AnyValue",
+                    "camelCase": {
+                        "unsafeName": "anyValue",
+                        "safeName": "anyValue"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "any_value",
+                        "safeName": "any_value"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ANY_VALUE",
+                        "safeName": "ANY_VALUE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AnyValue",
+                        "safeName": "AnyValue"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "unknown"
+            }
+        },
+        "type_:NullableAnyValue": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableAnyValue",
+                    "camelCase": {
+                        "unsafeName": "nullableAnyValue",
+                        "safeName": "nullableAnyValue"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_any_value",
+                        "safeName": "nullable_any_value"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_ANY_VALUE",
+                        "safeName": "NULLABLE_ANY_VALUE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableAnyValue",
+                        "safeName": "NullableAnyValue"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "unknown"
+                }
+            }
+        },
+        "type_:Report": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Report",
+                    "camelCase": {
+                        "unsafeName": "report",
+                        "safeName": "report"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "report",
+                        "safeName": "report"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REPORT",
+                        "safeName": "REPORT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Report",
+                        "safeName": "Report"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "created_date",
+                        "name": {
+                            "originalName": "created_date",
+                            "camelCase": {
+                                "unsafeName": "createdDate",
+                                "safeName": "createdDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "created_date",
+                                "safeName": "created_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CREATED_DATE",
+                                "safeName": "CREATED_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CreatedDate",
+                                "safeName": "CreatedDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:Iso8601Date"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "fraud_date",
+                        "name": {
+                            "originalName": "fraud_date",
+                            "camelCase": {
+                                "unsafeName": "fraudDate",
+                                "safeName": "fraudDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "fraud_date",
+                                "safeName": "fraud_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FRAUD_DATE",
+                                "safeName": "FRAUD_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "FraudDate",
+                                "safeName": "FraudDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:Iso8601DateNullable"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "resolved_date",
+                        "name": {
+                            "originalName": "resolved_date",
+                            "camelCase": {
+                                "unsafeName": "resolvedDate",
+                                "safeName": "resolvedDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "resolved_date",
+                                "safeName": "resolved_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RESOLVED_DATE",
+                                "safeName": "RESOLVED_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ResolvedDate",
+                                "safeName": "ResolvedDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:Iso8601DateTimeNullable"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:NullableString"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "tags",
+                        "name": {
+                            "originalName": "tags",
+                            "camelCase": {
+                                "unsafeName": "tags",
+                                "safeName": "tags"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "tags",
+                                "safeName": "tags"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TAGS",
+                                "safeName": "TAGS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Tags",
+                                "safeName": "Tags"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:NullableTags"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "metadata",
+                        "name": {
+                            "originalName": "metadata",
+                            "camelCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA",
+                                "safeName": "METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Metadata",
+                                "safeName": "Metadata"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:NullableMetadata"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "tags_alias",
+                        "name": {
+                            "originalName": "tags_alias",
+                            "camelCase": {
+                                "unsafeName": "tagsAlias",
+                                "safeName": "tagsAlias"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "tags_alias",
+                                "safeName": "tags_alias"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TAGS_ALIAS",
+                                "safeName": "TAGS_ALIAS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TagsAlias",
+                                "safeName": "TagsAlias"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:TagsAlias"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "metadata_alias",
+                        "name": {
+                            "originalName": "metadata_alias",
+                            "camelCase": {
+                                "unsafeName": "metadataAlias",
+                                "safeName": "metadataAlias"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata_alias",
+                                "safeName": "metadata_alias"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA_ALIAS",
+                                "safeName": "METADATA_ALIAS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MetadataAlias",
+                                "safeName": "MetadataAlias"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:MetadataAlias"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "extra",
+                        "name": {
+                            "originalName": "extra",
+                            "camelCase": {
+                                "unsafeName": "extra",
+                                "safeName": "extra"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "extra",
+                                "safeName": "extra"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EXTRA",
+                                "safeName": "EXTRA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Extra",
+                                "safeName": "Extra"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:AnyValue"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "nullable_extra",
+                        "name": {
+                            "originalName": "nullable_extra",
+                            "camelCase": {
+                                "unsafeName": "nullableExtra",
+                                "safeName": "nullableExtra"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nullable_extra",
+                                "safeName": "nullable_extra"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NULLABLE_EXTRA",
+                                "safeName": "NULLABLE_EXTRA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NullableExtra",
+                                "safeName": "NullableExtra"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:NullableAnyValue"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "title",
+                        "name": {
+                            "originalName": "title",
+                            "camelCase": {
+                                "unsafeName": "title",
+                                "safeName": "title"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "title",
+                                "safeName": "title"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TITLE",
+                                "safeName": "TITLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Title",
+                                "safeName": "Title"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_reports.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "reports",
+                            "camelCase": {
+                                "unsafeName": "reports",
+                                "safeName": "reports"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "reports",
+                                "safeName": "reports"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REPORTS",
+                                "safeName": "REPORTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Reports",
+                                "safeName": "Reports"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "reports",
+                        "camelCase": {
+                            "unsafeName": "reports",
+                            "safeName": "reports"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "reports",
+                            "safeName": "reports"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REPORTS",
+                            "safeName": "REPORTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Reports",
+                            "safeName": "Reports"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/reports"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Report"
+                    }
+                },
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

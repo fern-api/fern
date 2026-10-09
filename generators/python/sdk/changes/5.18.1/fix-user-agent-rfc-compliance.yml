@@ -1,0 +1,6 @@
+- summary: |
+    Normalize the architecture label in the structured `User-Agent` (emitted when
+    `include_platform_headers` is enabled) so the 64-bit x86 aliases (`x64`,
+    `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+    consistent across generators.
+  type: fix

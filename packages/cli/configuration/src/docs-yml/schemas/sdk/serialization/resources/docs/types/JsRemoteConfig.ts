@@ -11,11 +11,13 @@ export const JsRemoteConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     url: core.serialization.string(),
     strategy: JsScriptStrategy.optional(),
+    disableSri: core.serialization.property("disable-sri", core.serialization.boolean().optional()),
 });
 
 export declare namespace JsRemoteConfig {
     export interface Raw {
         url: string;
         strategy?: JsScriptStrategy.Raw | null;
+        "disable-sri"?: boolean | null;
     }
 }

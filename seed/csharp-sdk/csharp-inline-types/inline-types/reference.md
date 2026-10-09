@@ -45,7 +45,7 @@ await client.GetRootAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedObject/SeedObjectClient.cs">GetDiscriminatedUnionAsync</a>(GetDiscriminatedUnionRequest { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedObject/SeedObjectClient.cs">GetDiscriminatedUnionAsync</a>(GetDiscriminatedUnionRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -104,7 +104,7 @@ await client.GetDiscriminatedUnionAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedObject/SeedObjectClient.cs">GetUndiscriminatedUnionAsync</a>(GetUndiscriminatedUnionRequest { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedObject/SeedObjectClient.cs">GetUndiscriminatedUnionAsync</a>(GetUndiscriminatedUnionRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

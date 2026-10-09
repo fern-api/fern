@@ -368,6 +368,19 @@ function convertHeaders({
     };
 }
 
+function isOptionalType({
+    rawType,
+    typeResolver,
+    file
+}: {
+    rawType: string;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+}): boolean {
+    const resolvedType = typeResolver.resolveType({ type: rawType, file });
+    return resolvedType?._type === "container" && resolvedType.container._type === "optional";
+}
+
 function convertExampleRequestBody({
     endpoint,
     example,
@@ -393,10 +406,20 @@ function convertExampleRequestBody({
     }
 
     if (!isInlineRequestBody(requestType)) {
+        const rawTypeBeingExemplified = typeof requestType !== "string" ? requestType.type : requestType;
+        // An omitted request represents a call with no request body. That is spelled two ways:
+        // `optional: true` says the call may omit the body, and `optional<T>` says the body's value
+        // may be absent. Both accept an example without a `request`.
+        const isOmittable =
+            (typeof requestType !== "string" && requestType.optional === true) ||
+            isOptionalType({ rawType: rawTypeBeingExemplified, typeResolver, file });
+        if (example.request === undefined && isOmittable) {
+            return undefined;
+        }
         return ExampleRequestBody.reference(
             convertTypeReferenceExample({
                 example: example.request,
-                rawTypeBeingExemplified: typeof requestType !== "string" ? requestType.type : requestType,
+                rawTypeBeingExemplified,
                 typeResolver,
                 exampleResolver,
                 fileContainingRawTypeReference: file,
@@ -681,7 +704,6 @@ function buildUrl({
     file,
     service,
     endpoint,
-    example,
     pathParams
 }: {
     file: FernFileContext;
@@ -691,18 +713,26 @@ function buildUrl({
     pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
     let url = urlJoin(file.rootApiFile["base-path"] ?? "", service["base-path"], endpoint.path);
-    if (example["path-parameters"] != null) {
-        for (const parameter of [
-            ...pathParams.endpointPathParameters,
-            ...pathParams.servicePathParameters,
-            ...pathParams.rootPathParameters
-        ]) {
-            url = url.replaceAll(
-                `{${getOriginalName(parameter.name)}}`,
-                encodeURIComponent(`${parameter.value.jsonExample}`)
-            );
-        }
+
+    // First pass: substitute any placeholders the user supplied an example value for.
+    for (const parameter of [
+        ...pathParams.endpointPathParameters,
+        ...pathParams.servicePathParameters,
+        ...pathParams.rootPathParameters
+    ]) {
+        url = url.replaceAll(
+            `{${getOriginalName(parameter.name)}}`,
+            encodeURIComponent(`${parameter.value.jsonExample}`)
+        );
     }
+
+    // Second pass: any placeholder still in the URL came from a declaration the
+    // user didn't cover in this example (e.g. a root path parameter declared via
+    // the root API file but omitted from the per-endpoint example). Substitute
+    // with the parameter name itself so the URL matches what generators emit
+    // for the constructor block, which uses `ir.pathParameters` directly.
+    url = url.replace(/\{([^}]+)\}/g, (_, name) => encodeURIComponent(name));
+
     // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
     url = url.replaceAll("//", "/");
     // for backwards compatibility we always make sure that the url stats with a slash

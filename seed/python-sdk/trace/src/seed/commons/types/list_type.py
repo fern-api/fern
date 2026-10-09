@@ -22,6 +22,9 @@ class ListType(UniversalBaseModel):
             description="Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
         ),
     ] = None
+    """
+    Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

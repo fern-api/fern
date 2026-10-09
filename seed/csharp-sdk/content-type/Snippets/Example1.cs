@@ -10,8 +10,8 @@ public partial class Examples
         );
 
         await client.Service.PatchComplexAsync(
-            "id",
-            new PatchComplexRequest {
+            id: "id",
+            request: new PatchComplexRequest {
                 Name = "name",
                 Age = 1,
                 Active = true,

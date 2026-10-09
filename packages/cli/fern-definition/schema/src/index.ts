@@ -12,6 +12,12 @@ export { isOpenApiSourceSchema } from "./utils/isOpenApiSourceSchema.js";
 export { isRawProtobufSourceSchema } from "./utils/isRawProtobufSourceSchema.js";
 export { isRawTextType } from "./utils/isRawTextType.js";
 export { type BytesRequest, parseBytesRequest } from "./utils/parseBytesRequest.js";
+export {
+    CLIENT_ERROR_WILDCARD_STATUS_CODE,
+    type ParsedErrorStatusCode,
+    parseErrorStatusCode,
+    SERVER_ERROR_WILDCARD_STATUS_CODE
+} from "./utils/parseErrorStatusCode.js";
 export { parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest.js";
 export { parseRawBytesType, type RawBytesType } from "./utils/parseRawBytesType.js";
 export { parseRawFileType, type RawFileType } from "./utils/parseRawFileType.js";
@@ -22,6 +28,7 @@ export { visitExampleCodeSampleSchema } from "./utils/visitExampleCodeSampleSche
 export { type ExampleResponseSchemaVisitor, visitExampleResponseSchema } from "./utils/visitExampleResponseSchema.js";
 export {
     isAnyAuthSchemes,
+    isEndpointSecurityAuthSchemes,
     isSingleAuthScheme,
     type RawApiAuthVisitor,
     visitRawApiAuth

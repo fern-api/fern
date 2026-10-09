@@ -304,6 +304,54 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsyn
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfIntegerToObjectAsync</a>(Dictionary&lt;int, ObjectWithRequiredField&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;int, ObjectWithRequiredField&gt;&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Container.GetAndReturnMapOfIntegerToObjectAsync(
+    new Dictionary<int, ObjectWithRequiredField>()
+    {
+        {
+            1,
+            new ObjectWithRequiredField { String = "string" }
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Dictionary<int, ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnOptionalAsync</a>(ObjectWithRequiredField? { ... }) -> WithRawResponseTask&lt;ObjectWithRequiredField?&gt;</code></summary>
 <dl>
 <dd>
@@ -347,7 +395,7 @@ await client.Endpoints.Container.GetAndReturnOptionalAsync(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.Endpoints.ContentType.<a href="/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs">PostJsonPatchContentTypeAsync</a>(ObjectWithOptionalField { ... })</code></summary>
+<details><summary><code>client.Endpoints.ContentType.<a href="/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs">PostJsonPatchContentTypeAsync</a>(ObjectWithOptionalField { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -404,7 +452,7 @@ await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.ContentType.<a href="/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs">PostJsonPatchContentWithCharsetTypeAsync</a>(ObjectWithOptionalField { ... })</code></summary>
+<details><summary><code>client.Endpoints.ContentType.<a href="/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs">PostJsonPatchContentWithCharsetTypeAsync</a>(ObjectWithOptionalField { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -1602,7 +1650,7 @@ await client.Endpoints.Params.GetWithInlinePathAsync(new GetWithInlinePath { Par
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithQueryAsync</a>(GetWithQuery { ... })</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithQueryAsync</a>(GetWithQuery { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -1656,7 +1704,7 @@ await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "quer
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithAllowMultipleQueryAsync</a>(GetWithMultipleQuery { ... })</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithAllowMultipleQueryAsync</a>(GetWithMultipleQuery { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -1712,7 +1760,7 @@ await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithPathAndQueryAsync</a>(param, GetWithPathAndQuery { ... })</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithPathAndQueryAsync</a>(param, GetWithPathAndQuery { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -1777,7 +1825,7 @@ await client.Endpoints.Params.GetWithPathAndQueryAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithInlinePathAndQueryAsync</a>(GetWithInlinePathAndQuery { ... })</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithInlinePathAndQueryAsync</a>(GetWithInlinePathAndQuery { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -2005,6 +2053,66 @@ await client.Endpoints.Params.UploadWithPathAsync(
 <dd>
 
 **request:** `Stream` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">CreateWithBodyAndQueryAsync</a>(CreateWithBodyAndQuery { ... }) -> WithRawResponseTask&lt;ObjectWithOptionalField&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Params.CreateWithBodyAndQueryAsync(
+    new CreateWithBodyAndQuery
+    {
+        Fields = "_fields",
+        Body = new ObjectWithRequiredField { String = "string" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateWithBodyAndQuery` 
     
 </dd>
 </dl>
@@ -2749,6 +2857,66 @@ await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
 </dl>
 </details>
 
+<details><summary><code>client.InlinedRequests.<a href="/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs">PostWithArrayBodyAndHeadersAsync</a>(PostWithArrayBodyAndHeaders { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlinedRequests.PostWithArrayBodyAndHeadersAsync(
+    new PostWithArrayBodyAndHeaders
+    {
+        XCustomHeader = "X-Custom-Header",
+        Body = new List<string>() { "string", "string" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PostWithArrayBodyAndHeaders` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## NoAuth
 <details><summary><code>client.NoAuth.<a href="/src/SeedExhaustive/NoAuth/NoAuthClient.cs">PostWithNoAuthAsync</a>(object { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
@@ -2856,7 +3024,7 @@ await client.NoReqBody.PostWithNoRequestBodyAsync();
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.ReqWithHeaders.<a href="/src/SeedExhaustive/ReqWithHeaders/ReqWithHeadersClient.cs">GetWithCustomHeaderAsync</a>(ReqWithHeaders { ... })</code></summary>
+<details><summary><code>client.ReqWithHeaders.<a href="/src/SeedExhaustive/ReqWithHeaders/ReqWithHeadersClient.cs">GetWithCustomHeaderAsync</a>(ReqWithHeaders { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

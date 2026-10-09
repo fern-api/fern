@@ -42,12 +42,14 @@ import { ERROR_NAMES } from "./converters/convertToHttpError.js";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory.js";
 import { ConvertedOperation } from "./converters/operation/convertOperation.js";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions.js";
-import { getFernBasePath } from "./extensions/getFernBasePath.js";
+import { getFernBasePath, stripBasePathFromPaths } from "./extensions/getFernBasePath.js";
 import { getFernGroups } from "./extensions/getFernGroups.js";
 import { getFernVersion } from "./extensions/getFernVersion.js";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
+import { getGlobalParameters } from "./extensions/getGlobalParameters.js";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders.js";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions.js";
+import { applyTwilioVisibility } from "./extensions/twilioVisibility.js";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
 import { hasIncompleteExample } from "./hasIncompleteExample.js";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext.js";
@@ -66,6 +68,7 @@ export function generateIr({
     source: Source;
     namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
+    openApi = applyTwilioVisibility({ document: openApi, options, logger: taskContext.logger });
     openApi = runResolutions({ openapi: openApi });
 
     // Reset title collision tracker for this document processing
@@ -113,6 +116,7 @@ export function generateIr({
     );
     const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
     const globalHeaders = getGlobalHeaders(openApi);
+    const globalParameters = getGlobalParameters(openApi);
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
     const audiences = options.audiences ?? [];
     const endpointsWithExample: EndpointWithExample[] = [];
@@ -131,6 +135,22 @@ export function generateIr({
         taskContext.logger.debug("Endpoint filter applied...");
     }
 
+    const fernBasePathParsed = getFernBasePath(openApi);
+    if (fernBasePathParsed?.pathsIncludeBasePath) {
+        const stripErrors = stripBasePathFromPaths({
+            openApi,
+            basePath: fernBasePathParsed.basePath,
+            rootPathParameterNames: new Set(fernBasePathParsed.pathParameters.map((p) => p.name))
+        });
+        for (const message of stripErrors) {
+            taskContext.logger.warn(message);
+        }
+    }
+    const plainBasePath =
+        options.respectPerSpecBasePath && fernBasePathParsed != null && fernBasePathParsed.pathParameters.length === 0
+            ? fernBasePathParsed.basePath
+            : undefined;
+
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
@@ -143,16 +163,16 @@ export function generateIr({
             }
             switch (operation.type) {
                 case "async":
-                    endpointsWithExample.push(...operation.sync);
-                    endpointsWithExample.push(...operation.async);
+                    endpointsWithExample.push(...prependBasePathToEndpoints(operation.sync, plainBasePath));
+                    endpointsWithExample.push(...prependBasePathToEndpoints(operation.async, plainBasePath));
                     break;
                 case "http":
-                    endpointsWithExample.push(...operation.value);
+                    endpointsWithExample.push(...prependBasePathToEndpoints(operation.value, plainBasePath));
                     break;
                 case "streaming":
-                    endpointsWithExample.push(...operation.streaming);
+                    endpointsWithExample.push(...prependBasePathToEndpoints(operation.streaming, plainBasePath));
                     if (operation.nonStreaming) {
-                        endpointsWithExample.push(...operation.nonStreaming);
+                        endpointsWithExample.push(...prependBasePathToEndpoints(operation.nonStreaming, plainBasePath));
                     }
                     break;
                 case "webhook":
@@ -377,13 +397,16 @@ export function generateIr({
                 return {
                     generatedName: error.generatedName,
                     nameOverride: error.nameOverride,
+                    isWildcardStatusCode: error.isWildcardStatusCode,
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
                     source: error.source,
-                    examples
+                    examples,
+                    namespace: error.namespace
                 };
             }),
-            retries: endpointWithExample.retries
+            retries: endpointWithExample.retries,
+            globalParameterIds: endpointWithExample.globalParameterIds
         };
     });
 
@@ -392,12 +415,34 @@ export function generateIr({
 
     const groupInfo = getFernGroups({ document: openApi, context });
 
+    const baseUrlEnv = getExtension<unknown>(openApi, FernOpenAPIExtension.BASE_URL_ENV);
+    let validatedBaseUrlEnv: string | undefined;
+    if (baseUrlEnv != null) {
+        if (typeof baseUrlEnv === "string" && baseUrlEnv.length > 0) {
+            validatedBaseUrlEnv = baseUrlEnv;
+        } else {
+            taskContext.logger.warn(
+                `Expected a non-empty string value for ${FernOpenAPIExtension.BASE_URL_ENV}; ignoring.`
+            );
+        }
+    }
+
     const ir: OpenApiIntermediateRepresentation = {
         apiVersion: getFernVersion({
             context,
             document: openApi
         }),
-        basePath: getFernBasePath(openApi),
+        specVersion: openApi.info.version != null && openApi.info.version.length > 0 ? openApi.info.version : undefined,
+        baseUrlEnv: validatedBaseUrlEnv,
+        basePath:
+            fernBasePathParsed != null &&
+            (!options.respectPerSpecBasePath || fernBasePathParsed.pathParameters.length > 0)
+                ? fernBasePathParsed.basePath
+                : undefined,
+        basePathParameters:
+            fernBasePathParsed != null && fernBasePathParsed.pathParameters.length > 0
+                ? fernBasePathParsed.pathParameters
+                : undefined,
         title: openApi.info.title ?? "",
         description: openApi.info.description,
         groups: Object.fromEntries(
@@ -427,6 +472,7 @@ export function generateIr({
         nonRequestReferencedSchemas: context.getReferencedSchemas(),
         variables,
         globalHeaders,
+        globalParameters: globalParameters.length > 0 ? globalParameters : undefined,
         idempotencyHeaders
     };
 
@@ -502,6 +548,33 @@ function maybeRemoveDiscriminantsFromSchemas(
         }
     }
     return result;
+}
+
+function prependBasePath(path: string, basePath: string | undefined): string {
+    if (basePath == null || basePath === "/") {
+        return path;
+    }
+
+    const normalizedBasePath = basePath.replace(/\/+$/, "");
+    if (path === normalizedBasePath || path.startsWith(`${normalizedBasePath}/`)) {
+        return path;
+    }
+
+    const normalizedPath = path.replace(/^\/+/, "");
+    return normalizedPath.length > 0 ? `${normalizedBasePath}/${normalizedPath}` : normalizedBasePath;
+}
+
+function prependBasePathToEndpoints(
+    endpoints: EndpointWithExample[],
+    basePath: string | undefined
+): EndpointWithExample[] {
+    if (basePath == null || basePath === "/") {
+        return endpoints;
+    }
+    return endpoints.map((endpoint) => ({
+        ...endpoint,
+        path: prependBasePath(endpoint.path, basePath)
+    }));
 }
 
 /**

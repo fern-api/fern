@@ -3,15 +3,40 @@
 module Seed
   class Client
     # @param base_url [String, nil]
+    # @param client_id [String, nil]
+    # @param client_secret [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, client_id: ENV.fetch("CLIENT_ID", nil), client_secret: ENV.fetch("CLIENT_SECRET", nil), max_retries: 2, timeout: 60)
+      # Create an unauthenticated client for the auth endpoint
+      auth_raw_client = Seed::Internal::Http::RawClient.new(
+        base_url: base_url,
+        headers: {
+          "X-Fern-Language" => "Ruby"
+        },
+        timeout: timeout
+      )
+
+      # Create the auth client for token retrieval
+      auth_client = Seed::Auth::Client.new(client: auth_raw_client)
+
+      # Create the OAuth provider with the auth client and credentials
+      @auth_provider = Seed::Internal::OAuthProvider.new(
+        auth_client: auth_client,
+        options: { base_url: base_url, client_id: client_id, client_secret: client_secret }
+      )
+
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_oauth-client-credentials-environment-variables/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        auth_provider: @auth_provider,
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

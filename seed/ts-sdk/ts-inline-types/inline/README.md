@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedObjectClient } from "@fern/ts-inline-types";
 
-const client = new SeedObjectClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedObjectClient({ baseUrl: "YOUR_BASE_URL" });
 await client.getRoot({
     bar: {
         foo: "foo"

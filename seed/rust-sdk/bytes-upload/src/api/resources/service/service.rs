@@ -13,6 +13,20 @@ impl ServiceClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_bytes_upload::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = BytesUploadClient::new(config).expect("Failed to build client");
+    ///     client.service.upload(&vec![], None).await;
+    /// }
+    /// ```
     pub async fn upload(
         &self,
         request: &Vec<u8>,
@@ -24,11 +38,36 @@ impl ServiceClient {
                 "upload-content",
                 Some(request.to_vec()),
                 None,
+                "application/octet-stream",
                 options,
             )
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_bytes_upload::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = BytesUploadClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .upload_with_query_params(
+    ///             &UploadWithQueryParamsRequest {
+    ///                 model: "nova-2".to_string(),
+    ///                 body: vec![],
+    ///                 language: None,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn upload_with_query_params(
         &self,
         request: &UploadWithQueryParamsRequest,
@@ -43,6 +82,7 @@ impl ServiceClient {
                     .string("model", request.model.clone())
                     .string("language", request.language.clone())
                     .build(),
+                "application/octet-stream",
                 options,
             )
             .await

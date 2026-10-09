@@ -9,4 +9,5 @@ export type NavigationItem =
     | FernDocsConfig.LibraryReferenceConfiguration
     | FernDocsConfig.LinkConfiguration
     | FernDocsConfig.ChangelogConfiguration
+    | FernDocsConfig.BlogConfiguration
     | FernDocsConfig.FolderConfiguration;

@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     getElementTypeFromArrayType,
@@ -13,8 +13,11 @@ import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl.js";
-import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation.js";
-import { getAbortSignalExpression } from "../../utils/requestOptionsParameter.js";
+import {
+    GeneratedStreamingEndpointImplementation,
+    RECONNECT_FUNCTION_VARIABLE_NAME
+} from "../../GeneratedStreamingEndpointImplementation.js";
+import { getAbortSignalExpression, REQUEST_OPTIONS_PARAMETER_NAME } from "../../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
@@ -323,66 +326,61 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             noOptionalChaining: true
         });
 
-        // Use offset.step if available to ensure that page is full before returning true
+        // TS-only: when the caller supplies the page-size parameter, treat a short page as the last
+        // page (saves one round-trip at the tail). When the caller omits it, fall back to items-driven
+        // so we never compare against a fabricated default — that fabrication caused both false-negative
+        // termination on short pages and false-positive continuation on full last pages (FER-11160).
+        // Other Fern SDKs are uniformly items-driven; we accept the divergence to keep the optimization
+        // when the caller provides a page-size. `response.hasNextPage` from the API still takes priority
+        // via the `??` wrapper below.
+        const itemsLengthAccess = (): ts.Expression =>
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createParenthesizedExpression(
+                    ts.factory.createBinaryExpression(
+                        itemsPropertyAccess,
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createArrayLiteralExpression([], false)
+                    )
+                ),
+                ts.factory.createIdentifier("length")
+            );
+        const itemsLengthGtZero = ts.factory.createBinaryExpression(
+            itemsLengthAccess(),
+            ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
+            ts.factory.createNumericLiteral("0")
+        );
         const baseHasNextPage: ts.Expression =
             offset.step != null
-                ? // If step is defined, check if items.length >= step (got full page)
-                  (() => {
+                ? (() => {
                       const stepPropertyAccess = context.type.generateGetterForRequestProperty({
                           property: offset.step,
                           variable: "request",
                           isVariableOptional: true
                       });
-                      return ts.factory.createBinaryExpression(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createParenthesizedExpression(
-                                  ts.factory.createBinaryExpression(
-                                      itemsPropertyAccess,
-                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                      ts.factory.createArrayLiteralExpression([], false)
-                                  )
-                              ),
-                              ts.factory.createIdentifier("length")
-                          ),
+                      const stepIsNull = ts.factory.createBinaryExpression(
+                          stepPropertyAccess,
+                          ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                          ts.factory.createNull()
+                      );
+                      const itemsLengthGteStep = ts.factory.createBinaryExpression(
+                          itemsLengthAccess(),
                           ts.factory.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
-                          // access to stepPropertyAccess should be an integer so that it compares correctly to items.length
-                          ts.factory.createCallExpression(
-                              ts.factory.createPropertyAccessExpression(
-                                  ts.factory.createIdentifier("Math"),
-                                  ts.factory.createIdentifier("floor")
-                              ),
-                              undefined,
-                              [
-                                  ts.factory.createParenthesizedExpression(
-                                      ts.factory.createBinaryExpression(
-                                          stepPropertyAccess,
-                                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                          ts.factory.createNumericLiteral(
-                                              this.getDefaultPaginationValue({
-                                                  type: offset.step.property.valueType
-                                              })
-                                          )
-                                      )
-                                  )
-                              ]
+                          stepPropertyAccess
+                      );
+                      const stepGate = ts.factory.createParenthesizedExpression(
+                          ts.factory.createBinaryExpression(
+                              stepIsNull,
+                              ts.factory.createToken(ts.SyntaxKind.BarBarToken),
+                              itemsLengthGteStep
                           )
                       );
+                      return ts.factory.createBinaryExpression(
+                          itemsLengthGtZero,
+                          ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+                          stepGate
+                      );
                   })()
-                : // Fallback: check if items.length > 0 (got something)
-                  ts.factory.createBinaryExpression(
-                      ts.factory.createPropertyAccessExpression(
-                          ts.factory.createParenthesizedExpression(
-                              ts.factory.createBinaryExpression(
-                                  itemsPropertyAccess,
-                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                  ts.factory.createArrayLiteralExpression([], false)
-                              )
-                          ),
-                          ts.factory.createIdentifier("length")
-                      ),
-                      ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
-                      ts.factory.createNumericLiteral("0")
-                  );
+                : itemsLengthGtZero;
 
         // If explicit hasNextPage property exists, it takes priority (?? to fallback to base check)
         const hasNextPage: ts.Expression =
@@ -393,10 +391,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                           variable: "response",
                           isVariableOptional: true
                       });
+                      const rhs =
+                          offset.step != null
+                              ? ts.factory.createParenthesizedExpression(baseHasNextPage)
+                              : baseHasNextPage;
                       return ts.factory.createBinaryExpression(
                           hasNextPagePropertyAccess,
                           ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                          baseHasNextPage
+                          rhs
                       );
                   })()
                 : baseHasNextPage;
@@ -408,46 +410,94 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ts.factory.createArrayLiteralExpression([], false)
         );
 
-        // loadPage
-        const incrementOffset =
+        // loadPage: only advance `_offset` once the next page has loaded, so retrying a failed
+        // getNextPage() re-requests the same offset instead of skipping a page.
+        const offsetIncrement =
             offset.step != null && this.offsetSemantics === "item-index"
-                ? ts.factory.createExpressionStatement(
-                      ts.factory.createBinaryExpression(
-                          ts.factory.createIdentifier("_offset"),
-                          ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
-                          ts.factory.createConditionalExpression(
-                              ts.factory.createBinaryExpression(
-                                  itemsPropertyAccess,
-                                  ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                                  ts.factory.createNull()
-                              ),
-                              ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                              ts.factory.createPropertyAccessExpression(
-                                  itemsPropertyAccessWithoutOptional,
-                                  ts.factory.createIdentifier("length")
-                              ),
-                              ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                              ts.factory.createNumericLiteral("1")
-                          )
-                      )
-                  )
-                : ts.factory.createExpressionStatement(
-                      ts.factory.createBinaryExpression(
-                          ts.factory.createIdentifier("_offset"),
-                          ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
+                ? ts.factory.createParenthesizedExpression(
+                      ts.factory.createConditionalExpression(
+                          ts.factory.createBinaryExpression(
+                              itemsPropertyAccess,
+                              ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                              ts.factory.createNull()
+                          ),
+                          ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                          ts.factory.createPropertyAccessExpression(
+                              itemsPropertyAccessWithoutOptional,
+                              ts.factory.createIdentifier("length")
+                          ),
+                          ts.factory.createToken(ts.SyntaxKind.ColonToken),
                           ts.factory.createNumericLiteral("1")
                       )
-                  );
-        const callEndpoint = ts.factory.createReturnStatement(
-            ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
-                context.coreUtilities.utils.setObjectProperty._invoke({
-                    referenceToObject: ts.factory.createIdentifier("request"),
-                    path: pagePropertyPathForSet,
-                    value: ts.factory.createIdentifier("_offset")
-                })
-            ])
+                  )
+                : ts.factory.createNumericLiteral("1");
+        const nextOffset = ts.factory.createIdentifier("_nextOffset");
+        const declareNextOffset = ts.factory.createVariableStatement(
+            undefined,
+            ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        nextOffset,
+                        undefined,
+                        undefined,
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createIdentifier("_offset"),
+                            ts.factory.createToken(ts.SyntaxKind.PlusToken),
+                            offsetIncrement
+                        )
+                    )
+                ],
+                ts.NodeFlags.Const
+            )
         );
-        const loadPage = [incrementOffset, callEndpoint];
+        const pageResponse = ts.factory.createIdentifier("_pageResponse");
+        const callEndpoint = ts.factory.createReturnStatement(
+            context.coreUtilities.fetcher.HttpResponsePromise.fromPromise(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                                    context.coreUtilities.utils.setObjectProperty._invoke({
+                                        referenceToObject: ts.factory.createIdentifier("request"),
+                                        path: pagePropertyPathForSet,
+                                        value: nextOffset
+                                    })
+                                ]),
+                                ts.factory.createIdentifier("withRawResponse")
+                            ),
+                            undefined,
+                            []
+                        ),
+                        ts.factory.createIdentifier("then")
+                    ),
+                    undefined,
+                    [
+                        ts.factory.createArrowFunction(
+                            undefined,
+                            undefined,
+                            [ts.factory.createParameterDeclaration(undefined, undefined, pageResponse)],
+                            undefined,
+                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createExpressionStatement(
+                                        ts.factory.createBinaryExpression(
+                                            ts.factory.createIdentifier("_offset"),
+                                            ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                            nextOffset
+                                        )
+                                    ),
+                                    ts.factory.createReturnStatement(pageResponse)
+                                ],
+                                true
+                            )
+                        )
+                    ]
+                )
+            )
+        );
+        const loadPage = [declareNextOffset, callEndpoint];
 
         return {
             type: offset.step != null && this.offsetSemantics === "item-index" ? "offset-step" : "offset",
@@ -708,9 +758,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     public getNamesOfThrownExceptions(context: FileContext): string[] {
-        return this.endpoint.errors.map((error) =>
-            getTextOfTsNode(context.sdkError.getReferenceToError(error.error).getExpression())
-        );
+        return [
+            ...this.endpoint.errors.map((error) =>
+                getTextOfTsNode(context.sdkError.getReferenceToError(error.error).getExpression())
+            ),
+            getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()),
+            getTextOfTsNode(context.timeoutSdkError.getReferenceToTimeoutSdkError().getExpression())
+        ];
     }
 
     public getReturnType(context: FileContext): ts.TypeNode {
@@ -816,14 +870,19 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 )
             ];
         } else if (this.response?.type === "streaming") {
+            let isResumableSse = false;
             const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
-                sse: (sse) => ({
-                    type: "sse" as const,
-                    ...(sse.terminator != null
-                        ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
-                        : {}),
-                    ...this.getEventDiscriminator(sse.payload, context)
-                }),
+                sse: (sse) => {
+                    isResumableSse = sse.resumable === true;
+                    return {
+                        type: "sse" as const,
+                        ...(sse.terminator != null
+                            ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
+                            : {}),
+                        ...this.getEventDiscriminator(sse.payload, context),
+                        ...(sse.resumable === true ? { resumable: ts.factory.createTrue() } : {})
+                    };
+                },
                 json: (json) => ({
                     type: "json",
                     messageTerminator: ts.factory.createStringLiteral(json.terminator ?? "\n")
@@ -858,6 +917,53 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                             this.clientClass
                                         )
                                     }),
+                                    ...(isResumableSse
+                                        ? {
+                                              reconnectionEnabled: ts.factory.createBinaryExpression(
+                                                  ts.factory.createPropertyAccessChain(
+                                                      ts.factory.createPropertyAccessChain(
+                                                          ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                          ts.factory.createIdentifier("stream")
+                                                      ),
+                                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                      ts.factory.createIdentifier("reconnectionEnabled")
+                                                  ),
+                                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                                  ts.factory.createPropertyAccessChain(
+                                                      ts.factory.createPropertyAccessChain(
+                                                          this.clientClass.getReferenceToOptions(),
+                                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                          ts.factory.createIdentifier("stream")
+                                                      ),
+                                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                      ts.factory.createIdentifier("reconnectionEnabled")
+                                                  )
+                                              ),
+                                              maxReconnectionAttempts: ts.factory.createBinaryExpression(
+                                                  ts.factory.createPropertyAccessChain(
+                                                      ts.factory.createPropertyAccessChain(
+                                                          ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                          ts.factory.createIdentifier("stream")
+                                                      ),
+                                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                      ts.factory.createIdentifier("maxReconnectionAttempts")
+                                                  ),
+                                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                                  ts.factory.createPropertyAccessChain(
+                                                      ts.factory.createPropertyAccessChain(
+                                                          this.clientClass.getReferenceToOptions(),
+                                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                          ts.factory.createIdentifier("stream")
+                                                      ),
+                                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                      ts.factory.createIdentifier("maxReconnectionAttempts")
+                                                  )
+                                              ),
+                                              reconnect: ts.factory.createIdentifier(RECONNECT_FUNCTION_VARIABLE_NAME)
+                                          }
+                                        : {}),
                                     parse: context.includeSerdeLayer
                                         ? ts.factory.createArrowFunction(
                                               [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
@@ -1224,7 +1330,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getEventDiscriminator(
         payload: FernIr.TypeReference,
         context: FileContext
-    ): { eventDiscriminator: ts.Expression } | Record<string, never> {
+    ): { eventDiscriminator: ts.Expression; envelopeEvents?: ts.Expression } | Record<string, never> {
         if (payload.type !== "named") {
             return {};
         }
@@ -1235,8 +1341,28 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         if (typeDeclaration.shape.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
             return {};
         }
+        const envelopeEvents = getSseEnvelopeEventNames({
+            union: typeDeclaration.shape,
+            getObjectPropertyWireValues: (variant) => {
+                const variantDeclaration = context.type.getTypeDeclaration(variant);
+                if (variantDeclaration.shape.type !== "object") {
+                    return undefined;
+                }
+                return [
+                    ...(variantDeclaration.shape.extendedProperties ?? []),
+                    ...variantDeclaration.shape.properties
+                ].map((property) => getWireValue(property.name));
+            }
+        });
         return {
-            eventDiscriminator: ts.factory.createStringLiteral(getWireValue(typeDeclaration.shape.discriminant))
+            eventDiscriminator: ts.factory.createStringLiteral(getWireValue(typeDeclaration.shape.discriminant)),
+            ...(envelopeEvents.length > 0
+                ? {
+                      envelopeEvents: ts.factory.createArrayLiteralExpression(
+                          envelopeEvents.map((event) => ts.factory.createStringLiteral(event))
+                      )
+                  }
+                : {})
         };
     }
 }

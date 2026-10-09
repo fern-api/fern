@@ -50,6 +50,13 @@ class TypesClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->types->get(
+     *     'date-example',
+     * );
+     * ```
+     *
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,
@@ -96,6 +103,13 @@ class TypesClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->types->update(
+     *     UnionWithTime::date(new DateTime('1994-01-01')),
+     * );
+     * ```
+     *
      * @param UnionWithTime $request
      * @param ?array{
      *   baseUrl?: string,

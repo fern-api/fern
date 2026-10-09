@@ -11,9 +11,9 @@ public partial class Examples
         );
 
         await client.Admin.StoreTracedTestCaseAsync(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            "testCaseId",
-            new StoreTracedTestCaseRequest {
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            testCaseId: "testCaseId",
+            request: new StoreTracedTestCaseRequest {
                 Result = new TestCaseResultWithStdout {
                     Result = new TestCaseResult {
                         ExpectedResult = new VariableValue(

@@ -26,13 +26,27 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetTokenRequest{
+//	    ClientID: "my_oauth_app_123",
+//	    ClientSecret: "sk_live_abcdef123456789",
+//	    Scope: fern.String(
+//	        "read:users",
+//	    ),
+//	}
+//	client.Auth.GetTokenWithClientCredentials(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetTokenWithClientCredentials(
 	ctx context.Context,
 	request *fern.GetTokenRequest,
@@ -49,6 +63,20 @@ func (c *Client) GetTokenWithClientCredentials(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.RefreshTokenRequest{
+//	    ClientID: "my_oauth_app_123",
+//	    ClientSecret: "sk_live_abcdef123456789",
+//	    RefreshToken: "refresh_token",
+//	    Scope: fern.String(
+//	        "read:users",
+//	    ),
+//	}
+//	client.Auth.RefreshToken(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) RefreshToken(
 	ctx context.Context,
 	request *fern.RefreshTokenRequest,

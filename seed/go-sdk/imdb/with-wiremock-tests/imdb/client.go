@@ -26,14 +26,26 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // Add a movie to the database using the movies/* /... path.
+//
+// Example:
+//
+//	request := &testPackageName.CreateMovieRequest{
+//	    Title: "title",
+//	    Rating: 1.1,
+//	}
+//	client.Imdb.CreateMovie(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *testPackageName.CreateMovieRequest,
@@ -50,14 +62,23 @@ func (c *Client) CreateMovie(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &testPackageName.GetMovieImdbRequest{
+//	    MovieID: "movieId",
+//	}
+//	client.Imdb.GetMovie(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieID testPackageName.MovieID,
+	request *testPackageName.GetMovieImdbRequest,
 	opts ...option.RequestOption,
 ) (*testPackageName.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
-		movieID,
+		request,
 		opts...,
 	)
 	if err != nil {

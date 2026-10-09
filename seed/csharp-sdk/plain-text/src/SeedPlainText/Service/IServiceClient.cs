@@ -6,4 +6,14 @@ public partial interface IServiceClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    WithRawResponseTask<string> GetCsvAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<string> GetXmlAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

@@ -91,6 +91,7 @@ class RawSeedApi:
         nullable_text: typing.Optional[str] = OMIT,
         nullable_number: typing.Optional[float] = OMIT,
         non_nullable_text: typing.Optional[str] = OMIT,
+        required_nullable_text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Foo]:
         """
@@ -109,6 +110,9 @@ class RawSeedApi:
         non_nullable_text : typing.Optional[str]
             Regular non-nullable field
 
+        required_nullable_text : typing.Optional[str]
+            Must be sent, but may be null to clear the value
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -124,6 +128,7 @@ class RawSeedApi:
                 "nullable_text": nullable_text,
                 "nullable_number": nullable_number,
                 "non_nullable_text": non_nullable_text,
+                "required_nullable_text": required_nullable_text,
             },
             headers={
                 "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
@@ -225,6 +230,7 @@ class AsyncRawSeedApi:
         nullable_text: typing.Optional[str] = OMIT,
         nullable_number: typing.Optional[float] = OMIT,
         non_nullable_text: typing.Optional[str] = OMIT,
+        required_nullable_text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Foo]:
         """
@@ -243,6 +249,9 @@ class AsyncRawSeedApi:
         non_nullable_text : typing.Optional[str]
             Regular non-nullable field
 
+        required_nullable_text : typing.Optional[str]
+            Must be sent, but may be null to clear the value
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -258,6 +267,7 @@ class AsyncRawSeedApi:
                 "nullable_text": nullable_text,
                 "nullable_number": nullable_number,
                 "non_nullable_text": non_nullable_text,
+                "required_nullable_text": required_nullable_text,
             },
             headers={
                 "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,

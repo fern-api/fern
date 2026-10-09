@@ -9,9 +9,11 @@ The Seed Go library provides convenient access to the Seed APIs from Go.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Environments](#environments)
+- [Pagination](#pagination)
 - [Errors](#errors)
 - [Request Options](#request-options)
 - [Advanced](#advanced)
+  - [Additional Body Properties](#additional-body-properties)
   - [Response Headers](#response-headers)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -64,6 +66,71 @@ client := client.NewClient(
 )
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items.
+You can also iterate page-by-page using the `GetNextPage` helper method.
+
+The `Page.Results` attribute, which contains the relevant list of items returned by the call to the server,
+is the only attribute you will need for most use cases. But if need be, several other attributes are available:
+
+- `Page.Response` contains the full spec-defined response as returned by the server.
+- `Page.StatusCode` and `Page.Header` returns HTTP metadata associated with the call to the server.
+- `Page.RawResponse` returns the pagination object if you need to access its fields (like `Next`).
+
+```go
+// Loop over the items using the provided iterator.
+ctx := context.TODO()
+page, err := client.Endpoints.Pagination.ListItems(
+    ctx,
+    ...
+)
+if err != nil {
+    return err
+}
+iter := page.Iterator()
+for iter.Next(ctx) {
+    item := iter.Current()
+    fmt.Printf("Got item: %v", *item)
+}
+if err := iter.Err(); err != nil {
+    return err
+}
+
+// Alternatively, iterate page-by-page.
+for page != nil {
+    for _, item := range page.Results {
+        fmt.Printf("Got item: %v", *item)
+    }
+    page, err = page.GetNextPage(ctx)
+    if errors.Is(err, core.ErrNoPages) {
+        break
+    }
+    if err != nil {
+        return err
+    }
+}
+
+// Paginated endpoints return a Page with directly accessible headers, status code, and full response
+page, err = client.Endpoints.Pagination.ListItems(
+    ctx,
+    ...
+)
+if err != nil {
+    return err
+}
+
+// Access response metadata directly from the page
+fmt.Printf("Got headers: %v", page.Header)
+fmt.Printf("Got status code: %d", page.StatusCode)
+
+// Access the full spec-defined response object
+fullResponse := page.Response
+
+// Access individual fields from the pagination object
+nextCursor := page.RawResponse.Next
+```
+
 ## Errors
 
 Structured error types are returned from API calls that return non-success status codes. These errors are compatible
@@ -73,7 +140,7 @@ with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 response, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(...)
 if err != nil {
     var apiError *core.APIError
-    if errors.As(err, apiError) {
+    if errors.As(err, &apiError) {
         // Do something with the API error ...
     }
     return err
@@ -111,6 +178,23 @@ response, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(
 ```
 
 ## Advanced
+
+### Additional Body Properties
+
+If you need to send a request body property that isn't part of the generated request type (e.g. an
+undocumented or beta field), use the `option.WithBodyProperties` request option. Keys are sent exactly as
+provided (use the API's wire-format names), and they override any generated field with the same name. If the
+endpoint has no request body, a JSON body is created from the given properties. Body properties are applied to
+JSON and form URL encoded request bodies; they are not applied to multipart file upload or raw byte requests.
+
+```go
+response, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(
+    ...,
+    option.WithBodyProperties(map[string]interface{}{
+        "custom_field": "custom-value",
+    }),
+)
+```
 
 ### Response Headers
 

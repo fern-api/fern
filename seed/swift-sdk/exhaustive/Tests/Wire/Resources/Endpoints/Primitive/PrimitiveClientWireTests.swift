@@ -6,7 +6,7 @@ import Exhaustive
     @Test func getAndReturnString1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -28,7 +28,7 @@ import Exhaustive
     @Test func getAndReturnInt1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 1
                 """#.utf8
@@ -50,7 +50,7 @@ import Exhaustive
     @Test func getAndReturnLong1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 1000000
                 """#.utf8
@@ -72,7 +72,7 @@ import Exhaustive
     @Test func getAndReturnDouble1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 1.1
                 """#.utf8
@@ -94,7 +94,7 @@ import Exhaustive
     @Test func getAndReturnBool1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -116,9 +116,9 @@ import Exhaustive
     @Test func getAndReturnDatetime1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
-                2024-01-15T09:30:00Z
+                "2024-01-15T09:30:00Z"
                 """#.utf8
             )
         )
@@ -138,9 +138,9 @@ import Exhaustive
     @Test func getAndReturnDate1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
-                2023-01-15
+                "2023-01-15"
                 """#.utf8
             )
         )
@@ -160,9 +160,9 @@ import Exhaustive
     @Test func getAndReturnUuid1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
-                d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 """#.utf8
             )
         )
@@ -182,7 +182,7 @@ import Exhaustive
     @Test func getAndReturnBase641() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 SGVsbG8gd29ybGQh
                 """#.utf8

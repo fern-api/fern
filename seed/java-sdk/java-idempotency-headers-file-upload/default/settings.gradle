@@ -1,0 +1,3 @@
+rootProject.name = 'java-idempotency-headers-file-upload'
+
+include 'sample-app'

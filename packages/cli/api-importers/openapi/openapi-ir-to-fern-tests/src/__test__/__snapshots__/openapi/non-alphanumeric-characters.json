@@ -26,8 +26,10 @@
               "pagination": undefined,
               "path": "/settings",
               "request": {
-                "body": "Settings",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Settings",
+                },
               },
               "response": {
                 "docs": "OK",
@@ -94,8 +96,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Settings
-        content-type: application/json
+        body:
+          type: Settings
+          optional: true
       response:
         docs: OK
         type: Settings
@@ -146,4 +149,5 @@ error-discrimination:
 display-name: Enum of separator characters
 ",
   },
+  "specVersion": "1.0.0",
 }

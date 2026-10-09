@@ -51,6 +51,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getMovie(
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -98,6 +105,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getMovie(
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -145,6 +159,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getMovie(
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -192,6 +213,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getMovie(
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -239,6 +267,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getMovie(
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -286,6 +321,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getMovie(
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -333,6 +375,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getMovie(
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,

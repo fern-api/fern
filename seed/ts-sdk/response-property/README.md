@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedResponsePropertyClient } from "@fern/response-property";
 
-const client = new SeedResponsePropertyClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedResponsePropertyClient({ baseUrl: "YOUR_BASE_URL" });
 await client.service.getMovie("string");
 ```
 

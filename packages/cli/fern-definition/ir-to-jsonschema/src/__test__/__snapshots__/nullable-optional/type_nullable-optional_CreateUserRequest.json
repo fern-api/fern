@@ -49,7 +49,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "An alias for a nullable user ID"
     },
     "nullable-optional.OptionalUserId": {
       "oneOf": [
@@ -59,7 +60,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "An alias for an optional user ID"
     },
     "nullable-optional.Address": {
       "type": "object",
@@ -113,7 +115,8 @@
         "zipCode",
         "buildingId"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Nested object for testing"
     }
   }
 }

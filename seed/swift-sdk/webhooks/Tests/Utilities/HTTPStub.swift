@@ -55,7 +55,7 @@ final class HTTPStub {
     func setResponse(
         statusCode: Int = 200,
         headers: [String: String] = ["Content-Type": "application/json"],
-        body: Data
+        body: Foundation.Data
     ) {
         StubURLProtocol.configure(
             id: identifier,
@@ -66,7 +66,7 @@ final class HTTPStub {
     }
 
     func setResponseSequence(
-        _ responses: [(statusCode: Int, headers: [String: String], body: Data)]
+        _ responses: [(statusCode: Int, headers: [String: String], body: Foundation.Data)]
     ) {
         StubURLProtocol.configureSequence(id: identifier, responses: responses)
     }
@@ -92,7 +92,7 @@ private final class StubURLProtocol: Networking.URLProtocol {
     struct Response {
         let statusCode: Int
         let headers: [String: String]
-        let body: Data
+        let body: Foundation.Data
         var lastRequest: Networking.URLRequest?
     }
 
@@ -122,7 +122,7 @@ private final class StubURLProtocol: Networking.URLProtocol {
         id: UUID,
         statusCode: Int,
         headers: [String: String],
-        body: Data
+        body: Foundation.Data
     ) {
         lock.lock()
         responses[id] = Response(
@@ -133,7 +133,7 @@ private final class StubURLProtocol: Networking.URLProtocol {
 
     static func configureSequence(
         id: UUID,
-        responses: [(statusCode: Int, headers: [String: String], body: Data)]
+        responses: [(statusCode: Int, headers: [String: String], body: Foundation.Data)]
     ) {
         lock.lock()
         let responseList = responses.map {

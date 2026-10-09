@@ -13,6 +13,23 @@ impl UserClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .get_user(&"tenant_id".to_string(), &"user_id".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_user(
         &self,
         tenant_id: &str,
@@ -30,6 +47,31 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .create_user(
+    ///             &"tenant_id".to_string(),
+    ///             &User {
+    ///                 name: "name".to_string(),
+    ///                 tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_user(
         &self,
         tenant_id: &str,
@@ -47,6 +89,32 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .update_user(
+    ///             &"tenant_id".to_string(),
+    ///             &"user_id".to_string(),
+    ///             &User {
+    ///                 name: "name".to_string(),
+    ///                 tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update_user(
         &self,
         tenant_id: &str,
@@ -65,6 +133,31 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .search_users(
+    ///             &"tenant_id".to_string(),
+    ///             &"user_id".to_string(),
+    ///             &SearchUsersQueryRequest {
+    ///                 limit: Some(1),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn search_users(
         &self,
         tenant_id: &str,
@@ -94,6 +187,24 @@ impl UserClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .get_user_metadata(&"tenant_id".to_string(), &"user_id".to_string(), 1, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_user_metadata(
         &self,
         tenant_id: &str,
@@ -121,6 +232,30 @@ impl UserClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .get_user_specifics(
+    ///             &"tenant_id".to_string(),
+    ///             &"user_id".to_string(),
+    ///             1,
+    ///             &"thought".to_string(),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_user_specifics(
         &self,
         tenant_id: &str,

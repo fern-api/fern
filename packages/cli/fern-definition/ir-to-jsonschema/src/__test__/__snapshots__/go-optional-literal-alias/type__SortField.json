@@ -1,4 +1,5 @@
 {
   "const": "DEFAULT",
+  "description": "A sort field that only allows the value \"DEFAULT\"",
   "definitions": {}
 }

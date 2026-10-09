@@ -297,7 +297,6 @@ public final class Connection {
 
         /**
          * <p>Connection identifier</p>
-         * <p>Connection identifier</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -309,7 +308,6 @@ public final class Connection {
 
         /**
          * <p>Connection name</p>
-         * <p>Connection name</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -320,7 +318,6 @@ public final class Connection {
         }
 
         /**
-         * <p>The identity provider identifier (auth0, google-oauth2, facebook, etc.)</p>
          * <p>The identity provider identifier (auth0, google-oauth2, facebook, etc.)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

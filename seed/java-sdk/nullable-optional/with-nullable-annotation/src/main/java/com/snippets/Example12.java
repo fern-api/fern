@@ -4,7 +4,6 @@ import com.seed.nullableOptional.SeedNullableOptionalClient;
 import com.seed.nullableOptional.resources.nullableoptional.requests.SearchRequest;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class Example12 {
     public static void main(String[] args) {
@@ -14,10 +13,10 @@ public class Example12 {
         client.nullableOptional()
                 .getSearchResults(SearchRequest.builder()
                         .query("query")
-                        .includeTypes(Optional.of(Arrays.asList("includeTypes", "includeTypes")))
-                        .filters(new HashMap<String, Optional<String>>() {
+                        .includeTypes(Arrays.asList("includeTypes", "includeTypes"))
+                        .filters(new HashMap<String, String>() {
                             {
-                                put("filters", Optional.of("filters"));
+                                put("filters", "filters");
                             }
                         })
                         .build());

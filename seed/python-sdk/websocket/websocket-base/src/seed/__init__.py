@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import realtime
+    from . import realtime, status
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedWebsocket, SeedWebsocket
     from .realtime import (
@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
         SendSnakeCase,
         TranscriptEvent,
     )
+    from .status import StatusResponse
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedWebsocket": ".client",
@@ -36,9 +37,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SendEvent": ".realtime",
     "SendEvent2": ".realtime",
     "SendSnakeCase": ".realtime",
+    "StatusResponse": ".status",
     "TranscriptEvent": ".realtime",
     "__version__": ".version",
     "realtime": ".realtime",
+    "status": ".status",
 }
 
 
@@ -77,7 +80,9 @@ __all__ = [
     "SendEvent",
     "SendEvent2",
     "SendSnakeCase",
+    "StatusResponse",
     "TranscriptEvent",
     "__version__",
     "realtime",
+    "status",
 ]

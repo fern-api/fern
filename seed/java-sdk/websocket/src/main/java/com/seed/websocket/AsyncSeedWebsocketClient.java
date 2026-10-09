@@ -6,20 +6,38 @@ package com.seed.websocket;
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.Suppliers;
 import com.seed.websocket.resources.realtime.AsyncRealtimeClient;
+import com.seed.websocket.resources.status.AsyncStatusClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedWebsocketClient {
+public class AsyncSeedWebsocketClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncRealtimeClient> realtimeClient;
 
+    protected final Supplier<AsyncStatusClient> statusClient;
+
     public AsyncSeedWebsocketClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.realtimeClient = Suppliers.memoize(() -> new AsyncRealtimeClient(clientOptions));
+        this.statusClient = Suppliers.memoize(() -> new AsyncStatusClient(clientOptions));
     }
 
     public AsyncRealtimeClient realtime() {
         return this.realtimeClient.get();
+    }
+
+    public AsyncStatusClient status() {
+        return this.statusClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedWebsocketClientBuilder builder() {

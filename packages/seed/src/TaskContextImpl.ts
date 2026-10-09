@@ -3,6 +3,7 @@
 import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
+    type CaptureExceptionOptions,
     CliError,
     CreateInteractiveTaskParams,
     Finishable,
@@ -101,8 +102,9 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return this.lastFailureMessage;
     }
 
-    public captureException(_error: unknown, _code?: CliError.Code): void {
+    public captureException(_error: unknown, _options?: CaptureExceptionOptions): string | undefined {
         // no-op in seed context
+        return undefined;
     }
 
     public getResult(): TaskResult {

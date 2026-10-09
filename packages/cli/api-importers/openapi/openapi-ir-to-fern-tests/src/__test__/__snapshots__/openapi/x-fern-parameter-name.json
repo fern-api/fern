@@ -119,4 +119,5 @@ headers:
     name: version
 ",
   },
+  "specVersion": "1.0.0",
 }

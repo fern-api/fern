@@ -2,7 +2,11 @@ import { GeneratorName } from "@fern-api/configuration-loader";
 
 import { IrSerialization } from "../../ir-serialization/index.js";
 import { IrVersions } from "../../ir-versions/index.js";
-import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration.js";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration.js";
 
 export const V59_TO_V58_MIGRATION: IrMigration<
     IrVersions.V59.ir.IntermediateRepresentation,
@@ -37,7 +41,8 @@ export const V59_TO_V58_MIGRATION: IrMigration<
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: "1.17.0",
         [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_SDK]: "0.1.1"
+        [GeneratorName.RUST_SDK]: "0.1.1",
+        [GeneratorName.CLI]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V58.IntermediateRepresentation.jsonOrThrow(ir, {

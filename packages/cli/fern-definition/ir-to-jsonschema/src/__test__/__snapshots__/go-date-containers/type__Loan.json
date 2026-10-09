@@ -1,0 +1,106 @@
+{
+  "type": "object",
+  "properties": {
+    "disbursement_dates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "date"
+      }
+    },
+    "unique_dates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "date"
+      }
+    },
+    "dates_by_label": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "date"
+      }
+    },
+    "optional_dates": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "aliased_dates": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/DateList"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timestamps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "unique_timestamps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "timestamps_by_label": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "aliased_timestamps": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/DateTimeList"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "disbursement_dates",
+    "unique_dates",
+    "dates_by_label",
+    "timestamps",
+    "unique_timestamps",
+    "timestamps_by_label"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "DateList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "date"
+      }
+    },
+    "DateTimeList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  }
+}

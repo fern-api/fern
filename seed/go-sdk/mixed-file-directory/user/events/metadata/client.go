@@ -26,14 +26,25 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // Get event metadata.
+//
+// Example:
+//
+//	request := &events.GetEventMetadataRequest{
+//	    ID: "id",
+//	}
+//	client.User.Events.Metadata.GetMetadata(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetMetadata(
 	ctx context.Context,
 	request *events.GetEventMetadataRequest,

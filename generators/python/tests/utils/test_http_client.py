@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Tuple, cast
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import httpx
@@ -8,7 +8,10 @@ from core_utilities.shared.http_client import (
     AsyncHttpClient,
     HttpClient,
     _build_url,
+    _merge_headers,
+    _redact_headers,
     _should_retry,
+    drop_content_type_without_body,
     get_request_body,
     remove_none_from_dict,
 )
@@ -117,6 +120,69 @@ def test_explicit_empty_json_body_is_preserved() -> None:
     json_body2, data_body2 = get_request_body(json=None, data={}, request_options=unrelated_request_options, omit=None)
     assert json_body2 is None
     assert data_body2 == {}
+
+
+def test_omitted_body_sends_no_content() -> None:
+    """A body left at the sentinel was never passed, so nothing is sent.
+
+    This is how an endpoint whose body may be omitted stays bodyless, as opposed to
+    sending an empty ``{}``. An explicit ``None`` still reaches the wire as ``null``.
+    """
+    omit = cast(Any, ...)
+    unrelated_request_options: RequestOptions = {"max_retries": 3}
+
+    json_body, data_body = get_request_body(
+        json=omit, data=None, request_options=unrelated_request_options, omit=omit
+    )
+    assert json_body is None
+    assert data_body is None
+
+    json_body2, data_body2 = get_request_body(
+        json=None, data=omit, request_options=unrelated_request_options, omit=omit
+    )
+    assert json_body2 is None
+    assert data_body2 is None
+
+    # an explicitly passed body is untouched
+    json_body3, _ = get_request_body(json={"hello": "world"}, data=None, request_options=None, omit=omit)
+    assert json_body3 == {"hello": "world"}
+
+
+def test_optional_body_sends_no_content_when_every_property_is_omitted() -> None:
+    """An endpoint that inlines an omittable body sends nothing once every property is omitted.
+
+    The body reaches the client as a dict of sentinels rather than as a single argument, so
+    ``optional_body`` is what tells the client that an empty result means "no body at all".
+    """
+    omit = cast(Any, ...)
+
+    json_body, data_body = get_request_body(
+        json={"amount": omit, "source": omit}, data=None, request_options=None, omit=omit, optional_body=True
+    )
+    assert json_body is None
+    assert data_body is None
+
+    # a body the API requires still goes out as `{}`
+    required_json_body, _ = get_request_body(
+        json={"amount": omit, "source": omit}, data=None, request_options=None, omit=omit
+    )
+    assert required_json_body == {}
+
+    # a property the caller did pass keeps the body
+    populated_json_body, _ = get_request_body(
+        json={"amount": 1, "source": omit}, data=None, request_options=None, omit=omit, optional_body=True
+    )
+    assert populated_json_body == {"amount": 1}
+
+    # additional body parameters keep the body, since the caller asked for them
+    with_additional_body_parameters, _ = get_request_body(
+        json={"amount": omit},
+        data=None,
+        request_options={"additional_body_parameters": {"custom": "value"}},
+        omit=omit,
+        optional_body=True,
+    )
+    assert with_additional_body_parameters == {"custom": "value"}
 
 
 def test_json_body_preserves_none_values() -> None:
@@ -343,8 +409,8 @@ def test_sync_retries_on_connect_error(mock_sleep: MagicMock) -> None:
 
 
 @patch("core_utilities.shared.http_client.time.sleep", return_value=None)
-def test_sync_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
-    """Sync: connection error retries on httpx.RemoteProtocolError."""
+def test_sync_opt_in_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
+    """Sync: ambiguous disconnect retries require an explicit opt-in."""
     mock_client = MagicMock()
     mock_client.request.side_effect = [
         httpx.RemoteProtocolError("Remote end closed connection without response"),
@@ -352,7 +418,7 @@ def test_sync_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
     ]
     http_client = _make_sync_http_client(mock_client)
 
-    response = http_client.request(path="/test", method="GET")
+    response = http_client.request(path="/test", method="POST", request_options={"retry_remote_protocol_errors": True})
 
     assert response.status_code == 200
     assert mock_client.request.call_count == 2
@@ -419,8 +485,8 @@ async def test_async_retries_on_connect_error(mock_sleep: AsyncMock) -> None:
 
 @pytest.mark.asyncio
 @patch("core_utilities.shared.http_client.asyncio.sleep", new_callable=AsyncMock)
-async def test_async_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> None:
-    """Async: connection error retries on httpx.RemoteProtocolError."""
+async def test_async_opt_in_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> None:
+    """Async: ambiguous disconnect retries require an explicit opt-in."""
     mock_client = MagicMock()
     mock_client.request = AsyncMock(
         side_effect=[
@@ -430,7 +496,9 @@ async def test_async_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> 
     )
     http_client = _make_async_http_client(mock_client)
 
-    response = await http_client.request(path="/test", method="GET")
+    response = await http_client.request(
+        path="/test", method="POST", request_options={"retry_remote_protocol_errors": True}
+    )
 
     assert response.status_code == 200
     assert mock_client.request.call_count == 2
@@ -670,23 +738,146 @@ def _make_response(status_code: int) -> httpx.Response:
     return httpx.Response(status_code=status_code, content=b"")
 
 
-@pytest.mark.parametrize(
-    "status_code",
-    [408, 409, 429, 500, 501, 502, 503, 504, 599],
-)
+RETRYABLE_STATUS_CODES = [408, 409, 429, 500, 501, 502, 503, 504, 599]  # {{RETRYABLE_STATUS_CODES}}
+NON_RETRYABLE_STATUS_CODES = [200, 201, 301, 400, 401, 403, 404]  # {{NON_RETRYABLE_STATUS_CODES}}
+
+
+@pytest.mark.parametrize("status_code", RETRYABLE_STATUS_CODES)
 def test_should_retry_retryable_status_codes(status_code: int) -> None:
-    """Legacy mode: retries on 408, 409, 429, and all >= 500."""
     assert _should_retry(_make_response(status_code)) is True
 
 
-@pytest.mark.parametrize(
-    "status_code",
-    [200, 201, 301, 400, 401, 403, 404],
-)
+@pytest.mark.parametrize("status_code", NON_RETRYABLE_STATUS_CODES)
 def test_should_not_retry_non_retryable_status_codes(status_code: int) -> None:
     assert _should_retry(_make_response(status_code)) is False
 
 
-def test_should_retry_599_upper_boundary() -> None:
-    """Legacy mode retries on >= 500, which includes 599."""
-    assert _should_retry(_make_response(599)) is True
+# ---------------------------------------------------------------------------
+# RequestOptions timeout resolution tests (timeout / deprecated timeout_in_seconds)
+# ---------------------------------------------------------------------------
+
+
+def _sync_client_with_base_timeout(base_timeout: Any) -> Tuple[HttpClient, _DummySyncClient]:
+    dummy_client = _DummySyncClient()
+    http_client = HttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: base_timeout,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+    )
+    return http_client, dummy_client
+
+
+def test_sync_request_options_timeout_used() -> None:
+    """The new `timeout` request option is passed through to httpx (in seconds)."""
+    http_client, dummy_client = _sync_client_with_base_timeout(60)
+    http_client.request(path="/test", method="GET", request_options={"timeout": 30})
+    assert dummy_client.last_request_kwargs["timeout"] == 30
+
+
+def test_sync_request_options_timeout_in_seconds_still_works() -> None:
+    """The deprecated `timeout_in_seconds` request option remains backwards compatible."""
+    http_client, dummy_client = _sync_client_with_base_timeout(60)
+    http_client.request(path="/test", method="GET", request_options={"timeout_in_seconds": 45})
+    assert dummy_client.last_request_kwargs["timeout"] == 45
+
+
+def test_sync_request_options_timeout_takes_precedence() -> None:
+    """When both are set, `timeout` wins over `timeout_in_seconds` (same seconds unit)."""
+    http_client, dummy_client = _sync_client_with_base_timeout(60)
+    http_client.request(path="/test", method="GET", request_options={"timeout": 30, "timeout_in_seconds": 45})
+    assert dummy_client.last_request_kwargs["timeout"] == 30
+
+
+def test_sync_request_options_timeout_falls_back_to_base() -> None:
+    """When neither key is set, the client-level base timeout is used."""
+    http_client, dummy_client = _sync_client_with_base_timeout(60)
+    http_client.request(path="/test", method="GET", request_options=None)
+    assert dummy_client.last_request_kwargs["timeout"] == 60
+
+
+def test_sync_request_options_timeout_none_falls_back_to_deprecated() -> None:
+    """An explicit `timeout=None` (dynamic caller) falls back to the deprecated `timeout_in_seconds`."""
+    http_client, dummy_client = _sync_client_with_base_timeout(60)
+    request_options = cast(RequestOptions, {"timeout": None, "timeout_in_seconds": 45})
+    http_client.request(path="/test", method="GET", request_options=request_options)
+    assert dummy_client.last_request_kwargs["timeout"] == 45
+
+
+@pytest.mark.asyncio
+async def test_async_request_options_timeout_takes_precedence() -> None:
+    """Async: `timeout` wins over the deprecated `timeout_in_seconds`."""
+    dummy_client = _DummyAsyncClient()
+    http_client = AsyncHttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: 60,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        async_base_headers=None,
+    )
+    await http_client.request(path="/test", method="GET", request_options={"timeout": 30, "timeout_in_seconds": 45})
+    assert dummy_client.last_request_kwargs["timeout"] == 30
+
+
+def test_drop_content_type_without_body_omits_header_for_bodyless_optional_call() -> None:
+    """An optional-body endpoint the caller left empty must not advertise a media type.
+
+    `get_request_body` drops the body, but the endpoint still hands over the content type it
+    would have used, so a server that branches on the header would see a JSON request carrying
+    nothing at all.
+    """
+    headers = {"content-type": "application/json", "authorization": "Bearer x"}
+
+    assert drop_content_type_without_body(
+        headers, json_body=None, data_body=None, optional_body=True
+    ) == {"authorization": "Bearer x"}
+
+
+def test_drop_content_type_without_body_keeps_header_when_a_body_is_sent() -> None:
+    headers = {"content-type": "application/json"}
+
+    assert (
+        drop_content_type_without_body(headers, json_body={"amount": 60}, data_body=None, optional_body=True)
+        == headers
+    )
+    assert drop_content_type_without_body(headers, json_body=None, data_body="raw", optional_body=True) == headers
+
+
+def test_drop_content_type_without_body_leaves_required_body_endpoints_alone() -> None:
+    """Without the opt-in, an endpoint keeps the header it has always sent."""
+    headers = {"Content-Type": "application/json"}
+
+    assert drop_content_type_without_body(headers, json_body=None, data_body=None, optional_body=False) == headers
+
+
+def test_merge_headers_replaces_case_variants() -> None:
+    merged = _merge_headers(
+        {"PLAID-SECRET": "base", "X-Other": "1"},
+        {"plaid-secret": "endpoint"},
+        None,
+        {"Plaid-Secret": "override"},
+    )
+    assert merged == {"X-Other": "1", "Plaid-Secret": "override"}
+
+
+def test_redact_headers_is_case_insensitive() -> None:
+    redacted = _redact_headers({"AUTHORIZATION": "Bearer t", "X-Api-Key": "k", "Accept": "application/json"})
+    assert redacted == {"AUTHORIZATION": "[REDACTED]", "X-Api-Key": "[REDACTED]", "Accept": "application/json"}
+
+
+def test_http_client_sends_single_header_for_case_variant_override() -> None:
+    dummy_client = _DummySyncClient()
+    http_client = HttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {"PLAID-SECRET": "base"},
+        base_url=lambda: "https://example.com",
+    )
+    http_client.request(
+        path="resource",
+        method="GET",
+        request_options={"additional_headers": {"plaid-secret": "override"}},
+    )
+    sent = dummy_client.last_request_kwargs["headers"]
+    assert [k for k in sent if k.lower() == "plaid-secret"] == ["plaid-secret"]
+    assert sent["plaid-secret"] == "override"

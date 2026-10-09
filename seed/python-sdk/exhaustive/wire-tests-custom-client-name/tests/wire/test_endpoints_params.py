@@ -87,6 +87,17 @@ def test_endpoints_params_modify_with_inline_path() -> None:
     verify_request_count(test_id, "PUT", "/params/path/param", None, 1)
 
 
+def test_endpoints_params_create_with_body_and_query() -> None:
+    """Test createWithBodyAndQuery endpoint with WireMock"""
+    test_id = "endpoints.params.create_with_body_and_query.0"
+    client = get_client(test_id)
+    client.endpoints.params.create_with_body_and_query(
+        fields="_fields",
+        string="string",
+    )
+    verify_request_count(test_id, "POST", "/params/body-and-query", {"_fields": "_fields"}, 1)
+
+
 def test_endpoints_params_get_with_boolean_path() -> None:
     """Test getWithBooleanPath endpoint with WireMock"""
     test_id = "endpoints.params.get_with_boolean_path.0"

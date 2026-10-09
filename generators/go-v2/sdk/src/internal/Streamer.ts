@@ -1,9 +1,10 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getDisableRetriesValue } from "../utils/getDisableRetriesValue.js";
 
 export declare namespace Streamer {
     export interface StreamArgs {
@@ -27,6 +28,7 @@ export class Streamer {
     public static CONSTRUCTOR_FUNC_NAME = "NewStreamer";
     public static STREAM_PARAMS_TYPE_NAME = "StreamParams";
     public static STREAM_METHOD_NAME = "Stream";
+    public static STREAM_WITH_RECONNECT_METHOD_NAME = "StreamWithReconnect";
 
     private context: SdkGeneratorContext;
 
@@ -93,6 +95,18 @@ export class Streamer {
                 )
             },
             {
+                name: "DisableRetries",
+                value: getDisableRetriesValue({
+                    endpoint: args.endpoint,
+                    whenEnabled: go.TypeInstantiation.reference(
+                        go.selector({
+                            on: args.optionsReference,
+                            selector: go.codeblock("DisableRetries")
+                        })
+                    )
+                })
+            },
+            {
                 name: "BodyProperties",
                 value: go.TypeInstantiation.reference(
                     go.selector({
@@ -129,6 +143,29 @@ export class Streamer {
                 )
             }
         ];
+        const resumable = isResumableSseStream(args.streamingResponse);
+        if (resumable) {
+            arguments_.push(
+                {
+                    name: "MaxStreamReconnectAttempts",
+                    value: go.TypeInstantiation.reference(
+                        go.selector({
+                            on: args.optionsReference,
+                            selector: go.codeblock("MaxStreamReconnectAttempts")
+                        })
+                    )
+                },
+                {
+                    name: "DisableStreamReconnection",
+                    value: go.TypeInstantiation.reference(
+                        go.selector({
+                            on: args.optionsReference,
+                            selector: go.codeblock("DisableStreamReconnection")
+                        })
+                    )
+                }
+            );
+        }
         const prefix = this.getStreamPrefix(args.streamingResponse);
         if (prefix != null) {
             arguments_.push({
@@ -154,8 +191,17 @@ export class Streamer {
         if (eventDiscriminator != null) {
             arguments_.push({
                 name: "EventDiscriminator",
-                value: eventDiscriminator
+                value: go.TypeInstantiation.string(eventDiscriminator.field)
             });
+            if (eventDiscriminator.envelopeEvents.length > 0) {
+                arguments_.push({
+                    name: "EnvelopeEvents",
+                    value: go.TypeInstantiation.slice({
+                        valueType: go.Type.string(),
+                        values: eventDiscriminator.envelopeEvents.map((event) => go.TypeInstantiation.string(event))
+                    })
+                });
+            }
         }
         if (args.request != null) {
             arguments_.push({
@@ -165,19 +211,22 @@ export class Streamer {
         }
         // In per-endpoint mode, use the locally generated error codes variable.
         // In global mode, use the ErrorCodes variable from the namespace where the endpoint is defined.
-        const errorCodesReference =
-            this.context.isPerEndpointErrorCodes() && args.errorCodes != null
-                ? args.errorCodes
-                : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference(args.namespaceImportPath));
-        arguments_.push({
-            name: "ErrorDecoder",
-            value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
-        });
+        // In per-endpoint mode, endpoints without errors have no local errorCodes and no global ErrorCodes exists.
+        const errorCodesReference = this.context.isPerEndpointErrorCodes()
+            ? args.errorCodes
+            : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference(args.namespaceImportPath));
+        if (errorCodesReference != null) {
+            arguments_.push({
+                name: "ErrorDecoder",
+                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
+            });
+        }
+        const methodName = resumable ? Streamer.STREAM_WITH_RECONNECT_METHOD_NAME : Streamer.STREAM_METHOD_NAME;
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.invokeMethod({
                     on: args.streamerVariable,
-                    method: Streamer.STREAM_METHOD_NAME,
+                    method: methodName,
                     arguments_: [
                         this.context.getContextParameterReference(),
                         go.TypeInstantiation.structPointer({
@@ -257,7 +306,9 @@ export class Streamer {
         });
     }
 
-    private getEventDiscriminator(streamingResponse: FernIr.StreamingResponse): go.TypeInstantiation | undefined {
+    private getEventDiscriminator(
+        streamingResponse: FernIr.StreamingResponse
+    ): { field: string; envelopeEvents: string[] } | undefined {
         if (streamingResponse.type !== "sse") {
             return undefined;
         }
@@ -276,6 +327,25 @@ export class Streamer {
         ) {
             return undefined;
         }
-        return go.TypeInstantiation.string(getWireValue(union.discriminant));
+        return {
+            field: getWireValue(union.discriminant),
+            envelopeEvents: getSseEnvelopeEventNames({
+                union,
+                getObjectPropertyWireValues: (variant) => {
+                    const variantDeclaration = this.context.getTypeDeclarationOrThrow(variant.typeId);
+                    if (variantDeclaration.shape.type !== "object") {
+                        return undefined;
+                    }
+                    return [
+                        ...(variantDeclaration.shape.extendedProperties ?? []),
+                        ...variantDeclaration.shape.properties
+                    ].map((property) => getWireValue(property.name));
+                }
+            })
+        };
     }
+}
+
+export function isResumableSseStream(streamingResponse: FernIr.StreamingResponse): boolean {
+    return streamingResponse.type === "sse" && streamingResponse.resumable === true;
 }

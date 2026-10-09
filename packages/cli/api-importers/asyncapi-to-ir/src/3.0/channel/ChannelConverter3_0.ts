@@ -7,6 +7,7 @@ import { AbstractChannelConverter } from "../../converters/AbstractChannelConver
 import { AbstractServerConverter } from "../../converters/AbstractServerConverter.js";
 import { ParameterConverter } from "../../converters/ParameterConverter.js";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name.js";
+import { FernExplorerExtension } from "../../extensions/x-fern-explorer.js";
 import { AsyncAPIV3 } from "../index.js";
 import { ChannelParameter } from "../types.js";
 
@@ -81,9 +82,10 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             for (const message of operation.messages) {
                 const resolved = this.context.convertReferenceToTypeReference({ reference: message });
                 if (resolved.ok) {
+                    const docs = this.resolveMessageDocs(message) ?? operation.description;
                     const messageBody = WebSocketMessageBody.reference({
                         bodyType: resolved.reference,
-                        docs: operation.description
+                        docs
                     });
                     messages.push({
                         type: operationId,
@@ -94,7 +96,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                             node: operation,
                             breadcrumbs: this.breadcrumbs
                         }),
-                        docs: operation.description,
+                        docs,
                         methodName: undefined // AsyncAPI direct-to-IR doesn't support x-fern-sdk-method-name extension
                     });
                 }
@@ -114,6 +116,18 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             }) ?? [];
 
         const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
+
+        const globalExplorer = new FernExplorerExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            node: this.context.spec as object
+        }).convert();
+        const channelExplorer = new FernExplorerExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            node: this.channel as object
+        }).convert();
+        const apiPlayground = channelExplorer ?? globalExplorer;
 
         return {
             channel: {
@@ -140,7 +154,8 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                         baseUrl,
                         asyncApiVersion: "v3"
                     })
-                }
+                },
+                apiPlayground
             },
             audiences,
             inlinedTypes: this.inlinedTypes
@@ -260,6 +275,30 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             });
             return undefined;
         }
+    }
+
+    private resolveMessageDocs(message: OpenAPIV3.ReferenceObject): string | undefined {
+        let current: OpenAPIV3.ReferenceObject | AsyncAPIV3.ChannelMessage = message;
+        const seen = new Set<string>();
+        while (this.context.isReferenceObject(current)) {
+            if (seen.has(current.$ref)) {
+                return undefined;
+            }
+            seen.add(current.$ref);
+            const resolved:
+                | { resolved: true; value: OpenAPIV3.ReferenceObject | AsyncAPIV3.ChannelMessage }
+                | { resolved: false } = this.context.resolveReference<
+                OpenAPIV3.ReferenceObject | AsyncAPIV3.ChannelMessage
+            >({
+                reference: current,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            current = resolved.value;
+        }
+        return current.description ?? current.summary;
     }
 
     private resolveChannelServersFromReference(servers: OpenAPIV3.ReferenceObject[]): string | undefined {

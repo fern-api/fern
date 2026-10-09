@@ -8,7 +8,7 @@ export declare namespace DocComment {
     }
 
     interface Args {
-        summary: string;
+        summary?: string;
         description?: string;
         parameters?: Parameter[];
         returns?: string;
@@ -18,7 +18,7 @@ export declare namespace DocComment {
 }
 
 export class DocComment extends AstNode {
-    private readonly summary: string;
+    private readonly summary?: string;
     private readonly description?: string;
     private readonly parameters: DocComment.Parameter[];
     private readonly returns?: string;
@@ -26,7 +26,7 @@ export class DocComment extends AstNode {
 
     public constructor({ summary, description, parameters, returns, errors, examples }: DocComment.Args) {
         super();
-        this.summary = this.sanitizeText(summary);
+        this.summary = summary ? this.sanitizeText(summary) : undefined;
         this.description = description ? this.sanitizeText(description) : undefined;
         this.parameters = (parameters ?? []).map((param) => ({
             name: param.name,
@@ -37,20 +37,31 @@ export class DocComment extends AstNode {
     }
 
     public write(writer: Writer): void {
+        let hasContent = false;
+
         // Write summary
-        this.writeMultilineText(writer, this.summary);
+        if (this.summary) {
+            this.writeMultilineText(writer, this.summary);
+            hasContent = true;
+        }
 
         // Write description if present
         if (this.description) {
-            writer.write("///");
-            writer.newLine();
+            if (hasContent) {
+                writer.write("///");
+                writer.newLine();
+            }
             this.writeMultilineText(writer, this.description);
+            hasContent = true;
         }
 
         // Write parameters using Rust documentation conventions
         if (this.parameters.length > 0) {
-            writer.write("///");
-            writer.newLine();
+            if (hasContent) {
+                writer.write("///");
+                writer.newLine();
+            }
+            hasContent = true;
             writer.write("/// # Arguments");
             writer.newLine();
             writer.write("///");
@@ -71,8 +82,11 @@ export class DocComment extends AstNode {
 
         // Write return information
         if (this.returns) {
-            writer.write("///");
-            writer.newLine();
+            if (hasContent) {
+                writer.write("///");
+                writer.newLine();
+            }
+            hasContent = true;
             writer.write("/// # Returns");
             writer.newLine();
             writer.write("///");
@@ -86,16 +100,20 @@ export class DocComment extends AstNode {
 
         // Write examples
         if (this.examples.length > 0) {
-            writer.write("///");
-            writer.newLine();
+            if (hasContent) {
+                writer.write("///");
+                writer.newLine();
+            }
             writer.write("/// # Examples");
             writer.newLine();
             writer.write("///");
             writer.newLine();
             this.examples.forEach((example) => {
-                writer.write("/// ```rust");
+                // Use `no_run` so `cargo test` compiles doctests without executing
+                // them against live services.
+                writer.write("/// ```no_run");
                 writer.newLine();
-                this.writeMultilineText(writer, example);
+                this.writeCodeBlock(writer, example);
                 writer.write("/// ```");
                 writer.newLine();
             });
@@ -107,6 +125,16 @@ export class DocComment extends AstNode {
         for (const line of lines) {
             writer.write("/// ");
             writer.write(line.trim());
+            writer.newLine();
+        }
+    }
+
+    private writeCodeBlock(writer: Writer, code: string): void {
+        const lines = code.split("\n");
+        for (const line of lines) {
+            // Preserve indentation within code blocks; only trim trailing whitespace.
+            const trimmed = line.trimEnd();
+            writer.write(trimmed.length > 0 ? `/// ${trimmed}` : "///");
             writer.newLine();
         }
     }

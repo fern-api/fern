@@ -9,11 +9,13 @@ import { SecuritySchemeId } from "../../commons/types/SecuritySchemeId.js";
 import { Server } from "../../commons/types/Server.js";
 import { Endpoint } from "./Endpoint.js";
 import { GlobalHeader } from "./GlobalHeader.js";
+import { GlobalParameter } from "./GlobalParameter.js";
 import { GlobalSecurity } from "./GlobalSecurity.js";
 import { IdempotencyHeader } from "./IdempotencyHeader.js";
-import { PrimitiveSchema } from "./PrimitiveSchema.js";
+import { PathParameter } from "./PathParameter.js";
 import { Schemas } from "./Schemas.js";
 import { SdkGroupInfo } from "./SdkGroupInfo.js";
+import { SdkVariable } from "./SdkVariable.js";
 import { Tags } from "./Tags.js";
 import { Webhook } from "./Webhook.js";
 import { WebsocketChannel } from "./WebsocketChannel.js";
@@ -23,9 +25,12 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     FernOpenapiIr.OpenApiIntermediateRepresentation
 > = core.serialization.objectWithoutOptionalProperties({
     apiVersion: core.serialization.unknown().optional(),
+    specVersion: core.serialization.string().optional(),
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
+    baseUrlEnv: core.serialization.string().optional(),
     basePath: core.serialization.string().optional(),
+    basePathParameters: core.serialization.list(PathParameter).optional(),
     servers: core.serialization.list(Server),
     websocketServers: core.serialization.list(Server),
     groups: core.serialization.record(core.serialization.string(), SdkGroupInfo),
@@ -35,20 +40,24 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     webhooks: core.serialization.list(Webhook),
     channels: core.serialization.record(core.serialization.string(), WebsocketChannel),
     groupedSchemas: Schemas,
-    variables: core.serialization.record(core.serialization.string(), PrimitiveSchema),
+    variables: core.serialization.record(core.serialization.string(), SdkVariable),
     nonRequestReferencedSchemas: core.serialization.set(SchemaId),
     securitySchemes: core.serialization.record(SecuritySchemeId, SecurityScheme),
     security: GlobalSecurity.optional(),
     globalHeaders: core.serialization.list(GlobalHeader).optional(),
+    globalParameters: core.serialization.list(GlobalParameter).optional(),
     idempotencyHeaders: core.serialization.list(IdempotencyHeader).optional(),
 });
 
 export declare namespace OpenApiIntermediateRepresentation {
     export interface Raw {
         apiVersion?: unknown | null;
+        specVersion?: string | null;
         title?: string | null;
         description?: string | null;
+        baseUrlEnv?: string | null;
         basePath?: string | null;
+        basePathParameters?: PathParameter.Raw[] | null;
         servers: Server.Raw[];
         websocketServers: Server.Raw[];
         groups: Record<string, SdkGroupInfo.Raw>;
@@ -58,11 +67,12 @@ export declare namespace OpenApiIntermediateRepresentation {
         webhooks: Webhook.Raw[];
         channels: Record<string, WebsocketChannel.Raw>;
         groupedSchemas: Schemas.Raw;
-        variables: Record<string, PrimitiveSchema.Raw>;
+        variables: Record<string, SdkVariable.Raw>;
         nonRequestReferencedSchemas: SchemaId.Raw[];
         securitySchemes: Record<SecuritySchemeId.Raw, SecurityScheme.Raw>;
         security?: GlobalSecurity.Raw | null;
         globalHeaders?: GlobalHeader.Raw[] | null;
+        globalParameters?: GlobalParameter.Raw[] | null;
         idempotencyHeaders?: IdempotencyHeader.Raw[] | null;
     }
 }

@@ -13,14 +13,13 @@
 
 ```go
 request := &fern.PostSubmitRequest{
-        Username: "johndoe",
-        Email: "john@example.com",
-    }
-client.SubmitFormData(
-        context.TODO(),
-        request,
-    )
+    Username: "johndoe",
+    Email: "john@example.com",
 }
+client.SubmitFormData(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -69,14 +68,13 @@ client.SubmitFormData(
 
 ```go
 request := &fern.TokenRequest{
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-    }
-client.GetToken(
-        context.TODO(),
-        request,
-    )
+    ClientID: "client_id",
+    ClientSecret: "client_secret",
 }
+client.GetToken(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Fintech API",
   "servers": [
     {
@@ -688,6 +689,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -822,6 +824,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {

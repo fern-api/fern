@@ -40,7 +40,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUndiscriminatedUnionWithResponsePropertyClient } from "@fern/undiscriminated-union-with-response-property";
 
-const client = new SeedUndiscriminatedUnionWithResponsePropertyClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedUndiscriminatedUnionWithResponsePropertyClient({ baseUrl: "YOUR_BASE_URL" });
 await client.getUnion();
 ```
 

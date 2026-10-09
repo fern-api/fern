@@ -9,6 +9,7 @@ import { AiExamplesConfig } from "./AiExamplesConfig.js";
 import { AnalyticsConfig } from "./AnalyticsConfig.js";
 import { AnnouncementConfig } from "./AnnouncementConfig.js";
 import { BackgroundImageConfiguration } from "./BackgroundImageConfiguration.js";
+import { ChangelogConfiguration } from "./ChangelogConfiguration.js";
 import { CheckConfig } from "./CheckConfig.js";
 import { ColorsConfiguration } from "./ColorsConfiguration.js";
 import { CssConfig } from "./CssConfig.js";
@@ -30,7 +31,7 @@ import { PageActionsConfig } from "./PageActionsConfig.js";
 import { PageConfiguration } from "./PageConfiguration.js";
 import { ProductConfig } from "./ProductConfig.js";
 import { ProgrammingLanguage } from "./ProgrammingLanguage.js";
-import { RedirectConfig } from "./RedirectConfig.js";
+import { RedirectsConfiguration } from "./RedirectsConfiguration.js";
 import { RoleId } from "./RoleId.js";
 import { TabConfig } from "./TabConfig.js";
 import { TabId } from "./TabId.js";
@@ -51,6 +52,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     tabs: core.serialization.record(TabId, TabConfig).optional(),
     versions: core.serialization.list(VersionConfig).optional(),
     products: core.serialization.list(ProductConfig).optional(),
+    changelog: ChangelogConfiguration.optional(),
     landingPage: core.serialization.property("landing-page", PageConfiguration.optional()),
     navigation: NavigationConfig.optional(),
     navbarLinks: core.serialization.property("navbar-links", core.serialization.list(NavbarLink).optional()),
@@ -66,7 +68,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
-    redirects: core.serialization.list(RedirectConfig).optional(),
+    redirects: RedirectsConfiguration.optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: core.serialization.string().optional(),
@@ -94,6 +96,7 @@ export declare namespace DocsConfiguration {
         tabs?: Record<TabId.Raw, TabConfig.Raw> | null;
         versions?: VersionConfig.Raw[] | null;
         products?: ProductConfig.Raw[] | null;
+        changelog?: ChangelogConfiguration.Raw | null;
         "landing-page"?: PageConfiguration.Raw | null;
         navigation?: NavigationConfig.Raw | null;
         "navbar-links"?: NavbarLink.Raw[] | null;
@@ -109,7 +112,7 @@ export declare namespace DocsConfiguration {
         "ai-examples"?: AiExamplesConfig.Raw | null;
         agents?: AgentsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
-        redirects?: RedirectConfig.Raw[] | null;
+        redirects?: RedirectsConfiguration.Raw | null;
         check?: CheckConfig.Raw | null;
         logo?: LogoConfiguration.Raw | null;
         favicon?: string | null;

@@ -25,14 +25,21 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // GET request that always throws an error
+//
+// Example:
+//
+//	client.PropertyBasedError.ThrowError(
+//	    context.TODO(),
+//	)
 func (c *Client) ThrowError(
 	ctx context.Context,
 	opts ...option.RequestOption,

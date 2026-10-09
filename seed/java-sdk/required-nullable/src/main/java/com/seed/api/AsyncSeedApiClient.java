@@ -5,12 +5,13 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.GetFooRequest;
 import com.seed.api.requests.UpdateFooRequest;
 import com.seed.api.types.Foo;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -28,19 +29,57 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<Foo> getFoo(GetFooRequest request) {
-        return this.rawClient.getFoo(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Foo>> rawFuture = this.rawClient.getFoo(request);
+        CompletableFuture<Foo> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Foo> getFoo(GetFooRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getFoo(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Foo>> rawFuture = this.rawClient.getFoo(request, requestOptions);
+        CompletableFuture<Foo> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Foo> updateFoo(String id, UpdateFooRequest request) {
-        return this.rawClient.updateFoo(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Foo>> rawFuture = this.rawClient.updateFoo(id, request);
+        CompletableFuture<Foo> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Foo> updateFoo(String id, UpdateFooRequest request, RequestOptions requestOptions) {
-        return this.rawClient.updateFoo(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Foo>> rawFuture = this.rawClient.updateFoo(id, request, requestOptions);
+        CompletableFuture<Foo> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

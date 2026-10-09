@@ -16,4 +16,6 @@ export interface WebSocketChannel extends FernIr.Declaration {
     messages: FernIr.WebSocketMessage[];
     examples: FernIr.ExampleWebSocketSession[];
     v2Examples: FernIr.V2WebSocketSessionExamples | undefined;
+    /** Whether this channel is shown in the API playground */
+    apiPlayground: boolean | undefined;
 }

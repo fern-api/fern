@@ -25,6 +25,21 @@ impl UserClient {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_multi_line_docs::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MultiLineDocsClient::new(config).expect("Failed to build client");
+    ///     client.user.get_user(&"userId".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_user(
         &self,
         user_id: &str,
@@ -51,6 +66,30 @@ impl UserClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_multi_line_docs::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MultiLineDocsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .create_user(
+    ///             &CreateUserRequest {
+    ///                 name: "name".to_string(),
+    ///                 age: Some(1),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_user(
         &self,
         request: &CreateUserRequest,

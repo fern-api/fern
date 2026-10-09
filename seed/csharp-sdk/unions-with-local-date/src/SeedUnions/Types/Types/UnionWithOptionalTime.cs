@@ -58,7 +58,7 @@ public record UnionWithOptionalTime
     public bool IsDatetime => Type == "datetime";
 
     /// <summary>
-    /// Returns the value as a <see cref="DateOnly?"/> if <see cref="Type"/> is 'date', otherwise throws an exception.
+    /// Returns the value as a <see cref="DateOnly"/> if <see cref="Type"/> is 'date', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'date'.</exception>
     public DateOnly? AsDate() =>
@@ -67,7 +67,7 @@ public record UnionWithOptionalTime
             : throw new global::System.Exception("UnionWithOptionalTime.Type is not 'date'");
 
     /// <summary>
-    /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
+    /// Returns the value as a <see cref="DateTime"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'datetime'.</exception>
     public DateTime? AsDatetime() =>
@@ -110,7 +110,7 @@ public record UnionWithOptionalTime
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="DateOnly?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="DateOnly"/> and returns true if successful.
     /// </summary>
     public bool TryAsDate(out DateOnly? value)
     {
@@ -124,7 +124,7 @@ public record UnionWithOptionalTime
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="DateTime?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="DateTime"/> and returns true if successful.
     /// </summary>
     public bool TryAsDatetime(out DateTime? value)
     {

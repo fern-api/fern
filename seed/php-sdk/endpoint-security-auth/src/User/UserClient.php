@@ -4,6 +4,7 @@ namespace Seed\User;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Core\RoutingAuthProvider;
 use Seed\User\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -32,6 +33,11 @@ class UserClient
     private RawClient $client;
 
     /**
+     * @var ?RoutingAuthProvider $routingAuthProvider @phpstan-ignore-next-line Property is read in endpoint methods and passed to subclients
+     */
+    private ?RoutingAuthProvider $routingAuthProvider;
+
+    /**
      * @param RawClient $client
      * @param ?array{
      *   baseUrl?: string,
@@ -40,16 +46,24 @@ class UserClient
      *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
+     * @param ?RoutingAuthProvider $routingAuthProvider
      */
     public function __construct(
         RawClient $client,
         ?array $options = null,
+        ?RoutingAuthProvider $routingAuthProvider = null,
     ) {
         $this->client = $client;
+        $this->routingAuthProvider = $routingAuthProvider;
         $this->options = $options ?? [];
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -65,6 +79,10 @@ class UserClient
     public function getWithBearer(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
+        $options['headers'] = array_merge(
+            $this->routingAuthProvider?->getAuthHeaders([['Bearer' => []]]) ?? [],
+            $options['headers'] ?? []
+        );
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -95,6 +113,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -110,6 +133,10 @@ class UserClient
     public function getWithApiKey(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
+        $options['headers'] = array_merge(
+            $this->routingAuthProvider?->getAuthHeaders([['ApiKey' => []]]) ?? [],
+            $options['headers'] ?? []
+        );
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -140,6 +167,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -155,6 +187,10 @@ class UserClient
     public function getWithOAuth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
+        $options['headers'] = array_merge(
+            $this->routingAuthProvider?->getAuthHeaders([['OAuth' => ['read-only']]]) ?? [],
+            $options['headers'] ?? []
+        );
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -185,6 +221,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -200,6 +241,10 @@ class UserClient
     public function getWithBasic(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
+        $options['headers'] = array_merge(
+            $this->routingAuthProvider?->getAuthHeaders([['Basic' => []]]) ?? [],
+            $options['headers'] ?? []
+        );
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -230,6 +275,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -245,6 +295,10 @@ class UserClient
     public function getWithInferredAuth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
+        $options['headers'] = array_merge(
+            $this->routingAuthProvider?->getAuthHeaders([['InferredAuth' => []]]) ?? [],
+            $options['headers'] ?? []
+        );
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -275,6 +329,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -290,6 +349,10 @@ class UserClient
     public function getWithAnyAuth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
+        $options['headers'] = array_merge(
+            $this->routingAuthProvider?->getAuthHeaders([['Bearer' => []], ['ApiKey' => []], ['OAuth' => ['read-only']], ['Basic' => []], ['InferredAuth' => []]]) ?? [],
+            $options['headers'] ?? []
+        );
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -320,6 +383,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -335,6 +403,10 @@ class UserClient
     public function getWithAllAuth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
+        $options['headers'] = array_merge(
+            $this->routingAuthProvider?->getAuthHeaders([['Bearer' => [], 'ApiKey' => [], 'OAuth' => ['read-only'], 'Basic' => [], 'InferredAuth' => []]]) ?? [],
+            $options['headers'] ?? []
+        );
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

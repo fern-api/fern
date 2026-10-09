@@ -295,6 +295,12 @@ public final class GetUndiscriminatedUnionRequest {
                     } catch (RuntimeException e) {
                     }
                 }
+                if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("foo")) {
+                    try {
+                        return of(ObjectMappers.JSON_MAPPER.convertValue(value, ReferenceType.class));
+                    } catch (RuntimeException e) {
+                    }
+                }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, DiscriminatedUnion1.class));
                 } catch (RuntimeException e) {
@@ -321,12 +327,6 @@ public final class GetUndiscriminatedUnionRequest {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(
                             value, new TypeReference<Map<String, InlineMapItem1>>() {}));
                 } catch (RuntimeException e) {
-                }
-                if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("foo")) {
-                    try {
-                        return of(ObjectMappers.JSON_MAPPER.convertValue(value, ReferenceType.class));
-                    } catch (RuntimeException e) {
-                    }
                 }
                 throw new JsonParseException(p, "Failed to deserialize");
             }
@@ -457,7 +457,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
-                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -469,7 +468,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
-                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -480,7 +478,6 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
@@ -613,7 +610,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                     /**
                      * <p>lorem ipsum</p>
-                     * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -624,7 +620,6 @@ public final class GetUndiscriminatedUnionRequest {
                     }
 
                     /**
-                     * <p>lorem ipsum</p>
                      * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
@@ -1029,7 +1024,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                     /**
                      * <p>lorem ipsum</p>
-                     * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -1040,7 +1034,6 @@ public final class GetUndiscriminatedUnionRequest {
                     }
 
                     /**
-                     * <p>lorem ipsum</p>
                      * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
@@ -1195,7 +1188,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                     /**
                      * <p>lorem ipsum</p>
-                     * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -1207,7 +1199,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                     /**
                      * <p>lorem ipsum</p>
-                     * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -1218,7 +1209,6 @@ public final class GetUndiscriminatedUnionRequest {
                     }
 
                     /**
-                     * <p>lorem ipsum</p>
                      * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
@@ -1351,7 +1341,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                         /**
                          * <p>lorem ipsum</p>
-                         * <p>lorem ipsum</p>
                          * @return Reference to {@code this} so that method calls can be chained together.
                          */
                         @java.lang.Override
@@ -1362,7 +1351,6 @@ public final class GetUndiscriminatedUnionRequest {
                         }
 
                         /**
-                         * <p>lorem ipsum</p>
                          * <p>lorem ipsum</p>
                          * @return Reference to {@code this} so that method calls can be chained together.
                          */
@@ -1498,7 +1486,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
-                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -1509,7 +1496,6 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
@@ -1739,7 +1725,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
-                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -1750,7 +1735,6 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
@@ -1884,7 +1868,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
-                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -1895,7 +1878,6 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
@@ -2029,7 +2011,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
-                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -2040,7 +2021,6 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */

@@ -27,13 +27,26 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.CreateRequest{
+//	    Decimal: 2.2,
+//	    Even: 100,
+//	    Name: "fern",
+//	    Shape: fern.ShapeSquare,
+//	}
+//	client.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *fern.CreateRequest,
@@ -50,6 +63,17 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetRequest{
+//	    Decimal: 2.2,
+//	    Even: 100,
+//	    Name: "fern",
+//	}
+//	client.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *fern.GetRequest,

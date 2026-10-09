@@ -6,6 +6,8 @@ import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { getEndpointRequest } from "../utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { getItemIteratorDocs, getItemIteratorReturnType } from "../utils/itemIteratorPagination.js";
+import { responseBodyLoader } from "../utils/responseBody.js";
 import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
 
 export declare namespace HttpEndpointGenerator {
@@ -16,10 +18,13 @@ export declare namespace HttpEndpointGenerator {
 }
 
 const QUERY_PARAMETER_BAG_NAME = "query_params";
+const HEADER_PARAMETER_BAG_NAME = "headers";
 export const HTTP_RESPONSE_VN = "response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
 export const ERROR_CLASS_VN = "error_class";
+export const ERROR_BODY_VN = "error_body";
+export const ERROR_TYPES_VN = "error_types";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
@@ -43,7 +48,8 @@ export class HttpEndpointGenerator {
     }): ruby.Method {
         const rawClient = new RawClient(this.context);
 
-        const returnType = getEndpointReturnType({ context: this.context, endpoint });
+        const itemIteratorReturnType = getItemIteratorReturnType({ context: this.context, endpoint });
+        const returnType = itemIteratorReturnType ?? getEndpointReturnType({ context: this.context, endpoint });
 
         const request = getEndpointRequest({
             context: this.context,
@@ -56,7 +62,17 @@ export class HttpEndpointGenerator {
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
         const queryParameterCodeBlock = request?.getQueryParameterCodeBlock(QUERY_PARAMETER_BAG_NAME);
         const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
-        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const { pathParameterReferences, hasPathParametersFromParams } = this.getPathParameterReferences({
+            endpoint
+        });
+        const boundSdkVariables = this.context.getSdkVariablesForEndpoint(endpoint);
+        for (const option of boundSdkVariables) {
+            statements.push(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(this.context.getSdkVariableRequiredGuard(option));
+                })
+            );
+        }
 
         // params is referenced whenever the request emits a body/query/header code
         // block (each reference produced by these blocks uses `params` either in a
@@ -68,7 +84,7 @@ export class HttpEndpointGenerator {
             requestBodyCodeBlock != null ||
             queryParameterCodeBlock != null ||
             headerParameterCodeBlock != null ||
-            Object.keys(pathParameterReferences).length > 0;
+            hasPathParametersFromParams;
 
         if (paramsUsed) {
             statements.push(
@@ -86,7 +102,10 @@ export class HttpEndpointGenerator {
             );
         }
 
-        if (requestBodyCodeBlock?.code != null) {
+        // When the page property lives in the request body, the body has to be rebuilt from
+        // `params` on every page, so any body preparation moves into the pagination block.
+        const pagesThroughRequestBody = this.getBodyPageProperty(endpoint) != null;
+        if (requestBodyCodeBlock?.code != null && !pagesThroughRequestBody) {
             statements.push(requestBodyCodeBlock.code);
         }
 
@@ -97,15 +116,75 @@ export class HttpEndpointGenerator {
         if (headerParameterCodeBlock?.code != null) {
             statements.push(headerParameterCodeBlock.code);
         }
+
+        const requestType = request?.getRequestType();
+        let headerBagReference = headerParameterCodeBlock?.headerParameterBagReference;
+        const literalHeaders = this.getLiteralHeaders({ serviceId, endpoint });
+        if (literalHeaders.length > 0) {
+            if (headerBagReference == null) {
+                statements.push(
+                    ruby.codeblock(
+                        `${HEADER_PARAMETER_BAG_NAME} = { ${literalHeaders
+                            .map(({ wireValue, value }) => `${JSON.stringify(wireValue)} => ${JSON.stringify(value)}`)
+                            .join(", ")} }`
+                    )
+                );
+                headerBagReference = HEADER_PARAMETER_BAG_NAME;
+            } else {
+                for (const { wireValue, value } of literalHeaders) {
+                    statements.push(
+                        ruby.codeblock(
+                            `${headerBagReference}[${JSON.stringify(wireValue)}] = ${JSON.stringify(value)} unless ${headerBagReference}.key?(${JSON.stringify(wireValue)})`
+                        )
+                    );
+                }
+            }
+        }
+        const idempotencyKey = this.getAutoGeneratedIdempotencyKey({ endpoint, requestType });
+        if (idempotencyKey != null) {
+            if (headerBagReference == null) {
+                statements.push(
+                    ruby.codeblock(
+                        `${HEADER_PARAMETER_BAG_NAME} = { "${idempotencyKey.headerName}" => ${idempotencyKey.expression} }`
+                    )
+                );
+                headerBagReference = HEADER_PARAMETER_BAG_NAME;
+            } else {
+                statements.push(
+                    ruby.codeblock(
+                        `${headerBagReference}["${idempotencyKey.headerName}"] = ${idempotencyKey.expression}`
+                    )
+                );
+            }
+        }
+
+        // Under endpoint-security, route this endpoint's declared auth schemes into the
+        // request headers. The routing provider (held by the RawClient) returns only the
+        // headers for the schemes this endpoint requires; the flat client headers carry
+        // no auth. Merge them under any explicit headers so caller/SDK headers win.
+        if (this.context.isEndpointSecurity()) {
+            const securityLiteral = this.getEndpointSecurityLiteral(endpoint);
+            const authHeadersExpression = `@client.auth_headers_for_endpoint(security: ${securityLiteral})`;
+            if (headerBagReference == null) {
+                statements.push(ruby.codeblock(`${HEADER_PARAMETER_BAG_NAME} = ${authHeadersExpression}`));
+                headerBagReference = HEADER_PARAMETER_BAG_NAME;
+            } else {
+                statements.push(
+                    ruby.codeblock(`${headerBagReference} = ${authHeadersExpression}.merge(${headerBagReference})`)
+                );
+            }
+        }
+
         const baseUrlName = this.getBaseUrlNameForEndpoint(endpoint);
         const sendRequestCodeBlock = rawClient.sendRequest({
             baseUrl: ruby.codeblock(""),
             pathParameterReferences,
             endpoint,
-            requestType: request?.getRequestType(),
+            requestType,
             queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
-            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            headerBagReference,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            omitContentTypeWithoutBody: requestBodyCodeBlock?.omitContentTypeWithoutBody,
             baseUrlName
         });
 
@@ -119,6 +198,7 @@ export class HttpEndpointGenerator {
         });
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
+        const codeExample = this.getEndpointCodeExample({ endpoint });
         const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
         const requestOptionsDocs = this.generateRequestOptionsDocs();
 
@@ -183,17 +263,16 @@ export class HttpEndpointGenerator {
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
-                                    value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
-                                    )
+                                    value: ruby.codeblock(this.getPagePropertyRead(endpoint.pagination.page))
                                 })
                             ],
                             block: [
                                 ["next_cursor"],
                                 [
-                                    ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_cursor`
-                                    ),
+                                    ruby.codeblock(this.getPagePropertyWrite(endpoint.pagination.page, "next_cursor")),
+                                    ...(pagesThroughRequestBody && requestBodyCodeBlock?.code != null
+                                        ? [requestBodyCodeBlock.code]
+                                        : []),
                                     ...requestStatements
                                 ]
                             ]
@@ -212,9 +291,7 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "initial_page",
-                                    value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
-                                    )
+                                    value: ruby.codeblock(this.getPagePropertyRead(endpoint.pagination.page))
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
@@ -244,9 +321,10 @@ export class HttpEndpointGenerator {
                             block: [
                                 ["next_page"],
                                 [
-                                    ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_page`
-                                    ),
+                                    ruby.codeblock(this.getPagePropertyWrite(endpoint.pagination.page, "next_page")),
+                                    ...(pagesThroughRequestBody && requestBodyCodeBlock?.code != null
+                                        ? [requestBodyCodeBlock.code]
+                                        : []),
                                     ...requestStatements
                                 ]
                             ]
@@ -262,6 +340,15 @@ export class HttpEndpointGenerator {
                 default:
                     assertNever(endpoint.pagination);
             }
+        }
+
+        if (this.context.customConfig.fetchFirstPageOnCall === true && itemIteratorReturnType != null) {
+            requestStatements = requestStatements.map((statement) =>
+                ruby.codeblock((writer) => {
+                    statement.write(writer);
+                    writer.write(".load_first_page");
+                })
+            );
         }
 
         statements.push(...requestStatements);
@@ -284,8 +371,135 @@ export class HttpEndpointGenerator {
                 })
             },
             splatOptionDocs: [...requestOptionsDocs, ...splatOptionDocs],
+            codeExample,
             statements
         });
+    }
+
+    /**
+     * Returns the page property of a cursor or offset paginated endpoint when it is sent in the
+     * request body (e.g. `$request.cursor` or `$request.options.offset`), rather than as a
+     * query parameter.
+     */
+    private getBodyPageProperty(endpoint: FernIr.HttpEndpoint): FernIr.RequestProperty | undefined {
+        const pagination = endpoint.pagination;
+        if (pagination == null || (pagination.type !== "cursor" && pagination.type !== "offset")) {
+            return undefined;
+        }
+        return pagination.page.property.type === "body" ? pagination.page : undefined;
+    }
+
+    /**
+     * The Ruby expression reading the page property's initial value. Query parameters are read from
+     * the query bag by wire name; body properties are read from the normalized `params` hash, walking
+     * through any enclosing objects, which may be hashes or model instances.
+     */
+    private getPagePropertyRead(page: FernIr.RequestProperty): string {
+        if (page.property.type === "query") {
+            return `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(page.property.name)}"]`;
+        }
+        const leaf = this.case.snakeSafe(page.property.name);
+        const path = (page.propertyPath ?? []).map((item) => this.case.snakeSafe(item.name));
+        if (path.length === 0) {
+            return `${PARAMS_VN}[:${leaf}]`;
+        }
+        const [first, ...rest] = path;
+        let container = `${PARAMS_VN}[:${first}]`;
+        for (const name of rest) {
+            container = `${this.getNormalizeKeysReference()}(${container}.to_h)[:${name}]`;
+        }
+        return `${this.getNormalizeKeysReference()}(${container}.to_h)[:${leaf}]`;
+    }
+
+    /**
+     * The Ruby statement assigning the next page value to the page property. Body properties nested
+     * inside objects are written by rebuilding each enclosing object as a hash, so the caller's
+     * values are never mutated and an omitted parent object is created.
+     */
+    private getPagePropertyWrite(page: FernIr.RequestProperty, value: string): string {
+        if (page.property.type === "query") {
+            return `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(page.property.name)}"] = ${value}`;
+        }
+        const leaf = this.case.snakeSafe(page.property.name);
+        const path = (page.propertyPath ?? []).map((item) => this.case.snakeSafe(item.name));
+        if (path.length === 0) {
+            return `${PARAMS_VN}[:${leaf}] = ${value}`;
+        }
+        const normalizeKeys = this.getNormalizeKeysReference();
+        const build = (hash: string, remaining: string[], depth: number): string => {
+            const [next, ...rest] = remaining;
+            if (next == null) {
+                return `${hash}.merge(${leaf}: ${value})`;
+            }
+            const variable = `level${depth}`;
+            return `${hash}.then { |${variable}| ${variable}.merge(${next}: ${build(
+                `${normalizeKeys}(${variable}[:${next}].to_h)`,
+                rest,
+                depth + 1
+            )}) }`;
+        };
+        const [first, ...rest] = path;
+        return `${PARAMS_VN}[:${first}] = ${build(`${normalizeKeys}(${PARAMS_VN}[:${first}].to_h)`, rest, 1)}`;
+    }
+
+    /** Whether the endpoint returns its successful response body as a raw string (text, bytes, or a file download). */
+    private returnsRawResponseBody(endpoint: FernIr.HttpEndpoint): boolean {
+        const type = endpoint.response?.body?.type;
+        return type === "text" || type === "bytes" || type === "fileDownload";
+    }
+
+    private getNormalizeKeysReference(): string {
+        return `${this.context.getRootModuleName()}::Internal::Types::Utils.normalize_keys`;
+    }
+
+    /**
+     * When the IR enables idempotency-key auto-generation (`ir.sdkConfig.idempotencyKeyGeneration`
+     * is present) and the endpoint's HTTP method is one of the configured methods, returns the
+     * configured wire header name plus the Ruby expression to assign to it. For endpoints that
+     * declare an idempotency header matching the configured wire name the caller-supplied value
+     * wins and the generated UUID is only the fallback; otherwise a freshly generated UUID is used.
+     * Returns undefined when no key should be injected.
+     */
+    private getAutoGeneratedIdempotencyKey({
+        endpoint,
+        requestType
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        requestType: RawClient.RequestBodyType | undefined;
+    }): { headerName: string; expression: string } | undefined {
+        const idempotencyKeyGeneration = this.context.ir.sdkConfig.idempotencyKeyGeneration;
+        if (idempotencyKeyGeneration == null) {
+            return undefined;
+        }
+        if (!idempotencyKeyGeneration.methods.includes(endpoint.method)) {
+            return undefined;
+        }
+        // Only the JSON and multipart request paths thread a header bag through to the
+        // underlying request; other paths would leave the bag unused.
+        if (requestType !== "json" && requestType !== "multipartform") {
+            return undefined;
+        }
+        const headerName = idempotencyKeyGeneration.headerName;
+        // If a declared endpoint header already carries the configured wire name it is
+        // emitted by the header code block; avoid a duplicate entry.
+        const hasEndpointIdempotencyKeyHeader = endpoint.headers.some(
+            (header) => getWireValue(header.name).toLowerCase() === headerName.toLowerCase()
+        );
+        if (hasEndpointIdempotencyKeyHeader) {
+            return undefined;
+        }
+        const declaresIdempotencyKey =
+            endpoint.idempotent &&
+            this.context.ir.idempotencyHeaders.some(
+                (header) => getWireValue(header.name).toLowerCase() === headerName.toLowerCase()
+            );
+        // Generation of the key lives in a single core helper so the underlying
+        // source of randomness is not repeated at every eligible endpoint.
+        const generateExpression = `${this.context.getRootModuleName()}::Internal::IdempotencyKey.generate`;
+        const expression = declaresIdempotencyKey
+            ? `request_options[:idempotency_key] || ${generateExpression}`
+            : generateExpression;
+        return { headerName, expression };
     }
 
     private generateRequestProcedure({
@@ -331,9 +545,7 @@ export class HttpEndpointGenerator {
         statements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
 
         const jsonResponseBody =
-            endpoint.response?.body != null &&
-            endpoint.response.body.type === "json" &&
-            endpoint.response.body.value.responseBodyType.type === "named"
+            endpoint.response?.body != null && endpoint.response.body.type === "json"
                 ? endpoint.response.body.value
                 : undefined;
 
@@ -343,8 +555,29 @@ export class HttpEndpointGenerator {
                 `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
             );
 
+            const errorBodyTypes = this.getErrorBodyTypes(endpoint);
+            if (errorBodyTypes.length === 0) {
+                ruby.raise({
+                    errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                }).write(writer);
+                return;
+            }
+            writer.writeLine(`${ERROR_TYPES_VN} = {`);
+            writer.indent();
+            errorBodyTypes.forEach(({ matcher, typeId }, index) => {
+                writer.write(`${matcher} => `);
+                writer.writeNode(this.context.getReferenceToTypeId(typeId));
+                writer.writeLine(index < errorBodyTypes.length - 1 ? "," : "");
+            });
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine(
+                `${ERROR_BODY_VN} = ${rootModuleName}::Errors::ResponseError.load_error_body(${CODE_VN}, ${HTTP_RESPONSE_VN}.body, ${ERROR_TYPES_VN})`
+            );
             ruby.raise({
-                errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                errorClass: ruby.codeblock(
+                    `${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN}, body: ${ERROR_BODY_VN})`
+                )
             }).write(writer);
         });
 
@@ -356,9 +589,6 @@ export class HttpEndpointGenerator {
                         thenBody: [
                             ruby.codeblock((writer) => {
                                 if (wrapWithHttpResponse) {
-                                    if (jsonResponseBody.responseBodyType.type !== "named") {
-                                        writer.writeLine(`parsed_response = nil`);
-                                    }
                                     this.loadResponseBodyFromJson({
                                         writer,
                                         typeReference: jsonResponseBody.responseBodyType,
@@ -388,6 +618,9 @@ export class HttpEndpointGenerator {
                     elseBody: errorBody
                 })
             );
+        } else if (this.returnsRawResponseBody(endpoint)) {
+            statements.push(ruby.codeblock(`return ${HTTP_RESPONSE_VN}.body if ${CODE_VN}.between?(200, 299)\n`));
+            statements.push(errorBody);
         } else {
             statements.push(ruby.codeblock(`return if ${CODE_VN}.between?(200, 299)\n`));
             statements.push(errorBody);
@@ -396,10 +629,72 @@ export class HttpEndpointGenerator {
         return statements;
     }
 
-    private getPathParameterReferences({ endpoint }: { endpoint: FernIr.HttpEndpoint }): Record<string, string> {
+    /**
+     * Returns the wire name and value of every service- and endpoint-level header whose
+     * type is a literal. These headers have no caller-supplied value, so they must be
+     * emitted directly into the request's header bag (callers can still override them
+     * via request_options additional headers).
+     */
+    private getLiteralHeaders({
+        serviceId,
+        endpoint
+    }: {
+        serviceId: FernIr.ServiceId;
+        endpoint: FernIr.HttpEndpoint;
+    }): { wireValue: string; value: string }[] {
+        const service = this.context.getHttpServiceOrThrow(serviceId);
+        const literalHeaders: { wireValue: string; value: string }[] = [];
+        for (const header of [...service.headers, ...endpoint.headers]) {
+            const value = this.getLiteralHeaderValue(header.valueType);
+            if (value != null) {
+                literalHeaders.push({ wireValue: getWireValue(header.name), value });
+            }
+        }
+        return literalHeaders;
+    }
+
+    private getLiteralHeaderValue(typeReference: FernIr.TypeReference): string | undefined {
+        switch (typeReference.type) {
+            case "container":
+                switch (typeReference.container.type) {
+                    case "literal":
+                        return typeReference.container.literal.type === "string"
+                            ? typeReference.container.literal.string
+                            : String(typeReference.container.literal.boolean);
+                    case "optional":
+                        return this.getLiteralHeaderValue(typeReference.container.optional);
+                    case "nullable":
+                        return this.getLiteralHeaderValue(typeReference.container.nullable);
+                    default:
+                        return undefined;
+                }
+            case "named": {
+                const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.getLiteralHeaderValue(typeDeclaration.shape.aliasOf);
+                }
+                return undefined;
+            }
+            default:
+                return undefined;
+        }
+    }
+
+    private getPathParameterReferences({ endpoint }: { endpoint: FernIr.HttpEndpoint }): {
+        pathParameterReferences: Record<string, string>;
+        hasPathParametersFromParams: boolean;
+    } {
         const pathParameterReferences: Record<string, string> = {};
         const defaultExtractor = new DefaultValueExtractor(this.context);
+        let hasPathParametersFromParams = false;
         for (const pathParam of endpoint.allPathParameters) {
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParam);
+            if (sdkVariable != null) {
+                pathParameterReferences[getOriginalName(pathParam.name)] =
+                    this.context.getSdkVariableInstanceVariable(sdkVariable);
+                continue;
+            }
+            hasPathParametersFromParams = true;
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
@@ -411,7 +706,7 @@ export class HttpEndpointGenerator {
                 pathParameterReferences[getOriginalName(pathParam.name)] = `${PARAMS_VN}[:${parameterName}]`;
             }
         }
-        return pathParameterReferences;
+        return { pathParameterReferences, hasPathParametersFromParams };
     }
 
     private getPathParameterName({ pathParameter }: { pathParameter: FernIr.PathParameter }): string {
@@ -427,19 +722,74 @@ export class HttpEndpointGenerator {
         typeReference: FernIr.TypeReference;
         storeInVariable?: boolean;
     }): void {
-        switch (typeReference.type) {
-            case "named": {
-                const loadExpression = `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`;
-                if (storeInVariable) {
-                    writer.writeLine(`parsed_response = ${loadExpression}`);
-                } else {
-                    writer.writeLine(loadExpression);
-                }
-                break;
-            }
-            default:
-                break;
+        const wrapInvalidJson = this.context.customConfig.wrapInvalidJsonResponses === true;
+        if (wrapInvalidJson) {
+            writer.writeLine("begin");
+            writer.indent();
         }
+        if (storeInVariable) {
+            writer.write("parsed_response = ");
+        }
+        writer.writeNode(
+            responseBodyLoader({
+                context: this.context,
+                typeReference,
+                responseVariableName: HTTP_RESPONSE_VN
+            })
+        );
+        writer.newLine();
+        if (!wrapInvalidJson) {
+            return;
+        }
+        writer.dedent();
+        writer.writeLine("rescue ::JSON::ParserError");
+        writer.indent();
+        writer.writeLine(
+            `raise ${this.context.getRootModuleName()}::Errors::ResponseError.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`
+        );
+        writer.dedent();
+        writer.writeLine("end");
+    }
+
+    /**
+     * Status matchers (`404`, `400..499`) paired with the named body type of each error the
+     * endpoint declares, exact statuses before wildcards so the most specific one wins.
+     */
+    private getErrorBodyTypes(endpoint: FernIr.HttpEndpoint): { matcher: string; typeId: FernIr.TypeId }[] {
+        const exact: { matcher: string; typeId: FernIr.TypeId }[] = [];
+        const wildcard: { matcher: string; typeId: FernIr.TypeId }[] = [];
+        const seen = new Set<string>();
+        for (const responseError of endpoint.errors) {
+            const declaration = this.context.ir.errors[responseError.error.errorId];
+            const typeId = declaration?.type != null ? this.getNamedTypeId(declaration.type) : undefined;
+            if (declaration == null || typeId == null) {
+                continue;
+            }
+            const matcher = declaration.isWildcardStatusCode
+                ? `(${declaration.statusCode}..${declaration.statusCode + 99})`
+                : `${declaration.statusCode}`;
+            if (seen.has(matcher)) {
+                continue;
+            }
+            seen.add(matcher);
+            (declaration.isWildcardStatusCode ? wildcard : exact).push({ matcher, typeId });
+        }
+        return [...exact, ...wildcard];
+    }
+
+    private getNamedTypeId(typeReference: FernIr.TypeReference): FernIr.TypeId | undefined {
+        if (typeReference.type === "named") {
+            return typeReference.typeId;
+        }
+        if (typeReference.type === "container") {
+            if (typeReference.container.type === "optional") {
+                return this.getNamedTypeId(typeReference.container.optional);
+            }
+            if (typeReference.container.type === "nullable") {
+                return this.getNamedTypeId(typeReference.container.nullable);
+            }
+        }
+        return undefined;
     }
 
     private generateEnhancedDocstring({
@@ -448,7 +798,19 @@ export class HttpEndpointGenerator {
         endpoint: FernIr.HttpEndpoint;
         request: ReturnType<typeof getEndpointRequest>;
     }): string {
-        return endpoint.docs ?? "";
+        const paginationDocs = getItemIteratorDocs({ context: this.context, endpoint });
+        return [endpoint.docs, paginationDocs].filter((docs) => docs != null && docs !== "").join("\n\n");
+    }
+
+    private getEndpointCodeExample({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
+        const exampleCall = this.context.maybeGetExampleEndpointCall(endpoint);
+        if (exampleCall == null) {
+            return undefined;
+        }
+        return this.context.snippetGenerator.getSingleEndpointSnippet({
+            endpoint,
+            example: exampleCall
+        })?.endpointCall;
     }
 
     private generateRequestOptionsDocs(): string[] {
@@ -465,6 +827,9 @@ export class HttpEndpointGenerator {
         const optionTags: string[] = [];
 
         for (const pathParam of endpoint.allPathParameters) {
+            if (this.context.getSdkVariableForPathParameter(pathParam) != null) {
+                continue;
+            }
             const paramName = this.case.snakeSafe(pathParam.name);
             const typeString = this.typeReferenceToYardString(pathParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
@@ -504,6 +869,27 @@ export class HttpEndpointGenerator {
         normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
         normalized = normalized.replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
         return normalized;
+    }
+
+    /**
+     * Renders the endpoint's static `security` requirement as a Ruby literal for
+     * `auth_headers_for_endpoint(security:)`: an array of hashes mapping each scheme
+     * key to its (possibly empty) list of scopes, e.g. `[{ "Bearer" => [] }]` or
+     * `[{ "OAuth" => ["read-only"] }]`. Returns `nil` when the endpoint declares no
+     * security (the routing method then applies no auth).
+     */
+    private getEndpointSecurityLiteral(endpoint: FernIr.HttpEndpoint): string {
+        if (endpoint.security == null) {
+            return "nil";
+        }
+        const requirements = endpoint.security.map((requirement) => {
+            const entries = Object.entries(requirement).map(([schemeKey, scopes]) => {
+                const scopesLiteral = `[${scopes.map((scope) => JSON.stringify(scope)).join(", ")}]`;
+                return `${JSON.stringify(schemeKey)} => ${scopesLiteral}`;
+            });
+            return entries.length > 0 ? `{ ${entries.join(", ")} }` : "{}";
+        });
+        return `[${requirements.join(", ")}]`;
     }
 
     private getBaseUrlNameForEndpoint(endpoint: FernIr.HttpEndpoint): string | undefined {

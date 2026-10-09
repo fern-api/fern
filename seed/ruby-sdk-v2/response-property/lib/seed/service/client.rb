@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.get_movie(request: "string")
+      #
       # @return [Seed::Service::Types::Response]
       def get_movie(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -25,7 +28,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -35,7 +38,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Response.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -49,6 +52,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
       #
       # @return [Seed::Service::Types::Response]
       def get_movie_docs(request_options: {}, **params)
@@ -57,7 +63,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -67,7 +73,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Response.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -81,6 +87,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
       #
       # @return [Seed::Types::StringResponse]
       def get_movie_name(request_options: {}, **params)
@@ -89,7 +98,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -99,7 +108,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::StringResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::StringResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -113,6 +122,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
       #
       # @return [Seed::Service::Types::Response]
       def get_movie_metadata(request_options: {}, **params)
@@ -121,7 +133,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -131,7 +143,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Response.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -145,6 +157,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
       #
       # @return [Seed::Service::Types::Response, nil]
       def get_optional_movie(request_options: {}, **params)
@@ -153,37 +168,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
-      end
-
-      # @param request_options [Hash]
-      # @param params [Hash]
-      # @option request_options [String] :base_url
-      # @option request_options [Hash{String => Object}] :additional_headers
-      # @option request_options [Hash{String => Object}] :additional_query_parameters
-      # @option request_options [Hash{String => Object}] :additional_body_parameters
-      # @option request_options [Integer] :timeout_in_seconds
-      #
-      # @return [Seed::Service::Types::WithDocs, nil]
-      def get_optional_movie_docs(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "POST",
-          path: "movie",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -193,7 +178,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::OptionalWithDocs.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Response.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -208,14 +193,17 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::StringResponse, nil]
-      def get_optional_movie_name(request_options: {}, **params)
+      # @example
+      #   client.service.get_movie(request: "string")
+      #
+      # @return [Seed::Service::Types::WithDocs, nil]
+      def get_optional_movie_docs(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -225,7 +213,42 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::OptionalStringResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::OptionalWithDocs.load(response.body))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
+      #
+      # @return [Seed::Types::StringResponse, nil]
+      def get_optional_movie_name(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "movie",
+          body: params[:request],
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Seed::Types::OptionalStringResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

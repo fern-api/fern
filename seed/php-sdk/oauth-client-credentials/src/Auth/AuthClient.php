@@ -8,7 +8,7 @@ use Seed\Auth\Requests\GetTokenRequest;
 use Seed\Auth\Types\TokenResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\UrlEncodedApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -51,6 +51,19 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->getTokenWithClientCredentials(
+     *     new GetTokenRequest([
+     *         'clientId' => 'my_oauth_app_123',
+     *         'clientSecret' => 'sk_live_abcdef123456789',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'client_credentials',
+     *         'scope' => 'read:users',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -69,7 +82,7 @@ class AuthClient
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new UrlEncodedApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/token",
                     method: HttpMethod::POST,
@@ -98,6 +111,20 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->refreshToken(
+     *     new RefreshTokenRequest([
+     *         'clientId' => 'my_oauth_app_123',
+     *         'clientSecret' => 'sk_live_abcdef123456789',
+     *         'refreshToken' => 'refresh_token',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'refresh_token',
+     *         'scope' => 'read:users',
+     *     ]),
+     * );
+     * ```
+     *
      * @param RefreshTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -116,7 +143,7 @@ class AuthClient
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new UrlEncodedApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/token",
                     method: HttpMethod::POST,

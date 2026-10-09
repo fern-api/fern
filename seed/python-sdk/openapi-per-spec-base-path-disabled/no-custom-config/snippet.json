@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/items",
+                "method": "GET",
+                "identifier_override": "endpoint_.listItems"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.list_items()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.list_items()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/oauth/token",
+                "method": "POST",
+                "identifier_override": "endpoint_oauth.getToken"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.oauth.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.oauth.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

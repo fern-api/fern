@@ -12,12 +12,14 @@ if typing.TYPE_CHECKING:
     from .foo_extended import FooExtended
     from .second_item_type import SecondItemType
     from .type_with_optional_map import TypeWithOptionalMap
+    from .type_with_optional_reference_map import TypeWithOptionalReferenceMap
     from .union import Union
     from .union_with_base_properties import UnionWithBaseProperties
     from .union_with_discriminant import UnionWithDiscriminant
     from .union_with_duplicate_primitive import UnionWithDuplicatePrimitive
     from .union_with_duplicate_types import UnionWithDuplicateTypes
     from .union_with_duplicative_discriminants import UnionWithDuplicativeDiscriminants
+    from .union_with_global_name_collisions import UnionWithGlobalNameCollisions
     from .union_with_literal import UnionWithLiteral
     from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
     from .union_with_no_properties import UnionWithNoProperties
@@ -38,12 +40,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FooExtended": ".foo_extended",
     "SecondItemType": ".second_item_type",
     "TypeWithOptionalMap": ".type_with_optional_map",
+    "TypeWithOptionalReferenceMap": ".type_with_optional_reference_map",
     "Union": ".union",
     "UnionWithBaseProperties": ".union_with_base_properties",
     "UnionWithDiscriminant": ".union_with_discriminant",
     "UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
     "UnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
+    "UnionWithGlobalNameCollisions": ".union_with_global_name_collisions",
     "UnionWithLiteral": ".union_with_literal",
     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "UnionWithNoProperties": ".union_with_no_properties",
@@ -88,12 +92,14 @@ __all__ = [
     "FooExtended",
     "SecondItemType",
     "TypeWithOptionalMap",
+    "TypeWithOptionalReferenceMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",
     "UnionWithDuplicatePrimitive",
     "UnionWithDuplicateTypes",
     "UnionWithDuplicativeDiscriminants",
+    "UnionWithGlobalNameCollisions",
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",

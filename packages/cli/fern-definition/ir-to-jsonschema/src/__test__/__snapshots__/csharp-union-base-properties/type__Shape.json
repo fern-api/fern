@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "circle",
+        "square"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "circle"
+        },
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "radius": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "radius"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "square"
+        },
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "side": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "side"
+      ]
+    }
+  ],
+  "definitions": {}
+}

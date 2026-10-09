@@ -27,6 +27,30 @@ impl UserClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_mixed_file_directory::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .list(
+    ///             &ListQueryRequest {
+    ///                 limit: Some(1),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list(
         &self,
         request: &ListQueryRequest,

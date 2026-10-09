@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Resolve the `X-Fern-SDK-Name` header from the configured Maven coordinate in
+    GitHub output mode. Previously the header was read from the (Fiddle-synthesized)
+    publish config, so it emitted `com.<org>.fern:<workspace>-sdk` instead of the
+    coordinate the user configured under `output.coordinate`, leaving it inconsistent
+    with the `User-Agent` product token. The header now reads
+    `output.mode.github.publishInfo.maven.coordinate`, which is populated for both
+    remote and `--local` generation. Also emits `X-Fern-SDK-Version` in cases where a
+    coordinate resolves without a version previously being set.
+  type: fix

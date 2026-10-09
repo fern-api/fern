@@ -23,6 +23,9 @@ export class SimpleClient {
     /**
      * @param {SimpleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
+     *
      * @example
      *     await client.simple.getSomething()
      */

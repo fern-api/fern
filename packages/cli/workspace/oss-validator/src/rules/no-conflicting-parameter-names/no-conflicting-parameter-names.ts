@@ -60,10 +60,12 @@ export const NoConflictingParameterNamesRule: Rule = {
                     // Operation-level params override path-level params with the same `in` + `name`.
                     const mergedParams = mergeParameters(pathLevelParams, operationParams);
 
-                    // Group parameters by their camelCase-normalized name
+                    // Group parameters by their camelCase-normalized name.
+                    // Prefer x-fern-parameter-name when present, since SDK generators
+                    // use that override instead of the raw OpenAPI `name`.
                     const nameToParams: Record<string, ResolvedParam[]> = {};
                     for (const param of mergedParams) {
-                        const normalizedName = toCamelCase(param.name);
+                        const normalizedName = toCamelCase(param.fernParameterName ?? param.name);
                         if (normalizedName === "") {
                             continue;
                         }
@@ -84,7 +86,12 @@ export const NoConflictingParameterNamesRule: Rule = {
                             continue;
                         }
 
-                        const paramDescriptions = params.map((p) => `${p.in} parameter '${p.name}'`).join(", ");
+                        const paramDescriptions = params
+                            .map((p) => {
+                                const effectiveName = p.fernParameterName ?? p.name;
+                                return `${p.in} parameter '${effectiveName}'`;
+                            })
+                            .join(", ");
 
                         violations.push({
                             name: "no-conflicting-parameter-names",
@@ -108,6 +115,8 @@ export const NoConflictingParameterNamesRule: Rule = {
 interface ResolvedParam {
     in: string;
     name: string;
+    /** Override name from x-fern-parameter-name, used by SDKs instead of `name`. */
+    fernParameterName?: string;
 }
 
 /**
@@ -176,7 +185,9 @@ function resolveParam(
     }
 
     if (typeof paramObj.in === "string" && typeof paramObj.name === "string") {
-        return { in: paramObj.in, name: paramObj.name };
+        const fernParameterName =
+            typeof paramObj["x-fern-parameter-name"] === "string" ? paramObj["x-fern-parameter-name"] : undefined;
+        return { in: paramObj.in, name: paramObj.name, fernParameterName };
     }
 
     return undefined;

@@ -29,6 +29,36 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .list_resources(
+    ///             &ListResourcesQueryRequest {
+    ///                 page: 1,
+    ///                 per_page: 1,
+    ///                 sort: "created_at".to_string(),
+    ///                 order: "desc".to_string(),
+    ///                 include_totals: true,
+    ///                 fields: Some("fields".to_string()),
+    ///                 search: Some("search".to_string()),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_resources(
         &self,
         request: &ListResourcesQueryRequest,
@@ -64,6 +94,32 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .get_resource(
+    ///             &"resourceId".to_string(),
+    ///             &GetResourceQueryRequest {
+    ///                 include_metadata: true,
+    ///                 format: "json".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_resource(
         &self,
         resource_id: &str,
@@ -95,6 +151,36 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .search_resources(
+    ///             &SearchResourcesRequest {
+    ///                 limit: 1,
+    ///                 offset: 1,
+    ///                 query: Some("query".to_string()),
+    ///                 filters: Some(HashMap::from([(
+    ///                     "filters".to_string(),
+    ///                     serde_json::json!({"key":"value"}),
+    ///                 )])),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn search_resources(
         &self,
         request: &SearchResourcesRequest,
@@ -131,6 +217,38 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .list_users(
+    ///             &ListUsersQueryRequest {
+    ///                 page: Some(1),
+    ///                 per_page: Some(1),
+    ///                 include_totals: Some(true),
+    ///                 sort: Some("sort".to_string()),
+    ///                 connection: Some("connection".to_string()),
+    ///                 q: Some("q".to_string()),
+    ///                 search_engine: Some("search_engine".to_string()),
+    ///                 fields: Some("fields".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_users(
         &self,
         request: &ListUsersQueryRequest,
@@ -167,6 +285,33 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .get_user_by_id(
+    ///             &"userId".to_string(),
+    ///             &GetUserByIdQueryRequest {
+    ///                 fields: Some("fields".to_string()),
+    ///                 include_fields: Some(true),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_user_by_id(
         &self,
         user_id: &str,
@@ -196,6 +341,45 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .create_user(
+    ///             &CreateUserRequest {
+    ///                 email: "email".to_string(),
+    ///                 email_verified: Some(true),
+    ///                 username: Some("username".to_string()),
+    ///                 password: Some("password".to_string()),
+    ///                 phone_number: Some("phone_number".to_string()),
+    ///                 phone_verified: Some(true),
+    ///                 user_metadata: Some(HashMap::from([(
+    ///                     "user_metadata".to_string(),
+    ///                     serde_json::json!({"key":"value"}),
+    ///                 )])),
+    ///                 app_metadata: Some(HashMap::from([(
+    ///                     "app_metadata".to_string(),
+    ///                     serde_json::json!({"key":"value"}),
+    ///                 )])),
+    ///                 connection: "connection".to_string(),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_user(
         &self,
         request: &CreateUserRequest,
@@ -221,6 +405,46 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .update_user(
+    ///             &"userId".to_string(),
+    ///             &UpdateUserRequest {
+    ///                 email: Some("email".to_string()),
+    ///                 email_verified: Some(true),
+    ///                 username: Some("username".to_string()),
+    ///                 phone_number: Some("phone_number".to_string()),
+    ///                 phone_verified: Some(true),
+    ///                 user_metadata: Some(HashMap::from([(
+    ///                     "user_metadata".to_string(),
+    ///                     serde_json::json!({"key":"value"}),
+    ///                 )])),
+    ///                 app_metadata: Some(HashMap::from([(
+    ///                     "app_metadata".to_string(),
+    ///                     serde_json::json!({"key":"value"}),
+    ///                 )])),
+    ///                 password: Some("password".to_string()),
+    ///                 blocked: Some(true),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update_user(
         &self,
         user_id: &str,
@@ -247,6 +471,25 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .delete_user(&"userId".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn delete_user(
         &self,
         user_id: &str,
@@ -275,6 +518,33 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .list_connections(
+    ///             &ListConnectionsQueryRequest {
+    ///                 strategy: Some("strategy".to_string()),
+    ///                 name: Some("name".to_string()),
+    ///                 fields: Some("fields".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_connections(
         &self,
         request: &ListConnectionsQueryRequest,
@@ -305,6 +575,32 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .get_connection(
+    ///             &"connectionId".to_string(),
+    ///             &GetConnectionQueryRequest {
+    ///                 fields: Some("fields".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_connection(
         &self,
         connection_id: &str,
@@ -341,6 +637,38 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .list_clients(
+    ///             &ListClientsQueryRequest {
+    ///                 fields: Some("fields".to_string()),
+    ///                 include_fields: Some(true),
+    ///                 page: Some(1),
+    ///                 per_page: Some(1),
+    ///                 include_totals: Some(true),
+    ///                 is_global: Some(true),
+    ///                 is_first_party: Some(true),
+    ///                 app_type: Some(vec!["app_type".to_string(), "app_type".to_string()]),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_clients(
         &self,
         request: &ListClientsQueryRequest,
@@ -377,6 +705,33 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_client_side_params::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .get_client(
+    ///             &"clientId".to_string(),
+    ///             &GetClientQueryRequest {
+    ///                 fields: Some("fields".to_string()),
+    ///                 include_fields: Some(true),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_client(
         &self,
         client_id: &str,

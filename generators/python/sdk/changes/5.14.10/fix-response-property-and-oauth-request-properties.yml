@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the typing of endpoints that extract a property from an optional response body. The
+    `HttpResponse`/`AsyncHttpResponse` generic (and the corresponding client return type) is now
+    wrapped in `Optional` when the underlying response body resolves to an optional type, so an
+    empty response (`data=None`) no longer fails type checking.
+  type: fix
+
+- summary: |
+    Fix the generated OAuth token provider to respect the auth scheme's `request-properties`
+    mapping. The token endpoint is now invoked using the actual request parameter names
+    (e.g. `username`/`password` or custom names) instead of always hard-coding
+    `client_id`/`client_secret`.
+  type: fix

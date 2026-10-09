@@ -26,13 +26,19 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Service.Simple(
+//	    context.TODO(),
+//	)
 func (c *Client) Simple(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -47,6 +53,11 @@ func (c *Client) Simple(
 	return nil
 }
 
+// Example:
+//
+//	client.Service.DownloadFile(
+//	    context.TODO(),
+//	)
 func (c *Client) DownloadFile(
 	ctx context.Context,
 	opts ...option.RequestOption,

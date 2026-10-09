@@ -1,0 +1,5 @@
+- summary: |
+    Fix compilation failure in cliEmbedded mode by re-exporting the
+    co-generated types crate in api/mod.rs so service resource files
+    can resolve request/response types via `use crate::api::*`.
+  type: fix

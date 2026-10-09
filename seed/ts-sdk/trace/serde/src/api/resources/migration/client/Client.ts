@@ -27,6 +27,9 @@ export class MigrationClient {
      * @param {SeedTrace.GetAttemptedMigrationsRequest} request
      * @param {MigrationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.migration.getAttemptedMigrations({
      *         adminKeyHeader: "admin-key-header"

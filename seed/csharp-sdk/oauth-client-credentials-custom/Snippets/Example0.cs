@@ -19,7 +19,12 @@ public partial class Examples
                 EntityId = "entity_id",
                 Audience = "https://api.example.com",
                 GrantType = "client_credentials",
-                Scope = "scope"
+                Scope = "scope",
+                Permissions = new List<string>(){
+                    "permissions",
+                    "permissions",
+                }
+
             }
         );
     }

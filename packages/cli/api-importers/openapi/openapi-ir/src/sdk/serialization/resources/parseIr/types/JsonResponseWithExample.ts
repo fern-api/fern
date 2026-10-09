@@ -17,6 +17,7 @@ export const JsonResponseWithExample: core.serialization.ObjectSchema<
         responseProperty: core.serialization.string().optional(),
         terminator: core.serialization.string().optional(),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
+        resumable: core.serialization.boolean().optional(),
     })
     .extend(WithDescription)
     .extend(WithSource)
@@ -28,5 +29,6 @@ export declare namespace JsonResponseWithExample {
         responseProperty?: string | null;
         terminator?: string | null;
         fullExamples?: NamedFullExample.Raw[] | null;
+        resumable?: boolean | null;
     }
 }

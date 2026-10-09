@@ -49,6 +49,13 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   baseUrl?: string,

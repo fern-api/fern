@@ -2,8 +2,7 @@ namespace SeedVariables;
 
 public partial interface IServiceClient
 {
-    Task PostAsync(
-        string endpointParam,
+    WithRawResponseTask PostAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

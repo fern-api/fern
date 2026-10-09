@@ -1,4 +1,5 @@
 {
+  "specVersion": "0.1.0",
   "title": "Speechify API:",
   "servers": [
     {
@@ -32,6 +33,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -465,6 +467,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -1072,6 +1075,7 @@
           "type": "primitive"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {

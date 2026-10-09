@@ -4,18 +4,25 @@
 package com.seed.object;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.object.core.BodyProperties;
 import com.seed.object.core.ClientOptions;
 import com.seed.object.core.MediaTypes;
 import com.seed.object.core.ObjectMappers;
 import com.seed.object.core.RequestOptions;
+import com.seed.object.core.RetryInterceptor;
 import com.seed.object.core.SeedObjectApiException;
 import com.seed.object.core.SeedObjectException;
 import com.seed.object.core.SeedObjectHttpResponse;
 import com.seed.object.requests.GetDiscriminatedUnionRequest;
 import com.seed.object.requests.GetUndiscriminatedUnionRequest;
 import com.seed.object.requests.PostRootRequest;
+import com.seed.object.types.MapResponseValue;
+import com.seed.object.types.OrphanParentWithSharedChild;
 import com.seed.object.types.RootType1;
+import com.seed.object.types.SharedChildType;
 import java.io.IOException;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -48,7 +55,9 @@ public class RawSeedObjectClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedObjectException("Failed to serialize request", e);
         }
@@ -63,6 +72,15 @@ public class RawSeedObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -73,6 +91,8 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }
@@ -96,7 +116,9 @@ public class RawSeedObjectClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedObjectException("Failed to serialize request", e);
         }
@@ -110,6 +132,15 @@ public class RawSeedObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -119,6 +150,8 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }
@@ -142,7 +175,9 @@ public class RawSeedObjectClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedObjectException("Failed to serialize request", e);
         }
@@ -156,6 +191,15 @@ public class RawSeedObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -165,6 +209,161 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new SeedObjectException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedObjectHttpResponse<Map<String, MapResponseValue>> getMapResponse() {
+        return getMapResponse(null);
+    }
+
+    public SeedObjectHttpResponse<Map<String, MapResponseValue>> getMapResponse(RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("root")
+                .addPathSegments("map-response");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedObjectHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, new TypeReference<Map<String, MapResponseValue>>() {}),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedObjectApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new SeedObjectException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedObjectHttpResponse<SharedChildType> getSharedChild() {
+        return getSharedChild(null);
+    }
+
+    public SeedObjectHttpResponse<SharedChildType> getSharedChild(RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("root")
+                .addPathSegments("shared-child");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedObjectHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, SharedChildType.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedObjectApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new SeedObjectException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedObjectHttpResponse<OrphanParentWithSharedChild> getOrphanParent() {
+        return getOrphanParent(null);
+    }
+
+    public SeedObjectHttpResponse<OrphanParentWithSharedChild> getOrphanParent(RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("root")
+                .addPathSegments("orphan-parent");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedObjectHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OrphanParentWithSharedChild.class),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedObjectApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }

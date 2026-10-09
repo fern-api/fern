@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
@@ -168,7 +169,11 @@ export class ReferenceConfigAssembler {
                 params.push(`request: ${this.context.case.pascalSafe(endpoint.requestBody.name)}`);
             } else if (endpoint.requestBody.type === "reference") {
                 const typeName = this.getRustTypeForTypeReference(endpoint.requestBody.requestBodyType);
-                params.push(`request: ${typeName}`);
+                params.push(
+                    mayOmitRequestBody({ context: this.context, endpoint })
+                        ? `request: Option<${typeName}>`
+                        : `request: ${typeName}`
+                );
             }
         }
 

@@ -1,0 +1,105 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listItems": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/api/v3/items",
+              "source": {
+                "openapi": "../main-api.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../main-api.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listItems:
+      path: /api/v3/items
+      method: GET
+      source:
+        openapi: ../main-api.yml
+      examples:
+        - {}
+  source:
+    openapi: ../main-api.yml
+",
+    },
+    "auth/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getToken": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/token",
+              "source": {
+                "openapi": "../auth-api.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../auth-api.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getToken:
+      path: /token
+      method: POST
+      source:
+        openapi: ../auth-api.yml
+      examples:
+        - {}
+  source:
+    openapi: ../auth-api.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Auth API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Auth API
+",
+  },
+  "specVersion": "1.0.0",
+}

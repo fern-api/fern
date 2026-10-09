@@ -582,7 +582,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable:Status": {
             "type": "discriminatedUnion",
@@ -672,6 +673,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "active": {
                     "type": "noProperties",
@@ -1041,7 +1043,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -1860,5 +1863,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

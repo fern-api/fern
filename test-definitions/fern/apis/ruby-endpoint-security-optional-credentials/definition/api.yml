@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=../../../../../api-yml.schema.json
+
+imports:
+  token: token.yml
+
+name: ruby-endpoint-security-optional-credentials
+
+# Regression fixture: under endpoint-security, a caller may authenticate with only ONE
+# scheme (e.g. pure OAuth) and must be able to omit the others. The apiKey scheme here has
+# NO environment variable, so previously it was emitted as a REQUIRED constructor keyword
+# argument, breaking pure-OAuth users. Every credential must be optional (nil default).
+auth:
+  endpoint-security: {}
+
+auth-schemes:
+  # apiKey with NO env var (mirrors a header apiKey that isn't env-backed).
+  ApiKey:
+    header: X-API-Key
+    type: string
+  # OAuth client-credentials WITH env vars (so its own params are env-defaulted).
+  OAuth:
+    scheme: oauth
+    type: client-credentials
+    client-id-env: MY_CLIENT_ID
+    client-secret-env: MY_CLIENT_SECRET
+    get-token:
+      endpoint: token.getToken
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in

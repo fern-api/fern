@@ -27,6 +27,9 @@ export class FileUploadExampleClient {
      * @param {SeedApi.UploadFileRequest} request
      * @param {FileUploadExampleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     import { createReadStream } from "fs";
      *     await client.fileUploadExample.uploadFile({

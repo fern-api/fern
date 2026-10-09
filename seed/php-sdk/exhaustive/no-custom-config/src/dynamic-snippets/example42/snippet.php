@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithBooleanPath(
-    true,
+$client->endpoints->params->uploadWithPath(
+    'upload-path',
 );

@@ -22,7 +22,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Always null for active users."
     }
   },
   "required": [

@@ -21,6 +21,7 @@ export function createTaskContext(): TaskContext {
         },
         captureException: (_error: unknown) => {
             // no-op
+            return undefined;
         },
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,

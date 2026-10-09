@@ -3,6 +3,7 @@
   "items": {
     "$ref": "#/definitions/users.User"
   },
+  "description": "A type alias for a list of users",
   "definitions": {
     "users.User": {
       "type": "object",

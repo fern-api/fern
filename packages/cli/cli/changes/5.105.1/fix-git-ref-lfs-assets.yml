@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Materialize Git LFS assets when building docs versions from Git refs.
+  type: fix

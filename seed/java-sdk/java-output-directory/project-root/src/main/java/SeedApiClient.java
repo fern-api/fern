@@ -7,9 +7,11 @@ package com.test.sdk;
 import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.Suppliers;
 import com.test.sdk.resources.service.ServiceClient;
+import java.lang.AutoCloseable;
+import java.lang.Override;
 import java.util.function.Supplier;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
   protected final ClientOptions clientOptions;
 
   protected final Supplier<ServiceClient> serviceClient;
@@ -21,6 +23,16 @@ public class SeedApiClient {
 
   public ServiceClient service() {
     return this.serviceClient.get();
+  }
+
+  /**
+   * Releases resources owned by this client: any WebSocket clients still connected through
+   * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+   * {@code ClientOptions.close()} for what is and is not released.
+   */
+  @Override
+  public void close() {
+    this.clientOptions.close();
   }
 
   public static SeedApiClientBuilder builder() {

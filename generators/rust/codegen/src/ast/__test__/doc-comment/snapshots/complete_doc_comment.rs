@@ -14,7 +14,7 @@
 ///
 /// # Examples
 ///
-/// ```rust
+/// ```no_run
 /// let client = AuthClient::new();
 /// let token = client.authenticate("user", "pass", None).await?;
 /// ```

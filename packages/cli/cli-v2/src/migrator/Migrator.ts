@@ -115,7 +115,7 @@ export class Migrator {
         }
 
         // Point docs key at docs.yml via $ref if the file exists.
-        const docsResult = await migrateDocsYml(fernDir);
+        const docsResult = await migrateDocsYml(this.cwd, fernDir);
         if (docsResult.docsRef != null) {
             fernYml.docs = docsResult.docsRef as unknown as schemas.FernYmlSchema["docs"];
         }
@@ -169,6 +169,7 @@ export class Migrator {
         }
 
         const apiResult = await convertSingleApi({
+            projectRoot: this.cwd,
             fernDir,
             generatorsYmlApi: generatorsResult.rawApi
         });
@@ -237,6 +238,7 @@ export class Migrator {
 
         // Convert API configurations (handles Fern definition detection)
         const apisResult = await convertMultiApi({
+            projectRoot: this.cwd,
             fernDir,
             apisDir,
             generatorsYmlApis

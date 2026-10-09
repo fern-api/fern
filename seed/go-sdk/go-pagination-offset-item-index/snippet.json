@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/plants",
+                "method": "GET",
+                "identifier_override": "endpoint_plants.list"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-pagination-offset-item-index/fern\"\n\tfernclient \"github.com/go-pagination-offset-item-index/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Plants.List(\n\tcontext.TODO(),\n\t\u0026fern.ListPlantsRequest{\n\t\tOffset: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tCount: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants/body-offset",
+                "method": "POST",
+                "identifier_override": "endpoint_plants.listWithBodyOffset"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-pagination-offset-item-index/fern\"\n\tfernclient \"github.com/go-pagination-offset-item-index/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Plants.ListWithBodyOffset(\n\tcontext.TODO(),\n\t\u0026fern.ListPlantsWithBodyOffsetRequest{\n\t\tOffset: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tCount: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants/required-offset",
+                "method": "GET",
+                "identifier_override": "endpoint_plants.listWithRequiredOffset"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-pagination-offset-item-index/fern\"\n\tfernclient \"github.com/go-pagination-offset-item-index/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Plants.ListWithRequiredOffset(\n\tcontext.TODO(),\n\t\u0026fern.ListPlantsWithRequiredOffsetRequest{\n\t\tOffset: 1,\n\t\tCount:  1,\n\t},\n)\n"
+            }
+        }
+    ]
+}

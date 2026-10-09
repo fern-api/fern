@@ -141,7 +141,7 @@ client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.get_account(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

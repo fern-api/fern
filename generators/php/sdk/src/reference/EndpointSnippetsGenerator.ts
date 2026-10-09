@@ -56,6 +56,12 @@ export class EndpointSnippetsGenerator {
                     return null;
                 }
 
+                const userSpecifiedExampleIds = new Set(
+                    irEndpoint.userSpecifiedExamples
+                        .map((userSpecifiedExample) => userSpecifiedExample.example?.id)
+                        .filter((id): id is string => id != null)
+                );
+
                 const snippets = await Promise.all(
                     allExamples.map(async (example) => {
                         try {
@@ -64,7 +70,7 @@ export class EndpointSnippetsGenerator {
                                 example,
                                 dynamicSnippetsGenerator
                             });
-                            return { snippet, isUserSpecified: false };
+                            return { snippet, isUserSpecified: userSpecifiedExampleIds.has(example.id) };
                         } catch (error) {
                             return { snippet: null, isUserSpecified: false };
                         }
@@ -144,7 +150,7 @@ export class EndpointSnippetsGenerator {
         dynamicSnippetsGenerator
     }: {
         endpoint: FernIr.HttpEndpoint;
-        example: FernIr.dynamic.EndpointSnippetRequest;
+        example: FernIr.dynamic.EndpointExample;
         dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     }): Promise<SingleEndpointSnippet | null> {
         try {
@@ -157,7 +163,7 @@ export class EndpointSnippetsGenerator {
             }
 
             return {
-                exampleIdentifier: (example as FernIr.dynamic.EndpointExample).id,
+                exampleIdentifier: example.id,
                 endpointCall: this.extractMethodCall(generatedSnippet.snippet)
             };
         } catch (error) {

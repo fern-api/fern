@@ -7,6 +7,9 @@ export const BaseRustCustomConfigSchema = z.object({
     // Package Configuration
     // =========================================================================
     crateName: z.string().optional(),
+    // Keep hyphens from crateName in the Cargo.toml package name (e.g. "my-sdk" instead of "my_sdk").
+    // Rust paths such as `use my_sdk::prelude::*` still use the underscored name.
+    preserveCrateNameHyphens: z.boolean().optional().default(false),
     crateVersion: z.string().optional(),
     clientClassName: z.string().optional(),
     environmentEnumName: z.string().optional(),
@@ -32,6 +35,9 @@ export const BaseRustCustomConfigSchema = z.object({
     enableWireTests: z.boolean().optional().default(false),
     // Enable WebSocket client generation for APIs with WebSocket channels
     enableWebsockets: z.boolean().optional().default(false),
+    // Let callers leave out a request body the API marks as not required, sending no body and no
+    // Content-Type. Opt-in so that existing SDKs keep the signatures they already have.
+    respectOptionalRequestBody: z.boolean().optional().default(false),
     // Alias for enableWebsockets (matches TypeScript/Python/Java config key)
     generateWebSocketClients: z.boolean().optional(),
     // DateTime type to use for datetime primitives:
@@ -57,7 +63,15 @@ export const BaseRustCustomConfigSchema = z.object({
     // When true, common initialisms like ID, JSON, XML are uppercased in generated names
     // (e.g., UserID instead of UserId, JSONBody instead of JsonBody).
     // Default is false (idiomatic Rust casing).
-    capitalizeInitialisms: z.boolean().optional().default(false)
+    capitalizeInitialisms: z.boolean().optional().default(false),
+
+    // =========================================================================
+    // Internal Configuration (not user-facing — threaded by parent generators)
+    // =========================================================================
+    // Path prefix for core serde helper modules (flexible_datetime, base64_bytes, etc.)
+    // in generated #[serde(with = "...")] attributes. Defaults to "crate::core".
+    // The CLI generator overrides this when producing a standalone types crate.
+    coreModulePath: z.string().optional().default("crate::core")
 });
 
 export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;

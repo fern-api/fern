@@ -1,7 +1,7 @@
 import { AbstractAstNode, NamedArgument, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { php } from "@fern-api/php-codegen";
+import { getSdkVariableOptionNames, php } from "@fern-api/php-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
@@ -252,6 +252,10 @@ export class EndpointSnippetGenerator {
         if (environmentArg != null) {
             args.push(environmentArg);
         }
+
+        this.context.errors.scope(Scope.PathParameters);
+        args.push(...this.getConstructorSdkVariableArgs({ endpoint, snippet }));
+        this.context.errors.unscope();
 
         if (optionArgs.length > 0) {
             args.push({
@@ -818,7 +822,8 @@ export class EndpointSnippetGenerator {
         const args: php.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        // Path parameters bound to an SDK variable are set on the client, not passed per call.
+        const pathParameters = this.getUnboundPathParameters(request.pathParameters);
         if (pathParameters.length > 0) {
             args.push(
                 ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
@@ -827,12 +832,37 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+        if (request.body != null && !this.callOmitsRequestBody({ request, snippet })) {
+            const bodyArg = this.getBodyRequestArg({ body: request.body, value: snippet.requestBody });
+            if (!php.TypeLiteral.isNop(bodyArg)) {
+                args.push(bodyArg);
+            }
         }
         this.context.errors.unscope();
 
         return args;
+    }
+
+    /**
+     * Whether the snippet's call leaves the request body out. `bodyRequired` absent means required,
+     * so a snippet only drops the argument when the API says the body is optional, the generator is
+     * configured to respect that, and the snippet supplies no body of its own.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig?.respectOptionalRequestBody !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getBodyRequestArg({
@@ -873,8 +903,9 @@ export class EndpointSnippetGenerator {
         const inlinePathParameters = this.context.customConfig?.inlinePathParameters ?? false;
 
         this.context.errors.scope(Scope.PathParameters);
+        // Path parameters bound to an SDK variable are set on the client, not passed per call.
+        const pathParameters = this.getUnboundPathParameters(request.pathParameters);
         const pathParameterFields: php.ConstructorField[] = [];
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
             pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
         }
@@ -909,7 +940,101 @@ export class EndpointSnippetGenerator {
                 })
             );
         }
+
         return args;
+    }
+
+    /**
+     * The IR-level and endpoint-level path parameters that remain method arguments, i.e. those
+     * not bound to an SDK variable (bound parameters are resolved from the client).
+     */
+    private getUnboundPathParameters(
+        endpointPathParameters: FernIr.dynamic.NamedParameter[] | undefined
+    ): FernIr.dynamic.NamedParameter[] {
+        return [...(this.context.ir.pathParameters ?? []), ...(endpointPathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
+    }
+
+    /**
+     * Named constructor arguments for the SDK variables bound to this endpoint's path parameters,
+     * taking each value from the snippet's path parameters (matched by wire value). Variables
+     * without a value are omitted so the generated client falls back to its env var/default.
+     */
+    private getConstructorSdkVariableArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): NamedArgument[] {
+        const variables = this.context.ir.variables ?? [];
+        if (variables.length === 0) {
+            return [];
+        }
+        const optionNames = getSdkVariableOptionNames(
+            variables.map((variable) => this.context.getPropertyName(variable.name)),
+            this.getSdkVariableReservedOptionNames(endpoint)
+        );
+        const pathParameters = [
+            ...(this.context.ir.pathParameters ?? []),
+            ...(endpoint.request.type === "body" || endpoint.request.type === "inlined"
+                ? (endpoint.request.pathParameters ?? [])
+                : [])
+        ];
+        const args: NamedArgument[] = [];
+        variables.forEach((variable, index) => {
+            const optionName = optionNames[index];
+            if (optionName == null) {
+                return;
+            }
+            const boundParameter = pathParameters.find(
+                (parameter) =>
+                    parameter.variable === variable.id && snippet.pathParameters?.[parameter.name.wireValue] != null
+            );
+            if (boundParameter == null) {
+                return;
+            }
+            const value = this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: boundParameter.typeReference,
+                value: snippet.pathParameters?.[boundParameter.name.wireValue]
+            });
+            if (!php.TypeLiteral.isNop(value)) {
+                args.push({ name: optionName, assignment: value });
+            }
+        });
+        return args;
+    }
+
+    private getSdkVariableReservedOptionNames(endpoint: FernIr.dynamic.Endpoint): string[] {
+        const names: string[] = [];
+        for (const header of this.context.ir.headers ?? []) {
+            names.push(this.context.getPropertyName(header.name.name));
+        }
+        const auth = endpoint.auth;
+        if (auth == null) {
+            return names;
+        }
+        switch (auth.type) {
+            case "basic":
+                names.push(this.context.getPropertyName(auth.username), this.context.getPropertyName(auth.password));
+                break;
+            case "bearer":
+                names.push(this.context.getPropertyName(auth.token));
+                break;
+            case "header":
+                names.push(this.context.getPropertyName(auth.header.name.name));
+                break;
+            case "oauth":
+                names.push("clientId", "clientSecret");
+                break;
+            case "inferred":
+                // The snippet generator emits no constructor arguments for inferred auth.
+                break;
+            default:
+                assertNever(auth);
+        }
+        return names;
     }
 
     private getFilePropertyInfo({
@@ -1022,7 +1147,12 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField {
         return {
             name: this.context.getPropertyName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+            value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                body: body.bodyType,
+                // The generated wrapper requires the body, so an example that omits it still has to
+                // construct one. Only an object body has an empty form to fall back on.
+                value: body.bodyType.type === "typeReference" ? (value ?? {}) : value
+            })
         };
     }
 

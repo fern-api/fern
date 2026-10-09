@@ -28,6 +28,7 @@ import { camelCase, upperFirst } from "../utils/text.js";
 
 import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common.js";
 import { Extern } from "./extern.js";
+import { getFilesystemNugetPublishTarget } from "./filesystem-nuget-publish-target.js";
 import { ModelNavigator } from "./model-navigator.js";
 import { NameRegistry } from "./name-registry.js";
 
@@ -182,6 +183,8 @@ export class Generation {
         enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
         useDefaultRequestParameterValues: () => this.customConfig["use-default-request-parameter-values"] ?? false,
+        /** When true, an endpoint whose request body the API does not require takes that body as `Body? request = null`, and sends no body when the caller leaves it out. Default: false. */
+        respectOptionalRequestBody: () => this.customConfig["respect-optional-request-body"] ?? false,
         /** When true, redacts the response body in deserialization error exceptions and adds a custom ToString override to the base API exception. Default: false. */
         redactResponseBodyOnError: () => this.customConfig["redact-response-body-on-error"] ?? false,
         /** When true, generates inline types as nested classes inside a static Types class on the parent type, instead of as separate top-level files. Default: false. */
@@ -196,6 +199,8 @@ export class Generation {
         shouldGeneratedDiscriminatedUnions: () => this.customConfig["use-discriminated-unions"] ?? true,
         /** When true, generates undiscriminated unions with runtime type detection. Default: false. */
         shouldGenerateUndiscriminatedUnions: () => this.customConfig["use-undiscriminated-unions"] ?? false,
+        /** When true, a discriminated union's base properties are suppressed on `samePropertiesAsObject` variant leaves that duplicate them (per the IR's deferredUnionBaseProperties fact), so common fields are owned solely by the union envelope. Default: false (base properties are duplicated on the envelope and each leaf). */
+        dedupeUnionBaseProperties: () => this.customConfig["dedupe-union-base-properties"] ?? false,
         /** Custom name for the exported public client class. Default: "" (uses clientClassName or computed name). */
         exportedClientClassName: () => this.customConfig["exported-client-class-name"] ?? "",
         /** Custom name for the internal client class. Default: "" (auto-generated from organization/workspace). */
@@ -204,6 +209,10 @@ export class Generation {
         rootNamespaceForCoreClasses: () => this.customConfig["root-namespace-for-core-classes"] ?? true,
         /** Custom NuGet package identifier. Default: "" (uses root namespace). */
         packageId: () => this.customConfig["package-id"] ?? "",
+        /** When true, the generated csproj emits XML documentation so the nupkg ships `<Namespace>.xml`. Default: true. */
+        generateDocumentationFile: () => this.customConfig["generate-documentation-file"] ?? true,
+        /** NuGet package metadata (description, authors, tags, icon, urls, SourceLink, symbols) for the generated csproj. Default: {}. */
+        packageMetadata: () => this.customConfig["package-metadata"] ?? {},
         /** When true, generates enums that can handle unknown/future values gracefully. Default: true. */
         isForwardCompatibleEnumsEnabled: () =>
             this.customConfig["enable-forward-compatible-enums"] ??
@@ -235,8 +244,20 @@ export class Generation {
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
         /** When true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests. Default: false. */
         omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
+        /** When true, explicitly provided constructor auth credentials take precedence over env-var defaults when selecting the auth scheme (explicit basic auth wins over OAuth env vars). Default: false. */
+        preferExplicitAuth: () => this.customConfig["prefer-explicit-auth"] ?? false,
+        /** When true, emits the platform observability headers (X-Fern-Runtime, X-Fern-Runtime-Version, X-Fern-Platform). Default: false. Still subject to omitFernHeaders. */
+        includePlatformHeaders: () => this.customConfig["include-platform-headers"] ?? false,
+        /** When true, exposes an `AppInfo` client option whose sanitized product token is appended to the `User-Agent` header (RFC 9110). Default: false. Independent of includePlatformHeaders; still subject to omitFernHeaders. */
+        allowUserAgentAppInfo: () => this.customConfig["allow-user-agent-app-info"] ?? false,
+        /** When true, sends only the `User-Agent` platform header, omitting X-Fern-Language and X-Fern-SDK-Name/Version. Default: false. Still subject to omitFernHeaders. */
+        userAgentOnly: () => this.customConfig["user-agent-only"] ?? false,
+        /** When true, falls back to `<NuGetPackageId>/<version>` for the `User-Agent` header when the IR doesn't supply one. Default: false. */
+        userAgentNameFromPackage: () => this.customConfig["user-agent-name-from-package"] ?? false,
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
         unifiedClientOptions: () => this.customConfig["unified-client-options"] ?? false,
+        /** When true, exposes server URL variables as ClientOptions properties and interpolates them into the environment URL template(s) at construction time. When false, suppresses those options and the interpolation, falling back to the pre-feature base-URL behavior. Default: true. */
+        serverUrlVariables: () => this.customConfig["server-url-variables"] ?? true,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */
@@ -247,6 +268,22 @@ export class Generation {
         maxRetries: () => this.customConfig.maxRetries,
         /** Controls which HTTP status codes trigger automatic retries. Default: "legacy". */
         retryStatusCodes: () => this.customConfig.retryStatusCodes ?? "legacy",
+        /**
+         * Override the default request timeout (in milliseconds) for the generated SDK client. `"infinity"` disables
+         * the default timeout. Resolves the new `default-timeout-in-milliseconds` key when set, otherwise falls back
+         * to the deprecated `default-timeout-in-seconds` (converted to milliseconds). Default: 30000.
+         */
+        defaultTimeoutInMilliseconds: (): number | "infinity" | undefined => {
+            const milliseconds = this.customConfig["default-timeout-in-milliseconds"];
+            if (milliseconds != null) {
+                return milliseconds;
+            }
+            const seconds = this.customConfig["default-timeout-in-seconds"];
+            if (seconds == null) {
+                return undefined;
+            }
+            return seconds === "infinity" ? "infinity" : seconds * 1000;
+        },
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.
@@ -426,8 +463,9 @@ export class Generation {
             /** The prefix used for client-related classes, customizable via config or defaults to clientName. */
             clientPrefix: () =>
                 this.settings.exportedClientClassName || this.settings.clientClassName || this.names.project.client,
-            /** The NuGet package identifier for the generated SDK, defaults to root namespace if not specified. */
-            packageId: () => this.settings.packageId || this.namespaces.root
+            /** The NuGet package identifier for the generated SDK. Falls back to the nuget filesystem publish target (local-file-system output), then the root namespace. */
+            packageId: () =>
+                this.settings.packageId || getFilesystemNugetPublishTarget(this.ir)?.packageName || this.namespaces.root
         }),
         files: lazy({
             /* the name of the project */
@@ -551,6 +589,15 @@ export class Generation {
                 origin: this.model.staticExplicit("ClientOptions"),
                 namespace: this.namespaces.publicCoreClasses
             }),
+        /**
+         * Optional application-info product token appended to the `User-Agent`
+         * header. Only generated when the `allow-user-agent-app-info` config is on.
+         */
+        AppInfo: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("AppInfo"),
+                namespace: this.namespaces.publicCoreClasses
+            }),
         /** Low-level HTTP client wrapper for making raw API calls */
         RawClient: () =>
             this.csharp.classReference({
@@ -595,6 +642,12 @@ export class Generation {
                 multipartMethodName: "AddFileParameterPart",
                 multipartMethodNameForCollection: "AddFileParameterParts",
                 isReferenceType: true
+            }),
+        /** Factory for the default HttpClient with automatic response decompression */
+        DefaultHttpClientFactory: () =>
+            this.csharp.classReference({
+                namespace: this.namespaces.core,
+                origin: this.model.staticExplicit("DefaultHttpClientFactory")
             }),
         /** HTTP header management utilities */
         Headers: () =>
@@ -667,6 +720,32 @@ export class Generation {
             this.csharp.classReference({
                 origin: this.model.staticExplicit("DateTimeSerializer"),
                 namespace: this.namespaces.core
+            }),
+        /** Utility methods for XML serialization/deserialization */
+        XmlUtils: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlUtils"),
+                namespace: this.namespaces.core
+            }),
+        /** Generic XML element used to carry unknown child elements */
+        XmlElement: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlElement"),
+                namespace: this.namespaces.publicCore,
+                isReferenceType: true
+            }),
+        /** XML comment node held in an element's ordered content */
+        XmlComment: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlComment"),
+                namespace: this.namespaces.publicCore,
+                isReferenceType: true
+            }),
+        /** Interface implemented by XML-encoded models */
+        IXmlNode: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("IXmlNode"),
+                namespace: this.namespaces.publicCore
             }),
         /** Utility methods for JSON serialization/deserialization */
         JsonUtils: () =>

@@ -1,8 +1,9 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { tokenizeOperationId } from "@fern-api/core-utils";
 import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { CliError } from "@fern-api/task-context";
-import { camelCase, compact, isEqual } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName.js";
 
 export interface EndpointLocation {
@@ -25,6 +26,12 @@ function resolveEndpointLocationWithNamespaceOverride({
         };
     }
     return location;
+}
+
+// A dot in an endpoint id is parsed as a reference to another file (`import.endpoint`),
+// so dotted operation ids must be collapsed into a single name.
+function sanitizeEndpointId(operationId: string): string {
+    return operationId.includes(".") ? camelCase(operationId) : operationId;
 }
 
 function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
@@ -64,13 +71,13 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     if (tag == null) {
         return {
             file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            endpointId: operationId
+            endpointId: sanitizeEndpointId(operationId)
         };
     }
 
     // if both tag and operation ids are defined
-    const tagTokens = tokenizeString(tag);
-    const operationIdTokens = tokenizeString(operationId);
+    const tagTokens = tokenizeOperationId(tag);
+    const operationIdTokens = tokenizeOperationId(operationId);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
@@ -101,7 +108,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
             const camelCasedTag = camelCase(tag);
             return {
                 file: RelativeFilePath.of(`${camelCasedTag}.yml`),
-                endpointId: operationId,
+                endpointId: sanitizeEndpointId(operationId),
                 tag
             };
         }
@@ -143,26 +150,6 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
         namespaceOverride: endpoint.namespace,
         location: getUnresolvedEndpointLocation(endpoint)
     });
-}
-
-export function tokenizeString(input: string): string[] {
-    let tokens: string[];
-
-    // Check if the string is in camel case or Pascal case
-    if (/^[a-z]+(?:[A-Z][a-z]+)*$/.test(input)) {
-        // Camel case or Pascal case: Split based on capital letters
-        tokens = input.split(/(?=[A-Z])/);
-    } else {
-        // Snake case or non-alphanumeric separators: Split based on non-alphanumeric characters
-        tokens = input.split(/[^a-zA-Z0-9]+/);
-    }
-
-    tokens = tokens.map((token) => token.toLowerCase());
-
-    // Filter out empty tokens
-    tokens = compact(tokens);
-
-    return tokens;
 }
 
 // When the url is /users/{userId}/sign-in we want the split to be ["users", "{userId}", "sign", "in"]

@@ -3,11 +3,11 @@ pub use crate::prelude::*;
 /// Request for createPlaylist (body + query parameters)
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct CreatePlaylistRequest {
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     #[serde(default)]
     pub datetime: DateTime<FixedOffset>,
     #[serde(rename = "optionalDatetime")]
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     pub optional_datetime: Option<DateTime<FixedOffset>>,
     #[serde(default)]
     pub body: PlaylistCreateRequest,

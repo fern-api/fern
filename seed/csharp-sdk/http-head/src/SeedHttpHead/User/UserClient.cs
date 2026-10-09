@@ -18,6 +18,9 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedHttpHead.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedHttpHead.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -30,6 +33,7 @@ public partial class UserClient : IUserClient
                 {
                     Method = HttpMethod.Head,
                     Path = "/users",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -41,7 +45,7 @@ public partial class UserClient : IUserClient
             return new WithRawResponse<HttpResponseHeaders>()
             {
                 Data = response.Raw.Headers,
-                RawResponse = new RawResponse()
+                RawResponse = new SeedHttpHead.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -56,7 +60,13 @@ public partial class UserClient : IUserClient
             throw new SeedHttpHeadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedHttpHead.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -101,7 +111,7 @@ public partial class UserClient : IUserClient
                 return new WithRawResponse<IEnumerable<User>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedHttpHead.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -115,7 +125,13 @@ public partial class UserClient : IUserClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedHttpHead.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -126,7 +142,13 @@ public partial class UserClient : IUserClient
             throw new SeedHttpHeadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedHttpHead.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

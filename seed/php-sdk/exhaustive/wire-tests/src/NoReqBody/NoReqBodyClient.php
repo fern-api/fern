@@ -50,6 +50,11 @@ class NoReqBodyClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->noReqBody->getWithNoRequestBody();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -95,6 +100,11 @@ class NoReqBodyClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->noReqBody->postWithNoRequestBody();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

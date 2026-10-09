@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.resources.commons.types.types.Data;
 import com.seed.examples.resources.commons.types.types.EventInfo;
-import com.seed.examples.resources.commons.types.types.Metadata;
 import com.seed.examples.resources.service.requests.GetMetadataRequest;
 import com.seed.examples.resources.types.types.Actor;
 import com.seed.examples.resources.types.types.BigEntity;
@@ -22,6 +21,7 @@ import com.seed.examples.resources.types.types.MigrationStatus;
 import com.seed.examples.resources.types.types.Moment;
 import com.seed.examples.resources.types.types.Movie;
 import com.seed.examples.resources.types.types.Node;
+import com.seed.examples.resources.types.types.RefreshTokenRequest;
 import com.seed.examples.resources.types.types.Response;
 import com.seed.examples.resources.types.types.Test;
 import com.seed.examples.resources.types.types.Tree;
@@ -39,7 +39,6 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 public class ServiceWireTest {
     private MockWebServer server;
@@ -47,22 +46,23 @@ public class ServiceWireTest {
     private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup() throws java.lang.Exception {
         server = new MockWebServer();
         server.start();
         client = SeedExamplesClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .token("test-token")
                 .build();
     }
 
     @AfterEach
-    public void teardown() throws Exception {
+    public void teardown() throws java.lang.Exception {
         server.shutdown();
     }
 
-    @Test
-    public void testGetMovie() throws Exception {
+    @org.junit.jupiter.api.Test
+    public void testGetMovie() throws java.lang.Exception {
         server.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -130,8 +130,8 @@ public class ServiceWireTest {
         }
     }
 
-    @Test
-    public void testCreateMovie() throws Exception {
+    @org.junit.jupiter.api.Test
+    public void testCreateMovie() throws java.lang.Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"movie-c06a4ad7\""));
         String response = client.service()
                 .createMovie(Movie.builder()
@@ -248,8 +248,8 @@ public class ServiceWireTest {
         }
     }
 
-    @Test
-    public void testGetMetadata() throws Exception {
+    @org.junit.jupiter.api.Test
+    public void testGetMetadata() throws java.lang.Exception {
         server.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -316,8 +316,8 @@ public class ServiceWireTest {
         }
     }
 
-    @Test
-    public void testCreateBigEntity() throws Exception {
+    @org.junit.jupiter.api.Test
+    public void testCreateBigEntity() throws java.lang.Exception {
         server.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -352,7 +352,7 @@ public class ServiceWireTest {
                                 .name("name")
                                 .build())
                         .metadata(Metadata.html("metadata"))
-                        .commonMetadata(Metadata.builder()
+                        .commonMetadata(com.seed.examples.resources.commons.types.types.Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
                                     {
@@ -361,7 +361,7 @@ public class ServiceWireTest {
                                 })
                                 .jsonString("jsonString")
                                 .build())
-                        .eventInfo(EventInfo.metadata(Metadata.builder()
+                        .eventInfo(EventInfo.metadata(com.seed.examples.resources.commons.types.types.Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
                                     {
@@ -589,13 +589,52 @@ public class ServiceWireTest {
         }
     }
 
-    @Test
-    public void testRefreshToken() throws Exception {
+    @org.junit.jupiter.api.Test
+    public void testRefreshToken() throws java.lang.Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.service().refreshToken(Optional.empty());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testRefreshToken2() throws java.lang.Exception {
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        client.service()
+                .refreshToken(Optional.of(RefreshTokenRequest.builder().ttl(420).build()));
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "" + "{\n" + "  \"ttl\": 420\n" + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
     }
 
     /**

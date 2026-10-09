@@ -222,7 +222,7 @@ $client->nested->api->getSomething();
 </details>
 
 ## Service
-<details><summary><code>$client-&gt;service-&gt;post($endpointParam)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;post()</code></summary>
 <dl>
 <dd>
 
@@ -237,21 +237,6 @@ $client->nested->api->getSomething();
 ```php
 $client->service->post();
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$endpointParam:** `string` 
-    
 </dd>
 </dl>
 </dd>

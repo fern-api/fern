@@ -48,7 +48,15 @@ client.imdb().createMovie(
 <dl>
 <dd>
 
-**request:** `CreateMovieRequest` 
+**title:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `Double` 
     
 </dd>
 </dl>
@@ -73,7 +81,12 @@ client.imdb().createMovie(
 <dd>
 
 ```java
-client.imdb().getMovie("movieId");
+client.imdb().getMovie(
+    "movieId",
+    GetMovieImdbRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>

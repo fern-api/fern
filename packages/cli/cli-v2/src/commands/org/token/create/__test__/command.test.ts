@@ -28,6 +28,7 @@ function createMockContext(tokenType: "user" | "organization" = "user") {
     return {
         stdout: createMockLogger(),
         stderr: createMockLogger(),
+        headers: { "X-Request-Id": "test-request-id" },
         getTokenOrPrompt: vi.fn().mockResolvedValue({ type: tokenType, value: "test-token" })
     } as unknown as import("../../../../../context/Context.js").Context;
 }
@@ -62,7 +63,10 @@ describe("CreateTokenCommand", () => {
         const context = createMockContext();
         await cmd.handle(context, { org: "acme", description: "CI token" } as CreateTokenCommand.Args);
 
-        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(createVenusService).toHaveBeenCalledWith(
+            expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
+        );
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
         expect(mockCreate).toHaveBeenCalledWith({
             organizationId: "org_abc123",
             description: "CI token"
@@ -107,9 +111,7 @@ describe("CreateTokenCommand", () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { _other: () => void }) => visitor._other()
-            }
+            rawResponse: { status: 404 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }
@@ -126,9 +128,7 @@ describe("CreateTokenCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockCreate = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
-            }
+            rawResponse: { status: 403 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
@@ -148,9 +148,7 @@ describe("CreateTokenCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockCreate = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { organizationNotFoundError: () => void }) => visitor.organizationNotFoundError()
-            }
+            rawResponse: { status: 404 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
@@ -168,9 +166,7 @@ describe("CreateTokenCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockCreate = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { _other: () => void }) => visitor._other()
-            }
+            rawResponse: { status: 500 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },

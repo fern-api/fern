@@ -6,7 +6,7 @@ import Exhaustive
     @Test func listItems1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "items": [

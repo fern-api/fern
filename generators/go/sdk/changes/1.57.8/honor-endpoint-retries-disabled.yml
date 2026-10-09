@@ -1,0 +1,5 @@
+- summary: |
+    Honor endpoint-level retry configuration (`x-fern-retries: { disabled: true }`, or `retries: { disabled: true }`
+    in a Fern definition). Endpoints that disable retries are now issued exactly once, regardless of the
+    client-level and per-request retry options.
+  type: fix

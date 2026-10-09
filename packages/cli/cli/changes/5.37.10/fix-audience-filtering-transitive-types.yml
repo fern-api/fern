@@ -1,0 +1,6 @@
+- summary: |
+    Fix x-fern-audiences filtering dropping transitively-referenced named types when an outer
+    schema reaches its descendants through a chain of $refs. Audience filtering now walks the
+    full type-dependency closure instead of a single level, so deeply nested object types are
+    preserved in the docs IR and no longer render as `any` in the docs site.
+  type: fix

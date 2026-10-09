@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+# Entries below describe the user-facing changes pulled into generated CLIs by
+# syncing the vendored fern-cli-sdk to cli-sdk@9c1f38f. Each maps to an upstream
+# fern-api/cli-sdk PR.
+
+- summary: |
+    Generated CLIs now serialize OpenAPI query parameters according to their
+    declared `style`/`explode` (form, spaceDelimited, pipeDelimited, deepObject).
+    (cli-sdk #144, FER-10569)
+  type: feat
+
+- summary: |
+    Generated CLIs now serialize OpenAPI header parameters using the `simple`
+    style. (cli-sdk #137, FER-10569)
+  type: feat
+
+- summary: |
+    Generated CLIs now serialize OpenAPI path parameters using the `simple`,
+    `label`, and `matrix` styles. (cli-sdk #138, FER-10569)
+  type: feat
+
+- summary: |
+    Generated CLIs support `multipart/form-data` request bodies, exposing each
+    part as its own flag. (cli-sdk #88, FER-10569)
+  type: feat
+
+- summary: |
+    `multipart/form-data` request bodies accept `--file` parts, so file-upload
+    endpoints can stream a file from disk. (cli-sdk #145, FER-10569)
+  type: feat
+
+- summary: |
+    HTTP requests now retry on transient failures with exponential backoff and
+    automatically attach an `Idempotency-Key` header to retried mutations.
+    (cli-sdk #86, FER-10521)
+  type: feat
+
+- summary: |
+    OpenAPI parameter names are sanitized into valid, readable CLI flags instead
+    of being passed through verbatim. (cli-sdk #87, FER-10430)
+  type: feat
+
+- summary: |
+    Auth error messages now name the specific environment variable the CLI
+    expected, making missing-credential failures easier to diagnose.
+    (cli-sdk #81, FER-10702)
+  type: feat
+
+- summary: |
+    Auth schemes support multiple headers, enabling APIs that require more than
+    one credential header (e.g. Sandboxes). (cli-sdk #116)
+  type: feat
+
+- summary: |
+    Nullable scalar request-body flags emit a null sentinel, letting users
+    distinguish an explicit `null` from an omitted value. (cli-sdk 8234544)
+  type: feat

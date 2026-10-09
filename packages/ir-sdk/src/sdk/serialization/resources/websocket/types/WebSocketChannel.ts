@@ -31,6 +31,7 @@ export const WebSocketChannel: core.serialization.ObjectSchema<
         messages: core.serialization.list(WebSocketMessage),
         examples: core.serialization.list(ExampleWebSocketSession),
         v2Examples: V2WebSocketSessionExamples.optional(),
+        apiPlayground: core.serialization.boolean().optional(),
     })
     .extend(Declaration);
 
@@ -48,5 +49,6 @@ export declare namespace WebSocketChannel {
         messages: WebSocketMessage.Raw[];
         examples: ExampleWebSocketSession.Raw[];
         v2Examples?: V2WebSocketSessionExamples.Raw | null;
+        apiPlayground?: boolean | null;
     }
 }

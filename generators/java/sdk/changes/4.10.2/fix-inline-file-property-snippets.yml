@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets now compile for endpoints that inline file properties into the
+    request builder (`inline-file-properties: true`). File builder fields are typed as
+    `java.io.File`, so snippets render `new File("path/to/file")` (with a placeholder
+    path when the example omits a file) instead of a `FileStream`, and body properties
+    are emitted before file properties so a required body property's staged-builder step
+    precedes an optional file step.
+  type: fix

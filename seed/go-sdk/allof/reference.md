@@ -14,10 +14,9 @@
 ```go
 request := &fern.SearchRuleTypesRequest{}
 client.SearchRuleTypes(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -58,14 +57,13 @@ client.SearchRuleTypes(
 
 ```go
 request := &fern.RuleCreateRequest{
-        Name: "name",
-        ExecutionContext: fern.RuleExecutionContextProd,
-    }
-client.CreateRule(
-        context.TODO(),
-        request,
-    )
+    Name: "name",
+    ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
 }
+client.CreateRule(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -88,7 +86,7 @@ client.CreateRule(
 <dl>
 <dd>
 
-**executionContext:** `*fern.RuleExecutionContext` 
+**executionContext:** `fern.RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>
@@ -114,9 +112,8 @@ client.CreateRule(
 
 ```go
 client.ListUsers(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -142,9 +139,8 @@ client.ListUsers(
 
 ```go
 client.GetEntity(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -170,10 +166,168 @@ client.GetEntity(
 
 ```go
 client.GetOrganization(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.CreatePlant(request) -> *fern.PlantStrict</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.PlantPost{
+    Species: "species",
+    Family: "family",
+    Genus: "genus",
+    CommonName: "commonName",
+    WateringFrequency: fern.PlantBaseWateringFrequencyDaily,
+    SunExposure: fern.PlantPostSunExposureFull,
+}
+client.CreatePlant(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**commonName:** `string` — The common name of the plant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**wateringFrequency:** `fern.PlantBaseWateringFrequency` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sunExposure:** `fern.PlantPostSunExposure` — Required sun exposure level.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**plantedAt:** `*time.Time` — Date the plant was planted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**soilType:** `*string` — Preferred soil type.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.CreateTree(request) -> *fern.TreeRecord</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.TreeRecord{
+    ID: "id",
+    TreeName: "treeName",
+    TreeSpecies: "treeSpecies",
+}
+client.CreateTree(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*fern.TreeRecord` 
+    
 </dd>
 </dl>
 </dd>

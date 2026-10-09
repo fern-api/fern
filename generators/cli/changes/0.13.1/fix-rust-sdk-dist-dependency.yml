@@ -1,0 +1,4 @@
+- summary: |
+    Fix Docker image build to include rust-sdk dist by adding
+    @fern-api/rust-sdk#dist:cli to turbo dependency graph.
+  type: fix

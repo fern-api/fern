@@ -13,6 +13,23 @@ impl ServiceClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_mixed_case::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MixedCaseClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .get_resource(&"rsc-xyz".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_resource(
         &self,
         resource_id: &str,
@@ -29,6 +46,29 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_mixed_case::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MixedCaseClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .list_resources(
+    ///             &ListResourcesQueryRequest {
+    ///                 page_limit: 10,
+    ///                 before_date: NaiveDate::parse_from_str("2023-01-01", "%Y-%m-%d").unwrap(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_resources(
         &self,
         request: &ListResourcesQueryRequest,

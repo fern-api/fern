@@ -9,6 +9,20 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 export type RequestBodyProperty = InlinedRequestBodyProperty | ObjectProperty;
 
 /**
+ * Whether the caller may leave the request body out of the call entirely, which the IR describes as
+ * `required: false` on a referenced request body. An absent `required` means required, and reading the
+ * field at all is opt-in so that existing SDKs keep their signatures. A null body sends no content and
+ * so no body content type either.
+ */
+export function mayOmitRequestBody(context: SdkGeneratorContext, requestBody: HttpRequestBody | undefined): boolean {
+    return (
+        context.generation.settings.respectOptionalRequestBody &&
+        requestBody?.type === "reference" &&
+        requestBody.required === false
+    );
+}
+
+/**
  * Extracts non-literal properties from a request body (handles both inline and referenced types).
  * Returns an array of properties that can be used as credentials or parameters.
  */

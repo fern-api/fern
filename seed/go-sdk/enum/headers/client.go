@@ -26,13 +26,27 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.SendEnumAsHeaderRequest{
+//	    Operand: fern.OperandGreaterThan,
+//	    MaybeOperand: fern.OperandGreaterThan.Ptr(),
+//	    OperandOrColor: &fern.ColorOrOperand{
+//	        Color: fern.ColorRed,
+//	    },
+//	}
+//	client.Headers.Send(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Send(
 	ctx context.Context,
 	request *fern.SendEnumAsHeaderRequest,

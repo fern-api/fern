@@ -28,9 +28,8 @@ GET request that always throws an error
 
 ```go
 client.PropertyBasedError.ThrowError(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

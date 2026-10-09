@@ -1,11 +1,13 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
-import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
+import { DEFINITION_DIRECTORY, ROOT_API_FILENAME, SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
+import { type CreatedSdkConfigWorkspace, createSdkConfigWorkspace } from "../generate/createSdkConfigWorkspace.js";
+import { loadSdkConfigV1 } from "../generate/loadSdkConfigV1.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
@@ -35,130 +37,201 @@ export async function validateWorkspaces({
      */
     commandLineApiWorkspace?: string;
 }): Promise<void> {
+    const preparedSdkConfigWorkspaces = await prepareSdkConfigWorkspacesForValidation({ project, cliContext });
+    const projectForValidation: Project = {
+        ...project,
+        apiWorkspaces: [...project.apiWorkspaces, ...preparedSdkConfigWorkspaces.map(({ workspace }) => workspace)]
+    };
     const apiResults: ApiValidationResult[] = [];
     let docsResult: DocsValidationResult | undefined;
     let hasAnyErrors = false;
+    let abortReason: string | undefined;
 
     const apiWorkspacesToValidate =
         commandLineApiWorkspace != null
-            ? project.apiWorkspaces.filter((workspace) => workspace.workspaceName === commandLineApiWorkspace)
-            : project.apiWorkspaces;
+            ? projectForValidation.apiWorkspaces.filter(
+                  (workspace) => workspace.workspaceName === commandLineApiWorkspace
+              )
+            : projectForValidation.apiWorkspaces;
 
-    // Collect docs violations first (using runTaskForWorkspace to preserve [docs]: prefix for fatal errors)
-    const docsWorkspace = project.docsWorkspaces;
-    if (docsWorkspace != null) {
-        const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
-        const ossWorkspaces = await filterOssWorkspaces(project);
+    let hasErrors = false;
 
-        let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;
-        await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-            collected = await collectDocsWorkspaceViolations({
-                workspace: docsWorkspace,
-                context,
-                apiWorkspaces: project.apiWorkspaces,
-                ossWorkspaces,
-                errorOnBrokenLinks,
-                excludeRules
-            });
-        });
+    try {
+        // Collect docs violations first (using runTaskForWorkspace to preserve [docs]: prefix for fatal errors)
+        const docsWorkspace = projectForValidation.docsWorkspaces;
+        if (docsWorkspace != null) {
+            const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
+            const ossWorkspaces = await filterOssWorkspaces(projectForValidation);
 
-        if (collected != null) {
-            docsResult = {
-                violations: collected.violations,
-                elapsedMillis: collected.elapsedMillis
-            };
-
-            if (collected.hasErrors) {
-                hasAnyErrors = true;
-            }
-        }
-    }
-
-    // Collect API violations (using runTaskForWorkspace to preserve [api]: prefix for fatal errors)
-    await Promise.all(
-        apiWorkspacesToValidate.map(async (workspace) => {
-            if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type !== "fern") {
-                return;
-            }
-
-            if (workspace instanceof OSSWorkspace && directFromOpenapi) {
-                // For --from-openapi, run IR generation which logs its own errors
-                await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                    await workspace.getIntermediateRepresentation({
-                        context,
-                        audiences: { type: "all" },
-                        enableUniqueErrorsPerEndpoint: false,
-                        generateV1Examples: false,
-                        logWarnings: logWarnings
-                    });
-                });
-                return;
-            }
-
-            // For LazyFernWorkspace, check if api.yml exists before running validation.
-            // If it doesn't exist, we want to log the error WITHOUT the [api]: prefix.
-            // All other errors (including dependency errors) should have the [api]: prefix.
-            if (workspace instanceof LazyFernWorkspace) {
-                const absolutePathToApiYml = join(
-                    workspace.absoluteFilePath,
-                    RelativeFilePath.of(DEFINITION_DIRECTORY),
-                    RelativeFilePath.of(ROOT_API_FILENAME)
-                );
-                const apiYmlExists = await doesPathExist(absolutePathToApiYml);
-                if (!apiYmlExists) {
-                    // Log the missing file error without the [api]: prefix
-                    await cliContext.runTask(async (context) => {
-                        context.logger.error(`Missing file: ${ROOT_API_FILENAME}`);
-                        return context.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
-                    });
-                    return;
-                }
-            }
-
-            // Run toFernWorkspace and validation inside runTaskForWorkspace so that
-            // dependency errors and other validation errors get the [api]: prefix
-            let collected: Awaited<ReturnType<typeof collectAPIWorkspaceViolations>> | undefined;
-            await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const fernWorkspace = await workspace.toFernWorkspace({ context });
-                collected = await collectAPIWorkspaceViolations({
-                    workspace: fernWorkspace,
+            let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;
+            await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+                collected = await collectDocsWorkspaceViolations({
+                    workspace: docsWorkspace,
                     context,
-                    ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                    apiWorkspaces: projectForValidation.apiWorkspaces,
+                    ossWorkspaces,
+                    errorOnBrokenLinks,
+                    excludeRules
                 });
             });
 
             if (collected != null) {
-                apiResults.push({
-                    apiName: collected.apiName,
+                docsResult = {
                     violations: collected.violations,
                     elapsedMillis: collected.elapsedMillis
-                });
+                };
 
                 if (collected.hasErrors) {
                     hasAnyErrors = true;
                 }
             }
-        })
-    );
+        }
 
-    // Print the aggregated report (using runTask to get a proper TaskContext)
-    const { hasErrors } = await cliContext.runTask((context) => {
-        return printCheckReport({
-            apiResults,
-            docsResult,
-            logWarnings,
-            context
-        });
-    });
+        // Collect API violations (using runTaskForWorkspace to preserve [api]: prefix for fatal errors)
+        await Promise.all(
+            apiWorkspacesToValidate.map(async (workspace) => {
+                if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type !== "fern") {
+                    return;
+                }
 
-    if (cliContext.isJsonMode) {
-        const showApiNames = apiResults.length > 1;
-        cliContext.writeJsonToStdout(
-            buildCheckJsonResult({ apiResults, docsResult, hasErrors: hasErrors || hasAnyErrors, showApiNames })
+                if (workspace instanceof OSSWorkspace && directFromOpenapi) {
+                    // For --from-openapi, run IR generation which logs its own errors
+                    await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                        await workspace.getIntermediateRepresentation({
+                            context,
+                            audiences: { type: "all" },
+                            enableUniqueErrorsPerEndpoint: false,
+                            generateV1Examples: false,
+                            logWarnings: logWarnings
+                        });
+                    });
+                    return;
+                }
+
+                // For LazyFernWorkspace, check if api.yml exists before running validation.
+                // If it doesn't exist, we want to log the error WITHOUT the [api]: prefix.
+                // All other errors (including dependency errors) should have the [api]: prefix.
+                if (workspace instanceof LazyFernWorkspace) {
+                    const absolutePathToApiYml = join(
+                        workspace.absoluteFilePath,
+                        RelativeFilePath.of(DEFINITION_DIRECTORY),
+                        RelativeFilePath.of(ROOT_API_FILENAME)
+                    );
+                    const apiYmlExists = await doesPathExist(absolutePathToApiYml);
+                    if (!apiYmlExists) {
+                        abortReason = "missing api.yml";
+                        // Log the missing file error without the [api]: prefix
+                        await cliContext.runTask(async (context) => {
+                            context.logger.error(`Missing file: ${ROOT_API_FILENAME}`);
+                            return context.failAndThrow(undefined, undefined, {
+                                code: CliError.Code.ValidationError
+                            });
+                        });
+                        return;
+                    }
+                }
+
+                // Run toFernWorkspace and validation inside runTaskForWorkspace so that
+                // dependency errors and other validation errors get the [api]: prefix
+                let collected: Awaited<ReturnType<typeof collectAPIWorkspaceViolations>> | undefined;
+                await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                    const fernWorkspace = await workspace.toFernWorkspace({ context });
+                    collected = await collectAPIWorkspaceViolations({
+                        workspace: fernWorkspace,
+                        context,
+                        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                    });
+                });
+
+                if (collected != null) {
+                    apiResults.push({
+                        apiName: collected.apiName,
+                        violations: collected.violations,
+                        elapsedMillis: collected.elapsedMillis
+                    });
+
+                    if (collected.hasErrors) {
+                        hasAnyErrors = true;
+                    }
+                }
+            })
         );
-    }
 
-    if (hasErrors || hasAnyErrors) {
-        cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
+        // Print the aggregated report (using runTask to get a proper TaskContext)
+        const reportResult = await cliContext.runTask((context) => {
+            return printCheckReport({
+                apiResults,
+                docsResult,
+                logWarnings,
+                context
+            });
+        });
+        hasErrors = reportResult.hasErrors;
+
+        if (cliContext.isJsonMode) {
+            const showApiNames = apiResults.length > 1;
+            cliContext.writeJsonToStdout(
+                buildCheckJsonResult({ apiResults, docsResult, hasErrors: hasErrors || hasAnyErrors, showApiNames })
+            );
+        }
+
+        if (hasErrors || hasAnyErrors) {
+            abortReason = "validation errors";
+            cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
+        }
+    } catch (error) {
+        if (abortReason == null) {
+            abortReason = error instanceof Error ? error.message.slice(0, 100) : "unexpected error";
+        }
+        throw error;
+    } finally {
+        await Promise.all(preparedSdkConfigWorkspaces.map(({ cleanup }) => cleanup()));
+        const allViolations = [...apiResults.flatMap((r) => r.violations), ...(docsResult?.violations ?? [])];
+        const firedRules = [
+            ...new Set(allViolations.map((v) => v.name).filter((name): name is string => name != null))
+        ];
+        const numErrors = allViolations.filter((v) => v.severity === "fatal" || v.severity === "error").length;
+        const numWarnings = allViolations.filter((v) => v.severity === "warning").length;
+        cliContext.instrumentPostHogEvent({
+            command: "fern check",
+            properties: {
+                validationRules: firedRules,
+                numErrors,
+                numWarnings,
+                passed: !hasErrors && !hasAnyErrors,
+                abortReason
+            }
+        });
+    }
+}
+
+async function prepareSdkConfigWorkspacesForValidation({
+    project,
+    cliContext
+}: {
+    project: Project;
+    cliContext: CliContext;
+}): Promise<CreatedSdkConfigWorkspace[]> {
+    const prepared: CreatedSdkConfigWorkspace[] = [];
+    try {
+        for (const workspace of project.sdkConfigWorkspaces ?? []) {
+            const absolutePathToConfig = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
+            const loaded = await loadSdkConfigV1(absolutePathToConfig, true);
+            prepared.push(
+                await cliContext.runTask((context) =>
+                    createSdkConfigWorkspace({
+                        sdkConfig: loaded.config,
+                        absolutePathToConfig: loaded.absolutePath,
+                        cliVersion: cliContext.environment.packageVersion,
+                        workspaceName: workspace.workspaceName,
+                        context
+                    })
+                )
+            );
+        }
+        return prepared;
+    } catch (error) {
+        await Promise.all(prepared.map(({ cleanup }) => cleanup()));
+        throw error;
     }
 }

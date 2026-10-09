@@ -80,6 +80,59 @@ function extractLines(content: string, linesParam: string): string {
     return extractedLines.join("\n");
 }
 
+const CODE_TAG_REGEX = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
+
+/**
+ * Scans markdown content for <Code src="https://..."/> tags and returns the external URLs.
+ */
+export function collectCodeSrcUrls(markdown: string): string[] {
+    if (!markdown.includes("<Code")) {
+        return [];
+    }
+    const urls: string[] = [];
+    const regex = new RegExp(CODE_TAG_REGEX.source, CODE_TAG_REGEX.flags);
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(markdown)) != null) {
+        const src = match[2];
+        if (src && isUrl(src)) {
+            urls.push(src);
+        }
+    }
+    return urls;
+}
+
+/**
+ * Fetches all given URLs in parallel and returns a cache map of url -> content.
+ * Failed fetches are silently skipped (the per-page handler will warn).
+ */
+export async function prefetchCodeSrcUrls(urls: string[], context: TaskContext): Promise<Map<string, string>> {
+    const cache = new Map<string, string>();
+    const unique = [...new Set(urls)];
+    if (unique.length === 0) {
+        return cache;
+    }
+
+    const results = await Promise.allSettled(
+        unique.map(async (url) => {
+            const response = await fetch(url);
+            if (!response.ok) {
+                context.logger.warn(`Failed to prefetch code from URL "${url}" (status ${response.status})`);
+                return { url, content: undefined };
+            }
+            const content = await response.text();
+            return { url, content };
+        })
+    );
+
+    for (const result of results) {
+        if (result.status === "fulfilled" && result.value.content !== undefined) {
+            cache.set(result.value.url, result.value.content);
+        }
+    }
+
+    return cache;
+}
+
 // TODO: add a newline before and after the code block if inline to improve markdown parsing. i.e. <CodeGroup> <Code src="" /> </CodeGroup>
 export async function replaceReferencedCode({
     markdown,
@@ -87,19 +140,21 @@ export async function replaceReferencedCode({
     absolutePathToMarkdownFile,
     context,
     // allow for custom markdown loader for testing
-    fileLoader = defaultFileLoader
+    fileLoader = defaultFileLoader,
+    urlCache
 }: {
     markdown: string;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToMarkdownFile: AbsoluteFilePath;
     context: TaskContext;
     fileLoader?: (filepath: AbsoluteFilePath) => Promise<string>;
+    urlCache?: Map<string, string>;
 }): Promise<string> {
     if (!markdown.includes("<Code")) {
         return markdown;
     }
 
-    const regex = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
+    const regex = new RegExp(CODE_TAG_REGEX.source, CODE_TAG_REGEX.flags);
 
     let newMarkdown = markdown;
 
@@ -120,27 +175,32 @@ export async function replaceReferencedCode({
             let title: string | undefined;
 
             if (isUrl(src)) {
-                try {
-                    const response = await fetch(src);
-                    if (!response.ok) {
+                const cached = urlCache?.get(src);
+                if (cached !== undefined) {
+                    replacement = cached;
+                } else {
+                    try {
+                        const response = await fetch(src);
+                        if (!response.ok) {
+                            context.logger.warn(
+                                `Failed to fetch code from URL "${src}" (status ${response.status}) referenced in ${absolutePathToMarkdownFile}`
+                            );
+                            break;
+                        }
+                        replacement = await response.text();
+                    } catch (e) {
                         context.logger.warn(
-                            `Failed to fetch code from URL "${src}" (status ${response.status}) referenced in ${absolutePathToMarkdownFile}`
+                            `Failed to fetch code from URL "${src}" referenced in ${absolutePathToMarkdownFile}: ${e}`
                         );
                         break;
                     }
-                    replacement = await response.text();
-
-                    // Extract language and title from URL pathname
-                    const url = new URL(src);
-                    const pathname = url.pathname;
-                    language = pathname.split(".").pop();
-                    title = pathname.split("/").pop();
-                } catch (e) {
-                    context.logger.warn(
-                        `Failed to fetch code from URL "${src}" referenced in ${absolutePathToMarkdownFile}: ${e}`
-                    );
-                    break;
                 }
+
+                // Extract language and title from URL pathname
+                const url = new URL(src);
+                const pathname = url.pathname;
+                language = pathname.split(".").pop();
+                title = pathname.split("/").pop();
             } else {
                 const filepath = resolve(
                     src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),

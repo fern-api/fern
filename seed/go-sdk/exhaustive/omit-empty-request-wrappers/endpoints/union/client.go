@@ -26,13 +26,26 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &types.Animal{
+//	    Dog: &types.Dog{
+//	        Name: "name",
+//	        LikesToWoof: true,
+//	    },
+//	}
+//	client.Endpoints.Union.GetAndReturnUnion(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnUnion(
 	ctx context.Context,
 	request *types.Animal,

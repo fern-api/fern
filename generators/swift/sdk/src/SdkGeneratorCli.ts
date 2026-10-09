@@ -2,10 +2,11 @@ import { File, GeneratorError, GeneratorNotificationService, getWireValue } from
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, RootAsIsFiles, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
-import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { sanitizeSwiftIdentifier, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
     AliasGenerator,
+    CodingKeyRepresentableExtensionGenerator,
     DiscriminatedUnionGenerator,
     LiteralEnumGenerator,
     ObjectGenerator,
@@ -28,7 +29,6 @@ import { ReferenceConfigAssembler } from "./reference/index.js";
 import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
-import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -76,16 +76,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
         this.generatePackageSwiftFile(context);
 
-        // Create a shared DynamicSnippetsGenerator to avoid duplicate IR conversion
+        // Use the shared DynamicSnippetsGenerator to avoid duplicate IR conversion
         // and symbol registration between README and Reference generation.
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
             throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
-        const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
-            config: context.config
-        });
+        const sharedSnippetsGenerator = context.dynamicSnippetsGenerator;
 
         await Promise.all([
             this.generateReadme(context, dynamicIr, sharedSnippetsGenerator),
@@ -295,7 +292,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                     return fileProperty._visit({
                                         file: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(
+                                                unsafeName: sanitizeSwiftIdentifier(
                                                     context.caseConverter.camelUnsafe(property.key)
                                                 ),
                                                 accessLevel: "public",
@@ -308,7 +305,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         },
                                         fileArray: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(
+                                                unsafeName: sanitizeSwiftIdentifier(
                                                     context.caseConverter.camelUnsafe(property.key)
                                                 ),
                                                 accessLevel: "public",
@@ -326,7 +323,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 },
                                 bodyProperty: (property) => {
                                     return swift.property({
-                                        unsafeName: sanitizeSelf(context.caseConverter.camelUnsafe(property.name)),
+                                        unsafeName: sanitizeSwiftIdentifier(
+                                            context.caseConverter.camelUnsafe(property.name)
+                                        ),
                                         accessLevel: "public",
                                         declarationType: "let",
                                         type: context.getSwiftTypeReferenceFromScope(
@@ -472,6 +471,15 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private generateSourceSchemaFiles(context: SdkGeneratorContext): void {
+        const mapKeyTypeIds = context.getSchemaTypeIdsUsedAsNonStringMapKeys();
+        const buildSchemaFileContents = (typeId: string, primary: swift.FileComponent): swift.FileComponent[] => {
+            if (!mapKeyTypeIds.has(typeId)) {
+                return [primary];
+            }
+            const symbol = context.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+            const extension = new CodingKeyRepresentableExtensionGenerator({ name: symbol.name }).generate();
+            return [primary, swift.LineBreak.double(), extension];
+        };
         for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             typeDeclaration.shape._visit({
                 alias: (atd) => {
@@ -533,7 +541,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        contents: [enum_]
+                        contents: buildSchemaFileContents(typeId, enum_)
                     });
                 },
                 object: (otd) => {
@@ -564,7 +572,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        contents: [enum_]
+                        contents: buildSchemaFileContents(typeId, enum_)
                     });
                 },
                 union: (utd) => {

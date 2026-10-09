@@ -1,0 +1,357 @@
+name: ci
+
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RUSTFLAGS: "-A warnings"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check
+        run: cargo check
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Compile
+        run: cargo build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Test
+        run: cargo test
+
+  # The npm packages take their version from the release tag, while the
+  # binary reports the version in Cargo.toml. Publishing when they disagree
+  # ships a package whose --version names a release that isn't on the
+  # registry, so refuse to publish instead (cargo-dist hard-fails on the
+  # same mismatch for the GitHub Release).
+  version:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check tag matches crate version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          CRATE_VERSION=$(cargo metadata --no-deps --format-version 1 \
+            | jq -r --arg manifest "${PWD}/Cargo.toml" \
+              '.packages[] | select(.manifest_path == $manifest) | .version')
+
+          if [[ -z "${CRATE_VERSION}" ]]; then
+            echo "::error::Could not determine the crate version from cargo metadata (no package matched ${PWD}/Cargo.toml)."
+            exit 1
+          fi
+
+          if [[ "${TAG_VERSION}" != "${CRATE_VERSION}" ]]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} publishes version ${TAG_VERSION}, but Cargo.toml is ${CRATE_VERSION}."
+            echo "::error::The binary would report ${CRATE_VERSION} from --version while the npm packages say ${TAG_VERSION}."
+            echo "::error::Set the generator's output version to ${TAG_VERSION} and regenerate, or tag v${CRATE_VERSION} instead."
+            exit 1
+          fi
+          echo "Tag and crate version agree: ${TAG_VERSION}"
+
+  publish:
+    needs: [check, compile, test, version]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      # Don't cancel sibling matrix jobs on first failure — a transient
+      # failure on one platform would otherwise leave npm in a partial
+      # state (some platform packages published, others not, launcher
+      # never published), with no clean re-run since the already-
+      # published versions reject re-publish.
+      fail-fast: false
+      matrix:
+        include:
+          - rust-target: x86_64-unknown-linux-musl
+            runner: ubuntu-latest
+            npm-platform-suffix: linux-x64
+          - rust-target: aarch64-unknown-linux-musl
+            runner: ubuntu-24.04-arm
+            npm-platform-suffix: linux-arm64
+          - rust-target: x86_64-apple-darwin
+            runner: macos-latest
+            npm-platform-suffix: darwin-x64
+          - rust-target: aarch64-apple-darwin
+            runner: macos-latest
+            npm-platform-suffix: darwin-arm64
+          - rust-target: x86_64-pc-windows-msvc
+            runner: windows-latest
+            npm-platform-suffix: win32-x64
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: ${{ matrix.rust-target }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/Krypton"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install musl build tools
+        if: contains(matrix.rust-target, '-linux-musl')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
+
+      # The TLS backend and the keyring backend are selected per target by
+      # Cargo.toml, so no per-target feature flags are needed here.
+      #
+      # musl targets get a C compiler for the C dependencies, but not a
+      # linker: musl-gcc cannot produce static-pie, so it yields a binary
+      # that needs /lib/ld-musl-*.so.1 at runtime — which defeats the point
+      # of a musl build and crashes where that loader is absent. Left alone,
+      # rustc links the self-contained musl objects statically.
+      #
+      # Built with the `dist` profile — the same one cargo-dist uses for the
+      # GitHub Release — so npm and the Release ship byte-identical binaries
+      # for a given tag. Building `--release` here meant two channels
+      # shipping different bytes under one version, which surfaces as an
+      # unreproducible bug report.
+      - name: Build release binary
+        shell: bash
+        run: |
+          if [[ "${{ matrix.rust-target }}" == *-linux-musl ]]; then
+            TARGET_UNDERSCORE=$(echo "${{ matrix.rust-target }}" | tr '-' '_')
+            export "CC_${TARGET_UNDERSCORE}=musl-gcc"
+          fi
+          cargo build --profile dist --target ${{ matrix.rust-target }}
+
+      - name: Package and publish npm platform package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="${GITHUB_REF_NAME#v}"
+          PLATFORM_PKG="@fern/query-parameters-openapi-${{ matrix.npm-platform-suffix }}"
+          PKG_DIR="npm-pkg/${PLATFORM_PKG}"
+          mkdir -p "${PKG_DIR}"
+
+          # Locate the compiled binary
+          BINARY_NAME="query-parameters-api"
+          if [[ "${{ matrix.rust-target }}" == *"windows"* ]]; then
+            BINARY_NAME="query-parameters-api.exe"
+          fi
+          # A custom cargo profile writes to target/<triple>/<profile>/, not
+          # .../release/.
+          cp "target/${{ matrix.rust-target }}/dist/${BINARY_NAME}" "${PKG_DIR}/"
+
+          # Write platform package.json
+          cat > "${PKG_DIR}/package.json" <<PKGJSON
+          {
+            "name": "${PLATFORM_PKG}",
+            "version": "${VERSION}",
+            "description": "Platform-specific binary for query-parameters-api (${{ matrix.npm-platform-suffix }})",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/query-parameters-openapi/fern"
+            },
+            "os": ["$(echo ${{ matrix.npm-platform-suffix }} | cut -d- -f1)"],
+            "cpu": ["$(echo ${{ matrix.npm-platform-suffix }} | cut -d- -f2)"],
+            "main": "${BINARY_NAME}",
+            "files": ["${BINARY_NAME}"]
+          }
+          PKGJSON
+
+          cd "${PKG_DIR}"
+          # Pre-release detection. ANY SemVer pre-release (a "-" after the
+          # version core) must get a non-latest dist-tag: matching only
+          # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
+          # bare `npm publish`, which moves `latest` to a pre-release for
+          # every existing installer. The tag is the first dot-separated
+          # pre-release identifier, stripped to a safe slug, so -rc.1 -> rc
+          # and -next.1 -> next; an all-numeric or empty identifier falls
+          # back to "prerelease" because npm rejects a numeric dist-tag.
+          PRERELEASE="${VERSION#*-}"
+          if [[ "${VERSION}" == *-* ]]; then
+            TAG=$(echo "${PRERELEASE%%.*}" | tr -cd '[:alnum:]-')
+            if [[ -z "${TAG}" || "${TAG}" =~ ^[0-9]+$ ]]; then
+              TAG=prerelease
+            fi
+            echo "Publishing pre-release ${VERSION} with --tag ${TAG}"
+            npm publish --access public --tag "${TAG}"
+          else
+            PKG_NAME=$(node -p "require('./package.json').name")
+            PKG_VERSION=$(node -p "require('./package.json').version")
+            CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver@7.8.1 "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
+              npm publish --access public --tag backport
+            else
+              npm publish --access public
+            fi
+          fi
+
+  publish-launcher:
+    needs: [publish]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/Krypton"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Publish launcher package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="${GITHUB_REF_NAME#v}"
+          PKG_DIR="npm-pkg/launcher"
+          mkdir -p "${PKG_DIR}"
+
+          BINARY_NAME="query-parameters-api"
+
+          # Build optionalDependencies map
+          OPTIONAL_DEPS=""
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-linux-x64\": \"${VERSION}\","
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-linux-arm64\": \"${VERSION}\","
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-darwin-x64\": \"${VERSION}\","
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-darwin-arm64\": \"${VERSION}\","
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-win32-x64\": \"${VERSION}\""
+
+          cat > "${PKG_DIR}/package.json" <<PKGJSON
+          {
+            "name": "@fern/query-parameters-openapi",
+            "version": "${VERSION}",
+            "description": "Query-parameter CLI, and it's comma-laden",
+            "license": "MIT",
+            "keywords": ["acme","cli"],
+            "homepage": "https://acme.example",
+            "author": "Acme <dev@acme.example>",
+            "contributors": ["Second <two@acme.example>"],
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/query-parameters-openapi/fern"
+            },
+            "bin": {
+              "query-parameters-api": "bin/cli.js"
+            },
+            "optionalDependencies": {
+              ${OPTIONAL_DEPS}
+            },
+            "files": ["bin/"]
+          }
+          PKGJSON
+
+          # Write launcher script
+          mkdir -p "${PKG_DIR}/bin"
+          cat > "${PKG_DIR}/bin/cli.js" <<'LAUNCHER'
+          #!/usr/bin/env node
+          "use strict";
+          const { execFileSync } = require("child_process");
+          const path = require("path");
+          const os = require("os");
+
+          const PLATFORMS = {
+            "linux-x64": "@fern/query-parameters-openapi-linux-x64",
+            "linux-arm64": "@fern/query-parameters-openapi-linux-arm64",
+            "darwin-x64": "@fern/query-parameters-openapi-darwin-x64",
+            "darwin-arm64": "@fern/query-parameters-openapi-darwin-arm64",
+            "win32-x64": "@fern/query-parameters-openapi-win32-x64",
+          };
+
+          const platformKey = os.platform() + "-" + os.arch();
+          const pkg = PLATFORMS[platformKey];
+          if (!pkg) {
+            console.error("Unsupported platform: " + platformKey);
+            process.exit(1);
+          }
+
+          const binName = os.platform() === "win32" ? "query-parameters-api.exe" : "query-parameters-api";
+          const binPath = path.join(require.resolve(pkg + "/package.json"), "..", binName);
+
+          try {
+            execFileSync(binPath, process.argv.slice(2), { stdio: "inherit" });
+          } catch (e) {
+            if (e && typeof e === "object") {
+              // Propagate the child's exit code; a signal death has no
+              // numeric status, so report it as 128+signum like a shell does.
+              if (typeof e.status === "number") {
+                process.exit(e.status);
+              }
+              if (typeof e.signal === "string") {
+                const SIGNUM = { SIGHUP: 1, SIGINT: 2, SIGQUIT: 3, SIGILL: 4, SIGABRT: 6, SIGFPE: 8, SIGKILL: 9, SIGSEGV: 11, SIGPIPE: 13, SIGALRM: 14, SIGTERM: 15 };
+                process.exit(128 + (SIGNUM[e.signal] || 0));
+              }
+            }
+            throw e;
+          }
+          LAUNCHER
+
+          cd "${PKG_DIR}"
+          # Pre-release detection. ANY SemVer pre-release (a "-" after the
+          # version core) must get a non-latest dist-tag: matching only
+          # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
+          # bare `npm publish`, which moves `latest` to a pre-release for
+          # every existing installer. The tag is the first dot-separated
+          # pre-release identifier, stripped to a safe slug, so -rc.1 -> rc
+          # and -next.1 -> next; an all-numeric or empty identifier falls
+          # back to "prerelease" because npm rejects a numeric dist-tag.
+          PRERELEASE="${VERSION#*-}"
+          if [[ "${VERSION}" == *-* ]]; then
+            TAG=$(echo "${PRERELEASE%%.*}" | tr -cd '[:alnum:]-')
+            if [[ -z "${TAG}" || "${TAG}" =~ ^[0-9]+$ ]]; then
+              TAG=prerelease
+            fi
+            echo "Publishing pre-release ${VERSION} with --tag ${TAG}"
+            npm publish --access public --tag "${TAG}"
+          else
+            PKG_NAME=$(node -p "require('./package.json').name")
+            PKG_VERSION=$(node -p "require('./package.json').version")
+            CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver@7.8.1 "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
+              npm publish --access public --tag backport
+            else
+              npm publish --access public
+            fi
+          fi

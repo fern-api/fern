@@ -383,6 +383,52 @@ exports[`BearerAuthProviderGenerator > getFilePath() > returns auth/BearerAuthPr
 
 exports[`BearerAuthProviderGenerator > instantiate() > produces BearerAuthProvider.createInstance call 1`] = `"BearerAuthProvider.createInstance(options)"`;
 
+exports[`BearerAuthProviderGenerator > writeToFile() > generates bearer auth provider that skips the auth header when optionalAuth is enabled 1`] = `
+"const TOKEN_PARAM = "token" as const;
+const ENV_TOKEN = "PLANT_API_TOKEN" as const;
+
+export class BearerAuthProvider implements core.AuthProvider {
+    private readonly options: BearerAuthProvider.Options;
+
+    constructor(options: BearerAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
+        return options?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const token = 
+                    (await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata })) ??
+                    process.env?.[ENV_TOKEN];
+                if (token == null) {
+                    return { headers: {} };
+                }
+
+                return {
+                    headers: { Authorization: \`Bearer \${token}\` },
+                };
+                
+    }
+}
+
+export namespace BearerAuthProvider {
+    export const AUTH_SCHEME = "Bearer" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${TOKEN_PARAM}' when initializing the client, or set the '\${ENV_TOKEN}' environment variable\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> | undefined };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BearerAuthProvider(options);
+    }
+}
+"
+`;
+
 exports[`BearerAuthProviderGenerator > writeToFile() > generates bearer auth provider with env var + neverThrowErrors 1`] = `
 "const TOKEN_PARAM = "token" as const;
 const ENV_TOKEN = "PLANT_API_TOKEN" as const;
@@ -640,6 +686,7 @@ exports[`HeaderAuthProviderGenerator > getAuthOptionsProperties() > returns requ
 exports[`HeaderAuthProviderGenerator > writeToFile() > generates header auth provider with custom header name and prefix 1`] = `
 "const PARAM_KEY = "authorization" as const;
 const HEADER_NAME = "Authorization" as const;
+const HEADER_PREFIX = "Bearer " as const;
 
 export class HeaderAuthProvider implements core.AuthProvider {
     private readonly options: HeaderAuthProvider.Options;
@@ -664,7 +711,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
                 }
 
                 return {
-                    headers: { [HEADER_NAME]: headerValue },
+                    headers: { [HEADER_NAME]: \`\${HEADER_PREFIX}\${headerValue}\` },
                 };
                 
     }

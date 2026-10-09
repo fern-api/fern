@@ -38,5 +38,25 @@ export interface GraphQLSpec {
     type: "graphql";
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+    absoluteFilepathToExamples: AbsoluteFilePath | undefined;
     namespace?: string;
+}
+
+/**
+ * GraphQL specs that share a namespace describe a single schema whose SDL is split across files
+ * (e.g. federation subgraphs, each owned by a different team), so they must be converted together.
+ * Specs in different namespaces remain independent schemas.
+ */
+export function groupGraphQLSpecsByNamespace(specs: readonly GraphQLSpec[]): Map<string, GraphQLSpec[]> {
+    const grouped = new Map<string, GraphQLSpec[]>();
+    for (const spec of specs) {
+        const key = spec.namespace ?? "";
+        const existing = grouped.get(key);
+        if (existing != null) {
+            existing.push(spec);
+        } else {
+            grouped.set(key, [spec]);
+        }
+    }
+    return grouped;
 }

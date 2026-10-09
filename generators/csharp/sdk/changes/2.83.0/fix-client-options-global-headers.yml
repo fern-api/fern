@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Global header values set on `ClientOptions` are now respected in the default
+    (non-unified) client shape. Previously the generated root client read only the
+    constructor parameter for a promoted global header, so
+    `new Client(clientOptions: new ClientOptions { Version = "..." })` was silently
+    ignored and a stray environment variable could win instead. The resolution
+    order is now: explicit constructor argument, `ClientOptions` property,
+    environment variable, then the literal/client default.
+  type: fix
+
+- summary: |
+    `ClientOptions.Clone()` now copies literal global header properties (e.g.
+    `Version`), which were previously dropped when the options were cloned.
+  type: fix

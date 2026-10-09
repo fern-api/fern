@@ -3,10 +3,12 @@
  */
 package com.seed.api.resources.catalog;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.FileStream;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
@@ -77,6 +79,15 @@ public class RawCatalogClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -87,24 +98,32 @@ public class RawCatalogClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
     public SeedApiHttpResponse<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename) {
+            CreateCatalogImageBody request, InputStream stream, String filename) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -117,24 +136,32 @@ public class RawCatalogClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
     public SeedApiHttpResponse<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+            CreateCatalogImageBody request, InputStream stream, String filename, MediaType mediaType) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -147,13 +174,15 @@ public class RawCatalogClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
     public SeedApiHttpResponse<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+            CreateCatalogImageBody request, InputStream stream, String filename, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
@@ -164,7 +193,13 @@ public class RawCatalogClient {
         }
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -174,6 +209,15 @@ public class RawCatalogClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -185,13 +229,15 @@ public class RawCatalogClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
     public SeedApiHttpResponse<CatalogImage> createCatalogImage(
-            Optional<File> imageFile,
+            CreateCatalogImageBody request,
             InputStream stream,
             String filename,
             MediaType mediaType,
@@ -206,7 +252,13 @@ public class RawCatalogClient {
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -216,6 +268,15 @@ public class RawCatalogClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -227,6 +288,8 @@ public class RawCatalogClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }
@@ -265,6 +328,15 @@ public class RawCatalogClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -275,6 +347,8 @@ public class RawCatalogClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }

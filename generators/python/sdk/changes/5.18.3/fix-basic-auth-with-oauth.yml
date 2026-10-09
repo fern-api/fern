@@ -1,0 +1,8 @@
+- summary: |
+    Expose basic auth credentials (e.g. `account_sid` / `auth_token`) on the top-level
+    client when the API also configures OAuth (`auth: any`). Previously the root client
+    constructor only accepted OAuth client credentials or a bearer token, even though the
+    underlying client wrapper supported basic auth. The credentials are now optional
+    constructor parameters that are forwarded to the client wrapper, and the client can be
+    instantiated with basic auth alone without raising an error.
+  type: fix

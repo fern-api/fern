@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test inferring SSE streaming from text/event-stream MIME type",
   "auth": {
@@ -195,7 +196,7 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
-            "contentType": "application/json",
+            "required": false,
             "type": "reference"
           },
           "sdkRequest": {
@@ -210,6 +211,7 @@
                   "typeId": "type_:CompletionRequest",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -229,6 +231,7 @@
                   "typeId": "type_:CompletionChunk",
                   "type": "named"
                 },
+                "resumable": false,
                 "type": "sse"
               },
               "type": "streaming"
@@ -267,7 +270,7 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
-            "contentType": "application/json",
+            "required": false,
             "type": "reference"
           },
           "sdkRequest": {
@@ -282,6 +285,7 @@
                   "typeId": "type_:CompletionRequest",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -341,7 +345,7 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
-            "contentType": "application/json",
+            "required": false,
             "type": "reference"
           },
           "sdkRequest": {
@@ -356,6 +360,7 @@
                   "typeId": "type_:CompletionRequest",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -677,6 +682,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {
@@ -762,6 +768,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {
@@ -847,6 +854,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {
@@ -875,7 +883,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -892,7 +901,8 @@
     "subpackages": [
       "subpackage_completions"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

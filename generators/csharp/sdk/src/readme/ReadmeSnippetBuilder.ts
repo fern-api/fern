@@ -13,6 +13,7 @@ type FeatureId = FernIr.FeatureId;
 type Type = FernIr.Type;
 
 import { Generation } from "@fern-api/csharp-codegen";
+import { isPagerPagination } from "../endpoint/utils/isPagerPagination.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
@@ -26,6 +27,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSE";
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     private static ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_QUERY_PARAMETERS";
+    private static ADDITIONAL_BODY_PROPERTIES_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_BODY_PROPERTIES";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
@@ -118,11 +120,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
-        // gRPC APIs don't support raw response access or additional query parameters
+        // gRPC APIs don't support raw response access, additional query parameters, or additional body properties
         if (!this.context.hasGrpcEndpoints()) {
             snippets[ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID] = this.buildRawResponseSnippets();
             snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID] =
                 this.buildAdditionalQueryParametersSnippets();
+            snippets[ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID] =
+                this.buildAdditionalBodyPropertiesSnippets();
         }
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         if (this.isPaginationEnabled) {
@@ -153,7 +157,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 var response = await ${this.getMethodCall(retryEndpoint)}(
     ...,
     new ${this.requestOptionsName} {
-        MaxRetries: 0 // Override MaxRetries at the request level
+        MaxRetries = 0 // Override MaxRetries at the request level
     }
 );
 `)
@@ -167,7 +171,7 @@ var response = await ${this.getMethodCall(retryEndpoint)}(
 var response = await ${this.getMethodCall(timeoutEndpoint)}(
     ...,
     new ${this.requestOptionsName} {
-        Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+        Timeout = TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
 `)
@@ -187,6 +191,17 @@ try {
 } catch (${this.Types.BaseApiException.name} e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+
+    // Access the raw HTTP response (status code, URL, headers) off the exception
+    var rawResponse = e.RawResponse;
+    if (rawResponse != null)
+    {
+        System.Console.WriteLine(rawResponse.Url);
+        if (rawResponse.Headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            System.Console.WriteLine($"Request ID: {requestId}");
+        }
+    }
 }
 `)
         );
@@ -216,7 +231,10 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
+var parsedData = await ${this.getMethodCall(rawResponseEndpoint)}(...);
+
+// .WithRawResponse() also works on streaming endpoints (returns IAsyncEnumerable<T> + RawResponse)
+// and on endpoints with no response body (returns RawResponse only).
 `)
         );
     }
@@ -265,6 +283,25 @@ var response = await ${this.getMethodCall(queryParameterEndpoint)}(
         AdditionalQueryParameters = new Dictionary<string, string>
         {
             { "custom_param", "custom-value" }
+        }
+    }
+);
+`)
+        );
+    }
+
+    private buildAdditionalBodyPropertiesSnippets(): string[] {
+        const bodyPropertiesEndpoints = this.getEndpointsForFeature(
+            ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID
+        );
+        return bodyPropertiesEndpoints.map((bodyPropertiesEndpoint) =>
+            this.writeCode(`
+var response = await ${this.getMethodCall(bodyPropertiesEndpoint)}(
+    ...,
+    new ${this.requestOptionsName} {
+        AdditionalBodyProperties = new Dictionary<string, object>
+        {
+            { "custom_field", "custom-value" }
         }
     }
 );
@@ -326,7 +363,8 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.pagination != null) {
+            const pagination = endpointWithFilepath.endpoint.pagination;
+            if (pagination != null && isPagerPagination(pagination)) {
                 return endpointWithFilepath;
             }
             return undefined;
@@ -438,7 +476,7 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
             this.writeCode(`
 using ${this.namespaces.root};
 
-var client = new ${this.Types.RootClient.name}(new ${this.Types.ClientOptions.name}
+var client = new ${this.Types.RootClient.name}(clientOptions: new ${this.Types.ClientOptions.name}
 {
     ${envField} = ${environmentsClassName}.${defaultEnvName}
 });

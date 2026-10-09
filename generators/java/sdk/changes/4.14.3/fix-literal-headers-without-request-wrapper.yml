@@ -1,0 +1,6 @@
+- summary: |
+    Endpoints without a request wrapper (no request object, or a request that is
+    just a body) now send service- and endpoint-level headers whose types are
+    literals (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers
+    were silently dropped because there was no request object to carry them.
+  type: fix

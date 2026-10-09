@@ -1,4 +1,5 @@
 import { Style } from "@fern-api/browser-compatible-base-generator";
+import { FERN_JAVA_SKIP_FORMATTING_ENV_VAR, isEnvVarTruthy } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
@@ -18,7 +19,8 @@ export class DynamicSnippetsJavaTestGenerator {
     constructor(
         private readonly context: TaskContext,
         private readonly ir: dynamic.DynamicIntermediateRepresentation,
-        private readonly generatorConfig: FernGeneratorExec.GeneratorConfig
+        private readonly generatorConfig: FernGeneratorExec.GeneratorConfig,
+        private readonly inlineTypeIds?: Set<string>
     ) {
         // Note: the local-workspace-runner uses convertIr which always returns a DynamicIntermediateRepresentation
         //       that is actually of the latest version in the workspace.
@@ -35,7 +37,8 @@ export class DynamicSnippetsJavaTestGenerator {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             // biome-ignore lint/suspicious/noExplicitAny: workaround for version incompatibility - see note above
             ir: convertIr(this.ir) as unknown as any,
-            config: this.generatorConfig
+            config: this.generatorConfig,
+            inlineTypeIds: this.inlineTypeIds
         });
     }
 
@@ -71,10 +74,15 @@ export class DynamicSnippetsJavaTestGenerator {
                 );
             }
         }
-        this.context.logger.debug("Dynamic snippets test files generated, running spotlessApply...");
+        const skipFormatting = isEnvVarTruthy(process.env[FERN_JAVA_SKIP_FORMATTING_ENV_VAR]);
+        this.context.logger.debug(
+            skipFormatting
+                ? `Dynamic snippets test files generated, skipping spotlessApply because ${FERN_JAVA_SKIP_FORMATTING_ENV_VAR} is set`
+                : "Dynamic snippets test files generated, running spotlessApply..."
+        );
         const gradlewPath = join(outputDir, RelativeFilePath.of("gradlew"));
         const gradlewExists = await doesPathExist(gradlewPath, "file");
-        if (gradlewExists) {
+        if (gradlewExists && !skipFormatting) {
             try {
                 const customConfig = this.generatorConfig.customConfig as Record<string, unknown> | undefined;
                 const enableProfiling = customConfig?.["enable-gradle-profiling"] === true;

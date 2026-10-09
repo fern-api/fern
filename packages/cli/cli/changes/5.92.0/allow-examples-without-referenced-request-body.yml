@@ -1,0 +1,6 @@
+- summary: |
+    Allow endpoint examples to omit the request body when the body is a reference to a
+    shared schema. Previously only inlined request bodies supported omitting `request`,
+    so endpoints whose request schema was reused elsewhere still failed with
+    `Expected example to be an object. Example is: undefined`.
+  type: fix

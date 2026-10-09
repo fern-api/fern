@@ -4,11 +4,13 @@
 package com.seed.streaming.resources.dummy;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.streaming.core.BodyProperties;
 import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.MediaTypes;
 import com.seed.streaming.core.ObjectMappers;
 import com.seed.streaming.core.RequestOptions;
 import com.seed.streaming.core.ResponseBodyReader;
+import com.seed.streaming.core.RetryInterceptor;
 import com.seed.streaming.core.SeedStreamingApiException;
 import com.seed.streaming.core.SeedStreamingException;
 import com.seed.streaming.core.SeedStreamingHttpResponse;
@@ -50,7 +52,9 @@ public class RawDummyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedStreamingException("Failed to serialize request", e);
         }
@@ -64,6 +68,15 @@ public class RawDummyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         try {
             Response response = client.newCall(okhttpRequest).execute();
@@ -76,6 +89,8 @@ public class RawDummyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedStreamingApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedStreamingException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedStreamingException("Network error executing HTTP request", e);
         }
@@ -97,7 +112,9 @@ public class RawDummyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedStreamingException("Failed to serialize request", e);
         }
@@ -112,6 +129,15 @@ public class RawDummyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -122,6 +148,8 @@ public class RawDummyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedStreamingApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedStreamingException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedStreamingException("Network error executing HTTP request", e);
         }

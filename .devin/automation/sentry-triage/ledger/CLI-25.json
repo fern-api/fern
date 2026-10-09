@@ -1,0 +1,10 @@
+{
+  "title": "Invalid fern.config.json JSON",
+  "disposition": "duplicate",
+  "rationale": "Current loadProjectConfig wraps JSON.parse as ParseError; same non-reportable parse/config class as CLI-2Z.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-2Z",
+  "problemSignature": "Schema or configuration parse path for user-authored fern.config.json looked like InternalError instead of parse/config error."
+}

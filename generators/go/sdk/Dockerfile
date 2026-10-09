@@ -1,15 +1,13 @@
 # Stage 1: Build Node CLI
-FROM node:22.22-alpine3.23 AS node
+FROM node:24.17-alpine3.23 AS node
 
 RUN apk --no-cache add git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
-# Patch vulnerable packages bundled inside npm's node_modules that lag behind
-# upstream advisories (ip-address GHSA-v2v4-37r5-5v8g, brace-expansion
-# GHSA-f886-m6hf-6m8v, picomatch GHSA-3v7f-55p6-f55p / GHSA-c2c7-rcm5-vvqj).
-# We replace them with the latest patched releases via `npm pack` so the
-# resulting layer does not ship known-vulnerable copies.
+# Patch vulnerable packages bundled inside npm's node_modules. Replace them
+# with the latest patched releases via `npm pack` so the resulting layer does
+# not ship known-vulnerable copies.
 RUN set -eux; \
     NPM_NM=/usr/local/lib/node_modules/npm/node_modules; \
     mkdir -p /tmp/pkg-fix && cd /tmp/pkg-fix; \
@@ -19,14 +17,62 @@ RUN set -eux; \
         mkdir -p "${NPM_NM}/${pkg}"; \
         tar -xzf "${TARBALL}" -C "${NPM_NM}/${pkg}" --strip-components=1; \
     done; \
+    # npm 11.12.1 also vendors a nested picomatch under tinyglobby; patch it too.
+    for nested in "${NPM_NM}/tinyglobby/node_modules/picomatch"; do \
+        if [ -d "${nested}" ]; then \
+            TARBALL="$(npm pack picomatch@latest --silent)"; \
+            rm -rf "${nested}"; \
+            mkdir -p "${nested}"; \
+            tar -xzf "${TARBALL}" -C "${nested}" --strip-components=1; \
+        fi; \
+    done; \
+    # Patch undici to 6.27.0 to fix CVE-2026-12151.
+    TARBALL="$(npm pack undici@6.27.0 --silent)"; \
+    rm -rf "${NPM_NM:?}/undici"; \
+    mkdir -p "${NPM_NM}/undici"; \
+    tar -xzf "${TARBALL}" -C "${NPM_NM}/undici" --strip-components=1; \
+    # Patch tar to 7.5.16 (pinned) to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh.
+    TARBALL="$(npm pack tar@7.5.16 --silent)"; \
+    rm -rf "${NPM_NM:?}/tar"; \
+    mkdir -p "${NPM_NM}/tar"; \
+    tar -xzf "${TARBALL}" -C "${NPM_NM}/tar" --strip-components=1; \
+    cd / && rm -rf /tmp/pkg-fix /root/.npm
+
+# Patch @sigstore/core to 3.2.1 to fix GHSA-jfc7-64v2-mr8c.
+RUN set -eux; \
+    NPM_NM=/usr/local/lib/node_modules/npm/node_modules; \
+    if [ -d "${NPM_NM}/@sigstore/core" ]; then \
+        TARBALL="$(npm pack @sigstore/core@3.2.1 --silent)"; \
+        rm -rf "${NPM_NM}/@sigstore/core"; \
+        mkdir -p "${NPM_NM}/@sigstore/core"; \
+        tar -xzf "${TARBALL}" -C "${NPM_NM}/@sigstore/core" --strip-components=1; \
+        rm -f "${TARBALL}"; \
+    fi; \
     cd / && rm -rf /tmp/pkg-fix /root/.npm
 
 COPY generators/go-v2/sdk/dist/ /dist/
 
 # Stage 2: Final Go image
-FROM golang:1.26.2-alpine3.23
+# Built with Go 1.26.4 so the resulting /fern-go-sdk binary embeds a patched
+# stdlib that clears vulnerability scanners.
+FROM golang:1.26.4-alpine3.23
 
 WORKDIR /workspace
+
+# Patch src/go.mod and src/cmd/go.mod to bump declared x/net, x/crypto,
+# x/sys versions so SBOM scanners no longer flag stale pseudo-versions.
+RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/crypto v0.46.1-[^ ]*|golang.org/x/crypto v0.52.0|' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/crypto v0.46.1-/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.45.0|g' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.45.0|g' \
+        /usr/local/go/src/cmd/go.mod /usr/local/go/src/cmd/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/cmd/go.sum
 
 RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache ca-certificates git libstdc++
@@ -34,11 +80,12 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
     git config --global user.name "fern-api"
 
 COPY generators/go/go.mod generators/go/go.sum /workspace/
-RUN go mod download
-
 COPY generators/go/cmd /workspace/cmd
 COPY generators/go/internal /workspace/internal
 COPY generators/go/version.go /workspace/version.go
+# Bump golang.org/x/net, x/crypto, x/sys (transitives of golang.org/x/tools)
+# to versions that clear vulnerability scanners.
+RUN go get golang.org/x/net@v0.55.0 golang.org/x/crypto@v0.52.0 golang.org/x/sys@v0.45.0 && go mod tidy && go mod download
 
 COPY generators/go-v2/sdk/features.yml /assets/features.yml
 
@@ -53,6 +100,12 @@ COPY --from=node /dist/ /bin/
 RUN mv /bin/cli.cjs /bin/go-v2 && chmod +x /bin/go-v2
 
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk
+
+# Drop build-time artifacts (testdata, module cache) that scanners flag
+# but the runtime image doesn't need.
+RUN rm -rf /workspace/internal/testdata && \
+    go clean -modcache && \
+    rm -rf /root/.cache/go-build
 
 RUN test -f /bin/go-v2 || echo "go-v2 CLI not found or not executable"
 

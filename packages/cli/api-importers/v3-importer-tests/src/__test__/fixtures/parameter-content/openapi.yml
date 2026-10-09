@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: content-parameters
+  version: 1.0.0
+paths:
+  /account/photo:
+    get:
+      operationId: getAccountPhoto
+      parameters:
+        - name: Api-Arg
+          in: header
+          required: true
+          description: JSON-encoded arguments.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountPhotoGetArg"
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: string
+  /account/settings:
+    get:
+      operationId: getAccountSettings
+      parameters:
+        - name: Api-Filter
+          in: query
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountSettingsFilter"
+        - name: region
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/RegionAlias"
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    AccountPhotoGetArg:
+      type: object
+      examples:
+        - circle_crop: false
+          dbx_account_id: "dbid:plant-fern-123"
+          expect_account_photo: true
+          size: "128x128"
+      required:
+        - dbx_account_id
+      properties:
+        circle_crop:
+          type: boolean
+        dbx_account_id:
+          type: string
+        expect_account_photo:
+          type: boolean
+        size:
+          type: string
+    AccountSettingsFilter:
+      type: object
+      properties:
+        include_deleted:
+          type: boolean
+    RegionAlias:
+      $ref: "#/components/schemas/Region"
+    Region:
+      type: string
+      example: eu-west-1

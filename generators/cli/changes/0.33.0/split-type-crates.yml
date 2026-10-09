@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `splitTypeCrates`, which distributes the generated `<binaryName>-types` crate
+    across one crate per API — plus a shared core crate for types that more than one
+    API references — behind a facade crate that keeps the original crate name and
+    re-exports them.
+
+    A single crate holding every generated type is one `rustc` compilation unit, so
+    its peak memory is driven by the total amount of generated code; with enough
+    specs that is large enough to be killed on a standard CI runner. Cargo compiles
+    crates in separate processes, so splitting caps the peak at the largest single
+    API and lets the remaining crates build in parallel and cache independently.
+
+    Defaults to `false`: output is unchanged unless a consumer opts in. The CLI still
+    ships as one binary with every spec embedded, and `use <binary>_types::SomeType`
+    keeps resolving through the facade.
+
+    The partition crates are emitted inside the facade, at
+    `<binary>-types/crates/`, so enabling the flag adds no top-level entry to the
+    generated repo — the tree looks exactly as it did with a single types crate,
+    even for a workspace with 60 APIs.
+
+    The facade's module surface is unchanged too: `BuildError` and the serde
+    helpers are declared once in the shared core crate and re-exported by the
+    others, so `<binary>_types::error::BuildError` and
+    `<binary>_types::core::flexible_datetime` keep resolving, and a builder error
+    raised in one API is the same type as one raised in another.
+  type: feat

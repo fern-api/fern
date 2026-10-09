@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Forward-compatible discriminated unions: unmarshaling JSON with an unknown
+    discriminant value no longer drops the variant payload. The raw JSON is
+    preserved internally and returned verbatim when the union is re-marshaled,
+    so unknown server-introduced variants round-trip losslessly. Known
+    discriminants and `Accept` visitor behavior are unchanged.
+  type: feat

@@ -56,7 +56,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ExamplesClient.swift">createType</a>(request: Type, requestOptions: RequestOptions?) -> Identifier</code></summary>
+<details><summary><code>client.<a href="/Sources/ExamplesClient.swift">createType</a>(request: `Type`, requestOptions: RequestOptions?) -> Identifier</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Type` 
+**request:** ``Type`` 
     
 </dd>
 </dl>
@@ -205,7 +205,10 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    _ = try await client.file.service.getFile(filename: "file.txt")
+    _ = try await client.file.service.getFile(
+        filename: "file.txt",
+        xFileApiVersion: "0.0.2"
+    )
 }
 
 try await main()
@@ -522,7 +525,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">getMetadata</a>(xApiVersion: String, shallow: Bool?, tag: String?, requestOptions: RequestOptions?) -> MetadataType</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">getMetadata</a>(xApiVersion: String, shallow: Bool?, tag: [String]?, requestOptions: RequestOptions?) -> MetadataType</code></summary>
 <dl>
 <dd>
 
@@ -541,7 +544,13 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    _ = try await client.service.getMetadata(shallow: false)
+    _ = try await client.service.getMetadata(
+        xApiVersion: "0.0.1",
+        shallow: false,
+        tag: [
+            "development"
+        ]
+    )
 }
 
 try await main()
@@ -575,7 +584,7 @@ try await main()
 <dl>
 <dd>
 
-**tag:** `String?` 
+**tag:** `[String]?` 
     
 </dd>
 </dl>
@@ -648,7 +657,7 @@ private func main() async throws {
             name: "name"
         ),
         metadata: MetadataType.html(
-
+            "metadata"
         ),
         commonMetadata: Metadata(
             id: "id",
@@ -667,7 +676,7 @@ private func main() async throws {
             )
         ),
         data: Data.string(
-
+            "data"
         ),
         migration: Migration(
             name: "name",
@@ -681,7 +690,7 @@ private func main() async throws {
             )
         ),
         test: Test.and(
-
+            true
         ),
         node: Node(
             name: "name",
@@ -875,9 +884,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    _ = try await client.service.refreshToken(request: RefreshTokenRequest(
-
-    ))
+    _ = try await client.service.refreshToken()
 }
 
 try await main()

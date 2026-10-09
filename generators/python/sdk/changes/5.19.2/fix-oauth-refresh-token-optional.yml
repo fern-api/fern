@@ -1,0 +1,6 @@
+- summary: |
+    Fix the OAuth token provider crashing with "Access token not present in OAuth response"
+    when the token response does not include a refresh token. Client-credentials token
+    responses often omit `refresh_token`; the provider now treats it as optional instead
+    of raising.
+  type: fix

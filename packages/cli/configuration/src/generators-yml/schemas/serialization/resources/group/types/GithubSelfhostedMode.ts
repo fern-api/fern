@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const GithubSelfhostedMode: core.serialization.Schema<
     serializers.GithubSelfhostedMode.Raw,
     GeneratorsYml.GithubSelfhostedMode
-> = core.serialization.enum_(["pull-request", "push"]);
+> = core.serialization.enum_(["pull-request", "push", "commit-and-release"]);
 
 export declare namespace GithubSelfhostedMode {
-    export type Raw = "pull-request" | "push";
+    export type Raw = "pull-request" | "push" | "commit-and-release";
 }

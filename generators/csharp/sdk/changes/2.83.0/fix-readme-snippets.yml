@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    README and dynamic snippets no longer pass an upper-cased placeholder for
+    global header constructor parameters (e.g. `new Client("TOKEN", "VERSION")`,
+    which sent the literal header value `VERSION` at runtime). Snippets now use
+    the header's literal or client default value when one is known.
+  type: fix
+
+- summary: |
+    Fixed invalid C# in the generated README: `RequestOptions` examples used
+    object-initializer syntax with `:` instead of `=` (`new RequestOptions { MaxRetries: 0 }`),
+    and the `WithRawResponse` section declared `var data` twice in one block.
+  type: fix

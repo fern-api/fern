@@ -9,17 +9,7 @@ public partial class Examples
             }
         );
 
-        await client.Inlined.SendAsync(
-            new SendLiteralsInlinedRequest {
-                Temperature = 10.1,
-                AliasedContext = new SomeAliasedLiteral(),
-                MaybeContext = new SomeAliasedLiteral(),
-                ObjectWithLiteral = new ATopLevelLiteral {
-                    NestedLiteral = new ANestedLiteral()
-                },
-                Query = "What is the weather today"
-            }
-        );
+        await client.Headers.SendLiteralsOnlyAsync();
     }
 
 }

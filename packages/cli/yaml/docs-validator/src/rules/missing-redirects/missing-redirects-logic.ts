@@ -73,7 +73,7 @@ function isSlugCoveredByRedirect(oldSlug: string, redirects: Redirect[], basePat
 }
 
 /**
- * Compares published slug table entries against the local pageId->slug map
+ * Compares published slug table entries against the local pageId->slugs map
  * and returns entries whose slug disappeared or changed.
  *
  * Skips entries whose old slug is still actively served by another page in
@@ -83,21 +83,32 @@ function isSlugCoveredByRedirect(oldSlug: string, redirects: Redirect[], basePat
  */
 export function findRemovedSlugs(
     publishedEntries: MarkdownEntry[],
-    localPageIdToSlug: Map<string, string>
+    localPageIdToSlugs: Map<string, Set<string>>
 ): RemovedSlug[] {
-    const activeSlugs = new Set(localPageIdToSlug.values());
+    const activeSlugs = new Set<string>();
+    for (const slugs of localPageIdToSlugs.values()) {
+        for (const slug of slugs) {
+            activeSlugs.add(slug);
+        }
+    }
     const removed: RemovedSlug[] = [];
     for (const publishedEntry of publishedEntries) {
-        const newSlug = localPageIdToSlug.get(publishedEntry.pageId);
-        if (newSlug === undefined) {
+        // Empty slugs are FDR's fallback for pages without standalone nav nodes
+        // (for example changelog entries), not distinct redirectable URLs.
+        if (publishedEntry.slug.trim() === "") {
+            continue;
+        }
+        const localSlugs = localPageIdToSlugs.get(publishedEntry.pageId);
+        if (localSlugs == null) {
             if (activeSlugs.has(publishedEntry.slug)) {
                 continue;
             }
             removed.push({ pageId: publishedEntry.pageId, oldSlug: publishedEntry.slug, newSlug: undefined });
-        } else if (newSlug !== publishedEntry.slug) {
+        } else if (!localSlugs.has(publishedEntry.slug)) {
             if (activeSlugs.has(publishedEntry.slug)) {
                 continue;
             }
+            const newSlug = localSlugs.values().next().value;
             removed.push({ pageId: publishedEntry.pageId, oldSlug: publishedEntry.slug, newSlug });
         }
     }
@@ -128,7 +139,7 @@ export function checkMissingRedirects(
                 message:
                     `Page "${removed.pageId}" was moved from "${oldPath}" to "${newPath}". ` +
                     `The old URL will return 404 without a redirect. ` +
-                    `Add to docs.yml: redirects: [{source: "${oldPath}", destination: "${newPath}"}]`
+                    `Add to redirects: [{source: "${oldPath}", destination: "${newPath}"}]`
             });
         } else {
             violations.push({
@@ -136,7 +147,7 @@ export function checkMissingRedirects(
                 message:
                     `Page "${removed.pageId}" was removed. ` +
                     `The previously published URL "${oldPath}" will return 404 without a redirect. ` +
-                    `Consider adding a redirect in docs.yml to preserve existing links.`
+                    `Consider adding a redirect to preserve existing links.`
             });
         }
     }

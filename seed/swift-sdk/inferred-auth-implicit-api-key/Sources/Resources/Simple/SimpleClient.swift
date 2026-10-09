@@ -7,6 +7,20 @@ public final class SimpleClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import InferredAuthImplicitApiKey
+    ///
+    /// private func main() async throws {
+    ///     let client = InferredAuthImplicitApiKeyClient()
+    ///
+    ///     _ = try await client.simple.getSomething()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getSomething(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,

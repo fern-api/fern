@@ -62,9 +62,18 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             // Runtime data shapes are compatible; only TS types diverge across SDK versions.
             // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
             const convertedIr: any = convertIr(dynamicIr);
+            // The dynamic IR does not carry the `inline` flag, but v1 emits inline types as nested
+            // classes whose names differ from the schema type name. Compute the set of inline type
+            // IDs from the full IR so the snippet generator can resolve nested class names correctly.
+            const inlineTypeIds = new Set<string>(
+                Object.values(context.ir.types)
+                    .filter((typeDeclaration) => typeDeclaration.inline === true)
+                    .map((typeDeclaration) => typeDeclaration.name.typeId)
+            );
             const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
                 ir: convertedIr,
-                config: context.config
+                config: context.config,
+                inlineTypeIds
             });
 
             // Pre-populate snippets cache with the shared generator (used by reference.md)

@@ -1,5 +1,7 @@
 import { FernFiddleClient } from "@fern-fern/fiddle-sdk";
 
+import { getCodingAgentHeaders } from "../codingAgent.js";
+
 const FIDDLE_ORIGIN =
     process.env.FERN_FIDDLE_ORIGIN ??
     process.env.DEFAULT_FIDDLE_ORIGIN ??
@@ -9,9 +11,16 @@ export function getFiddleOrigin(): string {
     return FIDDLE_ORIGIN;
 }
 
-export function createFiddleService({ token }: { token?: string } = {}): FernFiddleClient {
+export function createFiddleService({
+    token,
+    headers
+}: {
+    token?: string;
+    headers?: Record<string, string>;
+} = {}): FernFiddleClient {
     return new FernFiddleClient({
         environment: FIDDLE_ORIGIN,
-        token
+        token,
+        headers: { ...getCodingAgentHeaders(), ...headers }
     });
 }

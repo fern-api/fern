@@ -3,6 +3,8 @@
 package client
 
 import (
+	os "os"
+
 	core "github.com/variables/fern/core"
 	internal "github.com/variables/fern/internal"
 	option "github.com/variables/fern/option"
@@ -19,14 +21,18 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.RootVariable == "" {
+		options.RootVariable = os.Getenv("ROOT_VARIABLE")
+	}
 	return &Client{
 		Service: service.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}

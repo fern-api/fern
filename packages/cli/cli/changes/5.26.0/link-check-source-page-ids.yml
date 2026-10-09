@@ -1,0 +1,3 @@
+- summary: |
+    The `fern docs link check` command now resolves broken link sources to local file paths when the server provides `sourcePageIds` and a Fern workspace is available.
+  type: feat

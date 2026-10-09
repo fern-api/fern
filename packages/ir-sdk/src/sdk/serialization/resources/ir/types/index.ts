@@ -7,6 +7,7 @@ export * from "./ErrorDiscriminationStrategy.js";
 export * from "./ExampleStyle.js";
 export * from "./GenerationMetadata.js";
 export * from "./HeaderApiVersionScheme.js";
+export * from "./IdempotencyKeyGeneration.js";
 export * from "./IntermediateRepresentation.js";
 export * from "./InvocationSource.js";
 export * from "./Package.js";

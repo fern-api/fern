@@ -29,9 +29,11 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        // ir-sdk versions may differ between ruby-v2-sdk and mock-utils;
-        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
-        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
+        // ir-sdk versions may differ between ruby-v2-sdk and mock-utils. The newer IR only adds
+        // optional fields and OAuth configuration variants that WireMock ignores, but the added
+        // union variants stop the two IntermediateRepresentations from overlapping structurally,
+        // so the assertion has to go through `unknown`.
+        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     /**
@@ -222,7 +224,7 @@ export class WireTestSetupGenerator {
       - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
-    command: ["--global-response-templating", "--verbose"]
+    command: ["--verbose"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
       interval: 2s
@@ -248,6 +250,13 @@ export class WireTestSetupGenerator {
      */
     private buildWireMockTestCaseContent(): string {
         const rootFolderName = this.context.getRootFolderName();
+        // Under endpoint-security the SDK routes a different auth scheme per endpoint, so the
+        // generated tests assert per-endpoint which auth header(s) are present/absent via
+        // `verify_auth_headers`. Only emit that helper in endpoint-security mode so the base
+        // wiremock_test_case.rb is byte-identical for every other API.
+        const endpointSecurityHelper = this.context.isEndpointSecurity()
+            ? `\n${this.buildVerifyAuthHeadersMethod()}\n`
+            : "";
         return `# frozen_string_literal: true
 
 require "test_helper"
@@ -303,6 +312,32 @@ class WireMockTestCase < Minitest::Test
     assert_equal expected, requests.length, "Expected #{expected} requests, found #{requests.length}"
   end
 
+  # Verifies the JSON body of the request made to WireMock for the given test ID.
+  #
+  # @param test_id [String] The test ID used to filter requests
+  # @param method [String] The HTTP method (GET, POST, etc.)
+  # @param url_path [String] The URL path to match
+  # @param expected_body [Object] The expected request body, as parsed JSON
+  def verify_request_body(test_id:, method:, url_path:, expected_body:)
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
+    http = Net::HTTP.new(uri.host, uri.port)
+    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+
+    request_body = { "method" => method, "urlPath" => url_path }
+    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
+
+    post_request.body = request_body.to_json
+    response = http.request(post_request)
+    result = JSON.parse(response.body)
+    requests = result["requests"] || []
+
+    refute_empty requests, "No requests found for test_id #{test_id} (#{method} #{url_path})"
+    actual_body = JSON.parse(requests.first["body"])
+
+    assert_equal expected_body, actual_body
+  end
+
   # Verifies that the Authorization header on captured requests matches the expected value.
   #
   # @param test_id [String] The test ID used to filter requests
@@ -324,12 +359,136 @@ class WireMockTestCase < Minitest::Test
     requests = result["requests"] || []
 
     refute_empty requests, "No requests found for test_id #{test_id}"
-    actual_header = requests.first.dig("request", "headers", "Authorization")
+    actual_header = requests.first.dig("headers", "Authorization")
 
     assert_equal expected_value, actual_header, "Expected Authorization header '#{expected_value}', got '#{actual_header}'"
   end
-end
+
+  # Verifies that numbers in the captured JSON request body equal the values passed to the SDK,
+  # so a decimal that is truncated or rounded on the way out fails the test.
+  #
+  # @param test_id [String] The test ID used to filter requests
+  # @param method [String] The HTTP method (GET, POST, etc.)
+  # @param url_path [String] The URL path to match
+  # @param expected [Hash{String => Numeric}] JSON Pointer (RFC 6901) => expected number
+  def verify_request_body_numbers(test_id:, method:, url_path:, expected:)
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
+    http = Net::HTTP.new(uri.host, uri.port)
+    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+
+    request_body = { "method" => method, "urlPath" => url_path }
+    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
+
+    post_request.body = request_body.to_json
+    response = http.request(post_request)
+
+    assert_equal "200", response.code, "WireMock request lookup failed for test_id #{test_id}: #{response.body}"
+    requests = JSON.parse(response.body)["requests"] || []
+
+    refute_empty requests, "No requests found for test_id #{test_id}"
+    body = requests.first["body"]
+    begin
+      document = JSON.parse(body)
+    rescue JSON::ParserError
+      flunk "Expected a JSON request body for test_id #{test_id}, got #{body.inspect}"
+    end
+
+    assert_json_numbers(expected, document, "request body for test_id #{test_id}")
+  end
+
+  # Verifies that numbers in the mocked JSON response decode unchanged into the SDK result,
+  # so a decimal that is truncated or rounded on the way in fails the test.
+  #
+  # @param actual [Object] The value returned by the SDK method
+  # @param expected [Hash{String => Numeric}] JSON Pointer (RFC 6901) => expected number
+  def verify_response_numbers(actual:, expected:)
+    assert_json_numbers(expected, wire_json(actual), "response")
+  end
+
+  def assert_json_numbers(expected, document, label)
+    expected.each do |pointer, value|
+      actual = json_pointer_get(document, pointer)
+
+      assert_kind_of Numeric, actual, "Expected a number at #{pointer} in #{label}, got #{actual.inspect}"
+      assert_equal value, actual, "Expected #{value.inspect} at #{pointer} in #{label}, got #{actual.inspect}"
+    end
+  end
+
+  def json_pointer_get(document, pointer)
+    pointer.split("/", -1).drop(1).reduce(document) do |node, token|
+      key = token.gsub(/~[01]/, "~0" => "~", "~1" => "/")
+      case node
+      when ::Array then node[Integer(key, 10)]
+      when ::Hash then node[key]
+      end
+    end
+  end
+
+  def wire_json(value)
+    case value
+    when ::Array then value.map { |item| wire_json(item) }
+    when ::Hash then value.to_h { |key, item| [key.to_s, wire_json(item)] }
+    when nil, ::String, ::Numeric, true, false then value
+    else value.respond_to?(:to_h) ? wire_json(value.to_h) : value
+    end
+  end
+${endpointSecurityHelper}end
 `;
+    }
+
+    /**
+     * Builds the `verify_auth_headers` helper (endpoint-security only). It captures the request
+     * for a given test id and, for each matcher, asserts the auth header is present with an exact
+     * value, present with any value, or absent. Header lookup is case-insensitive because HTTP
+     * header names are case-insensitive and WireMock preserves whatever casing was sent.
+     */
+    private buildVerifyAuthHeadersMethod(): string {
+        return `  # Verifies per-endpoint auth routing: for each matcher, asserts the named auth header is
+  # present with an exact value ("exact"), present with any value ("present"), or absent
+  # ("absent"). Proves the SDK sent only the auth scheme(s) the endpoint declares.
+  #
+  # @param test_id [String] The test ID used to filter requests
+  # @param method [String] The HTTP method (GET, POST, etc.)
+  # @param url_path [String] The URL path to match
+  # @param matchers [Array<Hash>] Each: { name:, kind: "exact"|"present"|"absent", value: }
+  def verify_auth_headers(test_id:, method:, url_path:, matchers:)
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
+    http = Net::HTTP.new(uri.host, uri.port)
+    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+
+    request_body = { "method" => method, "urlPath" => url_path }
+    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
+
+    post_request.body = request_body.to_json
+    response = http.request(post_request)
+    result = JSON.parse(response.body)
+    requests = result["requests"] || []
+
+    refute_empty requests, "No requests found for test_id #{test_id}"
+    headers = requests.first["headers"] || {}
+    matchers.each do |matcher|
+      name = matcher[:name]
+      actual = headers.find { |header_name, _| header_name.to_s.casecmp?(name) }&.last
+      case matcher[:kind]
+      when "exact"
+        message = "Expected #{name} header '#{matcher[:value]}' for test_id #{test_id}, got '#{actual.inspect}'"
+
+        assert_equal matcher[:value], actual, message
+      when "present"
+        message = "Expected #{name} header to be present for test_id #{test_id}, but it was absent"
+
+        refute_nil actual, message
+      when "absent"
+        message = "Expected #{name} header to be absent for test_id #{test_id}, but got '#{actual.inspect}'"
+
+        assert_nil actual, message
+      else
+        raise ArgumentError, "Unknown matcher kind: #{matcher[:kind]}"
+      end
+    end
+  end`;
     }
 
     /**

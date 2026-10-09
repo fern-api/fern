@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Readonly Properties API",
   "auth": {
@@ -1120,7 +1121,6 @@
               "typeId": "type_:User",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
@@ -2725,7 +2725,8 @@
       "error_:BadRequestError"
     ],
     "subpackages": [],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

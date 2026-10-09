@@ -16,14 +16,10 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def nop(
-        self, id: str, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[None]:
+    def nop(self, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         Parameters
         ----------
-        id : str
-
         nested_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -34,7 +30,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(id)}//{encode_path_param(nested_id)}",
+            f"{encode_path_param(self._client_wrapper._id)}//{encode_path_param(nested_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -56,13 +52,11 @@ class AsyncRawServiceClient:
         self._client_wrapper = client_wrapper
 
     async def nop(
-        self, id: str, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
-        id : str
-
         nested_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -73,7 +67,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(id)}//{encode_path_param(nested_id)}",
+            f"{encode_path_param(self._client_wrapper._id)}//{encode_path_param(nested_id)}",
             method="GET",
             request_options=request_options,
         )

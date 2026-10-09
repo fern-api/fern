@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.get
+      #
       # @return [Seed::Service::Types::Foo]
       def get(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -33,7 +36,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Foo.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Foo.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

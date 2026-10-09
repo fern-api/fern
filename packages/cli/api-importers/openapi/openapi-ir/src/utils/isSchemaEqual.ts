@@ -14,6 +14,8 @@ export function isSchemaEqual(a: Schema, b: Schema): boolean {
         return a.schema === b.schema;
     } else if (a.type === "optional" && b.type === "optional") {
         return isSchemaEqual(a.value, b.value);
+    } else if (a.type === "nullable" && b.type === "nullable") {
+        return isSchemaEqual(a.value, b.value);
     } else if (a.type === "oneOf" && b.type === "oneOf") {
         return isOneOfEqual(a.value, b.value);
     } else if (a.type === "object" && b.type === "object") {
@@ -66,19 +68,15 @@ function isOneOfEqual(a: OneOfSchema, b: OneOfSchema): boolean {
 }
 
 function isObjectEqual(a: ObjectSchema, b: ObjectSchema): boolean {
-    if (Object.keys(a.properties).length !== Object.keys(b.properties).length) {
+    if (a.properties.length !== b.properties.length) {
         return false;
     }
-    const aPropertyMap = Object.fromEntries(
-        a.properties.map((property) => {
-            return [property.key, property.schema];
-        })
-    );
-    return Object.entries(b.properties).every(([bPropertyName, bPropertySchema]) => {
-        const aProperty = aPropertyMap[bPropertyName];
-        if (aProperty == null) {
+    const aPropertyMap = new Map(a.properties.map((property) => [property.key, property.schema]));
+    return b.properties.every((bProperty) => {
+        const aPropertySchema = aPropertyMap.get(bProperty.key);
+        if (aPropertySchema == null) {
             return false;
         }
-        return isSchemaEqual(aProperty, bPropertySchema.schema);
+        return isSchemaEqual(aPropertySchema, bProperty.schema);
     });
 }

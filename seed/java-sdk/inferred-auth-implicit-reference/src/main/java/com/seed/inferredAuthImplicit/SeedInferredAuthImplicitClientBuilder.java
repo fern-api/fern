@@ -18,13 +18,49 @@ public class SeedInferredAuthImplicitClientBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+    private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+    private Optional<Double> retryJitterFactor = Optional.empty();
+
     private final Map<String, String> customHeaders = new HashMap<>();
+
+    private String clientId = null;
+
+    private String clientSecret = null;
+
+    private String scope = null;
 
     private Environment environment;
 
     private OkHttpClient httpClient;
 
     private Optional<LogConfig> logging = Optional.empty();
+
+    /**
+     * Sets clientId
+     */
+    public SeedInferredAuthImplicitClientBuilder clientId(String clientId) {
+        this.clientId = clientId;
+        return this;
+    }
+
+    /**
+     * Sets clientSecret
+     */
+    public SeedInferredAuthImplicitClientBuilder clientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+        return this;
+    }
+
+    /**
+     * Sets scope
+     */
+    public SeedInferredAuthImplicitClientBuilder scope(String scope) {
+        this.scope = scope;
+        return this;
+    }
 
     public SeedInferredAuthImplicitClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -44,6 +80,30 @@ public class SeedInferredAuthImplicitClientBuilder {
      */
     public SeedInferredAuthImplicitClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+     */
+    public SeedInferredAuthImplicitClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
+        this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+     */
+    public SeedInferredAuthImplicitClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
+        this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+     */
+    public SeedInferredAuthImplicitClientBuilder retryJitterFactor(double retryJitterFactor) {
+        this.retryJitterFactor = Optional.of(retryJitterFactor);
         return this;
     }
 
@@ -117,11 +177,12 @@ public class SeedInferredAuthImplicitClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        if (true) {
+        if (this.clientId != null && this.clientSecret != null) {
             ClientOptions.Builder authClientOptionsBuilder =
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            InferredAuthTokenSupplier inferredAuthTokenSupplier = new InferredAuthTokenSupplier(authClient);
+            InferredAuthTokenSupplier inferredAuthTokenSupplier =
+                    new InferredAuthTokenSupplier(this.clientId, this.clientSecret, this.scope, authClient);
             builder.addHeader(
                     "Authorization", () -> inferredAuthTokenSupplier.get().get("Authorization"));
         }
@@ -148,6 +209,15 @@ public class SeedInferredAuthImplicitClientBuilder {
     protected void setRetries(ClientOptions.Builder builder) {
         if (this.maxRetries.isPresent()) {
             builder.maxRetries(this.maxRetries.get());
+        }
+        if (this.initialRetryDelayMillis.isPresent()) {
+            builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+        }
+        if (this.maxRetryDelayMillis.isPresent()) {
+            builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+        }
+        if (this.retryJitterFactor.isPresent()) {
+            builder.retryJitterFactor(this.retryJitterFactor.get());
         }
     }
 

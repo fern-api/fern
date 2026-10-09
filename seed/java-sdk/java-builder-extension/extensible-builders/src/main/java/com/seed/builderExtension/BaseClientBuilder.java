@@ -16,6 +16,12 @@ public abstract class BaseClientBuilder<T extends BaseClientBuilder<T>> {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+    private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+    private Optional<Double> retryJitterFactor = Optional.empty();
+
     private final Map<String, String> customHeaders = new HashMap<>();
 
     private String token = null;
@@ -59,6 +65,30 @@ public abstract class BaseClientBuilder<T extends BaseClientBuilder<T>> {
      */
     public T maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return self();
+    }
+
+    /**
+     * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+     */
+    public T initialRetryDelayMillis(long initialRetryDelayMillis) {
+        this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+        return self();
+    }
+
+    /**
+     * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+     */
+    public T maxRetryDelayMillis(long maxRetryDelayMillis) {
+        this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+        return self();
+    }
+
+    /**
+     * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+     */
+    public T retryJitterFactor(double retryJitterFactor) {
+        this.retryJitterFactor = Optional.of(retryJitterFactor);
         return self();
     }
 
@@ -158,6 +188,15 @@ public abstract class BaseClientBuilder<T extends BaseClientBuilder<T>> {
     protected void setRetries(ClientOptions.Builder builder) {
         if (this.maxRetries.isPresent()) {
             builder.maxRetries(this.maxRetries.get());
+        }
+        if (this.initialRetryDelayMillis.isPresent()) {
+            builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+        }
+        if (this.maxRetryDelayMillis.isPresent()) {
+            builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+        }
+        if (this.retryJitterFactor.isPresent()) {
+            builder.retryJitterFactor(this.retryJitterFactor.get());
         }
     }
 

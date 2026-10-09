@@ -133,7 +133,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_user:User": {
             "type": "object",
@@ -267,7 +268,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -376,7 +378,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1069,7 +1072,8 @@
                         "type": "named",
                         "value": "type_user:User"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1987,5 +1991,6 @@
     ],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

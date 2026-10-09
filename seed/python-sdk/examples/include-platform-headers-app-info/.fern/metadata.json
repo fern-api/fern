@@ -1,0 +1,14 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "include_platform_headers": true,
+    "allow_user_agent_app_info": true
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
+  "sdkVersion": "0.0.1"
+}

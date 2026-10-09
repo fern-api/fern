@@ -25,13 +25,21 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Service.Nop(
+//	    context.TODO(),
+//	    "id-a2ijs82",
+//	    "id-219xca8",
+//	)
 func (c *Client) Nop(
 	ctx context.Context,
 	id string,

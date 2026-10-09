@@ -47,10 +47,12 @@ func (r *ReceiveEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ReceiveEvent) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetAlpha sets the Alpha field and marks it as non-optional;
@@ -156,10 +158,12 @@ func (r *ReceiveEvent2) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ReceiveEvent2) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetGamma sets the Gamma field and marks it as non-optional;
@@ -254,10 +258,12 @@ func (r *ReceiveEvent3) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ReceiveEvent3) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetReceiveText3 sets the ReceiveText3 field and marks it as non-optional;
@@ -347,10 +353,12 @@ func (s *SendEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SendEvent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetSendText sets the SendText field and marks it as non-optional;
@@ -447,10 +455,12 @@ func (s *SendEvent2) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SendEvent2) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetSendText2 sets the SendText2 field and marks it as non-optional;
@@ -547,10 +557,12 @@ func (r *ReceiveSnakeCase) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ReceiveSnakeCase) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetReceiveText sets the ReceiveText field and marks it as non-optional;
@@ -647,10 +659,12 @@ func (s *SendSnakeCase) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SendSnakeCase) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetSendText sets the SendText field and marks it as non-optional;

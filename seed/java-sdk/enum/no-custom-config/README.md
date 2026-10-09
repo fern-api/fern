@@ -17,6 +17,7 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Custom Headers](#custom-headers)
+  - [Additional Body Properties](#additional-body-properties)
   - [Access Raw Response Data](#access-raw-response-data)
 - [Contributing](#contributing)
 
@@ -55,11 +56,11 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.enum.SeedEnumClient;
-import com.seed.enum.resources.headers.requests.SendEnumAsHeaderRequest;
-import com.seed.enum.types.Color;
-import com.seed.enum.types.ColorOrOperand;
-import com.seed.enum.types.Operand;
+import com.seed._enum.SeedEnumClient;
+import com.seed._enum.resources.headers.requests.SendEnumAsHeaderRequest;
+import com.seed._enum.types.Color;
+import com.seed._enum.types.ColorOrOperand;
+import com.seed._enum.types.Operand;
 
 public class Example {
     public static void main(String[] args) {
@@ -86,7 +87,7 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.enum.SeedEnumClient;
+import com.seed._enum.SeedEnumClient;
 
 SeedEnumClient client = SeedEnumClient
     .builder()
@@ -99,7 +100,7 @@ SeedEnumClient client = SeedEnumClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.enum.core.SeedEnumApiException;
+import com.seed._enum.core.SeedEnumApiException;
 
 try{
     client.headers().send(...);
@@ -116,7 +117,7 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.enum.SeedEnumClient;
+import com.seed._enum.SeedEnumClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
@@ -152,7 +153,7 @@ Which status codes are retried depends on the `retry-status-codes` generator con
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.enum.SeedEnumClient;
+import com.seed._enum.SeedEnumClient;
 
 SeedEnumClient client = SeedEnumClient
     .builder()
@@ -164,8 +165,8 @@ SeedEnumClient client = SeedEnumClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.enum.SeedEnumClient;
-import com.seed.enum.core.RequestOptions;
+import com.seed._enum.SeedEnumClient;
+import com.seed._enum.core.RequestOptions;
 
 // Client level
 SeedEnumClient client = SeedEnumClient
@@ -188,8 +189,8 @@ client.headers().send(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.enum.SeedEnumClient;
-import com.seed.enum.core.RequestOptions;
+import com.seed._enum.SeedEnumClient;
+import com.seed._enum.core.RequestOptions;
 
 // Client level
 SeedEnumClient client = SeedEnumClient
@@ -205,6 +206,25 @@ client.headers().send(
     RequestOptions
         .builder()
         .addHeader("X-Request-Header", "request-value")
+        .build()
+);
+```
+
+### Additional Body Properties
+
+If you need to send a request body property that is not yet part of the SDK (for example, a beta field),
+use the `addBodyProperty` request option. Properties are sent with the key exactly as given and override
+any property with the same key; for endpoints without a request body, they are sent as a JSON body.
+This is supported for JSON and form-urlencoded request bodies, but not for multipart (file upload) requests.
+
+```java
+import com.seed._enum.core.RequestOptions;
+
+client.headers().send(
+    ...,
+    RequestOptions
+        .builder()
+        .addBodyProperty("extra_field", "extra-value")
         .build()
 );
 ```

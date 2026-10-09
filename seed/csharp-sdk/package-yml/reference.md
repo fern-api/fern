@@ -48,7 +48,7 @@ await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Si
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedPackageYml/Service/ServiceClient.cs">NopAsync</a>(id, nestedId)</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedPackageYml/Service/ServiceClient.cs">NopAsync</a>(id, nestedId) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

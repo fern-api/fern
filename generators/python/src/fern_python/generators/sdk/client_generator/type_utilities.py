@@ -127,3 +127,51 @@ def is_type_primitive_for_multipart(
         return False
 
     return check_type(type_reference)
+
+
+def is_type_list_of_primitives_for_multipart(
+    type_reference: ir_types.TypeReference,
+    get_type_declaration: Callable[[ir_types.TypeId], ir_types.TypeDeclaration],
+) -> bool:
+    """
+    Check if a type is a list/set whose item type can be passed directly in multipart
+    form data.
+
+    When True, the value should be handed to httpx's ``data=`` unchanged (after
+    ``jsonable_encoder``) so that each item is emitted as its own repeated form field
+    (``key=a&key=b``), rather than JSON-serialized into a single field
+    (``key=["a","b"]``), which servers validating individual items reject.
+
+    Unwraps optional/nullable/alias wrappers. Item primitiveness is decided by
+    ``is_type_primitive_for_multipart``.
+    """
+
+    def check_type(tr: ir_types.TypeReference) -> bool:
+        type_union = tr.get_as_union()
+
+        if type_union.type == "container":
+            container = type_union.container.get_as_union()
+
+            if container.type == "optional":
+                return check_type(container.optional)
+
+            elif container.type == "nullable":
+                return check_type(container.nullable)
+
+            elif container.type == "list":
+                return is_type_primitive_for_multipart(container.list_, get_type_declaration)
+
+            elif container.type == "set":
+                return is_type_primitive_for_multipart(container.set_, get_type_declaration)
+
+            return False
+
+        elif type_union.type == "named":
+            shape = get_type_declaration(type_union.type_id).shape.get_as_union()
+            if shape.type == "alias":
+                return check_type(shape.alias_of)
+            return False
+
+        return False
+
+    return check_type(type_reference)

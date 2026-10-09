@@ -16,6 +16,32 @@ paths:
             text/plain:
               schema:
                 type: string
+  /csv:
+    get:
+      operationId: service_getCsv
+      tags:
+        - Service
+      parameters: []
+      responses:
+        "200":
+          description: CSV file
+          content:
+            text/csv:
+              schema:
+                type: string
+  /xml:
+    get:
+      operationId: service_getXml
+      tags:
+        - Service
+      parameters: []
+      responses:
+        "200":
+          description: XML content
+          content:
+            text/xml:
+              schema:
+                type: string
 components:
   schemas: {}
   securitySchemes: {}

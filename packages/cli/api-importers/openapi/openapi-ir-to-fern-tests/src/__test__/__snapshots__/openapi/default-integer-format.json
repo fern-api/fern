@@ -509,4 +509,5 @@ error-discrimination:
 display-name: Default Integer Format Test API
 ",
   },
+  "specVersion": "1.0.0",
 }

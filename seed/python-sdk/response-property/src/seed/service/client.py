@@ -165,7 +165,9 @@ class ServiceClient:
         _response = self._raw_client.get_optional_movie(request=request, request_options=request_options)
         return _response.data
 
-    def get_optional_movie_docs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def get_optional_movie_docs(
+        self, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[str]:
         """
         Parameters
         ----------
@@ -176,7 +178,7 @@ class ServiceClient:
 
         Returns
         -------
-        str
+        typing.Optional[str]
 
         Examples
         --------
@@ -192,7 +194,9 @@ class ServiceClient:
         _response = self._raw_client.get_optional_movie_docs(request=request, request_options=request_options)
         return _response.data
 
-    def get_optional_movie_name(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def get_optional_movie_name(
+        self, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[str]:
         """
         Parameters
         ----------
@@ -203,7 +207,7 @@ class ServiceClient:
 
         Returns
         -------
-        str
+        typing.Optional[str]
 
         Examples
         --------
@@ -416,7 +420,7 @@ class AsyncServiceClient:
 
     async def get_optional_movie_docs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    ) -> typing.Optional[str]:
         """
         Parameters
         ----------
@@ -427,7 +431,7 @@ class AsyncServiceClient:
 
         Returns
         -------
-        str
+        typing.Optional[str]
 
         Examples
         --------
@@ -453,7 +457,7 @@ class AsyncServiceClient:
 
     async def get_optional_movie_name(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    ) -> typing.Optional[str]:
         """
         Parameters
         ----------
@@ -464,7 +468,7 @@ class AsyncServiceClient:
 
         Returns
         -------
-        str
+        typing.Optional[str]
 
         Examples
         --------

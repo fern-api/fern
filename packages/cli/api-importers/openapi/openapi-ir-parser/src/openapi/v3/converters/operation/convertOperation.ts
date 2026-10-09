@@ -13,7 +13,12 @@ import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { getFernAsyncExtension } from "../../extensions/getFernAsyncExtension.js";
-import { FernStreamingExtension, getFernStreamingExtension } from "../../extensions/getFernStreamingExtension.js";
+import {
+    FernStreamingExtension,
+    getDocumentLevelResumable,
+    getFernStreamingExtension,
+    getOperationLevelResumable
+} from "../../extensions/getFernStreamingExtension.js";
 import { getFernPaginationExtension } from "../../extensions/getPaginationExtension.js";
 import { OperationContext, PathItemContext } from "../contexts.js";
 import { hasTextEventStream } from "../endpoint/getApplicationJsonSchema.js";
@@ -96,14 +101,19 @@ export function convertOperation({
         return { type: "webhook", value: webhooks };
     }
 
-    let streamingExtension: FernStreamingExtension | undefined = getFernStreamingExtension(operation);
+    let streamingExtension: FernStreamingExtension | undefined = getFernStreamingExtension(context.document, operation);
 
     // If no streaming extension is specified, check if the response has text/event-stream content type.
     // This infers streaming based on the MIME type.
     if (streamingExtension == null) {
         const hasEventStreamResponse = checkOperationForTextEventStream({ operation, context });
         if (hasEventStreamResponse) {
-            streamingExtension = { type: "stream", format: "sse", terminator: undefined };
+            streamingExtension = {
+                type: "stream",
+                format: "sse",
+                terminator: undefined,
+                resumable: getOperationLevelResumable(operation) ?? getDocumentLevelResumable(context.document) ?? false
+            };
         }
     }
 

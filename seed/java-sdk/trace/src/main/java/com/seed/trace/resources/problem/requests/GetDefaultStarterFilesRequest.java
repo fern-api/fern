@@ -170,14 +170,6 @@ public final class GetDefaultStarterFilesRequest {
          * <li>Equals <code>=</code></li>
          * <li>Period <code>.</code></li>
          * </ul>
-         * <p>The name of the <code>method</code> that the student has to complete.
-         * The method name cannot include the following characters:</p>
-         * <ul>
-         * <li>Greater Than <code>&gt;</code></li>
-         * <li>Less Than `&lt;``</li>
-         * <li>Equals <code>=</code></li>
-         * <li>Period <code>.</code></li>
-         * </ul>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

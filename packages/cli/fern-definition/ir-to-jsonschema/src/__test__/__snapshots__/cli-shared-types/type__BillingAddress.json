@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "line1": {
+      "type": "string"
+    },
+    "postalCode": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "line1"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

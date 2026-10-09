@@ -12,7 +12,7 @@ public partial interface IImdbClient
     );
 
     WithRawResponseTask<Movie> GetMovieAsync(
-        string movieId,
+        GetMovieImdbRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

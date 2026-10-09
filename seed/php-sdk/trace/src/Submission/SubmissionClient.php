@@ -54,6 +54,13 @@ class SubmissionClient
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      *
+     * Example:
+     * ```php
+     * $client->submission->createExecutionSession(
+     *     Language::Java->value,
+     * );
+     * ```
+     *
      * @param value-of<Language> $language
      * @param ?array{
      *   baseUrl?: string,
@@ -101,6 +108,13 @@ class SubmissionClient
 
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
+     *
+     * Example:
+     * ```php
+     * $client->submission->getExecutionSession(
+     *     'sessionId',
+     * );
+     * ```
      *
      * @param string $sessionId
      * @param ?array{
@@ -150,6 +164,13 @@ class SubmissionClient
     /**
      * Stops execution session.
      *
+     * Example:
+     * ```php
+     * $client->submission->stopExecutionSession(
+     *     'sessionId',
+     * );
+     * ```
+     *
      * @param string $sessionId
      * @param ?array{
      *   baseUrl?: string,
@@ -189,6 +210,11 @@ class SubmissionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->submission->getExecutionSessionsState();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

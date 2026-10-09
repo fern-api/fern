@@ -17,15 +17,19 @@ type RequestOption interface {
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL         string
-	Environment     interface{}
-	HTTPClient      HTTPClient
-	HTTPHeader      http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	MaxAttempts     uint
-	MaxBufSize      int
-	Token           string
+	BaseURL                    string
+	Environment                interface{}
+	HTTPClient                 HTTPClient
+	HTTPHeader                 http.Header
+	BodyProperties             map[string]interface{}
+	QueryParameters            url.Values
+	MaxAttempts                uint
+	MaxBufSize                 int
+	MaxStreamReconnectAttempts uint
+	DisableStreamReconnection  bool
+	DisableRetries             bool
+	Token                      string
+	TokenFunc                  func() (string, error)
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -50,6 +54,10 @@ func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	if r.Token != "" {
 		header.Set("Authorization", "Bearer "+r.Token)
+	} else if r.TokenFunc != nil {
+		if token, err := r.TokenFunc(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
 	}
 	return header
 }
@@ -126,6 +134,29 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
+// MaxStreamReconnectAttemptsOption implements the RequestOption interface.
+type MaxStreamReconnectAttemptsOption struct {
+	MaxStreamReconnectAttempts uint
+}
+
+func (m *MaxStreamReconnectAttemptsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxStreamReconnectAttempts = m.MaxStreamReconnectAttempts
+}
+
+// WithoutStreamReconnectionOption implements the RequestOption interface.
+type WithoutStreamReconnectionOption struct{}
+
+func (w *WithoutStreamReconnectionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.DisableStreamReconnection = true
+}
+
+// WithoutRetriesOption implements the RequestOption interface.
+type WithoutRetriesOption struct{}
+
+func (w *WithoutRetriesOption) applyRequestOptions(opts *RequestOptions) {
+	opts.DisableRetries = true
+}
+
 // EnvironmentOption implements the RequestOption interface.
 type EnvironmentOption struct {
 	Environment interface{}
@@ -142,4 +173,13 @@ type TokenOption struct {
 
 func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Token = t.Token
+}
+
+// TokenFuncOption implements the RequestOption interface.
+type TokenFuncOption struct {
+	TokenFunc func() (string, error)
+}
+
+func (t *TokenFuncOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TokenFunc = t.TokenFunc
 }

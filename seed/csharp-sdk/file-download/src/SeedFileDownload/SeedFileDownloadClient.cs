@@ -14,7 +14,7 @@ public partial class SeedFileDownloadClient : ISeedFileDownloadClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedFileDownload" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedFileDownload.Version.Current },
                 { "User-Agent", "Fernfile-download/0.0.1" },
             }
         );

@@ -11,10 +11,17 @@ pub struct ClientConfig {
     pub password: Option<String>,
     pub client_id: Option<String>,
     pub client_secret: Option<String>,
+    pub oauth_token_endpoint: Option<String>,
+    pub oauth_token_exchange: Option<crate::OAuthTokenExchangeConfig>,
     pub timeout: Duration,
     pub max_retries: u32,
     pub custom_headers: HashMap<String, String>,
     pub user_agent: String,
+    /// Optional custom `reqwest` client, used as-is for every request.
+    /// When set, it owns all transport-level configuration (TLS, proxies, timeout,
+    /// user agent); when `None` the SDK builds its own client from `timeout` and
+    /// `user_agent`.
+    pub reqwest_client: Option<reqwest::Client>,
 }
 impl Default for ClientConfig {
     fn default() -> Self {
@@ -26,6 +33,8 @@ impl Default for ClientConfig {
             password: None,
             client_id: None,
             client_secret: None,
+            oauth_token_endpoint: None,
+            oauth_token_exchange: None,
             timeout: Duration::from_secs(60),
             max_retries: 3,
             custom_headers: HashMap::from([
@@ -34,6 +43,7 @@ impl Default for ClientConfig {
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
             user_agent: "Examples Rust SDK".to_string(),
+            reqwest_client: None,
         }
     }
 }

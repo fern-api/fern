@@ -7,6 +7,7 @@
       "$ref": "#/definitions/union.AliasedLeafB"
     }
   ],
+  "description": "Undiscriminated union whose members are named aliases of object types\n(including an alias-of-alias). Required keys are disjoint, so a correct\ndeserializer must emit containsKey() guards for each alias variant.",
   "definitions": {
     "union.LeafObjectA": {
       "type": "object",
@@ -25,7 +26,8 @@
       "additionalProperties": false
     },
     "union.AliasedLeafA": {
-      "$ref": "#/definitions/union.LeafObjectA"
+      "$ref": "#/definitions/union.LeafObjectA",
+      "description": "An alias around LeafObjectA."
     },
     "union.LeafObjectB": {
       "type": "object",
@@ -43,7 +45,8 @@
       "$ref": "#/definitions/union.LeafObjectB"
     },
     "union.AliasedLeafB": {
-      "$ref": "#/definitions/union.AliasToLeafB"
+      "$ref": "#/definitions/union.AliasToLeafB",
+      "description": "An alias around an alias around LeafObjectB, to exercise the alias-walk loop."
     }
   }
 }

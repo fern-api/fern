@@ -6,4 +6,5 @@ export interface HttpResponseSchemaDetailed extends FernDefinition.WithDocsSchem
     type?: string;
     property?: string;
     "status-code"?: number;
+    "content-type"?: string;
 }

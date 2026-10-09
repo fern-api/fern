@@ -1,0 +1,4 @@
+- summary: |
+    Suppress Sentry false positives for ENOTEMPTY/ENOMEM syscalls, undici
+    fetch-failed TypeErrors, and errno codes on error.cause.
+  type: fix

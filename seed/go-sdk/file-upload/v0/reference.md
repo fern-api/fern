@@ -14,12 +14,11 @@
 
 ```go
 client.Service.JustFile(
-        context.TODO(),
-        strings.NewReader(
-            "",
-        ),
-    )
-}
+    context.TODO(),
+    strings.NewReader(
+        "",
+    ),
+)
 ```
 </dd>
 </dl>
@@ -46,13 +45,12 @@ client.Service.JustFile(
 ```go
 request := &fern.OptionalArgsRequest{}
 client.Service.OptionalArgs(
-        context.TODO(),
-        strings.NewReader(
-            "",
-        ),
-        request,
-    )
-}
+    context.TODO(),
+    strings.NewReader(
+        "",
+    ),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -78,18 +76,17 @@ client.Service.OptionalArgs(
 
 ```go
 request := &fern.WithRefBodyRequest{
-        Request: &fern.MyObject{
-            Foo: "bar",
-        },
-    }
-client.Service.WithRefBody(
-        context.TODO(),
-        strings.NewReader(
-            "",
-        ),
-        request,
-    )
+    Request: &fern.MyObject{
+        Foo: "bar",
+    },
 }
+client.Service.WithRefBody(
+    context.TODO(),
+    strings.NewReader(
+        "",
+    ),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -115,9 +112,8 @@ client.Service.WithRefBody(
 
 ```go
 client.Service.Simple(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

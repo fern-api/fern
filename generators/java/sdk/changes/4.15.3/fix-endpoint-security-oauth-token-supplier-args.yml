@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated code failing to compile under `auth: endpoint-security` when the OAuth token
+    endpoint declares custom request properties (scopes, custom body properties, or headers). The
+    generated `OAuthTokenSupplier` constructor takes an extra parameter for each such property, but
+    the `OAuthAuthProvider` always called it with a fixed three arguments
+    (`clientId, clientSecret, authClient`), producing a "constructor cannot be applied to given
+    types" error. `OAuthAuthProvider` now passes a matching argument for every extra property
+    (`Optional.empty()` for optional properties), sharing the property computation with the token
+    supplier generator so the two cannot drift.
+  type: fix

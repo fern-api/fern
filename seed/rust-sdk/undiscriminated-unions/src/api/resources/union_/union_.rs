@@ -13,6 +13,23 @@ impl UnionClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .get(&MyUnion::String("string".to_string()), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get(
         &self,
         request: &MyUnion,
@@ -29,6 +46,20 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client.union_.get_metadata(None).await;
+    /// }
+    /// ```
     pub async fn get_metadata(
         &self,
         options: Option<RequestOptions>,
@@ -38,6 +69,29 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .update_metadata(
+    ///             &MetadataUnion::OptionalMetadata(OptionalMetadata(Some(HashMap::from([(
+    ///                 "string".to_string(),
+    ///                 serde_json::json!({"key":"value"}),
+    ///             )])))),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update_metadata(
         &self,
         request: &MetadataUnion,
@@ -54,6 +108,31 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .call(
+    ///             &Request {
+    ///                 union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
+    ///                     HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
+    ///                 )))),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn call(
         &self,
         request: &Request,
@@ -70,6 +149,23 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .duplicate_types_union(&UnionWithDuplicateTypes::String("string".to_string()), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn duplicate_types_union(
         &self,
         request: &UnionWithDuplicateTypes,
@@ -86,6 +182,23 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .nested_unions(&NestedUnionRoot::String("string".to_string()), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn nested_unions(
         &self,
         request: &NestedUnionRoot,
@@ -102,6 +215,23 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .nested_object_unions(&OuterNestedUnion::String("string".to_string()), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn nested_object_unions(
         &self,
         request: &OuterNestedUnion,
@@ -118,6 +248,30 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .aliased_object_union(
+    ///             &AliasedObjectUnion::AliasedLeafA(AliasedLeafA(LeafObjectA {
+    ///                 only_in_a: "onlyInA".to_string(),
+    ///                 shared_number: 1,
+    ///                 ..Default::default()
+    ///             })),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn aliased_object_union(
         &self,
         request: &AliasedObjectUnion,
@@ -134,6 +288,30 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .get_with_base_properties(
+    ///             &UnionWithBaseProperties::NamedMetadata(NamedMetadata {
+    ///                 name: "name".to_string(),
+    ///                 value: HashMap::from([("value".to_string(), serde_json::json!({"key":"value"}))]),
+    ///                 ..Default::default()
+    ///             }),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_base_properties(
         &self,
         request: &UnionWithBaseProperties,
@@ -150,6 +328,32 @@ impl UnionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_undiscriminated_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .union_
+    ///         .test_camel_case_properties(
+    ///             &PaymentRequest {
+    ///                 payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
+    ///                     method: "card".to_string(),
+    ///                     card_number: "1234567890123456".to_string(),
+    ///                     ..Default::default()
+    ///                 }),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn test_camel_case_properties(
         &self,
         request: &PaymentRequest,

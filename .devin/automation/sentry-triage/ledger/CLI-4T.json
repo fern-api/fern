@@ -1,0 +1,9 @@
+{
+  "title": "Failed to find PronunciationItem",
+  "disposition": "keep_sentry",
+  "rationale": "FDR SDK example generation failed to resolve a type; this is a product/SDK bug in generateEndpointExampleCall.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "FDR SDK example generation failed to locate a referenced type during endpoint example call generation; true product bug."
+}

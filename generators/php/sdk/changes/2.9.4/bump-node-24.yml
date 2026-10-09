@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the PHP SDK and PHP model generator containers' Node base image from
+    `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+    with the rest of the Fern generator containers on a single Node major
+    version (Node 24) and picks up Node 24's CVE patches.
+  type: chore

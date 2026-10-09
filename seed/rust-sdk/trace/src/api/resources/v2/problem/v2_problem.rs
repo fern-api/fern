@@ -22,6 +22,22 @@ impl ProblemClient2 {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client.v2.problem.get_lightweight_problems(None).await;
+    /// }
+    /// ```
     pub async fn get_lightweight_problems(
         &self,
         options: Option<RequestOptions>,
@@ -46,6 +62,22 @@ impl ProblemClient2 {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client.v2.problem.get_problems(None).await;
+    /// }
+    /// ```
     pub async fn get_problems(
         &self,
         options: Option<RequestOptions>,
@@ -70,6 +102,26 @@ impl ProblemClient2 {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .v2
+    ///         .problem
+    ///         .get_latest_problem(&ProblemId("problemId".to_string()), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_latest_problem(
         &self,
         problem_id: &ProblemId,
@@ -95,6 +147,26 @@ impl ProblemClient2 {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .v2
+    ///         .problem
+    ///         .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_problem_version(
         &self,
         problem_id: &ProblemId,

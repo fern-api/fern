@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Versioned Store
+  version: 1.0.0
+# Regression guard for namespace stutter-elision. This spec's operations are
+# grouped under `v1` (x-fern-sdk-group-name) AND mounted under namespace `v1`,
+# so the CLI SDK's merge_into_path hoists the `v1` resource into the `v1`
+# namespace node — the command is `<bin> v1 list`, NOT `<bin> v1 v1 list`.
+# The wire-test harness must mirror that elision (see collect_spec_commands in
+# generators/cli/src/wireTests/harness.ts) or it drives the wrong argv and clap
+# rejects it with "unrecognized subcommand". Because the wire test compiles and
+# runs the whole generated crate, this fixture turns a harness regression into a
+# `cargo test` failure.
+paths:
+  /items:
+    get:
+      operationId: listItems
+      x-fern-sdk-group-name: v1
+      x-fern-sdk-method-name: list
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

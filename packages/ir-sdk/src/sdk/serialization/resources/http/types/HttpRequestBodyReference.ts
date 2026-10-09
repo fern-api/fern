@@ -13,6 +13,7 @@ export const HttpRequestBodyReference: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         requestBodyType: core.serialization.lazy(() => serializers.TypeReference),
+        required: core.serialization.boolean().optional(),
     })
     .extend(WithDocs)
     .extend(WithContentType)
@@ -21,5 +22,6 @@ export const HttpRequestBodyReference: core.serialization.ObjectSchema<
 export declare namespace HttpRequestBodyReference {
     export interface Raw extends WithDocs.Raw, WithContentType.Raw, WithV2Examples.Raw {
         requestBodyType: serializers.TypeReference.Raw;
+        required?: boolean | null;
     }
 }

@@ -75,6 +75,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             ADDITIONAL_HEADERS: { renderer: this.renderAdditionalHeadersSnippet.bind(this) },
             ADDITIONAL_QUERY_PARAMETERS: { renderer: this.renderAdditionalQueryParametersSnippet.bind(this) },
+            ADDITIONAL_BODY_PROPERTIES: { renderer: this.renderAdditionalBodyPropertiesSnippet.bind(this) },
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -163,7 +164,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             fullString += this.writeCode(dedent`${openMardownRubySnippet}require "${this.rootPackageName}"
 
                 ${this.rootPackageName} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
-                    base_url: ${this.getEnvironmentNameExample()}
+                    ${this.getEnvironmentKeyword()}: ${this.getEnvironmentNameExample()}
                 )
             ${closeMardownRubySnippet}`);
         }
@@ -191,6 +192,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 result = ${this.getMethodCall(endpoint)}
             rescue ${this.rootPackageClientName}::Errors::TimeoutError
                 puts "API didn't respond before our timeout elapsed"
+            rescue ${this.rootPackageClientName}::Errors::ConnectionError => e
+                puts "Could not reach the API (connection refused, reset, DNS or TLS failure): #{e.message}"
             rescue ${this.rootPackageClientName}::Errors::ServiceUnavailableError
                 puts "API returned status 503, is probably overloaded, try again later"
             rescue ${this.rootPackageClientName}::Errors::ServerError
@@ -205,20 +208,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
         const placeholder = this.getAuthPlaceholder();
+        const tokenName = this.context.getBearerTokenParameterName();
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # Specify default options applied on every request.
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
-                token: "${placeholder}",
-                http_client: HTTP::Client.new(
-                    timeout: 5
-                )
+                ${tokenName}: "${placeholder}",
+                timeout: 5
             )
 
             # Specify options for an individual request.
             response = ${this.getMethodCall(endpoint)}(
                 ...,
-                token: "${placeholder}"
+                ${tokenName}: "${placeholder}"
             )
         `);
     }
@@ -239,9 +241,16 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
+            # Set the default timeout (in seconds) for every request made by the client.
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
+                base_url: ${this.getEnvironmentURLExample()},
+                timeout: 30
+            )
+
+            # Override the timeout for an individual request.
             response = ${this.getMethodCall(endpoint)}(
                 ...,
-                timeout: 30  # 30 second timeout
+                request_options: { timeout_in_seconds: 10 }
             )
         `);
     }
@@ -284,31 +293,64 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         `);
     }
 
-    private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
-        if (endpoint.endpoint.pagination?.type === "custom") {
-            return this.renderCustomPaginationSnippet(endpoint);
-        }
+    private renderAdditionalBodyPropertiesSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
-            # Loop over the items using the provided iterator.
-                page = ${this.rootPackageClientName}.${this.getMethodCall(endpoint)}(
-                ...
+            response = ${this.getMethodCall(endpoint)}(
+                ...,
+                request_options: {
+                    additional_body_parameters: {
+                        "custom_field" => "custom-value"
+                    }
+                }
             )
-            page.each do |item|
-                puts "Got item: #{item}"
-            end
-
-            # Alternatively, iterate page-by-page.
-            current_page = page
-            while current_page
-                current_page.results.each do |item|
-                    puts "Got item: #{item}"
-                end
-                current_page = current_page.next_page
-                break if current_page.nil?
-            end
-
         `);
+    }
+
+    private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
+        const pagination = endpoint.endpoint.pagination;
+        if (pagination?.type === "custom") {
+            return this.renderCustomPaginationSnippet(endpoint);
+        }
+        const methodCall = this.getMethodCall(endpoint);
+        const itemsField =
+            pagination?.type === "cursor" || pagination?.type === "offset"
+                ? this.case.snakeSafe(pagination.results.property.name)
+                : "items";
+        const fetchFirstPageOnCall = this.context.customConfig.fetchFirstPageOnCall === true;
+        const iterationComment = fetchFirstPageOnCall
+            ? dedent`
+                # The method sends the request for the first page and returns an iterator over the items of every page.
+                # An API error for the first page is raised by the call; later pages are requested while you iterate.`
+            : dedent`
+                # The method returns an iterator over the items of every page. No request is sent until you start
+                # iterating, so API errors are raised by the loop.`;
+        const sections = [
+            `require "${this.rootPackageName}"`,
+            `${iterationComment}\n` +
+                dedent`
+                items = ${methodCall}(
+                    ...
+                )
+                items.each do |item|
+                    puts "Got item: #{item}"
+                end`
+        ];
+        if (!fetchFirstPageOnCall) {
+            sections.push(dedent`
+                # Call \`load_first_page\` to send the first request now, so an API error for it is raised here.
+                items = ${methodCall}(
+                    ...
+                ).load_first_page`);
+        }
+        sections.push(dedent`
+            # Call \`pages\` to get each page's full response, including fields besides \`${itemsField}\`.
+            ${methodCall}(
+                ...
+            ).pages.each do |page|
+                puts "Got page: #{page.${itemsField}}"
+            end`);
+        return this.writeCode(sections.join("\n\n") + "\n");
     }
 
     private renderCustomPaginationSnippet(endpoint: EndpointWithFilepath): string {
@@ -379,8 +421,29 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
-        return endpointIds.map(this.lookupEndpointById.bind(this));
+        const configuredEndpointIds = this.getConfiguredEndpointIdsForFeature(featureId);
+        if (configuredEndpointIds != null) {
+            return configuredEndpointIds.map(this.lookupEndpointById.bind(this));
+        }
+        if (featureId === FernGeneratorCli.StructuredFeatureId.Pagination) {
+            const paginatedEndpoint = this.getEndpointWithPagination();
+            if (paginatedEndpoint != null) {
+                return [paginatedEndpoint];
+            }
+        }
+        return [this.lookupEndpointById(this.defaultEndpointId)];
+    }
+
+    private getEndpointWithPagination(): EndpointWithFilepath | undefined {
+        const isPaginated = (endpoint: EndpointWithFilepath) => {
+            const pagination = endpoint.endpoint.pagination;
+            return pagination != null && pagination.type !== "uri" && pagination.type !== "path";
+        };
+        const defaultEndpoint = this.endpointsById[this.defaultEndpointId];
+        if (defaultEndpoint != null && isPaginated(defaultEndpoint)) {
+            return defaultEndpoint;
+        }
+        return Object.values(this.endpointsById).find(isPaginated);
     }
 
     private getConfiguredEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {
@@ -429,6 +492,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getEnvironmentURLExample(): string {
         return '"https://example.com"';
+    }
+
+    /**
+     * A single-URL environment constant is a string the client takes as `base_url`. A multi-URL
+     * environment constant is a hash with one URL per service, which the client takes through its
+     * `environment` keyword; passed as `base_url` it would be used where a URL string is expected.
+     */
+    private getEnvironmentKeyword(): string {
+        return this.context.isMultipleBaseUrlsEnvironment() ? "environment" : "base_url";
     }
 
     private getEnvironmentNameExample(): string | undefined {

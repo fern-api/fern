@@ -37,6 +37,9 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         });
 
         for (const pathParameter of this.endpoint.allPathParameters) {
+            if (this.context.getSdkVariableForPathParameter(pathParameter) != null) {
+                continue;
+            }
             properties.push({
                 ...pathParameter,
                 name: {
@@ -44,7 +47,9 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                     wireValue: getOriginalName(pathParameter.name)
                 },
                 propertyAccess: undefined,
-                availability: undefined
+                availability: undefined,
+                defaultValue: undefined,
+                xml: undefined
             });
         }
 
@@ -52,7 +57,8 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             properties.push({
                 ...queryParameter,
                 propertyAccess: undefined,
-                availability: undefined
+                availability: undefined,
+                xml: undefined
             });
         }
 
@@ -60,7 +66,8 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             properties.push({
                 ...header,
                 propertyAccess: undefined,
-                availability: undefined
+                availability: undefined,
+                xml: undefined
             });
         }
 
@@ -74,15 +81,18 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                     valueType: reference.requestBodyType,
                     propertyAccess: undefined,
                     availability: undefined,
+                    defaultValue: undefined,
                     v2Examples: reference.v2Examples,
-                    docs: reference.docs
+                    docs: reference.docs,
+                    xml: undefined
                 });
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     properties.push({
                         ...property,
-                        propertyAccess: undefined
+                        propertyAccess: undefined,
+                        xml: undefined
                     });
                 }
             },
@@ -105,7 +115,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 ruby.wrapInModules(class_, this.context.getModulesForServiceId(this.serviceId)).write(writer);
             }),
             directory: this.getFilepath(),
-            filename: `${this.case.snakeSafe(this.wrapper.wrapperName)}.rb`,
+            filename: this.context.getFileNameForRequestWrapper(this.wrapper),
             customConfig: this.context.customConfig
         });
     }

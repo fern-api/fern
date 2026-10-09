@@ -76,6 +76,8 @@ function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] =
             pascalCase: { unsafeName: name, safeName: name }
         },
         displayName: undefined,
+        subtitle: undefined,
+        globalParameters: undefined,
         method: "GET",
         baseUrl: undefined,
         v2BaseUrls: undefined,
@@ -159,6 +161,8 @@ function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorC
                 .replace(/^_/, "");
         },
         hasMultipleBaseUrls: () => false,
+        isEndpointSecurity: () => false,
+        getEndpointSnippet: () => undefined,
         escapeRustKeyword: (name: string) => {
             // Simple implementation for testing - just returns the name as-is
             // In production, this would escape Rust keywords with r# prefix

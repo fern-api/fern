@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedLiteral from "../../../index.js";
@@ -24,6 +25,9 @@ export class InlinedClient {
     /**
      * @param {SeedLiteral.SendLiteralsInlinedRequest} request
      * @param {InlinedClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
      *
      * @example
      *     await client.inlined.send({
@@ -68,12 +72,15 @@ export class InlinedClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: {
-                ...request,
-                prompt: "You are a helpful assistant",
-                stream: false,
-                aliasedContext: "You're super wise",
-            },
+            body: mergeAdditionalBodyParameters(
+                {
+                    ...request,
+                    prompt: "You are a helpful assistant",
+                    stream: false,
+                    aliasedContext: "You're super wise",
+                },
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

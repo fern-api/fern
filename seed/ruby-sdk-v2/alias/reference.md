@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>(type_id) -> </code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>(type_id:) -> </code></summary>
 <dl>
 <dd>
 

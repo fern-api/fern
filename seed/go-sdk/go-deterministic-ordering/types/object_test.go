@@ -14,7 +14,7 @@ import (
 func TestSettersDoubleOptional(t *testing.T) {
 	t.Run("SetOptionalAlias", func(t *testing.T) {
 		obj := &DoubleOptional{}
-		var fernTestValueOptionalAlias *OptionalAlias
+		var fernTestValueOptionalAlias OptionalAlias
 		obj.SetOptionalAlias(fernTestValueOptionalAlias)
 		assert.Equal(t, fernTestValueOptionalAlias, obj.OptionalAlias)
 		assert.NotNil(t, obj.explicitFields)
@@ -27,21 +27,11 @@ func TestGettersDoubleOptional(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DoubleOptional{}
-		var expected *OptionalAlias
+		var expected OptionalAlias
 		obj.OptionalAlias = expected
 
 		// Act & Assert
 		assert.Equal(t, expected, obj.GetOptionalAlias(), "getter should return the property value")
-	})
-
-	t.Run("GetOptionalAlias_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &DoubleOptional{}
-		obj.OptionalAlias = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetOptionalAlias(), "getter should return nil when property is nil")
 	})
 
 	t.Run("GetOptionalAlias_NilReceiver", func(t *testing.T) {
@@ -63,7 +53,7 @@ func TestSettersMarkExplicitDoubleOptional(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DoubleOptional{}
-		var fernTestValueOptionalAlias *OptionalAlias
+		var fernTestValueOptionalAlias OptionalAlias
 
 		// Act
 		obj.SetOptionalAlias(fernTestValueOptionalAlias)

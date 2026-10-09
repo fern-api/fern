@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    C++ library docs now render Doxygen groups (`@defgroup` / `@ingroup` / `@addtogroup`).
+    Each group, including nested subgroups, gets a page under `groups/` that links to the
+    generated symbol pages, so a library's authored organization shows up in the navigation.
+  type: feat

@@ -71,6 +71,17 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->echo_(
+     *     'id-ksfd9c1',
+     *     new EchoRequest([
+     *         'name' => 'Hello world!',
+     *         'size' => 20,
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $id
      * @param EchoRequest $request
      * @param ?array{

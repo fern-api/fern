@@ -1,0 +1,6 @@
+- summary: |
+    Resolve the Java generator's kebab-case `package-name` config key when computing the package
+    name for local-file-system output. Previously configs using `package-name` (without
+    `group`/`artifact`) logged a misleading "package-prefix configured but packageName is missing"
+    warning even though the name was set.
+  type: fix

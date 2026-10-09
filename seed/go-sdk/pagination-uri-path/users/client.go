@@ -26,18 +26,24 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
-func (c *Client) ListWithUriPagination(
+// Example:
+//
+//	client.Users.ListWithURIPagination(
+//	    context.TODO(),
+//	)
+func (c *Client) ListWithURIPagination(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*fern.ListUsersUriPaginationResponse, error) {
-	response, err := c.WithRawResponse.ListWithUriPagination(
+) (*fern.ListUsersURIPaginationResponse, error) {
+	response, err := c.WithRawResponse.ListWithURIPagination(
 		ctx,
 		opts...,
 	)
@@ -47,6 +53,11 @@ func (c *Client) ListWithUriPagination(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Users.ListWithPathPagination(
+//	    context.TODO(),
+//	)
 func (c *Client) ListWithPathPagination(
 	ctx context.Context,
 	opts ...option.RequestOption,

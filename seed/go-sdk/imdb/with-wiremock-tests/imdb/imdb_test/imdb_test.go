@@ -113,9 +113,12 @@ func TestImdbGetMovieWithWireMock(
 	client := client.NewIMDBClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
+	request := &testPackageName.GetMovieImdbRequest{
+		MovieID: "movieId",
+	}
 	_, invocationErr := client.Imdb.GetMovie(
 		context.TODO(),
-		"movieId",
+		request,
 		option.WithHTTPHeader(
 			http.Header{"X-Test-Id": []string{"TestImdbGetMovieWithWireMock"}},
 		),

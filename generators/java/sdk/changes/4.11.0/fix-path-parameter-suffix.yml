@@ -1,0 +1,6 @@
+- summary: |
+    Fix URL building for paths with non-slash-separated suffixes (e.g.,
+    `/{Sid}.json`). The suffix is now correctly concatenated with the path
+    parameter value instead of being added as a separate path segment,
+    which previously caused an extra `/` before the suffix.
+  type: fix

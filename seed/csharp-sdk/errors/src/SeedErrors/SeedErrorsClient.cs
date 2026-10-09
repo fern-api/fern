@@ -14,7 +14,7 @@ public partial class SeedErrorsClient : ISeedErrorsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedErrors" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedErrors.Version.Current },
                 { "User-Agent", "Fernerrors/0.0.1" },
             }
         );

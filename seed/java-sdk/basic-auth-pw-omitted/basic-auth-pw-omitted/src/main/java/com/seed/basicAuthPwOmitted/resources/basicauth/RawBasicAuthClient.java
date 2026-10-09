@@ -4,10 +4,12 @@
 package com.seed.basicAuthPwOmitted.resources.basicauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.basicAuthPwOmitted.core.BodyProperties;
 import com.seed.basicAuthPwOmitted.core.ClientOptions;
 import com.seed.basicAuthPwOmitted.core.MediaTypes;
 import com.seed.basicAuthPwOmitted.core.ObjectMappers;
 import com.seed.basicAuthPwOmitted.core.RequestOptions;
+import com.seed.basicAuthPwOmitted.core.RetryInterceptor;
 import com.seed.basicAuthPwOmitted.core.SeedBasicAuthPwOmittedApiException;
 import com.seed.basicAuthPwOmitted.core.SeedBasicAuthPwOmittedException;
 import com.seed.basicAuthPwOmitted.core.SeedBasicAuthPwOmittedHttpResponse;
@@ -59,6 +61,15 @@ public class RawBasicAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -78,6 +89,8 @@ public class RawBasicAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedBasicAuthPwOmittedApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedBasicAuthPwOmittedException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedBasicAuthPwOmittedException("Network error executing HTTP request", e);
         }
@@ -106,7 +119,9 @@ public class RawBasicAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedBasicAuthPwOmittedException("Failed to serialize request", e);
         }
@@ -120,6 +135,15 @@ public class RawBasicAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -145,6 +169,8 @@ public class RawBasicAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedBasicAuthPwOmittedApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedBasicAuthPwOmittedException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedBasicAuthPwOmittedException("Network error executing HTTP request", e);
         }

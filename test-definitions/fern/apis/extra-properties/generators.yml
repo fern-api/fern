@@ -20,3 +20,13 @@ groups:
           mode: push
           uri: fern-api/go-sdk-tests
           branch: extra-properties
+  csharp-sdk:
+    generators:
+      - name: fernapi/fern-csharp-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/csharp-sdk-tests
+          branch: extra-properties

@@ -25,6 +25,9 @@ export class AuthClient {
      * @param {SeedInferredAuthImplicitApiKey.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedInferredAuthImplicitApiKeyError}
+     * @throws {@link errors.SeedInferredAuthImplicitApiKeyTimeoutError}
+     *
      * @example
      *     await client.auth.getToken({
      *         "X-Api-Key": "api_key"

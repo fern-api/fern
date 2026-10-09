@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: Path Parameter Suffix Test API
+  version: 1.0.0
+  description: |
+    Tests that path suffixes like .json are correctly concatenated with path
+    parameters rather than added as separate path segments.
+paths:
+  /accounts/{accountSid}/messages/{sid}.json:
+    get:
+      operationId: fetchMessage
+      summary: Fetch a message by SID
+      parameters:
+        - name: accountSid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: sid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    put:
+      operationId: updateMessage
+      summary: Update a message by SID
+      parameters:
+        - name: accountSid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: sid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMessageRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  /accounts/{accountSid}.json:
+    get:
+      operationId: fetchAccount
+      summary: Fetch an account by SID
+      parameters:
+        - name: accountSid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        sid:
+          type: string
+        body:
+          type: string
+        status:
+          type: string
+      required:
+        - sid
+    UpdateMessageRequest:
+      type: object
+      properties:
+        body:
+          type: string
+      required:
+        - body
+    Account:
+      type: object
+      properties:
+        sid:
+          type: string
+        friendlyName:
+          type: string
+      required:
+        - sid

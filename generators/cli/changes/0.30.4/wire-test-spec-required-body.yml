@@ -1,0 +1,34 @@
+- summary: |
+    Wire-test cases now repair a request body that omits a property the OpenAPI
+    spec marks `required`.
+
+    The CLI and its wire-test cases read from two different sources of truth: a
+    case body comes from an IR example, while the generated CLI validates
+    request bodies against the raw spec it embeds via `include_str!`. Those
+    disagree whenever a property is `required` in the spec but has a nullable
+    schema — `anyOf: [{type: array}, {type: null}]` is the common shape. The
+    importer models that as optional, so example generation legitimately skips
+    it, and the resulting example violates the very schema it came from. The CLI
+    then rejects its own wire-test case with `error[validation]: Missing
+    required property` and exits before any request leaves the process, so the
+    case fails having never reached the mock.
+
+    Any such property is now filled from the spec's own schema — `null` where
+    the schema permits it, which is the least-invented value and the shape that
+    actually occurs; otherwise a minimal value from the declared type, honoring
+    `const`/`enum`. The repair recurses, so a required property missing from
+    inside an array element the example did supply is fixed too. Where a value
+    can't be derived confidently the property is left absent on purpose: failing
+    exactly as before is more honest than fabricating a value that trips a
+    different validation rule.
+
+    Repaired properties are recorded on the case as `specFilledBodyProperties`
+    and named in failure diagnostics, so a spec-derived value is never mistaken
+    for one an API author wrote, and the underlying data-quality problem stays
+    visible in a diff instead of being buried.
+
+    Inert wherever the IR and the spec agree, which is every existing seed
+    fixture: no fixture's manifest gained a repair. On one real customer CLI it
+    took the suite from 670/678 to 678/678 with no change to their
+    `generators.yml`.
+  type: fix

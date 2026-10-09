@@ -63,6 +63,7 @@ export class BytesRequestBodyGenerator {
                 docs: undefined,
                 availability: undefined,
                 propertyAccess: undefined,
+                defaultValue: undefined,
                 v2Examples: undefined
             };
             allProperties.push(bodyProp);

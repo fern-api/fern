@@ -11,6 +11,20 @@ public final class V2Client: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    ///
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    ///
+    ///     _ = try await client.v2.test()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func test(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,

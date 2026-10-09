@@ -122,7 +122,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
     /// <summary>
     /// Converts the query parameters to a URL-encoded query string.
     /// </summary>
-    /// <returns>A string representation of the query parameters in the format "key1=value1&key2=value2".</returns>
+    /// <returns>A string representation of the query parameters in the format "key1=value1&amp;key2=value2".</returns>
     public override string ToString()
     {
         return string.Join(

@@ -23,6 +23,12 @@ module Seed
       # @option params [String, nil] :tags
       # @option params [Boolean, nil] :extra
       #
+      # @example
+      #   client.nullable.get_users(
+      #     avatar: "avatar",
+      #     extra: true
+      #   )
+      #
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -46,10 +52,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Nullable::Types::User], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # @param request_options [Hash]
@@ -59,6 +67,23 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.nullable.create_user(
+      #     username: "username",
+      #     tags: %w[tags tags],
+      #     metadata: {
+      #       created_at: "2024-01-15T09:30:00Z",
+      #       updated_at: "2024-01-15T09:30:00Z",
+      #       avatar: "avatar",
+      #       activated: true,
+      #       status: {},
+      #       values: {
+      #         values: "values"
+      #       }
+      #     },
+      #     avatar: "avatar"
+      #   )
       #
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
@@ -77,7 +102,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Nullable::Types::User.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Nullable::Types::User.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -91,6 +116,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.nullable.delete_user(username: "xy")
       #
       # @return [Boolean]
       def delete_user(request_options: {}, **params)
@@ -108,10 +136,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
     end
   end

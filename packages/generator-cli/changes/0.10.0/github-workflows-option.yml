@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `workflows` to `GithubStepConfig`. When `false`, the post-generation pipeline drops newly
+    generated `.github/workflows/*` files and restores tracked ones from HEAD before any commit,
+    so SDK delivery never touches workflow files (no GitHub App `workflows` permission required).
+  type: feat

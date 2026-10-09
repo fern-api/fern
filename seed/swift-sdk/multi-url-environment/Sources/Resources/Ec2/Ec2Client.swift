@@ -7,6 +7,20 @@ public final class Ec2Client: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import MultiUrlEnvironment
+    ///
+    /// private func main() async throws {
+    ///     let client = MultiUrlEnvironmentClient(token: "<token>")
+    ///
+    ///     _ = try await client.ec2.bootInstance(request: .init(size: "size"))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func bootInstance(request: Requests.BootInstanceRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

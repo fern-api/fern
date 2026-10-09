@@ -15,6 +15,7 @@
     "generationLanguage": undefined,
     "keywords": undefined,
     "smartCasing": true,
+    "smartCasingDigitWordBoundary": undefined,
   },
   "constants": {
     "errorInstanceIdKey": "errorInstanceId",
@@ -23,6 +24,7 @@
     "endpoints": {},
     "environments": undefined,
     "generatorConfig": undefined,
+    "globalParameters": undefined,
     "headers": [],
     "pathParameters": [],
     "types": {
@@ -93,6 +95,7 @@
             },
           },
         },
+        "deferredUnionBaseProperties": undefined,
         "extends": undefined,
         "properties": [
           {
@@ -355,6 +358,7 @@
             },
           },
         },
+        "deferredUnionBaseProperties": undefined,
         "extends": undefined,
         "properties": [
           {
@@ -645,6 +649,7 @@
   "errors": {},
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -659,6 +664,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": false,
     "navigationConfig": undefined,
     "service": undefined,
     "subpackages": [
@@ -672,6 +678,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": false,
     "platformHeaders": {
       "language": "X-Fern-Language",
@@ -679,6 +686,7 @@
       "sdkVersion": "X-Fern-SDK-Version",
       "userAgent": undefined,
     },
+    "webhookSignatureVerification": undefined,
   },
   "selfHosted": false,
   "serviceTypeReferenceInfo": {
@@ -691,6 +699,7 @@
   },
   "services": {},
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_types": {
       "displayName": undefined,
@@ -704,6 +713,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false,
       "name": "types",
       "navigationConfig": undefined,
       "service": undefined,
@@ -725,6 +735,7 @@
       "encoding": {
         "json": {},
         "proto": undefined,
+        "xml": undefined,
       },
       "inline": undefined,
       "name": {
@@ -745,6 +756,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -772,6 +784,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -796,6 +809,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -831,6 +845,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -855,6 +870,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -879,6 +895,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -906,6 +923,7 @@
               "type": "named",
               "typeId": "type_types:OrderStatus",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -921,6 +939,7 @@
       "encoding": {
         "json": {},
         "proto": undefined,
+        "xml": undefined,
       },
       "inline": undefined,
       "name": {
@@ -938,6 +957,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -965,6 +985,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -989,6 +1010,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1013,6 +1035,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -1028,6 +1051,7 @@
       "encoding": {
         "json": {},
         "proto": undefined,
+        "xml": undefined,
       },
       "inline": undefined,
       "name": {

@@ -1,0 +1,18 @@
+[package]
+name = "basic_auth_cli_types_system"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+doctest = false
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", features = ["serde"] }
+base64 = "0.22"
+num-bigint = { version = "0.4", features = ["serde"] }
+ordered-float = { version = "4.5", features = ["serde"] }
+
+[dependencies.basic_auth_cli_types_core]
+path = "../basic-auth-cli-types-core"

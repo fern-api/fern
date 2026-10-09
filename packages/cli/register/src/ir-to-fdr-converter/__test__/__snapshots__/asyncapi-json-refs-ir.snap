@@ -17,6 +17,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "production",
     "environments": {
       "_visit": [Function],
@@ -42,6 +43,7 @@
   "errors": {},
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -56,6 +58,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": undefined,
     "navigationConfig": undefined,
     "service": undefined,
     "subpackages": [
@@ -70,6 +73,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",
@@ -77,6 +81,7 @@
       "sdkVersion": "",
       "userAgent": undefined,
     },
+    "webhookSignatureVerification": undefined,
   },
   "selfHosted": false,
   "serviceTypeReferenceInfo": {
@@ -85,6 +90,7 @@
   },
   "services": {},
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_plantOrders": {
       "displayName": undefined,
@@ -98,6 +104,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": undefined,
       "name": "plantOrders",
       "navigationConfig": undefined,
       "service": undefined,
@@ -118,6 +125,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": undefined,
       "name": "plantUpdates",
       "navigationConfig": undefined,
       "service": undefined,
@@ -259,6 +267,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -302,6 +311,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -337,6 +347,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -369,6 +380,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -403,6 +415,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -441,6 +454,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -480,6 +494,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -498,6 +513,7 @@
   "webhookGroups": {},
   "websocketChannels": {
     "channel_plantOrders": {
+      "apiPlayground": undefined,
       "auth": false,
       "availability": undefined,
       "baseUrl": "production",
@@ -714,6 +730,7 @@
       },
     },
     "channel_plantUpdates": {
+      "apiPlayground": undefined,
       "auth": false,
       "availability": undefined,
       "baseUrl": "production",

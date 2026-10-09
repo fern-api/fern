@@ -17,6 +17,8 @@ export declare namespace Comment {
     interface Args {
         /* The preface docs of the comment, if any */
         docs?: string;
+        /* A usage code example rendered as a fenced code block, if any */
+        codeExample?: string;
     }
 
     interface Tag {
@@ -28,17 +30,21 @@ export declare namespace Comment {
         name?: string;
         /* The in-line docs associated with the type, if any */
         docs?: string;
+        /* Extra lines written as an indented continuation of this tag, if any */
+        detailDocs?: string[];
     }
 }
 
 export class Comment extends AstNode {
     public readonly docs: string | undefined;
+    public readonly codeExample: string | undefined;
 
     private tags: Comment.Tag[] = [];
 
-    constructor({ docs }: Comment.Args = {}) {
+    constructor({ docs, codeExample }: Comment.Args = {}) {
         super();
         this.docs = docs;
+        this.codeExample = codeExample;
     }
 
     public addTag(tag: Comment.Tag): void {
@@ -52,8 +58,19 @@ export class Comment extends AstNode {
         writer.writeLine("/**");
         if (this.docs != null) {
             this.docs.split("\n").forEach((line) => {
-                writer.writeLine(` * ${line}`);
+                writer.writeLine(` * ${this.escapeDocs(line)}`);
             });
+            if (this.codeExample != null || this.tags.length > 0) {
+                writer.writeLine(" *");
+            }
+        }
+        if (this.codeExample != null) {
+            writer.writeLine(" * Example:");
+            writer.writeLine(" * ```php");
+            this.codeExample.split("\n").forEach((line) => {
+                writer.writeLine(` * ${this.escapeDocs(line)}`.trimEnd());
+            });
+            writer.writeLine(" * ```");
             if (this.tags.length > 0) {
                 writer.writeLine(" *");
             }
@@ -64,11 +81,15 @@ export class Comment extends AstNode {
         writer.writeLine(" */");
     }
 
+    private escapeDocs(line: string): string {
+        return line.replaceAll("*/", "*\\/");
+    }
+
     private writeTag({ writer, tag }: { writer: Writer; tag: Comment.Tag }): void {
         const docsSplit = tag.docs != null ? tag.docs.split("\n") : undefined;
         if (docsSplit != null && docsSplit.length > 1) {
             docsSplit.forEach((line) => {
-                writer.writeLine(` * ${line}`);
+                writer.writeLine(` * ${this.escapeDocs(line)}`);
             });
             writer.writeLine(" *");
         }
@@ -80,9 +101,12 @@ export class Comment extends AstNode {
         }
 
         if (docsSplit != null && docsSplit.length === 1) {
-            writer.write(` ${docsSplit[0]}`);
+            writer.write(` ${this.escapeDocs(docsSplit[0] ?? "")}`);
         }
 
         writer.newLine();
+        for (const line of tag.detailDocs ?? []) {
+            writer.writeLine(` *   ${this.escapeDocs(line)}`);
+        }
     }
 }

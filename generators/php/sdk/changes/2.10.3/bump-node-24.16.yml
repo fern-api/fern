@@ -1,0 +1,4 @@
+- summary: |
+    Bump Node.js base image from 24.15 to 24.16.
+  type: chore
+

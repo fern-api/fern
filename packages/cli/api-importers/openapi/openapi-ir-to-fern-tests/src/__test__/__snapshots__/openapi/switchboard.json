@@ -2054,6 +2054,7 @@ service:
               "response-stream": {
                 "docs": "OK",
                 "format": "sse",
+                "resumable": false,
                 "terminator": "[DONE]",
                 "type": "SessionsEventsResponse",
               },
@@ -2324,6 +2325,7 @@ service:
               "path": "/sessions",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "configuration": {
                       "docs": "Session configuration",
@@ -2598,6 +2600,7 @@ service:
             configuration:
               type: optional<root.SessionConfigV1>
               docs: Session configuration
+          optional: true
         content-type: application/json
       response:
         docs: Created
@@ -2739,6 +2742,7 @@ service:
         type: SessionsEventsResponse
         format: sse
         terminator: '[DONE]'
+        resumable: false
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -3435,4 +3439,5 @@ auth-schemes:
 auth: BearerAuth
 ",
   },
+  "specVersion": "1.0.0",
 }

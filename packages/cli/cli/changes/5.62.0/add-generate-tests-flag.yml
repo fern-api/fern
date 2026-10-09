@@ -1,0 +1,5 @@
+- summary: |
+    Add `--generate-tests` flag to `fern generate` to enable test file generation
+    even when outputting to a local file system. Previously, tests were only generated
+    for GitHub output modes.
+  type: feat

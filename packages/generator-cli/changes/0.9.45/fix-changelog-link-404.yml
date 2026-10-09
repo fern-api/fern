@@ -1,0 +1,7 @@
+- summary: |
+    Fix the broken "See full changelog" link in generated PR bodies. The link pointed at
+    `blob/<sha>/changelog.md`, but that file was never committed in the self-hosted (non-replay)
+    generation path, so the link 404'd. GithubStep now guarantees `changelog.md` lands in the
+    committed tree it pushes, and only emits the link when the file is actually tracked at the
+    pushed head SHA.
+  type: fix

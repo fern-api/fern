@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the `fern init` fallback version for `fern-typescript-sdk` / `fern-typescript-node-sdk` from `2.3.2` to `3.71.2`.
+    The `2.3.2` container runs Node 20 and started failing `yarn install` after `mute-stream@4.0.0` (Node ≥22) was published as a transitive dep. The fallback only triggers when FDR cannot resolve a compatible generator version, so released CLIs are unaffected — this restores a working default for fresh `fern init` and for dev builds.
+  type: fix

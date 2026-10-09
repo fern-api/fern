@@ -14,8 +14,9 @@ module Seed
         # @param query [Hash] Query parameters for the request (optional)
         # @param body [Object, nil] The JSON request body (optional)
         # @param request_options [Seed::RequestOptions, Hash{Symbol=>Object}, nil]
-        def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, request_options: {})
-          super(base_url:, path:, method:, headers:, query:, request_options:)
+        # @param max_retries [Integer, nil] Overrides the client's retry count for this request
+        def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, request_options: {}, max_retries: nil)
+          super(base_url:, path:, method:, headers:, query:, request_options:, max_retries:)
 
           @body = body
         end
@@ -31,9 +32,18 @@ module Seed
           merge_additional_headers(sdk_headers, protected_keys:)
         end
 
-        # @return [String, nil] The encoded HTTP request body.
+        # @return [String, nil] The encoded HTTP request body, including any additional_body_parameters
+        #   from request_options.
         def encode_body
-          @body.nil? ? nil : ::JSON.generate(@body)
+          body = request_body
+          body.nil? ? nil : ::JSON.generate(body)
+        end
+
+        private
+
+        # @return [Object, nil] The request body merged with additional_body_parameters.
+        def request_body
+          merge_additional_body_parameters(@body)
         end
       end
     end

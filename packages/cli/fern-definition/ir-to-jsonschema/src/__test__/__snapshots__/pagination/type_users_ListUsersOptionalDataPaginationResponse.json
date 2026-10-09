@@ -22,7 +22,8 @@
       ]
     },
     "total_count": {
-      "type": "integer"
+      "type": "integer",
+      "description": "The totall number of /users"
     },
     "data": {
       "oneOf": [
@@ -63,7 +64,8 @@
       "type": "object",
       "properties": {
         "page": {
-          "type": "integer"
+          "type": "integer",
+          "description": "The current page"
         },
         "next": {
           "oneOf": [

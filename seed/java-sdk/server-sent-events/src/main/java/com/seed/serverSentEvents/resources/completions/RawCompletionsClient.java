@@ -4,11 +4,13 @@
 package com.seed.serverSentEvents.resources.completions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.serverSentEvents.core.BodyProperties;
 import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.MediaTypes;
 import com.seed.serverSentEvents.core.ObjectMappers;
 import com.seed.serverSentEvents.core.RequestOptions;
 import com.seed.serverSentEvents.core.ResponseBodyReader;
+import com.seed.serverSentEvents.core.RetryInterceptor;
 import com.seed.serverSentEvents.core.SeedServerSentEventsApiException;
 import com.seed.serverSentEvents.core.SeedServerSentEventsException;
 import com.seed.serverSentEvents.core.SeedServerSentEventsHttpResponse;
@@ -50,7 +52,9 @@ public class RawCompletionsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
@@ -63,6 +67,15 @@ public class RawCompletionsClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         try {
@@ -77,6 +90,8 @@ public class RawCompletionsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedServerSentEventsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedServerSentEventsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedServerSentEventsException("Network error executing HTTP request", e);
         }
@@ -100,7 +115,9 @@ public class RawCompletionsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
@@ -114,6 +131,15 @@ public class RawCompletionsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         try {
             Response response = client.newCall(okhttpRequest).execute();
@@ -126,6 +152,8 @@ public class RawCompletionsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedServerSentEventsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedServerSentEventsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedServerSentEventsException("Network error executing HTTP request", e);
         }

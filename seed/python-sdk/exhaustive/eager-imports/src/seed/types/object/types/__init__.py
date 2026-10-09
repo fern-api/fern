@@ -4,14 +4,17 @@
 
 from .documented_unknown_type import DocumentedUnknownType
 from .double_optional import DoubleOptional
+from .extended_object_with_inherited_enum import ExtendedObjectWithInheritedEnum
 from .map_of_documented_unknown_type import MapOfDocumentedUnknownType
 from .nested_object_with_optional_field import NestedObjectWithOptionalField
 from .nested_object_with_required_field import NestedObjectWithRequiredField
 from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
 from .object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
+from .object_with_inherited_required_enum import ObjectWithInheritedRequiredEnum
 from .object_with_map_of_map import ObjectWithMapOfMap
 from .object_with_mixed_required_and_optional_fields import ObjectWithMixedRequiredAndOptionalFields
 from .object_with_optional_field import ObjectWithOptionalField
+from .object_with_required_extended_field import ObjectWithRequiredExtendedField
 from .object_with_required_field import ObjectWithRequiredField
 from .object_with_required_nested_object import ObjectWithRequiredNestedObject
 from .object_with_unknown_field import ObjectWithUnknownField
@@ -20,14 +23,17 @@ from .optional_alias import OptionalAlias
 __all__ = [
     "DocumentedUnknownType",
     "DoubleOptional",
+    "ExtendedObjectWithInheritedEnum",
     "MapOfDocumentedUnknownType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",
     "ObjectWithDatetimeLikeString",
     "ObjectWithDocumentedUnknownType",
+    "ObjectWithInheritedRequiredEnum",
     "ObjectWithMapOfMap",
     "ObjectWithMixedRequiredAndOptionalFields",
     "ObjectWithOptionalField",
+    "ObjectWithRequiredExtendedField",
     "ObjectWithRequiredField",
     "ObjectWithRequiredNestedObject",
     "ObjectWithUnknownField",

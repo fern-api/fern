@@ -20,6 +20,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.property_based_error.throw_error
+      #
       # @return [String]
       def throw_error(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -34,10 +37,16 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_types = {
+            400 => Seed::Errors::Types::PropertyBasedErrorTestBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
+        end
       end
     end
   end

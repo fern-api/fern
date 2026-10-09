@@ -10,9 +10,9 @@ public partial class Examples
         );
 
         await client.User.UpdateUserAsync(
-            "tenant_id",
-            "user_id",
-            new UpdateUserRequest {
+            tenantId: "tenant_id",
+            userId: "user_id",
+            request: new UpdateUserRequest {
                 Body = new User {
                     Name = "name",
                     Tags = new List<string>(){

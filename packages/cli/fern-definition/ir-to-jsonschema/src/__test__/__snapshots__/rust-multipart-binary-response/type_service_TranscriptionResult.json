@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string"
+    },
+    "language": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "text"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -16,6 +16,12 @@ public class AsyncSeedHeaderTokenClientBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+    private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+    private Optional<Double> retryJitterFactor = Optional.empty();
+
     private final Map<String, String> customHeaders = new HashMap<>();
 
     private String headerTokenAuth = null;
@@ -52,6 +58,30 @@ public class AsyncSeedHeaderTokenClientBuilder {
      */
     public AsyncSeedHeaderTokenClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+     */
+    public AsyncSeedHeaderTokenClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
+        this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+     */
+    public AsyncSeedHeaderTokenClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
+        this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+     */
+    public AsyncSeedHeaderTokenClientBuilder retryJitterFactor(double retryJitterFactor) {
+        this.retryJitterFactor = Optional.of(retryJitterFactor);
         return this;
     }
 
@@ -125,7 +155,9 @@ public class AsyncSeedHeaderTokenClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        builder.addHeader("x-api-key", "test_prefix " + this.headerTokenAuth);
+        if (this.headerTokenAuth != null) {
+            builder.addHeader("x-api-key", "test_prefix " + this.headerTokenAuth);
+        }
     }
 
     /**
@@ -149,6 +181,15 @@ public class AsyncSeedHeaderTokenClientBuilder {
     protected void setRetries(ClientOptions.Builder builder) {
         if (this.maxRetries.isPresent()) {
             builder.maxRetries(this.maxRetries.get());
+        }
+        if (this.initialRetryDelayMillis.isPresent()) {
+            builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+        }
+        if (this.maxRetryDelayMillis.isPresent()) {
+            builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+        }
+        if (this.retryJitterFactor.isPresent()) {
+            builder.retryJitterFactor(this.retryJitterFactor.get());
         }
     }
 

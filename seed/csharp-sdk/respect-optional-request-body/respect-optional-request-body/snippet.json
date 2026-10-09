@@ -1,0 +1,53 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "Full refund",
+            "id": {
+                "path": "/refunds/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.RefundAsync(new RefundBody { Id = \"refund-id\" });\n"
+            }
+        },
+        {
+            "example_identifier": "Split refund",
+            "id": {
+                "path": "/refunds/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.RefundAsync(\n    new RefundBody\n    {\n        Id = \"refund-id\",\n        Body = new RefundRequest { Amount = 60 },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": "Required refund",
+            "id": {
+                "path": "/refunds/{id}/required",
+                "method": "POST",
+                "identifier_override": "endpoint_.requiredRefund"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.RequiredRefundAsync(\n    new RequiredRefundRequest\n    {\n        Id = \"refund-id\",\n        Body = new RefundRequest { Amount = 60 },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/refunds",
+                "method": "POST",
+                "identifier_override": "endpoint_.bulkRefund"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.BulkRefundAsync(new RefundRequest());\n"
+            }
+        }
+    ]
+}

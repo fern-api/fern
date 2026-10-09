@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Enable the `gzip` feature on the generated SDK's `reqwest` dependency so that
+    gzip-encoded response bodies are decompressed automatically. Previously,
+    `reqwest` was configured with `default-features = false` and no compression
+    features, so responses to requests with a spec-defined `Accept-Encoding: gzip`
+    header were returned as raw gzip bytes.
+  type: fix

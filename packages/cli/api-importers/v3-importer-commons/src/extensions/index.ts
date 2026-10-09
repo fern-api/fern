@@ -1,5 +1,6 @@
 export { AudienceExtension } from "./x-fern-audiences.js";
 export { FernAvailabilityExtension } from "./x-fern-availability.js";
+export { FernDiscriminatedExtension } from "./x-fern-discriminated.js";
 export { FernDiscriminatorContextExtension } from "./x-fern-discriminator-context.js";
 export { FernEnumExtension } from "./x-fern-enum.js";
 export { FernIgnoreExtension } from "./x-fern-ignore.js";
@@ -9,3 +10,4 @@ export { SdkMethodNameExtension } from "./x-fern-sdk-method-name.js";
 export { ServerFromOperationNameExtension } from "./x-fern-server-name-from-operation.js";
 export { FernTypeExtension } from "./x-fern-type.js";
 export { FernTypeNameExtension } from "./x-fern-type-name.js";
+export { XmlPropertyExtension, XmlSchemaExtension } from "./xml.js";

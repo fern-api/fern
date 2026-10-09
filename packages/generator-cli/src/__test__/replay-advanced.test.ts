@@ -304,6 +304,60 @@ describe("ReplayStep integration", { tags: ["slow", "flaky"] }, () => {
 });
 
 // ---------------------------------------------------------------------------
+// describe("lockfile advance commit (no-patches, zero new patches)")
+// ---------------------------------------------------------------------------
+
+describe("lockfile advance commit (no-patches, zero new patches)", { tags: ["slow", "flaky"] }, () => {
+    it("commits the lockfile when replay saved it but didn't create a [fern-replay] commit", async () => {
+        const setup = await setupRepoWithGeneration();
+        const repoPath = setup.repoPath;
+        try {
+            const originalLock = readFileSync(join(repoPath, ".fern", "replay.lock"), "utf-8");
+            const originalCurrentGen = setup.generationSha;
+
+            // Stage new generated files to simulate a regeneration with no user patches.
+            // The content differs from v1 so prepareReplay creates a new [fern-generated] commit.
+            writeFileSync(
+                join(repoPath, "src/client.ts"),
+                'export class Client {\n  baseUrl = "https://api.example.com";\n  version = "2";\n}\n'
+            );
+            gitExec(["add", "."], repoPath);
+
+            const mockLogger: PipelineLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            // stageOnly: false so commitLockfileIfUncommitted runs
+            const config: ReplayStepConfig = { enabled: true, stageOnly: false };
+            const step = new ReplayStep(repoPath, mockLogger, config);
+
+            const result = await step.execute(emptyContext);
+
+            expect(result.executed).toBe(true);
+            expect(result.success).toBe(true);
+
+            // The lockfile must NOT have uncommitted changes — the fix commits it.
+            const lockfileStatus = gitExec(["status", "--porcelain", "--", ".fern/replay.lock"], repoPath);
+            expect(lockfileStatus).toBe("");
+
+            // The lockfile's current_generation must have advanced from the original.
+            const updatedLock = readFileSync(join(repoPath, ".fern", "replay.lock"), "utf-8");
+            expect(updatedLock).not.toBe(originalLock);
+            expect(updatedLock).not.toContain(`current_generation: ${originalCurrentGen}`);
+
+            // A commit with the lockfile advance message must exist in git log.
+            const log = gitExec(["log", "--oneline", "-10"], repoPath);
+            expect(log).toContain("[fern-replay]");
+        } finally {
+            await setup.cleanup();
+        }
+    });
+});
+
+// ---------------------------------------------------------------------------
 // describe("fernignore idempotency")
 // ---------------------------------------------------------------------------
 

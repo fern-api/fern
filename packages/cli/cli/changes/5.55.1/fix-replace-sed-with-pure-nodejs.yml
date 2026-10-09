@@ -1,0 +1,5 @@
+- summary: |
+    Replace sed-based magic version replacement with pure Node.js implementation
+    in local generation mode. Fixes "illegal byte sequence" errors on binary files
+    and eliminates platform-specific behavior.
+  type: fix

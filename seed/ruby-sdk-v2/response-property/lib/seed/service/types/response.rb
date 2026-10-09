@@ -4,6 +4,10 @@ module Seed
   module Service
     module Types
       class Response < Internal::Types::Model
+        field :metadata, -> { Internal::Types::Hash[String, String] }, optional: false, nullable: false
+
+        field :docs, -> { String }, optional: false, nullable: false
+
         field :data, -> { Seed::Service::Types::Movie }, optional: false, nullable: false
       end
     end

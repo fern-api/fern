@@ -1,0 +1,13 @@
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    get_status:
+      method: GET
+      path: /status
+      response: StatusResponse
+
+types:
+  StatusResponse:
+    properties:
+      status: string

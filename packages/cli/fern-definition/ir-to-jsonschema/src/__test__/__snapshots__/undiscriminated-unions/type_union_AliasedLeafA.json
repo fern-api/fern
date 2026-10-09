@@ -1,5 +1,6 @@
 {
   "$ref": "#/definitions/union.LeafObjectA",
+  "description": "An alias around LeafObjectA.",
   "definitions": {
     "union.LeafObjectA": {
       "type": "object",

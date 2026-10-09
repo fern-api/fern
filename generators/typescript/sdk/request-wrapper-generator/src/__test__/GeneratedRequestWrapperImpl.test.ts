@@ -62,6 +62,7 @@ function createMockContext(opts?: {
     enableInlineTypes?: boolean;
     namespaceExport?: string;
     useDefaultRequestParameterValues?: boolean;
+    respectOptionalRequestBody?: boolean;
     isOptionalFn?: (typeRef: FernIr.TypeReference) => boolean;
     isNullableFn?: (typeRef: FernIr.TypeReference) => boolean;
     hasDefaultValueFn?: (typeRef: FernIr.TypeReference) => boolean;
@@ -77,6 +78,7 @@ function createMockContext(opts?: {
     const defaultResolve = (typeRef: FernIr.TypeReference): FernIr.TypeReference => typeRef;
 
     const context = {
+        respectOptionalRequestBody: opts?.respectOptionalRequestBody ?? false,
         requestWrapper: {
             shouldInlinePathParameters: () => opts?.shouldInlinePathParameters ?? false
         },
@@ -141,7 +143,8 @@ function createMockContext(opts?: {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             }),
             getGeneratedType: () => ({
@@ -308,6 +311,28 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(sourceFile.getText()).toMatchSnapshot();
         });
 
+        it("generates an optional body property when the referenced body is not required", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    headers: [createHttpHeader("xRequestId", STRING_TYPE, { wireValue: "X-Request-Id" })],
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: STRING_TYPE,
+                        required: false,
+                        docs: undefined,
+                        contentType: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({ respectOptionalRequestBody: true });
+
+            wrapper.writeToFile(context);
+            // the property type stays the body type; only the question mark comes from `required`
+            expect(sourceFile.getText()).toMatchSnapshot();
+        });
+
         it("generates interface with allowMultiple query parameter", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
@@ -442,6 +467,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: "The plant description",
                         contentType: undefined,
@@ -822,6 +848,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 retainOriginalCasing: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -840,6 +867,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 retainOriginalCasing: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -874,6 +902,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -891,6 +920,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -954,6 +984,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -967,12 +998,33 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
-        it("returns false for reference body with flattenRequestParameters=true", () => {
+        it("returns true for non-named reference body with flattenRequestParameters=true", () => {
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
+                        docs: undefined,
+                        contentType: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
+        });
+
+        it("returns false for named object reference body with flattenRequestParameters=true", () => {
+            const namedType = createNamedTypeReference("MyObject");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
+                        requestBodyType: namedType,
                         docs: undefined,
                         contentType: undefined,
                         v2Examples: undefined
@@ -1107,6 +1159,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -1124,6 +1177,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: OPTIONAL_STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -1360,6 +1414,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: "Plant data",
                         contentType: undefined,
@@ -1702,7 +1757,8 @@ describe("GeneratedRequestWrapperImpl", () => {
                     properties: [createObjectProperty("value", STRING_TYPE)],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 }),
                 autogeneratedExamples: [],
                 userProvidedExamples: [],
@@ -1753,6 +1809,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -1769,7 +1826,8 @@ describe("GeneratedRequestWrapperImpl", () => {
                     properties: [createObjectProperty("email", STRING_TYPE), createObjectProperty("age", INTEGER_TYPE)],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 }),
                 autogeneratedExamples: [],
                 userProvidedExamples: [],
@@ -1798,6 +1856,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 endpoint: createHttpEndpoint({
                     queryParameters: [createQueryParameter("dryRun", OPTIONAL_STRING_TYPE)],
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -1816,7 +1875,8 @@ describe("GeneratedRequestWrapperImpl", () => {
                     ],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 }),
                 autogeneratedExamples: [],
                 userProvidedExamples: [],
@@ -1985,6 +2045,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: OPTIONAL_STRING_TYPE,
                         contentType: undefined,
                         docs: undefined,
@@ -2002,6 +2063,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         contentType: undefined,
                         docs: undefined,
@@ -2250,6 +2312,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -2264,7 +2327,8 @@ describe("GeneratedRequestWrapperImpl", () => {
                     properties: [createObjectProperty("email", STRING_TYPE), createObjectProperty("age", INTEGER_TYPE)],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 }),
                 autogeneratedExamples: [],
                 userProvidedExamples: [],
@@ -2289,6 +2353,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         contentType: undefined,
                         docs: "The raw body",
@@ -2305,12 +2370,13 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(properties[0]?.docs).toEqual(["The raw body"]);
         });
 
-        it("returns empty for non-object type declaration when flattened", () => {
+        it("wraps non-object named type as body property when flattened", () => {
             const namedBodyRef = createNamedTypeReference("AliasPayload");
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -2343,8 +2409,9 @@ describe("GeneratedRequestWrapperImpl", () => {
                 getTypeDeclarationFn: () => aliasTypeDeclaration
             });
             const properties = wrapper.getRequestProperties(context);
-            // Alias type can't be flattened into properties
-            expect(properties).toHaveLength(0);
+            // Named non-object types get wrapped as a body property
+            expect(properties).toHaveLength(1);
+            expect(properties[0]?.name).toBe("body");
         });
 
         it("uses enableInlineTypes createNamespacedPropertyType when flattening named reference body", () => {
@@ -2354,6 +2421,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 enableInlineTypes: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -2368,7 +2436,8 @@ describe("GeneratedRequestWrapperImpl", () => {
                     properties: [createObjectProperty("color", STRING_TYPE)],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 }),
                 autogeneratedExamples: [],
                 userProvidedExamples: [],
@@ -2412,7 +2481,8 @@ describe("GeneratedRequestWrapperImpl", () => {
                     properties: [createObjectProperty("format", STRING_TYPE)],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 }),
                 autogeneratedExamples: [],
                 userProvidedExamples: [],
@@ -2459,6 +2529,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         contentType: undefined,
                         docs: undefined,
@@ -2472,12 +2543,33 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
-        it("returns false for reference request body when flattened", () => {
+        it("returns true for non-named reference request body when flattened", () => {
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
+        });
+
+        it("returns false for named object reference request body when flattened", () => {
+            const namedType = createNamedTypeReference("MyObject");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
+                        requestBodyType: namedType,
                         contentType: undefined,
                         docs: undefined,
                         v2Examples: undefined

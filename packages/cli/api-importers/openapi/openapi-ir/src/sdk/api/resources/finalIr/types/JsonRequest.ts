@@ -5,5 +5,10 @@ import type * as FernOpenapiIr from "../../../index.js";
 export interface JsonRequest extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource {
     schema: FernOpenapiIr.Schema;
     contentType: string | undefined;
+    /**
+     * Whether the request body must be sent. Populated from the OpenAPI
+     * `requestBody.required` field, which defaults to false.
+     */
+    required: boolean | undefined;
     additionalProperties: boolean;
 }

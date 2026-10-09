@@ -1,0 +1,12 @@
+openapi: 3.0.0
+info:
+  title: Auth API
+  version: 1.0.0
+x-fern-base-path: /
+paths:
+  /token:
+    post:
+      operationId: getToken
+      responses:
+        "200":
+          description: Token response

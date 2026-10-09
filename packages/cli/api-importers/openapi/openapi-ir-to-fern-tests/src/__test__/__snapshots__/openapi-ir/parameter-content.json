@@ -1,0 +1,272 @@
+{
+  "specVersion": "1.0.0",
+  "title": "content-parameters",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getAccountPhoto",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "description": "JSON-encoded arguments.",
+          "name": "Api-Arg",
+          "schema": {
+            "generatedName": "GetAccountPhotoRequestApiArg",
+            "schema": "AccountPhotoGetArg",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetAccountPhotoRequest",
+      "response": {
+        "description": "ok",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetAccountPhotoResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/account/photo",
+      "examples": [],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getAccountSettings",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "Api-Filter",
+          "schema": {
+            "generatedName": "GetAccountSettingsRequestApiFilter",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetAccountSettingsRequestApiFilter",
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetAccountSettingsRequest",
+      "response": {
+        "description": "ok",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetAccountSettingsResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/account/settings",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "AccountPhotoGetArg": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "accountPhotoGetArgCircleCrop",
+            "key": "circle_crop",
+            "schema": {
+              "generatedName": "AccountPhotoGetArgCircleCrop",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "AccountPhotoGetArgCircleCrop",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountPhotoGetArgDbxAccountId",
+            "key": "dbx_account_id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountPhotoGetArgDbxAccountId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountPhotoGetArgExpectAccountPhoto",
+            "key": "expect_account_photo",
+            "schema": {
+              "generatedName": "AccountPhotoGetArgExpectAccountPhoto",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "AccountPhotoGetArgExpectAccountPhoto",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountPhotoGetArgSize",
+            "key": "size",
+            "schema": {
+              "generatedName": "AccountPhotoGetArgSize",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AccountPhotoGetArgSize",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AccountPhotoGetArg",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AccountSettingsFilter": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "accountSettingsFilterIncludeDeleted",
+            "key": "include_deleted",
+            "schema": {
+              "generatedName": "AccountSettingsFilterIncludeDeleted",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "AccountSettingsFilterIncludeDeleted",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AccountSettingsFilter",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -19,7 +19,7 @@ var (
 type GetTokenRequest struct {
 	XAPIKey      string  `json:"-" url:"-"`
 	ClientID     string  `json:"client_id" url:"-"`
-	ClientSecret string  `json:"client_secret" url:"-"`
+	ClientSecret *string `json:"client_secret,omitempty" url:"-"`
 	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
 	grantType    string
@@ -37,10 +37,12 @@ func (g *GetTokenRequest) GrantType() string {
 }
 
 func (g *GetTokenRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetXAPIKey sets the XAPIKey field and marks it as non-optional;
@@ -59,7 +61,7 @@ func (g *GetTokenRequest) SetClientID(clientID string) {
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetClientSecret(clientSecret string) {
+func (g *GetTokenRequest) SetClientSecret(clientSecret *string) {
 	g.ClientSecret = clientSecret
 	g.require(getTokenRequestFieldClientSecret)
 }
@@ -128,10 +130,12 @@ func (r *RefreshTokenRequest) GrantType() string {
 }
 
 func (r *RefreshTokenRequest) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetXAPIKey sets the XAPIKey field and marks it as non-optional;
@@ -196,13 +200,13 @@ func (r *RefreshTokenRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-// An OAuth token response.
 var (
 	tokenResponseFieldAccessToken  = big.NewInt(1 << 0)
 	tokenResponseFieldExpiresIn    = big.NewInt(1 << 1)
 	tokenResponseFieldRefreshToken = big.NewInt(1 << 2)
 )
 
+// An OAuth token response.
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
@@ -244,10 +248,12 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

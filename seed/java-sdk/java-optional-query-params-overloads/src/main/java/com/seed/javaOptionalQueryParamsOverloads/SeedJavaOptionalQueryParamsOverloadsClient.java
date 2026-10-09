@@ -10,7 +10,7 @@ import com.seed.javaOptionalQueryParamsOverloads.requests.UserGetLatestInsurance
 import com.seed.javaOptionalQueryParamsOverloads.types.InsurancePolicy;
 import java.util.List;
 
-public class SeedJavaOptionalQueryParamsOverloadsClient {
+public class SeedJavaOptionalQueryParamsOverloadsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedJavaOptionalQueryParamsOverloadsClient rawClient;
@@ -84,6 +84,16 @@ public class SeedJavaOptionalQueryParamsOverloadsClient {
      */
     public List<InsurancePolicy> listAllPolicies(RequestOptions requestOptions) {
         return this.rawClient.listAllPolicies(requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedJavaOptionalQueryParamsOverloadsClientBuilder builder() {

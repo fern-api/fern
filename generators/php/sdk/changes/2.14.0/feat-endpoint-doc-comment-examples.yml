@@ -1,0 +1,4 @@
+- summary: |
+    Include a usage code example in each endpoint method's PHPDoc block, so IDEs
+    (PhpStorm, Intelephense) surface an example on hover.
+  type: feat

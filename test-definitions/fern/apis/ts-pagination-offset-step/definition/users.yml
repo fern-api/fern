@@ -1,0 +1,93 @@
+types:
+  User:
+    properties:
+      name: string
+      id: integer
+
+  ListUsersResponse:
+    properties:
+      total_count: integer
+      data: list<User>
+
+  ListUsersWithHasNextPageResponse:
+    properties:
+      has_next_page: optional<boolean>
+      total_count: integer
+      data: list<User>
+
+service:
+  auth: false
+  base-path: /users
+  display-name: Users
+  endpoints:
+    # The generated TS client only reports a next page when the response fills the
+    # requested step, so the wire tests must agree with that on a per-example basis.
+    list:
+      pagination:
+        offset: $request.offset
+        results: $response.data
+        step: $request.limit
+      method: GET
+      path: ""
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          offset: optional<integer>
+          limit: optional<integer>
+      response: ListUsersResponse
+      examples:
+        - name: FullPage
+          query-parameters:
+            offset: 0
+            limit: 2
+          response:
+            body:
+              total_count: 10
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+        - name: ShortPage
+          query-parameters:
+            offset: 0
+            limit: 10
+          response:
+            body:
+              total_count: 2
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+
+    # has-next-page takes priority over the step comparison, so a short page that
+    # explicitly advertises a next page still has one.
+    listWithHasNextPage:
+      pagination:
+        offset: $request.offset
+        results: $response.data
+        step: $request.limit
+        has-next-page: $response.has_next_page
+      method: GET
+      path: /with-has-next-page
+      request:
+        name: ListUsersWithHasNextPageRequest
+        query-parameters:
+          offset: optional<integer>
+          limit: optional<integer>
+      response: ListUsersWithHasNextPageResponse
+      examples:
+        - name: ShortPageWithHasNextPage
+          query-parameters:
+            offset: 0
+            limit: 10
+          response:
+            body:
+              has_next_page: true
+              total_count: 20
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2

@@ -26,13 +26,20 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.File.Notification.Service.GetException(
+//	    context.TODO(),
+//	    "notification-hsy129x",
+//	)
 func (c *Client) GetException(
 	ctx context.Context,
 	notificationID string,

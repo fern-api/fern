@@ -4,12 +4,12 @@ namespace SeedApi.Folder;
 
 public partial interface IServiceClient
 {
-    Task EndpointAsync(
+    WithRawResponseTask EndpointAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task UnknownRequestAsync(
+    WithRawResponseTask UnknownRequestAsync(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

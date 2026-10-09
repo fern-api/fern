@@ -17,7 +17,7 @@ public partial class SeedBasicAuthPwOmittedClient : ISeedBasicAuthPwOmittedClien
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedBasicAuthPwOmitted" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedBasicAuthPwOmitted.Version.Current },
                 { "User-Agent", "Fernbasic-auth-pw-omitted/0.0.1" },
             }
         );

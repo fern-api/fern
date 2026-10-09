@@ -3,17 +3,18 @@
  */
 package com.seed.endpointSecurityAuth.resources.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.endpointSecurityAuth.core.ClientOptions;
 import com.seed.endpointSecurityAuth.core.EndpointMetadata;
 import com.seed.endpointSecurityAuth.core.ObjectMappers;
 import com.seed.endpointSecurityAuth.core.RequestOptions;
+import com.seed.endpointSecurityAuth.core.RetryInterceptor;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthApiException;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthException;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthHttpResponse;
 import com.seed.endpointSecurityAuth.resources.user.types.User;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("Bearer", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("Bearer")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -55,6 +57,15 @@ public class RawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -67,6 +78,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -86,7 +99,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("ApiKey", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("ApiKey")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -96,6 +110,15 @@ public class RawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -108,6 +131,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -128,7 +153,7 @@ public class RawUserClient {
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(
-                new EndpointMetadata(Arrays.asList(Map.of("OAuth", List.of("read-only"))))));
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("OAuth", "read-only")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -138,6 +163,15 @@ public class RawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -150,6 +184,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -169,7 +205,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("Basic", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("Basic")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -179,6 +216,15 @@ public class RawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -191,6 +237,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -210,8 +258,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(
-                clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("InferredAuth", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("InferredAuth")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -221,6 +269,15 @@ public class RawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -233,6 +290,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -252,12 +311,12 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(
-                Map.of("Bearer", List.of()),
-                Map.of("ApiKey", List.of()),
-                Map.of("OAuth", List.of("read-only")),
-                Map.of("Basic", List.of()),
-                Map.of("InferredAuth", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(EndpointMetadata.of(
+                EndpointMetadata.requirement(EndpointMetadata.scheme("Bearer")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("ApiKey")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("OAuth", "read-only")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("Basic")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("InferredAuth")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -267,6 +326,15 @@ public class RawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -279,6 +347,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -298,17 +368,12 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of(
-                "Bearer",
-                List.of(),
-                "ApiKey",
-                List.of(),
-                "OAuth",
-                List.of("read-only"),
-                "Basic",
-                List.of(),
-                "InferredAuth",
-                List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(EndpointMetadata.of(EndpointMetadata.requirement(
+                EndpointMetadata.scheme("Bearer"),
+                EndpointMetadata.scheme("ApiKey"),
+                EndpointMetadata.scheme("OAuth", "read-only"),
+                EndpointMetadata.scheme("Basic"),
+                EndpointMetadata.scheme("InferredAuth")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -318,6 +383,15 @@ public class RawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -330,6 +404,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }

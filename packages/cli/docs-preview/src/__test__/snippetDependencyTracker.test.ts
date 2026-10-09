@@ -110,6 +110,47 @@ class SnippetDependencyTracker {
     }
 
     /**
+     * Rebuilds the snippet -> pages (reverse) map from the page -> snippets (forward)
+     * map. A pure in-memory transformation, so it can never leave stale reverse edges.
+     */
+    private rebuildReverseMap(): void {
+        this.snippetToPages.clear();
+        for (const [page, references] of this.pageToSnippets) {
+            for (const reference of references) {
+                let pages = this.snippetToPages.get(reference);
+                if (pages == null) {
+                    pages = new Set();
+                    this.snippetToPages.set(reference, pages);
+                }
+                pages.add(page);
+            }
+        }
+    }
+
+    /**
+     * Mirror of the incremental update path (minus disk IO): recompute a page's
+     * forward edges then rebuild the reverse map.
+     */
+    public updatePageReferences(pageFile: string, markdown: string, fernFolderPath: string): void {
+        const referencedFiles = this.extractReferences(
+            markdown,
+            AbsoluteFilePath.of(pageFile),
+            AbsoluteFilePath.of(fernFolderPath)
+        );
+        this.pageToSnippets.set(pageFile, referencedFiles);
+        this.rebuildReverseMap();
+    }
+
+    /**
+     * Mirror of the incremental delete path: drop a page's forward edge then rebuild
+     * the reverse map.
+     */
+    public removePage(pageFile: string): void {
+        this.pageToSnippets.delete(pageFile);
+        this.rebuildReverseMap();
+    }
+
+    /**
      * Get debug info about current dependencies
      */
     public getDebugInfo(): { snippetCount: number; pageCount: number; totalDependencies: number } {
@@ -252,5 +293,70 @@ And another one:
         expect(filesToReload).toBeDefined();
         expect(filesToReload).toHaveLength(1);
         filesToReload[0] && expect(filesToReload[0].toString()).toBe("/fern/standalone.md");
+    });
+
+    describe("incremental updates", () => {
+        test("removing a reference from a page clears the stale reverse edge", () => {
+            tracker.addPageDependencies(
+                "/fern/pages/page1.md",
+                '<Markdown src="snippets/a.md" /><Markdown src="snippets/b.md" />',
+                "/fern"
+            );
+            expect(tracker.getDebugInfo().snippetCount).toBe(2);
+
+            // Edit page1 to drop its reference to b.md
+            tracker.updatePageReferences("/fern/pages/page1.md", '<Markdown src="snippets/a.md" />', "/fern");
+
+            const info = tracker.getDebugInfo();
+            expect(info.snippetCount).toBe(1); // b.md edge removed, no stale entry left behind
+            expect(info.pageCount).toBe(1);
+            expect(info.totalDependencies).toBe(1);
+            // b.md no longer triggers a reload of page1; a.md still does
+            expect(tracker.hasSnippetDependencies([AbsoluteFilePath.of("/fern/pages/snippets/b.md")])).toBe(false);
+            expect(tracker.hasSnippetDependencies([AbsoluteFilePath.of("/fern/pages/snippets/a.md")])).toBe(true);
+        });
+
+        test("adding a reference to a page creates the reverse edge", () => {
+            tracker.addPageDependencies("/fern/pages/page1.md", '<Markdown src="snippets/a.md" />', "/fern");
+
+            tracker.updatePageReferences(
+                "/fern/pages/page1.md",
+                '<Markdown src="snippets/a.md" /><Code src="examples/x.py" />',
+                "/fern"
+            );
+
+            const info = tracker.getDebugInfo();
+            expect(info.snippetCount).toBe(2);
+            expect(info.totalDependencies).toBe(2);
+            expect(tracker.hasSnippetDependencies([AbsoluteFilePath.of("/fern/pages/examples/x.py")])).toBe(true);
+        });
+
+        test("re-processing an unchanged page is idempotent (no double-counting)", () => {
+            tracker.addPageDependencies("/fern/pages/page1.md", '<Markdown src="snippets/a.md" />', "/fern");
+            tracker.updatePageReferences("/fern/pages/page1.md", '<Markdown src="snippets/a.md" />', "/fern");
+            tracker.updatePageReferences("/fern/pages/page1.md", '<Markdown src="snippets/a.md" />', "/fern");
+
+            const info = tracker.getDebugInfo();
+            expect(info.snippetCount).toBe(1);
+            expect(info.pageCount).toBe(1);
+            expect(info.totalDependencies).toBe(1);
+            const reload = tracker.getFilesToReload([AbsoluteFilePath.of("/fern/pages/snippets/a.md")]);
+            expect(reload).toHaveLength(2); // snippet + page1, page1 not duplicated
+        });
+
+        test("removing a page keeps shared snippet edges from other pages", () => {
+            tracker.addPageDependencies("/fern/pages/page1.md", '<Markdown src="snippets/shared.md" />', "/fern");
+            tracker.addPageDependencies("/fern/pages/page2.md", '<Markdown src="snippets/shared.md" />', "/fern");
+
+            tracker.removePage("/fern/pages/page1.md");
+
+            const info = tracker.getDebugInfo();
+            expect(info.pageCount).toBe(1);
+            expect(info.snippetCount).toBe(1);
+            expect(info.totalDependencies).toBe(1); // only page2 references shared.md now
+            const reload = tracker.getFilesToReload([AbsoluteFilePath.of("/fern/pages/snippets/shared.md")]);
+            expect(reload.map((f) => f.toString())).toContain("/fern/pages/page2.md");
+            expect(reload.map((f) => f.toString())).not.toContain("/fern/pages/page1.md");
+        });
     });
 });

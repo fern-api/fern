@@ -203,6 +203,7 @@ describe("RequestWrapperExampleGenerator", () => {
             packageId: { isRoot: true } as PackageId,
             endpointName: casingsGenerator.generateName("updateUser"),
             requestBody: FernIr.HttpRequestBody.reference({
+                required: undefined,
                 requestBodyType: STRING_TYPE,
                 contentType: undefined,
                 docs: undefined,

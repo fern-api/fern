@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
+    #
     # @return [String]
     def echo(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -17,7 +20,7 @@ module Seed
         base_url: request_options[:base_url],
         method: "POST",
         path: "",
-        body: params,
+        body: params[:request],
         request_options: request_options
       )
       begin
@@ -26,10 +29,12 @@ module Seed
         raise Seed::Errors::TimeoutError
       end
       code = response.code.to_i
-      return if code.between?(200, 299)
-
-      error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-      raise error_class.new(response.body, code: code)
+      if code.between?(200, 299)
+        (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
     end
 
     # @param request_options [Hash]
@@ -39,6 +44,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.echo(request: "primitive")
     #
     # @return [Seed::Types::Identifier]
     def create_type(request_options: {}, **params)
@@ -57,7 +65,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::Identifier.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::Identifier.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -66,16 +74,20 @@ module Seed
 
     # @param token [String]
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(token:, base_url: nil)
+    def initialize(token:, base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_examples/0.0.1",
           "X-Fern-Language" => "Ruby",
           Authorization: "Bearer #{token}"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

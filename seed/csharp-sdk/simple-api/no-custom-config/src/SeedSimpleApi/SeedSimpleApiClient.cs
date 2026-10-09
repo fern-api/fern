@@ -14,7 +14,7 @@ public partial class SeedSimpleApiClient : ISeedSimpleApiClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedSimpleApi" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedSimpleApi.Version.Current },
                 { "User-Agent", "Fernsimple-api/0.0.1" },
             }
         );

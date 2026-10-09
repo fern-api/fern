@@ -5,6 +5,7 @@ package com.seed.literal.resources.headers;
 
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.RequestOptions;
+import com.seed.literal.core.SeedLiteralHttpResponse;
 import com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;
 import com.seed.literal.types.SendResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,48 @@ public class AsyncHeadersClient {
     }
 
     public CompletableFuture<SendResponse> send(SendLiteralsInHeadersRequest request) {
-        return this.rawClient.send(request).thenApply(response -> response.body());
+        CompletableFuture<SeedLiteralHttpResponse<SendResponse>> rawFuture = this.rawClient.send(request);
+        CompletableFuture<SendResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SendResponse> send(SendLiteralsInHeadersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.send(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedLiteralHttpResponse<SendResponse>> rawFuture =
+                this.rawClient.send(request, requestOptions);
+        CompletableFuture<SendResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SendResponse> sendLiteralsOnly() {
+        CompletableFuture<SeedLiteralHttpResponse<SendResponse>> rawFuture = this.rawClient.sendLiteralsOnly();
+        CompletableFuture<SendResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SendResponse> sendLiteralsOnly(RequestOptions requestOptions) {
+        CompletableFuture<SeedLiteralHttpResponse<SendResponse>> rawFuture =
+                this.rawClient.sendLiteralsOnly(requestOptions);
+        CompletableFuture<SendResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -19,6 +19,7 @@ class ServiceClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
@@ -36,6 +37,7 @@ class ServiceClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options
      */
     public function __construct(
@@ -47,7 +49,11 @@ class ServiceClient
     }
 
     /**
-     * @param string $endpointParam
+     * Example:
+     * ```php
+     * $client->service->post();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -55,18 +61,22 @@ class ServiceClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
+     *   rootVariable?: string,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function post(string $endpointParam, ?array $options = null): void
+    public function post(?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
+        if (!isset($options['rootVariable'])) {
+            throw new \InvalidArgumentException('The rootVariable SDK variable is required. Pass rootVariable to the SeedClient constructor.');
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/service/{$endpointParam}",
+                    path: "/service/{$options['rootVariable']}",
                     method: HttpMethod::POST,
                 ),
                 $options,

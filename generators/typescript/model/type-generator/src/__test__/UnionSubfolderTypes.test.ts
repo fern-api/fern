@@ -26,6 +26,7 @@ function createUnionDeclaration(opts?: {
 }): FernIr.UnionTypeDeclaration {
     return {
         discriminant: opts?.discriminant ?? createNameAndWireValue("type", "type"),
+        inheritedBaseProperties: undefined,
         extends: [],
         types: opts?.types ?? [],
         baseProperties: [],

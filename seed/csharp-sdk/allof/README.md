@@ -19,12 +19,16 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Additional Body Properties](#additional-body-properties)
   - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
 
 This SDK requires:
+- .NET 8 and above
+- .NET Framework 4.6.2 and above
+- .NET Standard 2.0 and above
 
 ## Installation
 
@@ -45,7 +49,11 @@ using SeedApi;
 
 var client = new SeedApiClient();
 await client.CreateRuleAsync(
-    new RuleCreateRequest { Name = "name", ExecutionContext = RuleExecutionContext.Prod }
+    new RuleCreateRequest
+    {
+        Name = "name",
+        ExecutionContext = RuleCreateRequestExecutionContext.Prod,
+    }
 );
 ```
 
@@ -56,7 +64,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedApi;
 
-var client = new SeedApiClient(new ClientOptions
+var client = new SeedApiClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedApiEnvironment.Default
 });
@@ -75,6 +83,17 @@ try {
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+
+    // Access the raw HTTP response (status code, URL, headers) off the exception
+    var rawResponse = e.RawResponse;
+    if (rawResponse != null)
+    {
+        System.Console.WriteLine(rawResponse.Url);
+        if (rawResponse.Headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            System.Console.WriteLine($"Request ID: {requestId}");
+        }
+    }
 }
 ```
 
@@ -106,7 +125,7 @@ Use the `MaxRetries` request option to configure this behavior.
 var response = await client.CreateRuleAsync(
     ...,
     new RequestOptions {
-        MaxRetries: 0 // Override MaxRetries at the request level
+        MaxRetries = 0 // Override MaxRetries at the request level
     }
 );
 ```
@@ -119,7 +138,7 @@ The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure t
 var response = await client.CreateRuleAsync(
     ...,
     new RequestOptions {
-        Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+        Timeout = TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
 ```
@@ -149,7 +168,10 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.CreateRuleAsync(...);
+var parsedData = await client.CreateRuleAsync(...);
+
+// .WithRawResponse() also works on streaming endpoints (returns IAsyncEnumerable<T> + RawResponse)
+// and on endpoints with no response body (returns RawResponse only).
 ```
 
 ### Additional Headers
@@ -184,6 +206,26 @@ var response = await client.CreateRuleAsync(
 );
 ```
 
+### Additional Body Properties
+
+If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
+These properties are merged into the serialized JSON body using their wire-format names; on a key collision the additional
+property wins, and nested objects are merged recursively. If the endpoint has no request body, the additional properties
+are sent as the JSON body. Form-urlencoded requests merge the additional properties the same way before encoding;
+multipart (file upload) requests are not supported.
+
+```csharp
+var response = await client.CreateRuleAsync(
+    ...,
+    new RequestOptions {
+        AdditionalBodyProperties = new Dictionary<string, object>
+        {
+            { "custom_field", "custom-value" }
+        }
+    }
+);
+```
+
 ### Forward Compatible Enums
 
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
@@ -192,25 +234,25 @@ This SDK uses forward-compatible enums that can handle unknown values gracefully
 using SeedApi;
 
 // Using a built-in value
-var ruleExecutionContext = RuleExecutionContext.Prod;
+var ruleCreateRequestExecutionContext = RuleCreateRequestExecutionContext.Prod;
 
 // Using a custom value
-var customRuleExecutionContext = RuleExecutionContext.FromCustom("custom-value");
+var customRuleCreateRequestExecutionContext = RuleCreateRequestExecutionContext.FromCustom("custom-value");
 
 // Using in a switch statement
-switch (ruleExecutionContext.Value)
+switch (ruleCreateRequestExecutionContext.Value)
 {
-    case RuleExecutionContext.Values.Prod:
+    case RuleCreateRequestExecutionContext.Values.Prod:
         Console.WriteLine("Prod");
         break;
     default:
-        Console.WriteLine($"Unknown value: {ruleExecutionContext.Value}");
+        Console.WriteLine($"Unknown value: {ruleCreateRequestExecutionContext.Value}");
         break;
 }
 
 // Explicit casting
-string ruleExecutionContextString = (string)RuleExecutionContext.Prod;
-RuleExecutionContext ruleExecutionContextFromString = (RuleExecutionContext)"prod";
+string ruleCreateRequestExecutionContextString = (string)RuleCreateRequestExecutionContext.Prod;
+RuleCreateRequestExecutionContext ruleCreateRequestExecutionContextFromString = (RuleCreateRequestExecutionContext)"prod";
 ```
 
 ## Contributing

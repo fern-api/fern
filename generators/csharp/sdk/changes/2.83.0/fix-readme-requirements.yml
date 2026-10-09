@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated README's `## Requirements` section is now populated with the
+    project's target frameworks (".NET 8 and above", ".NET Framework 4.6.2 and
+    above", ".NET Standard 2.0 and above"). Previously the C# generator passed an
+    empty requirements list, so the section rendered as a dangling
+    "This SDK requires:" with no entries.
+  type: fix

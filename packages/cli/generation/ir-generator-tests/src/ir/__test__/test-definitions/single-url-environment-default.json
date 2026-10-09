@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "single-url-environment-default",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -14,6 +15,7 @@
                 "tokenEnvVar": null,
                 "tokenPlaceholder": null,
                 "key": "bearer",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],
@@ -44,7 +46,8 @@
             "pathParameters": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "transport": {
                 "type": "http"
@@ -54,6 +57,7 @@
                     "id": "endpoint_dummy.getDummy",
                     "name": "getDummy",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -148,6 +152,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -162,6 +167,7 @@
     },
     "environments": {
         "defaultEnvironment": "Production",
+        "baseUrlEnvVar": "SINGLE_URL_ENVIRONMENT_DEFAULT_BASE_URL",
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
@@ -194,6 +200,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -229,7 +236,8 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -302,7 +310,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -368,6 +377,7 @@
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -376,7 +386,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_dummy": {
@@ -397,6 +408,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -416,6 +428,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -423,6 +436,8 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

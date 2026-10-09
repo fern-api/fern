@@ -63,7 +63,7 @@ export class DynamicSnippetsSwiftTestGenerator {
                     idx
                 });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
-                await writeFile(dynamicSnippetFilePath, response.snippet);
+                await writeFile(dynamicSnippetFilePath, this.wrapSnippetAsLibrary(response.snippet, `Example${idx}`));
             } catch (error) {
                 this.context.logger.error(
                     `Failed to generate dynamic snippet for endpoint ${JSON.stringify(request.endpoint)}: ${error}`
@@ -74,7 +74,7 @@ export class DynamicSnippetsSwiftTestGenerator {
     }
 
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {
-        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("Snippets"));
+        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("Tests/Snippets"));
         await mkdir(absolutePathToOutputDir, { recursive: true });
         return absolutePathToOutputDir;
     }
@@ -88,4 +88,76 @@ export class DynamicSnippetsSwiftTestGenerator {
     }): AbsoluteFilePath {
         return join(absolutePathToOutputDir, RelativeFilePath.of(`Example${idx}.swift`));
     }
+
+    private wrapSnippetAsLibrary(snippet: string, enumName: string): string {
+        return wrapSnippetAsLibrary({
+            snippet,
+            enumName,
+            warn: (message) => this.context.logger.warn(message)
+        });
+    }
+}
+
+/**
+ * Wraps a runnable snippet in an enum so it compiles as library code (part of the
+ * test target) rather than a standalone executable. This prevents SPM from treating
+ * each snippet file as a separate executable target while still validating that
+ * every generated snippet compiles against the SDK.
+ *
+ * Assumes the snippet generator produces exactly:
+ *   import ...
+ *   private func main() async throws { <body> }
+ *   try await main()
+ * with nothing after the invocation. If the format changes, the guards below
+ * will warn and fall back to writing the raw snippet.
+ */
+export function wrapSnippetAsLibrary({
+    snippet,
+    enumName,
+    warn
+}: {
+    snippet: string;
+    enumName: string;
+    warn: (message: string) => void;
+}): string {
+    const FUNC_DECL = "private func main() async throws {";
+    const FUNC_INVOCATION = "try await main()";
+
+    if (!snippet.includes(FUNC_DECL)) {
+        warn(`Snippet ${enumName} does not match expected format (missing '${FUNC_DECL}'). Writing raw snippet.`);
+        return snippet;
+    }
+
+    const lines = snippet.trimEnd().split("\n");
+    const result: string[] = [];
+    let insideFunc = false;
+    let foundInvocation = false;
+
+    for (const line of lines) {
+        if (line.trimEnd() === FUNC_DECL) {
+            result.push(`enum ${enumName} {`);
+            result.push("    static func snippet() async throws {");
+            insideFunc = true;
+        } else if (line.trimEnd() === FUNC_INVOCATION) {
+            foundInvocation = true;
+        } else if (insideFunc) {
+            result.push(line === "" ? "" : `    ${line}`);
+        } else {
+            result.push(line);
+        }
+    }
+
+    if (!foundInvocation) {
+        warn(`Snippet ${enumName} missing expected '${FUNC_INVOCATION}'. Writing raw snippet.`);
+        return snippet;
+    }
+
+    // Remove trailing empty lines before closing enum brace
+    while (result.length > 0 && result[result.length - 1] === "") {
+        result.pop();
+    }
+    result.push("}");
+    result.push("");
+
+    return result.join("\n");
 }

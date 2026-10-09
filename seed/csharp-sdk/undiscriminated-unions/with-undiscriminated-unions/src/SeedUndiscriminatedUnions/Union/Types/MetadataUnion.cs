@@ -30,13 +30,13 @@ public class MetadataUnion
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a Dictionary<string, object?>? value.
+    /// Factory method to create a union from a <see cref="Dictionary{String, Object}"/> value.
     /// </summary>
     public static MetadataUnion FromOptionalMetadata(Dictionary<string, object?>? value) =>
         new("optionalMetadata", value);
 
     /// <summary>
-    /// Factory method to create a union from a SeedUndiscriminatedUnions.NamedMetadata value.
+    /// Factory method to create a union from a <see cref="SeedUndiscriminatedUnions.NamedMetadata"/> value.
     /// </summary>
     public static MetadataUnion FromNamedMetadata(SeedUndiscriminatedUnions.NamedMetadata value) =>
         new("namedMetadata", value);
@@ -52,7 +52,7 @@ public class MetadataUnion
     public bool IsNamedMetadata() => Type == "namedMetadata";
 
     /// <summary>
-    /// Returns the value as a <see cref="Dictionary<string, object?>?"/> if <see cref="Type"/> is 'optionalMetadata', otherwise throws an exception.
+    /// Returns the value as a <see cref="Dictionary{String, Object}"/> if <see cref="Type"/> is 'optionalMetadata', otherwise throws an exception.
     /// </summary>
     /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'optionalMetadata'.</exception>
     public Dictionary<string, object?>? AsOptionalMetadata() =>
@@ -70,7 +70,7 @@ public class MetadataUnion
             : throw new SeedUndiscriminatedUnionsException("Union type is not 'namedMetadata'");
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Dictionary<string, object?>?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Dictionary{String, Object}"/> and returns true if successful.
     /// </summary>
     public bool TryGetOptionalMetadata(out Dictionary<string, object?>? value)
     {

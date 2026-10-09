@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test spec for `description` settings defined in anyOf.",
   "auth": {
@@ -116,6 +117,7 @@
         "discriminant": "variant",
         "extends": [],
         "baseProperties": [],
+        "inheritedBaseProperties": [],
         "types": [
           {
             "discriminantValue": "request",
@@ -248,7 +250,6 @@
               "typeId": "type_:SampleUnion",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
@@ -492,6 +493,7 @@
             }
           }
         },
+        "inheritedBaseProperties": [],
         "types": {
           "request": {
             "typeId": "type_:RequestOne",
@@ -659,7 +661,8 @@
     ],
     "errors": [],
     "subpackages": [],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

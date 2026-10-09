@@ -17,18 +17,23 @@ export class WebhooksHelper {
         signatureHeader: string,
         signatureKey: string,
         timestampHeader: string,
+        algorithm?: "sha1" | "sha256" | "sha384" | "sha512",
     ): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
+            return false;
         }
 
         if (timestampHeader == null || timestampHeader === "") {
-            throw new Error("Missing timestamp header 'x-webhook-timestamp' for webhook signature verification");
+            return false;
         }
 
         const timestampValue = parseInt(timestampHeader, 10);
         if (Number.isNaN(timestampValue)) {
-            throw new Error("Invalid timestamp format: expected unix seconds");
+            return false;
         }
         const timestampMs = timestampValue * 1000;
 
@@ -45,10 +50,14 @@ export class WebhooksHelper {
         const expected = await core.computeHmacSignature({
             payload: payload,
             secret: signatureKey,
-            algorithm: "sha256",
+            algorithm: algorithm ?? "sha256",
             encoding: "hex",
         });
 
-        return await core.timingSafeEqual(sig, expected);
+        const valid = await core.timingSafeEqual(sig, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }

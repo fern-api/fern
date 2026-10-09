@@ -1,0 +1,15 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    status:
+      method: GET
+      path: /status
+      response: string
+      docs: Root-level status endpoint (no service namespace)
+
+    invalidate:
+      method: GET
+      path: /invalidate
+      response: string
+      docs: Root-level endpoint named invalidate to test collision handling

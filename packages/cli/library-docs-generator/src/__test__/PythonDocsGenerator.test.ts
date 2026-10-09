@@ -1,5 +1,5 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -109,7 +109,7 @@ describe("generate()", () => {
         expect(result.navigation).toEqual([]);
     });
 
-    it("rootPageId uses slug + root module name", () => {
+    it("rootPageId uses slug + root module name for leaf root", () => {
         const ir = makeIr(
             makeModule({
                 name: "nemo_rl",
@@ -121,6 +121,27 @@ describe("generate()", () => {
         const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Ref" });
 
         expect(result.rootPageId).toBe("reference/python/nemo_rl.mdx");
+    });
+
+    it("rootPageId uses index.mdx when root has submodules", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "nemo_rl",
+                path: "nemo_rl",
+                functions: [makeFunction({ name: "f", path: "nemo_rl.f" })],
+                submodules: [
+                    makeModule({
+                        name: "utils",
+                        path: "nemo_rl.utils",
+                        functions: [makeFunction({ name: "g", path: "nemo_rl.utils.g" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Ref" });
+
+        expect(result.rootPageId).toBe("reference/python/nemo_rl/index.mdx");
     });
 
     it("writes files to correct directory structure", () => {
@@ -142,7 +163,7 @@ describe("generate()", () => {
         const result = generate({ ir, outputDir: tmpDir, slug: "docs", title: "Pkg" });
 
         expect(result.pageCount).toBe(2);
-        expect(existsSync(join(tmpDir, "docs/pkg.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "docs/pkg/index.mdx"))).toBe(true);
         expect(existsSync(join(tmpDir, "docs/pkg/sub.mdx"))).toBe(true);
     });
 
@@ -212,7 +233,7 @@ describe("generate()", () => {
         );
 
         generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
-        const content = readFileSync(join(tmpDir, "ref/pkg.mdx"), "utf-8");
+        const content = readFileSync(join(tmpDir, "ref/pkg/index.mdx"), "utf-8");
 
         expect(content).toContain("## Package Contents");
     });
@@ -292,6 +313,149 @@ describe("generate()", () => {
         expect(result.navigation[0]?.title).toBe("filled");
     });
 
+    it("hides private modules and links their re-exported symbols to the public page", () => {
+        const impl = makeClass({ name: "Model", path: "pkg._impl.Model" });
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                classes: [impl],
+                submodules: [
+                    makeModule({ name: "_impl", path: "pkg._impl", classes: [impl] }),
+                    makeModule({
+                        name: "api",
+                        path: "pkg.api",
+                        functions: [
+                            makeFunction({
+                                name: "build",
+                                path: "pkg.api.build",
+                                signature: "def build() -> pkg._impl.Model",
+                                returnTypeInfo: {
+                                    display: "pkg._impl.Model",
+                                    basePath: "pkg._impl.Model",
+                                    resolvedPath: "pkg._impl.Model"
+                                }
+                            })
+                        ]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        expect(existsSync(join(tmpDir, "ref/pkg/_impl.mdx"))).toBe(false);
+        expect(result.navigation.map((n) => n.title)).toEqual(["api"]);
+        const root = readFileSync(join(tmpDir, "ref/pkg/index.mdx"), "utf-8");
+        expect(root).not.toContain("_impl.mdx");
+        const api = readFileSync(join(tmpDir, "ref/pkg/api.mdx"), "utf-8");
+        expect(api).toContain("./index.mdx#pkg-_impl-Model");
+        expect(api).not.toContain("_impl.mdx");
+    });
+
+    it("replaces stale output from a previous layout on regeneration", () => {
+        const asPackage = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "sub",
+                        path: "pkg.sub",
+                        functions: [makeFunction({ name: "g", path: "pkg.sub.g" })]
+                    })
+                ]
+            })
+        );
+        generate({ ir: asPackage, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+        expect(existsSync(join(tmpDir, "ref/pkg/index.mdx"))).toBe(true);
+
+        const asLeaf = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "_sub",
+                        path: "pkg._sub",
+                        functions: [makeFunction({ name: "g", path: "pkg._sub.g" })]
+                    })
+                ]
+            })
+        );
+        const result = generate({ ir: asLeaf, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        expect(result.rootPageId).toBe("ref/pkg.mdx");
+        expect(result.navigation).toEqual([]);
+        expect(existsSync(join(tmpDir, "ref/pkg.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/pkg"))).toBe(false);
+    });
+
+    it("keeps the previous output when generation fails midway", () => {
+        const good = makeIr(
+            makeModule({ name: "pkg", path: "pkg", functions: [makeFunction({ name: "f", path: "pkg.f" })] })
+        );
+        generate({ ir: good, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+        const before = readFileSync(join(tmpDir, "ref/pkg.mdx"), "utf-8");
+
+        const broken = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "g", path: "pkg.g" })],
+                submodules: [
+                    makeModule({
+                        name: "sub",
+                        path: "pkg.sub",
+                        classes: [makeClass({ name: "Bad", path: "pkg.sub.Bad", methods: undefined })]
+                    })
+                ]
+            })
+        );
+        expect(() => generate({ ir: broken, outputDir: tmpDir, slug: "ref", title: "Pkg" })).toThrow();
+
+        expect(readFileSync(join(tmpDir, "ref/pkg.mdx"), "utf-8")).toBe(before);
+        expect(existsSync(join(tmpDir, "ref/pkg"))).toBe(false);
+        expect(readdirSync(tmpDir).filter((entry) => entry.startsWith(".library-docs-"))).toEqual([]);
+    });
+
+    it("links private definitions to an equal-depth public re-export", () => {
+        const impl = makeClass({ name: "Model", path: "pkg._impl.Model" });
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                submodules: [
+                    makeModule({ name: "_impl", path: "pkg._impl", classes: [impl] }),
+                    makeModule({ name: "models", path: "pkg.models", classes: [impl] }),
+                    makeModule({
+                        name: "api",
+                        path: "pkg.api",
+                        functions: [
+                            makeFunction({
+                                name: "build",
+                                path: "pkg.api.build",
+                                signature: "def build() -> pkg._impl.Model",
+                                returnTypeInfo: {
+                                    display: "pkg._impl.Model",
+                                    basePath: "pkg._impl.Model",
+                                    resolvedPath: "pkg._impl.Model"
+                                }
+                            })
+                        ]
+                    })
+                ]
+            })
+        );
+
+        generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        const api = readFileSync(join(tmpDir, "ref/pkg/api.mdx"), "utf-8");
+        expect(api).toContain("./models.mdx#pkg-_impl-Model");
+    });
+
     it("resolves cross-module type links in signatures", () => {
         const ir = makeIr(
             makeModule({
@@ -352,9 +516,81 @@ describe("generate()", () => {
 
         // 4 pages: a (submodules), b (submodules), c (submodules), deep (content)
         expect(result.pageCount).toBe(4);
-        expect(existsSync(join(tmpDir, "ref/a.mdx"))).toBe(true);
-        expect(existsSync(join(tmpDir, "ref/a/b.mdx"))).toBe(true);
-        expect(existsSync(join(tmpDir, "ref/a/b/c.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/b/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/b/c/index.mdx"))).toBe(true);
         expect(existsSync(join(tmpDir, "ref/a/b/c/deep.mdx"))).toBe(true);
+    });
+
+    it("writes index.mdx for modules with submodules, plain .mdx for leaf modules", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "adapters",
+                        path: "pkg.adapters",
+                        functions: [makeFunction({ name: "g", path: "pkg.adapters.g" })],
+                        submodules: [
+                            makeModule({
+                                name: "openai",
+                                path: "pkg.adapters.openai",
+                                classes: [makeClass({ name: "Client", path: "pkg.adapters.openai.Client" })]
+                            })
+                        ]
+                    }),
+                    makeModule({
+                        name: "utils",
+                        path: "pkg.utils",
+                        functions: [makeFunction({ name: "h", path: "pkg.utils.h" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        // Root (has submodules) → index.mdx
+        expect(existsSync(join(tmpDir, "ref/pkg/index.mdx"))).toBe(true);
+        // adapters (has submodules) → index.mdx
+        expect(existsSync(join(tmpDir, "ref/pkg/adapters/index.mdx"))).toBe(true);
+        // openai (leaf) → plain .mdx
+        expect(existsSync(join(tmpDir, "ref/pkg/adapters/openai.mdx"))).toBe(true);
+        // utils (leaf) → plain .mdx
+        expect(existsSync(join(tmpDir, "ref/pkg/utils.mdx"))).toBe(true);
+
+        // Sibling files should NOT exist
+        expect(existsSync(join(tmpDir, "ref/pkg.mdx"))).toBe(false);
+        expect(existsSync(join(tmpDir, "ref/pkg/adapters.mdx"))).toBe(false);
+    });
+
+    it("slugPrefix prefixes frontmatter slugs without changing file paths, page IDs, or navigation", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "utils",
+                        path: "pkg.utils",
+                        functions: [makeFunction({ name: "g", path: "pkg.utils.g" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg", slugPrefix: "api-reference" });
+        const unprefixed = generate({ ir, outputDir: join(tmpDir, "unprefixed"), slug: "ref", title: "Pkg" });
+
+        expect(result.rootPageId).toBe("ref/pkg/index.mdx");
+        expect(result.navigation).toEqual(unprefixed.navigation);
+        const rootPage = readFileSync(join(tmpDir, "ref/pkg/index.mdx"), "utf-8");
+        expect(rootPage).toContain("slug: api-reference/ref/pkg\n");
+        expect(rootPage).toContain("](./utils.mdx)");
+        const leafPage = readFileSync(join(tmpDir, "ref/pkg/utils.mdx"), "utf-8");
+        expect(leafPage).toContain("slug: api-reference/ref/pkg/utils\n");
     });
 });

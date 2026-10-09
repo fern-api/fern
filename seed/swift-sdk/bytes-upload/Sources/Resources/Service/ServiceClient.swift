@@ -7,6 +7,20 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import BytesUpload
+    ///
+    /// private func main() async throws {
+    ///     let client = BytesUploadClient()
+    ///
+    ///     _ = try await client.service.upload(request: Data("data".utf8))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func upload(request: Data, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
@@ -17,6 +31,25 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import BytesUpload
+    ///
+    /// private func main() async throws {
+    ///     let client = BytesUploadClient()
+    ///
+    ///     _ = try await client.service.uploadWithQueryParams(
+    ///         model: "nova-2",
+    ///         request: Data("data".utf8)
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter model: The model to use for processing
+    /// - Parameter language: The language of the content
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func uploadWithQueryParams(model: String, language: String? = nil, request: Data, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

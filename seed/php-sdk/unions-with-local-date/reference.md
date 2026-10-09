@@ -56,9 +56,9 @@ $client->bigunion->get(
 
 ```php
 $client->bigunion->update(
-    BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+    BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
         'value' => 'value',
-    ])),
+    ]), new DateTime('2024-01-15T09:30:00Z')),
 );
 ```
 </dd>
@@ -101,12 +101,12 @@ $client->bigunion->update(
 ```php
 $client->bigunion->updateMany(
     [
-        BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+        BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
             'value' => 'value',
-        ])),
-        BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+        ]), new DateTime('2024-01-15T09:30:00Z')),
+        BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
             'value' => 'value',
-        ])),
+        ]), new DateTime('2024-01-15T09:30:00Z')),
     ],
 );
 ```
@@ -192,7 +192,7 @@ $client->types->get(
 
 ```php
 $client->types->update(
-    UnionWithTime::date(),
+    UnionWithTime::date(new DateTime('1994-01-01')),
 );
 ```
 </dd>

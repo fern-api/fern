@@ -1,0 +1,37 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@shareable", "@external"])
+
+type Query {
+  """Fetch a user profile by id."""
+  userProfile(id: ID!, filter: UserProfileFilter): UserProfile
+  legacyUserProfile(id: ID!): UserProfile @deprecated(reason: "Use `userProfile` instead.")
+}
+
+type Mutation {
+  updateUserProfile(input: UpdateUserProfileInput!): UserProfile
+}
+
+type UserProfile @key(fields: "id") {
+  id: ID!
+  """The user's display name."""
+  displayName: String
+  nickname: String @deprecated(reason: "Use `displayName`.")
+  """Images owned by the images subgraph."""
+  profileImages: ProfileImages
+  usage(period: UsagePeriod = MONTHLY): ProductUsage
+}
+
+input UserProfileFilter {
+  status: ProfileStatus
+  images: ImageFilter
+}
+
+input UpdateUserProfileInput {
+  displayName: String
+  nickname: String
+}
+
+enum ProfileStatus {
+  ACTIVE
+  DISABLED
+  ARCHIVED @deprecated(reason: "Archived profiles are deleted immediately.")
+}

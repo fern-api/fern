@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Pin the npm toolchain used by the generated publish workflow. The
+    `publish` and `publish-launcher` jobs in `.github/workflows/ci.yml` now
+    run on a pinned Node LTS (`node-version: "lts/Krypton"`) and call
+    `npm publish` directly instead of `npx -y npm@latest publish`. Relying on
+    `npm@latest` pulled whatever npm release was newest at publish time, so a
+    broken npm release could break publishing. The pinned Node LTS bundles an
+    npm that supports OIDC trusted publishing.
+  type: fix

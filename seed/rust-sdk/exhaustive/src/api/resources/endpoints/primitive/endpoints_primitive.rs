@@ -14,6 +14,25 @@ impl PrimitiveClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_string(&"string".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_string(
         &self,
         request: &str,
@@ -30,6 +49,25 @@ impl PrimitiveClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_int(&1, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_int(
         &self,
         request: &i64,
@@ -46,6 +84,25 @@ impl PrimitiveClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_long(&1000000, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_long(
         &self,
         request: &i64,
@@ -62,6 +119,25 @@ impl PrimitiveClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_double(&1.1, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_double(
         &self,
         request: &f64,
@@ -78,6 +154,25 @@ impl PrimitiveClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_bool(&true, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_bool(
         &self,
         request: &bool,
@@ -94,6 +189,28 @@ impl PrimitiveClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_datetime(
+    ///             &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_datetime(
         &self,
         request: &DateTime<FixedOffset>,
@@ -110,6 +227,28 @@ impl PrimitiveClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_date(
+    ///             &NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_date(
         &self,
         request: &NaiveDate,
@@ -126,6 +265,28 @@ impl PrimitiveClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_uuid(
+    ///             &Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_uuid(
         &self,
         request: &Uuid,
@@ -142,6 +303,30 @@ impl PrimitiveClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .primitive
+    ///         .get_and_return_base64(
+    ///             &base64::engine::general_purpose::STANDARD
+    ///                 .decode("SGVsbG8gd29ybGQh")
+    ///                 .unwrap(),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_base64(
         &self,
         request: &Vec<u8>,

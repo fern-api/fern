@@ -8,6 +8,7 @@ private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
     _ = try await client.service.getMetadata(
+        xAPIVersion: "0.0.1",
         shallow: false,
         tag: [
             "development",
@@ -21,15 +22,23 @@ try await main()
 `;
 
 exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "queryParameters"
-    ],
-    "message": "Expected array but got: string"
-  }
-]"
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
+    _ = try await client.service.getMetadata(
+        xAPIVersion: "0.0.1",
+        shallow: false,
+        tag: [
+            "development"
+        ]
+    )
+}
+
+try await main()
+"
 `;
 
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
@@ -158,9 +167,13 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([
+            .string("set")
+        ]),
         map: [
             1: "map"
-        ]
+        ],
+        bigint: "1000000"
     ))
 }
 
@@ -333,7 +346,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
+    _ = try await client.imdb.createMovie(request: .init(
         title: "The Matrix",
         rating: 8.2
     ))
@@ -466,6 +479,25 @@ private func main() async throws {
         tags: [
             .null
         ]
+    )
+}
+
+try await main()
+"
+`;
+
+exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient()
+
+    _ = try await client.user.getUserSpecifics(
+        tenantID: "my_tenant",
+        userID: "my_user",
+        version: "7",
+        thought: "my_thought"
     )
 }
 

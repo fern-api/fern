@@ -17,6 +17,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "Production server",
     "environments": {
       "_visit": [Function],
@@ -42,6 +43,7 @@
   "errors": {},
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -56,6 +58,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": undefined,
     "navigationConfig": undefined,
     "service": undefined,
     "subpackages": [
@@ -74,6 +77,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",
@@ -81,6 +85,7 @@
       "sdkVersion": "",
       "userAgent": undefined,
     },
+    "webhookSignatureVerification": undefined,
   },
   "selfHosted": false,
   "serviceTypeReferenceInfo": {
@@ -89,6 +94,7 @@
   },
   "services": {},
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_documents": {
       "displayName": undefined,
@@ -102,6 +108,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": undefined,
       "name": "documents",
       "navigationConfig": undefined,
       "service": undefined,
@@ -122,6 +129,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": undefined,
       "name": "paymentSessions",
       "navigationConfig": undefined,
       "service": undefined,
@@ -153,6 +161,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -187,6 +196,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -214,6 +224,7 @@
               "type": "named",
               "typeId": "DocumentUploadedEventEventType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -245,6 +256,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -276,6 +288,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -307,6 +320,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -331,6 +345,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -412,6 +427,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -446,6 +462,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -473,6 +490,7 @@
               "type": "named",
               "typeId": "PaymentSessionStatus",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -505,6 +523,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -536,6 +555,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -575,6 +595,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -599,6 +620,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -636,9 +658,11 @@
       },
       "referencedTypes": Set {
         "PaymentSessionCompletedEventEventType",
+        "PaymentSession",
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -673,6 +697,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -700,6 +725,7 @@
               "type": "named",
               "typeId": "PaymentSessionCompletedEventEventType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -734,6 +760,7 @@
               "type": "named",
               "typeId": "PaymentSession",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -758,6 +785,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -971,6 +999,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1002,6 +1031,7 @@
                 "type": "named",
                 "typeId": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1037,6 +1067,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1072,6 +1103,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1107,6 +1139,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1135,6 +1168,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
           ],
           "v2Examples": {

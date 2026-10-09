@@ -11,14 +11,14 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.SimpleAsync();
-    /// </code></example>
-    public async Task SimpleAsync(
+    private async Task<RawResponse> SimpleAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedBytesDownload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedBytesDownload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +31,7 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Post,
                     Path = "snippet",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -39,7 +40,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedBytesDownload.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -48,9 +54,26 @@ public partial class ServiceClient : IServiceClient
             throw new SeedBytesDownloadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedBytesDownload.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.SimpleAsync();
+    /// </code></example>
+    public WithRawResponseTask SimpleAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(SimpleAsyncCore(options, cancellationToken));
     }
 
     public async Task DownloadAsync(
@@ -59,6 +82,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedBytesDownload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedBytesDownload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -74,6 +100,7 @@ public partial class ServiceClient : IServiceClient
                         "download-content/{0}",
                         ValueConvert.ToPathParameterString(id)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -87,7 +114,13 @@ public partial class ServiceClient : IServiceClient
             throw new SeedBytesDownloadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedBytesDownload.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

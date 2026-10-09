@@ -57,6 +57,17 @@
         },
         {
             "id": {
+                "path": "/stream/protocol-mixed-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolMixedSchema"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamProtocolMixedSchema(\n\tcontext.TODO(),\n\t\u0026fern.StreamRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/stream/protocol-no-collision",
                 "method": "POST",
                 "identifier_override": "endpoint_.streamProtocolNoCollision"

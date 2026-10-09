@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --local` no longer bumps the magic placeholder version as if it were a
+    real previous version, which produced versions such as `0.0.0-fern-placeholder.0`.
+    Placeholder candidates from the diff, `.fern/metadata.json` and git tags are skipped so
+    the next resolution source is used instead.
+  type: fix

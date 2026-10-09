@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "6077f6cf",
+            "example_identifier": "101471f",
             "id": {
                 "method": "POST",
                 "path": "/",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "1a3de9b7",
+            "example_identifier": "85e1a307",
             "id": {
                 "method": "POST",
                 "path": "/duplicate",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "b191b93d",
+            "example_identifier": "fb1bb25d",
             "id": {
                 "method": "POST",
                 "path": "/nested",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "7ae22e69",
+            "example_identifier": "385d03c9",
             "id": {
                 "method": "POST",
                 "path": "/nested-objects",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "b3d21111",
+            "example_identifier": "6d4eeae1",
             "id": {
                 "method": "POST",
                 "path": "/aliased-object",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "9577442f",
+            "example_identifier": "d1024f1f",
             "id": {
                 "method": "POST",
                 "path": "/with-base-properties",

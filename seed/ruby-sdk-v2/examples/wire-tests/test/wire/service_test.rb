@@ -15,7 +15,7 @@ class ServiceWireTest < WireMockTestCase
   def test_service_get_movie_with_wiremock
     test_id = "service.get_movie.0"
 
-    @client.service.get_movie(
+    result = @client.service.get_movie(
       movie_id: "movie-c06a4ad7",
       request_options: {
         additional_headers: {
@@ -31,6 +31,16 @@ class ServiceWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/rating" => 8,
+        "/metadata/ratings/rottenTomatoes" => 97,
+        "/metadata/ratings/imdb" => 7.6,
+        "/revenue" => 1000000
+      }
+    )
   end
 
   def test_service_create_movie_with_wiremock
@@ -44,7 +54,14 @@ class ServiceWireTest < WireMockTestCase
       rating: 8,
       type: "movie",
       tag: "tag-wf9as23d",
-      metadata: {},
+      metadata: {
+        actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+        releaseDate: "2023-12-08",
+        ratings: {
+          rottenTomatoes: 97,
+          imdb: 7.6
+        }
+      },
       revenue: 1000000,
       request_options: {
         additional_headers: {
@@ -59,6 +76,18 @@ class ServiceWireTest < WireMockTestCase
       url_path: "/movie",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/movie",
+      expected: {
+        "/rating" => 8,
+        "/metadata/ratings/rottenTomatoes" => 97,
+        "/metadata/ratings/imdb" => 7.6,
+        "/revenue" => 1000000
+      }
     )
   end
 
@@ -102,7 +131,11 @@ class ServiceWireTest < WireMockTestCase
         type: "movie",
         tag: "tag",
         book: "book",
-        metadata: {},
+        metadata: {
+          metadata: {
+            key: "value"
+          }
+        },
         revenue: 1000000
       },
       entity: {
@@ -229,6 +262,16 @@ class ServiceWireTest < WireMockTestCase
       url_path: "/big-entity",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/big-entity",
+      expected: {
+        "/extendedMovie/rating" => 1.1,
+        "/extendedMovie/revenue" => 1000000
+      }
     )
   end
 

@@ -4,10 +4,12 @@
 package com.seed.packageYml;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.packageYml.core.BodyProperties;
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.MediaTypes;
 import com.seed.packageYml.core.ObjectMappers;
 import com.seed.packageYml.core.RequestOptions;
+import com.seed.packageYml.core.RetryInterceptor;
 import com.seed.packageYml.core.SeedPackageYmlApiException;
 import com.seed.packageYml.core.SeedPackageYmlException;
 import com.seed.packageYml.core.SeedPackageYmlHttpResponse;
@@ -45,7 +47,9 @@ public class RawSeedPackageYmlClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPackageYmlException("Failed to serialize request", e);
         }
@@ -60,6 +64,15 @@ public class RawSeedPackageYmlClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -70,6 +83,8 @@ public class RawSeedPackageYmlClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPackageYmlApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPackageYmlException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPackageYmlException("Network error executing HTTP request", e);
         }

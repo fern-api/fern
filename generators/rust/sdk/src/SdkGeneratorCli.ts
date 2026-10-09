@@ -1,4 +1,5 @@
-import { GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
+import { GeneratorNotificationService, GeneratorError, GeneratorExecParsing } from "@fern-api/base-generator";
+import { readFile } from "fs/promises";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -26,6 +27,7 @@ import { ApiClientBuilderGenerator } from "./generators/ApiClientBuilderGenerato
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator.js";
 import { RootClientGenerator } from "./generators/RootClientGenerator.js";
 import { SubClientGenerator } from "./generators/SubClientGenerator.js";
+import { WebhooksHelperGenerator } from "./generators/WebhooksHelperGenerator.js";
 import { WebSocketChannelGenerator } from "./generators/WebSocketChannelGenerator.js";
 import { ReferenceConfigAssembler } from "./reference/index.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
@@ -36,6 +38,45 @@ import { WireTestGenerator } from "./wire-tests/index.js";
 const execAsync = promisify(exec);
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
+    // ===========================
+    // IN-PROCESS LIBRARY API
+    // ===========================
+
+    /**
+     * Run the full SDK generation pipeline and return the populated context.
+     *
+     * Used by the CLI generator to invoke the Rust SDK generator in-process
+     * (rather than as a subprocess) and read resolved client names directly
+     * from the context's filename registry.
+     */
+    public async generateAndReturnContext(configPath: string): Promise<SdkGeneratorContext> {
+        const rawConfig = await readFile(configPath, "utf-8");
+        const validatedConfig = await GeneratorExecParsing.GeneratorConfig.parse(JSON.parse(rawConfig), {
+            unrecognizedObjectKeys: "passthrough"
+        });
+        if (!validatedConfig.ok) {
+            throw new Error(
+                `Invalid generator config: ${validatedConfig.errors.map((e) => (typeof e === "object" ? JSON.stringify(e) : String(e))).join(", ")}`
+            );
+        }
+        const config = validatedConfig.value;
+
+        const ir = await this.parseIntermediateRepresentation(config.irFilepath);
+        const customConfig = this.parseCustomConfigOrThrow(config.customConfig);
+        const generatorNotificationService = new GeneratorNotificationService(
+            FernGeneratorExec.GeneratorEnvironment.local()
+        );
+        const context = this.constructContext({
+            ir,
+            customConfig,
+            generatorConfig: config,
+            generatorNotificationService
+        });
+
+        await this.generate(context);
+        return context;
+    }
+
     // ===========================
     // LIFECYCLE METHODS
     // ===========================
@@ -179,7 +220,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         return {
             registryUrl: "https://crates.io/api/v1/crates",
-            packageName: context.getCrateName(),
+            packageName: context.getPackageName(),
             token: ""
         };
     }
@@ -205,19 +246,24 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug(`Generated ${projectFiles.length} project files`);
         context.project.addSourceFiles(...projectFiles);
 
-        context.logger.debug("Generating README.md with code examples...");
-        // Generate README if configured
-        await this.generateReadme(context);
+        // Standalone doc generation requires static assets (features.yml, asIs/)
+        // that are only available in the standalone Docker image. Skip when running
+        // as an embedded SDK inside the CLI generator.
+        if (!context.customConfig.cliEmbedded) {
+            context.logger.debug("Generating README.md with code examples...");
+            await this.generateReadme(context);
 
-        context.logger.debug("Generating reference.md documentation...");
-        // Generate reference.md if configured
-        await this.generateReference(context);
+            context.logger.debug("Generating reference.md documentation...");
+            await this.generateReference(context);
 
-        if (!context.config.whitelabel) {
-            try {
-                await this.generateContributing(context);
-            } catch (error) {
-                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
+            if (!context.config.whitelabel) {
+                try {
+                    await this.generateContributing(context);
+                } catch (error) {
+                    throw GeneratorError.internalError(
+                        `Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`
+                    );
+                }
             }
         }
 
@@ -274,8 +320,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug(`Generating ${serviceCount} service client(s)...`);
         this.generateSubClientFiles(context, files);
 
-        // Types/**/*.rs
-        if (this.hasTypes(context)) {
+        // Types/**/*.rs — skipped in cliEmbedded mode (types come from co-generated types crate)
+        if (this.hasTypes(context) && !context.customConfig.cliEmbedded) {
             const typeCount = Object.keys(context.ir.types).length;
             context.logger.debug(`Generating ${typeCount} type definition(s)...`);
             files.push(...this.generateTypeFiles(context));
@@ -288,6 +334,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             files.push(...this.generateWebSocketFiles(context));
         }
 
+        // Webhook signature verification helpers
+        if (context.hasHmacWebhookSignatureVerification()) {
+            context.logger.debug("Generating webhook signature verification helpers...");
+            files.push(new WebhooksHelperGenerator(context).generate());
+        }
+
         return files;
     }
 
@@ -296,7 +348,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     private generateLibFile(context: SdkGeneratorContext): RustFile {
-        const hasTypes = this.hasTypes(context);
+        const hasTypes = this.hasTypes(context) && !context.customConfig.cliEmbedded;
         const clientName = context.getClientName();
 
         const libModule = this.buildLibModule(context, hasTypes, clientName);
@@ -333,6 +385,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const hasBase64 = context.usesBase64();
         const hasBigInteger = context.usesBigInteger();
         const hasFloatingPoint = context.usesFloatingPoint();
+        const hasWebhookSignature = context.hasHmacWebhookSignatureVerification();
 
         const lines: string[] = [];
         lines.push("//! Core client infrastructure");
@@ -350,6 +403,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("mod websocket;");
         }
         lines.push("mod utils;");
+        if (hasWebhookSignature) {
+            lines.push("pub mod webhook_signature;");
+        }
         lines.push("pub mod pagination;");
         if (hasDateTime) {
             lines.push("pub mod flexible_datetime;");
@@ -364,7 +420,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("pub mod number_serializers;");
         }
         lines.push("");
-        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig, RawResponse};");
+        lines.push(
+            "pub use http_client::{ByteStream, HttpClient, OAuthConfig, OAuthTokenExchangeConfig, RawResponse, RequestExecutor};"
+        );
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
         lines.push("pub use request_options::RequestOptions;");
         lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
@@ -377,6 +435,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("pub use websocket::{DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState};");
         }
         lines.push("pub use utils::join_url;");
+        if (hasWebhookSignature) {
+            lines.push("pub use webhook_signature::{WebhookDigest, WebhookEncoding, WebhookRequestBody};");
+        }
         lines.push("pub use pagination::{AsyncPaginator, SyncPaginator, PaginationResult};");
         lines.push("");
 
@@ -388,7 +449,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
-        const hasTypes = this.hasTypes(context);
+        const hasTypes = this.hasTypes(context) && !context.customConfig.cliEmbedded;
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 
@@ -571,6 +632,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDoc.push("- [`core`] - Core utilities and infrastructure");
         moduleDoc.push("- [`error`] - Error types and handling");
         moduleDoc.push("- [`prelude`] - Common imports for convenience");
+        if (context.hasHmacWebhookSignatureVerification()) {
+            moduleDoc.push("- [`webhooks`] - Webhook signature verification helpers");
+        }
 
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "api", isPublic: true }));
@@ -582,6 +646,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
+        }
+        if (context.hasHmacWebhookSignatureVerification()) {
+            moduleDeclarations.push(new ModuleDeclaration({ name: "webhooks", isPublic: true }));
         }
 
         // Add re-exports

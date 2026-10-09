@@ -25,9 +25,17 @@ export interface DocsSettingsConfig {
      * By default (`false`), search will display results for pages across all products and versions.
      * If set to true, search will display results for pages within the current product and version.
      *
+     * Preserved for backwards compatibility. Equivalent to
+     * `search.default-filter-by-current-product`.
+     *
      * @default: false
      */
     defaultSearchFilters?: boolean;
+    /**
+     * Controls product-aware search behavior. See `SearchSettingsConfig` for
+     * individual options.
+     */
+    search?: FernDocsConfig.SearchSettingsConfig;
     /**
      * Controls the display of HTTP snippets in the API Reference. HTTP snippets are enabled by default for all languages.
      * - Set to `false` to disable HTTP snippets completely
@@ -91,4 +99,16 @@ export interface DocsSettingsConfig {
      * @default: flat
      */
     websocketOneofDisplay?: FernDocsConfig.WebSocketOneofDisplay;
+    /**
+     * Controls which third-party sites may embed your documentation in an iframe.
+     * By default only your docs site itself (and the Fern dashboard) may frame it.
+     */
+    embedding?: FernDocsConfig.EmbeddingConfig;
+    /**
+     * If set to true, response examples in the API Reference include a raw HTTP block
+     * showing the response status line and response headers alongside the body.
+     *
+     * @default: false
+     */
+    showHeadersInExamples?: boolean;
 }

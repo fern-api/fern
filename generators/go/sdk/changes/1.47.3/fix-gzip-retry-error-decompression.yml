@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Decompress gzip-encoded error responses before decoding them when retry attempts
+    are exhausted.
+  type: fix

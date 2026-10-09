@@ -503,7 +503,7 @@ client.service().createBigEntity(
             Metadata.html("metadata")
         )
         .commonMetadata(
-            Metadata
+            com.seed.examples.resources.commons.types.types.Metadata
                 .builder()
                 .id("id")
                 .data(
@@ -516,7 +516,7 @@ client.service().createBigEntity(
         )
         .eventInfo(
             EventInfo.metadata(
-                Metadata
+                com.seed.examples.resources.commons.types.types.Metadata
                     .builder()
                     .id("id")
                     .data(

@@ -98,6 +98,16 @@ impl ApiClientBuilder {
         self
     }
 
+    /// Use a custom `reqwest` client for every request
+    ///
+    /// The supplied client is used as-is, so it owns all transport-level
+    /// configuration — custom certificates, proxies, timeouts and user agent.
+    /// Authentication, custom headers and retries are still applied by the SDK.
+    pub fn reqwest_client(mut self, client: reqwest::Client) -> Self {
+        self.config.reqwest_client = Some(client);
+        self
+    }
+
     /// Build the client with validation
     pub fn build(self) -> Result<PaginationClient, ApiError> {
         PaginationClient::new(self.config)
@@ -221,6 +231,19 @@ mod tests {
         assert_eq!(builder.config.timeout, Duration::from_secs(60));
         assert_eq!(builder.config.max_retries, 3);
         assert_eq!(builder.config.user_agent, "test/1.0");
+    }
+
+    #[test]
+    fn test_reqwest_client() {
+        let builder =
+            ApiClientBuilder::new("https://api.example.com").reqwest_client(reqwest::Client::new());
+        assert!(builder.config.reqwest_client.is_some());
+    }
+
+    #[test]
+    fn test_reqwest_client_defaults_to_none() {
+        let builder = ApiClientBuilder::new("https://api.example.com");
+        assert!(builder.config.reqwest_client.is_none());
     }
 
     #[test]

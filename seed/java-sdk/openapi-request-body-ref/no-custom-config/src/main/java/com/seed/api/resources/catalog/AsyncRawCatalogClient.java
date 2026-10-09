@@ -3,10 +3,12 @@
  */
 package com.seed.api.resources.catalog;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.FileStream;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
@@ -81,8 +83,18 @@ public class AsyncRawCatalogClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<CatalogImage>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -96,6 +108,9 @@ public class AsyncRawCatalogClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -106,26 +121,38 @@ public class AsyncRawCatalogClient {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedApiHttpResponse<CatalogImage>> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename) {
+            CreateCatalogImageBody request, InputStream stream, String filename) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedApiHttpResponse<CatalogImage>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -139,6 +166,9 @@ public class AsyncRawCatalogClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -149,26 +179,38 @@ public class AsyncRawCatalogClient {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedApiHttpResponse<CatalogImage>> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+            CreateCatalogImageBody request, InputStream stream, String filename, MediaType mediaType) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedApiHttpResponse<CatalogImage>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -182,6 +224,9 @@ public class AsyncRawCatalogClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -192,11 +237,16 @@ public class AsyncRawCatalogClient {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedApiHttpResponse<CatalogImage>> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+            CreateCatalogImageBody request, InputStream stream, String filename, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
@@ -207,7 +257,13 @@ public class AsyncRawCatalogClient {
         }
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -218,8 +274,18 @@ public class AsyncRawCatalogClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<CatalogImage>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -233,6 +299,9 @@ public class AsyncRawCatalogClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -243,11 +312,16 @@ public class AsyncRawCatalogClient {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedApiHttpResponse<CatalogImage>> createCatalogImage(
-            Optional<File> imageFile,
+            CreateCatalogImageBody request,
             InputStream stream,
             String filename,
             MediaType mediaType,
@@ -262,7 +336,13 @@ public class AsyncRawCatalogClient {
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -273,8 +353,18 @@ public class AsyncRawCatalogClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<CatalogImage>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -288,6 +378,9 @@ public class AsyncRawCatalogClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -296,6 +389,11 @@ public class AsyncRawCatalogClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -336,8 +434,18 @@ public class AsyncRawCatalogClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<CatalogImage>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -351,6 +459,9 @@ public class AsyncRawCatalogClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -359,6 +470,11 @@ public class AsyncRawCatalogClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/ast",
+                "method": "POST",
+                "identifier_override": "endpoint_.createAst"
+            },
+            "snippet": {
+                "sync_client": "from seed import AstNode_Llm, SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.create_ast(\n    request=AstNode_Llm(\n        model=\"model\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AstNode_Llm, AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.create_ast(\n        request=AstNode_Llm(\n            model=\"model\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

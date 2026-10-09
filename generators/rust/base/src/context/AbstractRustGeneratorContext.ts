@@ -13,6 +13,34 @@ import {
     validateAndSanitizeCrateName
 } from "../utils/index.js";
 
+/**
+ * A literal request-body property (e.g. `grant_type: "client_credentials"`) that must be
+ * sent verbatim on the OAuth token request.
+ */
+export interface OAuthTokenExchangeExtraProperty {
+    name: string;
+    value: string;
+}
+
+/**
+ * The wire-level property-name mapping for the OAuth client-credentials token exchange,
+ * resolved from the API's OAuth scheme configuration in the IR.
+ */
+export interface OAuthTokenExchange {
+    clientIdProperty: string;
+    clientSecretProperty: string;
+    accessTokenProperty: string;
+    expiresInProperty: string;
+    extraRequestProperties: OAuthTokenExchangeExtraProperty[];
+    /**
+     * Whether the token endpoint's request body is `application/x-www-form-urlencoded`
+     * (as opposed to JSON), resolved from the referenced endpoint's declared content type
+     * in the IR. OAuth 2.0 token endpoints are form-encoded per RFC 6749 §4.4.2, but the
+     * content type is honored from the spec so JSON token endpoints keep working.
+     */
+    formEncoded: boolean;
+}
+
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -22,6 +50,16 @@ export abstract class AbstractRustGeneratorContext<
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
     private readonly irUsesTypeCache = new Map<string, boolean>();
     private readonly featureCache = new Map<string, boolean>();
+    private typeIdByDeclaration: Map<FernIr.TypeDeclaration, FernIr.TypeId> | undefined;
+    private typeDeclarationByPascalPath: Map<string, FernIr.TypeDeclaration> | undefined;
+
+    /**
+     * Returns the path prefix for core serde helper modules used in
+     * `#[serde(with = "...")]` attributes. Defaults to `"crate::core"`.
+     */
+    public getCoreModulePath(): string {
+        return this.customConfig.coreModulePath ?? "crate::core";
+    }
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -61,6 +99,7 @@ export abstract class AbstractRustGeneratorContext<
         this.project = new RustProject({
             context: this,
             crateName: this.getCrateName(),
+            packageName: this.getPackageName(),
             crateVersion: this.getCrateVersion(),
             clientClassName: this.getClientName()
         });
@@ -77,7 +116,10 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("serde_json", "1.0");
         this.dependencyManager.add("reqwest", {
             version: "0.12",
-            features: ["json", "stream"], // stream is needed for ByteStream (file downloads)
+            // stream is needed for ByteStream (file downloads); gzip is needed to
+            // decompress gzip-encoded responses (e.g. when an Accept-Encoding
+            // header is set explicitly on the request)
+            features: ["json", "stream", "gzip"],
             defaultFeatures: false
         });
         this.dependencyManager.add("tokio", { version: "1.0", features: ["full"] });
@@ -105,12 +147,60 @@ export abstract class AbstractRustGeneratorContext<
             this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
         }
 
-        // Conditionally include base64 only when base64 types are used
-        if (this.usesBase64()) {
+        // Conditionally include base64 when base64 types are used, or when a basic auth scheme
+        // has to be encoded. Both auth paths need it: per-endpoint routing and the flat
+        // client-wide application.
+        if (this.usesBase64() || this.hasBasicAuthScheme()) {
             this.dependencyManager.add("base64", "0.22");
         }
 
+        this.addWebhookSignatureDependencies();
+
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
+    }
+
+    /**
+     * Dependencies for the generated webhook signature helpers (HMAC + digest crates and
+     * `url` for notification-URL parsing; `url` is already in the tree via reqwest). Only
+     * added when at least one webhook declares HMAC signature verification.
+     */
+    private addWebhookSignatureDependencies(): void {
+        const configs = this.getHmacWebhookVerifications();
+        if (configs.length === 0) {
+            return;
+        }
+        this.dependencyManager.add("base64", "0.22");
+        this.dependencyManager.add("hmac", "0.12");
+        this.dependencyManager.add("sha1", "0.10");
+        this.dependencyManager.add("sha2", "0.10");
+        this.dependencyManager.add("url", "2.5");
+        const needsIso8601 = configs.some(
+            (config) => config.timestamp != null && config.timestamp.format === "ISO8601"
+        );
+        if (needsIso8601) {
+            this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        }
+    }
+
+    /**
+     * Every HMAC signature-verification config declared on a webhook in the IR.
+     * Asymmetric verification is out of scope for the generated helpers.
+     */
+    public getHmacWebhookVerifications(): FernIr.HmacSignatureVerification[] {
+        const configs: FernIr.HmacSignatureVerification[] = [];
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                const verification = webhook.signatureVerification;
+                if (verification != null && verification.type === "hmac") {
+                    configs.push(verification);
+                }
+            }
+        }
+        return configs;
+    }
+
+    public hasHmacWebhookSignatureVerification(): boolean {
+        return this.cachedFeature("hasHmacWebhookSignatureVerification", () => this.getHmacWebhookVerifications().length > 0);
     }
 
     /**
@@ -561,6 +651,47 @@ export abstract class AbstractRustGeneratorContext<
         );
     }
 
+    /**
+     * Whether any endpoint declares an `application/x-www-form-urlencoded` request body. Those
+     * cannot go through `execute_request`, whose `.json()` sends a JSON document and stamps
+     * `application/json` over the declared media type.
+     */
+    public hasFormUrlEncodedEndpoints(): boolean {
+        return this.cachedFeature("hasFormUrlEncodedEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) =>
+                    (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded")
+                )
+            )
+        );
+    }
+
+    /**
+     * Whether any endpoint declares a JSON request media type OTHER than `application/json` --
+     * a vendor type, or `application/merge-patch+json`. Those endpoints cannot go through
+     * `execute_request`, whose `.json()` call stamps `application/json` over the declared type.
+     */
+    public hasNonDefaultJsonContentTypeEndpoints(): boolean {
+        return this.cachedFeature("hasNonDefaultJsonContentTypeEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => {
+                    const contentType = endpoint.requestBody?._visit<string | undefined>({
+                        inlinedRequestBody: (body) => body.contentType,
+                        reference: (body) => body.contentType,
+                        fileUpload: () => undefined,
+                        bytes: () => undefined,
+                        _other: () => undefined
+                    });
+                    return (
+                        contentType != null &&
+                        contentType !== "application/json" &&
+                        contentType.includes("json")
+                    );
+                })
+            )
+        );
+    }
+
     public hasWebSocketChannels(): boolean {
         return this.cachedFeature("hasWebSocketChannels", () => {
             const websocketsEnabled = this.customConfig.enableWebsockets || this.customConfig.generateWebSocketClients === true;
@@ -856,6 +987,17 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Get the Cargo package name. Matches getCrateName() unless preserveCrateNameHyphens is set,
+     * in which case hyphens are kept (Cargo maps them to underscores for the library name).
+     */
+    public getPackageName(): string {
+        const crateName = this.customConfig.crateName ?? this.generateDefaultCrateName();
+        return validateAndSanitizeCrateName(crateName, {
+            preserveHyphens: this.customConfig.preserveCrateNameHyphens ?? false
+        });
+    }
+
+    /**
      * Get the crate version from --version flag or use default
      * Priority: 1) customConfig.crateVersion, 2) publishConfig.publishTarget.version, 3) default "0.1.0"
      */
@@ -1021,8 +1163,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique filename (e.g., "foo_importing_type.rs")
      */
     public getUniqueFilenameForType(typeDeclaration: FernIr.TypeDeclaration): string {
-        // Find typeId in IR by matching the typeDeclaration reference
-        const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
+        const typeId = this.getTypeIdForDeclaration(typeDeclaration);
 
         if (!typeId) {
             throw new Error(
@@ -1042,8 +1183,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique type name (e.g., "TaskError" or "TypeTaskError" if collision)
      */
     public getUniqueTypeNameForDeclaration(typeDeclaration: FernIr.TypeDeclaration): string {
-        // Find typeId in IR by matching the typeDeclaration reference
-        const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
+        const typeId = this.getTypeIdForDeclaration(typeDeclaration);
 
         if (!typeId) {
             throw new Error(
@@ -1065,15 +1205,8 @@ export abstract class AbstractRustGeneratorContext<
     public getUniqueTypeNameForReference(declaredTypeName: FernIr.DeclaredTypeName): string {
         const baseTypeName = this.case.pascalSafe(declaredTypeName.name);
 
-        // Try to find the type declaration in IR
-        const typeDeclaration = Object.values(this.ir.types).find(
-            (type) =>
-                this.case.pascalSafe(type.name.name) === baseTypeName &&
-                type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
-                type.name.fernFilepath.allParts.every(
-                    (part, idx) =>
-                        this.case.pascalSafe(part) === this.case.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
-                )
+        const typeDeclaration = this.getTypeDeclarationsByPascalPath().get(
+            this.getPascalPathKey(declaredTypeName, baseTypeName)
         );
 
         if (typeDeclaration) {
@@ -1083,6 +1216,40 @@ export abstract class AbstractRustGeneratorContext<
 
         // Fallback: return base name if not found in IR (could be external type or error type)
         return baseTypeName;
+    }
+
+    private getTypeIdForDeclaration(typeDeclaration: FernIr.TypeDeclaration): FernIr.TypeId | undefined {
+        if (this.typeIdByDeclaration == null) {
+            this.typeIdByDeclaration = new Map();
+            for (const [typeId, type] of Object.entries(this.ir.types)) {
+                if (!this.typeIdByDeclaration.has(type)) {
+                    this.typeIdByDeclaration.set(type, typeId);
+                }
+            }
+        }
+        return this.typeIdByDeclaration.get(typeDeclaration);
+    }
+
+    /**
+     * Index of type declarations keyed by their pascal-cased name and fernFilepath.
+     * The first declaration registered for a key wins, matching the order of `ir.types`.
+     */
+    private getTypeDeclarationsByPascalPath(): Map<string, FernIr.TypeDeclaration> {
+        if (this.typeDeclarationByPascalPath == null) {
+            this.typeDeclarationByPascalPath = new Map();
+            for (const type of Object.values(this.ir.types)) {
+                const key = this.getPascalPathKey(type.name, this.case.pascalSafe(type.name.name));
+                if (!this.typeDeclarationByPascalPath.has(key)) {
+                    this.typeDeclarationByPascalPath.set(key, type);
+                }
+            }
+        }
+        return this.typeDeclarationByPascalPath;
+    }
+
+    private getPascalPathKey(declaredTypeName: FernIr.DeclaredTypeName, pascalTypeName: string): string {
+        const parts = declaredTypeName.fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
+        return [...parts, pascalTypeName].join("\u0000");
     }
 
     // TODO: @iamnamananand996 simplify collisions detection more
@@ -1321,6 +1488,69 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Whether the API applies auth per-endpoint: each endpoint declares its own
+     * subset of auth schemes (via `HttpEndpoint.security`) instead of applying all
+     * configured credentials to every request.
+     */
+    public isEndpointSecurity(): boolean {
+        return this.ir.auth?.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+    }
+
+    /**
+     * Whether the API configures a basic auth scheme.
+     */
+    public hasBasicAuthScheme(): boolean {
+        return (this.ir.auth?.schemes ?? []).some((scheme) => scheme.type === "basic");
+    }
+
+    /**
+     * Categorizes the API's auth schemes by how they produce request headers, keyed by
+     * each scheme's `key` (the identifier used in an endpoint's `security` requirements).
+     * Used to generate per-endpoint auth routing in endpoint-security mode.
+     *
+     * - `tokenSchemeKeys`: bearer + oauth schemes, all rendered as `Authorization: Bearer <token>`
+     * - `apiKeySchemes`: header auth schemes, each with its wire header name and optional prefix
+     * - `basicSchemeKeys`: basic auth schemes, rendered as `Authorization: Basic <base64>`
+     * - `inferredSchemeKeys`: inferred auth schemes (unsupported by the Rust SDK today)
+     */
+    public getEndpointAuthRoutingSchemes(): {
+        tokenSchemeKeys: string[];
+        apiKeySchemes: { key: string; headerName: string; prefix: string | undefined }[];
+        basicSchemeKeys: string[];
+        inferredSchemeKeys: string[];
+    } {
+        const tokenSchemeKeys: string[] = [];
+        const apiKeySchemes: { key: string; headerName: string; prefix: string | undefined }[] = [];
+        const basicSchemeKeys: string[] = [];
+        const inferredSchemeKeys: string[] = [];
+        for (const scheme of this.ir.auth?.schemes ?? []) {
+            FernIr.AuthScheme._visit<void>(scheme, {
+                bearer: (bearer) => {
+                    tokenSchemeKeys.push(bearer.key);
+                },
+                oauth: (oauth) => {
+                    tokenSchemeKeys.push(oauth.key);
+                },
+                header: (header) => {
+                    apiKeySchemes.push({
+                        key: header.key,
+                        headerName: getWireValue(header.name),
+                        prefix: header.prefix ?? undefined
+                    });
+                },
+                basic: (basic) => {
+                    basicSchemeKeys.push(basic.key);
+                },
+                inferred: (inferred) => {
+                    inferredSchemeKeys.push(inferred.key);
+                },
+                _other: () => undefined
+            });
+        }
+        return { tokenSchemeKeys, apiKeySchemes, basicSchemeKeys, inferredSchemeKeys };
+    }
+
+    /**
      * Get the API key header name from the IR auth schemes.
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
@@ -1430,6 +1660,163 @@ export abstract class AbstractRustGeneratorContext<
                 if (result !== undefined) {
                     return result;
                 }
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Get the OAuth client-credentials auth scheme from the IR, if one is configured.
+     */
+    public getOAuthClientCredentialsScheme(): FernIr.OAuthScheme | undefined {
+        if (this.ir.auth?.schemes == null) {
+            return undefined;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * The configuration of the OAuth client-credentials scheme, if one is configured. The other
+     * OAuth flows carry a different shape, so callers that need the token endpoint go through here.
+     */
+    private getOAuthClientCredentialsConfiguration(): FernIr.OAuthClientCredentials | undefined {
+        const configuration = this.getOAuthClientCredentialsScheme()?.configuration;
+        return configuration?.type === "clientCredentials" ? configuration : undefined;
+    }
+
+    /**
+     * Resolve the {@link FernIr.HttpEndpoint} referenced by the OAuth client-credentials
+     * token endpoint, if one is configured and resolvable.
+     */
+    public getOAuthTokenHttpEndpoint(): FernIr.HttpEndpoint | undefined {
+        const configuration = this.getOAuthClientCredentialsConfiguration();
+        if (configuration == null) {
+            return undefined;
+        }
+        const reference = configuration.tokenEndpoint.endpointReference;
+        const service = this.ir.services[reference.serviceId];
+        if (service == null) {
+            return undefined;
+        }
+        return service.endpoints.find((e) => e.id === reference.endpointId);
+    }
+
+    /**
+     * Get the URL path of the OAuth token endpoint (e.g. "/token"), resolved from the
+     * endpoint referenced by the OAuth client-credentials scheme. Returns undefined when
+     * no OAuth client-credentials scheme is configured or the referenced endpoint cannot
+     * be resolved.
+     */
+    public getOAuthTokenEndpointPath(): string | undefined {
+        const endpoint = this.getOAuthTokenHttpEndpoint();
+        if (endpoint == null) {
+            return undefined;
+        }
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+        if (!path.startsWith("/")) {
+            path = `/${path}`;
+        }
+        return path;
+    }
+
+    /**
+     * Extract the wire-level property-name mapping for the OAuth client-credentials token
+     * exchange from the IR. The generated token fetch uses these names to build the request
+     * body and parse the response, instead of hardcoding the default `client_id` /
+     * `client_secret` / `grant_type` / `access_token` / `expires_in` shape.
+     *
+     * Returns undefined when no OAuth client-credentials scheme is configured.
+     */
+    public getOAuthTokenExchange(): OAuthTokenExchange | undefined {
+        const configuration = this.getOAuthClientCredentialsConfiguration();
+        if (configuration == null) {
+            return undefined;
+        }
+        const { tokenEndpoint } = configuration;
+        const clientIdProperty = this.getRequestPropertyWireName(tokenEndpoint.requestProperties.clientId);
+        const clientSecretProperty = this.getRequestPropertyWireName(tokenEndpoint.requestProperties.clientSecret);
+        const accessTokenProperty = this.getResponsePropertyWireName(tokenEndpoint.responseProperties.accessToken);
+        const expiresInProperty =
+            tokenEndpoint.responseProperties.expiresIn != null
+                ? this.getResponsePropertyWireName(tokenEndpoint.responseProperties.expiresIn)
+                : undefined;
+
+        // Collect literal request-body properties (e.g. `grant_type: "client_credentials"`,
+        // `audience: "..."`), which must be sent verbatim on the token request. Non-literal
+        // properties are supplied from the credentials (client id / secret) or omitted.
+        const extraRequestProperties: OAuthTokenExchangeExtraProperty[] = [];
+        const endpoint = this.getOAuthTokenHttpEndpoint();
+        if (endpoint?.requestBody?.type === "inlinedRequestBody") {
+            for (const property of endpoint.requestBody.properties) {
+                const literalValue = this.getLiteralValueAsString(property.valueType);
+                if (literalValue != null) {
+                    extraRequestProperties.push({
+                        name: this.getWireValueFromName(property.name),
+                        value: literalValue
+                    });
+                }
+            }
+        }
+
+        // Honor the token endpoint's declared content type (all request-body variants carry
+        // `contentType` via WithContentType). Form-encode only when the spec explicitly declares
+        // `application/x-www-form-urlencoded`; otherwise keep the JSON body. This matches the
+        // referenced endpoint's contract instead of assuming a single encoding.
+        const contentType = endpoint?.requestBody?.contentType;
+        const formEncoded = contentType != null && contentType.toLowerCase().includes("x-www-form-urlencoded");
+
+        return {
+            clientIdProperty: clientIdProperty ?? "client_id",
+            clientSecretProperty: clientSecretProperty ?? "client_secret",
+            accessTokenProperty: accessTokenProperty ?? "access_token",
+            expiresInProperty: expiresInProperty ?? "expires_in",
+            extraRequestProperties,
+            formEncoded
+        };
+    }
+
+    private getWireValueFromName(name: FernIr.NameAndWireValueOrString): string {
+        return typeof name === "string" ? name : name.wireValue;
+    }
+
+    private getRequestPropertyWireName(requestProperty: FernIr.RequestProperty): string | undefined {
+        const value = requestProperty.property;
+        switch (value.type) {
+            case "body":
+                return this.getWireValueFromName(value.name);
+            case "query":
+                return this.getWireValueFromName(value.name);
+            default:
+                return undefined;
+        }
+    }
+
+    private getResponsePropertyWireName(responseProperty: FernIr.ResponseProperty): string | undefined {
+        return this.getWireValueFromName(responseProperty.property.name);
+    }
+
+    /**
+     * Returns the constant value of a literal type reference (e.g. `literal<"client_credentials">`)
+     * as a string, or undefined when the type reference is not a literal.
+     */
+    private getLiteralValueAsString(typeReference: FernIr.TypeReference): string | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
+            const literal = typeReference.container.literal;
+            switch (literal.type) {
+                case "string":
+                    return literal.string;
+                case "boolean":
+                    return String(literal.boolean);
+                default:
+                    return undefined;
             }
         }
         return undefined;

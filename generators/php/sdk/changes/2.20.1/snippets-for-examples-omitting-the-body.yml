@@ -1,0 +1,5 @@
+- summary: |
+    Render an empty body in snippets for an example that omits a request body the API does not
+    require. The generated request wrapper still requires the body, so the snippet left the
+    required key out and did not typecheck.
+  type: fix

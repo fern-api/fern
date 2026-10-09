@@ -14,13 +14,12 @@
 
 ```go
 request := map[string]any{
-        "key": "value",
-    }
-client.Unknown.Post(
-        context.TODO(),
-        request,
-    )
+    "key": "value",
 }
+client.Unknown.Post(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -61,15 +60,14 @@ client.Unknown.Post(
 
 ```go
 request := &fern.MyObject{
-        Unknown: map[string]any{
-            "key": "value",
-        },
-    }
-client.Unknown.PostObject(
-        context.TODO(),
-        request,
-    )
+    Unknown: map[string]any{
+        "key": "value",
+    },
 }
+client.Unknown.PostObject(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

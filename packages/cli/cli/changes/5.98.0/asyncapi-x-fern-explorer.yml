@@ -1,0 +1,5 @@
+- summary: |
+    Add support for the `x-fern-explorer` extension in AsyncAPI specs. It controls whether the
+    API Explorer is available for a generated WebSocket channel. It can be set globally at the
+    document root and overridden per channel, with the per-channel value taking precedence.
+  type: feat

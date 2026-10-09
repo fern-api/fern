@@ -1,0 +1,150 @@
+# frozen_string_literal: true
+
+module Seed
+  class Client
+    # @param request_options [Hash]
+    # @param _params [Hash]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.get_users
+    #
+    # @return [Array[Seed::Types::User]]
+    def get_users(request_options: {}, **_params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url] || @base_url || @environment&.dig(:base),
+        method: "GET",
+        path: "users",
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      if code.between?(200, 299)
+        Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Types::User], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
+    end
+
+    # @param request_options [Hash]
+    # @param params [Hash]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    # @option params [String] :user_id
+    #
+    # @example
+    #   client.get_user(user_id: "userId")
+    #
+    # @return [Seed::Types::User]
+    def get_user(request_options: {}, **params)
+      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url] || @base_url || @environment&.dig(:base),
+        method: "GET",
+        path: "users/#{URI.encode_uri_component(params[:user_id].to_s)}",
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      if code.between?(200, 299)
+        (response.body.to_s.empty? ? nil : Seed::Types::User.load(response.body))
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
+    end
+
+    # @param request_options [Hash]
+    # @param params [Seed::Types::TokenRequest]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.get_token(
+    #     client_id: "client_id",
+    #     client_secret: "client_secret"
+    #   )
+    #
+    # @return [Seed::Types::TokenResponse]
+    def get_token(request_options: {}, **params)
+      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url] || @base_url || @environment&.dig(:auth),
+        method: "POST",
+        path: "auth/token",
+        body: Seed::Types::TokenRequest.new(params).to_h,
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      if code.between?(200, 299)
+        (response.body.to_s.empty? ? nil : Seed::Types::TokenResponse.load(response.body))
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
+    end
+
+    # @param base_url [String, nil]
+    # @param environment [Hash[Symbol, String], nil]
+    # @param region [String, nil]
+    # @param server_url_environment [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
+    #
+    # @return [void]
+    def initialize(base_url: nil, environment: Seed::Environment::REGIONAL_API_SERVER, region: nil, server_url_environment: nil, max_retries: 2, timeout: 60)
+      if !region.nil? || !server_url_environment.nil?
+        region_value = region.nil? ? "us-east-1" : region
+        server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
+        environment_url_templates = {
+          Seed::Environment::REGIONAL_API_SERVER => {
+            base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
+            auth: "https://auth.#{region_value}.example.com"
+          }
+        }
+        environment = environment_url_templates.fetch(environment, environment)
+        environment ||= {
+          base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
+          auth: "https://auth.#{region_value}.example.com"
+        }
+      end
+
+      @base_url = base_url
+      @environment = environment
+
+      @raw_client = Seed::Internal::Http::RawClient.new(
+        base_url: base_url || environment&.dig(:base),
+        headers: {
+          "User-Agent" => "fern_server-url-templating/0.0.1",
+          "X-Fern-Language" => "Ruby"
+        },
+        max_retries: max_retries,
+        timeout: timeout
+      )
+    end
+  end
+end

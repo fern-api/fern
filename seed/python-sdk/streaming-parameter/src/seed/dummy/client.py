@@ -235,7 +235,7 @@ class AsyncDummyClient:
 
 
         async def main() -> None:
-            response = await client.dummy.generate(
+            response = client.dummy.generate(
                 stream=False,
                 num_events=5,
             )

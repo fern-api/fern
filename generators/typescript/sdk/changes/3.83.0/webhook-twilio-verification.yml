@@ -1,0 +1,7 @@
+- summary: |
+    Webhook signature helpers now support multi-value form parameters (with per-key
+    dedup + sort), branch at runtime on the body-hash query parameter to verify either
+    classic form-encoded or JSON requests, verify against normalized notification-URL
+    variants (port / legacy query encoding) when configured, and return `false` instead
+    of throwing on missing/invalid inputs.
+  type: feat

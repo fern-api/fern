@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

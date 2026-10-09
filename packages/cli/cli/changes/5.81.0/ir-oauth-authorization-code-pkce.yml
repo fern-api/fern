@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the additive `OAuthConfiguration.authorizationCode` and `OAuthConfiguration.deviceCode` IR
+    variants modeling the OAuth 2.0 authorization code grant with required PKCE (browser login) and
+    the device authorization grant (RFC 8628) for public clients. IR consumers now narrow the OAuth
+    configuration union before reading client-credentials-only fields. No behavior change for
+    existing client-credentials configurations.
+  type: internal

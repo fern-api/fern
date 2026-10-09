@@ -20,6 +20,7 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { getParameterName } from "../../extensions/getParameterName.js";
 import { getVariableReference } from "../../extensions/getVariableReference.js";
+import { findApplicationJsonRequest } from "./getApplicationJsonSchema.js";
 
 export interface ConvertedParameters {
     pathParameters: PathParameterWithExample[];
@@ -77,10 +78,12 @@ export function convertParameters({
         const [isOptional, isNullable] =
             context.options.coerceOptionalSchemasToNullable && !isHeader ? [false, !isRequired] : [!isRequired, false];
 
+        const parameterSchema = getParameterSchema(resolvedParameter, context);
+
         let schema =
-            resolvedParameter.schema != null
+            parameterSchema != null
                 ? convertSchema(
-                      resolvedParameter.schema,
+                      parameterSchema,
                       isOptional,
                       isNullable,
                       context,
@@ -172,7 +175,7 @@ export function convertParameters({
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
-            description: resolvedParameter.description,
+            description: getParameterDescription(resolvedParameter),
             parameterNameOverride: getParameterName(resolvedParameter),
             availability,
             source,
@@ -212,6 +215,29 @@ export function convertParameters({
     return convertedParameters;
 }
 
+/**
+ * Resolves the schema describing a parameter's value. Parameters normally declare `schema`
+ * directly, but the OpenAPI spec also allows a `content` map for values that are serialized
+ * in a media type — most commonly a header holding a JSON-encoded object.
+ *
+ * Only headers are resolved from `content`: header values are JSON-encoded when sent, whereas
+ * an object query parameter is serialized as separate key/value pairs rather than as a single
+ * JSON-encoded value, which is not what `content: application/json` describes.
+ */
+function getParameterSchema(
+    parameter: OpenAPIV3.ParameterObject,
+    context: AbstractOpenAPIV3ParserContext
+): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+    if (parameter.schema != null) {
+        return parameter.schema;
+    }
+    if (!context.options.respectParameterContent || parameter.in !== "header" || parameter.content == null) {
+        return undefined;
+    }
+    const jsonMediaType = findApplicationJsonRequest({ content: parameter.content, context });
+    return jsonMediaType?.[1].schema;
+}
+
 const HEADERS_TO_SKIP = new Set([
     "user-agent",
     "content-length",
@@ -222,6 +248,21 @@ const HEADERS_TO_SKIP = new Set([
     "content-disposition",
     "x-ping-custom-domain"
 ]);
+
+/**
+ * A parameter's description may be declared either on the parameter object or inside the
+ * parameter's (inline) schema; both are valid OpenAPI. A description on a referenced schema is
+ * left alone, since it belongs to the named type.
+ */
+function getParameterDescription(parameter: OpenAPIV3.ParameterObject): string | undefined {
+    if (parameter.description != null) {
+        return parameter.description;
+    }
+    if (parameter.schema == null || isReferenceObject(parameter.schema)) {
+        return undefined;
+    }
+    return parameter.schema.description;
+}
 
 /**
  * Gets the explode value for a query parameter, applying smart default logic.

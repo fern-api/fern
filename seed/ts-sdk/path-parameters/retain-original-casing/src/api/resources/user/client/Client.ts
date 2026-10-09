@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedPathParameters from "../../../index.js";
@@ -24,6 +25,9 @@ export class UserClient {
     /**
      * @param {SeedPathParameters.GetUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.getUser({
@@ -77,6 +81,9 @@ export class UserClient {
      * @param {SeedPathParameters.User} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
+     *
      * @example
      *     await client.user.createUser({
      *         name: "name",
@@ -106,7 +113,7 @@ export class UserClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -131,6 +138,9 @@ export class UserClient {
     /**
      * @param {SeedPathParameters.UpdateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.updateUser({
@@ -165,7 +175,7 @@ export class UserClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -190,6 +200,9 @@ export class UserClient {
     /**
      * @param {SeedPathParameters.SearchUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.searchUsers({
@@ -258,6 +271,9 @@ export class UserClient {
      * @param {SeedPathParameters.GetUserMetadataRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
+     *
      * @example
      *     await client.user.getUserMetadata({
      *         user_id: "user_id",
@@ -317,6 +333,9 @@ export class UserClient {
      *
      * @param {SeedPathParameters.GetUserSpecificsRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.getUserSpecifics({

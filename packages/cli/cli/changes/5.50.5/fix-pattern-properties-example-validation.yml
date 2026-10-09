@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` no longer reports valid examples as invalid when a schema uses
+    `patternProperties` (OpenAPI 3.1 / JSON Schema). When a schema declares
+    `patternProperties`, example keys are no longer flagged as unexpected additional
+    properties — including under `additionalProperties: false`.
+  type: fix

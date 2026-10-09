@@ -65,7 +65,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType": {
             "type": "object",
@@ -128,7 +129,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_a:A": {
             "type": "object",
@@ -231,7 +233,8 @@
             "extends": [
                 "type_:RootType"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:Animal": {
             "type": "undiscriminatedUnion",
@@ -563,7 +566,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:Dog": {
             "type": "object",
@@ -664,7 +668,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:Acai": {
             "type": "object",
@@ -767,7 +772,8 @@
             "extends": [
                 "type_ast:Berry"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:Fig": {
             "type": "object",
@@ -868,7 +874,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:Berry": {
             "type": "object",
@@ -969,7 +976,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:BranchNode": {
             "type": "object",
@@ -1073,7 +1081,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:LeafNode": {
             "type": "object",
@@ -1143,7 +1152,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:NodesWrapper": {
             "type": "object",
@@ -1250,7 +1260,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:ContainerValue": {
             "type": "discriminatedUnion",
@@ -1340,6 +1351,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "list": {
                     "type": "singleProperty",
@@ -1590,7 +1602,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:FieldName": {
             "type": "alias",
@@ -1751,6 +1764,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "primitive_value": {
                     "type": "singleProperty",
@@ -1970,7 +1984,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -1978,5 +1993,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

@@ -27,7 +27,7 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedBasicAuthEnvironmentVariables" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedBasicAuthEnvironmentVariables.Version.Current },
                 { "User-Agent", "Fernbasic-auth-environment-variables/0.0.1" },
             }
         );

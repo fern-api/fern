@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "cc8820f8",
+            "id": {
+                "method": "GET",
+                "path": "/oauth/authorize",
+                "identifier_override": "endpoint_oauth.authorize"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthPkce.SeedOauthPkceClient;\nimport com.seed.oauthPkce.resources.oauth.requests.AuthorizeRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthPkceClient client = SeedOauthPkceClient\n            .builder()\n            .build();\n\n        client.oauth().authorize(\n            AuthorizeRequest\n                .builder()\n                .clientId(\"client_abc123\")\n                .redirectUri(\"https://example.com/callback\")\n                .codeChallenge(\"E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM\")\n                .codeChallengeMethod(\"S256\")\n                .scope(\"read write\")\n                .state(\"xyz\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthPkce.SeedOauthPkceClient;\nimport com.seed.oauthPkce.resources.oauth.requests.AuthorizeRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthPkceClient client = SeedOauthPkceClient\n            .builder()\n            .build();\n\n        client.oauth().authorize(\n            AuthorizeRequest\n                .builder()\n                .clientId(\"client_abc123\")\n                .redirectUri(\"https://example.com/callback\")\n                .codeChallenge(\"E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM\")\n                .codeChallengeMethod(\"S256\")\n                .scope(\"read write\")\n                .state(\"xyz\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

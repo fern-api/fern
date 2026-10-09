@@ -36,6 +36,9 @@ export class V2Client {
     /**
      * @param {V2Client.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.v2.test()
      */

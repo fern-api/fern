@@ -7,7 +7,25 @@ public final class OptionalClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func sendOptionalBody(request: [String: JSONValue]?, requestOptions: RequestOptions? = nil) async throws -> String {
+    /// ```swift
+    /// import Foundation
+    /// import ObjectsWithImports
+    ///
+    /// private func main() async throws {
+    ///     let client = ObjectsWithImportsClient()
+    ///
+    ///     _ = try await client.optional.sendOptionalBody(request: [
+    ///         "string": .object([
+    ///             "key": .string("value")
+    ///         ])
+    ///     ])
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func sendOptionalBody(request: [String: JSONValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/send-optional-body",
@@ -17,7 +35,23 @@ public final class OptionalClient: Sendable {
         )
     }
 
-    public func sendOptionalTypedBody(request: SendOptionalBodyRequest?, requestOptions: RequestOptions? = nil) async throws -> String {
+    /// ```swift
+    /// import Foundation
+    /// import ObjectsWithImports
+    ///
+    /// private func main() async throws {
+    ///     let client = ObjectsWithImportsClient()
+    ///
+    ///     _ = try await client.optional.sendOptionalTypedBody(request: SendOptionalBodyRequest(
+    ///         message: "message"
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func sendOptionalTypedBody(request: SendOptionalBodyRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/send-optional-typed-body",
@@ -30,8 +64,27 @@ public final class OptionalClient: Sendable {
     /// Tests optional(nullable(T)) where T has only optional properties.
     /// This should not generate wire tests expecting {} when Optional.empty() is passed.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import ObjectsWithImports
+    ///
+    /// private func main() async throws {
+    ///     let client = ObjectsWithImportsClient()
+    ///
+    ///     _ = try await client.optional.sendOptionalNullableWithAllOptionalProperties(
+    ///         actionId: "actionId",
+    ///         id: "id",
+    ///         request: .value(DeployParams(
+    ///             updateDraft: true
+    ///         ))
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func sendOptionalNullableWithAllOptionalProperties(actionId: String, id: String, request: Nullable<DeployParams>?, requestOptions: RequestOptions? = nil) async throws -> DeployResponse {
+    public func sendOptionalNullableWithAllOptionalProperties(actionId: String, id: String, request: Nullable<DeployParams>? = nil, requestOptions: RequestOptions? = nil) async throws -> DeployResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/deploy/\(actionId)/versions/\(id)",

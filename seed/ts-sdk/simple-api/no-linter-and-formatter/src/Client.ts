@@ -19,9 +19,7 @@ export class SeedSimpleApiClient {
 
     constructor(options: SeedSimpleApiClient.Options) {
 
-
-                        this._options = normalizeClientOptionsWithAuth(options);
-                    
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get user(): UserClient {

@@ -26,13 +26,20 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Union.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id string,
@@ -49,6 +56,18 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.Shape{
+//	    Circle: &fern.Circle{
+//	        Radius: 1.1,
+//	    },
+//	    ID: "id",
+//	}
+//	client.Union.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *fern.Shape,

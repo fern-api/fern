@@ -2,6 +2,8 @@ import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getDisableRetriesValue } from "../utils/getDisableRetriesValue.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 
 export declare namespace Caller {
     export interface CallArgs {
@@ -11,6 +13,12 @@ export declare namespace Caller {
         url: go.AstNode;
         request?: go.AstNode;
         response?: go.AstNode;
+        /**
+         * Whether the endpoint's response body may be empty (e.g. an operation that returns both a
+         * body-bearing 2xx and a no-body 204). When true, the caller tolerates an empty body and
+         * returns a successful response with a nil body instead of failing to decode it.
+         */
+        responseIsOptional?: boolean;
         errorCodes?: go.AstNode;
         /** The import path of the namespace where the endpoint is defined. Used to reference namespace-specific ErrorCodes. */
         namespaceImportPath?: string;
@@ -73,7 +81,15 @@ export class Caller {
         });
     }
 
-    public instantiate({ client, maxAttempts }: { client: go.AstNode; maxAttempts: go.AstNode }): go.AstNode {
+    public instantiate({
+        client,
+        maxAttempts,
+        disableRetries
+    }: {
+        client: go.AstNode;
+        maxAttempts: go.AstNode;
+        disableRetries: go.AstNode;
+    }): go.AstNode {
         return go.invokeFunc({
             func: this.getConstructorTypeReference(),
             arguments_: [
@@ -87,6 +103,10 @@ export class Caller {
                         {
                             name: "MaxAttempts",
                             value: go.TypeInstantiation.reference(maxAttempts)
+                        },
+                        {
+                            name: "DisableRetries",
+                            value: go.TypeInstantiation.reference(disableRetries)
                         }
                     ]
                 })
@@ -130,6 +150,18 @@ export class Caller {
                 )
             },
             {
+                name: "DisableRetries",
+                value: getDisableRetriesValue({
+                    endpoint: args.endpoint,
+                    whenEnabled: go.TypeInstantiation.reference(
+                        go.selector({
+                            on: args.optionsReference,
+                            selector: go.codeblock("DisableRetries")
+                        })
+                    )
+                })
+            },
+            {
                 name: "BodyProperties",
                 value: go.TypeInstantiation.reference(
                     go.selector({
@@ -163,10 +195,22 @@ export class Caller {
                 value: go.TypeInstantiation.reference(args.request)
             });
         }
+        if (mayOmitRequestBody({ context: this.context, endpoint: args.endpoint })) {
+            arguments_.push({
+                name: "BodyIsOptional",
+                value: go.TypeInstantiation.bool(true)
+            });
+        }
         if (args.response != null) {
             arguments_.push({
                 name: "Response",
                 value: go.TypeInstantiation.reference(args.response)
+            });
+        }
+        if (args.responseIsOptional) {
+            arguments_.push({
+                name: "ResponseIsOptional",
+                value: go.TypeInstantiation.bool(true)
             });
         }
         if (args.errorCodes != null) {

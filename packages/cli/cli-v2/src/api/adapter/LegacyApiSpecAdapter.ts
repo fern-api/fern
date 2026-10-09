@@ -157,6 +157,7 @@ export class LegacyApiSpecAdapter {
             type: "graphql" as const,
             absoluteFilepath: spec.graphql,
             absoluteFilepathToOverrides: spec.overrides,
+            absoluteFilepathToExamples: spec.examples,
             namespace: spec.name
         };
     }
@@ -184,11 +185,13 @@ export class LegacyApiSpecAdapter {
 
             // OpenAPI-specific settings
             respectReadonlySchemas: settings.respectReadonlySchemas,
+            useReadVariantForResponses: settings.useReadVariantForResponses,
             onlyIncludeReferencedSchemas: settings.onlyIncludeReferencedSchemas,
             inlinePathParameters: settings.inlinePathParameters,
             shouldUseUndiscriminatedUnionsWithLiterals: settings.preferUndiscriminatedUnionsWithLiterals,
             objectQueryParameters: settings.objectQueryParameters,
             respectForwardCompatibleEnums: settings.respectForwardCompatibleEnums,
+            respectOptionalRequestBody: settings.respectOptionalRequestBody,
             useBytesForBinaryResponse: settings.useBytesForBinaryResponse,
             defaultFormParameterEncoding: settings.defaultFormParameterEncoding,
             filter: settings.filter,
@@ -196,16 +199,42 @@ export class LegacyApiSpecAdapter {
             additionalPropertiesDefaultsTo: settings.additionalPropertiesDefaultsTo,
             typeDatesAsStrings: settings.typeDatesAsStrings,
             preserveSingleSchemaOneOf: settings.preserveSingleSchemaOneof,
+            preserveOneOfInAllOf: settings.preserveOneOfInAllOf,
+            anyOfSiblingPropertiesAsObject: settings.anyOfSiblingPropertiesAsObject,
             inlineAllOfSchemas: settings.inlineAllOfSchemas,
             resolveAliases: settings.resolveAliases,
             groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
             defaultIntegerFormat: this.adaptDefaultIntegerFormat(settings.defaultIntegerFormat),
             coerceConstsTo: settings.coerceConstsTo,
-            shouldInferDiscriminatedUnionBaseProperties: settings.inferDiscriminatedUnionBaseProperties
+            shouldInferDiscriminatedUnionBaseProperties: settings.inferDiscriminatedUnionBaseProperties,
+            disambiguateRequestNames: settings["disambiguate-request-names"],
+            ignoreTags: settings["ignore-tags"],
+            respectParameterContent: settings["respect-parameter-content"],
+            respectPerSpecBasePath: settings["respect-per-spec-base-path"],
+            respectOperationIdWordBoundaries: settings["respect-operation-id-word-boundaries"],
+            namespacedErrors: settings["namespaced-errors"],
+            errorResponses: this.adaptErrorResponses(settings.errorResponses)
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
         return hasSettings ? (result as OpenAPISettings) : undefined;
+    }
+
+    private adaptErrorResponses(
+        value: schemas.OpenApiErrorResponsesSchema | undefined
+    ): generatorsYml.OpenApiErrorResponsesSchema | undefined {
+        if (value == null) {
+            return undefined;
+        }
+        return {
+            schema: value.schema,
+            name: value.name,
+            "apply-to": value.applyTo,
+            ensure: value.ensure?.map((ensure) => ({
+                "status-code": ensure.statusCode,
+                methods: ensure.methods
+            }))
+        };
     }
 
     private adaptAsyncApiSettings(settings: AsyncApiSpec["settings"]): OpenAPISettings | undefined {

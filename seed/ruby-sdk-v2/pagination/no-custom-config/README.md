@@ -16,6 +16,7 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
   - [Timeouts](#timeouts)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Additional Body Properties](#additional-body-properties)
 - [Contributing](#contributing)
 
 ## Reference
@@ -60,27 +61,30 @@ client = Seed::Client.new(
 
 ## Pagination
 
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+List endpoints are paginated. A paginated method returns an iterator, not the response object: loop over it to get the items of every page, or call `pages` on it to get each page's full response, including fields besides the items. Each page is requested when it is needed, and an API error is raised where that request is sent.
 
 ```ruby
 require "seed"
 
-# Loop over the items using the provided iterator.
-    page = Seed.client.complex.search(
+# The method returns an iterator over the items of every page. No request is sent until you start
+# iterating, so API errors are raised by the loop.
+items = client.complex.search(
     ...
 )
-page.each do |item|
+items.each do |item|
     puts "Got item: #{item}"
 end
 
-# Alternatively, iterate page-by-page.
-current_page = page
-while current_page
-    current_page.results.each do |item|
-        puts "Got item: #{item}"
-    end
-    current_page = current_page.next_page
-    break if current_page.nil?
+# Call `load_first_page` to send the first request now, so an API error for it is raised here.
+items = client.complex.search(
+    ...
+).load_first_page
+
+# Call `pages` to get each page's full response, including fields besides `conversations`.
+client.complex.search(
+    ...
+).pages.each do |page|
+    puts "Got page: #{page.conversations}"
 end
 ```
 
@@ -99,6 +103,8 @@ begin
     result = client.complex.search
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
+rescue Seed::Errors::ConnectionError => e
+    puts "Could not reach the API (connection refused, reset, DNS or TLS failure): #{e.message}"
 rescue Seed::Errors::ServiceUnavailableError
     puts "API returned status 503, is probably overloaded, try again later"
 rescue Seed::Errors::ServerError
@@ -146,9 +152,16 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
+# Set the default timeout (in seconds) for every request made by the client.
+client = Seed::Client.new(
+    base_url: "https://example.com",
+    timeout: 30
+)
+
+# Override the timeout for an individual request.
 response = client.complex.search(
     ...,
-    timeout: 30  # 30 second timeout
+    request_options: { timeout_in_seconds: 10 }
 )
 ```
 
@@ -181,6 +194,25 @@ response = client.complex.search(
     request_options: {
         additional_query_parameters: {
             "custom_param" => "custom-value"
+        }
+    }
+)
+```
+
+### Additional Body Properties
+
+If you would like to send additional body properties as part of the request, use the `additional_body_parameters` request option.
+Properties are merged into the serialized request body using their API (wire-format) names and override any field the SDK sets with the same name. If the endpoint has no body, one is created from these properties, except for GET and HEAD requests, which are always sent without a body (the properties are ignored).
+This applies to JSON and form-urlencoded requests; it is not applied to multipart (file upload) requests.
+
+```ruby
+require "seed"
+
+response = client.complex.search(
+    ...,
+    request_options: {
+        additional_body_parameters: {
+            "custom_field" => "custom-value"
         }
     }
 )

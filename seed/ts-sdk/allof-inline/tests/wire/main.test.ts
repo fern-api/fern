@@ -88,4 +88,67 @@ describe("SeedApiClient", () => {
         const response = await client.getOrganization();
         expect(response).toEqual(rawResponseBody);
     });
+
+    test("createPlant", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {
+            species: "species",
+            family: "family",
+            genus: "genus",
+            commonName: "commonName",
+            wateringFrequency: "daily",
+            sunExposure: "full",
+        };
+        const rawResponseBody = { species: "species", family: "family", genus: "genus" };
+
+        server
+            .mockEndpoint()
+            .post("/plants")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.createPlant({
+            species: "species",
+            family: "family",
+            genus: "genus",
+            commonName: "commonName",
+            wateringFrequency: "daily",
+            sunExposure: "full",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("createTree", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { id: "id", treeName: "treeName", treeSpecies: "treeSpecies" };
+        const rawResponseBody = {
+            id: "id",
+            treeName: "treeName",
+            treeDescription: "treeDescription",
+            treeSpecies: "treeSpecies",
+            heightInFeet: 1.1,
+            plantedDate: "2023-01-15",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/trees")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.createTree({
+            id: "id",
+            treeName: "treeName",
+            treeSpecies: "treeSpecies",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
 });

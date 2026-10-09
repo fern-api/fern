@@ -1,0 +1,180 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Collision Test",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "updateIdentifier",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "idType",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UpdateIdentifierRequestIdType",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UpdateIdentifierRequest",
+      "request": {
+        "schema": {
+          "generatedName": "UpdateIdentifierRequestBody",
+          "schema": "IdentifierUpdate",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "PATCH",
+      "path": "/Identifiers/{idType}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "idType",
+              "value": {
+                "value": {
+                  "value": "idType",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "idType": {
+                "value": {
+                  "value": "idType",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "oldValue": {
+                "value": {
+                  "value": "oldValue",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "newValue": {
+                "value": {
+                  "value": "newValue",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "IdentifierUpdate": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "identifierUpdateIdType",
+            "key": "idType",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "IdentifierUpdateIdType",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "identifierUpdateOldValue",
+            "key": "oldValue",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "IdentifierUpdateOldValue",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "identifierUpdateNewValue",
+            "key": "newValue",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "IdentifierUpdateNewValue",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "IdentifierUpdate",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

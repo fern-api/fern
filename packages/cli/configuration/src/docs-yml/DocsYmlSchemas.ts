@@ -92,9 +92,21 @@ export const ContentAlignment = z.enum(["center", "left"]);
 
 export const HeaderPosition = z.enum(["fixed", "static"]);
 
+export const ChangelogLayout = z.enum(["timeline", "classic"]);
+
+export const ApiReferenceLayout = z.enum(["indented", "cards"]);
+
 export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
+
+export const SiteSwitcherThemeConfig = z.object({
+    enabled: z.boolean().optional(),
+    order: z.array(z.string()).optional(),
+    hide: z.array(z.string()).optional(),
+    labels: z.record(z.string(), z.string()).optional(),
+    "show-products": z.boolean().optional()
+});
 
 export const FooterNavThemeConfig = z.enum(["default", "minimal"]);
 
@@ -233,6 +245,10 @@ export const AIChatDatasource = AIChatWebsiteDatasource;
 
 export const PageDescriptionSource = z.enum(["description", "subtitle"]);
 
+export const EmbeddingConfig = z.object({
+    "allowed-origins": z.array(z.string())
+});
+
 export const AgentsConfig = z.object({
     "page-directive": z.string().optional(),
     "page-description-source": PageDescriptionSource.optional(),
@@ -244,7 +260,9 @@ export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
     location: z.array(AIChatLocation).optional(),
-    datasources: z.array(AIChatDatasource).optional()
+    datasources: z.array(AIChatDatasource).optional(),
+    "mask-pii": z.boolean().optional(),
+    disclaimer: z.string().optional()
 });
 
 // ===== Font schemas =====
@@ -285,10 +303,15 @@ export const ThemeConfig = z.object({
     "page-actions": PageActionsThemeConfig.optional(),
     "footer-nav": FooterNavThemeConfig.optional(),
     "language-switcher": LanguageSwitcherThemeConfig.optional(),
-    "product-switcher": ProductSwitcherThemeConfig.optional()
+    "product-switcher": ProductSwitcherThemeConfig.optional(),
+    "site-switcher": SiteSwitcherThemeConfig.optional()
 });
 
 // ===== Layout schemas =====
+
+export const BreadcrumbsConfig = z.object({
+    "current-page": z.boolean().optional()
+});
 
 export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
@@ -303,16 +326,27 @@ export const LayoutConfig = z.object({
     "disable-header": z.boolean().optional(),
     "hide-nav-links": z.boolean().optional(),
     "hide-feedback": z.boolean().optional(),
-    "mobile-toc": z.boolean().optional()
+    "mobile-toc": z.boolean().optional(),
+    "changelog-layout": ChangelogLayout.optional(),
+    "api-reference-layout": ApiReferenceLayout.optional(),
+    "api-reference-expand-properties": z.boolean().optional(),
+    "show-nav-availability-badges": z.boolean().optional(),
+    breadcrumbs: BreadcrumbsConfig.optional()
 });
 
 // ===== Settings =====
+
+export const SearchSettingsConfig = z.object({
+    "prioritize-current-product": z.boolean().optional(),
+    "default-filter-by-current-product": z.boolean().optional()
+});
 
 export const DocsSettingsConfig = z.object({
     "search-text": z.string().optional(),
     "disable-search": z.boolean().optional(),
     "dark-mode-code": z.boolean().optional(),
     "default-search-filters": z.boolean().optional(),
+    search: SearchSettingsConfig.optional(),
     "http-snippets": HttpSnippetsConfig.optional(),
     "hide-404-page": z.boolean().optional(),
     "use-javascript-as-typescript": z.boolean().optional(),
@@ -321,7 +355,8 @@ export const DocsSettingsConfig = z.object({
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
-    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional()
+    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional(),
+    embedding: EmbeddingConfig.optional()
 });
 
 // ===== Colors =====
@@ -365,6 +400,7 @@ export const PageActionOptions = z.object({
     chatgpt: z.boolean().optional(),
     claude: z.boolean().optional(),
     cursor: z.boolean().optional(),
+    mcp: z.boolean().optional(),
     vscode: z.boolean().optional(),
     custom: z.array(CustomPageAction).optional()
 });
@@ -449,7 +485,8 @@ export const PlaygroundSettings = z.object({
     environments: z.array(z.string()).optional(),
     button: PlaygroundButtonSettings.optional(),
     oauth: z.boolean().optional(),
-    "limit-websocket-messages-per-connection": z.number().int().optional()
+    "limit-websocket-messages-per-connection": z.number().int().optional(),
+    "send-optional-defaults": z.boolean().optional()
 });
 
 // ===== Announcement =====
@@ -529,7 +566,8 @@ export const JsFileConfig = z.union([z.string(), JsFileConfigSettings]);
 
 export const JsRemoteConfig = z.object({
     url: z.string(),
-    strategy: JsScriptStrategy.optional()
+    strategy: JsScriptStrategy.optional(),
+    "disable-sri": z.boolean().optional()
 });
 
 export const JsConfigOptions = z.union([JsRemoteConfig, JsFileConfig]);
@@ -576,6 +614,20 @@ export const RedirectConfig = z.object({
     permanent: z.boolean().optional()
 });
 
+/**
+ * Either an inline list of redirects, or one or more filepaths to YAML files containing only that list.
+ */
+export const RedirectsConfiguration = z.union([z.array(RedirectConfig), z.string(), z.array(z.string())]);
+
+/**
+ * The contents of a standalone redirects file referenced by `redirects` in docs.yml.
+ */
+export const RedirectsFile = z
+    .object({
+        redirects: z.array(RedirectConfig.strict())
+    })
+    .strict();
+
 // ===== Check =====
 
 export const CheckRuleSeverity = z.enum(["warn", "error"]);
@@ -604,6 +656,13 @@ export const IntegrationsConfig = z.object({
 
 // ===== Experimental =====
 
+export const ExternalSitemapConfigSchema = z.object({
+    url: z.string(),
+    locale: z.string().optional()
+});
+
+export const ExternalSitemapSchema = z.union([z.string(), ExternalSitemapConfigSchema]);
+
 export const ExperimentalConfig = z.object({
     "mdx-components": z.array(z.string()).optional(),
     "disable-stream-toggle": z.boolean().optional(),
@@ -613,14 +672,17 @@ export const ExperimentalConfig = z.object({
     "ai-examples": z.boolean().optional(),
     "ai-example-style-instructions": z.string().optional(),
     "exclude-apis": z.boolean().optional(),
-    "basepath-aware": z.boolean().optional()
+    "basepath-aware": z.boolean().optional(),
+    "robots-txt-on-instance-url": z.boolean().optional(),
+    "external-sitemaps": z.array(ExternalSitemapSchema).optional()
 });
 
 // ===== Library schemas =====
 
 export const GitLibraryInputSchema = z.object({
     git: z.string(),
-    subpath: z.string().optional()
+    subpath: z.string().optional(),
+    ref: z.string().optional()
 });
 
 export const PathLibraryInputSchema = z.object({
@@ -658,6 +720,16 @@ export const PageConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
 export const ChangelogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         changelog: ChangelogFolderRelativePath,
+        title: z.string().optional(),
+        slug: z.string().optional(),
+        icon: z.string().optional(),
+        hidden: z.boolean().optional()
+    })
+);
+
+export const BlogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+    z.object({
+        blog: ChangelogFolderRelativePath,
         title: z.string().optional(),
         slug: z.string().optional(),
         icon: z.string().optional(),
@@ -768,10 +840,56 @@ export const ApiReferencePackageConfiguration: z.ZodType<unknown> = z.lazy(() =>
 
 // ===== API Reference Configuration =====
 
+export const ApiSpecType = z.enum(["openapi", "asyncapi", "graphql"]);
+
+export const ApiSpecErrorResponseHttpMethod = z.enum([
+    "get",
+    "post",
+    "put",
+    "patch",
+    "delete",
+    "head",
+    "options",
+    "trace"
+]);
+
+export const ApiSpecErrorResponseEnsure = z.object({
+    "status-code": z.number().int().min(400).max(599),
+    methods: z.array(ApiSpecErrorResponseHttpMethod).optional()
+});
+
+export const ApiSpecErrorResponses = z.object({
+    schema: z.union([z.string(), z.record(z.string(), z.unknown())]),
+    name: z.string().optional(),
+    "apply-to": z.enum(["all", "untyped"]).optional(),
+    ensure: z.array(ApiSpecErrorResponseEnsure).optional()
+});
+
+export const ApiSpecImportSettings = z.object({
+    "type-dates-as-strings": z.boolean().optional(),
+    "use-bytes-for-binary-response": z.boolean().optional(),
+    "respect-parameter-content": z.boolean().optional(),
+    "respect-operation-id-word-boundaries": z.boolean().optional(),
+    "infer-forward-compatible": z.boolean().optional(),
+    "preserve-one-of-in-all-of": z.boolean().optional(),
+    "any-of-sibling-properties-as-object": z.boolean().optional(),
+    "error-responses": ApiSpecErrorResponses.optional()
+});
+
+export const ApiSpecConfiguration = z.object({
+    type: ApiSpecType,
+    path: z.string(),
+    namespace: z.string().optional(),
+    overlays: z.string().optional(),
+    overrides: z.array(z.string()).optional(),
+    settings: ApiSpecImportSettings.optional()
+});
+
 export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         api: z.string(),
         "api-name": z.string().optional(),
+        specs: z.array(ApiSpecConfiguration).optional(),
         openrpc: z.string().optional(),
         audiences: Audience.optional(),
         "display-errors": z.boolean().optional(),
@@ -804,6 +922,7 @@ export const NavigationItem: z.ZodType<unknown> = z.lazy(() =>
         LibraryReferenceConfiguration,
         LinkConfiguration,
         ChangelogConfiguration,
+        BlogConfiguration,
         FolderConfiguration
     ])
 );
@@ -868,7 +987,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         hidden: z.boolean().optional(),
         href: z.string().optional(),
         target: Target.optional(),
-        changelog: ChangelogFolderRelativePath.optional()
+        changelog: ChangelogFolderRelativePath.optional(),
+        blog: ChangelogFolderRelativePath.optional()
     })
 );
 
@@ -877,7 +997,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
 export const VersionConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
-        path: z.string(),
+        path: z.string().optional(),
+        ref: z.string().optional(),
         slug: z.string().optional(),
         availability: VersionAvailability.optional(),
         audiences: Audience.optional(),
@@ -1002,7 +1123,7 @@ export const DocsConfiguration = z.object({
     "ai-examples": AiExamplesConfig.optional(),
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
-    redirects: z.array(RedirectConfig).optional(),
+    redirects: RedirectsConfiguration.optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),

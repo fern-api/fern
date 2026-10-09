@@ -10,6 +10,47 @@ import (
 )
 
 var (
+	postWithArrayBodyAndHeadersFieldXCustomHeader = big.NewInt(1 << 0)
+)
+
+type PostWithArrayBodyAndHeaders struct {
+	XCustomHeader *string  `json:"-" url:"-"`
+	Body          []string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (p *PostWithArrayBodyAndHeaders) require(field *big.Int) {
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
+	}
+	next.Or(next, field)
+	p.explicitFields = next
+}
+
+// SetXCustomHeader sets the XCustomHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostWithArrayBodyAndHeaders) SetXCustomHeader(xCustomHeader *string) {
+	p.XCustomHeader = xCustomHeader
+	p.require(postWithArrayBodyAndHeadersFieldXCustomHeader)
+}
+
+func (p *PostWithArrayBodyAndHeaders) UnmarshalJSON(data []byte) error {
+	var body []string
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	p.Body = body
+	return nil
+}
+
+func (p *PostWithArrayBodyAndHeaders) MarshalJSON() ([]byte, error) {
+	return json.Marshal(p.Body)
+}
+
+var (
 	postWithObjectBodyFieldFieldString  = big.NewInt(1 << 0)
 	postWithObjectBodyFieldInteger      = big.NewInt(1 << 1)
 	postWithObjectBodyFieldNestedObject = big.NewInt(1 << 2)
@@ -25,10 +66,12 @@ type PostWithObjectBody struct {
 }
 
 func (p *PostWithObjectBody) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;

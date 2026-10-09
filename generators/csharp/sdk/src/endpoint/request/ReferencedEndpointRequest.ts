@@ -4,8 +4,10 @@ import { FernIr } from "@fern-fern/ir-sdk";
 type HttpEndpoint = FernIr.HttpEndpoint;
 type SdkRequest = FernIr.SdkRequest;
 type TypeReference = FernIr.TypeReference;
+type ServiceId = FernIr.ServiceId;
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../../utils/requestBodyUtils.js";
 import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
@@ -13,6 +15,8 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
+import { writeEndpointAuthHeaderAdd } from "./endpointAuthHeaders.js";
+import { writeLiteralHeaders } from "./literalHeaders.js";
 
 export class ReferencedEndpointRequest extends EndpointRequest {
     private requestBodyShape: TypeReference;
@@ -21,16 +25,26 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         context: SdkGeneratorContext,
         sdkRequest: SdkRequest,
         endpoint: HttpEndpoint,
-        requestBodyShape: TypeReference
+        requestBodyShape: TypeReference,
+        private readonly serviceId: ServiceId
     ) {
         super(context, sdkRequest, endpoint);
         this.requestBodyShape = requestBodyShape;
     }
 
     public getParameterType(): ast.Type {
-        return this.context.csharpTypeMapper.convert({
+        const type = this.context.csharpTypeMapper.convert({
             reference: this.requestBodyShape
         });
+        return this.mayBeOmitted() ? type.asOptional() : type;
+    }
+
+    public override getParameterInitializer(): string | undefined {
+        return this.mayBeOmitted() ? "null" : undefined;
+    }
+
+    private mayBeOmitted(): boolean {
+        return mayOmitRequestBody(this.context, this.endpoint.requestBody);
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -50,13 +64,32 @@ export class ReferencedEndpointRequest extends EndpointRequest {
                 );
                 writer.indent();
 
+                // Add literal service- and endpoint-level headers (no request object carries them)
+                writeLiteralHeaders({
+                    writer,
+                    context: this.context,
+                    serviceId: this.serviceId,
+                    endpoint: this.endpoint
+                });
+
                 // Add client-level headers (from root client constructor)
                 writer.writeLine();
                 writer.write(".Add(_client.Options.Headers)");
 
+                // In endpoint-security mode, route this endpoint's declared auth scheme(s) here.
+                writeEndpointAuthHeaderAdd({ writer, context: this.context, endpoint: this.endpoint });
+
                 // Add client-level additional headers
                 writer.writeLine();
                 writer.write(".Add(_client.Options.AdditionalHeaders)");
+
+                // Fallback auto-generated idempotency-key header for the eligible HTTP methods carried
+                // in the IR. Emitted before the declared idempotency headers and request-option headers
+                // so a caller-provided value wins.
+                if (this.context.shouldAutoGenerateIdempotencyKey(this.endpoint)) {
+                    writer.writeLine();
+                    writer.write(".AddIdempotencyHeader()");
+                }
 
                 // For idempotent requests, add idempotency headers (as Dictionary<string, string>)
                 if (this.endpoint.idempotent) {

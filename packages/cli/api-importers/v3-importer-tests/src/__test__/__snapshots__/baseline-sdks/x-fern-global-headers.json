@@ -32,6 +32,7 @@
     },
     "type": "header"
   },
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
   "auth": {
@@ -1330,7 +1331,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -1346,7 +1348,8 @@
     "subpackages": [
       "subpackage_user"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

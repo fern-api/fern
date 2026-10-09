@@ -78,7 +78,8 @@
                 "pathParameters": [],
                 "body": {
                     "type": "bytes"
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -327,5 +328,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

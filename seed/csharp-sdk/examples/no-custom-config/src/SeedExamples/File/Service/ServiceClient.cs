@@ -20,6 +20,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExamples.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
             .Add("X-File-API-Version", request.XFileApiVersion)
             .Add(_client.Options.Headers)
@@ -33,6 +36,7 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format("/file/{0}", ValueConvert.ToPathParameterString(filename)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -50,7 +54,7 @@ public partial class ServiceClient : IServiceClient
                 return new WithRawResponse<SeedExamples.File>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExamples.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -64,7 +68,13 @@ public partial class ServiceClient : IServiceClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedExamples.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -77,7 +87,17 @@ public partial class ServiceClient : IServiceClient
                 switch (response.StatusCode)
                 {
                     case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<string>(responseBody),
+                            rawResponse: new SeedExamples.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -87,7 +107,13 @@ public partial class ServiceClient : IServiceClient
             throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExamples.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

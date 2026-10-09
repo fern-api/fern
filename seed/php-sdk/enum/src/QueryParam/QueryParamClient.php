@@ -49,6 +49,16 @@ class QueryParamClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->queryParam->send(
+     *     new SendEnumAsQueryParamRequest([
+     *         'operand' => Operand::GreaterThan->value,
+     *         'operandOrColor' => Color::Red->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param SendEnumAsQueryParamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -98,6 +108,26 @@ class QueryParamClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->queryParam->sendList(
+     *     new SendEnumListAsQueryParamRequest([
+     *         'operand' => [
+     *             Operand::GreaterThan->value,
+     *         ],
+     *         'maybeOperand' => [
+     *             Operand::GreaterThan->value,
+     *         ],
+     *         'operandOrColor' => [
+     *             Color::Red->value,
+     *         ],
+     *         'maybeOperandOrColor' => [
+     *             Color::Red->value,
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param SendEnumListAsQueryParamRequest $request
      * @param ?array{
      *   baseUrl?: string,

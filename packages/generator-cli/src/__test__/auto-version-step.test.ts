@@ -26,10 +26,11 @@ describe("AutoVersionStep", () => {
         expect(step.name).toBe("autoVersion");
     });
 
-    it("execute() is a no-op that reports executed + success", async () => {
+    it("enters non-replay mode when no prepared replay is available", async () => {
         const step = new AutoVersionStep("/tmp/fake", silentLogger, baseConfig);
-        const result = await step.execute(emptyContext);
-        expect(result).toEqual({ executed: true, success: true });
+        // Without a real git repo at /tmp/fake, gitDiffHead() throws.
+        // This verifies the step attempts non-replay mode rather than no-oping.
+        await expect(step.execute(emptyContext)).rejects.toThrow();
     });
 });
 
@@ -54,27 +55,20 @@ describe("PostGenerationPipeline autoVersion wiring", () => {
         expect(result.success).toBe(true);
     });
 
-    it("auto-disables autoVersion with a warning when replay is not enabled", async () => {
-        let warnings: string[] = [];
-        const capturingLogger: PipelineLogger = {
-            debug: () => undefined,
-            info: () => undefined,
-            warn: (msg: string) => {
-                warnings.push(msg);
-            },
-            error: () => undefined
-        };
+    it("wires autoVersion even when replay is not enabled (non-replay mode)", async () => {
         const pipeline = new PostGenerationPipeline(
             {
                 outputDir: "/tmp/fake",
                 autoVersion: baseConfig
             },
-            capturingLogger
+            silentLogger
         );
         const result = await pipeline.run();
+        // AutoVersionStep is wired and runs, but gitDiffHead() fails at /tmp/fake
+        // (no git repo). The pipeline catches the error and marks it as failed.
         expect(result.steps.autoVersion).toBeUndefined();
-        expect(warnings.some((w) => w.includes("AutoVersion requires Replay"))).toBe(true);
-        expect(result.success).toBe(true);
+        expect(result.errors).toBeDefined();
+        expect(result.errors?.some((e) => e.includes("autoVersion step error"))).toBe(true);
     });
 
     it("runs autoVersion alongside replay when both are enabled", async () => {
@@ -88,9 +82,9 @@ describe("PostGenerationPipeline autoVersion wiring", () => {
         );
         const result = await pipeline.run();
         // No lockfile at /tmp/fake, so GenerationCommitStep yields preparedReplay: null.
-        // AutoVersionStep still runs; current scaffold returns {executed, success}.
-        expect(result.steps.autoVersion?.executed).toBe(true);
-        expect(result.steps.autoVersion?.success).toBe(true);
-        expect(result.success).toBe(true);
+        // AutoVersionStep falls through to non-replay mode and fails (no git repo).
+        // Pipeline catches the error but continues.
+        expect(result.errors).toBeDefined();
+        expect(result.errors?.some((e) => e.includes("autoVersion step error"))).toBe(true);
     });
 });

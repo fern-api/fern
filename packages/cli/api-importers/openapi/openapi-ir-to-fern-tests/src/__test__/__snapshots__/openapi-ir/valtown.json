@@ -1,4 +1,5 @@
 {
+  "specVersion": "1",
   "title": "Val Town API",
   "description": "Val Town’s public API\n\nOpenAPI JSON endpoint:\n\nhttps://api.val.town/openapi.json",
   "servers": [
@@ -3899,6 +3900,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "name": "example1",
@@ -4432,6 +4434,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {
@@ -4669,6 +4672,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "name": "example1",
@@ -6714,6 +6718,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {
@@ -7002,6 +7007,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {
@@ -8106,6 +8112,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {

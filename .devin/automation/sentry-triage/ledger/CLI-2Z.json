@@ -1,0 +1,9 @@
+{
+  "title": "Schema validation / minified class names",
+  "disposition": "shipped",
+  "rationale": "isSchemaValidationError could not match minified constructor names.",
+  "fixSummary": "Set this.name on JsonError, ParseError, GeneratorError constructors.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "Schema validation path: minified build broke constructor-name-based detection so parse/schema errors looked like InternalError."
+}

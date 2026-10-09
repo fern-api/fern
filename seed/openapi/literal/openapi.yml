@@ -58,6 +58,43 @@ paths:
               Example1:
                 value:
                   query: What is the weather today
+  /headers/literals-only:
+    post:
+      operationId: headers_sendLiteralsOnly
+      tags:
+        - Headers
+      parameters:
+        - name: X-Endpoint-Version
+          in: header
+          required: true
+          schema:
+            type: string
+            const: 02-12-2024
+          examples:
+            Example1:
+              value: 02-12-2024
+        - name: X-Async
+          in: header
+          required: true
+          schema:
+            type: boolean
+            const: true
+          examples:
+            Example1:
+              value: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
   /inlined:
     post:
       operationId: inlined_send

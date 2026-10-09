@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/v1/products/{regionId}/search",
+                "method": "POST",
+                "identifier_override": "endpoint_products.search"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/x-fern-global-parameters/fern\"\n\tfernclient \"github.com/x-fern-global-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Products.Search(\n\tcontext.TODO(),\n\t\u0026fern.SearchProductsRequest{\n\t\tRegionID: \"regionId\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v1/products/{regionId}/{productId}",
+                "method": "GET",
+                "identifier_override": "endpoint_products.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/x-fern-global-parameters/fern\"\n\tfernclient \"github.com/x-fern-global-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Products.Get(\n\tcontext.TODO(),\n\t\u0026fern.GetProductsRequest{\n\t\tRegionID:  \"regionId\",\n\t\tProductID: \"productId\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

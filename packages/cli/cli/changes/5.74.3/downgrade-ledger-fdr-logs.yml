@@ -1,0 +1,3 @@
+- summary: |
+    Move internal docs-publish logs that expose implementation details (docs ledger deploy mode, per-locale segment counts, FDR publish, ledger deployment IDs) from INFO to DEBUG level, so they only appear when debug logging is enabled.
+  type: chore

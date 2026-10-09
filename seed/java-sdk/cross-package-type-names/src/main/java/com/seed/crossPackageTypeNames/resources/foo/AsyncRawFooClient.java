@@ -3,11 +3,14 @@
  */
 package com.seed.crossPackageTypeNames.resources.foo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.crossPackageTypeNames.core.BodyProperties;
 import com.seed.crossPackageTypeNames.core.ClientOptions;
 import com.seed.crossPackageTypeNames.core.MediaTypes;
 import com.seed.crossPackageTypeNames.core.ObjectMappers;
 import com.seed.crossPackageTypeNames.core.QueryStringMapper;
 import com.seed.crossPackageTypeNames.core.RequestOptions;
+import com.seed.crossPackageTypeNames.core.RetryInterceptor;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesApiException;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesException;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesHttpResponse;
@@ -54,7 +57,9 @@ public class AsyncRawFooClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -69,8 +74,18 @@ public class AsyncRawFooClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedCrossPackageTypeNamesHttpResponse<ImportingType>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -85,6 +100,9 @@ public class AsyncRawFooClient {
                     future.completeExceptionally(new SeedCrossPackageTypeNamesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedCrossPackageTypeNamesException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedCrossPackageTypeNamesException("Network error executing HTTP request", e));
@@ -95,6 +113,11 @@ public class AsyncRawFooClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedCrossPackageTypeNamesException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

@@ -3,6 +3,8 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { WebhookSignatureVerification } from "../../webhooks/types/WebhookSignatureVerification.js";
+import { IdempotencyKeyGeneration } from "./IdempotencyKeyGeneration.js";
 import { PlatformHeaders } from "./PlatformHeaders.js";
 
 export const SdkConfig: core.serialization.ObjectSchema<serializers.SdkConfig.Raw, FernIr.SdkConfig> =
@@ -12,6 +14,8 @@ export const SdkConfig: core.serialization.ObjectSchema<serializers.SdkConfig.Ra
         hasPaginatedEndpoints: core.serialization.boolean(),
         hasFileDownloadEndpoints: core.serialization.boolean(),
         platformHeaders: PlatformHeaders,
+        idempotencyKeyGeneration: IdempotencyKeyGeneration.optional(),
+        webhookSignatureVerification: WebhookSignatureVerification.optional(),
     });
 
 export declare namespace SdkConfig {
@@ -21,5 +25,7 @@ export declare namespace SdkConfig {
         hasPaginatedEndpoints: boolean;
         hasFileDownloadEndpoints: boolean;
         platformHeaders: PlatformHeaders.Raw;
+        idempotencyKeyGeneration?: IdempotencyKeyGeneration.Raw | null;
+        webhookSignatureVerification?: WebhookSignatureVerification.Raw | null;
     }
 }

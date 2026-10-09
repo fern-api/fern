@@ -47,10 +47,12 @@ func (l *ListUsersPathPaginationResponse) GetExtraProperties() map[string]interf
 }
 
 func (l *ListUsersPathPaginationResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -110,11 +112,11 @@ func (l *ListUsersPathPaginationResponse) String() string {
 }
 
 var (
-	listUsersUriPaginationResponseFieldData = big.NewInt(1 << 0)
-	listUsersUriPaginationResponseFieldNext = big.NewInt(1 << 1)
+	listUsersURIPaginationResponseFieldData = big.NewInt(1 << 0)
+	listUsersURIPaginationResponseFieldNext = big.NewInt(1 << 1)
 )
 
-type ListUsersUriPaginationResponse struct {
+type ListUsersURIPaginationResponse struct {
 	Data []*User `json:"data" url:"data"`
 	Next *string `json:"next,omitempty" url:"next,omitempty"`
 
@@ -125,55 +127,57 @@ type ListUsersUriPaginationResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (l *ListUsersUriPaginationResponse) GetData() []*User {
+func (l *ListUsersURIPaginationResponse) GetData() []*User {
 	if l == nil {
 		return nil
 	}
 	return l.Data
 }
 
-func (l *ListUsersUriPaginationResponse) GetNext() *string {
+func (l *ListUsersURIPaginationResponse) GetNext() *string {
 	if l == nil {
 		return nil
 	}
 	return l.Next
 }
 
-func (l *ListUsersUriPaginationResponse) GetExtraProperties() map[string]interface{} {
+func (l *ListUsersURIPaginationResponse) GetExtraProperties() map[string]interface{} {
 	if l == nil {
 		return nil
 	}
 	return l.extraProperties
 }
 
-func (l *ListUsersUriPaginationResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+func (l *ListUsersURIPaginationResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUsersUriPaginationResponse) SetData(data []*User) {
+func (l *ListUsersURIPaginationResponse) SetData(data []*User) {
 	l.Data = data
-	l.require(listUsersUriPaginationResponseFieldData)
+	l.require(listUsersURIPaginationResponseFieldData)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUsersUriPaginationResponse) SetNext(next *string) {
+func (l *ListUsersURIPaginationResponse) SetNext(next *string) {
 	l.Next = next
-	l.require(listUsersUriPaginationResponseFieldNext)
+	l.require(listUsersURIPaginationResponseFieldNext)
 }
 
-func (l *ListUsersUriPaginationResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler ListUsersUriPaginationResponse
+func (l *ListUsersURIPaginationResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersURIPaginationResponse
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*l = ListUsersUriPaginationResponse(value)
+	*l = ListUsersURIPaginationResponse(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
@@ -183,8 +187,8 @@ func (l *ListUsersUriPaginationResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (l *ListUsersUriPaginationResponse) MarshalJSON() ([]byte, error) {
-	type embed ListUsersUriPaginationResponse
+func (l *ListUsersURIPaginationResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersURIPaginationResponse
 	var marshaler = struct {
 		embed
 	}{
@@ -194,7 +198,7 @@ func (l *ListUsersUriPaginationResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (l *ListUsersUriPaginationResponse) String() string {
+func (l *ListUsersURIPaginationResponse) String() string {
 	if l == nil {
 		return "<nil>"
 	}
@@ -211,12 +215,12 @@ func (l *ListUsersUriPaginationResponse) String() string {
 
 var (
 	userFieldName = big.NewInt(1 << 0)
-	userFieldId   = big.NewInt(1 << 1)
+	userFieldID   = big.NewInt(1 << 1)
 )
 
 type User struct {
 	Name string `json:"name" url:"name"`
-	Id   int    `json:"id" url:"id"`
+	ID   int    `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -232,11 +236,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() int {
+func (u *User) GetID() int {
 	if u == nil {
 		return 0
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -247,10 +251,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -260,11 +266,11 @@ func (u *User) SetName(name string) {
 	u.require(userFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id int) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id int) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {

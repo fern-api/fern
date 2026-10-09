@@ -1,0 +1,82 @@
+openapi: 3.1.0
+info:
+  title: Path Param Body Collision
+  version: 0.0.0
+paths:
+  /Profiles/{profileId}/Identifiers/{idTypePathParam}:
+    patch:
+      operationId: updateProfileIdentifier
+      tags:
+        - ''
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: profile_123
+        - name: idTypePathParam
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: email
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfileIdentifierResponse'
+              examples:
+                Example1:
+                  value:
+                    message: ok
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idType:
+                  type: string
+                  description: The identifier type to update.
+                  examples:
+                    - phone
+                oldValue:
+                  type: string
+                  examples:
+                    - '+13175556789'
+                newValue:
+                  type: string
+                  examples:
+                    - '+13175556798'
+              required:
+                - idType
+                - oldValue
+                - newValue
+            examples:
+              Example1:
+                value:
+                  idType: phone
+                  oldValue: '+13175556789'
+                  newValue: '+13175556798'
+components:
+  schemas:
+    UpdateProfileIdentifierResponse:
+      title: UpdateProfileIdentifierResponse
+      type: object
+      properties:
+        message:
+          type:
+            - string
+            - 'null'
+  securitySchemes: {}
+servers:
+  - url: https://api.example.com
+    description: Default

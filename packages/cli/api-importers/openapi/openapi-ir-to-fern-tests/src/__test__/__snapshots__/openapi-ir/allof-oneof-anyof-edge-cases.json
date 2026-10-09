@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "AllOf/OneOf/AnyOf Edge Cases",
   "servers": [],
   "websocketServers": [],
@@ -1060,13 +1061,29 @@
               "generatedName": "RuleConfigExecutionContext",
               "value": {
                 "generatedName": "RuleConfigExecutionContext",
-                "schema": "RuleExecutionContext",
+                "values": [
+                  {
+                    "generatedName": "prod",
+                    "value": "prod",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "staging",
+                    "value": "staging",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "dev",
+                    "value": "dev",
+                    "casing": {}
+                  }
+                ],
                 "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "reference"
+                "type": "enum"
               },
               "groupName": [],
               "type": "optional"

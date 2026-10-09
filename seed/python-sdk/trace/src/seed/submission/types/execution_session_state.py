@@ -19,6 +19,10 @@ class ExecutionSessionState(UniversalBaseModel):
         FieldMetadata(alias="sessionId"),
         pydantic.Field(alias="sessionId", description="The auto-generated session id. Formatted as a uuid."),
     ]
+    """
+    The auto-generated session id. Formatted as a uuid.
+    """
+
     is_warm_instance: typing_extensions.Annotated[
         bool, FieldMetadata(alias="isWarmInstance"), pydantic.Field(alias="isWarmInstance")
     ]

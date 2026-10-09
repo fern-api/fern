@@ -1,12 +1,14 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { execFileSync } from "child_process";
 import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./github/constants";
+import { stripGeneratedWorkflows } from "./github/stripGeneratedWorkflows";
 import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
 import { AutoVersionStep } from "./steps/AutoVersionStep";
 import { BaseStep } from "./steps/BaseStep";
 import { GenerationCommitStep } from "./steps/GenerationCommitStep";
 import { GithubStep } from "./steps/GithubStep";
 import { ReplayStep } from "./steps/ReplayStep";
+import { VerificationStep } from "./steps/VerificationStep";
 import type {
     AutoVersionStepResult,
     FernignoreStepResult,
@@ -15,7 +17,8 @@ import type {
     PipelineConfig,
     PipelineContext,
     PipelineResult,
-    ReplayStepResult
+    ReplayStepResult,
+    VerificationStepResult
 } from "./types";
 
 export class PostGenerationPipeline {
@@ -28,22 +31,20 @@ export class PostGenerationPipeline {
         let replayEnabled = config.replay?.enabled ?? false;
         let autoVersionEnabled = config.autoVersion?.enabled ?? false;
 
-        // Disallow push mode + replay: push mode force-pushes to the base branch,
-        // which is incompatible with replay's 3-way merge workflow.
-        if (replayEnabled && config.github?.mode === "push") {
+        // Disallow push/commit-and-release mode + replay: these modes push directly
+        // to the base branch, which is incompatible with replay's 3-way merge workflow.
+        if (replayEnabled && (config.github?.mode === "push" || config.github?.mode === "commit-and-release")) {
             this.logger.warn(
-                "Replay is not supported with GitHub push mode. Disabling replay to prevent force push to base branch."
+                `Replay is not supported with GitHub ${config.github.mode} mode. Disabling replay to prevent push to base branch.`
             );
             replayEnabled = false;
         }
 
-        // Autoversion travels with replay — it needs the two [fern-generated] SHAs
-        // that the replay prepare phase produces. Non-replay orgs keep fiddle-side
-        // autoversioning per the epic's non-goals (FER-9978).
-        if (autoVersionEnabled && !replayEnabled) {
-            this.logger.warn("AutoVersion requires Replay to be enabled. Disabling AutoVersion for this run.");
-            autoVersionEnabled = false;
-        }
+        // Autoversion can run in two modes:
+        //   1. Replay mode: diffs the two [fern-generated] SHAs from GenerationCommitStep.
+        //   2. Non-replay mode: diffs HEAD vs the working tree (git diff HEAD).
+        // Non-replay mode allows autoversioning for orgs that haven't opted into replay,
+        // ensuring magic version placeholders are always replaced before GitHub delivery.
 
         // Split order:
         //   GenerationCommitStep — replay prepare phase: commits [fern-generated],
@@ -62,8 +63,7 @@ export class PostGenerationPipeline {
                     this.logger,
                     { enabled: true, skipApplication: config.replay.skipApplication },
                     config.cliVersion,
-                    config.generatorVersions,
-                    config.generatorName
+                    config.generatorVersions
                 )
             );
         }
@@ -79,8 +79,7 @@ export class PostGenerationPipeline {
                     this.logger,
                     config.replay,
                     config.cliVersion,
-                    config.generatorVersions,
-                    config.generatorName
+                    config.generatorVersions
                 )
             );
         }
@@ -89,6 +88,21 @@ export class PostGenerationPipeline {
         // if (config.fernignore?.enabled) {
         //   this.steps.push(new FernignoreStep(config.outputDir, this.logger));
         // }
+
+        // VerificationStep runs after replay and before GithubStep so a failing
+        // verify aborts the pipeline before we open a PR. Wired only when the
+        // generator emitted `.fern/verify.sh` (no-ops otherwise).
+        if (config.verify?.enabled) {
+            this.steps.push(
+                new VerificationStep(
+                    config.outputDir,
+                    this.logger,
+                    config.verify,
+                    config.generatorName,
+                    config.generatorVersions
+                )
+            );
+        }
 
         if (config.github?.enabled) {
             this.steps.push(new GithubStep(config.outputDir, this.logger, config.github));
@@ -111,6 +125,18 @@ export class PostGenerationPipeline {
             success: true,
             steps: {}
         };
+
+        // Must run before any step commits (GenerationCommitStep commits via `git add -A`).
+        // A partial strip must never reach a commit, so a failure here aborts the pipeline.
+        if (this.config.github?.enabled && this.config.github.workflows === false) {
+            try {
+                stripGeneratedWorkflows(this.config.outputDir, this.logger);
+            } catch (error) {
+                result.success = false;
+                result.errors = [`failed to strip generated workflows: ${extractErrorMessage(error)}`];
+                return result;
+            }
+        }
 
         const pipelineContext: PipelineContext = {
             previousStepResults: {}
@@ -139,6 +165,10 @@ export class PostGenerationPipeline {
                     pipelineContext.previousStepResults.autoVersion = stepResult as AutoVersionStepResult;
                 } else if (step.name === "fernignore") {
                     result.steps.fernignore = stepResult as FernignoreStepResult;
+                } else if (step.name === "verify") {
+                    const verifyResult = stepResult as VerificationStepResult;
+                    result.steps.verify = verifyResult;
+                    pipelineContext.previousStepResults.verify = verifyResult;
                 } else if (step.name === "github") {
                     result.steps.github = stepResult as GithubStepResult;
                 }
@@ -146,6 +176,17 @@ export class PostGenerationPipeline {
                 if (!stepResult.success) {
                     result.success = false;
                     result.errors = result.errors ?? [];
+                    if (step.name === "verify") {
+                        const verifyResult = stepResult as VerificationStepResult;
+                        if (verifyResult.stderr != null && verifyResult.stderr.length > 0) {
+                            result.errors.push(verifyResult.stderr);
+                        } else {
+                            result.errors.push(verifyResult.errorMessage ?? `${step.name} step failed`);
+                        }
+                        // Skip remaining steps (e.g. GithubStep) when verify fails — surface the failure
+                        // before opening a PR or pushing a broken SDK.
+                        break;
+                    }
                     result.errors.push(stepResult.errorMessage ?? `${step.name} step failed`);
                 }
             } catch (error) {
@@ -153,6 +194,12 @@ export class PostGenerationPipeline {
                 result.errors = result.errors ?? [];
                 const errorMessage = extractErrorMessage(error);
                 result.errors.push(`${step.name} step error: ${errorMessage}`);
+                // Defense-in-depth: an unhandled throw inside VerificationStep should still
+                // abort the pipeline so a broken SDK never makes it to GithubStep, mirroring
+                // the success: false branch above.
+                if (step.name === "verify") {
+                    break;
+                }
             }
         }
 

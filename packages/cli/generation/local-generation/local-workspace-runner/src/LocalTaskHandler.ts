@@ -9,19 +9,24 @@ import {
     AutoVersioningService,
     AutoVersionResult,
     CachedAnalysis,
+    changelogContainsVersion,
     countFilesInDiff,
     formatSizeKB,
     isAutoVersion,
+    isPlaceholderVersion,
+    MAGIC_VERSION,
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
     MAX_RAW_DIFF_BYTES,
-    maxVersionBump
+    mapMagicVersionForLanguage,
+    maxVersionBump,
+    prependChangelogBlock
 } from "@fern-api/generator-cli/autoversion";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
+import { cp, readdir, readFile, rm, stat, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
@@ -110,6 +115,7 @@ export class LocalTaskHandler {
         // Read prior changelog BEFORE copy operations overwrite the output directory
         const priorChangelog =
             this.version != null && isAutoVersion(this.version) ? await this.readPriorChangelog(3) : "";
+        const priorChangelogFile = await this.readChangelogFile();
 
         if (isFernIgnorePresent) {
             const absolutePathToFernignore = AbsoluteFilePath.of(
@@ -130,6 +136,19 @@ export class LocalTaskHandler {
             await this.copyGeneratedFilesNoFernIgnorePreservingGit();
         } else {
             await this.copyGeneratedFilesNoFernIgnoreDeleteAll();
+        }
+
+        // Generators don't emit changelog.md, so the copy operations above delete it.
+        // Restore it so changelog entries are never lost across regenerations.
+        await this.restoreChangelogFile(priorChangelogFile);
+
+        // An explicitly pinned version (e.g. `--version 0.1.0`) skips AI changelog generation,
+        // so record a version-only entry (empty description) in the changelog instead.
+        if (this.version != null && !isAutoVersion(this.version)) {
+            await this.prependExplicitVersionChangelogEntry({
+                version: this.version,
+                createIfMissing: isExistingGitRepo
+            });
         }
 
         if (
@@ -157,10 +176,14 @@ export class LocalTaskHandler {
                     autoVersioningVersionBumpReason: undefined
                 };
             }
-            // Replace placeholder version with computed version
+            // Replace placeholder version with computed version.
+            // Use the language-mapped magic version (e.g., "v0.0.0-fern-placeholder" for Go,
+            // "0.0.0.dev0" for Python) — NOT the raw "AUTO" string, which would corrupt
+            // identifiers containing "AUTO" during the global sed replacement.
+            const mappedMagicVersion = mapMagicVersionForLanguage(MAGIC_VERSION, this.generatorLanguage ?? "");
             await autoVersioningService.replaceMagicVersion(
                 this.absolutePathToLocalOutput,
-                this.version,
+                mappedMagicVersion,
                 autoVersionResult.version
             );
 
@@ -197,6 +220,11 @@ export class LocalTaskHandler {
         const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
         let diffFile: string | undefined;
 
+        // Compute the language-mapped magic version used for diff analysis.
+        // The generator produces code with this placeholder (e.g., "v0.0.0-fern-placeholder"
+        // for Go, "0.0.0.dev0" for Python, "0.0.0-fern-placeholder" for others).
+        const mappedMagicVersion = mapMagicVersionForLanguage(MAGIC_VERSION, this.generatorLanguage ?? "");
+
         try {
             this.context.logger.info("Analyzing SDK changes for automatic semantic versioning");
 
@@ -209,8 +237,7 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            // Extract previous version and clean diff
-            // Note: this.version is the mapped magic version (e.g., "v0.0.0-fern-placeholder" for Go)
+            // Extract previous version and clean diff using the mapped magic version
             if (!this.version) {
                 throw new CliError({
                     message: "Version is required for auto versioning",
@@ -220,7 +247,10 @@ export class LocalTaskHandler {
 
             let previousVersion: string | undefined;
             try {
-                previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+                previousVersion = this.usableVersion(
+                    autoVersioningService.extractPreviousVersion(diffContent, mappedMagicVersion) ?? undefined,
+                    "diff"
+                );
             } catch (e) {
                 if (!(e instanceof AutoVersioningException) || !e.magicVersionAbsent) {
                     throw e;
@@ -229,16 +259,16 @@ export class LocalTaskHandler {
                 // This happens for generators that don't embed versions in files (e.g., Swift
                 // uses git tags for versioning via SPM, not a version field in Package.swift).
                 this.context.logger.info(`Magic version not found in diff, trying fallbacks: ${e}`);
-                previousVersion = await this.getVersionFromLocalMetadata();
+                previousVersion = this.usableVersion(await this.getVersionFromLocalMetadata(), "metadata.json");
                 if (previousVersion == null) {
                     const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
                         this.absolutePathToLocalOutput
                     );
-                    previousVersion = this.normalizeVersionPrefix(tagVersion);
+                    previousVersion = this.usableVersion(this.normalizeVersionPrefix(tagVersion), "git tags");
                 }
                 if (previousVersion == null) {
                     this.context.logger.info("No git tags found — treating as new SDK repository");
-                    const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                    const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
                     const commitMessage = this.isWhitelabel
                         ? "Initial SDK generation"
                         : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -249,7 +279,7 @@ export class LocalTaskHandler {
                 }
                 this.context.logger.debug(`Previous version from fallback: ${previousVersion}`);
             }
-            const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
+            const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, mappedMagicVersion);
 
             const rawDiffSizeKB = formatSizeKB(diffContent.length);
             const cleanedDiffSizeKB = formatSizeKB(cleanedDiff.length);
@@ -264,12 +294,12 @@ export class LocalTaskHandler {
             // If no previous version from diff (e.g., Version.swift is a new file in an existing SDK),
             // try .fern/metadata.json first, then git tags before falling back to initial version
             if (previousVersion == null) {
-                previousVersion = await this.getVersionFromLocalMetadata();
+                previousVersion = this.usableVersion(await this.getVersionFromLocalMetadata(), "metadata.json");
                 if (previousVersion == null) {
                     const rawTagVersion = await autoVersioningService.getLatestVersionFromGitTags(
                         this.absolutePathToLocalOutput
                     );
-                    const normalizedTag = this.normalizeVersionPrefix(rawTagVersion);
+                    const normalizedTag = this.usableVersion(this.normalizeVersionPrefix(rawTagVersion), "git tags");
                     if (normalizedTag != null) {
                         this.context.logger.info(`No previous version from diff; using git tag: ${normalizedTag}`);
                         previousVersion = normalizedTag;
@@ -282,7 +312,7 @@ export class LocalTaskHandler {
                 this.context.logger.info(
                     "No previous version found (new SDK repository). Using 0.0.1 as initial version."
                 );
-                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
                 const commitMessage = this.isWhitelabel
                     ? "Initial SDK generation"
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -521,7 +551,7 @@ export class LocalTaskHandler {
                     `AUTO versioning could not extract previous version: ${error.message}. ` +
                         `Falling back to initial version 0.0.1.`
                 );
-                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
                 const commitMessage = this.isWhitelabel
                     ? "Initial SDK generation"
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -687,9 +717,30 @@ export class LocalTaskHandler {
     }
 
     /**
+     * Drops candidate previous versions that are the magic placeholder. SDK repos
+     * that derive their published version at release time keep the placeholder
+     * committed, so any resolution source can hand back the sentinel; bumping it
+     * would publish a mutated placeholder rather than a real version. Returning
+     * undefined lets the caller fall through to the next source, and ultimately to
+     * the initial-version path.
+     */
+    private usableVersion(version: string | undefined, source: string): string | undefined {
+        if (version == null) {
+            return undefined;
+        }
+        if (isPlaceholderVersion(version)) {
+            this.context.logger.info(
+                `Ignoring placeholder version ${version} from ${source}; trying the next previous-version source.`
+            );
+            return undefined;
+        }
+        return version;
+    }
+
+    /**
      * Normalizes a version string's `v` prefix to match the convention used by
-     * the magic version (`this.version`).  Git tags may use `v1.2.3` while the
-     * magic version is `0.0.0-fern-placeholder` (no prefix) or vice-versa.
+     * the magic version for this generator's language. Git tags may use `v1.2.3`
+     * while the magic version is `0.0.0-fern-placeholder` (no prefix) or vice-versa.
      * Without normalization the mismatch propagates into `replaceMagicVersion`
      * and can produce invalid versions in package manifests (e.g. `v1.3.0` in
      * a `package.json` that expects bare semver).
@@ -698,8 +749,9 @@ export class LocalTaskHandler {
         if (version == null) {
             return undefined;
         }
+        const mapped = mapMagicVersionForLanguage(MAGIC_VERSION, this.generatorLanguage ?? "");
         const stripped = version.startsWith("v") ? version.slice(1) : version;
-        if (this.version?.startsWith("v")) {
+        if (mapped.startsWith("v")) {
             return `v${stripped}`;
         }
         return stripped;
@@ -721,7 +773,14 @@ export class LocalTaskHandler {
 
         this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);
         const { configureBamlClient } = await loadBamlDependencies();
-        return configureBamlClient(this.ai);
+        try {
+            return configureBamlClient(this.ai);
+        } catch (error) {
+            throw new CliError({
+                message: `Invalid AI service configuration: ${extractErrorMessage(error)}`,
+                code: CliError.Code.ConfigError
+            });
+        }
     }
 
     private addFernBranding(message: string): string {
@@ -783,13 +842,16 @@ export class LocalTaskHandler {
         const pathsToPreserve = await this.getPathsToPreserve(fernIgnorePaths);
 
         // Copy files from local output to tmp directory
-        await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
+        await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true, verbatimSymlinks: true });
 
         // Initialize a throwaway git repo in the temp directory. This is only used to
         // leverage git's file-tracking for resolving .fernignore paths. We inline the
         // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
         // Touch ID on macOS) and unnecessary overhead.
         await this.runThrowawayGitCommand(["init"], tmpOutputResolutionDir);
+        // Disable auto-gc so that no background pack processes run during
+        // the subsequent operations, which would race with the rm(.git) below.
+        await this.runThrowawayGitCommand(["config", "gc.auto", "0"], tmpOutputResolutionDir);
         await this.runThrowawayGitCommand(["add", "."], tmpOutputResolutionDir);
         await this.runThrowawayGitCommand(
             [
@@ -820,11 +882,16 @@ export class LocalTaskHandler {
         await this.runThrowawayGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over
-        await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
+        await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), {
+            recursive: true,
+            force: true,
+            maxRetries: 3,
+            retryDelay: 100
+        });
 
         // Delete local output directory and copy all files from the generated directory
         await rm(this.absolutePathToLocalOutput, { recursive: true });
-        await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true });
+        await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true, verbatimSymlinks: true });
     }
 
     private async copyGeneratedFilesNoFernIgnorePreservingGit(): Promise<void> {
@@ -878,11 +945,11 @@ export class LocalTaskHandler {
                 await cp(
                     join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(localOutputItem)),
                     join(outputPath, RelativeFilePath.of(localOutputItem)),
-                    { recursive: true }
+                    { recursive: true, verbatimSymlinks: true }
                 );
             }
         } else {
-            await cp(this.absolutePathToTmpOutputDirectory, outputPath, { recursive: true });
+            await cp(this.absolutePathToTmpOutputDirectory, outputPath, { recursive: true, verbatimSymlinks: true });
         }
     }
 
@@ -893,8 +960,15 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetJSON: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath;
     }): Promise<void> {
+        const outcome = await copySnippetJsonIfNonEmpty({
+            src: absolutePathToTmpSnippetJSON,
+            dest: absolutePathToLocalSnippetJSON
+        });
+        if (outcome === "skipped-empty") {
+            this.context.logger.debug(`Skipping empty snippet.json copy from ${absolutePathToTmpSnippetJSON}`);
+            return;
+        }
         this.context.logger.debug(`Copying generated snippets to ${absolutePathToLocalSnippetJSON}`);
-        await cp(absolutePathToTmpSnippetJSON, absolutePathToLocalSnippetJSON);
     }
 
     /**
@@ -930,11 +1004,18 @@ export class LocalTaskHandler {
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
-        const response = await loggingExeca(this.context.logger, "git", options, {
-            cwd,
-            doNotPipeOutput: true
-        });
-        return response.stdout;
+        try {
+            const response = await loggingExeca(this.context.logger, "git", options, {
+                cwd,
+                doNotPipeOutput: true
+            });
+            return response.stdout;
+        } catch (error) {
+            throw new CliError({
+                message: `Git command failed in generated output directory: ${extractErrorMessage(error)}`,
+                code: CliError.Code.UserError
+            });
+        }
     }
 
     private async runThrowawayGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
@@ -1008,6 +1089,73 @@ export class LocalTaskHandler {
     }
 
     /**
+     * Reads the full contents of the changelog file (case-insensitive `changelog.md`)
+     * in the output directory. Returns undefined when no changelog file exists.
+     */
+    private async readChangelogFile(): Promise<{ filename: string; content: string } | undefined> {
+        try {
+            const files = await readdir(this.absolutePathToLocalOutput);
+            const filename = files.find((f) => f.toLowerCase() === "changelog.md");
+            if (filename == null) {
+                return undefined;
+            }
+            const content = await readFile(
+                join(this.absolutePathToLocalOutput, RelativeFilePath.of(filename)),
+                "utf-8"
+            );
+            return { filename, content };
+        } catch (error) {
+            this.context.logger.debug(`Failed to read changelog file: ${error}`);
+            return undefined;
+        }
+    }
+
+    /**
+     * Restores the changelog file captured before the copy operations if those
+     * operations removed it (generators don't emit changelog.md, so a plain copy
+     * would silently drop all prior entries).
+     */
+    private async restoreChangelogFile(prior: { filename: string; content: string } | undefined): Promise<void> {
+        if (prior == null) {
+            return;
+        }
+        const current = await this.readChangelogFile();
+        if (current != null) {
+            return;
+        }
+        await writeFile(join(this.absolutePathToLocalOutput, RelativeFilePath.of(prior.filename)), prior.content);
+        this.context.logger.debug(`Restored ${prior.filename} removed during generation.`);
+    }
+
+    /**
+     * Prepends a version-only changelog entry (version header, empty description) for an
+     * explicitly pinned version. Skips when the version is already recorded. When no
+     * changelog file exists, one is created only if `createIfMissing` is set (SDK repos) —
+     * plain local filesystem outputs are left untouched.
+     */
+    private async prependExplicitVersionChangelogEntry({
+        version,
+        createIfMissing
+    }: {
+        version: string;
+        createIfMissing: boolean;
+    }): Promise<void> {
+        const existing = await this.readChangelogFile();
+        if (existing == null && !createIfMissing) {
+            return;
+        }
+        if (existing != null && changelogContainsVersion(existing.content, version)) {
+            return;
+        }
+        const filename = existing?.filename ?? "changelog.md";
+        await writeFile(
+            join(this.absolutePathToLocalOutput, RelativeFilePath.of(filename)),
+            prependChangelogBlock({ existingContent: existing?.content ?? "", version, entry: "" })
+        );
+        this.context.logger.debug(`Recorded version ${version} in ${filename}.`);
+    }
+
+    /**
      * Reads the most recent git commit message that touched the .fern/ directory
      * in the spec repo. This provides context to the AI about why the API changed.
      */
@@ -1070,4 +1218,29 @@ export class LocalTaskHandler {
         this.context.logger.info(`Generated git diff to file: ${diffFile}`);
         return diffFile;
     }
+}
+
+/**
+ * Copies `src` to `dest` only when `src` has non-zero size; returns
+ * `"copied"` or `"skipped-empty"`. Extracted from `LocalTaskHandler` so
+ * the skip-empty behavior can be unit-tested without standing up the
+ * full handler. `runGenerator` pre-creates an empty `snippet.json` in
+ * the workspace tmp dir and bind-mounts it into the generator
+ * container; generators that don't emit per-endpoint snippets leave it
+ * empty, and we don't want that zero-byte stub leaking into the user's
+ * output dir.
+ */
+export async function copySnippetJsonIfNonEmpty({
+    src,
+    dest
+}: {
+    src: AbsoluteFilePath;
+    dest: AbsoluteFilePath;
+}): Promise<"copied" | "skipped-empty"> {
+    const tmpStat = await stat(src);
+    if (tmpStat.size === 0) {
+        return "skipped-empty";
+    }
+    await cp(src, dest);
+    return "copied";
 }

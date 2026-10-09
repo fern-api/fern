@@ -87,6 +87,24 @@ export interface ModifyResourceAtInlinedPath {
 /**
  * @example
  *     {
+ *         _fields: "_fields",
+ *         body: {
+ *             string: "string"
+ *         }
+ *     }
+ */
+export interface CreateWithBodyAndQuery {
+    _fields?: string;
+    body: SeedExhaustive.types.ObjectWithRequiredField;
+}
+
+export interface UploadBytesWithQuery {
+    _fields?: string;
+}
+
+/**
+ * @example
+ *     {
  *         id: "id"
  *     }
  */
@@ -122,6 +140,18 @@ export interface PostWithObjectBody {
     string: string;
     integer: number;
     NestedObject: SeedExhaustive.types.ObjectWithOptionalField;
+}
+
+/**
+ * @example
+ *     {
+ *         "X-Custom-Header": "X-Custom-Header",
+ *         body: ["string", "string"]
+ *     }
+ */
+export interface PostWithArrayBodyAndHeaders {
+    "X-Custom-Header"?: string;
+    body: string[];
 }
 
 /**

@@ -1,0 +1,7 @@
+- summary: |
+    Fix false-positive "Example is missing required property" errors when validating
+    examples of discriminated unions whose `base-properties` overlap with properties
+    each variant also inherits via its own `extends` chain. The union validator now
+    preserves keys claimed by the variant when constructing the example handed to
+    variant-level validation, so inherited required properties are no longer dropped.
+  type: fix

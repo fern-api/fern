@@ -3716,10 +3716,7 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lemur/v3/generate/action-items",
-              "request": {
-                "body": "root.LemurActionItemsParameters",
-                "content-type": "application/json",
-              },
+              "request": "root.LemurActionItemsParameters",
               "response": {
                 "docs": "LeMUR action items response",
                 "status-code": 200,
@@ -4069,9 +4066,7 @@ service:
       source:
         openapi: ../openapi.yml
       display-name: Extract action items from one or more meeting transcripts.
-      request:
-        body: root.LemurActionItemsParameters
-        content-type: application/json
+      request: root.LemurActionItemsParameters
       response:
         docs: LeMUR action items response
         type: root.LemurActionItemsResponse
@@ -5169,6 +5164,7 @@ docs: Real-time transcription
                 },
               },
               "response": {
+                "content-type": undefined,
                 "docs": "The exported captions as text",
                 "status-code": 200,
                 "type": "text",
@@ -6158,6 +6154,7 @@ docs: Transcript related operations
                 "docs": "Send messages to the WebSocket",
                 "type": "sendMessage",
               },
+              "docs": "Send messages to the WebSocket",
               "origin": "client",
             },
             "subscribe": {
@@ -6165,6 +6162,7 @@ docs: Transcript related operations
                 "docs": "Receive messages from the WebSocket",
                 "type": "receiveMessage",
               },
+              "docs": "Receive messages from the WebSocket",
               "origin": "server",
             },
           },
@@ -6263,11 +6261,13 @@ The parameter should map to a JSON encoded list of strings.
       body:
         type: sendMessage
         docs: Send messages to the WebSocket
+      docs: Send messages to the WebSocket
     subscribe:
       origin: server
       body:
         type: receiveMessage
         docs: Receive messages from the WebSocket
+      docs: Receive messages from the WebSocket
   examples:
     - messages:
         - type: publish
@@ -6349,4 +6349,5 @@ auth-schemes:
 auth: ApiKey
 ",
   },
+  "specVersion": "1.0.0",
 }

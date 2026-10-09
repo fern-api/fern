@@ -1,0 +1,9 @@
+{
+  "title": "Failed to load generator migrations for fernapi/fern-typescript-sdk",
+  "disposition": "shipped",
+  "rationale": "npm install failure (EACCES on rename) in migration cache. loadMigrationModule already wraps non-CliError exceptions as CliError(EnvironmentError) at the boundary.",
+  "fixSummary": "Already fixed: loadMigrationModule catch block wraps with EnvironmentError.",
+  "prOrIssue": "This PR (ledger only)",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "npm cache rename EACCES inside ensureMigrationsInstalled, caught and wrapped as EnvironmentError by loadMigrationModule."
+}

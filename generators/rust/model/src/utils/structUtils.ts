@@ -1,5 +1,6 @@
 import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getSerdeName } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -220,16 +221,31 @@ export function generateFieldAttributes(
 ): rust.Attribute[] {
     const attributes: rust.Attribute[] = [];
 
-    // Add serde rename if the field name differs from wire name
-    if (context.case.snakeUnsafe(property.name) !== getWireValue(property.name)) {
+    // Add serde rename if the field name differs from wire name. The comparison uses the
+    // escaped identifier because keywords that cannot be raw identifiers are mangled (e.g. a
+    // `self` property becomes `self_`), and serde would otherwise use the mangled name.
+    const fieldName = context.escapeRustKeyword(context.case.snakeUnsafe(property.name));
+    if (getSerdeName(fieldName) !== getWireValue(property.name)) {
         attributes.push(Attribute.serde.rename(getWireValue(property.name)));
     }
 
-    // If the field is entirely skipped during serialization (e.g. query params sent
-    // separately from the request body), use skip_serializing instead of skip_serializing_if.
+    // If the field is entirely excluded from serde (e.g. query params sent
+    // separately from the request body), prefer #[serde(skip)] so the field
+    // participates in neither serialization nor deserialization. Using only
+    // skip_serializing would leave the field eligible for deserialization,
+    // which can collide with a body field whose #[serde(rename = "X")]
+    // matches this field's name, producing an `unreachable pattern` warning.
+    //
+    // However, #[serde(skip)] requires the type to implement Default. For
+    // non-optional types without Default (e.g. required enum query params),
+    // fall back to skip_serializing to avoid a compile error.
     const isOptional = isOptionalType(property.valueType);
     if (options?.skipSerialization) {
-        attributes.push(Attribute.serde.skipSerializing());
+        if (isOptional || hasDefaultImpl(property.valueType, context)) {
+            attributes.push(Attribute.serde.skip());
+        } else {
+            attributes.push(Attribute.serde.skipSerializing());
+        }
     } else if (isOptional) {
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
     }
@@ -237,7 +253,12 @@ export function generateFieldAttributes(
     // For non-optional fields with types that implement Default (primitives, containers),
     // add #[serde(default)] so deserialization succeeds when the field is missing from JSON.
     // This handles cases like deferred responses that return partial objects.
-    if (!isOptional && hasDefaultImpl(property.valueType, context)) {
+    //
+    // `unknown` is deliberately excluded even though serde_json::Value implements Default:
+    // a required `unknown` field should still fail to deserialize when the key is absent,
+    // rather than silently becoming Value::Null and re-serializing as `null`. It also keeps
+    // untagged union members from matching every JSON object once all their fields default.
+    if (!isOptional && hasDefaultImpl(property.valueType, context, { unknownHasDefault: false })) {
         attributes.push(Attribute.serde.default());
     }
 
@@ -246,11 +267,12 @@ export function generateFieldAttributes(
     // since the with modules may not exist and aren't needed.
     if (context && !options?.skipSerialization) {
         const dateTimeType = context.getDateTimeType();
+        const coreModulePath = context.getCoreModulePath();
         const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
         if (isDateTimeOnlyType(typeRef)) {
             const modulePath = dateTimeType === "utc" 
-                ? "crate::core::flexible_datetime::utc" 
-                : "crate::core::flexible_datetime::offset";
+                ? `${coreModulePath}::flexible_datetime::utc` 
+                : `${coreModulePath}::flexible_datetime::offset`;
             if (isOptional) {
                 // For optional datetime fields with custom deserializer, we need serde(default)
                 // to handle missing fields in JSON (otherwise serde expects the field to be present)
@@ -265,9 +287,9 @@ export function generateFieldAttributes(
         if (isBase64Type(typeRef)) {
             if (isOptional) {
                 attributes.push(Attribute.serde.default());
-                attributes.push(Attribute.serde.with("crate::core::base64_bytes::option"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::base64_bytes::option`));
             } else {
-                attributes.push(Attribute.serde.with("crate::core::base64_bytes"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::base64_bytes`));
             }
         }
 
@@ -275,9 +297,9 @@ export function generateFieldAttributes(
         if (isBigIntType(typeRef)) {
             if (isOptional) {
                 attributes.push(Attribute.serde.default());
-                attributes.push(Attribute.serde.with("crate::core::bigint_string::option"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::bigint_string::option`));
             } else {
-                attributes.push(Attribute.serde.with("crate::core::bigint_string"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::bigint_string`));
             }
         }
 
@@ -285,9 +307,9 @@ export function generateFieldAttributes(
         if (isFloatingPointType(typeRef)) {
             if (isOptional) {
                 attributes.push(Attribute.serde.default());
-                attributes.push(Attribute.serde.with("crate::core::number_serializers::option"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::number_serializers::option`));
             } else {
-                attributes.push(Attribute.serde.with("crate::core::number_serializers"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::number_serializers`));
             }
         }
     }
@@ -403,6 +425,7 @@ export function convertQueryParametersToProperties(
             docs: queryParam.docs,
             availability: queryParam.availability,
             propertyAccess: undefined,
+            defaultValue: undefined,
             v2Examples: undefined
         };
     });

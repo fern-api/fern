@@ -57,6 +57,9 @@ export class ReadmeConfigBuilder {
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
+            apiName: context.ir.readmeConfig?.apiName,
+            disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
+            whiteLabel: context.ir.readmeConfig?.whiteLabel,
             customSections: getCustomSections(context),
             features,
             requirements: ["PHP ^8.1"]

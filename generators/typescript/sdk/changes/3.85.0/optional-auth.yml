@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `optional-auth` config flag. When enabled, client auth
+    parameters are made optional even when the API spec mandates auth on all
+    endpoints (`isAuthMandatory=true`), so the client can be constructed without
+    credentials. Requests are then sent unauthenticated when no credentials are
+    supplied, instead of throwing from the auth provider. Useful for
+    hand-maintained wrapper clients that authenticate via external means
+    (e.g. cloud provider credentials). Defaults to `false`, so existing
+    behavior is unchanged.
+  type: feat

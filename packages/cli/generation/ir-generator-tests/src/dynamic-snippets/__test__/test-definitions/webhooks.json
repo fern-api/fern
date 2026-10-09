@@ -122,7 +122,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:OrderCompletedPayload": {
             "type": "object",
@@ -245,7 +246,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:PaymentNotificationPayload": {
             "type": "object",
@@ -368,7 +370,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RefundProcessedPayload": {
             "type": "object",
@@ -494,7 +497,102 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:SmsStatusPayload": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SmsStatusPayload",
+                    "camelCase": {
+                        "unsafeName": "smsStatusPayload",
+                        "safeName": "smsStatusPayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "sms_status_payload",
+                        "safeName": "sms_status_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SMS_STATUS_PAYLOAD",
+                        "safeName": "SMS_STATUS_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SmsStatusPayload",
+                        "safeName": "SmsStatusPayload"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "messageSid",
+                        "name": {
+                            "originalName": "messageSid",
+                            "camelCase": {
+                                "unsafeName": "messageSid",
+                                "safeName": "messageSid"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message_sid",
+                                "safeName": "message_sid"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE_SID",
+                                "safeName": "MESSAGE_SID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MessageSid",
+                                "safeName": "MessageSid"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "status",
+                        "name": {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -502,5 +600,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

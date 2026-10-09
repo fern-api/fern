@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.no_req_body.get_with_no_request_body
+      #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def get_with_no_request_body(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -33,7 +36,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -47,6 +50,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.no_req_body.post_with_no_request_body
       #
       # @return [String]
       def post_with_no_request_body(request_options: {}, **_params)
@@ -62,10 +68,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
     end
   end

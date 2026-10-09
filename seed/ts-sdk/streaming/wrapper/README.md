@@ -43,7 +43,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedStreamingClient } from "@fern/streaming";
 
-const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedStreamingClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.dummy.generateStream({
     num_events: 1
 });
@@ -93,7 +93,7 @@ The SDK uses async iterators, so you can consume the responses using a `for awai
 ```typescript
 import { SeedStreamingClient } from "@fern/streaming";
 
-const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedStreamingClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.dummy.generateStream({
     num_events: 1
 });

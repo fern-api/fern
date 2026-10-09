@@ -21,7 +21,7 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedOauthClientCredentials" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedOauthClientCredentials.Version.Current },
                 { "User-Agent", "Fernoauth-client-credentials-nested-root/0.0.1" },
             }
         );

@@ -24,10 +24,12 @@ type ListResourcesRequest struct {
 }
 
 func (l *ListResourcesRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPageLimit sets the PageLimit field and marks it as non-optional;
@@ -82,10 +84,12 @@ func (n *NestedUser) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NestedUser) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -173,10 +177,12 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *Organization) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -233,6 +239,8 @@ type Resource struct {
 	Status       ResourceStatus
 	User         *User
 	Organization *Organization
+
+	rawJSON json.RawMessage
 }
 
 func (r *Resource) GetResourceType() string {
@@ -290,6 +298,7 @@ func (r *Resource) UnmarshalJSON(data []byte) error {
 		}
 		r.Organization = value
 	}
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -302,6 +311,9 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	}
 	if r.Organization != nil {
 		return internal.MarshalJSONWithExtraProperty(r.Organization, "resource_type", "Organization")
+	}
+	if len(r.rawJSON) > 0 {
+		return r.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", r)
 }
@@ -334,6 +346,9 @@ func (r *Resource) validate() error {
 	}
 	if len(fields) == 0 {
 		if r.ResourceType != "" {
+			if len(r.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", r, r.ResourceType)
 		}
 		return fmt.Errorf("type %T is empty", r)
@@ -378,15 +393,15 @@ func (r ResourceStatus) Ptr() *ResourceStatus {
 }
 
 var (
-	userFieldUserName        = big.NewInt(1 << 0)
-	userFieldMetadataTags    = big.NewInt(1 << 1)
-	userFieldExtraProperties = big.NewInt(1 << 2)
+	userFieldUserName             = big.NewInt(1 << 0)
+	userFieldMetadataTags         = big.NewInt(1 << 1)
+	userFieldFieldExtraProperties = big.NewInt(1 << 2)
 )
 
 type User struct {
-	UserName        string            `json:"userName" url:"userName"`
-	MetadataTags    []string          `json:"metadata_tags" url:"metadata_tags"`
-	ExtraProperties map[string]string `json:"EXTRA_PROPERTIES" url:"EXTRA_PROPERTIES"`
+	UserName             string            `json:"userName" url:"userName"`
+	MetadataTags         []string          `json:"metadata_tags" url:"metadata_tags"`
+	FieldExtraProperties map[string]string `json:"EXTRA_PROPERTIES" url:"EXTRA_PROPERTIES"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -409,11 +424,11 @@ func (u *User) GetMetadataTags() []string {
 	return u.MetadataTags
 }
 
-func (u *User) GetExtraProperties() map[string]string {
+func (u *User) GetFieldExtraProperties() map[string]string {
 	if u == nil {
 		return nil
 	}
-	return u.ExtraProperties
+	return u.FieldExtraProperties
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -424,10 +439,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUserName sets the UserName field and marks it as non-optional;
@@ -444,11 +461,11 @@ func (u *User) SetMetadataTags(metadataTags []string) {
 	u.require(userFieldMetadataTags)
 }
 
-// SetExtraProperties sets the ExtraProperties field and marks it as non-optional;
+// SetFieldExtraProperties sets the FieldExtraProperties field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetExtraProperties(extraProperties map[string]string) {
-	u.ExtraProperties = extraProperties
-	u.require(userFieldExtraProperties)
+func (u *User) SetFieldExtraProperties(extraProperties map[string]string) {
+	u.FieldExtraProperties = extraProperties
+	u.require(userFieldFieldExtraProperties)
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {

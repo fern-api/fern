@@ -81,9 +81,7 @@ impl PostRequest {
         }
 
         if let Some(ref value) = self.maybe_string {
-            if let Ok(json_str) = serde_json::to_string(value) {
-                form = form.text("maybe_string", json_str);
-            }
+            form = form.text("maybe_string", value.clone());
         }
 
         if let Ok(json_str) = serde_json::to_string(&self.integer) {

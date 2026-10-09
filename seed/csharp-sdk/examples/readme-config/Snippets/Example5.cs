@@ -12,8 +12,8 @@ public partial class Examples
         );
 
         await client.File.Service.GetFileAsync(
-            "file.txt",
-            new GetFileRequest {
+            filename: "file.txt",
+            request: new GetFileRequest {
                 XFileApiVersion = "0.0.2"
             }
         );

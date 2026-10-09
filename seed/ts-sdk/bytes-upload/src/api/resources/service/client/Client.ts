@@ -25,6 +25,9 @@ export class ServiceClient {
      * @param {core.file.Uploadable} uploadable
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedBytesUploadError}
+     * @throws {@link errors.SeedBytesUploadTimeoutError}
+     *
      * @example
      *     import { createReadStream } from "fs";
      *     await client.service.upload(createReadStream("path/to/file"))
@@ -84,6 +87,9 @@ export class ServiceClient {
      * @param {core.file.Uploadable} uploadable
      * @param {SeedBytesUpload.UploadWithQueryParamsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedBytesUploadError}
+     * @throws {@link errors.SeedBytesUploadTimeoutError}
      *
      * @example
      *     import { createReadStream } from "fs";

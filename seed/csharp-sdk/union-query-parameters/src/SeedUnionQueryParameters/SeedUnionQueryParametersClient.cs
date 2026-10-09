@@ -14,7 +14,7 @@ public partial class SeedUnionQueryParametersClient : ISeedUnionQueryParametersC
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedUnionQueryParameters" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedUnionQueryParameters.Version.Current },
                 { "User-Agent", "Fernunion-query-parameters/0.0.1" },
             }
         );

@@ -1,0 +1,7 @@
+- summary: |
+    Enrich CLI telemetry with automation-mode context (config repo, branch,
+    commit sha, PR number, trigger, and GitHub run details) on every PostHog
+    event and Sentry error report.
+    Add the three-leg failure flow (Sentry + PostHog + automation event API)
+    so automation-run failures surface end-to-end.
+  type: internal

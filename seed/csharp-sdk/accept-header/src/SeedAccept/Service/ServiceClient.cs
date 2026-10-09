@@ -12,14 +12,14 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.EndpointAsync();
-    /// </code></example>
-    public async Task EndpointAsync(
+    private async Task<RawResponse> EndpointAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedAccept.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedAccept.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +32,7 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Delete,
                     Path = "/container/",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -40,7 +41,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedAccept.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -51,7 +57,17 @@ public partial class ServiceClient : IServiceClient
                 switch (response.StatusCode)
                 {
                     case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<object>(responseBody));
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<object>(responseBody),
+                            rawResponse: new SeedAccept.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -61,8 +77,25 @@ public partial class ServiceClient : IServiceClient
             throw new SeedAcceptApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedAccept.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.EndpointAsync();
+    /// </code></example>
+    public WithRawResponseTask EndpointAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(EndpointAsyncCore(options, cancellationToken));
     }
 }

@@ -1,0 +1,6 @@
+- summary: |
+    TimeoutError now extends the base API error class instead of Error directly,
+    so `instanceof ApiError` catches timeout errors. Added a `requestId` getter
+    to the base API error class that extracts `x-request-id` from the raw response
+    headers.
+  type: feat

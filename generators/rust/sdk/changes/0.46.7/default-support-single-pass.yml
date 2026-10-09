@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Solve `Default` support for every type in one pass over the IR instead of walking
+    the type graph again for each reference. Derives are unchanged, and the answer no
+    longer depends on which type is analyzed first.
+  type: chore

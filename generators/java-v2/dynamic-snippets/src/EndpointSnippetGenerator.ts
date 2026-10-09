@@ -605,7 +605,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
+        if (request.body != null && !this.callOmitsRequestBody({ request, snippet })) {
             args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
         }
         this.context.errors.unscope();
@@ -617,6 +617,27 @@ export class EndpointSnippetGenerator {
         }
 
         return args;
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which the shorter overload accepts. Applies
+     * only to a body the caller may omit, and only once the generator opts in to that.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig?.["respect-optional-request-body"] !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private usesOptionalNullable(): boolean {
@@ -685,11 +706,25 @@ export class EndpointSnippetGenerator {
                         return convertedValue;
                     }
 
+                    // The generated client method accepts the body as a single Optional<T> (or
+                    // OptionalNullable<T> in collapse mode) argument and therefore requires an
+                    // explicit Optional.of(...) / OptionalNullable.of(...). When the body nests
+                    // optional/nullable (e.g. optional<nullable<T>>), converting body.value.value
+                    // already yields an Optional/OptionalNullable literal, which the wrap below
+                    // would then either drop (the "avoid double optional" guard) or double-wrap
+                    // (OptionalNullable.of(OptionalNullable.of(...))). Convert the fully unwrapped
+                    // type so the value is wrapped exactly once.
+                    const unwrappedValue = this.context.dynamicTypeLiteralMapper.convert({
+                        typeReference: stripOptionalAndNullable(body.value),
+                        value,
+                        as: "request"
+                    });
+
                     if (isCollapsedOptionalNullable) {
-                        return this.context.getOptionalNullableOf(convertedValue);
+                        return this.context.getOptionalNullableOf(unwrappedValue);
                     } else {
                         return java.TypeLiteral.optional({
-                            value: convertedValue,
+                            value: unwrappedValue,
                             useOf: true
                         });
                     }
@@ -855,22 +890,25 @@ export class EndpointSnippetGenerator {
         }));
         this.context.errors.unscope();
 
+        const requestClassReference = java.classReference({
+            name: this.context.getClassName(request.declaration.name),
+            packageName: this.context.getRequestsPackageName(request.declaration.fernFilepath)
+        });
+
         this.context.errors.scope(Scope.RequestBody);
         const requestBodyFields =
             request.body != null
                 ? this.getInlinedRequestBodyBuilderParameters({
                       body: request.body,
                       value: snippet.requestBody,
-                      filePropertyInfo
+                      filePropertyInfo,
+                      enclosing: requestClassReference
                   })
                 : [];
         this.context.errors.unscope();
 
         return java.TypeLiteral.builder({
-            classReference: java.classReference({
-                name: this.context.getClassName(request.declaration.name),
-                packageName: this.context.getRequestsPackageName(request.declaration.fernFilepath)
-            }),
+            classReference: requestClassReference,
             parameters: [...pathParameterFields, ...headerFields, ...queryParameterFields, ...requestBodyFields]
         });
     }
@@ -933,15 +971,21 @@ export class EndpointSnippetGenerator {
     private getInlinedRequestBodyBuilderParameters({
         body,
         value,
-        filePropertyInfo
+        filePropertyInfo,
+        enclosing
     }: {
         body: FernIr.dynamic.InlinedRequestBody;
         value: unknown;
         filePropertyInfo: FilePropertyInfo;
+        enclosing: java.ClassReference;
     }): java.BuilderParameter[] {
         switch (body.type) {
             case "properties":
-                return this.getInlinedRequestBodyPropertyBuilderParameters({ parameters: body.value, value });
+                return this.getInlinedRequestBodyPropertyBuilderParameters({
+                    parameters: body.value,
+                    value,
+                    enclosing
+                });
             case "referenced":
                 return [this.getReferencedRequestBodyPropertyBuilderParameter({ body, value })];
             case "fileUpload":
@@ -957,7 +1001,11 @@ export class EndpointSnippetGenerator {
         filePropertyInfo: FilePropertyInfo;
     }): java.BuilderParameter[] {
         if (this.context.shouldInlineFileProperties()) {
-            return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
+            // Body properties are emitted before file properties so that the snippet's builder call
+            // follows the generated staged-builder order. The dynamic IR does not expose whether a
+            // file is optional, so file builder parameters carry a concrete (non-optional) value and
+            // would otherwise be treated as required and ordered ahead of a required body property.
+            return [...filePropertyInfo.bodyPropertyFields, ...filePropertyInfo.fileFields];
         }
         return filePropertyInfo.bodyPropertyFields;
     }
@@ -971,7 +1019,13 @@ export class EndpointSnippetGenerator {
     }): java.BuilderParameter {
         return {
             name: this.context.getMethodName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+            // The wrapped request requires the body, so an example that sends none still has to
+            // build one. An empty record renders the body type's own empty builder, while the
+            // other body types already render an empty value of their own from an absent one.
+            value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                body: body.bodyType,
+                value: body.bodyType.type === "typeReference" ? (value ?? {}) : value
+            })
         };
     }
 
@@ -998,10 +1052,12 @@ export class EndpointSnippetGenerator {
 
     private getInlinedRequestBodyPropertyBuilderParameters({
         parameters,
-        value
+        value,
+        enclosing
     }: {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
+        enclosing: java.ClassReference;
     }): java.BuilderParameter[] {
         const bodyProperties = this.context.associateByWireValue({
             parameters,
@@ -1011,12 +1067,23 @@ export class EndpointSnippetGenerator {
             (parameter) => !this.context.isDirectLiteral(parameter.typeReference)
         );
         const sortedProperties = this.context.sortTypeInstancesByRequiredFirst(filteredProperties, parameters);
+        const reservedNames = new Set<string>([...enclosing.enclosingClasses, enclosing.name]);
+        const siblingPropertyNames = new Set<string>(
+            parameters.map((parameter) => this.context.getClassName(parameter.name.name))
+        );
         return sortedProperties.map((parameter) => ({
             name: this.context.getMethodName(parameter.name.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
                 typeReference: parameter.typeReference,
                 value: parameter.value,
-                as: "request"
+                as: "request",
+                nestedClassReference: this.context.dynamicTypeLiteralMapper.resolveInlineNestedClassReference({
+                    enclosing,
+                    baseName: this.context.getClassName(parameter.name.name),
+                    typeReference: parameter.typeReference,
+                    reservedNames,
+                    siblingPropertyNames
+                })
             })
         }));
     }
@@ -1031,7 +1098,8 @@ export class EndpointSnippetGenerator {
         const args: java.BuilderParameter[] = [];
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
-            values: snippet.pathParameters ?? {}
+            values: snippet.pathParameters ?? {},
+            ignoreMissingParameters: true
         });
         for (const parameter of pathParameters) {
             args.push({

@@ -27,13 +27,24 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.CreatePaymentRequest{
+//	    Amount: 1,
+//	    Currency: fern.CurrencyUsd,
+//	}
+//	client.Payment.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *fern.CreatePaymentRequest,
@@ -50,6 +61,12 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Payment.Delete(
+//	    context.TODO(),
+//	    "paymentId",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	paymentID string,

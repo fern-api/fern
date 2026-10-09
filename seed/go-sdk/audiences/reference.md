@@ -14,18 +14,17 @@
 
 ```go
 request := &foldera.GetDirectThreadRequest{
-        IDs: []string{
-            "ids",
-        },
-        Tags: []string{
-            "tags",
-        },
-    }
-client.FolderA.Service.GetDirectThread(
-        context.TODO(),
-        request,
-    )
+    IDs: []string{
+        "ids",
+    },
+    Tags: []string{
+        "tags",
+    },
 }
+client.FolderA.Service.GetDirectThread(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -75,9 +74,8 @@ client.FolderA.Service.GetDirectThread(
 
 ```go
 client.FolderD.Service.GetDirectThread(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -104,21 +102,20 @@ client.FolderD.Service.GetDirectThread(
 
 ```go
 request := &fern.FindRequest{
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        PublicProperty: fern.String(
-            "publicProperty",
-        ),
-        PrivateProperty: fern.Int(
-            1,
-        ),
-    }
-client.Foo.Find(
-        context.TODO(),
-        request,
-    )
+    OptionalString: fern.String(
+        "optionalString",
+    ),
+    PublicProperty: fern.String(
+        "publicProperty",
+    ),
+    PrivateProperty: fern.Int(
+        1,
+    ),
 }
+client.Foo.Find(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

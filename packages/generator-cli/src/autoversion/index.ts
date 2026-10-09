@@ -6,12 +6,14 @@ export {
     countFilesInDiff,
     formatSizeKB
 } from "./AutoVersioningService.js";
+export { changelogContainsVersion, prependChangelogBlock } from "./changelogUtils.js";
 export {
     AUTO_VERSION,
     extractLanguageFromGeneratorName,
     extractPreviousVersionFromDiffLine,
     incrementVersion,
     isAutoVersion,
+    isPlaceholderVersion,
     isValidSemver,
     MAGIC_VERSION,
     MAGIC_VERSION_PYTHON,

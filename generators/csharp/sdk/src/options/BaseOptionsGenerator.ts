@@ -51,7 +51,17 @@ export class BaseOptionsGenerator extends WithGeneration {
             get: true,
             init: true,
             type: optional ? type.asOptional() : type,
-            initializer: includeInitializer ? this.System.Net.Http.HttpClient.new() : undefined,
+            initializer: includeInitializer
+                ? this.csharp.codeblock((writer) => {
+                      writer.writeNode(
+                          this.csharp.invokeMethod({
+                              on: this.Types.DefaultHttpClientFactory,
+                              method: "Create",
+                              arguments_: []
+                          })
+                      );
+                  })
+                : undefined,
             summary: "The http client used to make requests."
         });
     }
@@ -92,15 +102,46 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
     }
 
+    public getMaxStreamReconnectAttemptsField(classOrInterface: ast.Interface | ast.Class, { optional }: OptionArgs) {
+        const type = this.Primitive.integer;
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("MaxStreamReconnectAttempts"),
+            access: ast.Access.Public,
+            get: true,
+            init: true,
+            type: optional ? type.asOptional() : type,
+            summary:
+                "The max number of reconnection attempts for streaming endpoints.\nOnly applies to SSE streams marked as resumable."
+        });
+    }
+
+    public getDisableStreamReconnectionField(classOrInterface: ast.Interface | ast.Class, { optional }: OptionArgs) {
+        const type = this.Primitive.boolean;
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("DisableStreamReconnection"),
+            access: ast.Access.Public,
+            get: true,
+            init: true,
+            type: optional ? type.asOptional() : type,
+            summary:
+                "When true, disables automatic reconnection for streaming endpoints.\nOnly applies to SSE streams marked as resumable."
+        });
+    }
+
     public getTimeoutField(classOrInterface: ast.Interface | ast.Class, { optional, includeInitializer }: OptionArgs) {
         const type = this.System.TimeSpan;
+        const configured = this.settings.defaultTimeoutInMilliseconds;
+        const initializer =
+            configured === "infinity"
+                ? this.csharp.codeblock("System.Threading.Timeout.InfiniteTimeSpan")
+                : this.csharp.codeblock(`TimeSpan.FromMilliseconds(${configured ?? 30000})`);
         classOrInterface.addField({
             origin: classOrInterface.explicit("Timeout"),
             access: ast.Access.Public,
             get: true,
             init: true,
             type: optional ? type.asOptional() : type,
-            initializer: includeInitializer ? this.csharp.codeblock("TimeSpan.FromSeconds(30)") : undefined,
+            initializer: includeInitializer ? initializer : undefined,
             summary: "The timeout for the request."
         });
     }
@@ -138,11 +179,11 @@ export class BaseOptionsGenerator extends WithGeneration {
             header: HttpHeader;
             options: OptionArgs;
         }
-    ) {
+    ): ast.Field | undefined {
         if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
-            return;
+            return undefined;
         }
-        classOrInterface.addField({
+        return classOrInterface.addField({
             access: ast.Access.Public,
             origin: header,
             get: true,
@@ -171,6 +212,10 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
         this.getMaxRetriesField(classOrInterface, optionArgs);
         this.getTimeoutField(classOrInterface, optionArgs);
+        if (this.context.hasResumableSseEndpoints) {
+            this.getMaxStreamReconnectAttemptsField(classOrInterface, optionArgs);
+            this.getDisableStreamReconnectionField(classOrInterface, optionArgs);
+        }
         this.getQueryParametersField(classOrInterface, {
             optional: false,
             includeInitializer: true
@@ -195,6 +240,10 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
         this.getMaxRetriesField(iface, optionArgs);
         this.getTimeoutField(iface, optionArgs);
+        if (this.context.hasResumableSseEndpoints) {
+            this.getMaxStreamReconnectAttemptsField(iface, optionArgs);
+            this.getDisableStreamReconnectionField(iface, optionArgs);
+        }
         this.getQueryParametersField(iface, {
             optional: false,
             includeInitializer: false
@@ -202,13 +251,19 @@ export class BaseOptionsGenerator extends WithGeneration {
         this.getBodyPropertiesField(iface, optionArgs);
     }
 
-    public getLiteralHeaderOptions(classOrInterface: ast.Interface | ast.Class, optionArgs: OptionArgs) {
+    /** Adds a client option for every literal-typed global header, and returns the added fields. */
+    public getLiteralHeaderOptions(classOrInterface: ast.Interface | ast.Class, optionArgs: OptionArgs): ast.Field[] {
+        const fields: ast.Field[] = [];
         for (const header of this.context.ir.headers) {
-            this.maybeGetLiteralHeaderField(classOrInterface, {
+            const field = this.maybeGetLiteralHeaderField(classOrInterface, {
                 header,
                 options: optionArgs
             });
+            if (field != null) {
+                fields.push(field);
+            }
         }
+        return fields;
     }
 
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): ast.Type {
@@ -244,7 +299,8 @@ export class BaseOptionsGenerator extends WithGeneration {
             origin: classOrInterface.explicit("AdditionalBodyProperties"),
             access: ast.Access.Public,
             type: this.context.getAdditionalBodyPropertiesType(),
-            summary: "Additional body properties sent with the request.\nThis is only applied to JSON requests.",
+            summary:
+                "Additional body properties sent with the request.\nThis is applied to JSON and form-urlencoded requests (not multipart requests).",
             get: true,
             init: true,
             initializer: includeInitializer ? this.csharp.codeblock("null") : undefined

@@ -9,8 +9,24 @@ public final class ImdbClient: Sendable {
 
     /// Add a movie to the database using the movies/* /... path.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient(token: "<token>")
+    ///
+    ///     _ = try await client.imdb.createMovie(request: .init(
+    ///         title: "title",
+    ///         rating: 1.1
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func createMovie(request: CreateMovieRequest, requestOptions: RequestOptions? = nil) async throws -> MovieId {
+    public func createMovie(request: Requests.CreateMovieRequest, requestOptions: RequestOptions? = nil) async throws -> MovieId {
         return try await httpClient.performRequest(
             method: .post,
             path: "/movies/create-movie",
@@ -20,6 +36,20 @@ public final class ImdbClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient(token: "<token>")
+    ///
+    ///     _ = try await client.imdb.getMovie(movieId: "movieId")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getMovie(movieId: String, requestOptions: RequestOptions? = nil) async throws -> Movie {
         return try await httpClient.performRequest(
             method: .get,

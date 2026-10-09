@@ -1,5 +1,5 @@
-export declare class SeedExhaustiveTimeoutError extends Error {
-    readonly cause?: unknown;
+import * as errors from "./index.mjs";
+export declare class SeedExhaustiveTimeoutError extends errors.SeedExhaustiveError {
     constructor(message: string, opts?: {
         cause?: unknown;
     });

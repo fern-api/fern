@@ -3,9 +3,11 @@
  */
 package com.seed.inferredAuthExplicit.resources.nestednoauth.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.inferredAuthExplicit.core.ClientOptions;
 import com.seed.inferredAuthExplicit.core.ObjectMappers;
 import com.seed.inferredAuthExplicit.core.RequestOptions;
+import com.seed.inferredAuthExplicit.core.RetryInterceptor;
 import com.seed.inferredAuthExplicit.core.SeedInferredAuthExplicitApiException;
 import com.seed.inferredAuthExplicit.core.SeedInferredAuthExplicitException;
 import com.seed.inferredAuthExplicit.core.SeedInferredAuthExplicitHttpResponse;
@@ -47,6 +49,15 @@ public class RawApiClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -56,6 +67,8 @@ public class RawApiClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedInferredAuthExplicitApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedInferredAuthExplicitException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedInferredAuthExplicitException("Network error executing HTTP request", e);
         }

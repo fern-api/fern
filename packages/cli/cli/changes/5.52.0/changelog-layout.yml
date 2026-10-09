@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `layout.changelog-layout` option to docs.yml. Set it to `classic` to render the
+    legacy stacked changelog layout, or `timeline` (the default) for the searchable
+    timeline-of-cards layout.
+  type: feat

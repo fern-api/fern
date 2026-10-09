@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add opt-in `allowUserAgentAppInfo` config. When enabled, generated clients expose an
+    `option.WithUserAgentAppInfo(name, version, comment string)` client option whose sanitized
+    product token is appended to whatever `User-Agent` the SDK would otherwise send
+    (`{sdk}/{version} ... {product}/{product-version} ({comment})`), following RFC 9110.
+    Disabled by default, so existing generated output is byte-identical, and it composes with
+    `includePlatformHeaders`, the configured `user-agent` template value, and the default
+    `{package}/{version}` value. Caller-supplied values are trimmed before the blank check and
+    before encoding (blank name/version/comment are dropped rather than encoded into whitespace
+    tokens), then name/version are percent-encoded to RFC 7230 `tchar` and comment delimiters
+    `(`, `)`, `\` and control characters (incl. CR/LF) are escaped, so untrusted values cannot
+    inject header content. Still overridable by an explicit `User-Agent` header and suppressed
+    by `omitFernHeaders`. The `AppInfo` type, the `AppInfoOption`, and the emitted
+    `appendAppInfoToUserAgent` helper are only generated when the flag is on, so the shared
+    core-utilities are never modified. No IR change.
+  type: feat

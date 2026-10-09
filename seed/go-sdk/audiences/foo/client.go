@@ -26,13 +26,31 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.FindRequest{
+//	    OptionalString: fern.String(
+//	        "optionalString",
+//	    ),
+//	    PublicProperty: fern.String(
+//	        "publicProperty",
+//	    ),
+//	    PrivateProperty: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Foo.Find(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Find(
 	ctx context.Context,
 	request *fern.FindRequest,

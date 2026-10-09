@@ -1,0 +1,221 @@
+openapi: 3.0.3
+info:
+  title: Nested allOf $ref Resolution
+  version: 1.0.0
+  description: >
+    Exercises nested allOf $ref resolution where a parent schema itself uses
+    allOf with $ref elements. The v3 parser must recursively resolve these
+    nested references during allOf flattening to include grandparent
+    properties in the merged result.
+
+servers:
+  - url: https://api.example.com
+
+paths:
+  /users:
+    post:
+      operationId: createUser
+      summary: Create a user (three-level allOf chain)
+      description: >
+        Tests the core BigCommerce pattern: userPost -> userBase -> userStrict.
+        The grandparent's properties must be resolved through the nested $ref.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPost"
+      responses:
+        "200":
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserStrict"
+
+  /companies:
+    post:
+      operationId: createCompany
+      summary: Create a company (sibling properties alongside nested $ref)
+      description: >
+        Tests that sibling properties at the parent level (companyBase has
+        its own properties in addition to $ref) are all preserved.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyPost"
+      responses:
+        "200":
+          description: Created company
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyBase"
+
+  /plants:
+    post:
+      operationId: createPlant
+      summary: Create a plant (multiple $ref in single allOf)
+      description: >
+        Tests that when a parent's allOf contains multiple $ref entries,
+        all of them are resolved and their properties merged.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlantRecord"
+      responses:
+        "200":
+          description: Created plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantRecord"
+
+components:
+  schemas:
+    # ===================================================================
+    # Case 1: Three-level chain (BigCommerce pattern)
+    # UserPost -> UserBase -> UserStrict
+    # ===================================================================
+    UserStrict:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+
+    UserBase:
+      allOf:
+        - $ref: "#/components/schemas/UserStrict"
+        - type: object
+          properties:
+            role:
+              type: string
+              description: The user's role
+            companyId:
+              type: integer
+              description: Associated company ID
+
+    UserPost:
+      allOf:
+        - $ref: "#/components/schemas/UserBase"
+        - required:
+            - firstName
+            - lastName
+            - email
+            - companyId
+            - role
+            - channelIds
+          properties:
+            acceptWelcomeEmail:
+              type: boolean
+              description: Whether to send a welcome email
+            originChannelId:
+              type: integer
+              description: Origin channel ID
+            channelIds:
+              type: array
+              items:
+                type: integer
+              description: List of channel IDs
+
+    # ===================================================================
+    # Case 2: Sibling properties alongside nested $ref
+    # CompanyPost -> CompanyBase -> AddressBase
+    # CompanyBase has its own properties PLUS a $ref to AddressBase
+    # ===================================================================
+    AddressBase:
+      type: object
+      required:
+        - country
+      properties:
+        country:
+          type: string
+        state:
+          type: string
+        city:
+          type: string
+
+    CompanyBase:
+      type: object
+      properties:
+        companyName:
+          type: string
+        companyPhone:
+          type: string
+      allOf:
+        - $ref: "#/components/schemas/AddressBase"
+
+    CompanyPost:
+      allOf:
+        - $ref: "#/components/schemas/CompanyBase"
+        - required:
+            - companyName
+            - companyPhone
+            - country
+          properties:
+            taxId:
+              type: string
+              description: Tax identification number
+
+    # ===================================================================
+    # Case 3: Multiple $ref in a single allOf
+    # PlantRecord -> PlantBase (which has allOf: [$ref: Identifiable, $ref: Describable, inline])
+    # ===================================================================
+    Identifiable:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+
+    Describable:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+
+    PlantBase:
+      allOf:
+        - $ref: "#/components/schemas/Identifiable"
+        - $ref: "#/components/schemas/Describable"
+        - type: object
+          properties:
+            species:
+              type: string
+            wateringFrequency:
+              type: string
+              enum:
+                - daily
+                - weekly
+                - biweekly
+                - monthly
+
+    PlantRecord:
+      allOf:
+        - $ref: "#/components/schemas/PlantBase"
+        - required:
+            - id
+            - name
+            - species
+          properties:
+            plantedAt:
+              type: string
+              format: date
+              description: Date the plant was planted

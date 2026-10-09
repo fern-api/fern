@@ -29,6 +29,8 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExamples.NotFoundError}
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
      *
      * @example
      *     await client.file.service.getFile("file.txt", {

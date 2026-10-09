@@ -1,0 +1,101 @@
+openapi: 3.0.0
+info:
+  title: go-date-containers
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /loan:
+    get:
+      operationId: getLoan
+      tags:
+        - Loans
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Loan"
+              example:
+                disbursement_dates:
+                  - "2002-08-28"
+                unique_dates:
+                  - "2002-08-28"
+                dates_by_label:
+                  first: "2002-08-28"
+                optional_dates:
+                  - "2002-08-28"
+                aliased_dates:
+                  - "2002-08-28"
+                timestamps:
+                  - "2002-08-28T12:30:00Z"
+                unique_timestamps:
+                  - "2002-08-28T12:30:00Z"
+                timestamps_by_label:
+                  first: "2002-08-28T12:30:00Z"
+                aliased_timestamps:
+                  - "2002-08-28T12:30:00Z"
+components:
+  schemas:
+    DateList:
+      type: array
+      items:
+        type: string
+        format: date
+    DateTimeList:
+      type: array
+      items:
+        type: string
+        format: date-time
+    Loan:
+      type: object
+      properties:
+        disbursement_dates:
+          type: array
+          items:
+            type: string
+            format: date
+        unique_dates:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: date
+        dates_by_label:
+          type: object
+          additionalProperties:
+            type: string
+            format: date
+        optional_dates:
+          type: array
+          items:
+            type: string
+            format: date
+        aliased_dates:
+          $ref: "#/components/schemas/DateList"
+        timestamps:
+          type: array
+          items:
+            type: string
+            format: date-time
+        unique_timestamps:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: date-time
+        timestamps_by_label:
+          type: object
+          additionalProperties:
+            type: string
+            format: date-time
+        aliased_timestamps:
+          $ref: "#/components/schemas/DateTimeList"
+      required:
+        - disbursement_dates
+        - unique_dates
+        - dates_by_label
+        - timestamps
+        - unique_timestamps
+        - timestamps_by_label

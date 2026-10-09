@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Optional idempotency headers are no longer sent with a Go expression prefix
+    prepended to their value. An `optional<string>` idempotency header was sent
+    with a literal `*` in front of the caller's value, and an
+    `optional<base64>` one with a literal `base64.StdEncoding.EncodeToString(`,
+    because the dereference/encode prefix used to build the value expression was
+    also interpolated into the `fmt.Sprintf` format string. Required headers were
+    unaffected.
+  type: fix

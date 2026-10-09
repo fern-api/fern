@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Enum of separator characters",
   "auth": {
@@ -157,7 +158,7 @@
               "typeId": "type_:Settings",
               "type": "named"
             },
-            "contentType": "application/json",
+            "required": false,
             "type": "reference"
           },
           "sdkRequest": {
@@ -172,6 +173,7 @@
                   "typeId": "type_:Settings",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -472,6 +474,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {
@@ -499,7 +502,8 @@
     ],
     "errors": [],
     "subpackages": [],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

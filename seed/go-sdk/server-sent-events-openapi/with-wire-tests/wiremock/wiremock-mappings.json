@@ -131,6 +131,32 @@
       }
     },
     {
+      "id": "13812919-a947-4096-b163-5202f346ac3b",
+      "name": "Protocol context mixing envelope+data and flat schema variants - default",
+      "request": {
+        "urlPathTemplate": "/stream/protocol-mixed-schema",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"timestamp\":\"2024-01-15T09:30:00Z\",\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "13812919-a947-4096-b163-5202f346ac3b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "2e3bb790-6935-4285-9c09-cd82ca3cd15f",
       "name": "Data context with envelope+data schema pattern - default",
       "request": {
@@ -470,6 +496,6 @@
     }
   ],
   "meta": {
-    "total": 18
+    "total": 19
   }
 }

@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# A basic-auth CLI. Companion to `cli-header-auth`, and the higher-risk of the
+# two: `mock-utils` matches basic auth with an *exact* `Authorization: Basic
+# <base64 of test-username:test-password>`, not a presence regex. That makes the
+# harness's credential seeding load-bearing — exporting one generic placeholder
+# for both halves produces a well-formed header that can never match, which is
+# precisely the bug this fixture guards.
+#
+# Env vars fall back to `<BIN>_USERNAME` / `<BIN>_PASSWORD`.
+api:
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

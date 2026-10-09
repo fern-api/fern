@@ -19,6 +19,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.urls.with_mixed_case
+        #
         # @return [String]
         def with_mixed_case(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
@@ -33,10 +36,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -46,6 +51,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.urls.no_ending_slash
         #
         # @return [String]
         def no_ending_slash(request_options: {}, **_params)
@@ -61,10 +69,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -74,6 +84,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.urls.with_ending_slash
         #
         # @return [String]
         def with_ending_slash(request_options: {}, **_params)
@@ -89,10 +102,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -102,6 +117,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.urls.with_underscores
         #
         # @return [String]
         def with_underscores(request_options: {}, **_params)
@@ -117,10 +135,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
       end
     end

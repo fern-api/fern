@@ -16,7 +16,9 @@ function createContext(): { context: TaskContextImpl; getLogs: () => Log[] } {
             await run();
         },
         shouldBufferLogs: false,
-        instrumentPostHogEvent: () => undefined
+        instrumentPostHogEvent: () => undefined,
+        captureException: () => undefined,
+        emitAutomationTelemetryEvent: () => undefined
     });
     return { context, getLogs: () => allLogs };
 }
@@ -33,7 +35,9 @@ function createInteractiveContext(): { subtask: InteractiveTaskContextImpl; getL
             await run();
         },
         shouldBufferLogs: false,
-        instrumentPostHogEvent: () => undefined
+        instrumentPostHogEvent: () => undefined,
+        captureException: () => undefined,
+        emitAutomationTelemetryEvent: () => undefined
     });
     return { subtask, getLogs: () => allLogs };
 }

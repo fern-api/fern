@@ -17,6 +17,9 @@ use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
 use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
 use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
+use Seed\Endpoints\Params\Requests\CreateWithBodyAndQuery;
+use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\Endpoints\Params\Requests\UploadBytesWithQuery;
 
 class ParamsClient
 {
@@ -56,6 +59,13 @@ class ParamsClient
 
     /**
      * GET with path param
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPath(
+     *     'param',
+     * );
+     * ```
      *
      * @param string $param
      * @param ?array{
@@ -105,6 +115,13 @@ class ParamsClient
     /**
      * GET with path param
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPath(
+     *     'param',
+     * );
+     * ```
+     *
      * @param string $param
      * @param ?array{
      *   baseUrl?: string,
@@ -153,6 +170,16 @@ class ParamsClient
     /**
      * GET with query param
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithQuery(
+     *     new GetWithQuery([
+     *         'query' => 'query',
+     *         'number' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetWithQuery $request
      * @param ?array{
      *   baseUrl?: string,
@@ -197,6 +224,16 @@ class ParamsClient
 
     /**
      * GET with multiple of same query param
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithQuery(
+     *     new GetWithQuery([
+     *         'query' => 'query',
+     *         'number' => 1,
+     *     ]),
+     * );
+     * ```
      *
      * @param GetWithMultipleQuery $request
      * @param ?array{
@@ -243,6 +280,16 @@ class ParamsClient
     /**
      * GET with path and query params
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPathAndQuery(
+     *     'param',
+     *     new GetWithPathAndQuery([
+     *         'query' => 'query',
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $param
      * @param GetWithPathAndQuery $request
      * @param ?array{
@@ -288,6 +335,16 @@ class ParamsClient
     /**
      * GET with path and query params
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPathAndQuery(
+     *     'param',
+     *     new GetWithPathAndQuery([
+     *         'query' => 'query',
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $param
      * @param GetWithInlinePathAndQuery $request
      * @param ?array{
@@ -332,6 +389,14 @@ class ParamsClient
 
     /**
      * PUT to update with path param
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->modifyWithPath(
+     *     'param',
+     *     'string',
+     * );
+     * ```
      *
      * @param string $param
      * @param string $request
@@ -383,6 +448,14 @@ class ParamsClient
     /**
      * PUT to update with path param
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->modifyWithPath(
+     *     'param',
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $param
      * @param ModifyResourceAtInlinedPath $request
      * @param ?array{
@@ -433,6 +506,13 @@ class ParamsClient
     /**
      * POST bytes with path param returning object
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->uploadWithPath(
+     *     'upload-path',
+     * );
+     * ```
+     *
      * @param string $param
      * @param ?array{
      *   baseUrl?: string,
@@ -479,7 +559,133 @@ class ParamsClient
     }
 
     /**
+     * POST with referenced body + query params
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->createWithBodyAndQuery(
+     *     new CreateWithBodyAndQuery([
+     *         'fields' => '_fields',
+     *         'body' => new ObjectWithRequiredField([
+     *             'string' => 'string',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
+     * @param CreateWithBodyAndQuery $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function createWithBodyAndQuery(CreateWithBodyAndQuery $request, ?array $options = null): ?ObjectWithOptionalField
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->fields != null) {
+            $query['_fields'] = $request->fields;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/params/body-and-query",
+                    method: HttpMethod::POST,
+                    query: $query,
+                    body: $request->body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ObjectWithOptionalField::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * POST bytes body + query params
+     *
+     * @param UploadBytesWithQuery $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function uploadBytesWithQuery(UploadBytesWithQuery $request, ?array $options = null): ?ObjectWithOptionalField
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->fields != null) {
+            $query['_fields'] = $request->fields;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/params/bytes-and-query",
+                    method: HttpMethod::POST,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ObjectWithOptionalField::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
      * GET with boolean path param
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithBooleanPath(
+     *     true,
+     * );
+     * ```
      *
      * @param bool $param
      * @param ?array{
@@ -501,7 +707,7 @@ class ParamsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/params/path-bool/{$param}",
+                    path: "/params/path-bool/" . ($param ? 'true' : 'false'),
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -528,6 +734,13 @@ class ParamsClient
 
     /**
      * GET with path param that can throw errors
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPath(
+     *     'param',
+     * );
+     * ```
      *
      * @param string $param
      * @param ?array{

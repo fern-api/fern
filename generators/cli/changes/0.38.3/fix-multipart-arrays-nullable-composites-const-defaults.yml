@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Array-typed `multipart/form-data` fields are now repeatable
+    (`--files a.mp3 --files b.mp3`), each occurrence becoming its own part with
+    the same wire name. Multipart fields named in `--params` are routed into the
+    form body instead of the query string, and a JSON array there is equivalent
+    to repeating the flag.
+  type: fix
+
+- summary: |
+    `anyOf: [$ref, null]` / `oneOf: [$ref, null]` body properties — what
+    FastAPI/pydantic emits for every `Optional[Model]` field — now resolve to
+    their non-null branch's type, so nullable objects and arrays are sent as
+    JSON instead of an escaped string. Explicit `null` remains accepted. True
+    unions with more than one non-null branch are left untouched.
+  type: fix
+
+- summary: |
+    A `const` on an optional body property is no longer injected into the
+    request body as a clap default; it stays documentation- and
+    validation-only. Required consts are still sent. This also unblocks
+    object-shorthand flags on const-bearing nested schemas, which previously
+    failed with "Cannot combine --a.b with --a.b.c".
+  type: fix

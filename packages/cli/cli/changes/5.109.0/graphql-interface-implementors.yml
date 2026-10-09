@@ -1,0 +1,4 @@
+- summary: |
+    Convert a GraphQL interface to its own set of fields and record each `implements` clause on the
+    implementing type, so docs can list an interface's fields and the types that implement it.
+  type: fix

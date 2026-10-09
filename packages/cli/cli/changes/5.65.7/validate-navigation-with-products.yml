@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` now fails when `docs.yml` contains both `navigation` and `products`.
+    These are mutually exclusive (as `navigation` and `versions` already were): in a
+    multi-product site the navigation lives in each product's referenced file, so a
+    top-level `navigation` block silently overrides the products and renders empty
+    navigation.
+  type: fix

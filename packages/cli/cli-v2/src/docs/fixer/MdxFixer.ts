@@ -16,7 +16,7 @@ export declare namespace MdxFixer {
         /** Human-readable description of what changed */
         summary: string;
         /** Strategy used for the fix: deterministic string-replace, or AI provider name */
-        strategy?: "deterministic" | "anthropic" | "openai" | "bedrock";
+        strategy?: "deterministic" | "anthropic" | "openai" | "aws-bedrock";
     }
 }
 
@@ -28,12 +28,12 @@ export declare namespace MdxFixer {
  *      text is present in the file, perform a literal string replace. This is
  *      fast, requires no API key, and produces predictable diffs.
  *   2. Otherwise, fall back to an AI provider (`anthropic` by default; can be
- *      switched to `openai` or `bedrock` via `~/.fernrc`). The provider is
+ *      switched to `openai` or `aws-bedrock` via `~/.fernrc`). The provider is
  *      asked to return the corrected file contents; we strip code fences and
  *      write the file back.
  *
  * Configure the AI provider with:
- *   fern config ai set-provider <anthropic|openai|bedrock>
+ *   fern config ai set-provider <anthropic|openai|aws-bedrock>
  *   fern config ai set-key <key>     # for anthropic / openai
  *
  * Bedrock uses the standard AWS credentials chain (env vars / ~/.aws/credentials).

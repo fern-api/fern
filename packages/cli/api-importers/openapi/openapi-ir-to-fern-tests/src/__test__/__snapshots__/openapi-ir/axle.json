@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0",
   "title": "Axle API",
   "servers": [
     {
@@ -171,6 +172,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {
@@ -456,6 +458,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {

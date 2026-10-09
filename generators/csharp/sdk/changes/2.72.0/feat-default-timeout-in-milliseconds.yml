@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `default-timeout-in-milliseconds` config option to the C# SDK generator
+    for expressing the default network timeout in milliseconds (mapping to .NET's
+    `TimeSpan`). The generated `ClientOptions.Timeout` is now computed from
+    milliseconds (or `Timeout.InfiniteTimeSpan` when set to `"infinity"`).
+    The `default-timeout-in-seconds` option is now deprecated but remains fully
+    backwards compatible: when only the seconds key is set, it is converted to
+    milliseconds. The new key takes precedence when both are set.
+  type: feat

@@ -3,13 +3,21 @@ from typing import List, Optional, Tuple
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
+from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
 DEFAULT_EXPIRES_IN_SECONDS = 3600  # 1 hour
+
+
+_REFRESH_TOKEN_GRANT_TYPE = "refresh_token"
+# Request parameters of the OAuth 2.0 refresh token grant (RFC 6749 section 6), plus client authentication.
+_REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES = frozenset({"refresh_token", "scope", "client_id", "client_secret"})
+
+ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME = "on_refresh_token_rotated"
 
 
 @dataclass
@@ -19,6 +27,10 @@ class CredentialProperty:
     is_literal: bool
     literal_value: Optional[str]
     is_optional: bool
+    # Set when the auth scheme fixes this property's value (e.g. `grant_type` for `type: refresh-token`).
+    # Such properties are treated like literals for the client constructor and sent with this value.
+    fixed_value: Optional[str] = None
+    is_header: bool = False
 
 
 class InferredAuthTokenProviderGenerator:
@@ -37,6 +49,8 @@ class InferredAuthTokenProviderGenerator:
         self._inferred_auth_scheme: ir_types.InferredAuthScheme = inferred_auth_scheme
 
     def generate(self, source_file: SourceFile) -> None:
+        if self._omits_unset_params():
+            source_file.add_arbitrary_code(AST.CodeWriter(self._write_omit_declaration))
         source_file.add_class_declaration(
             declaration=self._create_class_declaration(is_async=False),
             should_export=False,
@@ -121,6 +135,16 @@ class InferredAuthTokenProviderGenerator:
                         initializer=AST.Expression("None") if prop.is_optional else None,
                     )
                 )
+
+        if self.rotates_refresh_token():
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
+                    private_member_name=f"_{ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME}",
+                    type_hint=get_rotated_refresh_token_callback_type_hint(),
+                    initializer=AST.Expression("None"),
+                )
+            )
 
         parameters.append(
             ConstructorParameter(
@@ -401,6 +425,10 @@ class InferredAuthTokenProviderGenerator:
 
             writer.write_line(f"self.{self._get_cached_headers_member_name()} = headers")
 
+            rotated_refresh_token_property = self._get_rotated_refresh_token_response_property()
+            if rotated_refresh_token_property is not None:
+                self._write_refresh_token_rotation(writer, rotated_refresh_token_property)
+
             if has_expiry:
                 expiry_property = token_endpoint.expiry_property
                 if expiry_property is not None:
@@ -458,14 +486,15 @@ class InferredAuthTokenProviderGenerator:
     ) -> AST.FunctionInvocation:
         kwargs = []
         for prop in credential_properties:
+            if prop.fixed_value is not None:
+                kwargs.append((prop.field_name, AST.Expression(repr(prop.fixed_value))))
+                continue
             if prop.is_literal:
                 continue
-            kwargs.append(
-                (
-                    prop.field_name,
-                    AST.Expression(f"self._{prop.field_name}"),
-                )
-            )
+            value = f"self._{prop.field_name}"
+            if self._omits_unset_params() and prop.is_optional and not prop.is_header:
+                value = f"{value} if {value} is not None else {DEFAULT_BODY_PARAMETER_VALUE}"
+            kwargs.append((prop.field_name, AST.Expression(value)))
 
         endpoint_name = resolve_name(http_endpoint.name).snake_case.safe_name
 
@@ -475,6 +504,59 @@ class InferredAuthTokenProviderGenerator:
             ),
             kwargs=kwargs,
         )
+
+    def rotates_refresh_token(self) -> bool:
+        return self._get_rotated_refresh_token_response_property() is not None
+
+    def _get_rotated_refresh_token_response_property(self) -> Optional[ir_types.ObjectProperty]:
+        """With `type: refresh-token`, servers that rotate refresh tokens invalidate the presented token and
+        return a new `refresh_token` in the token response, which must be used for the next refresh."""
+        token_endpoint = self._inferred_auth_scheme.token_endpoint
+        grant_type = token_endpoint.grant_type
+        if grant_type is None or grant_type.value != _REFRESH_TOKEN_GRANT_TYPE:
+            return None
+        http_endpoint = self._get_endpoint_for_reference(token_endpoint.endpoint)
+        if not any(
+            prop.field_name == _REFRESH_TOKEN_GRANT_TYPE and not prop.is_literal and not prop.is_header
+            for prop in self._collect_credential_properties(http_endpoint)
+        ):
+            return None
+        if http_endpoint.response is None or http_endpoint.response.body is None:
+            return None
+        body = http_endpoint.response.body.get_as_union()
+        if body.type != "json":
+            return None
+        json_response = body.value.get_as_union()
+        if json_response.type != "response":
+            return None
+        type_id = self._get_type_id_from_type_reference(json_response.response_body_type)
+        if type_id is None:
+            return None
+        for prop in self._context.pydantic_generator_context.get_all_properties_including_extensions(type_id):
+            if get_wire_value(prop.name) == _REFRESH_TOKEN_GRANT_TYPE:
+                return prop
+        return None
+
+    def _write_refresh_token_rotation(self, writer: AST.NodeWriter, response_property: ir_types.ObjectProperty) -> None:
+        accessor = (
+            f"token_response.{resolve_name(get_name_from_wire_value(response_property.name)).snake_case.safe_name}"
+        )
+        callback = f"self._{ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME}"
+        writer.write_line(f"if {accessor} is not None:")
+        with writer.indent():
+            writer.write_line(f"self._{_REFRESH_TOKEN_GRANT_TYPE} = {accessor}")
+            writer.write_line(f"if {callback} is not None:")
+            with writer.indent():
+                writer.write_line(f"{callback}({accessor})")
+
+    def _omits_unset_params(self) -> bool:
+        return self._context.custom_config.omit_unset_inferred_auth_params
+
+    def _write_omit_declaration(self, writer: AST.NodeWriter) -> None:
+        writer.write_line("# used to leave unset optional parameters out of the token request")
+        writer.write(f"{DEFAULT_BODY_PARAMETER_VALUE} = ")
+        writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
+        writer.write_newline_if_last_line_not()
 
     def _get_expires_at_function_declaration(self) -> AST.FunctionDeclaration:
         named_parameters = [
@@ -533,6 +615,7 @@ class InferredAuthTokenProviderGenerator:
                     is_literal=is_literal,
                     literal_value=literal_value,
                     is_optional=is_optional,
+                    is_header=True,
                 )
             )
 
@@ -540,19 +623,8 @@ class InferredAuthTokenProviderGenerator:
             request_body = http_endpoint.request_body.get_as_union()
             if request_body.type == "inlinedRequestBody":
                 for prop in request_body.properties:
-                    field_name = resolve_name(get_name_from_wire_value(prop.name)).snake_case.safe_name
-                    is_literal = self._is_literal_type(prop.value_type)
-                    literal_value = self._extract_literal_value(prop.value_type) if is_literal else None
-                    is_optional = self._is_optional_type(prop.value_type)
-                    properties.append(
-                        CredentialProperty(
-                            field_name=field_name,
-                            constructor_param_name=field_name,
-                            is_literal=is_literal,
-                            literal_value=literal_value,
-                            is_optional=is_optional,
-                        )
-                    )
+                    if self._is_used_by_grant_type(prop.name, prop.value_type):
+                        properties.append(self._get_body_credential_property(prop.name, prop.value_type))
             elif request_body.type == "reference":
                 type_id = self._get_type_id_from_type_reference(request_body.request_body_type)
                 if type_id is not None:
@@ -560,21 +632,52 @@ class InferredAuthTokenProviderGenerator:
                         self._context.pydantic_generator_context.get_all_properties_including_extensions(type_id)
                     )
                     for object_prop in object_properties:
-                        field_name = resolve_name(get_name_from_wire_value(object_prop.name)).snake_case.safe_name
-                        is_literal = self._is_literal_type(object_prop.value_type)
-                        literal_value = self._extract_literal_value(object_prop.value_type) if is_literal else None
-                        is_optional = self._is_optional_type(object_prop.value_type)
-                        properties.append(
-                            CredentialProperty(
-                                field_name=field_name,
-                                constructor_param_name=field_name,
-                                is_literal=is_literal,
-                                literal_value=literal_value,
-                                is_optional=is_optional,
+                        if self._is_used_by_grant_type(object_prop.name, object_prop.value_type):
+                            properties.append(
+                                self._get_body_credential_property(object_prop.name, object_prop.value_type)
                             )
-                        )
 
         return properties
+
+    def _get_body_credential_property(
+        self, name: ir_types.NameAndWireValueOrString, value_type: ir_types.TypeReference
+    ) -> CredentialProperty:
+        field_name = resolve_name(get_name_from_wire_value(name)).snake_case.safe_name
+        value_is_literal = self._is_literal_type(value_type)
+        # A literal grant type is already sent by the endpoint itself, so only non-literals need a fixed value.
+        fixed_value = None if value_is_literal else self._get_fixed_grant_type_value(name)
+        return CredentialProperty(
+            field_name=field_name,
+            constructor_param_name=field_name,
+            is_literal=value_is_literal or fixed_value is not None,
+            literal_value=self._extract_literal_value(value_type) if value_is_literal else None,
+            is_optional=self._is_optional_type(value_type),
+            fixed_value=fixed_value,
+        )
+
+    def _is_used_by_grant_type(
+        self, name: ir_types.NameAndWireValueOrString, value_type: ir_types.TypeReference
+    ) -> bool:
+        """Token endpoints shared by several grants list fields of every grant. With a fixed refresh_token
+        grant, optional fields that belong to other grants (e.g. `code`, `redirect_uri`) are neither exposed
+        nor sent."""
+        grant_type = self._inferred_auth_scheme.token_endpoint.grant_type
+        if grant_type is None or grant_type.value != _REFRESH_TOKEN_GRANT_TYPE:
+            return True
+        if not self._is_optional_type(value_type) or self._is_literal_type(value_type):
+            return True
+        if self._get_fixed_grant_type_value(name) is not None:
+            return True
+        return get_wire_value(name) in _REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES
+
+    def _get_fixed_grant_type_value(self, name: ir_types.NameAndWireValueOrString) -> Optional[str]:
+        grant_type = self._inferred_auth_scheme.token_endpoint.grant_type
+        if grant_type is None or grant_type.request_property.property_path:
+            return None
+        grant_type_property = grant_type.request_property.property.get_as_union()
+        if grant_type_property.type != "body" or get_wire_value(grant_type_property.name) != get_wire_value(name):
+            return None
+        return grant_type.value
 
     def _get_type_id_from_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
         return type_reference.visit(
@@ -696,3 +799,7 @@ class InferredAuthTokenProviderGenerator:
         endpoint_reference = token_endpoint.endpoint
         http_endpoint = self._get_endpoint_for_reference(endpoint_reference)
         return self._collect_credential_properties(http_endpoint)
+
+
+def get_rotated_refresh_token_callback_type_hint() -> AST.TypeHint:
+    return AST.TypeHint.optional(AST.TypeHint.callable([AST.TypeHint.str_()], AST.TypeHint.none()))

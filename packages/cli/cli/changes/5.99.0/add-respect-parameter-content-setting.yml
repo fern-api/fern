@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `respect-parameter-content` OpenAPI setting. When enabled, header parameters that
+    declare their schema under `content` (e.g. a header whose value is a JSON-encoded
+    object) are typed from that schema instead of falling back to a string, so the
+    referenced object's fields are preserved in SDKs and the API reference playground.
+  type: feat

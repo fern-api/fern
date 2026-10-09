@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/v1/products/{regionId}/search",
+                "method": "POST",
+                "identifier_override": "endpoint_products.search"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Products.SearchAsync(new SearchProductsRequest { RegionId = \"regionId\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/v1/products/{regionId}/{productId}",
+                "method": "GET",
+                "identifier_override": "endpoint_products.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Products.GetAsync(\n    new GetProductsRequest { RegionId = \"regionId\", ProductId = \"productId\" }\n);\n"
+            }
+        }
+    ]
+}

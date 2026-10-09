@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    An empty string terminates cursor pagination when the cursor is a named type that resolves to an
+    optional string (e.g. `type Cursor = *string`), matching an inline optional string. Optionality
+    is now resolved through aliases, so both spellings of the same type generate the same
+    termination check. Required string, uuid, int, and datetime cursors are unchanged.
+  type: fix

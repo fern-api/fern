@@ -27,13 +27,23 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &sse.StreamCompletionRequest{
+//	    Query: "foo",
+//	}
+//	client.Completions.Stream(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Stream(
 	ctx context.Context,
 	request *sse.StreamCompletionRequest,
@@ -59,6 +69,7 @@ func (c *Client) Stream(
 			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -72,6 +83,15 @@ func (c *Client) Stream(
 	)
 }
 
+// Example:
+//
+//	request := &sse.StreamCompletionRequestWithoutTerminator{
+//	    Query: "query",
+//	}
+//	client.Completions.StreamWithoutTerminator(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) StreamWithoutTerminator(
 	ctx context.Context,
 	request *sse.StreamCompletionRequestWithoutTerminator,
@@ -97,6 +117,7 @@ func (c *Client) StreamWithoutTerminator(
 			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

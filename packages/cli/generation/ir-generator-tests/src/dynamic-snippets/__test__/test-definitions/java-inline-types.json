@@ -204,7 +204,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RequestTypeInlineType1": {
             "type": "object",
@@ -267,7 +268,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1": {
             "type": "object",
@@ -493,7 +495,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1FooMapValue": {
             "type": "object",
@@ -586,7 +589,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1FooListItem": {
             "type": "object",
@@ -679,7 +683,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1FooSetItem": {
             "type": "object",
@@ -772,7 +777,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1InlineType1": {
             "type": "object",
@@ -895,7 +901,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1InlineType1NestedInlineType1": {
             "type": "object",
@@ -1048,7 +1055,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DiscriminatedUnion1": {
             "type": "discriminatedUnion",
@@ -1100,6 +1108,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "type1": {
                     "type": "samePropertiesAsObject",
@@ -1305,7 +1314,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -1398,7 +1408,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -1491,7 +1502,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1": {
             "type": "undiscriminatedUnion",
@@ -1694,7 +1706,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -1787,7 +1800,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -1880,7 +1894,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:InlineEnum1": {
             "type": "enum",
@@ -2051,6 +2066,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "type1": {
                     "type": "samePropertiesAsObject",
@@ -2256,7 +2272,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -2349,7 +2366,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -2442,7 +2460,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineEnum1": {
             "type": "enum",
@@ -2687,7 +2706,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineSetItem1": {
             "type": "object",
@@ -2780,7 +2800,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineMapItem1": {
             "type": "object",
@@ -2873,7 +2894,420 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:MapResponseValue": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "MapResponseValue",
+                    "camelCase": {
+                        "unsafeName": "mapResponseValue",
+                        "safeName": "mapResponseValue"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "map_response_value",
+                        "safeName": "map_response_value"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MAP_RESPONSE_VALUE",
+                        "safeName": "MAP_RESPONSE_VALUE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MapResponseValue",
+                        "safeName": "MapResponseValue"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "nested",
+                        "name": {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:MapResponseValueNested"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:MapResponseValueNested": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "MapResponseValueNested",
+                    "camelCase": {
+                        "unsafeName": "mapResponseValueNested",
+                        "safeName": "mapResponseValueNested"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "map_response_value_nested",
+                        "safeName": "map_response_value_nested"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MAP_RESPONSE_VALUE_NESTED",
+                        "safeName": "MAP_RESPONSE_VALUE_NESTED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MapResponseValueNested",
+                        "safeName": "MapResponseValueNested"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "key",
+                        "name": {
+                            "originalName": "key",
+                            "camelCase": {
+                                "unsafeName": "key",
+                                "safeName": "key"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "key",
+                                "safeName": "key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "KEY",
+                                "safeName": "KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Key",
+                                "safeName": "Key"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "value",
+                        "name": {
+                            "originalName": "value",
+                            "camelCase": {
+                                "unsafeName": "value",
+                                "safeName": "value"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "value",
+                                "safeName": "value"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "VALUE",
+                                "safeName": "VALUE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Value",
+                                "safeName": "Value"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:SharedChildType": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SharedChildType",
+                    "camelCase": {
+                        "unsafeName": "sharedChildType",
+                        "safeName": "sharedChildType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "shared_child_type",
+                        "safeName": "shared_child_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SHARED_CHILD_TYPE",
+                        "safeName": "SHARED_CHILD_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SharedChildType",
+                        "safeName": "SharedChildType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "detail",
+                        "name": {
+                            "originalName": "detail",
+                            "camelCase": {
+                                "unsafeName": "detail",
+                                "safeName": "detail"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "detail",
+                                "safeName": "detail"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DETAIL",
+                                "safeName": "DETAIL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Detail",
+                                "safeName": "Detail"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:OrphanParentWithSharedChild": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "OrphanParentWithSharedChild",
+                    "camelCase": {
+                        "unsafeName": "orphanParentWithSharedChild",
+                        "safeName": "orphanParentWithSharedChild"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "orphan_parent_with_shared_child",
+                        "safeName": "orphan_parent_with_shared_child"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ORPHAN_PARENT_WITH_SHARED_CHILD",
+                        "safeName": "ORPHAN_PARENT_WITH_SHARED_CHILD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OrphanParentWithSharedChild",
+                        "safeName": "OrphanParentWithSharedChild"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "label",
+                        "name": {
+                            "originalName": "label",
+                            "camelCase": {
+                                "unsafeName": "label",
+                                "safeName": "label"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "label",
+                                "safeName": "label"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LABEL",
+                                "safeName": "LABEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Label",
+                                "safeName": "Label"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "child",
+                        "name": {
+                            "originalName": "child",
+                            "camelCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CHILD",
+                                "safeName": "CHILD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Child",
+                                "safeName": "Child"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:SharedChildType"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ReferenceType": {
             "type": "object",
@@ -2936,7 +3370,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionTypeWithAliasVariant": {
             "type": "discriminatedUnion",
@@ -2988,6 +3423,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "aliasVariant": {
                     "type": "samePropertiesAsObject",
@@ -3157,6 +3593,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "aliasVariant": {
                     "type": "singleProperty",
@@ -3278,6 +3715,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "aliasVariant": {
                     "type": "singleProperty",
@@ -3395,6 +3833,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "aliasVariant": {
                     "type": "singleProperty",
@@ -3680,7 +4119,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithMapAliasTypeValue": {
             "type": "object",
@@ -3750,7 +4190,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithMapAliasTypeKey": {
             "type": "object",
@@ -3820,7 +4261,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithMapAliasTypeBoth": {
             "type": "object",
@@ -3890,7 +4332,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithListAliasType": {
             "type": "object",
@@ -3956,7 +4399,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithSetAliasType": {
             "type": "object",
@@ -4022,7 +4466,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:AliasVariant": {
             "type": "alias",
@@ -4217,7 +4662,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:OtherAliasVariantType": {
             "type": "object",
@@ -4280,7 +4726,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:AliasPropertyType": {
             "type": "object",
@@ -4343,7 +4790,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:OtherAliasPropertyType": {
             "type": "object",
@@ -4406,7 +4854,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:NonAliasVariant": {
             "type": "object",
@@ -4469,7 +4918,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -4887,10 +5337,140 @@
                 "type": "json"
             },
             "examples": null
+        },
+        "endpoint_.getMapResponse": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getMapResponse",
+                    "camelCase": {
+                        "unsafeName": "getMapResponse",
+                        "safeName": "getMapResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_map_response",
+                        "safeName": "get_map_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_MAP_RESPONSE",
+                        "safeName": "GET_MAP_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetMapResponse",
+                        "safeName": "GetMapResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/root/map-response"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getSharedChild": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getSharedChild",
+                    "camelCase": {
+                        "unsafeName": "getSharedChild",
+                        "safeName": "getSharedChild"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_shared_child",
+                        "safeName": "get_shared_child"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_SHARED_CHILD",
+                        "safeName": "GET_SHARED_CHILD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetSharedChild",
+                        "safeName": "GetSharedChild"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/root/shared-child"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getOrphanParent": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getOrphanParent",
+                    "camelCase": {
+                        "unsafeName": "getOrphanParent",
+                        "safeName": "getOrphanParent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_orphan_parent",
+                        "safeName": "get_orphan_parent"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_ORPHAN_PARENT",
+                        "safeName": "GET_ORPHAN_PARENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetOrphanParent",
+                        "safeName": "GetOrphanParent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/root/orphan-parent"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
         }
     },
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

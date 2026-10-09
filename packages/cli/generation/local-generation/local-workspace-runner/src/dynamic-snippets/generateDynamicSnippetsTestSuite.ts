@@ -16,9 +16,15 @@ export async function generateDynamicSnippetsTestSuite({
             code: CliError.Code.InternalError
         });
     }
+    const inlineTypeIds = new Set<string>(
+        Object.values(ir.types)
+            .filter((typeDeclaration) => typeDeclaration.inline === true)
+            .map((typeDeclaration) => typeDeclaration.name.typeId)
+    );
     return {
         ir: ir.dynamic,
         config,
+        inlineTypeIds,
         requests: Object.entries(ir.dynamic.endpoints).flatMap(([endpointId, endpoint]) =>
             (endpoint.examples ?? []).map((example) => ({
                 endpointId,

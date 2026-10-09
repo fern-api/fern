@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "sid": {
+      "type": "string"
+    },
+    "body": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "sid"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

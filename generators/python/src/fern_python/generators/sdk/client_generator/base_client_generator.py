@@ -13,7 +13,7 @@ from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriter, Co
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.reference_resolver import ReferenceResolver
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from fern_python.utils.name_resolver import resolve_name
+from fern_python.utils.name_resolver import resolve_name_preserving_underscores
 from typing_extensions import Unpack
 
 import fern.ir.resources as ir_types
@@ -171,9 +171,8 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
 
         for subpackage_id in self._package.subpackages:
             subpackage = self._context.ir.subpackages[subpackage_id]
-            has_websocket = (
-                subpackage.websocket is not None and self._context.custom_config.should_generate_websocket_clients
-            )
+            has_websocket_in_tree = subpackage.has_web_socket_in_tree or subpackage.websocket is not None
+            has_websocket = has_websocket_in_tree and self._context.custom_config.should_generate_websocket_clients
             if subpackage.has_endpoints_in_tree or has_websocket:
                 if should_declare_client_wrapper:
                     writer.write_line("self._client_wrapper = client_wrapper")
@@ -187,7 +186,7 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
                     )
                     writer.write_node(
                         AST.VariableDeclaration(
-                            name=f"self._{resolve_name(subpackage.name).snake_case.safe_name}",
+                            name=f"self._{resolve_name_preserving_underscores(subpackage.name).snake_case.safe_name}",
                             type_hint=AST.TypeHint.optional(AST.TypeHint(type=service_reference)),
                             initializer=AST.Expression("None"),
                         )
@@ -195,7 +194,7 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
                 else:
                     writer.write_node(
                         AST.VariableDeclaration(
-                            name=f"self.{resolve_name(subpackage.name).snake_case.safe_name}",
+                            name=f"self.{resolve_name_preserving_underscores(subpackage.name).snake_case.safe_name}",
                             initializer=AST.Expression(
                                 self._get_subpackage_service_instantiation(
                                     subpackage_id=subpackage_id, is_async=is_async
@@ -233,13 +232,15 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         subpackage_id: ir_types.SubpackageId,
         is_async: bool,
     ) -> list[AST.AstNode]:
-        attr_name = f"self._{resolve_name(subpackage.name).snake_case.safe_name}"
+        attr_name = f"self._{resolve_name_preserving_underscores(subpackage.name).snake_case.safe_name}"
         service_instantiation = self._get_subpackage_service_instantiation(
             subpackage_id=subpackage_id, is_async=is_async
         )
         service_import = service_instantiation.get_class_reference().import_
         if service_import is None:
-            raise ValueError(f"Could not evaluate import for {resolve_name(subpackage.name).snake_case.safe_name}")
+            raise ValueError(
+                f"Could not evaluate import for {resolve_name_preserving_underscores(subpackage.name).snake_case.safe_name}"
+            )
 
         lazy_import_statement = CodeWriter(
             lambda writer: writer.write_line(
@@ -276,13 +277,12 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         if self._context.custom_config.lazy_imports:
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
-                has_websocket = (
-                    subpackage.websocket is not None and self._context.custom_config.should_generate_websocket_clients
-                )
+                has_websocket_in_tree = subpackage.has_web_socket_in_tree or subpackage.websocket is not None
+                has_websocket = has_websocket_in_tree and self._context.custom_config.should_generate_websocket_clients
                 if subpackage.has_endpoints_in_tree or has_websocket:
                     class_declaration.add_method(
                         declaration=AST.FunctionDeclaration(
-                            name=resolve_name(subpackage.name).snake_case.safe_name,
+                            name=resolve_name_preserving_underscores(subpackage.name).snake_case.safe_name,
                             is_async=False,
                             signature=AST.FunctionSignature(parameters=[]),
                             decorators=[

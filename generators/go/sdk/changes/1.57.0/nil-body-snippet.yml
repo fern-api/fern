@@ -1,0 +1,4 @@
+- summary: |
+    Snippets for examples that omit an optional request body now pass `nil` for the body
+    parameter instead of dropping the argument, which produced snippets that did not compile.
+  type: fix

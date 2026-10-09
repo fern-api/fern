@@ -14,9 +14,8 @@
 
 ```go
 client.User.Head(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -42,13 +41,12 @@ client.User.Head(
 
 ```go
 request := &fern.ListUsersRequest{
-        Limit: 1,
-    }
-client.User.List(
-        context.TODO(),
-        request,
-    )
+    Limit: 1,
 }
+client.User.List(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

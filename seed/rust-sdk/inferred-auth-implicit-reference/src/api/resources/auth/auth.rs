@@ -13,6 +13,32 @@ impl AuthClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_inferred_auth_implicit::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = InferredAuthImplicitClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .auth
+    ///         .get_token_with_client_credentials(
+    ///             &GetTokenRequest {
+    ///                 client_id: "client_id".to_string(),
+    ///                 client_secret: "client_secret".to_string(),
+    ///                 audience: "https://api.example.com".to_string(),
+    ///                 grant_type: "client_credentials".to_string(),
+    ///                 scope: Some("scope".to_string()),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_token_with_client_credentials(
         &self,
         request: &GetTokenRequest,
@@ -29,6 +55,33 @@ impl AuthClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_inferred_auth_implicit::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = InferredAuthImplicitClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .auth
+    ///         .refresh_token(
+    ///             &RefreshTokenRequest {
+    ///                 client_id: "client_id".to_string(),
+    ///                 client_secret: "client_secret".to_string(),
+    ///                 refresh_token: "refresh_token".to_string(),
+    ///                 audience: "https://api.example.com".to_string(),
+    ///                 grant_type: "refresh_token".to_string(),
+    ///                 scope: Some("scope".to_string()),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn refresh_token(
         &self,
         request: &RefreshTokenRequest,

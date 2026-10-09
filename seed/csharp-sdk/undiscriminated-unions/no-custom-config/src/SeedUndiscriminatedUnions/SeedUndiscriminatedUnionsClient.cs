@@ -14,7 +14,7 @@ public partial class SeedUndiscriminatedUnionsClient : ISeedUndiscriminatedUnion
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedUndiscriminatedUnions" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedUndiscriminatedUnions.Version.Current },
                 { "User-Agent", "Fernundiscriminated-unions/0.0.1" },
             }
         );

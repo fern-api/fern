@@ -1,0 +1,6 @@
+- summary: |
+    Fix ledger publish path not forwarding the `basepathAware` flag for
+    multi-source docs sites, causing the manifest to be written to the
+    wrong storage key. Affected sites served stale content from the last
+    legacy publish instead of the updated ledger manifest.
+  type: fix

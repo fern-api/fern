@@ -1,6 +1,6 @@
 import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { EnumWithAssociatedValues, Referencer, sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { EnumWithAssociatedValues, Referencer, sanitizeSwiftIdentifier, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { LiteralEnumGenerator } from "../literal/index.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -247,7 +247,7 @@ export class DiscriminatedUnionGenerator {
                 if (typeRef == null) {
                     return this.generateNoPropertiesDecoding(variant);
                 }
-                const propertyKey = sanitizeSelf(this.context.caseConverter.camelUnsafe(variant.shape.name));
+                const propertyKey = sanitizeSwiftIdentifier(this.context.caseConverter.camelUnsafe(variant.shape.name));
                 return swift.Statement.selfAssignment(
                     swift.Expression.contextualMethodCall({
                         methodName: variant.caseName,
@@ -383,7 +383,7 @@ export class DiscriminatedUnionGenerator {
                         body: [discriminantEncode]
                     };
                 }
-                const propertyKey = sanitizeSelf(this.context.caseConverter.camelUnsafe(variant.shape.name));
+                const propertyKey = sanitizeSwiftIdentifier(this.context.caseConverter.camelUnsafe(variant.shape.name));
                 return {
                     pattern: swift.Pattern.enumCaseValueBinding({
                         caseName: variant.caseName,
@@ -453,7 +453,7 @@ export class DiscriminatedUnionGenerator {
                 if (!seenRawValues.has(rawValue)) {
                     seenRawValues.add(rawValue);
                     cases.push({
-                        unsafeName: sanitizeSelf(this.context.caseConverter.camelUnsafe(variant.shape.name)),
+                        unsafeName: sanitizeSwiftIdentifier(this.context.caseConverter.camelUnsafe(variant.shape.name)),
                         rawValue
                     });
                 }

@@ -62,6 +62,54 @@ $client->headers->send(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;headers-&gt;sendLiteralsOnly() -> ?SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->headers->sendLiteralsOnly();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$endpointVersion:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$async:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>$client-&gt;inlined-&gt;send($request) -> ?SendResponse</code></summary>
 <dl>
@@ -78,9 +126,11 @@ $client->headers->send(
 ```php
 $client->inlined->send(
     new SendLiteralsInlinedRequest([
-        'temperature' => 10.1,
         'prompt' => 'You are a helpful assistant',
         'context' => "You're super wise",
+        'query' => 'What is the weather today',
+        'temperature' => 10.1,
+        'stream' => false,
         'aliasedContext' => "You're super wise",
         'maybeContext' => "You're super wise",
         'objectWithLiteral' => new ATopLevelLiteral([
@@ -88,8 +138,6 @@ $client->inlined->send(
                 'myLiteral' => 'How super cool',
             ]),
         ]),
-        'stream' => false,
-        'query' => 'What is the weather today',
     ]),
 );
 ```
@@ -351,9 +399,9 @@ $client->query->send(
 $client->reference->send(
     new SendRequest([
         'prompt' => 'You are a helpful assistant',
+        'query' => 'What is the weather today',
         'stream' => false,
         'context' => "You're super wise",
-        'query' => 'What is the weather today',
         'containerObject' => new ContainerObject([
             'nestedObjects' => [
                 new NestedObjectWithLiterals([

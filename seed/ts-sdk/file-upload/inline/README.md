@@ -45,7 +45,7 @@ import { createReadStream } from "fs";
 import * as fs from "fs";
 import { SeedFileUploadClient } from "@fern/file-upload";
 
-const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedFileUploadClient({ baseUrl: "YOUR_BASE_URL" });
 await client.service.justFile({
     file: fs.createReadStream("/path/to/your/file")
 });
@@ -93,7 +93,7 @@ import { createReadStream } from "fs";
 import * as fs from "fs";
 import { SeedFileUploadClient } from "@fern/file-upload";
 
-const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedFileUploadClient({ baseUrl: "YOUR_BASE_URL" });
 await client.service.justFile({
     file: fs.createReadStream("/path/to/your/file")
 });

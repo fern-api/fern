@@ -28,14 +28,13 @@ Add a movie to the database using the movies/* /... path.
 
 ```go
 request := &fern.CreateMovieRequest{
-        Title: "title",
-        Rating: 1.1,
-    }
-client.Imdb.CreateMovie(
-        context.TODO(),
-        request,
-    )
+    Title: "title",
+    Rating: 1.1,
 }
+client.Imdb.CreateMovie(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -50,7 +49,15 @@ client.Imdb.CreateMovie(
 <dl>
 <dd>
 
-**request:** `*fern.CreateMovieRequest` 
+**title:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `float64` 
     
 </dd>
 </dl>
@@ -75,11 +82,13 @@ client.Imdb.CreateMovie(
 <dd>
 
 ```go
-client.Imdb.GetMovie(
-        context.TODO(),
-        "movieId",
-    )
+request := &fern.GetMovieImdbRequest{
+    MovieID: "movieId",
 }
+client.Imdb.GetMovie(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

@@ -3,6 +3,9 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ApiReferenceLayout } from "./ApiReferenceLayout.js";
+import { BreadcrumbsConfig } from "./BreadcrumbsConfig.js";
+import { ChangelogLayout } from "./ChangelogLayout.js";
 import { ContentAlignment } from "./ContentAlignment.js";
 import { HeaderPosition } from "./HeaderPosition.js";
 import { SearchbarPlacement } from "./SearchbarPlacement.js";
@@ -24,6 +27,17 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         hideNavLinks: core.serialization.property("hide-nav-links", core.serialization.boolean().optional()),
         hideFeedback: core.serialization.property("hide-feedback", core.serialization.boolean().optional()),
         mobileToc: core.serialization.property("mobile-toc", core.serialization.boolean().optional()),
+        changelogLayout: core.serialization.property("changelog-layout", ChangelogLayout.optional()),
+        apiReferenceLayout: core.serialization.property("api-reference-layout", ApiReferenceLayout.optional()),
+        apiReferenceExpandProperties: core.serialization.property(
+            "api-reference-expand-properties",
+            core.serialization.boolean().optional(),
+        ),
+        showNavAvailabilityBadges: core.serialization.property(
+            "show-nav-availability-badges",
+            core.serialization.boolean().optional(),
+        ),
+        breadcrumbs: BreadcrumbsConfig.optional(),
     });
 
 export declare namespace LayoutConfig {
@@ -41,5 +55,10 @@ export declare namespace LayoutConfig {
         "hide-nav-links"?: boolean | null;
         "hide-feedback"?: boolean | null;
         "mobile-toc"?: boolean | null;
+        "changelog-layout"?: ChangelogLayout.Raw | null;
+        "api-reference-layout"?: ApiReferenceLayout.Raw | null;
+        "api-reference-expand-properties"?: boolean | null;
+        "show-nav-availability-badges"?: boolean | null;
+        breadcrumbs?: BreadcrumbsConfig.Raw | null;
     }
 }

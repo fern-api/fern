@@ -6,7 +6,7 @@ import Unions
     @Test func get1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "normalSweet",
@@ -43,7 +43,7 @@ import Unions
     @Test func update1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -68,7 +68,7 @@ import Unions
     @Test func updateMany1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": true

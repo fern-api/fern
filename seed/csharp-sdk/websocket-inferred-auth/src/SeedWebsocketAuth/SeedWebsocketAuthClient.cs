@@ -20,7 +20,7 @@ public partial class SeedWebsocketAuthClient : ISeedWebsocketAuthClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedWebsocketAuth" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedWebsocketAuth.Version.Current },
                 { "User-Agent", "Fernwebsocket-inferred-auth/0.0.1" },
             }
         );

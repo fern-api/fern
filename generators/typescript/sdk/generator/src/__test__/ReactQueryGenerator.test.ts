@@ -1,0 +1,1157 @@
+import { FernIr } from "@fern-fern/ir-sdk";
+import {
+    caseConverter,
+    casingsGenerator,
+    createHttpEndpoint,
+    createHttpService,
+    createMinimalIR,
+    createPathParameter,
+    createSdkRequestBody
+} from "@fern-typescript/test-utils";
+import { describe, expect, it } from "vitest";
+
+import { ReactQueryGenerator } from "../react-query/ReactQueryGenerator.js";
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+// biome-ignore lint/suspicious/noExplicitAny: test mock for PackageResolver
+function createMockPackageResolver(ir: FernIr.IntermediateRepresentation): any {
+    return {
+        getServiceDeclaration: (packageId: { isRoot: boolean; subpackageId?: string }) => {
+            if (packageId.isRoot) {
+                const rootServiceId = ir.rootPackage.service;
+                if (rootServiceId != null) {
+                    return ir.services[rootServiceId];
+                }
+                return undefined;
+            }
+            const subpackage = ir.subpackages[packageId.subpackageId ?? ""];
+            if (subpackage?.service != null) {
+                return ir.services[subpackage.service];
+            }
+            return undefined;
+        }
+    };
+}
+
+function createEndpointWithMethod(
+    name: string,
+    method: FernIr.HttpMethod,
+    opts?: {
+        pathParameters?: FernIr.PathParameter[];
+        allPathParameters?: FernIr.PathParameter[];
+        sdkRequest?: FernIr.SdkRequest;
+        docs?: string;
+    }
+): FernIr.HttpEndpoint {
+    const base = createHttpEndpoint({
+        pathParameters: opts?.pathParameters,
+        allPathParameters: opts?.allPathParameters ?? opts?.pathParameters,
+        sdkRequest: opts?.sdkRequest,
+        docs: opts?.docs
+    });
+    return {
+        ...base,
+        id: `endpoint_${name}`,
+        name: casingsGenerator.generateName(name),
+        method
+    };
+}
+
+function createIRWithService(opts: {
+    serviceName: string;
+    endpoints: FernIr.HttpEndpoint[];
+    subpackageName?: string;
+}): FernIr.IntermediateRepresentation {
+    const serviceId = `service_${opts.serviceName}`;
+    const service = {
+        ...createHttpService(),
+        endpoints: opts.endpoints,
+        name: {
+            fernFilepath: {
+                allParts: opts.subpackageName ? [casingsGenerator.generateName(opts.subpackageName)] : [],
+                packagePath: opts.subpackageName ? [casingsGenerator.generateName(opts.subpackageName)] : [],
+                file: opts.subpackageName ? casingsGenerator.generateName(opts.subpackageName) : undefined
+            }
+        }
+    };
+
+    const ir = createMinimalIR({ services: { [serviceId]: service } });
+
+    if (opts.subpackageName) {
+        const subpackageId = `subpackage_${opts.subpackageName}`;
+        ir.subpackages[subpackageId] = {
+            name: casingsGenerator.generateName(opts.subpackageName),
+            fernFilepath: {
+                allParts: [casingsGenerator.generateName(opts.subpackageName)],
+                packagePath: [casingsGenerator.generateName(opts.subpackageName)],
+                file: casingsGenerator.generateName(opts.subpackageName)
+            },
+            service: serviceId,
+            types: [],
+            errors: [],
+            subpackages: [],
+            hasEndpointsInTree: true,
+            docs: undefined,
+            websocket: undefined,
+            webhooks: undefined,
+            navigationConfig: undefined,
+            displayName: undefined
+            // biome-ignore lint/suspicious/noExplicitAny: minimal subpackage mock — some rarely-used fields omitted
+        } as any;
+        ir.rootPackage.subpackages = [subpackageId];
+    } else {
+        ir.rootPackage.service = serviceId;
+    }
+
+    return ir;
+}
+
+function createGenerator(
+    ir: FernIr.IntermediateRepresentation,
+    opts?: {
+        clientClassName?: string;
+        npmPackageName?: string;
+    }
+): ReactQueryGenerator {
+    return new ReactQueryGenerator({
+        intermediateRepresentation: ir,
+        packageResolver: createMockPackageResolver(ir),
+        namespaceExport: "SeedApi",
+        clientClassName: opts?.clientClassName ?? "SeedApiClient",
+        caseConverter,
+        npmPackageName: opts?.npmPackageName ?? "@fern/test-sdk",
+        relativePackagePath: "src"
+    });
+}
+
+function getFile(files: Record<string, string>, path: string): string {
+    const content = files[path];
+    if (content == null) {
+        throw new Error(`Expected file "${path}" to exist in generated files`);
+    }
+    return content;
+}
+
+// ─── Tests ──────────────────────────────────────────────────────────────────
+
+describe("ReactQueryGenerator", () => {
+    describe("generateFiles", () => {
+        it("generates context, types, and index files for API with no endpoints", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+
+            expect(files["src/react-query/context.ts"]).toBeDefined();
+            expect(files["src/react-query/types.ts"]).toBeDefined();
+            expect(files["src/react-query/index.ts"]).toBeDefined();
+            expect(files["src/react-query/hooks.ts"]).toBeUndefined();
+        });
+
+        it("generates hooks.ts when endpoints exist (no separate options/invalidation files)", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+
+            expect(files["src/react-query/hooks.ts"]).toBeDefined();
+            // tRPC-style: no separate options.ts or invalidation.ts
+            expect(files["src/react-query/options.ts"]).toBeUndefined();
+            expect(files["src/react-query/invalidation.ts"]).toBeUndefined();
+        });
+
+        it("uses correct file path prefix from relativePackagePath", () => {
+            const ir = createMinimalIR();
+            const generator = new ReactQueryGenerator({
+                intermediateRepresentation: ir,
+                packageResolver: createMockPackageResolver(ir),
+                namespaceExport: "SeedApi",
+                clientClassName: "SeedApiClient",
+                caseConverter,
+                npmPackageName: "@fern/test-sdk",
+                relativePackagePath: "custom/path"
+            });
+            const { files } = generator.generateFiles();
+
+            expect(files["custom/path/react-query/context.ts"]).toBeDefined();
+            expect(files["custom/path/react-query/types.ts"]).toBeDefined();
+            expect(files["custom/path/react-query/index.ts"]).toBeDefined();
+        });
+    });
+
+    describe("index.ts", () => {
+        it("does not export hooks namespace when no endpoints exist", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const index = files["src/react-query/index.ts"];
+
+            expect(index).not.toContain("hooks.js");
+            expect(index).toContain("context.js");
+            expect(index).toContain("types.js");
+        });
+
+        it("exports namespace from hooks.ts when endpoints exist", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const index = files["src/react-query/index.ts"];
+
+            expect(index).toContain('export { seedApi } from "./hooks.js"');
+        });
+
+        it("exports provider and context hook", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const index = files["src/react-query/index.ts"];
+
+            expect(index).toContain("SeedApiClientProvider");
+            expect(index).toContain("useSeedApiClientContext");
+            expect(index).toContain("SeedApiClientProviderProps");
+        });
+
+        it("exports QueryKey and all hook option types", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const index = files["src/react-query/index.ts"];
+
+            expect(index).toContain("QueryKey");
+            expect(index).toContain("QueryHookOptions");
+            expect(index).toContain("SuspenseQueryHookOptions");
+            expect(index).toContain("MutationHookOptions");
+        });
+    });
+
+    describe("context.ts", () => {
+        it("uses createElement instead of JSX", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const context = files["src/react-query/context.ts"];
+
+            expect(context).toContain("createElement");
+            expect(context).not.toContain("<SeedApiClientContext.Provider");
+        });
+
+        it("creates context with null default", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const context = files["src/react-query/context.ts"];
+
+            expect(context).toContain("createContext<SeedApiClient | null>(null)");
+        });
+
+        it("throws descriptive error when context is not provided", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const context = files["src/react-query/context.ts"];
+
+            expect(context).toContain("if (value === null)");
+            expect(context).toContain("SeedApiClient not initialized");
+        });
+
+        it("imports client from parent index", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const context = files["src/react-query/context.ts"];
+
+            expect(context).toContain('from "../index.js"');
+        });
+
+        it("uses custom client class name", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir, { clientClassName: "AcmeClient" });
+            const { files } = generator.generateFiles();
+            const context = files["src/react-query/context.ts"];
+
+            expect(context).toContain("AcmeClient");
+            expect(context).toContain("AcmeClientProvider");
+            expect(context).toContain("useAcmeClientContext");
+            expect(context).toContain("AcmeClientProviderProps");
+        });
+    });
+
+    describe("types.ts", () => {
+        it("defines QueryHookOptions omitting queryKey and queryFn", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const types = files["src/react-query/types.ts"];
+
+            expect(types).toContain('Omit<\n    UseQueryOptions<TData, TError>,\n    "queryKey" | "queryFn"\n>');
+        });
+
+        it("defines SuspenseQueryHookOptions omitting queryKey and queryFn", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const types = files["src/react-query/types.ts"];
+
+            expect(types).toContain(
+                'Omit<\n    UseSuspenseQueryOptions<TData, TError>,\n    "queryKey" | "queryFn"\n>'
+            );
+        });
+
+        it("defines MutationHookOptions omitting mutationKey and mutationFn", () => {
+            const ir = createMinimalIR();
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const types = files["src/react-query/types.ts"];
+
+            expect(types).toContain(
+                'Omit<\n    UseMutationOptions<TData, TError, TVariables>,\n    "mutationKey" | "mutationFn"\n>'
+            );
+        });
+    });
+
+    describe("namespace name derivation", () => {
+        it("derives seedApi from SeedApiClient", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            expect(hooks).toContain("export const seedApi:");
+        });
+
+        it("derives acme from AcmeClient", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir, { clientClassName: "AcmeClient" });
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            expect(hooks).toContain("export const acme:");
+        });
+
+        it("derives myApi from MyApiClient", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir, { clientClassName: "MyApiClient" });
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            expect(hooks).toContain("export const myApi:");
+        });
+
+        it("falls back to namespace export when class name is exactly 'Client'", () => {
+            // Fix #8: stripping "Client" suffix from "Client" yields empty string
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = new ReactQueryGenerator({
+                intermediateRepresentation: ir,
+                packageResolver: createMockPackageResolver(ir),
+                namespaceExport: "MyNamespace",
+                clientClassName: "Client",
+                caseConverter,
+                npmPackageName: "@fern/test-sdk",
+                relativePackagePath: "src"
+            });
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            // Should fall back to namespace export (lowercased first char)
+            expect(hooks).toContain("export const myNamespace:");
+        });
+
+        it("index exports the correct namespace name", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir, { clientClassName: "AcmeClient" });
+            const { files } = generator.generateFiles();
+            const index = files["src/react-query/index.ts"];
+
+            expect(index).toContain('export { acme } from "./hooks.js"');
+        });
+    });
+
+    describe("tRPC-style namespace structure", () => {
+        it("generates namespace object with service-level grouping", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(hooks).toContain("export const seedApi:");
+            expect(hooks).toContain("user: user,");
+            expect(userService).toContain("export const user = {");
+            expect(userService).toContain("list: {");
+        });
+
+        it("generates useQuery method on each query endpoint node", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("useQuery(");
+            expect(userService).toContain("useSuspenseQuery(");
+        });
+
+        it("generates useMutation method on each mutation endpoint node", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("create", "POST", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("create: {");
+            expect(userService).toContain("useMutation(");
+            expect(userService).toContain("mutationFn: (args) => client.user.create(...args)");
+        });
+
+        it("generates getQueryKey method on query endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("getQueryKey()");
+            expect(userService).toContain('"@fern/test-sdk", "user", "list"');
+        });
+
+        it("generates getQueryOptions method on query endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("getQueryOptions(");
+            expect(userService).toContain("client: SeedApiClient");
+            expect(userService).toContain("queryKey:");
+            expect(userService).toContain("queryFn:");
+        });
+
+        it("generates invalidate method on each endpoint node", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("invalidate(queryClient: QueryClient, ...args: unknown[]): Promise<void>");
+        });
+
+        it("generates per-service files and returns service export paths", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files, serviceExportPaths } = generator.generateFiles();
+
+            expect(files["src/react-query/user/index.ts"]).toBeDefined();
+            expect(serviceExportPaths).toContain("react-query/user");
+        });
+
+        it("hooks.ts imports from per-service files", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            expect(hooks).toContain('import { user } from "./user/index.js"');
+        });
+    });
+
+    describe("structured query keys", () => {
+        it("uses structured array keys instead of dot-joined strings", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            // Structured: ["@fern/test-sdk", "user", "list"] not ["@fern/test-sdk", "user.list"]
+            expect(userService).toContain('"@fern/test-sdk", "user", "list"');
+            expect(userService).not.toContain('"user.list"');
+        });
+
+        it("uses npm package name as query key prefix", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir, { npmPackageName: "@acme/sdk" });
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain('"@acme/sdk", "user", "list"');
+        });
+
+        it("falls back to namespace export when npm package name is undefined", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = new ReactQueryGenerator({
+                intermediateRepresentation: ir,
+                packageResolver: createMockPackageResolver(ir),
+                namespaceExport: "AcmeApi",
+                clientClassName: "SeedApiClient",
+                caseConverter,
+                npmPackageName: undefined,
+                relativePackagePath: "src"
+            });
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain('"AcmeApi", "user", "list"');
+        });
+
+        it("includes args in query key for endpoints with parameters", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("get", "GET", {
+                        pathParameters: [createPathParameter("userId")]
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain('"@fern/test-sdk", "user", "get", ...args');
+        });
+    });
+
+    describe("hierarchical invalidation", () => {
+        it("generates SDK-level invalidate on root namespace", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            expect(hooks).toContain('queryKey: ["@fern/test-sdk"]');
+        });
+
+        it("generates service-level invalidate on each service namespace", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain('queryKey: ["@fern/test-sdk", "user"]');
+        });
+
+        it("generates endpoint-level invalidate with prefix matching", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain('queryKey: ["@fern/test-sdk", "user", "list", ...args]');
+        });
+    });
+
+    describe("query hooks (GET endpoints)", () => {
+        it("generates no-args hooks when endpoint has no parameters", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("useQuery(\n            options?:");
+            expect(userService).toContain("queryFn: () => client.user.list()");
+        });
+
+        it("generates args-accepting hooks when endpoint has path parameters", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("get", "GET", {
+                        pathParameters: [createPathParameter("userId")]
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("args: Parameters<");
+            expect(userService).toContain("queryFn: () => client.user.get(...args)");
+        });
+
+        it("generates args-accepting hooks when endpoint has request body", () => {
+            const ir = createIRWithService({
+                serviceName: "search",
+                subpackageName: "search",
+                endpoints: [
+                    createEndpointWithMethod("query", "GET", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const searchService = getFile(files, "src/react-query/search/index.ts");
+
+            expect(searchService).toContain("args: Parameters<");
+            expect(searchService).toContain("queryFn: () => client.search.query(...args)");
+        });
+
+        it("includes JSDoc when endpoint has docs", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("list", "GET", {
+                        docs: "List all users"
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("* List all users");
+            expect(userService).toContain("@example");
+            expect(userService).toContain("seedApi.user.list.useQuery()");
+        });
+    });
+
+    describe("mutation hooks (POST/PUT/DELETE/PATCH endpoints)", () => {
+        it("generates useMutation for POST endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("create", "POST", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("create: {");
+            expect(userService).toContain("useMutation(");
+            expect(userService).toContain("mutationFn: (args) => client.user.create(...args)");
+        });
+
+        it("generates useMutation for DELETE endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("delete", "DELETE", {
+                        pathParameters: [createPathParameter("userId")]
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("delete: {");
+            expect(userService).toContain("mutationFn: (args) => client.user.delete(...args)");
+        });
+
+        it("generates useMutation for PUT endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("update", "PUT", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("update: {");
+            expect(userService).toContain("useMutation(");
+        });
+
+        it("generates useMutation for PATCH endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("patch", "PATCH", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("patch: {");
+            expect(userService).toContain("useMutation(");
+        });
+
+        it("generates void variables for mutation without arguments", () => {
+            const ir = createIRWithService({
+                serviceName: "cache",
+                subpackageName: "cache",
+                endpoints: [createEndpointWithMethod("clear", "POST")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const cacheService = getFile(files, "src/react-query/cache/index.ts");
+
+            expect(cacheService).toContain("MutationHookOptions<");
+            expect(cacheService).toContain(", Error, void>");
+            expect(cacheService).toContain("mutationFn: () => client.cache.clear()");
+        });
+
+        it("generates Parameters variables for mutation with arguments", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("create", "POST", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain('Parameters<SeedApiClient["user"]["create"]>');
+        });
+
+        it("mutation endpoints do not have useQuery methods", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("create", "POST", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            // The create endpoint node should only have useMutation, not useQuery
+            expect(userService).toContain("useMutation(");
+            expect(userService).not.toContain("getQueryKey");
+            expect(userService).not.toContain("getQueryOptions");
+        });
+
+        it("includes mutation key with structured format", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("create", "POST", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain('mutationKey: ["@fern/test-sdk", "user", "create"]');
+        });
+    });
+
+    describe("mixed endpoints", () => {
+        it("separates query and mutation endpoints in namespace correctly", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("list", "GET"),
+                    createEndpointWithMethod("create", "POST", {
+                        sdkRequest: createSdkRequestBody()
+                    }),
+                    createEndpointWithMethod("get", "GET", {
+                        pathParameters: [createPathParameter("userId")]
+                    }),
+                    createEndpointWithMethod("delete", "DELETE", {
+                        pathParameters: [createPathParameter("userId")]
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            // Query endpoints have all query methods
+            expect(userService).toContain("list: {");
+            expect(userService).toContain("get: {");
+
+            // Mutation endpoints
+            expect(userService).toContain("create: {");
+            expect(userService).toContain("delete: {");
+        });
+
+        it("only imports useQuery-related when there are query endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("create", "POST", {
+                        sdkRequest: createSdkRequestBody()
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).not.toContain("useQuery,");
+            expect(userService).not.toContain("useSuspenseQuery");
+            expect(userService).not.toContain("useInfiniteQuery");
+            expect(userService).toContain("useMutation");
+        });
+
+        it("only imports useMutation when there are mutation endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).toContain("useQuery");
+            expect(userService).not.toContain("useMutation");
+        });
+    });
+
+    describe("root-level endpoints", () => {
+        it("places root-level endpoints directly on the namespace object", () => {
+            const ir = createIRWithService({
+                serviceName: "root",
+                endpoints: [createEndpointWithMethod("health", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            // Root endpoint directly on namespace (no service nesting)
+            expect(hooks).toContain("health: {");
+            expect(hooks).toContain("queryFn: () => client.health()");
+            expect(hooks).toContain('"@fern/test-sdk", "health"');
+        });
+
+        it("generates valid type annotation when root endpoints coexist with services", () => {
+            // Fix #1: hooks.ts must include root endpoint keys in the type annotation
+            // alongside typeof import(...) for services, otherwise TS2353 fires.
+            const rootServiceId = "service_root";
+            const userServiceId = "service_user";
+            const rootService = {
+                ...createHttpService(),
+                endpoints: [createEndpointWithMethod("status", "GET")],
+                name: { fernFilepath: { allParts: [], packagePath: [], file: undefined } }
+            };
+            const userService = {
+                ...createHttpService(),
+                endpoints: [createEndpointWithMethod("list", "GET")],
+                name: {
+                    fernFilepath: {
+                        allParts: [casingsGenerator.generateName("user")],
+                        packagePath: [casingsGenerator.generateName("user")],
+                        file: casingsGenerator.generateName("user")
+                    }
+                }
+            };
+            const ir = createMinimalIR({
+                services: {
+                    [rootServiceId]: rootService,
+                    [userServiceId]: userService
+                }
+            });
+            ir.rootPackage.service = rootServiceId;
+            const subpackageId = "subpackage_user";
+            ir.subpackages[subpackageId] = {
+                name: casingsGenerator.generateName("user"),
+                fernFilepath: {
+                    allParts: [casingsGenerator.generateName("user")],
+                    packagePath: [casingsGenerator.generateName("user")],
+                    file: casingsGenerator.generateName("user")
+                },
+                service: userServiceId,
+                types: [],
+                errors: [],
+                subpackages: [],
+                hasEndpointsInTree: true,
+                docs: undefined,
+                websocket: undefined,
+                webhooks: undefined,
+                navigationConfig: undefined,
+                displayName: undefined
+                // biome-ignore lint/suspicious/noExplicitAny: minimal subpackage mock
+            } as any;
+            ir.rootPackage.subpackages = [subpackageId];
+
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            // Type annotation includes root endpoint key AND service typeof
+            expect(hooks).toContain("export const seedApi: {");
+            expect(hooks).toContain("status: {");
+            expect(hooks).toContain('typeof import("./user/index.js").user');
+            // Object literal includes both root endpoint and service
+            expect(hooks).toContain("user: user,");
+            expect(hooks).toContain("queryFn: () => client.status()");
+        });
+    });
+
+    describe("collision handling", () => {
+        it("escapes endpoint named 'invalidate' to 'invalidate_' at root level", () => {
+            // Fix #2: endpoint named "invalidate" collides with the generated invalidate method
+            const ir = createIRWithService({
+                serviceName: "root",
+                endpoints: [createEndpointWithMethod("invalidate", "GET"), createEndpointWithMethod("status", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            // The endpoint key is escaped to avoid collision with the generated invalidate method
+            expect(hooks).toContain("invalidate_: {");
+            // But the client accessor still uses the original name
+            expect(hooks).toContain("client.invalidate()");
+            // And the query key uses the original name
+            expect(hooks).toContain('"@fern/test-sdk", "invalidate"');
+            // The generated invalidate method still exists
+            expect(hooks).toContain("invalidate(queryClient: QueryClient): Promise<void>");
+        });
+
+        it("escapes endpoint named 'useQuery' at service level", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("useQuery", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            // Endpoint key is escaped to avoid collision with the generated useQuery method
+            expect(userService).toContain("useQuery_: {");
+        });
+    });
+
+    describe("hasArgs with construction-level path params", () => {
+        it("does not treat construction-level path params as hook args", () => {
+            // Fix #5: allPathParameters includes root/env path params that are NOT
+            // part of the endpoint method signature. Only endpoint-level pathParameters count.
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("list", "GET", {
+                        pathParameters: [],
+                        allPathParameters: [createPathParameter("envId")]
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            // Should be a no-args hook (construction-level param excluded)
+            expect(userService).toContain("useQuery(\n            options?:");
+            expect(userService).not.toContain("args: Parameters<");
+        });
+    });
+
+    describe("HEAD endpoints", () => {
+        it("treats HEAD as a query method", () => {
+            const ir = createIRWithService({
+                serviceName: "health",
+                subpackageName: "health",
+                endpoints: [createEndpointWithMethod("check", "HEAD")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const healthService = getFile(files, "src/react-query/health/index.ts");
+
+            expect(healthService).toContain("check: {");
+            expect(healthService).toContain("useQuery(");
+            expect(healthService).toContain("useSuspenseQuery(");
+            expect(healthService).not.toContain("useMutation(");
+        });
+    });
+
+    describe("no infinite query hooks", () => {
+        it("does not generate infinite query hooks (removed — not wired to pagination)", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            expect(userService).not.toContain("useInfiniteQuery");
+            expect(userService).not.toContain("useSuspenseInfiniteQuery");
+            expect(userService).not.toContain("InfiniteQueryHookOptions");
+        });
+    });
+
+    describe("complete generation", () => {
+        it("generates all expected files for a service with mixed endpoints", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("list", "GET", { docs: "List all users" }),
+                    createEndpointWithMethod("get", "GET", {
+                        pathParameters: [createPathParameter("userId")],
+                        docs: "Get a user by ID"
+                    }),
+                    createEndpointWithMethod("create", "POST", {
+                        sdkRequest: createSdkRequestBody(),
+                        docs: "Create a new user"
+                    }),
+                    createEndpointWithMethod("delete", "DELETE", {
+                        pathParameters: [createPathParameter("userId")],
+                        docs: "Delete a user"
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+
+            // Verify all expected files exist
+            expect(files["src/react-query/hooks.ts"]).toBeDefined();
+            expect(files["src/react-query/user/index.ts"]).toBeDefined();
+            expect(files["src/react-query/context.ts"]).toBeDefined();
+            expect(files["src/react-query/types.ts"]).toBeDefined();
+            expect(files["src/react-query/index.ts"]).toBeDefined();
+
+            // Verify hooks.ts has correct structure
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+            expect(hooks).toContain("export const seedApi:");
+            expect(hooks).toContain("user: user,");
+            expect(hooks).toContain('import { user } from "./user/index.js"');
+
+            // Verify user service file has all endpoints
+            const userService = getFile(files, "src/react-query/user/index.ts");
+            expect(userService).toContain("list: {");
+            expect(userService).toContain("get: {");
+            expect(userService).toContain("create: {");
+            expect(userService).toContain("delete: {");
+            // Query endpoints have useQuery + useSuspenseQuery
+            expect(userService).toContain("useQuery(");
+            expect(userService).toContain("useSuspenseQuery(");
+            // Mutation endpoints have useMutation
+            expect(userService).toContain("useMutation(");
+            // No infinite query hooks
+            expect(userService).not.toContain("useInfiniteQuery");
+            expect(userService).not.toContain("useSuspenseInfiniteQuery");
+            // JSDoc with @example tags
+            expect(userService).toContain("* List all users");
+            expect(userService).toContain("* Get a user by ID");
+            expect(userService).toContain("@example");
+
+            // Verify context.ts has provider and hook
+            const context = getFile(files, "src/react-query/context.ts");
+            expect(context).toContain("SeedApiClientProvider");
+            expect(context).toContain("useSeedApiClientContext");
+            expect(context).toContain("createElement");
+
+            // Verify types.ts has all hook option types
+            const types = getFile(files, "src/react-query/types.ts");
+            expect(types).toContain("QueryHookOptions");
+            expect(types).toContain("SuspenseQueryHookOptions");
+            expect(types).toContain("MutationHookOptions");
+
+            // Verify index.ts re-exports everything
+            const index = getFile(files, "src/react-query/index.ts");
+            expect(index).toContain("seedApi");
+            expect(index).toContain("SeedApiClientProvider");
+            expect(index).toContain("QueryHookOptions");
+        });
+    });
+});

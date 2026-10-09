@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The retrier no longer waits out a `Retry-After`/backoff delay after its final
+    attempt. Previously the sleep happened before the attempt budget was checked,
+    so a client with retries disabled (or `MaxAttempts: 1`) still blocked for the
+    full `Retry-After` on a 429/5xx, and the default two-attempt retrier paid two
+    delays for one retry. Retrier exhaustion now returns immediately.
+  type: fix
+- summary: |
+    Fixed a `crypto/rand: argument to Int is <= 0` panic when a retry delay was
+    too small to jitter (e.g. an `X-RateLimit-Reset` timestamp only a few
+    nanoseconds in the future). Such delays are now clamped to the minimum retry
+    delay without jitter.
+  type: fix

@@ -14,7 +14,7 @@ public partial class SeedAliasClient : ISeedAliasClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAlias" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedAlias.Version.Current },
                 { "User-Agent", "Fernalias/0.0.1" },
             }
         );
@@ -28,15 +28,15 @@ public partial class SeedAliasClient : ISeedAliasClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.GetAsync("typeId");
-    /// </code></example>
-    public async Task GetAsync(
+    private async Task<RawResponse> GetAsyncCore(
         string typeId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedAlias.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedAlias.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -49,6 +49,7 @@ public partial class SeedAliasClient : ISeedAliasClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(typeId)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -57,7 +58,12 @@ public partial class SeedAliasClient : ISeedAliasClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedAlias.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -66,8 +72,26 @@ public partial class SeedAliasClient : ISeedAliasClient
             throw new SeedAliasApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedAlias.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.GetAsync("typeId");
+    /// </code></example>
+    public WithRawResponseTask GetAsync(
+        string typeId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(GetAsyncCore(typeId, options, cancellationToken));
     }
 }

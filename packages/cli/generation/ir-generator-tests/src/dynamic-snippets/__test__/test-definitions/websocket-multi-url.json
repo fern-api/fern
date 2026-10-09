@@ -130,7 +130,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_realtime:ReceiveEvent": {
             "type": "object",
@@ -261,7 +262,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -376,5 +378,6 @@
         }
     },
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

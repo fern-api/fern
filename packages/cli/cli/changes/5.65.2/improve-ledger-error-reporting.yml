@@ -1,0 +1,5 @@
+- summary: |
+    Improve error messages when ledger docs publishing fails: surface the
+    server-side validation issues (field paths and messages) so the exact
+    failing field is visible without needing server-side log access.
+  type: fix

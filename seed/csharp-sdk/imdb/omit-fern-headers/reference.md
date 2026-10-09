@@ -54,7 +54,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rat
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetMovieAsync</a>(movieId) -> WithRawResponseTask&lt;Movie&gt;</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetMovieAsync</a>(GetMovieImdbRequest { ... }) -> WithRawResponseTask&lt;Movie&gt;</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rat
 <dd>
 
 ```csharp
-await client.Imdb.GetMovieAsync("movieId");
+await client.Imdb.GetMovieAsync(new GetMovieImdbRequest { MovieId = "movieId" });
 ```
 </dd>
 </dl>
@@ -82,7 +82,7 @@ await client.Imdb.GetMovieAsync("movieId");
 <dl>
 <dd>
 
-**movieId:** `string` 
+**request:** `GetMovieImdbRequest` 
     
 </dd>
 </dl>

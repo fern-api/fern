@@ -79,9 +79,12 @@ type fileWriter struct {
 	inlineFileProperties         bool
 	useReaderForBytesRequest     bool
 	gettersPassByValue           bool
+	dedupeUnionBaseProperties    bool
+	serverURLVariables           bool
 	exportAllRequestsAtRoot      bool
 	omitEmptyRequestWrappers     bool
-	omitFernHeaders              bool
+	legacyNullableAliasPointers  bool
+	userAgent                    userAgentConfig
 	unionVersion                 UnionVersion
 	customPagerName              string
 	scope                        *gospec.Scope
@@ -95,6 +98,11 @@ type fileWriter struct {
 	// EncodeQueryValues method generated; populated by generateModelTypes.
 	queryReachableUnions map[common.TypeId]struct{}
 
+	// headerReachableUnions is the set of undiscriminated union TypeIds that
+	// may be sent as request headers. Only unions in this set get a String
+	// method generated; populated by generateModelTypes.
+	headerReachableUnions map[common.TypeId]struct{}
+
 	buffer *bytes.Buffer
 
 	// testData collects information about types that need getter/setter tests
@@ -106,6 +114,12 @@ type fileWriter struct {
 	stringMethodTests    map[string]struct{}
 	enumTests            map[string][]string // map[typeName][]enumValues for enum tests
 	extraPropertiesTests map[string]struct{} // types that have GetExtraProperties()
+	// requiredNullableRoundTripTests maps type names to the wire names of their
+	// required-nullable fields, for JSON round-trip test generation.
+	requiredNullableRoundTripTests map[string][]string
+	// optionalNullableRoundTripTests maps type names to the wire names of their
+	// optional-nullable fields, for JSON round-trip test generation.
+	optionalNullableRoundTripTests map[string][]string
 }
 
 // GetterSetterTestConfig contains configuration for generating getter/setter tests
@@ -139,9 +153,12 @@ func newFileWriter(
 	inlineFileProperties bool,
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
+	dedupeUnionBaseProperties bool,
+	serverURLVariables bool,
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
-	omitFernHeaders bool,
+	legacyNullableAliasPointers bool,
+	userAgent userAgentConfig,
 	unionVersion UnionVersion,
 	customPagerName string,
 	types map[common.TypeId]*ir.TypeDeclaration,
@@ -163,6 +180,7 @@ func newFileWriter(
 	scope.AddImport("net/http")
 	scope.AddImport("net/url")
 	scope.AddImport("os")
+	scope.AddImport("sort")
 	scope.AddImport("strconv")
 	scope.AddImport("strings")
 	scope.AddImport("testing")
@@ -188,9 +206,12 @@ func newFileWriter(
 		inlineFileProperties:         inlineFileProperties,
 		useReaderForBytesRequest:     useReaderForBytesRequest,
 		gettersPassByValue:           gettersPassByValue,
+		dedupeUnionBaseProperties:    dedupeUnionBaseProperties,
+		serverURLVariables:           serverURLVariables,
 		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		omitEmptyRequestWrappers:     omitEmptyRequestWrappers,
-		omitFernHeaders:              omitFernHeaders,
+		legacyNullableAliasPointers:  legacyNullableAliasPointers,
+		userAgent:                    userAgent,
 		unionVersion:                 unionVersion,
 		customPagerName:              customPagerName,
 		scope:                        scope,
@@ -284,9 +305,7 @@ func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNa
 
 	f.P("var (")
 	for i, propertyName := range propertyNames {
-		constantName := fmt.Sprintf("%sField%s", typeName, propertyName)
-		// Convert to camelCase for the constant name (not exported)
-		constantName = strings.ToLower(constantName[:1]) + constantName[1:]
+		constantName := fieldBitConstantName(typeName, propertyName)
 		if i < 63 {
 			f.P("\t", constantName, " = big.NewInt(1 << ", i, ")")
 		} else {
@@ -295,6 +314,13 @@ func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNa
 	}
 	f.P(")")
 	f.P()
+}
+
+// fieldBitConstantName returns the (unexported) name of the bit constant for the
+// given type's property, e.g. accountBalanceFieldLimit.
+func fieldBitConstantName(typeName string, propertyName string) string {
+	constantName := fmt.Sprintf("%sField%s", typeName, propertyName)
+	return strings.ToLower(constantName[:1]) + constantName[1:]
 }
 
 // WriteSetterMethods writes setter methods for each field.
@@ -306,9 +332,7 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 	receiver := typeNameToReceiver(typeName)
 	for i, propertyName := range propertyNames {
 		setterName := fmt.Sprintf("Set%s", propertyName)
-		fieldConstantName := fmt.Sprintf("%sField%s", typeName, propertyName)
-		// Convert to camelCase for the constant name
-		fieldConstantName = strings.ToLower(fieldConstantName[:1]) + fieldConstantName[1:]
+		fieldConstantName := fieldBitConstantName(typeName, propertyName)
 
 		// Use safe name for parameter to avoid reserved keywords
 		paramName := propertySafeNames[i]
@@ -342,13 +366,20 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 }
 
 // WriteRequireMethod writes the require helper method for explicit field tracking.
+//
+// The bitmask is replaced rather than mutated in place. Because explicitFields is a
+// pointer, a value copy of the enclosing struct aliases the same big.Int, and an
+// in-place Or would make a setter on one copy visible in every other copy. Allocating
+// a new value gives each copy its own mask on first write.
 func (f *fileWriter) WriteRequireMethod(typeName string) {
 	receiver := typeNameToReceiver(typeName)
 	f.P("func (", receiver, " *", typeName, ") require(field *big.Int) {")
-	f.P("\tif ", receiver, ".explicitFields == nil {")
-	f.P("\t\t", receiver, ".explicitFields = big.NewInt(0)")
+	f.P("\tnext := new(big.Int)")
+	f.P("\tif ", receiver, ".explicitFields != nil {")
+	f.P("\t\tnext.Set(", receiver, ".explicitFields)")
 	f.P("\t}")
-	f.P("\t", receiver, ".explicitFields.Or(", receiver, ".explicitFields, field)")
+	f.P("\tnext.Or(next, field)")
+	f.P("\t", receiver, ".explicitFields = next")
 	f.P("}")
 	f.P()
 }
@@ -395,6 +426,30 @@ func (f *fileWriter) AddJSONMarshalingTestData(typeName string, hasLiterals bool
 	f.jsonMarshalingTests[typeName] = hasLiterals
 }
 
+// AddRequiredNullableRoundTripTest marks a type for required-nullable JSON
+// round-trip test generation, given the wire names of its required-nullable fields.
+func (f *fileWriter) AddRequiredNullableRoundTripTest(typeName string, wireNames []string) {
+	if len(wireNames) == 0 {
+		return
+	}
+	if f.requiredNullableRoundTripTests == nil {
+		f.requiredNullableRoundTripTests = make(map[string][]string)
+	}
+	f.requiredNullableRoundTripTests[typeName] = wireNames
+}
+
+// AddOptionalNullableRoundTripTest marks a type for optional-nullable JSON
+// round-trip test generation, given the wire names of its optional-nullable fields.
+func (f *fileWriter) AddOptionalNullableRoundTripTest(typeName string, wireNames []string) {
+	if len(wireNames) == 0 {
+		return
+	}
+	if f.optionalNullableRoundTripTests == nil {
+		f.optionalNullableRoundTripTests = make(map[string][]string)
+	}
+	f.optionalNullableRoundTripTests[typeName] = wireNames
+}
+
 // AddStringMethodTest marks a type for String() method test generation.
 func (f *fileWriter) AddStringMethodTest(typeName string) {
 	if f.stringMethodTests == nil {
@@ -425,7 +480,9 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		len(f.jsonMarshalingTests) == 0 &&
 		len(f.stringMethodTests) == 0 &&
 		len(f.enumTests) == 0 &&
-		len(f.extraPropertiesTests) == 0 {
+		len(f.extraPropertiesTests) == 0 &&
+		len(f.requiredNullableRoundTripTests) == 0 &&
+		len(f.optionalNullableRoundTripTests) == 0 {
 		return nil, nil
 	}
 
@@ -443,9 +500,12 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.inlineFileProperties,
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
+		f.dedupeUnionBaseProperties,
+		f.serverURLVariables,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
-		f.omitFernHeaders,
+		f.legacyNullableAliasPointers,
+		f.userAgent,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,
@@ -470,11 +530,32 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		mainAliasToPath[alias] = importPath
 	}
 
+	// Cycle-breaking can relocate types into a sibling subpackage whose alias
+	// matches the current package name (e.g. a package named "v2" importing the
+	// relocated "common/v2", also aliased "v2"). In that case a "v2." qualifier
+	// refers to the imported package, not the local one, so it must be kept and
+	// imported rather than stripped.
+	currentImportPath := path.Join(f.baseImportPath, path.Dir(f.filename))
+	packageNameIsImportedAlias := false
+	if importPath, ok := mainAliasToPath[f.packageName]; ok && importPath != currentImportPath {
+		packageNameIsImportedAlias = true
+	}
+
 	validSubpackages := make(map[string]struct{})
+	if packageNameIsImportedAlias {
+		// A property's qualifier is only the first package referenced in its
+		// type string (e.g. "common" in map[common.X]*v2.Y), so the colliding
+		// alias may not be discovered below. Register it up front.
+		validSubpackages[f.packageName] = struct{}{}
+		testWriter.scope.AddImport(mainAliasToPath[f.packageName])
+	}
 	for _, td := range f.testData {
 		for _, propType := range td.propertyTypes {
 			pkgQualifier := extractPackageQualifier(propType)
-			if pkgQualifier == "" || pkgQualifier == f.packageName || isStdLibPackage(pkgQualifier) {
+			if pkgQualifier == "" || isStdLibPackage(pkgQualifier) {
+				continue
+			}
+			if pkgQualifier == f.packageName && !packageNameIsImportedAlias {
 				continue
 			}
 			if _, seen := validSubpackages[pkgQualifier]; seen {
@@ -505,7 +586,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 			// 3. Package qualifier is in validSubpackages (known generated subpackage)
 			// 4. Package qualifier is a standard library package
 			shouldInclude := false
-			if pkgQualifier == "" || pkgQualifier == f.packageName {
+			if pkgQualifier == "" || (pkgQualifier == f.packageName && !packageNameIsImportedAlias) {
 				shouldInclude = true
 			} else if _, isValid := validSubpackages[pkgQualifier]; isValid {
 				shouldInclude = true
@@ -518,7 +599,16 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 			}
 
 			localPropertyNames = append(localPropertyNames, testData.propertyNames[i])
-			localPropertyTypes = append(localPropertyTypes, stripPackageQualifier(propType, f.packageName))
+			// When the current package name is also an imported alias (a type was
+			// relocated into a sibling subpackage by cycle-breaking), the
+			// "packageName." qualifier refers to that import, not the local
+			// package, so it must be kept; stripping it references an undefined
+			// local type.
+			localPropertyType := propType
+			if !packageNameIsImportedAlias {
+				localPropertyType = stripPackageQualifier(propType, f.packageName)
+			}
+			localPropertyTypes = append(localPropertyTypes, localPropertyType)
 			if i < len(testData.propertySafeNames) {
 				localPropertySafeNames = append(localPropertySafeNames, testData.propertySafeNames[i])
 			}
@@ -553,6 +643,26 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 	sort.Strings(jsonTestNames)
 	for _, typeName := range jsonTestNames {
 		testWriter.WriteJSONMarshalingTests(typeName, f.jsonMarshalingTests[typeName])
+	}
+
+	// Write required-nullable round-trip tests for types that have them (sorted for deterministic output)
+	requiredNullableTestNames := make([]string, 0, len(f.requiredNullableRoundTripTests))
+	for typeName := range f.requiredNullableRoundTripTests {
+		requiredNullableTestNames = append(requiredNullableTestNames, typeName)
+	}
+	sort.Strings(requiredNullableTestNames)
+	for _, typeName := range requiredNullableTestNames {
+		testWriter.WriteRequiredNullableRoundTripTests(typeName, f.requiredNullableRoundTripTests[typeName])
+	}
+
+	// Write optional-nullable round-trip tests for types that have them (sorted for deterministic output)
+	optionalNullableTestNames := make([]string, 0, len(f.optionalNullableRoundTripTests))
+	for typeName := range f.optionalNullableRoundTripTests {
+		optionalNullableTestNames = append(optionalNullableTestNames, typeName)
+	}
+	sort.Strings(optionalNullableTestNames)
+	for _, typeName := range optionalNullableTestNames {
+		testWriter.WriteOptionalNullableRoundTripTests(typeName, f.optionalNullableRoundTripTests[typeName])
 	}
 
 	// Write String() method tests for types that have them (sorted for deterministic output)
@@ -830,6 +940,78 @@ func (f *fileWriter) WriteJSONMarshalingTests(typeName string, hasLiterals bool)
 	f.P()
 }
 
+// WriteRequiredNullableRoundTripTests generates tests asserting that required-nullable
+// fields survive a JSON decode/encode round-trip: a field present as null stays null,
+// an absent field stays absent, and a freshly constructed value omits the field.
+func (f *fileWriter) WriteRequiredNullableRoundTripTests(typeName string, wireNames []string) {
+	f.writeNullableRoundTripTests("TestRequiredNullableRoundTrip", "requiredNullableKeys", "required nullable", typeName, wireNames)
+}
+
+// WriteOptionalNullableRoundTripTests generates tests asserting that optional-nullable
+// fields survive a JSON decode/encode round-trip: a field present as null stays null,
+// an absent field stays absent, and a freshly constructed value omits the field.
+func (f *fileWriter) WriteOptionalNullableRoundTripTests(typeName string, wireNames []string) {
+	f.writeNullableRoundTripTests("TestOptionalNullableRoundTrip", "optionalNullableKeys", "optional nullable", typeName, wireNames)
+}
+
+func (f *fileWriter) writeNullableRoundTripTests(testPrefix, keysName, fieldKind, typeName string, wireNames []string) {
+	var nullInput strings.Builder
+	nullInput.WriteString("{")
+	for i, wireName := range wireNames {
+		if i > 0 {
+			nullInput.WriteString(",")
+		}
+		nullInput.WriteString(fmt.Sprintf("%q:null", wireName))
+	}
+	nullInput.WriteString("}")
+
+	f.P("func ", testPrefix, typeName, "(t *testing.T) {")
+	f.P("\t", keysName, " := []string{")
+	for _, wireName := range wireNames {
+		f.P("\t\t", fmt.Sprintf("%q", wireName), ",")
+	}
+	f.P("\t}")
+	f.P("\tmarshalToMap := func(t *testing.T, obj *", typeName, ") map[string]json.RawMessage {")
+	f.P("\t\tdata, err := json.Marshal(obj)")
+	f.P("\t\trequire.NoError(t, err, \"marshaling should succeed\")")
+	f.P("\t\tvar result map[string]json.RawMessage")
+	f.P("\t\trequire.NoError(t, json.Unmarshal(data, &result), \"marshaled data should be a JSON object\")")
+	f.P("\t\treturn result")
+	f.P("\t}")
+	f.P()
+	f.P("\tt.Run(\"NullPreserved\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tvar obj ", typeName)
+	f.P("\t\trequire.NoError(t, json.Unmarshal([]byte(`", nullInput.String(), "`), &obj))")
+	f.P("\t\tresult := marshalToMap(t, &obj)")
+	f.P("\t\tfor _, key := range ", keysName, " {")
+	f.P("\t\t\tvalue, ok := result[key]")
+	f.P("\t\t\trequire.True(t, ok, \"", fieldKind, " field %q received as null should be present in the output\", key)")
+	f.P("\t\t\tassert.Equal(t, \"null\", string(value), \"", fieldKind, " field %q received as null should be null in the output\", key)")
+	f.P("\t\t}")
+	f.P("\t})")
+	f.P()
+	f.P("\tt.Run(\"AbsentStaysAbsent\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tvar obj ", typeName)
+	f.P("\t\trequire.NoError(t, json.Unmarshal([]byte(`{}`), &obj))")
+	f.P("\t\tresult := marshalToMap(t, &obj)")
+	f.P("\t\tfor _, key := range ", keysName, " {")
+	f.P("\t\t\tassert.NotContains(t, result, key, \"", fieldKind, " field %q absent from the input should be absent from the output\", key)")
+	f.P("\t\t}")
+	f.P("\t})")
+	f.P()
+	f.P("\tt.Run(\"FreshValueOmits\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tresult := marshalToMap(t, &", typeName, "{})")
+	f.P("\t\tfor _, key := range ", keysName, " {")
+	f.P("\t\t\tassert.NotContains(t, result, key, \"", fieldKind, " field %q should be omitted from a freshly constructed value\", key)")
+	f.P("\t\t}")
+	f.P("\t})")
+	f.P("}")
+	f.P()
+}
+
 // WriteStringMethodTests generates tests for String() method.
 func (f *fileWriter) WriteStringMethodTests(typeName string) {
 	f.P("func TestString", typeName, "(t *testing.T) {")
@@ -946,9 +1128,12 @@ func (f *fileWriter) clone() *fileWriter {
 		f.inlineFileProperties,
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
+		f.dedupeUnionBaseProperties,
+		f.serverURLVariables,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
-		f.omitFernHeaders,
+		f.legacyNullableAliasPointers,
+		f.userAgent,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,

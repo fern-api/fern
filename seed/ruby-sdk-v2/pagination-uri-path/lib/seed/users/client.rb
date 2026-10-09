@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.users.list_with_uri_pagination
+      #
       # @return [Seed::Users::Types::ListUsersURIPaginationResponse]
       def list_with_uri_pagination(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -33,7 +36,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          parsed_response = Seed::Users::Types::ListUsersURIPaginationResponse.load(response.body)
+          parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersURIPaginationResponse.load(response.body))
           [parsed_response, response]
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -48,6 +51,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.users.list_with_path_pagination
       #
       # @return [Seed::Users::Types::ListUsersPathPaginationResponse]
       def list_with_path_pagination(request_options: {}, **_params)
@@ -64,7 +70,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          parsed_response = Seed::Users::Types::ListUsersPathPaginationResponse.load(response.body)
+          parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPathPaginationResponse.load(response.body))
           [parsed_response, response]
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)

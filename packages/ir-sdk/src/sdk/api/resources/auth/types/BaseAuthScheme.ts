@@ -8,4 +8,11 @@ export interface BaseAuthScheme extends FernIr.WithDocs {
      * Defaults to the type of the auth scheme if not provided.
      */
     key: FernIr.AuthSchemeKey;
+    /**
+     * Documentation rendered below this scheme's input in the API playground, instead of `docs`.
+     * Set from `x-fern-playground-description` in OpenAPI or `playground-docs` in a Fern definition.
+     * Supports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,
+     * `inline code`, and blank-line-separated paragraphs.
+     */
+    playgroundDocs: string | undefined;
 }

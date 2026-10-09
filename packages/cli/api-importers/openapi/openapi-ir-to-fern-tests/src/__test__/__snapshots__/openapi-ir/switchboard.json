@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Browser Control API",
   "servers": [
     {
@@ -352,6 +353,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -1215,6 +1217,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -3121,6 +3124,7 @@
       "response": {
         "description": "OK",
         "terminator": "[DONE]",
+        "resumable": false,
         "fullExamples": [],
         "schema": {
           "value": {
@@ -3840,6 +3844,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -4452,6 +4457,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {

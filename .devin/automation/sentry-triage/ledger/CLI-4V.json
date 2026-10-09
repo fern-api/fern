@@ -1,0 +1,9 @@
+{
+  "title": "Cannot find declaration of type in IR generator",
+  "problemSignature": "IR generation TypeResolver failed to locate a declared type referenced from user-authored Fern definitions.",
+  "disposition": "shipped",
+  "rationale": "Missing named type declarations in Fern definition files are user reference errors at the IR generation boundary, not reportable resolver failures.",
+  "fixSummary": "Changed TypeResolver missing declaration failures to non-reportable REFERENCE_ERROR and covered the behavior with a unit test.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15950",
+  "lastAnalyzed": "2026-05-16"
+}

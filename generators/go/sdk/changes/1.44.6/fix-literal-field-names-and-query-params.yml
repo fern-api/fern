@@ -1,0 +1,7 @@
+- summary: |
+    Fix generated Go failing to compile for APIs that use literals. Undiscriminated
+    union members whose literal value is not a valid Go identifier (e.g. starting with
+    a digit) now produce a valid exported field name, literal query parameters are no
+    longer double-quoted, and literal path parameters are now passed as their concrete
+    value in dynamic snippets instead of `nil`.
+  type: fix

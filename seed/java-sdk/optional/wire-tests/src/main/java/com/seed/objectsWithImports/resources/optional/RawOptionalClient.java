@@ -4,10 +4,12 @@
 package com.seed.objectsWithImports.resources.optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.objectsWithImports.core.BodyProperties;
 import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.MediaTypes;
 import com.seed.objectsWithImports.core.ObjectMappers;
 import com.seed.objectsWithImports.core.RequestOptions;
+import com.seed.objectsWithImports.core.RetryInterceptor;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiException;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsException;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsHttpResponse;
@@ -57,9 +59,12 @@ public class RawOptionalClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request.isPresent()) {
+            if (request.isPresent()
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
@@ -75,6 +80,15 @@ public class RawOptionalClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -85,6 +99,8 @@ public class RawOptionalClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectsWithImportsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectsWithImportsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectsWithImportsException("Network error executing HTTP request", e);
         }
@@ -115,9 +131,12 @@ public class RawOptionalClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request.isPresent()) {
+            if (request.isPresent()
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
@@ -133,6 +152,15 @@ public class RawOptionalClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -143,6 +171,8 @@ public class RawOptionalClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectsWithImportsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectsWithImportsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectsWithImportsException("Network error executing HTTP request", e);
         }
@@ -195,9 +225,12 @@ public class RawOptionalClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request.isPresent()) {
+            if (request.isPresent()
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
@@ -213,6 +246,15 @@ public class RawOptionalClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -223,6 +265,8 @@ public class RawOptionalClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectsWithImportsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectsWithImportsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectsWithImportsException("Network error executing HTTP request", e);
         }

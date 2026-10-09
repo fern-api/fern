@@ -5,6 +5,11 @@ namespace Seed\Folder\Service;
 interface ServiceClientInterface
 {
     /**
+     * Example:
+     * ```php
+     * $client->folder->service->endpoint();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -17,6 +22,15 @@ interface ServiceClientInterface
     public function endpoint(?array $options = null): void;
 
     /**
+     * Example:
+     * ```php
+     * $client->folder->service->unknownRequest(
+     *     [
+     *         'key' => "value",
+     *     ],
+     * );
+     * ```
+     *
      * @param mixed $request
      * @param ?array{
      *   baseUrl?: string,

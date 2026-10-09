@@ -1,0 +1,567 @@
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
+import type { CargoPackageIdentity } from "./patchCargoToml.js";
+import type { ResolvedNpmPublishInfo } from "./resolveOutputConfig.js";
+
+/**
+ * JSON-encode a value for embedding in an **unquoted** heredoc.
+ *
+ * `JSON.stringify` alone stops a quote or newline from breaking the JSON, but
+ * the launcher's `package.json` is written through `<<PKGJSON` rather than
+ * `<<'PKGJSON'` — it has to be, because `${VERSION}` and `${OPTIONAL_DEPS}` are
+ * meant to expand. So the shell also expands `$VAR`, `${...}`, `$(...)` and
+ * backticks inside user-supplied prose, and collapses `\\` to `\`: a
+ * description reading `Uses ${HOME}` was silently substituted at publish time,
+ * a backtick or `$(...)` executed a command in the publish workflow, and a
+ * literal backslash corrupted the JSON.
+ *
+ * Rather than backslash-escape those characters — which would leave the
+ * heredoc body invalid JSON until the shell processed it — they are emitted as
+ * `\uXXXX`. The result is simultaneously valid JSON *and* free of every
+ * character the shell acts on, so nothing depends on how the file is written.
+ *
+ * Order matters: JSON's escaped backslash (`\\`) is rewritten first, because
+ * the `$` and backtick replacements introduce backslashes of their own.
+ */
+function shellSafeJson(value: string | string[]): string {
+    return JSON.stringify(value).replace(/\\\\/g, "\\u005c").replace(/\$/g, "\\u0024").replace(/`/g, "\\u0060");
+}
+
+/**
+ * Cross-compilation targets for the CLI binary. Each entry maps a
+ * Rust target triple to the npm platform package suffix that cargo-dist
+ * / the npm embedded-binary convention expects.
+ */
+const TARGETS: ReadonlyArray<{
+    rustTarget: string;
+    runner: string;
+    npmPlatformSuffix: string;
+}> = [
+    { rustTarget: "x86_64-unknown-linux-musl", runner: "ubuntu-latest", npmPlatformSuffix: "linux-x64" },
+    { rustTarget: "aarch64-unknown-linux-musl", runner: "ubuntu-24.04-arm", npmPlatformSuffix: "linux-arm64" },
+    { rustTarget: "x86_64-apple-darwin", runner: "macos-latest", npmPlatformSuffix: "darwin-x64" },
+    { rustTarget: "aarch64-apple-darwin", runner: "macos-latest", npmPlatformSuffix: "darwin-arm64" },
+    { rustTarget: "x86_64-pc-windows-msvc", runner: "windows-latest", npmPlatformSuffix: "win32-x64" }
+];
+
+/**
+ * Emit `.github/workflows/ci.yml` with only build+test jobs (check,
+ * compile, test). Used when the output mode is `github` but no npm
+ * publish info is configured.
+ *
+ */
+export async function emitCiWorkflow(args: { outputDir: string; binaryName: string }): Promise<void> {
+    const { outputDir, binaryName } = args;
+    const workflowsDir = path.join(outputDir, ".github", "workflows");
+    await mkdir(workflowsDir, { recursive: true });
+    const yaml = constructBuildTestYaml({ binaryName });
+    await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
+}
+
+/**
+ * Emit `.github/workflows/ci.yml` into the generated CLI output.
+ *
+ * The workflow:
+ *   - **check / compile / test** jobs run on every push (mirror the
+ *     Rust SDK's emitted `ci.yml`).
+ *   - **publish** job runs only on tag pushes, builds cross-platform
+ *     binaries, packages each as an embedded-binary npm platform
+ *     package, assembles a thin launcher package, and publishes all
+ *     to npm via OIDC or `secrets.NPM_TOKEN`.
+ *
+ * The embedded-binary packaging model (the esbuild/swc pattern) means
+ * the binary bytes live *inside* the npm tarball. This decouples
+ * artifact distribution from GitHub source-repo visibility — a
+ * customer can keep their CLI source private and still have a freely
+ * `npm i -g` / `npx`-installable CLI.
+ */
+export async function emitPublishWorkflow(args: {
+    outputDir: string;
+    binaryName: string;
+    npmPublishInfo: ResolvedNpmPublishInfo;
+    repoUrl: string | undefined;
+    /**
+     * `customConfig.packageIdentity`. Already feeds `Cargo.toml`; without it
+     * here the published npm package carried none of it — npm rendered the
+     * launcher as "License: none", with no keywords, no homepage and a
+     * hardcoded description. The license is the part that isn't cosmetic:
+     * dependency scanners and corporate policy gates reject unlicensed
+     * packages.
+     */
+    packageIdentity?: CargoPackageIdentity;
+}): Promise<void> {
+    const { outputDir, binaryName, npmPublishInfo, repoUrl, packageIdentity } = args;
+    const workflowsDir = path.join(outputDir, ".github", "workflows");
+    await mkdir(workflowsDir, { recursive: true });
+    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl, packageIdentity });
+    await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
+}
+
+/**
+ * Build+test-only workflow YAML — the `check`, `compile`, and `test`
+ * jobs with no publish steps.
+ */
+function constructBuildTestYaml(args: { binaryName: string }): string {
+    return `name: ci
+
+on: [push]
+
+concurrency:
+  group: \${{ github.workflow }}-\${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RUSTFLAGS: "-A warnings"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check
+        run: cargo check
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Compile
+        run: cargo build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Test
+        run: cargo test
+`;
+}
+
+function constructWorkflowYaml(args: {
+    binaryName: string;
+    npmPublishInfo: ResolvedNpmPublishInfo;
+    repoUrl: string | undefined;
+    packageIdentity?: CargoPackageIdentity;
+}): string {
+    const { binaryName, npmPublishInfo, repoUrl, packageIdentity } = args;
+    const { useOidc } = npmPublishInfo;
+    const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
+
+    const oidcPermissions = useOidc ? `\n    permissions:\n      contents: read\n      id-token: write` : "";
+    const tokenEnvBlock = useOidc ? "" : `\n        env:\n          NODE_AUTH_TOKEN: \${{ secrets.${tokenVar} }}`;
+
+    const matrixIncludes = TARGETS.map(
+        (t) =>
+            `          - rust-target: ${t.rustTarget}\n` +
+            `            runner: ${t.runner}\n` +
+            `            npm-platform-suffix: ${t.npmPlatformSuffix}`
+    ).join("\n");
+
+    // Bash lines that build up the launcher's optionalDependencies map.
+    // Each entry ends with a trailing comma except the last — JSON
+    // forbids trailing commas inside `{ ... }`.
+    const optionalDepsLines = TARGETS.map((t, i) => {
+        const trailingComma = i === TARGETS.length - 1 ? "" : ",";
+        return `          OPTIONAL_DEPS="\${OPTIONAL_DEPS}\\"${npmPublishInfo.packageName}-${t.npmPlatformSuffix}\\": \\"\${VERSION}\\"${trailingComma}"`;
+    }).join("\n");
+
+    // JavaScript object-literal entries for the launcher's PLATFORMS
+    // map. Trailing commas are legal in ES5+ object literals so every
+    // entry gets one — keeps diffs small when targets are added.
+    // The npm launcher shells out to the platform binary with
+    // `execFileSync` and must forward its exit status faithfully.
+    //
+    // `execFileSync` throws on a non-zero exit *and* on a signal death, but
+    // the two look different: a normal exit sets `status` to a number and
+    // `signal` to null, while a signal sets `status` to **null** and `signal`
+    // to e.g. "SIGTERM". An earlier version tested `"status" in e` — true in
+    // both cases — and called `process.exit(e.status)`, which Node coerces
+    // `null` to 0. CI timeouts (SIGTERM), SIGSEGV and OOM-kills therefore all
+    // reported SUCCESS to anything checking `$?`, on the npm install path
+    // only. The launcher now requires a numeric status and otherwise reports
+    // 128+signum, matching the shell convention (SIGTERM -> 143).
+    // Identity fields for the launcher's package.json. `packageIdentity`
+    // already feeds Cargo.toml; the npm package got none of it, so npm rendered
+    // the CLI as "License: none" with no keywords and a hardcoded description.
+    //
+    // Values are `JSON.stringify`d rather than interpolated raw: a description
+    // legitimately contains apostrophes and commas, and a stray quote here
+    // would emit a package.json that npm cannot parse.
+    const identityLines: string[] = [];
+    const identityField = (key: string, value: string | string[] | undefined): void => {
+        if (value == null || (Array.isArray(value) && value.length === 0)) {
+            return;
+        }
+        identityLines.push(`            ${JSON.stringify(key)}: ${shellSafeJson(value)},`);
+    };
+    identityField("license", packageIdentity?.license);
+    identityField("keywords", packageIdentity?.keywords);
+    identityField("homepage", packageIdentity?.homepage);
+    // npm takes a single `author` string; `packageIdentity.authors` is a list
+    // (Cargo's shape), so the first entry becomes `author` and the rest
+    // `contributors`.
+    const [firstAuthor, ...otherAuthors] = packageIdentity?.authors ?? [];
+    identityField("author", firstAuthor);
+    identityField("contributors", otherAuthors);
+    const launcherDescription = packageIdentity?.description ?? `CLI for ${binaryName}`;
+
+    const launcherPlatformEntries = TARGETS.map(
+        (t) => `            "${t.npmPlatformSuffix}": "${npmPublishInfo.packageName}-${t.npmPlatformSuffix}",`
+    ).join("\n");
+
+    return `name: ci
+
+on: [push]
+
+concurrency:
+  group: \${{ github.workflow }}-\${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RUSTFLAGS: "-A warnings"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check
+        run: cargo check
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Compile
+        run: cargo build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Test
+        run: cargo test
+
+  # The npm packages take their version from the release tag, while the
+  # binary reports the version in Cargo.toml. Publishing when they disagree
+  # ships a package whose --version names a release that isn't on the
+  # registry, so refuse to publish instead (cargo-dist hard-fails on the
+  # same mismatch for the GitHub Release).
+  version:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check tag matches crate version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TAG_VERSION="\${GITHUB_REF_NAME#v}"
+          CRATE_VERSION=\$(cargo metadata --no-deps --format-version 1 \\
+            | jq -r --arg manifest "\${PWD}/Cargo.toml" \\
+              '.packages[] | select(.manifest_path == \$manifest) | .version')
+
+          if [[ -z "\${CRATE_VERSION}" ]]; then
+            echo "::error::Could not determine the crate version from cargo metadata (no package matched \${PWD}/Cargo.toml)."
+            exit 1
+          fi
+
+          if [[ "\${TAG_VERSION}" != "\${CRATE_VERSION}" ]]; then
+            echo "::error::Tag \${GITHUB_REF_NAME} publishes version \${TAG_VERSION}, but Cargo.toml is \${CRATE_VERSION}."
+            echo "::error::The binary would report \${CRATE_VERSION} from --version while the npm packages say \${TAG_VERSION}."
+            echo "::error::Set the generator's output version to \${TAG_VERSION} and regenerate, or tag v\${CRATE_VERSION} instead."
+            exit 1
+          fi
+          echo "Tag and crate version agree: \${TAG_VERSION}"
+
+  publish:
+    needs: [check, compile, test, version]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: \${{ matrix.runner }}${oidcPermissions}
+    strategy:
+      # Don't cancel sibling matrix jobs on first failure — a transient
+      # failure on one platform would otherwise leave npm in a partial
+      # state (some platform packages published, others not, launcher
+      # never published), with no clean re-run since the already-
+      # published versions reject re-publish.
+      fail-fast: false
+      matrix:
+        include:
+${matrixIncludes}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: \${{ matrix.rust-target }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/Krypton"
+          registry-url: "${npmPublishInfo.registryUrl}"
+
+      - name: Install musl build tools
+        if: contains(matrix.rust-target, '-linux-musl')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
+
+      # The TLS backend and the keyring backend are selected per target by
+      # Cargo.toml, so no per-target feature flags are needed here.
+      #
+      # musl targets get a C compiler for the C dependencies, but not a
+      # linker: musl-gcc cannot produce static-pie, so it yields a binary
+      # that needs /lib/ld-musl-*.so.1 at runtime — which defeats the point
+      # of a musl build and crashes where that loader is absent. Left alone,
+      # rustc links the self-contained musl objects statically.
+      #
+      # Built with the \`dist\` profile — the same one cargo-dist uses for the
+      # GitHub Release — so npm and the Release ship byte-identical binaries
+      # for a given tag. Building \`--release\` here meant two channels
+      # shipping different bytes under one version, which surfaces as an
+      # unreproducible bug report.
+      - name: Build release binary
+        shell: bash
+        run: |
+          if [[ "\${{ matrix.rust-target }}" == *-linux-musl ]]; then
+            TARGET_UNDERSCORE=\$(echo "\${{ matrix.rust-target }}" | tr '-' '_')
+            export "CC_\${TARGET_UNDERSCORE}=musl-gcc"
+          fi
+          cargo build --profile dist --target \${{ matrix.rust-target }}
+
+      - name: Package and publish npm platform package${tokenEnvBlock}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="\${GITHUB_REF_NAME#v}"
+          PLATFORM_PKG="${npmPublishInfo.packageName}-\${{ matrix.npm-platform-suffix }}"
+          PKG_DIR="npm-pkg/\${PLATFORM_PKG}"
+          mkdir -p "\${PKG_DIR}"
+
+          # Locate the compiled binary
+          BINARY_NAME="${binaryName}"
+          if [[ "\${{ matrix.rust-target }}" == *"windows"* ]]; then
+            BINARY_NAME="${binaryName}.exe"
+          fi
+          # A custom cargo profile writes to target/<triple>/<profile>/, not
+          # .../release/.
+          cp "target/\${{ matrix.rust-target }}/dist/\${BINARY_NAME}" "\${PKG_DIR}/"
+
+          # Write platform package.json
+          cat > "\${PKG_DIR}/package.json" <<PKGJSON
+          {
+            "name": "\${PLATFORM_PKG}",
+            "version": "\${VERSION}",
+            "description": "Platform-specific binary for ${binaryName} (\${{ matrix.npm-platform-suffix }})",${
+                repoUrl != null
+                    ? `
+            "repository": {
+              "type": "git",
+              "url": "${repoUrl}"
+            },`
+                    : ""
+            }
+            "os": ["\$(echo \${{ matrix.npm-platform-suffix }} | cut -d- -f1)"],
+            "cpu": ["\$(echo \${{ matrix.npm-platform-suffix }} | cut -d- -f2)"],
+            "main": "\${BINARY_NAME}",
+            "files": ["\${BINARY_NAME}"]
+          }
+          PKGJSON
+
+          cd "\${PKG_DIR}"
+          # Pre-release detection. ANY SemVer pre-release (a "-" after the
+          # version core) must get a non-latest dist-tag: matching only
+          # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
+          # bare \`npm publish\`, which moves \`latest\` to a pre-release for
+          # every existing installer. The tag is the first dot-separated
+          # pre-release identifier, stripped to a safe slug, so -rc.1 -> rc
+          # and -next.1 -> next; an all-numeric or empty identifier falls
+          # back to "prerelease" because npm rejects a numeric dist-tag.
+          PRERELEASE="\${VERSION#*-}"
+          if [[ "\${VERSION}" == *-* ]]; then
+            TAG=\$(echo "\${PRERELEASE%%.*}" | tr -cd '[:alnum:]-')
+            if [[ -z "\${TAG}" || "\${TAG}" =~ ^[0-9]+\$ ]]; then
+              TAG=prerelease
+            fi
+            echo "Publishing pre-release \${VERSION} with --tag \${TAG}"
+            npm publish --access public --tag "\${TAG}"
+          else
+            PKG_NAME=\$(node -p "require('./package.json').name")
+            PKG_VERSION=\$(node -p "require('./package.json').version")
+            CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
+              npm publish --access public --tag backport
+            else
+              npm publish --access public
+            fi
+          fi
+
+  publish-launcher:
+    needs: [publish]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest${oidcPermissions}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/Krypton"
+          registry-url: "${npmPublishInfo.registryUrl}"
+
+      - name: Publish launcher package${tokenEnvBlock}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="\${GITHUB_REF_NAME#v}"
+          PKG_DIR="npm-pkg/launcher"
+          mkdir -p "\${PKG_DIR}"
+
+          BINARY_NAME="${binaryName}"
+
+          # Build optionalDependencies map
+          OPTIONAL_DEPS=""
+${optionalDepsLines}
+
+          cat > "\${PKG_DIR}/package.json" <<PKGJSON
+          {
+            "name": "${npmPublishInfo.packageName}",
+            "version": "\${VERSION}",
+            "description": ${shellSafeJson(launcherDescription)},${
+                identityLines.length > 0
+                    ? `
+${identityLines.join("\n")}`
+                    : ""
+            }${
+                repoUrl != null
+                    ? `
+            "repository": {
+              "type": "git",
+              "url": "${repoUrl}"
+            },`
+                    : ""
+            }
+            "bin": {
+              "${binaryName}": "bin/cli.js"
+            },
+            "optionalDependencies": {
+              \${OPTIONAL_DEPS}
+            },
+            "files": ["bin/"]
+          }
+          PKGJSON
+
+          # Write launcher script
+          mkdir -p "\${PKG_DIR}/bin"
+          cat > "\${PKG_DIR}/bin/cli.js" <<'LAUNCHER'
+          #!/usr/bin/env node
+          "use strict";
+          const { execFileSync } = require("child_process");
+          const path = require("path");
+          const os = require("os");
+
+          const PLATFORMS = {
+${launcherPlatformEntries}
+          };
+
+          const platformKey = os.platform() + "-" + os.arch();
+          const pkg = PLATFORMS[platformKey];
+          if (!pkg) {
+            console.error("Unsupported platform: " + platformKey);
+            process.exit(1);
+          }
+
+          const binName = os.platform() === "win32" ? "${binaryName}.exe" : "${binaryName}";
+          const binPath = path.join(require.resolve(pkg + "/package.json"), "..", binName);
+
+          try {
+            execFileSync(binPath, process.argv.slice(2), { stdio: "inherit" });
+          } catch (e) {
+            if (e && typeof e === "object") {
+              // Propagate the child's exit code; a signal death has no
+              // numeric status, so report it as 128+signum like a shell does.
+              if (typeof e.status === "number") {
+                process.exit(e.status);
+              }
+              if (typeof e.signal === "string") {
+                const SIGNUM = { SIGHUP: 1, SIGINT: 2, SIGQUIT: 3, SIGILL: 4, SIGABRT: 6, SIGFPE: 8, SIGKILL: 9, SIGSEGV: 11, SIGPIPE: 13, SIGALRM: 14, SIGTERM: 15 };
+                process.exit(128 + (SIGNUM[e.signal] || 0));
+              }
+            }
+            throw e;
+          }
+          LAUNCHER
+
+          cd "\${PKG_DIR}"
+          # Pre-release detection. ANY SemVer pre-release (a "-" after the
+          # version core) must get a non-latest dist-tag: matching only
+          # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
+          # bare \`npm publish\`, which moves \`latest\` to a pre-release for
+          # every existing installer. The tag is the first dot-separated
+          # pre-release identifier, stripped to a safe slug, so -rc.1 -> rc
+          # and -next.1 -> next; an all-numeric or empty identifier falls
+          # back to "prerelease" because npm rejects a numeric dist-tag.
+          PRERELEASE="\${VERSION#*-}"
+          if [[ "\${VERSION}" == *-* ]]; then
+            TAG=\$(echo "\${PRERELEASE%%.*}" | tr -cd '[:alnum:]-')
+            if [[ -z "\${TAG}" || "\${TAG}" =~ ^[0-9]+\$ ]]; then
+              TAG=prerelease
+            fi
+            echo "Publishing pre-release \${VERSION} with --tag \${TAG}"
+            npm publish --access public --tag "\${TAG}"
+          else
+            PKG_NAME=\$(node -p "require('./package.json').name")
+            PKG_VERSION=\$(node -p "require('./package.json').version")
+            CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
+              npm publish --access public --tag backport
+            else
+              npm publish --access public
+            fi
+          fi
+`;
+}

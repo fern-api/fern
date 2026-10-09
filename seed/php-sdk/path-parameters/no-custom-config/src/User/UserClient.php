@@ -52,6 +52,14 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getUser(
+     *     'tenant_id',
+     *     'user_id',
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param string $userId
      * @param ?array{
@@ -99,6 +107,20 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->createUser(
+     *     'tenant_id',
+     *     new User([
+     *         'name' => 'name',
+     *         'tags' => [
+     *             'tags',
+     *             'tags',
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param User $request
      * @param ?array{
@@ -147,6 +169,23 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->updateUser(
+     *     'tenant_id',
+     *     'user_id',
+     *     new UpdateUserRequest([
+     *         'body' => new User([
+     *             'name' => 'name',
+     *             'tags' => [
+     *                 'tags',
+     *                 'tags',
+     *             ],
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param string $userId
      * @param UpdateUserRequest $request
@@ -196,6 +235,17 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->searchUsers(
+     *     'tenant_id',
+     *     'user_id',
+     *     new SearchUsersRequest([
+     *         'limit' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param string $userId
      * @param SearchUsersRequest $request
@@ -251,6 +301,15 @@ class UserClient
     /**
      * Test endpoint with path parameter that has a text prefix (v{version})
      *
+     * Example:
+     * ```php
+     * $client->user->getUserMetadata(
+     *     'tenant_id',
+     *     'user_id',
+     *     1,
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param string $userId
      * @param int $version
@@ -300,6 +359,16 @@ class UserClient
 
     /**
      * Test endpoint with path parameters listed in different order than found in path
+     *
+     * Example:
+     * ```php
+     * $client->user->getUserSpecifics(
+     *     'tenant_id',
+     *     'user_id',
+     *     1,
+     *     'thought',
+     * );
+     * ```
      *
      * @param string $tenantId
      * @param string $userId

@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The user who created this resource."
     },
     "createdDateTime": {
       "oneOf": [
@@ -20,7 +21,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "When this resource was created."
     },
     "modifiedBy": {
       "oneOf": [
@@ -30,7 +32,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The user who last modified this resource."
     },
     "modifiedDateTime": {
       "oneOf": [
@@ -41,9 +44,11 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "When this resource was last modified."
     }
   },
   "additionalProperties": false,
+  "description": "Common audit metadata.",
   "definitions": {}
 }

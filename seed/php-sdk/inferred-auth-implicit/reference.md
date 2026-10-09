@@ -53,7 +53,7 @@ $client->auth->getTokenWithClientCredentials(
 <dl>
 <dd>
 
-**$clientSecret:** `string` 
+**$clientSecret:** `?string` 
     
 </dd>
 </dl>

@@ -1,0 +1,5 @@
+- summary: |
+    Update krb5-libs in the Java SDK generator container to fix
+    CVE-2026-40356 (integer underflow OOB read) and CVE-2026-40355
+    (NULL pointer dereference) in MIT Kerberos 5.
+  type: chore

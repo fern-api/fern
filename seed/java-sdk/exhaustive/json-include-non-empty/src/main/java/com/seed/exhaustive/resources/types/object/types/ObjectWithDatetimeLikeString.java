@@ -122,7 +122,6 @@ public final class ObjectWithDatetimeLikeString {
 
         /**
          * <p>A string field that happens to contain a datetime-like value</p>
-         * <p>A string field that happens to contain a datetime-like value</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -133,7 +132,6 @@ public final class ObjectWithDatetimeLikeString {
         }
 
         /**
-         * <p>An actual datetime field for comparison</p>
          * <p>An actual datetime field for comparison</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

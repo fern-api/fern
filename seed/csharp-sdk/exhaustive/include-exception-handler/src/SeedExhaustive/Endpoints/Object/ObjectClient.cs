@@ -33,6 +33,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -46,6 +49,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-optional-field",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -65,7 +69,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<ObjectWithOptionalField>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -81,7 +85,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -92,7 +104,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -110,6 +128,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -123,6 +144,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-required-field",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -142,7 +164,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<ObjectWithRequiredField>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -158,7 +180,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -169,7 +199,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -185,6 +221,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -198,6 +237,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-map-of-map",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -215,7 +255,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<ObjectWithMapOfMap>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -231,7 +271,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -242,7 +290,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -260,6 +314,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -273,6 +330,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-nested-with-optional-field",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -292,7 +350,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<NestedObjectWithOptionalField>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -308,7 +366,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -319,7 +385,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -338,6 +410,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -354,6 +429,7 @@ public partial class ObjectClient : IObjectClient
                                 ValueConvert.ToPathParameterString(string_)
                             ),
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -373,7 +449,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<NestedObjectWithRequiredField>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -389,7 +465,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -400,7 +484,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -418,6 +508,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -431,6 +524,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-nested-with-required-field-list",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -450,7 +544,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<NestedObjectWithRequiredField>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -466,7 +560,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -477,7 +579,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -495,6 +603,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -508,6 +619,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-unknown-field",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -527,7 +639,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<ObjectWithUnknownField>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -543,7 +655,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -554,7 +674,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -572,6 +698,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -585,6 +714,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-documented-unknown-type",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -604,7 +734,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<ObjectWithDocumentedUnknownType>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -620,7 +750,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -631,7 +769,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -649,6 +793,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -662,6 +809,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-map-of-documented-unknown-type",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -681,7 +829,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<Dictionary<string, object?>>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -697,7 +845,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -708,7 +864,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -726,6 +888,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -739,6 +904,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-mixed-required-and-optional-fields",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -759,7 +925,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<ObjectWithMixedRequiredAndOptionalFields>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -775,7 +941,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -786,7 +960,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -804,6 +984,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -817,6 +1000,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-required-nested-object",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -836,7 +1020,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<ObjectWithRequiredNestedObject>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -852,7 +1036,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -863,7 +1055,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -881,6 +1079,9 @@ public partial class ObjectClient : IObjectClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -894,6 +1095,7 @@ public partial class ObjectClient : IObjectClient
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-datetime-like-string",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -913,7 +1115,7 @@ public partial class ObjectClient : IObjectClient
                         return new WithRawResponse<ObjectWithDatetimeLikeString>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -929,7 +1131,15 @@ public partial class ObjectClient : IObjectClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -940,7 +1150,13 @@ public partial class ObjectClient : IObjectClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })

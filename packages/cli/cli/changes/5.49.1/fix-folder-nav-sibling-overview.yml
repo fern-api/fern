@@ -1,0 +1,5 @@
+- summary: |
+    Library docs generator now writes module overview pages as `index.mdx` inside their
+    directory (e.g. `adapters/index.mdx`) instead of as sibling files (`adapters.mdx`),
+    eliminating duplicate entries in the sidebar for library autodocs output.
+  type: fix

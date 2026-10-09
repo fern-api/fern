@@ -26,7 +26,11 @@ private func main() async throws {
         entityId: "entity_id",
         audience: .httpsApiExampleCom,
         grantType: .clientCredentials,
-        scope: "scope"
+        scope: "scope",
+        permissions: [
+            "permissions",
+            "permissions"
+        ]
     ))
 }
 

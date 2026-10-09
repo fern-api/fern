@@ -163,6 +163,17 @@ The Java generator supports extensive configuration in `generators.yml`:
 - `client-class-name`: Customize generated client class name
 - `custom-dependencies`: Add custom Gradle dependencies
 
+### Environment Variables
+
+- `FERN_JAVA_SKIP_FORMATTING`: when truthy (`1`/`true`/`yes`/`on`), skips the post-generation
+  `./gradlew :spotlessApply` pass in `generators/java-v2/base/src/project/JavaProject.ts` and in the
+  CLI's dynamic-snippet test generator. The Spotless plugin is still wired into the generated
+  `build.gradle`, so consumers can run `./gradlew spotlessApply` themselves. The CLI forwards this
+  variable from the host into generator containers (see
+  `packages/cli/generation/local-generation/docker-utils/src/buildContainerEnvVars.ts`), so it works
+  with `fern generate --local` and with `docker run -e FERN_JAVA_SKIP_FORMATTING=true`. It does not
+  apply to remote (Fiddle) generation, where the host environment is not available.
+
 ### Model Generator
 - Generates POJOs with Jackson annotations
 - Supports inheritance and polymorphic types

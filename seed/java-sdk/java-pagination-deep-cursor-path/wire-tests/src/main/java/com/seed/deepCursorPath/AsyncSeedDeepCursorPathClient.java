@@ -8,7 +8,7 @@ import com.seed.deepCursorPath.core.Suppliers;
 import com.seed.deepCursorPath.resources.deepcursorpath.AsyncDeepCursorPathClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedDeepCursorPathClient {
+public class AsyncSeedDeepCursorPathClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncDeepCursorPathClient> deepCursorPathClient;
@@ -20,6 +20,16 @@ public class AsyncSeedDeepCursorPathClient {
 
     public AsyncDeepCursorPathClient deepCursorPath() {
         return this.deepCursorPathClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedDeepCursorPathClientBuilder builder() {

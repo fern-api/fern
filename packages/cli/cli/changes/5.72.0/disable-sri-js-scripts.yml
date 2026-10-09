@@ -1,0 +1,5 @@
+- summary: |
+    Add a `disable-sri` option to remote `js` scripts in `docs.yml`. When set to
+    true, the script is rendered without a Subresource Integrity (SRI) `integrity`
+    attribute, which is useful for scripts whose contents change over time.
+  type: feat

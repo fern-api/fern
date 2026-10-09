@@ -1,0 +1,6 @@
+- summary: |
+    Add `--fix` flag to `fern check`, `fern sdk check`, and `fern docs check`.
+    When specified, the CLI automatically applies known fixes for detected issues
+    (e.g. replacing invalid SDK target versions with the latest stable release,
+    applying deterministic MDX parse error fixes).
+  type: feat

@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
@@ -25,6 +26,9 @@ export class ContentTypeClient {
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.contentType.postJsonPatchContentType({
@@ -73,10 +77,13 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -101,6 +108,9 @@ export class ContentTypeClient {
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
@@ -151,10 +161,13 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json; charset=utf-8",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

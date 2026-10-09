@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamAsync</a>(StreamCompletionRequest { ... }) -> IAsyncEnumerable&lt;StreamedCompletion&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamAsync</a>(StreamCompletionRequest { ... }) -> WithRawResponseStream&lt;StreamedCompletion&gt;</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
 </dl>
 </details>
 
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsAsync</a>(StreamEventsRequest { ... }) -> IAsyncEnumerable&lt;StreamEvent&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsAsync</a>(StreamEventsRequest { ... }) -> WithRawResponseStream&lt;StreamEvent&gt;</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" }
 </dl>
 </details>
 
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsDiscriminantInDataAsync</a>(StreamEventsDiscriminantInDataRequest { ... }) -> IAsyncEnumerable&lt;StreamEventDiscriminantInData&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsDiscriminantInDataAsync</a>(StreamEventsDiscriminantInDataRequest { ... }) -> WithRawResponseStream&lt;StreamEventDiscriminantInData&gt;</code></summary>
 <dl>
 <dd>
 
@@ -122,7 +122,7 @@ client.Completions.StreamEventsDiscriminantInDataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsContextProtocolAsync</a>(StreamEventsContextProtocolRequest { ... }) -> IAsyncEnumerable&lt;StreamEventContextProtocol&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsContextProtocolAsync</a>(StreamEventsContextProtocolRequest { ... }) -> WithRawResponseStream&lt;StreamEventContextProtocol&gt;</code></summary>
 <dl>
 <dd>
 

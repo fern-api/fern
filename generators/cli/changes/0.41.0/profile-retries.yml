@@ -1,0 +1,16 @@
+- type: feat
+  summary: |
+    `--retries <N>` on every operation, resolving `flag > <NAME>_RETRIES env > active
+    profile > x-fern-retries`. `N` counts attempts *after* the first, so `--retries 0`
+    is equivalent to `--no-retry`. Only `max_attempts` is overridden — the spec's
+    backoff base, factor and jitter are left alone, since the caller asked how many
+    times to retry rather than how to pace them.
+
+    `profiles create <name> --retries N` stores it per profile, so a user with several
+    profiles can allow a different number of retries in each. Inherited by child
+    profiles (unlike `format`): retries describe the network a profile talks to, which
+    a subaccount shares with its parent. `retries = 0` is distinct from unset and means
+    "never retry in this profile".
+
+    Additive. With no flag, no env var and no profile value the resolved policy is
+    byte-identical to what the spec declared, so existing CLIs are unaffected.

@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/payment",
+                "method": "POST",
+                "identifier_override": "endpoint_payment.create"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/payment/{paymentId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_payment.delete"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.DeleteAsync(\"paymentId\");\n"
+            }
+        }
+    ]
+}

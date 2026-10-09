@@ -2,12 +2,14 @@
   "apiName": "Auth Test API",
   "auth": {
     "description": "JWT Bearer token authentication",
+    "playgroundDescription": undefined,
     "tokenName": "token",
     "type": "bearerAuth",
   },
   "authSchemes": {
     "bearerAuth": {
       "description": "JWT Bearer token authentication",
+      "playgroundDescription": undefined,
       "tokenName": "token",
       "type": "bearerAuth",
     },
@@ -85,6 +87,7 @@
                 "id": "resource123",
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],
@@ -154,6 +157,7 @@
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
       {
         "auth": false,
@@ -186,6 +190,7 @@
               "type": "json",
               "value": "public data",
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],
@@ -261,6 +266,7 @@
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
     ],
     "graphqlOperations": [],

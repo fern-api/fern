@@ -7,9 +7,10 @@ import { addListTokensCommand } from "./list/index.js";
 import { addRevokeTokenCommand } from "./revoke/index.js";
 
 export function addTokenCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "token", "Manage organization API tokens", [
-        addCreateTokenCommand,
-        addListTokensCommand,
-        addRevokeTokenCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "token",
+        description: "Manage organization API tokens",
+        subcommands: [addCreateTokenCommand, addListTokensCommand, addRevokeTokenCommand]
+    });
 }

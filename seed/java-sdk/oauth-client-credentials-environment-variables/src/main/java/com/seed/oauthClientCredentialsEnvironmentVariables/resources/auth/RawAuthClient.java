@@ -4,10 +4,12 @@
 package com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.oauthClientCredentialsEnvironmentVariables.core.BodyProperties;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.MediaTypes;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ObjectMappers;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.RequestOptions;
+import com.seed.oauthClientCredentialsEnvironmentVariables.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesApiException;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesException;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesHttpResponse;
@@ -48,7 +50,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedOauthClientCredentialsEnvironmentVariablesException("Failed to serialize request", e);
         }
@@ -63,6 +67,15 @@ public class RawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -73,6 +86,9 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedOauthClientCredentialsEnvironmentVariablesException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsEnvironmentVariablesException(
                     "Network error executing HTTP request", e);
@@ -97,7 +113,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedOauthClientCredentialsEnvironmentVariablesException("Failed to serialize request", e);
         }
@@ -112,6 +130,15 @@ public class RawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -122,6 +149,9 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedOauthClientCredentialsEnvironmentVariablesException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsEnvironmentVariablesException(
                     "Network error executing HTTP request", e);

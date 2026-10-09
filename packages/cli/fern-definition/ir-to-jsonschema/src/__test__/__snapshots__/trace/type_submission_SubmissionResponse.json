@@ -181,7 +181,8 @@
           "required": [
             "type",
             "message"
-          ]
+          ],
+          "description": "If the submission cannot be executed and throws a runtime error before getting to any of the testcases."
         },
         {
           "properties": {
@@ -195,7 +196,8 @@
           "required": [
             "type",
             "exceptionInfo"
-          ]
+          ],
+          "description": "If the trace backend encounters an unexpected error."
         }
       ]
     },
@@ -1005,7 +1007,8 @@
           "required": [
             "type",
             "missingSubmissionId"
-          ]
+          ],
+          "description": "The submission request references a submission id that doesn't exist."
         },
         {
           "properties": {
@@ -1041,7 +1044,8 @@
             "type",
             "expectedLanguage",
             "actualLanguage"
-          ]
+          ],
+          "description": "The submission request was routed to an incorrect language executor."
         }
       ]
     },
@@ -1082,7 +1086,8 @@
             "type",
             "submissionId",
             "status"
-          ]
+          ],
+          "description": "Statuses if an executor for the session isn't ready (Before RunningResponse)."
         },
         {
           "properties": {
@@ -1100,7 +1105,8 @@
             "type",
             "submissionId",
             "state"
-          ]
+          ],
+          "description": "Sent once a test submission is executing."
         },
         {
           "properties": {
@@ -1118,7 +1124,8 @@
             "type",
             "submissionId",
             "errorInfo"
-          ]
+          ],
+          "description": "Sent if a submission cannot be run (i.e. Compile Error)."
         },
         {
           "properties": {
@@ -1132,7 +1139,8 @@
           "required": [
             "type",
             "submissionId"
-          ]
+          ],
+          "description": "Sent if a submission is stopped."
         },
         {
           "properties": {
@@ -1153,7 +1161,8 @@
             "type",
             "submissionId",
             "testCases"
-          ]
+          ],
+          "description": "Graded testcases without trace information."
         },
         {
           "properties": {
@@ -1174,7 +1183,8 @@
             "type",
             "submissionId",
             "testCases"
-          ]
+          ],
+          "description": "Graded submission for v2 problems."
         },
         {
           "properties": {
@@ -1192,7 +1202,8 @@
             "type",
             "submissionId",
             "runDetails"
-          ]
+          ],
+          "description": "Workspace run without trace information."
         },
         {
           "properties": {
@@ -1234,7 +1245,8 @@
             "submissionId",
             "lineNumber",
             "lightweightStackInfo"
-          ]
+          ],
+          "description": "Gives progress about what is being recorded."
         },
         {
           "properties": {
@@ -1262,7 +1274,8 @@
             "type",
             "submissionId",
             "traceResponsesSize"
-          ]
+          ],
+          "description": "Graded testcases with trace information."
         },
         {
           "properties": {
@@ -1280,7 +1293,8 @@
             "type",
             "request",
             "cause"
-          ]
+          ],
+          "description": "Sent if an invalid request is sent for a submission."
         },
         {
           "properties": {
@@ -1294,7 +1308,8 @@
           "required": [
             "type",
             "submissionId"
-          ]
+          ],
+          "description": "Sent once a submission is graded and fully recorded."
         }
       ]
     }

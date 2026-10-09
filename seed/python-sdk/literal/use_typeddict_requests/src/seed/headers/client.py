@@ -53,6 +53,29 @@ class HeadersClient:
         _response = self._raw_client.send(query=query, request_options=request_options)
         return _response.data
 
+    def send_literals_only(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
+        from seed import SeedLiteral
+
+        client = SeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.headers.send_literals_only()
+        """
+        _response = self._raw_client.send_literals_only(request_options=request_options)
+        return _response.data
+
 
 class AsyncHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -102,4 +125,35 @@ class AsyncHeadersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.send(query=query, request_options=request_options)
+        return _response.data
+
+    async def send_literals_only(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedLiteral
+
+        client = AsyncSeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.headers.send_literals_only()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.send_literals_only(request_options=request_options)
         return _response.data

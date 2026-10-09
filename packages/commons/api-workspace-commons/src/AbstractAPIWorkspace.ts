@@ -13,6 +13,10 @@ export interface FernDefinition {
     namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
     packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
     importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
+    /** Non-enumerable metadata containing wire names of global headers from the retained source specification. */
+    sourceDerivedGlobalHeaderNames?: string[];
+    /** The document version from OpenAPI `info.version`, preserved as-is. */
+    specVersion?: string;
 }
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {

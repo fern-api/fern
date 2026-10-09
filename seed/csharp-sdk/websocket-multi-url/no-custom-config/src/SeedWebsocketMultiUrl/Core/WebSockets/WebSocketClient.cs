@@ -134,6 +134,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Sends a text message instantly through the WebSocket connection.
     /// </summary>
     /// <param name="message">The text message to send.</param>
+    /// <param name="cancellationToken">Token to cancel the send operation.</param>
     /// <returns>A task representing the asynchronous send operation.</returns>
     /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
     public global::System.Threading.Tasks.Task SendInstant(
@@ -149,6 +150,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Sends a binary message instantly through the WebSocket connection.
     /// </summary>
     /// <param name="message">The binary message to send as a Memory&lt;byte&gt;.</param>
+    /// <param name="cancellationToken">Token to cancel the send operation.</param>
     /// <returns>A task representing the asynchronous send operation.</returns>
     /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
     public global::System.Threading.Tasks.Task SendInstant(
@@ -164,6 +166,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Sends a binary message instantly through the WebSocket connection.
     /// </summary>
     /// <param name="message">The binary message to send as an ArraySegment&lt;byte&gt;.</param>
+    /// <param name="cancellationToken">Token to cancel the send operation.</param>
     /// <returns>A task representing the asynchronous send operation.</returns>
     /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
     public global::System.Threading.Tasks.Task SendInstant(
@@ -179,6 +182,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Sends a binary message instantly through the WebSocket connection.
     /// </summary>
     /// <param name="message">The binary message to send as a byte array.</param>
+    /// <param name="cancellationToken">Token to cancel the send operation.</param>
     /// <returns>A task representing the asynchronous send operation.</returns>
     /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
     public global::System.Threading.Tasks.Task SendInstant(

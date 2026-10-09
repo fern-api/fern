@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "description": "A named alias that resolves to a required string, i.e. a value in Go.",
+  "definitions": {}
+}

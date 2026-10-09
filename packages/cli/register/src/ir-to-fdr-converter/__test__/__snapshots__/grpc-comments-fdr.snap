@@ -2,12 +2,14 @@
   "apiName": "",
   "auth": {
     "description": undefined,
+    "playgroundDescription": undefined,
     "tokenName": "token",
     "type": "bearerAuth",
   },
   "authSchemes": {
     "Bearer": {
       "description": undefined,
+      "playgroundDescription": undefined,
       "tokenName": "token",
       "type": "bearerAuth",
     },
@@ -98,6 +100,7 @@
                   },
                 },
               },
+              "responseHeaders": undefined,
               "responseStatusCode": 200,
             },
           ],
@@ -199,6 +202,7 @@
             ],
           },
           "slug": undefined,
+          "subtitle": undefined,
         },
       ],
       "graphqlOperations": [],

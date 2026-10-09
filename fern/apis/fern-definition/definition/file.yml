@@ -9,6 +9,7 @@ imports:
   environments: environments.yml
   auth: auth.yml
   variables: variables.yml
+  global-parameters: global-parameters.yml
   webhooks: webhooks.yml
   websocket: websocket.yml
 
@@ -80,6 +81,7 @@ types:
       path-parameters: optional<map<string, service.HttpPathParameterSchema>>
       idempotency-headers: optional<map<string, service.HttpHeaderSchema>>
       variables: optional<map<string, variables.VariableDeclarationSchema>>
+      global-parameters: optional<map<string, global-parameters.GlobalParameterDeclarationSchema>>
       pagination: optional<pagination.PaginationSchema>
       product: optional<products.ProductDeclarationSchema>
       version: optional<versioning.VersionDeclarationSchema>

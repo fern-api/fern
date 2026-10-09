@@ -28,6 +28,7 @@ class RawAuthClient:
         scp: str,
         entity_id: str,
         scope: typing.Optional[str] = OMIT,
+        permissions: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponse]:
         """
@@ -42,6 +43,8 @@ class RawAuthClient:
         entity_id : str
 
         scope : typing.Optional[str]
+
+        permissions : typing.Optional[typing.Sequence[str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -59,6 +62,7 @@ class RawAuthClient:
                 "scp": scp,
                 "entity_id": entity_id,
                 "scope": scope,
+                "permissions": permissions,
                 "audience": "https://api.example.com",
                 "grant_type": "client_credentials",
             },
@@ -157,6 +161,7 @@ class AsyncRawAuthClient:
         scp: str,
         entity_id: str,
         scope: typing.Optional[str] = OMIT,
+        permissions: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponse]:
         """
@@ -171,6 +176,8 @@ class AsyncRawAuthClient:
         entity_id : str
 
         scope : typing.Optional[str]
+
+        permissions : typing.Optional[typing.Sequence[str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -188,6 +195,7 @@ class AsyncRawAuthClient:
                 "scp": scp,
                 "entity_id": entity_id,
                 "scope": scope,
+                "permissions": permissions,
                 "audience": "https://api.example.com",
                 "grant_type": "client_credentials",
             },

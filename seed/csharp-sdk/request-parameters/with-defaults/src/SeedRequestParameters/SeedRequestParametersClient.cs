@@ -14,7 +14,7 @@ public partial class SeedRequestParametersClient : ISeedRequestParametersClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedRequestParameters" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedRequestParameters.Version.Current },
                 { "User-Agent", "Fernrequest-parameters/0.0.1" },
             }
         );

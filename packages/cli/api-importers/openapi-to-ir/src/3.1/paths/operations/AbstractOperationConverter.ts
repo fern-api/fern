@@ -1,8 +1,9 @@
+import { tokenizeOperationId } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
-import { camelCase, compact, isEqual } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming.js";
@@ -29,11 +30,13 @@ export declare namespace AbstractOperationConverter {
         operation: OpenAPIV3_1.OperationObject;
         method: OpenAPIV3_1.HttpMethods;
         path: string;
+        pathItemParameters?: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[];
     }
 
     export interface Output {
         group?: string[];
         groupDisplayName?: string;
+        groupDescription?: string;
         inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
@@ -41,6 +44,7 @@ interface ConvertedRequestBody {
     requestBody: HttpRequestBody;
     streamRequestBody: HttpRequestBody | undefined;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+    inlinedPropertiesByAudience?: Record<string, Set<string>>;
 }
 
 export abstract class AbstractOperationConverter extends AbstractConverter<
@@ -50,13 +54,22 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected readonly operation: OpenAPIV3_1.OperationObject;
     protected readonly method: OpenAPIV3_1.HttpMethods;
     protected readonly path: string;
+    protected readonly pathItemParameters: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[];
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        operation,
+        method,
+        path,
+        pathItemParameters
+    }: AbstractOperationConverter.Args) {
         super({ context, breadcrumbs });
         this.operation = operation;
         this.method = method;
         this.path = path;
+        this.pathItemParameters = pathItemParameters ?? [];
     }
 
     public abstract convert(): AbstractOperationConverter.Output | undefined;
@@ -89,12 +102,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        if (!this.operation.parameters) {
+        const mergedParameters = this.mergeParameters(this.pathItemParameters, this.operation.parameters ?? []);
+
+        if (mergedParameters.length === 0) {
             this.checkMissingPathParameters(pathParameters);
             return { pathParameters, queryParameters, headers };
         }
 
-        for (const parameter of this.operation.parameters) {
+        for (const parameter of mergedParameters) {
             const resolvedParameter = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
                 schemaOrReference: parameter,
                 breadcrumbs
@@ -158,6 +173,46 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 
         this.checkMissingPathParameters(pathParameters);
         return { pathParameters, queryParameters, headers };
+    }
+
+    /**
+     * Per the OpenAPI spec, path-level parameters are inherited by all operations
+     * unless overridden by an operation-level parameter with the same name and location.
+     */
+    protected mergeParameters(
+        pathItemParams: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[],
+        operationParams: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[]
+    ): (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[] {
+        if (pathItemParams.length === 0) {
+            return operationParams;
+        }
+        if (operationParams.length === 0) {
+            return pathItemParams;
+        }
+
+        const resolvedOperationParams = new Set<string>();
+        for (const param of operationParams) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: param,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (resolved != null) {
+                resolvedOperationParams.add(`${resolved.in}:${resolved.name}`);
+            }
+        }
+
+        const inheritedParams = pathItemParams.filter((param) => {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: param,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (resolved == null) {
+                return false;
+            }
+            return !resolvedOperationParams.has(`${resolved.in}:${resolved.name}`);
+        });
+
+        return [...inheritedParams, ...operationParams];
     }
 
     protected checkMissingPathParameters(pathParameters: PathParameter[]): void {
@@ -238,7 +293,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 convertedRequestBodies.push({
                     requestBody: convertedRequestBody.requestBody,
                     streamRequestBody: convertedRequestBody.streamRequestBody,
-                    examples: convertedRequestBody.examples
+                    examples: convertedRequestBody.examples,
+                    inlinedPropertiesByAudience: convertedRequestBody.inlinedPropertiesByAudience
                 });
             }
         }
@@ -278,16 +334,24 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return operationId;
     }
 
+    // A dot in a method name is parsed as a reference to another file (`import.endpoint`),
+    // so dotted operation ids must be collapsed into a single name. This runs after
+    // tokenization so that grouping still sees the individual tokens.
+    protected sanitizeMethodName(methodName: string): string {
+        return methodName.includes(".") ? camelCase(methodName) : methodName;
+    }
+
     protected computeGroupNameFromTagAndOperationId(): GroupNameAndLocation {
         const tag = this.operation.tags?.[0];
         const methodName = this.evaluateMethodNameFromOperation();
 
         if (tag == null) {
-            return { method: methodName };
+            return { method: this.sanitizeMethodName(methodName) };
         }
 
-        const tagTokens = tokenizeString(tag);
-        const methodNameTokens = tokenizeString(methodName);
+        const respectWordBoundaries = this.context.settings.respectOperationIdWordBoundaries;
+        const tagTokens = tokenizeOperationId(tag, respectWordBoundaries);
+        const methodNameTokens = tokenizeOperationId(methodName, respectWordBoundaries);
 
         if (isEqual(tagTokens, methodNameTokens)) {
             return {
@@ -318,11 +382,21 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         if (tagIsNotPrefixOfMethodName) {
             return {
                 group: [tag],
-                method: methodName
+                method: this.sanitizeMethodName(methodName)
             };
         }
 
         const methodTokens = methodNameTokens.slice(tagTokens.length);
+
+        // A leading digit is not a valid identifier, so keep the whole method name rather than
+        // stripping the tag prefix (e.g. tag `files` + `files2GetThumbnail`).
+        if (methodTokens[0] != null && /^\d/.test(methodTokens[0])) {
+            return {
+                group: [tag],
+                method: this.sanitizeMethodName(methodName)
+            };
+        }
+
         return {
             group: [tag],
             method: camelCase(methodTokens.join("_"))
@@ -339,25 +413,6 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const { validExample } = exampleConverter.convert();
         return validExample;
     }
-}
-
-function tokenizeString(input: string): string[] {
-    let tokens = isCamelOrPascalCase(input) ? splitOnCapitalLetters(input) : splitOnNonAlphanumericCharacters(input);
-    tokens = tokens.map((token) => token.toLowerCase());
-    tokens = compact(tokens);
-    return tokens;
-}
-
-function isCamelOrPascalCase(input: string): boolean {
-    return /^[a-z]+(?:[A-Z][a-z]+)*$/.test(input);
-}
-
-function splitOnCapitalLetters(input: string): string[] {
-    return input.split(/(?=[A-Z])/);
-}
-
-function splitOnNonAlphanumericCharacters(input: string): string[] {
-    return input.split(/[^a-zA-Z0-9]+/);
 }
 
 function isHeaderAuthScheme(

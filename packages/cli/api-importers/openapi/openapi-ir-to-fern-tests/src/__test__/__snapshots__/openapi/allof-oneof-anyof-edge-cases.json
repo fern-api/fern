@@ -32,8 +32,10 @@
               "pagination": undefined,
               "path": "/extended",
               "request": {
-                "body": "Extended",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Extended",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -59,8 +61,10 @@
               "pagination": undefined,
               "path": "/flexible",
               "request": {
-                "body": "FlexibleValue",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "FlexibleValue",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -91,8 +95,10 @@
               "pagination": undefined,
               "path": "/pet",
               "request": {
-                "body": "Pet",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Pet",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -350,9 +356,20 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "executionContext": "optional<RuleExecutionContext>",
+              "executionContext": "optional<RuleConfigExecutionContext>",
               "name": "optional<string>",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "RuleConfigExecutionContext": {
+            "enum": [
+              "prod",
+              "staging",
+              "dev",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -405,8 +422,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Extended
-        content-type: application/json
+        body:
+          type: Extended
+          optional: true
       response:
         docs: Success
         type: Extended
@@ -427,8 +445,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Pet
-        content-type: application/json
+        body:
+          type: Pet
+          optional: true
       response:
         docs: Success
         type: Pet
@@ -446,8 +465,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: FlexibleValue
-        content-type: application/json
+        body:
+          type: FlexibleValue
+          optional: true
       response:
         docs: Success
         type: FlexibleValue
@@ -588,10 +608,18 @@ types:
       - dev
     source:
       openapi: ../openapi.yml
+  RuleConfigExecutionContext:
+    enum:
+      - prod
+      - staging
+      - dev
+    inline: true
+    source:
+      openapi: ../openapi.yml
   RuleConfig:
     properties:
       name: optional<string>
-      executionContext: optional<RuleExecutionContext>
+      executionContext: optional<RuleConfigExecutionContext>
     source:
       openapi: ../openapi.yml
   PaginatedList:
@@ -634,4 +662,5 @@ error-discrimination:
 display-name: AllOf/OneOf/AnyOf Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -1,0 +1,6 @@
+- summary: |
+    Fix dynamic snippet argument ordering for discriminated union factory methods
+    with optional base properties. Required base fields now come before the variant
+    value, and optional base fields come after, matching the PHP Method AST's
+    automatic parameter reordering.
+  type: fix

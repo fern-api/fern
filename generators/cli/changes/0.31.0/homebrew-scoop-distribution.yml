@@ -1,0 +1,126 @@
+- summary: |
+    Add `customConfig.distribution` so a generated CLI can publish to Homebrew and
+    Scoop on the same `vX.Y.Z` tag that already drives its GitHub Release and npm
+    packages. Both channels are independently optional:
+
+    ```yaml
+    config:
+      binaryName: acme-cli
+      distribution:
+        homebrew:
+          tap: acme/homebrew-tap        # required, "<owner>/<repo>"
+          formula: acme                 # optional, defaults to binaryName
+          tokenEnvironmentVariable: HOMEBREW_TAP_TOKEN   # optional, default
+        scoop:
+          bucket: acme/scoop-bucket     # required, "<owner>/<repo>"
+          tokenEnvironmentVariable: SCOOP_BUCKET_TOKEN   # optional, default
+    ```
+
+    Homebrew is cargo-dist's native installer: the generator adds `"homebrew"` to
+    `installers` / `publish-jobs` and sets `tap` / `formula` in
+    `dist-workspace.toml`, then appends cargo-dist's `publish-homebrew-formula`
+    job to `release.yml`. cargo-dist renders the `.rb` from its own
+    `dist-manifest.json` (per-arch `url` + `sha256`) and pushes it to the tap.
+
+    cargo-dist has no Scoop support, so that channel is a `publish-scoop` job the
+    generator renders itself — download the released Windows archive, hash it,
+    render the manifest, commit it to the bucket repo. It sits in `release.yml`
+    beside `publish-homebrew-formula`, gated on the same `host` job and the same
+    prerelease expression, so neither channel can publish a version the other
+    missed. It resolves the archive by target-triple suffix rather than by name,
+    since the archive prefix is cargo-dist's app name rather than the binary
+    name. Re-running a release rewrites the manifest instead of failing, so a
+    flaked job is safe to retry.
+
+    The README gains `brew install <tap>/<formula>` and
+    `scoop bucket add` + `scoop install` stanzas for whichever channels are
+    configured.
+
+    Enabling Homebrew also points the crate's `[package]` identity at the
+    consumer. cargo-dist renders the formula straight off that block, and
+    `packageIdentity` only rewrites the fields you set — so anything unset kept
+    the SDK template's Fern-owned value and surfaced on the consumer's own tap:
+    `repository` becomes the per-arch **release download URLs**, `homepage`
+    becomes `homepage`, and `description` becomes `desc`. `repository` was the
+    load-bearing one — left at the template's value the formula's URLs resolved
+    to `github.com/fern-api/cli-sdk/releases/...`, where the consumer's archives
+    do not exist, so every `brew install` 404'd. All three now default from the
+    configured repo (and the API display name) when unset. Explicit values
+    always win, and the defaults are scoped to the Homebrew case so no existing
+    generation's `Cargo.toml` changes.
+
+    Setting `packageIdentity.name` is still worth doing: it names the release
+    archives themselves, which otherwise ship as `fern-cli-sdk-<target>.tar.gz`.
+    That is cosmetic — the formula and the archives agree either way.
+
+    Also fixes the cargo-dist release pipeline, which this feature depends on
+    and which had never been exercised with a real release. `dist build` used
+    the crate's default `native-tls`, so `openssl-sys` failed on both musl
+    targets ("Could not find directory of OpenSSL installation") — and because
+    `host` only runs when `build-local-artifacts` succeeded or skipped, a failed
+    leg meant *no GitHub Release was created at all*. The glibc archives that
+    did build were also not portable: the released binary carried
+    `NEEDED libssl.so.3` / `libcrypto.so.3` and so would not start on Ubuntu
+    20.04, Debian 11, RHEL 8 or Amazon Linux 2 — which is exactly the artifact
+    `brew install` serves to Linux users. `dist-workspace.toml` now sets
+    `default-features = false` / `features = ["rustls"]`, matching what the npm
+    publish job already does for its musl builds. `rustls-tls-native-roots`
+    still reads the OS trust store, so custom/corporate root CAs keep working;
+    what goes away is the dynamic dependency on the host's OpenSSL. Applies to
+    every github-output generation, since the release workflow is emitted
+    unconditionally.
+
+    `aarch64-unknown-linux-musl` is dropped from the target list for a separate
+    reason found in the same run: the keyring crate's Linux secret-service
+    backend pulls `libdbus-sys`, whose C objects fail to statically link for
+    aarch64-musl (`undefined reference to __aarch64_ldadd4_sync` — GCC
+    outline-atomics helpers live in libgcc, which a `-static` musl build does
+    not link). `x86_64-unknown-linux-musl` is unaffected and still ships. ARM64
+    Alpine keeps a path via npm, whose job builds that target natively on an
+    `ubuntu-24.04-arm` runner rather than cross-compiling. The upstream fix is
+    to drop the dbus dependency in the SDK template, but that changes where
+    credentials are stored and does not belong in a distribution change.
+
+    The Homebrew job's `brew style` pass is guarded on `brew` actually being
+    present. GitHub's ubuntu runner images no longer ship Homebrew, so
+    cargo-dist's unconditional `export PATH="$(brew --prefix)/bin:$PATH"` exits
+    127 under `bash -e` and kills the step *before* the formula is committed —
+    observed on a real release. The style pass is cosmetic reformatting of a
+    file cargo-dist already renders validly, so it is skipped when brew is
+    absent rather than failing the publish. The commit is also idempotent now,
+    matching the Scoop job, so re-running a release is a no-op instead of an
+    empty-commit failure.
+
+    Fixes the README's `curl | bash` and PowerShell install commands, which
+    404'd. They were built from the binary name, but cargo-dist names its
+    installer scripts after the cargo *package* — so the two differed for every
+    generated CLI (the package defaults to the template's `fern-cli-sdk`). This
+    predates the distribution work but sits in the same Installation section,
+    and shipping working `brew`/`scoop` instructions beside two broken commands
+    was not worth doing.
+
+    The cargo-dist installer download in the build matrix is now retried and
+    verified. cargo-dist applies pipefail to that download in its `plan` job but
+    not in the six-way build matrix, where the same `curl ... | sh` runs per leg
+    — a dead curl pipes nothing into `sh`, which exits 0, so the step reports
+    success and `dist build` fails two steps later with an opaque exit 127. It
+    hit 2 of 3 real releases. The retry deliberately reuses the matrix's own
+    command and shell rather than branching on `install_dist.shell`, so a future
+    cargo-dist field rename cannot mis-route a leg and skip the install
+    entirely; the change can only ever add an attempt. A final verify step fails
+    with a directed message naming the transient download if both attempts miss.
+
+    Two things the customer must do that generation cannot: create the tap and
+    bucket repos (public), and add a PAT with write access to them under the
+    configured secret names. The workflow's built-in `GITHUB_TOKEN` cannot push
+    cross-repo, so configuring it is rejected at generation time rather than
+    producing a pipeline that only fails after the tag is cut.
+
+    Only honored for `output.location: github` — both channels publish from a
+    tagged GitHub Release. Omitting `distribution` keeps today's output
+    byte-for-byte, so existing consumers are unaffected.
+
+    Known gap: `aarch64-pc-windows-msvc` is not in the cargo-dist `targets` list,
+    so the Scoop manifest declares `64bit` only. Scoop runs it on ARM64 Windows
+    under emulation; the README says so.
+  type: feat

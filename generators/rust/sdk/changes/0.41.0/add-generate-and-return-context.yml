@@ -1,0 +1,5 @@
+- summary: |
+    Expose `generateAndReturnContext()` on `SdkGeneratorCli` for
+    in-process invocation by the CLI generator. Returns the populated
+    `SdkGeneratorContext` after generation completes.
+  type: internal

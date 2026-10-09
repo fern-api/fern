@@ -26,8 +26,9 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -35,6 +36,13 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Retrieve a user.
 // This endpoint is used to retrieve a user.
+//
+// Example:
+//
+//	client.User.GetUser(
+//	    context.TODO(),
+//	    "userId",
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	// The ID of the user to retrieve.
@@ -55,6 +63,19 @@ func (c *Client) GetUser(
 
 // Create a new user.
 // This endpoint is used to create a new user.
+//
+// Example:
+//
+//	request := &fern.CreateUserRequest{
+//	    Name: "name",
+//	    Age: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.User.CreateUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	request *fern.CreateUserRequest,

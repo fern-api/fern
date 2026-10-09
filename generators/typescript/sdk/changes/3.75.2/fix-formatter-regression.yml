@@ -1,0 +1,7 @@
+- summary: |
+    Fix formatter regression caused by pnpm 11 Docker upgrade. The Dockerfile's
+    `rm -rf /.pnpm/store` cleanup step was breaking all globally installed tools
+    (biome, oxfmt, prettier) because pnpm 11 stores global packages as symlinks
+    into `$PNPM_HOME/store`. Also clean up a redundant `code` template wrapper in
+    constructor generation that produced malformed indentation before formatting.
+  type: fix

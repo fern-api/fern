@@ -26,13 +26,28 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &foldera.GetDirectThreadRequest{
+//	    IDs: []string{
+//	        "ids",
+//	    },
+//	    Tags: []string{
+//	        "tags",
+//	    },
+//	}
+//	client.FolderA.Service.GetDirectThread(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetDirectThread(
 	ctx context.Context,
 	request *foldera.GetDirectThreadRequest,

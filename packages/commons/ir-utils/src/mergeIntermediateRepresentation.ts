@@ -18,6 +18,7 @@ export function mergeIntermediateRepresentation(
         apiName: ir1.apiName,
         basePath: ir1.basePath,
         selfHosted: ir1.selfHosted && ir2.selfHosted,
+        specVersion: ir1.specVersion ?? ir2.specVersion,
         apiDisplayName: ir1.apiDisplayName ?? ir2.apiDisplayName,
         apiDocs: ir1.apiDocs ?? ir2.apiDocs,
         auth: {
@@ -63,6 +64,10 @@ export function mergeIntermediateRepresentation(
             webhooks: ir1.rootPackage.webhooks ?? ir2.rootPackage.webhooks,
             websocket: ir1.rootPackage.websocket ?? ir2.rootPackage.websocket,
             hasEndpointsInTree: ir1.rootPackage.hasEndpointsInTree || ir2.rootPackage.hasEndpointsInTree,
+            hasWebSocketInTree:
+                (ir1.rootPackage.hasWebSocketInTree ?? false) ||
+                (ir2.rootPackage.hasWebSocketInTree ?? false) ||
+                undefined,
             navigationConfig: ir1.rootPackage.navigationConfig ?? ir2.rootPackage.navigationConfig,
             docs: ir1.rootPackage.docs ?? ir2.rootPackage.docs
         },
@@ -72,6 +77,7 @@ export function mergeIntermediateRepresentation(
         pathParameters: [...(ir1.pathParameters ?? []), ...(ir2.pathParameters ?? [])],
         errorDiscriminationStrategy: ir1.errorDiscriminationStrategy ?? ir2.errorDiscriminationStrategy,
         variables: [...(ir1.variables ?? []), ...(ir2.variables ?? [])],
+        globalParameters: mergeOptionalArrays(ir1.globalParameters, ir2.globalParameters),
         serviceTypeReferenceInfo: ir1.serviceTypeReferenceInfo ?? ir2.serviceTypeReferenceInfo,
         readmeConfig: ir1.readmeConfig ?? ir2.readmeConfig,
         sourceConfig: ir1.sourceConfig ?? ir2.sourceConfig,
@@ -99,6 +105,10 @@ function mergeSubpackages(
                 displayName: subpackage.displayName,
                 fernFilepath: subpackage.fernFilepath,
                 hasEndpointsInTree: mergedSubpackages[subpackageId].hasEndpointsInTree || subpackage.hasEndpointsInTree,
+                hasWebSocketInTree:
+                    (mergedSubpackages[subpackageId].hasWebSocketInTree ?? false) ||
+                    (subpackage.hasWebSocketInTree ?? false) ||
+                    undefined,
                 navigationConfig: mergedSubpackages[subpackageId].navigationConfig ?? subpackage.navigationConfig,
                 docs: mergedSubpackages[subpackageId].docs ?? subpackage.docs,
                 service: mergedSubpackages[subpackageId].service ?? subpackage.service,
@@ -168,6 +178,7 @@ function mergeEnvironments(
         return {
             environments: {
                 defaultEnvironment: environmentConfig1.defaultEnvironment ?? environmentConfig2.defaultEnvironment,
+                baseUrlEnvVar: environmentConfig1.baseUrlEnvVar ?? environmentConfig2.baseUrlEnvVar,
                 environments: FernIr.Environments.singleBaseUrl({
                     environments: [
                         ...environmentConfig1.environments.environments,
@@ -215,6 +226,7 @@ function mergeEnvironments(
         return {
             environments: {
                 defaultEnvironment,
+                baseUrlEnvVar: environmentConfig1.baseUrlEnvVar ?? environmentConfig2.baseUrlEnvVar,
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [
                         { id: environmentId, name: environmentName },
@@ -264,6 +276,7 @@ function mergeEnvironments(
         return {
             environments: {
                 defaultEnvironment,
+                baseUrlEnvVar: environmentConfig1.baseUrlEnvVar ?? environmentConfig2.baseUrlEnvVar,
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [
                         ...multipleBaseUrlsEnvironment.baseUrls,
@@ -294,6 +307,7 @@ function mergeEnvironments(
         return {
             environments: {
                 defaultEnvironment,
+                baseUrlEnvVar: environmentConfig1.baseUrlEnvVar ?? environmentConfig2.baseUrlEnvVar,
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [...environments1.baseUrls, ...deconflictedEnvironments.baseUrls],
                     environments: environments1.environments.flatMap((env1) =>
@@ -541,6 +555,13 @@ function deduplicateHeaders(headers: FernIr.HttpHeader[]): FernIr.HttpHeader[] {
         seen.add(wireValue);
         return true;
     });
+}
+
+function mergeOptionalArrays<T>(a: T[] | undefined, b: T[] | undefined): T[] | undefined {
+    if (a == null && b == null) {
+        return undefined;
+    }
+    return [...(a ?? []), ...(b ?? [])];
 }
 
 function generateUniqueName(id: string, existingIds: Set<string>): string {

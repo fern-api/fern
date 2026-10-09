@@ -25,6 +25,13 @@ export interface ConvertOpenAPIOptions {
     respectReadonlySchemas: boolean;
 
     /**
+     * If true, endpoint response type references will use the Read variant of schemas
+     * (e.g. `WebhookRead` instead of `Webhook`) when `respectReadonlySchemas` is enabled.
+     * Defaults to false for backward compatibility.
+     */
+    useReadVariantForResponses: boolean;
+
+    /**
      * If true, the converter will respect nullable properties in OpenAPI schemas.
      */
     respectNullableSchemas: boolean;
@@ -38,6 +45,13 @@ export interface ConvertOpenAPIOptions {
      * If true, the converter will include path parameters in the in-lined request.
      */
     inlinePathParameters: boolean;
+
+    /**
+     * @deprecated No longer read. `requestBody.required: false` is always carried into the IR now,
+     * and each SDK generator decides whether to act on it via its own configuration. Kept so that
+     * existing `respect-optional-request-body` settings keep validating; setting it only warns.
+     */
+    respectOptionalRequestBody: boolean;
 
     /**
      * If true, the converter will use the `bytes` type for binary responses.
@@ -126,9 +140,11 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     detectGlobalHeaders: true,
     objectQueryParameters: true,
     respectReadonlySchemas: false,
+    useReadVariantForResponses: false,
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: true,
+    respectOptionalRequestBody: false,
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     wrapReferencesToNullableInOptional: false,

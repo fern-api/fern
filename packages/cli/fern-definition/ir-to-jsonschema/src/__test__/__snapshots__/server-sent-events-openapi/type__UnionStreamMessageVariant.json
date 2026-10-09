@@ -9,13 +9,16 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether to stream the response."
     },
     "prompt": {
-      "type": "string"
+      "type": "string",
+      "description": "The input prompt."
     },
     "message": {
-      "type": "string"
+      "type": "string",
+      "description": "The message content."
     }
   },
   "required": [
@@ -23,5 +26,6 @@
     "message"
   ],
   "additionalProperties": false,
+  "description": "A user input message. Inherits stream_response from base via allOf.",
   "definitions": {}
 }

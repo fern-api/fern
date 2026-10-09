@@ -64,6 +64,18 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->create(
+     *     new CreateRequest([
+     *         'decimal' => 2.2,
+     *         'even' => 100,
+     *         'name' => 'fern',
+     *         'shape' => Shape::Square->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -111,6 +123,17 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->get(
+     *     new GetRequest([
+     *         'decimal' => 2.2,
+     *         'even' => 100,
+     *         'name' => 'fern',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetRequest $request
      * @param ?array{
      *   baseUrl?: string,

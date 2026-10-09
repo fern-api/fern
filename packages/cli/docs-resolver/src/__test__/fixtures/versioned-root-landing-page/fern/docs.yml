@@ -1,0 +1,21 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+
+title: Versioned Root Landing Page
+
+# Root-level landing page whose slug (and mdx) collide with a page inside the
+# default version's navigation — narrowed from the Extend docset, where
+# docs.yml declares `landing-page: /overview` pointing at the same mdx as the
+# "Overview" page in the default version's Getting Started section.
+landing-page:
+  page: Overview
+  path: ./pages/overview.mdx
+  slug: overview
+
+versions:
+  - display-name: v2
+    path: versions/v2.yml
+    slug: v2
+  - display-name: v1
+    path: versions/v1.yml
+    slug: v1

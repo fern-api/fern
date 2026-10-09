@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "0.0.1",
   "apiName": "api",
   "apiDisplayName": "OneOfService API",
   "auth": {
@@ -2776,7 +2777,8 @@
     ],
     "errors": [],
     "subpackages": [],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

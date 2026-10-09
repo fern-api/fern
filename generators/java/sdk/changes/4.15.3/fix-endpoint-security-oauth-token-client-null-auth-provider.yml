@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a `NullPointerException` thrown at runtime on every OAuth (or inferred-auth) authenticated
+    request under `auth: endpoint-security`. To fetch a token, the OAuth auth provider builds an
+    internal client for the (unauthenticated) token endpoint whose `ClientOptions` has no auth
+    provider; `ClientOptions.getAuthHeaders(...)` then dereferenced the null provider and threw. It
+    now returns no auth headers when no auth provider is configured, so token fetching (and therefore
+    all OAuth-authenticated calls) works.
+  type: fix

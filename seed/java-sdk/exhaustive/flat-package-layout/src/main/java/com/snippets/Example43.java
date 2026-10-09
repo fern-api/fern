@@ -1,6 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.endpoints.types.CreateWithBodyAndQuery;
+import com.seed.exhaustive.types.types.ObjectWithRequiredField;
 
 public class Example43 {
     public static void main(String[] args) {
@@ -9,6 +11,11 @@ public class Example43 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().params().getWithPathAndErrors("param");
+        client.endpoints()
+                .params()
+                .createWithBodyAndQuery(CreateWithBodyAndQuery.builder()
+                        .body(ObjectWithRequiredField.builder().string("string").build())
+                        .fields("_fields")
+                        .build());
     }
 }

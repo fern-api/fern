@@ -1,0 +1,7 @@
+- summary: |
+    Fix generated wire tests failing with "unrecognized subcommand" for specs
+    mounted under a namespace whose leaf matches a top-level resource name. The
+    wire-test harness now mirrors the SDK's `merge_into_path` stutter elision, so
+    an untagged spec grouped under its version path prefix (e.g. `v1`) resolves to
+    `<bin> v1 <op>` instead of the double `<bin> v1 v1 <op>` that clap rejects.
+  type: fix

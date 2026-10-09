@@ -1,0 +1,8 @@
+- summary: |
+    Add the `FERN_JAVA_SKIP_FORMATTING` environment variable, which skips the Gradle
+    `spotlessApply` pass that runs after Java SDK generation. The CLI forwards the
+    variable from the host into generator containers, so `FERN_JAVA_SKIP_FORMATTING=true
+    fern generate --local` produces unformatted (but otherwise identical) Java output.
+    Useful on networks that cannot reach the Gradle distribution or plugin repositories,
+    and to cut generation time.
+  type: feat

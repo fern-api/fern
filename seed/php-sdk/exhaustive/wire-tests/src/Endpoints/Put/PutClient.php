@@ -49,6 +49,13 @@ class PutClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->put->add(
+     *     'id',
+     * );
+     * ```
+     *
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,

@@ -14,7 +14,7 @@ public partial class SeedApiWideBasePathClient : ISeedApiWideBasePathClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedApiWideBasePath" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedApiWideBasePath.Version.Current },
                 { "User-Agent", "Fernapi-wide-base-path/0.0.1" },
             }
         );

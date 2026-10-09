@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# Single-spec fixture mounted under a namespace whose leaf matches the spec's
+# top-level resource group, exercising the CLI SDK's merge_into_path
+# stutter-elision. Scoped to the CLI generator via the `cli` group.
+api:
+  specs:
+    - openapi: ./openapi.yml
+      namespace: v1
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

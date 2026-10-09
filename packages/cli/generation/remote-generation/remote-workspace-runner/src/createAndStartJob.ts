@@ -1,11 +1,8 @@
+import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { createFiddleService, getFiddleOrigin, getIrVersionForGenerator } from "@fern-api/core";
+import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import {
-    migrateIntermediateRepresentationForGenerator,
-    migrateIntermediateRepresentationToVersionForGenerator
-} from "@fern-api/ir-migrations";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
@@ -17,6 +14,7 @@ import yaml from "js-yaml";
 import urlJoin from "url-join";
 import { promisify } from "util";
 import { gzip } from "zlib";
+import { migrateIntermediateRepresentationForInvocation } from "./migrateIntermediateRepresentationForInvocation.js";
 import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
 
 const gzipAsync = promisify(gzip);
@@ -43,7 +41,9 @@ export async function createAndStartJob({
     automationMode,
     autoMerge,
     skipIfNoDiff,
-    loginCommand = "fern login"
+    verify,
+    loginCommand = "fern login",
+    specsTarGzBuffer
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -69,10 +69,18 @@ export async function createAndStartJob({
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
     /**
+     * When true, Fiddle enables the generator-cli pipeline's VerificationStep,
+     * which runs `.fern/verify.sh` inside the language-specific validator
+     * container after the generator emits SDK files. Plumbed through from the
+     * CLI-level `--verify` flag. Default: false (verify off).
+     */
+    verify?: boolean;
+    /**
      * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    specsTarGzBuffer?: Buffer;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -111,6 +119,7 @@ export async function createAndStartJob({
                 automationMode,
                 autoMerge,
                 skipIfNoDiff,
+                verify,
                 loginCommand
             }),
         retryRateLimited,
@@ -122,7 +131,14 @@ export async function createAndStartJob({
                 { code: CliError.Code.NetworkError }
             )
     });
-    await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
+    await startJob({
+        intermediateRepresentation,
+        job,
+        context,
+        generatorInvocation,
+        irVersionOverride,
+        specsTarGzBuffer
+    });
     return job;
 }
 
@@ -142,6 +158,7 @@ async function createJob({
     pushPreviewBranch,
     fernignoreContents,
     skipIfNoDiff,
+    verify,
     loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -163,6 +180,7 @@ async function createJob({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    verify?: boolean;
     loginCommand: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
@@ -171,7 +189,7 @@ async function createJob({
         id: generatorInvocation.name,
         version: generatorInvocation.version,
         outputMode: generatorInvocation.outputMode,
-        customConfig: generatorInvocation.config,
+        customConfig: stripCliConfigKeys(generatorInvocation.config),
         publishMetadata: generatorInvocation.publishMetadata
     };
 
@@ -200,7 +218,8 @@ async function createJob({
         preview: fiddlePreview ?? absolutePathToPreview != null,
         pushPreviewBranch,
         fernignoreContents,
-        skipIfNoDiff
+        skipIfNoDiff,
+        verify
         // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
         //   automationMode,
         //   autoMerge,
@@ -363,37 +382,22 @@ async function startJob({
     generatorInvocation,
     job,
     context,
-    irVersionOverride
+    irVersionOverride,
+    specsTarGzBuffer
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    specsTarGzBuffer: Buffer | undefined;
 }): Promise<void> {
-    const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
-        version == null ? undefined : "v" + version.toString()
-    );
-    const resolvedIrVersionOverride = irVersionOverride ?? irVersionFromFdr;
-    const migratedIntermediateRepresentation =
-        resolvedIrVersionOverride == null
-            ? await migrateIntermediateRepresentationForGenerator({
-                  intermediateRepresentation,
-                  context,
-                  targetGenerator: {
-                      name: generatorInvocation.name,
-                      version: generatorInvocation.version
-                  }
-              })
-            : await migrateIntermediateRepresentationToVersionForGenerator({
-                  intermediateRepresentation,
-                  context,
-                  irVersion: resolvedIrVersionOverride,
-                  targetGenerator: {
-                      name: generatorInvocation.name,
-                      version: generatorInvocation.version
-                  }
-              });
+    const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForInvocation({
+        intermediateRepresentation,
+        generatorInvocation,
+        context,
+        irVersionOverride
+    });
 
     const formData = new FormData();
 
@@ -408,7 +412,12 @@ async function startJob({
         `Compressed IR from ${irBytes.byteLength} bytes to ${compressed.length} bytes ` +
             `(${((1 - compressed.length / irBytes.byteLength) * 100).toFixed(1)}% reduction)`
     );
-    formData.append("file", compressed, { filename: "ir.json", contentType: "application/octet-stream" });
+    formData.append("ir", compressed, { filename: "ir.json", contentType: "application/octet-stream" });
+
+    if (specsTarGzBuffer != null) {
+        formData.append("specs", specsTarGzBuffer, { filename: "specs.tar.gz", contentType: "application/gzip" });
+        context.logger.debug(`Appended specs tar.gz (${specsTarGzBuffer.length} bytes)`);
+    }
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {

@@ -1,0 +1,3 @@
+- summary: |
+    Group GraphQL queries by parent field in the sidebar; mutations and subscriptions remain flat. Field path is now included on all GraphQL operations for correct snippet nesting.
+  type: fix

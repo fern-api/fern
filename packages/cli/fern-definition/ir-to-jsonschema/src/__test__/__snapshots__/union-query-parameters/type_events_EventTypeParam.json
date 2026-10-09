@@ -10,6 +10,7 @@
       }
     }
   ],
+  "description": "Either a single event type or a list of event types.",
   "definitions": {
     "events.EventTypeEnum": {
       "type": "string",

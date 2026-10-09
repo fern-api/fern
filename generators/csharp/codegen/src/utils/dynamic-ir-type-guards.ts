@@ -307,7 +307,7 @@ export const is = {
             is.NamedParameter(value) && "type" in value && value.type === "bodyProperty",
         FileArray: (value: unknown): value is FernIr.dynamic.FileUploadRequestBodyProperty.FileArray =>
             is.NameAndWireValue(value) && "type" in value && value.type === "fileArray",
-        File_: (value: unknown): value is FernIr.dynamic.FileUploadRequestBodyProperty.File_ =>
+        File_: (value: unknown): value is FernIr.dynamic.FileUploadRequestBodyProperty.File =>
             is.NameAndWireValue(value) && "type" in value && value.type === "file"
     },
 
@@ -332,7 +332,7 @@ export const is = {
             is.DiscriminatedUnionType(value) && "type" in value && value.type === "discriminatedUnion",
         Enum: (value: unknown): value is FernIr.dynamic.NamedType.Enum =>
             is.EnumType(value) && "type" in value && value.type === "enum",
-        Object_: (value: unknown): value is FernIr.dynamic.NamedType.Object_ =>
+        Object_: (value: unknown): value is FernIr.dynamic.NamedType.Object =>
             is.ObjectType(value) && "type" in value && value.type === "object",
         UndiscriminatedUnion: (value: unknown): value is FernIr.dynamic.NamedType.UndiscriminatedUnion =>
             is.UndiscriminatedUnionType(value) && "type" in value && value.type === "undiscriminatedUnion"

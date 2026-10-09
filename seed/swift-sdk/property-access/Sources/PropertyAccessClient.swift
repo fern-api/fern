@@ -53,6 +53,31 @@ public final class PropertyAccessClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import PropertyAccess
+    ///
+    /// private func main() async throws {
+    ///     let client = PropertyAccessClient()
+    ///
+    ///     _ = try await client.createUser(request: User(
+    ///         id: "id",
+    ///         email: "email",
+    ///         password: "password",
+    ///         profile: UserProfile(
+    ///             name: "name",
+    ///             verification: UserProfileVerification(
+    ///                 verified: "verified"
+    ///             ),
+    ///             ssn: "ssn"
+    ///         )
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createUser(request: User, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .post,

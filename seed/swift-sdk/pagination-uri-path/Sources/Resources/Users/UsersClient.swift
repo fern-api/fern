@@ -7,6 +7,20 @@ public final class UsersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import PaginationUriPath
+    ///
+    /// private func main() async throws {
+    ///     let client = PaginationUriPathClient(token: "<token>")
+    ///
+    ///     _ = try await client.users.listWithUriPagination()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func listWithUriPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersUriPaginationResponse {
         return try await httpClient.performRequest(
             method: .get,
@@ -16,6 +30,20 @@ public final class UsersClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import PaginationUriPath
+    ///
+    /// private func main() async throws {
+    ///     let client = PaginationUriPathClient(token: "<token>")
+    ///
+    ///     _ = try await client.users.listWithPathPagination()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func listWithPathPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPathPaginationResponse {
         return try await httpClient.performRequest(
             method: .get,

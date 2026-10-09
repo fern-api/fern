@@ -20,6 +20,12 @@ module Seed
       # @option params [Seed::Commons::Types::Language] :language
       # @option params [Integer] :num_warm_instances
       #
+      # @example
+      #   client.sysprop.set_num_warm_instances(
+      #     language: "JAVA",
+      #     num_warm_instances: 1
+      #   )
+      #
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -49,6 +55,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.sysprop.get_num_warm_instances
+      #
       # @return [Hash[Seed::Commons::Types::Language, Integer]]
       def get_num_warm_instances(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -63,10 +72,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[Seed::Commons::Types::Language, Integer], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
     end
   end

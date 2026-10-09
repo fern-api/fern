@@ -7,6 +7,11 @@ use Seed\Folder\Service\ServiceClientInterface;
 interface FolderClientInterface
 {
     /**
+     * Example:
+     * ```php
+     * $client->foo();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

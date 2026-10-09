@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Literal, Optional, Union, cast
 
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
+from fern_python.codegen.project import OutputDirectory
 from fern_python.generators.pydantic_model.custom_config import PydanticModelCustomConfig
 
 
@@ -55,6 +56,25 @@ class WireTestsConfig(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class TcpKeepaliveConfig(pydantic.BaseModel):
+    """Configuration for platform-guarded TCP keepalive on the default HTTP transport.
+
+    When enabled, the generated default httpx transport emits periodic TCP
+    keepalive probes so long, non-streaming requests survive idle-connection
+    reaping by a firewall/load balancer/NAT. Off by default to keep generated
+    output unchanged; a user-supplied httpx client or custom transport always
+    takes precedence over the keepalive default.
+    """
+
+    enabled: bool = False
+    idle_seconds: int = 60
+    interval_seconds: int = 30
+    count: int = 5
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -65,8 +85,21 @@ class SDKCustomConfig(pydantic.BaseModel):
     use_api_name_in_package: bool = False
     package_name: Optional[str] = None
     package_path: Optional[str] = None
+    # Request timeout, in seconds. Prefer `timeout`; `timeout_in_seconds` is a
+    # deprecated alias kept for backwards compatibility. Both mean seconds.
+    timeout: Optional[Union[Literal["infinity"], int]] = None
+    # deprecated, use `timeout` instead (same value, seconds)
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
+    # Deprecated: prefer `output_directory`. `flat_layout` toggles only the `src/`
+    # prefix and never skips project scaffolding; `output_directory: source-root`
+    # additionally skips pyproject.toml / requirements.txt / README.md / py.typed.
     flat_layout: bool = False
+    # Controls project layout. `project-root` (default when unset) emits the
+    # standard `src/<package>/...` tree with a pyproject.toml at root.
+    # `source-root` writes source files directly without the `src/` prefix and
+    # skips project scaffolding — useful when embedding into an existing project.
+    # When unset, `flat_layout` continues to drive behavior for backwards compat.
+    output_directory: Optional[OutputDirectory] = None
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
     additional_init_exports: Optional[List[ModuleExport]] = None
     exclude_types_from_init_exports: Optional[bool] = False
@@ -93,8 +126,25 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Wire test configuration
     wire_tests: Optional[WireTestsConfig] = None
 
+    # When True, an endpoint whose request body the API does not require takes a body
+    # parameter defaulting to the OMIT sentinel, so the caller may leave it out entirely
+    # and no body is sent. Off by default — existing signatures are unchanged unless
+    # this is opted in.
+    respect_optional_request_body: bool = False
+
+    # When True, streaming endpoints return a `Stream` (`AsyncStream` for async clients) instead of
+    # a plain iterator. The stream still iterates as the parsed payloads, and `with_metadata()`
+    # additionally exposes the server-sent event `id`, `event` and `retry` fields. Off by default —
+    # existing output is unchanged unless this is opted in.
+    stream_abstraction: bool = False
+
     # If true, treats path parameters as named parameters in endpoint functions
     inline_path_params: bool = False
+
+    # If true, path parameter values are percent-encoded when substituted into the
+    # request path, so a value containing "/" or ".." cannot change which endpoint
+    # the request resolves to. Off by default so existing output is unchanged.
+    encode_path_params: bool = False
 
     # Feature flag that enables generation of Python websocket clients
     should_generate_websocket_clients: bool = False
@@ -127,6 +177,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     """
 
     pyproject_toml: Optional[str] = None
+
+    # Text emitted as a comment at the top of every generated Python file, above the
+    # auto-generated notice. Lines that are not already comments are prefixed with `#`.
+    license_header: Optional[str] = None
 
     # The chunk size to use (if any) when processing a response bytes stream within `iter_bytes` or `aiter_bytes`
     # results in: `for _chunk in _response.iter_bytes(chunk_size=<default_bytes_stream_chunk_size>):`
@@ -165,6 +219,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     # transports via custom code (e.g., factory/classmethod wrappers).
     custom_transport: bool = False
 
+    # Opt-in platform-guarded TCP keepalive on the generated default HTTP
+    # transport. Disabled by default so existing generated output is unchanged.
+    # When enabled, the SDK's default httpx transport emits TCP keepalive probes
+    # so long, non-streaming requests survive idle-connection reaping. A
+    # user-supplied httpx_client or custom_transport http_client always wins.
+    tcp_keepalive: TcpKeepaliveConfig = TcpKeepaliveConfig()
+
     # Controls how offset pagination increments between pages.
     # "item-index" (default): offset increments by the number of items returned.
     # "page-index": offset increments by 1 each page.
@@ -178,6 +239,42 @@ class SDKCustomConfig(pydantic.BaseModel):
     # If true, omits Fern platform headers (X-Fern-Language, SDK name/version,
     # X-Fern-Runtime, X-Fern-Platform, User-Agent) from generated SDK requests.
     omit_fern_headers: bool = False
+
+    # If true, emits a structured `User-Agent` header of the form
+    # `{sdkName}/{version} ({os}; {arch}) Python/{pythonVersion}` that consolidates
+    # platform + runtime information. Disabled by default so existing output is
+    # unchanged. Subject to `omit_fern_headers`.
+    include_platform_headers: bool = False
+
+    # If true, emits only the `User-Agent` header (in whatever form the other
+    # configs produce) and drops the X-Fern-Language, X-Fern-SDK-Name,
+    # X-Fern-SDK-Version, X-Fern-Runtime, and X-Fern-Platform headers. Disabled by
+    # default so existing output is unchanged. Subject to `omit_fern_headers`.
+    user_agent_only: bool = False
+
+    # If true, the SDK version reported in the telemetry headers (X-Fern-SDK-Version
+    # and the version segment of User-Agent) is resolved at runtime via
+    # `importlib.metadata.version(<dist>)` instead of being baked in as a literal at
+    # generation time. This lets the reported version track the actually-installed
+    # package version (e.g. when an external tool such as release-please sets the
+    # published version after generation), rather than a version the SDK may never
+    # publish. Falls back to the generation-time version when the distribution is not
+    # installed (e.g. running from source). Disabled by default so existing output is
+    # unchanged. Subject to `omit_fern_headers`.
+    runtime_version: bool = False
+
+    # If true, the generated client exposes an optional `app_info` constructor
+    # argument (`{"name": ..., "version"?: ..., "comment"?: ...}`) whose product
+    # token is appended to whatever `User-Agent` the SDK would otherwise send,
+    # e.g. `my-sdk/1.0 (...) partner-app/3.1.0 (+https://partner.example)` per
+    # RFC 9110 §5.5.3. Appended to all three User-Agent branches (the structured
+    # platform header, the `user-agent` template value, and the default
+    # `{package}/{version}`), and survives the `runtime_version` path. Caller
+    # values are sanitized (name/version token-encoded, comment delimiters and
+    # control chars escaped). Disabled by default so existing output is
+    # unchanged. Overridable by an explicit `User-Agent` in `headers`, and
+    # suppressed by `omit_fern_headers`.
+    allow_user_agent_app_info: bool = False
 
     # The default number of retries for failed requests in the generated SDK.
     # Set to 0 to disable retries by default (useful for non-idempotent APIs).
@@ -196,6 +293,24 @@ class SDKCustomConfig(pydantic.BaseModel):
     #   "all": defaults on query params, headers, request body params, and pydantic model fields
     use_request_defaults: Optional[Literal["none", "parameters", "all"]] = None
 
+    # When true, makes client auth parameters optional even when the spec
+    # mandates auth on all endpoints (isAuthMandatory=true). Useful for
+    # hand-maintained wrapper clients that authenticate via external means.
+    optional_auth: bool = False
+
+    # When true (and the API uses `auth: any` with OAuth client credentials),
+    # auth credentials passed explicitly to the client constructor take
+    # precedence over environment-variable defaults when selecting the auth
+    # scheme. For example, explicitly provided basic-auth credentials are used
+    # even if OAuth client id/secret environment variables are set. Defaults to
+    # false, where OAuth env vars win over explicitly provided basic auth.
+    prefer_explicit_auth: bool = False
+
+    # When true, the inferred auth token provider leaves optional token request body
+    # parameters that are unset (None after constructor and environment defaults) out of
+    # the get-token request, instead of sending them as null (JSON) or empty (form).
+    omit_unset_inferred_auth_params: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -209,10 +324,26 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["offset_semantics"] = obj.pop("offsetSemantics")
             if "omitFernHeaders" in obj and "omit_fern_headers" not in obj:
                 obj["omit_fern_headers"] = obj.pop("omitFernHeaders")
+            if "runtime-version" in obj and "runtime_version" not in obj:
+                obj["runtime_version"] = obj.pop("runtime-version")
+            if "runtimeVersion" in obj and "runtime_version" not in obj:
+                obj["runtime_version"] = obj.pop("runtimeVersion")
+            if "allowUserAgentAppInfo" in obj and "allow_user_agent_app_info" not in obj:
+                obj["allow_user_agent_app_info"] = obj.pop("allowUserAgentAppInfo")
+            if "userAgentOnly" in obj and "user_agent_only" not in obj:
+                obj["user_agent_only"] = obj.pop("userAgentOnly")
             if "maxRetries" in obj and "default_max_retries" not in obj:
                 obj["default_max_retries"] = obj.pop("maxRetries")
             if "retryStatusCodes" in obj and "retry_status_codes" not in obj:
                 obj["retry_status_codes"] = obj.pop("retryStatusCodes")
+            if "optional-auth" in obj and "optional_auth" not in obj:
+                obj["optional_auth"] = obj.pop("optional-auth")
+            if "optionalAuth" in obj and "optional_auth" not in obj:
+                obj["optional_auth"] = obj.pop("optionalAuth")
+            if "prefer-explicit-auth" in obj and "prefer_explicit_auth" not in obj:
+                obj["prefer_explicit_auth"] = obj.pop("prefer-explicit-auth")
+            if "preferExplicitAuth" in obj and "prefer_explicit_auth" not in obj:
+                obj["prefer_explicit_auth"] = obj.pop("preferExplicitAuth")
 
         obj = super().parse_obj(obj)
 
@@ -226,6 +357,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":
         self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models
         return self
+
+    @property
+    def resolved_timeout(self) -> Union[Literal["infinity"], int]:
+        """Resolve the request timeout (in seconds), preferring `timeout` and
+        falling back to the deprecated `timeout_in_seconds` alias. Both keys mean
+        seconds, so no unit conversion is applied."""
+        return self.timeout if self.timeout is not None else self.timeout_in_seconds
 
     def get_resolved_defaults_mode(self) -> str:
         """Resolve the effective defaults mode from use_request_defaults (takes precedence)

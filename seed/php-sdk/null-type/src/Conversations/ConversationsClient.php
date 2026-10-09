@@ -52,6 +52,15 @@ class ConversationsClient
     /**
      * Place an outbound call or validate call setup with dry_run.
      *
+     * Example:
+     * ```php
+     * $client->conversations->outboundCall(
+     *     new OutboundCallConversationsRequest([
+     *         'toPhoneNumber' => 'to_phone_number',
+     *     ]),
+     * );
+     * ```
+     *
      * @param OutboundCallConversationsRequest $request
      * @param ?array{
      *   baseUrl?: string,

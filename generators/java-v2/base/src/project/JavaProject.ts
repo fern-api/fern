@@ -1,4 +1,5 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
+import { FERN_JAVA_SKIP_FORMATTING_ENV_VAR, isEnvVarTruthy } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -42,13 +43,31 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
             // Apply gradle-distribution-url override if configured
             await this.applyGradleDistributionUrlOverride();
 
+            const skipFormattingValue = process.env[FERN_JAVA_SKIP_FORMATTING_ENV_VAR];
+            if (isEnvVarTruthy(skipFormattingValue)) {
+                this.context.logger.info(
+                    `JavaProject: ${FERN_JAVA_SKIP_FORMATTING_ENV_VAR}=${skipFormattingValue} — skipping spotlessApply. ` +
+                        "No Gradle command will run during generation. Generated code is unformatted; " +
+                        "run ./gradlew spotlessApply yourself to format it."
+                );
+                return;
+            }
+            if (skipFormattingValue != null) {
+                this.context.logger.info(
+                    `JavaProject: ${FERN_JAVA_SKIP_FORMATTING_ENV_VAR}=${skipFormattingValue} is not a truthy value ` +
+                        '("1", "true", "yes", "on"), so formatting will still run.'
+                );
+            }
+
             const enableProfiling = this.context.customConfig["enable-gradle-profiling"] === true;
             const gradleArgs = [":spotlessApply"];
             if (enableProfiling) {
                 gradleArgs.push("--profile");
                 this.context.logger.info(`JavaProject: Running spotlessApply with profiling enabled`);
             } else {
-                this.context.logger.debug(`JavaProject: Running spotlessApply`);
+                this.context.logger.info(
+                    `JavaProject: Running spotlessApply. Set ${FERN_JAVA_SKIP_FORMATTING_ENV_VAR}=true to skip it.`
+                );
             }
             await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
                 doNotPipeOutput: false,

@@ -1,0 +1,15 @@
+- summary: |
+    A wire-test mismatch now reports a self-probe and the full received URL.
+
+    When a mock matches zero requests, the failure could mean two very different
+    things — the mock is not matching in this environment, or the CLI sent
+    something the diagnostic does not surface — and nothing in the output told
+    them apart. The harness now issues its own request for the expected method
+    and path and reports whether the mock matched *that*, which separates the
+    two. It also prints the full received URL rather than just the path, since a
+    stray or missing query parameter is invisible otherwise and is exactly the
+    kind of difference a matcher rejects.
+
+    Reported, not asserted on: a bodyless probe cannot satisfy a case that
+    carries body matchers, so its result is informational.
+  type: fix

@@ -23,13 +23,24 @@ export declare namespace MintlifyImporter {
     }
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value != null && !Array.isArray(value);
+}
+
+function hasNavigationArray(value: unknown): value is MintJsonSchema {
+    return isRecord(value) && Array.isArray(value.navigation);
+}
+
 export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
     private documentationTab: TabInfo | undefined = undefined;
     private tabUrlToInfo: Record<string, TabInfo> = {};
 
     public async import({ args, builder }: { args: MintlifyImporter.Args; builder: FernDocsBuilder }): Promise<void> {
         const mintJsonContent = await readFile(args.absolutePathToMintJson, "utf-8");
-        const mint = JSON.parse(mintJsonContent) as MintJsonSchema;
+        const mint = this.parseMintJson({
+            content: mintJsonContent,
+            absolutePathToMintJson: args.absolutePathToMintJson
+        });
 
         builder.setTitle({ title: mint.name });
 
@@ -143,6 +154,31 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
             companyName: convertInstanceName(mint.name)
         });
         this.context.logger.debug(`Added instance ${instanceUrl} to docs.yml`);
+    }
+
+    private parseMintJson({
+        content,
+        absolutePathToMintJson
+    }: {
+        content: string;
+        absolutePathToMintJson: AbsoluteFilePath;
+    }): MintJsonSchema {
+        let mintJson: unknown;
+        try {
+            mintJson = JSON.parse(content) as unknown;
+        } catch (error) {
+            return this.context.failAndThrow(`Failed to parse ${absolutePathToMintJson}.`, error, {
+                code: CliError.Code.ParseError
+            });
+        }
+
+        if (!hasNavigationArray(mintJson)) {
+            return this.context.failAndThrow("Expected navigation in mint.json to be an array.", undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+
+        return mintJson;
     }
 
     private async getNavigationBuilder({

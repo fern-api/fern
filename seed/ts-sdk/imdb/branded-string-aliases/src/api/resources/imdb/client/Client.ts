@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedApi from "../../../index.js";
@@ -22,12 +23,13 @@ export class ImdbClient {
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
-     *
      * Add a movie to the database using the movies/* /... path.
      *
      * @param {SeedApi.CreateMovieRequest} request
      * @param {ImdbClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.imdb.createMovie({
@@ -51,14 +53,14 @@ export class ImdbClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/movies/create-movie",
+                "movies/create-movie",
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -83,31 +85,36 @@ export class ImdbClient {
     /**
      * @deprecated
      *
-     * @param {SeedApi.MovieId} movieId
+     * @param {SeedApi.GetMovieImdbRequest} request
      * @param {ImdbClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.MovieDoesNotExistError}
+     * @throws {@link SeedApi.NotFoundError}
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
-     *     await client.imdb.getMovie(SeedApi.MovieId("movieId"))
+     *     await client.imdb.getMovie({
+     *         movieId: SeedApi.MovieId("movieId")
+     *     })
      */
     public getMovie(
-        movieId: SeedApi.MovieId,
+        request: SeedApi.GetMovieImdbRequest,
         requestOptions?: ImdbClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Movie> {
-        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(request, requestOptions));
     }
 
     private async __getMovie(
-        movieId: SeedApi.MovieId,
+        request: SeedApi.GetMovieImdbRequest,
         requestOptions?: ImdbClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.Movie>> {
+        const { movieId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/movies/${core.url.encodePathParam(movieId)}`,
+                `movies/${core.url.encodePathParam(movieId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -125,10 +132,7 @@ export class ImdbClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new SeedApi.MovieDoesNotExistError(
-                        _response.error.body as SeedApi.MovieId,
-                        _response.rawResponse,
-                    );
+                    throw new SeedApi.NotFoundError(_response.error.body as SeedApi.MovieId, _response.rawResponse);
                 default:
                     throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,

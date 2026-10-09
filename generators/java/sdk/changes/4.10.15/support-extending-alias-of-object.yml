@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support extending a type alias that resolves to an object. Previously the generator crashed with "Non-objects cannot be extended"; it now resolves the alias to its underlying object declaration when generating the interface.
+  type: fix

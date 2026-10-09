@@ -19,25 +19,18 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
         }
     }
 
-    /// <example><code>
-    /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-    ///     new ReqWithHeaders
-    ///     {
-    ///         XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
-    ///         XTestServiceHeader = "X-TEST-SERVICE-HEADER",
-    ///         Body = "string",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task GetWithCustomHeaderAsync(
+    private async Task<RawResponse> GetWithCustomHeaderAsyncCore(
         ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        await _client
+        return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add("X-TEST-SERVICE-HEADER", request.XTestServiceHeader)
                     .Add("X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader)
@@ -53,6 +46,7 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
                             Method = HttpMethod.Post,
                             Path = "/test-headers/custom-header",
                             Body = request.Body,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -61,7 +55,12 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    return;
+                    return new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    };
                 }
                 {
                     var responseBody = await response
@@ -70,10 +69,37 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+    ///     new ReqWithHeaders
+    ///     {
+    ///         XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
+    ///         XTestServiceHeader = "X-TEST-SERVICE-HEADER",
+    ///         Body = "string",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask GetWithCustomHeaderAsync(
+        ReqWithHeaders request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            GetWithCustomHeaderAsyncCore(request, options, cancellationToken)
+        );
     }
 }

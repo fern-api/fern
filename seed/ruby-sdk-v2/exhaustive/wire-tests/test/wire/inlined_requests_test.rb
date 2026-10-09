@@ -15,7 +15,7 @@ class InlinedRequestsWireTest < WireMockTestCase
   def test_inlined_requests_post_with_object_bodyand_response_with_wiremock
     test_id = "inlined_requests.post_with_object_bodyand_response.0"
 
-    @client.inlined_requests.post_with_object_bodyand_response(
+    result = @client.inlined_requests.post_with_object_bodyand_response(
       string: "string",
       integer: 1,
       nested_object: {
@@ -48,6 +48,56 @@ class InlinedRequestsWireTest < WireMockTestCase
       url_path: "/req-bodies/object",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/req-bodies/object",
+      expected: {
+        "/integer" => 1,
+        "/NestedObject/integer" => 1,
+        "/NestedObject/long" => 1000000,
+        "/NestedObject/double" => 1.1
+      }
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
+    )
+  end
+
+  def test_inlined_requests_post_with_array_body_and_headers_with_wiremock
+    test_id = "inlined_requests.post_with_array_body_and_headers.0"
+
+    @client.inlined_requests.post_with_array_body_and_headers(
+      x_custom_header: "X-Custom-Header",
+      body: %w[string string],
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "inlined_requests.post_with_array_body_and_headers.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/req-bodies/array-body-with-headers",
+      query_params: nil,
+      expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/req-bodies/array-body-with-headers",
+      expected_body: JSON.parse('["string","string"]')
     )
   end
 end

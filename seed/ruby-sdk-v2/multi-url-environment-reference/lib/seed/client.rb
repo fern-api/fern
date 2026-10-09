@@ -5,9 +5,11 @@ module Seed
     # @param token [String]
     # @param base_url [String, nil]
     # @param environment [Hash[Symbol, String], nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(token:, base_url: nil, environment: Seed::Environment::PRODUCTION)
+    def initialize(token:, base_url: nil, environment: Seed::Environment::PRODUCTION, max_retries: 2, timeout: 60)
       @base_url = base_url
       @environment = environment
 
@@ -17,7 +19,9 @@ module Seed
           "User-Agent" => "fern_multi-url-environment-reference/0.0.1",
           "X-Fern-Language" => "Ruby",
           Authorization: "Bearer #{token}"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

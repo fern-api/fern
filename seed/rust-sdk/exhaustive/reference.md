@@ -306,6 +306,54 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_map_of_integer_to_object</a>(request: std::collections::HashMap&lt;i64, ObjectWithRequiredField&gt;) -> Result&lt;std::collections::HashMap&lt;i64, ObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .container
+        .get_and_return_map_of_integer_to_object(
+            &HashMap::from([(
+                1,
+                ObjectWithRequiredField {
+                    string: "string".to_string(),
+                    ..Default::default()
+                },
+            )]),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_optional</a>(request: Option&lt;ObjectWithRequiredField&gt;) -> Result&lt;Option&lt;ObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
@@ -2288,6 +2336,83 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">create_with_body_and_query</a>(request: ObjectWithRequiredField, fields: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ObjectWithOptionalField, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .params
+        .create_with_body_and_query(
+            &CreateWithBodyAndQueryRequest {
+                fields: Some("_fields".to_string()),
+                body: ObjectWithRequiredField {
+                    string: "string".to_string(),
+                    ..Default::default()
+                },
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `Option<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_boolean_path</a>(param: bool) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
@@ -3131,6 +3256,61 @@ async fn main() {
 
 **nested_object:** `ObjectWithOptionalField` 
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlined_requests.<a href="/src/api/resources/inlined_requests/client.rs">post_with_array_body_and_headers</a>(request: Vec&lt;String&gt;) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .inlined_requests
+        .post_with_array_body_and_headers(
+            &vec!["string".to_string(), "string".to_string()],
+            Some(RequestOptions::new().additional_header("X-Custom-Header", "X-Custom-Header")),
+        )
+        .await;
+}
+```
 </dd>
 </dl>
 </dd>

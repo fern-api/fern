@@ -19,7 +19,7 @@ var (
 )
 
 type DoubleOptional struct {
-	OptionalAlias *OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
+	OptionalAlias OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -28,7 +28,7 @@ type DoubleOptional struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *DoubleOptional) GetOptionalAlias() *OptionalAlias {
+func (d *DoubleOptional) GetOptionalAlias() OptionalAlias {
 	if d == nil {
 		return nil
 	}
@@ -43,15 +43,17 @@ func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DoubleOptional) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetOptionalAlias sets the OptionalAlias field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DoubleOptional) SetOptionalAlias(optionalAlias *OptionalAlias) {
+func (d *DoubleOptional) SetOptionalAlias(optionalAlias OptionalAlias) {
 	d.OptionalAlias = optionalAlias
 	d.require(doubleOptionalFieldOptionalAlias)
 }
@@ -98,6 +100,127 @@ func (d *DoubleOptional) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	extendedObjectWithInheritedEnumFieldRequiredEnum        = big.NewInt(1 << 0)
+	extendedObjectWithInheritedEnumFieldRequiredString      = big.NewInt(1 << 1)
+	extendedObjectWithInheritedEnumFieldOptionalDescription = big.NewInt(1 << 2)
+)
+
+// Extends ObjectWithInheritedRequiredEnum, inheriting the required enum field.
+// This type should NOT derive Default in Rust because the parent type
+// has a required enum field.
+type ExtendedObjectWithInheritedEnum struct {
+	RequiredEnum        WeatherReport `json:"requiredEnum" url:"requiredEnum"`
+	RequiredString      string        `json:"requiredString" url:"requiredString"`
+	OptionalDescription *string       `json:"optionalDescription,omitempty" url:"optionalDescription,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *ExtendedObjectWithInheritedEnum) GetRequiredEnum() WeatherReport {
+	if e == nil {
+		return ""
+	}
+	return e.RequiredEnum
+}
+
+func (e *ExtendedObjectWithInheritedEnum) GetRequiredString() string {
+	if e == nil {
+		return ""
+	}
+	return e.RequiredString
+}
+
+func (e *ExtendedObjectWithInheritedEnum) GetOptionalDescription() *string {
+	if e == nil {
+		return nil
+	}
+	return e.OptionalDescription
+}
+
+func (e *ExtendedObjectWithInheritedEnum) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ExtendedObjectWithInheritedEnum) require(field *big.Int) {
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
+	}
+	next.Or(next, field)
+	e.explicitFields = next
+}
+
+// SetRequiredEnum sets the RequiredEnum field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExtendedObjectWithInheritedEnum) SetRequiredEnum(requiredEnum WeatherReport) {
+	e.RequiredEnum = requiredEnum
+	e.require(extendedObjectWithInheritedEnumFieldRequiredEnum)
+}
+
+// SetRequiredString sets the RequiredString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExtendedObjectWithInheritedEnum) SetRequiredString(requiredString string) {
+	e.RequiredString = requiredString
+	e.require(extendedObjectWithInheritedEnumFieldRequiredString)
+}
+
+// SetOptionalDescription sets the OptionalDescription field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExtendedObjectWithInheritedEnum) SetOptionalDescription(optionalDescription *string) {
+	e.OptionalDescription = optionalDescription
+	e.require(extendedObjectWithInheritedEnumFieldOptionalDescription)
+}
+
+func (e *ExtendedObjectWithInheritedEnum) UnmarshalJSON(data []byte) error {
+	type unmarshaler ExtendedObjectWithInheritedEnum
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ExtendedObjectWithInheritedEnum(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ExtendedObjectWithInheritedEnum) MarshalJSON() ([]byte, error) {
+	type embed ExtendedObjectWithInheritedEnum
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *ExtendedObjectWithInheritedEnum) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 // Tests that map value types with unknown types don't get spurious | undefined.
 type MapOfDocumentedUnknownType = map[string]DocumentedUnknownType
 
@@ -139,10 +262,12 @@ func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interfac
 }
 
 func (n *NestedObjectWithOptionalField) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -239,10 +364,12 @@ func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interfac
 }
 
 func (n *NestedObjectWithRequiredField) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -301,14 +428,14 @@ func (n *NestedObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// This type tests that string fields containing datetime-like values
-// are NOT reformatted by the wire test generator. The string field
-// should preserve its exact value even if it looks like a datetime.
 var (
 	objectWithDatetimeLikeStringFieldDatetimeLikeString = big.NewInt(1 << 0)
 	objectWithDatetimeLikeStringFieldActualDatetime     = big.NewInt(1 << 1)
 )
 
+// This type tests that string fields containing datetime-like values
+// are NOT reformatted by the wire test generator. The string field
+// should preserve its exact value even if it looks like a datetime.
 type ObjectWithDatetimeLikeString struct {
 	// A string field that happens to contain a datetime-like value
 	DatetimeLikeString string `json:"datetimeLikeString" url:"datetimeLikeString"`
@@ -344,10 +471,12 @@ func (o *ObjectWithDatetimeLikeString) GetExtraProperties() map[string]interface
 }
 
 func (o *ObjectWithDatetimeLikeString) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetDatetimeLikeString sets the DatetimeLikeString field and marks it as non-optional;
@@ -414,11 +543,11 @@ func (o *ObjectWithDatetimeLikeString) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that unknown types are able to preserve their type names.
 var (
 	objectWithDocumentedUnknownTypeFieldDocumentedUnknownType = big.NewInt(1 << 0)
 )
 
+// Tests that unknown types are able to preserve their type names.
 type ObjectWithDocumentedUnknownType struct {
 	DocumentedUnknownType DocumentedUnknownType `json:"documentedUnknownType" url:"documentedUnknownType"`
 
@@ -444,10 +573,12 @@ func (o *ObjectWithDocumentedUnknownType) GetExtraProperties() map[string]interf
 }
 
 func (o *ObjectWithDocumentedUnknownType) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetDocumentedUnknownType sets the DocumentedUnknownType field and marks it as non-optional;
@@ -500,6 +631,110 @@ func (o *ObjectWithDocumentedUnknownType) String() string {
 }
 
 var (
+	objectWithInheritedRequiredEnumFieldRequiredEnum   = big.NewInt(1 << 0)
+	objectWithInheritedRequiredEnumFieldRequiredString = big.NewInt(1 << 1)
+)
+
+// A base object that has a required enum field, preventing Default derive
+// in Rust because enums don't implement Default.
+type ObjectWithInheritedRequiredEnum struct {
+	RequiredEnum   WeatherReport `json:"requiredEnum" url:"requiredEnum"`
+	RequiredString string        `json:"requiredString" url:"requiredString"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithInheritedRequiredEnum) GetRequiredEnum() WeatherReport {
+	if o == nil {
+		return ""
+	}
+	return o.RequiredEnum
+}
+
+func (o *ObjectWithInheritedRequiredEnum) GetRequiredString() string {
+	if o == nil {
+		return ""
+	}
+	return o.RequiredString
+}
+
+func (o *ObjectWithInheritedRequiredEnum) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithInheritedRequiredEnum) require(field *big.Int) {
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
+	}
+	next.Or(next, field)
+	o.explicitFields = next
+}
+
+// SetRequiredEnum sets the RequiredEnum field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithInheritedRequiredEnum) SetRequiredEnum(requiredEnum WeatherReport) {
+	o.RequiredEnum = requiredEnum
+	o.require(objectWithInheritedRequiredEnumFieldRequiredEnum)
+}
+
+// SetRequiredString sets the RequiredString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithInheritedRequiredEnum) SetRequiredString(requiredString string) {
+	o.RequiredString = requiredString
+	o.require(objectWithInheritedRequiredEnumFieldRequiredString)
+}
+
+func (o *ObjectWithInheritedRequiredEnum) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithInheritedRequiredEnum
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithInheritedRequiredEnum(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithInheritedRequiredEnum) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithInheritedRequiredEnum
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithInheritedRequiredEnum) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
 	objectWithMapOfMapFieldMap = big.NewInt(1 << 0)
 )
 
@@ -528,10 +763,12 @@ func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithMapOfMap) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetMap sets the Map field and marks it as non-optional;
@@ -583,9 +820,6 @@ func (o *ObjectWithMapOfMap) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that dynamic snippets include all required properties even when
-// the example data only provides a subset. In C#, properties marked as
-// `required` must be set in the object initializer.
 var (
 	objectWithMixedRequiredAndOptionalFieldsFieldRequiredString  = big.NewInt(1 << 0)
 	objectWithMixedRequiredAndOptionalFieldsFieldRequiredInteger = big.NewInt(1 << 1)
@@ -593,6 +827,9 @@ var (
 	objectWithMixedRequiredAndOptionalFieldsFieldRequiredLong    = big.NewInt(1 << 3)
 )
 
+// Tests that dynamic snippets include all required properties even when
+// the example data only provides a subset. In C#, properties marked as
+// `required` must be set in the object initializer.
 type ObjectWithMixedRequiredAndOptionalFields struct {
 	RequiredString  string  `json:"requiredString" url:"requiredString"`
 	RequiredInteger int     `json:"requiredInteger" url:"requiredInteger"`
@@ -642,10 +879,12 @@ func (o *ObjectWithMixedRequiredAndOptionalFields) GetExtraProperties() map[stri
 }
 
 func (o *ObjectWithMixedRequiredAndOptionalFields) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetRequiredString sets the RequiredString field and marks it as non-optional;
@@ -856,10 +1095,12 @@ func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithOptionalField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -1008,6 +1249,95 @@ func (o *ObjectWithOptionalField) String() string {
 }
 
 var (
+	objectWithRequiredExtendedFieldFieldRequiredExtended = big.NewInt(1 << 0)
+)
+
+// Tests that a struct with a required field whose type extends a non-Default
+// base type does NOT incorrectly derive Default in Rust. Reproduces the bug
+// where namedTypeSupportsDefault only checked properties but not extends.
+type ObjectWithRequiredExtendedField struct {
+	RequiredExtended *ExtendedObjectWithInheritedEnum `json:"requiredExtended" url:"requiredExtended"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithRequiredExtendedField) GetRequiredExtended() *ExtendedObjectWithInheritedEnum {
+	if o == nil {
+		return nil
+	}
+	return o.RequiredExtended
+}
+
+func (o *ObjectWithRequiredExtendedField) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithRequiredExtendedField) require(field *big.Int) {
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
+	}
+	next.Or(next, field)
+	o.explicitFields = next
+}
+
+// SetRequiredExtended sets the RequiredExtended field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithRequiredExtendedField) SetRequiredExtended(requiredExtended *ExtendedObjectWithInheritedEnum) {
+	o.RequiredExtended = requiredExtended
+	o.require(objectWithRequiredExtendedFieldFieldRequiredExtended)
+}
+
+func (o *ObjectWithRequiredExtendedField) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithRequiredExtendedField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithRequiredExtendedField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithRequiredExtendedField) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithRequiredExtendedField
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithRequiredExtendedField) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
 	objectWithRequiredFieldFieldFieldString = big.NewInt(1 << 0)
 )
 
@@ -1036,10 +1366,12 @@ func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithRequiredField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -1091,14 +1423,14 @@ func (o *ObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that dynamic snippets recursively construct default objects for
-// required properties whose type is a named object. The nested object's
-// own required properties should also be filled with defaults.
 var (
 	objectWithRequiredNestedObjectFieldRequiredString = big.NewInt(1 << 0)
 	objectWithRequiredNestedObjectFieldRequiredObject = big.NewInt(1 << 1)
 )
 
+// Tests that dynamic snippets recursively construct default objects for
+// required properties whose type is a named object. The nested object's
+// own required properties should also be filled with defaults.
 type ObjectWithRequiredNestedObject struct {
 	RequiredString string                         `json:"requiredString" url:"requiredString"`
 	RequiredObject *NestedObjectWithRequiredField `json:"requiredObject" url:"requiredObject"`
@@ -1132,10 +1464,12 @@ func (o *ObjectWithRequiredNestedObject) GetExtraProperties() map[string]interfa
 }
 
 func (o *ObjectWithRequiredNestedObject) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetRequiredString sets the RequiredString field and marks it as non-optional;
@@ -1194,12 +1528,12 @@ func (o *ObjectWithRequiredNestedObject) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that unknown/any values containing backslashes in map keys
-// are properly escaped in Go string literals.
 var (
 	objectWithUnknownFieldFieldUnknown = big.NewInt(1 << 0)
 )
 
+// Tests that unknown/any values containing backslashes in map keys
+// are properly escaped in Go string literals.
 type ObjectWithUnknownField struct {
 	Unknown any `json:"unknown" url:"unknown"`
 
@@ -1225,10 +1559,12 @@ func (o *ObjectWithUnknownField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithUnknownField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetUnknown sets the Unknown field and marks it as non-optional;

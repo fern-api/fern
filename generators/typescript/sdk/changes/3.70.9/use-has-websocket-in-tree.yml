@@ -1,0 +1,5 @@
+- summary: |
+    Use `hasWebSocketInTree` IR field to wire WebSocket sub-clients into the
+    root client, even when the WebSocket channel lives on a nested sub-resource
+    rather than the top-level namespace package.
+  type: fix

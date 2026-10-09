@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add support for server URL variables (e.g. region/edge routing). Server variables
+    defined on the API's environments are now exposed as optional string options on the
+    client constructor and interpolated into the base URL(s) at request time. Reserved
+    option names are de-collided by prefixing with `serverUrl` (e.g. a variable named
+    `environment` is exposed as `serverUrlEnvironment`).
+  type: feat

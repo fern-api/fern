@@ -28,13 +28,12 @@ Create a new organization.
 
 ```go
 request := &fern.CreateOrganizationRequest{
-        Name: "name",
-    }
-client.Organization.Create(
-        context.TODO(),
-        request,
-    )
+    Name: "name",
 }
+client.Organization.Create(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -90,15 +89,14 @@ List all users.
 
 ```go
 request := &fern.ListUsersRequest{
-        Limit: fern.Int(
-            1,
-        ),
-    }
-client.User.List(
-        context.TODO(),
-        request,
-    )
+    Limit: fern.Int(
+        1,
+    ),
 }
+client.User.List(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -154,15 +152,14 @@ List all user events.
 
 ```go
 request := &user.ListUserEventsRequest{
-        Limit: fern.Int(
-            1,
-        ),
-    }
-client.User.Events.ListEvents(
-        context.TODO(),
-        request,
-    )
+    Limit: fern.Int(
+        1,
+    ),
 }
+client.User.Events.ListEvents(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -218,13 +215,12 @@ Get event metadata.
 
 ```go
 request := &events.GetEventMetadataRequest{
-        ID: "id",
-    }
-client.User.Events.Metadata.GetMetadata(
-        context.TODO(),
-        request,
-    )
+    ID: "id",
 }
+client.User.Events.Metadata.GetMetadata(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

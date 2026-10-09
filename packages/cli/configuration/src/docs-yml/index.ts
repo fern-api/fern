@@ -1,3 +1,6 @@
 export * as DocsYmlSchemas from "./DocsYmlSchemas.js";
+export * from "./navigation.js";
 export * from "./ParsedDocsConfiguration.js";
 export * as RawSchemas from "./schemas/index.js";
+export * from "./themeEligibleFields.js";
+export * from "./validateEmbeddingOrigin.js";

@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\StreamXFernStreamingUnionRequest;
+use Seed\Types\StreamXFernStreamingUnionStreamRequest;
 use Seed\Types\UnionStreamMessageVariant;
 
 $client = new SeedClient(
@@ -11,10 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->streamXFernStreamingUnion(
-    StreamXFernStreamingUnionRequest::message(false, new UnionStreamMessageVariant([
-        'message' => 'message',
-        'streamResponse' => false,
+$client->streamXFernStreamingUnionStream(
+    StreamXFernStreamingUnionStreamRequest::message(true, new UnionStreamMessageVariant([
+        'streamResponse' => true,
         'prompt' => 'prompt',
+        'message' => 'message',
     ])),
 );

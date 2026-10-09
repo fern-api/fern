@@ -38,6 +38,10 @@ class Client(UniversalBaseModel):
         FieldMetadata(alias="global"),
         pydantic.Field(alias="global", description="Whether this is a global client"),
     ] = None
+    """
+    Whether this is a global client
+    """
+
     client_secret: typing.Optional[str] = pydantic.Field(default=None)
     """
     The client secret (only for non-public clients)

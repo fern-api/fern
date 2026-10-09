@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate --package-only` now copies the generated `README.md` and `reference.md`
+    into `fern-dist/` before removing the SDK source, so they are kept for every language
+    instead of only those whose package format bundles root files (e.g. Ruby gems, Go source zips).
+  type: fix

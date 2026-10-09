@@ -26,13 +26,24 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetTokenIdentityRequest{
+//	    Username: "username",
+//	    Password: "password",
+//	}
+//	client.Identity.GetToken(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetToken(
 	ctx context.Context,
 	request *fern.GetTokenIdentityRequest,

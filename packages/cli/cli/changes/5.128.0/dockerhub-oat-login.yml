@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+      Local generation now authenticates to Docker Hub itself when pulling a private
+      `fernenterprise` image, using the `DOCKERHUB_OAT` organization access token — the same
+      credential and variable name self-hosted Fern Docs already documents. Setting it removes the
+      separate `docker login` step; leaving it unset keeps using whatever credentials Docker already
+      holds. The token is sent only for images in that organization's namespace, and is passed on
+      the runner's stdin rather than as a command argument. `DOCKERHUB_OAT_USERNAME` overrides the
+      organization, for a staging or personal namespace.
+  type: feat

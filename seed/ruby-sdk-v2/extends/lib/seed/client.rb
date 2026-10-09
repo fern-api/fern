@@ -10,6 +10,13 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.extended_inline_request_body(
+    #     name: "name",
+    #     docs: "docs",
+    #     unique: "unique"
+    #   )
+    #
     # @return [untyped]
     def extended_inline_request_body(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -33,15 +40,19 @@ module Seed
     end
 
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_extends/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

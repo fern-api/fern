@@ -30,7 +30,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = new HttpClient();
+    } = DefaultHttpClientFactory.Create();
 
     /// <summary>
     /// Additional headers to be sent with HTTP requests.
@@ -64,7 +64,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = TimeSpan.FromSeconds(30);
+    } = TimeSpan.FromMilliseconds(30000);
 
     public string? Version { get;
 #if NET5_0_OR_GREATER
@@ -95,6 +95,8 @@ public partial class ClientOptions
             Timeout = Timeout,
             Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
             AdditionalHeaders = AdditionalHeaders,
+            Version = Version,
+            AuditLogging = AuditLogging,
         };
     }
 }

@@ -28,13 +28,16 @@ export type NamingConfigSchema = z.infer<typeof NamingConfigSchema>;
 export const TypescriptCustomConfigSchema = z.strictObject({
     neverThrowErrors: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
+    esmOnly: z.optional(z.boolean()),
     outputSourceFiles: z.optional(z.boolean()),
     outputSrcOnly: z.optional(z.boolean()),
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
     generateWebSocketClients: z.optional(z.boolean()),
-    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    // Default request timeout, expressed in milliseconds (idiomatic for JS/TS, e.g.
+    // `setTimeout` / `AbortSignal.timeout(ms)`). Use "infinity" to disable the timeout.
+    defaultTimeout: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
     extraDevDependencies: z.optional(z.record(z.string())),
@@ -44,6 +47,12 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     noOptionalProperties: z.optional(z.boolean()),
     tolerateRepublish: z.optional(z.boolean()),
     packageJson: z.optional(z.record(z.any())),
+    packageJsonMergeStrategy: z.optional(z.enum(["shallow", "deep"])),
+    // When true, the generated SDK compiles cleanly under TypeScript's
+    // `exactOptionalPropertyTypes` compiler option: every optional property is
+    // emitted as `prop?: T | undefined`, and `exactOptionalPropertyTypes: true`
+    // is enabled in the generated tsconfig files.
+    exactOptionalPropertyTypes: z.optional(z.boolean()),
     publishToJsr: z.optional(z.boolean()),
     omitUndefined: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
@@ -53,9 +62,14 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     fetchSupport: z.optional(z.enum(["node-fetch", "native"])),
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
+    includePlatformHeaders: z.optional(z.boolean()),
+    userAgentOnly: z.optional(z.boolean()),
+    allowUserAgentAppInfo: z.optional(z.boolean()),
     useDefaultRequestParameterValues: z.optional(z.boolean()),
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     flattenRequestParameters: z.optional(z.boolean()),
+    respectOptionalRequestBody: z.optional(z.boolean()),
+    deepObjectMapQueryParameters: z.optional(z.boolean()),
     exportAllRequestsAtRoot: z.optional(z.boolean()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
     testFramework: z.optional(z.enum(["jest", "vitest"])),
@@ -78,8 +92,13 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // namespaceExport is kept for backwards compatibility
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
+    serdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),
     requireDefaultEnvironment: z.optional(z.boolean()),
+    // When true, the client's `baseUrl` option becomes required and the `environment`
+    // option becomes optional. Intended for APIs whose consumers always supply a URL
+    // explicitly and have no concept of named environments.
+    requireBaseUrl: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
     useBigInt: z.optional(z.boolean()),
     useBrandedStringAliases: z.optional(z.boolean()),
@@ -88,6 +107,26 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 
     resolveQueryParameterNameConflicts: z.optional(z.boolean()),
     alwaysSendAuth: z.optional(z.boolean()),
+    // When true, makes client auth parameters optional even when the spec
+    // mandates auth on all endpoints (isAuthMandatory=true), and sends requests
+    // unauthenticated instead of throwing when no credentials are supplied.
+    // Useful for hand-maintained wrapper clients that authenticate via external
+    // means. Orthogonal to `alwaysSendAuth`, which decides which endpoints get
+    // auth headers: with both enabled, endpoints that don't require auth still
+    // get auth headers when credentials are supplied, and no endpoint gets them
+    // when credentials are absent.
+    "optional-auth": z.optional(z.boolean()),
+    // When true, the generated auth providers read environment variables through a
+    // `typeof process !== "undefined"` guard, so they fall back to the normal
+    // missing-credential error instead of throwing `ReferenceError: process is not
+    // defined` in runtimes without a Node `process` global (browsers, Cloudflare
+    // Workers, Deno). Node behavior is unchanged.
+    guardProcessEnvAccess: z.optional(z.boolean()),
+    generateReactQueryHooks: z.optional(z.boolean()),
+    // Controls how generated WebSocket socket classes store handlers registered via `on()`.
+    // `replace` (default): a second `on()` for the same event replaces the previous handler.
+    // `accumulate`: handlers accumulate and run in registration order.
+    websocketHandlerMode: z.optional(z.enum(["replace", "accumulate"])),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
@@ -100,6 +139,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     experimentalGenerateReadWriteOnlyTypes: z.optional(z.boolean()),
 
     // deprecated
+    // @deprecated Use `defaultTimeout` (milliseconds) instead. Converted to milliseconds (× 1000).
+    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    // @deprecated Use `defaultTimeout` (milliseconds) instead. Converted to milliseconds (× 1000).
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     includeApiReference: z.optional(z.boolean()),
     // @deprecated Use generateWebSocketClients instead
@@ -112,3 +154,40 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;
+
+/**
+ * Resolves the effective noSerdeLayer value from config.
+ * `serdeLayer` takes precedence over `noSerdeLayer` when set.
+ */
+export function resolveNoSerdeLayer(config: TypescriptCustomConfigSchema | undefined): boolean {
+    if (config?.serdeLayer != null) {
+        return !config.serdeLayer;
+    }
+    return !!config?.noSerdeLayer;
+}
+
+/**
+ * Resolves the effective default request timeout in milliseconds from config.
+ *
+ * Precedence:
+ * 1. `defaultTimeout` (already in milliseconds)
+ * 2. `defaultTimeoutInSeconds` (deprecated, converted × 1000)
+ * 3. `timeoutInSeconds` (deprecated, converted × 1000)
+ *
+ * `"infinity"` is preserved as-is (disables the timeout). Returns `undefined`
+ * when no timeout is configured, so callers can fall back to their own default.
+ */
+export function resolveTimeoutInMilliseconds(
+    config: TypescriptCustomConfigSchema | undefined
+): number | "infinity" | undefined {
+    if (config?.defaultTimeout != null) {
+        return config.defaultTimeout;
+    }
+    if (config?.defaultTimeoutInSeconds != null) {
+        return config.defaultTimeoutInSeconds === "infinity" ? "infinity" : config.defaultTimeoutInSeconds * 1000;
+    }
+    if (config?.timeoutInSeconds != null) {
+        return config.timeoutInSeconds === "infinity" ? "infinity" : config.timeoutInSeconds * 1000;
+    }
+    return undefined;
+}

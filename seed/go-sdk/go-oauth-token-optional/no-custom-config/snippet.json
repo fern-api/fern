@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/v2/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.CreateOauth2Token"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-oauth-token-optional/fern\"\n\tfernclient \"github.com/go-oauth-token-optional/fern/client\"\n\toption \"github.com/go-oauth-token-optional/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithClientCredentials(\n\t\t\"\u003cYOUR_CLIENT_ID\u003e\",\n\t\t\"\u003cYOUR_CLIENT_SECRET\u003e\",\n\t),\n)\nresponse, err := client.Auth.CreateOauth2Token(\n\tcontext.TODO(),\n\t\u0026fern.CreateOauth2TokenRequest{\n\t\tClientID:     \"my_oauth_app_123\",\n\t\tClientSecret: \"sk_live_abcdef123456789\",\n\t\tGrantType: fern.String(\n\t\t\t\"client_credentials\",\n\t\t),\n\t},\n)\n"
+            }
+        }
+    ]
+}

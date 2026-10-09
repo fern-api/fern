@@ -91,7 +91,7 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
                     ),
                     undefined
                 ),
-                // 4. Set the error name - this.name = this.constructor.name
+                // 4. Set the error name — use a string literal so minifiers cannot mangle it
                 ts.factory.createExpressionStatement(
                     ts.factory.createBinaryExpression(
                         ts.factory.createPropertyAccessExpression(
@@ -99,13 +99,7 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
                             ts.factory.createIdentifier("name")
                         ),
                         ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createThis(),
-                                ts.factory.createIdentifier("constructor")
-                            ),
-                            ts.factory.createIdentifier("name")
-                        )
+                        ts.factory.createStringLiteral(this.errorClassName)
                     )
                 ),
                 ...this.getConstructorStatements(context)

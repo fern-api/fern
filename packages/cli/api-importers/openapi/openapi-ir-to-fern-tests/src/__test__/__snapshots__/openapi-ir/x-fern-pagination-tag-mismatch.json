@@ -1,0 +1,474 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Test `x-fern-pagination` with an operationId whose prefix does not match its tag",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "List comments",
+      "audiences": [],
+      "operationId": "comments.index",
+      "tags": [
+        "Comments"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "page",
+          "schema": {
+            "generatedName": "CommentsIndexRequestPage",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CommentsIndexRequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "CommentsIndexRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CommentsIndexResponse",
+          "schema": "PaginatedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/comments",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "data",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "links": {
+                  "properties": {
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "total_count": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "pagination": {
+        "cursor": "$request.page",
+        "nextCursor": "$response.links.next",
+        "results": "$response.data",
+        "type": "cursor"
+      },
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "List custom actions",
+      "audiences": [],
+      "operationId": "actions.index",
+      "tags": [
+        "Custom Actions"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "page",
+          "schema": {
+            "generatedName": "ActionsIndexRequestPage",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ActionsIndexRequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "ActionsIndexRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "ActionsIndexResponse",
+          "schema": "PaginatedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/custom_actions",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "data",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "links": {
+                  "properties": {
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "total_count": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "pagination": {
+        "cursor": "$request.page",
+        "nextCursor": "$response.links.next",
+        "results": "$response.data",
+        "type": "cursor"
+      },
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "List users",
+      "audiences": [],
+      "operationId": "users.list_v2",
+      "tags": [
+        "Users"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "page",
+          "schema": {
+            "generatedName": "UsersListV2RequestPage",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "UsersListV2RequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "UsersListV2Request",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "UsersListV2Response",
+          "schema": "PaginatedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "data",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "links": {
+                  "properties": {
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "total_count": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "pagination": {
+        "cursor": "$request.page",
+        "nextCursor": "$response.links.next",
+        "results": "$response.data",
+        "type": "cursor"
+      },
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "PaginatedResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "paginatedResponseData",
+            "key": "data",
+            "schema": {
+              "generatedName": "PaginatedResponseData",
+              "value": {
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "PaginatedResponseDataItem",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "PaginatedResponseData",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paginatedResponseLinks",
+            "key": "links",
+            "schema": {
+              "generatedName": "PaginatedResponseLinks",
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "paginatedResponseLinksNext",
+                    "key": "next",
+                    "schema": {
+                      "generatedName": "PaginatedResponseLinksNext",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "PaginatedResponseLinksNext",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "PaginatedResponseLinks",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paginatedResponseTotalCount",
+            "key": "total_count",
+            "schema": {
+              "generatedName": "PaginatedResponseTotalCount",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "PaginatedResponseTotalCount",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PaginatedResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

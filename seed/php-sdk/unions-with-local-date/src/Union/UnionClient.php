@@ -50,6 +50,13 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->bigunion->get(
+     *     'id',
+     * );
+     * ```
+     *
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,
@@ -96,6 +103,15 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->update(
+     *     Shape::circle('id', new Circle([
+     *         'radius' => 1.1,
+     *     ])),
+     * );
+     * ```
+     *
      * @param Shape $request
      * @param ?array{
      *   baseUrl?: string,

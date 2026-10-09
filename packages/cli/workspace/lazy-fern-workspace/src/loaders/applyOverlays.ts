@@ -78,10 +78,7 @@ export async function applyOverlays<T extends object>({
     return result;
 }
 
-async function parseOverlayFile(
-    absoluteFilePathToOverlay: AbsoluteFilePath,
-    context: TaskContext
-): Promise<OverlayDocument> {
+async function parseOverlayFile(absoluteFilePathToOverlay: AbsoluteFilePath, context: TaskContext): Promise<unknown> {
     let contents: string;
     try {
         contents = await readFile(absoluteFilePathToOverlay, "utf8");
@@ -94,9 +91,11 @@ async function parseOverlayFile(
     try {
         // Try JSON first, then YAML
         try {
-            return JSON.parse(contents) as OverlayDocument;
+            const parsedJson: unknown = JSON.parse(contents);
+            return parsedJson;
         } catch {
-            return yaml.load(contents, { json: true }) as OverlayDocument;
+            const parsedYaml: unknown = yaml.load(contents, { json: true });
+            return parsedYaml;
         }
     } catch (err) {
         return context.failAndThrow(`Failed to parse overlay file at ${absoluteFilePathToOverlay}: ${err}`, undefined, {
@@ -105,25 +104,38 @@ async function parseOverlayFile(
     }
 }
 
-function validateOverlay(overlay: OverlayDocument, context: TaskContext): boolean {
-    if (!overlay.overlay) {
+function validateOverlay(overlay: unknown, context: TaskContext): overlay is OverlayDocument {
+    if (!isRecord(overlay)) {
+        context.logger.error("Overlay file must be a YAML or JSON object");
+        return false;
+    }
+
+    if (typeof overlay.overlay !== "string" || overlay.overlay.length === 0) {
         context.logger.error("Overlay file missing required 'overlay' version field");
         return false;
     }
 
-    if (!overlay.info?.title || !overlay.info?.version) {
+    const info = overlay.info;
+    if (
+        !isRecord(info) ||
+        typeof info.title !== "string" ||
+        info.title.length === 0 ||
+        typeof info.version !== "string" ||
+        info.version.length === 0
+    ) {
         context.logger.error("Overlay file missing required 'info.title' or 'info.version' field");
         return false;
     }
 
-    if (!Array.isArray(overlay.actions) || overlay.actions.length === 0) {
+    const actions = overlay.actions;
+    if (!Array.isArray(actions) || actions.length === 0) {
         context.logger.error("Overlay file must have at least one action");
         return false;
     }
 
-    for (let i = 0; i < overlay.actions.length; i++) {
-        const action = overlay.actions[i];
-        if (!action?.target) {
+    for (let i = 0; i < actions.length; i++) {
+        const action = actions[i];
+        if (!isRecord(action) || !action.target) {
             context.logger.error(`Overlay action at index ${i} missing required 'target' field`);
             return false;
         }
@@ -134,4 +146,8 @@ function validateOverlay(overlay: OverlayDocument, context: TaskContext): boolea
     }
 
     return true;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value != null && !Array.isArray(value);
 }

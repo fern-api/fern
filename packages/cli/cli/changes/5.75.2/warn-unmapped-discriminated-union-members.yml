@@ -1,0 +1,6 @@
+- summary: |
+    The OpenAPI importer now emits a warning when a discriminated union lists a member in its
+    oneOf/anyOf that is absent from the discriminator mapping. Previously such members were
+    silently dropped from the generated union, producing an SDK whose wire contract did not match
+    the spec. The warning names the offending schema so the failure is loud instead of silent.
+  type: fix

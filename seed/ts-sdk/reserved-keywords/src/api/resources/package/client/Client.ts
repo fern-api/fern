@@ -25,6 +25,9 @@ export class PackageClient {
      * @param {SeedNurseryApi.TestRequest} request
      * @param {PackageClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNurseryApiError}
+     * @throws {@link errors.SeedNurseryApiTimeoutError}
+     *
      * @example
      *     await client.package.test({
      *         "for": "for"

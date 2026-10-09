@@ -4,6 +4,12 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
     public doGenerate(): CSharpFile {
+        const rawResponseReference = this.csharp
+            .classReference({
+                name: "RawResponse",
+                namespace: this.namespaces.root
+            })
+            .asFullyQualified();
         const class_ = this.csharp.class_({
             reference: this.Types.BaseApiException,
             access: ast.Access.Public,
@@ -22,6 +28,11 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
                     this.csharp.parameter({
                         name: "innerException",
                         type: this.System.Exception.asOptional(),
+                        initializer: "null"
+                    }),
+                    this.csharp.parameter({
+                        name: "rawResponse",
+                        type: rawResponseReference.asOptional(),
                         initializer: "null"
                     })
                 ],
@@ -47,6 +58,16 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
             get: true,
             initializer: this.csharp.codeblock("body"),
             summary: "The body of the response that triggered the exception."
+        });
+
+        class_.addField({
+            origin: class_.explicit("RawResponse"),
+            enclosingType: class_,
+            type: rawResponseReference.asOptional(),
+            access: ast.Access.Public,
+            get: true,
+            initializer: this.csharp.codeblock("rawResponse"),
+            summary: "The raw HTTP response (status code, URL, headers) that triggered the exception, if available."
         });
 
         if (this.settings.redactResponseBodyOnError) {

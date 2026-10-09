@@ -3,7 +3,7 @@
 //! This module provides the client implementations for all available services.
 
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct ValidationClient {
@@ -19,6 +19,30 @@ impl ValidationClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_validation::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ValidationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .create(
+    ///             &CreateRequest {
+    ///                 decimal: 2.2,
+    ///                 even: 100,
+    ///                 name: "fern".to_string(),
+    ///                 shape: Shape::Square,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create(
         &self,
         request: &CreateRequest,
@@ -35,6 +59,29 @@ impl ValidationClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_validation::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ValidationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .get(
+    ///             &GetQueryRequest {
+    ///                 decimal: 2.2,
+    ///                 even: 100,
+    ///                 name: "fern".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get(
         &self,
         request: &GetQueryRequest,

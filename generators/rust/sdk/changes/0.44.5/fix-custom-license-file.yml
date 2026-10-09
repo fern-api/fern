@@ -1,0 +1,6 @@
+- summary: |
+    Write the LICENSE file into the generated crate when a custom license is configured
+    (`github.license.custom` or `metadata.license.custom`), matching the other SDK generators.
+    When that file is written and neither `packageLicense` nor `packageLicenseFile` is set,
+    `Cargo.toml` now points `license-file` at it instead of defaulting to MIT.
+  type: fix

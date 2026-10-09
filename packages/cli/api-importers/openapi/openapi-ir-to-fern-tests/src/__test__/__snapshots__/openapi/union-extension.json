@@ -116,4 +116,5 @@ error-discrimination:
 display-name: Test inheritance from undiscrimnated union objects
 ",
   },
+  "specVersion": "1.0.0",
 }

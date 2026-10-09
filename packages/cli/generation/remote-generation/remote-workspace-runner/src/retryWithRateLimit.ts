@@ -79,6 +79,6 @@ export async function retryWithRateLimit<T>({
     // Unreachable, but TypeScript needs this
     throw new CliError({
         message: "Exceeded maximum retries for 429 Too Many Requests.",
-        code: CliError.Code.InternalError
+        code: CliError.Code.NetworkError
     });
 }

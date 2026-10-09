@@ -24,7 +24,7 @@ function createMockContext(): TaskContext {
             throw new Error(message ?? "Task failed");
         },
         failWithoutThrowing: noop,
-        captureException: noop,
+        captureException: () => undefined,
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {
@@ -52,6 +52,7 @@ function createMinimalEndpoint(overrides: {
         audiences: [],
         path: overrides.path,
         summary: undefined,
+        subtitle: undefined,
         operationId: overrides.operationId ?? undefined,
         tags: overrides.tags ?? [],
         pathParameters: [],
@@ -70,7 +71,8 @@ function createMinimalEndpoint(overrides: {
         availability: undefined,
         source: undefined,
         namespace: undefined,
-        retries: undefined
+        retries: undefined,
+        globalParameterIds: undefined
     };
 }
 
@@ -84,6 +86,7 @@ function createMinimalIR(overrides?: {
         title: undefined,
         description: undefined,
         basePath: undefined,
+        basePathParameters: undefined,
         servers: [],
         websocketServers: [],
         groups: {},
@@ -101,7 +104,10 @@ function createMinimalIR(overrides?: {
         securitySchemes: {},
         security: undefined,
         globalHeaders: undefined,
-        idempotencyHeaders: undefined
+        globalParameters: undefined,
+        idempotencyHeaders: undefined,
+        specVersion: undefined,
+        baseUrlEnv: undefined
     };
 }
 

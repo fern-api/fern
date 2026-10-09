@@ -31,8 +31,10 @@
               "pagination": undefined,
               "path": "/animal",
               "request": {
-                "body": "Animal",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Animal",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -66,8 +68,10 @@
               "pagination": undefined,
               "path": "/payment",
               "request": {
-                "body": "Payment",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Payment",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -99,8 +103,10 @@
               "pagination": undefined,
               "path": "/shape",
               "request": {
-                "body": "Shape",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Shape",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -283,8 +289,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Animal
-        content-type: application/json
+        body:
+          type: Animal
+          optional: true
       response:
         docs: Success
         type: Animal
@@ -304,8 +311,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Shape
-        content-type: application/json
+        body:
+          type: Shape
+          optional: true
       response:
         docs: Success
         type: Shape
@@ -324,8 +332,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Payment
-        content-type: application/json
+        body:
+          type: Payment
+          optional: true
       response:
         docs: Success
         type: Payment
@@ -450,4 +459,5 @@ error-discrimination:
 display-name: Discriminator Unions Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

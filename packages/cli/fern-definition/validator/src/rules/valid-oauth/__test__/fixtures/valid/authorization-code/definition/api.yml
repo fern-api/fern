@@ -1,0 +1,15 @@
+name: authorization-code
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: authorization-code
+    client-id: "public-client-id"
+    authorization-url: https://auth.example.com/authorize
+    token-url: https://auth.example.com/token
+    redirect-uri: http://127.0.0.1:8484/callback
+    scopes: [openid]
+    pkce:
+      method: S256
+    authorization-parameters:
+      audience: https://api.example.com

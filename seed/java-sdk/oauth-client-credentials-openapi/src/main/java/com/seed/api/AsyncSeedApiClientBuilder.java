@@ -18,6 +18,12 @@ public class AsyncSeedApiClientBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+    private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+    private Optional<Double> retryJitterFactor = Optional.empty();
+
     private final Map<String, String> customHeaders = new HashMap<>();
 
     protected Environment environment;
@@ -31,7 +37,7 @@ public class AsyncSeedApiClientBuilder {
      * Use this when you already have a valid access token and want to bypass
      * the OAuth client credentials flow.
      *
-     * @param token The access token to use for Authorization header
+     * @param token The access token to use for token header
      * @return A builder configured for token authentication
      */
     public static _TokenAuth withToken(String token) {
@@ -78,6 +84,30 @@ public class AsyncSeedApiClientBuilder {
      */
     public AsyncSeedApiClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+     */
+    public AsyncSeedApiClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
+        this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+     */
+    public AsyncSeedApiClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
+        this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+     */
+    public AsyncSeedApiClientBuilder retryJitterFactor(double retryJitterFactor) {
+        this.retryJitterFactor = Optional.of(retryJitterFactor);
         return this;
     }
 
@@ -174,6 +204,15 @@ public class AsyncSeedApiClientBuilder {
         if (this.maxRetries.isPresent()) {
             builder.maxRetries(this.maxRetries.get());
         }
+        if (this.initialRetryDelayMillis.isPresent()) {
+            builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+        }
+        if (this.maxRetryDelayMillis.isPresent()) {
+            builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+        }
+        if (this.retryJitterFactor.isPresent()) {
+            builder.retryJitterFactor(this.retryJitterFactor.get());
+        }
     }
 
     /**
@@ -250,7 +289,7 @@ public class AsyncSeedApiClientBuilder {
 
         @Override
         protected void setAuthentication(ClientOptions.Builder builder) {
-            builder.addHeader("Authorization", " " + this.token);
+            builder.addHeader("token", this.token);
         }
     }
 
@@ -272,7 +311,7 @@ public class AsyncSeedApiClientBuilder {
             OAuthTokenSupplier oAuthTokenSupplier =
                     new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
             ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
-                    .addHeader("Authorization", oAuthTokenSupplier)
+                    .addHeader("token", oAuthTokenSupplier)
                     .build();
             return new AsyncSeedApiClient(finalOptions);
         }
@@ -284,6 +323,12 @@ public class AsyncSeedApiClientBuilder {
         private Optional<Integer> timeout = Optional.empty();
 
         private Optional<Integer> maxRetries = Optional.empty();
+
+        private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+        private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+        private Optional<Double> retryJitterFactor = Optional.empty();
 
         private OkHttpClient httpClient;
 
@@ -311,6 +356,30 @@ public class AsyncSeedApiClientBuilder {
         }
 
         /**
+         * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+         */
+        public _Builder initialRetryDelayMillis(long initialRetryDelayMillis) {
+            this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+            return this;
+        }
+
+        /**
+         * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+         */
+        public _Builder maxRetryDelayMillis(long maxRetryDelayMillis) {
+            this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+            return this;
+        }
+
+        /**
+         * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+         */
+        public _Builder retryJitterFactor(double retryJitterFactor) {
+            this.retryJitterFactor = Optional.of(retryJitterFactor);
+            return this;
+        }
+
+        /**
          * Sets the underlying OkHttp client
          */
         public _Builder httpClient(OkHttpClient httpClient) {
@@ -334,7 +403,7 @@ public class AsyncSeedApiClientBuilder {
          * Use this when you already have a valid access token and want to bypass
          * the OAuth client credentials flow.
          *
-         * @param token The access token to use for Authorization header
+         * @param token The access token to use for token header
          * @return A builder configured for token authentication
          */
         public _TokenAuth token(String token) {
@@ -347,6 +416,15 @@ public class AsyncSeedApiClientBuilder {
             }
             if (this.maxRetries.isPresent()) {
                 auth.maxRetries(this.maxRetries.get());
+            }
+            if (this.initialRetryDelayMillis.isPresent()) {
+                auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+            }
+            if (this.maxRetryDelayMillis.isPresent()) {
+                auth.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+            }
+            if (this.retryJitterFactor.isPresent()) {
+                auth.retryJitterFactor(this.retryJitterFactor.get());
             }
             if (this.httpClient != null) {
                 auth.httpClient(this.httpClient);
@@ -375,6 +453,15 @@ public class AsyncSeedApiClientBuilder {
             }
             if (this.maxRetries.isPresent()) {
                 auth.maxRetries(this.maxRetries.get());
+            }
+            if (this.initialRetryDelayMillis.isPresent()) {
+                auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+            }
+            if (this.maxRetryDelayMillis.isPresent()) {
+                auth.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+            }
+            if (this.retryJitterFactor.isPresent()) {
+                auth.retryJitterFactor(this.retryJitterFactor.get());
             }
             if (this.httpClient != null) {
                 auth.httpClient(this.httpClient);

@@ -2,16 +2,20 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string"
+      "type": "string",
+      "description": "The unique identifier for the vendor."
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "description": "The name of the vendor."
     },
     "created_at": {
-      "type": "string"
+      "type": "string",
+      "description": "The timestamp when the vendor was created."
     },
     "updated_at": {
-      "type": "string"
+      "type": "string",
+      "description": "The timestamp when the vendor was last updated."
     }
   },
   "required": [
@@ -21,5 +25,6 @@
     "updated_at"
   ],
   "additionalProperties": false,
+  "description": "A vendor object with read-only timestamps",
   "definitions": {}
 }

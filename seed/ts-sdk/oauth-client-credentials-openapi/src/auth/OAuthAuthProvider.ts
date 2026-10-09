@@ -67,7 +67,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
 
         return {
             headers: {
-                Authorization: `Bearer ${token}`,
+                token: token,
             },
         };
     }
@@ -93,9 +93,10 @@ export class OAuthAuthProvider implements core.AuthProvider {
                     password: clientSecret,
                 });
 
-                this.accessToken = tokenResponse.access_token;
+                const accessToken = tokenResponse.access_token;
+                this.accessToken = accessToken;
                 this.expiresAt = this.getExpiresAt(tokenResponse.expires_in, BUFFER_IN_MINUTES);
-                return this.accessToken;
+                return accessToken;
             } finally {
                 this.refreshPromise = undefined;
             }
@@ -135,7 +136,7 @@ export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
         }
         return {
             headers: {
-                Authorization: `Bearer ${await core.EndpointSupplier.get(token, { endpointMetadata })}`,
+                token: await core.EndpointSupplier.get(token, { endpointMetadata }),
             },
         };
     }

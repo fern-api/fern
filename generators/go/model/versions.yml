@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.24.0-rc.1
+  changelogEntry:
+    - summary: |
+        Consume the discriminated-union base-property dedupe decision from the IR
+        (`UnionTypeDeclaration.inheritedBaseProperties`) instead of recomputing it in the
+        generator, and move to IR v67 where that fact is available. Go still applies a thin local
+        render-equivalence widening on top (list/set both render `[]T`, optional/nullable both
+        render `*T`, `getters-pass-by-value` strips the leading `*`), so the deduped set — and the
+        generated output — is unchanged. The behavior stays gated behind the opt-in
+        `dedupeUnionBaseProperties` flag (default off), so existing generated output is unchanged.
+      type: chore
+  createdAt: "2026-07-15"
+  irVersion: 67
+
 - version: 0.24.0-rc.0
   changelogEntry:
     - summary: |

@@ -1,0 +1,6 @@
+- summary: |
+    Respect endpoint-level disabled retries. Endpoints configured with
+    `retries: { disabled: true }` (`x-fern-retries` in OpenAPI) now pin the
+    generated request's retry count to zero, so they are never retried
+    regardless of the client-level or per-request retry settings.
+  type: fix

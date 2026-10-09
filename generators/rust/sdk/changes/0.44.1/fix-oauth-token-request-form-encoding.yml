@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Encode the OAuth token request to match the token endpoint's declared content type. The
+    client-credentials exchange previously always sent a JSON body, so APIs whose token
+    endpoint expects `application/x-www-form-urlencoded` (the OAuth 2.0 default per RFC 6749
+    §4.4.2) rejected the exchange. The content type is now resolved from the referenced
+    endpoint in the IR: form-encoded when the spec declares it, JSON otherwise — so existing
+    JSON token endpoints are unaffected.
+  type: fix

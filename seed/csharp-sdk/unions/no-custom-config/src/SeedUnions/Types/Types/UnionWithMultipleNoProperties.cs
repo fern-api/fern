@@ -84,7 +84,7 @@ public record UnionWithMultipleNoProperties
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty1', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty1'.</exception>
-    public object AsEmpty1() =>
+    public object? AsEmpty1() =>
         IsEmpty1
             ? Value!
             : throw new global::System.Exception(
@@ -95,7 +95,7 @@ public record UnionWithMultipleNoProperties
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty2', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty2'.</exception>
-    public object AsEmpty2() =>
+    public object? AsEmpty2() =>
         IsEmpty2
             ? Value!
             : throw new global::System.Exception(
@@ -104,8 +104,8 @@ public record UnionWithMultipleNoProperties
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
-        Func<object, T> onEmpty1,
-        Func<object, T> onEmpty2,
+        Func<object?, T> onEmpty1,
+        Func<object?, T> onEmpty2,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -120,8 +120,8 @@ public record UnionWithMultipleNoProperties
 
     public void Visit(
         Action<SeedUnions.Foo> onFoo,
-        Action<object> onEmpty1,
-        Action<object> onEmpty2,
+        Action<object?> onEmpty1,
+        Action<object?> onEmpty2,
         Action<string, object?> onUnknown_
     )
     {
@@ -233,8 +233,8 @@ public record UnionWithMultipleNoProperties
             {
                 "foo" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "empty1" => new { },
-                "empty2" => new { },
+                "empty1" => null,
+                "empty2" => null,
                 _ => json.Deserialize<object?>(options),
             };
             return new UnionWithMultipleNoProperties(discriminator, value);
@@ -305,9 +305,9 @@ public record UnionWithMultipleNoProperties
     [Serializable]
     public record Empty1
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -316,8 +316,8 @@ public record UnionWithMultipleNoProperties
     [Serializable]
     public record Empty2
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

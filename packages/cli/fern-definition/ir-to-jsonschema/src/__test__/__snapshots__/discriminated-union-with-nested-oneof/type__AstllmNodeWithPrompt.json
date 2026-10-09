@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/AstllmNodeWithPromptType"
+    },
+    "model": {
+      "type": "string"
+    },
+    "prompt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "model",
+    "prompt"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AstllmNodeWithPromptType": {
+      "type": "string",
+      "enum": [
+        "llm"
+      ]
+    }
+  }
+}

@@ -15,22 +15,22 @@ class UserSearchResponse extends JsonSerializableType
     public PagingCursors $paging;
 
     /**
-     * @var ?array<User> $results Current page of results from the requested resource.
+     * @var array<User> $results Current page of results from the requested resource.
      */
     #[JsonProperty('results'), ArrayType([User::class])]
-    public ?array $results;
+    public array $results;
 
     /**
      * @param array{
      *   paging: PagingCursors,
-     *   results?: ?array<User>,
+     *   results: array<User>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->paging = $values['paging'];
-        $this->results = $values['results'] ?? null;
+        $this->results = $values['results'];
     }
 
     /**

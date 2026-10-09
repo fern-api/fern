@@ -59,7 +59,8 @@ function createGenerator(opts?: Partial<SdkClientClassGenerator.Init>): SdkClien
         allowCustomFetcher: false,
         generateWebSocketClients: false,
         requireDefaultEnvironment: false,
-        defaultTimeoutInSeconds: 60,
+        requireBaseUrl: false,
+        defaultTimeout: 60000,
         npmPackage: undefined,
         includeContentHeadersOnFileDownloadResponse: false,
         includeSerdeLayer: true,
@@ -91,14 +92,14 @@ describe("SdkClientClassGenerator", () => {
 
         it("constructs with custom timeout infinity", () => {
             const generator = createGenerator({
-                defaultTimeoutInSeconds: "infinity"
+                defaultTimeout: "infinity"
             });
             expect(generator).toBeDefined();
         });
 
         it("constructs with custom timeout undefined", () => {
             const generator = createGenerator({
-                defaultTimeoutInSeconds: undefined
+                defaultTimeout: undefined
             });
             expect(generator).toBeDefined();
         });

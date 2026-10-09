@@ -34,12 +34,12 @@ public class OuterNestedUnion
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a string value.
+    /// Factory method to create a union from a <see cref="string"/> value.
     /// </summary>
     public static OuterNestedUnion FromString(string value) => new("string", value);
 
     /// <summary>
-    /// Factory method to create a union from a SeedUndiscriminatedUnions.WrapperObject value.
+    /// Factory method to create a union from a <see cref="SeedUndiscriminatedUnions.WrapperObject"/> value.
     /// </summary>
     public static OuterNestedUnion FromWrapperObject(
         SeedUndiscriminatedUnions.WrapperObject value

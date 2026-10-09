@@ -1,0 +1,9 @@
+{
+  "title": "ENOMEM open user spec file",
+  "disposition": "shipped",
+  "rationale": "ENOMEM is a user-environment errno (out of memory opening file); added to USER_ENVIRONMENT_ERRNOS.",
+  "fixSummary": "Add ENOMEM to USER_ENVIRONMENT_ERRNOS in resolveErrorCode.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Filesystem errno ENOMEM while opening user spec file surfaced as InternalError instead of EnvironmentError."
+}

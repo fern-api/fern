@@ -50,13 +50,17 @@ export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonS
                 default:
                     assertNever(member.shape);
             }
-            return {
+            const memberSchema: JSONSchema4 = {
                 properties: {
                     [discriminant]: { const: getWireValue(member.discriminantValue) },
                     ...properties
                 },
                 required: [discriminant, ...required]
             };
+            if (member.docs != null) {
+                memberSchema.description = member.docs;
+            }
+            return memberSchema;
         })
     };
 }

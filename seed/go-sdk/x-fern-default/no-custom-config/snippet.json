@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/test/{region}/resource",
+                "method": "GET",
+                "identifier_override": "endpoint_.test_get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/x-fern-default/fern\"\n\tfernclient \"github.com/x-fern-default/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.TestGet(\n\tcontext.TODO(),\n\t\u0026fern.TestGetRequest{\n\t\tRegion: \"region\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

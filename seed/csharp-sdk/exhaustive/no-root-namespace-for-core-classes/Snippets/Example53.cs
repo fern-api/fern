@@ -11,8 +11,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBase64Async(
-            "SGVsbG8gd29ybGQh"
+        await client.Endpoints.Primitive.GetAndReturnDateAsync(
+            DateOnly.Parse("2023-01-15")
         );
     }
 

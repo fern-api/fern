@@ -6,7 +6,7 @@ import PathParameters
     @Test func getOrganization1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -40,7 +40,7 @@ import PathParameters
     @Test func getOrganizationUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -64,6 +64,7 @@ import PathParameters
             ]
         )
         let response = try await client.organizations.getOrganizationUser(
+            tenantId: "tenant_id",
             organizationId: "organization_id",
             userId: "user_id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -74,7 +75,7 @@ import PathParameters
     @Test func searchOrganizations1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -116,6 +117,7 @@ import PathParameters
             )
         ]
         let response = try await client.organizations.searchOrganizations(
+            tenantId: "tenant_id",
             organizationId: "organization_id",
             limit: 1,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

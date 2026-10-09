@@ -78,7 +78,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Aliases that map to multiple groups. When running `fern generate <alias>`,\nall groups in the alias will be run. For example:\n```yaml\naliases:\n  all: [\"php-sdk\", \"ts-sdk\", \"go-sdk\"]\n```\nThen `fern generate all` will run all three groups."
     },
     "groups": {
       "oneOf": [
@@ -111,7 +112,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Configuration for SDK customization replay.\nAutomatically preserves user customizations across SDK regenerations."
     },
     "ai": {
       "oneOf": [
@@ -131,7 +133,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "If true, automatically release SDKs when changes are detected.\nCan be overridden at the individual generator level."
     },
     "automation": {
       "oneOf": [
@@ -141,7 +144,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Controls which automation features (GitHub Actions workflows) are enabled.\nCan be overridden at the group or generator level.\nAll features default to true when not specified."
     },
     "openapi": {
       "oneOf": [
@@ -151,7 +155,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Deprecated, use the `api` key instead"
     },
     "openapi-overrides": {
       "oneOf": [
@@ -161,7 +166,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Deprecated, use the `api` key instead"
     },
     "spec-origin": {
       "oneOf": [
@@ -171,7 +177,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Deprecated, use the `api` key instead"
     },
     "async-api": {
       "oneOf": [
@@ -181,7 +188,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Deprecated, use the `api` key instead"
     },
     "api-settings": {
       "oneOf": [
@@ -191,11 +199,20 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Deprecated, use the `api` key instead"
     }
   },
   "additionalProperties": false,
   "definitions": {
+    "fernDefinition.auth.OAuthFlowTypeSchema": {
+      "type": "string",
+      "enum": [
+        "client-credentials",
+        "authorization-code",
+        "device-code"
+      ]
+    },
     "fernDefinition.auth.AuthScope": {
       "type": "string"
     },
@@ -210,7 +227,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the client ID."
         },
         "client-secret": {
           "oneOf": [
@@ -220,7 +238,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the client secret."
         },
         "scopes": {
           "oneOf": [
@@ -230,7 +249,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the scopes."
         }
       },
       "additionalProperties": false
@@ -246,7 +266,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the access token."
         },
         "expires-in": {
           "oneOf": [
@@ -256,7 +277,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the expires in property."
         },
         "refresh-token": {
           "oneOf": [
@@ -266,7 +288,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the refresh token"
         }
       },
       "additionalProperties": false
@@ -275,7 +298,8 @@
       "type": "object",
       "properties": {
         "endpoint": {
-          "type": "string"
+          "type": "string",
+          "description": "The endpoint to get the access token, such as 'auth.get_token"
         },
         "request-properties": {
           "oneOf": [
@@ -307,7 +331,8 @@
       "type": "object",
       "properties": {
         "refresh-token": {
-          "type": "string"
+          "type": "string",
+          "description": "The property name for the refresh token."
         }
       },
       "required": [
@@ -326,7 +351,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the access token."
         },
         "expires-in": {
           "oneOf": [
@@ -336,7 +362,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the expires in property."
         },
         "refresh-token": {
           "oneOf": [
@@ -346,7 +373,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the refresh token."
         }
       },
       "additionalProperties": false
@@ -355,7 +383,8 @@
       "type": "object",
       "properties": {
         "endpoint": {
-          "type": "string"
+          "type": "string",
+          "description": "The endpoint to refresh the access token, such as 'auth.refresh_token"
         },
         "request-properties": {
           "oneOf": [
@@ -383,6 +412,62 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.auth.RedirectUriWithBackupPortsSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The primary loopback callback URI, e.g. `http://127.0.0.1:8484/callback`."
+        },
+        "ports": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Backup loopback ports, tried in order when the port in `url` is busy. Each reuses the host and path of `url` (only the port differs) and must be pre-registered with the authorization server."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "description": "A loopback callback URI with additional backup ports for the authorization-code flow."
+    },
+    "fernDefinition.auth.RedirectUriSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.RedirectUriWithBackupPortsSchema"
+        }
+      ]
+    },
+    "fernDefinition.auth.OAuthPkceSchema": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The PKCE code challenge method. Only 'S256' is supported. Defaults to 'S256'."
+        }
+      },
+      "additionalProperties": false,
+      "description": "PKCE (RFC 7636) configuration for the authorization-code flow."
+    },
     "fernDefinition.auth.OAuthSchemeSchema": {
       "type": "object",
       "properties": {
@@ -396,11 +481,23 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "scheme": {
           "const": "oauth"
         },
         "type": {
-          "const": "client-credentials"
+          "$ref": "#/definitions/fernDefinition.auth.OAuthFlowTypeSchema",
+          "description": "The OAuth flow. Defaults to 'client-credentials'."
         },
         "scopes": {
           "oneOf": [
@@ -415,6 +512,28 @@
             }
           ]
         },
+        "token-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sets the token header value prefix. Defaults to 'Bearer'"
+        },
+        "token-header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sets the token header key name. Defaults to 'Authorization'"
+        },
         "client-id-env": {
           "oneOf": [
             {
@@ -423,7 +542,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The environment variable holding the client ID. Used by the client-credentials flow and, for the public-client flows, as an alternative to a literal `client-id`."
         },
         "client-secret-env": {
           "oneOf": [
@@ -435,28 +555,16 @@
             }
           ]
         },
-        "token-prefix": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "token-header": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "get-token": {
-          "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token endpoint for the client-credentials flow. Required for that flow."
         },
         "refresh-token": {
           "oneOf": [
@@ -467,12 +575,166 @@
               "type": "null"
             }
           ]
+        },
+        "client-id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The public client ID (literal). Public clients do not use a client secret. Required for the authorization-code and device-code flows (an environment-variable client ID via `client-id-env` is not yet supported for these flows)."
+        },
+        "authorization-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The authorization (consent) endpoint URL. Required for the authorization-code flow."
+        },
+        "device-authorization-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The device authorization endpoint URL. Required for the device-code flow."
+        },
+        "token-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token endpoint URL. Required for the authorization-code and device-code flows."
+        },
+        "refresh-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token refresh endpoint URL. Defaults to `token-url` when omitted."
+        },
+        "redirect-uri": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.RedirectUriSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The loopback redirect (callback) URI for the authorization-code flow. Must be a loopback host over http — `127.0.0.1` (recommended, RFC 8252 §7.3) or `localhost` — with any path; the generated CLI binds and sends this URI exactly, so it must match the redirect registered with the authorization server (e.g. `http://127.0.0.1:8484/callback` or `http://localhost:8484/callback`). Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port."
+        },
+        "success-redirect-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A page the generated CLI redirects the browser to once it captures the authorization code, for the authorization-code flow. Must be an absolute http(s) URL. This is not an OAuth `redirect_uri` and does not need registering with the authorization server — the redirect happens on the loopback listener after the code is captured, and no `code` or `state` is forwarded. Omit it to serve the CLI's built-in success page."
+        },
+        "error-redirect-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A page the generated CLI redirects the browser to when authorization fails (the user denies consent, or the callback is unusable), for the authorization-code flow. Must be an absolute http(s) URL. The `error` and `error_description` query parameters are appended so the page can explain what happened — merged into any query string already on the URL, and inserted before a fragment if there is one. Omit it to serve the CLI's built-in failure page."
+        },
+        "pkce": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.OAuthPkceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PKCE configuration for the authorization-code flow. PKCE is always applied for that flow."
+        },
+        "authorization-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters appended to the authorization request (e.g. `audience`)."
+        },
+        "device-authorization-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the device authorization request."
+        },
+        "token-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the token exchange request."
+        },
+        "refresh-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the refresh request."
         }
       },
       "required": [
         "scheme",
-        "type",
-        "get-token"
+        "type"
       ],
       "additionalProperties": false
     },
@@ -509,6 +771,17 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "header": {
           "type": "string"
         },
@@ -520,7 +793,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Defaults to string"
         },
         "prefix": {
           "oneOf": [
@@ -540,7 +814,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The placeholder value to use in code snippets (e.g., \"YOUR_API_KEY\")."
         }
       },
       "required": [
@@ -579,7 +854,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the auth variable will be omitted from the SDK."
         },
         "placeholder": {
           "oneOf": [
@@ -589,7 +865,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The placeholder value to use in code snippets (e.g., \"YOUR_API_KEY\")."
         }
       },
       "additionalProperties": false
@@ -606,6 +883,17 @@
               "type": "null"
             }
           ]
+        },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
         },
         "scheme": {
           "const": "basic"
@@ -649,6 +937,17 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "scheme": {
           "const": "bearer"
         },
@@ -672,10 +971,12 @@
       "type": "object",
       "properties": {
         "response-property": {
-          "type": "string"
+          "type": "string",
+          "description": "The property to retrieve the header value from the get token or refresh endpoint response."
         },
         "header-name": {
-          "type": "string"
+          "type": "string",
+          "description": "The header name to put the token in for any authenticated HTTP request."
         },
         "value-prefix": {
           "oneOf": [
@@ -685,20 +986,23 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Commonly used for setting the `Authorization` scheme, but could be used for other things."
         }
       },
       "required": [
         "response-property",
         "header-name"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint. These are not headers for the authorization endpoint."
     },
     "fernDefinition.auth.InferredGetTokenEndpointSchemaObject": {
       "type": "object",
       "properties": {
         "endpoint": {
-          "type": "string"
+          "type": "string",
+          "description": "The endpoint to get the access token, such as 'auth.get_token'"
         },
         "expiry-response-property": {
           "oneOf": [
@@ -708,7 +1012,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the expiry time in the response."
         },
         "authenticated-request-headers": {
           "oneOf": [
@@ -721,7 +1026,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint."
         }
       },
       "required": [
@@ -739,6 +1045,13 @@
         }
       ]
     },
+    "fernDefinition.auth.InferredAuthTypeSchema": {
+      "type": "string",
+      "enum": [
+        "api-key",
+        "refresh-token"
+      ]
+    },
     "fernDefinition.auth.InferredBearerAuthSchema": {
       "type": "object",
       "properties": {
@@ -752,11 +1065,33 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "scheme": {
           "const": "bearer"
         },
         "get-token": {
           "$ref": "#/definitions/fernDefinition.auth.InferredGetTokenEndpointSchema"
+        },
+        "type": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.InferredAuthTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The kind of credential the user passes to the SDK to call the get-token endpoint. Defaults to 'api-key'. With 'refresh-token', the SDK always sends `grant_type=refresh_token` to the get-token endpoint and does not expose `grant_type` as a client option."
         }
       },
       "required": [
@@ -792,7 +1127,8 @@
       ]
     },
     "generators.APIDefinitionPathSchema": {
-      "type": "string"
+      "type": "string",
+      "description": "Path to the OpenAPI, AsyncAPI or Fern Definition"
     },
     "generators.OverridesSchema": {
       "anyOf": [
@@ -805,7 +1141,8 @@
             "type": "string"
           }
         }
-      ]
+      ],
+      "description": "Paths to override files. Can be a single path or an array of paths.\nWhen multiple paths are provided, overrides are applied sequentially in order."
     },
     "generators.UnionSettingsSchema": {
       "type": "string",
@@ -825,21 +1162,24 @@
       "enum": [
         "environment-per-server",
         "urls-per-environment"
-      ]
+      ],
+      "description": "Controls how multiple top-level OpenAPI servers map to environments in the generated Fern definition."
     },
     "generators.RemoveDiscriminantsFromSchemas": {
       "type": "string",
       "enum": [
         "always",
         "never"
-      ]
+      ],
+      "description": "Whether to remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union."
     },
     "generators.PathParameterOrder": {
       "type": "string",
       "enum": [
         "url-order",
         "spec-order"
-      ]
+      ],
+      "description": "Controls the order of path parameters in generated method signatures."
     },
     "generators.APIDefinitionSettingsSchema": {
       "type": "object",
@@ -852,7 +1192,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false.\nDeprecated, use the `api.specs.[].settings.title-as-schema-name` key instead."
         },
         "unions": {
           "oneOf": [
@@ -862,7 +1203,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "What version of union generation to use, this will grow over time. Defaults to v0.\nDeprecated, use the `api.specs.[].settings.prefer-undiscriminated-unions-with-literals` key instead."
         },
         "message-naming": {
           "oneOf": [
@@ -872,7 +1214,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1."
         },
         "respect-nullable-schemas": {
           "oneOf": [
@@ -882,7 +1225,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional."
         },
         "only-include-referenced-schemas": {
           "oneOf": [
@@ -892,7 +1236,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false."
         },
         "inline-path-parameters": {
           "oneOf": [
@@ -902,7 +1247,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to include path parameters within the generated in-lined request. Defaults to true."
         },
         "idiomatic-request-names": {
           "oneOf": [
@@ -912,7 +1258,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to true."
         },
         "wrap-references-to-nullable-in-optional": {
           "oneOf": [
@@ -922,7 +1269,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the converter will wrap references to nullable schemas in optional.\nIf false, the converter will wrap references to nullable schemas in nullable.\nDefaults to true."
         },
         "coerce-optional-schemas-to-nullable": {
           "oneOf": [
@@ -932,7 +1280,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the converter will coerce nullable schemas to optional.\nIf false, the converter will keep nullable schemas as nullable.\nDefaults to true."
         },
         "group-environments-by-host": {
           "oneOf": [
@@ -942,7 +1291,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, group servers by host into unified environments regardless of protocol.\nThis allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.\nWhen enabled, environment URL IDs are generated with collision resolution:\n- Use server name alone if no collision\n- Add path segment if collision (e.g., \"prod: https://api.com/foo\" -> \"foo\")\n- Add protocol if still collision (e.g., \"prod: wss://api.com/foo\" -> \"foo_wss\", only for non-HTTPS protocols)"
         },
         "multi-server-strategy": {
           "oneOf": [
@@ -952,7 +1302,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls how multiple top-level OpenAPI servers are mapped to environments in the generated\nFern definition, when those servers each declare an `x-fern-server-name` and endpoint-level\n`servers:` overrides reference those names.\n- `environment-per-server`: emit one environment per top-level server (each `x-fern-server-name`\n  becomes its own environment constant in generated SDKs, e.g. `Environment.PRODUCTION` and\n  `Environment.AGENT`). This is the default.\n- `urls-per-environment`: collapse all top-level servers into a single environment with each\n  server exposed as a named URL. Useful for APIs that expose multiple base hosts that together\n  form a single logical environment (e.g. `api.box.com`, `upload.box.com`, `dl.boxcloud.com`)."
         },
         "remove-discriminants-from-schemas": {
           "oneOf": [
@@ -962,7 +1313,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.\nIf `never`, keep discriminant properties in schemas when generating types.\nDefaults to `always`."
         },
         "path-parameter-order": {
           "oneOf": [
@@ -972,10 +1324,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the order of path parameters in generated method signatures.\n- `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})\n- `spec-order`: Use the order path parameters are defined in the spec\nDefaults to `url-order`."
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Deprecated, use the `api.specs` key instead"
     },
     "generators.APIDefinitionWithOverridesSchema": {
       "type": "object",
@@ -991,7 +1345,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The URL of the API definition origin, from which the file should be polled."
         },
         "overrides": {
           "oneOf": [
@@ -1001,7 +1356,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Paths to the OpenAPI or AsyncAPI overrides. Can be a single path or an array of paths applied sequentially."
         },
         "audiences": {
           "oneOf": [
@@ -1014,7 +1370,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Audiences that you would like to filter to"
         },
         "settings": {
           "oneOf": [
@@ -1032,6 +1389,61 @@
       ],
       "additionalProperties": false
     },
+    "generators.GitRemoteSchema": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "description": "The git repository URL (e.g., https://github.com/org/repo.git)."
+        },
+        "ref": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Branch, tag, or commit SHA. Defaults to the repository's default branch."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the spec file or directory within the repository."
+        }
+      },
+      "required": [
+        "repo",
+        "path"
+      ],
+      "additionalProperties": false,
+      "description": "A reference to a file or directory in a remote git repository.\nThe CLI will shallow-clone the repo at the specified ref and resolve the path locally."
+    },
+    "generators.SpecGitSourceSchema": {
+      "type": "object",
+      "properties": {
+        "git": {
+          "$ref": "#/definitions/generators.GitRemoteSchema"
+        }
+      },
+      "required": [
+        "git"
+      ],
+      "additionalProperties": false,
+      "description": "A wrapper that identifies the spec source as a remote git reference.\nContains the git repository details under the `git` key."
+    },
+    "generators.SpecSourceSchema": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "A local file path relative to the Fern workspace."
+        },
+        {
+          "$ref": "#/definitions/generators.SpecGitSourceSchema"
+        }
+      ],
+      "description": "A spec source can be either a local file path (string) or a remote git reference."
+    },
     "generators.ProtobufDefinitionSchema": {
       "type": "object",
       "properties": {
@@ -1043,10 +1455,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`)."
         },
         "root": {
-          "type": "string"
+          "$ref": "#/definitions/generators.SpecSourceSchema",
+          "description": "The path to the `.proto` directory root (e.g. `proto`), or a git remote reference."
         },
         "overrides": {
           "oneOf": [
@@ -1056,7 +1470,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Paths to the overrides configuration. Can be a single path or an array of paths applied sequentially."
         },
         "local-generation": {
           "oneOf": [
@@ -1066,7 +1481,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to compile the `.proto` files locally. By default, we generate remotely."
         },
         "from-openapi": {
           "oneOf": [
@@ -1076,7 +1492,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to convert to OpenAPI before generating"
         },
         "dependencies": {
           "oneOf": [
@@ -1089,7 +1506,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Dependencies to use for generation."
         }
       },
       "required": [
@@ -1163,13 +1581,98 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
         }
       },
       "required": [
         "type"
       ],
       "additionalProperties": false
+    },
+    "fernDefinition.encoding.XmlEncodingSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The element or attribute name on the wire, casing preserved. Defaults to the type or property name."
+        },
+        "namespace": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The XML namespace URI."
+        },
+        "prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The namespace prefix for the element name."
+        },
+        "attribute": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Serialize this property as an attribute of the parent element instead of a child element."
+        },
+        "text": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Serialize this property as the text content of the parent element."
+        },
+        "wrapped": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "For list properties, wrap the items in a container element named `name`."
+        },
+        "separator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "For list-valued attributes or text, the string used to join items (e.g. a space)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "On a type declaration: marks the object as an XML element (e.g. a TwiML verb).\nOn an object property: controls how the property serializes within its parent element."
     },
     "fernDefinition.encoding.EncodingSchema": {
       "type": "object",
@@ -1178,6 +1681,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/fernDefinition.encoding.ProtobufTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "xml": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.encoding.XmlEncodingSchema"
             },
             {
               "type": "null"
@@ -1538,7 +2051,8 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "The variable name as it appears in the URL template"
         },
         "default": {
           "oneOf": [
@@ -1548,7 +2062,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default value for this variable"
         },
         "values": {
           "oneOf": [
@@ -1561,7 +2076,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Allowed values for this variable (from enum)"
         }
       },
       "required": [
@@ -1606,7 +2122,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "A separate default URL to use when no variables are provided (from x-fern-default-url extension)"
         },
         "url-template": {
           "oneOf": [
@@ -1616,7 +2133,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The original URL template with variable placeholders (e.g., \"https://api.{region}.example.com\")"
         },
         "variables": {
           "oneOf": [
@@ -1629,7 +2147,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Server variables for URL templating"
         }
       },
       "required": [
@@ -1680,7 +2199,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL templates with variable placeholders for each base URL (e.g., \"https://api.{region}.example.com\")"
         },
         "default-urls": {
           "oneOf": [
@@ -1693,7 +2213,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Default URLs to use when no variables are provided (from x-fern-default-url extension)"
         },
         "variables": {
           "oneOf": [
@@ -1709,7 +2230,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Server variables for URL templating, keyed by base URL ID"
         }
       },
       "required": [
@@ -1805,7 +2327,8 @@
           ]
         },
         "endpoint-security": {
-          "$ref": "#/definitions/fernDefinition.auth.EndpointSecuritySchemaDetails"
+          "$ref": "#/definitions/fernDefinition.auth.EndpointSecuritySchemaDetails",
+          "description": "Indicates that authentication requirements are defined per-endpoint via the `security` field."
         }
       },
       "required": [
@@ -1835,7 +2358,8 @@
         "literals",
         "enums",
         "enums-coerceable-to-literals"
-      ]
+      ],
+      "description": "Controls how const values in OpenAPI specs are represented."
     },
     "generators.FormParameterEncoding": {
       "type": "string",
@@ -1858,7 +2382,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Endpoints to include in the generated SDK (e.g. \"POST /users\")."
         }
       },
       "additionalProperties": false
@@ -1874,7 +2399,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the maximum depth for which optional properties will have examples generated. A depth of 0 means no optional properties will have examples."
         }
       },
       "additionalProperties": false
@@ -1919,7 +2445,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Names of alias types to exclude from resolving."
         }
       },
       "additionalProperties": false
@@ -1943,6 +2470,122 @@
         "uint64"
       ]
     },
+    "generators.OpenAPIErrorResponsesSchemaSource": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "generators.OpenAPIErrorResponsesApplyTo": {
+      "type": "string",
+      "enum": [
+        "all",
+        "untyped"
+      ]
+    },
+    "generators.OpenAPIErrorResponsesHttpMethod": {
+      "type": "string",
+      "enum": [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+        "head",
+        "options",
+        "trace"
+      ]
+    },
+    "generators.OpenAPIErrorResponsesEnsureSchema": {
+      "type": "object",
+      "properties": {
+        "status-code": {
+          "type": "integer",
+          "description": "The 4xx/5xx status code to add when an operation does not declare it."
+        },
+        "methods": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/generators.OpenAPIErrorResponsesHttpMethod"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "HTTP methods whose operations receive the response. Defaults to all methods."
+        }
+      },
+      "required": [
+        "status-code"
+      ],
+      "additionalProperties": false
+    },
+    "generators.OpenAPIErrorResponsesSchema": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchemaSource",
+          "description": "The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file\n(relative to this generators.yml) or an inline schema object. It is registered under\n`components.schemas` and every affected response references it. Any `$ref` inside the\nschema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to."
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`.\nIf the spec already defines a different schema under this name, it is replaced as long as\nnothing references it once the error responses have been rewritten (e.g. a legacy error\nbody only used by 4xx/5xx responses under `apply-to: all`); otherwise `fern check` fails."
+        },
+        "apply-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesApplyTo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "`all` replaces the body of every 4xx/5xx response with the configured schema.\n`untyped` only fills in 4xx/5xx responses that declare no body schema, leaving existing\ntyped error responses untouched.\nDefaults to `all`."
+        },
+        "ensure": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/generators.OpenAPIErrorResponsesEnsureSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Error responses to add to operations that do not already declare them\n(e.g. a `422` on every `post`, `put` and `patch`)."
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "additionalProperties": false
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1954,7 +2597,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional."
         },
         "title-as-schema-name": {
           "oneOf": [
@@ -1964,7 +2608,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false."
         },
         "optional-additional-properties": {
           "oneOf": [
@@ -1984,7 +2629,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to coerce single value enums to literals. Defaults to true."
         },
         "idiomatic-request-names": {
           "oneOf": [
@@ -2004,7 +2650,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the converter will convert nullable schemas to optional nullable.\nIf false, the converter will convert nullable schemas to required nullable.\nDefaults to true."
         },
         "coerce-optional-schemas-to-nullable": {
           "oneOf": [
@@ -2014,7 +2661,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the converter will coerce nullable schemas to optional.\nIf false, the converter will keep nullable schemas as nullable.\nDefaults to true."
         },
         "group-environments-by-host": {
           "oneOf": [
@@ -2024,7 +2672,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, group servers by host into unified environments regardless of protocol.\nThis allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.\nWhen enabled, environment URL IDs are generated with collision resolution:\n- Use server name alone if no collision\n- Add path segment if collision (e.g., \"prod: https://api.com/foo\" -> \"foo\")\n- Add protocol if still collision (e.g., \"prod: wss://api.com/foo\" -> \"foo_wss\", only for non-HTTPS protocols)"
         },
         "multi-server-strategy": {
           "oneOf": [
@@ -2034,7 +2683,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls how multiple top-level OpenAPI servers are mapped to environments in the generated\nFern definition, when those servers each declare an `x-fern-server-name` and endpoint-level\n`servers:` overrides reference those names.\n- `environment-per-server`: emit one environment per top-level server (each `x-fern-server-name`\n  becomes its own environment constant in generated SDKs, e.g. `Environment.PRODUCTION` and\n  `Environment.AGENT`). This is the default.\n- `urls-per-environment`: collapse all top-level servers into a single environment with each\n  server exposed as a named URL. Useful for APIs that expose multiple base hosts that together\n  form a single logical environment (e.g. `api.box.com`, `upload.box.com`, `dl.boxcloud.com`)."
         },
         "remove-discriminants-from-schemas": {
           "oneOf": [
@@ -2044,7 +2694,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.\nIf `never`, keep discriminant properties in schemas when generating types.\nDefaults to `always`."
         },
         "path-parameter-order": {
           "oneOf": [
@@ -2054,7 +2705,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the order of path parameters in generated method signatures.\n- `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})\n- `spec-order`: Use the order path parameters are defined in the spec\nDefaults to `url-order`."
         },
         "resolve-schema-collisions": {
           "oneOf": [
@@ -2064,7 +2716,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, resolve schema name collisions by appending numbers (e.g., Schema2, Schema3) and emit warnings.\nIf false, throw hard errors when schema collisions are detected.\nDefaults to false."
         },
         "infer-forward-compatible": {
           "oneOf": [
@@ -2074,7 +2727,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, infer forward-compatible enums from oneOf [enum, string] or anyOf [enum, string] patterns. Defaults to false."
         },
         "infer-default-environment": {
           "oneOf": [
@@ -2084,7 +2738,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to automatically infer the default environment from the first server. Defaults to true. When false, SDK users must explicitly provide a base URL."
         },
         "coerce-consts-to": {
           "oneOf": [
@@ -2094,7 +2749,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls how `const` values in OpenAPI specs are represented.\n- `literals`: Convert const values directly to literals with defaults.\n- `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.\n- `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.\nDefaults to `enums-coerceable-to-literals`."
         },
         "only-include-referenced-schemas": {
           "oneOf": [
@@ -2104,7 +2760,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false."
         },
         "inline-path-parameters": {
           "oneOf": [
@@ -2114,7 +2771,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to include path parameters within the generated in-lined request. Defaults to true."
         },
         "prefer-undiscriminated-unions-with-literals": {
           "oneOf": [
@@ -2124,7 +2782,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to prefer undiscriminated unions with literals. Defaults to false."
         },
         "object-query-parameters": {
           "oneOf": [
@@ -2134,7 +2793,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enables parsing deep object query parameters"
         },
         "respect-readonly-schemas": {
           "oneOf": [
@@ -2144,7 +2804,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enables exploring readonly schemas in OpenAPI specifications"
         },
         "respect-forward-compatible-enums": {
           "oneOf": [
@@ -2154,7 +2815,19 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false."
+        },
+        "respect-optional-request-body": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration."
         },
         "use-bytes-for-binary-response": {
           "oneOf": [
@@ -2164,7 +2837,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream."
         },
         "default-form-parameter-encoding": {
           "oneOf": [
@@ -2174,7 +2848,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default encoding of form parameters. Defaults to JSON."
         },
         "filter": {
           "oneOf": [
@@ -2184,7 +2859,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Filter to apply to the OpenAPI specification."
         },
         "example-generation": {
           "oneOf": [
@@ -2194,7 +2870,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Fine-tune your example generation"
         },
         "additional-properties-defaults-to": {
           "oneOf": [
@@ -2204,7 +2881,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`."
         },
         "type-dates-as-strings": {
           "oneOf": [
@@ -2214,7 +2892,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, convert strings with format date to strings.\nIf false, convert strings with format date to dates.\nDefaults to true."
         },
         "preserve-single-schema-oneof": {
           "oneOf": [
@@ -2224,7 +2903,30 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, preserve oneOf structures with a single schema.\nIf false, unwrap oneOf structures with a single schema.\nDefaults to false."
+        },
+        "preserve-one-of-in-all-of": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each\nvariant is the union member merged with the remaining allOf members.\nIf false, the variants' properties are flattened into a single object and marked optional.\nDefaults to false."
+        },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Applies when a schema declares `properties` alongside an `anyOf` whose branches\nonly re-declare some of those same properties as required. Per JSON Schema such an\n`anyOf` is an \"at least one of\" constraint rather than a set of variants.\nIf true, the schema is converted as an object carrying all of its declared\nproperties.\nIf false, the schema is converted to an undiscriminated union, which discards the\nsibling `properties` and makes the branches mutually exclusive.\nDefaults to false."
         },
         "inline-all-of-schemas": {
           "oneOf": [
@@ -2234,7 +2936,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to inline allOf schemas. If false, allOf schemas will be\nextended in the code generation."
         },
         "resolve-aliases": {
           "oneOf": [
@@ -2244,7 +2947,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to resolve aliases and inline them if possible.\nIf provided, all aliases will be resolved except for the ones in the except array.\nDefaults to false, meaning that no aliases will be resolved."
         },
         "group-multi-api-environments": {
           "oneOf": [
@@ -2254,7 +2958,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.\nThis is useful for organizations with multiple APIs deployed to the same set of environments."
         },
         "default-integer-format": {
           "oneOf": [
@@ -2264,7 +2969,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default format to use for integer types when no format is specified in the OpenAPI schema.\nDefaults to int32."
         },
         "infer-discriminated-union-base-properties": {
           "oneOf": [
@@ -2274,7 +2980,85 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, properties shared by every variant of a discriminated `oneOf`\n(including via `allOf`/`$ref`) are lifted into the union's base properties\nso SDKs can expose them directly on the union type without casting.\nDefaults to false."
+        },
+        "disambiguate-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to true."
+        },
+        "ignore-tags": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, ignore operation-level tags when determining the SDK structure.\nEndpoints fall back to the root package (or their namespace) and method\nnames are derived from each operation's operationId.\nDefaults to false."
+        },
+        "respect-parameter-content": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, header parameters that declare their schema under `content` (e.g. a header\nwhose value is a JSON-encoded object) are typed from that schema instead of falling\nback to a string.\nDefaults to false."
+        },
+        "respect-per-spec-base-path": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
+        },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names\nfrom the legacy importer are unaffected. Changing it changes existing API reference URLs.\nDefaults to false."
+        },
+        "namespaced-errors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared\nwithin, that namespace instead of the endpoint's namespace. Lets error types be scoped per\nnamespace while endpoints and other types stay at the root.\nDefaults to false."
+        },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Standardize the body of every 4xx/5xx response on a single schema (for example an\nRFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a\nper-spec overlay that rewrites each error response by hand."
         }
       },
       "additionalProperties": false
@@ -2283,7 +3067,7 @@
       "type": "object",
       "properties": {
         "openapi": {
-          "type": "string"
+          "$ref": "#/definitions/generators.SpecSourceSchema"
         },
         "origin": {
           "oneOf": [
@@ -2352,7 +3136,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional."
         },
         "title-as-schema-name": {
           "oneOf": [
@@ -2362,7 +3147,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false."
         },
         "optional-additional-properties": {
           "oneOf": [
@@ -2382,7 +3168,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to coerce single value enums to literals. Defaults to true."
         },
         "idiomatic-request-names": {
           "oneOf": [
@@ -2402,7 +3189,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the converter will convert nullable schemas to optional nullable.\nIf false, the converter will convert nullable schemas to required nullable.\nDefaults to true."
         },
         "coerce-optional-schemas-to-nullable": {
           "oneOf": [
@@ -2412,7 +3200,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the converter will coerce nullable schemas to optional.\nIf false, the converter will keep nullable schemas as nullable.\nDefaults to true."
         },
         "group-environments-by-host": {
           "oneOf": [
@@ -2422,7 +3211,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, group servers by host into unified environments regardless of protocol.\nThis allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.\nWhen enabled, environment URL IDs are generated with collision resolution:\n- Use server name alone if no collision\n- Add path segment if collision (e.g., \"prod: https://api.com/foo\" -> \"foo\")\n- Add protocol if still collision (e.g., \"prod: wss://api.com/foo\" -> \"foo_wss\", only for non-HTTPS protocols)"
         },
         "multi-server-strategy": {
           "oneOf": [
@@ -2432,7 +3222,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls how multiple top-level OpenAPI servers are mapped to environments in the generated\nFern definition, when those servers each declare an `x-fern-server-name` and endpoint-level\n`servers:` overrides reference those names.\n- `environment-per-server`: emit one environment per top-level server (each `x-fern-server-name`\n  becomes its own environment constant in generated SDKs, e.g. `Environment.PRODUCTION` and\n  `Environment.AGENT`). This is the default.\n- `urls-per-environment`: collapse all top-level servers into a single environment with each\n  server exposed as a named URL. Useful for APIs that expose multiple base hosts that together\n  form a single logical environment (e.g. `api.box.com`, `upload.box.com`, `dl.boxcloud.com`)."
         },
         "remove-discriminants-from-schemas": {
           "oneOf": [
@@ -2442,7 +3233,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.\nIf `never`, keep discriminant properties in schemas when generating types.\nDefaults to `always`."
         },
         "path-parameter-order": {
           "oneOf": [
@@ -2452,7 +3244,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the order of path parameters in generated method signatures.\n- `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})\n- `spec-order`: Use the order path parameters are defined in the spec\nDefaults to `url-order`."
         },
         "resolve-schema-collisions": {
           "oneOf": [
@@ -2462,7 +3255,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, resolve schema name collisions by appending numbers (e.g., Schema2, Schema3) and emit warnings.\nIf false, throw hard errors when schema collisions are detected.\nDefaults to false."
         },
         "infer-forward-compatible": {
           "oneOf": [
@@ -2472,7 +3266,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, infer forward-compatible enums from oneOf [enum, string] or anyOf [enum, string] patterns. Defaults to false."
         },
         "infer-default-environment": {
           "oneOf": [
@@ -2482,7 +3277,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to automatically infer the default environment from the first server. Defaults to true. When false, SDK users must explicitly provide a base URL."
         },
         "coerce-consts-to": {
           "oneOf": [
@@ -2492,7 +3288,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls how `const` values in OpenAPI specs are represented.\n- `literals`: Convert const values directly to literals with defaults.\n- `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.\n- `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.\nDefaults to `enums-coerceable-to-literals`."
         },
         "message-naming": {
           "oneOf": [
@@ -2502,7 +3299,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1."
         }
       },
       "additionalProperties": false
@@ -2511,7 +3309,7 @@
       "type": "object",
       "properties": {
         "asyncapi": {
-          "type": "string"
+          "$ref": "#/definitions/generators.SpecSourceSchema"
         },
         "origin": {
           "oneOf": [
@@ -2629,6 +3427,16 @@
             }
           ]
         },
+        "examples": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "name": {
           "oneOf": [
             {
@@ -2700,7 +3508,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false."
         },
         "inline-path-parameters": {
           "oneOf": [
@@ -2710,7 +3519,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to include path parameters within the generated in-lined request. Defaults to true."
         },
         "prefer-undiscriminated-unions-with-literals": {
           "oneOf": [
@@ -2720,7 +3530,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to prefer undiscriminated unions with literals. Defaults to false."
         },
         "object-query-parameters": {
           "oneOf": [
@@ -2730,7 +3541,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enables parsing deep object query parameters"
         },
         "respect-readonly-schemas": {
           "oneOf": [
@@ -2740,7 +3552,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enables exploring readonly schemas in OpenAPI specifications"
         },
         "respect-forward-compatible-enums": {
           "oneOf": [
@@ -2750,7 +3563,19 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false."
+        },
+        "respect-optional-request-body": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration."
         },
         "use-bytes-for-binary-response": {
           "oneOf": [
@@ -2760,7 +3585,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream."
         },
         "default-form-parameter-encoding": {
           "oneOf": [
@@ -2770,7 +3596,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default encoding of form parameters. Defaults to JSON."
         },
         "filter": {
           "oneOf": [
@@ -2780,7 +3607,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Filter to apply to the OpenAPI specification."
         },
         "example-generation": {
           "oneOf": [
@@ -2790,7 +3618,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Fine-tune your example generation"
         },
         "additional-properties-defaults-to": {
           "oneOf": [
@@ -2800,7 +3629,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`."
         },
         "type-dates-as-strings": {
           "oneOf": [
@@ -2810,7 +3640,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, convert strings with format date to strings.\nIf false, convert strings with format date to dates.\nDefaults to true."
         },
         "preserve-single-schema-oneof": {
           "oneOf": [
@@ -2820,7 +3651,30 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, preserve oneOf structures with a single schema.\nIf false, unwrap oneOf structures with a single schema.\nDefaults to false."
+        },
+        "preserve-one-of-in-all-of": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each\nvariant is the union member merged with the remaining allOf members.\nIf false, the variants' properties are flattened into a single object and marked optional.\nDefaults to false."
+        },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Applies when a schema declares `properties` alongside an `anyOf` whose branches\nonly re-declare some of those same properties as required. Per JSON Schema such an\n`anyOf` is an \"at least one of\" constraint rather than a set of variants.\nIf true, the schema is converted as an object carrying all of its declared\nproperties.\nIf false, the schema is converted to an undiscriminated union, which discards the\nsibling `properties` and makes the branches mutually exclusive.\nDefaults to false."
         },
         "inline-all-of-schemas": {
           "oneOf": [
@@ -2830,7 +3684,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to inline allOf schemas. If false, allOf schemas will be\nextended in the code generation."
         },
         "resolve-aliases": {
           "oneOf": [
@@ -2840,7 +3695,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to resolve aliases and inline them if possible.\nIf provided, all aliases will be resolved except for the ones in the except array.\nDefaults to false, meaning that no aliases will be resolved."
         },
         "group-multi-api-environments": {
           "oneOf": [
@@ -2850,7 +3706,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.\nThis is useful for organizations with multiple APIs deployed to the same set of environments."
         },
         "default-integer-format": {
           "oneOf": [
@@ -2860,7 +3717,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default format to use for integer types when no format is specified in the OpenAPI schema.\nDefaults to int32."
         },
         "infer-discriminated-union-base-properties": {
           "oneOf": [
@@ -2870,7 +3728,85 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, properties shared by every variant of a discriminated `oneOf`\n(including via `allOf`/`$ref`) are lifted into the union's base properties\nso SDKs can expose them directly on the union type without casting.\nDefaults to false."
+        },
+        "disambiguate-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to true."
+        },
+        "ignore-tags": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, ignore operation-level tags when determining the SDK structure.\nEndpoints fall back to the root package (or their namespace) and method\nnames are derived from each operation's operationId.\nDefaults to false."
+        },
+        "respect-parameter-content": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, header parameters that declare their schema under `content` (e.g. a header\nwhose value is a JSON-encoded object) are typed from that schema instead of falling\nback to a string.\nDefaults to false."
+        },
+        "respect-per-spec-base-path": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
+        },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names\nfrom the legacy importer are unaffected. Changing it changes existing API reference URLs.\nDefaults to false."
+        },
+        "namespaced-errors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared\nwithin, that namespace instead of the endpoint's namespace. Lets error types be scoped per\nnamespace while endpoints and other types stay at the root.\nDefaults to false."
+        },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Standardize the body of every 4xx/5xx response on a single schema (for example an\nRFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a\nper-spec overlay that rewrites each error response by hand."
         },
         "respect-nullable-schemas": {
           "oneOf": [
@@ -2880,7 +3816,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional."
         },
         "title-as-schema-name": {
           "oneOf": [
@@ -2890,7 +3827,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false."
         },
         "optional-additional-properties": {
           "oneOf": [
@@ -2910,7 +3848,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to coerce single value enums to literals. Defaults to true."
         },
         "idiomatic-request-names": {
           "oneOf": [
@@ -2930,7 +3869,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the converter will convert nullable schemas to optional nullable.\nIf false, the converter will convert nullable schemas to required nullable.\nDefaults to true."
         },
         "coerce-optional-schemas-to-nullable": {
           "oneOf": [
@@ -2940,7 +3880,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the converter will coerce nullable schemas to optional.\nIf false, the converter will keep nullable schemas as nullable.\nDefaults to true."
         },
         "group-environments-by-host": {
           "oneOf": [
@@ -2950,7 +3891,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, group servers by host into unified environments regardless of protocol.\nThis allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.\nWhen enabled, environment URL IDs are generated with collision resolution:\n- Use server name alone if no collision\n- Add path segment if collision (e.g., \"prod: https://api.com/foo\" -> \"foo\")\n- Add protocol if still collision (e.g., \"prod: wss://api.com/foo\" -> \"foo_wss\", only for non-HTTPS protocols)"
         },
         "multi-server-strategy": {
           "oneOf": [
@@ -2960,7 +3902,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls how multiple top-level OpenAPI servers are mapped to environments in the generated\nFern definition, when those servers each declare an `x-fern-server-name` and endpoint-level\n`servers:` overrides reference those names.\n- `environment-per-server`: emit one environment per top-level server (each `x-fern-server-name`\n  becomes its own environment constant in generated SDKs, e.g. `Environment.PRODUCTION` and\n  `Environment.AGENT`). This is the default.\n- `urls-per-environment`: collapse all top-level servers into a single environment with each\n  server exposed as a named URL. Useful for APIs that expose multiple base hosts that together\n  form a single logical environment (e.g. `api.box.com`, `upload.box.com`, `dl.boxcloud.com`)."
         },
         "remove-discriminants-from-schemas": {
           "oneOf": [
@@ -2970,7 +3913,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.\nIf `never`, keep discriminant properties in schemas when generating types.\nDefaults to `always`."
         },
         "path-parameter-order": {
           "oneOf": [
@@ -2980,7 +3924,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the order of path parameters in generated method signatures.\n- `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})\n- `spec-order`: Use the order path parameters are defined in the spec\nDefaults to `url-order`."
         },
         "resolve-schema-collisions": {
           "oneOf": [
@@ -2990,7 +3935,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, resolve schema name collisions by appending numbers (e.g., Schema2, Schema3) and emit warnings.\nIf false, throw hard errors when schema collisions are detected.\nDefaults to false."
         },
         "infer-forward-compatible": {
           "oneOf": [
@@ -3000,7 +3946,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, infer forward-compatible enums from oneOf [enum, string] or anyOf [enum, string] patterns. Defaults to false."
         },
         "infer-default-environment": {
           "oneOf": [
@@ -3010,7 +3957,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether to automatically infer the default environment from the first server. Defaults to true. When false, SDK users must explicitly provide a base URL."
         },
         "coerce-consts-to": {
           "oneOf": [
@@ -3020,7 +3968,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls how `const` values in OpenAPI specs are represented.\n- `literals`: Convert const values directly to literals with defaults.\n- `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.\n- `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.\nDefaults to `enums-coerceable-to-literals`."
         },
         "message-naming": {
           "oneOf": [
@@ -3030,10 +3979,48 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1."
+        },
+        "auto-generate-idempotency-key": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enable idempotency-key auto-generation for every generator in this API, so it\ndoes not have to be set on each generator's `config`. When enabled, generators\nauto-generate an idempotency key header on retry-unsafe (POST/PUT) requests\nunless the caller supplies one.\n\nAccepts either a boolean shorthand or an object with an optional custom\nheader name and eligible-method list:\n```yaml\napi:\n  settings:\n    auto-generate-idempotency-key: true\n    # or\n    auto-generate-idempotency-key:\n      header-name: \"Idempotency-Key\"\n      methods: [\"POST\", \"PUT\"]\n```\nA generator's own `config.auto-generate-idempotency-key` overrides this\nvalue for that generator."
+        },
+        "webhook-signature": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Webhook signature scheme for the whole API, declared once here instead of in the\nAPI definition. Every generator in this API emits a shared webhook verification\nhelper (e.g. `WebhooksHelper.verifySignature`) built from this scheme, even when\nthe spec models no webhooks. Uses the same shape as a webhook's `signature` block\nin a Fern definition:\n```yaml\napi:\n  settings:\n    webhook-signature:\n      type: hmac\n      header: X-Twilio-Signature\n      algorithm: sha1\n      encoding: base64\n      payload-format:\n        components: [notification-url, body]\n        delimiter: \"\"\n        body-sort: alphabetical\n```"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Global default API import settings that apply to all specs in this API configuration.\nIndividual spec settings in specs[].settings will override these defaults.\nGenerator settings in groups.generators[].api.settings will override both.\nSettings hierarchy (highest to lowest priority): generator > spec > api."
     },
     "generators.APIConfigurationV2Schema": {
       "type": "object",
@@ -3049,7 +4036,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Global Headers for the entire API"
         },
         "default-url": {
           "oneOf": [
@@ -3070,6 +4058,17 @@
               "type": "null"
             }
           ]
+        },
+        "base-url-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The name of an environment variable (e.g. MY_API_BASE_URL) that generated SDKs\nread to override the base URL. When the variable is set, it takes precedence over\nthe default environment; an explicitly provided base URL still wins."
         },
         "environments": {
           "oneOf": [
@@ -3362,7 +4361,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set, use this endpoint's snippet as the default whenever possible"
         },
         "features": {
           "oneOf": [
@@ -3378,7 +4378,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Specifies a list of endpoints associated with the feature"
         },
         "customSections": {
           "oneOf": [
@@ -3391,7 +4392,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Supply custom sections as markdown to be included in the readme"
         },
         "exampleStyle": {
           "oneOf": [
@@ -3401,7 +4403,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls whether usage examples show only required parameters (minimal) or all parameters (comprehensive). Defaults to comprehensive."
         }
       },
       "additionalProperties": false
@@ -3499,6 +4502,7 @@
             "pypi",
             "postman",
             "local-file-system",
+            "fern-hosted",
             "nuget",
             "rubygems",
             "crates"
@@ -3703,6 +4707,27 @@
         {
           "properties": {
             "location": {
+              "const": "fern-hosted"
+            },
+            "slug": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Path of the hosted server, https://<org>.fernmcp.dev/<slug>. Defaults to \"mcp\"."
+            }
+          },
+          "required": [
+            "location"
+          ]
+        },
+        {
+          "properties": {
+            "location": {
               "const": "nuget"
             },
             "url": {
@@ -3808,7 +4833,8 @@
       "type": "string",
       "enum": [
         "pull-request",
-        "push"
+        "push",
+        "commit-and-release"
       ]
     },
     "license.GithubLicenseType": {
@@ -3878,6 +4904,17 @@
               "type": "null"
             }
           ]
+        },
+        "workflows": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
         }
       },
       "required": [
@@ -3907,7 +4944,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If specified, commits and tags the release on this branch instead of the default branch. The branch must exist."
         },
         "license": {
           "oneOf": [
@@ -3928,6 +4966,17 @@
               "type": "null"
             }
           ]
+        },
+        "workflows": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
         }
       },
       "required": [
@@ -4017,6 +5066,17 @@
               "type": "null"
             }
           ]
+        },
+        "workflows": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
         }
       },
       "required": [
@@ -4053,6 +5113,17 @@
               "type": "null"
             }
           ]
+        },
+        "workflows": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
         }
       },
       "required": [
@@ -4137,7 +5208,8 @@
       "type": "object",
       "properties": {
         "path": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the generated snippets file."
         }
       },
       "required": [
@@ -4182,7 +5254,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override or extend the global headers for this generator.\nWhen provided, these headers are merged with the top-level api.headers configuration,\nwith per-generator headers taking precedence for same-key headers."
         },
         "settings": {
           "oneOf": [
@@ -4202,10 +5275,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override the specs configuration for this generator.\nWhen provided, this completely replaces the top-level api.specs configuration."
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Override API configuration settings for a specific generator.\nWhen specs is provided, it completely replaces the top-level api.specs configuration for this generator."
     },
     "automation.AutomationSchema": {
       "type": "object",
@@ -4218,7 +5293,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enable or disable SDK generation automation (fern-generate workflow).\nDefaults to true."
         },
         "upgrade": {
           "oneOf": [
@@ -4228,7 +5304,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enable or disable CLI and generator upgrade automation (fern-upgrade workflow).\nDefaults to true."
         },
         "preview": {
           "oneOf": [
@@ -4238,7 +5315,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enable or disable SDK preview validation on PRs (fern-preview workflow).\nDefaults to true."
         },
         "verify": {
           "oneOf": [
@@ -4248,10 +5326,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enable or disable self-verification (install, build, test) of generated SDK output.\nRuns on PRs and on merge to main.\nDefaults to true."
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Controls which automation features (GitHub Actions workflows) are enabled.\nCan be set at root, group, or generator level. Resolution order:\ngenerator → group → root → default (all enabled)."
     },
     "group.DefaultGeneratorInvocationSchema": {
       "type": "object",
@@ -4317,7 +5397,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Overrides the keywords that require safe name variants."
         },
         "snippets": {
           "oneOf": [
@@ -4327,7 +5408,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Configures snippets for a particular generator."
         },
         "ir-version": {
           "oneOf": [
@@ -4337,7 +5419,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Overrides the version of the IR used by the generator."
         },
         "smart-casing": {
           "oneOf": [
@@ -4347,7 +5430,19 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Feature flag used to enable better IR naming."
+        },
+        "smart-casing-digit-word-boundary": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
         },
         "api": {
           "oneOf": [
@@ -4357,7 +5452,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override API import settings (this is applied across all specs)"
         },
         "disable-examples": {
           "oneOf": [
@@ -4367,7 +5463,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Temporary way to unblock example serialization."
         },
         "publish-metadata": {
           "oneOf": [
@@ -4377,7 +5474,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated, use `metadata` on the output block instead."
         },
         "autorelease": {
           "oneOf": [
@@ -4387,7 +5485,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, automatically release this SDK when changes are detected.\nOverrides the top-level autorelease setting if specified."
         },
         "automation": {
           "oneOf": [
@@ -4397,33 +5496,39 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls which automation features are enabled for this generator.\nOverrides group-level and root-level automation settings."
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The generator name (e.g., `fernapi/fern-typescript-sdk`)."
         }
       },
       "required": [
         "version",
         "name"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A generator invocation that uses a well-known generator name\n(e.g., `fernapi/fern-typescript-sdk`) and pulls from Docker Hub."
     },
     "generators.GeneratorImageObjectSchema": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The Docker image name (e.g., `fernapi/fern-typescript-sdk`)."
         },
         "registry": {
-          "type": "string"
+          "type": "string",
+          "description": "The container registry URL to pull the image from during local generation.\nExample: `ghcr.io/myorg` or `123456789.dkr.ecr.us-east-1.amazonaws.com`"
         }
       },
       "required": [
         "name",
         "registry"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Explicit Docker image configuration with a custom container registry."
     },
     "group.CustomGeneratorInvocationSchema": {
       "type": "object",
@@ -4489,7 +5594,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Overrides the keywords that require safe name variants."
         },
         "snippets": {
           "oneOf": [
@@ -4499,7 +5605,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Configures snippets for a particular generator."
         },
         "ir-version": {
           "oneOf": [
@@ -4509,7 +5616,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Overrides the version of the IR used by the generator."
         },
         "smart-casing": {
           "oneOf": [
@@ -4519,7 +5627,19 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Feature flag used to enable better IR naming."
+        },
+        "smart-casing-digit-word-boundary": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
         },
         "api": {
           "oneOf": [
@@ -4529,7 +5649,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override API import settings (this is applied across all specs)"
         },
         "disable-examples": {
           "oneOf": [
@@ -4539,7 +5660,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Temporary way to unblock example serialization."
         },
         "publish-metadata": {
           "oneOf": [
@@ -4549,7 +5671,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated, use `metadata` on the output block instead."
         },
         "autorelease": {
           "oneOf": [
@@ -4559,7 +5682,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, automatically release this SDK when changes are detected.\nOverrides the top-level autorelease setting if specified."
         },
         "automation": {
           "oneOf": [
@@ -4569,17 +5693,20 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls which automation features are enabled for this generator.\nOverrides group-level and root-level automation settings."
         },
         "image": {
-          "$ref": "#/definitions/generators.GeneratorImageObjectSchema"
+          "$ref": "#/definitions/generators.GeneratorImageObjectSchema",
+          "description": "The Docker image to use for this generator, with an optional custom container registry."
         }
       },
       "required": [
         "version",
         "image"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A generator invocation that specifies a custom Docker image,\noptionally from a custom container registry."
     },
     "group.GeneratorInvocationSchema": {
       "anyOf": [
@@ -4589,7 +5716,8 @@
         {
           "$ref": "#/definitions/group.CustomGeneratorInvocationSchema"
         }
-      ]
+      ],
+      "description": "A generator invocation. Either uses a well-known generator `name` (default)\nor specifies a custom `image` with an optional container registry."
     },
     "group.GeneratorGroupSchema": {
       "type": "object",
@@ -4641,7 +5769,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls which automation features are enabled for this group.\nOverrides root-level automation settings.\nCan be further overridden at the generator level."
         }
       },
       "required": [
@@ -4653,7 +5782,8 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether to enable replay for this SDK"
         }
       },
       "required": [
@@ -4666,7 +5796,7 @@
       "enum": [
         "openai",
         "anthropic",
-        "bedrock"
+        "aws-bedrock"
       ]
     },
     "ai.ModelName": {

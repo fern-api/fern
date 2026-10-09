@@ -1,0 +1,4 @@
+- summary: |
+    Add support for `x-fern-subtitle` OpenAPI extension on endpoints. When set,
+    the subtitle is rendered below the endpoint title in the docs UI.
+  type: feat

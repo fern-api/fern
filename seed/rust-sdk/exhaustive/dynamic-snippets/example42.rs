@@ -11,6 +11,6 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_boolean_path(true, None)
+        .upload_with_path(&"upload-path".to_string(), &vec![], None)
         .await;
 }

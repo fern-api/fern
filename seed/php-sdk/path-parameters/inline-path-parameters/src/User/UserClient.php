@@ -55,6 +55,16 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getUser(
+     *     new GetUsersRequest([
+     *         'tenantId' => 'tenant_id',
+     *         'userId' => 'user_id',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -101,6 +111,20 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->createUser(
+     *     'tenant_id',
+     *     new User([
+     *         'name' => 'name',
+     *         'tags' => [
+     *             'tags',
+     *             'tags',
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param User $request
      * @param ?array{
@@ -149,6 +173,23 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->updateUser(
+     *     new UpdateUserRequest([
+     *         'tenantId' => 'tenant_id',
+     *         'userId' => 'user_id',
+     *         'body' => new User([
+     *             'name' => 'name',
+     *             'tags' => [
+     *                 'tags',
+     *                 'tags',
+     *             ],
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param UpdateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -196,6 +237,17 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->searchUsers(
+     *     new SearchUsersRequest([
+     *         'tenantId' => 'tenant_id',
+     *         'userId' => 'user_id',
+     *         'limit' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param SearchUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -249,6 +301,17 @@ class UserClient
     /**
      * Test endpoint with path parameter that has a text prefix (v{version})
      *
+     * Example:
+     * ```php
+     * $client->user->getUserMetadata(
+     *     new GetUserMetadataRequest([
+     *         'tenantId' => 'tenant_id',
+     *         'userId' => 'user_id',
+     *         'version' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetUserMetadataRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -296,6 +359,18 @@ class UserClient
 
     /**
      * Test endpoint with path parameters listed in different order than found in path
+     *
+     * Example:
+     * ```php
+     * $client->user->getUserSpecifics(
+     *     new GetUserSpecificsRequest([
+     *         'tenantId' => 'tenant_id',
+     *         'userId' => 'user_id',
+     *         'version' => 1,
+     *         'thought' => 'thought',
+     *     ]),
+     * );
+     * ```
      *
      * @param GetUserSpecificsRequest $request
      * @param ?array{

@@ -42,6 +42,54 @@ func (m *MyUnion) GetVariantC() *VariantC {
 }
 
 func (m *MyUnion) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"type", "valueA"}, []string{"type", "valueA"}) {
+		valueVariantA := new(VariantA)
+		if err := json.Unmarshal(data, &valueVariantA); err == nil {
+			m.typ = "VariantA"
+			m.VariantA = valueVariantA
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"type", "valueB"}, []string{"type", "valueB"}) {
+		valueVariantB := new(VariantB)
+		if err := json.Unmarshal(data, &valueVariantB); err == nil {
+			m.typ = "VariantB"
+			m.VariantB = valueVariantB
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"type", "valueC"}, []string{"type", "valueC"}) {
+		valueVariantC := new(VariantC)
+		if err := json.Unmarshal(data, &valueVariantC); err == nil {
+			m.typ = "VariantC"
+			m.VariantC = valueVariantC
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "valueA"}) {
+		valueVariantA := new(VariantA)
+		if err := json.Unmarshal(data, &valueVariantA); err == nil {
+			m.typ = "VariantA"
+			m.VariantA = valueVariantA
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "valueB"}) {
+		valueVariantB := new(VariantB)
+		if err := json.Unmarshal(data, &valueVariantB); err == nil {
+			m.typ = "VariantB"
+			m.VariantB = valueVariantB
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "valueC"}) {
+		valueVariantC := new(VariantC)
+		if err := json.Unmarshal(data, &valueVariantC); err == nil {
+			m.typ = "VariantC"
+			m.VariantC = valueVariantC
+			return nil
+		}
+	}
 	valueVariantA := new(VariantA)
 	if err := json.Unmarshal(data, &valueVariantA); err == nil {
 		m.typ = "VariantA"
@@ -124,10 +172,12 @@ func (u *UnionListResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UnionListResponse) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -208,10 +258,12 @@ func (u *UnionResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UnionResponse) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -297,10 +349,12 @@ func (v *VariantA) GetExtraProperties() map[string]interface{} {
 }
 
 func (v *VariantA) require(field *big.Int) {
-	if v.explicitFields == nil {
-		v.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if v.explicitFields != nil {
+		next.Set(v.explicitFields)
 	}
-	v.explicitFields.Or(v.explicitFields, field)
+	next.Or(next, field)
+	v.explicitFields = next
 }
 
 // SetValueA sets the ValueA field and marks it as non-optional;
@@ -397,10 +451,12 @@ func (v *VariantB) GetExtraProperties() map[string]interface{} {
 }
 
 func (v *VariantB) require(field *big.Int) {
-	if v.explicitFields == nil {
-		v.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if v.explicitFields != nil {
+		next.Set(v.explicitFields)
 	}
-	v.explicitFields.Or(v.explicitFields, field)
+	next.Or(next, field)
+	v.explicitFields = next
 }
 
 // SetValueB sets the ValueB field and marks it as non-optional;
@@ -497,10 +553,12 @@ func (v *VariantC) GetExtraProperties() map[string]interface{} {
 }
 
 func (v *VariantC) require(field *big.Int) {
-	if v.explicitFields == nil {
-		v.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if v.explicitFields != nil {
+		next.Set(v.explicitFields)
 	}
-	v.explicitFields.Or(v.explicitFields, field)
+	next.Or(next, field)
+	v.explicitFields = next
 }
 
 // SetValueC sets the ValueC field and marks it as non-optional;

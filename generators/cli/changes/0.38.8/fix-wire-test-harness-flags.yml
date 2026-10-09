@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the generated wire-test harness invoking the CLI with arguments it rejects.
+    It no longer passes `--no-pager`, which commands without pagination never register,
+    and it now passes any required global parameter (for example an API key header) as a
+    flag. Both cases made the binary exit during argument parsing, so the mock server saw
+    no request at all.
+  type: fix

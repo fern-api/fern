@@ -24,8 +24,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -51,9 +52,9 @@ func (r *RawClient) Send(
 	if request.MaybeOperand != nil {
 		headers.Add("maybeOperand", string(*request.MaybeOperand))
 	}
-	headers.Add("operandOrColor", request.OperandOrColor)
+	headers.Add("operandOrColor", request.OperandOrColor.String())
 	if request.MaybeOperandOrColor != nil {
-		headers.Add("maybeOperandOrColor", request.MaybeOperandOrColor)
+		headers.Add("maybeOperandOrColor", request.MaybeOperandOrColor.String())
 	}
 
 	raw, err := r.caller.Call(
@@ -63,6 +64,7 @@ func (r *RawClient) Send(
 			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

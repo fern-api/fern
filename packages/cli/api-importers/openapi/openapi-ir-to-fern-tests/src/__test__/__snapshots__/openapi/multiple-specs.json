@@ -241,4 +241,5 @@ error-discrimination:
 display-name: Test file upload v1
 ",
   },
+  "specVersion": "1.0.0",
 }

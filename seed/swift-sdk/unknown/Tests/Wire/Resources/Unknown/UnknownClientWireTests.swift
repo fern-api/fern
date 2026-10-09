@@ -6,7 +6,7 @@ import UnknownAsAny
     @Test func post1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -47,7 +47,7 @@ import UnknownAsAny
     @Test func postObject1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {

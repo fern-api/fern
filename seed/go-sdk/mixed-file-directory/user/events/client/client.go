@@ -29,14 +29,27 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // List all user events.
+//
+// Example:
+//
+//	request := &user.ListUserEventsRequest{
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.User.Events.ListEvents(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListEvents(
 	ctx context.Context,
 	request *user.ListUserEventsRequest,

@@ -53,6 +53,7 @@ jobs:
             parser
             ir
             cli-v2
+            cli-generator
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

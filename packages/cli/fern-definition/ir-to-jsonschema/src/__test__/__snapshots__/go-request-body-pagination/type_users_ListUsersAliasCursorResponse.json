@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "next_cursor": {
+      "$ref": "#/definitions/users.Cursor"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/users.User"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "users.Cursor": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A named alias that resolves to an optional string, i.e. a pointer in Go."
+    },
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

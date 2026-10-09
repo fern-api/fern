@@ -4,15 +4,18 @@
 package com.seed.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.errors.MovieDoesNotExistError;
+import com.seed.api.errors.NotFoundError;
 import com.seed.api.types.CreateMovieRequest;
+import com.seed.api.types.GetMovieImdbRequest;
 import com.seed.api.types.Movie;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -48,8 +51,7 @@ public class AsyncRawImdbClient {
             CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("movies")
-                .addPathSegments("create-movie");
+                .addPathSegments("movies/create-movie");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -58,7 +60,9 @@ public class AsyncRawImdbClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }
@@ -73,8 +77,18 @@ public class AsyncRawImdbClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -88,6 +102,9 @@ public class AsyncRawImdbClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -98,14 +115,28 @@ public class AsyncRawImdbClient {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId) {
-        return getMovie(movieId, null);
+        return getMovie(movieId, GetMovieImdbRequest.builder().build());
     }
 
     public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId, RequestOptions requestOptions) {
+        return getMovie(movieId, GetMovieImdbRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId, GetMovieImdbRequest request) {
+        return getMovie(movieId, request, null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(
+            String movieId, GetMovieImdbRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movies")
@@ -115,18 +146,28 @@ public class AsyncRawImdbClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<Movie>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -138,7 +179,7 @@ public class AsyncRawImdbClient {
                     }
                     try {
                         if (response.code() == 404) {
-                            future.completeExceptionally(new MovieDoesNotExistError(
+                            future.completeExceptionally(new NotFoundError(
                                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                             return;
                         }
@@ -149,6 +190,9 @@ public class AsyncRawImdbClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -157,6 +201,11 @@ public class AsyncRawImdbClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Cursor and offset paginated methods now document what they return. The YARD `@return` tag and
+    the `reference.md` signature name the `CursorItemIterator` / `OffsetItemIterator` instead of the
+    response type, the method docs say which items it yields, that `pages` gives each page's full
+    response, and when the request is sent and API errors are raised. The README pagination example
+    uses a paginated endpoint even when the default endpoint is not paginated, and shows `pages`
+    instead of the nonexistent `results` method. Iterators gain `load_first_page`, which sends the
+    first request immediately so its API error is raised at that call.
+  type: fix
+- summary: |
+    Add opt-in `fetchFirstPageOnCall` config. When enabled, cursor and offset paginated methods send
+    the request for the first page before returning the iterator, so an API error for that page is
+    raised by the method call, as in non-paginated methods. Disabled by default because existing
+    callers may rescue errors around the loop, or build an iterator without iterating it.
+  type: feat

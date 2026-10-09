@@ -33,6 +33,17 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Apply IR-defined default values to query parameters and headers in request wrappers
     useDefaultRequestParameterValues: z.boolean().optional(),
     omitFernHeaders: z.boolean().optional(),
+    // Opt-in: emit the X-Fern-Runtime, X-Fern-Runtime-Version, and X-Fern-Platform
+    // observability headers. Disabled by default so existing output is unchanged.
+    includePlatformHeaders: z.boolean().optional(),
+    // Opt-in: expose an optional `app_info` client keyword whose product token is
+    // appended to the User-Agent header (RFC 9110). Disabled by default so existing
+    // output is byte-identical.
+    allowUserAgentAppInfo: z.boolean().optional(),
+    // Opt-in: send only the User-Agent platform header (in whatever form the other
+    // configs produce) and omit X-Fern-Language, X-Fern-SDK-Name, and
+    // X-Fern-SDK-Version. Disabled by default; still subject to omitFernHeaders.
+    userAgentOnly: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
@@ -44,7 +55,53 @@ export const BaseRubyCustomConfigSchema = z.object({
     // - "error": reports violations as errors (used in seed to enforce rubocop)
     rubocopSeverity: z.enum(["info", "warning", "error"]).optional(),
     maxRetries: z.number().int().min(0).optional(),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    // Opt-in: when the API composes OAuth client-credentials with basic auth
+    // (`auth: any`), auth credentials passed explicitly to the client constructor
+    // take precedence over environment-variable defaults when selecting the auth
+    // scheme. Disabled by default so existing output is unchanged (OAuth env vars
+    // win over explicitly provided basic auth).
+    preferExplicitAuth: z.boolean().optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    // Opt-in: when the IR marks a referenced request body as optional, a caller that
+    // passes no body properties sends neither a body nor a Content-Type header.
+    // Disabled by default so existing output is byte-identical.
+    respectOptionalRequestBody: z.boolean().optional(),
+    // Opt-in: credential keywords on the client follow the names configured on the auth
+    // schemes (`token: { name: apiKey }` exposes `api_key:`). Disabled by default, since
+    // renaming a keyword breaks callers of an already published gem.
+    respectAuthSchemeNames: z.boolean().optional(),
+    // Opt-in: the undiscriminated-union matcher treats a required field that is also
+    // `nullable` as satisfied when it arrives as `nil`. Without this, such a field looks
+    // like a missing required field, no member matches, and the union falls back to an
+    // untyped Hash instead of the documented model. Disabled by default because callers
+    // of a published gem may already read that Hash by key.
+    respectNullableUnionFields: z.boolean().optional(),
+    // Opt-in: a type alias to a named type coerces into that type rather than returning
+    // the result of a bare `JSON.parse`. Without this, an endpoint whose response schema
+    // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents
+    // the aliased model. Disabled by default because callers of a published gem may
+    // already read that Hash by key.
+    coerceAliasResponses: z.boolean().optional(),
+    // Opt-in: the client constructor raises `ArgumentError` if a bearer or header
+    // credential is neither passed nor set in its environment variable. Disabled by
+    // default because constructing a client without credentials currently succeeds and
+    // only fails once a request reaches the server.
+    requireAuthCredentials: z.boolean().optional(),
+    // Opt-in: a 2xx response whose body is not valid JSON raises `Errors::ResponseError`
+    // instead of `JSON::ParserError`. Disabled by default because callers may already
+    // rescue `JSON::ParserError`.
+    wrapInvalidJsonResponses: z.boolean().optional(),
+    // Opt-in: expose an optional `http_client` client keyword. The object must respond to
+    // `request(url, http_request)` (a URI and a Net::HTTPGenericRequest) and return a
+    // Net::HTTPResponse; it replaces the SDK's own Net::HTTP transport so callers can add
+    // proxies, custom TLS, connection reuse, or request/response interceptors. Retries still
+    // wrap the custom client. Disabled by default so existing output is byte-identical.
+    allowCustomHttpClient: z.boolean().optional(),
+    // Opt-in: cursor and offset paginated methods send the request for the first page before
+    // returning the iterator, so an API error for that page is raised by the method call
+    // instead of by the first iteration. Disabled by default because callers may rescue
+    // errors around the loop, or build an iterator without iterating it.
+    fetchFirstPageOnCall: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

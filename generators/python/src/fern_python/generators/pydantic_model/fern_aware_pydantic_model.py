@@ -58,6 +58,7 @@ class FernAwarePydanticModel:
         # With the addition of __root__ and root definitions conditionally to the Pydantic model
         # when leveraging union utils, we need to update refs to pick up the types.
         force_update_forward_refs: bool = False,
+        preserve_child_identity: bool = False,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -97,6 +98,7 @@ class FernAwarePydanticModel:
             universal_field_validator=self._context.core_utilities.universal_field_validator,
             universal_root_validator=self._context.core_utilities.universal_root_validator,
             is_root_model=is_root_model,
+            preserve_child_identity=preserve_child_identity,
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,
@@ -286,6 +288,9 @@ class FernAwarePydanticModel:
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 
+    def add_root_validator(self, *, validator_name: str, body: AST.CodeWriter, pre: bool = False) -> None:
+        self._pydantic_model.add_root_validator(validator_name=validator_name, body=body, pre=pre)
+
     def set_root_type_v1_or_v2_only(
         self,
         root_type: ir_types.TypeReference,
@@ -299,7 +304,11 @@ class FernAwarePydanticModel:
         )
 
     def set_root_type_unsafe_v1_or_v2_only(
-        self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None, is_forward_ref: bool = False
+        self,
+        root_type: AST.TypeHint,
+        annotation: Optional[AST.Expression] = None,
+        is_forward_ref: bool = False,
+        skip_declaration: bool = False,
     ) -> None:
         if self._custom_config.version not in [
             PydanticVersionCompatibility.V1,
@@ -307,7 +316,9 @@ class FernAwarePydanticModel:
             PydanticVersionCompatibility.V2,
         ]:
             raise RuntimeError("Overriding root types is only available in Pydantic v1, v2 or v1_on_v2 mode")
-        self._pydantic_model.set_root_type_unsafe_v1_or_v2_only(root_type=root_type, annotation=annotation)
+        self._pydantic_model.set_root_type_unsafe_v1_or_v2_only(
+            root_type=root_type, annotation=annotation, skip_declaration=skip_declaration
+        )
 
     def add_ghost_reference(self, type_id: ir_types.TypeId) -> None:
         self._pydantic_model.add_ghost_reference(

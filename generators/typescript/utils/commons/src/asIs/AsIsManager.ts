@@ -7,6 +7,19 @@ import { Project } from "ts-morph";
 const asIsFilePath = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("assets/asIs"));
 
 const DEFAULT_PACKAGE_PATH = "src";
+const DEFAULT_IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
+
+/**
+ * The `core/idempotency.ts` helper hardcodes the default `Idempotency-Key` header name so it lives
+ * in exactly one place instead of being repeated at every endpoint call site. When the SDK is
+ * configured with a custom header name, swap it in here.
+ */
+export function substituteIdempotencyKeyHeaderName(fileContent: string, idempotencyKeyHeaderName: string): string {
+    if (idempotencyKeyHeaderName === DEFAULT_IDEMPOTENCY_KEY_HEADER) {
+        return fileContent;
+    }
+    return fileContent.replace(`"${DEFAULT_IDEMPOTENCY_KEY_HEADER}"`, JSON.stringify(idempotencyKeyHeaderName));
+}
 export namespace AsIsManager {
     export interface Init {
         useBigInt: boolean;
@@ -16,6 +29,9 @@ export namespace AsIsManager {
         generatorType: "sdk" | "model" | "express";
         formatter: "prettier" | "biome" | "oxfmt" | "none";
         linter: "biome" | "oxlint" | "none";
+        autoGenerateIdempotencyKey: boolean;
+        idempotencyKeyHeaderName: string;
+        esModulePackage: boolean;
     }
 }
 
@@ -27,6 +43,9 @@ export class AsIsManager {
     private readonly generatorType: "sdk" | "model" | "express";
     private readonly formatter: "prettier" | "biome" | "oxfmt" | "none";
     private readonly linter: "biome" | "oxlint" | "none";
+    private readonly autoGenerateIdempotencyKey: boolean;
+    private readonly idempotencyKeyHeaderName: string;
+    private readonly esModulePackage: boolean;
 
     constructor({
         useBigInt,
@@ -35,7 +54,10 @@ export class AsIsManager {
         relativeTestPath,
         generatorType,
         formatter,
-        linter
+        linter,
+        autoGenerateIdempotencyKey,
+        idempotencyKeyHeaderName,
+        esModulePackage
     }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
@@ -44,6 +66,9 @@ export class AsIsManager {
         this.generatorType = generatorType;
         this.formatter = formatter;
         this.linter = linter;
+        this.autoGenerateIdempotencyKey = autoGenerateIdempotencyKey;
+        this.idempotencyKeyHeaderName = idempotencyKeyHeaderName;
+        this.esModulePackage = esModulePackage;
     }
 
     /**
@@ -55,6 +80,8 @@ export class AsIsManager {
             oxfmtrcJson: { "oxfmtrc.json": ".oxfmtrc.json" },
             core: {
                 mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
+                idempotency: { "core/idempotency.ts": `${this.relativePackagePath}/core/idempotency.ts` },
+                mergeAdditionalBodyParameters: { "core/requestBody.ts": `${this.relativePackagePath}/core/requestBody.ts` },
                 json: {
                     vanilla: { "core/json.vanilla.ts": `${this.relativePackagePath}/core/json.ts` },
                     bigint: { "core/json.bigint.ts": `${this.relativePackagePath}/core/json.ts` }
@@ -68,7 +95,11 @@ export class AsIsManager {
             },
             scripts: {
                 renameToEsmFiles: {
-                    "scripts/rename-to-esm-files.js": "scripts/rename-to-esm-files.js"
+                    // in a `type: "module"` package, a `.js` file would be interpreted
+                    // as ESM, so the CommonJS script must be emitted with a `.cjs` extension
+                    "scripts/rename-to-esm-files.js": this.esModulePackage
+                        ? "scripts/rename-to-esm-files.cjs"
+                        : "scripts/rename-to-esm-files.js"
                 }
             }
         };
@@ -86,6 +117,9 @@ export class AsIsManager {
         }
         if (this.generatorType === "sdk" || this.generatorType === "model") {
             filesToCopy.push(asIsFiles.core.mergeHeaders);
+            if (this.autoGenerateIdempotencyKey) {
+                filesToCopy.push(asIsFiles.core.idempotency);
+            }
             filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
             if (this.useBigInt) {
                 filesToCopy.push(asIsFiles.tests.bigintSetup);
@@ -95,6 +129,7 @@ export class AsIsManager {
             }
         }
         if (this.generatorType === "sdk") {
+            filesToCopy.push(asIsFiles.core.mergeAdditionalBodyParameters);
             if (this.generateWireTests) {
                 filesToCopy.push(asIsFiles.tests.mockServer);
             }
@@ -134,7 +169,10 @@ export class AsIsManager {
                 }
             } else {
                 // Handle direct file mapping
-                const fileContent = await fs.readFile(path.join(asIsFilePath, sourcePattern), "utf-8");
+                let fileContent = await fs.readFile(path.join(asIsFilePath, sourcePattern), "utf-8");
+                if (sourcePattern === "core/idempotency.ts") {
+                    fileContent = substituteIdempotencyKeyHeaderName(fileContent, this.idempotencyKeyHeaderName);
+                }
                 project.createSourceFile(targetPattern, fileContent, { overwrite: true });
             }
         }

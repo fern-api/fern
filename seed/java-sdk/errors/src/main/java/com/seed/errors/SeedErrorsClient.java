@@ -8,7 +8,7 @@ import com.seed.errors.core.Suppliers;
 import com.seed.errors.resources.simple.SimpleClient;
 import java.util.function.Supplier;
 
-public class SeedErrorsClient {
+public class SeedErrorsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<SimpleClient> simpleClient;
@@ -20,6 +20,16 @@ public class SeedErrorsClient {
 
     public SimpleClient simple() {
         return this.simpleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedErrorsClientBuilder builder() {

@@ -52,6 +52,18 @@ class CatalogClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->catalog->createCatalogImage(
+     *     new CreateCatalogImageBody([
+     *         'imageFile' => File::createFromString("example_image_file", "example_image_file"),
+     *         'request' => new CreateCatalogImageRequest([
+     *             'catalogObjectId' => 'catalog_object_id',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateCatalogImageBody $request
      * @param ?array{
      *   baseUrl?: string,
@@ -103,6 +115,13 @@ class CatalogClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->catalog->getCatalogImage(
+     *     'image_id',
+     * );
+     * ```
+     *
      * @param string $imageId
      * @param ?array{
      *   baseUrl?: string,

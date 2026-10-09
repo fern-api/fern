@@ -22,6 +22,12 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :filename
         #
+        # @example
+        #   client.file.service.get_file(
+        #     filename: "file.txt",
+        #     x_file_api_version: "0.0.2"
+        #   )
+        #
         # @return [Seed::Types::Types::File]
         def get_file(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -38,7 +44,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Types::File.load(response.body)
+            (response.body.to_s.empty? ? nil : Seed::Types::Types::File.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

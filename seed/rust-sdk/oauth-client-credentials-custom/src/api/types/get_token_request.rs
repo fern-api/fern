@@ -14,6 +14,8 @@ pub struct GetTokenRequest {
     pub grant_type: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub scope: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub permissions: Option<Vec<String>>,
 }
 
 impl GetTokenRequest {
@@ -32,6 +34,7 @@ pub struct GetTokenRequestBuilder {
     audience: Option<String>,
     grant_type: Option<String>,
     scope: Option<String>,
+    permissions: Option<Vec<String>>,
 }
 
 impl GetTokenRequestBuilder {
@@ -70,6 +73,11 @@ impl GetTokenRequestBuilder {
         self
     }
 
+    pub fn permissions(mut self, value: Vec<String>) -> Self {
+        self.permissions = Some(value);
+        self
+    }
+
     /// Consumes the builder and constructs a [`GetTokenRequest`].
     /// This method will fail if any of the following fields are not set:
     /// - [`cid`](GetTokenRequestBuilder::cid)
@@ -93,6 +101,7 @@ impl GetTokenRequestBuilder {
                 .grant_type
                 .ok_or_else(|| BuildError::missing_field("grant_type"))?,
             scope: self.scope,
+            permissions: self.permissions,
         })
     }
 }

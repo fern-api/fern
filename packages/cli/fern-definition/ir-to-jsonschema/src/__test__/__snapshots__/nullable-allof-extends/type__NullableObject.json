@@ -13,5 +13,6 @@
     }
   },
   "additionalProperties": false,
+  "description": "This schema has nullable:true at the top level.",
   "definitions": {}
 }

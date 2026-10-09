@@ -1,5 +1,6 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.java.client.ClientGeneratorContext;
@@ -31,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponseParserGenerator {
 
     private static final String FUTURE = "future";
+    private static final String OKHTTP_CALL = "okhttpCall";
 
     public AsyncHttpResponseParserGenerator(
             AbstractEndpointWriterVariableNameContext variables,
@@ -69,19 +71,10 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             MethodSpec.Builder endpointWithoutRequestBuilder,
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBody,
-            ParameterSpec bodyParameterSpec) {
-        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
-        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
-            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
-            endpointWithoutRequestBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                    paramType.rawType,
-                    paramType.typeArguments.get(0));
-        } else {
-            endpointWithoutRequestBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                    bodyParameterSpec.type);
-        }
+            List<Object> bodyValueFormatArgs) {
+        endpointWithoutRequestBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                bodyValueFormatArgs.toArray());
     }
 
     @Override
@@ -89,21 +82,11 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder,
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBodyWithRequestOptions,
-            ParameterSpec bodyParameterSpec) {
-        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
-        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
-            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
-            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "("
-                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
-                    paramType.rawType,
-                    paramType.typeArguments.get(0));
-        } else {
-            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "("
-                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
-                    bodyParameterSpec.type);
-        }
+            List<Object> bodyValueFormatArgs) {
+        endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBodyWithRequestOptions)
+                        + ")",
+                bodyValueFormatArgs.toArray());
     }
 
     @Override
@@ -196,11 +179,16 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             CodeBlock.Builder httpResponseBuilder,
             Consumer<CodeBlock.Builder> onResponseWriter,
             Consumer<CodeBlock.Builder> onFailureWriter) {
-        httpResponseBuilder.add(
-                "$N.newCall($L).enqueue(new $T() {\n",
+        ClassName retryInterceptorClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
+        httpResponseBuilder.addStatement(
+                "$T $L = $T.newAsyncCall($N, $L)",
+                retryInterceptorClassName.nestedClass("AsyncCall"),
+                OKHTTP_CALL,
+                retryInterceptorClassName,
                 variables.getDefaultedClientName(),
-                variables.getOkhttpRequestName(),
-                Callback.class);
+                variables.getOkhttpRequestName());
+        httpResponseBuilder.add("$L.enqueue(new $T() {\n", OKHTTP_CALL, Callback.class);
         httpResponseBuilder.indent();
 
         httpResponseBuilder.add("@$T\n", Override.class);
@@ -216,6 +204,13 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
         httpResponseBuilder.indent();
         onResponseWriter.accept(httpResponseBuilder);
         httpResponseBuilder
+                .beginControlFlow("catch ($T e)", JsonProcessingException.class)
+                .addStatement(
+                        "$L.completeExceptionally(new $T($S + e.getMessage(), e))",
+                        FUTURE,
+                        baseErrorClassName,
+                        "Failed to deserialize response: ")
+                .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement(
                         "$L.completeExceptionally(new $T($S, e))",
@@ -242,6 +237,13 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
         httpResponseBuilder.unindent();
         httpResponseBuilder.add("}\n");
 
+        httpResponseBuilder.unindent();
+        httpResponseBuilder.addStatement("})");
+        httpResponseBuilder.add("$L.whenComplete((result_, throwable_) -> {\n", FUTURE);
+        httpResponseBuilder.indent();
+        httpResponseBuilder.beginControlFlow("if ($L.isCancelled())", FUTURE);
+        httpResponseBuilder.addStatement("$L.cancel()", OKHTTP_CALL);
+        httpResponseBuilder.endControlFlow();
         httpResponseBuilder.unindent();
         httpResponseBuilder.addStatement("})");
         httpResponseBuilder.addStatement("return $L", FUTURE);

@@ -16,7 +16,8 @@
       ]
     },
     "total_count": {
-      "type": "integer"
+      "type": "integer",
+      "description": "The totall number of /users"
     }
   },
   "required": [

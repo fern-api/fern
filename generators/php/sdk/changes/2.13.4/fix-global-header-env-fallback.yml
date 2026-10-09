@@ -1,0 +1,6 @@
+- summary: |
+    Global API headers configured with an `env` fallback (e.g. `X-Twilio-Version` with
+    `env: TWILIO_VERSION`) now fall back to the environment variable in the root client
+    constructor when the parameter is not passed explicitly. Optional headers never throw
+    when both the parameter and the environment variable are missing.
+  type: fix

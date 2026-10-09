@@ -33,8 +33,10 @@
               "pagination": undefined,
               "path": "/author",
               "request": {
-                "body": "Author",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Author",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -63,8 +65,10 @@
               "pagination": undefined,
               "path": "/node",
               "request": {
-                "body": "Node",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Node",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -93,8 +97,10 @@
               "pagination": undefined,
               "path": "/tree",
               "request": {
-                "body": "TreeNode",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "TreeNode",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -253,8 +259,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Node
-        content-type: application/json
+        body:
+          type: Node
+          optional: true
       response:
         docs: Success
         type: Node
@@ -271,8 +278,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Author
-        content-type: application/json
+        body:
+          type: Author
+          optional: true
       response:
         docs: Success
         type: Author
@@ -292,8 +300,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: TreeNode
-        content-type: application/json
+        body:
+          type: TreeNode
+          optional: true
       response:
         docs: Success
         type: TreeNode
@@ -400,4 +409,5 @@ error-discrimination:
 display-name: Circular References Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

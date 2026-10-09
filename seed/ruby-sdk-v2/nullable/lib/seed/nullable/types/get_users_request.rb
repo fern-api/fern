@@ -10,9 +10,9 @@ module Seed
 
         field :activated, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
-        field :tags, -> { String }, optional: true, nullable: false
+        field :tags, -> { String }, optional: true, nullable: true
 
-        field :extra, -> { Internal::Types::Boolean }, optional: true, nullable: false
+        field :extra, -> { Internal::Types::Boolean }, optional: true, nullable: true
       end
     end
   end

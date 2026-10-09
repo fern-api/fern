@@ -73,6 +73,23 @@ describe("DocComment", () => {
             await expect(docComment.toString()).toMatchFileSnapshot("snapshots/complete_doc_comment.swift");
         });
 
+        it("should write doc comment with code example", async () => {
+            const docComment = swift.docComment({
+                summary: "Retrieves a user by ID",
+                codeExample: 'let user = try await client.users.get(userId: "userId")'
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/with_code_example.swift");
+        });
+
+        it("should write doc comment with code example only", async () => {
+            const docComment = swift.docComment({
+                codeExample: 'let user = try await client.users.get(userId: "userId")'
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/code_example_only.swift");
+        });
+
         it("should handle multi-line summary", async () => {
             const docComment = swift.docComment({
                 summary:

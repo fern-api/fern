@@ -17,6 +17,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Additional Body Properties](#additional-body-properties)
   - [Timeouts](#timeouts)
   - [Custom Networking Client](#custom-networking-client)
 - [Contributing](#contributing)
@@ -56,7 +57,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.updateTestSubmissionStatus(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         request: TestSubmissionStatus.stopped
     )
 }
@@ -141,6 +142,19 @@ If you would like to send additional query string parameters as part of the requ
 try await client.admin.updateTestSubmissionStatus(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
+    ]
+))
+```
+
+### Additional Body Properties
+
+If you would like to send additional properties as part of a JSON request body (for example, undocumented or beta fields), use the `additionalBodyProperties` request option. Keys are sent as-is, values can be any JSON value, and they override any generated fields with the same name. If the endpoint has no request body, a JSON body is created from these properties (except for GET and HEAD requests, which are sent without a body). Multipart and raw binary request bodies are not modified. The `additionalBodyParameters` request option accepts string values only and is merged the same way; if both options set the same key, `additionalBodyProperties` wins.
+
+```swift
+try await client.admin.updateTestSubmissionStatus(..., requestOptions: .init(
+    additionalBodyProperties: [
+        "beta_feature": true, 
+        "beta_options": ["mode": "fast"]
     ]
 ))
 ```

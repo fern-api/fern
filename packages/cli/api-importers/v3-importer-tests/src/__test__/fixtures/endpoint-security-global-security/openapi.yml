@@ -1,0 +1,82 @@
+openapi: 3.1.0
+info:
+  title: Endpoint Security With Spec-Level Global Security
+  version: 1.0.0
+  description: >
+    Companion to `endpoint-security-per-endpoint-auth`, covering the case where
+    the spec itself declares a top-level `security` block while generators.yml
+    uses `api.auth: { endpoint-security: {} }`.
+
+    `endpoint-security` suppresses only the generators.yml-derived default; the
+    spec's own global requirement is still standard OpenAPI inheritance, so an
+    operation with no `security` of its own must inherit it — and `auth` must
+    agree with `security` rather than reporting no-auth alongside a non-empty
+    requirement list.
+
+security:
+  - PlantOAuth: []
+
+paths:
+  # No operation-level `security` -> inherits the spec-level global requirement.
+  /plants:
+    get:
+      summary: List plants
+      operationId: listPlants
+      responses:
+        "200":
+          description: A list of plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+
+  # Operation-level override wins over the global requirement.
+  /plants/{plantId}:
+    get:
+      summary: Get plant by ID
+      operationId: getPlant
+      security:
+        - PlantApiKey: []
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Plant details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+
+  # Explicit opt-out still beats the global requirement.
+  /health:
+    get:
+      summary: Health check
+      operationId: health
+      security: []
+      responses:
+        "200":
+          description: OK
+
+components:
+  securitySchemes:
+    PlantOAuth:
+      type: http
+      scheme: bearer
+    PlantApiKey:
+      type: apiKey
+      in: header
+      name: X-Plant-Token
+  schemas:
+    Plant:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string

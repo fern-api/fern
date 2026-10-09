@@ -53,7 +53,15 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-**request:** `CreateMovieRequest` 
+**title:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `float` 
     
 </dd>
 </dl>

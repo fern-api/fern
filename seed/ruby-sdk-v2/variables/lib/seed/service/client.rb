@@ -4,28 +4,33 @@ module Seed
   module Service
     class Client
       # @param client [Seed::Internal::Http::RawClient]
+      # @param root_variable [String, nil]
       #
       # @return [void]
-      def initialize(client:)
+      def initialize(client:, root_variable: nil)
         @client = client
+        @root_variable = root_variable
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :endpoint_param
+      #
+      # @example
+      #   client.service.post
       #
       # @return [untyped]
-      def post(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def post(request_options: {}, **_params)
+        raise ArgumentError, "The `root_variable` SDK variable is required. Pass `root_variable:` to Seed::Client.new or set the ROOT_VARIABLE environment variable." if @root_variable.nil?
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/#{URI.encode_uri_component(params[:endpoint_param].to_s)}",
+          path: "/#{URI.encode_uri_component(@root_variable.to_s)}",
           request_options: request_options
         )
         begin

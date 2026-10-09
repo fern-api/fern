@@ -180,9 +180,17 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             throw new Error("Path parameter does not exist: " + pathParameterKey);
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
-        return ts.factory.createIdentifier(
-            this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfPathParameter(pathParameter))
-        );
+        const propertyName = generatedRequestWrapper.getPropertyNameOfPathParameter(pathParameter);
+        const collidingPathParamPropertyNames = generatedRequestWrapper.getCollidingPathParameterPropertyNames(context);
+        if (collidingPathParamPropertyNames.has(propertyName.propertyName)) {
+            // The path parameter shares its name with a body property, so it is not destructured out
+            // of the request. Reference it through the request body so the value is sent in both the
+            // URL path and the request body.
+            const bodyReference =
+                this.getReferenceToRequestBody(context) ?? ts.factory.createIdentifier(this.getRequestParameterName());
+            return createMemberAccess(bodyReference, propertyName.propertyName);
+        }
+        return ts.factory.createIdentifier(this.getAliasForNonBodyProperty(propertyName));
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
@@ -300,4 +308,12 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         }
         return undefined;
     }
+}
+
+const VALID_IDENTIFIER_REGEX = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
+
+function createMemberAccess(object: ts.Expression, propertyName: string): ts.Expression {
+    return VALID_IDENTIFIER_REGEX.test(propertyName)
+        ? ts.factory.createPropertyAccessExpression(object, propertyName)
+        : ts.factory.createElementAccessExpression(object, ts.factory.createStringLiteral(propertyName));
 }

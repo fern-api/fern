@@ -26,9 +26,16 @@ const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefin
 // Mock context
 // ──────────────────────────────────────────────────────────────────────────────
 
+interface MockContextOpts {
+    useDefaultValues?: boolean;
+    useBigInt?: boolean;
+    respectOptionalRequestBody?: boolean;
+}
+
 // biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
-function createMockContext(opts?: { useDefaultValues?: boolean; useBigInt?: boolean }): any {
+function createMockContext(opts?: MockContextOpts): any {
     return {
+        respectOptionalRequestBody: opts?.respectOptionalRequestBody ?? false,
         includeSerdeLayer: true,
         retainOriginalCasing: false,
         inlineFileProperties: false,
@@ -51,7 +58,8 @@ function createMockContext(opts?: { useDefaultValues?: boolean; useBigInt?: bool
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             }),
             getReferenceToType: (typeRef: FernIr.TypeReference) => {
@@ -154,6 +162,7 @@ describe("RequestBodyParameter", () => {
         const sdkRequest = createSdkRequest(
             FernIr.SdkRequestShape.justRequestBody(
                 FernIr.SdkRequestBodyType.typeReference({
+                    required: undefined,
                     requestBodyType,
                     contentType: undefined,
                     docs: undefined,
@@ -167,6 +176,7 @@ describe("RequestBodyParameter", () => {
             endpoint: createHttpEndpoint({ sdkRequest }),
             sdkRequest,
             requestBodyReference: {
+                required: undefined,
                 requestBodyType,
                 contentType: undefined,
                 docs: undefined,
@@ -390,7 +400,8 @@ describe("FileUploadRequestParameter", () => {
             availability: undefined,
             docs: undefined,
             v2Examples: undefined,
-            clientDefault: undefined
+            clientDefault: undefined,
+            defaultValue: undefined
         };
         const ref = param.getReferenceToNonLiteralHeader(header, context);
         expect(getTextOfTsNode(ref)).toContain(".");
@@ -414,7 +425,8 @@ describe("FileUploadRequestParameter", () => {
             availability: undefined,
             docs: undefined,
             v2Examples: undefined,
-            clientDefault: undefined
+            clientDefault: undefined,
+            defaultValue: undefined
         };
         const ref = param.getReferenceToNonLiteralHeader(header, context);
         const text = getTextOfTsNode(ref);
@@ -454,6 +466,7 @@ describe("FileUploadRequestParameter", () => {
             valueType: STRING_TYPE,
             docs: undefined,
             availability: undefined,
+            defaultValue: undefined,
             v2Examples: undefined,
             propertyAccess: undefined
         };

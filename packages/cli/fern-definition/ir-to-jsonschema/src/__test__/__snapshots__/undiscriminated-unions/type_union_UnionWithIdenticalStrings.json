@@ -4,5 +4,6 @@
       "type": "string"
     }
   ],
+  "description": "Multiple string types that all resolve to String in Java.\nThis tests the fix for duplicate method signatures.",
   "definitions": {}
 }

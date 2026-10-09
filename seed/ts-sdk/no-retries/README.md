@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNoRetriesClient } from "@fern/no-retries";
 
-const client = new SeedNoRetriesClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedNoRetriesClient({ baseUrl: "YOUR_BASE_URL" });
 await client.retries.getUsers();
 ```
 

@@ -14,7 +14,7 @@ public partial class SeedMixedCaseClient : ISeedMixedCaseClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedMixedCase" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedMixedCase.Version.Current },
                 { "User-Agent", "Fernmixed-case/0.0.1" },
             }
         );

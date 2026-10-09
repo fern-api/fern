@@ -12,18 +12,24 @@ module Seed
       def initialize(auth_client:, options:)
         @auth_client = auth_client
         @options = options
+        @mutex = Mutex.new
         @access_token = nil
         @expires_at = nil
       end
 
       # Returns a cached access token, refreshing if necessary.
       # Refreshes the token if it's nil, or if we're within the buffer period before expiration.
+      # Only one thread refreshes the token at a time.
       #
       # @return [String]
       def token
-        return refresh if @access_token.nil? || token_needs_refresh?
+        return @access_token unless @access_token.nil? || token_needs_refresh?
 
-        @access_token
+        @mutex.synchronize do
+          return @access_token unless @access_token.nil? || token_needs_refresh?
+
+          refresh
+        end
       end
 
       # Returns the authentication headers to be included in requests.

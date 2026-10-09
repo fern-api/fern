@@ -206,6 +206,26 @@ export abstract class AbstractTypeReferenceConverter<T> {
         return this.context.type.isOptional(typeReference);
     }
 
+    /**
+     * Returns true if the type reference is (or resolves to) `unknown`, ignoring any
+     * optional/nullable wrappers. For `unknown` (and `any` via `treatUnknownAsAny`),
+     * adding `| undefined` is redundant because `unknown | undefined` is just `unknown`.
+     * Map value types use this to strip the redundant `| undefined` from unknown values
+     * while preserving it for genuinely optional values (e.g. optional additionalProperties).
+     */
+    protected isTypeReferenceUnknown(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type === "container") {
+            if (typeReference.container.type === "optional") {
+                return this.isTypeReferenceUnknown(typeReference.container.optional);
+            }
+            if (typeReference.container.type === "nullable") {
+                return this.isTypeReferenceUnknown(typeReference.container.nullable);
+            }
+            return false;
+        }
+        return this.context.type.resolveTypeReference(typeReference).type === "unknown";
+    }
+
     public isTypeReferenceNullable(typeReference: FernIr.TypeReference): boolean {
         return this.context.type.isNullable(typeReference);
     }

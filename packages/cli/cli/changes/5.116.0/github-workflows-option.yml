@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `github.workflows: false` to `generators.yml` (defaults to `true`). When disabled, generated
+    `.github/workflows/*` files are not committed to the SDK repository: existing workflow files are
+    left untouched and newly generated ones are skipped. Useful when the GitHub App used to push
+    does not have the `workflows` permission.
+  type: feat

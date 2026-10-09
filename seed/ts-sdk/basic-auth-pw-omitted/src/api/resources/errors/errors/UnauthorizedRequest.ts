@@ -5,6 +5,8 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedBasicAuthPwOmitted from "../../../index.js";
 
 export class UnauthorizedRequest extends errors.SeedBasicAuthPwOmittedError {
+    public declare readonly body: SeedBasicAuthPwOmitted.UnauthorizedRequestErrorBody;
+
     constructor(body: SeedBasicAuthPwOmitted.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "UnauthorizedRequest",
@@ -17,6 +19,6 @@ export class UnauthorizedRequest extends errors.SeedBasicAuthPwOmittedError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "UnauthorizedRequest";
     }
 }

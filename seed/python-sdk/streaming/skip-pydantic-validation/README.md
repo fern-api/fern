@@ -61,9 +61,8 @@ client = AsyncSeedStreaming(
 
 
 async def main() -> None:
-    await client.dummy.generate_stream(
-        num_events=1,
-    )
+    async for chunk in client.dummy.generate_stream(...):
+        print(chunk)
 
 
 asyncio.run(main())
@@ -158,7 +157,7 @@ client = SeedStreaming(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.dummy.generate_stream(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

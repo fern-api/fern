@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { generateFields } from "./generateFields.js";
+import { XmlObjectGenerator } from "./XmlObjectGenerator.js";
 
 export interface GeneratorContextLike {
     customConfig: unknown;
@@ -29,13 +30,29 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
     }
 
     public doGenerate(): RubyFile {
-        const properties = this.objectDeclaration.properties || [];
+        const properties = [
+            ...(this.objectDeclaration.extendedProperties ?? []),
+            ...(this.objectDeclaration.properties ?? [])
+        ];
 
+        const xml = this.typeDeclaration.encoding?.xml;
         const statements = generateFields({
             typeDeclaration: this.typeDeclaration,
             properties,
-            context: this.context
+            context: this.context,
+            documentFields: xml != null
         });
+
+        if (xml != null) {
+            statements.push(
+                ...new XmlObjectGenerator(
+                    this.context,
+                    this.typeDeclaration,
+                    this.objectDeclaration,
+                    xml
+                ).generateStatements()
+            );
+        }
 
         const classNode = ruby.class_({
             name: this.case.pascalSafe(this.typeDeclaration.name.name),

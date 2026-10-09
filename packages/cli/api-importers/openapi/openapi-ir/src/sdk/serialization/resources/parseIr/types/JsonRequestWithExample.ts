@@ -15,6 +15,7 @@ export const JsonRequestWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         contentType: core.serialization.string().optional(),
+        required: core.serialization.boolean().optional(),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
         additionalProperties: core.serialization.boolean(),
     })
@@ -26,6 +27,7 @@ export declare namespace JsonRequestWithExample {
     export interface Raw extends WithDescription.Raw, WithSource.Raw, WithSdkMethodName.Raw {
         schema: serializers.SchemaWithExample.Raw;
         contentType?: string | null;
+        required?: boolean | null;
         fullExamples?: NamedFullExample.Raw[] | null;
         additionalProperties: boolean;
     }

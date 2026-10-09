@@ -1,0 +1,26 @@
+service:
+  auth: false
+  base-path: /identifiers
+  endpoints:
+    update:
+      path: /{idType}
+      path-parameters:
+        idType: string
+      method: PATCH
+      request:
+        name: IdentifierUpdateRequest
+        body:
+          properties:
+            idType: string
+            oldValue: string
+            newValue: string
+    updateSnake:
+      path: /{user_id}
+      path-parameters:
+        user_id: string
+      method: PATCH
+      request:
+        name: UpdateSnakeRequest
+        body:
+          properties:
+            userId: string

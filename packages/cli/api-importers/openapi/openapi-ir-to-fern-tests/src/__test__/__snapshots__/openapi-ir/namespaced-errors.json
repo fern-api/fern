@@ -1,0 +1,533 @@
+{
+  "specVersion": "1.0",
+  "title": "Video",
+  "servers": [
+    {
+      "url": "https://api.example.com"
+    },
+    {
+      "url": "https://api.example.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listEgressStreams",
+      "tags": [
+        "Video"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListEgressStreamsRequest",
+      "errors": {
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "tooManyRequestsErrorBodyMessage",
+                "key": "message",
+                "schema": {
+                  "generatedName": "TooManyRequestsErrorBodyMessage",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "TooManyRequestsErrorBodyMessage",
+                    "namespace": "video",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              },
+              {
+                "conflict": {},
+                "generatedName": "tooManyRequestsErrorBodyRetryAfter",
+                "key": "retryAfter",
+                "schema": {
+                  "generatedName": "TooManyRequestsErrorBodyRetryAfter",
+                  "value": {
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "TooManyRequestsErrorBodyRetryAfter",
+                    "namespace": "video",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "TooManyRequestsErrorBody",
+            "namespace": "video",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "video.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "video.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ],
+          "namespace": "video"
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/egress",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "video.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createEgressStream",
+      "tags": [
+        "Video"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateEgressStreamRequest",
+      "errors": {
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "tooManyRequestsErrorBodyMessage",
+                "key": "message",
+                "schema": {
+                  "generatedName": "TooManyRequestsErrorBodyMessage",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "TooManyRequestsErrorBodyMessage",
+                    "namespace": "video",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              },
+              {
+                "conflict": {},
+                "generatedName": "tooManyRequestsErrorBodyRetryAfter",
+                "key": "retryAfter",
+                "schema": {
+                  "generatedName": "TooManyRequestsErrorBodyRetryAfter",
+                  "value": {
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "TooManyRequestsErrorBodyRetryAfter",
+                    "namespace": "video",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "TooManyRequestsErrorBody",
+            "namespace": "video",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "video.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "video.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ],
+          "namespace": "video"
+        },
+        "503": {
+          "generatedName": "ServiceUnavailableError",
+          "schema": {
+            "generatedName": "ServiceUnavailableErrorBody",
+            "schema": "ServiceUnavailableBody",
+            "namespace": "video",
+            "source": {
+              "file": "video.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Service unavailable",
+          "source": {
+            "file": "video.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/egress",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "video.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listEntities",
+      "tags": [
+        "Entities"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListEntitiesRequest",
+      "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "schema": "Error",
+            "namespace": "entity",
+            "source": {
+              "file": "entities.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Not found",
+          "source": {
+            "file": "entities.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        },
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "schema": "Error",
+            "namespace": "entity",
+            "source": {
+              "file": "entities.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "entities.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/entities",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "entities.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getEntity",
+      "tags": [
+        "Entities"
+      ],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetEntityRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "entities.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetEntityRequest",
+      "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "schema": "Error",
+            "namespace": "entity",
+            "source": {
+              "file": "entities.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Not found",
+          "source": {
+            "file": "entities.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        },
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "schema": "Error",
+            "namespace": "entity",
+            "source": {
+              "file": "entities.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "entities.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/entities/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "entities.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {
+      "video": {
+        "ServiceUnavailableBody": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "serviceUnavailableBodyRetryAfter",
+              "key": "retryAfter",
+              "schema": {
+                "generatedName": "ServiceUnavailableBodyRetryAfter",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "ServiceUnavailableBodyRetryAfter",
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "namespace": "video",
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ServiceUnavailableBody",
+          "namespace": "video",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "video.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      },
+      "entity": {
+        "Error": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "errorCode",
+              "key": "code",
+              "schema": {
+                "generatedName": "ErrorCode",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ErrorCode",
+                  "namespace": "entity",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "namespace": "entity",
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Error",
+          "namespace": "entity",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "entities.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      }
+    }
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

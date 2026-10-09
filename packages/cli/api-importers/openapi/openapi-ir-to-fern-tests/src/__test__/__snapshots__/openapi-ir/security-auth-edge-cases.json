@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Security and Auth Edge Cases",
   "servers": [],
   "websocketServers": [],

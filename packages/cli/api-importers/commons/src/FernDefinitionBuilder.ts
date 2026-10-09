@@ -32,13 +32,19 @@ export interface FernDefinitionBuilder {
 
     addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void;
 
+    addGlobalParameter({ name, schema }: { name: string; schema: RawSchemas.GlobalParameterDeclarationSchema }): void;
+
     addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void;
 
     setDefaultEnvironment(name: string): void;
 
     setDefaultUrl(name: string): void;
 
+    setBaseUrlEnv(name: string): void;
+
     setBasePath(basePath: string): void;
+
+    setRootPathParameters(parameters: Record<string, RawSchemas.HttpPathParameterSchema>): void;
 
     setApiVersion(apiVersionScheme: unknown): void;
 
@@ -121,6 +127,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
+    private rootPathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined = undefined;
 
     public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory();
@@ -195,8 +202,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile["default-url"] = name;
     }
 
+    public setBaseUrlEnv(name: string): void {
+        this.rootApiFile["base-url-env"] = name;
+    }
+
     public setBasePath(basePath: string): void {
         this.basePath = basePath;
+    }
+
+    public setRootPathParameters(parameters: Record<string, RawSchemas.HttpPathParameterSchema>): void {
+        if (Object.keys(parameters).length === 0) {
+            return;
+        }
+        this.rootPathParameters = parameters;
     }
 
     public setApiVersion(apiVersionScheme: unknown): void {
@@ -278,6 +296,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile.variables = {};
         }
         this.rootApiFile.variables[name] = schema;
+    }
+
+    public addGlobalParameter({
+        name,
+        schema
+    }: {
+        name: string;
+        schema: RawSchemas.GlobalParameterDeclarationSchema;
+    }): void {
+        if (this.rootApiFile["global-parameters"] == null) {
+            this.rootApiFile["global-parameters"] = {};
+        }
+        this.rootApiFile["global-parameters"][name] = schema;
     }
 
     public addImport({
@@ -508,8 +539,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     public build(): FernDefinition {
         const definitionFiles = this.root.getAllFiles();
         const basePath = this.basePath;
-        if (basePath != null) {
-            // substitute package marker file
+        const rootPathParameters = this.rootPathParameters;
+        // Inline the base path into every endpoint path when it has no
+        // placeholders AND no root path parameters were declared. Otherwise
+        // preserve the base path at the root API file so endpoints can refer
+        // to root-level parameters.
+        const shouldInline = basePath != null && rootPathParameters == null && !basePath.includes("{");
+
+        if (basePath != null && shouldInline) {
             if (this.packageMarkerFile.service != null) {
                 this.packageMarkerFile.service = {
                     ...this.packageMarkerFile.service,
@@ -527,7 +564,6 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 };
             }
 
-            // substitute definition files
             for (const file of Object.values(definitionFiles)) {
                 if (file.service != null) {
                     file.service = {
@@ -545,6 +581,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                         )
                     };
                 }
+            }
+        } else if (basePath != null) {
+            this.rootApiFile["base-path"] = basePath;
+            if (rootPathParameters != null) {
+                this.rootApiFile["path-parameters"] = rootPathParameters;
             }
         }
 

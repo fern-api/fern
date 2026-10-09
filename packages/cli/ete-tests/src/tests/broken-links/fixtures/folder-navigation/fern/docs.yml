@@ -1,0 +1,8 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
+navigation:
+  - page: Overview
+    path: overview.mdx
+  - title: Resources
+    folder: ./pages/resources

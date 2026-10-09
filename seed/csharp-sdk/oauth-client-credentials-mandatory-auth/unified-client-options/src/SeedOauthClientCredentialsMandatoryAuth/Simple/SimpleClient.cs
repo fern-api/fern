@@ -11,14 +11,15 @@ public partial class SimpleClient : ISimpleClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Simple.GetSomethingAsync();
-    /// </code></example>
-    public async Task GetSomethingAsync(
+    private async Task<RawResponse> GetSomethingAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedOauthClientCredentialsMandatoryAuth.Core.QueryStringBuilder.Builder(capacity: 0)
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedOauthClientCredentialsMandatoryAuth.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -32,6 +33,7 @@ public partial class SimpleClient : ISimpleClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/get-something",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -40,7 +42,12 @@ public partial class SimpleClient : ISimpleClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedOauthClientCredentialsMandatoryAuth.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -49,8 +56,25 @@ public partial class SimpleClient : ISimpleClient
             throw new SeedOauthClientCredentialsMandatoryAuthApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedOauthClientCredentialsMandatoryAuth.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Simple.GetSomethingAsync();
+    /// </code></example>
+    public WithRawResponseTask GetSomethingAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(GetSomethingAsyncCore(options, cancellationToken));
     }
 }

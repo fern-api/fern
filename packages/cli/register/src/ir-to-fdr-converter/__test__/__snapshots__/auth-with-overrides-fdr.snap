@@ -2,12 +2,14 @@
   "apiName": "Auth with Overrides Test API",
   "auth": {
     "description": undefined,
+    "playgroundDescription": undefined,
     "tokenName": "token",
     "type": "bearerAuth",
   },
   "authSchemes": {
     "customAuth": {
       "description": undefined,
+      "playgroundDescription": undefined,
       "tokenName": "token",
       "type": "bearerAuth",
     },
@@ -104,6 +106,7 @@
                   },
                 ],
               },
+              "responseHeaders": undefined,
               "responseStatusCode": 200,
             },
           ],
@@ -183,6 +186,7 @@
             ],
           },
           "slug": undefined,
+          "subtitle": undefined,
         },
         {
           "auth": true,
@@ -227,6 +231,7 @@
                   "name": "string",
                 },
               },
+              "responseHeaders": undefined,
               "responseStatusCode": 200,
             },
           ],
@@ -322,6 +327,7 @@
             ],
           },
           "slug": undefined,
+          "subtitle": undefined,
         },
       ],
       "graphqlOperations": [],

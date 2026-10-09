@@ -14,6 +14,29 @@ impl OptionalClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_objects_with_imports::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ObjectsWithImportsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .optional
+    ///         .send_optional_body(
+    ///             &Some(HashMap::from([(
+    ///                 "string".to_string(),
+    ///                 serde_json::json!({"key":"value"}),
+    ///             )])),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn send_optional_body(
         &self,
         request: &Option<HashMap<String, serde_json::Value>>,
@@ -30,6 +53,29 @@ impl OptionalClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_objects_with_imports::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ObjectsWithImportsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .optional
+    ///         .send_optional_typed_body(
+    ///             &Some(SendOptionalBodyRequest {
+    ///                 message: "message".to_string(),
+    ///                 ..Default::default()
+    ///             }),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn send_optional_typed_body(
         &self,
         request: &Option<SendOptionalBodyRequest>,
@@ -56,6 +102,32 @@ impl OptionalClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_objects_with_imports::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ObjectsWithImportsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .optional
+    ///         .send_optional_nullable_with_all_optional_properties(
+    ///             &"actionId".to_string(),
+    ///             &"id".to_string(),
+    ///             &Some(DeployParams {
+    ///                 update_draft: Some(true),
+    ///                 ..Default::default()
+    ///             }),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn send_optional_nullable_with_all_optional_properties(
         &self,
         action_id: &str,

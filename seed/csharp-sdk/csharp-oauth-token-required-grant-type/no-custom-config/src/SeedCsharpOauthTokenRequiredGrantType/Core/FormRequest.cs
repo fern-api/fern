@@ -1,0 +1,49 @@
+using global::System.Net.Http;
+
+namespace SeedCsharpOauthTokenRequiredGrantType.Core;
+
+/// <summary>
+/// The request object to be sent for Form URL Encoded APIs.
+/// </summary>
+internal record FormRequest : BaseRequest
+{
+    internal object? Body { get; init; }
+
+    internal override HttpContent? CreateContent()
+    {
+        if (Body is null && Options?.AdditionalBodyProperties is null)
+        {
+            return null;
+        }
+
+        var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
+            ContentType,
+            Utf8NoBom,
+            "application/x-www-form-urlencoded"
+        );
+
+        var content = new StringContent(
+            FormUrlEncoder.EncodeAsForm(GetFormBody()).ReadAsStringAsync().Result,
+            encoding,
+            mediaType
+        );
+
+        if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
+        {
+            content.Headers.ContentType.CharSet = "";
+        }
+
+        return content;
+    }
+
+    private object GetFormBody()
+    {
+        if (Options?.AdditionalBodyProperties is null)
+        {
+            return Body!;
+        }
+        return JsonUtils.Deserialize<global::System.Text.Json.JsonElement>(
+            JsonUtils.SerializeWithAdditionalProperties(Body, Options.AdditionalBodyProperties)
+        );
+    }
+}

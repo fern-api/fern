@@ -52,6 +52,15 @@ class ContactsClient
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      *
+     * Example:
+     * ```php
+     * $client->contacts->create(
+     *     new CreateContactRequest([
+     *         'name' => 'name',
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateContactRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -100,6 +109,13 @@ class ContactsClient
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
+     *
+     * Example:
+     * ```php
+     * $client->contacts->get(
+     *     'id',
+     * );
+     * ```
      *
      * @param string $id
      * @param ?array{

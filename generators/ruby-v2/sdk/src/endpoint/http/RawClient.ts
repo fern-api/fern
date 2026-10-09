@@ -1,4 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
+import { areRetriesDisabled } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
@@ -10,6 +11,8 @@ export declare namespace RawClient {
         endpoint: FernIr.HttpEndpoint;
         /** reference to a variable that is the body */
         bodyReference?: ruby.CodeBlock;
+        /** whether the request must omit Content-Type when the body reference is nil */
+        omitContentTypeWithoutBody?: boolean;
         /** the path parameter id to reference */
         pathParameterReferences: Record<string, string>;
         /** the headers to pass to the endpoint */
@@ -22,7 +25,7 @@ export declare namespace RawClient {
         baseUrlName?: string;
     }
 
-    export type RequestBodyType = "json" | "bytes" | "multipartform";
+    export type RequestBodyType = "json" | "urlencoded" | "bytes" | "multipartform";
 }
 
 export class RawClient {
@@ -48,14 +51,18 @@ export class RawClient {
         headerBagReference,
         queryBagReference,
         requestType,
-        baseUrlName
+        baseUrlName,
+        omitContentTypeWithoutBody
     }: RawClient.CreateHttpRequestWrapperArgs): ruby.CodeBlock | undefined {
         switch (requestType) {
             case "json":
+            case "urlencoded":
                 return ruby.codeblock((writer) => {
-                    writer.writeLine(
-                        `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
-                    );
+                    const requestClassReference =
+                        requestType === "urlencoded"
+                            ? this.context.getReferenceToInternalUrlEncodedRequest()
+                            : this.context.getReferenceToInternalJSONRequest();
+                    writer.writeLine(`${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${requestClassReference}.new(`);
                     writer.indent();
                     this.writeBaseUrlDeclaration(writer, baseUrlName);
                     writer.writeLine(",");
@@ -72,7 +79,12 @@ export class RawClient {
                     if (bodyReference != null) {
                         writer.writeLine(`body: ${bodyReference},`);
                     }
-                    writer.writeLine(`request_options: request_options`);
+                    if (omitContentTypeWithoutBody === true && requestType === "json") {
+                        writer.writeLine(`omit_content_type_without_body: true,`);
+                    }
+                    writer.write(`request_options: request_options`);
+                    this.writeMaxRetriesOverride({ writer, endpoint });
+                    writer.writeLine();
                     writer.dedent();
                     writer.write(`)`);
                 });
@@ -99,7 +111,9 @@ export class RawClient {
                     if (bodyReference != null) {
                         writer.writeLine(`body: ${bodyReference},`);
                     }
-                    writer.writeLine(`request_options: request_options`);
+                    writer.write(`request_options: request_options`);
+                    this.writeMaxRetriesOverride({ writer, endpoint });
+                    writer.writeLine();
                     writer.dedent();
                     writer.write(`)`);
                 });
@@ -115,10 +129,34 @@ export class RawClient {
             writer.write(`path: `);
             this.writePathString({ writer, endpoint, pathParameterReferences });
             writer.writeLine(",");
-            writer.writeLine(`request_options: request_options`);
+            if (headerBagReference != null) {
+                writer.writeLine(`headers: ${headerBagReference},`);
+            }
+            if (queryBagReference != null) {
+                writer.writeLine(`query: ${queryBagReference},`);
+            }
+            writer.write(`request_options: request_options`);
+            this.writeMaxRetriesOverride({ writer, endpoint });
+            writer.writeLine();
             writer.dedent();
             writer.write(`)`);
         });
+    }
+
+    // Endpoints configured with `retries: { disabled: true }` pin the request's retry count to
+    // zero, which wins over both the client-level and the per-request retry settings.
+    private writeMaxRetriesOverride({
+        writer,
+        endpoint
+    }: {
+        writer: ruby.Writer;
+        endpoint: FernIr.HttpEndpoint;
+    }): void {
+        if (!areRetriesDisabled(endpoint)) {
+            return;
+        }
+        writer.writeLine(",");
+        writer.write("max_retries: 0");
     }
 
     private writePathString({

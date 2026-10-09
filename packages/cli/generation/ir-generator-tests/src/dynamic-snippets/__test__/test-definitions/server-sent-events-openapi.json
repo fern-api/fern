@@ -51,6 +51,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -212,6 +213,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -373,6 +375,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -480,6 +483,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -587,6 +591,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -644,6 +649,141 @@
                 }
             }
         },
+        "type_:StreamProtocolMixedSchemaResponse": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamProtocolMixedSchemaResponse",
+                    "camelCase": {
+                        "unsafeName": "streamProtocolMixedSchemaResponse",
+                        "safeName": "streamProtocolMixedSchemaResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_protocol_mixed_schema_response",
+                        "safeName": "stream_protocol_mixed_schema_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_PROTOCOL_MIXED_SCHEMA_RESPONSE",
+                        "safeName": "STREAM_PROTOCOL_MIXED_SCHEMA_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamProtocolMixedSchemaResponse",
+                        "safeName": "StreamProtocolMixedSchemaResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "wireValue": "event",
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                }
+            },
+            "inheritedBaseProperties": [],
+            "types": {
+                "heartbeat": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:DataContextHeartbeat",
+                    "discriminantValue": {
+                        "wireValue": "heartbeat",
+                        "name": {
+                            "originalName": "heartbeat",
+                            "camelCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEARTBEAT",
+                                "safeName": "HEARTBEAT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Heartbeat",
+                                "safeName": "Heartbeat"
+                            }
+                        }
+                    },
+                    "properties": []
+                },
+                "entity": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:DataContextEntityEvent",
+                    "discriminantValue": {
+                        "wireValue": "entity",
+                        "name": {
+                            "originalName": "entity",
+                            "camelCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENTITY",
+                                "safeName": "ENTITY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Entity",
+                                "safeName": "Entity"
+                            }
+                        }
+                    },
+                    "properties": []
+                },
+                "object_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolObjectEvent",
+                    "discriminantValue": {
+                        "wireValue": "object_data",
+                        "name": {
+                            "originalName": "object_data",
+                            "camelCase": {
+                                "unsafeName": "objectData",
+                                "safeName": "objectData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object_data",
+                                "safeName": "object_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT_DATA",
+                                "safeName": "OBJECT_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ObjectData",
+                                "safeName": "ObjectData"
+                            }
+                        }
+                    },
+                    "properties": []
+                }
+            }
+        },
         "type_:StreamDataContextWithEnvelopeSchemaResponse": {
             "type": "discriminatedUnion",
             "declaration": {
@@ -694,6 +834,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -855,6 +996,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "message": {
                     "type": "samePropertiesAsObject",
@@ -1091,6 +1233,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "message": {
                     "type": "samePropertiesAsObject",
@@ -1341,7 +1484,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:StreamRequest": {
             "type": "object",
@@ -1407,7 +1551,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Event": {
             "type": "object",
@@ -1569,7 +1714,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:StatusPayload": {
             "type": "object",
@@ -1662,7 +1808,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectPayloadWithEventField": {
             "type": "object",
@@ -1785,7 +1932,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:HeartbeatPayload": {
             "type": "object",
@@ -1851,7 +1999,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:EntityEventPayloadEventType": {
             "type": "enum",
@@ -2102,7 +2251,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolHeartbeat": {
             "type": "object",
@@ -2134,7 +2284,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolStringEvent": {
             "type": "object",
@@ -2197,7 +2348,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolNumberEvent": {
             "type": "object",
@@ -2260,7 +2412,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolObjectEvent": {
             "type": "object",
@@ -2323,7 +2476,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolCollisionObjectEvent": {
             "type": "object",
@@ -2386,7 +2540,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DataContextHeartbeat": {
             "type": "object",
@@ -2454,7 +2609,8 @@
             "extends": [
                 "type_:HeartbeatPayload"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DataContextEntityEvent": {
             "type": "object",
@@ -2588,7 +2744,8 @@
             "extends": [
                 "type_:EntityEventPayload"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:CompletionRequest": {
             "type": "object",
@@ -2684,7 +2841,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:NullableStreamRequest": {
             "type": "object",
@@ -2783,7 +2941,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:CompletionFullResponseFinishReason": {
             "type": "enum",
@@ -2979,7 +3138,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:CompletionStreamChunk": {
             "type": "object",
@@ -3078,7 +3238,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamRequestBase": {
             "type": "object",
@@ -3174,7 +3335,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamMessageVariant": {
             "type": "object",
@@ -3302,7 +3464,8 @@
             "extends": [
                 "type_:UnionStreamRequestBase"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamInterruptVariant": {
             "type": "object",
@@ -3400,7 +3563,8 @@
             "extends": [
                 "type_:UnionStreamRequestBase"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamCompactVariant": {
             "type": "object",
@@ -3528,7 +3692,8 @@
             "extends": [
                 "type_:UnionStreamRequestBase"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamRequest": {
             "type": "discriminatedUnion",
@@ -3580,6 +3745,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "message": {
                     "type": "samePropertiesAsObject",
@@ -3708,7 +3874,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3756,7 +3923,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3804,7 +3972,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3852,7 +4021,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3900,7 +4070,57 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
+                },
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_.streamProtocolMixedSchema": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamProtocolMixedSchema",
+                    "camelCase": {
+                        "unsafeName": "streamProtocolMixedSchema",
+                        "safeName": "streamProtocolMixedSchema"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_protocol_mixed_schema",
+                        "safeName": "stream_protocol_mixed_schema"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_PROTOCOL_MIXED_SCHEMA",
+                        "safeName": "STREAM_PROTOCOL_MIXED_SCHEMA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamProtocolMixedSchema",
+                        "safeName": "StreamProtocolMixedSchema"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
                 }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream/protocol-mixed-schema"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:StreamRequest"
+                    }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3948,7 +4168,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3996,7 +4217,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -4839,7 +5061,8 @@
                         "type": "named",
                         "value": "type_:StreamXFernStreamingUnionStreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -4887,7 +5110,8 @@
                         "type": "named",
                         "value": "type_:StreamXFernStreamingUnionRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4935,7 +5159,8 @@
                         "type": "named",
                         "value": "type_:UnionStreamRequestBase"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5265,7 +5490,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -5276,5 +5502,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

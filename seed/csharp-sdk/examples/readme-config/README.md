@@ -1,11 +1,11 @@
-# Seed C# Library
+# CustomName C# Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
 [![nuget shield](https://img.shields.io/nuget/v/Fernexamples)](https://nuget.org/packages/Fernexamples)
 
-The Seed C# library provides convenient access to the Seed APIs from C#.
+The CustomName C# library provides convenient access to the CustomName APIs from C#.
 
 ## Table of Contents
 
@@ -25,8 +25,8 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Additional Body Properties](#additional-body-properties)
   - [Forward Compatible Enums](#forward-compatible-enums)
-- [Contributing](#contributing)
 
 ## Documentation
 
@@ -35,6 +35,9 @@ API reference documentation is available [here](https://www.docs.fernapi.com).
 ## Requirements
 
 This SDK requires:
+- .NET 8 and above
+- .NET Framework 4.6.2 and above
+- .NET Standard 2.0 and above
 
 ## Installation
 
@@ -100,7 +103,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedExamples;
 
-var client = new SeedExamplesClient(new ClientOptions
+var client = new SeedExamplesClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedExamplesEnvironment.Production
 });
@@ -119,6 +122,17 @@ try {
 } catch (SeedExamplesApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+
+    // Access the raw HTTP response (status code, URL, headers) off the exception
+    var rawResponse = e.RawResponse;
+    if (rawResponse != null)
+    {
+        System.Console.WriteLine(rawResponse.Url);
+        if (rawResponse.Headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            System.Console.WriteLine($"Request ID: {requestId}");
+        }
+    }
 }
 ```
 
@@ -150,7 +164,7 @@ Use the `MaxRetries` request option to configure this behavior.
 var response = await client.Service.CreateMovieAsync(
     ...,
     new RequestOptions {
-        MaxRetries: 0 // Override MaxRetries at the request level
+        MaxRetries = 0 // Override MaxRetries at the request level
     }
 );
 ```
@@ -163,7 +177,7 @@ The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure t
 var response = await client.Service.GetMovieAsync(
     ...,
     new RequestOptions {
-        Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+        Timeout = TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
 ```
@@ -172,7 +186,7 @@ var response = await client.Service.GetMovieAsync(
 var response = await client.Service.CreateMovieAsync(
     ...,
     new RequestOptions {
-        Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+        Timeout = TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
 ```
@@ -202,7 +216,10 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Service.CreateMovieAsync(...);
+var parsedData = await client.Service.CreateMovieAsync(...);
+
+// .WithRawResponse() also works on streaming endpoints (returns IAsyncEnumerable<T> + RawResponse)
+// and on endpoints with no response body (returns RawResponse only).
 ```
 
 ### Additional Headers
@@ -237,6 +254,26 @@ var response = await client.Service.CreateMovieAsync(
 );
 ```
 
+### Additional Body Properties
+
+If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
+These properties are merged into the serialized JSON body using their wire-format names; on a key collision the additional
+property wins, and nested objects are merged recursively. If the endpoint has no request body, the additional properties
+are sent as the JSON body. Form-urlencoded requests merge the additional properties the same way before encoding;
+multipart (file upload) requests are not supported.
+
+```csharp
+var response = await client.Service.CreateMovieAsync(
+    ...,
+    new RequestOptions {
+        AdditionalBodyProperties = new Dictionary<string, object>
+        {
+            { "custom_field", "custom-value" }
+        }
+    }
+);
+```
+
 ### Forward Compatible Enums
 
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
@@ -266,12 +303,3 @@ string basicTypeString = (string)BasicType.Primitive;
 BasicType basicTypeFromString = (BasicType)"primitive";
 ```
 
-## Contributing
-
-While we value open-source contributions to this SDK, this library is generated programmatically.
-Additions made directly to this library would have to be moved over to our generation code,
-otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
-a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
-an issue first to discuss with us!
-
-On the other hand, contributions to the README are always very welcome!

@@ -1,0 +1,6 @@
+- summary: |
+    Fix replay lockfile not advancing in the no-patches flow when zero new
+    patches are detected. The lockfile's current_generation was saved to disk
+    but never committed, causing previousGenerationSha to remain stale and
+    autoversion diffs to accumulate across runs.
+  type: fix

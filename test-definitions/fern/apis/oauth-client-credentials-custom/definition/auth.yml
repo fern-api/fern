@@ -25,6 +25,7 @@ service:
             audience: literal<"https://api.example.com">
             grant_type: literal<"client_credentials">
             scope: optional<string>
+            permissions: optional<list<string>>
       response: TokenResponse
 
     refreshToken:

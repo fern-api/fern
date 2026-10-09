@@ -1,7 +1,8 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
+#[non_exhaustive]
 pub enum UnionWithBaseProperties {
     #[serde(rename = "integer")]
     #[non_exhaustive]
@@ -18,6 +19,12 @@ pub enum UnionWithBaseProperties {
         data: Foo,
         id: String,
     },
+
+    /// Catch-all variant for unrecognized discriminant values.
+    /// If the server sends a discriminant not recognized by the current SDK
+    /// version, the raw payload is captured here so callers can still inspect it.
+    #[serde(untagged)]
+    __Unknown(serde_json::Value),
 }
 
 impl UnionWithBaseProperties {
@@ -33,11 +40,18 @@ impl UnionWithBaseProperties {
         Self::Foo { data, id }
     }
 
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
+    }
+
     pub fn get_id(&self) -> &str {
         match self {
             Self::Integer { id, .. } => id,
             Self::String { id, .. } => id,
             Self::Foo { id, .. } => id,
+            Self::__Unknown(_) => {
+                panic!("get_id() called on __Unknown variant; inspect the raw JSON value directly")
+            }
         }
     }
 }

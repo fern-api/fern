@@ -9,11 +9,7 @@ public class Example3 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.postWithNonNullableNamedRequestBodyType(
-                "id",
-                NonNullableObject.builder()
-                        .nonNullableObjectId("id")
-                        .name("name")
-                        .age(1)
-                        .build());
+                "pathId",
+                NonNullableObject.builder().id("id").name("name").age(1).build());
     }
 }

@@ -1,0 +1,12 @@
+name: redirect-uri-host
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: authorization-code
+    client-id: "public-client-id"
+    authorization-url: https://auth.example.com/authorize
+    token-url: https://auth.example.com/token
+    redirect-uri: http://evil.example.com:8484/callback
+    pkce:
+      method: S256

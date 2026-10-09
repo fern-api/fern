@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed request URLs for endpoints with enum-typed path parameters and for
+    multi-value query parameters whose element type is a complex type (e.g. an
+    undiscriminated union). Multi-value query parameters are now serialized as
+    repeated flat key=value pairs instead of deep-object bracket notation, and
+    generated WireMock tests now match the decoded request path.
+  type: fix

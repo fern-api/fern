@@ -55,3 +55,9 @@ updates:
     directory: "/generators/go"
     schedule:
       interval: "weekly"
+  # The CLI generator vendors a Rust SDK whose Cargo.lock ships verbatim into
+  # every generated CLI, so an advisory here reaches every consumer.
+  - package-ecosystem: "cargo"
+    directory: "/generators/cli/sdk"
+    schedule:
+      interval: "weekly"

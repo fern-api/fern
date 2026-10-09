@@ -3,11 +3,13 @@
  */
 package com.seed.pathParameters.resources.organizations;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.ObjectMappers;
 import com.seed.pathParameters.core.QueryStringMapper;
 import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.core.RetryInterceptor;
 import com.seed.pathParameters.core.SeedPathParametersApiException;
 import com.seed.pathParameters.core.SeedPathParametersException;
 import com.seed.pathParameters.core.SeedPathParametersHttpResponse;
@@ -57,6 +59,15 @@ public class RawOrganizationsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -67,6 +78,8 @@ public class RawOrganizationsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }
@@ -112,6 +125,15 @@ public class RawOrganizationsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -122,6 +144,8 @@ public class RawOrganizationsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }
@@ -170,6 +194,15 @@ public class RawOrganizationsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -182,6 +215,8 @@ public class RawOrganizationsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }

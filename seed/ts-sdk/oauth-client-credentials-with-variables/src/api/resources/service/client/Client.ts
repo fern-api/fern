@@ -23,6 +23,9 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedOauthClientCredentialsWithVariablesError}
+     * @throws {@link errors.SeedOauthClientCredentialsWithVariablesTimeoutError}
+     *
      * @example
      *     await client.service.post()
      */

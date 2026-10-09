@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Enable the `exhaustive:local-files` seed fixture by skipping the Gradle build
+    scripts for source-only `local_files` output (which has no Gradle project).
+  type: chore

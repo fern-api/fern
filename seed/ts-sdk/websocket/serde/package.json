@@ -66,6 +66,17 @@
             },
             "default": "./dist/cjs/api/resources/realtime/exports.js"
         },
+        "./status": {
+            "import": {
+                "types": "./dist/esm/api/resources/status/exports.d.mts",
+                "default": "./dist/esm/api/resources/status/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/status/exports.d.ts",
+                "default": "./dist/cjs/api/resources/status/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/status/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
@@ -97,7 +108,7 @@
         "@types/ws": "^8.18.1",
         "vitest": "^4.1.1",
         "msw": "2.11.2",
-        "@types/node": "^18.19.70",
+        "@types/node": "^20.0.0",
         "typescript": "~5.9.3",
         "@biomejs/biome": "2.4.10"
     },

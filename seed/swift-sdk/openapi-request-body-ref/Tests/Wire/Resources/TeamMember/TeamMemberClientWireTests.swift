@@ -6,7 +6,7 @@ import Api
     @Test func updateTeamMember1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -36,7 +36,7 @@ import Api
     @Test func updateTeamMember2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",

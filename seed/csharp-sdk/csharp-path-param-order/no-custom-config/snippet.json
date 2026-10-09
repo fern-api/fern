@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/Bill/approval/{idBill}/{approved}",
+                "method": "GET",
+                "identifier_override": "endpoint_.setApprovedBill"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpPathParamOrder;\n\nvar client = new SeedCsharpPathParamOrderClient();\nawait client.SetApprovedBillAsync(285, \"true\");\n"
+            }
+        }
+    ]
+}

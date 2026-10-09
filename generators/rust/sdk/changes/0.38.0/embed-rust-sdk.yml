@@ -1,0 +1,6 @@
+- summary: |
+    Support embedding as a library crate inside CLI generator output.
+    Async command handlers, `AppContext::client()` returning a
+    forward-compatible `ApiClient` trait, and `ResolvedClientConfig`
+    for auth credential resolution.
+  type: feat

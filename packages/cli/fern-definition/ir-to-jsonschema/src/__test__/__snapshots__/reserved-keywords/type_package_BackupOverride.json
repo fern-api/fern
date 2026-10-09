@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "model": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "model"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

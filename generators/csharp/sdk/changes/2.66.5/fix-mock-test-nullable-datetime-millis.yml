@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Mock-server tests now serialize nullable date-time query and header parameters with millisecond precision so they match what the runtime sends. Previously, when a date-time field was wrapped in a nullable container (e.g. with `respect-nullable-schemas: true` and `coerce-optional-schemas-to-nullable: false`), the generated `WithParam("since", "2024-01-15T09:30:00Z")` omitted milliseconds while the SDK actually sent `2024-01-15T09:30:00.000Z`, causing WireMock to return 404.
+  type: fix

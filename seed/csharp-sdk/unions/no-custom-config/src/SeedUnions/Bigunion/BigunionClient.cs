@@ -18,6 +18,9 @@ public partial class BigunionClient : IBigunionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUnions.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,7 +32,8 @@ public partial class BigunionClient : IBigunionClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
+                    Path = string.Format("/bigunion/{0}", ValueConvert.ToPathParameterString(id)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -47,7 +51,7 @@ public partial class BigunionClient : IBigunionClient
                 return new WithRawResponse<BigUnion>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -61,7 +65,13 @@ public partial class BigunionClient : IBigunionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -72,7 +82,13 @@ public partial class BigunionClient : IBigunionClient
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -83,6 +99,9 @@ public partial class BigunionClient : IBigunionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUnions.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -94,8 +113,9 @@ public partial class BigunionClient : IBigunionClient
                 new JsonRequest
                 {
                     Method = HttpMethodExtensions.Patch,
-                    Path = "",
+                    Path = "/bigunion",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -113,7 +133,7 @@ public partial class BigunionClient : IBigunionClient
                 return new WithRawResponse<bool>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -127,7 +147,13 @@ public partial class BigunionClient : IBigunionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -138,7 +164,13 @@ public partial class BigunionClient : IBigunionClient
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -149,6 +181,9 @@ public partial class BigunionClient : IBigunionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUnions.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -160,8 +195,9 @@ public partial class BigunionClient : IBigunionClient
                 new JsonRequest
                 {
                     Method = HttpMethodExtensions.Patch,
-                    Path = "/many",
+                    Path = "/bigunion/many",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -179,7 +215,7 @@ public partial class BigunionClient : IBigunionClient
                 return new WithRawResponse<Dictionary<string, bool>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUnions.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -193,7 +229,13 @@ public partial class BigunionClient : IBigunionClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUnions.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -204,7 +246,13 @@ public partial class BigunionClient : IBigunionClient
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUnions.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

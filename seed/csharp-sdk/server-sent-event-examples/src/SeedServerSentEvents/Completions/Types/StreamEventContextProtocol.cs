@@ -37,9 +37,9 @@ public record StreamEventContextProtocol
     }
 
     /// <summary>
-    /// Create an instance of StreamEventContextProtocol with <see cref="StreamEventContextProtocol.Event"/>.
+    /// Create an instance of StreamEventContextProtocol with <see cref="StreamEventContextProtocol.EventInner"/>.
     /// </summary>
-    public StreamEventContextProtocol(StreamEventContextProtocol.Event value)
+    public StreamEventContextProtocol(StreamEventContextProtocol.EventInner value)
     {
         Event = "event";
         Value = value.Value;
@@ -193,7 +193,7 @@ public record StreamEventContextProtocol
     ) => new(value);
 
     public static implicit operator StreamEventContextProtocol(
-        StreamEventContextProtocol.Event value
+        StreamEventContextProtocol.EventInner value
     ) => new(value);
 
     [Serializable]
@@ -343,9 +343,9 @@ public record StreamEventContextProtocol
     /// Discriminated union type for event
     /// </summary>
     [Serializable]
-    public struct Event
+    public struct EventInner
     {
-        public Event(SeedServerSentEvents.EventEvent value)
+        public EventInner(SeedServerSentEvents.EventEvent value)
         {
             Value = value;
         }
@@ -354,7 +354,7 @@ public record StreamEventContextProtocol
 
         public override string ToString() => Value.ToString() ?? "null";
 
-        public static implicit operator StreamEventContextProtocol.Event(
+        public static implicit operator StreamEventContextProtocol.EventInner(
             SeedServerSentEvents.EventEvent value
         ) => new(value);
     }

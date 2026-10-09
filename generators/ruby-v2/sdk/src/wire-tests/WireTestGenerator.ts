@@ -1,4 +1,5 @@
-import { CaseConverter, File, GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { ruby } from "@fern-api/ruby-ast";
@@ -7,6 +8,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { isUrlEncodedRequestBody, unwrapTypeReference } from "../utils/requestBody.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
@@ -16,6 +18,52 @@ interface EndpointTestCase {
     exampleIndex: number;
     testId: string;
 }
+
+/**
+ * The header(s) a single auth scheme contributes to a request when its credentials
+ * are supplied. `exact` schemes (bearer/header/basic) produce a deterministic value;
+ * `present` schemes (oauth/inferred) resolve their value from a live token endpoint at
+ * runtime, so only presence can be asserted.
+ */
+interface SchemeAuthHeader {
+    headerName: string;
+    kind: "exact" | "present";
+    value?: string;
+}
+
+/**
+ * A per-endpoint assertion about one auth header:
+ * - `exact`: header must be present with exactly this value.
+ * - `present`: header must be present with any value.
+ * - `absent`: header must NOT be present (proves the SDK did not send a scheme the
+ *   endpoint does not declare).
+ */
+/** A number found in a JSON document, addressed by its RFC 6901 JSON Pointer. */
+interface JsonNumber {
+    pointer: string;
+    value: number;
+}
+
+function collectJsonNumbers(value: unknown, pointer = "", out: JsonNumber[] = []): JsonNumber[] {
+    if (typeof value === "number") {
+        // Integers beyond 2^53 lose precision in JS, so their literal can't be asserted exactly.
+        if (Number.isFinite(value) && (!Number.isInteger(value) || Number.isSafeInteger(value))) {
+            out.push({ pointer, value });
+        }
+    } else if (Array.isArray(value)) {
+        value.forEach((item, index) => collectJsonNumbers(item, `${pointer}/${index}`, out));
+    } else if (value != null && typeof value === "object") {
+        for (const [key, item] of Object.entries(value)) {
+            collectJsonNumbers(item, `${pointer}/${key.replaceAll("~", "~0").replaceAll("/", "~1")}`, out);
+        }
+    }
+    return out;
+}
+
+type AuthHeaderMatcher =
+    | { headerName: string; kind: "exact"; value: string }
+    | { headerName: string; kind: "present" }
+    | { headerName: string; kind: "absent" };
 
 /**
  * Generates WireMock-based integration tests for Ruby SDK.
@@ -144,7 +192,7 @@ export class WireTestGenerator {
         lines.push(`class ${this.toPascalCase(serviceName)}WireTest < WireMockTestCase`);
 
         // Setup method that creates the client once (base class handles skip logic)
-        lines.push(...this.generateSetupMethod());
+        lines.push(...this.generateSetupMethod([...endpointTestCases.values()].map((testCase) => testCase.endpoint)));
 
         // Test methods
         const testMethods: string[][] = [];
@@ -172,7 +220,7 @@ export class WireTestGenerator {
      * This follows the PHP/Python pattern of client reuse for better performance.
      * The base class (WireMockTestCase) handles the skip logic for wire tests.
      */
-    private generateSetupMethod(): string[] {
+    private generateSetupMethod(endpoints: FernIr.HttpEndpoint[]): string[] {
         const lines: string[] = [];
 
         lines.push("  def setup");
@@ -180,7 +228,7 @@ export class WireTestGenerator {
         lines.push("");
 
         // Build auth parameters for the client constructor
-        const authParams = this.buildAuthParamsForSetup();
+        const authParams = [...this.buildAuthParamsForSetup(), ...this.buildSdkVariableParamsForSetup(endpoints)];
         const clientClassName = `${this.context.getRootModuleName()}::${this.context.getRootClientClassName()}`;
 
         // Generate client instantiation with auth and base_url
@@ -201,6 +249,54 @@ export class WireTestGenerator {
     }
 
     /**
+     * SDK variables bound to path parameters are configured on the client, not passed to the
+     * endpoint, so seed the client with the value from the first example that provides one.
+     */
+    private buildSdkVariableParamsForSetup(endpoints: FernIr.HttpEndpoint[]): string[] {
+        const options = this.context.getSdkVariableOptions();
+        if (options.length === 0) {
+            return [];
+        }
+        const exampleValues = this.collectSdkVariableExampleValues(endpoints);
+        const params: string[] = [];
+        for (const option of options) {
+            const value = exampleValues.get(option.variable.id);
+            if (value != null) {
+                params.push(`${option.optionName}: ${JSON.stringify(value)}`);
+            }
+        }
+        return params;
+    }
+
+    /** First example value per SDK variable id, collected in a single pass over the endpoints. */
+    private collectSdkVariableExampleValues(endpoints: FernIr.HttpEndpoint[]): Map<string, unknown> {
+        const values = new Map<string, unknown>();
+        for (const endpoint of endpoints) {
+            const boundParameters = endpoint.allPathParameters.filter(
+                (pathParameter) => pathParameter.variable != null
+            );
+            if (boundParameters.length === 0) {
+                continue;
+            }
+            const example = this.getDynamicEndpointExample(endpoint);
+            if (example?.pathParameters == null) {
+                continue;
+            }
+            for (const pathParameter of boundParameters) {
+                const variableId = pathParameter.variable;
+                if (variableId == null || values.has(variableId)) {
+                    continue;
+                }
+                const value = example.pathParameters[getOriginalName(pathParameter.name)];
+                if (value != null) {
+                    values.set(variableId, value);
+                }
+            }
+        }
+        return values;
+    }
+
+    /**
      * Builds auth parameters for the setup method based on global auth schemes.
      */
     private buildAuthParamsForSetup(): string[] {
@@ -209,17 +305,17 @@ export class WireTestGenerator {
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer":
-                    authParams.push(`${this.case.snakeSafe(scheme.token)}: "<token>"`);
+                    authParams.push(`${this.context.getBearerTokenParameterName(scheme.token)}: "<token>"`);
                     break;
                 case "header":
-                    authParams.push(`${this.case.snakeSafe(scheme.name)}: "test-api-key"`);
+                    authParams.push(`${this.context.getCredentialParameterName(scheme.name)}: "test-api-key"`);
                     break;
                 case "basic":
                     if (!scheme.usernameOmit) {
-                        authParams.push(`${this.case.snakeSafe(scheme.username)}: "test-username"`);
+                        authParams.push(`${this.context.getCredentialParameterName(scheme.username)}: "test-username"`);
                     }
                     if (!scheme.passwordOmit) {
-                        authParams.push(`${this.case.snakeSafe(scheme.password)}: "test-password"`);
+                        authParams.push(`${this.context.getCredentialParameterName(scheme.password)}: "test-password"`);
                     }
                     break;
                 case "oauth":
@@ -238,7 +334,20 @@ export class WireTestGenerator {
             }
         }
 
-        return authParams;
+        // Dedupe by keyword name (the text before the first ":"), keeping the first
+        // occurrence. Under endpoint-security an API can declare OAuth *and* inferred
+        // auth that both derive `client_id`/`client_secret` from the same token endpoint;
+        // without deduping we would emit duplicate keyword arguments and produce invalid
+        // Ruby. This is a no-op when there are no collisions.
+        const seenKeywords = new Set<string>();
+        return authParams.filter((param) => {
+            const keyword = param.slice(0, param.indexOf(":"));
+            if (seenKeywords.has(keyword)) {
+                return false;
+            }
+            seenKeywords.add(keyword);
+            return true;
+        });
     }
 
     /**
@@ -326,6 +435,12 @@ export class WireTestGenerator {
             // Check if endpoint uses lazy pagination (cursor or offset)
             // These return iterators that don't make HTTP requests until iterated
             const isLazyPagination = endpoint.pagination?.type === "cursor" || endpoint.pagination?.type === "offset";
+            // Custom pagination returns a pager whose `current` is the response model; other
+            // pagination kinds return iterators, so their response numbers are not checked.
+            const isCustomPagination = endpoint.pagination?.type === "custom";
+            const responseNumbers =
+                endpoint.pagination == null || isCustomPagination ? this.getExpectedResponseNumbers(endpoint) : [];
+            const requestBodyNumbers = this.getExpectedRequestBodyNumbers(endpoint);
 
             if (isLazyPagination) {
                 // For lazy paginated endpoints, we need to trigger the first HTTP request
@@ -347,12 +462,10 @@ export class WireTestGenerator {
                 }
                 lines.push(`    result.pages.next_page`);
             } else {
-                const snippetLines = snippetCode.split("\n");
-                for (const line of snippetLines) {
-                    if (line.trim()) {
-                        lines.push(`    ${line}`);
-                    }
-                }
+                const snippetLines = snippetCode.split("\n").filter((line) => line.trim());
+                snippetLines.forEach((line, i) => {
+                    lines.push(i === 0 && responseNumbers.length > 0 ? `    result = ${line}` : `    ${line}`);
+                });
             }
             lines.push("");
 
@@ -365,16 +478,58 @@ export class WireTestGenerator {
             lines.push(`      expected: 1`);
             lines.push(`    )`);
 
-            // Verify Authorization header when basic auth is configured
-            const expectedAuthHeader = this.buildExpectedAuthorizationHeader();
-            if (expectedAuthHeader != null) {
-                lines.push(``);
-                lines.push(`    verify_authorization_header(`);
+            if (requestBodyNumbers.length > 0) {
+                lines.push("");
+                lines.push(`    verify_request_body_numbers(`);
                 lines.push(`      test_id: test_id,`);
                 lines.push(`      method: "${endpoint.method}",`);
                 lines.push(`      url_path: "${basePath}",`);
-                lines.push(`      expected_value: "${expectedAuthHeader}"`);
+                lines.push(...this.renderExpectedNumbers(requestBodyNumbers));
                 lines.push(`    )`);
+            }
+
+            if (responseNumbers.length > 0) {
+                lines.push("");
+                lines.push(`    verify_response_numbers(`);
+                lines.push(`      actual: ${isCustomPagination ? "result.current" : "result"},`);
+                lines.push(...this.renderExpectedNumbers(responseNumbers));
+                lines.push(`    )`);
+            }
+
+            const expectedRequestBody = this.getExpectedRawRequestBody(endpoint);
+            if (expectedRequestBody != null) {
+                lines.push(``);
+                lines.push(`    verify_request_body(`);
+                lines.push(`      test_id: test_id,`);
+                lines.push(`      method: "${endpoint.method}",`);
+                lines.push(`      url_path: "${basePath}",`);
+                lines.push(
+                    `      expected_body: JSON.parse(${toRubyStringLiteral(JSON.stringify(expectedRequestBody))})`
+                );
+                lines.push(`    )`);
+            }
+
+            if (this.context.isEndpointSecurity()) {
+                // Per-endpoint security: the SDK routes only the auth scheme(s) this endpoint
+                // declares, so assert the routed scheme's header(s) are present (and every other
+                // scheme's header is absent) rather than asserting a single global auth header.
+                lines.push(...this.buildEndpointSecurityAuthAssertion(endpoint, basePath));
+            } else {
+                // Verify Authorization header when basic auth is configured.
+                // Skipped when an OAuth scheme is also configured: the test client is
+                // constructed with client credentials, so the OAuth provider's dynamic
+                // Bearer token overwrites the static Basic header at request time.
+                const hasOAuthScheme = this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
+                const expectedAuthHeader = hasOAuthScheme ? null : this.buildExpectedAuthorizationHeader();
+                if (expectedAuthHeader != null) {
+                    lines.push(``);
+                    lines.push(`    verify_authorization_header(`);
+                    lines.push(`      test_id: test_id,`);
+                    lines.push(`      method: "${endpoint.method}",`);
+                    lines.push(`      url_path: "${basePath}",`);
+                    lines.push(`      expected_value: "${expectedAuthHeader}"`);
+                    lines.push(`    )`);
+                }
             }
 
             lines.push("  end");
@@ -384,6 +539,151 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Numbers in the JSON request body of the example the snippet was generated from. The test
+     * asserts they reach the wire unchanged (e.g. a `double` amount of 1.1 is not sent as 1).
+     * Only object bodies are checked here; other body types are compared exactly by
+     * `verify_request_body` (see `getExpectedRawRequestBody`).
+     */
+    private getExpectedRequestBodyNumbers(endpoint: FernIr.HttpEndpoint): JsonNumber[] {
+        if (!this.isObjectRequestBody(endpoint.requestBody)) {
+            return [];
+        }
+        const requestBody = this.getDynamicEndpointExample(endpoint)?.requestBody;
+        if (requestBody == null || typeof requestBody !== "object" || Array.isArray(requestBody)) {
+            return [];
+        }
+        return collectJsonNumbers(requestBody);
+    }
+
+    private isObjectRequestBody(requestBody: FernIr.HttpRequestBody | undefined): boolean {
+        if (requestBody == null || isUrlEncodedRequestBody(requestBody)) {
+            return false;
+        }
+        if (requestBody.type === "inlinedRequestBody") {
+            return true;
+        }
+        if (requestBody.type !== "reference" || requestBody.requestBodyType.type !== "named") {
+            return false;
+        }
+        return this.context.ir.types[requestBody.requestBodyType.typeId]?.shape.type === "object";
+    }
+
+    /**
+     * Numbers in the mocked JSON response. The test asserts they decode unchanged into the
+     * SDK's return value (e.g. a `double` balance of 100.57 does not come back as 100).
+     */
+    private getExpectedResponseNumbers(endpoint: FernIr.HttpEndpoint): JsonNumber[] {
+        if (endpoint.response?.body?.type !== "json") {
+            return [];
+        }
+        const responseBody = this.getWireMockMapping(endpoint)?.response.body;
+        if (responseBody == null || responseBody.trim() === "") {
+            return [];
+        }
+        try {
+            return collectJsonNumbers(JSON.parse(responseBody));
+        } catch {
+            return [];
+        }
+    }
+
+    private renderExpectedNumbers(numbers: JsonNumber[]): string[] {
+        return [
+            `      expected: {`,
+            ...numbers.map(
+                ({ pointer, value }, i) =>
+                    `        ${JSON.stringify(pointer)} => ${String(value)}${i < numbers.length - 1 ? "," : ""}`
+            ),
+            `      }`
+        ];
+    }
+
+    private getWireMockMapping(endpoint: FernIr.HttpEndpoint): WireMockMapping | undefined {
+        return this.wireMockConfigContent[
+            this.wiremockMappingKey({
+                requestMethod: endpoint.method,
+                requestUrlPathTemplate: this.getPathTemplate(endpoint)
+            })
+        ];
+    }
+
+    private getPathTemplate(endpoint: FernIr.HttpEndpoint): string {
+        const path =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
+        return path.startsWith("/") ? path : `/${path}`;
+    }
+
+    /**
+     * Returns the example body for endpoints whose referenced body is passed as a single argument (a
+     * primitive, enum, optional/nullable object, or a list/set/map of those) and serializes back to
+     * the example JSON exactly, so the captured request body must equal it. Top-level object bodies
+     * and types with formatted values (dates, base64, big integers) or unknowns/unions are skipped.
+     */
+    private getExpectedRawRequestBody(endpoint: FernIr.HttpEndpoint): unknown {
+        const requestBody = endpoint.requestBody;
+        if (requestBody?.type !== "reference" || isUrlEncodedRequestBody(requestBody)) {
+            return undefined;
+        }
+        const bodyType = requestBody.requestBodyType;
+        const resolved = this.unwrapTypeReference(bodyType);
+        const isTopLevelObject =
+            bodyType.type === "named" &&
+            resolved.type === "named" &&
+            this.context.getTypeDeclarationOrThrow(resolved.typeId).shape.type === "object";
+        if (isTopLevelObject || !this.serializesToExampleJson(bodyType, new Set())) {
+            return undefined;
+        }
+        return this.getDynamicEndpointExample(endpoint)?.requestBody ?? undefined;
+    }
+
+    private serializesToExampleJson(typeReference: FernIr.TypeReference, visiting: Set<FernIr.TypeId>): boolean {
+        const resolved = this.unwrapTypeReference(typeReference);
+        switch (resolved.type) {
+            case "primitive":
+                return EXAMPLE_STABLE_PRIMITIVES.has(resolved.primitive.v1);
+            case "named": {
+                if (visiting.has(resolved.typeId)) {
+                    return false;
+                }
+                const shape = this.context.getTypeDeclarationOrThrow(resolved.typeId).shape;
+                if (shape.type === "enum") {
+                    return true;
+                }
+                if (shape.type !== "object") {
+                    return false;
+                }
+                const next = new Set(visiting).add(resolved.typeId);
+                return [...shape.properties, ...(shape.extendedProperties ?? [])].every((property) =>
+                    this.serializesToExampleJson(property.valueType, next)
+                );
+            }
+            case "container": {
+                const container = resolved.container;
+                switch (container.type) {
+                    case "list":
+                        return this.serializesToExampleJson(container.list, visiting);
+                    case "set":
+                        return this.serializesToExampleJson(container.set, visiting);
+                    case "map":
+                        return (
+                            this.serializesToExampleJson(container.keyType, visiting) &&
+                            this.serializesToExampleJson(container.valueType, visiting)
+                        );
+                    default:
+                        return false;
+                }
+            }
+            default:
+                return false;
+        }
+    }
+
+    private unwrapTypeReference(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        return unwrapTypeReference(typeReference, (typeId) => this.context.getTypeDeclarationOrThrow(typeId));
     }
 
     private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
@@ -513,8 +813,15 @@ export class WireTestGenerator {
         };
 
         const snippetRequest = convertDynamicEndpointSnippetRequest(exampleWithTestId);
+        // Resolve by endpoint id, not just method+path: under endpoint-security several endpoints
+        // can share the same method+path (e.g. multiple `GET /users` variants differing only by
+        // auth), and location-only resolution would always pick the first, generating the wrong
+        // method call for every test. Gated to endpoint-security so non-endpoint-security fixtures
+        // keep byte-identical output (matching the other generators); disambiguating everywhere is
+        // a correctness fix best made separately.
         const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest, {
-            skipClientInstantiation: true
+            skipClientInstantiation: true,
+            endpointId: this.context.isEndpointSecurity() ? endpoint.id : undefined
         });
         return snippetAst as ruby.AstNode;
     }
@@ -567,6 +874,161 @@ export class WireTestGenerator {
     }
 
     /**
+     * Builds the `verify_auth_headers(...)` assertion lines for an endpoint under
+     * endpoint-security. Emits nothing when there are no auth headers in play.
+     */
+    private buildEndpointSecurityAuthAssertion(endpoint: FernIr.HttpEndpoint, basePath: string): string[] {
+        const matchers = this.getEndpointSecurityAuthHeaderMatchers(endpoint);
+        if (matchers.length === 0) {
+            return [];
+        }
+
+        const lines: string[] = [];
+        lines.push("");
+        lines.push("    verify_auth_headers(");
+        lines.push("      test_id: test_id,");
+        lines.push(`      method: "${endpoint.method}",`);
+        lines.push(`      url_path: "${basePath}",`);
+        lines.push("      matchers: [");
+        matchers.forEach((matcher, index) => {
+            const suffix = index < matchers.length - 1 ? "," : "";
+            lines.push(`        ${this.renderAuthHeaderMatcher(matcher)}${suffix}`);
+        });
+        lines.push("      ]");
+        lines.push("    )");
+        return lines;
+    }
+
+    private renderAuthHeaderMatcher(matcher: AuthHeaderMatcher): string {
+        const name = JSON.stringify(matcher.headerName);
+        switch (matcher.kind) {
+            case "exact":
+                return `{ name: ${name}, kind: "exact", value: ${JSON.stringify(matcher.value)} }`;
+            case "present":
+                return `{ name: ${name}, kind: "present" }`;
+            case "absent":
+                return `{ name: ${name}, kind: "absent" }`;
+            default:
+                return assertNever(matcher);
+        }
+    }
+
+    /**
+     * Computes the per-endpoint auth-header assertions for an endpoint under
+     * endpoint-security.
+     *
+     * The wire-test client is constructed with credentials for every auth scheme, so every
+     * scheme is "available". `auth_headers_for_endpoint` then routes headers by selecting the
+     * FIRST of the endpoint's security requirements whose schemes are all available (OR across
+     * requirements, AND within one) and merging that requirement's schemes' headers (last write
+     * wins per header name). This mirrors that routing to determine exactly which auth headers the
+     * SDK will send, then asserts:
+     * - the routed header(s) are present (exact value for static schemes; presence-only for
+     *   schemes whose value is resolved at runtime, i.e. oauth/inferred), and
+     * - every other auth header the API could emit is absent.
+     *
+     * When the endpoint declares no security (unauthenticated), no requirement wins and every
+     * auth header the API could emit is asserted absent.
+     */
+    private getEndpointSecurityAuthHeaderMatchers(endpoint: FernIr.HttpEndpoint): AuthHeaderMatcher[] {
+        // Map each scheme (by its IR key) to the header(s) it contributes when credentials are present.
+        const schemeHeadersByKey = new Map<string, SchemeAuthHeader[]>();
+        for (const scheme of this.context.ir.auth.schemes) {
+            schemeHeadersByKey.set(scheme.key, this.getSchemeAuthHeaders(scheme));
+        }
+
+        // The universe of auth header names the API could emit; anything not routed to this
+        // endpoint must be asserted absent. Preserves scheme order for deterministic output.
+        const universe: string[] = [];
+        for (const headers of schemeHeadersByKey.values()) {
+            for (const header of headers) {
+                if (!universe.includes(header.headerName)) {
+                    universe.push(header.headerName);
+                }
+            }
+        }
+
+        // The wire-test client supplies every scheme's credentials, so treat all schemes as available.
+        const availableKeys = new Set(schemeHeadersByKey.keys());
+        const requirements = endpoint.security ?? [];
+        const winningRequirement = requirements.find((requirement) =>
+            Object.keys(requirement).every((schemeKey) => availableKeys.has(schemeKey))
+        );
+
+        // Build the effective header map for the winning requirement (last write wins per header name).
+        const effective = new Map<string, { kind: "exact" | "present"; value?: string }>();
+        if (winningRequirement != null) {
+            for (const schemeKey of Object.keys(winningRequirement)) {
+                for (const header of schemeHeadersByKey.get(schemeKey) ?? []) {
+                    effective.set(header.headerName, { kind: header.kind, value: header.value });
+                }
+            }
+        }
+
+        const matchers: AuthHeaderMatcher[] = [];
+        for (const [headerName, matcher] of effective) {
+            if (matcher.kind === "exact" && matcher.value != null) {
+                matchers.push({ headerName, kind: "exact", value: matcher.value });
+            } else {
+                matchers.push({ headerName, kind: "present" });
+            }
+        }
+        for (const headerName of universe) {
+            if (!effective.has(headerName)) {
+                matchers.push({ headerName, kind: "absent" });
+            }
+        }
+        return matchers;
+    }
+
+    /**
+     * Returns the auth header(s) a scheme contributes when its credentials are present, using the
+     * same placeholder credential values `buildAuthParamsForSetup` constructs the client with.
+     * Static schemes (bearer/header/basic) yield an exact expected value; oauth/inferred yield
+     * presence-only because their header values are resolved from a live token endpoint at runtime.
+     */
+    private getSchemeAuthHeaders(scheme: FernIr.AuthScheme): SchemeAuthHeader[] {
+        switch (scheme.type) {
+            case "bearer":
+                // Setup constructs the client with `<token param>: "<token>"`.
+                return [{ headerName: "Authorization", kind: "exact", value: "Bearer <token>" }];
+            case "header": {
+                if (scheme.name == null) {
+                    return [];
+                }
+                const headerName = getWireValue(scheme.name);
+                // Setup constructs the client with `<param>: "test-api-key"`.
+                const value = scheme.prefix != null ? `${scheme.prefix} test-api-key` : "test-api-key";
+                return [{ headerName, kind: "exact", value }];
+            }
+            case "basic": {
+                const authHeader = this.buildExpectedAuthorizationHeader();
+                if (authHeader == null) {
+                    return [];
+                }
+                return [{ headerName: "Authorization", kind: "exact", value: authHeader }];
+            }
+            case "oauth":
+                // OAuth writes Authorization with a token fetched from the token endpoint at runtime.
+                return [{ headerName: "Authorization", kind: "present" }];
+            case "inferred": {
+                // Inferred auth writes its authenticated request header(s) with a runtime-resolved value.
+                const inferred = this.context.getInferredAuth();
+                const authenticatedHeaders = inferred?.tokenEndpoint.authenticatedRequestHeaders ?? [];
+                if (authenticatedHeaders.length === 0) {
+                    return [{ headerName: "Authorization", kind: "present" }];
+                }
+                return authenticatedHeaders.map((header) => ({
+                    headerName: header.headerName,
+                    kind: "present" as const
+                }));
+            }
+            default:
+                return assertNever(scheme);
+        }
+    }
+
+    /**
      * Builds the expected Authorization header value for basic auth.
      * Returns the full header value (e.g., "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk")
      * or null if no basic auth scheme is configured.
@@ -592,4 +1054,17 @@ export class WireTestGenerator {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join("");
     }
+}
+
+const EXAMPLE_STABLE_PRIMITIVES = new Set<string>(["STRING", "INTEGER", "LONG", "UINT", "UINT_64", "BOOLEAN", "UUID"]);
+
+/**
+ * Ruby string literal that satisfies RuboCop's `Style/StringLiterals: double_quotes`: single quotes (no
+ * interpolation, only `\\` and `'` escaped) when the value contains a double quote, double quotes otherwise.
+ */
+export function toRubyStringLiteral(value: string): string {
+    if (value.includes('"')) {
+        return `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
+    }
+    return `"${value.replace(/\\/g, "\\\\").replace(/#(?=[{$@])/g, "\\#")}"`;
 }

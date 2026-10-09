@@ -96,4 +96,5 @@ environments:
         default: '{TENANT}'
 ",
   },
+  "specVersion": "1.0.0",
 }

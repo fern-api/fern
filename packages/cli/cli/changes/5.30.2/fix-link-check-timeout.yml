@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern docs link check` disconnecting on large sites by using batched
+    requests instead of a single long-lived SSE connection. Pages are now scraped
+    in batches of ~200 and links checked in batches of ~500, with automatic
+    retries on connection failures.
+  type: fix

@@ -45,13 +45,19 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.User.GetWithBearer(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithBearer(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -66,6 +72,11 @@ func (c *Client) GetWithBearer(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.User.GetWithAPIKey(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithAPIKey(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -80,6 +91,11 @@ func (c *Client) GetWithAPIKey(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.User.GetWithOAuth(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithOAuth(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -94,6 +110,11 @@ func (c *Client) GetWithOAuth(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.User.GetWithBasic(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithBasic(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -108,6 +129,11 @@ func (c *Client) GetWithBasic(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.User.GetWithInferredAuth(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithInferredAuth(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -122,6 +148,11 @@ func (c *Client) GetWithInferredAuth(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.User.GetWithAnyAuth(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithAnyAuth(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -136,6 +167,11 @@ func (c *Client) GetWithAnyAuth(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.User.GetWithAllAuth(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithAllAuth(
 	ctx context.Context,
 	opts ...option.RequestOption,

@@ -1,0 +1,98 @@
+openapi: 3.0.3
+info:
+  title: Optional referenced request bodies
+  version: 1.0.0
+paths:
+  /refunds/{id}:
+    post:
+      operationId: refund
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ok
+  /refunds/{id}/partial:
+    post:
+      operationId: partialRefund
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+              description: Optional split instructions.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ok
+  /refunds/{id}/required:
+    post:
+      operationId: requiredRefund
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ok
+  # a body that omits `required` follows the OpenAPI default and is optional
+  /refunds/{id}/unspecified:
+    post:
+      operationId: unspecifiedRefund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ok
+  # no path parameters, so the request collapses to a bare type reference
+  /refunds:
+    post:
+      operationId: bulkRefund
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      responses:
+        "204":
+          description: ok
+components:
+  schemas:
+    RefundRequest:
+      type: object
+      properties:
+        amount:
+          type: number

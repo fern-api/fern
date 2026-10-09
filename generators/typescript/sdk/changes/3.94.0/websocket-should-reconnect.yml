@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an optional `shouldReconnect(event: CloseEvent) => boolean` option to `ReconnectingWebSocket` and to the
+    generated WebSocket `connect()` args. Return `false` to treat a close as terminal and suppress the automatic
+    reconnect (e.g. after the client sent an end-of-stream message and the server closed with a non-1000 code).
+    Defaults to the existing behaviour of reconnecting on any close code other than 1000. Also clarifies the
+    `reconnectAttempts` docstring (defaults to 30; set to 0 to disable reconnecting).
+  type: feat

@@ -16,6 +16,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPublicObject.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPublicObject.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -28,6 +31,7 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/helloworld.txt",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -40,7 +44,7 @@ public partial class ServiceClient : IServiceClient
             return new WithRawResponse<global::System.IO.Stream>()
             {
                 Data = stream,
-                RawResponse = new RawResponse()
+                RawResponse = new SeedPublicObject.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -55,7 +59,13 @@ public partial class ServiceClient : IServiceClient
             throw new SeedPublicObjectApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedPublicObject.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

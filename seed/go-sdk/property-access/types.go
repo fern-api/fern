@@ -9,7 +9,6 @@ import (
 	big "math/big"
 )
 
-// Admin user object
 var (
 	adminFieldID         = big.NewInt(1 << 0)
 	adminFieldEmail      = big.NewInt(1 << 1)
@@ -18,6 +17,7 @@ var (
 	adminFieldAdminLevel = big.NewInt(1 << 4)
 )
 
+// Admin user object
 type Admin struct {
 	// The unique identifier for the user.
 	ID string `json:"id" url:"id"`
@@ -80,10 +80,12 @@ func (a *Admin) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *Admin) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -210,10 +212,12 @@ func (f *Foo) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *Foo) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetNormal sets the Normal field and marks it as non-optional;
@@ -279,7 +283,6 @@ func (f *Foo) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-// User object
 var (
 	userFieldID       = big.NewInt(1 << 0)
 	userFieldEmail    = big.NewInt(1 << 1)
@@ -287,6 +290,7 @@ var (
 	userFieldProfile  = big.NewInt(1 << 3)
 )
 
+// User object
 type User struct {
 	// The unique identifier for the user.
 	ID string `json:"id" url:"id"`
@@ -340,10 +344,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -439,6 +445,38 @@ func (u *UserOrAdmin) GetAdmin() *Admin {
 }
 
 func (u *UserOrAdmin) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "email", "password", "profile"}, []string{"id", "email", "password", "profile"}) {
+		valueUser := new(User)
+		if err := json.Unmarshal(data, &valueUser); err == nil {
+			u.typ = "User"
+			u.User = valueUser
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "email", "password", "profile", "adminLevel"}, []string{"id", "email", "password", "profile", "adminLevel"}) {
+		valueAdmin := new(Admin)
+		if err := json.Unmarshal(data, &valueAdmin); err == nil {
+			u.typ = "Admin"
+			u.Admin = valueAdmin
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "email", "password", "profile"}) {
+		valueUser := new(User)
+		if err := json.Unmarshal(data, &valueUser); err == nil {
+			u.typ = "User"
+			u.User = valueUser
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "email", "password", "profile", "adminLevel"}) {
+		valueAdmin := new(Admin)
+		if err := json.Unmarshal(data, &valueAdmin); err == nil {
+			u.typ = "Admin"
+			u.Admin = valueAdmin
+			return nil
+		}
+	}
 	valueUser := new(User)
 	if err := json.Unmarshal(data, &valueUser); err == nil {
 		u.typ = "User"
@@ -485,11 +523,12 @@ type UserOrAdminDiscriminated struct {
 	Normal string
 	Read   string
 	Write  string
-	Normal string
 	Foo    *Foo
 	User   *User
 	Admin  *Admin
 	Empty  interface{}
+
+	rawJSON json.RawMessage
 }
 
 func (u *UserOrAdminDiscriminated) GetType() string {
@@ -518,13 +557,6 @@ func (u *UserOrAdminDiscriminated) GetWrite() string {
 		return ""
 	}
 	return u.Write
-}
-
-func (u *UserOrAdminDiscriminated) GetNormal() string {
-	if u == nil {
-		return ""
-	}
-	return u.Normal
 }
 
 func (u *UserOrAdminDiscriminated) GetFoo() *Foo {
@@ -561,7 +593,6 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 		Normal string `json:"normal" url:"normal"`
 		Read   string `json:"read" url:"read"`
 		Write  string `json:"write" url:"write"`
-		Normal string `json:"normal"`
 		Foo    *Foo   `json:"foo"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
@@ -571,7 +602,6 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 	u.Normal = unmarshaler.Normal
 	u.Read = unmarshaler.Read
 	u.Write = unmarshaler.Write
-	u.Normal = unmarshaler.Normal
 	u.Foo = unmarshaler.Foo
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", u)
@@ -598,6 +628,7 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 		}
 		u.Empty = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -614,7 +645,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal string `json:"normal" url:"normal"`
 			Read   string `json:"read" url:"read"`
 			Write  string `json:"write" url:"write"`
-			Normal string `json:"normal"`
 			Foo    *Foo   `json:"foo"`
 			Admin  *Admin `json:"admin"`
 		}{
@@ -622,7 +652,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal: u.Normal,
 			Read:   u.Read,
 			Write:  u.Write,
-			Normal: u.Normal,
 			Foo:    u.Foo,
 			Admin:  u.Admin,
 		}
@@ -634,7 +663,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal string      `json:"normal" url:"normal"`
 			Read   string      `json:"read" url:"read"`
 			Write  string      `json:"write" url:"write"`
-			Normal string      `json:"normal"`
 			Foo    *Foo        `json:"foo"`
 			Empty  interface{} `json:"empty,omitempty"`
 		}{
@@ -642,11 +670,13 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal: u.Normal,
 			Read:   u.Read,
 			Write:  u.Write,
-			Normal: u.Normal,
 			Foo:    u.Foo,
 			Empty:  u.Empty,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -686,6 +716,9 @@ func (u *UserOrAdminDiscriminated) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -707,13 +740,13 @@ func (u *UserOrAdminDiscriminated) validate() error {
 	return nil
 }
 
-// User profile object
 var (
 	userProfileFieldName         = big.NewInt(1 << 0)
 	userProfileFieldVerification = big.NewInt(1 << 1)
 	userProfileFieldSsn          = big.NewInt(1 << 2)
 )
 
+// User profile object
 type UserProfile struct {
 	// The name of the user.
 	Name string `json:"name" url:"name"`
@@ -758,10 +791,12 @@ func (u *UserProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserProfile) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -827,11 +862,11 @@ func (u *UserProfile) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// User profile verification object
 var (
 	userProfileVerificationFieldVerified = big.NewInt(1 << 0)
 )
 
+// User profile verification object
 type UserProfileVerification struct {
 	// User profile verification status
 	Verified string `json:"verified" url:"verified"`
@@ -858,10 +893,12 @@ func (u *UserProfileVerification) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserProfileVerification) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetVerified sets the Verified field and marks it as non-optional;

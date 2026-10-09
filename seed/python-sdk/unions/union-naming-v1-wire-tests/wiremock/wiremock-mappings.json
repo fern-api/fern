@@ -1,10 +1,10 @@
 {
   "mappings": [
     {
-      "id": "79c47b13-99df-4bee-a249-4ce00eb110db",
+      "id": "b1f32ca9-b912-472c-b65c-0dd721da6993",
       "name": "get - default",
       "request": {
-        "urlPathTemplate": "/{id}",
+        "urlPathTemplate": "/bigunion/{id}",
         "method": "GET",
         "pathParameters": {
           "id": {
@@ -19,7 +19,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "79c47b13-99df-4bee-a249-4ce00eb110db",
+      "uuid": "b1f32ca9-b912-472c-b65c-0dd721da6993",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -32,10 +32,10 @@
       }
     },
     {
-      "id": "5f1f346e-183d-4637-acbe-e1b61414f5e4",
+      "id": "b512b590-3d02-4a21-bd0d-b20388dba9f3",
       "name": "update - default",
       "request": {
-        "urlPathTemplate": "/",
+        "urlPathTemplate": "/bigunion",
         "method": "PATCH"
       },
       "response": {
@@ -45,7 +45,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "5f1f346e-183d-4637-acbe-e1b61414f5e4",
+      "uuid": "b512b590-3d02-4a21-bd0d-b20388dba9f3",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -58,10 +58,10 @@
       }
     },
     {
-      "id": "4950f13e-46d4-4dd3-9513-62d558c1061b",
+      "id": "f08d1bf3-46e1-482b-a8f0-39c16c3a2d84",
       "name": "update-many - default",
       "request": {
-        "urlPathTemplate": "/many",
+        "urlPathTemplate": "/bigunion/many",
         "method": "PATCH"
       },
       "response": {
@@ -71,7 +71,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "4950f13e-46d4-4dd3-9513-62d558c1061b",
+      "uuid": "f08d1bf3-46e1-482b-a8f0-39c16c3a2d84",
       "persistent": true,
       "priority": 3,
       "metadata": {

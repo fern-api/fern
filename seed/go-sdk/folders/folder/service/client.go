@@ -25,13 +25,19 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Folder.Service.Endpoint(
+//	    context.TODO(),
+//	)
 func (c *Client) Endpoint(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -46,6 +52,15 @@ func (c *Client) Endpoint(
 	return nil
 }
 
+// Example:
+//
+//	request := map[string]any{
+//	    "key": "value",
+//	}
+//	client.Folder.Service.UnknownRequest(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UnknownRequest(
 	ctx context.Context,
 	request any,

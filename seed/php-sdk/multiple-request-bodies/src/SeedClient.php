@@ -69,6 +69,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->uploadJsonDocument(
+     *     new UploadDocumentRequest([]),
+     * );
+     * ```
+     *
      * @param UploadDocumentRequest $request
      * @param ?array{
      *   baseUrl?: string,

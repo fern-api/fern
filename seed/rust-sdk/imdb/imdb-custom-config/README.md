@@ -11,11 +11,14 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
+- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Additional Body Properties](#additional-body-properties)
+  - [Custom Client](#custom-client)
 - [Contributing](#contributing)
 
 ## Installation
@@ -57,7 +60,6 @@ async fn main() {
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
-                ..Default::default()
             },
             None,
         )
@@ -81,6 +83,18 @@ match client.imdb.create_movie(None)?.await {
         println!("Other error: {:?}", e);
     }
 }
+```
+
+## Request Types
+
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
+```rust
+use custom_imdb_sdk::prelude::{*};
+
+let request = CreateMovieRequest {
+    ...
+};
 ```
 
 ## Advanced
@@ -148,6 +162,47 @@ let response = client.imdb.create_movie(
     )
 )?
 .await;
+```
+
+### Additional Body Properties
+
+You can add properties to the request body using `RequestOptions`, e.g. to send fields the SDK
+doesn't model yet. Keys are sent as-is, and a property set here overrides a field of the same name.
+If the endpoint has no body, a JSON object containing only these properties is sent. Additional
+properties apply to JSON and form-urlencoded bodies; multipart (file upload) and raw bytes bodies
+are sent unchanged.
+
+```rust
+let response = client.imdb.create_movie(
+    Some(
+        RequestOptions::new()
+            .additional_body_param("beta_feature", true)
+            .additional_body_param("metadata", serde_json::json!({ "source": "sdk" }))
+    )
+)?
+.await;
+```
+
+### Custom Client
+
+The SDK builds its own `reqwest` client by default, but you can supply your own through
+`ClientConfig.reqwest_client` (or `ApiClientBuilder::reqwest_client`) when you need control over the
+transport — custom root certificates, client certificates, proxies or connection tuning. The supplied
+client is used as-is; authentication, custom headers and retries are still applied by the SDK.
+
+```rust
+use custom_imdb_sdk::prelude::*;
+
+let certificate = reqwest::Certificate::from_pem(&std::fs::read("ca.pem")?)?;
+let reqwest_client = reqwest::Client::builder()
+    .add_root_certificate(certificate)
+    .build()
+    .expect("Failed to build reqwest client");
+let config = ClientConfig {
+    reqwest_client: Some(reqwest_client),
+    ..Default::default()
+};
+let client = CustomImdbClient::new(config).expect("Failed to build client");
 ```
 
 ## Contributing

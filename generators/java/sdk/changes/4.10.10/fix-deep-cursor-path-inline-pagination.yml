@@ -1,0 +1,6 @@
+- summary: |
+    Fix generated raw clients for cursor pagination whose deep cursor path navigates through inline
+    types or repeats property names. The generator no longer emits duplicate local variable names,
+    uses the correct type names in method references, and passes the navigated value (instead of a
+    type literal) when rebuilding the next-page request.
+  type: fix

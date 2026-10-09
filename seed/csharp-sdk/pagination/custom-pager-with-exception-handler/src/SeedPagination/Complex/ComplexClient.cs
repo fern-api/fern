@@ -42,6 +42,9 @@ public partial class ComplexClient : IComplexClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -58,6 +61,7 @@ public partial class ComplexClient : IComplexClient
                                 ValueConvert.ToPathParameterString(index)
                             ),
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             ContentType = "application/json",
                             Options = options,
@@ -78,7 +82,7 @@ public partial class ComplexClient : IComplexClient
                         return new WithRawResponse<PaginatedConversationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -94,7 +98,15 @@ public partial class ComplexClient : IComplexClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -105,7 +117,13 @@ public partial class ComplexClient : IComplexClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })

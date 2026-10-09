@@ -1,7 +1,14 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { FileContext, GeneratedGenericAPISdkError } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, Scope, ts } from "ts-morph";
+import {
+    ClassDeclaration,
+    OptionalKind,
+    ParameterDeclarationStructure,
+    PropertyDeclarationStructure,
+    Scope,
+    ts
+} from "ts-morph";
 
 export class GeneratedGenericAPISdkErrorImpl
     extends AbstractErrorClassGenerator<FileContext>
@@ -21,6 +28,8 @@ export class GeneratedGenericAPISdkErrorImpl
     private static readonly CAUSE_CONSTRUCTOR_PARAMETER_NAME = "cause";
 
     private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
+    private static readonly REQUEST_ID_PROPERTY_NAME = "requestId";
+    private static readonly REQUEST_ID_HEADER = "x-request-id";
 
     public writeToFile(context: FileContext): void {
         super.writeToSourceFile(context);
@@ -323,8 +332,15 @@ export class GeneratedGenericAPISdkErrorImpl
         ];
     }
 
-    protected addToClass(): void {
-        // no-op
+    protected addToClass(class_: ClassDeclaration): void {
+        class_.addGetAccessor({
+            name: GeneratedGenericAPISdkErrorImpl.REQUEST_ID_PROPERTY_NAME,
+            returnType: "string | undefined",
+            scope: Scope.Public,
+            statements: [
+                `return this.${GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME}?.headers?.get("${GeneratedGenericAPISdkErrorImpl.REQUEST_ID_HEADER}") ?? undefined;`
+            ]
+        });
     }
 
     protected isAbstract(): boolean {

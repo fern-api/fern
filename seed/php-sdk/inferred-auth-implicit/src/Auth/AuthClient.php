@@ -51,6 +51,20 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->getTokenWithClientCredentials(
+     *     new GetTokenRequest([
+     *         'xApiKey' => 'X-Api-Key',
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'client_credentials',
+     *         'scope' => 'scope',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -101,6 +115,21 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->refreshToken(
+     *     new RefreshTokenRequest([
+     *         'xApiKey' => 'X-Api-Key',
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *         'refreshToken' => 'refresh_token',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'refresh_token',
+     *         'scope' => 'scope',
+     *     ]),
+     * );
+     * ```
+     *
      * @param RefreshTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,

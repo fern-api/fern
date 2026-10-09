@@ -24,10 +24,12 @@ type ListUsernamesRequest struct {
 }
 
 func (l *ListUsernamesRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStartingAfter sets the StartingAfter field and marks it as non-optional;
@@ -51,10 +53,12 @@ type ListUsernamesWithOptionalResponseRequest struct {
 }
 
 func (l *ListUsernamesWithOptionalResponseRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStartingAfter sets the StartingAfter field and marks it as non-optional;
@@ -62,6 +66,55 @@ func (l *ListUsernamesWithOptionalResponseRequest) require(field *big.Int) {
 func (l *ListUsernamesWithOptionalResponseRequest) SetStartingAfter(startingAfter *string) {
 	l.StartingAfter = startingAfter
 	l.require(listUsernamesWithOptionalResponseRequestFieldStartingAfter)
+}
+
+var (
+	listUsersAliasedDataRequestFieldPage          = big.NewInt(1 << 0)
+	listUsersAliasedDataRequestFieldPerPage       = big.NewInt(1 << 1)
+	listUsersAliasedDataRequestFieldStartingAfter = big.NewInt(1 << 2)
+)
+
+type ListUsersAliasedDataRequest struct {
+	// Defaults to first page
+	Page *int `json:"-" url:"page,omitempty"`
+	// Defaults to per page
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersAliasedDataRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listUsersAliasedDataRequestFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataRequest) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listUsersAliasedDataRequestFieldPerPage)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataRequest) SetStartingAfter(startingAfter *string) {
+	l.StartingAfter = startingAfter
+	l.require(listUsersAliasedDataRequestFieldStartingAfter)
 }
 
 var (
@@ -78,10 +131,12 @@ type ListUsersBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPagination sets the Pagination field and marks it as non-optional;
@@ -126,10 +181,12 @@ type ListUsersBodyOffsetPaginationRequest struct {
 }
 
 func (l *ListUsersBodyOffsetPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPagination sets the Pagination field and marks it as non-optional;
@@ -182,10 +239,12 @@ type ListUsersCursorPaginationRequest struct {
 }
 
 func (l *ListUsersCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -238,10 +297,12 @@ type ListUsersDoubleOffsetPaginationRequest struct {
 }
 
 func (l *ListUsersDoubleOffsetPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -284,10 +345,12 @@ type ListUsersExtendedRequest struct {
 }
 
 func (l *ListUsersExtendedRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -309,10 +372,12 @@ type ListUsersExtendedRequestForOptionalData struct {
 }
 
 func (l *ListUsersExtendedRequestForOptionalData) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -334,10 +399,12 @@ type ListWithGlobalConfigRequest struct {
 }
 
 func (l *ListWithGlobalConfigRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -359,10 +426,12 @@ type ListUsersMixedTypeCursorPaginationRequest struct {
 }
 
 func (l *ListUsersMixedTypeCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -394,10 +463,12 @@ type ListUsersOffsetPaginationRequest struct {
 }
 
 func (l *ListUsersOffsetPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -448,10 +519,12 @@ type ListWithOffsetPaginationHasNextPageRequest struct {
 }
 
 func (l *ListWithOffsetPaginationHasNextPageRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -495,10 +568,12 @@ type ListUsersOffsetStepPaginationRequest struct {
 }
 
 func (l *ListUsersOffsetStepPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -535,10 +610,12 @@ type ListUsersOptionalDataRequest struct {
 }
 
 func (l *ListUsersOptionalDataRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -565,10 +642,12 @@ type ListUsersTopLevelBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersTopLevelBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -604,6 +683,141 @@ func (l *ListUsersTopLevelBodyCursorPaginationRequest) MarshalJSON() ([]byte, er
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
 	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	listUsersAliasedDataPaginationResponseFieldHasNextPage = big.NewInt(1 << 0)
+	listUsersAliasedDataPaginationResponseFieldPage        = big.NewInt(1 << 1)
+	listUsersAliasedDataPaginationResponseFieldTotalCount  = big.NewInt(1 << 2)
+	listUsersAliasedDataPaginationResponseFieldData        = big.NewInt(1 << 3)
+)
+
+type ListUsersAliasedDataPaginationResponse struct {
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
+	// The totall number of /users
+	TotalCount int      `json:"total_count" url:"total_count"`
+	Data       UserList `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetHasNextPage() *bool {
+	if l == nil {
+		return nil
+	}
+	return l.HasNextPage
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetPage() *Page {
+	if l == nil {
+		return nil
+	}
+	return l.Page
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetData() UserList {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetHasNextPage sets the HasNextPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataPaginationResponse) SetHasNextPage(hasNextPage *bool) {
+	l.HasNextPage = hasNextPage
+	l.require(listUsersAliasedDataPaginationResponseFieldHasNextPage)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataPaginationResponse) SetPage(page *Page) {
+	l.Page = page
+	l.require(listUsersAliasedDataPaginationResponseFieldPage)
+}
+
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataPaginationResponse) SetTotalCount(totalCount int) {
+	l.TotalCount = totalCount
+	l.require(listUsersAliasedDataPaginationResponseFieldTotalCount)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataPaginationResponse) SetData(data UserList) {
+	l.Data = data
+	l.require(listUsersAliasedDataPaginationResponseFieldData)
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersAliasedDataPaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersAliasedDataPaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersAliasedDataPaginationResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 var (
@@ -654,10 +868,12 @@ func (l *ListUsersExtendedOptionalListResponse) GetExtraProperties() map[string]
 }
 
 func (l *ListUsersExtendedOptionalListResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -771,10 +987,12 @@ func (l *ListUsersExtendedResponse) GetExtraProperties() map[string]interface{} 
 }
 
 func (l *ListUsersExtendedResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -878,10 +1096,12 @@ func (l *ListUsersMixedTypePaginationResponse) GetExtraProperties() map[string]i
 }
 
 func (l *ListUsersMixedTypePaginationResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -997,10 +1217,12 @@ func (l *ListUsersOptionalDataPaginationResponse) GetExtraProperties() map[strin
 }
 
 func (l *ListUsersOptionalDataPaginationResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetHasNextPage sets the HasNextPage field and marks it as non-optional;
@@ -1130,10 +1352,12 @@ func (l *ListUsersPaginationResponse) GetExtraProperties() map[string]interface{
 }
 
 func (l *ListUsersPaginationResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetHasNextPage sets the HasNextPage field and marks it as non-optional;
@@ -1244,10 +1468,12 @@ func (l *ListUsersTopLevelCursorPaginationResponse) GetExtraProperties() map[str
 }
 
 func (l *ListUsersTopLevelCursorPaginationResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNextCursor sets the NextCursor field and marks it as non-optional;
@@ -1344,10 +1570,12 @@ func (n *NextPage) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NextPage) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -1485,10 +1713,12 @@ func (p *Page) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Page) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -1563,12 +1793,12 @@ func (p *Page) String() string {
 
 var (
 	userFieldName = big.NewInt(1 << 0)
-	userFieldId   = big.NewInt(1 << 1)
+	userFieldID   = big.NewInt(1 << 1)
 )
 
 type User struct {
 	Name string `json:"name" url:"name"`
-	Id   int    `json:"id" url:"id"`
+	ID   int    `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1584,11 +1814,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() int {
+func (u *User) GetID() int {
 	if u == nil {
 		return 0
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -1599,10 +1829,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1612,11 +1844,11 @@ func (u *User) SetName(name string) {
 	u.require(userFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id int) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id int) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
@@ -1661,6 +1893,9 @@ func (u *User) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// A type alias for a list of users
+type UserList = []*User
+
 var (
 	userListContainerFieldUsers = big.NewInt(1 << 0)
 )
@@ -1690,10 +1925,12 @@ func (u *UserListContainer) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserListContainer) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUsers sets the Users field and marks it as non-optional;
@@ -1774,10 +2011,12 @@ func (u *UserOptionalListContainer) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UserOptionalListContainer) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUsers sets the Users field and marks it as non-optional;
@@ -1867,10 +2106,12 @@ func (u *UserOptionalListPage) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserOptionalListPage) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -1967,10 +2208,12 @@ func (u *UserPage) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserPage) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -2058,10 +2301,12 @@ func (u *UsernameContainer) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernameContainer) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetResults sets the Results field and marks it as non-optional;
@@ -2142,10 +2387,12 @@ func (w *WithCursor) GetExtraProperties() map[string]interface{} {
 }
 
 func (w *WithCursor) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -2226,10 +2473,12 @@ func (w *WithPage) GetExtraProperties() map[string]interface{} {
 }
 
 func (w *WithPage) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;

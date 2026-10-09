@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ./core-api.yml
+      namespace: core
+    - openapi: ./auth-api.yml
+      namespace: auth
+  settings:
+    title-as-schema-name: false
+    group-multi-api-environments: true

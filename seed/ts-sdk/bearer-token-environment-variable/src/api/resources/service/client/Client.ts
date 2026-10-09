@@ -25,6 +25,9 @@ export class ServiceClient {
      *
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedBearerTokenEnvironmentVariableError}
+     * @throws {@link errors.SeedBearerTokenEnvironmentVariableTimeoutError}
+     *
      * @example
      *     await client.service.getWithBearerToken()
      */

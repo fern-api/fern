@@ -14,15 +14,14 @@
 
 ```go
 request := map[string]any{
-        "string": map[string]any{
-            "key": "value",
-        },
-    }
-client.Optional.SendOptionalBody(
-        context.TODO(),
-        request,
-    )
+    "string": map[string]any{
+        "key": "value",
+    },
 }
+client.Optional.SendOptionalBody(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -63,13 +62,12 @@ client.Optional.SendOptionalBody(
 
 ```go
 request := &fern.SendOptionalBodyRequest{
-        Message: "message",
-    }
-client.Optional.SendOptionalTypedBody(
-        context.TODO(),
-        request,
-    )
+    Message: "message",
 }
+client.Optional.SendOptionalTypedBody(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -125,17 +123,16 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 
 ```go
 request := &fern.DeployParams{
-        UpdateDraft: fern.Bool(
-            true,
-        ),
-    }
-client.Optional.SendOptionalNullableWithAllOptionalProperties(
-        context.TODO(),
-        "actionId",
-        "id",
-        request,
-    )
+    UpdateDraft: fern.Bool(
+        true,
+    ),
 }
+client.Optional.SendOptionalNullableWithAllOptionalProperties(
+    context.TODO(),
+    "actionId",
+    "id",
+    request,
+)
 ```
 </dd>
 </dl>

@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { EndpointReference } from "../../commons/types/EndpointReference.js";
 import { ResponseProperty } from "../../http/types/ResponseProperty.js";
 import { InferredAuthenticatedRequestHeader } from "./InferredAuthenticatedRequestHeader.js";
+import { InferredAuthGrantType } from "./InferredAuthGrantType.js";
 
 export const InferredAuthSchemeTokenEndpoint: core.serialization.ObjectSchema<
     serializers.InferredAuthSchemeTokenEndpoint.Raw,
@@ -14,6 +15,7 @@ export const InferredAuthSchemeTokenEndpoint: core.serialization.ObjectSchema<
     endpoint: EndpointReference,
     expiryProperty: ResponseProperty.optional(),
     authenticatedRequestHeaders: core.serialization.list(InferredAuthenticatedRequestHeader),
+    grantType: InferredAuthGrantType.optional(),
 });
 
 export declare namespace InferredAuthSchemeTokenEndpoint {
@@ -21,5 +23,6 @@ export declare namespace InferredAuthSchemeTokenEndpoint {
         endpoint: EndpointReference.Raw;
         expiryProperty?: ResponseProperty.Raw | null;
         authenticatedRequestHeaders: InferredAuthenticatedRequestHeader.Raw[];
+        grantType?: InferredAuthGrantType.Raw | null;
     }
 }

@@ -71,6 +71,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 response: convertedResponseBody?.responseBody,
                 v2Responses: undefined,
                 displayName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.name),
+                subtitle: undefined,
                 method: HttpMethod.Post,
                 baseUrl: undefined,
                 v2BaseUrls: undefined,
@@ -106,6 +107,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 }),
                 audiences: [],
                 retries: undefined,
+                globalParameters: undefined,
                 apiPlayground: undefined,
                 responseHeaders: []
             }
@@ -136,6 +138,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     contentType: "application/proto",
                     docs: undefined,
                     requestBodyType: requestBodyType.reference,
+                    // a gRPC method always carries a request message, and absent means required
+                    required: undefined,
                     v2Examples: undefined
                 }),
                 requestExample: undefined

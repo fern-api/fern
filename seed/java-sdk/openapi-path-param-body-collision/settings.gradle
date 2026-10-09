@@ -1,0 +1,3 @@
+rootProject.name = 'openapi-path-param-body-collision'
+
+include 'sample-app'

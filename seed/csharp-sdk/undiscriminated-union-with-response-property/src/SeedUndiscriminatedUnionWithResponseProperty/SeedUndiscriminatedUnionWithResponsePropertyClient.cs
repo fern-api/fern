@@ -16,7 +16,10 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedUndiscriminatedUnionWithResponseProperty" },
-                { "X-Fern-SDK-Version", Version.Current },
+                {
+                    "X-Fern-SDK-Version",
+                    global::SeedUndiscriminatedUnionWithResponseProperty.Version.Current
+                },
                 { "User-Agent", "Fernundiscriminated-union-with-response-property/0.0.1" },
             }
         );
@@ -35,6 +38,12 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedUndiscriminatedUnionWithResponseProperty.Core.QueryStringBuilder.Builder(
+                capacity: 0
+            )
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedUndiscriminatedUnionWithResponseProperty.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -48,6 +57,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/union",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -65,7 +75,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 return new WithRawResponse<UnionResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -79,7 +89,13 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -90,7 +106,13 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -100,6 +122,12 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedUndiscriminatedUnionWithResponseProperty.Core.QueryStringBuilder.Builder(
+                capacity: 0
+            )
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedUndiscriminatedUnionWithResponseProperty.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -113,6 +141,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/unions",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -130,7 +159,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 return new WithRawResponse<UnionListResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -144,7 +173,13 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -155,7 +190,13 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

@@ -1,4 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
+import { isXmlDependentType } from "@fern-typescript/commons";
+
 /**
  * TypeResolver converts a TypeName to a "resolved" value by following all
  * aliases and unwrapping all containers.
@@ -21,9 +23,13 @@ export class TypeResolver {
     }
 
     public getTypeDeclarationFromName(typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration {
-        const type = this.allTypes[typeName.typeId];
+        return this.getTypeDeclarationById(typeName.typeId);
+    }
+
+    public getTypeDeclarationById(typeId: FernIr.TypeId): FernIr.TypeDeclaration {
+        const type = this.allTypes[typeId];
         if (type == null) {
-            throw new Error("Type not found: " + typeName.typeId);
+            throw new Error("Type not found: " + typeId);
         }
         return type;
     }
@@ -79,5 +85,9 @@ export class TypeResolver {
 
     public doesTypeExist(typeName: FernIr.DeclaredTypeName): boolean {
         return this.allTypes[typeName.typeId] != null;
+    }
+
+    public isXmlDependentType(typeDeclaration: FernIr.TypeDeclaration): boolean {
+        return isXmlDependentType(typeDeclaration, (typeId) => this.getTypeDeclarationById(typeId));
     }
 }

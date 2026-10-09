@@ -1,0 +1,5 @@
+- summary: |
+    Escape Rust reserved keywords in generated client method names. An
+    endpoint named e.g. "move" now generates `pub async fn r#move` instead
+    of the unparseable `pub async fn move`.
+  type: fix

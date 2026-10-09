@@ -11,16 +11,22 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
+        path_param: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
+        self._path_param = path_param
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
         self._max_retries = max_retries
+        self._stream_reconnection_enabled = stream_reconnection_enabled
+        self._max_stream_reconnection_attempts = max_stream_reconnection_attempts
         self._logging = logging
 
     def get_headers(self) -> typing.Dict[str, str]:
@@ -49,19 +55,37 @@ class BaseClientWrapper:
     def get_max_retries(self) -> int:
         return self._max_retries
 
+    def get_stream_reconnection_enabled(self) -> bool:
+        return self._stream_reconnection_enabled if self._stream_reconnection_enabled is not None else True
+
+    def get_max_stream_reconnection_attempts(self) -> typing.Optional[int]:
+        return self._max_stream_reconnection_attempts
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        path_param: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(headers=headers, base_url=base_url, timeout=timeout, max_retries=max_retries, logging=logging)
+        super().__init__(
+            path_param=path_param,
+            headers=headers,
+            base_url=base_url,
+            timeout=timeout,
+            max_retries=max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
+            logging=logging,
+        )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -76,15 +100,27 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        path_param: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(headers=headers, base_url=base_url, timeout=timeout, max_retries=max_retries, logging=logging)
+        super().__init__(
+            path_param=path_param,
+            headers=headers,
+            base_url=base_url,
+            timeout=timeout,
+            max_retries=max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
+            logging=logging,
+        )
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,

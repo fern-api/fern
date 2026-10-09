@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The warning for `auth-schemes` declared without `api.auth` now fires on
+    `fern generate` and `fern check`, not only `fern check --from-openapi`. It
+    was emitted from `OSSWorkspace.getIntermediateRepresentation`, a branch
+    reached only when `--from-openapi` is passed; `fern generate` and plain
+    `fern check` go through `toFernWorkspace` and saw nothing. Since the whole
+    point is that this misconfiguration is otherwise silent — valid YAML, clean
+    check, successful generation, and a client reading an environment variable
+    the user never configured — the warning was unreachable on exactly the paths
+    where it was needed. Both entry points now emit it, at most once per
+    workspace.
+  type: fix

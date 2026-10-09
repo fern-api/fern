@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "override",
+        "fallback"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "override"
+        },
+        "model": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "model"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "fallback"
+        },
+        "model": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "model"
+      ]
+    }
+  ],
+  "definitions": {}
+}

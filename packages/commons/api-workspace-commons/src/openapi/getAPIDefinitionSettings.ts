@@ -40,17 +40,21 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     coerceEnumsToLiterals: "coerceEnumsToLiterals",
     objectQueryParameters: "objectQueryParameters",
     respectReadonlySchemas: "respectReadonlySchemas",
+    useReadVariantForResponses: "useReadVariantForResponses",
     respectNullableSchemas: "respectNullableSchemas",
     onlyIncludeReferencedSchemas: "onlyIncludeReferencedSchemas",
     inlinePathParameters: "inlinePathParameters",
     useBytesForBinaryResponse: "useBytesForBinaryResponse",
     respectForwardCompatibleEnums: "respectForwardCompatibleEnums",
+    respectOptionalRequestBody: "respectOptionalRequestBody",
     filter: "filter",
     defaultFormParameterEncoding: "defaultFormParameterEncoding",
     exampleGeneration: "exampleGeneration",
     additionalPropertiesDefaultsTo: "additionalPropertiesDefaultsTo",
     typeDatesAsStrings: "typeDatesAsStrings",
     preserveSingleSchemaOneOf: "preserveSingleSchemaOneOf",
+    preserveOneOfInAllOf: "preserveOneOfInAllOf",
+    anyOfSiblingPropertiesAsObject: "anyOfSiblingPropertiesAsObject",
     inlineAllOfSchemas: "inlineAllOfSchemas",
     resolveAliases: "resolveAliases",
     groupMultiApiEnvironments: "groupMultiApiEnvironments",
@@ -65,7 +69,14 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     resolveSchemaCollisions: "resolveSchemaCollisions",
     inferForwardCompatible: "inferForwardCompatible",
     coerceConstsTo: "coerceConstsTo",
-    shouldInferDiscriminatedUnionBaseProperties: "shouldInferDiscriminatedUnionBaseProperties"
+    shouldInferDiscriminatedUnionBaseProperties: "shouldInferDiscriminatedUnionBaseProperties",
+    disambiguateRequestNames: "disambiguateRequestNames",
+    ignoreTags: "ignoreTags",
+    respectParameterContent: "respectParameterContent",
+    respectPerSpecBasePath: "respectPerSpecBasePath",
+    respectOperationIdWordBoundaries: "respectOperationIdWordBoundaries",
+    namespacedErrors: "namespacedErrors",
+    errorResponses: "errorResponses"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

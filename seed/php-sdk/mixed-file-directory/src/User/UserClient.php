@@ -60,6 +60,15 @@ class UserClient
     /**
      * List all users.
      *
+     * Example:
+     * ```php
+     * $client->user->list(
+     *     new ListUsersRequest([
+     *         'limit' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,

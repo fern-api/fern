@@ -62,6 +62,11 @@ class V2Client
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->v2->test();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

@@ -14,6 +14,9 @@ module Seed
     # @option params [String, nil] :filter_date
     # @option params [String, nil] :fields
     #
+    # @example
+    #   client.bulk_update_tasks
+    #
     # @return [Seed::Types::BulkUpdateTasksResponse]
     def bulk_update_tasks(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -42,7 +45,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::BulkUpdateTasksResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::BulkUpdateTasksResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -50,15 +53,19 @@ module Seed
     end
 
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_query-param-name-conflict/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

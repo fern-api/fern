@@ -31,8 +31,10 @@
               "pagination": undefined,
               "path": "/settings",
               "request": {
-                "body": "Settings",
-                "content-type": "application/json",
+                "body": {
+                  "optional": true,
+                  "type": "Settings",
+                },
               },
               "response": {
                 "docs": "Success",
@@ -148,8 +150,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Settings
-        content-type: application/json
+        body:
+          type: Settings
+          optional: true
       response:
         docs: Success
         type: Settings
@@ -241,4 +244,5 @@ error-discrimination:
 display-name: Discriminant Default Value
 ",
   },
+  "specVersion": "1.0.0",
 }

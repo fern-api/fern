@@ -5,7 +5,8 @@
       "$ref": "#/definitions/CombinedEntityStatus"
     },
     "id": {
-      "type": "string"
+      "type": "string",
+      "description": "Unique identifier."
     },
     "name": {
       "oneOf": [
@@ -15,7 +16,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Display name from Identifiable."
     },
     "summary": {
       "oneOf": [
@@ -25,7 +27,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "A short summary."
     }
   },
   "required": [

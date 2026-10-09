@@ -4,17 +4,6 @@
             "id": {
                 "path": "/",
                 "method": "PATCH",
-                "identifier_override": "endpoint_bigunion.update"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.Update(\n\tcontext.TODO(),\n\t\u0026fern.BigUnion{\n\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\tValue: \"value\",\n\t\t},\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/",
-                "method": "PATCH",
                 "identifier_override": "endpoint_union.update"
             },
             "snippet": {
@@ -24,7 +13,18 @@
         },
         {
             "id": {
-                "path": "/many",
+                "path": "/bigunion",
+                "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.Update(\n\tcontext.TODO(),\n\t\u0026fern.BigUnion{\n\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\tValue: \"value\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/bigunion/many",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update-many"
             },
@@ -35,7 +35,7 @@
         },
         {
             "id": {
-                "path": "/{id}",
+                "path": "/bigunion/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_bigunion.get"
             },

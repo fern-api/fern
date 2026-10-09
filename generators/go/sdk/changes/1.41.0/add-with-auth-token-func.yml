@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `With<AuthToken>Func` option for bearer auth that accepts a `func() (string, error)` callable.
+    The callable is evaluated at request time when no static token is set, matching the callable
+    auth behavior available in the Python and TypeScript SDK generators.
+  type: feat

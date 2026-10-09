@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate HMAC webhook signature verification helpers from the IR.
+  type: feat

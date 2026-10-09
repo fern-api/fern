@@ -24,6 +24,11 @@ internal abstract record BaseRequest
 
     internal IRequestOptions? Options { get; init; }
 
+    /// <summary>
+    /// Whether retries are disabled for this request, regardless of the client or request options.
+    /// </summary>
+    internal bool RetriesDisabled { get; init; }
+
     internal abstract HttpContent? CreateContent();
 
     protected static (

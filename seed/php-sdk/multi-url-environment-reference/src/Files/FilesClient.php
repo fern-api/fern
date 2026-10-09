@@ -50,6 +50,16 @@ class FilesClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->files->upload(
+     *     new FilesUploadRequest([
+     *         'name' => 'name',
+     *         'parentId' => 'parent_id',
+     *     ]),
+     * );
+     * ```
+     *
      * @param FilesUploadRequest $request
      * @param ?array{
      *   maxRetries?: int,

@@ -22,6 +22,12 @@ types:
   V2HttpEndpointExample:
     properties:
       displayName: optional<string>
+      contentType:
+        type: optional<string>
+        docs: |
+          The content type this example is associated with (e.g. "application/json",
+          "application/ld+json"). When present, the docs UI can filter or auto-select
+          this example when the user switches to the corresponding content type.
       request: optional<V2HttpEndpointRequest>
       response: optional<V2HttpEndpointResponse>
       codeSamples: optional<list<V2HttpEndpointCodeSample>>

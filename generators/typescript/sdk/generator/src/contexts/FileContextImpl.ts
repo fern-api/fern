@@ -148,6 +148,8 @@ export declare namespace FileContextImpl {
         useDefaultRequestParameterValues: boolean;
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
+        respectOptionalRequestBody: boolean;
+        deepObjectMapQueryParameters: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         resolveQueryParameterNameConflicts: boolean;
     }
@@ -176,6 +178,8 @@ export class FileContextImpl implements FileContext {
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
     public readonly flattenRequestParameters: boolean;
+    public readonly respectOptionalRequestBody: boolean;
+    public readonly deepObjectMapQueryParameters: boolean;
     public readonly importsManager: ImportsManager;
     public readonly exportsManager: ExportsManager;
     public readonly relativePackagePath: string;
@@ -221,6 +225,8 @@ export class FileContextImpl implements FileContext {
         this.formDataSupport = init.formDataSupport;
         this.generateOAuthClients = init.generateOAuthClients;
         this.flattenRequestParameters = init.flattenRequestParameters;
+        this.respectOptionalRequestBody = init.respectOptionalRequestBody;
+        this.deepObjectMapQueryParameters = init.deepObjectMapQueryParameters;
         this.namespaceExport = init.typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);

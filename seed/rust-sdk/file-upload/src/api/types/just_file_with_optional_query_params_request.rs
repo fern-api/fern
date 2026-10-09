@@ -6,10 +6,10 @@ pub struct JustFileWithOptionalQueryParamsRequest {
     #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
     #[serde(rename = "maybeString")]
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     pub maybe_string: Option<String>,
     #[serde(rename = "maybeInteger")]
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     pub maybe_integer: Option<i64>,
 }
 impl JustFileWithOptionalQueryParamsRequest {

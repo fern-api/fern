@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Retry Swagger 2.0 to OpenAPI 3 conversion in lenient mode when strict conversion fails, instead
+    of dropping the spec. Specs using constructs such as `type: ['null', string]` now load, with a
+    warning naming the strict-mode error.
+  type: fix

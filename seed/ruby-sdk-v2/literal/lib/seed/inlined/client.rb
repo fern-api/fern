@@ -18,6 +18,22 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.inlined.send_(
+      #     prompt: "You are a helpful assistant",
+      #     context: "You're super wise",
+      #     query: "What is the weather today",
+      #     temperature: 10.1,
+      #     stream: false,
+      #     aliased_context: "You're super wise",
+      #     maybe_context: "You're super wise",
+      #     object_with_literal: {
+      #       nested_literal: {
+      #         my_literal: "How super cool"
+      #       }
+      #     }
+      #   )
+      #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -35,7 +51,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::SendResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::SendResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

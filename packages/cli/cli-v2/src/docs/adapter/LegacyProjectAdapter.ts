@@ -23,7 +23,7 @@ export class LegacyProjectAdapter {
         const apiWorkspaces = await this.buildApiWorkspaces(workspace);
         const docsWorkspace =
             workspace.docs != null
-                ? this.docsAdapter.adapt({
+                ? await this.docsAdapter.adapt({
                       docsConfig: workspace.docs,
                       absoluteFilePath:
                           workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? this.context.cwd

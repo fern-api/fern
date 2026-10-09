@@ -42,9 +42,9 @@ use Seed\User\Requests\CreateUserRequest;
 $client = new SeedClient();
 $client->user->createUser(
     new CreateUserRequest([
-        'name' => 'Alice',
         'type' => 'CreateUserRequest',
         'version' => 'v1',
+        'name' => 'Alice',
     ]),
 );
 

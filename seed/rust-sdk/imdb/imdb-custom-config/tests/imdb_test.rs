@@ -13,7 +13,6 @@ async fn test_imdb_create_movie_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = CustomImdbClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -22,7 +21,6 @@ async fn test_imdb_create_movie_with_wiremock() {
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
-                ..Default::default()
             },
             None,
         )
@@ -46,7 +44,6 @@ async fn test_imdb_get_movie_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = CustomImdbClient::new(config).expect("Failed to build client");
 
     let result = client

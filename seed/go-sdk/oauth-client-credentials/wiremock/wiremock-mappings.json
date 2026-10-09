@@ -84,7 +84,12 @@
       "name": "getSomething - default",
       "request": {
         "urlPathTemplate": "/nested/get-something",
-        "method": "GET"
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -111,7 +116,12 @@
       "name": "getSomething - default",
       "request": {
         "urlPathTemplate": "/get-something",
-        "method": "GET"
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
       },
       "response": {
         "status": 200,

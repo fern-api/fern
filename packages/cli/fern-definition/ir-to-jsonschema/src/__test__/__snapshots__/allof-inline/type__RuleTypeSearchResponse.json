@@ -5,21 +5,16 @@
       "$ref": "#/definitions/PagingCursors"
     },
     "results": {
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RuleType"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RuleType"
+      },
+      "description": "Current page of results from the requested resource."
     }
   },
   "required": [
-    "paging"
+    "paging",
+    "results"
   ],
   "additionalProperties": false,
   "definitions": {
@@ -27,7 +22,8 @@
       "type": "object",
       "properties": {
         "next": {
-          "type": "string"
+          "type": "string",
+          "description": "Cursor for the next page of results."
         },
         "previous": {
           "oneOf": [
@@ -37,7 +33,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Cursor for the previous page of results."
         }
       },
       "required": [

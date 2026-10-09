@@ -20,6 +20,12 @@ module Seed
       # @option params [Integer, nil] :limit
       # @option params [String, nil] :starting_after
       #
+      # @example
+      #   client.users.list_with_custom_pager(
+      #     limit: 1,
+      #     starting_after: "starting_after"
+      #   )
+      #
       # @return [Seed::Types::UsersListResponse]
       def list_with_custom_pager(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -41,7 +47,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          parsed_response = Seed::Types::UsersListResponse.load(response.body)
+          parsed_response = (response.body.to_s.empty? ? nil : Seed::Types::UsersListResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

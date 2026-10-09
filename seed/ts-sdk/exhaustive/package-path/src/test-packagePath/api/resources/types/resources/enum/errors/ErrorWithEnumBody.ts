@@ -5,6 +5,8 @@ import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export class ErrorWithEnumBody extends errors.SeedExhaustiveError {
+    public declare readonly body: SeedExhaustive.types.WeatherReport;
+
     constructor(body: SeedExhaustive.types.WeatherReport, rawResponse?: core.RawResponse) {
         super({
             message: "ErrorWithEnumBody",
@@ -17,6 +19,6 @@ export class ErrorWithEnumBody extends errors.SeedExhaustiveError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "ErrorWithEnumBody";
     }
 }

@@ -9,7 +9,16 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
 - [Installation](#installation)
 - [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
 - [Websockets](#websockets)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Additional Body Properties](#additional-body-properties)
+  - [Custom Client](#custom-client)
 - [Contributing](#contributing)
 
 ## Installation
@@ -31,6 +40,41 @@ cargo add seed_websocket
 
 A full reference for this library is available [here](./reference.md).
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```rust
+use seed_websocket::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = WebsocketClient::new(config).expect("Failed to build client");
+    client.status.get_status(None).await;
+}
+```
+
+## Errors
+
+When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
+
+```rust
+match client.status.get_status(None)?.await {
+    Ok(response) => {
+        println!("Success: {:?}", response);
+    },
+    Err(ApiError::HTTP { status, message }) => {
+        println!("API Error {}: {:?}", status, message);
+    },
+    Err(e) => {
+        println!("Other error: {:?}", e);
+    }
+}
+```
+
 ## Websockets
 
 The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.
@@ -49,6 +93,114 @@ let mut empty_realtime = client.empty_realtime.connect().await.expect("Failed to
 
 // Close the connection when done
 empty_realtime.close().await.expect("Failed to close");
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, and all `>= 500`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
+
+Use the `max_retries` method to configure this behavior.
+
+```rust
+let response = client.status.get_status(
+    Some(RequestOptions::new().max_retries(3))
+)?.await;
+```
+
+### Timeouts
+
+The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
+
+```rust
+let response = client.status.get_status(
+    Some(RequestOptions::new().timeout_seconds(30))
+)?.await;
+```
+
+### Additional Headers
+
+You can add custom headers to requests using `RequestOptions`.
+
+```rust
+let response = client.status.get_status(
+    Some(
+        RequestOptions::new()
+            .additional_header("X-Custom-Header", "custom-value")
+            .additional_header("X-Another-Header", "another-value")
+    )
+)?
+.await;
+```
+
+### Additional Query String Parameters
+
+You can add custom query parameters to requests using `RequestOptions`.
+
+```rust
+let response = client.status.get_status(
+    Some(
+        RequestOptions::new()
+            .additional_query_param("filter", "active")
+            .additional_query_param("sort", "desc")
+    )
+)?
+.await;
+```
+
+### Additional Body Properties
+
+You can add properties to the request body using `RequestOptions`, e.g. to send fields the SDK
+doesn't model yet. Keys are sent as-is, and a property set here overrides a field of the same name.
+If the endpoint has no body, a JSON object containing only these properties is sent. Additional
+properties apply to JSON and form-urlencoded bodies; multipart (file upload) and raw bytes bodies
+are sent unchanged.
+
+```rust
+let response = client.status.get_status(
+    Some(
+        RequestOptions::new()
+            .additional_body_param("beta_feature", true)
+            .additional_body_param("metadata", serde_json::json!({ "source": "sdk" }))
+    )
+)?
+.await;
+```
+
+### Custom Client
+
+The SDK builds its own `reqwest` client by default, but you can supply your own through
+`ClientConfig.reqwest_client` (or `ApiClientBuilder::reqwest_client`) when you need control over the
+transport — custom root certificates, client certificates, proxies or connection tuning. The supplied
+client is used as-is; authentication, custom headers and retries are still applied by the SDK.
+
+```rust
+use seed_websocket::prelude::*;
+
+let certificate = reqwest::Certificate::from_pem(&std::fs::read("ca.pem")?)?;
+let reqwest_client = reqwest::Client::builder()
+    .add_root_certificate(certificate)
+    .build()
+    .expect("Failed to build reqwest client");
+let config = ClientConfig {
+    reqwest_client: Some(reqwest_client),
+    ..Default::default()
+};
+let client = WebsocketClient::new(config).expect("Failed to build client");
 ```
 
 ## Contributing

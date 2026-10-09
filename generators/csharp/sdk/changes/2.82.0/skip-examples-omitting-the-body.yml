@@ -1,0 +1,5 @@
+- summary: |
+    Skip endpoint examples that omit a request body the endpoint declares. The generated request
+    type requires the body, so rendering such an example produced a call missing a required
+    argument in the reference, the snippets and the mock server tests.
+  type: fix

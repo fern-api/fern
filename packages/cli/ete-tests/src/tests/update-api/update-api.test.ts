@@ -11,7 +11,9 @@ const FIXTURES_DIR = path.join(__dirname, "fixtures");
 describe("fern api update", () => {
     it("fern api update", async ({ signal }) => {
         // Start express server that will respond with the OpenAPI spec.
-        const { cleanup } = setupOpenAPIServer();
+        // Port is pinned because the fixture's generators.yml and the test snapshots
+        // reference http://localhost:4567/openapi.json verbatim.
+        const { cleanup } = await setupOpenAPIServer({ port: 4567 });
 
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
@@ -28,7 +30,9 @@ describe("fern api update", () => {
 
     it("fern api update --indent 4", async ({ signal }) => {
         // Start express server that will respond with the OpenAPI spec.
-        const { cleanup } = setupOpenAPIServer();
+        // Port is pinned because the fixture's generators.yml and the test snapshots
+        // reference http://localhost:4567/openapi.json verbatim.
+        const { cleanup } = await setupOpenAPIServer({ port: 4567 });
 
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);

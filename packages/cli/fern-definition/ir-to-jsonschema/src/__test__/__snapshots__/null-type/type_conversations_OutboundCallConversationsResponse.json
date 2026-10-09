@@ -16,10 +16,12 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Always null when dry_run is true."
     },
     "dry_run": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Always true for this response."
     }
   },
   "required": [

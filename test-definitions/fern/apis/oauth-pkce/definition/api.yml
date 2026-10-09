@@ -1,0 +1,6 @@
+name: oauth-pkce
+docs: |
+  Reproduces the OAuth authorization-code + PKCE wire-test bugs: a required literal
+  query parameter (response_type=code) that is hardcoded in the generated method, and
+  a direct optional literal query parameter (code_challenge_method=S256) that must be
+  materialized on the wire.

@@ -138,7 +138,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -373,7 +374,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -477,7 +479,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -488,5 +491,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

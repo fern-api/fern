@@ -4,10 +4,10 @@
   "repository": "https://github.com/fern-api/fern",
   "author": "Birch Solutions, Inc.",
   "private": true,
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@11.0.6",
   "engines": {
     "npm": "please-use-pnpm",
-    "pnpm": "^10.28.0",
+    "pnpm": "^11.0.0",
     "node": ">=20.0.0"
   },
   "scripts": {
@@ -57,10 +57,15 @@
     "fern-v2-dev:build": "turbo run dist:cli:dev --filter=@fern-api/cli-v2 && echo 'Run node --enable-source-maps packages/cli/cli-v2/dist/dev/cli.cjs'",
     "fern-v2-dev:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli-v2/dist/dev/cli.cjs",
     "fern-v2-dev:bin": "pnpm fern-v2-dev:build && pnpm --filter @fern-api/cli-v2 dist:bin:local",
+    "fern-beta:build": "turbo run dist:cli:beta --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/beta/cli.cjs'",
+    "fern-beta:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/beta/cli.cjs",
+    "fern-pre-prod:build": "turbo run dist:cli:pre-prod --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/pre-prod/cli.cjs'",
+    "fern-pre-prod:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/pre-prod/cli.cjs",
     "generator-cli:generate": "pnpm fern:build && pnpm fern generate --api generator-cli --local && turbo run dist:cli --filter=@fern-api/generator-cli",
     "seed:build": "turbo run dist:cli --filter=@fern-api/seed-cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
-    "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema && pnpm product-yml:jsonschema && pnpm version-yml:jsonschema",
+    "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema && pnpm product-yml:jsonschema && pnpm version-yml:jsonschema && pnpm fern-yml:jsonschema",
+    "fern-yml:jsonschema": "pnpm fern beta schema --output fern-yml.schema.json",
     "definition-yml:jsonschema": "pnpm fern jsonschema fern.schema.json --api fern-definition --type file.DefinitionFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/fern.schema.json --api fern-definition --type file.DefinitionFileSchema",
     "api-yml:jsonschema": "pnpm fern jsonschema api-yml.schema.json --api fern-definition --type file.RootApiFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/api-yml.schema.json --api fern-definition --type file.RootApiFileSchema",
     "package-yml:jsonschema": "pnpm fern jsonschema package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema",
@@ -138,6 +143,11 @@
     "nanoid": "3.3.8",
     "yaml": "2.8.3"
   },
+  "pnpm": {
+    "overrides": {
+      "js-yaml@4.1.1": "4.2.0"
+    }
+  },
   "workspaces": [
     "packages/**",
     "generators/**",
@@ -146,22 +156,10 @@
     "!**/generated",
     "!packages/cli/cli/dist/local",
     "!packages/cli/cli/dist/dev",
-    "!packages/cli/cli/dist/prod"
+    "!packages/cli/cli/dist/pre-prod",
+    "!packages/cli/cli/dist/prod",
+    "!packages/cli/cli/dist/beta"
   ],
-  "pnpm": {
-    "overrides": {
-      "ajv": "8.18.0",
-      "node-fetch@2.x>whatwg-url": "^14.0.0",
-      "minimatch": ">=10.2.3",
-      "qs": "6.15.0",
-      "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "1.2.4-f661387fb2",
-      "form-data": "^4.0.4",
-      "@fern-api/ui-core-utils": "0.145.12-b50d999d1",
-      "vite": "^7.3.2",
-      "yauzl": "^3.2.1"
-    }
-  },
   "dependencies": {
     "js-yaml": "catalog:"
   }

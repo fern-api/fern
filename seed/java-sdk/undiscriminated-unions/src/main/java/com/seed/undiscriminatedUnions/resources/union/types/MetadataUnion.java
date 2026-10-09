@@ -84,11 +84,6 @@ public final class MetadataUnion {
         @java.lang.Override
         public MetadataUnion deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(
-                        value, new TypeReference<Optional<Map<String, Object>>>() {}));
-            } catch (RuntimeException e) {
-            }
             if (value instanceof Map<?, ?>
                     && ((Map<?, ?>) value).containsKey("name")
                     && ((Map<?, ?>) value).containsKey("value")) {
@@ -96,6 +91,11 @@ public final class MetadataUnion {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, NamedMetadata.class));
                 } catch (RuntimeException e) {
                 }
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, new TypeReference<Optional<Map<String, Object>>>() {}));
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

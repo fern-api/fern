@@ -76,6 +76,12 @@ export abstract class AbstractEndpointGenerator {
             ...service.pathParameters,
             ...endpoint.pathParameters
         ]) {
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParam);
+            if (sdkVariable != null) {
+                // Resolved from the client option in the endpoint body, not the signature.
+                pathParameterReferences[getOriginalName(pathParam.name)] = `_${sdkVariable.localName}`;
+                continue;
+            }
             const parameterName = this.context.getParameterName(pathParam.name);
             pathParameterReferences[getOriginalName(pathParam.name)] = this.accessPathParameterValue({
                 pathParameter: pathParam,
@@ -143,7 +149,7 @@ export abstract class AbstractEndpointGenerator {
     private getFileParameterFromProperty({
         property
     }: {
-        property: FernIr.FileUploadRequestProperty.File_;
+        property: FernIr.FileUploadRequestProperty.File;
     }): go.Parameter {
         const filePropertyType = property.value.type;
         switch (filePropertyType) {

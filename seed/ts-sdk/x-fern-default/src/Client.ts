@@ -25,6 +25,9 @@ export class SeedApiClient {
      * @param {SeedApi.TestGetRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.testGet({
      *         region: "region"

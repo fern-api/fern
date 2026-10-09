@@ -31,55 +31,57 @@ export interface FilteredIr {
 export class FilteredIrImpl implements FilteredIr {
     private environments: Set<EnvironmentId> = new Set();
     private types: Set<TypeId> = new Set();
-    private properties: Record<TypeId, Set<string> | undefined>;
+    // Property wire-names to exclude per type/endpoint/webhook. `undefined` means no
+    // filtering applies and every property is kept.
+    private excludedProperties: Record<TypeId, Set<string> | undefined>;
     private errors: Set<ErrorId> = new Set();
     private services: Set<ServiceId> = new Set();
     private endpoints: Set<EndpointId> = new Set();
-    private requestProperties: Record<EndpointId, Set<string> | undefined>;
-    private queryParameters: Record<EndpointId, Set<string> | undefined>;
+    private excludedRequestProperties: Record<EndpointId, Set<string> | undefined>;
+    private excludedQueryParameters: Record<EndpointId, Set<string> | undefined>;
     private webhooks: Set<WebhookId> = new Set();
-    private webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
+    private excludedWebhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
     private channels: Set<WebSocketChannelId> = new Set();
     private subpackages: Set<SubpackageId> = new Set();
 
     public constructor({
         types,
-        properties,
+        excludedProperties,
         errors,
         environments,
         services,
         endpoints,
         webhooks,
         subpackages,
-        queryParameters,
-        requestProperties,
-        webhookPayloadProperties,
+        excludedQueryParameters,
+        excludedRequestProperties,
+        excludedWebhookPayloadProperties,
         channels
     }: {
         types: Set<TypeId>;
-        properties: Record<TypeId, Set<string> | undefined>;
+        excludedProperties: Record<TypeId, Set<string> | undefined>;
         errors: Set<ErrorId>;
         environments: Set<EnvironmentId>;
         services: Set<ServiceId>;
-        queryParameters: Record<EndpointId, Set<string> | undefined>;
-        requestProperties: Record<EndpointId, Set<string> | undefined>;
+        excludedQueryParameters: Record<EndpointId, Set<string> | undefined>;
+        excludedRequestProperties: Record<EndpointId, Set<string> | undefined>;
         endpoints: Set<EndpointId>;
         webhooks: Set<WebhookId>;
-        webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
+        excludedWebhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
         subpackages: Set<SubpackageId>;
         channels: Set<WebSocketChannelId>;
     }) {
         this.environments = environments;
         this.types = types;
-        this.properties = properties;
+        this.excludedProperties = excludedProperties;
         this.errors = errors;
         this.services = services;
         this.endpoints = endpoints;
         this.webhooks = webhooks;
-        this.webhookPayloadProperties = webhookPayloadProperties;
+        this.excludedWebhookPayloadProperties = excludedWebhookPayloadProperties;
         this.subpackages = subpackages;
-        this.requestProperties = requestProperties;
-        this.queryParameters = queryParameters;
+        this.excludedRequestProperties = excludedRequestProperties;
+        this.excludedQueryParameters = excludedQueryParameters;
         this.channels = channels;
     }
 
@@ -105,12 +107,8 @@ export class FilteredIrImpl implements FilteredIr {
     }
 
     public hasProperty(typeId: string, property: string): boolean {
-        const properties = this.properties[typeId];
-        if (properties == null) {
-            // No audiences were configured.
-            return true;
-        }
-        return properties.has(property);
+        const excluded = this.excludedProperties[typeId];
+        return excluded == null || !excluded.has(property);
     }
 
     public hasError(error: ErrorDeclaration): boolean {
@@ -132,21 +130,13 @@ export class FilteredIrImpl implements FilteredIr {
     }
 
     public hasRequestProperty(endpoint: string, property: string): boolean {
-        const properties = this.requestProperties[endpoint];
-        if (properties == null) {
-            // No audiences were configured.
-            return true;
-        }
-        return properties.has(property);
+        const excluded = this.excludedRequestProperties[endpoint];
+        return excluded == null || !excluded.has(property);
     }
 
     public hasQueryParameter(endpoint: string, parameter: string): boolean {
-        const parameters = this.queryParameters[endpoint];
-        if (parameters == null) {
-            // No audiences were configured.
-            return true;
-        }
-        return parameters.has(parameter);
+        const excluded = this.excludedQueryParameters[endpoint];
+        return excluded == null || !excluded.has(parameter);
     }
 
     public hasSubpackage(subpackageId: string): boolean {
@@ -168,11 +158,7 @@ export class FilteredIrImpl implements FilteredIr {
     }
 
     public hasWebhookPayloadProperty(webhookId: string, property: string): boolean {
-        const properties = this.webhookPayloadProperties[webhookId];
-        if (properties == null) {
-            // No audiences were configured.
-            return true;
-        }
-        return properties.has(property);
+        const excluded = this.excludedWebhookPayloadProperties[webhookId];
+        return excluded == null || !excluded.has(property);
     }
 }

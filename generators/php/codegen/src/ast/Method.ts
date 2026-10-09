@@ -24,6 +24,8 @@ export declare namespace Method {
         body?: CodeBlock;
         /* Documentation for the method */
         docs?: string;
+        /* A usage code example to include in the method's doc block, if any */
+        codeExample?: string;
         /* The class this method belongs to, if any */
         classReference?: ClassReference;
         /* Whether this method is static */
@@ -41,6 +43,7 @@ export class Method extends AstNode {
     public readonly return_: Type | typeof STATIC | typeof SELF | undefined;
     public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
+    public readonly codeExample: string | undefined;
     public readonly classReference: ClassReference | undefined;
     public readonly static_: boolean;
     public readonly noBody: boolean;
@@ -53,6 +56,7 @@ export class Method extends AstNode {
         return_,
         body,
         docs,
+        codeExample,
         classReference,
         static_,
         noBody
@@ -65,6 +69,7 @@ export class Method extends AstNode {
         this.return_ = return_;
         this.body = body;
         this.docs = docs;
+        this.codeExample = codeExample;
         this.classReference = classReference;
         this.static_ = static_ ?? false;
         this.noBody = noBody ?? false;
@@ -107,7 +112,7 @@ export class Method extends AstNode {
     }
 
     private writeComment(writer: Writer): void {
-        const comment = new Comment({ docs: this.docs });
+        const comment = new Comment({ docs: this.docs, codeExample: this.codeExample });
         for (const parameter of this.parameters) {
             comment.addTag({
                 tagType: "param",

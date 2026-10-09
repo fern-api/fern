@@ -88,6 +88,12 @@ paths:
                   type: string
                   nullable: true
                   description: Regular non-nullable field
+                required_nullable_text:
+                  type: string
+                  nullable: true
+                  description: Must be sent, but may be null to clear the value
+              required:
+                - required_nullable_text
 components:
   schemas:
     Foo:

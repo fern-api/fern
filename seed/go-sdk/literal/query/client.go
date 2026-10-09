@@ -26,13 +26,41 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.SendLiteralsInQueryRequest{
+//	    OptionalPrompt: fern.String(
+//	        "You are a helpful assistant",
+//	    ),
+//	    AliasPrompt: fern.AliasToPrompt(
+//	        "You are a helpful assistant",
+//	    ),
+//	    AliasOptionalPrompt: fern.String(
+//	        "You are a helpful assistant",
+//	    ),
+//	    OptionalStream: fern.Bool(
+//	        false,
+//	    ),
+//	    AliasStream: fern.AliasToStream(
+//	        false,
+//	    ),
+//	    AliasOptionalStream: fern.Bool(
+//	        false,
+//	    ),
+//	    Query: "What is the weather today",
+//	}
+//	client.Query.Send(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Send(
 	ctx context.Context,
 	request *fern.SendLiteralsInQueryRequest,

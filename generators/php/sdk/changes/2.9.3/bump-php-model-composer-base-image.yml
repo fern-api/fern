@@ -1,0 +1,7 @@
+- summary: |
+    Bump the php-model container's `composer` base image from `composer:2.7.9`
+    (Alpine 3.20, PHP 8.3.12) to `composer:2.9.7` (Alpine 3.22, current PHP),
+    mirroring the php-sdk bump. Addresses the Alpine 3.20 EOL alert and the
+    PHP 8.3.12 CVEs (CVE-2024-8932, CVE-2024-11236, CVE-2025-1861), and
+    standardizes on `apk upgrade --no-cache --available` for cache invalidation.
+  type: chore

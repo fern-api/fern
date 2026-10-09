@@ -147,6 +147,15 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->justFile(
+     *     new JustFileRequest([
+     *         'file' => File::createFromString("example_file", "example_file"),
+     *     ]),
+     * );
+     * ```
+     *
      * @param JustFileRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -484,6 +493,15 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->optionalArgs(
+     *     new OptionalArgsRequest([
+     *         'imageFile' => File::createFromString("example_image_file", "example_image_file"),
+     *     ]),
+     * );
+     * ```
+     *
      * @param OptionalArgsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -646,6 +664,18 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->withRefBody(
+     *     new WithRefBodyRequest([
+     *         'imageFile' => File::createFromString("example_image_file", "example_image_file"),
+     *         'request' => new MyObject([
+     *             'foo' => 'bar',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param WithRefBodyRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -706,6 +736,11 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->simple();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -762,7 +797,7 @@ class ServiceClient
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
         if ($request->modelType != null) {
-            $body->add(name: 'model_type', value: $request->modelType->toJson());
+            $body->add(name: 'model_type', value: $request->modelType);
         }
         if ($request->openEnum != null) {
             $body->add(name: 'open_enum', value: $request->openEnum);

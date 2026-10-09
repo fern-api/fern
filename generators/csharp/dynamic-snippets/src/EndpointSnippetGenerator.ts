@@ -1,11 +1,16 @@
 import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, getSdkVariableOptionName, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 import { Config } from "./Config.js";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
+
+// The request parameter is always named "request" in the generated C# SDK: the IR sets
+// `SdkRequest.requestParameterName` to the default for both body and wrapped requests (see
+// DEFAULT_REQUEST_PARAMETER_NAME in convertHttpSdkRequest.ts).
+const REQUEST_PARAMETER_NAME = "request";
 
 export class EndpointSnippetGenerator extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
@@ -207,6 +212,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         if (baseUrlArgs.length > 0) {
             optionArgs.push(...baseUrlArgs);
         }
+        optionArgs.push(...this.getConstructorSdkVariableArgs({ endpoint, snippet }));
         this.context.errors.scope(Scope.Headers);
         const headerArgs: NamedArgument[] = [];
         if (this.context.ir.headers != null && snippet.headers != null) {
@@ -265,6 +271,60 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 })
             }
         ];
+    }
+
+    /**
+     * Path parameters bound to an SDK variable are configured on the client via
+     * `ClientOptions.<Variable>` rather than passed to the endpoint method.
+     */
+    private getConstructorSdkVariableArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): NamedArgument[] {
+        const variables = this.context.ir.variables ?? [];
+        const pathParameterValues = snippet.pathParameters ?? {};
+        const boundParameters = [
+            ...(this.context.ir.pathParameters ?? []),
+            ...(endpoint.request.pathParameters ?? [])
+        ].filter(
+            // Without a value, leave the variable unset so the generated client resolves it from
+            // its environment fallback (or fails clearly) instead of sending a placeholder.
+            (parameter) => parameter.variable != null && pathParameterValues[parameter.name.wireValue] != null
+        );
+        if (boundParameters.length === 0) {
+            return [];
+        }
+        const args: NamedArgument[] = [];
+        const seen = new Set<string>();
+        this.context.errors.scope(Scope.PathParameters);
+        const instances = this.context.associateByWireValueOrDefault({
+            parameters: boundParameters,
+            values: pathParameterValues
+        });
+        const instancesByWireValue = new Map(instances.map((instance) => [instance.name.wireValue, instance]));
+        for (const parameter of boundParameters) {
+            const instance = instancesByWireValue.get(parameter.name.wireValue);
+            const variableId = parameter.variable;
+            if (instance == null || variableId == null || seen.has(variableId)) {
+                continue;
+            }
+            seen.add(variableId);
+            const variable = variables.find((candidate) => candidate.id === variableId);
+            const name = variable?.name ?? parameter.name.name;
+            args.push({
+                name: getSdkVariableOptionName(name.pascalCase.safeName),
+                assignment: this.context.dynamicLiteralMapper.convert({
+                    ...instance,
+                    fallbackToDefault: parameter.name.wireValue,
+                    forceLiteral: true
+                })
+            });
+        }
+        this.context.errors.unscope();
+        return args;
     }
 
     private getConstructorBaseUrlArgs({
@@ -545,7 +605,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.Literal[] {
+    }): (ast.Literal | ast.CodeBlock)[] {
         switch (endpoint.request.type) {
             case "inlined":
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
@@ -562,15 +622,24 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.Literal[] {
-        const args: ast.Literal[] = [];
-
+    }): (ast.Literal | ast.CodeBlock)[] {
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: ast.ConstructorField[] = [];
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
-        }
+        // Parameters bound to a client-level SDK variable are passed to the constructor instead.
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
+        const includePathParameters =
+            pathParameters.length > 0 &&
+            this.context.includePathParametersInWrappedRequest({
+                request,
+                inlinePathParameters: this.settings.shouldInlinePathParameters
+            });
+        const pathParameterFields = includePathParameters
+            ? this.getPathParameters({ namedParameters: pathParameters, snippet })
+            : [];
+        const separatePathParameterArgs = includePathParameters
+            ? []
+            : this.getPathParameterArguments({ namedParameters: pathParameters, snippet });
         this.context.errors.unscope();
 
         // TODO: Add support for file properties.
@@ -578,29 +647,26 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (
-            !this.context.includePathParametersInWrappedRequest({
-                request,
-                inlinePathParameters: this.settings.shouldInlinePathParameters
-            })
-        ) {
-            args.push(...pathParameterFields.map((field) => field.value));
-        }
         // For now, the C# SDK always requires the inlined request parameter.
-        args.push(
-            this.getInlinedRequestArg({
-                request,
-                snippet,
-                pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                    request,
-                    inlinePathParameters: this.settings.shouldInlinePathParameters
-                })
-                    ? pathParameterFields
-                    : [],
-                filePropertyInfo
-            })
-        );
-        return args;
+        const requestArg = this.getInlinedRequestArg({
+            request,
+            snippet,
+            pathParameterFields,
+            filePropertyInfo
+        });
+
+        // When path parameters are not inlined into the wrapped request they become separate method
+        // arguments, and any with a client default are optional in the generated signature and placed
+        // after the request parameter. The dynamic IR does not carry this optionality, so emit named
+        // arguments to make the call compile regardless of the parameter ordering in the signature.
+        if (separatePathParameterArgs.length > 0) {
+            return [
+                ...separatePathParameterArgs.map((arg) => this.namedArgument({ name: arg.name, value: arg.value })),
+                this.namedArgument({ name: REQUEST_PARAMETER_NAME, value: requestArg })
+            ];
+        }
+
+        return [requestArg];
     }
 
     private getFilePropertyInfo({
@@ -787,24 +853,88 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.Literal[] {
-        const args: ast.Literal[] = [];
+    }): (ast.Literal | ast.CodeBlock)[] {
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            args.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
-            );
-        }
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
+        const pathParameterArgs = this.getPathParameterArguments({ namedParameters: pathParameters, snippet });
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
-        }
+        const bodyArg =
+            request.body != null && !this.callOmitsRequestBody({ request, snippet })
+                ? this.getBodyRequestArg({ body: request.body, value: snippet.requestBody })
+                : undefined;
         this.context.errors.unscope();
 
+        // A path parameter that is optional in the generated signature (e.g. one with a client default)
+        // is placed after the request body, while required path parameters come before it. The dynamic IR
+        // does not carry this optionality, so when a body request also has path parameters we emit named
+        // arguments to make the call compile regardless of the parameter ordering in the signature.
+        if (pathParameterArgs.length > 0 && bodyArg != null) {
+            return [
+                ...pathParameterArgs.map((arg) => this.namedArgument({ name: arg.name, value: arg.value })),
+                this.namedArgument({ name: REQUEST_PARAMETER_NAME, value: bodyArg })
+            ];
+        }
+
+        const args: (ast.Literal | ast.CodeBlock)[] = pathParameterArgs.map((arg) => arg.value);
+        if (bodyArg != null) {
+            args.push(bodyArg);
+        }
         return args;
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which the parameter's null default allows.
+     * Applies only to a body the caller may omit, and only once the generator opts in to that.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (!this.settings.respectOptionalRequestBody) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
+    }
+
+    private getPathParameterArguments({
+        namedParameters,
+        snippet
+    }: {
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): { name: string; value: ast.Literal }[] {
+        const pathParameters = this.context.associateByWireValueOrDefault({
+            parameters: namedParameters,
+            values: snippet.pathParameters ?? {}
+        });
+        return pathParameters.map((parameter) => ({
+            name: this.context.getParameterName(parameter.name.name),
+            value: this.context.dynamicLiteralMapper.convert({
+                ...parameter,
+                // Path parameters rendered as positional method arguments stay required even when
+                // `generateLiterals` is enabled, so literal values must still be emitted for them.
+                fallbackToDefault: parameter.name.wireValue,
+                forceLiteral: true
+            })
+        }));
+    }
+
+    private namedArgument({ name, value }: { name: string; value: ast.AstNode }): ast.CodeBlock {
+        return this.csharp.codeblock((writer) => {
+            writer.write(`${name}: `);
+            writer.writeNode(value);
+        });
     }
 
     private getBodyRequestArg({

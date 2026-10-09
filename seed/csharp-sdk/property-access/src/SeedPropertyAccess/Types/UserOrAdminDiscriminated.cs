@@ -1,6 +1,7 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
+using global::System.Diagnostics.CodeAnalysis;
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
@@ -15,6 +16,7 @@ namespace SeedPropertyAccess;
 [Serializable]
 public record UserOrAdminDiscriminated
 {
+    [SetsRequiredMembers]
     internal UserOrAdminDiscriminated(string type, object? value)
     {
         Type = type;
@@ -102,7 +104,7 @@ public record UserOrAdminDiscriminated
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty'.</exception>
-    public object AsEmpty() =>
+    public object? AsEmpty() =>
         IsEmpty
             ? Value!
             : throw new global::System.Exception("UserOrAdminDiscriminated.Type is not 'empty'");
@@ -110,7 +112,7 @@ public record UserOrAdminDiscriminated
     public T Match<T>(
         Func<SeedPropertyAccess.User, T> onUser,
         Func<SeedPropertyAccess.Admin, T> onAdmin,
-        Func<object, T> onEmpty,
+        Func<object?, T> onEmpty,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -126,7 +128,7 @@ public record UserOrAdminDiscriminated
     public void Visit(
         Action<SeedPropertyAccess.User> onUser,
         Action<SeedPropertyAccess.Admin> onAdmin,
-        Action<object> onEmpty,
+        Action<object?> onEmpty,
         Action<string, object?> onUnknown_
     )
     {
@@ -249,7 +251,7 @@ public record UserOrAdminDiscriminated
                     ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.User"),
                 "admin" => json.GetProperty("admin").Deserialize<SeedPropertyAccess.Admin?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.Admin"),
-                "empty" => new { },
+                "empty" => null,
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
@@ -369,8 +371,8 @@ public record UserOrAdminDiscriminated
     [Serializable]
     public record Empty
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

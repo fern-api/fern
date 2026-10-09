@@ -2,13 +2,16 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string"
+      "type": "string",
+      "description": "The unique identifier"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "description": "The user's name.\nFor Windows: DOMAIN\\username"
     },
     "email": {
-      "type": "string"
+      "type": "string",
+      "description": "The user's email address"
     }
   },
   "required": [
@@ -17,5 +20,6 @@
     "email"
   ],
   "additionalProperties": false,
+  "description": "Represents a user in the system.\nWindows users should use DOMAIN\\username format.",
   "definitions": {}
 }

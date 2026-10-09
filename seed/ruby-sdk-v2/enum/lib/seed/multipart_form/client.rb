@@ -23,25 +23,25 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        if params[:color]
+        unless params[:color].nil?
           body.add(
             name: "color",
             value: params[:color]
           )
         end
-        if params[:maybe_color]
+        unless params[:maybe_color].nil?
           body.add(
             name: "maybeColor",
             value: params[:maybe_color]
           )
         end
-        if params[:color_list]
+        unless params[:color_list].nil?
           body.add(
             name: "colorList",
             value: params[:color_list]
           )
         end
-        if params[:maybe_color_list]
+        unless params[:maybe_color_list].nil?
           body.add(
             name: "maybeColorList",
             value: params[:maybe_color_list]

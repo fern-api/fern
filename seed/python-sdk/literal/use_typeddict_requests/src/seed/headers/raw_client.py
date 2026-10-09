@@ -67,6 +67,47 @@ class RawHeadersClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def send_literals_only(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[SendResponse]:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SendResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "headers/literals-only",
+            method="POST",
+            headers={
+                "X-Endpoint-Version": "02-12-2024",
+                "X-Async": "true",
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SendResponse,
+                    parse_obj_as(
+                        type_=SendResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -99,6 +140,47 @@ class AsyncRawHeadersClient:
             },
             request_options=request_options,
             omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SendResponse,
+                    parse_obj_as(
+                        type_=SendResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def send_literals_only(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[SendResponse]:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SendResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "headers/literals-only",
+            method="POST",
+            headers={
+                "X-Endpoint-Version": "02-12-2024",
+                "X-Async": "true",
+            },
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:

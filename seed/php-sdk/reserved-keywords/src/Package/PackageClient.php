@@ -48,6 +48,15 @@ class PackageClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->package->test(
+     *     new TestRequest([
+     *         'for' => 'for',
+     *     ]),
+     * );
+     * ```
+     *
      * @param TestRequest $request
      * @param ?array{
      *   baseUrl?: string,

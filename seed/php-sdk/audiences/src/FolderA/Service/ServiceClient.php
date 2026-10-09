@@ -50,6 +50,20 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->folderA->service->getDirectThread(
+     *     new GetDirectThreadRequest([
+     *         'ids' => [
+     *             'ids',
+     *         ],
+     *         'tags' => [
+     *             'tags',
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetDirectThreadRequest $request
      * @param ?array{
      *   baseUrl?: string,

@@ -23,6 +23,7 @@ export declare namespace WorkspaceLoader {
         | FileReadFailure
         | FileParseFailure
         | MissingFileFailure
+        | AbsoluteFilepathFailure
         | StructureValidationFailure
         | DependencyFailure
         | JsonSchemaValidationFailure;
@@ -39,6 +40,11 @@ export declare namespace WorkspaceLoader {
 
     export interface MissingFileFailure {
         type: WorkspaceLoaderFailureType.FILE_MISSING;
+    }
+
+    export interface AbsoluteFilepathFailure {
+        type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH;
+        filepath: string;
     }
 
     export interface MisconfiguredDirectoryFailure {
@@ -87,6 +93,7 @@ export enum WorkspaceLoaderFailureType {
     FILE_READ = "FILE_READ",
     FILE_PARSE = "FILE_PARSE",
     FILE_MISSING = "FILE_MISSING",
+    ABSOLUTE_FILEPATH = "ABSOLUTE_FILEPATH",
     STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
     JSONSCHEMA_VALIDATION = "JSONSCHEMA_VALIDATION",
     DEPENDENCY_NOT_LISTED = "DEPENDENCY_NOT_LISTED",

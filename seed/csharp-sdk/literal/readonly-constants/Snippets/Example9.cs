@@ -9,22 +9,13 @@ public partial class Examples
             }
         );
 
-        await client.Reference.SendAsync(
-            new SendRequest {
+        await client.Query.SendAsync(
+            new SendLiteralsInQueryRequest {
+                AliasPrompt = new AliasToPrompt(),
+                AliasOptionalPrompt = new AliasToPrompt(),
                 Query = "query",
-                Context = new SomeLiteral(),
-                MaybeContext = new SomeLiteral(),
-                ContainerObject = new ContainerObject {
-                    NestedObjects = new List<NestedObjectWithLiterals>(){
-                        new NestedObjectWithLiterals {
-                            StrProp = "strProp"
-                        },
-                        new NestedObjectWithLiterals {
-                            StrProp = "strProp"
-                        },
-                    }
-
-                }
+                AliasStream = new AliasToStream(),
+                AliasOptionalStream = new AliasToStream()
             }
         );
     }

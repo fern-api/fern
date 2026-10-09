@@ -10,4 +10,47 @@ import type * as GeneratorsYml from "../../../index.js";
  */
 export interface ApiConfigurationV2SettingsSchema
     extends GeneratorsYml.OpenApiSettingsSchema,
-        GeneratorsYml.AsyncApiSettingsSchema {}
+        GeneratorsYml.AsyncApiSettingsSchema {
+    /**
+     * Enable idempotency-key auto-generation for every generator in this API, so it
+     * does not have to be set on each generator's `config`. When enabled, generators
+     * auto-generate an idempotency key header on retry-unsafe (POST/PUT) requests
+     * unless the caller supplies one.
+     *
+     * Accepts either a boolean shorthand or an object with an optional custom
+     * header name and eligible-method list:
+     * ```yaml
+     * api:
+     *   settings:
+     *     auto-generate-idempotency-key: true
+     *     # or
+     *     auto-generate-idempotency-key:
+     *       header-name: "Idempotency-Key"
+     *       methods: ["POST", "PUT"]
+     * ```
+     * A generator's own `config.auto-generate-idempotency-key` overrides this
+     * value for that generator.
+     */
+    "auto-generate-idempotency-key"?: unknown;
+    /**
+     * Webhook signature scheme for the whole API, declared once here instead of in the
+     * API definition. Every generator in this API emits a shared webhook verification
+     * helper (e.g. `WebhooksHelper.verifySignature`) built from this scheme, even when
+     * the spec models no webhooks. Uses the same shape as a webhook's `signature` block
+     * in a Fern definition:
+     * ```yaml
+     * api:
+     *   settings:
+     *     webhook-signature:
+     *       type: hmac
+     *       header: X-Twilio-Signature
+     *       algorithm: sha1
+     *       encoding: base64
+     *       payload-format:
+     *         components: [notification-url, body]
+     *         delimiter: ""
+     *         body-sort: alphabetical
+     * ```
+     */
+    "webhook-signature"?: unknown;
+}

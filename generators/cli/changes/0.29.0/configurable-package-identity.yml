@@ -1,0 +1,11 @@
+- summary: |
+    Add `customConfig.packageIdentity` so the generated crate's `[package]` block
+    (`name`, `description`, `license`, `repository`, `homepage`, `authors`,
+    `keywords`) can be templated from the customer's own metadata instead of
+    shipping Fern's SDK-template identity (`fern-cli-sdk`,
+    `github.com/fern-api/cli-sdk`). A `name` override renames the matching
+    `Cargo.lock` entry in the same pass, so `cargo build --locked` still
+    resolves. The `[lib]` name (`fern_cli_sdk`) is unchanged — the vendored
+    `src/` tree imports through it. Omitting the field keeps today's output
+    byte-for-byte.
+  type: feat

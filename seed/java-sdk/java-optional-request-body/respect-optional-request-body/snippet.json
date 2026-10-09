@@ -1,0 +1,70 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "c9b1c75d",
+            "id": {
+                "method": "POST",
+                "path": "/refunds/{id}",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.types.RefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.refund(\n            \"id\",\n            RefundRequest\n                .builder()\n                .amount(1.1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.types.RefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.refund(\n            \"id\",\n            RefundRequest\n                .builder()\n                .amount(1.1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e59ae771",
+            "id": {
+                "method": "POST",
+                "path": "/refunds",
+                "identifier_override": "endpoint_.bulkRefund"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.types.RefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.bulkRefund(\n            RefundRequest\n                .builder()\n                .amount(1.1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.types.RefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.bulkRefund(\n            RefundRequest\n                .builder()\n                .amount(1.1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a92509a8",
+            "id": {
+                "method": "POST",
+                "path": "/refunds/with-header",
+                "identifier_override": "endpoint_.refundWithHeader"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.requests.RefundWithHeaderRequest;\nimport com.seed.javaOptionalRequestBody.types.RefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.refundWithHeader(\n            RefundWithHeaderRequest\n                .builder()\n                .body(\n                    RefundRequest\n                        .builder()\n                        .amount(1.1)\n                        .build()\n                )\n                .xIdempotencyKey(\"X-Idempotency-Key\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.requests.RefundWithHeaderRequest;\nimport com.seed.javaOptionalRequestBody.types.RefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.refundWithHeader(\n            RefundWithHeaderRequest\n                .builder()\n                .body(\n                    RefundRequest\n                        .builder()\n                        .amount(1.1)\n                        .build()\n                )\n                .xIdempotencyKey(\"X-Idempotency-Key\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8dd45501",
+            "id": {
+                "method": "POST",
+                "path": "/refunds/{id}/exact",
+                "identifier_override": "endpoint_.refundExactAmount"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.types.ExactRefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.refundExactAmount(\n            \"id\",\n            ExactRefundRequest\n                .builder()\n                .amount(1.1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.types.ExactRefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.refundExactAmount(\n            \"id\",\n            ExactRefundRequest\n                .builder()\n                .amount(1.1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c9b1c75d",
+            "id": {
+                "method": "POST",
+                "path": "/refunds/{id}/required",
+                "identifier_override": "endpoint_.requiredRefund"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.types.RefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.requiredRefund(\n            \"id\",\n            RefundRequest\n                .builder()\n                .amount(1.1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalRequestBody.SeedJavaOptionalRequestBodyClient;\nimport com.seed.javaOptionalRequestBody.types.RefundRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalRequestBodyClient client = SeedJavaOptionalRequestBodyClient\n            .builder()\n            .build();\n\n        client.requiredRefund(\n            \"id\",\n            RefundRequest\n                .builder()\n                .amount(1.1)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

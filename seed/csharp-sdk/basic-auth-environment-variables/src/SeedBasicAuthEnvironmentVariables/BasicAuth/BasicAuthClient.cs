@@ -17,6 +17,11 @@ public partial class BasicAuthClient : IBasicAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedBasicAuthEnvironmentVariables.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedBasicAuthEnvironmentVariables.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +34,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                 {
                     Method = HttpMethod.Get,
                     Path = "basic-auth",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -46,7 +52,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                 return new WithRawResponse<bool>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedBasicAuthEnvironmentVariables.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -60,7 +66,13 @@ public partial class BasicAuthClient : IBasicAuthClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedBasicAuthEnvironmentVariables.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -74,7 +86,15 @@ public partial class BasicAuthClient : IBasicAuthClient
                 {
                     case 401:
                         throw new UnauthorizedRequest(
-                            JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
+                            JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody),
+                            rawResponse: new SeedBasicAuthEnvironmentVariables.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                 }
             }
@@ -85,7 +105,13 @@ public partial class BasicAuthClient : IBasicAuthClient
             throw new SeedBasicAuthEnvironmentVariablesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedBasicAuthEnvironmentVariables.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -96,6 +122,11 @@ public partial class BasicAuthClient : IBasicAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedBasicAuthEnvironmentVariables.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedBasicAuthEnvironmentVariables.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -109,6 +140,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                     Method = HttpMethod.Post,
                     Path = "basic-auth",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -126,7 +158,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                 return new WithRawResponse<bool>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedBasicAuthEnvironmentVariables.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -140,7 +172,13 @@ public partial class BasicAuthClient : IBasicAuthClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedBasicAuthEnvironmentVariables.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -154,10 +192,28 @@ public partial class BasicAuthClient : IBasicAuthClient
                 {
                     case 401:
                         throw new UnauthorizedRequest(
-                            JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
+                            JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody),
+                            rawResponse: new SeedBasicAuthEnvironmentVariables.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     case 400:
-                        throw new BadRequest(JsonUtils.Deserialize<object>(responseBody));
+                        throw new BadRequest(
+                            JsonUtils.Deserialize<object>(responseBody),
+                            rawResponse: new SeedBasicAuthEnvironmentVariables.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -167,7 +223,13 @@ public partial class BasicAuthClient : IBasicAuthClient
             throw new SeedBasicAuthEnvironmentVariablesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedBasicAuthEnvironmentVariables.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

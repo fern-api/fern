@@ -69,3 +69,10 @@ func WithToken(token string) *core.TokenOption {
 		Token: token,
 	}
 }
+
+// WithTokenFunc sets a function that returns the 'Authorization: Bearer' token at request time.
+func WithTokenFunc(fn func() (string, error)) *core.TokenFuncOption {
+	return &core.TokenFuncOption{
+		TokenFunc: fn,
+	}
+}

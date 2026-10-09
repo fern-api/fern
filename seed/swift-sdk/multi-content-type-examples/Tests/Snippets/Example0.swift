@@ -1,0 +1,13 @@
+import Foundation
+import Api
+
+enum Example0 {
+    static func snippet() async throws {
+        let client = ApiClient(baseURL: "https://api.fern.com")
+
+        _ = try await client.clients.create(request: .init(client: Client(
+            name: "Acme Corp",
+            email: "contact@acme.com"
+        )))
+    }
+}

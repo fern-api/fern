@@ -1,6 +1,7 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 
+import { isDynamicSpecialDocPage } from "./dynamic-special-doc-page.js";
 import { getRedirectForPath } from "./redirect-for-path.js";
 import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils.js";
 import { withBasePathPrepended } from "./with-base-path-prepended.js";
@@ -71,6 +72,10 @@ export async function checkIfPathnameExists({
         // This handles cases where internal paths redirect to external services
         // (e.g., /ui -> https://auth-platform.example.com)
         if (isExternalUrl(redirectedPath)) {
+            return true;
+        }
+
+        if (isDynamicSpecialDocPage(redirectedPath, baseUrl.basePath)) {
             return true;
         }
 

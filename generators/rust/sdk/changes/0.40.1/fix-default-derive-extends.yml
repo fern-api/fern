@@ -1,0 +1,7 @@
+- summary: |
+    Fix compilation error where structs incorrectly derived `Default` when
+    containing fields whose types extend base objects that don't support
+    `Default` (e.g., objects with required enum fields). The
+    `namedTypeSupportsDefault` check now also verifies parent types via
+    `extends`, not just direct properties.
+  type: fix

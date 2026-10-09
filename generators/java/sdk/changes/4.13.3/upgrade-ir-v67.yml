@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Upgrade the Java SDK generator to consume IR v67. The generated SDK output is unchanged.
+  type: chore

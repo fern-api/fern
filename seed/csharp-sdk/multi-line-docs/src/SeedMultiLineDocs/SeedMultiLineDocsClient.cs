@@ -14,7 +14,7 @@ public partial class SeedMultiLineDocsClient : ISeedMultiLineDocsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedMultiLineDocs" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedMultiLineDocs.Version.Current },
                 { "User-Agent", "Fernmulti-line-docs/0.0.1" },
             }
         );

@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{apiVersion}/widgets",
+                "method": "POST",
+                "identifier_override": "endpoint_widgets.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/api-wide-base-path-with-default/fern\"\n\tfernclient \"github.com/api-wide-base-path-with-default/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Widgets.Create(\n\tcontext.TODO(),\n\t\"v1beta\",\n\t\u0026fern.Widget{\n\t\tName: \"name\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

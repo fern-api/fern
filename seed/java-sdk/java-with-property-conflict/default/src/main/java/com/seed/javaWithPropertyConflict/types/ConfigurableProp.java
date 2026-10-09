@@ -173,7 +173,6 @@ public final class ConfigurableProp {
 
         /**
          * <p>The name of the prop</p>
-         * <p>The name of the prop</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

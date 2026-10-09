@@ -6,6 +6,7 @@ import * as errors from "../errors/index.js";
 const PARAM_KEY = "headerTokenAuth" as const;
 const ENV_HEADER_KEY = "HEADER_TOKEN_ENV_VAR" as const;
 const HEADER_NAME = "x-api-key" as const;
+const HEADER_PREFIX = "test_prefix " as const;
 
 export class HeaderAuthProvider implements core.AuthProvider {
     private readonly options: HeaderAuthProvider.Options;
@@ -31,7 +32,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
         }
 
         return {
-            headers: { [HEADER_NAME]: headerValue },
+            headers: { [HEADER_NAME]: `${HEADER_PREFIX}${headerValue}` },
         };
     }
 }

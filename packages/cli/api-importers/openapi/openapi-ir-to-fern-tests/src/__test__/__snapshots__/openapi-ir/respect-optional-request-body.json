@@ -1,0 +1,421 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Optional referenced request bodies",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "refund",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RefundRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "RefundBody",
+      "request": {
+        "schema": {
+          "generatedName": "RefundRequestBody",
+          "schema": "RefundRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": false,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/refunds/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "partialRefund",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PartialRefundRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PartialRefundRequest",
+      "request": {
+        "schema": {
+          "description": "Optional split instructions.",
+          "generatedName": "PartialRefundRequestBody",
+          "schema": "RefundRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": false,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/refunds/{id}/partial",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "requiredRefund",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RequiredRefundRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "RequiredRefundRequest",
+      "request": {
+        "schema": {
+          "generatedName": "RequiredRefundRequestBody",
+          "schema": "RefundRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/refunds/{id}/required",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "unspecifiedRefund",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UnspecifiedRefundRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UnspecifiedRefundRequest",
+      "request": {
+        "schema": {
+          "generatedName": "UnspecifiedRefundRequestBody",
+          "schema": "RefundRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/refunds/{id}/unspecified",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "bulkRefund",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "BulkRefundRequest",
+      "request": {
+        "schema": {
+          "generatedName": "BulkRefundRequest",
+          "schema": "RefundRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": false,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/refunds",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "RefundRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "refundRequestAmount",
+            "key": "amount",
+            "schema": {
+              "generatedName": "RefundRequestAmount",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "RefundRequestAmount",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "RefundRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -55,6 +55,26 @@ public final class PackageYmlClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import PackageYml
+    ///
+    /// private func main() async throws {
+    ///     let client = PackageYmlClient()
+    ///
+    ///     _ = try await client.echo(
+    ///         id: "id-ksfd9c1",
+    ///         request: EchoRequest(
+    ///             name: "Hello world!",
+    ///             size: 20
+    ///         )
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func echo(id: String, request: EchoRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,

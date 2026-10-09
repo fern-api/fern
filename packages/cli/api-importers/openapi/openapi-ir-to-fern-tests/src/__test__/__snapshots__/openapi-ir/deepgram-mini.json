@@ -22,6 +22,7 @@
         {
           "origin": "client",
           "name": "SpeakV1Text",
+          "description": "Request to convert text to speech",
           "body": {
             "allOf": [],
             "properties": [

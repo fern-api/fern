@@ -17,6 +17,7 @@ export interface RootApiFileSchema
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
     "idempotency-headers"?: Record<string, FernDefinition.HttpHeaderSchema>;
     variables?: Record<string, FernDefinition.VariableDeclarationSchema>;
+    "global-parameters"?: Record<string, FernDefinition.GlobalParameterDeclarationSchema>;
     pagination?: FernDefinition.PaginationSchema;
     product?: FernDefinition.ProductDeclarationSchema;
     version?: FernDefinition.VersionDeclarationSchema;

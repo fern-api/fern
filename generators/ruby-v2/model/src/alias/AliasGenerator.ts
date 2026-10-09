@@ -37,6 +37,25 @@ export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
         );
 
         // Add load method - parses JSON string to value
+        //
+        // An alias to a *named* type delegates to that type's own `load`, which
+        // coerces into the model. A bare `::JSON.parse` returned a
+        // string-keyed Hash while the SDK documented the aliased model, so
+        // every documented accessor raised NoMethodError — and it parses
+        // without `symbolize_names`, unlike `Model.load`, so even hash access
+        // used different keys. Endpoints whose response schema is a `$ref` to
+        // another schema all take this path, so the blast radius grew with how
+        // well-factored the spec was.
+        //
+        // Primitives, containers and `unknown` keep the raw parse: there is no
+        // named type to delegate to, and `::JSON.parse` already yields the
+        // right thing for them.
+        // Opt-in: coercing changes what `load` returns for every alias to a
+        // named type, and a caller of an already published gem may be reading
+        // the raw Hash by key.
+        const aliasedTypeReference = this.context.customConfig.coerceAliasResponses
+            ? this.getAliasedNamedTypeReference()
+            : undefined;
         aliasModule.addStatement(
             ruby.method({
                 name: "load",
@@ -45,7 +64,11 @@ export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
                     positional: [ruby.parameters.positional({ name: "str", type: ruby.Type.string() })]
                 },
                 returnType: ruby.Type.untyped(),
-                statements: [ruby.codeblock("::JSON.parse(str)")]
+                statements: [
+                    ruby.codeblock(
+                        aliasedTypeReference != null ? `${aliasedTypeReference}.load(str)` : "::JSON.parse(str)"
+                    )
+                ]
             })
         );
 
@@ -75,6 +98,22 @@ export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
+    }
+
+    /**
+     * Fully-qualified Ruby constant for the aliased type when this alias points
+     * at a named type, else `undefined`.
+     *
+     * Only a named type has its own coercion to delegate to; a primitive or
+     * container does not, and inventing one would change what `load` returns.
+     */
+    private getAliasedNamedTypeReference(): string | undefined {
+        const aliasOf = this.aliasDeclaration.aliasOf;
+        if (aliasOf.type !== "named") {
+            return undefined;
+        }
+        const classReference = this.context.getClassReferenceForTypeId(aliasOf.typeId);
+        return [...classReference.modules, classReference.name].join("::");
     }
 
     private getAliasedTypeName(): string {

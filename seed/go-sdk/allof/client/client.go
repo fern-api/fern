@@ -27,13 +27,21 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.SearchRuleTypesRequest{}
+//	client.SearchRuleTypes(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SearchRuleTypes(
 	ctx context.Context,
 	request *fern.SearchRuleTypesRequest,
@@ -50,6 +58,16 @@ func (c *Client) SearchRuleTypes(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.RuleCreateRequest{
+//	    Name: "name",
+//	    ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
+//	}
+//	client.CreateRule(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateRule(
 	ctx context.Context,
 	request *fern.RuleCreateRequest,
@@ -66,6 +84,11 @@ func (c *Client) CreateRule(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.ListUsers(
+//	    context.TODO(),
+//	)
 func (c *Client) ListUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -80,6 +103,11 @@ func (c *Client) ListUsers(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.GetEntity(
+//	    context.TODO(),
+//	)
 func (c *Client) GetEntity(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -94,12 +122,78 @@ func (c *Client) GetEntity(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.GetOrganization(
+//	    context.TODO(),
+//	)
 func (c *Client) GetOrganization(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*fern.Organization, error) {
 	response, err := c.WithRawResponse.GetOrganization(
 		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+//
+// Example:
+//
+//	request := &fern.PlantPost{
+//	    Species: "species",
+//	    Family: "family",
+//	    Genus: "genus",
+//	    CommonName: "commonName",
+//	    WateringFrequency: fern.PlantBaseWateringFrequencyDaily,
+//	    SunExposure: fern.PlantPostSunExposureFull,
+//	}
+//	client.CreatePlant(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) CreatePlant(
+	ctx context.Context,
+	request *fern.PlantPost,
+	opts ...option.RequestOption,
+) (*fern.PlantStrict, error) {
+	response, err := c.WithRawResponse.CreatePlant(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+//
+// Example:
+//
+//	request := &fern.TreeRecord{
+//	    ID: "id",
+//	    TreeName: "treeName",
+//	    TreeSpecies: "treeSpecies",
+//	}
+//	client.CreateTree(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) CreateTree(
+	ctx context.Context,
+	request *fern.TreeRecord,
+	opts ...option.RequestOption,
+) (*fern.TreeRecord, error) {
+	response, err := c.WithRawResponse.CreateTree(
+		ctx,
+		request,
 		opts...,
 	)
 	if err != nil {

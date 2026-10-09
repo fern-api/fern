@@ -14,10 +14,9 @@
 ```go
 request := &fern.UploadDocumentRequest{}
 client.UploadJSONDocument(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

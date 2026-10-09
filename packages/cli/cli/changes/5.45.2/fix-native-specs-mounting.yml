@@ -1,0 +1,5 @@
+- summary: |
+    Fix native generator execution to correctly pass raw API specs directory
+    via FERN_SPECS_DIR environment variable, enabling local seed tests for
+    generators that consume OpenAPI specs (e.g. CLI generator).
+  type: fix

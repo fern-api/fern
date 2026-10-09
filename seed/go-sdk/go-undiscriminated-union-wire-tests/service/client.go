@@ -26,14 +26,37 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // Rerank documents based on relevance to a query
+//
+// Example:
+//
+//	request := &fern.RerankRequest{
+//	    Documents: []*fern.DocumentItem{
+//	        &fern.DocumentItem{
+//	            DocumentObject: &fern.DocumentObject{
+//	                Text: "Carson City is the capital city of the American state of Nevada.",
+//	            },
+//	        },
+//	        &fern.DocumentItem{
+//	            DocumentObject: &fern.DocumentObject{
+//	                Text: "Washington, D.C. is the capital of the United States.",
+//	            },
+//	        },
+//	    },
+//	    Query: "What is the capital of the United States?",
+//	}
+//	client.Service.Rerank(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Rerank(
 	ctx context.Context,
 	request *fern.RerankRequest,

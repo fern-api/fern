@@ -19,13 +19,16 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
       #
+      # @example
+      #   client.bigunion.get(id: "id")
+      #
       # @return [Seed::Bigunion::Types::BigUnion]
       def get(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{URI.encode_uri_component(params[:id].to_s)}",
+          path: "/bigunion/#{URI.encode_uri_component(params[:id].to_s)}",
           request_options: request_options
         )
         begin
@@ -35,7 +38,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Bigunion::Types::BigUnion.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Bigunion::Types::BigUnion.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -50,13 +53,16 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.bigunion.update
+      #
       # @return [Boolean]
       def update(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "",
+          path: "/bigunion",
           body: Seed::Bigunion::Types::BigUnion.new(params).to_h,
           request_options: request_options
         )
@@ -66,10 +72,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # @param request_options [Hash]
@@ -80,14 +88,17 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.bigunion.update_many(request: [])
+      #
       # @return [Hash[String, Boolean]]
       def update_many(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/many",
-          body: params,
+          path: "/bigunion/many",
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -96,10 +107,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Internal::Types::Boolean], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
     end
   end

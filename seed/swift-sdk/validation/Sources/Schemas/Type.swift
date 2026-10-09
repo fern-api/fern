@@ -1,7 +1,7 @@
 import Foundation
 
 /// Defines properties with default values and validation rules.
-public struct Type: Codable, Hashable, Sendable {
+public struct `Type`: Codable, Hashable, Sendable {
     public let decimal: Swift.Double
     public let even: Int
     public let name: String

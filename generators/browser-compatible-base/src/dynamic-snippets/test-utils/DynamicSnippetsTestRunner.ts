@@ -38,6 +38,7 @@ export class DynamicSnippetsTestRunner {
         this.runImdbTests(args);
         this.runMultiUrlEnvironmentTests(args);
         this.runNullableTests(args);
+        this.runPathParametersTests(args);
         this.runReadWriteOnlyTests(args);
         this.runRequiredHeadersTests(args);
         this.runSingleUrlEnvironmentDefaultTests(args);
@@ -917,6 +918,43 @@ export class DynamicSnippetsTestRunner {
                         baseURL: "http://localhost:8080",
                         environment: "Production",
                         pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: undefined,
+                        requestBody: undefined
+                    }
+                }
+            ]
+        });
+    }
+
+    private runPathParametersTests(args: DynamicSnippetsTestRunner.Args): void {
+        const generator = args.buildGenerator({
+            irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "path-parameters.json"))
+        });
+        this.runDynamicSnippetTests({
+            fixture: "path-parameters",
+            generator,
+            testCases: [
+                {
+                    // Regression test for FER-10546: path-parameter arguments must render in IR
+                    // (SDK signature / URL) order even when the input `pathParameters` object
+                    // supplies them in a different order (here: alphabetical).
+                    description:
+                        "GET /{tenant_id}/user/{user_id}/specifics/{version}/{thought} (alphabetical input order)",
+                    giveRequest: {
+                        endpoint: {
+                            method: "GET",
+                            path: "/{tenant_id}/user/{user_id}/specifics/{version}/{thought}"
+                        },
+                        baseURL: undefined,
+                        environment: undefined,
+                        auth: undefined,
+                        pathParameters: {
+                            tenant_id: "my_tenant",
+                            thought: "my_thought",
+                            user_id: "my_user",
+                            version: 7
+                        },
                         queryParameters: undefined,
                         headers: undefined,
                         requestBody: undefined

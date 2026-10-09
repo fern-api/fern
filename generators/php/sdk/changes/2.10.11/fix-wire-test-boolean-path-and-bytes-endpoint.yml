@@ -1,0 +1,9 @@
+- summary: |
+    Serialize boolean path parameters as "true"/"false" instead of relying on PHP's
+    string coercion (which renders them as "1"/""), producing valid URLs.
+  type: fix
+- summary: |
+    Skip bytes request body endpoints when generating wire tests, matching the WireMock
+    stub generator which omits them. Previously the generated test called an endpoint with
+    no matching stub and failed.
+  type: fix

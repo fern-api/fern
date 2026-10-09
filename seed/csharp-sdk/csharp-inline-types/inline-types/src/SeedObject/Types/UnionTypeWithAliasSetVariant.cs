@@ -44,7 +44,7 @@ public record UnionTypeWithAliasSetVariant
     public bool IsAliasVariant => Type == "aliasVariant";
 
     /// <summary>
-    /// Returns the value as a <see cref="HashSet<AliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
+    /// Returns the value as a <see cref="HashSet{AliasVariantType}"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'aliasVariant'.</exception>
     public HashSet<AliasVariantType> AsAliasVariant() =>
@@ -83,7 +83,7 @@ public record UnionTypeWithAliasSetVariant
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="HashSet<AliasVariantType>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="HashSet{AliasVariantType}"/> and returns true if successful.
     /// </summary>
     public bool TryAsAliasVariant(out HashSet<AliasVariantType>? value)
     {

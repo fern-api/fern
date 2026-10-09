@@ -14,6 +14,12 @@ module Seed
     # @option params [String] :required_baz
     # @option params [String, nil] :required_nullable_baz
     #
+    # @example
+    #   client.get_foo(
+    #     required_baz: "required_baz",
+    #     required_nullable_baz: "required_nullable_baz"
+    #   )
+    #
     # @return [Seed::Types::Foo]
     def get_foo(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -37,7 +43,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::Foo.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::Foo.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -53,6 +59,16 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :id
     # @option params [String] :x_idempotency_key
+    #
+    # @example
+    #   client.update_foo(
+    #     id: "id",
+    #     x_idempotency_key: "X-Idempotency-Key",
+    #     nullable_text: "nullable_text",
+    #     nullable_number: 1.1,
+    #     non_nullable_text: "non_nullable_text",
+    #     required_nullable_text: "required_nullable_text"
+    #   )
     #
     # @return [Seed::Types::Foo]
     def update_foo(request_options: {}, **params)
@@ -79,7 +95,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::Foo.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::Foo.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -87,15 +103,19 @@ module Seed
     end
 
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_required-nullable/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

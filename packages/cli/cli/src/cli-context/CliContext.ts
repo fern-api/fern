@@ -1,12 +1,14 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { getPosthogManager, PosthogManager } from "@fern-api/posthog-manager";
+import { getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import {
+    type CaptureExceptionOptions,
     CliError,
     Finishable,
-    PosthogEvent,
+    type PosthogAutomationEvent,
+    type PosthogEvent,
     Startable,
     TaskAbortSignal,
     TaskContext,
@@ -14,9 +16,14 @@ import {
 } from "@fern-api/task-context";
 
 import { Workspace } from "@fern-api/workspace-loader";
-import { input, select } from "@inquirer/prompts";
+import { checkbox, input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
+import {
+    type AutomationTelemetryEmitOptions,
+    AutomationTelemetryManager
+} from "../telemetry/AutomationTelemetryManager.js";
+import type { AutomationTelemetryEvent } from "../telemetry/automationTelemetryEvent.js";
 import { reportError } from "../telemetry/reportError.js";
 import { SentryClient } from "../telemetry/SentryClient.js";
 import { CliEnvironment } from "./CliEnvironment.js";
@@ -42,6 +49,7 @@ export class CliContext {
     public readonly environment: CliEnvironment;
     private readonly sentryClient: SentryClient;
     private readonly posthogManager: PosthogManager;
+    private readonly automationTelemetryManager: AutomationTelemetryManager;
 
     private didSucceed = true;
 
@@ -82,7 +90,15 @@ export class CliContext {
             packageVersion,
             cliName
         };
-        this.sentryClient = new SentryClient({ release: `cli@${this.environment.packageVersion}` });
+        this.sentryClient = new SentryClient({
+            release: `cli@${this.environment.packageVersion}`,
+            telemetry: {
+                cliName: this.environment.cliName,
+                packageVersion: this.environment.packageVersion,
+                isLocal: this.isLocal
+            }
+        });
+        this.automationTelemetryManager = new AutomationTelemetryManager(this);
     }
 
     private getPackageName() {
@@ -150,13 +166,22 @@ export class CliContext {
         return this.jsonMode;
     }
 
+    public get isTTY(): boolean {
+        return this.ttyAwareLogger.isTTY;
+    }
+
     /**
      * Write a value as formatted JSON to stdout.
      * Temporarily restores the real stdout, writes, then re-redirects.
      */
     public writeJsonToStdout(value: unknown): void {
+        this.writeTextToStdout(JSON.stringify(value, null, 2) + "\n");
+    }
+
+    /** Write machine-readable text to stdout while keeping status and diagnostics on stderr. */
+    public writeTextToStdout(value: string): void {
         this.stdoutRedirector.restore();
-        process.stdout.write(JSON.stringify(value, null, 2) + "\n");
+        process.stdout.write(value);
         if (this.jsonMode) {
             this.stdoutRedirector.redirect();
         }
@@ -173,6 +198,7 @@ export class CliContext {
             // Silently swallow – analytics should never block the CLI
         }
         await this.sentryClient.flush();
+        await this.automationTelemetryManager.flush();
         this.exitProgram({ code });
     }
 
@@ -222,6 +248,7 @@ export class CliContext {
     private project: Project | undefined;
     public registerProject(project: Project): void {
         this.project = project;
+        this.automationTelemetryManager.setOrganization(project.config.organization);
     }
 
     public runTask<T>(run: (context: TaskContext) => T | Promise<T>): Promise<T> {
@@ -271,8 +298,21 @@ export class CliContext {
         }
     }
 
-    public captureException(error: unknown, code?: CliError.Code): void {
-        this.sentryClient.captureException(error, code);
+    public instrumentPostHogAutomationEvent(event: PosthogAutomationEvent): void {
+        if (!this.isLocal) {
+            this.posthogManager.sendAutomationEvent(event);
+        }
+    }
+
+    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
+        return this.sentryClient.captureException(error, options);
+    }
+
+    public emitAutomationTelemetryEvent(
+        event: AutomationTelemetryEvent,
+        options?: AutomationTelemetryEmitOptions
+    ): void {
+        this.automationTelemetryManager.emit(event, options);
     }
 
     public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
@@ -316,9 +356,8 @@ export class CliContext {
                 this.instrumentPostHogEvent(event);
             },
             shouldBufferLogs: false,
-            captureException: (error, code) => {
-                this.sentryClient.captureException(error, code);
-            }
+            captureException: (error, options) => this.sentryClient.captureException(error, options),
+            emitAutomationTelemetryEvent: (event, options) => this.emitAutomationTelemetryEvent(event, options)
         };
     }
 
@@ -408,13 +447,29 @@ export class CliContext {
      * @returns Promise<boolean> representing the user's choice
      */
     public async confirmPrompt(message: string, defaultValue = false): Promise<boolean> {
+        return this.selectPrompt({
+            message,
+            choices: [
+                { name: "No", value: false },
+                { name: "Yes", value: true }
+            ],
+            default: defaultValue
+        });
+    }
+
+    public async selectPrompt<T>({
+        message,
+        choices,
+        default: defaultValue
+    }: {
+        message: string;
+        choices: Array<{ name: string; value: T }>;
+        default?: T;
+    }): Promise<T> {
         try {
-            const answer = await select({
+            return await select({
                 message,
-                choices: [
-                    { name: "No", value: false },
-                    { name: "Yes", value: true }
-                ],
+                choices,
                 default: defaultValue,
                 theme: {
                     prefix: chalk.yellow("?"),
@@ -425,9 +480,46 @@ export class CliContext {
                     }
                 }
             });
-            return answer;
         } catch (error) {
             // User pressed Ctrl+C
+            if ((error as Error)?.name === "ExitPromptError") {
+                this.logger.info("\nCancelled by user.");
+                throw new TaskAbortSignal();
+            }
+            throw error;
+        }
+    }
+
+    public async checkboxPrompt<T>({
+        message,
+        choices,
+        required = false,
+        validate
+    }: {
+        message: string;
+        choices: Array<{ name: string; value: T; short?: string; checked?: boolean }>;
+        required?: boolean;
+        validate?: (values: T[]) => boolean | string | Promise<boolean | string>;
+    }): Promise<T[]> {
+        try {
+            return await checkbox({
+                message,
+                choices,
+                required,
+                validate:
+                    validate == null
+                        ? undefined
+                        : (selectedChoices) => validate(selectedChoices.map((choice) => choice.value)),
+                theme: {
+                    prefix: chalk.yellow("?"),
+                    style: {
+                        answer: (text: string) => chalk.cyan(text),
+                        message: (text: string) => chalk.bold(text),
+                        highlight: (text: string) => chalk.cyan(text)
+                    }
+                }
+            });
+        } catch (error) {
             if ((error as Error)?.name === "ExitPromptError") {
                 this.logger.info("\nCancelled by user.");
                 throw new TaskAbortSignal();

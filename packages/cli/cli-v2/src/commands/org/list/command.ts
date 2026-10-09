@@ -1,6 +1,5 @@
 import { createVenusService } from "@fern-api/core";
 import { CliError } from "@fern-api/task-context";
-
 import type { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { spawn } from "child_process";
 import type { Argv } from "yargs";
@@ -24,7 +23,7 @@ export class ListCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusService({ token: token.value });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
 
         // Fetch the first page to check if there are any results.
         const firstPage = await this.fetchPage({ venus, pageId: 1 });

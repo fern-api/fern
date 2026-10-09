@@ -47,7 +47,15 @@ $client->imdb->createMovie(
 <dl>
 <dd>
 
-**$request:** `CreateMovieRequest` 
+**$title:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$rating:** `float` 
     
 </dd>
 </dl>

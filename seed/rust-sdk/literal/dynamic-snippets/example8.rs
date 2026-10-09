@@ -8,23 +8,20 @@ async fn main() {
     };
     let client = LiteralClient::new(config).expect("Failed to build client");
     client
-        .reference
+        .query
         .send(
-            &SendRequest {
+            &SendQueryRequest {
                 prompt: "You are a helpful assistant".to_string(),
-                query: "What is the weather today".to_string(),
+                optional_prompt: Some("You are a helpful assistant".to_string()),
+                alias_prompt: AliasToPrompt("You are a helpful assistant".to_string()),
+                alias_optional_prompt: Some(AliasToPrompt(
+                    "You are a helpful assistant".to_string(),
+                )),
                 stream: false,
-                ending: Default::default(),
-                context: SomeLiteral("You're super wise".to_string()),
-                maybe_context: None,
-                container_object: ContainerObject {
-                    nested_objects: vec![NestedObjectWithLiterals {
-                        literal1: "literal1".to_string(),
-                        literal2: "literal2".to_string(),
-                        str_prop: "strProp".to_string(),
-                    }],
-                    ..Default::default()
-                },
+                optional_stream: Some(false),
+                alias_stream: AliasToStream(false),
+                alias_optional_stream: Some(AliasToStream(false)),
+                query: "What is the weather today".to_string(),
             },
             None,
         )

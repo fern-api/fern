@@ -2,42 +2,70 @@
 
 module Seed
   class Client
+    # @param client_id [String]
+    # @param client_secret [String]
     # @param base_url [String, nil]
+    # @param root_variable [String, nil]
+    # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(client_id:, client_secret:, base_url: nil, root_variable: nil, max_retries: 2, timeout: 60)
+      @root_variable = root_variable
+
+      # Create an unauthenticated client for the auth endpoint
+      auth_raw_client = Seed::Internal::Http::RawClient.new(
+        base_url: base_url,
+        headers: {
+          "X-Fern-Language" => "Ruby"
+        },
+        timeout: timeout
+      )
+
+      # Create the auth client for token retrieval
+      auth_client = Seed::Auth::Client.new(client: auth_raw_client)
+
+      # Create the OAuth provider with the auth client and credentials
+      @auth_provider = Seed::Internal::OAuthProvider.new(
+        auth_client: auth_client,
+        options: { base_url: base_url, client_id: client_id, client_secret: client_secret }
+      )
+
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_oauth-client-credentials-with-variables/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        auth_provider: @auth_provider,
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 
     # @return [Seed::Auth::Client]
     def auth
-      @auth ||= Seed::Auth::Client.new(client: @raw_client)
+      @auth ||= Seed::Auth::Client.new(client: @raw_client, root_variable: @root_variable)
     end
 
     # @return [Seed::NestedNoAuth::Client]
     def nested_no_auth
-      @nested_no_auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client)
+      @nested_no_auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client, root_variable: @root_variable)
     end
 
     # @return [Seed::Nested::Client]
     def nested
-      @nested ||= Seed::Nested::Client.new(client: @raw_client)
+      @nested ||= Seed::Nested::Client.new(client: @raw_client, root_variable: @root_variable)
     end
 
     # @return [Seed::Service::Client]
     def service
-      @service ||= Seed::Service::Client.new(client: @raw_client)
+      @service ||= Seed::Service::Client.new(client: @raw_client, root_variable: @root_variable)
     end
 
     # @return [Seed::Simple::Client]
     def simple
-      @simple ||= Seed::Simple::Client.new(client: @raw_client)
+      @simple ||= Seed::Simple::Client.new(client: @raw_client, root_variable: @root_variable)
     end
   end
 end

@@ -663,6 +663,20 @@ public class QueryStringBuilderTests
     }
 
     [Test]
+    public void Build_Semicolon_Encoded()
+    {
+        // ";" is a legacy parameter separator, so it must be encoded in keys and values
+        var parameters = new List<KeyValuePair<string, string>>
+        {
+            new("a;b", "jo@example.com; ceo@example.com"),
+        };
+
+        var result = QueryStringBuilder.Build(parameters);
+
+        Assert.That(result, Is.EqualTo("?a%3Bb=jo@example.com%3B%20ceo@example.com"));
+    }
+
+    [Test]
     public void Build_ODataFilter_DollarPreserved()
     {
         // "$" is safe in query keys (sub-delimiter), verifies OData-style parameters work

@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBytesDownloadClient } from "@fern/bytes-download";
 
-const client = new SeedBytesDownloadClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedBytesDownloadClient({ baseUrl: "YOUR_BASE_URL" });
 await client.service.simple();
 ```
 

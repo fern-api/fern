@@ -14,7 +14,7 @@ public partial class SeedNullableOptionalClient : ISeedNullableOptionalClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedNullableOptional" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedNullableOptional.Version.Current },
                 { "User-Agent", "Fernnullable-optional/0.0.1" },
             }
         );

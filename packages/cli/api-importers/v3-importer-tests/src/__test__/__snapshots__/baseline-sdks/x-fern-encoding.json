@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-encoding` for schemas",
   "auth": {
@@ -305,7 +306,8 @@
     ],
     "errors": [],
     "subpackages": [],
-    "hasEndpointsInTree": false
+    "hasEndpointsInTree": false,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

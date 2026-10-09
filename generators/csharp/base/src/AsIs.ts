@@ -12,6 +12,7 @@ export const AsIsFiles = {
     TemplateCsProj: "Template.csproj",
     UsingCs: "Using.cs",
     ValueConvert: "ValueConvert.Template.cs",
+    WebhookSignature: "WebhookSignature.Template.cs",
     // Grpc
     GrpcRequestOptions: "GrpcRequestOptions.Template.cs",
     ProtoAnyMapper: "ProtoAnyMapper.Template.cs",
@@ -38,14 +39,18 @@ export const AsIsFiles = {
     NdJsonContent: "NdJsonContent.Template.cs",
     NdJsonRequest: "NdJsonRequest.Template.cs",
     HeadersBuilder: "HeadersBuilder.Template.cs",
+    IdempotencyHeaderExtensions: "IdempotencyHeaderExtensions.Template.cs",
     QueryStringBuilder: "QueryStringBuilder.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
+    DefaultHttpClientFactory: "DefaultHttpClientFactory.Template.cs",
     RawClient: "RawClient.Template.cs",
+    SseReconnectHelper: "SseReconnectHelper.Template.cs",
     RawResponse: "RawResponse.Template.cs",
     ResponseHeaders: "ResponseHeaders.Template.cs",
     StreamRequest: "StreamRequest.Template.cs",
     WithRawResponse: "WithRawResponse.Template.cs",
     WithRawResponseTask: "WithRawResponseTask.Template.cs",
+    WithRawResponseStream: "WithRawResponseStream.Template.cs",
     WebSockets: {
         AsyncLock: "WebSockets/AsyncLock.Template.cs",
         Closed: "WebSockets/Closed.Template.cs",
@@ -77,6 +82,12 @@ export const AsIsFiles = {
         Optional: "Optional.Template.cs",
         OptionalAttribute: "OptionalAttribute.Template.cs"
     },
+    Xml: {
+        IXmlNode: "IXmlNode.Template.cs",
+        XmlComment: "XmlComment.Template.cs",
+        XmlElement: "XmlElement.Template.cs",
+        XmlUtils: "XmlUtils.Template.cs"
+    },
     Test: {
         HeadersBuilderTests: "test/HeadersBuilderTests.Template.cs",
         QueryStringBuilderTests: "test/QueryStringBuilderTests.Template.cs",
@@ -84,8 +95,10 @@ export const AsIsFiles = {
         TemplateTestClientCs: "test/TemplateTestClient.cs",
         TemplateTestCsProj: "test/Template.Test.csproj",
         TestCustomProps: "test/Test.Custom.props.Template",
+        WebhookSignatureTests: "test/WebhookSignatureTests.Template.cs",
         WithRawResponseTests: "test/WithRawResponseTests.Template.cs",
         RawClientTests: {
+            GzipResponseTests: "test/RawClientTests/GzipResponseTests.Template.cs",
             MultipartFormTests: "test/RawClientTests/MultipartFormTests.Template.cs",
             RetriesTests: "test/RawClientTests/RetriesTests.Template.cs",
             QueryParameterTests: "test/RawClientTests/QueryParameterTests.Template.cs",
@@ -110,6 +123,9 @@ export const AsIsFiles = {
             "test/Pagination/StepOffsetTest.Template.cs",
             "test/Pagination/StringCursorTest.Template.cs"
         ],
+        Sse: {
+            SseReconnectHelperTests: "test/Sse/SseReconnectHelperTests.Template.cs"
+        },
         WebSockets: {
             AsyncLockTests: "test/WebSockets/AsyncLockTests.Template.cs",
             DisconnectionInfoTests: "test/WebSockets/DisconnectionInfoTests.Template.cs",
@@ -124,6 +140,9 @@ export const AsIsFiles = {
             WebSocketConnectionTests: "test/WebSockets/WebSocketConnectionTests.Template.cs",
             WebsocketExceptionTests: "test/WebSockets/WebsocketExceptionTests.Template.cs"
         },
+        Xml: {
+            XmlElementTests: "test/Xml/XmlElementTests.Template.cs"
+        },
         Json: {
             AdditionalPropertiesTests: "test/Json/AdditionalPropertiesTests.Template.cs",
             DateOnlyJsonTests: "test/Json/DateOnlyJsonTests.Template.cs",
@@ -131,6 +150,7 @@ export const AsIsFiles = {
             EnumSerializerTests: "test/Json/EnumSerializerTests.Template.cs",
             JsonAccessAttributeTests: "test/Json/JsonAccessAttributeTests.Template.cs",
             OneOfSerializerTests: "test/Json/OneOfSerializerTests.Template.cs",
+            SerializeWithAdditionalPropertiesTests: "test/Json/SerializeWithAdditionalPropertiesTests.Template.cs",
             StringEnumSerializerTests: "test/Json/StringEnumSerializerTests.Template.cs"
         }
     }

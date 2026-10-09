@@ -11,16 +11,16 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
-    /// </code></example>
-    public async Task NopAsync(
+    private async Task<RawResponse> NopAsyncCore(
         string id,
         string nestedId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPackageYml.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPackageYml.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -33,10 +33,11 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/{0}//{1}",
+                        "/{0}/{1}",
                         ValueConvert.ToPathParameterString(id),
                         ValueConvert.ToPathParameterString(nestedId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -45,7 +46,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedPackageYml.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -54,8 +60,27 @@ public partial class ServiceClient : IServiceClient
             throw new SeedPackageYmlApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedPackageYml.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
+    /// </code></example>
+    public WithRawResponseTask NopAsync(
+        string id,
+        string nestedId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(NopAsyncCore(id, nestedId, options, cancellationToken));
     }
 }

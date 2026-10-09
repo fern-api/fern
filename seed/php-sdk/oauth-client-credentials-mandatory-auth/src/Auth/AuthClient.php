@@ -51,6 +51,19 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->getTokenWithClientCredentials(
+     *     new GetTokenRequest([
+     *         'clientId' => 'my_oauth_app_123',
+     *         'clientSecret' => 'sk_live_abcdef123456789',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'client_credentials',
+     *         'scope' => 'read:users',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -98,6 +111,20 @@ class AuthClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->auth->refreshToken(
+     *     new RefreshTokenRequest([
+     *         'clientId' => 'my_oauth_app_123',
+     *         'clientSecret' => 'sk_live_abcdef123456789',
+     *         'refreshToken' => 'refresh_token',
+     *         'audience' => 'https://api.example.com',
+     *         'grantType' => 'refresh_token',
+     *         'scope' => 'read:users',
+     *     ]),
+     * );
+     * ```
+     *
      * @param RefreshTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,

@@ -3,5 +3,6 @@
 export const GithubSelfhostedMode = {
     PullRequest: "pull-request",
     Push: "push",
+    CommitAndRelease: "commit-and-release",
 } as const;
 export type GithubSelfhostedMode = (typeof GithubSelfhostedMode)[keyof typeof GithubSelfhostedMode];

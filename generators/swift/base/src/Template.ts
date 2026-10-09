@@ -46,6 +46,14 @@ const TestTemplateFileSpecs = {
         relativePath: "Core",
         filenameWithoutExtension: () => "ClientRetryTests"
     },
+    ClientRetriesDisabledTests: {
+        relativePath: "Core",
+        filenameWithoutExtension: () => "ClientRetriesDisabledTests"
+    },
+    ClientAdditionalBodyParametersTests: {
+        relativePath: "Core",
+        filenameWithoutExtension: () => "ClientAdditionalBodyParametersTests"
+    },
     // Utilities
     HTTPStub: {
         relativePath: "Utilities",

@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/docs-bundle-smoke-test.yml"
       - "packages/cli/docs-preview/**"
+      - "packages/cli/docs-resolver/**"
       - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
       - "docs-preview-smoke-test/**"
@@ -14,6 +15,7 @@ on:
     paths:
       - ".github/workflows/docs-bundle-smoke-test.yml"
       - "packages/cli/docs-preview/**"
+      - "packages/cli/docs-resolver/**"
       - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
       - "docs-preview-smoke-test/**"
@@ -42,6 +44,11 @@ jobs:
       - name: Build CLI (prod)
         run: pnpm fern:build
 
+      # The astro run uses the dev CLI, which downloads the Astro preview bundle
+      # from the dev2 bucket (populated on every merge to fern-platform `app`).
+      - name: Build CLI (dev)
+        run: pnpm fern-dev:build
+
       # The build writes "catalog:" as the @boundaryml/baml version (pnpm-
       # specific) and `npm pkg fix` strips it. Resolve the real version from
       # the workspace catalog so `npm install` works in the smoke-test jobs.
@@ -56,21 +63,31 @@ jobs:
           ")
           echo "Resolved @boundaryml/baml version: $BAML_VERSION"
 
-          node -e "
-            const fs = require('fs');
-            const pkg = JSON.parse(fs.readFileSync('packages/cli/cli/dist/prod/package.json', 'utf8'));
-            pkg.dependencies = pkg.dependencies || {};
-            pkg.dependencies['@boundaryml/baml'] = process.argv[1];
-            fs.writeFileSync('packages/cli/cli/dist/prod/package.json', JSON.stringify(pkg, null, 2) + '\n');
-          " "$BAML_VERSION"
-          echo "Patched package.json:"
-          cat packages/cli/cli/dist/prod/package.json
+          for DIST in prod dev; do
+            node -e "
+              const fs = require('fs');
+              const file = 'packages/cli/cli/dist/' + process.argv[2] + '/package.json';
+              const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));
+              pkg.dependencies = pkg.dependencies || {};
+              pkg.dependencies['@boundaryml/baml'] = process.argv[1];
+              fs.writeFileSync(file, JSON.stringify(pkg, null, 2) + '\n');
+            " "$BAML_VERSION" "$DIST"
+            echo "Patched $DIST package.json:"
+            cat "packages/cli/cli/dist/$DIST/package.json"
+          done
 
-      - name: Upload CLI artifact
+      - name: Upload CLI artifact (prod)
         uses: actions/upload-artifact@v6
         with:
-          name: fern-cli
+          name: fern-cli-prod
           path: packages/cli/cli/dist/prod/
+          retention-days: 1
+
+      - name: Upload CLI artifact (dev)
+        uses: actions/upload-artifact@v6
+        with:
+          name: fern-cli-dev
+          path: packages/cli/cli/dist/dev/
           retention-days: 1
 
   smoke-test:
@@ -81,7 +98,8 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [22, 24, 26]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    name: smoke-test (${{ matrix.os }}, node ${{ matrix.node-version }})
+    timeout-minutes: 45
 
     steps:
       - name: Enable long paths (Windows)
@@ -116,12 +134,21 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Download CLI artifact
+      # Each leg runs the suite twice: the prod CLI (`fern`, Next bundle) and the
+      # dev CLI (`fern-dev`, `--astro` preview-SSR bundle from the dev2 bucket).
+      - name: Download CLI artifact (prod)
         if: steps.node-check.outputs.available == 'true'
         uses: actions/download-artifact@v7
         with:
-          name: fern-cli
-          path: cli-dist/
+          name: fern-cli-prod
+          path: cli-dist/prod/
+
+      - name: Download CLI artifact (dev)
+        if: steps.node-check.outputs.available == 'true'
+        uses: actions/download-artifact@v7
+        with:
+          name: fern-cli-dev
+          path: cli-dist/dev/
 
       # Simulate what a customer does: npm install -g fern-api
       # We use `npm pack` + `npm install -g <tarball>` because
@@ -129,220 +156,84 @@ jobs:
       # and Node resolves modules relative to the symlink target, where
       # node_modules doesn't exist. A tarball install copies files into the
       # global prefix just like a registry install would.
-      - name: Install CLI globally
+      - name: Install CLIs globally
         if: steps.node-check.outputs.available == 'true'
         shell: bash
         run: |
-          echo "Packing CLI artifact into tarball..."
-          cd cli-dist && npm pack
-          TARBALL=$(ls *.tgz)
-          echo "Installing CLI globally from $TARBALL (simulating npm install -g fern-api)..."
-          npm install -g "$TARBALL"
-          cd ..
-          echo "Installed fern CLI:"
+          for DIST in prod dev; do
+            echo "Packing $DIST CLI artifact into tarball..."
+            (cd "cli-dist/$DIST" && npm pack)
+            TARBALL=$(ls -t cli-dist/$DIST/*.tgz | head -n1)
+            echo "Installing globally from $TARBALL (simulating npm install -g fern-api)..."
+            npm install -g "$TARBALL"
+          done
           fern --version || echo "fern --version exited with $?"
+          fern-dev --version || echo "fern-dev --version exited with $?"
+
+      # The smoke-test docs use a custom component that imports a third-party
+      # library, which the CLI bundles at docs-build time (resolved from the
+      # docs project's node_modules).
+      - name: Install docs project dependencies
+        if: steps.node-check.outputs.available == 'true'
+        shell: bash
+        run: |
+          cd docs-preview-smoke-test/fern && npm install
 
       - name: Install Playwright
         if: steps.node-check.outputs.available == 'true'
+        timeout-minutes: 10
         shell: bash
         run: |
           cd docs-preview-smoke-test/playwright && npm install && npx playwright install chromium
 
-      # On Unix, background the server and wait for it to be ready, then run
-      # Playwright in a separate step.
-      - name: Start fern docs dev server (Unix)
-        if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
-        shell: bash
-        run: |
-          cd docs-preview-smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
-            > /tmp/fern-docs-dev.log 2>&1 &
-          FERN_PID=$!
-          echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
-
-          echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
-          for i in $(seq 1 180); do
-            if grep -qi "ready on" /tmp/fern-docs-dev.log 2>/dev/null; then
-              echo "Server reported ready after ${i}s!"
-              break
-            fi
-
-            if ! kill -0 $FERN_PID 2>/dev/null; then
-              echo "fern docs dev process (PID: $FERN_PID) exited unexpectedly"
-              echo "--- Dev server logs (last 50 lines) ---"
-              tail -50 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-
-            if [ $i -eq 180 ]; then
-              echo "Timeout waiting for server to start after 180s"
-              echo "--- Dev server logs (last 50 lines) ---"
-              tail -50 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-
-            if [ $((i % 15)) -eq 0 ]; then
-              echo "Still waiting... (${i}s)"
-              tail -5 /tmp/fern-docs-dev.log 2>/dev/null || true
-            fi
-
-            sleep 1
-          done
-
-          # Wait for port 3000 to accept connections
-          echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
-          for j in $(seq 1 30); do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:3000/sitemap.xml 2>/dev/null || echo "000")
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "Server returning 200 on /sitemap.xml after ${j}s"
-              break
-            fi
-            if [ $j -eq 30 ]; then
-              echo "Server never returned 200 on /sitemap.xml after 30s (last HTTP $HTTP_CODE)"
-              echo "--- Dev server logs (last 100 lines) ---"
-              tail -100 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-            sleep 1
-          done
-
-          # Warm up SSR — first render may trigger compilation. Retry until 200.
-          echo "Warming up SSR on /welcome..."
-          for k in $(seq 1 60); do
-            HTTP_CODE=$(curl -s -o /tmp/warmup-response.html -w "%{http_code}" --max-time 10 http://localhost:3000/welcome 2>/dev/null || echo "000")
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "SSR warm-up succeeded after attempt ${k}"
-              break
-            fi
-            if [ $k -eq 60 ]; then
-              echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
-              echo "--- Response body (first 2000 chars) ---"
-              head -c 2000 /tmp/warmup-response.html 2>/dev/null || true
-              echo ""
-              echo "--- Dev server logs (last 100 lines) ---"
-              tail -100 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-            sleep 2
-          done
-
-      - name: Run Playwright smoke tests (Unix)
-        if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
+      - name: Run smoke tests (next, with server restart on crash)
+        if: steps.node-check.outputs.available == 'true'
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        env:
+          FERN_NO_VERSION_REDIRECTION: "true"
+          FERN_BIN: fern
+          FERN_DOCS_DEV_ARGS: ""
+          SMOKE_RENDERER: next
         with:
           timeout_minutes: 15
-          max_attempts: 2
+          max_attempts: 3
           retry_wait_seconds: 10
           shell: bash
-          command: cd docs-preview-smoke-test/playwright && npx playwright test smoke.spec.ts --config playwright.config.ts
+          command: |
+            bash docs-preview-smoke-test/run-smoke.sh
 
-      # On Windows, background processes (&) are killed when the parent bash
-      # step exits. We must start the server and run Playwright in the SAME
-      # step so the server stays alive for the duration of the tests.
-      - name: Start server and run Playwright smoke tests (Windows)
-        if: steps.node-check.outputs.available == 'true' && runner.os == 'Windows'
-        shell: bash
-        run: |
-          cd docs-preview-smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
-            > /tmp/fern-docs-dev.log 2>&1 &
-          FERN_PID=$!
-          echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
-
-          echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
-          for i in $(seq 1 180); do
-            if grep -qi "ready on" /tmp/fern-docs-dev.log 2>/dev/null; then
-              echo "Server reported ready after ${i}s!"
-              break
-            fi
-
-            if ! kill -0 $FERN_PID 2>/dev/null; then
-              echo "fern docs dev process (PID: $FERN_PID) exited unexpectedly"
-              echo "--- Dev server logs (last 50 lines) ---"
-              tail -50 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-
-            if [ $i -eq 180 ]; then
-              echo "Timeout waiting for server to start after 180s"
-              echo "--- Dev server logs (last 50 lines) ---"
-              tail -50 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-
-            if [ $((i % 15)) -eq 0 ]; then
-              echo "Still waiting... (${i}s)"
-              tail -5 /tmp/fern-docs-dev.log 2>/dev/null || true
-            fi
-
-            sleep 1
-          done
-
-          # Wait for port 3000 to accept connections
-          echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
-          for j in $(seq 1 30); do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:3000/sitemap.xml 2>/dev/null || echo "000")
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "Server returning 200 on /sitemap.xml after ${j}s"
-              break
-            fi
-            if [ $j -eq 30 ]; then
-              echo "Server never returned 200 on /sitemap.xml after 30s (last HTTP $HTTP_CODE)"
-              echo "--- Dev server logs (last 100 lines) ---"
-              tail -100 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-            sleep 1
-          done
-
-          echo "Warming up SSR on /welcome..."
-          for k in $(seq 1 60); do
-            HTTP_CODE=$(curl -s -o /tmp/warmup-response.html -w "%{http_code}" --max-time 10 http://localhost:3000/welcome 2>/dev/null || echo "000")
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "SSR warm-up succeeded after attempt ${k}"
-              break
-            fi
-            if [ $k -eq 60 ]; then
-              echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
-              echo "--- Response body (first 2000 chars) ---"
-              head -c 2000 /tmp/warmup-response.html 2>/dev/null || true
-              echo ""
-              echo "--- Dev server logs (last 100 lines) ---"
-              tail -100 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-            sleep 2
-          done
-
-          echo "Running Playwright smoke tests..."
-          cd "$GITHUB_WORKSPACE/docs-preview-smoke-test/playwright"
-          for attempt in 1 2; do
-            if npx playwright test smoke.spec.ts --config playwright.config.ts; then
-              echo "Playwright passed on attempt ${attempt}"
-              break
-            fi
-            if [ $attempt -eq 2 ]; then
-              echo "Playwright failed after 2 attempts"
-              exit 1
-            fi
-            echo "Playwright failed on attempt ${attempt}, retrying after 10s..."
-            sleep 10
-          done
-
-      - name: Upload Playwright report
+      - name: Upload Playwright report (next)
         uses: actions/upload-artifact@v6
         if: always() && steps.node-check.outputs.available == 'true'
         continue-on-error: true
         with:
-          name: smoke-test-playwright-report-${{ matrix.os }}-node${{ matrix.node-version }}
+          name: smoke-test-playwright-report-next-${{ matrix.os }}-node${{ matrix.node-version }}
+          path: docs-preview-smoke-test/playwright/playwright-report/
+          retention-days: 7
+
+      - name: Run smoke tests (astro, with server restart on crash)
+        # Run even if the Next run failed so each renderer gets independent coverage
+        if: ${{ !cancelled() && steps.node-check.outputs.available == 'true' }}
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        env:
+          FERN_NO_VERSION_REDIRECTION: "true"
+          FERN_BIN: fern-dev
+          FERN_DOCS_DEV_ARGS: "--astro --log-level debug"
+          SMOKE_RENDERER: astro
+        with:
+          timeout_minutes: 15
+          max_attempts: 3
+          retry_wait_seconds: 10
+          shell: bash
+          command: |
+            bash docs-preview-smoke-test/run-smoke.sh
+
+      - name: Upload Playwright report (astro)
+        uses: actions/upload-artifact@v6
+        if: always() && steps.node-check.outputs.available == 'true'
+        continue-on-error: true
+        with:
+          name: smoke-test-playwright-report-astro-${{ matrix.os }}-node${{ matrix.node-version }}
           path: docs-preview-smoke-test/playwright/playwright-report/
           retention-days: 7
 
@@ -368,6 +259,6 @@ jobs:
         if: always() && steps.node-check.outputs.available == 'true'
         shell: bash
         run: |
-          if [ -n "$FERN_PID" ]; then
-            kill $FERN_PID 2>/dev/null || true
+          if [ -f /tmp/fern-server.pid ]; then
+            kill "$(cat /tmp/fern-server.pid)" 2>/dev/null || true
           fi

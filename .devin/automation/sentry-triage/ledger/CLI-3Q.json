@@ -1,0 +1,10 @@
+{
+  "title": "ENOENT loading docs page",
+  "disposition": "duplicate",
+  "rationale": "Same user/environment errno classification as CLI-2X; current code maps ENOENT to EnvironmentError.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-2X",
+  "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+}

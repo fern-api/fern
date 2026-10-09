@@ -1,0 +1,70 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/refunds/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPythonOptionalRequestBody\n\nclient = SeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.refund(\n    id=\"id\",\n    amount=1.1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPythonOptionalRequestBody\n\nclient = AsyncSeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.refund(\n        id=\"id\",\n        amount=1.1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/refunds",
+                "method": "POST",
+                "identifier_override": "endpoint_.bulkRefund"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPythonOptionalRequestBody\n\nclient = SeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bulk_refund(\n    amount=1.1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPythonOptionalRequestBody\n\nclient = AsyncSeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bulk_refund(\n        amount=1.1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/refunds/with-header",
+                "method": "POST",
+                "identifier_override": "endpoint_.refundWithHeader"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPythonOptionalRequestBody\n\nclient = SeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.refund_with_header(\n    x_idempotency_key=\"X-Idempotency-Key\",\n    amount=1.1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPythonOptionalRequestBody\n\nclient = AsyncSeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.refund_with_header(\n        x_idempotency_key=\"X-Idempotency-Key\",\n        amount=1.1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/refunds/batch",
+                "method": "POST",
+                "identifier_override": "endpoint_.batchRefund"
+            },
+            "snippet": {
+                "sync_client": "from seed import RefundRequest, SeedPythonOptionalRequestBody\n\nclient = SeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.batch_refund(\n    request=[\n        RefundRequest(\n            amount=1.1,\n        ),\n        RefundRequest(\n            amount=1.1,\n        ),\n    ],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPythonOptionalRequestBody, RefundRequest\n\nclient = AsyncSeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.batch_refund(\n        request=[\n            RefundRequest(\n                amount=1.1,\n            ),\n            RefundRequest(\n                amount=1.1,\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/refunds/{id}/required",
+                "method": "POST",
+                "identifier_override": "endpoint_.requiredRefund"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPythonOptionalRequestBody\n\nclient = SeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.required_refund(\n    id=\"id\",\n    amount=1.1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPythonOptionalRequestBody\n\nclient = AsyncSeedPythonOptionalRequestBody(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.required_refund(\n        id=\"id\",\n        amount=1.1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

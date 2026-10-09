@@ -1,6 +1,12 @@
+import {
+    anyOfIsPresenceConstraint,
+    oneOfIsPresenceConstraint,
+    requiredByPresenceConstraint
+} from "@fern-api/core-utils";
 import * as FernIr from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
+import { collectNamedTypeIdsFromTypeReference } from "../../utils/ConvertProperties.js";
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType.js";
 import { ExampleConverter } from "../ExampleConverter.js";
 import { ArraySchemaConverter } from "./ArraySchemaConverter.js";
@@ -46,6 +52,9 @@ export declare namespace SchemaConverter {
 }
 
 export class SchemaConverter extends AbstractConverter<AbstractConverterContext<object>, SchemaConverter.Output> {
+    /** Upper bound on the variants produced by distributing an allOf over its unions. */
+    private static readonly MAX_DISTRIBUTED_VARIANTS = 64;
+
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly id: string;
     private readonly inlined: boolean;
@@ -81,9 +90,19 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return maybeConvertedFernTypeDeclaration;
         }
 
+        const maybeConvertedReferenceSchema = this.tryConvertReferenceSchema();
+        if (maybeConvertedReferenceSchema != null) {
+            return maybeConvertedReferenceSchema;
+        }
+
         const maybeConvertedEnumSchema = this.tryConvertEnumSchema();
         if (maybeConvertedEnumSchema != null) {
             return maybeConvertedEnumSchema;
+        }
+
+        const maybeDistributedAllOfOverOneOf = this.tryDistributeAllOfOverOneOf();
+        if (maybeDistributedAllOfOverOneOf != null) {
+            return maybeDistributedAllOfOverOneOf;
         }
 
         const maybeConvertedSingularAllOfSchema = this.tryConvertSingularAllOfSchema();
@@ -104,6 +123,16 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const maybeConvertedTypeArraySchema = this.tryConvertTypeArraySchema();
         if (maybeConvertedTypeArraySchema != null) {
             return maybeConvertedTypeArraySchema;
+        }
+
+        const maybeConvertedSiblingAnyOfConstraint = this.tryConvertSiblingAnyOfConstraint();
+        if (maybeConvertedSiblingAnyOfConstraint != null) {
+            return maybeConvertedSiblingAnyOfConstraint;
+        }
+
+        const maybeConvertedSiblingOneOfConstraint = this.tryConvertSiblingOneOfConstraint();
+        if (maybeConvertedSiblingOneOfConstraint != null) {
+            return maybeConvertedSiblingOneOfConstraint;
         }
 
         const maybeConvertedOneOfAnyOfSchema = this.tryConvertOneOfAnyOfSchema();
@@ -136,6 +165,45 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             path: this.breadcrumbs
         });
         return undefined;
+    }
+
+    /**
+     * Converts a schema that is itself a `$ref` (e.g. `components.schemas.A: { $ref: '#/components/schemas/B' }`)
+     * into an alias of the referenced type.
+     */
+    private tryConvertReferenceSchema(): SchemaConverter.Output | undefined {
+        if (!this.context.isReferenceObject(this.schema)) {
+            return undefined;
+        }
+        const reference: OpenAPIV3_1.ReferenceObject = this.schema;
+        if (this.visitedRefs.has(reference.$ref) || reference.$ref === `#/components/schemas/${this.id}`) {
+            return undefined;
+        }
+        const response = this.context.convertReferenceToTypeReference({
+            reference,
+            breadcrumbs: this.breadcrumbs
+        });
+        if (!response.ok) {
+            return undefined;
+        }
+        const referencedTypes = new Set<string>();
+        collectNamedTypeIdsFromTypeReference(response.reference, referencedTypes);
+        return {
+            convertedSchema: {
+                typeDeclaration: this.createTypeDeclaration({
+                    shape: FernIr.Type.alias({
+                        aliasOf: response.reference,
+                        // Placeholder; replaced with the terminal named type by resolveAliasResolvedTypes.
+                        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                        resolvedType: response.reference as any
+                    }),
+                    referencedTypes
+                }),
+                audiences: this.audiences,
+                propertiesByAudience: {}
+            },
+            inlinedTypes: response.inlinedTypes ?? {}
+        };
     }
 
     private tryConvertEnumSchema(): SchemaConverter.Output | undefined {
@@ -311,7 +379,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     continue;
                 }
 
-                resolvedElements.push(schemaToMerge);
+                resolvedElements.push(withPresenceConstraintRequired(schemaToMerge));
             }
 
             // If a circular reference was detected, fall back to the ObjectSchemaConverter path
@@ -319,7 +387,17 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 return undefined;
             }
 
-            const mergedSchema = mergeAllOfSchemas(this.schema, resolvedElements);
+            const mergedSchema = mergeAllOfSchemas(this.schema, resolvedElements, (ref) => {
+                const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                    schemaOrReference: ref,
+                    breadcrumbs: this.breadcrumbs
+                });
+                // Skip if result is still a reference (e.g. URL ref alias)
+                if (resolved != null && this.context.isReferenceObject(resolved)) {
+                    return undefined;
+                }
+                return resolved;
+            });
 
             const allResolvedRefs = new Set<string>([...this.visitedRefs, ...localResolvedRefs]);
             const mergedConverter = new SchemaConverter({
@@ -334,6 +412,124 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         }
 
         return undefined;
+    }
+
+    /**
+     * Distributes an allOf whose members include a union over that union, so that
+     * `allOf: [oneOf: [A, B], S]` is converted as `oneOf: [allOf: [A, S], allOf: [B, S]]`.
+     * Otherwise the union member is flattened into the parent object and its variants are lost.
+     *
+     * Only the first union is distributed here; the remaining allOf members are re-injected into
+     * every variant, so any further unions are distributed by the recursive conversion below.
+     */
+    private tryDistributeAllOfOverOneOf(): SchemaConverter.Output | undefined {
+        if (!this.context.settings.preserveOneOfInAllOf) {
+            return undefined;
+        }
+        const allOf = this.schema.allOf;
+        if (!Array.isArray(allOf) || allOf.length === 0) {
+            return undefined;
+        }
+        // A union declared alongside the allOf intersects with it; distributing would drop it.
+        if (this.schema.oneOf != null || this.schema.anyOf != null) {
+            return undefined;
+        }
+
+        const unions = this.getDistributableUnions(allOf);
+        const firstUnion = unions[0];
+        if (firstUnion == null) {
+            return undefined;
+        }
+        // Every union multiplies the variant count, since the others are redistributed per variant.
+        const variantCount = unions.reduce((count, union) => count * union.variants.length, 1);
+        if (variantCount > SchemaConverter.MAX_DISTRIBUTED_VARIANTS) {
+            this.context.logger.warn(
+                `Not distributing allOf over its ${unions.length} unions at ${this.breadcrumbs.join(".")}: ` +
+                    `it would produce ${variantCount} variants (max ${SchemaConverter.MAX_DISTRIBUTED_VARIANTS}).`
+            );
+            return undefined;
+        }
+
+        const sharedElements: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] = allOf.filter(
+            (_, index) => index !== firstUnion.index
+        );
+        if (this.schema.properties != null || this.schema.required != null) {
+            sharedElements.push({
+                type: "object",
+                properties: this.schema.properties,
+                required: this.schema.required
+            });
+        }
+
+        const siblings: OpenAPIV3_1.SchemaObject = { ...this.schema };
+        delete siblings.allOf;
+        delete siblings.properties;
+        delete siblings.required;
+
+        const distributedConverter = new SchemaConverter({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: {
+                ...siblings,
+                oneOf: firstUnion.variants.map((variant) => {
+                    // The wrapper takes the variant's place in the union, so it has to carry the
+                    // variant's title for the variant to stay named in docs and generated SDKs.
+                    const title = this.getVariantTitle(variant);
+                    return { ...(title != null ? { title } : {}), allOf: [variant, ...sharedElements] };
+                })
+            },
+            id: this.id,
+            inlined: this.inlined,
+            nameOverride: this.nameOverride,
+            visitedRefs: this.visitedRefs
+        });
+        return distributedConverter.convert();
+    }
+
+    private getVariantTitle(variant: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject): string | undefined {
+        if (!this.context.isReferenceObject(variant)) {
+            return variant.title;
+        }
+        const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: variant,
+            breadcrumbs: this.breadcrumbs
+        });
+        return resolved?.title ?? variant.$ref.split("/").pop();
+    }
+
+    /**
+     * The allOf members that are plain unions of the parent's shape, in declaration order.
+     */
+    private getDistributableUnions(
+        allOf: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[]
+    ): { index: number; variants: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] }[] {
+        const unions: { index: number; variants: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] }[] = [];
+        for (const [index, element] of allOf.entries()) {
+            const resolved = this.context.isReferenceObject(element)
+                ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: element,
+                      breadcrumbs: this.breadcrumbs
+                  })
+                : element;
+            if (resolved == null || resolved.properties != null) {
+                continue;
+            }
+            // Anything but a plain object wrapper (e.g. a nullable union) carries extra semantics
+            // that the distributed variants would not preserve.
+            if (resolved.type != null && resolved.type !== "object") {
+                continue;
+            }
+            // Discriminated unions retain their discriminator only when left intact.
+            if (resolved.discriminator != null) {
+                continue;
+            }
+            const variants = resolved.oneOf ?? resolved.anyOf;
+            if (variants == null || variants.length === 0) {
+                continue;
+            }
+            unions.push({ index, variants });
+        }
+        return unions;
     }
 
     private tryConvertPrimitiveSchema(): SchemaConverter.Output | undefined {
@@ -401,6 +597,103 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return this.convert();
         }
         return undefined;
+    }
+
+    /**
+     * A schema may declare `properties` alongside an `anyOf` whose branches only
+     * re-declare some of those same properties as required, for example:
+     *
+     *     type: object
+     *     properties: { a: {...}, b: {...} }
+     *     anyOf:
+     *       - { properties: { a: {...} }, required: [a] }
+     *       - { properties: { b: {...} }, required: [b] }
+     *
+     * Per JSON Schema an instance must satisfy both keywords, so the `anyOf` here
+     * is a validation constraint -- "at least one of a, b" -- and not a set of
+     * variants. Converting it as a union discards the sibling `properties`
+     * entirely and makes the variants mutually exclusive, so a body carrying both
+     * `a` and `b` silently loses one on the wire.
+     *
+     * Drop the `anyOf` and convert the schema as the object it declares. The "at
+     * least one" constraint is not expressible in the IR and is not enforced.
+     *
+     * This only applies when every branch is an inline object whose properties are
+     * a subset of the sibling `properties`. A branch that introduces a property,
+     * or is a reference, is a genuine variant and is left to the union converter.
+     *
+     * Gated behind the `any-of-sibling-properties-as-object` setting.
+     */
+    private tryConvertSiblingAnyOfConstraint(): SchemaConverter.Output | undefined {
+        if (!this.context.settings.anyOfSiblingPropertiesAsObject) {
+            return undefined;
+        }
+        if (!anyOfIsPresenceConstraint(this.schema)) {
+            return undefined;
+        }
+
+        this.context.logger.debug(
+            `Treating the anyOf at ${this.breadcrumbs.join(".")} as an "at least one of" constraint ` +
+                `over its sibling properties rather than a union, and converting the schema as an object.`
+        );
+
+        // Convert a copy rather than mutating this.schema: the schema object belongs
+        // to the spec document and may be reached again through a $ref.
+        const { anyOf: _constraint, ...schemaWithoutAnyOf } = this.schema;
+        return new SchemaConverter({
+            id: this.id,
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: schemaWithoutAnyOf,
+            inlined: this.inlined,
+            nameOverride: this.nameOverride,
+            visitedRefs: this.visitedRefs
+        }).convert();
+    }
+
+    /**
+     * A `oneOf` whose branches only mark sibling `properties` as required, e.g.
+     * `oneOf: [{ required: [domain] }, { required: [phone] }]`, is an "exactly one
+     * of" constraint over the declared object rather than a set of variants. The
+     * branches carry no shape of their own, so converting them to a union would
+     * drop every sibling property. See oneOfIsPresenceConstraint.
+     *
+     * An explicit `x-fern-discriminated: true` keeps the union. The recursion
+     * below terminates because the predicate guarantees no `allOf`/`anyOf`
+     * remain, so the stripped schema cannot re-enter this branch.
+     */
+    private tryConvertSiblingOneOfConstraint(): SchemaConverter.Output | undefined {
+        if (!oneOfIsPresenceConstraint(this.schema)) {
+            return undefined;
+        }
+        const isDiscriminated = new Extensions.FernDiscriminatedExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            node: this.schema
+        }).convert();
+        if (isDiscriminated === true) {
+            return undefined;
+        }
+
+        this.context.logger.debug(
+            `Treating the oneOf at ${this.breadcrumbs.join(".")} as an "exactly one of" constraint ` +
+                `over its sibling properties rather than a union, and converting the schema as an object.`
+        );
+
+        const alwaysRequired = requiredByPresenceConstraint(this.schema);
+        const { oneOf: _constraint, ...schemaWithoutOneOf } = this.schema;
+        if (alwaysRequired.length > 0) {
+            schemaWithoutOneOf.required = [...new Set([...(schemaWithoutOneOf.required ?? []), ...alwaysRequired])];
+        }
+        return new SchemaConverter({
+            id: this.id,
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: schemaWithoutOneOf,
+            inlined: this.inlined,
+            nameOverride: this.nameOverride,
+            visitedRefs: this.visitedRefs
+        }).convert();
     }
 
     private tryConvertOneOfAnyOfSchema(): SchemaConverter.Output | undefined {
@@ -507,7 +800,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const objectConverter = new ObjectSchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                schema: this.schema
+                schema: this.schema,
+                id: this.id
             });
             const convertedObject = objectConverter.convert();
             if (convertedObject != null) {
@@ -515,7 +809,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     convertedSchema: {
                         typeDeclaration: this.createTypeDeclaration({
                             shape: convertedObject.type,
-                            referencedTypes: convertedObject.referencedTypes
+                            referencedTypes: convertedObject.referencedTypes,
+                            encoding:
+                                convertedObject.xmlEncoding != null
+                                    ? { json: undefined, proto: undefined, xml: convertedObject.xmlEncoding }
+                                    : undefined
                         }),
                         audiences: this.audiences,
                         propertiesByAudience: convertedObject.propertiesByAudience
@@ -583,18 +881,20 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     public createTypeDeclaration({
         shape,
         referencedTypes,
-        omitV2Examples
+        omitV2Examples,
+        encoding
     }: {
         shape: FernIr.Type;
         referencedTypes: Set<string>;
         omitV2Examples?: boolean;
+        encoding?: FernIr.Encoding;
     }): FernIr.TypeDeclaration {
         return {
             name: this.convertDeclaredTypeName(),
             shape,
             autogeneratedExamples: [],
             userProvidedExamples: [],
-            encoding: undefined,
+            encoding,
             availability: this.context.getAvailability({
                 node: this.schema,
                 breadcrumbs: this.breadcrumbs
@@ -703,4 +1003,17 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         // because they are too verbose and not actionable for users
         return convertedExample;
     }
+}
+
+/**
+ * An `allOf` member's `oneOf`/`anyOf` is not carried into the merged schema, so
+ * the properties its presence constraint requires unconditionally are lifted
+ * into the member's `required` first.
+ */
+function withPresenceConstraintRequired(schema: OpenAPIV3_1.SchemaObject): OpenAPIV3_1.SchemaObject {
+    const alwaysRequired = requiredByPresenceConstraint(schema);
+    if (alwaysRequired.length === 0) {
+        return schema;
+    }
+    return { ...schema, required: [...new Set([...(schema.required ?? []), ...alwaysRequired])] };
 }

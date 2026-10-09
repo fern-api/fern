@@ -7,8 +7,15 @@ import { WithDocs } from "../../commons/types/WithDocs.js";
 import { WithV2Examples } from "../../examples/types/WithV2Examples.js";
 
 export const TextResponse: core.serialization.ObjectSchema<serializers.TextResponse.Raw, FernIr.TextResponse> =
-    core.serialization.objectWithoutOptionalProperties({}).extend(WithDocs).extend(WithV2Examples);
+    core.serialization
+        .objectWithoutOptionalProperties({
+            contentType: core.serialization.string().optional(),
+        })
+        .extend(WithDocs)
+        .extend(WithV2Examples);
 
 export declare namespace TextResponse {
-    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {}
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
+        contentType?: string | null;
+    }
 }

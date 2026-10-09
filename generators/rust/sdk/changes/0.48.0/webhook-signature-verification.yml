@@ -1,0 +1,8 @@
+- summary: |
+    Generate webhook signature verification helpers (`src/webhooks.rs` plus a
+    `core::webhook_signature` runtime) when the API defines HMAC-signed webhooks.
+    Helpers verify the configured signature header (HMAC-SHA1/256/384/512, base64 or
+    hex, optional prefix) with constant-time comparison, support sorted/deduplicated
+    form parameters, `bodySHA256`-style body-hash binding for JSON requests,
+    notification URL port/legacy-query normalization, and timestamp tolerance checks.
+  type: feat

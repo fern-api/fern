@@ -1,0 +1,5 @@
+- summary: |
+    Extend dynamic IR OAuth types with custom properties and populate them in
+    DynamicSnippetsConverter, enabling dynamic snippet generators to include
+    custom OAuth token endpoint request parameters in generated code examples.
+  type: feat

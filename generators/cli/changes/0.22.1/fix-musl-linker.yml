@@ -1,0 +1,6 @@
+- summary: |
+    Fix aarch64-unknown-linux-musl build failure in generated CI workflow.
+    The emitted workflow now sets CARGO_TARGET_*_LINKER=musl-gcc and
+    CC=musl-gcc for musl targets so the Rust linker finds musl-gcc
+    instead of falling back to the system cc (which links against glibc).
+  type: fix

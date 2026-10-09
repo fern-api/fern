@@ -45,7 +45,9 @@ export async function writeDocsDefinitionForProject({
                 ? Array.isArray(docsWorkspace.config.instances[0].audiences)
                     ? docsWorkspace.config.instances[0].audiences
                     : [docsWorkspace.config.instances[0].audiences]
-                : undefined
+                : undefined,
+            // writes the working-tree definition only; git-ref-backed versions are materialized at publish time
+            buildRefVersions: false
         });
         const docsDefinition = await docsResolver.resolve();
 

@@ -1,6 +1,7 @@
 import { exec } from "child_process";
 import { existsSync } from "fs";
-import { cp, mkdir, readdir, readFile, rm, writeFile } from "fs/promises";
+import { cp, mkdir, readdir, readFile, rm, rmdir, writeFile } from "fs/promises";
+import { minimatch } from "minimatch";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
@@ -55,8 +56,11 @@ export async function rewriteSourceMapSources(absOutDir) {
  *   Can be:
  *   - string: '../base/src/asIs' - copies to dist/
  *   - array of strings: ['../base/src/asIs', '../base/src/template'] - copies each to dist/
- *   - object: { from: '../base/src/asIs', to: 'dist/asIs' } - custom destination
- *   - array of objects: [{ from: '...', to: '...' }, ...]
+ *   - object: { from: '../base/src/asIs', to: 'dist/asIs', ignore?: string[] } - custom destination
+ *     The optional `ignore` field is an array of glob patterns (minimatch syntax) evaluated
+ *     against paths relative to `from`. Matching files and directories are skipped. A pattern
+ *     that matches a directory prunes the entire subtree.
+ *   - array of objects: [{ from: '...', to: '...', ignore?: [...] }, ...]
  */
 export async function buildGenerator(dirname, options = {}) {
     const { entry = "src/cli.ts", tsupOptions = {}, copy = null } = options;
@@ -93,14 +97,105 @@ export async function buildGenerator(dirname, options = {}) {
                 // Simple string: copy to dist/
                 await cp(path.join(dirname, copyOp), path.join(dirname, "dist"), { recursive: true });
             } else if (typeof copyOp === "object" && copyOp.from) {
-                // Object with from/to: custom destination
-                await cp(path.join(dirname, copyOp.from), path.join(dirname, copyOp.to), {
+                // Object with from/to: custom destination, optional ignore globs.
+                // We want mirror semantics — files removed from `from` should
+                // disappear from `to` too, otherwise stale state accumulates
+                // between rebuilds. `fs.cp` only adds/overwrites, so wipe the
+                // destination first.
+                const absoluteFrom = path.join(dirname, copyOp.from);
+                const absoluteTo = path.join(dirname, copyOp.to);
+                const ignorePatterns = Array.isArray(copyOp.ignore) ? copyOp.ignore : null;
+                await rm(absoluteTo, { recursive: true, force: true });
+                await cp(absoluteFrom, absoluteTo, {
                     recursive: true,
-                    force: true
+                    force: true,
+                    filter: ignorePatterns == null ? undefined : makeIgnoreFilter(absoluteFrom, ignorePatterns)
                 });
+                if (ignorePatterns != null) {
+                    // Filtering only prunes files. Parent directories whose entire
+                    // contents were filtered out are left behind as empty dirs.
+                    // Sweep them so the copied tree looks like a clean checkout.
+                    await removeEmptyDirs(absoluteTo);
+                }
             }
         }
     }
+}
+
+/**
+ * Build a filter function for `fs.cp` that skips paths matching any of the
+ * provided glob patterns. Patterns use minimatch syntax and are evaluated
+ * against paths relative to `absoluteFrom` (POSIX-style separators). When a
+ * directory matches, the entire subtree is pruned because `cp` does not
+ * descend into it.
+ *
+ * @param {string} absoluteFrom - Absolute path of the source root
+ * @param {string[]} patterns - Glob patterns to ignore (minimatch syntax)
+ * @returns {(src: string) => boolean}
+ */
+function makeIgnoreFilter(absoluteFrom, patterns) {
+    const matchOptions = { dot: true, matchBase: false };
+    // For each `X/**` pattern, also treat `X` itself as ignored so `cp` skips
+    // the whole subtree instead of descending into it and creating an empty
+    // destination directory.
+    const expanded = [];
+    for (const pattern of patterns) {
+        expanded.push(pattern);
+        if (pattern.endsWith("/**")) {
+            const trimmed = pattern.slice(0, -3);
+            if (trimmed.length > 0) {
+                expanded.push(trimmed);
+            }
+        }
+    }
+    return (src) => {
+        if (src === absoluteFrom) {
+            return true;
+        }
+        const relative = path.relative(absoluteFrom, src).split(path.sep).join("/");
+        if (relative === "" || relative.startsWith("..")) {
+            return true;
+        }
+        for (const pattern of expanded) {
+            if (minimatch(relative, pattern, matchOptions)) {
+                return false;
+            }
+        }
+        return true;
+    };
+}
+
+/**
+ * Recursively remove empty directories under `root` (but leave `root` itself
+ * even if it ends up empty). Runs depth-first so a directory only becomes a
+ * removal candidate after its children have been processed.
+ *
+ * @param {string} root
+ */
+async function removeEmptyDirs(root) {
+    if (!existsSync(root)) {
+        return;
+    }
+    const walk = async (dir) => {
+        let entries;
+        try {
+            entries = await readdir(dir, { withFileTypes: true });
+        } catch {
+            return false;
+        }
+        for (const entry of entries) {
+            if (entry.isDirectory()) {
+                await walk(path.join(dir, entry.name));
+            }
+        }
+        const remaining = await readdir(dir);
+        if (remaining.length === 0 && dir !== root) {
+            await rmdir(dir);
+            return true;
+        }
+        return false;
+    };
+    await walk(root);
 }
 
 /**

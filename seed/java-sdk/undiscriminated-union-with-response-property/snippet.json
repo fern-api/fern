@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "627a6d11",
+            "example_identifier": "91de9871",
             "id": {
                 "method": "GET",
                 "path": "/union",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "6fce9fb8",
+            "example_identifier": "9e0bf4e8",
             "id": {
                 "method": "GET",
                 "path": "/unions",

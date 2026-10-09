@@ -6,7 +6,7 @@ import Errors
     @Test func fooWithoutEndpointError1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "bar": "bar"
@@ -33,7 +33,7 @@ import Errors
     @Test func foo1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "bar": "bar"
@@ -60,7 +60,7 @@ import Errors
     @Test func fooWithExamples1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "bar": "hello"
@@ -87,7 +87,7 @@ import Errors
     @Test func fooWithExamples4() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "bar": "bar"

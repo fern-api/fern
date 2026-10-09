@@ -8,10 +8,19 @@ import { gfm } from "micromark-extension-gfm";
 import { math } from "micromark-extension-math";
 import { mdxjs } from "micromark-extension-mdxjs";
 
-export function parseMarkdownToTree(markdown: string): MdastRoot {
-    const { content } = grayMatter(markdown);
-    return fromMarkdown(content, {
+/**
+ * Parses markdown that has already had its frontmatter stripped. Node offsets are relative to
+ * `body`, which makes this the right entrypoint when offsets need to be mapped back onto the
+ * original file.
+ */
+export function parseMarkdownBodyToTree(body: string): MdastRoot {
+    return fromMarkdown(body, {
         extensions: [mdxjs(), gfm(), math()],
         mdastExtensions: [mdxFromMarkdown(), gfmFromMarkdown(), mathFromMarkdown()]
     });
+}
+
+export function parseMarkdownToTree(markdown: string): MdastRoot {
+    const { content } = grayMatter(markdown);
+    return parseMarkdownBodyToTree(content);
 }

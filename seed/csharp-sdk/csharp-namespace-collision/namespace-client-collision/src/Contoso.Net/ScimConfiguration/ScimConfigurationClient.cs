@@ -20,6 +20,9 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new global::Contoso.Net.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +35,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/scim-configuration",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -49,7 +53,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                 return new WithRawResponse<ScimConfiguration>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new global::Contoso.Net.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -63,7 +67,13 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new global::Contoso.Net.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -74,7 +84,13 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
             throw new ContosoApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new global::Contoso.Net.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -87,6 +103,9 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new global::Contoso.Net.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -100,6 +119,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                     Method = HttpMethod.Post,
                     Path = "/scim-configuration/tokens",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -117,7 +137,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                 return new WithRawResponse<ScimToken>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new global::Contoso.Net.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -131,7 +151,13 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new global::Contoso.Net.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -142,7 +168,13 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
             throw new ContosoApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new global::Contoso.Net.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -154,6 +186,9 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new global::Contoso.Net.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -166,6 +201,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/scim-configuration/users",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -185,7 +221,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                 return new WithRawResponse<IEnumerable<global::Contoso.Net.User>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new global::Contoso.Net.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -199,7 +235,13 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new global::Contoso.Net.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -210,7 +252,13 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
             throw new ContosoApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new global::Contoso.Net.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

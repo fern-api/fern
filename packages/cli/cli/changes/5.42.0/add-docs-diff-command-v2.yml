@@ -1,0 +1,3 @@
+- summary: |
+    Add `fern docs diff` command to CLI v2 for generating visual diffs between preview and production docs pages.
+  type: feat

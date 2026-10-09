@@ -1,0 +1,8 @@
+- summary: |
+    Fix compile errors in the generated `OAuthAuthProvider` when the serde layer is
+    disabled: the token endpoint method is now called with the same camelCase name
+    that the generated client exposes (previously the original casing, e.g.
+    `CreateOauth2Token`, was used). Also guard against optional `access_token`
+    response properties so the token refresh path satisfies its `Promise<string>`
+    return type instead of `string | undefined`.
+  type: fix

@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedHttpHeadClient } from "@fern/http-head";
 
-const client = new SeedHttpHeadClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedHttpHeadClient({ baseUrl: "YOUR_BASE_URL" });
 await client.user.head();
 ```
 

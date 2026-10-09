@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.upload
+      #
       # @return [untyped]
       def upload(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -47,6 +50,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :model
       # @option params [String, nil] :language
+      #
+      # @example
+      #   client.service.upload_with_query_params(model: "nova-2")
       #
       # @return [untyped]
       def upload_with_query_params(request_options: {}, **params)

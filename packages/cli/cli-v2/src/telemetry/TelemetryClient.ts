@@ -1,6 +1,6 @@
 import { getRunIdProperties, setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CliError } from "@fern-api/task-context";
+import { type CaptureExceptionOptions, CliError } from "@fern-api/task-context";
 import * as Sentry from "@sentry/node";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import IS_CI from "is-ci";
@@ -39,7 +39,11 @@ export class TelemetryClient {
             usingAccessToken: process.env.FERN_TOKEN != null,
             ...getRunIdProperties()
         };
-        this.posthog = apiKey != null && apiKey.length > 0 && isTelemetryEnabled ? new PostHog(apiKey) : undefined;
+        // isServer: false keeps posthog-node >=5.36 from tagging CLI events with `$is_server: true`.
+        this.posthog =
+            apiKey != null && apiKey.length > 0 && isTelemetryEnabled
+                ? new PostHog(apiKey, { isServer: false })
+                : undefined;
 
         const sentryDsn = process.env.SENTRY_DSN;
         if (sentryDsn != null && sentryDsn.length > 0 && isTelemetryEnabled) {
@@ -131,19 +135,26 @@ export class TelemetryClient {
      * The caller is responsible for deciding which errors are worth reporting
      * (see `shouldReportToSentry` in withContext.ts).
      */
-    public captureException(error: unknown, { errorCode }: { errorCode: string }): void {
+    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
         if (this.sentry === undefined) {
-            return;
+            return undefined;
         }
         try {
-            this.sentry.captureException(error, {
-                captureContext: {
-                    user: { id: this.distinctId },
-                    tags: { ...this.baseTags, ...this.accumulatedTags, "error.code": errorCode }
+            const tags = { ...this.baseTags, ...this.accumulatedTags, ...options?.tags };
+            const context = options?.context;
+            return Sentry.withScope((scope) => {
+                scope.setTags(tags);
+                if (context != null) {
+                    for (const [key, value] of Object.entries(context)) {
+                        if (value != null) {
+                            scope.setContext(key, value);
+                        }
+                    }
                 }
+                return this.sentry?.captureException(error, undefined, scope);
             });
         } catch {
-            // no-op
+            return undefined;
         }
     }
 

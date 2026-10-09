@@ -1,0 +1,37 @@
+%% Component view — OpenAPI protocol path (src/openapi/).
+%% Self-contained: no imports from src/graphql/.
+
+flowchart TB
+    SpecYaml[("openapi.yaml<br/>+ optional<br/>overlays / overrides")]
+    OverridesYaml[("overrides.yml")]
+    OverlayYaml[("overlay.yaml<br/>OpenAPI Overlay v1.0.0")]
+
+    overlay["overlay.rs<br/><i>deep-merge overlays + overrides</i>"]
+    parser["parser.rs<br/><i>YAML → RestDescription;<br/>x-fern-* lowering;<br/>OAS 3.0 + 3.1</i>"]
+    discovery["discovery.rs<br/><i>RestDescription, RestMethod,<br/>schemas, security,<br/>pagination metadata</i>"]
+    commands["commands.rs<br/><i>clap::Command builder;<br/>x-fern-sdk-group-name nesting,<br/>x-fern-sdk-method-name leaves</i>"]
+    executor["executor.rs<br/><i>request construction,<br/>schema validation,<br/>retry executor,<br/>pagination,<br/>streaming,<br/>idempotency,<br/>--debug HTTP dump</i>"]
+    app["app.rs<br/><i>CliApp&lt;OpenApi&gt;;<br/>AppContext;<br/>HandlerFn</i>"]
+    help["help.rs<br/><i>audience filtering,<br/>group rendering,<br/>availability badges</i>"]
+
+    SpecYaml --> overlay
+    OverridesYaml --> overlay
+    OverlayYaml --> overlay
+    overlay --> parser
+    parser --> discovery
+    discovery --> commands
+    discovery --> executor
+    commands --> app
+    executor --> app
+    help --> commands
+
+    %% imports from shared infra (above protocol path)
+    SharedAuth(("src/auth/")):::shared --> executor
+    SharedHttp(("src/http.rs")):::shared --> executor
+    SharedFormatter(("src/formatter.rs")):::shared --> executor
+    SharedValidate(("src/validate.rs")):::shared --> executor
+    SharedError(("src/error.rs")):::shared --> executor
+
+    classDef shared fill:#e8f5e9,stroke:#2e7d32
+    classDef path fill:#fff3e0,stroke:#e65100
+    class overlay,parser,discovery,commands,executor,app,help path

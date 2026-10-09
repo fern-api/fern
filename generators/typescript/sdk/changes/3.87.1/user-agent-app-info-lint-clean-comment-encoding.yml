@@ -1,0 +1,6 @@
+- summary: |
+    The `appInfo` User-Agent helper emitted when `allowUserAgentAppInfo` is enabled no longer
+    uses a control-character regex range, so generated SDKs lint cleanly under rules such as
+    Biome's `noControlCharactersInRegex` without a suppression comment. Escaping behavior is
+    unchanged.
+  type: fix

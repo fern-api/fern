@@ -1,0 +1,42 @@
+name: Set npm dist-tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "The npm package to retag (e.g. @fern-api/typescript-dynamic-snippets)."
+        required: true
+        type: string
+      version:
+        description: "The already published version the tag should point at (e.g. 3.88.0)."
+        required: true
+        type: string
+      tag:
+        description: "The dist-tag to move."
+        required: false
+        default: latest
+        type: string
+
+env:
+  DO_NOT_TRACK: "1"
+
+jobs:
+  set-dist-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          scope: "@fern-api"
+
+      - name: Set dist-tag
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+          PACKAGE: ${{ inputs.package }}
+          VERSION: ${{ inputs.version }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          npm dist-tag add "${PACKAGE}@${VERSION}" "${TAG}"
+          npm dist-tag ls "${PACKAGE}"

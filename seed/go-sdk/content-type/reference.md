@@ -14,18 +14,17 @@
 
 ```go
 request := &fern.PatchProxyRequest{
-        Application: fern.String(
-            "application",
-        ),
-        RequireAuth: fern.Bool(
-            true,
-        ),
-    }
-client.Service.Patch(
-        context.TODO(),
-        request,
-    )
+    Application: fern.String(
+        "application",
+    ),
+    RequireAuth: fern.Bool(
+        true,
+    ),
 }
+client.Service.Patch(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -91,48 +90,47 @@ This endpoint demonstrates the distinction between:
 
 ```go
 request := &fern.PatchComplexRequest{
-        Name: fern.String(
-            "name",
-        ),
-        Age: fern.Int(
-            1,
-        ),
-        Active: fern.Bool(
-            true,
-        ),
-        Metadata: map[string]any{
-            "metadata": map[string]any{
-                "key": "value",
-            },
+    Name: fern.String(
+        "name",
+    ),
+    Age: fern.Int(
+        1,
+    ),
+    Active: fern.Bool(
+        true,
+    ),
+    Metadata: map[string]any{
+        "metadata": map[string]any{
+            "key": "value",
         },
-        Tags: []string{
-            "tags",
-            "tags",
+    },
+    Tags: []string{
+        "tags",
+        "tags",
+    },
+    Email: fern.String(
+        "email",
+    ),
+    Nickname: fern.String(
+        "nickname",
+    ),
+    Bio: fern.String(
+        "bio",
+    ),
+    ProfileImageURL: fern.String(
+        "profileImageUrl",
+    ),
+    Settings: map[string]any{
+        "settings": map[string]any{
+            "key": "value",
         },
-        Email: fern.String(
-            "email",
-        ),
-        Nickname: fern.String(
-            "nickname",
-        ),
-        Bio: fern.String(
-            "bio",
-        ),
-        ProfileImageURL: fern.String(
-            "profileImageUrl",
-        ),
-        Settings: map[string]any{
-            "settings": map[string]any{
-                "key": "value",
-            },
-        },
-    }
-client.Service.PatchComplex(
-        context.TODO(),
-        "id",
-        request,
-    )
+    },
 }
+client.Service.PatchComplex(
+    context.TODO(),
+    "id",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -268,22 +266,21 @@ This should trigger the NPE issue when optional fields aren't initialized.
 
 ```go
 request := &fern.NamedMixedPatchRequest{
-        AppID: fern.String(
-            "appId",
-        ),
-        Instructions: fern.String(
-            "instructions",
-        ),
-        Active: fern.Bool(
-            true,
-        ),
-    }
-client.Service.NamedPatchWithMixed(
-        context.TODO(),
-        "id",
-        request,
-    )
+    AppID: fern.String(
+        "appId",
+    ),
+    Instructions: fern.String(
+        "instructions",
+    ),
+    Active: fern.Bool(
+        true,
+    ),
 }
+client.Service.NamedPatchWithMixed(
+    context.TODO(),
+    "id",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -365,25 +362,24 @@ This endpoint should:
 
 ```go
 request := &fern.OptionalMergePatchRequest{
-        RequiredField: "requiredField",
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        OptionalInteger: fern.Int(
-            1,
-        ),
-        OptionalBoolean: fern.Bool(
-            true,
-        ),
-        NullableString: fern.String(
-            "nullableString",
-        ),
-    }
-client.Service.OptionalMergePatchTest(
-        context.TODO(),
-        request,
-    )
+    RequiredField: "requiredField",
+    OptionalString: fern.String(
+        "optionalString",
+    ),
+    OptionalInteger: fern.Int(
+        1,
+    ),
+    OptionalBoolean: fern.Bool(
+        true,
+    ),
+    NullableString: fern.String(
+        "nullableString",
+    ),
 }
+client.Service.OptionalMergePatchTest(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -470,19 +466,18 @@ Regular PATCH endpoint without merge-patch semantics
 
 ```go
 request := &fern.RegularPatchRequest{
-        Field1: fern.String(
-            "field1",
-        ),
-        Field2: fern.Int(
-            1,
-        ),
-    }
-client.Service.RegularPatch(
-        context.TODO(),
-        "id",
-        request,
-    )
+    Field1: fern.String(
+        "field1",
+    ),
+    Field2: fern.Int(
+        1,
+    ),
 }
+client.Service.RegularPatch(
+    context.TODO(),
+    "id",
+    request,
+)
 ```
 </dd>
 </dl>

@@ -14,11 +14,10 @@
 
 ```go
 client.Organizations.GetOrganization(
-        context.TODO(),
-        "tenant_id",
-        "organization_id",
-    )
-}
+    context.TODO(),
+    "tenant_id",
+    "organization_id",
+)
 ```
 </dd>
 </dl>
@@ -67,12 +66,11 @@ client.Organizations.GetOrganization(
 
 ```go
 client.Organizations.GetOrganizationUser(
-        context.TODO(),
-        "tenant_id",
-        "organization_id",
-        "user_id",
-    )
-}
+    context.TODO(),
+    "tenant_id",
+    "organization_id",
+    "user_id",
+)
 ```
 </dd>
 </dl>
@@ -129,17 +127,16 @@ client.Organizations.GetOrganizationUser(
 
 ```go
 request := &fern.SearchOrganizationsRequest{
-        Limit: fern.Int(
-            1,
-        ),
-    }
-client.Organizations.SearchOrganizations(
-        context.TODO(),
-        "tenant_id",
-        "organization_id",
-        request,
-    )
+    Limit: fern.Int(
+        1,
+    ),
 }
+client.Organizations.SearchOrganizations(
+    context.TODO(),
+    "tenant_id",
+    "organization_id",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -197,11 +194,10 @@ client.Organizations.SearchOrganizations(
 
 ```go
 client.User.GetUser(
-        context.TODO(),
-        "tenant_id",
-        "user_id",
-    )
-}
+    context.TODO(),
+    "tenant_id",
+    "user_id",
+)
 ```
 </dd>
 </dl>
@@ -250,18 +246,17 @@ client.User.GetUser(
 
 ```go
 request := &fern.User{
-        Name: "name",
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-    }
-client.User.CreateUser(
-        context.TODO(),
-        "tenant_id",
-        request,
-    )
+    Name: "name",
+    Tags: []string{
+        "tags",
+        "tags",
+    },
 }
+client.User.CreateUser(
+    context.TODO(),
+    "tenant_id",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -310,21 +305,20 @@ client.User.CreateUser(
 
 ```go
 request := &fern.UpdateUserRequest{
-        Body: &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
+    Body: &fern.User{
+        Name: "name",
+        Tags: []string{
+            "tags",
+            "tags",
         },
-    }
-client.User.UpdateUser(
-        context.TODO(),
-        "tenant_id",
-        "user_id",
-        request,
-    )
+    },
 }
+client.User.UpdateUser(
+    context.TODO(),
+    "tenant_id",
+    "user_id",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -381,17 +375,16 @@ client.User.UpdateUser(
 
 ```go
 request := &fern.SearchUsersRequest{
-        Limit: fern.Int(
-            1,
-        ),
-    }
-client.User.SearchUsers(
-        context.TODO(),
-        "tenant_id",
-        "user_id",
-        request,
-    )
+    Limit: fern.Int(
+        1,
+    ),
 }
+client.User.SearchUsers(
+    context.TODO(),
+    "tenant_id",
+    "user_id",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -462,12 +455,11 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```go
 client.User.GetUserMetadata(
-        context.TODO(),
-        "tenant_id",
-        "user_id",
-        1,
-    )
-}
+    context.TODO(),
+    "tenant_id",
+    "user_id",
+    1,
+)
 ```
 </dd>
 </dl>
@@ -538,13 +530,12 @@ Test endpoint with path parameters listed in different order than found in path
 
 ```go
 client.User.GetUserSpecifics(
-        context.TODO(),
-        "tenant_id",
-        "user_id",
-        1,
-        "thought",
-    )
-}
+    context.TODO(),
+    "tenant_id",
+    "user_id",
+    1,
+    "thought",
+)
 ```
 </dd>
 </dl>

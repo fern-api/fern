@@ -201,4 +201,5 @@ auth-schemes:
 auth: BasicAuth
 ",
   },
+  "specVersion": "1.0.0",
 }

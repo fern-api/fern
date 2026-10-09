@@ -26,13 +26,28 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.ListWithCustomPagerRequest{
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.Users.ListWithCustomPager(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithCustomPager(
 	ctx context.Context,
 	request *fern.ListWithCustomPagerRequest,
@@ -76,6 +91,7 @@ func (c *Client) ListWithCustomPager(
 			Method:          "GET",
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

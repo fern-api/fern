@@ -13,6 +13,8 @@ export const AiChatConfig: core.serialization.ObjectSchema<serializers.AiChatCon
         systemPrompt: core.serialization.property("system-prompt", core.serialization.string().optional()),
         location: core.serialization.list(AiChatLocation).optional(),
         datasources: core.serialization.list(AiChatDatasource).optional(),
+        maskPii: core.serialization.property("mask-pii", core.serialization.boolean().optional()),
+        disclaimer: core.serialization.string().optional(),
     });
 
 export declare namespace AiChatConfig {
@@ -21,5 +23,7 @@ export declare namespace AiChatConfig {
         "system-prompt"?: string | null;
         location?: AiChatLocation.Raw[] | null;
         datasources?: AiChatDatasource.Raw[] | null;
+        "mask-pii"?: boolean | null;
+        disclaimer?: string | null;
     }
 }

@@ -305,6 +305,10 @@ def _convert_undiscriminated_union_type(
         except Exception:
             continue
 
+    # No member matched (e.g. a variant added after this SDK was generated, or a missing
+    # discriminant): keep the original data rather than dropping it.
+    return object_
+
 
 def _convert_union_type(
     type_: typing.Type[typing.Any],
@@ -360,7 +364,10 @@ def construct_type(
         if not isinstance(object_, typing.Mapping):
             return object_
 
-        key_type, items_type = get_args(type_)
+        type_args = get_args(type_)
+        if not type_args:
+            return object_
+        key_type, items_type = type_args
         key_type = _maybe_resolve_forward_ref(key_type, host)
         items_type = _maybe_resolve_forward_ref(items_type, host)
         d = {
@@ -375,14 +382,20 @@ def construct_type(
         if not isinstance(object_, list):
             return object_
 
-        inner_type = _maybe_resolve_forward_ref(get_args(type_)[0], host)
+        type_args = get_args(type_)
+        if not type_args:
+            return object_
+        inner_type = _maybe_resolve_forward_ref(type_args[0], host)
         return [construct_type(object_=entry, type_=inner_type, host=host) for entry in object_]
 
     if base_type == set:
         if not isinstance(object_, set) and not isinstance(object_, list):
             return object_
 
-        inner_type = _maybe_resolve_forward_ref(get_args(type_)[0], host)
+        type_args = get_args(type_)
+        if not type_args:
+            return object_
+        inner_type = _maybe_resolve_forward_ref(type_args[0], host)
         return {construct_type(object_=entry, type_=inner_type, host=host) for entry in object_}
 
     if is_union(base_type) or is_annotated_union:

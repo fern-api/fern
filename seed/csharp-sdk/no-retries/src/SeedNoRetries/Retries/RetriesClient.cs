@@ -17,6 +17,9 @@ public partial class RetriesClient : IRetriesClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedNoRetries.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedNoRetries.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,8 +32,10 @@ public partial class RetriesClient : IRetriesClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/users",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
+                    RetriesDisabled = true,
                 },
                 cancellationToken
             )
@@ -46,7 +51,7 @@ public partial class RetriesClient : IRetriesClient
                 return new WithRawResponse<IEnumerable<User>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedNoRetries.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -60,7 +65,13 @@ public partial class RetriesClient : IRetriesClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedNoRetries.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -71,7 +82,13 @@ public partial class RetriesClient : IRetriesClient
             throw new SeedNoRetriesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedNoRetries.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

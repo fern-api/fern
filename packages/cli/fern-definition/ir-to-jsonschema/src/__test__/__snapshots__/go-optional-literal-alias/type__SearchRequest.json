@@ -9,10 +9,12 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The sort field to use"
     },
     "query": {
-      "type": "string"
+      "type": "string",
+      "description": "The search query"
     }
   },
   "required": [
@@ -21,7 +23,8 @@
   "additionalProperties": false,
   "definitions": {
     "SortField": {
-      "const": "DEFAULT"
+      "const": "DEFAULT",
+      "description": "A sort field that only allows the value \"DEFAULT\""
     }
   }
 }

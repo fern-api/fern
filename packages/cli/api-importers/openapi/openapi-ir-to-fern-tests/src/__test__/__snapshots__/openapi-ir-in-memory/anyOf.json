@@ -89,12 +89,16 @@
     "objectQueryParameters": true,
     "shouldUseUndiscriminatedUnionsWithLiterals": false,
     "shouldUseIdiomaticRequestNames": true,
+    "libraryVisibility": "all",
+    "docsVisibility": "all",
     "asyncApiNaming": "v1",
     "useBytesForBinaryResponse": false,
     "respectForwardCompatibleEnums": false,
     "additionalPropertiesDefaultsTo": false,
     "typeDatesAsStrings": false,
     "preserveSingleSchemaOneOf": false,
+    "preserveOneOfInAllOf": false,
+    "anyOfSiblingPropertiesAsObject": false,
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,
@@ -108,6 +112,12 @@
     "inferForwardCompatible": false,
     "coerceConstsTo": "enums-coerceable-to-literals",
     "respectByteFormat": false,
-    "shouldInferDiscriminatedUnionBaseProperties": false
+    "shouldInferDiscriminatedUnionBaseProperties": false,
+    "disambiguateRequestNames": true,
+    "ignoreTags": false,
+    "respectParameterContent": false,
+    "respectPerSpecBasePath": false,
+    "respectOperationIdWordBoundaries": false,
+    "namespacedErrors": false
   }
 }

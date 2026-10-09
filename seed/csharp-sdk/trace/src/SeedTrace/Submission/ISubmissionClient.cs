@@ -23,7 +23,7 @@ public partial interface ISubmissionClient
     /// <summary>
     /// Stops execution session.
     /// </summary>
-    Task StopExecutionSessionAsync(
+    WithRawResponseTask StopExecutionSessionAsync(
         string sessionId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -6,7 +6,7 @@ import Unions
     @Test func get1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "date",
@@ -30,7 +30,7 @@ import Unions
     @Test func get2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "datetime",
@@ -54,7 +54,7 @@ import Unions
     @Test func get3() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "value",
@@ -78,7 +78,7 @@ import Unions
     @Test func update1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -91,7 +91,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.date(
-
+                CalendarDate("1994-01-01")!
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -101,7 +101,7 @@ import Unions
     @Test func update2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -114,7 +114,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.datetime(
-
+                try! Date("1994-01-01T01:01:01Z", strategy: .iso8601)
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -124,7 +124,7 @@ import Unions
     @Test func update3() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8

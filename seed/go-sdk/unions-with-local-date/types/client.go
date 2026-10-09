@@ -26,13 +26,20 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	client.Types.Get(
+//	    context.TODO(),
+//	    "date-example",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id string,
@@ -49,6 +56,13 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.UnionWithTime{}
+//	client.Types.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *fern.UnionWithTime,

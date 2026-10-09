@@ -13,10 +13,9 @@
 
 ```go
 client.GetAccount(
-        context.TODO(),
-        "account_id",
-    )
-}
+    context.TODO(),
+    "account_id",
+)
 ```
 </dd>
 </dl>

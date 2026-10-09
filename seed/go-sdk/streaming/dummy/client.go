@@ -27,13 +27,23 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &stream.GenerateStreamRequest{
+//	    NumEvents: 1,
+//	}
+//	client.Dummy.GenerateStream(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GenerateStream(
 	ctx context.Context,
 	request *stream.GenerateStreamRequest,
@@ -58,6 +68,7 @@ func (c *Client) GenerateStream(
 			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -68,6 +79,15 @@ func (c *Client) GenerateStream(
 	)
 }
 
+// Example:
+//
+//	request := &stream.Generateequest{
+//	    NumEvents: 5,
+//	}
+//	client.Dummy.Generate(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Generate(
 	ctx context.Context,
 	request *stream.Generateequest,

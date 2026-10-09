@@ -71,6 +71,7 @@
               "path": "/completions/chat",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "prompt": "string",
                     "stream": "optional<boolean>",
@@ -85,6 +86,7 @@
               "response-stream": {
                 "docs": "Success!",
                 "format": "sse",
+                "resumable": false,
                 "terminator": undefined,
                 "type": "string",
               },
@@ -113,11 +115,13 @@
           properties:
             stream: optional<boolean>
             prompt: string
+          optional: true
         content-type: application/json
       response-stream:
         docs: Success!
         type: string
         format: sse
+        resumable: false
       examples:
         - request:
             prompt: prompt
@@ -146,4 +150,5 @@ error-discrimination:
 display-name: Test extension `x-fern-audiences` alongside `x-fern-streaming`.
 ",
   },
+  "specVersion": "1.0.0",
 }

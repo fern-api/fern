@@ -1,10 +1,11 @@
-import { ObjectProperty, TypeId, V2SchemaExamples } from "@fern-api/ir-sdk";
+import { ContainerType, ObjectProperty, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverterContext } from "../AbstractConverterContext.js";
 import { ExampleConverter } from "../converters/ExampleConverter.js";
 import { SchemaConverter } from "../converters/schema/SchemaConverter.js";
 import { SchemaOrReferenceConverter } from "../converters/schema/SchemaOrReferenceConverter.js";
 import { ErrorCollector } from "../ErrorCollector.js";
+import { XmlPropertyExtension } from "../extensions/xml.js";
 import { Extensions } from "../index.js";
 
 export function convertProperties({
@@ -12,13 +13,16 @@ export function convertProperties({
     required,
     breadcrumbs,
     context,
-    errorCollector
+    errorCollector,
+    withinXmlElement = false
 }: {
     properties: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>;
     required: string[];
     breadcrumbs: string[];
     context: AbstractConverterContext<object>;
     errorCollector: ErrorCollector;
+    /** Whether the enclosing object is an XML element; property `xml` encodings are only emitted when true. */
+    withinXmlElement?: boolean;
 }): {
     convertedProperties: ObjectProperty[];
     propertiesByAudience: Record<string, Set<string>>;
@@ -64,10 +68,18 @@ export function convertProperties({
                     wireValue: propertyName
                 }),
                 valueType: convertedProperty.type,
-                docs: propertySchema.description,
+                docs: propertySchema.description ?? convertedProperty.schema?.typeDeclaration.docs,
                 availability: convertedProperty.availability,
                 propertyAccess: context.getPropertyAccess(propertySchema),
                 defaultValue: resolvedPropertySchema?.default,
+                xml: withinXmlElement
+                    ? new XmlPropertyExtension({
+                          breadcrumbs: propertyBreadcrumbs,
+                          propertySchema,
+                          resolvedPropertySchema: resolvedPropertySchema ?? undefined,
+                          context
+                      }).convert()
+                    : undefined,
                 v2Examples:
                     convertedProperty.schema?.typeDeclaration?.v2Examples ??
                     generatePropertyV2Examples({
@@ -87,6 +99,7 @@ export function convertProperties({
                     referencedTypes.add(type);
                 });
             }
+            collectNamedTypeIdsFromTypeReference(convertedProperty.type, referencedTypes);
             for (const audience of convertedProperty.schema?.audiences ?? []) {
                 if (propertiesByAudience[audience] == null) {
                     propertiesByAudience[audience] = new Set<string>();
@@ -168,4 +181,41 @@ function maybeGetFernTypeNameExtension(
         context
     });
     return fernTypeNameConverter.convert();
+}
+
+export function collectNamedTypeIdsFromTypeReference(typeReference: TypeReference, referencedTypes: Set<string>): void {
+    switch (typeReference.type) {
+        case "named":
+            referencedTypes.add(typeReference.typeId);
+            return;
+        case "primitive":
+        case "unknown":
+            return;
+        case "container":
+            collectNamedTypeIdsFromContainer(typeReference.container, referencedTypes);
+            return;
+    }
+}
+
+function collectNamedTypeIdsFromContainer(container: ContainerType, referencedTypes: Set<string>): void {
+    switch (container.type) {
+        case "list":
+            collectNamedTypeIdsFromTypeReference(container.list, referencedTypes);
+            return;
+        case "set":
+            collectNamedTypeIdsFromTypeReference(container.set, referencedTypes);
+            return;
+        case "optional":
+            collectNamedTypeIdsFromTypeReference(container.optional, referencedTypes);
+            return;
+        case "nullable":
+            collectNamedTypeIdsFromTypeReference(container.nullable, referencedTypes);
+            return;
+        case "map":
+            collectNamedTypeIdsFromTypeReference(container.keyType, referencedTypes);
+            collectNamedTypeIdsFromTypeReference(container.valueType, referencedTypes);
+            return;
+        case "literal":
+            return;
+    }
 }

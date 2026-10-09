@@ -6,14 +6,16 @@ import { getOrganizationNameValidationError } from "./getOrganizationNameValidat
 export async function createOrganizationIfDoesNotExist({
     organization,
     token,
-    context
+    context,
+    headers
 }: {
     organization: string;
     token: FernUserToken;
     context: TaskContext;
+    headers?: Record<string, string>;
 }): Promise<boolean> {
-    const venus = createVenusService({ token: token.value });
-    const getOrganizationResponse = await venus.organization.get(organization);
+    const venus = createVenusService({ token: token.value, headers });
+    const getOrganizationResponse = await venus.organization.get({ orgId: organization });
 
     if (getOrganizationResponse.ok) {
         return false;

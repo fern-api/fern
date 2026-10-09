@@ -111,4 +111,42 @@ World!\``);
             expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
+
+    describe("recordWithIdentifierKeysToString", () => {
+        it("Should emit valid identifier keys without quotes and quote the rest", async () => {
+            const actual = ts.codeblock((writer) => {
+                writer.write("let myRecord = ");
+                writer.writeNode(
+                    ts.TypeLiteral.record({
+                        entries: [
+                            {
+                                key: ts.TypeLiteral.string("validKey"),
+                                value: ts.TypeLiteral.number(1)
+                            },
+                            {
+                                key: ts.TypeLiteral.string("needs-quotes"),
+                                value: ts.TypeLiteral.number(2)
+                            }
+                        ]
+                    })
+                );
+            });
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
+        });
+    });
+
+    describe("unknownObjectToString", () => {
+        it("Should emit valid identifier keys without quotes and quote the rest", async () => {
+            const actual = ts.codeblock((writer) => {
+                writer.write("let myUnknown = ");
+                writer.writeNode(
+                    ts.TypeLiteral.unknown({
+                        validKey: "a",
+                        "needs quotes": "b"
+                    })
+                );
+            });
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
+        });
+    });
 });

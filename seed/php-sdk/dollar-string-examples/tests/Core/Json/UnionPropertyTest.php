@@ -66,9 +66,7 @@ class UnionPropertyTest extends TestCase
 
     public function testWithNull(): void
     {
-        $expectedJson = JsonEncoder::encode(
-            [],
-        );
+        $expectedJson = '{}';
 
         $object = UnionProperty::fromJson($expectedJson);
         $this->assertNull($object->complexUnion, 'complexUnion should be null.');

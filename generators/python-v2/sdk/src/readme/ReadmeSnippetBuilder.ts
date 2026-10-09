@@ -184,7 +184,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const methodCallBlock = syncSnippet != null ? this.extractMethodCallFromSyncSnippet(syncSnippet) : undefined;
 
         let asyncBody: string;
-        if (methodCallBlock != null) {
+        if (this.isStreamingEndpoint(endpoint.endpoint)) {
+            // Streaming methods are async generator functions, so awaiting the call raises a
+            // TypeError; the returned stream is iterated with `async for` instead.
+            const methodCall = this.getMethodCall(endpoint);
+            const hasParams = this.endpointHasParameters(endpoint.endpoint);
+            asyncBody = `    async for chunk in ${methodCall}(${hasParams ? "..." : ""}):\n        print(chunk)`;
+        } else if (methodCallBlock != null) {
             const indentedMethodCall = methodCallBlock
                 .split("\n")
                 .map((line, idx) => {
@@ -373,7 +379,7 @@ client = ${this.clientClassName}(..., timeout=20.0)
 
 # Override timeout for a specific method
 ${methodCall}(${hasParams ? "..., " : ""}request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })`
         );
     }
@@ -440,17 +446,17 @@ for page in pager.iter_pages():
 
     private findPaginationEndpoint(): EndpointWithFilepath | undefined {
         const configuredEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.PAGINATION_FEATURE_ID).filter(
-            (ep) => ep.endpoint.pagination != null
+            (ep) => this.isPaginatedEndpoint(ep.endpoint)
         );
         if (configuredEndpoints.length > 0) {
             return configuredEndpoints[0];
         }
-        return Object.values(this.endpointsById).find((ep) => ep.endpoint.pagination != null);
+        return Object.values(this.endpointsById).find((ep) => this.isPaginatedEndpoint(ep.endpoint));
     }
 
     private renderAccessRawResponseDataSnippet(endpoint: EndpointWithFilepath): string {
         // For paginated endpoints, show pager response pattern instead of .with_raw_response
-        if (endpoint.endpoint.pagination != null) {
+        if (this.isPaginatedEndpoint(endpoint.endpoint)) {
             const methodCall = this.getMethodCall(endpoint);
             const hasParams = this.endpointHasParameters(endpoint.endpoint);
             return this.writeCode(
@@ -490,7 +496,7 @@ print(response.data)  # access the underlying object`
         }
 
         const { subpackage, channel } = websocketInfo;
-        const subpackageName = this.context.caseConverter.snakeSafe(subpackage.name);
+        const subpackageName = this.context.getModuleName(subpackage.name);
         // connectMethodName may not exist on older IR SDK versions
         const connectMethodName = (channel as unknown as { connectMethodName?: string }).connectMethodName;
         const connectMethodNameSnakeCase = this.toSnakeCase(connectMethodName ?? "connect");
@@ -707,17 +713,13 @@ ${constructorArg}
     }
 
     private getEndpointAccessPath(endpoint: EndpointWithFilepath): string {
-        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) =>
-            this.context.caseConverter.snakeSafe(part)
-        );
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => this.context.getModuleName(part));
         const methodName = this.context.caseConverter.snakeUnsafe(endpoint.endpoint.name);
         return clientAccessParts.length > 0 ? `${clientAccessParts.join(".")}.${methodName}` : methodName;
     }
 
     private getRawResponseMethodCall(endpoint: EndpointWithFilepath): string {
-        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) =>
-            this.context.caseConverter.snakeSafe(part)
-        );
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => this.context.getModuleName(part));
         const methodName = this.context.caseConverter.snakeUnsafe(endpoint.endpoint.name);
         if (clientAccessParts.length > 0) {
             return `client.${clientAccessParts.join(".")}.with_raw_response.${methodName}`;
@@ -750,10 +752,14 @@ ${constructorArg}
         return false;
     }
 
+    private isPaginatedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        return endpoint.pagination != null && this.context.config.generatePaginatedClients === true;
+    }
+
     private hasPaginatedEndpoints(): boolean {
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
-                if (endpoint.pagination != null) {
+                if (this.isPaginatedEndpoint(endpoint)) {
                     return true;
                 }
             }

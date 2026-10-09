@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Test API",
   "servers": [
     {
@@ -333,6 +334,7 @@
         {
           "origin": "server",
           "name": "event",
+          "description": "Server-sent event.",
           "body": {
             "schema": {
               "type": "string"
@@ -387,6 +389,7 @@
         {
           "origin": "server",
           "name": "uploadProgress",
+          "description": "Upload progress update.",
           "body": {
             "schema": {
               "type": "string"

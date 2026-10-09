@@ -1,0 +1,8 @@
+- summary: |
+    Expose non-literal global headers without a client default as root client
+    constructor parameters. Headers with a declared `env` default to that
+    environment variable (e.g. `version: ENV.fetch("MY_API_VERSION", nil)`), and
+    the header is only sent when the value is non-nil. Previously such headers
+    were omitted entirely and could only be sent via per-request
+    `additional_headers`.
+  type: fix

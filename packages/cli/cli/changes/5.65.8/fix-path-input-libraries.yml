@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Docs configs with a `path` input library no longer crash `fern docs dev` and
+    `fern generate --docs`. `parseLibrariesConfiguration` now accepts both `git`
+    and `path` library inputs instead of throwing on `path`, so a site whose
+    library docs were generated locally with `fern docs md generate --local` can
+    be previewed and published.
+  type: fix

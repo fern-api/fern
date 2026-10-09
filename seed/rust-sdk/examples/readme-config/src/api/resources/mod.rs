@@ -36,6 +36,23 @@ impl ExamplesClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_examples::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExamplesClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .echo(&"Hello world!\\n\\nwith\\n\\tnewlines".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn echo(
         &self,
         request: &str,
@@ -52,6 +69,21 @@ impl ExamplesClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_examples::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExamplesClient::new(config).expect("Failed to build client");
+    ///     client.echo(&"primitive".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn create_type(
         &self,
         request: &Type,

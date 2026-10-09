@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedUnions from "../../../index.js";
@@ -25,6 +26,9 @@ export class BigunionClient {
      * @param {string} id
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
+     *
      * @example
      *     await client.bigunion.get("id")
      */
@@ -44,7 +48,7 @@ export class BigunionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(id)}`,
+                `/bigunion/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -67,12 +71,15 @@ export class BigunionClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/{id}");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/bigunion/{id}");
     }
 
     /**
      * @param {SeedUnions.BigUnion} request
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
      *
      * @example
      *     await client.bigunion.update({
@@ -96,15 +103,17 @@ export class BigunionClient {
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)),
+                "/bigunion",
+            ),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -123,12 +132,15 @@ export class BigunionClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/bigunion");
     }
 
     /**
      * @param {SeedUnions.BigUnion[]} request
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
      *
      * @example
      *     await client.bigunion.updateMany([{
@@ -161,14 +173,14 @@ export class BigunionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/many",
+                "/bigunion/many",
             ),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -187,6 +199,6 @@ export class BigunionClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/many");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/bigunion/many");
     }
 }

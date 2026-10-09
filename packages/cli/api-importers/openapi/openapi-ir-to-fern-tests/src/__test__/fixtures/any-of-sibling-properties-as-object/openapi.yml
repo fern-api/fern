@@ -1,0 +1,109 @@
+openapi: 3.0.3
+info:
+  title: Test spec for the any-of-sibling-properties-as-object setting.
+  version: 1.0.0
+
+paths:
+  /domain:
+    patch:
+      operationId: UpdateDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDomainRequest"
+      responses:
+        "204":
+          description: Accepted.
+  /variants:
+    post:
+      operationId: PostVariants
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addsProperty:
+                  $ref: "#/components/schemas/AnyOfBranchAddsProperty"
+                narrowsProperty:
+                  $ref: "#/components/schemas/AnyOfBranchNarrowsProperty"
+      responses:
+        "204":
+          description: Accepted.
+
+components:
+  schemas:
+    # Reproduces namedotcom/core-api-go#6: an anyOf that constrains its own sibling
+    # properties to "at least one of" rather than introducing variants. A body may
+    # carry several of them, so with the setting on this converts as the object it
+    # declares instead of an undiscriminated union.
+    UpdateDomainRequest:
+      type: object
+      properties:
+        autorenewEnabled:
+          type: boolean
+        privacyEnabled:
+          type: boolean
+        locked:
+          type: boolean
+      anyOf:
+        - properties:
+            autorenewEnabled:
+              type: boolean
+          required:
+            - autorenewEnabled
+        - properties:
+            privacyEnabled:
+              type: boolean
+          required:
+            - privacyEnabled
+        - properties:
+            locked:
+              type: boolean
+          required:
+            - locked
+
+    # A branch introducing a property the siblings do not declare is a real
+    # variant, so this stays a union even with the setting on.
+    AnyOfBranchAddsProperty:
+      type: object
+      properties:
+        a:
+          type: boolean
+      anyOf:
+        - properties:
+            a:
+              type: boolean
+          required:
+            - a
+        - properties:
+            b:
+              type: boolean
+          required:
+            - b
+
+    # Branches narrowing a shared property to different values are variants too,
+    # so this stays a union rather than losing the discriminant.
+    AnyOfBranchNarrowsProperty:
+      type: object
+      properties:
+        kind:
+          type: string
+        value:
+          type: string
+      anyOf:
+        - properties:
+            kind:
+              enum:
+                - a
+          required:
+            - kind
+        - properties:
+            kind:
+              enum:
+                - b
+          required:
+            - kind

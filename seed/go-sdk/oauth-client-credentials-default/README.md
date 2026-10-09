@@ -13,6 +13,7 @@ The Seed Go library provides convenient access to the Seed APIs from Go.
 - [Errors](#errors)
 - [Request Options](#request-options)
 - [Advanced](#advanced)
+  - [Additional Body Properties](#additional-body-properties)
   - [Response Headers](#response-headers)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -101,7 +102,7 @@ with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 response, err := client.Auth.GetToken(...)
 if err != nil {
     var apiError *core.APIError
-    if errors.As(err, apiError) {
+    if errors.As(err, &apiError) {
         // Do something with the API error ...
     }
     return err
@@ -123,7 +124,7 @@ specified on the client so that they're applied on every request, or for an indi
 ```go
 // Specify default options applied on every request.
 client := client.NewClient(
-    option.WithToken("<YOUR_API_KEY>"),
+    option.WithClientCredentials("<YOUR_CLIENT_ID>", "<YOUR_CLIENT_SECRET>"),
     option.WithHTTPClient(
         &http.Client{
             Timeout: 5 * time.Second,
@@ -134,11 +135,28 @@ client := client.NewClient(
 // Specify options for an individual request.
 response, err := client.Auth.GetToken(
     ...,
-    option.WithToken("<YOUR_API_KEY>"),
+    option.WithClientCredentials("<YOUR_CLIENT_ID>", "<YOUR_CLIENT_SECRET>"),
 )
 ```
 
 ## Advanced
+
+### Additional Body Properties
+
+If you need to send a request body property that isn't part of the generated request type (e.g. an
+undocumented or beta field), use the `option.WithBodyProperties` request option. Keys are sent exactly as
+provided (use the API's wire-format names), and they override any generated field with the same name. If the
+endpoint has no request body, a JSON body is created from the given properties. Body properties are applied to
+JSON and form URL encoded request bodies; they are not applied to multipart file upload or raw byte requests.
+
+```go
+response, err := client.Auth.GetToken(
+    ...,
+    option.WithBodyProperties(map[string]interface{}{
+        "custom_field": "custom-value",
+    }),
+)
+```
 
 ### Response Headers
 

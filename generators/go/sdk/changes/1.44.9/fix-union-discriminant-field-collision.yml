@@ -1,0 +1,6 @@
+- summary: |
+    Fixed a compilation error when a discriminated union's discriminant property
+    name collides with one of its member discriminant values (e.g. a discriminant
+    "event" with a union member also keyed "event"). The discriminant struct field
+    is now disambiguated to keep the generated Go code valid and compilable.
+  type: fix

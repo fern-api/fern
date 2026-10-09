@@ -16,4 +16,5 @@ export interface TabConfig extends FernDocsConfig.WithPermissions, FernDocsConfi
     href?: string;
     target?: FernDocsConfig.Target;
     changelog?: FernDocsConfig.ChangelogFolderRelativePath;
+    blog?: FernDocsConfig.ChangelogFolderRelativePath;
 }

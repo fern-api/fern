@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedBasicAuthEnvironmentVariables from "../../../index.js";
@@ -27,6 +28,8 @@ export class BasicAuthClient {
      * @param {BasicAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
+     * @throws {@link errors.SeedBasicAuthEnvironmentVariablesError}
+     * @throws {@link errors.SeedBasicAuthEnvironmentVariablesTimeoutError}
      *
      * @example
      *     await client.basicAuth.getWithBasicAuth()
@@ -90,6 +93,8 @@ export class BasicAuthClient {
      *
      * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
      * @throws {@link SeedBasicAuthEnvironmentVariables.BadRequest}
+     * @throws {@link errors.SeedBasicAuthEnvironmentVariablesError}
+     * @throws {@link errors.SeedBasicAuthEnvironmentVariablesTimeoutError}
      *
      * @example
      *     await client.basicAuth.postWithBasicAuth({
@@ -124,7 +129,7 @@ export class BasicAuthClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

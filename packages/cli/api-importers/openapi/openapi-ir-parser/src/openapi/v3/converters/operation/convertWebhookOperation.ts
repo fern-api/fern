@@ -64,7 +64,7 @@ export function convertWebhookOperation({
           })
         : undefined;
 
-    const signatureVerification = getFernWebhookSignatureExtension(document, operation);
+    const signatureVerification = getFernWebhookSignatureExtension(document, operation, context.logger);
 
     // For GET webhooks without a request body, synthesize a payload from query parameters
     if (operation.requestBody == null) {
@@ -84,7 +84,8 @@ export function convertWebhookOperation({
             conflict: {},
             nameOverride: qp.parameterNameOverride,
             generatedName: getGeneratedTypeName([...payloadBreadcrumbs, qp.name], context.options.preserveSchemaIds),
-            availability: qp.availability
+            availability: qp.availability,
+            xml: undefined
         }));
 
         const payload: SchemaWithExample = SchemaWithExample.object({
@@ -142,7 +143,10 @@ export function convertWebhookOperation({
                 context,
                 requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
                 source,
-                namespace: context.namespace
+                namespace: context.namespace,
+                // carried for IR fidelity; a webhook payload is built as a type reference,
+                // so nothing downstream reads its requiredness today
+                bodyRequired: resolvedRequestBody.required
             })
         )
         .filter((request) => request != null)

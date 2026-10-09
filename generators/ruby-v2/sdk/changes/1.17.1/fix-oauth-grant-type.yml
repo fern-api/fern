@@ -1,0 +1,7 @@
+- summary: |
+    Send `grant_type: "client_credentials"` in the OAuth token request when the
+    token endpoint's `grant_type` property is a non-literal string. Previously the
+    property was omitted (when optional) or surfaced as a required constructor
+    parameter (when required), so token endpoints that require `grant_type`
+    rejected the request.
+  type: fix

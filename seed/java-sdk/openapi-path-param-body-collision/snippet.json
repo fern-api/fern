@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "1d2f2299",
+            "id": {
+                "method": "PATCH",
+                "path": "/Profiles/{profileId}/Identifiers/{idTypePathParam}",
+                "identifier_override": "endpoint_.updateProfileIdentifier"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.IdentifierUpdate;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updateProfileIdentifier(\n            \"profile_123\",\n            \"email\",\n            IdentifierUpdate\n                .builder()\n                .idType(\"phone\")\n                .oldValue(\"+13175556789\")\n                .newValue(\"+13175556798\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.IdentifierUpdate;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updateProfileIdentifier(\n            \"profile_123\",\n            \"email\",\n            IdentifierUpdate\n                .builder()\n                .idType(\"phone\")\n                .oldValue(\"+13175556789\")\n                .newValue(\"+13175556798\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

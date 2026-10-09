@@ -193,11 +193,19 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ? this.getCollidingQueryParamWireValues(context)
             : new Set<string>();
 
+        // When an inlined path parameter shares its property name with a body property, emit only
+        // the body property to avoid a duplicate interface member. The shared field is used for both
+        // the URL path and the request body.
+        const collidingPathParamPropertyNames = this.getCollidingPathParameterPropertyNames(context);
+
         for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
+            const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
+            if (collidingPathParamPropertyNames.has(propertyName.propertyName)) {
+                continue;
+            }
             const type = context.type.getReferenceToType(pathParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
             const hasClientDefault = pathParameter.clientDefault != null;
-            const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
             properties.push({
                 name: getPropertyKey(propertyName.propertyName),
                 safeName: getPropertyKey(propertyName.safeName),
@@ -276,7 +284,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             name,
                             safeName: name,
                             type: type.typeNodeWithoutUndefined,
-                            isOptional: type.isOptional,
+                            isOptional: type.isOptional || mayOmitReferencedBody(referenceToRequestBody, context),
                             docs: referenceToRequestBody.docs ? [referenceToRequestBody.docs] : undefined
                         };
                         properties.push(requestProperty);
@@ -332,7 +340,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getDocs(context: FileContext): string | undefined {
-        const exampleCalls = getExampleEndpointCalls(this.endpoint);
+        const exampleCalls = getExampleEndpointCalls(this.endpoint, context.respectOptionalRequestBody);
         if (exampleCalls.length === 0) {
             return undefined;
         }
@@ -529,10 +537,19 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ? this.getCollidingQueryParamWireValues(context)
             : new Set<string>();
 
+        // Path parameters that collide with a body property are not destructured out of the request,
+        // so they remain part of the spread request body (and are referenced for the URL via the body).
+        const collidingPathParamPropertyNames = this.getCollidingPathParameterPropertyNames(context);
+
         const properties = [
-            ...this.getPathParamsForRequestWrapper(context).map((pathParameter) =>
-                this.getPropertyNameOfPathParameter(pathParameter)
-            ),
+            ...this.getPathParamsForRequestWrapper(context)
+                .filter(
+                    (pathParameter) =>
+                        !collidingPathParamPropertyNames.has(
+                            this.getPropertyNameOfPathParameter(pathParameter).propertyName
+                        )
+                )
+                .map((pathParameter) => this.getPropertyNameOfPathParameter(pathParameter)),
             ...this.getAllQueryParameters().map((queryParameter) =>
                 collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
                     ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
@@ -556,14 +573,25 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ? this.getCollidingQueryParamWireValues(context)
             : new Set<string>();
 
+        // Path parameters that collide with a body property are not destructured out of the request,
+        // so they remain part of the spread request body (and are referenced for the URL via the body).
+        const collidingPathParamPropertyNames = this.getCollidingPathParameterPropertyNames(context);
+
         const properties: RequestWrapperNonBodyPropertyWithData[] = [
-            ...this.getPathParamsForRequestWrapper(context).map((pathParameter) => ({
-                ...this.getPropertyNameOfPathParameter(pathParameter),
-                originalParameter: {
-                    type: "path" as const,
-                    parameter: pathParameter
-                }
-            })),
+            ...this.getPathParamsForRequestWrapper(context)
+                .filter(
+                    (pathParameter) =>
+                        !collidingPathParamPropertyNames.has(
+                            this.getPropertyNameOfPathParameter(pathParameter).propertyName
+                        )
+                )
+                .map((pathParameter) => ({
+                    ...this.getPropertyNameOfPathParameter(pathParameter),
+                    originalParameter: {
+                        type: "path" as const,
+                        parameter: pathParameter
+                    }
+                })),
             ...this.getAllQueryParameters().map((queryParameter) => ({
                 ...(collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
                     ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
@@ -628,7 +656,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
         if (this.endpoint.requestBody != null) {
             const areBodyPropertiesOptional = FernIr.HttpRequestBody._visit<boolean>(this.endpoint.requestBody, {
-                reference: ({ requestBodyType }) => this.isTypeOptional(requestBodyType, context),
+                reference: (referenceToRequestBody) =>
+                    this.isTypeOptional(referenceToRequestBody.requestBodyType, context) ||
+                    mayOmitReferencedBody(referenceToRequestBody, context),
                 inlinedRequestBody: (inlinedRequestBody) => {
                     for (const property of inlinedRequestBody.properties) {
                         if (!this.isTypeOptional(property.valueType, context)) {
@@ -848,11 +878,20 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
         return FernIr.HttpRequestBody._visit(requestBody, {
             inlinedRequestBody: () => false,
-            reference: () => {
+            reference: (referenceToRequestBody) => {
                 if (!this.flattenRequestParameters) {
                     return true;
                 }
-                return false;
+                // Only named object types can be flattened into individual properties.
+                // Non-named types (e.g., list<string>) cannot be flattened and get
+                // wrapped in a body property instead.
+                if (referenceToRequestBody.requestBodyType.type === "named") {
+                    const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
+                    if (typeDeclaration?.shape.type === "object") {
+                        return false;
+                    }
+                }
+                return true;
             },
             bytes: () => false,
             fileUpload: () => false,
@@ -936,8 +975,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     context.case.pascalSafe(referenceToRequestBody.requestBodyType.name)
                 );
                 properties.push(...typeProperties);
+                return properties;
             }
-            return properties;
         }
 
         const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
@@ -946,7 +985,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             name,
             safeName: name,
             type: type.typeNodeWithoutUndefined,
-            isOptional: type.isOptional,
+            isOptional: type.isOptional || mayOmitReferencedBody(referenceToRequestBody, context),
             docs: referenceToRequestBody.docs ? [referenceToRequestBody.docs] : undefined
         });
         return properties;
@@ -1023,6 +1062,23 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
      * will use their SDK override names instead of wire values.
      */
     private getCollidingQueryParamWireValues(context: FileContext): Set<string> {
+        const bodyPropertyNames = this.getInlinedBodyPropertyNames(context);
+
+        const collidingWireValues = new Set<string>();
+        for (const queryParameter of this.getAllQueryParameters()) {
+            const normalPropertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+            if (bodyPropertyNames.has(normalPropertyName.propertyName)) {
+                collidingWireValues.add(getWireValue(queryParameter.name));
+            }
+        }
+        return collidingWireValues;
+    }
+
+    /**
+     * Computes the set of property names produced by the (inlined) request body. Used to detect
+     * collisions between non-body parameters (path/query) and body property names.
+     */
+    private getInlinedBodyPropertyNames(context: FileContext): Set<string> {
         const bodyPropertyNames = new Set<string>();
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
@@ -1042,8 +1098,23 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         }
                     }
                 },
-                reference: () => {
-                    // noop — reference body types do not produce individual property names
+                reference: (referenceToRequestBody) => {
+                    // When flattenRequestParameters is enabled, a named object reference body is
+                    // flattened into the request wrapper, so its properties contribute names that
+                    // can collide with path/query parameters. This mirrors
+                    // getFlattenedReferencedRequestBodyProperties.
+                    if (this.flattenRequestParameters && referenceToRequestBody.requestBodyType.type === "named") {
+                        const typeDeclaration = this.getTypeDeclaration(
+                            referenceToRequestBody.requestBodyType,
+                            context
+                        );
+                        if (typeDeclaration?.shape.type === "object") {
+                            for (const property of typeDeclaration.shape.properties) {
+                                const propName = this.getPropertyNameOfTypeDeclarationProperty(property);
+                                bodyPropertyNames.add(propName.propertyName);
+                            }
+                        }
+                    }
                 },
                 fileUpload: () => {
                     // noop
@@ -1056,15 +1127,34 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 }
             });
         }
+        return bodyPropertyNames;
+    }
 
-        const collidingWireValues = new Set<string>();
-        for (const queryParameter of this.getAllQueryParameters()) {
-            const normalPropertyName = this.getPropertyNameOfQueryParameter(queryParameter);
-            if (bodyPropertyNames.has(normalPropertyName.propertyName)) {
-                collidingWireValues.add(getWireValue(queryParameter.name));
+    /**
+     * When path parameters are inlined into the request wrapper (`inlinePathParameters: true`),
+     * a path parameter can share its property name with an inlined body property (e.g. a `{idType}`
+     * path param and an `idType` body field). Emitting both would produce a duplicate interface
+     * member (TS2300) and the client would destructure the path param out of the body, dropping it
+     * from the request payload. In that case the body property serves as the single shared field:
+     * the value is read for the URL path and also sent in the body.
+     */
+    public getCollidingPathParameterPropertyNames(context: FileContext): Set<string> {
+        const colliding = new Set<string>();
+        const pathParameters = this.getPathParamsForRequestWrapper(context);
+        if (pathParameters.length === 0) {
+            return colliding;
+        }
+        const bodyPropertyNames = this.getInlinedBodyPropertyNames(context);
+        if (bodyPropertyNames.size === 0) {
+            return colliding;
+        }
+        for (const pathParameter of pathParameters) {
+            const propertyName = this.getPropertyNameOfPathParameter(pathParameter).propertyName;
+            if (bodyPropertyNames.has(propertyName)) {
+                colliding.add(propertyName);
             }
         }
-        return collidingWireValues;
+        return colliding;
     }
 
     /**
@@ -1081,4 +1171,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             propertyName: this.retainOriginalCasing ? getOriginalName(name) : this.case.camelUnsafe(name)
         };
     }
+}
+
+/**
+ * Whether the caller may leave the referenced body out of the call. Absent `required` means
+ * required, which is what every endpoint predating the field relies on.
+ */
+function mayOmitReferencedBody(referenceToRequestBody: FernIr.HttpRequestBodyReference, context: FileContext): boolean {
+    return context.respectOptionalRequestBody && referenceToRequestBody.required === false;
 }

@@ -14,7 +14,7 @@ public partial class SeedUnionsClient : ISeedUnionsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedUnions" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedUnions.Version.Current },
                 { "User-Agent", "Fernunions/0.0.1" },
             }
         );

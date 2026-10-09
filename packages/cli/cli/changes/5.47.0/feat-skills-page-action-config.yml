@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `page-actions.options.skills` to docs.yml to enable and configure the "Install skills"
+    page action on docs sites. Presence of the key enables the action (an empty object enables it
+    with all defaults); `title`, `description`, `learn-more-url`, `repository`, and
+    `install-command` (string or list, rendered one command per line) customize the modal, and
+    `skills` lists the available skills. If the site also serves a `/.well-known` skills manifest,
+    the served manifest replaces the hand-listed skills.
+  type: feat

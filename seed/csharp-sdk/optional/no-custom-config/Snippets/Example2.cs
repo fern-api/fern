@@ -10,9 +10,9 @@ public partial class Examples
         );
 
         await client.Optional.SendOptionalNullableWithAllOptionalPropertiesAsync(
-            "actionId",
-            "id",
-            new DeployParams {
+            actionId: "actionId",
+            id: "id",
+            request: new DeployParams {
                 UpdateDraft = true
             }
         );

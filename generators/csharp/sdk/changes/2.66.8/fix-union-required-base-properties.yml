@@ -1,0 +1,6 @@
+- summary: |
+    Fixed a compile error (CS9035) for discriminated unions that have required base properties.
+    The internal constructor used for property-name deserialization is now annotated with
+    `[SetsRequiredMembers]`, so callers are no longer forced to set the required base properties
+    at that call site.
+  type: fix

@@ -96,7 +96,7 @@ client.echo(request: "primitive")
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file.notification.service.<a href="/lib/seed/file/notification/service/client.rb">get_exception</a>(notification_id) -> Seed::Types::Types::Exception</code></summary>
+<details><summary><code>client.file.notification.service.<a href="/lib/seed/file/notification/service/client.rb">get_exception</a>(notification_id:) -> Seed::Types::Types::Exception</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +145,7 @@ client.file.notification.service.get_exception(notification_id: "notification-hs
 </details>
 
 ## File Service
-<details><summary><code>client.file.service.<a href="/lib/seed/file/service/client.rb">get_file</a>(filename) -> Seed::Types::Types::File</code></summary>
+<details><summary><code>client.file.service.<a href="/lib/seed/file/service/client.rb">get_file</a>(filename:) -> Seed::Types::Types::File</code></summary>
 <dl>
 <dd>
 
@@ -211,7 +211,7 @@ client.file.service.get_file(
 </details>
 
 ## Health Service
-<details><summary><code>client.health.service.<a href="/lib/seed/health/service/client.rb">check</a>(id) -> </code></summary>
+<details><summary><code>client.health.service.<a href="/lib/seed/health/service/client.rb">check</a>(id:) -> </code></summary>
 <dl>
 <dd>
 
@@ -328,7 +328,7 @@ client.health.service.ping
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(movie_id) -> Seed::Types::Types::Movie</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(movie_id:) -> Seed::Types::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -397,7 +397,14 @@ client.service.create_movie(
   rating: 8,
   type: "movie",
   tag: "tag-wf9as23d",
-  metadata: {},
+  metadata: {
+    actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+    releaseDate: "2023-12-08",
+    ratings: {
+      rottenTomatoes: 97,
+      imdb: 7.6
+    }
+  },
   revenue: 1000000
 )
 ```
@@ -529,7 +536,11 @@ client.service.create_big_entity(
     type: "movie",
     tag: "tag",
     book: "book",
-    metadata: {},
+    metadata: {
+      metadata: {
+        key: "value"
+      }
+    },
     revenue: 1000000
   },
   entity: {

@@ -141,7 +141,7 @@ client = SeedErrors(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.simple.foo_without_endpoint_error(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

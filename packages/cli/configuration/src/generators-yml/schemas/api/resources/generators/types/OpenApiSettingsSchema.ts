@@ -13,8 +13,12 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */
     "respect-readonly-schemas"?: boolean;
+    /** If true, endpoint response types will use the Read variant of schemas when respect-readonly-schemas is enabled. Defaults to false. */
+    "use-read-variant-for-responses"?: boolean;
     /** Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false. */
     "respect-forward-compatible-enums"?: boolean;
+    /** Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration. */
+    "respect-optional-request-body"?: boolean;
     /** Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream. */
     "use-bytes-for-binary-response"?: boolean;
     /** The default encoding of form parameters. Defaults to JSON. */
@@ -37,6 +41,24 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to false.
      */
     "preserve-single-schema-oneof"?: boolean;
+    /**
+     * If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members.
+     * If false, the variants' properties are flattened into a single object and marked optional.
+     * Defaults to false.
+     */
+    "preserve-one-of-in-all-of"?: boolean;
+    /**
+     * Applies when a schema declares `properties` alongside an `anyOf` whose branches
+     * only re-declare some of those same properties as required. Per JSON Schema such an
+     * `anyOf` is an "at least one of" constraint rather than a set of variants.
+     * If true, the schema is converted as an object carrying all of its declared
+     * properties.
+     * If false, the schema is converted to an undiscriminated union, which discards the
+     * sibling `properties` and makes the branches mutually exclusive.
+     * Defaults to false.
+     */
+    "any-of-sibling-properties-as-object"?: boolean;
     /**
      * Whether to inline allOf schemas. If false, allOf schemas will be
      * extended in the code generation.
@@ -65,4 +87,53 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to false.
      */
     "infer-discriminated-union-base-properties"?: boolean;
+    /**
+     * If true, disambiguate generated request wrapper names that collide with
+     * component schema names by replacing the "Request" suffix with "Body".
+     * If false, keep the original "Request" suffix regardless of collisions.
+     * Defaults to false.
+     */
+    "disambiguate-request-names"?: boolean;
+    /**
+     * If true, ignore operation-level tags when determining the SDK structure.
+     * Endpoints fall back to the root package (or their namespace) and method
+     * names are derived from each operation's operationId.
+     * Defaults to false.
+     */
+    "ignore-tags"?: boolean;
+    /**
+     * If true, header parameters that declare their schema under `content` (e.g. a header
+     * whose value is a JSON-encoded object) are typed from that schema instead of falling
+     * back to a string.
+     * Defaults to false.
+     */
+    "respect-parameter-content"?: boolean;
+    /**
+     * If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
+     * Defaults to false.
+     */
+    "respect-per-spec-base-path"?: boolean;
+    /**
+     * If true, operation ids are split on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields
+     * `listFolderMembers` rather than `listfoldermembers`).
+     * This changes endpoint names, and therefore SDK method names and docs URLs.
+     * Defaults to false.
+     */
+    "respect-operation-id-word-boundaries"?: boolean;
+
+    /**
+     * If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
+     * within, that namespace instead of the endpoint's namespace. Lets error types be scoped per
+     * namespace while endpoints and other types stay at the root.
+     * Defaults to false.
+     */
+    "namespaced-errors"?: boolean;
+    /**
+     * Standardize the body of every 4xx/5xx response on a single schema (for example an
+     * RFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a
+     * per-spec overlay that rewrites each error response by hand.
+     */
+    "error-responses"?: GeneratorsYml.OpenApiErrorResponsesSchema;
 }

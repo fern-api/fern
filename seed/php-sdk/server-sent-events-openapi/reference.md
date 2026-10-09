@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-&gt;streamProtocolNoCollision($request)</code></summary>
+<details><summary><code>$client-&gt;streamProtocolNoCollision($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ $client->streamProtocolNoCollision(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamProtocolCollision($request)</code></summary>
+<details><summary><code>$client-&gt;streamProtocolCollision($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -111,7 +111,7 @@ $client->streamProtocolCollision(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamDataContext($request)</code></summary>
+<details><summary><code>$client-&gt;streamDataContext($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -167,7 +167,7 @@ $client->streamDataContext(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamNoContext($request)</code></summary>
+<details><summary><code>$client-&gt;streamNoContext($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -223,7 +223,7 @@ $client->streamNoContext(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamProtocolWithFlatSchema($request)</code></summary>
+<details><summary><code>$client-&gt;streamProtocolWithFlatSchema($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -279,7 +279,63 @@ $client->streamProtocolWithFlatSchema(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamDataContextWithEnvelopeSchema($request)</code></summary>
+<details><summary><code>$client-&gt;streamProtocolMixedSchema($request) -> SseStream</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->streamProtocolMixedSchema(
+    new StreamRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `StreamRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;streamDataContextWithEnvelopeSchema($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -335,7 +391,7 @@ $client->streamDataContextWithEnvelopeSchema(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamOasSpecNative($request)</code></summary>
+<details><summary><code>$client-&gt;streamOasSpecNative($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -391,7 +447,7 @@ $client->streamOasSpecNative(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamXFernStreamingConditionStream($request)</code></summary>
+<details><summary><code>$client-&gt;streamXFernStreamingConditionStream($request) -> JsonStream</code></summary>
 <dl>
 <dd>
 
@@ -525,7 +581,7 @@ $client->streamXFernStreamingConditionStream(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamXFernStreamingSharedSchemaStream($request)</code></summary>
+<details><summary><code>$client-&gt;streamXFernStreamingSharedSchemaStream($request) -> JsonStream</code></summary>
 <dl>
 <dd>
 
@@ -752,7 +808,7 @@ $client->validateCompletion(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamXFernStreamingUnionStream($request)</code></summary>
+<details><summary><code>$client-&gt;streamXFernStreamingUnionStream($request) -> JsonStream</code></summary>
 <dl>
 <dd>
 
@@ -781,9 +837,9 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 ```php
 $client->streamXFernStreamingUnionStream(
     StreamXFernStreamingUnionStreamRequest::message(true, new UnionStreamMessageVariant([
+        'streamResponse' => true,
         'prompt' => 'prompt',
         'message' => 'message',
-        'streamResponse' => true,
     ])),
 );
 ```
@@ -841,9 +897,9 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 ```php
 $client->streamXFernStreamingUnionStream(
     StreamXFernStreamingUnionStreamRequest::message(false, new UnionStreamMessageVariant([
+        'streamResponse' => false,
         'prompt' => 'prompt',
         'message' => 'message',
-        'streamResponse' => false,
     ])),
 );
 ```
@@ -930,7 +986,7 @@ $client->validateUnionRequest(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamXFernStreamingNullableConditionStream($request)</code></summary>
+<details><summary><code>$client-&gt;streamXFernStreamingNullableConditionStream($request) -> JsonStream</code></summary>
 <dl>
 <dd>
 
@@ -1064,7 +1120,7 @@ $client->streamXFernStreamingNullableConditionStream(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;streamXFernStreamingSseOnly($request)</code></summary>
+<details><summary><code>$client-&gt;streamXFernStreamingSseOnly($request) -> SseStream</code></summary>
 <dl>
 <dd>
 

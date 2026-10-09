@@ -28,14 +28,13 @@ Post a nullable request body
 
 ```go
 request := &fern.TestMethodNameTestGroupRequest{
-        PathParam: "path_param",
-        Body: &fern.PlainObject{},
-    }
-client.TestGroup.TestMethodName(
-        context.TODO(),
-        request,
-    )
+    PathParam: "path_param",
+    Body: &fern.PlainObject{},
 }
+client.TestGroup.TestMethodName(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

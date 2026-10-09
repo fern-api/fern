@@ -36,6 +36,7 @@ export class CaseConverter {
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         keywords: string[] | undefined;
         smartCasing: boolean;
+        smartCasingDigitWordBoundary?: boolean;
     }) {
         this.casingsGenerator = constructFullCasingsGenerator(opts);
     }

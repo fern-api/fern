@@ -228,4 +228,5 @@ error-discrimination:
 display-name: Query Parameters API
 ",
   },
+  "specVersion": "1.0.0",
 }

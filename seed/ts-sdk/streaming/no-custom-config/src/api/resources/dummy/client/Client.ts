@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedStreaming from "../../../index.js";
@@ -44,7 +45,7 @@ export class DummyClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: { ...request, stream: true },
+            body: mergeAdditionalBodyParameters({ ...request, stream: true }, requestOptions?.additionalBodyParameters),
             responseType: "streaming",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -82,6 +83,9 @@ export class DummyClient {
      * @param {SeedStreaming.Generateequest} request
      * @param {DummyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedStreamingError}
+     * @throws {@link errors.SeedStreamingTimeoutError}
+     *
      * @example
      *     await client.dummy.generate({
      *         num_events: 5
@@ -110,7 +114,10 @@ export class DummyClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: { ...request, stream: false },
+            body: mergeAdditionalBodyParameters(
+                { ...request, stream: false },
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

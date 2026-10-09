@@ -14,7 +14,7 @@ public partial class SeedContentTypesClient : ISeedContentTypesClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedContentTypes" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedContentTypes.Version.Current },
                 { "User-Agent", "Ferncontent-type/0.0.1" },
             }
         );

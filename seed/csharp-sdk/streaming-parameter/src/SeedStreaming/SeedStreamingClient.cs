@@ -14,7 +14,7 @@ public partial class SeedStreamingClient : ISeedStreamingClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedStreaming" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedStreaming.Version.Current },
                 { "User-Agent", "Fernstreaming-parameter/0.0.1" },
             }
         );

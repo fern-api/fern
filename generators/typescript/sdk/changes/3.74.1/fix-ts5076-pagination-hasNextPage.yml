@@ -1,0 +1,9 @@
+- summary: |
+    Fix TS5076 compilation error in generated pagination code when both
+    `hasNextPage` and `step` are configured on offset pagination. The
+    `??` and `&&` operators were mixed without parentheses.
+  type: fix
+- summary: |
+    Fix TS1484 compilation error in generated webhook code by using
+    `import type` for `SignatureEncoding` to satisfy `verbatimModuleSyntax`.
+  type: fix

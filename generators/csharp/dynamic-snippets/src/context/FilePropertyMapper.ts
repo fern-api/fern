@@ -140,7 +140,7 @@ export class FilePropertyMapper extends WithGeneration {
         property,
         record
     }: {
-        property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
+        property: FernIr.dynamic.FileUploadRequestBodyProperty.File;
         record: Record<string, unknown>;
     }): ast.Literal {
         const fileValue = this.context.getSingleFileValue({ property, record });

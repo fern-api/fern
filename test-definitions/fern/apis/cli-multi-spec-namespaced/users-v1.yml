@@ -1,0 +1,36 @@
+openapi: 3.0.0
+info:
+  title: Users API (v1)
+  version: "1.0.0"
+  description: Legacy users surface, kept around for v1 clients.
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: List users (v1 shape)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserV1"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    UserV1:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        email:
+          type: string

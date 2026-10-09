@@ -556,7 +556,7 @@ favicon: ./docs/assets/favicon.png
         expect(yml.org).toBe("intrinsic");
 
         const raw = await readMigratedYmlRaw(projectDir);
-        expect(raw).toContain("$ref: ./docs.yml");
+        expect(raw).toContain("$ref: ./fern/docs.yml");
         expect(raw).not.toContain("intrinsic.docs.buildwithfern.com");
         expect(raw).not.toContain("favicon");
 
@@ -682,7 +682,7 @@ navbar-links:
         expect(tsPublish.npm.packageName).toBe("plumery");
 
         const raw = await readMigratedYmlRaw(projectDir);
-        expect(raw).toContain("$ref: ./docs.yml");
+        expect(raw).toContain("$ref: ./fern/docs.yml");
         expect(raw).not.toContain("plumery.docs.buildwithfern.com");
     });
 
@@ -763,7 +763,7 @@ favicon: ./docs/assets/favicon.ico
         expect(ts.lang).toBe("typescript");
         expect(ts.output).toBe("../generated/sdk/node");
 
-        expect(raw).toContain("$ref: ./docs.yml");
+        expect(raw).toContain("$ref: ./fern/docs.yml");
     });
 
     // -- 10. Alpaca -- multi-API workspace (6 APIs), Postman generators
@@ -1067,7 +1067,7 @@ jobs:
         expect(sdks.targets).toHaveProperty("go");
 
         const raw = await readMigratedYmlRaw(projectDir);
-        expect(raw).toContain("$ref: ./docs.yml");
+        expect(raw).toContain("$ref: ./fern/docs.yml");
         expect(raw).not.toContain("default-group");
 
         const workflowContent = await readFile(join(projectDir, ".github", "workflows", "generate-sdks.yml"), "utf-8");

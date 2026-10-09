@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The README's `## Requirements` section is now omitted when the generator
+    supplies an empty requirements list, instead of rendering a heading followed by
+    a dangling "This SDK requires:" line.
+  type: fix

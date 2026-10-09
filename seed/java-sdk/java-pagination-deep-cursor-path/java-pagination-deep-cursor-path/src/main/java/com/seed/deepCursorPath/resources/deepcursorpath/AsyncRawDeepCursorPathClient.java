@@ -4,10 +4,12 @@
 package com.seed.deepCursorPath.resources.deepcursorpath;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.deepCursorPath.core.BodyProperties;
 import com.seed.deepCursorPath.core.ClientOptions;
 import com.seed.deepCursorPath.core.MediaTypes;
 import com.seed.deepCursorPath.core.ObjectMappers;
 import com.seed.deepCursorPath.core.RequestOptions;
+import com.seed.deepCursorPath.core.RetryInterceptor;
 import com.seed.deepCursorPath.core.SeedDeepCursorPathApiException;
 import com.seed.deepCursorPath.core.SeedDeepCursorPathException;
 import com.seed.deepCursorPath.core.SeedDeepCursorPathHttpResponse;
@@ -18,6 +20,7 @@ import com.seed.deepCursorPath.resources.deepcursorpath.types.C;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.D;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineA;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineB;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineC;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineD;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;
@@ -70,7 +73,9 @@ public class AsyncRawDeepCursorPathClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
@@ -85,9 +90,19 @@ public class AsyncRawDeepCursorPathClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -98,23 +113,31 @@ public class AsyncRawDeepCursorPathClient {
                                         responseBodyString,
                                         com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
-                        Optional<D> d = request.getB()
+                        Optional<D> d = Optional.of(request.getB()
                                 .map(B::getC)
                                 .flatMap(C::getD)
                                 .map((D d_) -> D.builder()
                                         .from(d_)
                                         .startingAfter(startingAfter)
-                                        .build());
-                        Optional<C> c = d.flatMap((D d_) -> request.getB()
+                                        .build())
+                                .orElseGet(() ->
+                                        D.builder().startingAfter(startingAfter).build()));
+                        Optional<C> c = d.map((D d_) -> request.getB()
                                 .map(B::getC)
-                                .map((C c_) -> C.builder().from(c_).d(d_).build()));
-                        Optional<B> b = c.flatMap((C c_) -> request.getB()
-                                .map((B b_) -> B.builder().from(b_).c(c_).build()));
+                                .map((C c_) -> C.builder().from(c_).d(d_).build())
+                                .orElseGet(() -> C.builder().d(d_).build()));
+                        Optional<B> b = c.map((C c_) -> request.getB()
+                                .map((B b_) -> B.builder().from(b_).c(c_).build())
+                                .orElseGet(() -> B.builder().c(c_).build()));
                         A nextRequest = A.builder().from(request).b(b).build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
                                 new SyncPagingIterable<String>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return doThing(nextRequest, requestOptions)
                                                         .get()
@@ -130,6 +153,9 @@ public class AsyncRawDeepCursorPathClient {
                     future.completeExceptionally(new SeedDeepCursorPathApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedDeepCursorPathException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedDeepCursorPathException("Network error executing HTTP request", e));
@@ -140,6 +166,11 @@ public class AsyncRawDeepCursorPathClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedDeepCursorPathException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -163,7 +194,9 @@ public class AsyncRawDeepCursorPathClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
@@ -178,9 +211,19 @@ public class AsyncRawDeepCursorPathClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -192,7 +235,7 @@ public class AsyncRawDeepCursorPathClient {
                                         com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
                         IndirectionRequired indirection = IndirectionRequired.builder()
-                                .from(com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired)
+                                .from(request.getIndirection())
                                 .startingAfter(startingAfter)
                                 .build();
                         MainRequired nextRequest = MainRequired.builder()
@@ -202,7 +245,11 @@ public class AsyncRawDeepCursorPathClient {
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
                                 new SyncPagingIterable<String>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return doThingRequired(nextRequest, requestOptions)
                                                         .get()
@@ -218,6 +265,9 @@ public class AsyncRawDeepCursorPathClient {
                     future.completeExceptionally(new SeedDeepCursorPathApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedDeepCursorPathException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedDeepCursorPathException("Network error executing HTTP request", e));
@@ -228,6 +278,11 @@ public class AsyncRawDeepCursorPathClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedDeepCursorPathException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -260,7 +315,9 @@ public class AsyncRawDeepCursorPathClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
@@ -275,9 +332,19 @@ public class AsyncRawDeepCursorPathClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -288,26 +355,35 @@ public class AsyncRawDeepCursorPathClient {
                                         responseBodyString,
                                         com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
-                        Optional<InlineD> b = request.getB()
-                                .map(B::getC)
-                                .flatMap(C::getB)
-                                .map((InlineD b_) -> InlineD.builder()
-                                        .from(b_)
+                        Optional<InlineD> b2 = Optional.of(request.getB()
+                                .map(InlineB::getC)
+                                .flatMap(InlineC::getB)
+                                .map((InlineD b2_) -> InlineD.builder()
+                                        .from(b2_)
                                         .startingAfter(startingAfter)
-                                        .build());
-                        Optional<InlineC> c = b.flatMap((InlineD b_) -> request.getB()
-                                .map(B::getC)
+                                        .build())
+                                .orElseGet(() -> InlineD.builder()
+                                        .startingAfter(startingAfter)
+                                        .build()));
+                        Optional<InlineC> c = b2.map((InlineD b2_) -> request.getB()
+                                .map(InlineB::getC)
                                 .map((InlineC c_) ->
-                                        InlineC.builder().from(c_).b(b_).build()));
-                        Optional<InlineD> b = c.flatMap((InlineC c_) -> request.getB()
-                                .map((InlineD b_) ->
-                                        InlineD.builder().from(b_).c(c_).build()));
+                                        InlineC.builder().from(c_).b(b2_).build())
+                                .orElseGet(() -> InlineC.builder().b(b2_).build()));
+                        Optional<InlineB> b0 = c.map((InlineC c_) -> request.getB()
+                                .map((InlineB b0_) ->
+                                        InlineB.builder().from(b0_).c(c_).build())
+                                .orElseGet(() -> InlineB.builder().c(c_).build()));
                         InlineA nextRequest =
-                                InlineA.builder().from(request).b(b).build();
+                                InlineA.builder().from(request).b(b0).build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
                                 new SyncPagingIterable<String>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return doThingInline(nextRequest, requestOptions)
                                                         .get()
@@ -323,6 +399,9 @@ public class AsyncRawDeepCursorPathClient {
                     future.completeExceptionally(new SeedDeepCursorPathApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedDeepCursorPathException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedDeepCursorPathException("Network error executing HTTP request", e));
@@ -333,6 +412,11 @@ public class AsyncRawDeepCursorPathClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedDeepCursorPathException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

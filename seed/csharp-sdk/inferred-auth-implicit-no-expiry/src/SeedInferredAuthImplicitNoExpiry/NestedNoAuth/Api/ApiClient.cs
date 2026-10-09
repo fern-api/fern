@@ -12,14 +12,16 @@ public partial class ApiClient : IApiClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.NestedNoAuth.Api.GetSomethingAsync();
-    /// </code></example>
-    public async Task GetSomethingAsync(
+    private async Task<RawResponse> GetSomethingAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedInferredAuthImplicitNoExpiry.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedInferredAuthImplicitNoExpiry.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +34,7 @@ public partial class ApiClient : IApiClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/nested-no-auth/get-something",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -40,7 +43,12 @@ public partial class ApiClient : IApiClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedInferredAuthImplicitNoExpiry.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -49,8 +57,25 @@ public partial class ApiClient : IApiClient
             throw new SeedInferredAuthImplicitNoExpiryApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedInferredAuthImplicitNoExpiry.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.NestedNoAuth.Api.GetSomethingAsync();
+    /// </code></example>
+    public WithRawResponseTask GetSomethingAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(GetSomethingAsyncCore(options, cancellationToken));
     }
 }

@@ -36,10 +36,6 @@ $client->service->createBigEntity(
             'id' => 'id',
         ]),
         'extendedMovie' => new ExtendedMovie([
-            'cast' => [
-                'cast',
-                'cast',
-            ],
             'id' => 'id',
             'prequel' => 'prequel',
             'title' => 'title',
@@ -54,6 +50,10 @@ $client->service->createBigEntity(
                 ],
             ],
             'revenue' => 1000000,
+            'cast' => [
+                'cast',
+                'cast',
+            ],
         ]),
         'entity' => new Entity([
             'type' => BasicType::Primitive->value,
@@ -63,7 +63,7 @@ $client->service->createBigEntity(
             'extra' => 'extra',
         ], [
             'tags',
-        ]),
+        ], 'metadata'),
         'commonMetadata' => new \Seed\Commons\Types\Types\Metadata([
             'id' => 'id',
             'data' => [
@@ -78,7 +78,7 @@ $client->service->createBigEntity(
             ],
             'jsonString' => 'jsonString',
         ])),
-        'data' => Data::string(),
+        'data' => Data::string('data'),
         'migration' => new Migration([
             'name' => 'name',
             'status' => MigrationStatus::Running->value,
@@ -88,7 +88,7 @@ $client->service->createBigEntity(
             'exceptionMessage' => 'exceptionMessage',
             'exceptionStacktrace' => 'exceptionStacktrace',
         ])),
-        'test' => Test::and_(),
+        'test' => Test::and(true),
         'node' => new Node([
             'name' => 'name',
             'nodes' => [

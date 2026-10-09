@@ -1,0 +1,96 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    # Multipart file upload with binary (audio) response and query params.
+    # Mirrors ElevenLabs speech-to-speech: multipart audio in -> binary audio out.
+    # Bug A: must route to execute_multipart_stream_request (not execute_multipart_request).
+    # Bug B: must bind the query-folded envelope type (not the bare body type).
+    convertAudio:
+      path: /audio/convert
+      method: POST
+      request:
+        name: ConvertAudioRequest
+        query-parameters:
+          enable_logging: optional<boolean>
+          optimize_streaming_latency: optional<integer>
+          output_format: string
+        body:
+          properties:
+            audio: file
+            model_id: optional<string>
+      response: file
+
+    # Multipart file upload with binary response (no query params).
+    # Bug A only: must use streaming method.
+    isolateAudio:
+      path: /audio/isolate
+      method: POST
+      request:
+        name: IsolateAudioRequest
+        body:
+          properties:
+            audio: file
+      response: file
+
+    # Multipart file upload with JSON response (existing pattern, should still work).
+    transcribeAudio:
+      path: /audio/transcribe
+      method: POST
+      request:
+        name: TranscribeAudioRequest
+        query-parameters:
+          language: optional<string>
+        body:
+          properties:
+            audio: file
+            model_id: optional<string>
+      response: TranscriptionResult
+
+    # Reproduces ElevenLabs collision shape: The file-upload endpoint named
+    # "speechToSpeech" generates Rust type name "SpeechToSpeechRequest" (from
+    # endpoint name + "Request"), which collides with the inlined request type
+    # from getSpeechToSpeechSettings below. The collision-resolved envelope
+    # (e.g. "SpeechToSpeechRequest2") must be bound — not the colliding type.
+    # Bug B: without the fix, getRequestTypeName() returns "SpeechToSpeechRequest"
+    # (computed from endpoint name) which is the settings endpoint's type (no query
+    # fields) → E0609.
+    speechToSpeech:
+      path: /speech-to-speech/convert
+      method: POST
+      request:
+        name: SpeechToSpeechBody
+        query-parameters:
+          enable_logging: optional<boolean>
+          optimize_streaming_latency: optional<integer>
+          output_format: string
+        body:
+          properties:
+            audio: file
+            model_id: optional<string>
+      response: file
+
+    # This non-file-upload endpoint's inlined request body name
+    # "SpeechToSpeechRequest" is registered at Priority 2 in the Rust filename
+    # registry, causing the file-upload endpoint "speechToSpeech" (Priority 2.5,
+    # also generating "SpeechToSpeechRequest") to be collision-resolved.
+    getSpeechToSpeechSettings:
+      path: /speech-to-speech/settings
+      method: POST
+      request:
+        name: SpeechToSpeechRequest
+        body:
+          properties:
+            voice_id: string
+            model_id: optional<string>
+
+    # Non-file endpoint to force snippet generation
+    simple:
+      path: "/snippet"
+      method: POST
+
+types:
+  TranscriptionResult:
+    properties:
+      text: string
+      language: optional<string>

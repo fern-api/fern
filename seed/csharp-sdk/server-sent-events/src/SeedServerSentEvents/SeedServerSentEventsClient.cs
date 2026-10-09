@@ -14,7 +14,7 @@ public partial class SeedServerSentEventsClient : ISeedServerSentEventsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedServerSentEvents" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedServerSentEvents.Version.Current },
                 { "User-Agent", "Fernserver-sent-events/0.0.1" },
             }
         );

@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/required-nullable";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.getFoo({
     required_baz: "required_baz",
     required_nullable_baz: "required_nullable_baz"

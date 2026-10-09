@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `userAgentFromPlatformHeaders` config option. When it is set to `true`, the default
+    `ClientConfig.user_agent` uses the IR's platform `User-Agent` value (`<package-name>/<version>`
+    by default, or the `user-agent` template from generators.yml), matching the other SDK generators.
+    The option defaults to `false`, which keeps the existing `<ApiName> Rust SDK` value. The Rust SDK
+    also falls back to `<ApiName> Rust SDK` when the IR has no platform User-Agent.
+  type: feat

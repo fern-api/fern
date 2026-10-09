@@ -1,0 +1,5 @@
+- summary: |
+    Fix GraphQL namespace types (e.g. Inventory, Geography) being excluded from the
+    type registry and missing parent operations for query pages. Namespace types are
+    now registered so their fields render correctly on landing pages.
+  type: fix

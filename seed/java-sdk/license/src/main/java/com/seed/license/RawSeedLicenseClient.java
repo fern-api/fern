@@ -3,9 +3,11 @@
  */
 package com.seed.license;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.license.core.ClientOptions;
 import com.seed.license.core.ObjectMappers;
 import com.seed.license.core.RequestOptions;
+import com.seed.license.core.RetryInterceptor;
 import com.seed.license.core.SeedLicenseApiException;
 import com.seed.license.core.SeedLicenseException;
 import com.seed.license.core.SeedLicenseHttpResponse;
@@ -46,6 +48,15 @@ public class RawSeedLicenseClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -55,6 +66,8 @@ public class RawSeedLicenseClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedLicenseApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedLicenseException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedLicenseException("Network error executing HTTP request", e);
         }

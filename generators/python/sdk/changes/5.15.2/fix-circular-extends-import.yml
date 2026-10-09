@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `ImportError` when a type uses `extends` to inherit from a base type that
+    is part of a circular reference cycle (e.g. `Acai extends Berry` where
+    `Berry → Animal → Cat → Fruit → Acai`). Python inheritance requires a
+    top-level import of the base class, which cannot coexist with the ghost
+    reference imports needed for circular forward-ref resolution. The generator
+    now automatically falls back to inlining the base type's properties instead
+    of using Python class inheritance when it detects a circular extends chain.
+  type: fix

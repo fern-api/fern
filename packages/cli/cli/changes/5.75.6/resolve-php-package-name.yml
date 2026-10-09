@@ -1,0 +1,6 @@
+- summary: |
+    Resolve the PHP SDK generator's camelCase `packageName` config key when
+    computing the package name for a generator. This lets local-file-system PHP
+    generation populate the `User-Agent` (and SDK name/version) headers, matching
+    the behavior of the other generators' package-identity config keys.
+  type: fix

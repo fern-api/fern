@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client-&gt;dummy-&gt;generateStream($request)</code></summary>
+<details><summary><code>$client-&gt;dummy-&gt;generateStream($request) -> JsonStream</code></summary>
 <dl>
 <dd>
 

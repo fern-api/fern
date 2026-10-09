@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the Python SDK generator container's Node base image from
+    `node:22.22-bookworm-slim` to `node:24.15-trixie-slim`. Aligns the
+    generator with the rest of the Fern generator containers on a single
+    Node major version (Node 24) and Debian release (trixie). Trixie ships
+    patched versions of glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+    krb5, curl, and expat that are not available on bookworm, clearing the
+    AWS Inspector findings that dist-upgrade alone could not.
+  type: chore

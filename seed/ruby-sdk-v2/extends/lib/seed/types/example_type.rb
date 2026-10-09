@@ -3,6 +3,8 @@
 module Seed
   module Types
     class ExampleType < Internal::Types::Model
+      field :docs, -> { String }, optional: false, nullable: false
+
       field :name, -> { String }, optional: false, nullable: false
     end
   end

@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUnionQueryParametersClient } from "@fern/union-query-parameters";
 
-const client = new SeedUnionQueryParametersClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedUnionQueryParametersClient({ baseUrl: "YOUR_BASE_URL" });
 await client.events.subscribe({
     event_type: "group.created",
     tags: "tags"

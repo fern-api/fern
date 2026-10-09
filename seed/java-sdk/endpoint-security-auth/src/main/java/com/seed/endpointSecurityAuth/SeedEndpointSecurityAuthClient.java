@@ -9,7 +9,7 @@ import com.seed.endpointSecurityAuth.resources.auth.AuthClient;
 import com.seed.endpointSecurityAuth.resources.user.UserClient;
 import java.util.function.Supplier;
 
-public class SeedEndpointSecurityAuthClient {
+public class SeedEndpointSecurityAuthClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AuthClient> authClient;
@@ -28,6 +28,26 @@ public class SeedEndpointSecurityAuthClient {
 
     public UserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
+    }
+
+    /**
+     * Creates a client builder pre-configured with OAuth client credentials.
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured with the provided OAuth credentials
+     */
+    public static SeedEndpointSecurityAuthClientBuilder withCredentials(String clientId, String clientSecret) {
+        return builder().clientId(clientId).clientSecret(clientSecret);
     }
 
     public static SeedEndpointSecurityAuthClientBuilder builder() {

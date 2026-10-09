@@ -1,0 +1,8 @@
+- summary: |
+    When a custom `httpx.Client` or `httpx.AsyncClient` is passed to the generated SDK client,
+    the timeout configured on that httpx client is now respected. Previously, the SDK would
+    extract only the `read` timeout component and pass it explicitly to each request, which
+    overrode the full timeout configuration (including separate connect/read/write/pool timeouts).
+    Now, when no explicit `timeout` is provided to the SDK constructor, requests defer to the
+    httpx client's own timeout settings via `httpx.USE_CLIENT_DEFAULT`.
+  type: fix

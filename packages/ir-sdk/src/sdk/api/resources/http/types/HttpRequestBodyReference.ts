@@ -4,4 +4,16 @@ import type * as FernIr from "../../../index.js";
 
 export interface HttpRequestBodyReference extends FernIr.WithDocs, FernIr.WithContentType, FernIr.WithV2Examples {
     requestBodyType: FernIr.TypeReference;
+    /**
+     * Whether the caller must supply a body. Absent means required, so a generator that
+     * does not read this field produces the same output it always has.
+     *
+     * This is about the call, not the value: a body that is sent is always a
+     * `requestBodyType`, never an optional of it. When false the caller may omit the body
+     * entirely, and the request carries neither content nor a `Content-Type` header.
+     * Optionality is modelled here rather than by wrapping `requestBodyType` in
+     * `optional<T>` so that generators do not have to unwrap a container before deciding
+     * how to shape the request parameter.
+     */
+    required: boolean | undefined;
 }

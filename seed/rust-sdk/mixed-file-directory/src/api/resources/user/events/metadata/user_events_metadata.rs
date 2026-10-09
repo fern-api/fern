@@ -22,6 +22,31 @@ impl MetadataClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_mixed_file_directory::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .events
+    ///         .metadata
+    ///         .get_metadata(
+    ///             &GetMetadataQueryRequest {
+    ///                 id: Id("id".to_string()),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_metadata(
         &self,
         request: &GetMetadataQueryRequest,

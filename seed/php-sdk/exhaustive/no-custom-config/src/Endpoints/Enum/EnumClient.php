@@ -50,6 +50,13 @@ class EnumClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->enum->getAndReturnEnum(
+     *     WeatherReport::Sunny->value,
+     * );
+     * ```
+     *
      * @param value-of<WeatherReport> $request
      * @param ?array{
      *   baseUrl?: string,

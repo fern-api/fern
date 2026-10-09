@@ -11,14 +11,16 @@ public partial class TasktestClient : ITasktestClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Tasktest.HelloAsync();
-    /// </code></example>
-    public async global::System.Threading.Tasks.Task HelloAsync(
+    private async global::System.Threading.Tasks.Task<RawResponse> HelloAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new global::Seed.CsharpNamespaceConflict.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new global::Seed.CsharpNamespaceConflict.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +33,7 @@ public partial class TasktestClient : ITasktestClient
                 {
                     Method = HttpMethod.Get,
                     Path = "hello",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -39,7 +42,12 @@ public partial class TasktestClient : ITasktestClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new global::Seed.CsharpNamespaceConflict.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -48,8 +56,25 @@ public partial class TasktestClient : ITasktestClient
             throw new SeedApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new global::Seed.CsharpNamespaceConflict.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Tasktest.HelloAsync();
+    /// </code></example>
+    public WithRawResponseTask HelloAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(HelloAsyncCore(options, cancellationToken));
     }
 }

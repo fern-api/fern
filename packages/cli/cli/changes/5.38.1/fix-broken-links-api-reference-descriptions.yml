@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern check --broken-links` (and `fern docs broken-links`) silently
+    skipping broken links inside API Reference description fields. Links in
+    endpoint, type, property, path-parameter, and other `docs` / `description`
+    fields are now validated against the rest of the docs navigation.
+  type: fix

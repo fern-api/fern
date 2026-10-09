@@ -1,0 +1,7 @@
+- summary: |
+    Endpoints that disable retries (`x-fern-retries: { disabled: true }` in OpenAPI, or
+    `retries: { disabled: true }` in a Fern definition) now always emit `maxRetries: 0`,
+    overriding both client-level and request-level `maxRetries`. Previously this
+    configuration was only honored by the Python SDK generator and was silently ignored
+    in TypeScript.
+  type: fix

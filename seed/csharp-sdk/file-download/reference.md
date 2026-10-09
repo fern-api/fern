@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedFileDownload/Service/ServiceClient.cs">SimpleAsync</a>()</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedFileDownload/Service/ServiceClient.cs">SimpleAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -14,6 +14,31 @@
 
 ```csharp
 await client.Service.SimpleAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Service.<a href="/src/SeedFileDownload/Service/ServiceClient.cs">DownloadFileAsync</a>() -> WithRawResponseTask&lt;Stream&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.DownloadFileAsync();
 ```
 </dd>
 </dl>

@@ -6,4 +6,10 @@ export interface HttpResponseStreamSchemaDetailed extends FernDefinition.WithDoc
     type: string;
     format?: FernDefinition.StreamFormat;
     terminator?: string;
+    /**
+     * For SSE responses (`format: sse`), when true, the endpoint
+     * participates in client-side reconnection using `Last-Event-ID`
+     * and `retry:`. Defaults to false. No effect on non-SSE streams.
+     */
+    resumable?: boolean;
 }

@@ -126,4 +126,5 @@ environments:
 default-environment: Default
 ",
   },
+  "specVersion": "v1",
 }

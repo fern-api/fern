@@ -5,16 +5,20 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
+import com.seed.api.requests.PlantPost;
 import com.seed.api.requests.RuleCreateRequest;
 import com.seed.api.requests.SearchRuleTypesRequest;
 import com.seed.api.types.CombinedEntity;
 import com.seed.api.types.Organization;
+import com.seed.api.types.PlantStrict;
 import com.seed.api.types.RuleResponse;
 import com.seed.api.types.RuleTypeSearchResponse;
+import com.seed.api.types.TreeRecord;
 import com.seed.api.types.UserSearchResponse;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -32,52 +36,208 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<RuleTypeSearchResponse> searchRuleTypes() {
-        return this.rawClient.searchRuleTypes().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RuleTypeSearchResponse>> rawFuture = this.rawClient.searchRuleTypes();
+        CompletableFuture<RuleTypeSearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<RuleTypeSearchResponse> searchRuleTypes(RequestOptions requestOptions) {
-        return this.rawClient.searchRuleTypes(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RuleTypeSearchResponse>> rawFuture =
+                this.rawClient.searchRuleTypes(requestOptions);
+        CompletableFuture<RuleTypeSearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<RuleTypeSearchResponse> searchRuleTypes(SearchRuleTypesRequest request) {
-        return this.rawClient.searchRuleTypes(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RuleTypeSearchResponse>> rawFuture =
+                this.rawClient.searchRuleTypes(request);
+        CompletableFuture<RuleTypeSearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<RuleTypeSearchResponse> searchRuleTypes(
             SearchRuleTypesRequest request, RequestOptions requestOptions) {
-        return this.rawClient.searchRuleTypes(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RuleTypeSearchResponse>> rawFuture =
+                this.rawClient.searchRuleTypes(request, requestOptions);
+        CompletableFuture<RuleTypeSearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<RuleResponse> createRule(RuleCreateRequest request) {
-        return this.rawClient.createRule(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RuleResponse>> rawFuture = this.rawClient.createRule(request);
+        CompletableFuture<RuleResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<RuleResponse> createRule(RuleCreateRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createRule(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RuleResponse>> rawFuture =
+                this.rawClient.createRule(request, requestOptions);
+        CompletableFuture<RuleResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UserSearchResponse> listUsers() {
-        return this.rawClient.listUsers().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UserSearchResponse>> rawFuture = this.rawClient.listUsers();
+        CompletableFuture<UserSearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UserSearchResponse> listUsers(RequestOptions requestOptions) {
-        return this.rawClient.listUsers(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UserSearchResponse>> rawFuture = this.rawClient.listUsers(requestOptions);
+        CompletableFuture<UserSearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CombinedEntity> getEntity() {
-        return this.rawClient.getEntity().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CombinedEntity>> rawFuture = this.rawClient.getEntity();
+        CompletableFuture<CombinedEntity> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CombinedEntity> getEntity(RequestOptions requestOptions) {
-        return this.rawClient.getEntity(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CombinedEntity>> rawFuture = this.rawClient.getEntity(requestOptions);
+        CompletableFuture<CombinedEntity> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Organization> getOrganization() {
-        return this.rawClient.getOrganization().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Organization>> rawFuture = this.rawClient.getOrganization();
+        CompletableFuture<Organization> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Organization> getOrganization(RequestOptions requestOptions) {
-        return this.rawClient.getOrganization(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Organization>> rawFuture = this.rawClient.getOrganization(requestOptions);
+        CompletableFuture<Organization> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     */
+    public CompletableFuture<PlantStrict> createPlant(PlantPost request) {
+        CompletableFuture<SeedApiHttpResponse<PlantStrict>> rawFuture = this.rawClient.createPlant(request);
+        CompletableFuture<PlantStrict> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     */
+    public CompletableFuture<PlantStrict> createPlant(PlantPost request, RequestOptions requestOptions) {
+        CompletableFuture<SeedApiHttpResponse<PlantStrict>> rawFuture =
+                this.rawClient.createPlant(request, requestOptions);
+        CompletableFuture<PlantStrict> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     */
+    public CompletableFuture<TreeRecord> createTree(TreeRecord request) {
+        CompletableFuture<SeedApiHttpResponse<TreeRecord>> rawFuture = this.rawClient.createTree(request);
+        CompletableFuture<TreeRecord> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     */
+    public CompletableFuture<TreeRecord> createTree(TreeRecord request, RequestOptions requestOptions) {
+        CompletableFuture<SeedApiHttpResponse<TreeRecord>> rawFuture =
+                this.rawClient.createTree(request, requestOptions);
+        CompletableFuture<TreeRecord> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

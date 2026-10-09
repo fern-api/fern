@@ -1,0 +1,9 @@
+{
+  "title": "TypeError: fetch failed (docs resolver)",
+  "disposition": "shipped",
+  "rationale": "Undici TypeError: fetch failed escapes as unhandled error; wrapped fetch calls at boundary with try/catch → NetworkError in uploadDynamicIRs, SourceUploader, and uploadDynamicIRForSdkGeneration.",
+  "fixSummary": "Wrap bare fetch() calls in uploadDynamicIRs, SourceUploader.uploadSource, and uploadDynamicIRForSdkGeneration with try/catch that classifies network failures as NetworkError at the call site.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Undici TypeError fetch failed during docs resolution surfaced as InternalError instead of NetworkError."
+}

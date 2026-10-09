@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/Sources/Resources/Dummy/DummyClient.swift">generate</a>(request: Requests.GenerateRequest, requestOptions: RequestOptions?) -> JSONValue</code></summary>
+<details><summary><code>client.dummy.<a href="/Sources/Resources/Dummy/DummyClient.swift">generate</a>(request: Requests.GenerateRequest, requestOptions: RequestOptions?) -> RegularResponse</code></summary>
 <dl>
 <dd>
 

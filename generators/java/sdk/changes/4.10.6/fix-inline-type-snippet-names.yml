@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix dynamic snippet generation to reference the correct nested class names for inline
+    types. Inline types within objects, discriminated unions, and undiscriminated unions are
+    now resolved to their actual generated nested class (e.g. `Parent.Bar.Type1`) instead of a
+    mangled top-level name, so generated snippets compile.
+  type: fix

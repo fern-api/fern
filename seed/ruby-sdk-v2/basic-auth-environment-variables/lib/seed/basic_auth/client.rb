@@ -20,6 +20,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.basic_auth.get_with_basic_auth
+      #
       # @return [Boolean]
       def get_with_basic_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -34,10 +37,16 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_types = {
+            401 => Seed::Errors::Types::UnauthorizedRequestErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
+        end
       end
 
       # POST request with basic auth scheme
@@ -50,6 +59,11 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.basic_auth.post_with_basic_auth(request: {
+      #     key: "value"
+      #   })
+      #
       # @return [Boolean]
       def post_with_basic_auth(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -57,7 +71,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "basic-auth",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -66,10 +80,16 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_types = {
+            401 => Seed::Errors::Types::UnauthorizedRequestErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
+        end
       end
     end
   end

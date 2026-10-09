@@ -35,6 +35,7 @@
     },
     "type": "header"
   },
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-webhook`.",
   "auth": {
@@ -617,7 +618,8 @@
       "errors": [],
       "subpackages": [],
       "webhooks": "webhooks_status",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -632,7 +634,8 @@
     "subpackages": [
       "subpackage_status"
     ],
-    "hasEndpointsInTree": false
+    "hasEndpointsInTree": false,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": true,

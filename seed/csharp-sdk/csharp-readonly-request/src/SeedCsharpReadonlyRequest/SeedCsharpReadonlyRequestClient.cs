@@ -15,7 +15,7 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpReadonlyRequest" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpReadonlyRequest.Version.Current },
                 { "User-Agent", "Ferncsharp-readonly-request/0.0.1" },
             }
         );
@@ -35,6 +35,11 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedCsharpReadonlyRequest.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedCsharpReadonlyRequest.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -48,6 +53,7 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
                     Method = HttpMethod.Post,
                     Path = "/vendors/batch",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -65,7 +71,7 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
                 return new WithRawResponse<CreateVendorResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedCsharpReadonlyRequest.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -79,7 +85,13 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedCsharpReadonlyRequest.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -90,7 +102,13 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
             throw new SeedCsharpReadonlyRequestApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedCsharpReadonlyRequest.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

@@ -19,6 +19,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :vendor_id
       #
+      # @example
+      #   client.vendor.update_vendor(
+      #     vendor_id: "vendor_id",
+      #     name: "name"
+      #   )
+      #
       # @return [Seed::Types::Vendor]
       def update_vendor(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -39,7 +45,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Vendor.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Vendor.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -54,6 +60,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String, nil] :idempotency_key
+      #
+      # @example
+      #   client.vendor.create_vendor(name: "name")
       #
       # @return [Seed::Types::Vendor]
       def create_vendor(request_options: {}, **params)
@@ -80,7 +89,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Vendor.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::Vendor.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

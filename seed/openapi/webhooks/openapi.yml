@@ -65,4 +65,15 @@ components:
       required:
         - refundId
         - amount
+    SmsStatusPayload:
+      title: SmsStatusPayload
+      type: object
+      properties:
+        messageSid:
+          type: string
+        status:
+          type: string
+      required:
+        - messageSid
+        - status
   securitySchemes: {}

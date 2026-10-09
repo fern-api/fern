@@ -318,6 +318,52 @@ $client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnMapOfIntegerToObject($request) -> ?array</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->container->getAndReturnMapOfIntegerToObject(
+    [
+        1 => new ObjectWithRequiredField([
+            'string' => 'string',
+        ]),
+    ],
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnOptional($request) -> ?ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
@@ -2110,7 +2156,6 @@ POST bytes with path param returning object
 ```php
 $client->endpoints->params->uploadWithPath(
     'upload-path',
-    ,
 );
 ```
 </dd>
@@ -2127,6 +2172,129 @@ $client->endpoints->params->uploadWithPath(
 <dd>
 
 **$param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;createWithBodyAndQuery($request) -> ?ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->createWithBodyAndQuery(
+    new CreateWithBodyAndQuery([
+        'fields' => '_fields',
+        'body' => new ObjectWithRequiredField([
+            'string' => 'string',
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$fields:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;uploadBytesWithQuery($request) -> ?ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->uploadBytesWithQuery($request): ?ObjectWithOptionalField;
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$fields:** `?string` 
     
 </dd>
 </dl>
@@ -2906,6 +3074,76 @@ $client->inlinedRequests->postWithObjectBodyandResponse(
 <dd>
 
 **$nestedObject:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;inlinedRequests-&gt;postWithArrayBodyAndHeaders($request) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->inlinedRequests->postWithArrayBodyAndHeaders(
+    new PostWithArrayBodyAndHeaders([
+        'xCustomHeader' => 'X-Custom-Header',
+        'body' => [
+            'string',
+            'string',
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$xCustomHeader:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `array` 
     
 </dd>
 </dl>

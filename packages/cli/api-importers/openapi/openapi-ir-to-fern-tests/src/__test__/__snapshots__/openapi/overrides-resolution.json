@@ -303,4 +303,5 @@ error-discrimination:
 display-name: OpenAPI overrides resolution
 ",
   },
+  "specVersion": "1.0.0",
 }

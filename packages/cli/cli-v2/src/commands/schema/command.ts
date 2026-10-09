@@ -1,5 +1,8 @@
 import { getFernYmlJsonSchema, getJsonSchemaByName, getJsonSchemaNames } from "@fern-api/config";
+import { dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
+import chalk from "chalk";
+import { mkdir, writeFile } from "fs/promises";
 
 import type { Argv } from "yargs";
 import type { Context } from "../../context/Context.js";
@@ -15,6 +18,8 @@ export declare namespace SchemaCommand {
         name?: string;
         /** Pretty-print JSON output. Defaults to true. */
         pretty: boolean;
+        /** Write JSON Schema to this path instead of stdout. */
+        output?: string;
     }
 }
 
@@ -27,30 +32,57 @@ export declare namespace SchemaCommand {
  * (e.g. `api`, `sdks.targets`), prints just that subsection.
  *
  * Output is pure JSON on stdout so it is pipe-safe (e.g.
- * `fern schema | jq .properties.sdks`).
+ * `fern schema | jq .properties.sdks`). Use `--output` to write a file
+ * (e.g. for CI: `fern schema --output fern-yml.schema.json`).
  */
 export class SchemaCommand {
     public async handle(context: Context, args: SchemaCommand.Args): Promise<void> {
-        if (args.name == null) {
-            this.writeJson(context, getFernYmlJsonSchema(), args.pretty);
+        const schema = this.resolveSchema(args.name);
+
+        if (args.output != null) {
+            await this.writeToFile(context, schema, args.pretty, args.output);
             return;
         }
 
-        const schema = getJsonSchemaByName(args.name);
+        this.writeToStdout(context, schema, args.pretty);
+    }
+
+    private resolveSchema(name: string | undefined): Record<string, unknown> {
+        if (name == null) {
+            return getFernYmlJsonSchema();
+        }
+
+        const schema = getJsonSchemaByName(name);
         if (schema == null) {
             const available = getJsonSchemaNames().join(", ");
             throw new CliError({
-                message: `Unknown schema '${args.name}'. Available subsections: ${available}.`,
+                message: `Unknown schema '${name}'. Available subsections: ${available}.`,
                 code: CliError.Code.ConfigError
             });
         }
 
-        this.writeJson(context, schema, args.pretty);
+        return schema;
     }
 
-    private writeJson(context: Context, value: unknown, pretty: boolean): void {
+    private formatJson(value: unknown, pretty: boolean): string {
         const json = pretty ? JSON.stringify(value, null, 2) : JSON.stringify(value);
-        context.stdout.info(json);
+        return `${json}\n`;
+    }
+
+    private writeToStdout(context: Context, value: unknown, pretty: boolean): void {
+        context.stdout.info(this.formatJson(value, pretty).trimEnd());
+    }
+
+    private async writeToFile(context: Context, value: unknown, pretty: boolean, outputPath: string): Promise<void> {
+        const absoluteOutputPath = resolve(context.cwd, outputPath);
+        const outputDir = dirname(absoluteOutputPath);
+
+        if (!(await doesPathExist(outputDir))) {
+            await mkdir(outputDir, { recursive: true });
+        }
+
+        await writeFile(absoluteOutputPath, this.formatJson(value, pretty));
+        context.stderr.info(chalk.green(`Wrote JSON Schema to ${absoluteOutputPath}`));
     }
 }
 
@@ -68,6 +100,10 @@ export function addSchemaCommand(cli: Argv<GlobalArgs>): void {
                     description:
                         "Dot-delimited subsection of fern.yml. Omit to print the full schema. " +
                         `Available subsections: ${getJsonSchemaNames().join(", ")}.`
+                })
+                .option("output", {
+                    type: "string",
+                    description: "Write JSON Schema to this file instead of stdout"
                 })
                 .option("pretty", {
                     type: "boolean",

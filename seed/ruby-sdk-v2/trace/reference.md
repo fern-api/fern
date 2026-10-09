@@ -41,7 +41,7 @@ client.v2.test
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">update_test_submission_status</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">update_test_submission_status</a>(submission_id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -100,7 +100,7 @@ client.admin.update_test_submission_status(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">send_test_submission_update</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">send_test_submission_update</a>(submission_id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -160,7 +160,7 @@ client.admin.send_test_submission_update(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">update_workspace_submission_status</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">update_workspace_submission_status</a>(submission_id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -219,7 +219,7 @@ client.admin.update_workspace_submission_status(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">send_workspace_submission_update</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">send_workspace_submission_update</a>(submission_id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -279,7 +279,7 @@ client.admin.send_workspace_submission_update(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case</a>(submission_id, test_case_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case</a>(submission_id:, test_case_id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -415,7 +415,7 @@ client.admin.store_traced_test_case(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case_v2</a>(submission_id, test_case_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case_v2</a>(submission_id:, test_case_id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -541,7 +541,7 @@ client.admin.store_traced_test_case_v2(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace</a>(submission_id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -666,7 +666,7 @@ client.admin.store_traced_workspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace_v2</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace_v2</a>(submission_id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -922,7 +922,7 @@ client.migration.get_attempted_migrations(admin_key_header: "admin-key-header")
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">create_playlist</a>(service_param, request) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">create_playlist</a>(service_param:, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1014,7 +1014,7 @@ client.playlist.create_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">get_playlists</a>(service_param) -> Internal::Types::Array[Seed::Playlist::Types::Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">get_playlists</a>(service_param:) -> Internal::Types::Array[Seed::Playlist::Types::Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1124,7 +1124,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">get_playlist</a>(service_param, playlist_id) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">get_playlist</a>(service_param:, playlist_id:) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1197,7 +1197,7 @@ client.playlist.get_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">update_playlist</a>(service_param, playlist_id, request) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">update_playlist</a>(service_param:, playlist_id:, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1282,7 +1282,7 @@ client.playlist.update_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">delete_playlist</a>(service_param, playlist_id) -> </code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">delete_playlist</a>(service_param:, playlist_id:) -> </code></summary>
 <dl>
 <dd>
 
@@ -1460,7 +1460,7 @@ client.problem.create_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">update_problem</a>(problem_id, request) -> Seed::Problem::Types::UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">update_problem</a>(problem_id:, request) -> Seed::Problem::Types::UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1573,7 +1573,7 @@ client.problem.update_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">delete_problem</a>(problem_id) -> </code></summary>
+<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">delete_problem</a>(problem_id:) -> </code></summary>
 <dl>
 <dd>
 
@@ -1731,7 +1731,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">create_execution_session</a>(language) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">create_execution_session</a>(language:) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1793,7 +1793,7 @@ client.submission.create_execution_session(language: "JAVA")
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">get_execution_session</a>(session_id) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">get_execution_session</a>(session_id:) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1855,7 +1855,7 @@ client.submission.get_execution_session(session_id: "sessionId")
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">stop_execution_session</a>(session_id) -> </code></summary>
+<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">stop_execution_session</a>(session_id:) -> </code></summary>
 <dl>
 <dd>
 
@@ -1958,7 +1958,7 @@ client.submission.get_execution_sessions_state
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="/lib/seed/sysprop/client.rb">set_num_warm_instances</a>(language, num_warm_instances) -> </code></summary>
+<details><summary><code>client.sysprop.<a href="/lib/seed/sysprop/client.rb">set_num_warm_instances</a>(language:, num_warm_instances:) -> </code></summary>
 <dl>
 <dd>
 
@@ -2166,7 +2166,7 @@ client.v2.problem.get_problems
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_latest_problem</a>(problem_id:) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2228,7 +2228,7 @@ client.v2.problem.get_latest_problem(problem_id: "problemId")
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_problem_version</a>(problem_id:, problem_version:) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2410,7 +2410,7 @@ client.v2.problem.get_problems
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_latest_problem</a>(problem_id:) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2472,7 +2472,7 @@ client.v2.problem.get_latest_problem(problem_id: "problemId")
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_problem_version</a>(problem_id:, problem_version:) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 

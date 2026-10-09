@@ -1,0 +1,8 @@
+api:
+  specs:
+    - openapi: ../core-api.yml
+      namespace: core
+    - openapi: ../auth-api.yml
+      namespace: auth
+  settings:
+    group-multi-api-environments: true

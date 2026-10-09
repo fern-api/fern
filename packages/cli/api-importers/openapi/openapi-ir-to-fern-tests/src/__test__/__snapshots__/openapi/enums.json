@@ -167,4 +167,5 @@ error-discrimination:
 display-name: Example API
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -29,6 +29,28 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_file_upload::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = FileUploadClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .just_file(
+    ///             &JustFileRequest {
+    ///                 file: b"test file content".to_vec(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn just_file(
         &self,
         request: &JustFileRequest,
@@ -137,6 +159,29 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_file_upload::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = FileUploadClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .optional_args(
+    ///             &OptionalArgsRequest {
+    ///                 image_file: b"test file content".to_vec(),
+    ///                 request: None,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn optional_args(
         &self,
         request: &OptionalArgsRequest,
@@ -185,6 +230,32 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_file_upload::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = FileUploadClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .with_ref_body(
+    ///             &WithRefBodyRequest {
+    ///                 image_file: b"test file content".to_vec(),
+    ///                 request: MyObject {
+    ///                     foo: "bar".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn with_ref_body(
         &self,
         request: &WithRefBodyRequest,
@@ -201,6 +272,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_file_upload::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = FileUploadClient::new(config).expect("Failed to build client");
+    ///     client.service.simple(None).await;
+    /// }
+    /// ```
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::POST, "/snippet", None, None, options)

@@ -23,6 +23,7 @@ export const BaseGeneratorInvocationSchema: core.serialization.ObjectSchema<
     snippets: GeneratorSnippetsSchema.optional(),
     "ir-version": core.serialization.string().optional(),
     "smart-casing": core.serialization.boolean().optional(),
+    "smart-casing-digit-word-boundary": core.serialization.boolean().optional(),
     api: GeneratorApiSettingsSchema.optional(),
     "disable-examples": core.serialization.boolean().optional(),
     "publish-metadata": GeneratorPublishMetadataSchema.optional(),
@@ -41,6 +42,7 @@ export declare namespace BaseGeneratorInvocationSchema {
         snippets?: GeneratorSnippetsSchema.Raw | null;
         "ir-version"?: string | null;
         "smart-casing"?: boolean | null;
+        "smart-casing-digit-word-boundary"?: boolean | null;
         api?: GeneratorApiSettingsSchema.Raw | null;
         "disable-examples"?: boolean | null;
         "publish-metadata"?: GeneratorPublishMetadataSchema.Raw | null;

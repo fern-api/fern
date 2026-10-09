@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Treat null values identically to undefined when serializing query string
+    parameters. Previously, null values in objects and arrays were serialized as
+    empty strings (e.g. `key=`); they are now omitted from the query string,
+    matching the existing behavior for undefined values and the
+    QueryStringBuilder API.
+  type: fix

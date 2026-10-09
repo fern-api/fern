@@ -13,9 +13,8 @@
 
 ```go
 client.GetUnion(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -41,9 +40,8 @@ client.GetUnion(
 
 ```go
 client.ListUnions(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

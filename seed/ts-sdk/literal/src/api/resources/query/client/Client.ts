@@ -25,6 +25,9 @@ export class QueryClient {
      * @param {SeedLiteral.SendLiteralsInQueryRequest} request
      * @param {QueryClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
+     *
      * @example
      *     await client.query.send({
      *         prompt: "You are a helpful assistant",

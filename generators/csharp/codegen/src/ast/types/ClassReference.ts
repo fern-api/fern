@@ -174,6 +174,9 @@ export class ClassReference extends Node implements Type {
                 // if the first namespace segment is both a type name and a namespace root,
                 // the C# compiler will resolve it to the type instead of the namespace (CS0426)
                 this.registry.hasTypeNamespaceConflict(this.namespaceSegments[0]) ||
+                // a nested type can also shadow the root namespace segment, but only within its
+                // enclosing type's body — qualify only when we are writing inside that scope
+                this.registry.hasNestedTypeShadowInScope(this.namespaceSegments[0], writer.typeScopeStack) ||
                 // or we always are going to be using fully qualified namespaces
                 writer.generation.settings.useFullyQualifiedNamespaces);
 
@@ -474,6 +477,18 @@ export class ClassReference extends Node implements Type {
         return this.csharp.classReferenceInternal({
             ...this,
             fullyQualified: true
+        });
+    }
+
+    /**
+     * returns this class reference as a fully qualified class reference with the `global::`
+     * alias, making it immune to shadowing by locals, parameters or members in scope
+     */
+    public asGloballyQualified() {
+        return this.csharp.classReferenceInternal({
+            ...this,
+            fullyQualified: true,
+            global: true
         });
     }
 

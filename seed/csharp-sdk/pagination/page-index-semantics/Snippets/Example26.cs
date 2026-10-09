@@ -10,8 +10,8 @@ public partial class Examples
             }
         );
 
-        await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-            new SeedPagination.ListUsersExtendedRequestForOptionalData {
+        await client.Users.ListWithExtendedResultsAsync(
+            new SeedPagination.ListUsersExtendedRequest {
                 Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
             }
         );

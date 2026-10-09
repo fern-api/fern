@@ -134,10 +134,8 @@ private func main() async throws {
     let client = EnumClient()
 
     _ = try await client.pathParam.send(
-        operand: .greaterThan,
-        operandOrColor: ColorOrOperand.color(
-            .red
-        )
+        operand: ">",
+        operandOrColor: "red"
     )
 }
 
@@ -271,7 +269,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.queryParam.<a href="/Sources/Resources/QueryParam/QueryParamClient.swift">sendList</a>(operand: Operand, maybeOperand: Operand?, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand?, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.queryParam.<a href="/Sources/Resources/QueryParam/QueryParamClient.swift">sendList</a>(operand: [Operand], maybeOperand: [Operand]?, operandOrColor: [ColorOrOperand], maybeOperandOrColor: [ColorOrOperand]?, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -290,7 +288,24 @@ import Enum
 private func main() async throws {
     let client = EnumClient()
 
-    _ = try await client.queryParam.sendList()
+    _ = try await client.queryParam.sendList(
+        operand: [
+            .greaterThan
+        ],
+        maybeOperand: [
+            .greaterThan
+        ],
+        operandOrColor: [
+            ColorOrOperand.color(
+                .red
+            )
+        ],
+        maybeOperandOrColor: [
+            ColorOrOperand.color(
+                .red
+            )
+        ]
+    )
 }
 
 try await main()
@@ -308,7 +323,7 @@ try await main()
 <dl>
 <dd>
 
-**operand:** `Operand` 
+**operand:** `[Operand]` 
     
 </dd>
 </dl>
@@ -316,7 +331,7 @@ try await main()
 <dl>
 <dd>
 
-**maybeOperand:** `Operand?` 
+**maybeOperand:** `[Operand]?` 
     
 </dd>
 </dl>
@@ -324,7 +339,7 @@ try await main()
 <dl>
 <dd>
 
-**operandOrColor:** `ColorOrOperand` 
+**operandOrColor:** `[ColorOrOperand]` 
     
 </dd>
 </dl>
@@ -332,7 +347,7 @@ try await main()
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `ColorOrOperand?` 
+**maybeOperandOrColor:** `[ColorOrOperand]?` 
     
 </dd>
 </dl>

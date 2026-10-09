@@ -1,0 +1,7 @@
+- summary: |
+    Fix `fern export` to emit top-level `servers` array for multi-URL environments
+    (`multipleBaseUrls`). Previously only single-URL environments produced servers.
+    Each environment × base-URL combination is now listed with a description like
+    `"Production (api)"`. Endpoint-level servers also now include the environment
+    name in their description.
+  type: fix

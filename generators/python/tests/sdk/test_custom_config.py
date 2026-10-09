@@ -85,6 +85,40 @@ def test_flatten_union_request_bodies_explicit_true() -> None:
     assert config.flatten_union_request_bodies is True
 
 
+def test_timeout_default_uses_timeout_in_seconds() -> None:
+    """When neither key is set, resolved_timeout falls back to the timeout_in_seconds default (60)."""
+    config = SDKCustomConfig.parse_obj({})
+    assert config.timeout is None
+    assert config.timeout_in_seconds == 60
+    assert config.resolved_timeout == 60
+
+
+def test_timeout_alias_is_accepted() -> None:
+    """The new `timeout` key is accepted and used by resolved_timeout."""
+    config = SDKCustomConfig.parse_obj({"timeout": 30})
+    assert config.timeout == 30
+    assert config.resolved_timeout == 30
+
+
+def test_timeout_in_seconds_still_works() -> None:
+    """The deprecated `timeout_in_seconds` key remains backwards compatible."""
+    config = SDKCustomConfig.parse_obj({"timeout_in_seconds": 45})
+    assert config.timeout_in_seconds == 45
+    assert config.resolved_timeout == 45
+
+
+def test_timeout_prefers_new_key_over_deprecated() -> None:
+    """When both keys are set, `timeout` takes precedence over `timeout_in_seconds`."""
+    config = SDKCustomConfig.parse_obj({"timeout": 30, "timeout_in_seconds": 60})
+    assert config.resolved_timeout == 30
+
+
+def test_timeout_infinity_literal() -> None:
+    """The `infinity` literal is accepted for both keys (no unit conversion)."""
+    assert SDKCustomConfig.parse_obj({"timeout": "infinity"}).resolved_timeout == "infinity"
+    assert SDKCustomConfig.parse_obj({"timeout_in_seconds": "infinity"}).resolved_timeout == "infinity"
+
+
 def test_parse_wrapped_aliases() -> None:
     v1 = {
         "pydantic_config": {

@@ -14,7 +14,7 @@ public partial class SeedErrorPropertyClient : ISeedErrorPropertyClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedErrorProperty" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedErrorProperty.Version.Current },
                 { "User-Agent", "Fernerror-property/0.0.1" },
             }
         );

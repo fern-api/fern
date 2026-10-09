@@ -62,7 +62,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:OptionalStringResponse": {
             "type": "alias",
@@ -168,7 +169,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_service:WithDocs": {
             "type": "object",
@@ -269,7 +271,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_service:OptionalWithDocs": {
             "type": "alias",
@@ -474,7 +477,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_service:Response": {
             "type": "object",
@@ -645,7 +649,8 @@
                 "type_:WithMetadata",
                 "type_service:WithDocs"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -729,7 +734,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -815,7 +821,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -901,7 +908,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -987,7 +995,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1073,7 +1082,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1159,7 +1169,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1245,7 +1256,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1256,5 +1268,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

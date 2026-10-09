@@ -164,9 +164,14 @@ export function convertReferenceHttpRequestBody({
     file: FernFileContext;
     contentType?: string;
 }): HttpRequestBodyReference {
+    // `optional: true` says the call may omit the body, which is not the same as the body's value
+    // being nullable. It is carried as `required: false` rather than by wrapping requestBodyType in
+    // optional<T>, so a generator sees the same type it always has and opts in to the optionality.
+    const isOmittable = typeof requestBody !== "string" && requestBody.optional === true;
     return {
         docs: typeof requestBody !== "string" ? requestBody.docs : undefined,
         requestBodyType: file.parseTypeReference(requestBody),
+        required: isOmittable ? false : undefined,
         contentType,
         v2Examples: undefined
     };

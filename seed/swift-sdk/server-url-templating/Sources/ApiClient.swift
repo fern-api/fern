@@ -53,6 +53,20 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.getUsers()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getUsers(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
@@ -62,6 +76,20 @@ public final class ApiClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.getUser(userId: "userId")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getUser(userId: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .get,
@@ -71,6 +99,23 @@ public final class ApiClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.getToken(request: .init(
+    ///         clientId: "client_id",
+    ///         clientSecret: "client_secret"
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getToken(request: Requests.TokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,

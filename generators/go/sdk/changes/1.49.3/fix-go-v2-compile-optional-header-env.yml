@@ -1,0 +1,6 @@
+- summary: |
+    Fix a generator compile error introduced by two concurrent changes: the optional
+    global-header env fallback now uses `isTypeReferencePointer` (which also covers
+    `nullable` and aliased optional headers) instead of the removed
+    `isTypeReferenceOptional` export.
+  type: fix

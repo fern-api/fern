@@ -1,0 +1,11 @@
+- summary: |
+    Add opt-in support for a structured `User-Agent` header of the form
+    `{sdkName}/{version} ({os}; {arch}) {runtime}/{runtimeVersion}`, matching the
+    Twilio helper-library shape. This is gated behind the `includePlatformHeaders`
+    config option and is disabled by default, so existing generated output is
+    unchanged. When enabled, the platform + runtime information is consolidated
+    into the `User-Agent` and the discrete `X-Fern-Runtime` / `X-Fern-Runtime-Version`
+    headers are omitted. The platform group and runtime segment are dropped
+    gracefully in environments where they cannot be determined (e.g. browsers),
+    and the header remains subject to `omitFernHeaders`.
+  type: feat

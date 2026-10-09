@@ -1,0 +1,649 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:Message": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Message",
+                    "camelCase": {
+                        "unsafeName": "message",
+                        "safeName": "message"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "message",
+                        "safeName": "message"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MESSAGE",
+                        "safeName": "MESSAGE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Message",
+                        "safeName": "Message"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "sid",
+                        "name": {
+                            "originalName": "sid",
+                            "camelCase": {
+                                "unsafeName": "sid",
+                                "safeName": "sid"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "sid",
+                                "safeName": "sid"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SID",
+                                "safeName": "SID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Sid",
+                                "safeName": "Sid"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "body",
+                        "name": {
+                            "originalName": "body",
+                            "camelCase": {
+                                "unsafeName": "body",
+                                "safeName": "body"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "body",
+                                "safeName": "body"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BODY",
+                                "safeName": "BODY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Body",
+                                "safeName": "Body"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "status",
+                        "name": {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:Account": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Account",
+                    "camelCase": {
+                        "unsafeName": "account",
+                        "safeName": "account"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "account",
+                        "safeName": "account"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ACCOUNT",
+                        "safeName": "ACCOUNT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Account",
+                        "safeName": "Account"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "sid",
+                        "name": {
+                            "originalName": "sid",
+                            "camelCase": {
+                                "unsafeName": "sid",
+                                "safeName": "sid"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "sid",
+                                "safeName": "sid"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SID",
+                                "safeName": "SID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Sid",
+                                "safeName": "Sid"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "friendlyName",
+                        "name": {
+                            "originalName": "friendlyName",
+                            "camelCase": {
+                                "unsafeName": "friendlyName",
+                                "safeName": "friendlyName"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "friendly_name",
+                                "safeName": "friendly_name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FRIENDLY_NAME",
+                                "safeName": "FRIENDLY_NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "FriendlyName",
+                                "safeName": "FriendlyName"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.fetchMessage": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "fetchMessage",
+                    "camelCase": {
+                        "unsafeName": "fetchMessage",
+                        "safeName": "fetchMessage"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "fetch_message",
+                        "safeName": "fetch_message"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FETCH_MESSAGE",
+                        "safeName": "FETCH_MESSAGE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FetchMessage",
+                        "safeName": "FetchMessage"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/accounts/{accountSid}/messages/{sid}/.json"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "FetchMessageRequest",
+                        "camelCase": {
+                            "unsafeName": "fetchMessageRequest",
+                            "safeName": "fetchMessageRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "fetch_message_request",
+                            "safeName": "fetch_message_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FETCH_MESSAGE_REQUEST",
+                            "safeName": "FETCH_MESSAGE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FetchMessageRequest",
+                            "safeName": "FetchMessageRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "accountSid",
+                                "camelCase": {
+                                    "unsafeName": "accountSid",
+                                    "safeName": "accountSid"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "account_sid",
+                                    "safeName": "account_sid"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACCOUNT_SID",
+                                    "safeName": "ACCOUNT_SID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AccountSid",
+                                    "safeName": "AccountSid"
+                                }
+                            },
+                            "wireValue": "accountSid"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "sid",
+                                "camelCase": {
+                                    "unsafeName": "sid",
+                                    "safeName": "sid"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "sid",
+                                    "safeName": "sid"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SID",
+                                    "safeName": "SID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Sid",
+                                    "safeName": "Sid"
+                                }
+                            },
+                            "wireValue": "sid"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.updateMessage": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "updateMessage",
+                    "camelCase": {
+                        "unsafeName": "updateMessage",
+                        "safeName": "updateMessage"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "update_message",
+                        "safeName": "update_message"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPDATE_MESSAGE",
+                        "safeName": "UPDATE_MESSAGE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpdateMessage",
+                        "safeName": "UpdateMessage"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "PUT",
+                "path": "/accounts/{accountSid}/messages/{sid}/.json"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "UpdateMessageRequest",
+                        "camelCase": {
+                            "unsafeName": "updateMessageRequest",
+                            "safeName": "updateMessageRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "update_message_request",
+                            "safeName": "update_message_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPDATE_MESSAGE_REQUEST",
+                            "safeName": "UPDATE_MESSAGE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UpdateMessageRequest",
+                            "safeName": "UpdateMessageRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "accountSid",
+                                "camelCase": {
+                                    "unsafeName": "accountSid",
+                                    "safeName": "accountSid"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "account_sid",
+                                    "safeName": "account_sid"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACCOUNT_SID",
+                                    "safeName": "ACCOUNT_SID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AccountSid",
+                                    "safeName": "AccountSid"
+                                }
+                            },
+                            "wireValue": "accountSid"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "sid",
+                                "camelCase": {
+                                    "unsafeName": "sid",
+                                    "safeName": "sid"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "sid",
+                                    "safeName": "sid"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SID",
+                                    "safeName": "SID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Sid",
+                                    "safeName": "Sid"
+                                }
+                            },
+                            "wireValue": "sid"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "body",
+                                "name": {
+                                    "originalName": "body",
+                                    "camelCase": {
+                                        "unsafeName": "body",
+                                        "safeName": "body"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "body",
+                                        "safeName": "body"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BODY",
+                                        "safeName": "BODY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Body",
+                                        "safeName": "Body"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.fetchAccount": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "fetchAccount",
+                    "camelCase": {
+                        "unsafeName": "fetchAccount",
+                        "safeName": "fetchAccount"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "fetch_account",
+                        "safeName": "fetch_account"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FETCH_ACCOUNT",
+                        "safeName": "FETCH_ACCOUNT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FetchAccount",
+                        "safeName": "FetchAccount"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/accounts/{accountSid}/.json"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "FetchAccountRequest",
+                        "camelCase": {
+                            "unsafeName": "fetchAccountRequest",
+                            "safeName": "fetchAccountRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "fetch_account_request",
+                            "safeName": "fetch_account_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FETCH_ACCOUNT_REQUEST",
+                            "safeName": "FETCH_ACCOUNT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FetchAccountRequest",
+                            "safeName": "FetchAccountRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "accountSid",
+                                "camelCase": {
+                                    "unsafeName": "accountSid",
+                                    "safeName": "accountSid"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "account_sid",
+                                    "safeName": "account_sid"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACCOUNT_SID",
+                                    "safeName": "ACCOUNT_SID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AccountSid",
+                                    "safeName": "AccountSid"
+                                }
+                            },
+                            "wireValue": "accountSid"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

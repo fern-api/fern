@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"path"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/ast"
@@ -17,9 +18,29 @@ import (
 // goLanguageHeader is the identifier used for the X-Fern-Language platform header.
 const goLanguageHeader = "Go"
 
+// platformUserAgentFunc is the name of the generated helper that builds the
+// structured User-Agent header value when includePlatformHeaders is enabled.
+const platformUserAgentFunc = "platformUserAgent"
+
+// appInfoTypeName is the name of the generated public struct carrying the opt-in
+// User-Agent appInfo (name/version/comment), emitted only when
+// allowUserAgentAppInfo is enabled.
+const appInfoTypeName = "AppInfo"
+
+// appendAppInfoFunc is the name of the generated helper that appends a sanitized
+// appInfo product token to a base User-Agent value. Emitted into core only when
+// allowUserAgentAppInfo is enabled (and a User-Agent is actually written).
+const appendAppInfoFunc = "appendAppInfoToUserAgent"
+
 var (
 	//go:embed sdk/core/api_error.go
 	apiErrorFile string
+
+	//go:embed sdk/core/xml.go
+	xmlFile string
+
+	//go:embed sdk/core/xml_test.go
+	xmlTestFile string
 
 	//go:embed sdk/client/client_test.go.tmpl
 	clientTestFile string
@@ -71,6 +92,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/internal/query_defaults_on_nil.go_
+	queryDefaultsOnNilFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -181,7 +205,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				camelCase  = authScheme.Header.Name.Name.CamelCase.SafeName
 				optionName = fmt.Sprintf("With%s", pascalCase)
-				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers)
 				typeName   = "*core." + pascalCase + "Option"
 			)
 			f.P("// ", optionName, " sets the ", camelCase, " auth request header.")
@@ -204,7 +228,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
 			camelCase  = header.Name.Name.CamelCase.SafeName
 			optionName = fmt.Sprintf("With%s", pascalCase)
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers)
 			typeName   = "*core." + pascalCase + "Option"
 		)
 		f.P("// ", optionName, " sets the ", camelCase, " request header.")
@@ -246,7 +270,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers),
 		)
 	}
 
@@ -275,7 +299,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 	for _, header := range idempotencyHeaders {
 		var (
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		)
 		if err := f.writeOptionStruct(pascalCase, goType, false, true); err != nil {
 			return err
@@ -291,13 +315,211 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		value := valueTypeFormat.Prefix + "i." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		f.P("if i.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-		f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, valueTypeFormat.Prefix, `%v",`, value, "))")
+		// Prefix is a Go expression prefix, not a wire prefix: it belongs in value, not the format string.
+		f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v",`, value, "))")
 		f.P("}")
 	}
 	f.P("return header")
 	f.P("}")
 
 	return nil
+}
+
+// serverURLVariable pairs an IR server URL variable with the idiomatic Go
+// client-option name it is exposed under (e.g. the variable "region" is exposed
+// as the "Region" option, and a variable named "environment" is exposed as
+// "ServerURLEnvironment" to avoid colliding with the reserved Environment option).
+type serverURLVariable struct {
+	variable *common.ServerVariable
+	// optionName is the exported Go identifier used for the RequestOptions field,
+	// the option struct, and the With<Name> helper (e.g. "Region").
+	optionName string
+	// paramName is the unexported parameter name used by the With<Name> helper
+	// (e.g. "region").
+	paramName string
+}
+
+// reservedRequestOptionNames are the RequestOptions field names that a server
+// URL variable must not shadow. A variable whose idiomatic name collides with
+// one of these is exposed under a "ServerURL"-prefixed name instead.
+var reservedRequestOptionNames = map[string]struct{}{
+	"BaseURL":                    {},
+	"Environment":                {},
+	"HTTPClient":                 {},
+	"HTTPHeader":                 {},
+	"BodyProperties":             {},
+	"QueryParameters":            {},
+	"MaxAttempts":                {},
+	"MaxBufSize":                 {},
+	"MaxStreamReconnectAttempts": {},
+	"DisableStreamReconnection":  {},
+	"DisableRetries":             {},
+}
+
+// serverURLVariablesFromConfig returns the server URL variables declared on the
+// API's environments, paired with the client-option name each is exposed under.
+// Variables are de-duplicated by id (taken from the first environment that
+// declares them) and de-collided against reserved RequestOptions field names.
+//
+// When enabled is false (i.e. the serverUrlVariables generator config option is
+// disabled), this returns an empty slice so that no server-URL-variable client
+// options nor the construction-time base-URL template interpolation are emitted,
+// falling back to the pre-feature base-URL behavior.
+func serverURLVariablesFromConfig(enabled bool, environmentsConfig *common.EnvironmentsConfig) []*serverURLVariable {
+	if !enabled {
+		return nil
+	}
+	variables := collectServerURLVariables(environmentsConfig)
+	result := make([]*serverURLVariable, 0, len(variables))
+	for _, variable := range variables {
+		if variable == nil || variable.Name == nil {
+			continue
+		}
+		optionName := variable.Name.PascalCase.UnsafeName
+		paramName := variable.Name.CamelCase.SafeName
+		if _, ok := reservedRequestOptionNames[optionName]; ok {
+			optionName = "ServerURL" + variable.Name.PascalCase.UnsafeName
+			paramName = "serverURL" + variable.Name.PascalCase.UnsafeName
+		}
+		result = append(result, &serverURLVariable{
+			variable:   variable,
+			optionName: optionName,
+			paramName:  paramName,
+		})
+	}
+	return result
+}
+
+// sdkVariable pairs an IR SDK variable (an API-level variable that path
+// parameters bind to via x-fern-sdk-variable) with the client-option name it is
+// exposed under. Bound path parameters are removed from every endpoint
+// signature and request wrapper, and are resolved from the client option instead.
+type sdkVariable struct {
+	variable   *ir.VariableDeclaration
+	optionName string
+	paramName  string
+	goType     string
+}
+
+// sdkVariablesFromIR returns the SDK variables declared on the API, de-collided
+// against reserved RequestOptions field names.
+func (f *fileWriter) sdkVariablesFromIR(variables []*ir.VariableDeclaration, importPath string) []*sdkVariable {
+	result := make([]*sdkVariable, 0, len(variables))
+	for _, variable := range variables {
+		if variable == nil || variable.Name == nil || variable.Type == nil {
+			continue
+		}
+		optionName := variable.Name.PascalCase.UnsafeName
+		paramName := variable.Name.CamelCase.SafeName
+		if _, ok := reservedRequestOptionNames[optionName]; ok {
+			optionName = "Variable" + variable.Name.PascalCase.UnsafeName
+			paramName = "variable" + variable.Name.PascalCase.UnsafeName
+		}
+		result = append(result, &sdkVariable{
+			variable:   variable,
+			optionName: optionName,
+			paramName:  paramName,
+			goType:     typeReferenceToGoType(variable.Type, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers),
+		})
+	}
+	return result
+}
+
+// missingErrorMessage is the error returned when a string SDK variable is unset
+// on both the request and the client.
+func (s *sdkVariable) missingErrorMessage() string {
+	envHint := ""
+	if s.variable.EnvVar != nil && *s.variable.EnvVar != "" {
+		envHint = " or set the " + *s.variable.EnvVar + " environment variable"
+	}
+	return fmt.Sprintf("%s is required. Pass option.With%s%s.", s.variable.Name.OriginalName, s.optionName, envHint)
+}
+
+// isSDKVariablePathParameter returns true if the path parameter is bound to an
+// SDK variable and is therefore configured on the client rather than per call.
+func isSDKVariablePathParameter(pathParameter *ir.PathParameter) bool {
+	return pathParameter != nil && pathParameter.Variable != nil
+}
+
+// nonSDKVariablePathParameters returns the path parameters that are not bound
+// to an SDK variable.
+func nonSDKVariablePathParameters(pathParameters []*ir.PathParameter) []*ir.PathParameter {
+	result := make([]*ir.PathParameter, 0, len(pathParameters))
+	for _, pathParameter := range pathParameters {
+		if !isSDKVariablePathParameter(pathParameter) {
+			result = append(result, pathParameter)
+		}
+	}
+	return result
+}
+
+// nonSDKVariableExamplePathParameters returns the example path parameters that
+// are not bound to an SDK variable on the given endpoint.
+func nonSDKVariableExamplePathParameters(endpoint *ir.HttpEndpoint, examplePathParameters []*ir.ExamplePathParameter) []*ir.ExamplePathParameter {
+	bound := make(map[string]struct{})
+	for _, pathParameter := range endpoint.AllPathParameters {
+		if isSDKVariablePathParameter(pathParameter) {
+			bound[pathParameter.Name.OriginalName] = struct{}{}
+		}
+	}
+	if len(bound) == 0 {
+		return examplePathParameters
+	}
+	result := make([]*ir.ExamplePathParameter, 0, len(examplePathParameters))
+	for _, examplePathParameter := range examplePathParameters {
+		if _, ok := bound[examplePathParameter.Name.OriginalName]; !ok {
+			result = append(result, examplePathParameter)
+		}
+	}
+	return result
+}
+
+// collectServerURLVariables extracts the server URL variables from the first
+// environment that declares them, handling both single- and multiple-base-URL
+// environments and de-duplicating by id.
+func collectServerURLVariables(environmentsConfig *common.EnvironmentsConfig) []*common.ServerVariable {
+	if environmentsConfig == nil || environmentsConfig.Environments == nil {
+		return nil
+	}
+	seen := make(map[string]struct{})
+	var result []*common.ServerVariable
+	add := func(variables []*common.ServerVariable) {
+		for _, variable := range variables {
+			if variable == nil {
+				continue
+			}
+			if _, ok := seen[variable.Id]; ok {
+				continue
+			}
+			seen[variable.Id] = struct{}{}
+			result = append(result, variable)
+		}
+	}
+	if single := environmentsConfig.Environments.SingleBaseUrl; single != nil {
+		for _, environment := range single.Environments {
+			if len(environment.UrlVariables) > 0 {
+				add(environment.UrlVariables)
+				break
+			}
+		}
+	}
+	if multiple := environmentsConfig.Environments.MultipleBaseUrls; multiple != nil {
+		for _, environment := range multiple.Environments {
+			if len(environment.UrlVariables) > 0 {
+				// Preserve a deterministic order across base URLs.
+				baseURLIds := make([]string, 0, len(environment.UrlVariables))
+				for baseURLId := range environment.UrlVariables {
+					baseURLIds = append(baseURLIds, baseURLId)
+				}
+				sort.Strings(baseURLIds)
+				for _, baseURLId := range baseURLIds {
+					add(environment.UrlVariables[baseURLId])
+				}
+				break
+			}
+		}
+	}
+	return result
 }
 
 // WriteRequestOptionsDefinition writes the RequestOption interface and
@@ -312,8 +534,10 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	sdkVersion string,
 	environmentsConfig *common.EnvironmentsConfig,
 	inferredParams []inferredAuthParam,
+	variables []*ir.VariableDeclaration,
 ) error {
 	importPath := path.Join(f.baseImportPath, "core")
+	sdkVariables := f.sdkVariablesFromIR(variables, importPath)
 	f.P("// RequestOption adapts the behavior of the client or an individual request.")
 	f.P("type RequestOption interface {")
 	f.P("applyRequestOptions(*RequestOptions)")
@@ -323,6 +547,13 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	// Check if OAuth or inferred auth is configured
 	hasOAuth := getOAuthClientCredentials(auth) != nil
 	hasInferred := getInferredAuthScheme(auth) != nil
+
+	// In endpoint-security mode, auth is applied per-endpoint (each endpoint
+	// declares its own schemes) rather than flatly on every request. The flat
+	// ToHeader() therefore emits no auth headers; routing happens in
+	// AuthHeadersForEndpoint, which the endpoint code calls with the endpoint's
+	// static security requirements.
+	endpointSecurity := isEndpointSecurity(auth)
 
 	// Generate TokenGetter type if OAuth or inferred auth is configured
 	if hasOAuth || hasInferred {
@@ -348,6 +579,14 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
 	f.P("MaxBufSize int")
+	f.P("MaxStreamReconnectAttempts uint")
+	f.P("DisableStreamReconnection bool")
+	f.P("DisableRetries bool")
+	if f.userAgent.emitsAppInfo() {
+		// Optional application info appended to the User-Agent header. Set via
+		// option.WithUserAgentAppInfo.
+		f.P(appInfoTypeName, " *", appInfoTypeName)
+	}
 	if hasOAuth || hasInferred {
 		f.P("tokenGetter TokenGetter")
 	}
@@ -361,6 +600,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		if authScheme.Bearer != nil {
 			name := authScheme.Bearer.Token.PascalCase.UnsafeName
 			f.P(name, " string")
+			f.P(name, "Func func() (string, error)")
 			declaredFields[name] = true
 		}
 		if authScheme.Basic != nil {
@@ -385,7 +625,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(
 				name,
 				" ",
-				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers),
 			)
 			declaredFields[name] = true
 		}
@@ -417,8 +657,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers),
 		)
+	}
+	// Generate a field for each server URL variable (e.g. region), used to
+	// interpolate the environment's URL template(s) at client construction.
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
+		f.P(serverURLVariable.optionName, " string")
+	}
+	// Generate a field for each SDK variable (e.g. targetAccountSid), which is
+	// substituted into every endpoint path bound to it.
+	for _, sdkVariable := range sdkVariables {
+		f.P(sdkVariable.optionName, " ", sdkVariable.goType)
 	}
 	f.P("}")
 	f.P()
@@ -450,7 +700,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams)
+		if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig), sdkVariables); err != nil {
+			return err
+		}
+		// Emit the AppInfo type alongside its consumers (the AppInfo field,
+		// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+		// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+		// package references an undefined core.AppInfo for versionless (local /
+		// downloadFiles) generation or IRs without platform headers.
+		if f.userAgent.emitsAppInfo() {
+			f.writeAppInfoType()
+		}
+		return nil
 	}
 
 	// Generate the ToHeader method.
@@ -459,9 +720,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("func (r *RequestOptions) ToHeader() http.Header {")
 	f.P("header := r.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
+		if endpointSecurity {
+			// Auth headers are routed per-endpoint via AuthHeadersForEndpoint.
+			break
+		}
 		if authScheme.Bearer != nil {
-			f.P("if r.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" { `)
-			f.P(`header.Set("Authorization", `, `"Bearer " + r.`, authScheme.Bearer.Token.PascalCase.UnsafeName, ")")
+			name := authScheme.Bearer.Token.PascalCase.UnsafeName
+			f.P("if r.", name, ` != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.`, name, ")")
+			f.P("} else if r.", name, "Func != nil {")
+			f.P("if token, err := r.", name, `Func(); err == nil && token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + token)`)
+			f.P("}")
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
@@ -562,7 +832,14 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			continue
 		}
-		if header.ClientDefault != nil {
+		// Headers with an env var and/or client default are resolved into the
+		// client-level options at construction time, so ToHeader only emits
+		// values that are explicitly set on the options. Setting the resolved
+		// fallback here would clobber the client-level value on every request,
+		// since empty per-request options win the header merge. Construction-time
+		// resolution only covers optional, string, and boolean header types, so
+		// other types keep the request-time client default fallback.
+		if header.ClientDefault != nil && !isClientDefaultResolvedAtConstruction(header.ValueType, valueTypeFormat) {
 			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
 			f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
 			if header.Env != nil {
@@ -571,22 +848,23 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				f.P("}")
 			}
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			if valueTypeFormat.IsOptional {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
-			} else {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-			}
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
 			f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, value, ")")
 			f.P("}")
 			f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
 			continue
 		}
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-		if valueTypeFormat.IsOptional {
+		switch {
+		case valueTypeFormat.IsOptional:
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
 			f.P("}")
-		} else {
+		case isComparableHeaderValueType(header.ValueType, valueTypeFormat, f.types):
+			f.P("if ", headerIsSetCondition("r."+header.Name.Name.PascalCase.UnsafeName, header.ValueType, valueTypeFormat), " {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+			f.P("}")
+		default:
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
 		}
 	}
@@ -594,17 +872,217 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
+	if endpointSecurity {
+		f.writeAuthHeadersForEndpoint(auth)
+		f.P()
+	}
+
 	if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
 		return err
 	}
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig), sdkVariables); err != nil {
 		return err
 	}
 
+	// Emit the AppInfo type alongside its consumers (the AppInfo field,
+	// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+	// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+	// package references an undefined core.AppInfo for versionless (local /
+	// downloadFiles) generation or IRs without platform headers.
+	if f.userAgent.emitsAppInfo() {
+		f.writeAppInfoType()
+	}
+
 	return nil
+}
+
+// writeAuthHeadersForEndpoint generates the AuthHeadersForEndpoint method on
+// *RequestOptions, used in endpoint-security mode. Given an endpoint's static
+// security requirements ([][]string, where the outer slice is OR'd and each
+// inner slice of scheme keys is AND'd), it returns only the auth headers for
+// the first requirement whose schemes all have credentials available. If none
+// is satisfiable, it returns an error naming the missing schemes. This mirrors
+// the TypeScript RoutingAuthProvider and the Python get_auth_headers_for_endpoint.
+func (f *fileWriter) writeAuthHeadersForEndpoint(auth *ir.ApiAuth) {
+	// Bearer and OAuth schemes share the single token slot: a resolved token
+	// is applied as "Authorization: Bearer <token>" for whichever of those keys
+	// the endpoint declares.
+	var (
+		bearerScheme    *ir.BearerAuthScheme
+		basicScheme     *ir.BasicAuthScheme
+		inferredScheme  *ir.InferredAuthScheme
+		headerSchemes   []*ir.HeaderAuthScheme
+		tokenSchemeKeys []string
+	)
+	for _, authScheme := range auth.Schemes {
+		switch {
+		case authScheme.Bearer != nil:
+			bearerScheme = authScheme.Bearer
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Bearer.Key)
+		case authScheme.Oauth != nil:
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Oauth.Key)
+		case authScheme.Basic != nil:
+			basicScheme = authScheme.Basic
+		case authScheme.Header != nil:
+			if shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
+				headerSchemes = append(headerSchemes, authScheme.Header)
+			}
+		case authScheme.Inferred != nil:
+			inferredScheme = authScheme.Inferred
+		}
+	}
+
+	f.P("// AuthHeadersForEndpoint returns the auth headers to apply for an endpoint,")
+	f.P("// given the endpoint's static security requirements. It routes to the first")
+	f.P("// requirement whose schemes all have credentials available (OR across the")
+	f.P("// list, AND within a requirement).")
+	f.P("func (r *RequestOptions) AuthHeadersForEndpoint(security [][]string) (http.Header, error) {")
+	f.P("if len(security) == 0 {")
+	f.P("return make(http.Header), nil")
+	f.P("}")
+	f.P("availableAuthHeaders := make(map[string]http.Header)")
+
+	// Bearer / OAuth token schemes.
+	if len(tokenSchemeKeys) > 0 {
+		if bearerScheme != nil {
+			name := bearerScheme.Token.PascalCase.UnsafeName
+			f.P("token := r.", name)
+			f.P("if token == \"\" && r.", name, "Func != nil {")
+			f.P("if value, err := r.", name, "Func(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		} else {
+			// OAuth without an explicit bearer scheme: the token is either provided
+			// directly or fetched via the configured token getter.
+			f.P("token := r.Token")
+			f.P("if token == \"\" && r.tokenGetter != nil {")
+			f.P("if value, err := r.tokenGetter(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		}
+		f.P("if token != \"\" {")
+		f.P("tokenHeaders := make(http.Header)")
+		f.P(`tokenHeaders.Set("Authorization", "Bearer " + token)`)
+		for _, key := range tokenSchemeKeys {
+			f.P(`availableAuthHeaders["`, key, `"] = tokenHeaders`)
+		}
+		f.P("}")
+	}
+
+	// Header auth schemes (e.g. X-API-Key).
+	for _, header := range headerSchemes {
+		var prefix string
+		if header.Prefix != nil {
+			prefix = *header.Prefix + " "
+		}
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
+		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+		f.P("headerValues := make(http.Header)")
+		f.P(`headerValues.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+		f.P(`availableAuthHeaders["`, header.Key, `"] = headerValues`)
+		f.P("}")
+	}
+
+	// Basic auth.
+	if basicScheme != nil {
+		usernameOmitted := isBasicAuthUsernameOmitted(basicScheme)
+		passwordOmitted := isBasicAuthPasswordOmitted(basicScheme)
+		username := basicScheme.Username.PascalCase.UnsafeName
+		password := basicScheme.Password.PascalCase.UnsafeName
+		var (
+			condition   string
+			usernameArg string
+			passwordArg string
+		)
+		switch {
+		case usernameOmitted && passwordOmitted:
+			// Both omitted — no basic credentials to apply.
+		case usernameOmitted:
+			condition = "r." + password + ` != ""`
+			usernameArg = `""`
+			passwordArg = "r." + password
+		case passwordOmitted:
+			condition = "r." + username + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = `""`
+		default:
+			condition = "r." + username + ` != "" || r.` + password + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = "r." + password
+		}
+		if condition != "" {
+			f.P("if ", condition, " {")
+			f.P("basicHeaders := make(http.Header)")
+			f.P(`basicHeaders.Set("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(`, usernameArg, ` + ":" + `, passwordArg, `)))`)
+			f.P(`availableAuthHeaders["`, basicScheme.Key, `"] = basicHeaders`)
+			f.P("}")
+		}
+	}
+
+	// Inferred auth: fetch the token and apply the configured authenticated
+	// request headers.
+	if inferredScheme != nil && inferredScheme.TokenEndpoint != nil {
+		f.P("if r.tokenGetter != nil {")
+		f.P("if inferredToken, err := r.tokenGetter(); err == nil && inferredToken != \"\" {")
+		f.P("inferredHeaders := make(http.Header)")
+		for _, authHeader := range inferredScheme.TokenEndpoint.AuthenticatedRequestHeaders {
+			if authHeader.ValuePrefix != nil {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, %q + inferredToken)`, authHeader.HeaderName, *authHeader.ValuePrefix))
+			} else {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, inferredToken)`, authHeader.HeaderName))
+			}
+		}
+		f.P(`availableAuthHeaders["`, inferredScheme.Key, `"] = inferredHeaders`)
+		f.P("}")
+		f.P("}")
+	}
+
+	// OR across requirements: pick the first fully-satisfiable requirement and
+	// combine the headers of its schemes.
+	f.P("for _, requirement := range security {")
+	f.P("satisfied := true")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("satisfied = false")
+	f.P("break")
+	f.P("}")
+	f.P("}")
+	f.P("if !satisfied {")
+	f.P("continue")
+	f.P("}")
+	f.P("combined := make(http.Header)")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("for name, values := range availableAuthHeaders[schemeKey] {")
+	f.P("for _, value := range values {")
+	f.P("combined.Set(name, value)")
+	f.P("}")
+	f.P("}")
+	f.P("}")
+	f.P("return combined, nil")
+	f.P("}")
+
+	// No requirement satisfiable: report the missing schemes.
+	f.P("missing := make([]string, 0, len(security))")
+	f.P("for _, requirement := range security {")
+	f.P("var missingSchemes []string")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("missingSchemes = append(missingSchemes, schemeKey)")
+	f.P("}")
+	f.P("}")
+	f.P(`missing = append(missing, strings.Join(missingSchemes, " AND "))`)
+	f.P("}")
+	f.P("return nil, fmt.Errorf(")
+	f.P(`"no authentication credentials provided that satisfy the endpoint's security requirements; please provide credentials for: %s",`)
+	f.P(`strings.Join(missing, " OR "),`)
+	f.P(")")
+	f.P("}")
 }
 
 // writePlatformHeaders generates the platform headers.
@@ -613,7 +1091,7 @@ func (f *fileWriter) writePlatformHeaders(
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
 ) error {
-	if sdkVersion == "" || f.omitFernHeaders {
+	if sdkVersion == "" || f.userAgent.omitFernHeaders {
 		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
 		f.P("return r.HTTPHeader.Clone()")
 		f.P("}")
@@ -622,16 +1100,188 @@ func (f *fileWriter) writePlatformHeaders(
 	if sdkConfig.PlatformHeaders != nil {
 		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
 		f.P("headers := r.HTTPHeader.Clone()")
-		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.Language, goLanguageHeader))
-		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
-		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
+		// userAgentOnly only drops the discrete headers when a User-Agent is actually
+		// emitted, so the SDK is never left without any identification header.
+		if !f.userAgent.userAgentOnly || sdkConfig.PlatformHeaders.UserAgent == nil {
+			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.Language, goLanguageHeader))
+			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
+			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
+		}
 		if sdkConfig.PlatformHeaders.UserAgent != nil {
-			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
+			// Base is the User-Agent value the SDK would otherwise send: either the
+			// structured, runtime-computed value (includePlatformHeaders) or the raw
+			// configured/default value.
+			var userAgentExpr string
+			if f.userAgent.includePlatformHeaders {
+				// Consolidate runtime/platform observability into a single structured
+				// User-Agent header, computed at runtime.
+				userAgentExpr = fmt.Sprintf("%s(%q)", platformUserAgentFunc, sdkConfig.PlatformHeaders.UserAgent.Value)
+			} else {
+				userAgentExpr = fmt.Sprintf("%q", sdkConfig.PlatformHeaders.UserAgent.Value)
+			}
+			if f.userAgent.emitsAppInfo() {
+				// When enabled, the caller's appInfo product token is appended to
+				// whatever User-Agent the SDK would otherwise send (all branches).
+				userAgentExpr = fmt.Sprintf("%s(%s, r.%s)", appendAppInfoFunc, userAgentExpr, appInfoTypeName)
+			}
+			f.P(fmt.Sprintf("headers.Set(%q, %s)", sdkConfig.PlatformHeaders.UserAgent.Header(), userAgentExpr))
 		}
 		f.P("return headers")
 		f.P("}")
+		if f.userAgent.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
+			f.writePlatformUserAgentFunc()
+		}
+		if f.userAgent.emitsAppInfo() && sdkConfig.PlatformHeaders.UserAgent != nil {
+			// The AppInfo type itself is emitted unconditionally by
+			// WriteRequestOptionsDefinition (gated only on emitsAppInfo) so it is
+			// always defined alongside its consumers. The appender helper is emitted
+			// here only when a User-Agent header is actually written.
+			f.writeAppendAppInfoFunc()
+		}
 	}
 	return nil
+}
+
+// writePlatformUserAgentFunc generates a helper that augments the base
+// User-Agent value with the operating system, architecture, and Go runtime
+// version, all resolved at runtime. Unknown components are omitted rather than
+// reported as empty, and it never panics.
+func (f *fileWriter) writePlatformUserAgentFunc() {
+	fmtPackage := f.scope.AddImport("fmt")
+	runtimePackage := f.scope.AddImport("runtime")
+	stringsPackage := f.scope.AddImport("strings")
+	f.P()
+	f.P("// ", platformUserAgentFunc, " builds a structured User-Agent header value of the form")
+	f.P("// \"{base} ({os}; {arch}) Go/{version}\". The operating system, architecture, and")
+	f.P("// Go runtime version are resolved at runtime; unknown components are omitted.")
+	f.P("func ", platformUserAgentFunc, "(base string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("b.WriteString(base)")
+	f.P("goos, goarch := ", runtimePackage, ".GOOS, ", runtimePackage, ".GOARCH")
+	f.P("if goarch == \"x64\" || goarch == \"amd64\" || goarch == \"x86_64\" {")
+	f.P("goarch = \"x86_64\"")
+	f.P("}")
+	f.P("switch {")
+	f.P("case goos != \"\" && goarch != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s; %s)\", goos, goarch))")
+	f.P("case goos != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s)\", goos))")
+	f.P("case goarch != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s)\", goarch))")
+	f.P("}")
+	f.P("b.WriteString(\" Go\")")
+	f.P("if version := ", stringsPackage, ".TrimPrefix(", runtimePackage, ".Version(), \"go\"); version != \"\" {")
+	f.P("b.WriteString(\"/\" + version)")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+}
+
+// writeAppInfoType emits the public AppInfo struct into core/request_option.go.
+// It is emitted whenever the feature is enabled (emitsAppInfo) so the AppInfo
+// field, AppInfoOption, and option.WithUserAgentAppInfo always resolve, even for
+// APIs that do not declare a User-Agent platform header.
+func (f *fileWriter) writeAppInfoType() {
+	f.P()
+	f.P("// ", appInfoTypeName, " is optional application information whose product token is")
+	f.P("// appended to the User-Agent header (see WithUserAgentAppInfo). The Name is")
+	f.P("// required; when it is blank the User-Agent is left unchanged. Version and")
+	f.P("// Comment are optional and omitted from the token when blank.")
+	f.P("type ", appInfoTypeName, " struct {")
+	f.P("Name string")
+	f.P("Version string")
+	f.P("Comment string")
+	f.P("}")
+}
+
+// writeAppendAppInfoFunc emits the appendAppInfoToUserAgent helper (and its
+// token/comment encoders) into core/request_option.go. Emitted only when the
+// feature is enabled and a User-Agent is actually written, so flag-off output
+// stays byte-identical and the shared core-utilities are never modified.
+//
+// The helper appends a sanitized RFC 9110 product token
+// ("{name}/{version} ({comment})") to whatever User-Agent the SDK would
+// otherwise send. Each field is trimmed before the blank check and before
+// encoding, so blank values are dropped rather than encoded into whitespace
+// tokens. name/version are percent-encoded down to RFC 7230 tchar and the
+// comment's delimiters ("(", ")", "\") and control characters (incl. CR/LF) are
+// escaped, so caller-supplied values cannot inject additional header content.
+func (f *fileWriter) writeAppendAppInfoFunc() {
+	fmtPackage := f.scope.AddImport("fmt")
+	stringsPackage := f.scope.AddImport("strings")
+	utf8Package := f.scope.AddImport("unicode/utf8")
+
+	f.P()
+	// Percent-encoder helper (shared by token and comment encoders).
+	f.P("// ", appendAppInfoFunc, "PercentEncode percent-encodes a single rune from its")
+	f.P("// UTF-8 bytes (e.g. '\\n' -> \"%0A\"), so untrusted values cannot inject header content.")
+	f.P("func ", appendAppInfoFunc, "PercentEncode(b *", stringsPackage, ".Builder, r rune) {")
+	f.P("var buf [", utf8Package, ".UTFMax]byte")
+	f.P("n := ", utf8Package, ".EncodeRune(buf[:], r)")
+	f.P("for _, c := range buf[:n] {")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\"%%%02X\", c))")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Token encoder: keep RFC 7230 tchar, percent-encode everything else.
+	f.P("// ", appendAppInfoFunc, "EncodeToken keeps RFC 7230 token characters (tchar) and")
+	f.P("// percent-encodes everything else (spaces, control characters, CR/LF included).")
+	f.P("func ", appendAppInfoFunc, "EncodeToken(value string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("for _, r := range value {")
+	f.P("switch {")
+	f.P("case r >= 'a' && r <= 'z', r >= 'A' && r <= 'Z', r >= '0' && r <= '9':")
+	f.P("b.WriteRune(r)")
+	f.P("case ", stringsPackage, ".ContainsRune(\"!#$%&'*+-.^_`|~\", r):")
+	f.P("b.WriteRune(r)")
+	f.P("default:")
+	f.P(appendAppInfoFunc, "PercentEncode(&b, r)")
+	f.P("}")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+	f.P()
+
+	// Comment encoder: escape delimiters and control characters only.
+	f.P("// ", appendAppInfoFunc, "EncodeComment escapes the comment delimiters '(', ')', '\\\\'")
+	f.P("// and control characters (0x00-0x1F, 0x7F, incl. CR/LF) so a caller-supplied")
+	f.P("// comment cannot terminate the comment group early or inject header content.")
+	f.P("func ", appendAppInfoFunc, "EncodeComment(value string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("for _, r := range value {")
+	f.P("if r == '(' || r == ')' || r == '\\\\' || r < 0x20 || r == 0x7F {")
+	f.P(appendAppInfoFunc, "PercentEncode(&b, r)")
+	f.P("} else {")
+	f.P("b.WriteRune(r)")
+	f.P("}")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+	f.P()
+
+	// The appender itself.
+	f.P("// ", appendAppInfoFunc, " appends the sanitized appInfo product token")
+	f.P("// (\"{name}/{version} ({comment})\", RFC 9110) to the given User-Agent value.")
+	f.P("// Each field is trimmed before the blank check and before encoding; a blank")
+	f.P("// name leaves the User-Agent unchanged.")
+	f.P("func ", appendAppInfoFunc, "(userAgent string, appInfo *", appInfoTypeName, ") string {")
+	f.P("if appInfo == nil {")
+	f.P("return userAgent")
+	f.P("}")
+	f.P("name := ", appendAppInfoFunc, "EncodeToken(", stringsPackage, ".TrimSpace(appInfo.Name))")
+	f.P("if name == \"\" {")
+	f.P("return userAgent")
+	f.P("}")
+	f.P("productToken := name")
+	f.P("if version := ", appendAppInfoFunc, "EncodeToken(", stringsPackage, ".TrimSpace(appInfo.Version)); version != \"\" {")
+	f.P("productToken += \"/\" + version")
+	f.P("}")
+	f.P("if comment := ", appendAppInfoFunc, "EncodeComment(", stringsPackage, ".TrimSpace(appInfo.Comment)); comment != \"\" {")
+	f.P("productToken += \" (\" + comment + \")\"")
+	f.P("}")
+	f.P("return userAgent + \" \" + productToken")
+	f.P("}")
 }
 
 func (f *fileWriter) writeRequestOptionStructs(
@@ -640,6 +1290,8 @@ func (f *fileWriter) writeRequestOptionStructs(
 	asIdempotentRequestOption bool,
 	isMultiURL bool,
 	inferredParams []inferredAuthParam,
+	serverURLVariables []*serverURLVariable,
+	sdkVariables []*sdkVariable,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -662,8 +1314,32 @@ func (f *fileWriter) writeRequestOptionStructs(
 	if err := f.writeOptionStruct("MaxBufSize", "int", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
+	if err := f.writeOptionStruct("MaxStreamReconnectAttempts", "uint", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	f.writeMarkerOptionStruct("WithoutStreamReconnectionOption", "DisableStreamReconnection", asIdempotentRequestOption)
+	f.writeMarkerOptionStruct("WithoutRetriesOption", "DisableRetries", asIdempotentRequestOption)
+
+	if f.userAgent.emitsAppInfo() {
+		if err := f.writeOptionStruct(appInfoTypeName, "*"+appInfoTypeName, true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	for _, serverURLVariable := range serverURLVariables {
+		if err := f.writeOptionStruct(serverURLVariable.optionName, "string", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	for _, sdkVariable := range sdkVariables {
+		if err := f.writeOptionStruct(sdkVariable.optionName, sdkVariable.goType, true, asIdempotentRequestOption); err != nil {
 			return err
 		}
 	}
@@ -682,7 +1358,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
 				}
-					declaredOptionStructs[pascalCase] = true
+				declaredOptionStructs[pascalCase] = true
+
+				if err := f.writeOptionStruct(pascalCase+"Func", "func() (string, error)", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
 			}
 			if authScheme.Basic != nil {
 				usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
@@ -721,7 +1401,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 				var (
 					pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
-					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 				)
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
@@ -798,7 +1478,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 		}
 		var (
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 		)
 		if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 			return err
@@ -846,6 +1526,27 @@ func (f *fileWriter) writeOptionStruct(
 	return nil
 }
 
+// writeMarkerOptionStruct emits an empty-struct option whose apply method
+// toggles boolField on RequestOptions to true. Used for opt-out options like
+// WithoutRetries / WithoutStreamReconnection where there is no user value to
+// carry, just a sentinel to flip a default.
+func (f *fileWriter) writeMarkerOptionStruct(typeName string, boolField string, asIdempotentRequestOption bool) {
+	receiver := typeNameToReceiver(typeName)
+	f.P("// ", typeName, " implements the RequestOption interface.")
+	f.P("type ", typeName, " struct{}")
+	f.P()
+	f.P("func (", receiver, " *", typeName, ") applyRequestOptions(opts *RequestOptions) {")
+	f.P("opts.", boolField, " = true")
+	f.P("}")
+	f.P()
+	if asIdempotentRequestOption {
+		f.P("func (", receiver, " *", typeName, ") applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {")
+		f.P("opts.", boolField, " = true")
+		f.P("}")
+		f.P()
+	}
+}
+
 type GeneratedAuth struct {
 	Option          ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
 	EnvironmentVars []string // e.g. ACME_API_KEY
@@ -867,7 +1568,7 @@ func (f *fileWriter) WriteIdempotentRequestOptions(
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
 			camelCase  = header.Name.Name.CamelCase.SafeName
 			optionName = fmt.Sprintf("With%s", pascalCase)
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		)
 		f.P("// ", optionName, " sets the ", camelCase, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -893,6 +1594,7 @@ func (f *fileWriter) WriteRequestOptions(
 	headers []*ir.HttpHeader,
 	environmentsConfig *common.EnvironmentsConfig,
 	inferredParams []inferredAuthParam,
+	variables []*ir.VariableDeclaration,
 ) (*GeneratedAuth, error) {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
@@ -966,6 +1668,47 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("}")
 	f.P("}")
 	f.P()
+	f.P("// WithMaxStreamReconnectAttempts caps the number of transparent mid-stream")
+	f.P("// reconnect attempts on streaming endpoints that support resumption. The")
+	f.P("// reconnect loop honors Last-Event-ID and any server-sent `retry:` directives.")
+	f.P("// Has no effect on endpoints that don't support resumption.")
+	f.P("func WithMaxStreamReconnectAttempts(attempts uint) *core.MaxStreamReconnectAttemptsOption {")
+	f.P("return &core.MaxStreamReconnectAttemptsOption{")
+	f.P("MaxStreamReconnectAttempts: attempts,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithoutStreamReconnection disables transparent mid-stream reconnection on")
+	f.P("// resumable SSE endpoints. Has no effect on non-resumable endpoints.")
+	f.P("func WithoutStreamReconnection() *core.WithoutStreamReconnectionOption {")
+	f.P("return &core.WithoutStreamReconnectionOption{}")
+	f.P("}")
+	f.P()
+	f.P("// WithoutRetries disables HTTP-level retry attempts for the request. Use this")
+	f.P("// instead of WithMaxAttempts(0), which falls through to the default of 2")
+	f.P("// attempts.")
+	f.P("func WithoutRetries() *core.WithoutRetriesOption {")
+	f.P("return &core.WithoutRetriesOption{}")
+	f.P("}")
+	f.P()
+
+	// Generate the opt-in WithUserAgentAppInfo option.
+	if f.userAgent.emitsAppInfo() {
+		f.P("// WithUserAgentAppInfo appends an application product token to the User-Agent")
+		f.P("// header sent by the client (\"{name}/{version} ({comment})\", RFC 9110). The")
+		f.P("// version and comment are optional; pass \"\" to omit them. Caller-supplied")
+		f.P("// values are sanitized before being written to the header.")
+		f.P("func WithUserAgentAppInfo(name, version, comment string) *core.", appInfoTypeName, "Option {")
+		f.P("return &core.", appInfoTypeName, "Option{")
+		f.P(appInfoTypeName, ": &core.", appInfoTypeName, "{")
+		f.P("Name: name,")
+		f.P("Version: version,")
+		f.P("Comment: comment,")
+		f.P("},")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
 
 	// Generate the WithEnvironment option for multi-URL environments.
 	if isMultipleBaseUrlsEnvironment(environmentsConfig) {
@@ -976,6 +1719,38 @@ func (f *fileWriter) WriteRequestOptions(
 		f.P("func WithEnvironment(environment ", f.scope.AddImport(rootImportPath), ".Environment) *core.EnvironmentOption {")
 		f.P("return &core.EnvironmentOption{")
 		f.P("Environment: environment,")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
+	// Generate a functional option for each server URL variable (e.g. region).
+	// Setting one rebuilds the base URL(s) from the environment's URL template(s)
+	// at client construction time.
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
+		originalName := serverURLVariable.variable.Id
+		if serverURLVariable.variable.Name != nil {
+			originalName = serverURLVariable.variable.Name.OriginalName
+		}
+		f.P("// With", serverURLVariable.optionName, " sets the \"", originalName, "\" server URL variable, which is")
+		f.P("// substituted into the base URL template(s) at construction time.")
+		f.P("func With", serverURLVariable.optionName, "(", serverURLVariable.paramName, " string) *core.", serverURLVariable.optionName, "Option {")
+		f.P("return &core.", serverURLVariable.optionName, "Option{")
+		f.P(serverURLVariable.optionName, ": ", serverURLVariable.paramName, ",")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
+	// Generate a functional option for each SDK variable. The value is substituted
+	// into every endpoint path bound to the variable; it can be set on the client
+	// or overridden on an individual request.
+	for _, sdkVariable := range f.sdkVariablesFromIR(variables, importPath) {
+		f.P("// With", sdkVariable.optionName, " sets the \"", sdkVariable.variable.Name.OriginalName, "\" SDK variable, which is")
+		f.P("// substituted into every endpoint path that references it.")
+		f.P("func With", sdkVariable.optionName, "(", sdkVariable.paramName, " ", sdkVariable.goType, ") *core.", sdkVariable.optionName, "Option {")
+		f.P("return &core.", sdkVariable.optionName, "Option{")
+		f.P(sdkVariable.optionName, ": ", sdkVariable.paramName, ",")
 		f.P("}")
 		f.P("}")
 		f.P()
@@ -1023,6 +1798,16 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("}")
 			f.P()
 			declaredPublicOptions[optionName] = true
+
+			funcOptionName := fmt.Sprintf("With%sFunc", pascalCase)
+			funcTypeName := "core." + pascalCase + "FuncOption"
+			f.P("// ", funcOptionName, " sets a function that returns the 'Authorization: Bearer' token at request time.")
+			f.P("func ", funcOptionName, "(fn func() (string, error)) *", funcTypeName, " {")
+			f.P("return &", funcTypeName, "{")
+			f.P(pascalCase, "Func: fn,")
+			f.P("}")
+			f.P("}")
+			f.P()
 		}
 		if authScheme.Basic != nil {
 			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
@@ -1089,7 +1874,7 @@ func (f *fileWriter) WriteRequestOptions(
 				optionName = fmt.Sprintf("With%s", pascalCase)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
-				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			)
 			if i == 0 {
 				option = ast.NewCallExpr(
@@ -1242,7 +2027,7 @@ func (f *fileWriter) WriteRequestOptions(
 			optionName = fmt.Sprintf("With%s", pascalCase)
 			field      = header.Name.Name.PascalCase.UnsafeName
 			param      = header.Name.Name.CamelCase.SafeName
-			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		)
 		f.P("// ", optionName, " sets the ", param, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -1294,6 +2079,7 @@ func (f *fileWriter) WriteClient(
 	inlineFileProperties bool,
 	clientNameOverride string,
 	clientConstructorNameOverride string,
+	variables []*ir.VariableDeclaration,
 ) (*GeneratedClient, error) {
 	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
 	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
@@ -1303,7 +2089,7 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties, variables)
 		if err != nil {
 			return nil, err
 		}
@@ -1406,6 +2192,15 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 		}
 	}
+	// SDK variables that declare an env var default to it when not set on the client.
+	for _, sdkVariable := range f.sdkVariablesFromIR(variables, fernFilepathToImportPath(f.baseImportPath, fernFilepath)) {
+		if sdkVariable.variable.EnvVar == nil || *sdkVariable.variable.EnvVar == "" || !isStringType(sdkVariable.variable.Type) {
+			continue
+		}
+		f.P("if options.", sdkVariable.optionName, ` == "" {`)
+		f.P("options.", sdkVariable.optionName, ` = os.Getenv("`, *sdkVariable.variable.EnvVar, `")`)
+		f.P("}")
+	}
 	if oauthClientCredentials != nil {
 		f.P("oauthTokenProvider := core.NewTokenProvider(0)")
 		// Create an auth client to fetch tokens
@@ -1448,6 +2243,7 @@ func (f *fileWriter) WriteClient(
 	f.P("&internal.CallerParams{")
 	f.P("Client: options.HTTPClient,")
 	f.P("MaxAttempts: options.MaxAttempts,")
+	f.P("DisableRetries: options.DisableRetries,")
 	f.P("},")
 	f.P("),")
 	f.P("header: options.ToHeader(),")
@@ -1503,6 +2299,24 @@ func (f *fileWriter) WriteClient(
 			}
 			f.P("if ", ppd.VarExpr, ` == "" {`)
 			f.P(ppd.VarExpr, " = fmt.Sprintf(\"%v\", ", ppd.DefaultVal, ")")
+			f.P("}")
+		}
+		for _, svp := range endpoint.SDKVariablePathParameters {
+			if !svp.IsString {
+				f.P(svp.VarExpr, " := ", receiver, ".options.", svp.OptionName)
+				f.P("var ", svp.VarExpr, "Zero ", svp.GoType)
+				f.P("if options.", svp.OptionName, " != ", svp.VarExpr, "Zero {")
+				f.P(svp.VarExpr, " = options.", svp.OptionName)
+				f.P("}")
+				continue
+			}
+			f.P(svp.VarExpr, " := options.", svp.OptionName)
+			f.P("if ", svp.VarExpr, ` == "" {`)
+			f.P(svp.VarExpr, " = ", receiver, ".options.", svp.OptionName)
+			f.P("}")
+			f.P("if ", svp.VarExpr, ` == "" {`)
+			errorsPackage := f.scope.AddImport("errors")
+			f.P("return ", strings.TrimSuffix(endpoint.ErrorReturnValues, "err"), errorsPackage, ".New(", strconv.Quote(svp.ErrMessage), ")")
 			f.P("}")
 		}
 		if len(endpoint.PathParameterNames) > 0 {
@@ -1587,7 +2401,7 @@ func (f *fileWriter) WriteClient(
 					errorDeclaration := f.errors[responseError.Error.ErrorId]
 					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
 					errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
-					f.P(fmt.Sprintf("%d: func(apiError *core.APIError) error {", errorDeclaration.StatusCode))
+					f.P(f.errorCodesKey(errorDeclaration), ": func(apiError *core.APIError) error {")
 					f.P("return &", errorType, "{")
 					f.P("APIError: apiError,")
 					f.P("}")
@@ -1759,6 +2573,7 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1807,10 +2622,13 @@ func (f *fileWriter) WriteClient(
 				f.P("Terminator:", streamingInfo.Terminator, ",")
 			}
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
 			f.P("MaxBufSize: options.MaxBufSize,")
+			f.P("MaxStreamReconnectAttempts: options.MaxStreamReconnectAttempts,")
+			f.P("DisableStreamReconnection: options.DisableStreamReconnection,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
 			}
@@ -1835,6 +2653,7 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1953,6 +2772,7 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1991,6 +2811,7 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -2117,7 +2938,7 @@ func (f *fileWriter) getPaginationInfo(
 			// TODO: Add support for body property pagination.
 			return nil, nil
 		}
-		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Cursor.Results)
+		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Cursor.Results, f.types)
 		if err != nil {
 			return nil, err
 		}
@@ -2134,7 +2955,7 @@ func (f *fileWriter) getPaginationInfo(
 			Type:                      t,
 			PageName:                  nameAndWireValue.Name,
 			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
-			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 			PageZeroValue:             valueTypeFormat.ZeroValue,
 			PageFirstRequestParameter: fmt.Sprintf("%s.%s", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName),
 			PageIsOptional:            pageIsOptional,
@@ -2142,12 +2963,12 @@ func (f *fileWriter) getPaginationInfo(
 			Results:                   pagination.Cursor.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Cursor.Results.PropertyPath)),
 			ResultsNilCheck:           responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Cursor.Results.PropertyPath)),
-			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
-			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
+			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 			NextCursor:                pagination.Cursor.Next,
 			NextCursorPropertyPath:    responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Cursor.Next.PropertyPath)),
 			NextCursorNilCheck:        responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Cursor.Next.PropertyPath)),
-			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 			NextCursorIsOptional:      nextCursorIsOptional,
 		}, nil
 	case "offset":
@@ -2155,7 +2976,7 @@ func (f *fileWriter) getPaginationInfo(
 			// TODO: Add support for body property pagination.
 			return nil, nil
 		}
-		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Offset.Results)
+		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Offset.Results, f.types)
 		if err != nil {
 			return nil, err
 		}
@@ -2180,7 +3001,7 @@ func (f *fileWriter) getPaginationInfo(
 			Type:                      t,
 			PageName:                  nameAndWireValue.Name,
 			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
-			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 			PageZeroValue:             valueTypeFormat.ZeroValue,
 			PageFirstRequestParameter: pageFirstRequestParameter,
 			PageIsOptional:            pageIsOptional,
@@ -2189,10 +3010,12 @@ func (f *fileWriter) getPaginationInfo(
 			Results:                   pagination.Offset.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Offset.Results.PropertyPath)),
 			ResultsNilCheck:           responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Offset.Results.PropertyPath)),
-			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
-			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
+			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 		}, nil
-	case "custom":
+	case "custom", "uri", "path":
+		// The v1 client is overwritten by v2, which generates these endpoints as
+		// regular (non-auto-paginated) methods, so there is nothing to do here.
 		return nil, nil
 	default:
 		return nil, fmt.Errorf("%s pagination is not supported yet", t)
@@ -2219,27 +3042,20 @@ func nameAndWireValueFromRequestPropertyValue(requestPropertyValue *ir.RequestPr
 	return nil
 }
 
-func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProperty) (*ir.TypeReference, error) {
+func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProperty, types map[common.TypeId]*ir.TypeDeclaration) (*ir.TypeReference, error) {
 	if responseProperty == nil {
 		return nil, nil
 	}
 	property := responseProperty.Property
 	if property != nil && property.ValueType != nil {
-		valueType := property.ValueType
-		optionalOrNullableContainer := getOptionalOrNullableContainer(property.ValueType)
-		if optionalOrNullableContainer != nil {
-			valueType = optionalOrNullableContainer
+		// The results property may be a list/set directly, an optional/nullable
+		// wrapper around one, or a named alias that resolves to one.
+		// maybeIterableType follows alias indirection and unwraps
+		// optional/nullable containers before extracting the element type.
+		if singleType := maybeIterableType(property.ValueType, types); singleType != nil {
+			return singleType, nil
 		}
-		switch valueType.Type {
-		case "container":
-			switch valueType.Container.Type {
-			case "list":
-				return valueType.Container.List, nil
-			case "set":
-				return valueType.Container.Set, nil
-			}
-		}
-		return nil, fmt.Errorf("unsupported pagination results type %q", valueType.Type)
+		return nil, fmt.Errorf("unsupported pagination results type %q", property.ValueType.Type)
 	}
 	return nil, nil
 }
@@ -2472,7 +3288,7 @@ func getEndpointParameters(
 			},
 		},
 	}
-	allPathParameters := getAllExamplePathParameters(example)
+	allPathParameters := nonSDKVariableExamplePathParameters(endpoint, getAllExamplePathParameters(example))
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range allPathParameters {
 			fields = append(
@@ -2557,8 +3373,42 @@ func getEndpointParameters(
 			parameters,
 			f.snippetWriter.GetSnippetForExampleTypeReference(example.Request.Reference),
 		)
+		return parameters
+	}
+	if requestBodyIsNilable(endpoint, f.types) {
+		// The example omits the request body, but the parameter is still positional.
+		parameters = append(
+			parameters,
+			&ast.LocalReference{
+				Name: "nil",
+			},
+		)
 	}
 	return parameters
+}
+
+// requestBodyIsNilable returns true if the endpoint's request body is passed as a
+// nilable Go type, so that a call omitting the body can pass nil for it.
+func requestBodyIsNilable(endpoint *ir.HttpEndpoint, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if endpoint.SdkRequest == nil || endpoint.SdkRequest.Shape == nil {
+		return false
+	}
+	requestBody := endpoint.SdkRequest.Shape.JustRequestBody
+	if requestBody == nil || requestBody.TypeReference == nil {
+		return false
+	}
+	typeReference := requestBody.TypeReference.RequestBodyType
+	if typeReference.Named != nil {
+		typeDeclaration, ok := types[typeReference.Named.TypeId]
+		return ok && isPointer(typeDeclaration)
+	}
+	if typeReference.Container != nil {
+		return typeReference.Container.List != nil ||
+			typeReference.Container.Set != nil ||
+			typeReference.Container.Map != nil ||
+			isOptionalType(typeReference, types)
+	}
+	return false
 }
 
 func getAllExamplePathParameters(example *ir.ExampleEndpointCall) []*ir.ExamplePathParameter {
@@ -2735,6 +3585,18 @@ func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error
 //
 // All of the fields are pre-formatted so that they can all be simple
 // strings.
+// sdkVariablePathParameter resolves a path parameter bound to an SDK variable
+// into a local variable: a per-request option takes precedence over the
+// client-level value, and a string variable that is still empty fails before
+// any request is sent.
+type sdkVariablePathParameter struct {
+	VarExpr    string // Go local variable (e.g., "_targetAccountSid")
+	OptionName string // RequestOptions field name (e.g., "TargetAccountSid")
+	IsString   bool   // Whether the "" zero-value check and env var fallback apply
+	GoType     string // Go type of the variable, used for the zero-value check of non-string variables
+	ErrMessage string // Error message when the variable is unset
+}
+
 type pathParameterDefault struct {
 	VarExpr    string // Go local variable to check and assign (e.g., "_region")
 	InitExpr   string // Go expression to initialize VarExpr from (e.g., "request.Region"), empty if VarExpr is already the source
@@ -2757,6 +3619,7 @@ type endpoint struct {
 	ResponseIsOptionalParameter bool
 	PathParameterNames          []string
 	PathParameterDefaults       []pathParameterDefault
+	SDKVariablePathParameters   []*sdkVariablePathParameter
 	SignatureParameters         []*signatureParameter
 	ReturnValues                string
 	SuccessfulReturnValues      string
@@ -2798,8 +3661,37 @@ func (f *fileWriter) endpointFromIR(
 	idempotencyHeaders []*ir.HttpHeader,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	variables []*ir.VariableDeclaration,
 ) (*endpoint, error) {
 	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+
+	sdkVariablesByID := make(map[string]*sdkVariable)
+	for _, sdkVariable := range f.sdkVariablesFromIR(variables, importPath) {
+		sdkVariablesByID[sdkVariable.variable.Id] = sdkVariable
+	}
+	var sdkVariablePathParameters []*sdkVariablePathParameter
+	// sdkVariableLocal returns the local variable the bound path parameter is
+	// resolved into, registering the resolution once per SDK variable.
+	sdkVariableLocal := func(pathParameter *ir.PathParameter) (string, error) {
+		sdkVariable, ok := sdkVariablesByID[*pathParameter.Variable]
+		if !ok {
+			return "", fmt.Errorf("internal error: path parameter %s references unknown SDK variable %s", pathParameter.Name.OriginalName, *pathParameter.Variable)
+		}
+		localVar := "_" + sdkVariable.paramName
+		for _, existing := range sdkVariablePathParameters {
+			if existing.VarExpr == localVar {
+				return localVar, nil
+			}
+		}
+		sdkVariablePathParameters = append(sdkVariablePathParameters, &sdkVariablePathParameter{
+			VarExpr:    localVar,
+			OptionName: sdkVariable.optionName,
+			IsString:   isStringType(sdkVariable.variable.Type),
+			GoType:     sdkVariable.goType,
+			ErrMessage: sdkVariable.missingErrorMessage(),
+		})
+		return localVar, nil
+	}
 
 	// Create a new child scope for this endpoint.
 	scope := f.scope.Child()
@@ -2819,6 +3711,14 @@ func (f *fileWriter) endpointFromIR(
 	if includePathParametersInWrappedRequest(irEndpoint, inlinePathParameters) {
 		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 		for _, pathParameter := range irEndpoint.AllPathParameters {
+			if isSDKVariablePathParameter(pathParameter) {
+				localVar, err := sdkVariableLocal(pathParameter)
+				if err != nil {
+					return nil, err
+				}
+				pathParameterNames = append(pathParameterNames, localVar)
+				continue
+			}
 			requestFieldExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
 			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
 				// Use a local variable to avoid mutating the caller's request struct.
@@ -2841,6 +3741,16 @@ func (f *fileWriter) endpointFromIR(
 			pathParameter, ok := pathParameters[part.PathParameter]
 			if !ok {
 				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+			}
+			if isSDKVariablePathParameter(pathParameter) {
+				// Resolved from the client-level SDK variable, not the signature.
+				localVar, err := sdkVariableLocal(pathParameter)
+				if err != nil {
+					return nil, err
+				}
+				pathParameterNames = append(pathParameterNames, localVar)
+				pathParameterToScopedName[part.PathParameter] = localVar
+				continue
 			}
 			if literal := maybeLiteral(pathParameter.ValueType, f.types); literal != nil {
 				value := literalToValue(literal)
@@ -2865,8 +3775,8 @@ func (f *fileWriter) endpointFromIR(
 			if !ok {
 				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
 			}
-			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
-			if isLiteralType(pathParameter.ValueType, f.types) {
+			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
+			if isLiteralType(pathParameter.ValueType, f.types) || isSDKVariablePathParameter(pathParameter) {
 				continue
 			}
 			signatureParameters = append(
@@ -2932,7 +3842,7 @@ func (f *fileWriter) endpointFromIR(
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
 				switch requestBody.Type {
 				case "typeReference":
-					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 				case "bytes":
 					requestType = "[]byte"
 					requestValueName = "requestBuffer"
@@ -3030,7 +3940,7 @@ func (f *fileWriter) endpointFromIR(
 			if typeReference == nil {
 				return nil, fmt.Errorf("unsupported json response type: %s", irEndpoint.Response.Body.Json.Type)
 			}
-			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 			responseInitializerFormat = "var response %s"
 			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
 			responseParameterName = "&response"
@@ -3041,7 +3951,7 @@ func (f *fileWriter) endpointFromIR(
 			if irEndpoint.Response.Body.Json.NestedPropertyAsResponse != nil && irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty != nil {
 				responseProperty := irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty
 				responsePropertyTypeReference := responseProperty.ValueType
-				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 				signatureReturnValues = fmt.Sprintf("(%s, error)", responsePropertyType)
 				successfulReturnValues = fmt.Sprintf("response.%s, nil", responseProperty.Name.Name.PascalCase.UnsafeName)
 				errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(responsePropertyTypeReference, f.types))
@@ -3060,6 +3970,13 @@ func (f *fileWriter) endpointFromIR(
 			signatureReturnValues = "(io.Reader, error)"
 			successfulReturnValues = "response, nil"
 			errorReturnValues = "nil, err"
+		case "bytes":
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
+			responseParameterName = "response"
+			signatureReturnValues = "([]byte, error)"
+			successfulReturnValues = "response.Bytes(), nil"
+			errorReturnValues = "nil, err"
 		case "text":
 			responseType = "bytes.NewBuffer(nil)"
 			responseInitializerFormat = "response := %s"
@@ -3072,10 +3989,30 @@ func (f *fileWriter) endpointFromIR(
 			if err != nil {
 				return nil, err
 			}
-			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false), "*")
+			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers), "*")
 			responseParameterName = "response"
 			signatureReturnValues = fmt.Sprintf("(*core.Stream[%s], error)", responseType)
 			errorReturnValues = "nil, err"
+		case "streamParameter":
+			// A stream-condition endpoint exposes both a streaming and a
+			// non-streaming response; v1's client is overwritten by v2, so we
+			// generate the non-streaming (regular) variant to keep generation
+			// from aborting.
+			nonStreamResponse := irEndpoint.Response.Body.StreamParameter.GetNonStreamResponse()
+			if nonStreamResponse == nil || nonStreamResponse.Json == nil {
+				return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
+			}
+			typeReference := typeReferenceFromJsonResponse(nonStreamResponse.Json)
+			if typeReference == nil {
+				return nil, fmt.Errorf("unsupported json response type: %s", nonStreamResponse.Json.Type)
+			}
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
+			responseInitializerFormat = "var response %s"
+			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
+			responseParameterName = "&response"
+			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
+			successfulReturnValues = "response, nil"
+			errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(typeReference, f.types))
 		default:
 			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
 		}
@@ -3139,7 +4076,7 @@ func (f *fileWriter) endpointFromIR(
 	}
 
 	var pathParameterDocs []*string
-	for _, pathParam := range irEndpoint.AllPathParameters {
+	for _, pathParam := range nonSDKVariablePathParameters(irEndpoint.AllPathParameters) {
 		if pathParam.Docs != nil && len(*pathParam.Docs) > 0 {
 			pathParameterDocs = append(pathParameterDocs, pathParam.Docs)
 		}
@@ -3188,6 +4125,7 @@ func (f *fileWriter) endpointFromIR(
 		ResponseInitializerFormat:   responseInitializerFormat,
 		ResponseIsOptionalParameter: responseIsOptionalParameter,
 		PathParameterNames:          pathParameterNames,
+		SDKVariablePathParameters:   sdkVariablePathParameters,
 		PathParameterDefaults:       pathParameterDefaults,
 		SignatureParameters:         signatureParameters,
 		ReturnValues:                signatureReturnValues,
@@ -3227,6 +4165,34 @@ func (f *fileWriter) WriteEnvironments(environmentsConfig *common.EnvironmentsCo
 	return environmentsToEnvironmentsVariable(environmentsConfig, f, useCore)
 }
 
+// writeErrorStatusCodeAssignment sets the error's StatusCode in UnmarshalJSON.
+// Wildcard errors (4XX/5XX) keep the status code of the actual response,
+// which the error decoder already populated on the embedded *core.APIError.
+func (f *fileWriter) writeErrorStatusCodeAssignment(receiver string, errorDeclaration *ir.ErrorDeclaration) {
+	if isWildcardStatusCode(errorDeclaration) {
+		return
+	}
+	f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+}
+
+// isWildcardStatusCode returns true if the error was declared with a 4XX or 5XX wildcard.
+func isWildcardStatusCode(errorDeclaration *ir.ErrorDeclaration) bool {
+	return errorDeclaration.IsWildcardStatusCode != nil && *errorDeclaration.IsWildcardStatusCode
+}
+
+// errorCodesKey returns the ErrorCodes map key for the given error: the literal
+// status code, or the internal wildcard constant for 4XX/5XX wildcard errors.
+func (f *fileWriter) errorCodesKey(errorDeclaration *ir.ErrorDeclaration) string {
+	if !isWildcardStatusCode(errorDeclaration) {
+		return strconv.Itoa(errorDeclaration.StatusCode)
+	}
+	internalAlias := f.scope.AddImport(path.Join(f.baseImportPath, "internal"))
+	if errorDeclaration.StatusCode >= 500 {
+		return internalAlias + ".ServerErrorWildcard"
+	}
+	return internalAlias + ".ClientErrorWildcard"
+}
+
 // WriteError writes the structured error types.
 func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	// Generate the error type declaration.
@@ -3243,7 +4209,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 		f.P("}")
 		f.P()
 		f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
-		f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+		f.writeErrorStatusCodeAssignment(receiver, errorDeclaration)
 		f.P("return nil")
 		f.P("}")
 		f.P()
@@ -3255,7 +4221,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	}
 	var (
 		importPath = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false)
+		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 	)
 	var literal string
 	if errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Literal != nil {
@@ -3270,7 +4236,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
 	if isOptional {
 		f.P("if len(data) == 0 {")
-		f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+		f.writeErrorStatusCodeAssignment(receiver, errorDeclaration)
 		f.P("return nil")
 		f.P("}")
 	}
@@ -3284,7 +4250,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 		f.P(`return fmt.Errorf("expected literal %q, but found %q", `, literal, ", body)")
 		f.P("}")
 	}
-	f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+	f.writeErrorStatusCodeAssignment(receiver, errorDeclaration)
 	f.P(receiver, ".Body = body")
 	f.P("return nil")
 	f.P("}")
@@ -3308,6 +4274,14 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	// Implement the error unwrapper interface.
 	f.P("func (", receiver, "*", typeName, ") Unwrap() error {")
 	f.P("return ", receiver, ".APIError")
+	f.P("}")
+	f.P()
+
+	f.P("func (", receiver, "*", typeName, ") GetBody() ", value, " {")
+	f.P("if ", receiver, " == nil {")
+	f.P("return ", zeroValueForTypeReference(errorDeclaration.Type, f.types))
+	f.P("}")
+	f.P("return ", receiver, ".Body")
 	f.P("}")
 	f.P()
 
@@ -3354,7 +4328,7 @@ func (f *fileWriter) WriteRequestType(
 		if header.ValueType.Container == nil || header.ValueType.Container.Literal == nil {
 			propertyNames = append(propertyNames, goExportedFieldName(header.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
-			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			propertyTypes = append(propertyTypes, goType)
 			// Headers have json:"-" tags, so skip for test generation
 		}
@@ -3362,10 +4336,10 @@ func (f *fileWriter) WriteRequestType(
 
 	// Collect from path parameters (always include these)
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
-		for _, pathParameter := range endpoint.AllPathParameters {
+		for _, pathParameter := range nonSDKVariablePathParameters(endpoint.AllPathParameters) {
 			propertyNames = append(propertyNames, goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
-			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			propertyTypes = append(propertyTypes, goType)
 			// Path parameters have json:"-" tags, so skip for test generation
 		}
@@ -3376,7 +4350,7 @@ func (f *fileWriter) WriteRequestType(
 		if queryParam.ValueType.Container == nil || queryParam.ValueType.Container.Literal == nil {
 			propertyNames = append(propertyNames, goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, queryParam.Name.Name.CamelCase.SafeName)
-			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			if queryParam.AllowMultiple {
 				goType = fmt.Sprintf("[]%s", goType)
 			}
@@ -3390,7 +4364,7 @@ func (f *fileWriter) WriteRequestType(
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
 				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
-				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 				propertyTypes = append(propertyTypes, goType)
 			}
 		}
@@ -3413,18 +4387,18 @@ func (f *fileWriter) WriteRequestType(
 			continue
 		}
 		f.WriteDocs(header.Docs)
-		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
 	}
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
-		for _, pathParameter := range endpoint.AllPathParameters {
-			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		for _, pathParameter := range nonSDKVariablePathParameters(endpoint.AllPathParameters) {
+			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			f.WriteDocs(pathParameter.Docs)
 			f.P(goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName), " ", value, " `json:\"-\" url:\"-\"`")
 		}
 	}
 	for _, queryParam := range endpoint.QueryParameters {
-		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
@@ -3524,7 +4498,7 @@ func (f *fileWriter) WriteRequestType(
 		referenceLiteral        string
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
-		fullType := typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false)
+		fullType := typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		referenceFieldIsPointer = strings.HasPrefix(fullType, "*")
 		referenceType = strings.TrimPrefix(fullType, "*")
 		referenceIsPointer = reference.RequestBodyType.Named != nil && isPointer(f.types[reference.RequestBodyType.Named.TypeId])
@@ -3548,6 +4522,16 @@ func (f *fileWriter) WriteRequestType(
 		} else {
 			f.P("var body ", referenceType)
 		}
+	} else if len(requestBody.dates) > 0 {
+		f.P("type embed ", typeName)
+		f.P("var body = struct{")
+		f.P("embed")
+		for _, date := range requestBody.dates {
+			f.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
+		}
+		f.P("}{")
+		f.P("embed: embed(*", receiver, "),")
+		f.P("}")
 	} else {
 		f.P("type unmarshaler ", typeName)
 		f.P("var body unmarshaler")
@@ -3566,6 +4550,12 @@ func (f *fileWriter) WriteRequestType(
 			bodyValue = "&body"
 		}
 		f.P(receiver, ".", bodyField, " = ", bodyValue)
+	} else if len(requestBody.dates) > 0 {
+		f.P("*", receiver, " = ", typeName, "(body.embed)")
+		for _, date := range requestBody.dates {
+			fieldName := date.Name.Name.PascalCase.UnsafeName
+			f.P(receiver, ".", fieldName, " = ", date.unmarshaledValue("body."+fieldName))
+		}
 	} else {
 		f.P("*", receiver, " = ", typeName, "(body)")
 	}
@@ -3908,7 +4898,7 @@ func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReferen
 	r.writer.P(
 		r.bodyField,
 		" ",
-		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false),
+		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false, r.writer.legacyNullableAliasPointers),
 		" `json:\"-\" url:\"-\"`",
 	)
 	return nil
@@ -4216,7 +5206,7 @@ func includePathParametersInWrappedRequest(
 		return false
 	}
 	includePathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetIncludePathParameters()
-	return len(endpoint.PathParameters) > 0 && inlinePathParameters && includePathParameters != nil && *includePathParameters
+	return len(nonSDKVariablePathParameters(endpoint.PathParameters)) > 0 && inlinePathParameters && includePathParameters != nil && *includePathParameters
 }
 
 // maybePrimitive recurses into the given value type, returning its underlying primitive
@@ -4242,6 +5232,87 @@ func isStringType(valueType *ir.TypeReference) bool {
 	}
 	primitive := maybePrimitive(valueType)
 	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
+}
+
+// isClientDefaultResolvedAtConstruction returns true if a header's client
+// default is applied to the client-level options at construction time (by the
+// v2 client generator), which covers optional (pointer) types plus plain
+// string and boolean primitives. For those types, ToHeader must not re-apply
+// the fallback, or it would clobber the client-level value on every request.
+func isClientDefaultResolvedAtConstruction(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat) bool {
+	if valueTypeFormat.IsOptional {
+		return true
+	}
+	if valueType.Primitive == nil {
+		return false
+	}
+	return valueType.Primitive.V1 == common.PrimitiveTypeV1String || valueType.Primitive.V1 == common.PrimitiveTypeV1Boolean
+}
+
+// isComparableHeaderValueType returns true if a header's field can be checked
+// against its zero value in the generated code, so that a header left unset is
+// omitted rather than sent with an empty value (matching how the auth scheme
+// header is generated). Only types whose zero value is never a meaningful wire
+// value are supported: booleans and numbers are excluded because false and 0
+// are legitimate values that cannot be distinguished from an unset field, and
+// so are iterables and composite types (objects, lists, maps, unions). Named
+// types are only supported when they resolve to an enum; an alias of a
+// primitive stays unguarded because the alias' zero value is not necessarily
+// the underlying primitive's.
+func isComparableHeaderValueType(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if valueTypeFormat.IsIterable || valueTypeFormat.IsOptional {
+		return false
+	}
+	if primitive := maybePrimitive(valueType); primitive != nil {
+		switch primitive.V1 {
+		case common.PrimitiveTypeV1String,
+			common.PrimitiveTypeV1BigInteger,
+			common.PrimitiveTypeV1Uuid,
+			common.PrimitiveTypeV1Base64,
+			common.PrimitiveTypeV1Date,
+			common.PrimitiveTypeV1DateTime:
+			return true
+		}
+		return false
+	}
+	return isEnumType(valueType, types)
+}
+
+// headerIsSetCondition returns the condition used to determine whether a header
+// field holds a value, e.g. `r.Version != ""`. The caller must first verify the
+// type is supported with isComparableHeaderValueType.
+func headerIsSetCondition(field string, valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat) string {
+	if primitive := maybePrimitive(valueType); primitive != nil {
+		switch primitive.V1 {
+		case common.PrimitiveTypeV1DateTime, common.PrimitiveTypeV1Date:
+			// time.Time is not comparable with the != operator against a composite literal.
+			return "!" + field + ".IsZero()"
+		}
+	}
+	return field + " != " + valueTypeFormat.ZeroValue
+}
+
+// isEnumType returns true if the given type reference resolves to an enum,
+// following alias chains.
+func isEnumType(valueType *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	visited := make(map[common.TypeId]struct{})
+	for valueType.Named != nil {
+		typeId := valueType.Named.TypeId
+		if _, ok := visited[typeId]; ok {
+			// Guard against a self-referential alias chain.
+			return false
+		}
+		visited[typeId] = struct{}{}
+		typeDeclaration, ok := types[typeId]
+		if !ok {
+			return false
+		}
+		if typeDeclaration.Shape.Alias == nil {
+			return typeDeclaration.Shape.Enum != nil
+		}
+		valueType = typeDeclaration.Shape.Alias.AliasOf
+	}
+	return false
 }
 
 // isPrimitiveInteger returns true if the given primitive type is an integer.
@@ -4301,6 +5372,37 @@ func isOptionalType(typeReference *ir.TypeReference, types map[common.TypeId]*ir
 		return typeDeclaration.Shape.Alias != nil && isOptionalType(typeDeclaration.Shape.Alias.AliasOf, types)
 	}
 	return getOptionalOrNullableContainer(typeReference) != nil
+}
+
+// isNullableType returns true if the given type reference is a nullable (but not
+// optional) type, resolving through any alias indirection.
+func isNullableType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if typeReference == nil {
+		return false
+	}
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		return typeDeclaration != nil && typeDeclaration.Shape.Alias != nil && isNullableType(typeDeclaration.Shape.Alias.AliasOf, types)
+	}
+	return typeReference.Container != nil && typeReference.Container.Nullable != nil
+}
+
+// isOptionalNullableType returns true if the given type reference is an optional
+// type whose value is itself nullable (e.g. optional<nullable<T>>), resolving
+// through any alias indirection. A plain optional<T> is not nullable.
+func isOptionalNullableType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if typeReference == nil {
+		return false
+	}
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		return typeDeclaration != nil && typeDeclaration.Shape.Alias != nil && isOptionalNullableType(typeDeclaration.Shape.Alias.AliasOf, types)
+	}
+	if typeReference.Container == nil || typeReference.Container.Optional == nil {
+		return false
+	}
+	inner := typeReference.Container.Optional
+	return isNullableType(inner, types) || isOptionalNullableType(inner, types)
 }
 
 // maybeIterableType returns the given type reference's iterable type, if any.
@@ -4366,6 +5468,12 @@ func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
 		}
 	}
 	return nil
+}
+
+// isEndpointSecurity returns true when the API applies auth per-endpoint (each
+// endpoint declares its own schemes) rather than flatly on every request.
+func isEndpointSecurity(auth *ir.ApiAuth) bool {
+	return auth != nil && string(auth.Requirement) == "ENDPOINT_SECURITY"
 }
 
 // hasBearerAuth returns true if the auth configuration has a bearer auth scheme.

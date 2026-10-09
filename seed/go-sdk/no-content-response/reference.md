@@ -28,13 +28,12 @@ Creates a new contact. Returns 200 with the contact or 204 with no content.
 
 ```go
 request := &fern.CreateContactRequest{
-        Name: "name",
-    }
-client.Contacts.Create(
-        context.TODO(),
-        request,
-    )
+    Name: "name",
 }
+client.Contacts.Create(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -97,13 +96,12 @@ Gets a contact by ID. Returns 200 with the contact.
 
 ```go
 request := &fern.GetContactsRequest{
-        ID: "id",
-    }
-client.Contacts.Get(
-        context.TODO(),
-        request,
-    )
+    ID: "id",
 }
+client.Contacts.Get(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

@@ -6,7 +6,7 @@ import MixedCase
     @Test func getResource1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "status": "ACTIVE",
@@ -55,7 +55,7 @@ import MixedCase
     @Test func getResource2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "resource_type": "user",
@@ -102,7 +102,7 @@ import MixedCase
     @Test func listResources1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -156,7 +156,7 @@ import MixedCase
     @Test func listResources2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {

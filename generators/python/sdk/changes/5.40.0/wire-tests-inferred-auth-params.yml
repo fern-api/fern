@@ -1,0 +1,5 @@
+- summary: |
+    Fix wire test setup for inferred auth. `tests/wire/conftest.py` now passes a test value for each
+    required token endpoint parameter (e.g. `client_id`, `client_secret`) instead of always passing
+    `api_key`, which raised `TypeError` when the client had no `api_key` parameter.
+  type: fix

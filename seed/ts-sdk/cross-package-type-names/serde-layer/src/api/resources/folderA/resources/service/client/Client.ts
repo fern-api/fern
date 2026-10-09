@@ -25,6 +25,9 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedCrossPackageTypeNamesError}
+     * @throws {@link errors.SeedCrossPackageTypeNamesTimeoutError}
+     *
      * @example
      *     await client.folderA.service.getDirectThread()
      */

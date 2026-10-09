@@ -80,7 +80,7 @@
             "base-properties": {
               "display_name": {
                 "docs": "Connection name shown in the login screen.",
-                "type": "string",
+                "type": "optional<string>",
               },
               "id": {
                 "docs": "The connection's identifier.",
@@ -235,7 +235,7 @@ types:
         type: string
         docs: The connection's display name.
       display_name:
-        type: string
+        type: optional<string>
         docs: Connection name shown in the login screen.
     docs: Discriminated union of connection strategies.
     union:
@@ -305,4 +305,5 @@ error-discrimination:
 display-name: Lift shared allOf properties from oneOf variants
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -43,7 +43,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedEndpointSecurityAuthClient } from "@fern/endpoint-security-auth";
 
-const client = new SeedEndpointSecurityAuthClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN", apiKey: "YOUR_API_KEY", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET", username: "YOUR_USERNAME", password: "YOUR_PASSWORD" });
+const client = new SeedEndpointSecurityAuthClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN", apiKey: "YOUR_API_KEY", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET", username: "YOUR_USERNAME", password: "YOUR_PASSWORD" });
 await client.auth.getToken({
     client_id: "client_id",
     client_secret: "client_secret"

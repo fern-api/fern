@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the Python SDK generator container's base image from `python:3.13.7-slim`
+    to `python:3.13.14-slim` to pull in CPython security fixes, clearing
+    CVE-2025-13836, CVE-2026-3644, and CVE-2026-4224 (plus several lower-severity
+    CPython advisories).
+  type: chore

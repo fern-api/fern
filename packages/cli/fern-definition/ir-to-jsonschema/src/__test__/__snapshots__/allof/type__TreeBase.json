@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique tree identifier."
+    },
+    "treeName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Display name of the tree."
+    },
+    "treeDescription": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A description of the tree."
+    },
+    "treeSpecies": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The species of tree."
+    },
+    "heightInFeet": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Height of the tree in feet."
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

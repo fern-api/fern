@@ -14,6 +14,9 @@ export declare class ContainerClient {
      * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
@@ -22,6 +25,9 @@ export declare class ContainerClient {
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.container.getAndReturnListOfObjects([{
@@ -36,6 +42,9 @@ export declare class ContainerClient {
      * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
@@ -44,6 +53,9 @@ export declare class ContainerClient {
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.container.getAndReturnSetOfObjects([{
@@ -56,6 +68,9 @@ export declare class ContainerClient {
      * @param {Record<string, string>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnMapPrimToPrim({
      *         "string": "string"
@@ -66,6 +81,9 @@ export declare class ContainerClient {
     /**
      * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
@@ -80,6 +98,9 @@ export declare class ContainerClient {
      * @param {Record<string, SeedExhaustive.types.MixedType>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
      *         "string": 1.1
@@ -88,8 +109,27 @@ export declare class ContainerClient {
     getAndReturnMapOfPrimToUndiscriminatedUnion(request: Record<string, SeedExhaustive.types.MixedType>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<Record<string, SeedExhaustive.types.MixedType>>;
     private __getAndReturnMapOfPrimToUndiscriminatedUnion;
     /**
+     * @param {Record<number, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnMapOfIntegerToObject({
+     *         1: {
+     *             string: "string"
+     *         }
+     *     })
+     */
+    getAndReturnMapOfIntegerToObject(request: Record<number, SeedExhaustive.types.ObjectWithRequiredField>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<Record<number, SeedExhaustive.types.ObjectWithRequiredField>>;
+    private __getAndReturnMapOfIntegerToObject;
+    /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.container.getAndReturnOptional({

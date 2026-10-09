@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+    rather than in the order they happen to appear in the input request, so generated
+    examples line up with the actual SDK method signature even when the spec lists path
+    parameters in a different order.
+  type: fix
+- summary: |
+    Dynamic snippets now pass root-level path parameters to the endpoint method instead
+    of the client constructor (which does not accept them), and include them alongside
+    endpoint-level path parameters so the rendered call matches the generated Python SDK
+    method signature.
+  type: fix

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentials;\n\nvar client = new SeedOauthClientCredentialsClient(\"client_id\", \"client_secret\", \"entityId\", \"scp\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        Cid = \"cid\",\n        Csr = \"csr\",\n        Scp = \"scp\",\n        EntityId = \"entity_id\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
+                "client": "using SeedOauthClientCredentials;\n\nvar client = new SeedOauthClientCredentialsClient(\"client_id\", \"client_secret\", \"entityId\", \"scp\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        Cid = \"cid\",\n        Csr = \"csr\",\n        Scp = \"scp\",\n        EntityId = \"entity_id\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n        Permissions = new List<string>() { \"permissions\", \"permissions\" },\n    }\n);\n"
             }
         },
         {

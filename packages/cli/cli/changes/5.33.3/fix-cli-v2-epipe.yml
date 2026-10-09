@@ -1,0 +1,3 @@
+- summary: |
+    Swallow stdout/stderr EPIPE events in the cli-v2 terminal logger so Unix pipe closures do not report false-positive internal errors.
+  type: fix

@@ -100,5 +100,6 @@
       ]
     }
   ],
+  "description": "Discriminated union for testing nullable unions",
   "definitions": {}
 }

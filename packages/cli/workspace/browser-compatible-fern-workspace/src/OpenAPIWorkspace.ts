@@ -45,6 +45,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             ...DEFAULT_WORKSPACE_ARGS,
             generatorsConfiguration,
             respectReadonlySchemas: spec.settings?.respectReadonlySchemas,
+            useReadVariantForResponses: spec.settings?.useReadVariantForResponses,
             respectNullableSchemas: spec.settings?.respectNullableSchemas,
             wrapReferencesToNullableInOptional: spec.settings?.wrapReferencesToNullableInOptional,
             coerceOptionalSchemasToNullable: spec.settings?.coerceOptionalSchemasToNullable,
@@ -55,6 +56,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             exampleGeneration: spec.settings?.exampleGeneration,
             useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
             respectForwardCompatibleEnums: spec.settings?.respectForwardCompatibleEnums,
+            respectOptionalRequestBody: spec.settings?.respectOptionalRequestBody,
             inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas,
             resolveAliases: spec.settings?.resolveAliases,
             groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost,
@@ -63,7 +65,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             removeDiscriminantsFromSchemas: spec.settings?.removeDiscriminantsFromSchemas,
             defaultIntegerFormat: spec.settings?.defaultIntegerFormat,
             pathParameterOrder: spec.settings?.pathParameterOrder,
-            coerceConstsTo: spec.settings?.coerceConstsTo
+            coerceConstsTo: spec.settings?.coerceConstsTo,
+            respectOperationIdWordBoundaries: spec.settings?.respectOperationIdWordBoundaries
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();

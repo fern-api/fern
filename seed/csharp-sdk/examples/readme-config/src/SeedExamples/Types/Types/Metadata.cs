@@ -1,6 +1,7 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
+using global::System.Diagnostics.CodeAnalysis;
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
@@ -12,6 +13,7 @@ namespace SeedExamples;
 [Serializable]
 public record Metadata
 {
+    [SetsRequiredMembers]
     internal Metadata(string type, object? value)
     {
         Type = type;

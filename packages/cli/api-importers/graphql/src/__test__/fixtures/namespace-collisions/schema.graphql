@@ -1,0 +1,48 @@
+# Edge cases for namespace operation-id collision handling.
+#
+# These schemas exercise the flat-id -> namespaced-id fallback in resolveOperationIds:
+#
+# 1. A namespace child field whose name equals the root namespace field name
+#    (InventoryQueries.inventory vs the root `inventory` parent operation). Both map to
+#    the flat id `query_inventory`, so the child must fall back to a namespaced id.
+# 2. Two namespaces that share a child field name (`search` in InventoryQueries and
+#    CatalogQueries). Both map to `query_search` and must resolve to distinct ids.
+# 3. Two root fields returning the SAME namespace type (`inventory` and `stock` both
+#    return InventoryQueries). Each gets its own parent operation and its own field-path
+#    prefix, so their children must not clobber one another.
+#
+# If any of these silently collided, one operation would overwrite another in the
+# resolved operations map and disappear from the output.
+
+"""
+A basic data type (not a namespace — its fields take no arguments).
+"""
+type Widget {
+  id: ID!
+  label: String!
+}
+
+"""
+Query namespace whose `inventory` child field collides with the root `inventory` field.
+All fields have arguments, so this is treated as a namespace type.
+"""
+type InventoryQueries {
+  inventory(id: ID!): Widget!
+  search(term: String!): [Widget!]!
+}
+
+"""
+A second query namespace that shares the `search` child field name with InventoryQueries.
+"""
+type CatalogQueries {
+  search(term: String!): [Widget!]!
+  featured(limit: Int!): [Widget!]!
+}
+
+type Query {
+  # Two root fields returning the same namespace type.
+  inventory: InventoryQueries
+  stock: InventoryQueries
+  # A distinct namespace sharing a child field name with InventoryQueries.
+  catalog: CatalogQueries
+}

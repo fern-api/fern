@@ -1,0 +1,7 @@
+- summary: |
+    Fix smart-casing snake_case names dropping the word boundary after a number.
+    Names like `ConversationsV2Configuration` now generate `conversations_v2_configuration`
+    instead of `conversations_v2configuration` (matching the camelCase and pascalCase
+    variants). Trailing numbers remain fused, e.g. `applicationV1` still generates
+    `application_v1`.
+  type: fix

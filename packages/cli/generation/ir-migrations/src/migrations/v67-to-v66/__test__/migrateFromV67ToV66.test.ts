@@ -58,6 +58,7 @@ describe("migrateFromV67ToV66", () => {
             basePath: undefined,
             pathParameters: [],
             variables: [],
+            globalParameters: undefined,
             serviceTypeReferenceInfo: {
                 typesReferencedOnlyByService: {},
                 sharedTypes: []
@@ -257,6 +258,7 @@ describe("migrateFromV67ToV66", () => {
                     extends: [],
                     extendedProperties: undefined,
                     extraProperties: false,
+                    deferredUnionBaseProperties: undefined,
                     properties: [
                         {
                             docs: undefined,
@@ -265,6 +267,7 @@ describe("migrateFromV67ToV66", () => {
                             valueType: IrVersions.V67.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                             propertyAccess: undefined,
                             defaultValue: undefined,
+                            xml: undefined,
                             v2Examples: undefined
                         }
                     ]

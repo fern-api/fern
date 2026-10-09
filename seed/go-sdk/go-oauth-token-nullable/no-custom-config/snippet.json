@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-oauth-token-nullable/fern\"\n\tfernclient \"github.com/go-oauth-token-nullable/fern/client\"\n\toption \"github.com/go-oauth-token-nullable/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithClientCredentials(\n\t\t\"\u003cYOUR_CLIENT_ID\u003e\",\n\t\t\"\u003cYOUR_CLIENT_SECRET\u003e\",\n\t),\n)\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientID:     \"my_oauth_app_123\",\n\t\tClientSecret: \"sk_live_abcdef123456789\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

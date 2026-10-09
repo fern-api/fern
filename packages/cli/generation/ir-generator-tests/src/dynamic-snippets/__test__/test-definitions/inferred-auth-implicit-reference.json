@@ -229,7 +229,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_auth:RefreshTokenRequest": {
             "type": "object",
@@ -489,7 +490,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_auth:TokenResponse": {
             "type": "object",
@@ -653,7 +655,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -755,7 +758,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -834,7 +838,8 @@
                         "type": "named",
                         "value": "type_auth:GetTokenRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -938,7 +943,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -1017,7 +1023,8 @@
                         "type": "named",
                         "value": "type_auth:RefreshTokenRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1121,7 +1128,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -1233,7 +1241,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1337,7 +1346,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -1449,7 +1459,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1553,7 +1564,8 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ]
+                ],
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -1626,7 +1638,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1637,5 +1650,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

@@ -28,10 +28,9 @@ Uses discriminator with mapping, x-fern-discriminator-context set to protocol. B
 ```go
 request := &fern.StreamRequest{}
 client.StreamProtocolNoCollision(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -87,10 +86,9 @@ Same as endpoint 1, but the object data payload contains its own "event" propert
 ```go
 request := &fern.StreamRequest{}
 client.StreamProtocolCollision(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -146,10 +144,9 @@ x-fern-discriminator-context is explicitly set to "data" (the default value). Ea
 ```go
 request := &fern.StreamRequest{}
 client.StreamDataContext(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -205,10 +202,9 @@ The x-fern-discriminator-context extension is omitted entirely. Tests whether Fe
 ```go
 request := &fern.StreamRequest{}
 client.StreamNoContext(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -264,10 +260,67 @@ Mismatched combination: context=protocol with the flat allOf schema pattern that
 ```go
 request := &fern.StreamRequest{}
 client.StreamProtocolWithFlatSchema(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*fern.StreamRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.StreamProtocolMixedSchema(request) -> fern.StreamProtocolMixedSchemaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.StreamRequest{}
+client.StreamProtocolMixedSchema(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -323,10 +376,9 @@ Mismatched combination: context=data with the envelope+data schema pattern that 
 ```go
 request := &fern.StreamRequest{}
 client.StreamDataContextWithEnvelopeSchema(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -382,10 +434,9 @@ Follows the pattern from the OAS 3.2 specification's own SSE example. The itemSc
 ```go
 request := &fern.StreamRequest{}
 client.StreamOasSpecNative(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -440,13 +491,12 @@ Uses x-fern-streaming extension with stream-condition to split into streaming an
 
 ```go
 request := &fern.StreamXFernStreamingConditionStreamRequest{
-        Query: "query",
-    }
-client.StreamXFernStreamingConditionStream(
-        context.TODO(),
-        request,
-    )
+    Query: "query",
 }
+client.StreamXFernStreamingConditionStream(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -508,14 +558,13 @@ Uses x-fern-streaming extension with stream-condition to split into streaming an
 <dd>
 
 ```go
-request := &fern.StreamXFernStreamingConditionStreamRequest{
-        Query: "query",
-    }
-client.StreamXFernStreamingConditionStream(
-        context.TODO(),
-        request,
-    )
+request := &fern.StreamXFernStreamingConditionRequest{
+    Query: "query",
 }
+client.StreamXFernStreamingCondition(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -578,14 +627,13 @@ Uses x-fern-streaming with stream-condition. The request body $ref (SharedComple
 
 ```go
 request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
-        Prompt: "prompt",
-        Model: "model",
-    }
-client.StreamXFernStreamingSharedSchemaStream(
-        context.TODO(),
-        request,
-    )
+    Prompt: "prompt",
+    Model: "model",
 }
+client.StreamXFernStreamingSharedSchemaStream(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -655,15 +703,14 @@ Uses x-fern-streaming with stream-condition. The request body $ref (SharedComple
 <dd>
 
 ```go
-request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
-        Prompt: "prompt",
-        Model: "model",
-    }
-client.StreamXFernStreamingSharedSchemaStream(
-        context.TODO(),
-        request,
-    )
+request := &fern.StreamXFernStreamingSharedSchemaRequest{
+    Prompt: "prompt",
+    Model: "model",
 }
+client.StreamXFernStreamingSharedSchema(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -734,14 +781,13 @@ A non-streaming endpoint that references the same SharedCompletionRequest schema
 
 ```go
 request := &fern.SharedCompletionRequest{
-        Prompt: "prompt",
-        Model: "model",
-    }
-client.ValidateCompletion(
-        context.TODO(),
-        request,
-    )
+    Prompt: "prompt",
+    Model: "model",
 }
+client.ValidateCompletion(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -812,19 +858,18 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 
 ```go
 request := &fern.StreamXFernStreamingUnionStreamRequest{
-        Message: &fern.UnionStreamMessageVariant{
-            Prompt: "prompt",
-            Message: "message",
-            StreamResponse: fern.Bool(
-                true,
-            ),
-        },
-    }
-client.StreamXFernStreamingUnionStream(
-        context.TODO(),
-        request,
-    )
+    Message: &fern.UnionStreamMessageVariant{
+        StreamResponse: fern.Bool(
+            true,
+        ),
+        Prompt: "prompt",
+        Message: "message",
+    },
 }
+client.StreamXFernStreamingUnionStream(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -878,20 +923,19 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 <dd>
 
 ```go
-request := &fern.StreamXFernStreamingUnionStreamRequest{
-        Message: &fern.UnionStreamMessageVariant{
-            Prompt: "prompt",
-            Message: "message",
-            StreamResponse: fern.Bool(
-                false,
-            ),
-        },
-    }
-client.StreamXFernStreamingUnionStream(
-        context.TODO(),
-        request,
-    )
+request := &fern.StreamXFernStreamingUnionRequest{
+    Message: &fern.UnionStreamMessageVariant{
+        StreamResponse: fern.Bool(
+            false,
+        ),
+        Prompt: "prompt",
+        Message: "message",
+    },
 }
+client.StreamXFernStreamingUnion(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -946,13 +990,12 @@ References UnionStreamRequestBase directly, ensuring the base schema cannot be e
 
 ```go
 request := &fern.UnionStreamRequestBase{
-        Prompt: "prompt",
-    }
-client.ValidateUnionRequest(
-        context.TODO(),
-        request,
-    )
+    Prompt: "prompt",
 }
+client.ValidateUnionRequest(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1007,13 +1050,12 @@ Uses x-fern-streaming with stream-condition where the stream field is nullable (
 
 ```go
 request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
-        Query: "query",
-    }
-client.StreamXFernStreamingNullableConditionStream(
-        context.TODO(),
-        request,
-    )
+    Query: "query",
 }
+client.StreamXFernStreamingNullableConditionStream(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1075,14 +1117,13 @@ Uses x-fern-streaming with stream-condition where the stream field is nullable (
 <dd>
 
 ```go
-request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
-        Query: "query",
-    }
-client.StreamXFernStreamingNullableConditionStream(
-        context.TODO(),
-        request,
-    )
+request := &fern.StreamXFernStreamingNullableConditionRequest{
+    Query: "query",
 }
+client.StreamXFernStreamingNullableCondition(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1146,10 +1187,9 @@ Uses x-fern-streaming with format: sse but no stream-condition. This represents 
 ```go
 request := &fern.StreamRequest{}
 client.StreamXFernStreamingSseOnly(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

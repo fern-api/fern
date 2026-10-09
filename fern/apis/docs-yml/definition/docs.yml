@@ -156,6 +156,14 @@ types:
       - description
       - subtitle
 
+  EmbeddingConfig:
+    properties:
+      allowed-origins:
+        type: list<string>
+        docs: |
+          Origins that may embed your docs in an iframe, e.g. `https://app.example.com` or `https://*.example.com`.
+          Each entry is added to the `frame-ancestors` directive of the Content-Security-Policy header.
+
   AgentsConfig:
     properties:
       page-directive:
@@ -264,6 +272,12 @@ types:
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
       products: optional<list<ProductConfig>>
+      changelog:
+        type: optional<ChangelogConfiguration>
+        docs: |
+          A site-level changelog shared by every product. Only valid alongside `products`.
+          It is served at the root (e.g. `/changelog`) rather than under any product slug,
+          and does not appear in the product switcher.
       landing-page:
         type: optional<PageConfiguration>
         docs: Creates a landing page for your documentation website.
@@ -339,7 +353,7 @@ types:
 
       # seo
       metadata: optional<MetadataConfig>
-      redirects: optional<list<RedirectConfig>>
+      redirects: optional<RedirectsConfiguration>
 
       # validation
       check: optional<CheckConfig>
@@ -452,6 +466,16 @@ types:
           to `false` to hide it on those sites.
 
           @default: true
+      mcp:
+        type: optional<boolean>
+        docs: |
+          Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.
+          When set to `false`, the endpoint returns 404, the MCP server URL is omitted from
+          `llms.txt` and agent prompts, and the "Connect to Claude Code" / "Connect to Cursor"
+          buttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents
+          discovering the endpoint would cause confusion.
+
+          @default: true
       vscode:
         type: optional<boolean>
         docs: |
@@ -464,6 +488,14 @@ types:
           When enabled, displays a custom button that allows users to open the page content in a custom IDE for editing and development.
           The value of this property should be the name of the custom IDE.
           Example: `cursor`
+      skills:
+        type: optional<SkillsPageActionConfig>
+        docs: |
+          Enables the "Install skills" page action and configures its modal. Presence of this key
+          enables the action; omit it and the action is hidden. An empty object (`skills: {}`) is
+          valid and enables the action with all defaults — the right minimal config for sites that
+          serve a `/.well-known` skills manifest, where the docs site generates the
+          `npx skills add https://<domain>` command and fetches the live skill list itself.
 
   CustomPageAction:
     docs: A custom page action that can be configured by the user.
@@ -483,6 +515,59 @@ types:
       default:
         type: optional<boolean>
         docs: Whether this custom action should be the default action.
+
+  SkillsPageActionConfig:
+    docs: |
+      Configures the "Install skills" page action and its modal. Sites that ship agent skills
+      point at where those skills live and how to install them. If the docs site also serves a
+      `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array with the
+      served manifest; `title`, `description`, `learn-more-url`, `repository`, and
+      `install-command` always come from this config.
+    properties:
+      title:
+        type: optional<string>
+        docs: Overrides the modal title.
+      description:
+        type: optional<string>
+        docs: Overrides the modal description/blurb.
+      "learn-more-url":
+        type: optional<string>
+        docs: Optional "Learn more" link shown alongside the description.
+      repository:
+        type: optional<string>
+        docs: Source repository (e.g. GitHub or GitLab) shown as a "View source" button.
+      "install-command":
+        type: optional<SkillsInstallCommand>
+        docs: |
+          Command(s) used to install the skills, rendered verbatim as a copyable block. Providing a
+          custom command disables the modal's per-skill selection. When omitted, the docs site
+          generates `npx skills add https://<domain>` and per-skill selection appends
+          `--skill <name>` flags. A list is rendered as one command per line (multi-step installs).
+      skills:
+        type: optional<list<SkillEntry>>
+        docs: Skills displayed in the modal.
+
+  SkillsInstallCommand:
+    discriminated: false
+    docs: A single install command, or a list of commands rendered one per line.
+    union:
+      - string
+      - list<string>
+
+  SkillEntry:
+    docs: |
+      A single agent skill surfaced in the "Install skills" modal. `name` is the skill identifier
+      (e.g. `fern-docs`); `url` optionally links to its source (a path in the repo, a docs page, etc.).
+    properties:
+      name:
+        type: string
+        docs: The skill identifier.
+      description:
+        type: optional<string>
+        docs: Short description of what the skill does.
+      url:
+        type: optional<string>
+        docs: Optional link to the skill's source.
 
   AIChatConfig:
     properties:
@@ -504,6 +589,16 @@ types:
       datasources:
         type: optional<list<AIChatDatasource>>
         docs: Additional content sources that Ask Fern should index and search.
+      "mask-pii":
+        type: optional<boolean>
+        docs: |
+          When enabled, personally identifiable information (PII) in user messages is masked before
+          being sent to Ask Fern. Disabled by default.
+      disclaimer:
+        type: optional<string>
+        docs: |
+          Overrides the disclaimer shown in the Ask Fern chat
+          (default: "Responses are generated using AI and may contain mistakes.").
 
   AIChatLocation:
     enum:
@@ -550,6 +645,7 @@ types:
           Tabs with `href` must not have children in the navigation config.
       target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
+      blog: optional<ChangelogFolderRelativePath>
 
   ChangelogFolderRelativePath:
     type: string
@@ -629,8 +725,16 @@ types:
     properties:
       display-name: string
       path:
-        type: string
-        docs: The relative path to the version's docs.yml file.
+        type: optional<string>
+        docs: |
+          The relative path to the version's docs.yml file. Required unless `ref` is set,
+          in which case the version's content is built from that git ref.
+      ref:
+        type: optional<string>
+        docs: |
+          A git ref—branch, tag, or commit SHA—whose committed content is built for this
+          version. Branches are mutable and resolve to their latest commit on the remote;
+          tags and commit SHAs are immutable.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
@@ -732,6 +836,7 @@ types:
       - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
+      - BlogConfiguration
       - FolderConfiguration
 
   LogoConfiguration:
@@ -910,6 +1015,57 @@ types:
         docs: |
           If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
 
+      changelog-layout:
+        type: optional<ChangelogLayout>
+        availability: in-development
+        docs: |
+          Sets which layout to use for changelog pages.
+
+          @default: `timeline`
+
+          - `timeline` renders the searchable timeline-of-cards layout.
+          - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
+
+      api-reference-layout:
+        type: optional<ApiReferenceLayout>
+        availability: in-development
+        docs: |
+          Sets how nested object fields are rendered in the API reference.
+
+          @default: `indented`
+
+          - `indented` renders each nested level as an indented branch with a connector line and a color-coded path breadcrumb.
+          - `cards` renders each nested level as a bordered card.
+
+      api-reference-expand-properties:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `api-reference-expand-properties` is set to true, the first level of nested object
+          and union fields in the API reference is expanded on page load instead of hidden behind
+          a "Show N properties" button. Deeper levels stay collapsed. Defaults to false.
+
+      show-nav-availability-badges:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
+          are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
+          availability badge is unaffected by this setting.
+
+      breadcrumbs:
+        type: optional<BreadcrumbsConfig>
+        availability: in-development
+        docs: Configures the breadcrumb trail rendered above the page title.
+
+  BreadcrumbsConfig:
+    properties:
+      current-page:
+        type: optional<boolean>
+        docs: |
+          If `current-page` is set to true, the current page is appended to the breadcrumb trail
+          as a non-clickable item. Defaults to false.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -936,7 +1092,15 @@ types:
           By default (`false`), search will display results for pages across all products and versions.
           If set to true, search will display results for pages within the current product and version.
 
+          Preserved for backwards compatibility. Equivalent to
+          `search.default-filter-by-current-product`.
+
           @default: false
+      search:
+        type: optional<SearchSettingsConfig>
+        docs: |
+          Controls product-aware search behavior. See `SearchSettingsConfig` for
+          individual options.
       http-snippets:
         type: optional<HttpSnippetsConfig>
         docs: |
@@ -1000,6 +1164,38 @@ types:
           - `grouped`: Messages are shown as a single parent entry with nested variants.
 
           @default: flat
+      embedding:
+        type: optional<EmbeddingConfig>
+        docs: |
+          Controls which third-party sites may embed your documentation in an iframe.
+          By default only your docs site itself (and the Fern dashboard) may frame it.
+      show-headers-in-examples:
+        type: optional<boolean>
+        docs: |
+          If set to true, response examples in the API Reference include a raw HTTP block
+          showing the response status line and response headers alongside the body.
+
+          @default: false
+
+  SearchSettingsConfig:
+    properties:
+      prioritize-current-product:
+        type: optional<boolean>
+        docs: |
+          If set to true, search results from the current product/version are
+          boosted in Algolia's ranking (via `optionalFilters`) without excluding
+          results from other products/versions.
+
+          @default: false
+      default-filter-by-current-product:
+        type: optional<boolean>
+        docs: |
+          If set to true, the current product is automatically selected as a
+          facet filter, so only results from the current product are shown by
+          default. Equivalent to the legacy `settings.default-search-filters`
+          setting, which is preserved as an alias for backwards compatibility.
+
+          @default: false
 
   ThemeConfig:
     properties:
@@ -1010,6 +1206,30 @@ types:
       footer-nav: optional<FooterNavThemeConfig>
       language-switcher: optional<LanguageSwitcherThemeConfig>
       product-switcher: optional<ProductSwitcherThemeConfig>
+      site-switcher:
+        type: optional<SiteSwitcherThemeConfig>
+        docs: |
+          Header switcher listing the other docs sites published to the same
+          domain under different basepaths. Membership is discovered
+          automatically at publish time; this only controls presentation.
+
+  SiteSwitcherThemeConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: Render the site switcher. Defaults to false.
+      order:
+        type: optional<list<string>>
+        docs: Basepaths to pin first, in this order. Remaining sites follow alphabetically.
+      hide:
+        type: optional<list<string>>
+        docs: Basepaths to omit, including any sites nested beneath them.
+      labels:
+        type: optional<map<string, string>>
+        docs: Display label overrides keyed by basepath.
+      show-products:
+        type: optional<boolean>
+        docs: List each site's products indented beneath it. Defaults to false.
 
   ProductSwitcherThemeConfig:
     enum:
@@ -1112,6 +1332,16 @@ types:
     enum:
       - fixed
       - static
+
+  ChangelogLayout:
+    enum:
+      - timeline
+      - classic
+
+  ApiReferenceLayout:
+    enum:
+      - indented
+      - cards
 
   AudienceId:
     type: string
@@ -1275,6 +1505,16 @@ types:
       hidden: optional<boolean>
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
 
+  BlogConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      blog: ChangelogFolderRelativePath
+      title: optional<string> # defaults to "Blog"
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      # skip-slug: optional<boolean> # skip-slug is not needed for blog
+
   SectionConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
@@ -1358,6 +1598,82 @@ types:
       - name: OpenByDefault
         value: open-by-default
 
+  ApiSpecType:
+    enum:
+      - openapi
+      - asyncapi
+      - graphql
+
+  ApiSpecErrorResponseHttpMethod:
+    enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      - head
+      - options
+      - trace
+
+  ApiSpecErrorResponseEnsure:
+    properties:
+      status-code:
+        type: integer
+        docs: The 4xx/5xx status code to add when an operation does not declare it.
+        validation:
+          min: 400
+          max: 599
+      methods: optional<list<ApiSpecErrorResponseHttpMethod>>
+
+  ApiSpecErrorResponses:
+    properties:
+      schema: ApiSpecErrorResponseSchemaSource
+      name: optional<string>
+      apply-to:
+        type: optional<ApiSpecErrorResponseApplyTo>
+      ensure: optional<list<ApiSpecErrorResponseEnsure>>
+
+  ApiSpecErrorResponseSchemaSource:
+    discriminated: false
+    union:
+      - string
+      - map<string, unknown>
+
+  ApiSpecErrorResponseApplyTo:
+    enum:
+      - all
+      - untyped
+
+  ApiSpecImportSettings:
+    docs: Import settings that affect the API definition rendered by Fern Docs.
+    properties:
+      type-dates-as-strings: optional<boolean>
+      use-bytes-for-binary-response: optional<boolean>
+      respect-parameter-content: optional<boolean>
+      respect-operation-id-word-boundaries: optional<boolean>
+      infer-forward-compatible: optional<boolean>
+      preserve-one-of-in-all-of: optional<boolean>
+      any-of-sibling-properties-as-object: optional<boolean>
+      error-responses: optional<ApiSpecErrorResponses>
+
+  ApiSpecConfiguration:
+    docs: A source API specification referenced directly by docs.yml.
+    properties:
+      type: ApiSpecType
+      path:
+        type: string
+        docs: Path to the API specification, relative to docs.yml.
+      namespace: optional<string>
+      overlays:
+        type: optional<string>
+        docs: Path to an OpenAPI Overlay document, relative to docs.yml.
+      overrides:
+        type: optional<list<string>>
+        docs: Paths to Fern override documents, relative to docs.yml.
+      settings:
+        type: optional<ApiSpecImportSettings>
+        docs: Import settings that affect the rendered API reference.
+
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
@@ -1365,6 +1681,9 @@ types:
       "api-name":
         type: optional<string>
         docs: Name of API that we are referencing
+      specs:
+        type: optional<list<ApiSpecConfiguration>>
+        docs: API specifications to load directly. When provided, these take precedence over the API workspace referenced by `api-name`.
       openrpc:
         type: optional<string>
         docs: Path to an openrpc spec.
@@ -1444,6 +1763,12 @@ types:
         docs: |
           Optional path within the repository to the library source.
           Example: django/core
+      ref:
+        type: optional<string>
+        docs: |
+          Git ref (branch, tag, or commit SHA) to check out.
+          Defaults to the repository's default branch when omitted.
+          Example: feature/my-fix
 
   PathLibraryInputSchema:
     docs: Configuration for using a local filesystem path as library source. (Not yet implemented)
@@ -1474,6 +1799,12 @@ types:
           Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.
           When provided, the backend uses this Doxyfile instead of auto-generating one.
           Only valid when lang is cpp.
+      include-undocumented-macros:
+        type: optional<boolean>
+        docs: |
+          Also generate pages for `#define`s that have no Doxygen comment.
+          By default only documented macros are rendered. Include guards are never
+          emitted (Doxygen drops them). Only valid when lang is cpp.
 
   LibraryConfiguration:
     docs: |
@@ -1975,6 +2306,13 @@ types:
     properties:
       url: string
       strategy: optional<JsScriptStrategy>
+      disable-sri:
+        type: optional<boolean>
+        docs: |-
+          When true, skip computing a Subresource Integrity (SRI) hash for this
+          remote script. The script is rendered without an `integrity` attribute.
+          Useful for scripts whose contents change (e.g. rolling CDN builds) that
+          would otherwise fail integrity verification.
 
   JsFileConfig:
     discriminated: false
@@ -2093,6 +2431,26 @@ types:
       - dark
       - light
 
+  RedirectsConfiguration:
+    discriminated: false
+    docs: |
+      Either an inline list of redirects, or one or more filepaths to YAML files containing
+      only a list of redirects.
+
+      ```yaml
+      redirects: ./redirects.yml
+      ```
+
+      ```yaml
+      redirects:
+        - ./redirects/a.yml
+        - ./redirects/b.yml
+      ```
+    union:
+      - list<RedirectConfig>
+      - string
+      - list<string>
+
   RedirectConfig:
     availability: in-development
     docs: |
@@ -2183,6 +2541,33 @@ types:
         type: optional<boolean>
         docs: |
           Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
+      robots-txt-on-instance-url:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          Experimental flag: when set to `true`, the custom robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep the `X-Robots-Tag: noindex, nofollow` header, so search engines still won't index them. Has no effect without a custom robots.txt. Only the static docs renderer needs this flag: the Next.js renderer already serves a custom robots.txt on the instance URL.
+      external-sitemaps:
+        type: optional<list<ExternalSitemap>>
+        availability: pre-release
+        docs: |
+          Experimental flag: a list of external sitemaps (`sitemap.xml`), each either an absolute URL or an object with `url` and an optional `locale`. Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation. Each URL is routed to the search index of the site locale it belongs to (detected from `hreflang` or a leading locale path segment, defaulting to the site's default language); set `locale` to pin every URL in a sitemap to one of the site's locales instead.
+
+  ExternalSitemap:
+    discriminated: false
+    union:
+      - string
+      - ExternalSitemapConfig
+
+  ExternalSitemapConfig:
+    properties:
+      url:
+        type: string
+        docs: Absolute URL of the external sitemap (`sitemap.xml` or sitemap index).
+      locale:
+        type: optional<string>
+        docs: |
+          Locale to index every URL in this sitemap into (e.g. `en`, `nl`, `ja-JP`). Must match the
+          site's default language or one of its `translations`. Overrides per-URL language detection.
 
   PlaygroundSettings:
     properties:
@@ -2197,6 +2582,11 @@ types:
         type: optional<integer>
         docs: |
           The maximum number of websocket messages per connection in the playground.
+      "send-optional-defaults":
+        type: optional<boolean>
+        docs: |
+          When true, optional parameters that declare a default (or x-fern-default) are
+          pre-filled and sent from the API Explorer playground. Defaults to false.
 
   PlaygroundButtonSettings:
     properties:

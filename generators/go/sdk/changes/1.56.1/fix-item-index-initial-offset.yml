@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the initial offset for `offsetSemantics: item-index`. Item-index offsets address records
+    rather than pages, so pagination now starts at `0` instead of `1`, which previously skipped the
+    first record of every collection. This applies to both query-parameter and request-body offsets.
+    Page-index semantics continue to start at `1`.
+  type: fix

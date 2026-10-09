@@ -1,0 +1,146 @@
+openapi: 3.1.0
+info:
+  title: OAuth Client Credentials OpenAPI
+  version: 0.0.0
+paths:
+  /identity/token:
+    post:
+      operationId: identity_getToken
+      tags:
+        - Identity
+      parameters: []
+      responses:
+        '200':
+          description: Successful token response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
+                    refresh_token: refresh_token
+      summary: Get an access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  examples:
+                    - username
+                password:
+                  type: string
+                  examples:
+                    - password
+              required:
+                - username
+                - password
+            examples:
+              Example1:
+                value:
+                  username: username
+                  password: password
+  /plants:
+    get:
+      operationId: plants_list
+      tags:
+        - Plants
+      parameters: []
+      responses:
+        '200':
+          description: A list of plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plant'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
+                      species: species
+      summary: List all plants
+      security:
+        - CustomAuth: []
+  /plants/{plantId}:
+    get:
+      operationId: plants_get
+      tags:
+        - Plants
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: plantId
+      responses:
+        '200':
+          description: A plant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plant'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    species: species
+      summary: Get a plant by ID
+      security:
+        - CustomAuth: []
+components:
+  schemas:
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      properties:
+        access_token:
+          type: string
+          examples:
+            - access_token
+        expires_in:
+          type: integer
+          examples:
+            - 1
+        refresh_token:
+          type:
+            - string
+            - 'null'
+      required:
+        - access_token
+        - expires_in
+    Plant:
+      title: Plant
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        name:
+          type: string
+          examples:
+            - name
+        species:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - name
+  securitySchemes:
+    CustomAuth:
+      type: http
+      scheme: bearer

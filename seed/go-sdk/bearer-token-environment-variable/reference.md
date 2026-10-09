@@ -28,9 +28,8 @@ GET request with custom api key
 
 ```go
 client.Service.GetWithBearerToken(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Test API",
   "servers": [
     {
@@ -157,6 +158,7 @@
         {
           "origin": "client",
           "name": "transcribe",
+          "description": "Transcription request.",
           "body": {
             "schema": {
               "type": "string"
@@ -211,6 +213,7 @@
         {
           "origin": "client",
           "name": "converse",
+          "description": "Agent conversation request.",
           "body": {
             "schema": {
               "type": "string"

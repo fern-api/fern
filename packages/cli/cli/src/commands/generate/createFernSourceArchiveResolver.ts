@@ -1,0 +1,160 @@
+import { exposesSourceSpecs } from "@fern-api/api-workspace-commons";
+import { generatorsYml } from "@fern-api/configuration-loader";
+import {
+    createGroupedSpecsTarGzArchiveSettled,
+    createSpecsTarGzArchive,
+    generatorWantsSpecs,
+    validateSdkConfigImportSettings
+} from "@fern-api/local-workspace-runner";
+import {
+    type FernSdkConfigV1Payload,
+    type FernSourceArchiveRequest,
+    type FernSourceArchiveResolution
+} from "@fern-api/remote-workspace-runner";
+import { TaskContext } from "@fern-api/task-context";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+
+export function createFernSourceArchiveResolver({
+    workspace,
+    context,
+    group,
+    sdkConfigV1
+}: {
+    workspace: AbstractAPIWorkspace<unknown>;
+    context: TaskContext;
+    group: generatorsYml.GeneratorGroup;
+    sdkConfigV1?: FernSdkConfigV1Payload;
+}): (requests: FernSourceArchiveRequest[]) => Promise<FernSourceArchiveResolution> {
+    return async (requests) => {
+        const audiences =
+            sdkConfigV1 == null
+                ? group.audiences
+                : sdkConfigV1.audiences == null
+                  ? ({ type: "all" } as const)
+                  : ({ type: "select", audiences: sdkConfigV1.audiences } as const);
+        const sourceArchives: FernSourceArchiveResolution["sourceArchives"] = new Map();
+        const errors = new Map<number, unknown>();
+        if (!exposesSourceSpecs(workspace)) {
+            for (const request of requests) {
+                if (requestRequiresSourceArchive(request)) {
+                    errors.set(
+                        request.generatorIndex,
+                        new Error(
+                            `Generator index ${request.generatorIndex} (${request.generatorInvocation.name}) requires a source archive, but workspace type ${workspace.type} does not expose source specs`
+                        )
+                    );
+                }
+            }
+            return { sourceArchives, errors };
+        }
+
+        const settledSelections = await Promise.allSettled(
+            requests.map(async (request) => {
+                if (request.sdkGenApiRoute == null) {
+                    return undefined;
+                }
+                const specs = await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
+                if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
+                    validateSdkConfigImportSettings(specs, {
+                        clientPathParameterStyle: getClientPathParameterStyle(request, sdkConfigV1)
+                    });
+                }
+                return specs;
+            })
+        );
+        const generatorSelections = settledSelections.flatMap((result, index) => {
+            const request = requests[index];
+            if (request == null) {
+                throw new Error(`Missing source archive request at settled index ${index}`);
+            }
+            if (result.status === "rejected") {
+                errors.set(request.generatorIndex, result.reason);
+                return [];
+            }
+            return result.value == null ? [] : [{ generatorIndex: request.generatorIndex, specs: result.value }];
+        });
+        if (generatorSelections.length > 0) {
+            const settledArchive = await createGroupedSpecsTarGzArchiveSettled({
+                generatorSelections,
+                context,
+                audiences
+            });
+            for (const [generatorIndex, error] of settledArchive.errorsByGeneratorIndex) {
+                errors.set(generatorIndex, error);
+            }
+            if (settledArchive.archive != null) {
+                const { specIndexesByGeneratorIndex, ...sourceArchive } = settledArchive.archive;
+                for (const [generatorIndex, specIndexes] of specIndexesByGeneratorIndex) {
+                    sourceArchives.set(generatorIndex, { ...sourceArchive, specIndexes });
+                }
+            }
+        }
+
+        const rootRequests = requests.filter(
+            (request) =>
+                request.sdkGenApiRoute == null &&
+                generatorWantsSpecs(request.generatorInvocation.name, request.generatorInvocation.version) &&
+                !errors.has(request.generatorIndex)
+        );
+        if (rootRequests.length > 0) {
+            try {
+                const archive = await createSpecsTarGzArchive({
+                    specs: await workspace.getSourceSpecs(),
+                    context,
+                    audiences
+                });
+                const specIndexes = archive.manifest.specs.map((_, index) => index);
+                for (const request of rootRequests) {
+                    sourceArchives.set(request.generatorIndex, { ...archive, specIndexes });
+                }
+            } catch (error) {
+                for (const request of rootRequests) {
+                    errors.set(request.generatorIndex, error);
+                }
+            }
+        }
+
+        for (const request of requests) {
+            if (!requestRequiresSourceArchive(request)) {
+                continue;
+            }
+            const hasArchive = sourceArchives.has(request.generatorIndex);
+            const hasError = errors.has(request.generatorIndex);
+            if (hasArchive && hasError) {
+                throw new Error(
+                    `Generator index ${request.generatorIndex} produced both a source archive and a source preparation error`,
+                    { cause: errors.get(request.generatorIndex) }
+                );
+            }
+            if (!hasArchive && !hasError) {
+                errors.set(
+                    request.generatorIndex,
+                    new Error(
+                        `Generator index ${request.generatorIndex} did not produce a source archive or source preparation error`
+                    )
+                );
+            }
+        }
+        return { sourceArchives, errors };
+    };
+}
+
+function getClientPathParameterStyle(
+    request: FernSourceArchiveRequest,
+    sdkConfigV1: FernSdkConfigV1Payload | undefined
+): "inline" | "wrapped" | "language-default" | undefined {
+    if (request.sdkConfigTargetIndex == null) {
+        return sdkConfigV1?.clientPathParameterStyle;
+    }
+    return (
+        sdkConfigV1?.targets[request.sdkConfigTargetIndex]?.clientPathParameterStyle ??
+        sdkConfigV1?.clientPathParameterStyle
+    );
+}
+
+function requestRequiresSourceArchive(request: FernSourceArchiveRequest): boolean {
+    return (
+        request.sdkGenApiRoute != null ||
+        generatorWantsSpecs(request.generatorInvocation.name, request.generatorInvocation.version)
+    );
+}

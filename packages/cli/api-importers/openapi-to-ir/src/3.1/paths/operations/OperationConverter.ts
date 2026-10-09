@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { isEndpointSecurityAuthSchemes, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ContainerType,
     FernIr,
@@ -27,6 +27,8 @@ import { AbstractOperationConverter } from "./AbstractOperationConverter.js";
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
         idempotent: boolean | undefined;
+        subtitle: string | undefined;
+        globalParameterIds: string[] | undefined;
         idToAuthScheme?: Record<string, FernIr.AuthScheme>;
         topLevelServers?: OpenAPIV3_1.ServerObject[];
         pathLevelServers?: OpenAPIV3_1.ServerObject[];
@@ -39,6 +41,8 @@ export declare namespace OperationConverter {
         audiences: string[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
         servers?: OpenAPIV3_1.ServerObject[];
+        inlinedRequestPropertiesByAudience?: Record<string, Set<string>>;
+        queryParametersByAudience?: Record<string, Set<string>>;
     }
 
     export interface ConvertedResponseBody {
@@ -58,6 +62,8 @@ export declare namespace OperationConverter {
 
 export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
+    private readonly subtitle: string | undefined;
+    private readonly globalParameterIds: string[] | undefined;
     private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
     private readonly pathLevelServers?: OpenAPIV3_1.ServerObject[];
@@ -71,14 +77,19 @@ export class OperationConverter extends AbstractOperationConverter {
         operation,
         method,
         path,
+        pathItemParameters,
         idempotent,
+        subtitle,
+        globalParameterIds,
         idToAuthScheme,
         topLevelServers,
         pathLevelServers,
         streamingExtension
     }: OperationConverter.Args) {
-        super({ context, breadcrumbs, operation, method, path });
+        super({ context, breadcrumbs, operation, method, path, pathItemParameters });
         this.idempotent = idempotent;
+        this.subtitle = subtitle;
+        this.globalParameterIds = globalParameterIds;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
         this.pathLevelServers = pathLevelServers;
@@ -94,8 +105,13 @@ export class OperationConverter extends AbstractOperationConverter {
         const { group, method } =
             this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
         const groupDisplayName = this.getGroupDisplayName(group);
+        const groupDescription = this.getGroupDescription(group);
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({
+            breadcrumbs: [...this.breadcrumbs, "parameters"]
+        });
+
+        const queryParametersByAudience = this.collectQueryParameterAudiences({
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
@@ -109,6 +125,8 @@ export class OperationConverter extends AbstractOperationConverter {
         const requestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.requestBody : undefined;
         const streamRequestBody =
             convertedRequestBodies != null ? convertedRequestBodies[0]?.streamRequestBody : undefined;
+        const inlinedRequestPropertiesByAudience =
+            convertedRequestBodies != null ? convertedRequestBodies[0]?.inlinedPropertiesByAudience : undefined;
 
         const v2RequestBodies: V2HttpRequestBodies = {
             requestBodies: convertedRequestBodies?.map((body) => body.requestBody)
@@ -146,6 +164,31 @@ export class OperationConverter extends AbstractOperationConverter {
             });
             if (nativeExamples != null) {
                 for (const [name, example] of Object.entries(nativeExamples)) {
+                    fernExamples.examples[name] = example;
+                }
+            }
+        }
+
+        // When there are still no endpoint-level examples but multiple content types
+        // have per-body v2Examples (from native OAS per-mediaType examples on bodies
+        // WITH schemas), elevate them to endpoint-level examples tagged with their
+        // content type. This enables docs to display per-content-type examples.
+        // Only fires for multi-content-type endpoints; single-content-type endpoints
+        // are handled by the normal v1→v2 example synthesis pipeline.
+        if (
+            Object.keys(fernExamples.examples).length === 0 &&
+            Object.keys(fernExamples.streamExamples).length === 0 &&
+            convertedRequestBodies != null &&
+            convertedRequestBodies.length > 1
+        ) {
+            const perContentTypeExamples = this.synthesizeEndpointExamplesFromPerContentTypeRequestBodies({
+                convertedRequestBodies,
+                httpPath: path,
+                httpMethod,
+                baseUrl
+            });
+            if (perContentTypeExamples != null) {
+                for (const [name, example] of Object.entries(perContentTypeExamples)) {
                     fernExamples.examples[name] = example;
                 }
             }
@@ -210,6 +253,7 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
+            subtitle: this.subtitle,
             method: httpMethod,
             baseUrl,
             v2BaseUrls,
@@ -240,6 +284,7 @@ export class OperationConverter extends AbstractOperationConverter {
             source: HttpEndpointSource.openapi(),
             audiences,
             retries: undefined,
+            globalParameters: this.globalParameterIds,
             apiPlayground
         };
 
@@ -251,6 +296,7 @@ export class OperationConverter extends AbstractOperationConverter {
             audiences,
             group,
             groupDisplayName,
+            groupDescription,
             errors: topLevelErrors,
             endpoint: {
                 ...baseEndpoint,
@@ -298,8 +344,52 @@ export class OperationConverter extends AbstractOperationConverter {
                       }
                     : undefined,
             inlinedTypes: this.inlinedTypes,
-            servers: this.filterOutTopLevelServers(this.operation.servers ?? this.pathLevelServers ?? [])
+            servers: this.filterOutTopLevelServers(this.operation.servers ?? this.pathLevelServers ?? []),
+            inlinedRequestPropertiesByAudience,
+            queryParametersByAudience
         };
+    }
+
+    /**
+     * Walks the operation's parameters and groups query parameter wire names by
+     * `x-fern-audiences`. Parameters without an audience tag are omitted (they
+     * are universal — see `computeExcludedKeys` in `IrGraph.build()`). Returns
+     * `undefined` when no query parameter declares any audience to avoid
+     * populating the IR filter graph with empty maps.
+     */
+    private collectQueryParameterAudiences({
+        breadcrumbs
+    }: {
+        breadcrumbs: string[];
+    }): Record<string, Set<string>> | undefined {
+        const mergedParameters = this.mergeParameters(this.pathItemParameters, this.operation.parameters ?? []);
+        if (mergedParameters.length === 0) {
+            return undefined;
+        }
+        const audiencesByQueryParameter: Record<string, Set<string>> = {};
+        let foundAny = false;
+        for (const parameter of mergedParameters) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: parameter,
+                breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved == null || resolved.in !== "query") {
+                continue;
+            }
+            const paramAudiences = this.context.getAudiences({ operation: resolved, breadcrumbs }) ?? [];
+            if (paramAudiences.length === 0) {
+                continue;
+            }
+            foundAny = true;
+            for (const audience of paramAudiences) {
+                if (audiencesByQueryParameter[audience] == null) {
+                    audiencesByQueryParameter[audience] = new Set<string>();
+                }
+                audiencesByQueryParameter[audience].add(resolved.name);
+            }
+        }
+        return foundAny ? audiencesByQueryParameter : undefined;
     }
 
     protected convertResponseBody({
@@ -555,13 +645,21 @@ export class OperationConverter extends AbstractOperationConverter {
             return [];
         }
 
-        // When auth overrides are specified, use them instead of OpenAPI security
-        if (this.context.authOverrides?.auth != null) {
+        // When auth overrides are specified, use them instead of OpenAPI security.
+        // endpoint-security is the exception: it delegates auth requirements to the spec,
+        // so the OpenAPI security must be preserved — the operation's own `security` when
+        // present, otherwise the spec-level block via the fallback below.
+        if (this.context.authOverrides?.auth != null && !this.usesEndpointSecurity()) {
             return this.getDefaultSecurityFromAuthOverrides();
         }
 
         // Fall back to OpenAPI security
         return sanitizeSecurityScopes(this.operation.security ?? this.context.spec.security);
+    }
+
+    private usesEndpointSecurity(): boolean {
+        const auth = this.context.authOverrides?.auth;
+        return auth != null && isEndpointSecurityAuthSchemes(auth);
     }
 
     /**
@@ -571,6 +669,17 @@ export class OperationConverter extends AbstractOperationConverter {
      */
     private shouldApplyDefaultAuthOverrides(): boolean {
         if (!this.context.authOverrides?.auth) {
+            return false;
+        }
+
+        // endpoint-security has no generators.yml-derived default to fall back on. A
+        // spec-level `security` block still applies: the caller checks `spec.security`
+        // before consulting this method, so returning false here leaves that inheritance
+        // intact and only declines to synthesize a default from the auth override.
+        //
+        // The single caller reaches this only when `operation.security == null`, so the
+        // checks below would be constant in this mode.
+        if (this.usesEndpointSecurity()) {
             return false;
         }
 
@@ -759,6 +868,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 if (resolvedValue != null) {
                     result[name] = {
                         displayName: undefined,
+                        contentType: undefined,
                         request: {
                             docs: undefined,
                             endpoint: {
@@ -825,6 +935,129 @@ export class OperationConverter extends AbstractOperationConverter {
         return undefined;
     }
 
+    /**
+     * Synthesizes endpoint-level v2Examples from per-content-type request body
+     * examples that have already been extracted by the RequestBodyConverter.
+     *
+     * This handles the case where multiple content types (e.g. application/json
+     * and application/ld+json) reference the same schema but have distinct
+     * per-content-type examples. The RequestBodyConverter correctly extracts
+     * these into each body's v2Examples, but they need to be elevated to
+     * endpoint-level examples (tagged with contentType) for docs rendering.
+     */
+    private synthesizeEndpointExamplesFromPerContentTypeRequestBodies({
+        convertedRequestBodies,
+        httpPath,
+        httpMethod,
+        baseUrl
+    }: {
+        convertedRequestBodies: { requestBody: FernIr.HttpRequestBody }[];
+        httpPath: HttpPath;
+        httpMethod: FernIr.HttpMethod;
+        baseUrl: string | undefined;
+    }): Record<string, FernIr.V2HttpEndpointExample> | undefined {
+        const result: Record<string, FernIr.V2HttpEndpointExample> = {};
+        const responseExamplesByContentType = this.extractNativeResponseExamplesByContentType();
+
+        for (const convertedBody of convertedRequestBodies) {
+            const body = convertedBody.requestBody;
+            const bodyContentType = body.contentType;
+            const bodyV2Examples = body.v2Examples;
+
+            if (bodyV2Examples == null) {
+                continue;
+            }
+
+            const userExamples = bodyV2Examples.userSpecifiedExamples;
+            if (Object.keys(userExamples).length === 0) {
+                continue;
+            }
+
+            // Find a matching response example for this content type
+            const matchedResponse =
+                bodyContentType != null ? responseExamplesByContentType.get(bodyContentType) : undefined;
+
+            for (const [exampleName, exampleValue] of Object.entries(userExamples)) {
+                // Use a unique key that includes the content type to avoid collisions
+                const key =
+                    convertedRequestBodies.length > 1 && bodyContentType != null
+                        ? `${exampleName} (${bodyContentType})`
+                        : exampleName;
+
+                result[key] = {
+                    displayName: convertedRequestBodies.length > 1 ? key : undefined,
+                    contentType: bodyContentType ?? undefined,
+                    request: {
+                        docs: undefined,
+                        endpoint: {
+                            method: httpMethod,
+                            path: this.buildExamplePath(httpPath, {})
+                        },
+                        baseUrl: undefined,
+                        environment: baseUrl,
+                        auth: undefined,
+                        pathParameters: {},
+                        queryParameters: {},
+                        headers: {},
+                        requestBody: exampleValue
+                    },
+                    response: matchedResponse ?? this.extractNativeResponseExample() ?? undefined,
+                    codeSamples: undefined
+                };
+            }
+        }
+
+        return Object.keys(result).length > 0 ? result : undefined;
+    }
+
+    /**
+     * Extracts native response examples grouped by content type from the
+     * operation's successful (2xx) responses. Used by
+     * synthesizeEndpointExamplesFromPerContentTypeRequestBodies to match
+     * response examples to their corresponding request content types.
+     */
+    private extractNativeResponseExamplesByContentType(): Map<string, FernIr.V2HttpEndpointResponse> {
+        const responsesByContentType = new Map<string, FernIr.V2HttpEndpointResponse>();
+        if (this.operation.responses == null) {
+            return responsesByContentType;
+        }
+        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+                continue;
+            }
+            const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                schemaOrReference: response,
+                breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
+            });
+            if (resolvedResponse?.content == null) {
+                continue;
+            }
+            for (const [responseContentType, responseMediaType] of Object.entries(resolvedResponse.content)) {
+                if (responsesByContentType.has(responseContentType)) {
+                    continue;
+                }
+                const namedExamples = this.context.getNamedExamplesFromMediaTypeObject({
+                    mediaTypeObject: responseMediaType,
+                    breadcrumbs: [...this.breadcrumbs, "responses", statusCode],
+                    defaultExampleName: "Example"
+                });
+                for (const [, example] of namedExamples) {
+                    const resolvedValue = this.context.resolveExampleWithValue(example);
+                    if (resolvedValue != null) {
+                        responsesByContentType.set(responseContentType, {
+                            docs: undefined,
+                            statusCode: statusCodeNum,
+                            body: FernIr.V2HttpEndpointResponseBody.json(resolvedValue)
+                        });
+                        break;
+                    }
+                }
+            }
+        }
+        return responsesByContentType;
+    }
+
     private convertStreamConditionExamples({
         httpPath,
         httpMethod,
@@ -877,6 +1110,7 @@ export class OperationConverter extends AbstractOperationConverter {
                     this.getExampleName({ example, exampleIndex }),
                     {
                         displayName: undefined,
+                        contentType: undefined,
                         request:
                             example.request != null ||
                             example["path-parameters"] != null ||
@@ -983,6 +1217,16 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getEndpointBaseUrls(): string[] | undefined {
+        const serverFromOperationNameExtension = new Extensions.ServerFromOperationNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation,
+            context: this.context
+        });
+        const serverFromOperationName = serverFromOperationNameExtension.convert();
+        if (serverFromOperationName != null) {
+            return undefined;
+        }
+
         const operationServers = this.operation.servers ?? this.pathLevelServers;
         if (operationServers == null) {
             return undefined;
@@ -1029,5 +1273,17 @@ export class OperationConverter extends AbstractOperationConverter {
             return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined;
         }
         return undefined;
+    }
+
+    private getGroupDescription(group: string[] | undefined): string | undefined {
+        const rawOperationTag = this.operation.tags?.[0];
+        const baseGroupName = group?.[group.length - 1];
+        if (rawOperationTag == null || baseGroupName == null) {
+            return undefined;
+        }
+        if (camelCase(rawOperationTag) !== camelCase(baseGroupName)) {
+            return undefined;
+        }
+        return this.context.getDescriptionForTag(rawOperationTag);
     }
 }

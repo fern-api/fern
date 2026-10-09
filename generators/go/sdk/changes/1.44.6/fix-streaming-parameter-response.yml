@@ -1,0 +1,6 @@
+- summary: |
+    Support endpoints with a `stream-condition` (stream-parameter) response. The
+    v1 generator now handles the non-streaming variant instead of aborting, and the
+    v2 generator includes the streamer helper files when an endpoint exposes a
+    stream-parameter response.
+  type: fix

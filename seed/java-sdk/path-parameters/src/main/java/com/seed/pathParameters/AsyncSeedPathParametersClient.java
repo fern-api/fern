@@ -9,7 +9,7 @@ import com.seed.pathParameters.resources.organizations.AsyncOrganizationsClient;
 import com.seed.pathParameters.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedPathParametersClient {
+public class AsyncSeedPathParametersClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncOrganizationsClient> organizationsClient;
@@ -28,6 +28,16 @@ public class AsyncSeedPathParametersClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedPathParametersClientBuilder builder() {

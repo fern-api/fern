@@ -9,11 +9,15 @@ import { WithStatusCode } from "../../commons/types/WithStatusCode.js";
 
 export const TextResponse: core.serialization.ObjectSchema<serializers.TextResponse.Raw, FernOpenapiIr.TextResponse> =
     core.serialization
-        .objectWithoutOptionalProperties({})
+        .objectWithoutOptionalProperties({
+            contentType: core.serialization.string().optional(),
+        })
         .extend(WithDescription)
         .extend(WithSource)
         .extend(WithStatusCode);
 
 export declare namespace TextResponse {
-    export interface Raw extends WithDescription.Raw, WithSource.Raw, WithStatusCode.Raw {}
+    export interface Raw extends WithDescription.Raw, WithSource.Raw, WithStatusCode.Raw {
+        contentType?: string | null;
+    }
 }

@@ -19,14 +19,14 @@ public partial class V2Client : IV2Client
 
     public IV3Client V3 { get; }
 
-    /// <example><code>
-    /// await client.V2.TestAsync();
-    /// </code></example>
-    public async Task TestAsync(
+    private async Task<RawResponse> TestAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -39,6 +39,7 @@ public partial class V2Client : IV2Client
                 {
                     Method = HttpMethod.Get,
                     Path = "",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -47,7 +48,12 @@ public partial class V2Client : IV2Client
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -56,8 +62,25 @@ public partial class V2Client : IV2Client
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.V2.TestAsync();
+    /// </code></example>
+    public WithRawResponseTask TestAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(TestAsyncCore(options, cancellationToken));
     }
 }

@@ -22,6 +22,7 @@ import { GeneratedDefaultEndpointImplementation } from "../endpoints/default/Gen
 function createMockRequest(opts?: {
     endpointParameters?: { name: string; type: string; docs?: string }[];
     buildStatements?: ts.Statement[];
+    buildHeaderStatements?: ts.Statement[];
     fetcherArgs?: Record<string, ts.Expression>;
     requestParameter?: ts.TypeNode;
     exampleParameters?: ts.Expression[];
@@ -36,6 +37,7 @@ function createMockRequest(opts?: {
                 docs: p.docs
             })),
         getBuildRequestStatements: () => opts?.buildStatements ?? [],
+        getBuildHeaderStatements: () => opts?.buildHeaderStatements ?? [],
         getFetcherRequestArgs: () => ({
             headers: opts?.fetcherArgs?.headers,
             queryParameters: opts?.fetcherArgs?.queryParameters,
@@ -102,6 +104,7 @@ function createMockClientClass(opts?: { hasRequestOptions?: boolean }): any {
             ts.factory.createPropertyAccessExpression(referenceToRootClient, ts.factory.createIdentifier("service")),
         hasAuthProvider: () => false,
         getGenerateEndpointMetadata: () => false,
+        getGuardProcessEnvAccess: () => false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getEnvironment: () => undefined
     };
@@ -205,7 +208,7 @@ function createImpl(opts?: {
     request?: GeneratedEndpointRequest;
     response?: GeneratedEndpointResponse;
     includeCredentialsOnCrossOriginRequests?: boolean;
-    defaultTimeoutInSeconds?: number | "infinity" | undefined;
+    defaultTimeout?: number | "infinity" | undefined;
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
     omitUndefined?: boolean;
@@ -220,7 +223,7 @@ function createImpl(opts?: {
         response: opts?.response ?? createMockResponse(),
         generatedSdkClientClass: opts?.generatedSdkClientClass ?? createMockClientClass(),
         includeCredentialsOnCrossOriginRequests: opts?.includeCredentialsOnCrossOriginRequests ?? false,
-        defaultTimeoutInSeconds: opts?.defaultTimeoutInSeconds,
+        defaultTimeout: opts?.defaultTimeout,
         includeSerdeLayer: opts?.includeSerdeLayer ?? true,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
@@ -503,6 +506,46 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             expect(output).toMatchSnapshot();
         });
 
+        it("generates uri pagination body that sends the request on the first page", () => {
+            const impl = createImpl({
+                request: createMockRequest({
+                    requestParameter: ts.factory.createTypeReferenceNode("ListUsersRequest"),
+                    buildStatements: [
+                        ts.factory.createExpressionStatement(ts.factory.createIdentifier("// build request"))
+                    ]
+                }),
+                response: createMockResponse({
+                    paginationInfo: {
+                        type: "uri",
+                        responseType: ts.factory.createTypeReferenceNode("ListResponse"),
+                        itemType: ts.factory.createTypeReferenceNode("User"),
+                        getItems: ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("response"),
+                            ts.factory.createIdentifier("items")
+                        ),
+                        hasNextPage: ts.factory.createBinaryExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("response"),
+                                ts.factory.createIdentifier("next")
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        loadPage: [
+                            ts.factory.createExpressionStatement(ts.factory.createIdentifier("// load next page"))
+                        ]
+                    }
+                })
+            });
+            const context = createMockFileContext();
+            const stmts = impl.getStatements(context);
+            const output = serializeStatements(stmts);
+            // The first page is a regular request, so the request the caller built must be sent.
+            expect(output).toContain("// build request");
+            expect(output).toContain("await initialRequest().withRawResponse()");
+            expect(output).toMatchSnapshot();
+        });
+
         it("generates offset pagination body with initializeOffset", () => {
             const impl = createImpl({
                 request: createMockRequest({
@@ -636,25 +679,12 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             expect(result).toBeUndefined();
         });
 
-        it("returns undefined when generatePaginatedClients is false", () => {
+        it("returns pagination leverage code when pagination is set, regardless of generatePaginatedClients", () => {
             const endpoint = createHttpEndpoint();
             endpoint.pagination = createCursorPagination();
             const impl = createImpl({ endpoint });
             const context = createMockFileContext();
             // generatePaginatedClients is false by default
-            const result = impl.maybeLeverageInvocation({
-                invocation: ts.factory.createIdentifier("result"),
-                context
-            });
-            expect(result).toBeUndefined();
-        });
-
-        it("returns pagination leverage code when pagination and generatePaginatedClients are both set", () => {
-            const endpoint = createHttpEndpoint();
-            endpoint.pagination = createCursorPagination();
-            const impl = createImpl({ endpoint });
-            const context = createMockFileContext();
-            context.config.generatePaginatedClients = true;
             const result = impl.maybeLeverageInvocation({
                 invocation: ts.factory.createIdentifier("result"),
                 context
@@ -697,7 +727,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
         it("sets responseType to text for text response endpoints", () => {
             const endpoint = createHttpEndpoint();
             endpoint.response = {
-                body: FernIr.HttpResponseBody.text({ docs: undefined, v2Examples: undefined }),
+                body: FernIr.HttpResponseBody.text({ docs: undefined, v2Examples: undefined, contentType: undefined }),
                 statusCode: undefined,
                 isWildcardStatusCode: undefined,
                 docs: undefined
@@ -725,7 +755,9 @@ function createCursorPagination(): FernIr.Pagination {
                 docs: undefined,
                 availability: undefined,
                 propertyAccess: undefined,
-                v2Examples: undefined
+                defaultValue: undefined,
+                v2Examples: undefined,
+                xml: undefined
             })
         },
         next: {
@@ -738,7 +770,9 @@ function createCursorPagination(): FernIr.Pagination {
                 docs: undefined,
                 availability: undefined,
                 propertyAccess: undefined,
-                v2Examples: undefined
+                defaultValue: undefined,
+                v2Examples: undefined,
+                xml: undefined
             }
         },
         results: {
@@ -751,7 +785,9 @@ function createCursorPagination(): FernIr.Pagination {
                 docs: undefined,
                 availability: undefined,
                 propertyAccess: undefined,
-                v2Examples: undefined
+                defaultValue: undefined,
+                v2Examples: undefined,
+                xml: undefined
             }
         }
     });

@@ -1,0 +1,17 @@
+using SeedCsharpGlobalHeaderEnv;
+
+public partial class Examples
+{
+    public async Task Example0() {
+        var client = new SeedCsharpGlobalHeaderEnvClient(
+            username: "<username>",
+            password: "<password>",
+            clientOptions: new ClientOptions {
+                BaseUrl = "https://api.fern.com"
+            }
+        );
+
+        await client.Service.GetWithApiVersionAsync();
+    }
+
+}

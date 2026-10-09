@@ -1,8 +1,13 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { assertNever, tokenizeOperationId } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     AsymmetricAlgorithm,
     Webhook,
+    WebhookBodyHashAlgorithm,
+    WebhookBodyHashBinding,
+    WebhookBodyHashLocation,
+    WebhookNotificationUrlNormalization,
     WebhookPayloadBodySort,
     WebhookPayloadComponent,
     WebhookPayloadFormat,
@@ -20,7 +25,6 @@ import { buildTypeReference } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertFullExample } from "./utils/convertFullExample.js";
 import { convertEndpointSdkNameToFile } from "./utils/convertSdkGroupName.js";
-import { tokenizeString } from "./utils/getEndpointLocation.js";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
@@ -105,7 +109,8 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                     webhookDefinition.response = {
                         docs: textResponse.description ?? undefined,
                         type: "text",
-                        "status-code": textResponse.statusCode
+                        "status-code": textResponse.statusCode,
+                        "content-type": textResponse.contentType ?? undefined
                     };
                 },
                 streamingJson: (jsonResponse) => {
@@ -205,8 +210,8 @@ function getUnresolvedWebhookLocation({
     }
 
     // if both tag and operation ids are defined
-    const tagTokens = tokenizeString(tag);
-    const operationIdTokens = tokenizeString(operationId);
+    const tagTokens = tokenizeOperationId(tag);
+    const operationIdTokens = tokenizeOperationId(operationId);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
@@ -280,7 +285,9 @@ function convertSignatureVerification(
                 encoding: convertSignatureEncoding(signatureVerification.encoding),
                 "signature-prefix": signatureVerification.signaturePrefix,
                 "payload-format": convertPayloadFormat(signatureVerification.payloadFormat),
-                timestamp: convertTimestamp(signatureVerification.timestamp)
+                timestamp: convertTimestamp(signatureVerification.timestamp),
+                "body-hash-binding": convertBodyHashBinding(signatureVerification.bodyHashBinding),
+                "url-normalization": convertUrlNormalization(signatureVerification.notificationUrlNormalization)
             };
         case "asymmetric":
             return {
@@ -291,6 +298,7 @@ function convertSignatureVerification(
                 "signature-prefix": signatureVerification.signaturePrefix,
                 "jwks-url": signatureVerification.jwksUrl,
                 "key-id-header": signatureVerification.keyIdHeader,
+                "payload-format": convertPayloadFormat(signatureVerification.payloadFormat),
                 timestamp: convertTimestamp(signatureVerification.timestamp)
             };
         default:
@@ -366,6 +374,58 @@ function convertPayloadFormat(
         delimiter: payloadFormat.delimiter,
         "body-sort": convertBodySort(payloadFormat.bodySort)
     };
+}
+
+function convertBodyHashBinding(
+    binding: WebhookBodyHashBinding | undefined
+): RawSchemas.WebhookBodyHashBindingSchema | undefined {
+    if (binding == null) {
+        return undefined;
+    }
+    return {
+        algorithm: convertBodyHashAlgorithm(binding.algorithm),
+        encoding: binding.encoding != null ? convertSignatureEncoding(binding.encoding) : undefined,
+        location: convertBodyHashLocation(binding.location)
+    };
+}
+
+function convertUrlNormalization(
+    normalization: WebhookNotificationUrlNormalization | undefined
+): RawSchemas.WebhookUrlNormalizationSchema | undefined {
+    if (normalization == null) {
+        return undefined;
+    }
+    return {
+        "port-variants": normalization.portVariants,
+        "legacy-query-encoding": normalization.legacyQueryEncoding
+    };
+}
+
+function convertBodyHashAlgorithm(algorithm: WebhookBodyHashAlgorithm): RawSchemas.WebhookBodyHashAlgorithmSchema {
+    switch (algorithm) {
+        case "sha256":
+            return "sha256";
+        case "sha1":
+            return "sha1";
+        case "sha384":
+            return "sha384";
+        case "sha512":
+            return "sha512";
+        default:
+            assertNever(algorithm);
+    }
+}
+
+function convertBodyHashLocation(location: WebhookBodyHashLocation): RawSchemas.WebhookBodyHashLocationSchema {
+    switch (location.type) {
+        case "queryParameter":
+            return {
+                type: "query-parameter",
+                name: location.name
+            };
+        default:
+            assertNever(location.type);
+    }
 }
 
 function convertBodySort(

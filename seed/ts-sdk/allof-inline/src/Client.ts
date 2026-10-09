@@ -5,6 +5,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { mergeAdditionalBodyParameters } from "./core/requestBody.js";
 import * as environments from "./environments.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
@@ -25,6 +26,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApi.SearchRuleTypesRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.searchRuleTypes()
@@ -84,6 +88,9 @@ export class SeedApiClient {
      * @param {SeedApi.RuleCreateRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.createRule({
      *         name: "name",
@@ -114,7 +121,7 @@ export class SeedApiClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -138,6 +145,9 @@ export class SeedApiClient {
 
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.listUsers()
@@ -186,6 +196,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.getEntity()
      */
@@ -231,6 +244,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.getOrganization()
      */
@@ -273,6 +289,133 @@ export class SeedApiClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/organizations");
+    }
+
+    /**
+     * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     *
+     * @param {SeedApi.PlantPost} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
+     * @example
+     *     await client.createPlant({
+     *         species: "species",
+     *         family: "family",
+     *         genus: "genus",
+     *         commonName: "commonName",
+     *         wateringFrequency: "daily",
+     *         sunExposure: "full"
+     *     })
+     */
+    public createPlant(
+        request: SeedApi.PlantPost,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.PlantStrict> {
+        return core.HttpResponsePromise.fromPromise(this.__createPlant(request, requestOptions));
+    }
+
+    private async __createPlant(
+        request: SeedApi.PlantPost,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.PlantStrict>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Default,
+                "plants",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.PlantStrict, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/plants");
+    }
+
+    /**
+     * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     *
+     * @param {SeedApi.TreeRecord} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
+     * @example
+     *     await client.createTree({
+     *         id: "id",
+     *         treeName: "treeName",
+     *         treeSpecies: "treeSpecies"
+     *     })
+     */
+    public createTree(
+        request: SeedApi.TreeRecord,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.TreeRecord> {
+        return core.HttpResponsePromise.fromPromise(this.__createTree(request, requestOptions));
+    }
+
+    private async __createTree(
+        request: SeedApi.TreeRecord,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.TreeRecord>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Default,
+                "trees",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.TreeRecord, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/trees");
     }
 
     /**

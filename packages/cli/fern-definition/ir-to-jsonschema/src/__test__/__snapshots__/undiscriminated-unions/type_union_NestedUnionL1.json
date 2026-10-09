@@ -20,6 +20,7 @@
       "$ref": "#/definitions/union.NestedUnionL2"
     }
   ],
+  "description": "Nested layer 1.",
   "definitions": {
     "union.NestedUnionL2": {
       "anyOf": [
@@ -39,7 +40,8 @@
             "type": "string"
           }
         }
-      ]
+      ],
+      "description": "Nested layer 2."
     }
   }
 }

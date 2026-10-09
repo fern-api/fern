@@ -1,4 +1,17 @@
 {
     "types": {},
-    "endpoints": []
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/status",
+                "method": "GET",
+                "identifier_override": "endpoint_status.get_status"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedWebsocket;\n\nvar client = new SeedWebsocketClient();\nawait client.Status.GetStatusAsync();\n"
+            }
+        }
+    ]
 }

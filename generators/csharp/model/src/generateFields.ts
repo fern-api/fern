@@ -1,13 +1,34 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type TypeReference = FernIr.TypeReference;
 type Literal = FernIr.Literal;
+type NameAndWireValueOrString = FernIr.NameAndWireValueOrString;
 
 import { generateNestedBoolLiteralBody, generateNestedStringLiteralBody } from "./generateLiteralType.js";
 import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+
+/**
+ * The C# property name for an object/union property. Class names and property names cannot overlap
+ * in C# (CS0102), so a property whose PascalCase name matches its enclosing class is suffixed with
+ * `_`. This is the single source of truth for that naming; callers that emit a property name for a
+ * generated field (e.g. object initializers, union base-property snippets) must use it so they stay
+ * in sync with the fields `generateField` produces.
+ */
+export function getGeneratedPropertyName({
+    caseConverter,
+    className,
+    name
+}: {
+    caseConverter: CaseConverter;
+    className: string;
+    name: NameAndWireValueOrString;
+}): string {
+    const propertyName = caseConverter.pascalSafe(name);
+    return propertyName === className ? `${propertyName}_` : propertyName;
+}
 
 interface TypeInfo {
     isOptional: boolean;

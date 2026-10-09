@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Escape Java reserved keywords (e.g. `enum`, `extends`) in package names used by
+    generated snippets, README, and reference docs. These now match the SDK code
+    (e.g. `com.seed._enum`) instead of producing uncompilable imports like
+    `com.seed.enum`.
+  type: fix

@@ -1,0 +1,3 @@
+- summary: |
+    Fix relative .md/.mdx link resolution in translated documentation pages. Previously, translated pages passed an empty markdownFilesToPathName map, so relative markdown links (e.g., ../reference/support-matrix.md) were not resolved to their published slug URLs.
+  type: fix

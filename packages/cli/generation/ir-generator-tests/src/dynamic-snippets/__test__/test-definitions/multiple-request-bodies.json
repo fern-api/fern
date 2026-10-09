@@ -166,7 +166,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DocumentUploadResult": {
             "type": "object",
@@ -265,7 +266,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UploadDocumentResponse": {
             "type": "undiscriminatedUnion",
@@ -330,7 +332,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -531,7 +534,8 @@
                         "unsafeName": "Token",
                         "safeName": "Token"
                     }
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -568,7 +572,8 @@
                 "pathParameters": [],
                 "body": {
                     "type": "bytes"
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -610,5 +615,6 @@
         }
     },
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

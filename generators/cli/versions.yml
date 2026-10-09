@@ -1,0 +1,3044 @@
+# yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.51.2
+  changelogEntry:
+    - summary: |
+        `profiles create --provision` and `profiles remove --revoke` now resolve the request URL the same way a
+        direct command does: `--base-url` is honored and the spec's `servers[].variables` / `x-fern-default-url`
+        are applied. Previously the provision/revoke call kept the raw server template (e.g.
+        `https://api.{region}.{city}.twilio.com`) and failed with an invalid URL unless `<NAME>_BASE_URL` or a
+        profile base URL was set.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.51.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.1 updates.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.51.0
+  changelogEntry:
+    - summary: |
+        Add `config.profiles.provisionOperation`, the create-side counterpart of `revokeOperation`. When set,
+        `profiles create` gains `--provision`, which calls the named operation (e.g. `iam.keys.create`) with the
+        credentials already in the caller's environment, maps the response onto the profile's credential
+        (`credential: { username: sid, password: secret }`) and stores it in the OS keychain without ever printing
+        the secret. `revokeParameters: { Sid: sid }` records the key's identity as `credential_parameters` on the
+        profile — consulted only by `profiles remove --revoke`, never as a request default — so a profile owns its
+        API key end to end: minted on create, revoked on remove.
+      type: feat
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.50.0
+  changelogEntry:
+    - summary: |
+        `--dry-run` now renders the full request preview on a terminal. The default
+        `table` format treated the preview's `headers` array as a paginated list and
+        printed only the header rows, dropping the URL, method, query params and body.
+        Dry-run previews (REST and GraphQL) are now emitted as a key/value record;
+        other formats (`json`, `yaml`, ...) are unchanged.
+      type: fix
+    - summary: |
+        `--dry-run` output includes an `auth` block reporting the endpoint's security
+        schemes and whether credentials would be attached: `resolved` (naming the
+        requirement that was satisfied and the configured sources), `missing` (with
+        the sources to set), `supplied` (passed explicitly as a request parameter)
+        or `not_required`. Credential values are never printed; `apiKey`-in-query
+        values are redacted in the preview like header credentials already were.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 0.49.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.0 updates.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 0.48.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.52.0 updates.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 0.47.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.51.0 updates.
+      type: feat
+    - summary: |
+        `profiles set <name> …` no longer creates a missing profile silently. In a
+        terminal it asks first. When an existing profile has a similar name it asks
+        "Did you mean `<closest>`? [y/N]" (yes writes to that profile), then
+        "Create profile `<name>`? [y/N]"; otherwise only "Create it? [y/N]".
+        Answering no changes nothing. When stdin or stderr is not a terminal
+        (scripts, CI, agents), `set` on a missing profile now fails with a hint
+        instead of creating it; pass `--yes` to create it without asking.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 0.46.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.50.0 updates.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 0.45.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.49.1 updates.
+      type: chore
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.45.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.49.0 updates.
+      type: feat
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.44.2
+  changelogEntry:
+    - summary: |
+        `profiles list`, `profiles show`, and `profiles current` now report an OAuth2
+        client id stored in the keyring — what `profiles set <name> <CLIENT_ID_VAR>=…`
+        and `auth login --with-token` write — instead of only the plaintext
+        `oauth_client_id` from `profiles create --oauth-client-id`. The keyring id
+        takes precedence, matching the order requests resolve it in.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.44.1
+  changelogEntry:
+    - summary: |
+        A command whose operation requires authentication (its own `security:` or
+        the spec-level default) now fails locally with "Authentication credentials
+        are missing, so the request was not sent. Set ..." when no configured
+        credential source (flag, env var, or selected profile) satisfies any of its
+        security requirements, instead of sending an unauthenticated request and
+        surfacing the server's 401. Applies with and without `--debug`. Operations
+        with `security: []`, optional auth (`- {}`), no declared security, or an
+        auth header or `apiKey` query parameter passed explicitly as a parameter
+        still go out as before.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.44.0
+  changelogEntry:
+    - summary: |
+        The root `--help` "Environment variables" footer is now derived from the
+        spec instead of a static string: it lists `<PREFIX>_PROFILE`,
+        `<PREFIX>_OUTPUT`, `<PREFIX>_RETRIES`, and one `<PREFIX>_<VAR>` entry per
+        `servers[].variables` (e.g. `TWILIO_CLI_REGION`), alongside the existing
+        runtime-only knobs. Which of these `profiles set` can persist is
+        documented by that command, not the footer.
+      type: fix
+    - summary: |
+        A selected profile now takes precedence over environment variables for every
+        value it stores — credentials, `<PREFIX>_BASE_URL`, `<PREFIX>_OUTPUT`,
+        `<PREFIX>_RETRIES`, server variables such as `<PREFIX>_REGION`, spec
+        parameter defaults, and the transport settings — however the profile was
+        selected (`-p/--profile`, `<PREFIX>_PROFILE`, or `profiles use`). Env vars
+        fill in only what the profile leaves unset; explicit flags still win, and
+        invocations with no profile selected are unchanged. Previously only `-p`
+        outranked env, so an active profile's stored values were silently ignored
+        whenever the same variable was exported. `profiles current` now reports
+        exported credential vars as `credential_env_fallback` instead of
+        `credential_overridden_by_env` / `credential_partially_shadowed_by_env`.
+        `profiles set`, `profiles create --from-env`, `profiles use`, and a
+        profile-scoped `auth login` no longer warn that an exported credential
+        will shadow the stored one, since it no longer does.
+      type: feat
+    - summary: |
+        Profiles can now store the transport settings that were previously
+        env/flag-only: `profiles set <name> <PREFIX>_TIMEOUT_SECS=…`,
+        `<PREFIX>_PROXY=…`, `<PREFIX>_CA_BUNDLE=…`, `<PREFIX>_INSECURE=…`, and
+        `<PREFIX>_USER_AGENT_SUFFIX=…` persist to `profiles.toml` (inherited
+        through `parent`, shown by `profiles show`/`current`). For these five the
+        profile's stored value wins over the shell-exported global whenever a
+        profile is in play — `-p`, `<PREFIX>_PROFILE`, or `profiles use` alike
+        (flag > profile > env var > default); the env var only fills in what the
+        profile leaves unset.
+      type: feat
+    - summary: |
+        `profiles show` and `profiles current` now print the full stored account
+        identifier (e.g. the complete Twilio Account SID) instead of the truncated
+        form used in the `profiles list` table, and include the profile's
+        `oauth_client_id` when one is set. `profiles list` folds the OAuth client
+        id into the `ACCOUNT` column (shown when the profile stores no basic-auth
+        account) instead of a separate `OAUTH_CLIENT_ID` column.
+      type: fix
+    - summary: |
+        `profiles show` and `profiles current` human output now lists fields in a
+        fixed order (`profile`, `active`/`selected_by`, `account`/`oauth_client_id`,
+        then settings) instead of alphabetically, so the identifier sits in the
+        same place for basic-auth and OAuth profiles.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 0.43.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.48.0 updates.
+      type: feat
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 0.42.3
+  changelogEntry:
+    - summary: |
+        The file-based token cache fallback now creates its credential file with
+        owner-only permissions (0600) at open time instead of tightening them
+        after the write, closing the window in which the token was briefly
+        world-readable under a permissive umask.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 0.42.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.47.11 updates.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 0.42.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.47.10 updates.
+      type: chore
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 0.42.0
+  changelogEntry:
+    - summary: |
+        `config.extraDependencies` and `config.extraDevDependencies` declare additional
+        crates in the generated root `Cargo.toml`, so code kept in `.fernignore` (custom
+        command handlers, custom auth) no longer needs a post-generation script to re-add
+        the crates it imports. Each entry is a version requirement string or a full
+        dependency table (`version`, `features`, `optional`, `defaultFeatures`, `package`,
+        `path`, `git`, `branch`, `rev`, `registry`), matching the Rust SDK generator's
+        option of the same name. A crate the CLI runtime already depends on is rejected
+        rather than silently overridden. `Cargo.lock` is not re-resolved at generation
+        time; the first `cargo build` after generation records the new crates.
+      type: feat
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 0.41.2
+  changelogEntry:
+    - summary: |
+        A named `--profile` now prefers that profile's stored credentials when
+        selecting among multiple authentication schemes. Previously the first
+        scheme in spec order whose credentials resolved won, so a profile holding
+        only an OAuth2 credential still sent env-var basic auth under `-p <name>`.
+        Covers OAuth2 client credentials and `auth login` tokens (device-code /
+        PKCE) alike; under `--profile`, OAuth2 also resolves its client id from
+        the profile before the environment, so both halves of a client credential
+        come from the same place. Ambient selection (`<BIN>_PROFILE`,
+        `profiles use`) is unchanged — the environment still wins there.
+      type: fix
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 0.41.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.47.9 updates.
+      type: fix
+  createdAt: "2026-09-18"
+  irVersion: 67
+- version: 0.41.0
+  changelogEntry:
+    - summary: |
+        `auth login --from-env` captures the credential already in your shell into the active
+        profile's keyring slot, so "log me in with what I have" no longer routes through
+        `profiles create <name> --from-env --force` — which made users name a profile they had
+        already selected. Honours `-p` to target a non-active profile, and emits the same
+        shadow warning as the create-time capture, since `--from-env` reads the very variable
+        that will keep outranking the copy it just stored. Conflicts with `--with-token`.
+      type: feat
+    - summary: |
+        `profiles create <name>` now says when it stored no credential, pointing at
+        `auth login` / `--from-env`. Previously a bare create looked like it had set the
+        profile up, and the next `auth status` reported every keyring rung as `missing` with
+        no hint which command was meant to fill them. Suppressed when a credential was just
+        captured, when the profile inherits one, or when environment variables already supply
+        one — in those cases nothing is missing.
+      type: fix
+    - summary: |
+        `--retries <N>` on every operation, resolving `flag > <NAME>_RETRIES env > active
+        profile > x-fern-retries`. `N` counts attempts *after* the first, so `--retries 0`
+        is equivalent to `--no-retry`. Only `max_attempts` is overridden — the spec's
+        backoff base, factor and jitter are left alone, since the caller asked how many
+        times to retry rather than how to pace them.
+
+        `profiles create <name> --retries N` stores it per profile, so a user with several
+        profiles can allow a different number of retries in each. Inherited by child
+        profiles (unlike `format`): retries describe the network a profile talks to, which
+        a subaccount shares with its parent. `retries = 0` is distinct from unset and means
+        "never retry in this profile".
+
+        Additive. With no flag, no env var and no profile value the resolved policy is
+        byte-identical to what the spec declared, so existing CLIs are unaffected.
+      type: feat
+    - summary: |
+        `profiles set <name> KEY=VALUE …` sets credentials and settings on a profile using the
+        names you already use. `KEY` may be an environment variable this CLI reads — a
+        credential, or a setting like `<NAME>_RETRIES` / `<NAME>_BASE_URL` / `<NAME>_OUTPUT` /
+        `<NAME>_<SERVER_VAR>` — or an API parameter by its spec name. Credentials go to the OS
+        keyring under that profile's slot; everything else to `profiles.toml`. The profile is
+        created if it does not exist.
+
+        One assignment reaches **every** scheme that declares the variable. A vendor spec with
+        several basic schemes sharing one credential pair previously needed one
+        `auth login --scheme <name>` per scheme, with names a user cannot guess; now a single
+        `profiles set prod <NAME>_ACCOUNT_SID=… <NAME>_AUTH_TOKEN=…` covers all of them, and the
+        output names how many it reached.
+
+        Multi-field credentials merge, so setting one half later does not discard the other.
+        Every key is classified before anything is written, so a run whose third assignment is
+        invalid leaves the first two unapplied. An unrecognised key is rejected with a
+        suggestion rather than stored inert — including one that merely looks like one of this
+        CLI's variables.
+      type: feat
+    - summary: |
+        `profiles current` no longer reports `credential_overridden_by_env` when environment
+        variables supply only *part* of a multi-value credential. The variable is consulted and
+        does outrank the keyring for that field, but nothing authenticates — so claiming an
+        override contradicted `auth status`, which correctly reported not-logged-in. The partial
+        case is now reported as `credential_partially_shadowed_by_env`.
+      type: fix
+    - summary: |
+        `profiles list` warns when a variable is set that closely resembles one of this CLI's
+        credential variables but is not read — `<NAME>_ACCOUNT_ID` when the CLI reads
+        `<NAME>_ACCOUNT_SID`. Previously such a typo produced no diagnostic at all. Scoped to
+        declared names that are unset while a near neighbour is set, so it cannot fire on
+        unrelated variables.
+      type: fix
+    - summary: |
+        `profiles list`'s `[env]` row labels its environment variable names under `variables`
+        rather than reusing the profile `credential` key, which produced a `CREDENTIAL` column
+        header that every real profile row left blank. Column order is now pinned rather than
+        alphabetical, so the identifier leads and the explanatory `NOTE` sorts last instead of
+        landing ahead of the value it annotates.
+      type: fix
+    - summary: |
+        `profiles show <name>` prints one profile's resolved config without selecting it.
+        `profiles current` answers "what is in effect" and takes no name, so inspecting another
+        profile previously meant `-p other profiles current` — "run as if I were on other, then
+        tell me what's current" — which reads backwards. Reports `active` so you can tell
+        whether it is the default, and omits `selected_by`, which only means something for the
+        profile actually in play. Matches `gcloud config configurations describe NAME` and
+        `kubectl config get-contexts NAME`.
+      type: feat
+    - summary: |
+        Add named profiles, off by default behind `config.profiles.enabled`. A profile is a named bundle of request
+        context — a credential slot, parameter defaults, server variables, an optional base URL and output format —
+        resolved once per invocation. Enabling it adds a `profiles create | list | use | remove | current` group and a
+        global `--profile` / `-p` flag.
+
+        Precedence per value is: explicit flag, then environment variable, then profile, then the spec's own
+        `x-fern-default`. Environment variables sit above profiles so a CI pipeline that exports them is never
+        silently overridden by a developer's stored profile. For credentials the profile adds no rung to ADR-0008's
+        chain — it only selects which keyring account the existing `Keyring` rung reads, so two tenants can hold
+        separate tokens for one auth scheme. `config.profiles.commandName` renames the group for an API that already
+        owns the `profiles` noun.
+
+        Secrets never reach `~/.config/<bin>/profiles.toml`: the file names a keyring account, and
+        `profiles create --with-token` / `--from-env` write the credential to the OS keychain under an account scoped
+        to that profile. The file is written through `toml_edit`, so a user's comments and any field written by a newer
+        binary survive a round-trip.
+
+        Also fixes a latent correctness bug in the OAuth token cache, which was keyed by `token_url` alone: two
+        profiles authenticating against the same client-credentials endpoint would have clobbered each other's access
+        and refresh tokens. The key is now `<token_url>#<credential>` when a profile is selected and byte-identical to
+        before when none is, so existing caches keep resolving and no one is logged out by the upgrade.
+
+        HTTP basic auth gains a keyring rung it never had: both halves are stored in one entry as
+        `{"username":…,"password":…}` and read back field-by-field, so a per-profile SID+Token credential is
+        actually resolved. Previously `auth login` on a basic-auth CLI reported success, wrote an entry, and
+        nothing ever read it — the CLI still said "not logged in".
+
+        OAuth2 client credentials are now storable per profile. The provider reads its client id and secret
+        from the profile's keyring entry when the environment does not supply them, and `auth login
+        --with-token` collects both halves into one entry — previously the paste wrote a raw string nothing
+        ever read, so the credential appeared to store and the CLI still reported "not logged in". The client
+        secret has no plaintext rung; the client id may additionally come from `profiles.toml`, since a client
+        id is public by construction (RFC 6749 §2.2). `auth status` now lists every rung the resolvers
+        actually consult, so it no longer reports a scheme as unsatisfied where the profile does supply it.
+
+        A profile named explicitly with `--profile` / `-p` now outranks environment variables for credentials,
+        base URL, output format and server variables; a profile selected *ambiently* (the active profile, or
+        `<BIN>_PROFILE`) still loses to them. Explicit beats ambient, which is how every other flag here
+        already behaves, and it keeps a CI job's exported credentials authoritative against a stored default.
+        Matches the ordering Twilio's shipping CLI documents.
+
+        `profiles create` gains a `--<tenant-key>` flag for parameters the spec scopes most operations by —
+        derived from non-terminal path position, with no provider configuration — so the commonest profile
+        field is not stuck behind `--set`. `profiles list` renders a fixed `PROFILE … ACTIVE` column order,
+        with the middle columns being whatever the profiles carry. `profiles create` also accepts the name as
+        `--profile <NAME>`.
+
+        `profiles remove --revoke` calls a generator-named operation (`config.profiles.revokeOperation`)
+        before deleting the profile, on a new `Binding::invoke_operation` seam for framework-owned commands
+        that need to call the API without an `ArgMatches`. The flag is not registered at all when unconfigured.
+
+        Spec server variables now also read `<PREFIX>_<VARIABLE>` (`twilio` + `region` → `TWILIO_REGION`,
+        prefix = binary name uppercased, `-` → `_`). They were flag-or-spec-default only, so the
+        documented `flag > env > profile > spec default` order had no env rung for them and a region
+        could not be pinned for a shell session. Additive — an unset variable resolves exactly as
+        before. `x-fern-sdk-variables` keep their existing unprefixed spelling.
+
+        `profiles list` shows an `ACCOUNT` column — the identifier behind the stored credential
+        (the username half of a basic credential), truncated. It is absent for schemes with no
+        username field, when nothing is stored, or when the keyring read fails, so rendering the
+        listing never errors or blocks on a locked keychain. The keyring slot name survives as
+        `credentials_from` and is emitted only when it differs from the profile's own name, so it
+        marks exactly the row borrowing another profile's credential. `profiles current` renames
+        `source` to `selected_by`. A root profile whose slot is its own name no longer writes a
+        redundant `credential` key to `profiles.toml`.
+
+        Three changes deliberately apply to **every** generated CLI, not just those that enable profiles,
+        because each fixes something that was already broken:
+
+        - `auth login --with-token` on an HTTP-basic or OAuth2-client-credentials scheme now reads **two**
+          values from stdin rather than one. Previously it wrote a single opaque string that no resolver ever
+          read, so the paste reported success and did nothing; a script piping one token now exits non-zero
+          instead of silently no-op'ing. Bearer, API-key, PKCE and device-code paste are unchanged.
+        - `auth status` reports every credential rung the resolvers actually consult, so basic and
+          client-credentials schemes gain keyring rows, and the JSON payload gains a `profile` field
+          (`null` when unprofiled).
+        - `--schema` gains a `builtinCommands` array. Additive; `operations`, `globalFlags` and `sdkVariables`
+          are unchanged.
+
+        Everything else — the `profiles` group, the `--profile` / `-p` flag, reading `profiles.toml`, the
+        reserved-flag-name check, and every profile-sourced default — is inert unless `config.profiles.enabled`
+        is set. A CLI generated without the block emits byte-identical output.
+
+        `AuthCredentialSource` gains a `KeyringField` variant. The enum is not `#[non_exhaustive]`, so a
+        hand-authored `custom.rs` that matches it exhaustively will need a new arm; the generated scaffold
+        does not match on it.
+
+        Also fixes a credential-confusion bug that predates profiles. `AuthCredentialSource::Cli` resolves by
+        clap arg *id*, and a binding-contributed arg whose id the root already owns is dropped by the command
+        merge — so an auth scheme bound to `cli("format")` resolved to the user's `--format` value and sent
+        `json` as the credential. Such a binding is now rejected at startup, naming the reserved ids. The
+        generator emits `cli(...)` flags derived from scheme names (for APIs with several header schemes), so
+        this was reachable from generated output, not only hand-authored CLIs.
+
+        Built-in commands (`auth`, `profiles`, `completion`, `man`) now appear in `--schema` under a new
+        `builtinCommands` array. They were absent entirely, so an agent reading `--schema` could not discover that the
+        CLI had any way to authenticate or switch tenant.
+
+        A CLI generated without the `profiles` config block is byte-identical to one generated before this change.
+      type: feat
+  createdAt: "2026-09-17"
+  irVersion: 67
+- version: 0.40.0
+  changelogEntry:
+    - summary: |
+        **Behavior change for multi-scheme CLIs.** The generated `main.rs` now emits
+        `.auth_strategy(AuthStrategy::Any)` whenever the IR's `auth.requirement` is `ANY`
+        (`.auth_strategy(AuthStrategy::Routing)` for `endpoint-security`). Previously the
+        runtime derived its strategy from the baked spec and dispatched per operation, so
+        each request used the scheme that operation's `security` named.
+
+        With `Any`, the first scheme in `generators.yml` order that has credentials is used
+        for **every** authenticated request and per-operation `security` is no longer
+        consulted. This matches what the SDK generators have always done for
+        `api.auth: any:`, and it is what makes a scheme declared only in `generators.yml`
+        (e.g. OAuth client-credentials layered onto a vendor spec) reachable at all —
+        per-operation routing could never select it, so those requests went out
+        unauthenticated.
+
+        Two groups are affected:
+
+        - `api.auth: any: [...]` in `generators.yml`. One `auth login` now covers every
+          operation. If your schemes map to different accounts or privileges, reorder
+          `any:` so the preferred credential is declared first — declaration order is now
+          the precedence lever, and it is the same lever your SDKs already use.
+        - Specs with two or more `components.securitySchemes` and **no** `api.auth` block.
+          The importer derives `ANY` from the scheme count alone, so these CLIs switch from
+          per-endpoint routing to first-credential-wins even though nothing in
+          `generators.yml` asked for it. If your operations genuinely need different
+          schemes, declare `api.auth: endpoint-security` to keep per-operation dispatch.
+
+        A selected scheme whose credentials fail (e.g. a rejected OAuth token exchange) now
+        fails the command. The SDKs instead fall through to the next scheme; the CLI is
+        deliberately stricter, because silently substituting one credential for another with
+        different privileges is worse in a terminal than a loud failure.
+
+        `ALL` over several schemes has no equivalent strategy and now warns and leaves the
+        runtime on its `Auto` default, rather than pinning one.
+      type: feat
+    - summary: |
+        OAuth2 client-credentials CLIs now send `grant_type=client_credentials` (and
+        `grant_type=refresh_token` on the refresh endpoint) when the spec declares
+        `grant_type` without a literal or default value, instead of exposing it as an
+        optional `<BIN>_<SCHEME>_TOKEN_GRANT_TYPE` env var that was silently omitted.
+      type: fix
+    - summary: |
+        Cached OAuth2 tokens in `credentials.json` are now tagged with a fingerprint of
+        the client credentials they were minted for. Changing the client ID/secret env
+        vars no longer reuses the previous client's access or refresh token.
+      type: fix
+    - summary: |
+        OAuth token and refresh endpoints now resolve their URL from `x-fern-default-url`
+        when the spec's server is templated, instead of the template filled with each
+        variable's default. A spec declaring `https://oauth.{region}.example.com` with
+        `x-fern-default-url: https://oauth.example.com` previously baked
+        `https://oauth.us1.example.com` into the token request — a host that need not
+        exist, since the regional form is often not a real name. The CLI has no way to
+        supply server variables, so the untemplated default is always the correct
+        choice; this matches what the SDK generators already do.
+      type: fix
+  createdAt: "2026-09-15"
+  irVersion: 67
+- version: 0.39.4
+  changelogEntry:
+    - summary: |
+        The generated README and `reference.md` no longer list `--page-all` / `--page-limit` under the flags
+        "available on every operation". Since 0.38.6 those flags are only registered on operations the spec
+        describes how to page (`x-fern-pagination`, or a root `page_token` parameter), so the docs now list them
+        in a separate table introduced by "Operations the spec describes how to page ... also accept:" instead of
+        promising them everywhere. The previously undocumented `--page-delay` / `--no-pager` (paginated
+        operations), `--no-stream` (streaming operations) and `--no-extract` / `--no-retry` (every operation) are
+        now documented alongside them.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 0.39.3
+  changelogEntry:
+    - summary: |
+        `auth status` now lists the env vars an OAuth2 client-credentials scheme reads (e.g. `OAUTH_CLIENT_ID`,
+        `OAUTH_CLIENT_SECRET`, plus any required custom token-endpoint properties) with their active/missing state,
+        instead of reporting `(no credential sources bound)`. A valid cached access token is reported alongside
+        those env vars — it satisfies the scheme on its own, but the env vars stay visible so you can still tell
+        whether they were picked up. Multi-value schemes (OAuth2 client credentials, basic auth) are now modelled
+        as independent credential slots: each slot resolves on its own, so a username and password that are both
+        set are both shown as active rather than one shadowing the other, and `logged_in` in `--output json` is
+        true only when every slot resolves (or a standalone alternative does).
+      type: fix
+    - summary: |
+        `auth status` no longer suggests `auth login --with-token` for schemes that never read the keyring
+        (OAuth2 client credentials, basic auth) — a token pasted there would have been silently ignored at
+        request time. It now names the env vars to set instead.
+      type: fix
+    - summary: |
+        `auth status` no longer reports a scheme as unauthenticated just because the env vars that would mint its
+        token are unset when a stored login token is present — a keyring entry written by `auth login` satisfies the
+        scheme on its own. An auth scheme configured with an empty env-var name (e.g. `client-id-env: ""`) is now
+        reported as `(unbound)` instead of rendering a nameless `missing    env var` row and a remedy with an empty
+        entry.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 0.39.2
+  changelogEntry:
+    - summary: |
+        `--page-all` now treats a step-less offset param as a page number, advancing by 1 per page, matching the
+        default in the TypeScript, Python, Ruby, PHP and C# SDKs. When `x-fern-pagination` does declare a `step`,
+        the param is treated as an item index and advanced by the number of results returned, as before.
+        Page-number APIs (e.g. `?page=2&pageSize=50`) previously skipped pages. Paging also continues from the
+        caller's own value for the offset param (`--params '{"page": 7}'` fetches 7, 8, 9, …) and no longer sends
+        that param twice on subsequent pages. The first request is still sent exactly as the caller wrote it —
+        the CLI never synthesizes a page param for it. When the caller omits the offset param, paging continues
+        from the param's declared default (`default: 0` / `x-fern-default`), so 0-indexed APIs fetch 1, 2, 3, …
+        after their implicit first page instead of skipping page 1.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
+- version: 0.39.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.7 updates.
+      type: chore
+    - summary: |
+        Embedded types generation no longer fails on large APIs. The rust-model subprocess
+        timeout is raised from 2 to 15 minutes, and its stderr is now surfaced in the error
+        message when it does fail.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
+- version: 0.39.0
+  changelogEntry:
+    - summary: |
+        Generated `--help` output now groups flags into `Required parameters`,
+        `Optional parameters`, `Request options` (`--json`, `--params`, pagination,
+        retries, ...) and `Global options` (output format, base URL, env-backed
+        variables, `--help`/`--version`) instead of one flat `Options:` list, so
+        users and agents can see at a glance which flags an operation needs.
+        Runtime validation is unchanged: required parameters may still be supplied
+        via `--params`/`--json`. Two cases are deliberately listed as optional
+        because the operation runs without them: a required parameter with an
+        `x-fern-default`, and a required property of an object that is itself
+        optional (`--settings.region` where `--settings` may be omitted).
+      type: feat
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.38.13
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.6 updates.
+      type: fix
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.38.12
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.5 updates.
+      type: fix
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.38.11
+  changelogEntry:
+    - summary: |
+        `config.packageIdentity.license: MIT` now emits a LICENSE. The generator
+        reads `GeneratorConfig.license`, which is fed by `publish-metadata.license`,
+        `metadata.license` or `github.license` — none of which is
+        `packageIdentity.license`. A project that set only the latter got "MIT" in
+        `Cargo.toml` and on the npm page while shipping no LICENSE text: a package
+        advertising a license it does not carry. Honored as a fallback only, so any
+        of the three standard keys still wins and existing output is unchanged.
+      type: fix
+    - summary: |
+        An out-of-range integer supplied through `--params` is rejected instead of
+        silently mangled. Accepting a whole-valued float looked like it closed the
+        gap with the flag path past `u64::MAX`, but `serde_json` has already coerced
+        the literal to `f64` by then, so accepting meant re-serializing the double:
+        `--params '{"limit": 18446744073709551616}'` sent
+        `limit=1.8446744073709552e+19` and `1e3` sent `limit=1000.0`. The two paths
+        now deliberately differ beyond `u64::MAX` — the flag path carries the digits
+        verbatim, `--params` refuses a value it can no longer represent — which is
+        the safe direction, since the precision is gone before validation sees it.
+      type: fix
+    - summary: |
+        Every missing required input is reported at once, in a stable order.
+        The check returned on the first miss while iterating a hash map, so an
+        operation missing four required inputs named one arbitrary parameter — and a
+        different one on each run. Fixing them meant re-running once per parameter,
+        in random order, with no indication of how many remained. A missing path
+        parameter also short-circuited the check and hid every missing body
+        parameter behind it. The list now follows the spec's own parameter order,
+        with anything absent from it appended alphabetically. A single missing input
+        keeps its original one-line wording.
+      type: fix
+  createdAt: "2026-09-01"
+  irVersion: 67
+- version: 0.38.10
+  changelogEntry:
+    - summary: |
+        `packageIdentity` now reaches the published npm package. The launcher's
+        `package.json` carried only name/version/bin/optionalDependencies plus a
+        hardcoded description, so npm rendered the CLI as "License: none" with no
+        keywords, homepage or author — while the same config already populated
+        `Cargo.toml`. The license is the part that matters: dependency scanners and
+        corporate policy gates reject unlicensed packages. `authors[0]` becomes npm's
+        single `author` and the rest `contributors`.
+      type: fix
+    - summary: |
+        A `license: MIT` entry in `generators.yml` now emits a matching LICENSE.
+        Fern's `LicenseConfig.Basic` mounts no file, so no generator honored it and
+        a repo publishing to npm as MIT shipped no LICENSE at all. The copyright
+        holder comes from `packageIdentity.authors[0]`, falling back to the
+        organization; when neither is known nothing is written, since a copyright
+        line naming nobody is worse than no file. `Apache-2.0` is left to
+        `license: { type: custom }`.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
+- version: 0.38.9
+  changelogEntry:
+    - summary: |
+        Query- and path-parameter values are type-checked locally. `--limit nope`
+        used to serialize as `?limit=nope` and fail at the API; it now fails
+        immediately naming the flag and the expected type. Only numeric and boolean
+        types are enforced — `string` accepts anything (it is what the wire carries)
+        and arrays/objects are left to the style-aware serializer — so the check
+        catches typos without rejecting requests a server would accept.
+      type: fix
+    - summary: |
+        `--schema` advertises `httpMethod` and `path` again, per ADR-0006's
+        2026-08-28 amendment. They were dropped as HTTP-execution detail, but they
+        are how an agent tells a read from a write *before* running a command, which
+        is a safety property rather than plumbing. Additive — the `{globalFlags,
+        operations}` shape, the `parameters` to `input` rename and the capability
+        hints are unchanged.
+      type: fix
+    - summary: |
+        `--schema` and `--help` report the real element type of an array-typed
+        query, header or path parameter. Only body arrays carried one, so both
+        renderers fell back to the container type: `--schema` advertised
+        `items: {"type": "array"}` — an array of arrays — and `--help` showed
+        `<JSON_ARRAY>` where a single element belongs. All three spellings now
+        resolve: inline `type: array`, a `$ref` to an array component, and
+        `anyOf: [array, null]`; anything that still doesn't resolve reports
+        `string` rather than the container type. Advertisement-only: the value
+        collector branches on the element type being something other than
+        `string`, so no request changes on the wire — verified against two
+        customer specs (56 array parameters, 4 input forms each).
+      type: fix
+    - summary: |
+        Array-of-enum parameters are now constrained. `type: array, items:
+        {$ref: SomeEnum}` carries no enum of its own — it lives on `items` — so
+        the flag was completely unchecked while its scalar twin was enforced by a
+        clap `value_parser`: `--event-types bogus` reached the API, `--direction
+        bogus` did not. `--schema` now advertises `items.enum` and the executor
+        rejects a non-member before any request is sent, naming the flag and
+        listing the valid options. Enforced after value collection rather than by
+        a `value_parser`, because a repeated flag also accepts a whole JSON array
+        in one argument (`--event-types '["a","b"]'`) and clap would reject that
+        literal as a non-member; all four input forms (repeated, single, JSON
+        array, `--params`) are verified to serialize exactly as before.
+        Note this can newly reject a request that previously went out: that is the
+        point, but a spec whose enum is stale will now block values the API still
+        accepts.
+      type: fix
+    - summary: |
+        Body properties spelled `anyOf: [T, null]` are type-checked. Such a
+        property carries no `type:` of its own — the type is in the branch — and
+        every check downstream keyed off it, so `--json '{"name": 123}'` on a
+        `name` declared `anyOf: [{type: string}, {type: null}]` was forwarded to
+        the wire unvalidated, while the same property spelled `type: string` was
+        correctly rejected. Non-null values are now validated against the sole
+        non-null branch, at both the property level and for a `$ref`'d component
+        that is itself a nullable union. A genuine multi-branch union
+        (`oneOf: [string, array]`) is deliberately left permissive: asserting one
+        branch would reject values the other allows.
+      type: fix
+    - summary: |
+        The two mutual-exclusion errors name flags that exist. Both interpolated
+        the raw wire key, so combining `--json` with a body flag reported
+        `--event_types` where `--event-types` is registered, and an object
+        shorthand against its own leaf reported `--permissions.inbox_read` where
+        `--permissions.inbox-read` is registered — clap rejects the spelling the
+        error suggests, and `--schema` discloses the resolved name, so the
+        message contradicted the contract beside it. Both now route through
+        `resolve_param_flag_name`, the shared resolver the command builder and
+        the missing-parameter hint already use.
+      type: fix
+    - summary: |
+        Non-body parameter type-checking no longer rejects values the CLI used to
+        send. The boolean check accepted only `true|false|1|0`, case-sensitively,
+        so `--flag True`, `TRUE`, `False`, `yes`, `no`, `on` and `off` became hard
+        local failures — spellings that were forwarded before the check existed and
+        that the frameworks generating these specs accept. It now matches
+        case-insensitively over `true/false/1/0/yes/no/on/off/t/f/y/n`, and accepts
+        a JSON `1`/`0` (previously the string `"1"` passed while
+        `--params '{"flag": 1}'` failed). An empty string on a typed parameter is
+        accepted again, since a shell turns an unset variable into one and the
+        request previously went out. The integer check reads digit shape rather
+        than parsing as `i64`, so the flag path and the `--params` path agree on
+        values above `i64::MAX` and an integer with no declared `maximum` is not
+        rejected for its magnitude. Measured across two customer specs: 41 boolean
+        query parameters on one and 8 on the other were affected.
+      type: fix
+    - summary: |
+        Body arrays of enums advertise `items.enum` in `--schema`. The element-enum
+        resolution reached parameters only, so on a spec where the same enum array
+        appears both as a query parameter and as a body property, `--schema`
+        disclosed the members for one and not the other — including on operations
+        where the body property is required.
+      type: fix
+    - summary: |
+        The integer check for a non-body parameter agrees between the flag path and
+        `--params` past `u64::MAX`. `serde_json` widens an integer literal beyond
+        that to a float, so `--params '{"limit": 18446744073709551616}'` was
+        rejected while the identical value supplied as a flag was accepted. A
+        whole-valued number is an integer for this purpose; range remains a
+        `minimum`/`maximum` concern, checked separately.
+      type: fix
+    - summary: |
+        A body property spelled `{$ref: X, nullable: true}` accepts `null`.
+        Nullability is declared at the `$ref` *site* — a component is shared, so it
+        cannot be nullable for one referrer and not another — but the parser's
+        `$ref` early-return dropped every sibling keyword, lowering the property to
+        `nullable: false`. The validator's null short-circuit therefore never fired
+        for the one shape it exists to handle, and resolving the ref rejected `null`
+        with "Expected object". On one customer's OpenAPI 3.0.1 spec that blocked
+        `null` on 121 body properties the spec explicitly permits.
+        A `$ref` property that is not nullable still rejects `null`, and non-null
+        values are still validated against the referenced schema.
+      type: fix
+    - summary: |
+        Enum members are enforced when supplied through `--params`. A scalar enum
+        was gated only by clap's value parser, which `--params` bypasses entirely,
+        so `--params '{"direction":"bogus"}'` reached the wire — and for a path
+        parameter landed in the URL. Array element enums had the same hole for
+        non-string values: `--params '{"event_types":[5]}'` sent `?event_types=5`
+        because the check only inspected strings. The accepted set deliberately
+        mirrors clap's rather than just the declared wire values, so an
+        `x-fern-enum` display name and the `null` sentinel on a nullable parameter
+        are still accepted.
+      type: fix
+    - summary: |
+        A `$ref` to an enum component is enforced inside a request body. The
+        validator's component model carried no `enum` field at all, so a property
+        that reached its enum through a `$ref` had its members advertised in
+        `--schema` and never checked — `webhooks create --event-types bogus` was
+        accepted and sent, while the identical enum declared inline on the property,
+        or used as a query parameter, was rejected. Covers array elements too, and
+        a `const:` lowers to a single-member enum as it does elsewhere. Exact
+        matching is safe because the flag layer canonicalizes an `x-fern-enum`
+        display name to its wire value before validation.
+      type: fix
+    - summary: |
+        A repeatable flag's `--help` now says it is repeatable. The value name can
+        only show one form, and once it correctly reports the element type
+        (`<STRING>` rather than `<JSON_ARRAY>`) nothing on the surface indicated
+        that the flag can be passed more than once or handed a whole JSON array —
+        both of which work. The long help now discloses both forms; the one-line
+        form is unchanged, since it is width-limited and truncated.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
+- version: 0.38.8
+  changelogEntry:
+    - summary: |
+        Fix the generated wire-test harness invoking the CLI with arguments it rejects.
+        It no longer passes `--no-pager`, which commands without pagination never register,
+        and it now passes any required global parameter (for example an API key header) as a
+        flag. Both cases made the binary exit during argument parsing, so the mock server saw
+        no request at all.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
+- version: 0.38.7
+  changelogEntry:
+    - summary: |
+        Every settable property in `--schema` now discloses the flag to type.
+        Property keys are wire names and diverge from flags more often than they
+        look: a header `Idempotency-Key` becomes `--idempotency-key`, an
+        `x-fern-parameter-name` rename changes it outright, and a name colliding
+        with a builtin gets a `-param` suffix — so a spec parameter called `query`
+        is registered as `--query-param` because `--query` is the JMESPath global.
+        That last case made the contract unfollowable: `required` named `query` and
+        no such flag existed. The name is derived from the same
+        `resolve_param_flag_name` the command builder uses, and is absent when no
+        flag exists for that property — either the name cannot be sanitized into a
+        flag, or another wire name claimed the same flag first and the builder
+        skipped this one — meaning that property is reachable via `--params` alone.
+      type: fix
+  createdAt: "2026-08-28"
+  irVersion: 67
+- version: 0.38.6
+  changelogEntry:
+    - summary: |
+        Retries no longer treat a self-generated `Idempotency-Key` as a licence to
+        retry. Because the key is generated for every POST/PUT/PATCH, every
+        non-idempotent operation was retry-eligible and a 5xx on a create retried
+        ~4x against endpoints with no idempotency support. Retry-safety now
+        requires either `x-fern-idempotent: true` (the spec declaring server-side
+        support) or an explicit `--idempotency-key`. The auto key is still sent.
+      type: fix
+    - summary: |
+        `x-fern-idempotent: true` no longer suppresses the auto `Idempotency-Key`.
+        The marker only means the operation *exposes* `--idempotency-key`, but it
+        was read as "the caller supplies one" — so a marked operation invoked
+        without the flag retried with no key at all, while the same operation
+        without the marker got one. A key is now always sent on POST/PUT/PATCH
+        unless the caller supplied their own or `x-fern-cli-idempotency: false`
+        opts out.
+      type: fix
+    - summary: |
+        Request-body validation now checks properties behind a `$ref`. The
+        validator only had an object branch, so a `$ref` to a scalar or array
+        component was accepted whatever its value — on specs where most schemas
+        are component refs this meant validation was effectively off, and
+        `--dry-run` exited 0 on a malformed body. Bare-`$ref` component chains are
+        now followed too (bounded, so a cycle fails closed).
+      type: fix
+    - summary: |
+        Parameters declared as a bare `$ref`, or as `anyOf: [T, null]` (pydantic's
+        `Optional[T]`), now resolve through component schemas, so they keep their
+        type, `enum`, `format` and numeric bounds instead of arriving untyped.
+        Array-typed parameters in any of those spellings are now repeatable:
+        `--labels a --labels b` works, and a single JSON-array argument is
+        equivalent. Previously a JSON array on such a parameter went on the wire
+        URL-encoded as `?x=%5B%22a%22%5D`. A single value is still sent as `?x=a`,
+        and a true union (more than one non-null branch) is left untouched.
+      type: fix
+    - summary: |
+        `--page-all` / `--page-limit` / `--page-delay` / `--no-pager` are only
+        registered on operations the spec describes how to page. They were
+        advertised everywhere, and on a spec with no pagination metadata the
+        executor fell back to guessing `pageToken` / `nextPageToken`: one request
+        went out and the command exited 0 with page 1 — silent partial data.
+
+        Note for consumers: on a spec with no pagination metadata these flags now
+        disappear from every operation, so a script or agent already passing
+        `--page-all` goes from exit 0 (having silently received one page) to a
+        hard "unexpected argument" error. Nothing that previously worked breaks,
+        but the failure is now loud rather than silent.
+      type: fix
+    - summary: |
+        The generated npm launcher now exits non-zero when the binary dies on a
+        signal. `execFileSync` reports a signal death with `status: null`, which
+        the launcher passed to `process.exit`, and Node coerces that to 0 — so CI
+        timeouts (SIGTERM), SIGSEGV and OOM-kills all reported success. Signal
+        deaths now exit 128+signum (SIGTERM to 143).
+      type: fix
+    - summary: |
+        Any SemVer pre-release now publishes to npm under a non-latest dist-tag.
+        Only `-alpha` and `-beta` were matched, so a `v1.1.0-rc.1` or `-next.1`
+        tag fell through to a bare `npm publish` and would move `latest` to a
+        pre-release. The tag is derived from the first pre-release identifier.
+      type: fix
+    - summary: |
+        The custom-command SDK bridge seeds the co-generated SDK's `base_url` from
+        the CLI's own resolution. `ClientConfig::default()` carries an empty
+        `base_url` for any API that declares no environment, so `sdk::client(ctx)`
+        produced a client with no host and every custom command failed on a
+        relative URL before the injected executor could help. A spec that declares
+        its server per-operation rather than at the root is resolved too.
+      type: fix
+    - summary: |
+        Generated skills now tell agents to verify auth with `<cli> auth status`
+        rather than `<cli> --help`, which reads no credentials and so confirmed
+        nothing.
+      type: fix
+    - summary: |
+        npm platform binaries are built with the `dist` cargo profile, the same one
+        cargo-dist uses for the GitHub Release. `ci.yml` built `--release` while
+        `release.yml` built `--profile dist`, so the two channels shipped different
+        bytes under one version tag.
+      type: fix
+    - summary: |
+        Generated CLI repos no longer ship the vendored runtime's Apache-2.0
+        `LICENSE` by default, which contradicted the `license` field
+        `packageIdentity` writes into `Cargo.toml`. A LICENSE is now emitted only
+        when one is configured (`license: { type: custom }`), matching every other
+        Fern generator; a basic license remains package metadata only.
+      type: fix
+    - summary: |
+        The generated README carries an Attribution section naming the vendored
+        `fern-cli-sdk` runtime and its Apache-2.0 license. The runtime's source is
+        copied into every generated repo, and Apache-2.0 requires retaining that
+        notice; carrying it in the README keeps it without shipping a LICENSE file
+        that contradicts the repo's own declared license.
+      type: fix
+    - summary: |
+        The shared `generate-skills` prerequisite file no longer documents flags the
+        spec cannot produce. `-o, --output` and the pagination flags are emitted
+        only when some operation actually registers them, and the pointer at
+        `--schema`'s `paginable` / `binaryResponse` hints is emitted only when those
+        hints can appear. On an API with neither, step one of the file was
+        unfollowable — it named a flag the parser rejects.
+      type: fix
+    - summary: |
+        Generated skills state the real `--format` default (`table` on a TTY,
+        `json` when piped) instead of `json`, and tell agents to set **one** of
+        several alternative auth schemes rather than exporting every environment
+        variable — which set up the exact credential shadowing the CLI's own auth
+        errors warn about.
+      type: fix
+    - summary: |
+        Auth failures name only the credential sources that actually hold a value,
+        and the "check for shadowing" advice appears only when more than one source
+        is populated. Listing every *declared* source meant a CLI with two schemes
+        named four places when one supplied the credential, then sent the user
+        hunting for a conflict that could not exist.
+      type: fix
+    - summary: |
+        `--schema`'s `globalFlags` lists `--params`, `--no-retry`, `--no-extract`
+        and `--help`. All four are registered on every operation, so an agent
+        coding against `--schema` had no way to discover they existed.
+      type: fix
+    - summary: |
+        `--schema` and `--help` advertise the real element type of an array body
+        property. A repeated flag carries `type: string` because that is the flag
+        surface, which was rendered as `items: {type: string}` even for an array of
+        objects — an agent following the contract sent `["x"]` and the request was
+        rejected. Each occurrence of such a flag is now JSON-decoded, so
+        `--inputs '{...}' --inputs '{...}'` builds an array of objects; plain
+        string arrays are unchanged.
+      type: fix
+    - summary: |
+        `--schema`'s `input.required` no longer disagrees with the validator. An
+        object-valued body property the parser recurses into kept a clap-optional
+        shorthand flag (leaf flags can satisfy it) but was also dropped from the
+        advertised required list, so a caller could supply every field `--schema`
+        named and still be rejected for one it never mentioned.
+      type: fix
+    - summary: |
+        `--schema` no longer advertises a required parent object alongside its
+        required dotted leaves. The executor rejects combining `--a` with `--a.b`,
+        so listing both made the contract unsatisfiable — following it verbatim
+        produced "Cannot combine". The ancestor is dropped; the required leaves
+        already imply it. A required parent with no required leaves is unaffected.
+      type: fix
+    - summary: |
+        `--help` shows the real element type for a repeated flag, so an
+        array-of-objects flag reads `<JSON_OBJECT>` rather than `<STRING>`.
+      type: fix
+    - summary: |
+        `--schema` includes `multipart/form-data` body fields. They live in
+        `method.multipart_fields` rather than `method.parameters`, so an upload
+        operation advertised only its query parameters and headers with an empty
+        `required` — the flags existed and worked but were undiscoverable, making
+        every multipart operation uninvokable by an agent driving from the
+        contract. File parts carry `file: true` so an agent knows to pass a path,
+        and a per-part `contentType` surfaces when the spec pins one.
+      type: fix
+  createdAt: "2026-08-27"
+  irVersion: 67
+- version: 0.38.5
+  changelogEntry:
+    - summary: |
+        Resolve OpenAPI server variables and `x-fern-default-url` instead of sending the raw
+        URL template. The runtime spec parser dropped `servers[].variables` and
+        `x-fern-default-url`, so a server such as `https://api.{region}.twilio.com` reached
+        reqwest with a literal `{region}` and failed with "Parsed Url is not a valid Uri".
+        Each spec-declared server variable now surfaces as a global flag (carrying the
+        variable's `default`, `description` and `enum`), and when the caller pins no
+        variable the server's `x-fern-default-url` is used. Applies to per-operation
+        `servers:` entries too.
+      type: fix
+    - summary: |
+        Send API-wide headers (the `headers:` block / `x-fern-global-headers`) on every
+        request. They live in the IR's `headers` rather than `globalParameters` and were
+        never emitted into the generated CLI, so a header declared with `env` and
+        `client-default` was silently absent from requests. They are now lowered to
+        header-location global parameters with `auto` apply, preserving `env`,
+        `client-default` and optionality; a `globalParameters` entry targeting the same
+        header still wins.
+      type: fix
+  createdAt: "2026-08-27"
+  irVersion: 67
+- version: 0.38.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.4 updates.
+      type: fix
+    - summary: |
+        Fix generated CLI failing to compile when a property is named `self`, `Self`, `crate` or `super`.
+        Rust rejects these as raw identifiers, so they are now suffixed with an underscore (`self_`)
+        and given an explicit `#[serde(rename = "self")]` to preserve the wire name.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 0.38.3
+  changelogEntry:
+    - summary: |
+        An `x-fern-global-headers` / `x-fern-global-parameters` entry whose flag
+        name collides with a per-operation parameter is now honored on custom
+        commands. Colliding globals are registered per-leaf rather than globally,
+        and the custom-command path resolves them from the root `ArgMatches`, so
+        the value was stamped on spec-derived requests and silently dropped on
+        hand-written ones. Such a global now falls back to its `env` var and
+        `default` (the CLI flag is not registered on those commands, so this is the
+        full chain that was ever reachable).
+      type: fix
+    - summary: |
+        A body property spelled `anyOf: [$ref Model, null]` now emits the same
+        dot-notation leaf flags as a bare `$ref: Model` (e.g.
+        `--voice-settings.stability`), not just the JSON shorthand. The parent flag
+        keeps its `null` sentinel. Nullable *array* branches are unaffected — they
+        stay a single repeated flag, matching a plain `type: array` property.
+      type: fix
+    - summary: |
+        Array-typed `multipart/form-data` fields are now repeatable
+        (`--files a.mp3 --files b.mp3`), each occurrence becoming its own part with
+        the same wire name. Multipart fields named in `--params` are routed into the
+        form body instead of the query string, and a JSON array there is equivalent
+        to repeating the flag.
+      type: fix
+    - summary: |
+        `anyOf: [$ref, null]` / `oneOf: [$ref, null]` body properties — what
+        FastAPI/pydantic emits for every `Optional[Model]` field — now resolve to
+        their non-null branch's type, so nullable objects and arrays are sent as
+        JSON instead of an escaped string. Explicit `null` remains accepted. True
+        unions with more than one non-null branch are left untouched.
+      type: fix
+    - summary: |
+        A `const` on an optional body property is no longer injected into the
+        request body as a clap default; it stays documentation- and
+        validation-only. Required consts are still sent. This also unblocks
+        object-shorthand flags on const-bearing nested schemas, which previously
+        failed with "Cannot combine --a.b with --a.b.c".
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 0.38.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.3 updates.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 0.38.1
+  changelogEntry:
+    - summary: |
+        Fixed `auth login` failing on Windows with "keyring set failed: Attribute
+        'password encoded as UTF-16' is longer than platform limit of 2560 chars".
+        Large OAuth token bundles are now transparently split across multiple
+        Windows Credential Manager entries and reassembled on read, so credentials
+        stay in the OS keyring. A partially written entry set is detected on read
+        and reported as a missing credential rather than a corrupt token. Only
+        Windows writes split entries — macOS Keychain and secret-service have no
+        such limit and keep storing credentials exactly as before. Existing
+        credentials remain readable.
+      type: fix
+  createdAt: "2026-08-24"
+  irVersion: 67
+- version: 0.38.0
+  changelogEntry:
+    - summary: |
+        Generated CLI READMEs now include a "CLI generated by Fern" shield in the
+        header, matching the branding SDK READMEs already carry. The shield is
+        omitted for orgs configured for white-labeling.
+      type: feat
+  createdAt: "2026-08-22"
+  irVersion: 67
+- version: 0.37.0
+  changelogEntry:
+    - summary: |
+        The "no credentials" hint is no longer tied to 401/403. The condition it
+        describes — this request went out carrying nothing — has nothing to do with
+        the status code, but the hint was gated on those two, so an API that
+        expresses "not authenticated" any other way said nothing useful. ElevenLabs
+        answers 404 for a workspace scoped to the anonymous principal (deliberate: a
+        401 would confirm the resource exists), so a logged-out user read
+        `Workspace 1anonymous1 not found` with no indication that the fix was
+        `auth login`.
+
+        Any failed status now carries a `No credentials were sent with this
+        request. Set ...` note in `error.help` when the provider had nothing for
+        that endpoint. This only annotates: the error keeps its class and exit code,
+        and the request is still sent, because the server — not the spec — is the
+        authority on whether an endpoint needed auth. Public endpoints are
+        unaffected, and 401/403 still escalate to `error[auth]` with exit 2.
+      type: fix
+    - summary: |
+        The "check for shadowing" advice on a rejected credential now appears only
+        when there is more than one visible credential source. Shadowing means one
+        source silently outranking another, which cannot happen with a single
+        source — yet the note sent every user to `auth status` to compare a list of
+        one against itself. On a scope failure (`OAuth token does not have required
+        permissions: user_read`) that was worse than noise: the credential is the
+        right one from the right place, and the advice points away from the real
+        fix. The source is still named whenever credentials were sent, since knowing
+        which one was used is useful either way.
+      type: fix
+    - summary: |
+        Transport failures no longer report a fabricated HTTP status. A request that
+        never reached a server — DNS, TLS, connection refused, timeout — was folded
+        into the generic internal-error shape and emitted `code: 500` with
+        `reason: "internalError"`, telling a consumer the *API* had failed and
+        inviting a retry against a host that was never contacted. These now produce
+        `reason: "networkError"` and **no** `code` field, since the field is
+        documented as the HTTP status and there is none. Exit code is unchanged at
+        5, and the human rendering is labelled `error[network]:`.
+
+        The message also keeps the part that matters: `reqwest` stops at "error
+        sending request for url (...)" and buries "Connection refused" two levels
+        down its `source()` chain, so the chain is now walked and joined. SDK-mode
+        CLIs report network and timeout failures the same way as OpenAPI-mode ones.
+      type: fix
+    - summary: |
+        `auth status` now honors the global `--format`. It gated JSON output on its
+        own `--json` boolean, so `auth status --format json` printed the human table
+        with no error and no hint — the first command an agent runs, silently
+        ignoring the flag it uses everywhere else. `--format`, `--human`, the
+        `<NAME>_OUTPUT` env var and the piped default now all apply; `--json`
+        remains as an alias so existing scripts keep working.
+      type: fix
+    - summary: |
+        Fixed a literal `<bin>` placeholder appearing in credential hints. The
+        keyring source rendered `populated by \`<bin> auth login\`` instead of naming
+        the binary. CLIs using an OAuth login flow were unaffected — that provider
+        overrides the hint and substituted correctly — so the placeholder only
+        reached users on bearer, header and basic schemes.
+      type: fix
+    - summary: |
+        `error.details` no longer repeats the sentence already reported in
+        `error.message`. The parsed server body is still carried structurally, so
+        fields a consumer cannot get anywhere else — `request_id`, a validation
+        error's `loc`, a GraphQL error's `path`/`extensions` — are unchanged, but the
+        one field the message was lifted from is removed, and `details` is
+        omitted entirely when the body said nothing beyond that message (so
+        `{"detail": "Not Found"}` now yields just `code`/`message`/`reason`).
+
+        Removal is by position, not by value: when several entries report the same
+        problem — two required fields both failing with `"field required"`, the
+        common multi-field validation shape — only the entry the sentence came from
+        loses it. Dropping every string equal to the message would leave the
+        remaining problems unattributable to their `loc`.
+      type: fix
+    - summary: |
+        Fixed API errors being printed twice and with the server's JSON body escaped
+        inside the `message` string. An error is now rendered in exactly one
+        representation — the JSON envelope on stdout for machine formats
+        (`json`/`jsonl`/`yaml`, which includes the piped/non-TTY default), or a single
+        `error[api]: <message>` line on stderr for `table`/`csv` — and the server's
+        body is parsed rather than stringified: a sentence lands in `message`, the
+        parsed body in `error.details`, and `reason` is derived from the HTTP status
+        (`internalServerError` for 500) instead of always `httpError`. Top-level
+        shapes such as `{"status", "message"}`, `{"error": "<message>"}`, RFC 7807
+        `detail`/`title`, and OAuth 2.0 `error_description` are now recognized. Two
+        consequences worth noting for anyone scripting against these fields: 429 now
+        always reports `reason: "rateLimited"`. Previously a generated CLI reported
+        either that or `tooManyRequests` for the same status depending on which code
+        path produced the error — the runtime's `sdk_executor` already said
+        `rateLimited`, while the generated request adapter said `tooManyRequests`.
+        Both now come from one mapping. Also,
+        `error.code` is always the HTTP status the server answered with. A body's own
+        `code` never overrides it — not an internal numbering (`{"code": 100234}`,
+        which used to truncate into a nonsense status), and not one that merely looks
+        like a status, which could disagree with what was actually served and point
+        the docs link at the wrong page. The body's `code` is still available under
+        `error.details`.
+      type: fix
+    - summary: |
+        Added a global `--human` flag, shorthand for `--format table`, for the one
+        case TTY detection gets wrong: a person piping into a pager or a file still
+        wants the interactive rendering. Without it the existing TTY-aware default
+        applies (`table` on a terminal, `json` when piped), and passing it alongside
+        `--format` is rejected. There is deliberately no `--json` counterpart:
+        endpoints with a request body already spell that flag `--json <JSON>`, so
+        the name cannot mean "render JSON" everywhere; use `--format json`.
+      type: feat
+    - summary: |
+        `--format jsonl` now emits errors as a single line. The envelope was
+        pretty-printed regardless of format, so a line-delimited consumer — the only
+        reason to pick NDJSON — read a bare `{` and failed on the first line. Errors
+        under `jsonl` are compact; `json` and `yaml` keep the readable multi-line
+        rendering.
+      type: fix
+    - summary: |
+        A request that fails to build is now a validation error rather than an
+        internal one. `reqwest`'s `build()` fails on a malformed URL or header
+        value, which comes from `--base-url` or a flag the user typed, but the
+        failure was reported as `code: 500` / `reason: "internalError"` with exit 5.
+        A mistyped `--base-url` claimed a server status for a request that was never
+        sent and buried a fixable input error under an internal-error exit code. It
+        now reports `code: 400` / `reason: "validationError"` with exit 3.
+      type: fix
+    - summary: |
+        `<cli> --help --format json` now emits the operation catalog, as the
+        generated README has always documented. It printed the human help instead,
+        so the README's own example (`--help --format json | jq …`) failed with a
+        jq parse error. It now returns exactly what `--schema` returns for the same
+        scope.
+
+        Only an *explicit* machine `--format` triggers this — the piped default does
+        not, so `<cli> --help | less` still shows help. A path with no catalog entry
+        (`auth login`, `completion`, `man` — built-ins, not API operations) falls
+        back to prose rather than erroring; `--schema` on such a path still reports
+        `discoveryError`, since asking for a document that does not exist is a real
+        error. The README example was also
+        corrected: the catalog is an object with `globalFlags` and `operations`, so
+        counting operations is `jq '.operations | length'`, not `jq 'length'` (which
+        counted the two top-level keys).
+      type: fix
+    - summary: |
+        Removed `error::print_error_json` from the vendored runtime. It wrote the
+        JSON envelope to stdout unconditionally — the exact double-output behaviour
+        the rest of this release removes — so it was a working copy of the bug left
+        reachable under an inviting name. It had no callers in the runtime, in the
+        generator's emitted code, or in any generated CLI. `write_error_json`, which
+        honours the resolved format, is the entry point.
+      type: fix
+    - summary: |
+        A credential the CLI could not read is no longer treated as a credential the
+        user never stored. Denying the OS keychain prompt made
+        `AuthCredentialSource::resolve` return "nothing here" — the same answer as an
+        empty keyring — so the CLI sent the request unauthenticated and the user saw
+        whatever the API says to an anonymous caller. Against ElevenLabs that is
+        `error[api]: Workspace 1anonymous1 not found.` with exit 1: a 404 for a
+        problem that is an authentication failure.
+
+        Credential resolution now distinguishes "not configured" from "configured but
+        unreadable". On the request path a denied or broken keyring surfaces as
+        `error[auth]` with exit 2, naming the backend failure. A fallback chain stops
+        at the denial instead of falling through to a later empty source, which would
+        have masked it again. Probing paths — `auth status`, `has_credentials` — still
+        degrade to "no credential" rather than aborting, since a status listing should
+        report what is usable, not fail.
+      type: fix
+    - summary: |
+        Terminal error output no longer repeats itself. Services routinely echo one
+        token across several fields — ElevenLabs sends `code`, `status` and `type` all
+        restating the same `workspace_not_found` — which turned a one-fact 404 into
+        five lines saying the same thing four times. A detail line whose value already
+        appeared in the message, the reason, or an earlier line is now dropped, and a
+        sole wrapper object (`{"detail": {...}}`) no longer prefixes every line with a
+        word that names nothing the reader is looking for.
+
+        A service-specific reason is now shown on the message line, in parentheses.
+        It was previously the one useful field that appeared in the JSON envelope but
+        never in the terminal. A reason derived from the HTTP status (`notFound` on a
+        404) stays hidden, since it says nothing the label and message do not.
+
+            error[api]: Workspace 1anonymous1 not found. (workspace_not_found)
+              request_id: 6c312fb855fc7b476570b44e2b660988
+              type: not_found
+
+        The JSON envelope is unchanged and still carries every field.
+      type: fix
+    - summary: |
+        Terminal error output now reports what the server said beyond the failure
+        sentence. A field-level rejection used to read as `error[api]: field
+        required` with no way to tell which field — the `loc` was in the JSON
+        envelope, which is exactly what the person in the terminal cannot see. The
+        parsed body is now flattened one `path: value` per line under the message:
+
+            error[api]: value is not a valid email address
+              detail[0].loc: body, email
+              detail[0].type: value_error.email
+
+        Lists of scalars stay on one line, since splitting FastAPI's two-element
+        `loc` buries the field name it exists to report. Output is capped at ten
+        lines, with a final line naming what was elided and pointing at
+        `--format json`. The JSON envelope is unchanged.
+      type: fix
+    - summary: |
+        Non-JSON error bodies no longer break the "`message` is one sentence"
+        guarantee. A CDN or load balancer answering with an HTML page used to have
+        its whole document — doctype, newlines and markup — pasted into
+        `error.message`; the previous 500-byte clip did not help, because a short
+        page is still multi-line markup. Markup and over-long bodies now yield
+        `HTTP 502 badGateway (non-JSON response, 1284 bytes)` in `message`, with the
+        bytes preserved (whitespace-collapsed and clipped) in `error.details.body`.
+        A short plain-text body — the common proxy case — is still the message
+        itself, now collapsed onto one line if the server wrapped it.
+      type: fix
+    - summary: |
+        Two error bodies that produced an unhelpful envelope now read correctly. An
+        empty body gave `message: ""`, which reads as the CLI having lost the error
+        rather than the server having sent nothing; it now reports
+        `HTTP <status> <reason>`. A body that is a bare JSON string
+        (`"Service temporarily unavailable"`) was summarised as
+        `HTTP 500 internalServerError` with the only text the server sent exiled to
+        `details`; it is now the message. A body that is a bare JSON list of
+        problems is also recognised, matching the existing `errors`/`detail`
+        handling one level out.
+      type: fix
+    - summary: |
+        Made the error envelope's `message` field one sentence for every error class.
+        Advice that is not part of what the server reported — today the "Credentials
+        were supplied via: ..." hint shown on 401/403 — moved out of `message` into
+        its own `error.help` field, so a consumer keying off `error.message` sees the
+        same shape whether or not the CLI had advice to offer. The docs link (opt-in
+        via `error_docs_base_url`, previously human-only) now also appears as
+        `error.docs_url`, so the JSON envelope no longer silently drops information
+        the human rendering shows. Human output keeps the same order, one item per
+        line: message, then what the server said beyond it, then hint, then link.
+      type: fix
+    - summary: |
+        Usage errors (a mistyped subcommand, a bad flag value, conflicting flags) no
+        longer stuff clap's whole multi-line block into `error.message` when output is
+        machine-readable. The failure sentence stays in `message`, clap's `tip:` and
+        `[possible values: ...]` lines move to `error.help`, the usage string becomes
+        `error.usage`, and the `For more information, try '--help'` boilerplate is
+        dropped — so every field is a single line, as with API errors. Human output on
+        a terminal is unchanged: it still prints clap's full rendering, tip and usage
+        included.
+
+        Only clap's own blocks are split. A multi-line message from one of the CLI's
+        validators — schema validation listing one bullet per violation, say — passes
+        through whole, since applying the split there would demote the violations to
+        `help` and leave `message` as the bare header.
+      type: fix
+  createdAt: "2026-08-21"
+  irVersion: 67
+- version: 0.36.0
+  changelogEntry:
+    - summary: |
+        Use safe OpenAPI root tag descriptions for generated CLI group help and agent
+        skills when no x-fern-groups summary is provided. Match operation-declared
+        tags to groups without borrowing ambiguous or scope-style descriptions, and
+        keep CLI help table lines concise while preserving full prose in long help.
+        Treat summaries that only restate a group's command name as non-informative
+        when a usable tag description exists, while retaining them when no such
+        description is available. Preserve framework built-in group descriptions
+        when a colliding API group has only the generic fallback. Method help now
+        keeps the fuller description under `<method> --help` while the command
+        table stays a single short sentence, and sentence splitting no longer cuts
+        help text at abbreviations such as `e.g.`, `i.e.`, or `U.S.`. A tag named
+        after the group owns that group's description: when it documents nothing,
+        a sibling tag's prose no longer stands in for it, and a tag the group
+        declares less often than another never names the whole group. An operation's
+        `description` is no longer discarded in favour of its terse `summary`: the
+        summary still labels the command table while the prose is what the command
+        renders under its own `--help` — but only when it elaborates rather than
+        paraphrasing the summary, so the two tiers never read as different
+        commands. Flag help is split the same way — `-h`
+        shows a one-line form and `--help` the fuller prose — and multipart field
+        help, which previously bypassed truncation entirely, is now capped and has
+        its spec indentation collapsed like every other parameter. `--help` keeps
+        whatever the spec documents in full; only `-h` trims. An explicit
+        `x-fern-groups.description` now drives the group's command-table line too
+        (first sentence, with the full prose kept in long help) instead of only
+        populating long help while the table showed the generic label.
+      type: feat
+  createdAt: "2026-08-21"
+  irVersion: 67
+- version: 0.35.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.2 updates.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 0.35.3
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.1 updates.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 0.35.2
+  changelogEntry:
+    - summary: |
+        Refresh the vendored Cargo.lock to clear two advisories that shipped into
+        every generated CLI: h2 0.4.15 -> 0.4.16 (RUSTSEC-2026-0258) and
+        webbrowser 1.2.1 -> 1.2.4 (RUSTSEC-2026-0257).
+      type: fix
+    - summary: |
+        Make the generated release workflow re-runnable. The final step ran a bare
+        `gh release create`, so a release that already existed for the tag - cut
+        from the GitHub UI, or a re-run of a failed `host` job - failed the release
+        after every build had already succeeded. It now edits and re-uploads into
+        an existing release, and only creates when there is none.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 0.35.1
+  changelogEntry:
+    - summary: |
+        Fix a race in credential storage that made `auth login --with-token` fail
+        intermittently when several CLI processes ran at once.
+
+        `atomic_write` derived its temp file name from the target alone, so every
+        concurrent writer used the same sibling path (`auth-keyring.tmp`). Whichever
+        process renamed first moved it away and the rest failed with
+        `error[auth]: Failed to rename .../auth-keyring.tmp: No such file or
+        directory (os error 2)`. The temp name now carries the writer's pid plus a
+        process-local counter, and a drop guard unlinks it on any early return or
+        panic so unique names can't accumulate orphaned credential files.
+
+        This surfaced as flaky generated wire-test suites. The harness gives each
+        case its own temp `HOME`, but `config_dir()` consults `$XDG_CONFIG_HOME`
+        first on Linux and CI runners set it to the real config directory — so the
+        `HOME` override was inert, every authenticated case shared one
+        `auth-keyring.json`, and `cargo test` ran them in parallel. On a workspace
+        with ~680 cases a different subset died on each run. macOS never consults
+        `$XDG_CONFIG_HOME`, so the isolation holds there and the bug cannot
+        reproduce locally on a Mac, which is why it reached a real workspace before
+        ours.
+
+        `rename` was already atomic for readers, so no partially written credential
+        file was ever observable — only writer-vs-writer collisions were affected.
+        `FileKeyringStore::set` is still an unlocked read-modify-write of the whole
+        map, so simultaneous writers can clobber one another's entries; that needs
+        file locking and is left alone here.
+      type: fix
+  createdAt: "2026-08-19"
+  irVersion: 67
+- version: 0.35.0
+  changelogEntry:
+    - summary: |
+        Add `distribution.githubApp`, letting the Homebrew and Scoop publish jobs mint a
+        GitHub App installation token at release time instead of reading a long-lived
+        personal access token out of a secret:
+
+        ```yaml
+        distribution:
+          githubApp:
+            appIdSecret: PUBLISH_APP_ID
+            privateKeySecret: PUBLISH_APP_PRIVATE_KEY
+          homebrew:
+            tap: acme/homebrew-tap
+          scoop:
+            bucket: acme/scoop-bucket
+        ```
+
+        The token is scoped to one repository and expires in an hour, and revoking it is
+        uninstalling an App rather than rotating a credential attached to a person who
+        may have left the org. Declared once for the whole `distribution` block because
+        one App normally serves both channels — an App can be installed on several
+        accounts, and each job passes its own tap/bucket `owner` so it mints from the
+        right installation.
+
+        Precedence is most-specific-first: a channel's `tokenEnvironmentVariable`, then
+        `distribution.githubApp`, then the channel's default PAT secret name. That makes
+        migrating one channel at a time expressible — a shared App plus
+        `scoop.tokenEnvironmentVariable` means "App everywhere except Scoop, which is not
+        migrated yet".
+
+        Additive: omitting `githubApp` leaves the emitted `release.yml` byte-identical, so
+        existing `tokenEnvironmentVariable` consumers are unaffected.
+      type: feat
+    - summary: |
+        Emit a `preflight-distribution` job when a channel uses `distribution.githubApp`.
+        It declares no `needs`, so it reports in roughly twenty seconds rather than after
+        the build matrix and after `gh release create` has already published the release,
+        and it names both the secret and the fix.
+
+        The two failure modes it catches do not describe themselves. An Actions
+        *variable* is not readable as `secrets.<NAME>`, and an undefined secret resolves
+        to the empty string rather than erroring — so a variable named correctly fails
+        forty minutes later with `appId is required`. A PEM pasted as a single line still
+        carries its BEGIN header, so the only signal is the missing line breaks, and it
+        fails with `secretOrPrivateKey must be an asymmetric key`.
+
+        Only the publish jobs depend on it. A bad secret therefore costs the formula and
+        the manifest but still ships archives and installers, and recovery is re-running
+        two jobs. It is skipped on pull requests, where fork secrets are unavailable.
+      type: feat
+  createdAt: "2026-08-18"
+  irVersion: 67
+- version: 0.34.0
+  changelogEntry:
+    - summary: |
+        `auth login` now honors the `success-redirect-url` / `error-redirect-url` fields on an
+        `authorization-code` OAuth scheme: the loopback listener answers the browser with a `302` to the
+        configured page instead of rendering its own. The success redirect forwards no `code` or `state`;
+        the error redirect carries `error` and, when the server sent one, `error_description`, merged
+        into any query string already on the URL and inserted before a fragment.
+      type: feat
+    - summary: |
+        The built-in callback pages served when no redirect URL is configured are now styled,
+        Fern-branded HTML (light and dark) for both the success and failure states, replacing the bare
+        success markup and the `text/plain` failure response. Everything is inlined, so the last screen
+        of the login flow never depends on a network request.
+      type: feat
+    - summary: |
+        The OAuth callback listener now answers the browser only once the login has actually finished.
+        Previously the success page was served as soon as `code` and `state` were parsed — before the
+        `state` was checked, the code was redeemed, or the credential was stored — so a failed token
+        exchange, a rejected `state`, or a keyring the CLI couldn't write to would leave the browser
+        reading "you're all set" while the terminal reported the failure. The connection is now held
+        open across the exchange and answered from the outcome: the success page (or
+        `success-redirect-url`) only on a login that completed, and the failure page (or
+        `error-redirect-url`) otherwise. A rejected `state` reports `error=invalid_request` and a
+        failure after the callback reports `error=server_error`; no `state` value and no token-endpoint
+        detail is forwarded to a hosted page.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 0.33.0
+  changelogEntry:
+    - summary: |
+        Add `splitTypeCrates`, which distributes the generated `<binaryName>-types` crate
+        across one crate per API — plus a shared core crate for types that more than one
+        API references — behind a facade crate that keeps the original crate name and
+        re-exports them.
+
+        A single crate holding every generated type is one `rustc` compilation unit, so
+        its peak memory is driven by the total amount of generated code; with enough
+        specs that is large enough to be killed on a standard CI runner. Cargo compiles
+        crates in separate processes, so splitting caps the peak at the largest single
+        API and lets the remaining crates build in parallel and cache independently.
+
+        Defaults to `false`: output is unchanged unless a consumer opts in. The CLI still
+        ships as one binary with every spec embedded, and `use <binary>_types::SomeType`
+        keeps resolving through the facade.
+
+        The partition crates are emitted inside the facade, at
+        `<binary>-types/crates/`, so enabling the flag adds no top-level entry to the
+        generated repo — the tree looks exactly as it did with a single types crate,
+        even for a workspace with 60 APIs.
+
+        The facade's module surface is unchanged too: `BuildError` and the serde
+        helpers are declared once in the shared core crate and re-exported by the
+        others, so `<binary>_types::error::BuildError` and
+        `<binary>_types::core::flexible_datetime` keep resolving, and a builder error
+        raised in one API is the same type as one raised in another.
+      type: feat
+  createdAt: "2026-08-16"
+  irVersion: 67
+- version: 0.32.1
+  changelogEntry:
+    - summary: |
+        Print the `Environment variables:` block once in the root `--help`. `build_cli`
+        already set it as the command's `after_help`, and `decorate_command` appended it
+        a second time when composing the global-header, global-parameter, and auth
+        sections.
+      type: fix
+    - summary: |
+        Restore `aarch64-unknown-linux-musl` to the generated `dist-workspace.toml`
+        target list. It was dropped because the keyring crate's secret-service
+        backend pulled libdbus, which cannot be statically linked for that target;
+        the keyring is now excluded from musl builds, so the target builds. Without
+        it the GitHub Release shipped no static ARM64 Linux binary even though the
+        npm workflow published one, leaving Graviton and ARM container users on the
+        glibc build.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 0.32.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.45.0 updates.
+      type: feat
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 0.31.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.5 updates.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 0.31.3
+  changelogEntry:
+    - summary: |
+        Restore `aarch64-unknown-linux-musl` to the generated `dist-workspace.toml`
+        target list. It was dropped because the keyring crate's secret-service
+        backend pulled libdbus, which cannot be statically linked for that target;
+        the keyring is now excluded from musl builds, so the target builds. Without
+        it the GitHub Release shipped no static ARM64 Linux binary even though the
+        npm workflow published one, leaving Graviton and ARM container users on the
+        glibc build.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 0.31.2
+  changelogEntry:
+    - summary: |
+        Stop pointing the linker at `musl-gcc` in the generated npm publish workflow.
+        musl-gcc cannot produce a static-pie executable, so the published
+        `*-linux-musl` binaries were dynamically linked against
+        `/lib/ld-musl-*.so.1` and segfaulted on any machine without a musl loader.
+        The C dependencies still build with `musl-gcc` (via a target-scoped `CC_*`),
+        while rustc links the self-contained musl objects into a truly static binary.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 0.31.1
+  changelogEntry:
+    - summary: |
+        Select the TLS and credential-store backends per target in Cargo.toml instead
+        of via build flags, so musl targets build with a plain `cargo build`. Previously
+        the default `native-tls` feature pulled in `openssl-sys` and `keyring`'s
+        secret-service backend pulled in `libdbus-sys`, both of which fail for
+        `*-linux-musl` under cargo-dist's release workflow (which has no per-target
+        feature configuration). musl builds now use rustls and the file-backed
+        credential store.
+      type: fix
+    - summary: |
+        Fail the npm publish workflow when the release tag and the crate version in
+        Cargo.toml disagree, instead of publishing packages whose binary reports a
+        `--version` that is not on the registry.
+      type: fix
+    - summary: |
+        Fail the publish workflow's version guard with a clear, actionable error when
+        the crate version can't be resolved from `cargo metadata`, instead of
+        reporting a misleading empty-string version mismatch or silently passing.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 0.31.0
+  changelogEntry:
+    - summary: |
+        Add `customConfig.distribution` so a generated CLI can publish to Homebrew and
+        Scoop on the same `vX.Y.Z` tag that already drives its GitHub Release and npm
+        packages. Both channels are independently optional:
+
+        ```yaml
+        config:
+          binaryName: acme-cli
+          distribution:
+            homebrew:
+              tap: acme/homebrew-tap        # required, "<owner>/<repo>"
+              formula: acme                 # optional, defaults to binaryName
+              tokenEnvironmentVariable: HOMEBREW_TAP_TOKEN   # optional, default
+            scoop:
+              bucket: acme/scoop-bucket     # required, "<owner>/<repo>"
+              tokenEnvironmentVariable: SCOOP_BUCKET_TOKEN   # optional, default
+        ```
+
+        Homebrew is cargo-dist's native installer: the generator adds `"homebrew"` to
+        `installers` / `publish-jobs` and sets `tap` / `formula` in
+        `dist-workspace.toml`, then appends cargo-dist's `publish-homebrew-formula`
+        job to `release.yml`. cargo-dist renders the `.rb` from its own
+        `dist-manifest.json` (per-arch `url` + `sha256`) and pushes it to the tap.
+
+        cargo-dist has no Scoop support, so that channel is a `publish-scoop` job the
+        generator renders itself — download the released Windows archive, hash it,
+        render the manifest, commit it to the bucket repo. It sits in `release.yml`
+        beside `publish-homebrew-formula`, gated on the same `host` job and the same
+        prerelease expression, so neither channel can publish a version the other
+        missed. It resolves the archive by target-triple suffix rather than by name,
+        since the archive prefix is cargo-dist's app name rather than the binary
+        name. Re-running a release rewrites the manifest instead of failing, so a
+        flaked job is safe to retry.
+
+        The README gains `brew install <tap>/<formula>` and
+        `scoop bucket add` + `scoop install` stanzas for whichever channels are
+        configured.
+
+        Enabling Homebrew also points the crate's `[package]` identity at the
+        consumer. cargo-dist renders the formula straight off that block, and
+        `packageIdentity` only rewrites the fields you set — so anything unset kept
+        the SDK template's Fern-owned value and surfaced on the consumer's own tap:
+        `repository` becomes the per-arch **release download URLs**, `homepage`
+        becomes `homepage`, and `description` becomes `desc`. `repository` was the
+        load-bearing one — left at the template's value the formula's URLs resolved
+        to `github.com/fern-api/cli-sdk/releases/...`, where the consumer's archives
+        do not exist, so every `brew install` 404'd. All three now default from the
+        configured repo (and the API display name) when unset. Explicit values
+        always win, and the defaults are scoped to the Homebrew case so no existing
+        generation's `Cargo.toml` changes.
+
+        Setting `packageIdentity.name` is still worth doing: it names the release
+        archives themselves, which otherwise ship as `fern-cli-sdk-<target>.tar.gz`.
+        That is cosmetic — the formula and the archives agree either way.
+
+        Also fixes the cargo-dist release pipeline, which this feature depends on
+        and which had never been exercised with a real release. `dist build` used
+        the crate's default `native-tls`, so `openssl-sys` failed on both musl
+        targets ("Could not find directory of OpenSSL installation") — and because
+        `host` only runs when `build-local-artifacts` succeeded or skipped, a failed
+        leg meant *no GitHub Release was created at all*. The glibc archives that
+        did build were also not portable: the released binary carried
+        `NEEDED libssl.so.3` / `libcrypto.so.3` and so would not start on Ubuntu
+        20.04, Debian 11, RHEL 8 or Amazon Linux 2 — which is exactly the artifact
+        `brew install` serves to Linux users. `dist-workspace.toml` now sets
+        `default-features = false` / `features = ["rustls"]`, matching what the npm
+        publish job already does for its musl builds. `rustls-tls-native-roots`
+        still reads the OS trust store, so custom/corporate root CAs keep working;
+        what goes away is the dynamic dependency on the host's OpenSSL. Applies to
+        every github-output generation, since the release workflow is emitted
+        unconditionally.
+
+        `aarch64-unknown-linux-musl` is dropped from the target list for a separate
+        reason found in the same run: the keyring crate's Linux secret-service
+        backend pulls `libdbus-sys`, whose C objects fail to statically link for
+        aarch64-musl (`undefined reference to __aarch64_ldadd4_sync` — GCC
+        outline-atomics helpers live in libgcc, which a `-static` musl build does
+        not link). `x86_64-unknown-linux-musl` is unaffected and still ships. ARM64
+        Alpine keeps a path via npm, whose job builds that target natively on an
+        `ubuntu-24.04-arm` runner rather than cross-compiling. The upstream fix is
+        to drop the dbus dependency in the SDK template, but that changes where
+        credentials are stored and does not belong in a distribution change.
+
+        The Homebrew job's `brew style` pass is guarded on `brew` actually being
+        present. GitHub's ubuntu runner images no longer ship Homebrew, so
+        cargo-dist's unconditional `export PATH="$(brew --prefix)/bin:$PATH"` exits
+        127 under `bash -e` and kills the step *before* the formula is committed —
+        observed on a real release. The style pass is cosmetic reformatting of a
+        file cargo-dist already renders validly, so it is skipped when brew is
+        absent rather than failing the publish. The commit is also idempotent now,
+        matching the Scoop job, so re-running a release is a no-op instead of an
+        empty-commit failure.
+
+        Fixes the README's `curl | bash` and PowerShell install commands, which
+        404'd. They were built from the binary name, but cargo-dist names its
+        installer scripts after the cargo *package* — so the two differed for every
+        generated CLI (the package defaults to the template's `fern-cli-sdk`). This
+        predates the distribution work but sits in the same Installation section,
+        and shipping working `brew`/`scoop` instructions beside two broken commands
+        was not worth doing.
+
+        The cargo-dist installer download in the build matrix is now retried and
+        verified. cargo-dist applies pipefail to that download in its `plan` job but
+        not in the six-way build matrix, where the same `curl ... | sh` runs per leg
+        — a dead curl pipes nothing into `sh`, which exits 0, so the step reports
+        success and `dist build` fails two steps later with an opaque exit 127. It
+        hit 2 of 3 real releases. The retry deliberately reuses the matrix's own
+        command and shell rather than branching on `install_dist.shell`, so a future
+        cargo-dist field rename cannot mis-route a leg and skip the install
+        entirely; the change can only ever add an attempt. A final verify step fails
+        with a directed message naming the transient download if both attempts miss.
+
+        Two things the customer must do that generation cannot: create the tap and
+        bucket repos (public), and add a PAT with write access to them under the
+        configured secret names. The workflow's built-in `GITHUB_TOKEN` cannot push
+        cross-repo, so configuring it is rejected at generation time rather than
+        producing a pipeline that only fails after the tag is cut.
+
+        Only honored for `output.location: github` — both channels publish from a
+        tagged GitHub Release. Omitting `distribution` keeps today's output
+        byte-for-byte, so existing consumers are unaffected.
+
+        Known gap: `aarch64-pc-windows-msvc` is not in the cargo-dist `targets` list,
+        so the Scoop manifest declares `64bit` only. Scoop runs it on ARM64 Windows
+        under emulation; the README says so.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 0.30.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.4 updates.
+      type: fix
+    - summary: |
+        The Rust SDK crate bundled into generated CLIs (`api-sdk/src/core/http_client.rs`)
+        no longer reports non-2xx responses as successes. Its `parse_response` /
+        `parse_response_raw` consulted the status code only for empty bodies, so an error
+        response carrying a payload was deserialized into the success type and returned
+        `Ok`. This did not affect commands driven by the OpenAPI binding — that path
+        checks the status in the CLI's own executor — but it did affect custom commands
+        and any code calling the bundled SDK crate directly. Picked up from
+        `@fern-api/rust-sdk`; see its changelog for details.
+      type: fix
+    - summary: |
+        Refuse pagination links that cross a host boundary. `x-fern-pagination`'s
+        `Uri` variant took the next-page URL from the response body verbatim, and its
+        `Path` variant resolved a value that may be an absolute URL — which replaces
+        the base's origin. In both cases the *response* chose where the next request
+        went, so a server (or anything able to influence its output) could redirect
+        the CLI to another host and the credential would follow. As with the redirect
+        guard, reqwest only strips the headers it hardcodes as sensitive, so a
+        spec-declared custom header (`xi-api-key`, `X-API-Key`, anything an
+        `apiKey`-in-header scheme produces) was sent to the new host verbatim.
+
+        Same host-only comparison the redirect guard uses: an `http` -> `https`
+        upgrade or a port change is unaffected, and a relative `next_path` cannot
+        cross an origin so it is allowed without inspection. Crossing to a different
+        host now halts pagination with a warning naming both origins — the origins
+        only, since a pagination link's query string can itself carry a credential.
+
+        Opt out with `<PREFIX>_ALLOW_CROSS_HOST_PAGINATION`, deliberately separate
+        from `<PREFIX>_ALLOW_CROSS_HOST_REDIRECTS`: allowing a redirect is not
+        consent to let a response body steer the next request.
+      type: fix
+    - summary: |
+        Refuse to follow redirects that cross a host boundary. reqwest strips only the
+        headers it hardcodes as sensitive (`Authorization`, `Cookie`,
+        `Proxy-Authorization`, `WWW-Authenticate`) when a redirect changes origin, so a
+        credential carried in a spec-declared *custom* header — `xi-api-key`,
+        `X-API-Key`, anything an `apiKey`-in-header scheme produces — was resent verbatim
+        to the redirect target. A redirect to an attacker-controlled host therefore
+        leaked the API key. `HeaderValue::set_sensitive` does not help: reqwest's
+        stripping consults its own list, not that flag. Even for `Authorization`-based
+        auth, where reqwest does strip, the request URL and body were still delivered to
+        the new host.
+
+        Same-host redirects (path rewrites, `http` -> `https` upgrades, port changes) are
+        unaffected. Crossing to a different host now fails with an error naming both
+        origins — path and query are omitted, since redirect targets are often pre-signed
+        URLs whose query string is itself a credential. Set
+        `<PREFIX>_ALLOW_CROSS_HOST_REDIRECTS=1` to opt back in for APIs that
+        legitimately redirect across hosts (for example a download endpoint that hands
+        off to a CDN).
+      type: fix
+    - summary: |
+        Generated projects now satisfy `cargo build --locked`, so `cargo audit` and
+        `cargo metadata --locked` work on them. Two defects combined to break this, and
+        both failed silently — the build still succeeded, so dependency auditing was
+        quietly disabled instead of erroring.
+
+        First, the `[[package]]` stanzas `patchCargoToml` writes for the generated
+        model/SDK crates were hardcoded: a placeholder `0.0.0` version and a fixed
+        dependency list. The real dependency sets vary by spec (one API's types crate
+        pulls `chrono`, another's pulls `base64`), so the stanza rarely matched the
+        manifest and Cargo demanded a lock update. The stanzas are now derived from each
+        crate's actual `Cargo.toml`, including the version-qualified form Cargo requires
+        (`"thiserror 1.0.69"`) when the lock holds two majors of a package.
+
+        Second, packages the generated crates need but the CLI SDK does not use were
+        absent from the shipped lock entirely: `chrono`, `num-bigint`, `ordered-float`,
+        the `reqwest/gzip` closure (`async-compression`, `flate2`, `miniz_oxide`, ...),
+        and `reqwest-sse` / `pin-project` for server-sent-event specs. These are now
+        declared in the template manifest as `optional` and enabled by no feature, so
+        they are pinned in the lock without entering the build graph.
+
+        Generation now fails with an actionable error if a generated crate needs a
+        package the shipped lock lacks, rather than emitting a lock that cannot resolve.
+        The seed compile/test scripts pass `--locked` so this cannot regress unnoticed.
+      type: fix
+    - summary: |
+        The CLI SDK template now declares `reqwest/gzip`, so the shipped Cargo.lock
+        contains the gzip dependency closure (required for `cargo build --locked`).
+
+        This is behavior-neutral for effectively every generated CLI: the generated API
+        SDK crate already enables `reqwest/gzip`, and Cargo unifies features across a
+        workspace, so reqwest was compiled with gzip — and `ClientBuilder::gzip` defaults
+        to true when the feature is on — regardless of this declaration. The one case it
+        changes is a CLI whose spec produces no model/SDK crate at all, which now also
+        sends `Accept-Encoding: gzip` and transparently decompresses responses. That
+        removes an inconsistency where behavior depended on whether a spec happened to
+        generate an SDK crate.
+      type: fix
+    - summary: |
+        `--json` is usable again on commands with a `const` or defaulted body field.
+        Such a field carries a clap default, so it appeared in the collected
+        parameters on *every* invocation — and the executor treats any body-located
+        parameter as a per-field body flag and refuses to combine it with `--json`.
+        The result was `Cannot combine --json with per-field body flags (--type)` for
+        a flag the user never passed and could not avoid, making `--json`
+        permanently impossible on those commands. Any spec with `const`
+        discriminators hits it; four ElevenLabs endpoints did.
+
+        Body-located parameters whose value came from a default are now omitted when
+        a whole-body `--json` is supplied: an explicit `--json` is the user's intent
+        for the whole body, so it wins over defaults. Everything else is unchanged —
+        without `--json` the default still reaches the body (so `const` fields are
+        still sent on the flag-driven path), a per-field flag the user actually typed
+        still conflicts with `--json` as intended, and the exemption is scoped to
+        body params so a defaulted query, path, or header value still applies.
+      type: fix
+    - summary: |
+        A `.env` file can no longer override transport or process-execution
+        settings. `dotenvy::dotenv()` searches the working directory and its
+        ancestors, and a generated CLI is routinely run inside repositories the
+        operator did not write — so an attacker-authored `.env` could point the CLI
+        at another host (`<PREFIX>_BASE_URL`), disable certificate verification
+        (`<PREFIX>_INSECURE`, `<PREFIX>_INSECURE_SKIP_VERIFY`), replace the trust
+        store (`<PREFIX>_CA_BUNDLE`, `SSL_CERT_FILE`, …), route traffic through a
+        proxy (`<PREFIX>_PROXY`, `HTTPS_PROXY`, …), or switch off the cross-host
+        redirect and pagination guards. Sharpest of all: `<PREFIX>_PAGER` / `PAGER`
+        names a program the CLI *executes* when paging output, making a stray `.env`
+        arbitrary command execution.
+
+        Those keys are now ignored when they come from `.env` (with a warning naming
+        the key), while everything else — credentials, `<PREFIX>_OUTPUT`, timeouts —
+        loads exactly as before. Real process environment still wins over `.env`, so
+        anything genuinely exported from the operator's shell is unaffected.
+      type: fix
+    - summary: |
+        `--dry-run` no longer prints credential headers. It renders the request the
+        CLI *would* send, and a credential reaches that output whenever the spec
+        models it as a header parameter or an `x-fern-global-headers` entry — an
+        `apiKey`-in-header scheme being the common case. Since dry-run output is
+        routinely pasted into issues, values for credential headers are now
+        `[REDACTED]`, using the same predicate and the same spec-derived header
+        names as `--debug` so the two cannot drift apart. Non-credential headers are
+        still shown in full, and the redaction no longer depends on `--debug` being
+        passed.
+
+        Redaction also now recognises vendor-specific credential header names.
+        Neither the exact-match list nor spec-declared `apiKey`-in-header schemes
+        covered a spec that models its credential as a plain header *parameter* with
+        no `securitySchemes` block — ElevenLabs' `xi-api-key` is that shape (an
+        explicit header parameter on 333 operations), and both `--debug` and
+        `--dry-run` printed it in full. Header names containing `api-key`, `apikey`,
+        `api_key`, `token`, `secret`, `password` or `credential` are now treated as
+        credentials. `idempotency-key` is deliberately not matched — it is not a
+        secret and is useful when debugging retries.
+      type: fix
+    - summary: |
+        `--debug` now works for custom commands. Every HTTP dump lived in the
+        OpenAPI executor, so a handler calling the co-generated SDK through
+        `sdk::client(ctx)` produced no debug output at all — silent at exactly the
+        moment it is wanted, while diagnosing a live API failure. The SDK executor
+        now dumps the fully-built request (after auth and global headers are
+        applied, so what is printed is what goes on the wire) plus the response
+        status and headers, with spec-declared credential headers redacted. The
+        response body is not buffered on this path — the generated SDK client
+        consumes it — so it is reported as such rather than being cloned.
+      type: fix
+    - summary: |
+        Fixed the `custom.rs` scaffold so the example it tells you to uncomment
+        compiles. `CliApp::command` takes a `CliCommandHandler` — a boxed
+        `Fn(&ArgMatches, &dyn Any)` — but the commented example passed a bare
+        closure, so following the "uncomment to get started" comment produced an
+        `E0308` on a customer's first custom command. It now wraps the closure in
+        `OpenApiBinding::handler(...)`, matching `CliApp::command`'s own
+        documentation, with a comment explaining why the wrapper is required.
+      type: fix
+    - summary: |
+        Three follow-ups found while testing the above against a real CLI.
+
+        The `.env` filter's explanation never reached anyone: it warned before
+        `init_logging` ran, so with no subscriber installed yet every message was
+        dropped. A user who legitimately put `<PREFIX>_BASE_URL` in `.env` saw it
+        silently not work. The ignored keys are now collected and reported after
+        logging is initialized.
+
+        `--debug` and `--dry-run` redacted `access-control-allow-credentials`, a
+        routine CORS response header whose value is `true`, because its name contains
+        "credential". Header names beginning `access-control-` are now never treated
+        as credentials, so the header is legible again while `xi-api-key`,
+        `authorization` and other genuine credentials stay redacted.
+
+        A refused cross-host redirect was reported as `internalError` with a 500 and
+        exit code 5 — indistinguishable from the CLI genuinely breaking — and the
+        explanation reached only the structured output, leaving stderr with a bare
+        "HTTP request failed". It was also retried, re-issuing a request whose
+        outcome cannot change. It is now a client-side error: `error[validation]`
+        on stderr carrying the full reason (both origins and the opt-out variable),
+        exit code 3, and no retry. Applied in both the OpenAPI and GraphQL
+        executors. The generic `Try <cmd> --help` hint is suppressed when a
+        validation message already names an environment variable to set, since a
+        flag list says nothing about it; ordinary validation errors keep the hint.
+      type: fix
+    - summary: |
+        De-flaked the cross-host guard tests, which ship into every generated CLI
+        and so failed `cargo test` in customers' own repositories, not just ours.
+        They all read the guard's opt-out from the *process* environment under one
+        shared `<PREFIX>`, so `#[serial]` was load-bearing for correctness rather
+        than just for tidiness: one test setting the shared variable while another
+        cleared it flipped the other's expected outcome, in whichever direction the
+        thread interleaving happened to land. That is invisible on an idle machine
+        and shows up under the contention of a loaded CI runner. Each test now uses
+        a CLI name unique to itself, so its variables cannot collide with any other
+        test's, and a future test that forgets `#[serial]` cannot reintroduce the
+        race.
+      type: fix
+    - summary: |
+        Wire tests now assert the credential header, and the basic-auth credential
+        the harness seeds is the one the mock actually expects.
+
+        `mock-utils` emits stub-level auth header matchers only for `basic`,
+        `bearer` and `header` schemes — its switch has no `oauth` case. Every
+        wire-test fixture we had was either unauthenticated or OAuth, so
+        `headerMatchers` was empty everywhere and the harness's header-assertion
+        path had never executed against a real binary, despite being implemented.
+        Two fixtures now cover both matcher kinds the harness dispatches on:
+        `cli-header-auth` (apiKey in header → `x-api-key: .+`, via
+        `match_header_regex`) and `cli-basic-auth` (exact `Authorization: Basic
+        <base64>`, via `match_header`). Each spec also carries one `security: []`
+        operation, so the `requiresAuth` gate is pinned in the same fixture.
+
+        Standing that up surfaced a real defect. The harness exported every
+        credential env var with the same placeholder, but `mock-utils` encodes basic
+        auth as an exact base64 of `test-username:test-password` — so a basic-auth
+        CLI sent a perfectly well-formed `Authorization` header that could never
+        match its own mock, and every authenticated case would have failed the
+        moment anyone enabled wire tests on such an API. The manifest now carries a
+        value per credential env var and pairs the username and password halves with
+        what `mock-utils` expects, including the `usernameOmit` / `passwordOmit`
+        single-half variants where seeding the wrong half is silently wrong.
+        Presence-only schemes keep the placeholder, since `.+` and `Bearer .+` are
+        satisfied by any non-empty value.
+      type: fix
+    - summary: |
+        Wire tests no longer depend on the machine's credential store, and no longer
+        write to the developer's real one.
+
+        The isolated file-backed store was created only for login-flow fixtures, the
+        ones that seed a token via `auth login --with-token`. Every other auth style
+        ran the CLI with the ambient `HOME` and no `FERN_CLI_CREDENTIAL_STORE`
+        override, so `auto_store()` resolved against whatever the host had: the OS
+        keyring when one was reachable, otherwise a file under the real `HOME`. Two
+        consequences. A CLI whose auth caches a token — a client-credentials exchange
+        caches one — became dependent on that ambient state, which is the shape of a
+        test that is green on a developer box and red on a CI runner. And the cases
+        within a fixture, which run concurrently, shared a single store and could race
+        over it.
+
+        Every case now gets its own temp `HOME` plus `FERN_CLI_CREDENTIAL_STORE=file`,
+        so the token cache is hermetic per test regardless of auth style. Login-flow
+        cases seed their token into that same store, so their behavior is unchanged.
+      type: fix
+    - summary: |
+        A wire-test mismatch now reports a self-probe and the full received URL.
+
+        When a mock matches zero requests, the failure could mean two very different
+        things — the mock is not matching in this environment, or the CLI sent
+        something the diagnostic does not surface — and nothing in the output told
+        them apart. The harness now issues its own request for the expected method
+        and path and reports whether the mock matched *that*, which separates the
+        two. It also prints the full received URL rather than just the path, since a
+        stray or missing query parameter is invisible otherwise and is exactly the
+        kind of difference a matcher rejects.
+
+        Reported, not asserted on: a bodyless probe cannot satisfy a case that
+        carries body matchers, so its result is informational.
+      type: fix
+    - summary: |
+        Wire tests now exercise the request side, not just the response. The
+        harness asserts JSON request bodies with a partial-JSON matcher, drives
+        multipart and binary endpoints with real temporary fixture files through
+        the generated field flags (instead of skipping them), and every positive
+        case gets a negative (non-2xx) twin that asserts the CLI exits non-zero and
+        surfaces an error. Multipart file/text classification is derived from the
+        Fern IR so a runtime regression fails the mock match rather than passing
+        silently. Endpoints whose JSON body is also flattened into per-field flags
+        are now driven via `--json` (previously skipped without asserting the body),
+        with the harness reconciling a path parameter the CLI renamed to avoid
+        colliding with a body field of the same name. Multipart assertions pin the
+        request's `multipart/form-data` content type and each part's
+        `Content-Disposition` name, bind `filename=` to the field that must carry it
+        (so a sibling file part cannot satisfy it), and a dedicated variant omits
+        optional file fields and requires the omitted field to be absent from the
+        wire body, so a runtime that turns an absent optional file into an empty or
+        path-valued part fails. Also fixes the OpenAPI multipart classifier to unwrap
+        `anyOf`/`oneOf`/`allOf` so an optional nullable binary field
+        (`anyOf: [{string, binary}, {null}]`) is recognized as a file upload.
+      type: fix
+    - summary: |
+        Bound the multipart classifier's `anyOf`/`oneOf`/`allOf` unwrapping to a
+        fixed nesting depth. A cyclic composition chain (`A: {anyOf: [B]}`,
+        `B: {anyOf: [A]}`) on a multipart property recursed until the stack
+        overflowed; because the CLI loads its baked OpenAPI spec at startup, that
+        aborted the binary on every invocation rather than failing at generate time.
+        Such a field now fails closed as a text part.
+      type: fix
+    - summary: |
+        Multipart file parts are no longer mislabelled `application/octet-stream`.
+        The OpenAPI parser synthesized that content type for every `format: binary`
+        property, which downstream was indistinguishable from a type the spec had
+        actually declared via `encoding` — so it outranked any inference and every
+        upload went out as octet-stream. Servers that validate a part's media type
+        reject that: ElevenLabs' knowledge-base upload answers `Invalid file type.
+        Allowed types are ['application/pdf', 'text/plain', …]` for a `.txt` file,
+        making those endpoints unusable from the CLI regardless of the file. The
+        parser now reports a content type only when the schema or `encoding` pins
+        one, and the request builder resolves a file part as declared `encoding` →
+        inferred from the file's extension → `application/octet-stream`. This is the
+        precedence binary request bodies already used (`resolve_upload_mime`); the
+        multipart path simply never called the existing helper. Content-character
+        sanitization is now shared by both paths, so a spec-supplied media type
+        cannot smuggle a header break into the multipart preamble. The extension
+        table also gained the audio formats speech-to-text and dubbing endpoints
+        take (`m4a`, `aac`, `flac`, `ogg`, `opus`, `aiff`) plus `epub` and `mov`.
+        Wire tests now pin each file part's `Content-Type` in the same substring as
+        its `Content-Disposition`, binding it to that field so a sibling part cannot
+        satisfy it, and their fixture files carry a real extension so the inference
+        path is exercised rather than only the octet-stream fallback.
+      type: fix
+    - summary: |
+        Wire tests no longer demand a credential from endpoints that declare none.
+        For public-client login flows the harness required
+        `Authorization: Bearer <seeded>` on *every* case, so an unauthenticated
+        operation — an OAuth token endpoint exposed as a normal command being the
+        common shape — could never match its own mock: the CLI correctly sends no
+        bearer, nothing matches, and the case failed for a reason unrelated to what
+        it tests. The manifest now carries the endpoint's `auth` flag from the IR
+        (the same signal `mock-utils` already gates its auth-header matchers on) and
+        the harness asserts the bearer only where it applies. Under
+        `ENDPOINT_SECURITY` auth, where each endpoint selects its own scheme and no
+        single credential holds across the board, the assertion is dropped
+        wholesale. The inverse is deliberately not asserted: a `requiresAuth: false`
+        endpoint may still carry a credential, since specs under-declare security
+        often enough that forbidding it would manufacture failures.
+      type: fix
+    - summary: |
+        A wire test that fails because the request never matched now says so, with
+        the command, exit code, stdout, stderr, and the requests the mock server
+        actually received alongside what was expected. Previously the harness leaned
+        on `MockServer`'s drop-time verification, which reports a bare "expected 1,
+        got 0" with no context — and on the negative-twin path it was the *only*
+        check that could fail, because a CLI that dies before ever making the call
+        still satisfies a non-zero-exit assertion. Diagnosing one meant re-running
+        its positive twin by hand. The case mock is now registered scoped so the
+        harness can read the per-mock matched count directly, and the request-match
+        assertion runs before the exit-code check on the success path: when a matcher
+        rejects a request the mock server answers 404 and the CLI faithfully reports
+        it, so checking the exit code first blamed the CLI for a mock that never
+        matched.
+      type: fix
+    - summary: |
+        Wire-test cases now repair a request body that omits a property the OpenAPI
+        spec marks `required`.
+
+        The CLI and its wire-test cases read from two different sources of truth: a
+        case body comes from an IR example, while the generated CLI validates
+        request bodies against the raw spec it embeds via `include_str!`. Those
+        disagree whenever a property is `required` in the spec but has a nullable
+        schema — `anyOf: [{type: array}, {type: null}]` is the common shape. The
+        importer models that as optional, so example generation legitimately skips
+        it, and the resulting example violates the very schema it came from. The CLI
+        then rejects its own wire-test case with `error[validation]: Missing
+        required property` and exits before any request leaves the process, so the
+        case fails having never reached the mock.
+
+        Any such property is now filled from the spec's own schema — `null` where
+        the schema permits it, which is the least-invented value and the shape that
+        actually occurs; otherwise a minimal value from the declared type, honoring
+        `const`/`enum`. The repair recurses, so a required property missing from
+        inside an array element the example did supply is fixed too. Where a value
+        can't be derived confidently the property is left absent on purpose: failing
+        exactly as before is more honest than fabricating a value that trips a
+        different validation rule.
+
+        Repaired properties are recorded on the case as `specFilledBodyProperties`
+        and named in failure diagnostics, so a spec-derived value is never mistaken
+        for one an API author wrote, and the underlying data-quality problem stays
+        visible in a diff instead of being buried.
+
+        Inert wherever the IR and the spec agree, which is every existing seed
+        fixture: no fixture's manifest gained a repair. On one real customer CLI it
+        took the suite from 670/678 to 678/678 with no change to their
+        `generators.yml`.
+      type: fix
+  createdAt: "2026-08-12"
+  irVersion: 67
+- version: 0.30.3
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.3 updates.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
+- version: 0.30.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.2 updates.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
+- version: 0.30.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.1 updates.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
+- version: 0.30.0
+  changelogEntry:
+    - summary: |
+        Emit login-capable CLIs for public-client OAuth flows. An `authorization-code` (PKCE) OAuth
+        scheme now generates a `PkceLoginFlow` and a `device-code` scheme a `DeviceCodeLoginFlow`,
+        registered via `CliApp::login_flow(...)` so `<bin> auth login` runs the browser / device
+        flow, tokens are stored in the OS keyring, and requests get `Authorization: Bearer <token>`
+        with refresh-on-expiry. A configured loopback `redirect-uri` pins the callback host, path,
+        and port exactly (both `127.0.0.1` and `localhost` are honored, along with a custom path)
+        so it matches the authorization server's registered redirect; the object form
+        (`{ url, ports }`) adds backup ports tried in order when the primary is busy, and omitting
+        it binds an ephemeral (OS-assigned) port per RFC 8252 §7.3. Extra literal parameter maps
+        (`authorizationParameters` / `tokenParameters` / `refreshParameters` /
+        `deviceAuthorizationParameters` — e.g. an Auth0 `audience`) are appended to the respective
+        requests, with protocol-reserved keys skipped. Environment-variable client IDs and the IR's
+        `refreshUrl` / `tokenHeader` / `tokenPrefix` fields are not yet consumed and are skipped.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 0.29.1
+  changelogEntry:
+    - summary: |
+        Fix the built-in `auth login` / `logout` / `status` commands shadowing a spec-owned
+        `auth` resource group, which made every `<bin> auth <op>` operation undispatchable
+        ("unrecognized subcommand") even though `--schema` and `reference.md` advertised it.
+        Built-in commands are now folded into a same-named generated group instead of
+        replacing it, so `<bin> auth login` and `<bin> auth me` both work; only
+        `login` / `logout` / `status` are intercepted by the framework.
+      type: fix
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 0.29.0
+  changelogEntry:
+    - summary: |
+        Add `customConfig.packageIdentity` so the generated crate's `[package]` block
+        (`name`, `description`, `license`, `repository`, `homepage`, `authors`,
+        `keywords`) can be templated from the customer's own metadata instead of
+        shipping Fern's SDK-template identity (`fern-cli-sdk`,
+        `github.com/fern-api/cli-sdk`). A `name` override renames the matching
+        `Cargo.lock` entry in the same pass, so `cargo build --locked` still
+        resolves. The `[lib]` name (`fern_cli_sdk`) is unchanged — the vendored
+        `src/` tree imports through it. Omitting the field keeps today's output
+        byte-for-byte.
+      type: feat
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 0.28.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests failing with "unrecognized subcommand" for specs
+        mounted under a namespace whose leaf matches a top-level resource name. The
+        wire-test harness now mirrors the SDK's `merge_into_path` stutter elision, so
+        an untagged spec grouped under its version path prefix (e.g. `v1`) resolves to
+        `<bin> v1 <op>` instead of the double `<bin> v1 v1 <op>` that clap rejects.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 0.28.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.0 updates.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 0.27.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `generateWireTests` config flag. When enabled, the generator
+        emits an automated wire-test suite alongside the CLI: `wiremock/wire-test-cases.json`
+        (one case per endpoint example, derived from the IR) and `tests/wire_test.rs`
+        (a generic harness). Each test stands up an in-process mock server, drives the
+        compiled CLI binary against it (`--base-url` + `--params` + `--json`), and
+        asserts the CLI issued the expected request and rendered the mocked response.
+        The suite runs under a plain `cargo test` — no docker, no network. Defaults to
+        off so existing generations are unaffected.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 0.26.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.43.1 updates.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 0.26.0
+  changelogEntry:
+    - summary: |
+        Generate OAuth client-credentials authentication from the full Fern IR
+        contract, including custom token and refresh requests, response mappings,
+        scopes, token headers and prefixes, environment URLs, expiry-aware caching,
+        and refresh fallback.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 0.25.0
+  changelogEntry:
+    - summary: |
+        The generated CLI now sends a `User-Agent` header identifying itself by its
+        own binary name and version (e.g. `mycli-cli/1.4.0`) instead of the shared
+        `fern-cli-sdk` crate name. This lets each CLI's traffic be tracked
+        distinctly on the API backend. The product token is normalized to end with
+        `-cli` so it unambiguously denotes CLI traffic (a binary named `mycli`
+        reports `mycli-cli`; one already named `mycli-cli` is left unchanged).
+
+        A tool built on top of the CLI can voluntarily tag its traffic, either with
+        the `--user-agent-suffix` flag or the `<NAME>_USER_AGENT_SUFFIX` environment
+        variable (the flag takes precedence). The token is appended to (rather than
+        replacing) the CLI's own identity — e.g. `mycli-cli/1.4.0 partner-app/3.1`.
+
+        The name of this suffix flag (and its derived environment variable) is
+        configurable at generation time via the new `userAgentSuffixFlag` custom
+        config. It defaults to `--user-agent-suffix` / `<NAME>_USER_AGENT_SUFFIX`;
+        setting `userAgentSuffixFlag: via` instead exposes `--via` and `<NAME>_VIA`,
+        giving API owners branding control over the consumer suffix knob.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 0.24.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.43.0 updates.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 0.23.4
+  changelogEntry:
+    - summary: |
+        Re-export `std::collections::{HashMap, HashSet}` from the embedded SDK
+        crate's `prelude`. The Rust SDK generator emits `use crate::prelude::*;`
+        in files that reference `HashMap`/`HashSet` by bare name — most notably
+        `error.rs`, whose error-body fields can resolve to
+        `Vec<HashMap<String, serde_json::Value>>`. The CLI generator previously
+        overwrote the standalone SDK prelude with only the types-crate re-export,
+        dropping the std re-export, so the generated `<binary>-sdk` crate failed
+        to compile with `cannot find type HashMap in this scope`. The embedded
+        prelude now mirrors the standalone SDK prelude for std collections.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 0.23.3
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.42.2 updates.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 0.23.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.42.1 updates.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 0.23.1
+  changelogEntry:
+    - summary: |
+        Pin the npm toolchain used by the generated publish workflow. The
+        `publish` and `publish-launcher` jobs in `.github/workflows/ci.yml` now
+        run on a pinned Node LTS (`node-version: "lts/Krypton"`) and call
+        `npm publish` directly instead of `npx -y npm@latest publish`. Relying on
+        `npm@latest` pulled whatever npm release was newest at publish time, so a
+        broken npm release could break publishing. The pinned Node LTS bundles an
+        npm that supports OIDC trusted publishing.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 0.23.0
+  changelogEntry:
+    - summary: |
+        Remove the current-working-directory sandbox on output paths. `--output`
+        and `--output-dir` now write wherever they are pointed — including
+        absolute paths and locations outside the current directory — instead of
+        failing with "resolves to ... which is outside the current directory".
+        Control-character rejection and the `O_NOFOLLOW` refusal of a
+        final-component symlink are retained; `--output` still requires its parent
+        directory to exist.
+      type: feat
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 0.22.1
+  changelogEntry:
+    - summary: |
+        Fix aarch64-unknown-linux-musl build failure in generated CI workflow.
+        The emitted workflow now sets CARGO_TARGET_*_LINKER=musl-gcc and
+        CC=musl-gcc for musl targets so the Rust linker finds musl-gcc
+        instead of falling back to the system cc (which links against glibc).
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 0.22.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.42.0 updates.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 0.21.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI parser crash when a schema property value is an array instead
+        of an object. Some Fern-processed specs (e.g. ElevenLabs) emit a
+        single-element array wrapping the real schema object. The parser now
+        unwraps single-element arrays and falls back to a default schema for
+        other non-object values, instead of aborting with "invalid type: sequence,
+        expected struct OpenApiSchemaObject".
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 67
+- version: 0.21.0
+  changelogEntry:
+    - summary: |
+        Add `rootGroup` custom config field. When set in `generators.yml`,
+        emits `.command_namespace("<rootGroup>")` on the generated
+        `OpenApiBinding`, mounting all spec-derived commands under a
+        configurable namespace prefix (e.g. `cli api users list` instead of
+        `cli users list`). Requires cli-sdk >= 0.19.0.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 0.20.0
+  changelogEntry:
+    - summary: |
+        Auto-detect `text/event-stream` responses and stream SSE events to stdout
+        in real time, even when the OpenAPI spec omits `x-fern-streaming`. Previously
+        these responses fell through to the binary handler, causing errors or hangs.
+      type: feat
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 0.19.5
+  changelogEntry:
+    - summary: |
+        Generated CLIs now register two-field HTTP Basic auth at the root level
+        (`.auth(BasicAuth::new(...))`) instead of on the `OpenApiBinding`. This
+        makes `<bin> auth status` correctly enumerate the basic scheme, which it
+        previously reported as "No auth schemes are declared" even though
+        credentials were wired and requests authenticated correctly. Request-time
+        behavior is unchanged — the root builder lowers to the same
+        `SchemeBinding::Basic` and still propagates to the binding. (FER-11474)
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 0.19.4
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.3
+  changelogEntry:
+    - summary: |
+        Add `cargo:` prefix to workspace members in generated `dist-workspace.toml`
+        so that `dist plan` can parse the file correctly.
+      type: fix
+    - summary: |
+        Strip the `cargo:crates/pipeline-fixture` workspace member from generated
+        `dist-workspace.toml`. That member is a cli-sdk-only release-pipeline fixture
+        that is never vendored into a user's CLI, so leaving it in made `cargo dist
+        plan` / `cargo metadata` fail with "failed to load manifest for workspace
+        member `crates/pipeline-fixture`".
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.2 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure (ENOENT on asIs templates like
+        prelude.rs, http_client.rs) by setting FERN_RUST_ASIS_DIR before
+        invoking the Rust SDK generator in-process, ensuring the bundled
+        rust-sdk-dist/asIs/ directory is discovered correctly.
+      type: fix
+    - summary: |
+        Fix embedded SDK compilation failures caused by type-name casing
+        divergence between the co-generated types and SDK crates. The embedded
+        SDK IR is now migrated to exactly v66 (the rust generators' pinned IR
+        version) instead of all the way down the migration chain; the v66→v65
+        migration inflated bare-string names into language-agnostic casing
+        (e.g. "OrderId" → "OrderID"), which only the SDK crate echoed, breaking
+        references to the types crate.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.1 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure ("failed to read feature configuration")
+        by skipping standalone doc generation (README, CONTRIBUTING, reference.md)
+        when the Rust SDK generator runs in cliEmbedded mode. Also stage features.yml
+        into the CLI dist for future extensibility.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.0 updates.
+      type: internal
+    - summary: |
+        Fix de-conflicted client names in generated sdk.rs (renamed from
+        sdk_glue.rs). Client names are now read directly from the Rust SDK
+        generator's context via in-process orchestration with backward IR
+        migration (v67→v66), eliminating independent re-derivation drift.
+        Also renames module sdk_glue→sdk, sdk_client()→client().
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.18.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.9 updates.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 67
+- version: 0.18.0
+  changelogEntry:
+    - summary: |
+        Add curl|bash installation support for generated CLIs via cargo-dist
+        release assets. Emits `.github/workflows/release.yml` unconditionally
+        for GitHub output, removes npm from dist-workspace.toml installers,
+        and updates the README Installation section to lead with shell/powershell
+        installer one-liners.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.12
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.8 updates.
+      type: fix
+    - summary: |
+        Suppress `unused import: super::*` warnings in generated type files by adding
+        `#[allow(unused_imports)]` before the injected `use super::*;` statement.
+      type: fix
+    - summary: |
+        Suppress `dead_code` warnings in the generated `sdk_glue.rs` module, which
+        contains utilities for custom command handlers that may not be used yet.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.11
+  changelogEntry:
+    - summary: |
+        Show credential source hints (e.g. env var names) in `--help` for custom auth
+        providers instead of the opaque "custom auth provider" label.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.10
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.7 updates.
+      type: fix
+  createdAt: "2026-06-23"
+  irVersion: 67
+- version: 0.17.9
+  changelogEntry:
+    - summary: |
+        Fix crash in reference.md generation when OpenAPI specs contain `$ref`
+        parameter references (e.g. `$ref: "#/components/parameters/LimitParam"`).
+        The generator now resolves these references from `components.parameters`
+        instead of crashing with "Cannot read properties of undefined".
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 0.17.8
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 0.17.7
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 0.17.6
+  changelogEntry:
+    - summary: |
+        Fix generated sdk_glue.rs missing `http_client` field in ApiClient
+        initializer for flat APIs (no sub-client groups), which caused Rust
+        compilation failures.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 0.17.5
+  changelogEntry:
+    - summary: |
+        Rebuild to pick up rust-sdk 0.40.6 which fixes serde imports in
+        `environment.rs` for multi-URL environments when embedded in the CLI.
+      type: chore
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 0.17.4
+  changelogEntry:
+    - summary: |
+        API-key (`header`) auth schemes now emit a `--api-key` CLI flag in
+        addition to the environment variable. The generated binding uses a
+        credential-source chain (`.source(AuthCredentialSource::any([cli,
+        env]))`) so the flag is tried first, falling back to the env var.
+        Previously the flag was env-only with no way to pass the key inline.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 0.17.3
+  changelogEntry:
+    - summary: |
+        Rebuild embedded SDK generation to pick up rust-sdk 0.40.5 error.rs
+        codegen fix — named/non-primitive error body fields now emit correct
+        imports and use serde_json::from_value() instead of as_str().
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 0.17.2
+  changelogEntry:
+    - summary: |
+        Add `reqwest` dependency to the embedded types crate when file-upload
+        (multipart/form-data) request types are generated. Previously the types
+        crate referenced `reqwest::multipart::Form` without declaring the dep.
+      type: fix
+    - summary: |
+        Fix SDK glue generation for APIs with nested `x-fern-sdk-group-name`
+        groups (2+ levels). The glue now recursively discovers sub-client
+        structs from the generated SDK's resource tree and emits correct
+        nested struct literals instead of assuming a flat client hierarchy.
+        Nested sub-clients are qualified through `api::resources::<group>`
+        (where the group modules actually live) rather than `api::<group>`,
+        which is not re-exported at the crate's `api` root.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.17.1
+  changelogEntry:
+    - summary: |
+        Populate `repository.url` in generated npm `package.json` files from
+        the GitHub output mode's `repoUrl`. Fixes npm provenance verification
+        failures (E422) when publishing with `--provenance`.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.17.0
+  changelogEntry:
+    - summary: |
+        Add npm version badge to the generated CLI README header when npm
+        publish info is configured, matching the badge behavior of generated
+        TypeScript SDKs.
+      type: feat
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.4
+  changelogEntry:
+    - summary: |
+        Update generated `sdk_glue.rs` to box `SdkError` when bridging to the SDK's
+        `RequestExecutor` trait and downcast `ApiError::Executor` back to `SdkError`
+        for structured error recovery.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.3
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.2
+  changelogEntry:
+    - summary: |
+        Remove `--locked` from `cargo check`, `cargo build`, and `cargo test`
+        commands in generated CI workflows. The lockfile produced at generation
+        time can become stale when the cli-sdk runtime is updated or users add
+        custom code, causing `--locked` builds to reject the lockfile.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error in generated CLI embedded types where structs
+        incorrectly derived `Default` when containing fields whose types extend
+        base objects that don't support `Default`. Propagated from the underlying
+        Rust model generator fix.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.16.0
+  changelogEntry:
+    - summary: |
+        Replace `embedTypes` and `embedSdk` config options with a single
+        `customCommands` flag. When true (default), the generator produces
+        the full custom command infrastructure (types crate, SDK crate,
+        sdk_glue, and custom.rs scaffold). Set to false for a spec-only
+        CLI with no custom command support.
+      type: feat
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.15.0
+  changelogEntry:
+    - summary: |
+        Ship custom-command agent skills inside generated CLIs. A freshly
+        generated project now includes `.agents/skills/custom-commands/SKILL.md`
+        (symlinked into `.claude/`) with spec-aware guidance: real endpoint
+        names, typed SDK client fields, and crate names derived from the API
+        spec. Coding agents can follow the skill to author custom commands
+        without reverse-engineering the patterns.
+      type: feat
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.4
+  changelogEntry:
+    - summary: |
+        Fix local (native) seed test execution by correctly passing OpenAPI specs
+        and SDK template directory to the CLI generator via environment variables.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.3
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.2
+  changelogEntry:
+    - summary: |
+        Add `--locked` to cargo check/build/test commands in generated CI workflow
+        so dependency resolution matches the committed lockfile (consistent with the
+        publish job which already used `--locked`).
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.1
+  changelogEntry:
+    - summary: |
+        Remove `--locked` from `cargo build` commands in generated CI
+        publish workflows. The lockfile produced at generation time may
+        become stale when users add custom code or dev-dependencies,
+        causing `--locked` builds to reject the lockfile. CI now allows
+        Cargo to re-resolve dependencies at build time.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.0
+  changelogEntry:
+    - summary: |
+        Generate `sdk_glue.rs` module providing `sdk_client()` and `block_on()`
+        helpers that bridge the CLI's AppContext to the co-generated SDK client.
+        Custom command handlers can now use typed SDK calls without manual
+        Cargo.toml edits — the SDK crate is the sole direct dependency and
+        re-exports all types.
+      type: feat
+  createdAt: "2026-06-06"
+  irVersion: 67
+- version: 0.13.2
+  changelogEntry:
+    - summary: |
+        Fix compilation failure in cliEmbedded mode by re-exporting the
+        co-generated types crate in api/mod.rs so service resource files
+        can resolve request/response types via `use crate::api::*`.
+      type: fix
+  createdAt: "2026-06-06"
+  irVersion: 67
+- version: 0.13.1
+  changelogEntry:
+    - summary: |
+        Fix Docker image build to include rust-sdk dist by adding
+        @fern-api/rust-sdk#dist:cli to turbo dependency graph.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.13.0
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime with CliExecutor bridge for SDK
+        execution-sharing in custom commands.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.12.1
+  changelogEntry:
+    - summary: |
+        Fix process hanging indefinitely after generation completes by
+        explicitly calling process.exit() instead of relying on the
+        event loop to drain.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.12.0
+  changelogEntry:
+    - summary: |
+        Co-vendor the Rust SDK crate alongside the types crate in CLI generation.
+        When `embedSdk` is enabled (default), the pipeline invokes `@fern-api/rust-sdk`
+        in `cliEmbedded` mode to produce a `<api>-sdk` workspace member with a path
+        dependency on the types crate and a `prelude` module that re-exports all types
+        for single type identity.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.11.0
+  changelogEntry:
+    - summary: |
+        Always emit a build+test CI workflow (check, compile, test) for GitHub
+        outputs, even when npm publishing is not configured. Previously, no
+        ci.yml was emitted unless npmPublishInfo was present.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.10.1
+  changelogEntry:
+    - summary: |
+        Fix datetime, base64, bigint, and number types failing to compile
+        in the generated -types crate by copying serde helper modules and
+        adding missing dependencies.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.10.0
+  changelogEntry:
+    - summary: |
+        Restructure generated README to follow progressive disclosure: TOC,
+        Install → Auth → Quick start → Usage → Documentation link → Advanced
+        (Common flags, Environment variables, Output formats, Shell completion
+        collapsed as subsections). Removes the --help dump from Usage.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.9.1
+  changelogEntry:
+    - summary: |
+        Derive sync-sdk.sh rsync set and build.mjs SDK_IGNORE from cli-sdk's
+        sync-manifest.toml instead of hardcoded path lists. Eliminates layout
+        drift between the two repos.
+      type: chore
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.9.0
+  changelogEntry:
+    - summary: |
+        Embed typed Rust model crate as a workspace member in all generated
+        CLI output by default. The CLI generator invokes the rust-model
+        generator as a child process to produce a `<api>-types` library crate
+        alongside the CLI crate, wired as a path dependency. Custom command
+        handlers use `ctx.invoke()` with typed serde structs from the types
+        crate for serialization/deserialization while all HTTP execution stays
+        on the CLI's native executor. Set `embedTypes: false` in customConfig
+        to opt out.
+      type: feat
+    - summary: |
+        Exclude `.synced-from` provenance file from generated CLI output.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 0.8.0
+  changelogEntry:
+    - summary: |
+        Generate a README.md in every generated CLI project. The README includes
+        installation, authentication, usage, output formats, configuration, and
+        shell completion sections. Customer-authored H2 sections are preserved
+        on regeneration via the existing Fern SDK README merge mechanism.
+      type: feat
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 0.7.0
+  changelogEntry:
+    - summary: |
+        Generated publish workflow improvements: uses `npx -y npm@latest publish`
+        for OIDC support, adds backport tag detection for older-than-latest releases,
+        switches Linux targets from glibc to musl for fully static binaries,
+        builds aarch64-linux natively on `ubuntu-24.04-arm` instead of cross-compiling,
+        conditionally uses `--no-default-features --features rustls` for musl targets,
+        and bumps `actions/checkout` and `actions/setup-node` to v6.
+      type: feat
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 0.6.1
+  changelogEntry:
+    - summary: |
+        Publish new docker image after name change fernapi/fern-cli -> fernapi/fern-cli-generator
+      type: chore
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 0.6.0
+  changelogEntry:
+    - summary: Strip fixture-dependent inline tests from vendored cli-sdk so `cargo test` passes in both the SDK and generated
+        CLIs
+      type: fix
+    - summary: |
+        Generated CLIs now serialize OpenAPI query parameters according to their
+        declared `style`/`explode` (form, spaceDelimited, pipeDelimited, deepObject).
+        (cli-sdk #144, FER-10569)
+      type: feat
+    - summary: |
+        Generated CLIs now serialize OpenAPI header parameters using the `simple`
+        style. (cli-sdk #137, FER-10569)
+      type: feat
+    - summary: |
+        Generated CLIs now serialize OpenAPI path parameters using the `simple`,
+        `label`, and `matrix` styles. (cli-sdk #138, FER-10569)
+      type: feat
+    - summary: |
+        Generated CLIs support `multipart/form-data` request bodies, exposing each
+        part as its own flag. (cli-sdk #88, FER-10569)
+      type: feat
+    - summary: |
+        `multipart/form-data` request bodies accept `--file` parts, so file-upload
+        endpoints can stream a file from disk. (cli-sdk #145, FER-10569)
+      type: feat
+    - summary: |
+        HTTP requests now retry on transient failures with exponential backoff and
+        automatically attach an `Idempotency-Key` header to retried mutations.
+        (cli-sdk #86, FER-10521)
+      type: feat
+    - summary: |
+        OpenAPI parameter names are sanitized into valid, readable CLI flags instead
+        of being passed through verbatim. (cli-sdk #87, FER-10430)
+      type: feat
+    - summary: |
+        Auth error messages now name the specific environment variable the CLI
+        expected, making missing-credential failures easier to diagnose.
+        (cli-sdk #81, FER-10702)
+      type: feat
+    - summary: |
+        Auth schemes support multiple headers, enabling APIs that require more than
+        one credential header (e.g. Sandboxes). (cli-sdk #116)
+      type: feat
+    - summary: |
+        Nullable scalar request-body flags emit a null sentinel, letting users
+        distinguish an explicit `null` from an omitted value. (cli-sdk 8234544)
+      type: feat
+  createdAt: "2026-06-02"
+  irVersion: 67
+- version: 0.5.0
+  changelogEntry:
+    - summary: |
+        Include a `.gitignore` in generated CLI output so that Rust build
+        artifacts (`target/`) are not tracked by Git.
+      type: feat
+  createdAt: "2026-05-29"
+  irVersion: 67
+- version: 0.4.2
+  changelogEntry:
+    - summary: |
+        Move overlay fixture integration tests out of `src/openapi/overlay.rs`
+        into `tests/overlay_fixture.rs` (filtered from shipped output via
+        `SDK_IGNORE`). The previous in-source tests `include_str!`'d
+        `../../cli/openapi-fixture/openapi.yaml`, a path pruned by
+        `SDK_IGNORE`, so every generated CLI failed
+        `cargo build --locked --all-features --tests` at
+        `src/openapi/overlay.rs:1835` / `:1894` with
+        `couldn't read … openapi.yaml`.
+      type: fix
+  createdAt: "2026-05-25"
+  irVersion: 67
+- version: 0.4.1
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 67
+- version: 0.4.0
+  changelogEntry:
+    - summary: |
+        Drive binary identity and auth wiring from the Fern IR instead of
+        the raw OpenAPI spec. Env-var names now come from
+        `generators.yml`'s `auth-schemes` block (e.g. `CLOSE_API_KEY`)
+        rather than the spec-derived `<BIN>_<SCHEME>_<KIND>`.
+
+        Fix silent auth drop for basic schemes with `password.omit: true`
+        (Close's "API key as username" pattern). Previously emitted
+        `auth_basic_scheme(..., literal(""))`, but `Literal("")` resolves
+        to `None`, tripping the SDK's "both halves must resolve" check and
+        sending the request unauthenticated. Now uses the new
+        `auth_basic_scheme_username_only` / `_password_only` builders
+        backed by `BasicAuthProvider::{username_only,password_only}`.
+        `--help` now reads `basic auth (username only) · username: …`
+        instead of the misleading `password: built-in literal`.
+
+        Output also no longer ships Fern's CI workflows, the strip-schema
+        dev bin, or the `@fern-api` cargo-dist scope;
+        `[package.metadata.dist].dist` defaults to `true`.
+      type: feat
+  createdAt: "2026-05-22"
+  irVersion: 67
+- version: 0.3.0
+  changelogEntry:
+    - summary: |
+        End-to-end Rust CLI generation. The generator copies the bundled
+        Rust SDK template into the user's output (recursive copy with a
+        curated `SDK_IGNORE`) and writes `cli/<binary>/main.rs` from
+        scratch alongside each mounted OpenAPI spec.
+
+        Binary identity is derived from one of:
+          - `customConfig.binaryName` in generators.yml
+          - else the spec's `info.title` (kebab-cased) for single-spec
+            workspaces
+          - else a clear error (multi-spec without override).
+        Patched into `Cargo.toml`'s `[[bin]] name`/`path`, the
+        `CliApp::new(...)` arg, and the env-var prefix for auth
+        credentials.
+
+        Auth detection: each declared `components.securitySchemes`
+        entry the SDK can lower (`http: bearer`, `oauth2`,
+        `apiKey: header`, `http: basic`) emits the matching
+        `.auth_scheme_env(...)` / `.auth_basic_scheme(...)` call
+        against `<BIN>_<SCHEME>_<KIND>` env vars. Unsupported schemes
+        (apiKey in query/cookie, openIdConnect, mTLS) are silently
+        skipped to match the SDK's supported surface.
+
+        Multi-spec routing: specs without a `namespace:` in
+        `generators.yml` emit `.spec(include_str!(...))` so they merge
+        flat at the root of the command tree; specs with a namespace
+        emit `.spec_under("<ns>", include_str!(...))` so each surfaces
+        under its own sub-command. Mixed workspaces work.
+
+        Workspaces that mount no OpenAPI specs (e.g. Fern definitions)
+        skip cleanly with a log message — the output dir stays
+        untouched rather than receiving a half-wired template.
+
+        Operational: Sentry instrumentation matches the other
+        generators (no-op without `SENTRY_DSN` or with
+        `FERN_DISABLE_TELEMETRY=true`). Shipped lib test fixture
+        trimmed from 33 KB to 1.5 KB; the rich fixture remains in
+        source for template-author tests but is excluded from user
+        output via SDK_IGNORE.
+      type: feat
+  createdAt: "2026-05-21"
+  irVersion: 67
+- version: 0.2.0
+  changelogEntry:
+    - summary: |
+        Add API spec pre-processing infrastructure: bundle external $refs,
+        merge overrides, apply overlays, and output compact JSON for embedding
+        in generated CLI.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 0.1.0
+  changelogEntry:
+    - summary: |
+        Add CLI generator infrastructure and registration.
+      type: feat
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 0.0.1
+  changelogEntry:
+    - summary: Initial release of the CLI generator.
+      type: feat
+  createdAt: "2026-05-08"
+  irVersion: 66

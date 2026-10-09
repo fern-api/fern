@@ -29,14 +29,30 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // List items with cursor pagination
+//
+// Example:
+//
+//	request := &fern.ListItemsRequest{
+//	    Cursor: fern.String(
+//	        "cursor",
+//	    ),
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Endpoints.Pagination.ListItems(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListItems(
 	ctx context.Context,
 	request *fern.ListItemsRequest,
@@ -70,6 +86,7 @@ func (c *Client) ListItems(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -84,7 +101,7 @@ func (c *Client) ListItems(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(

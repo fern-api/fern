@@ -5,9 +5,11 @@
 package com.fern.sdk.resources.endpoints.contenttype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.RetryInterceptor;
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.core.SeedExhaustiveHttpResponse;
@@ -56,7 +58,7 @@ public class RawContentTypeClient {
       }
       RequestBody body;
       try {
-        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json"));
+        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaType.parse("application/json-patch+json"));
       }
       catch(JsonProcessingException e) {
         throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -71,6 +73,9 @@ public class RawContentTypeClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
+      if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+        okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+      }
       try (Response response = client.newCall(okhttpRequest).execute()) {
         ResponseBody responseBody = response.body();
         if (response.isSuccessful()) {
@@ -79,6 +84,9 @@ public class RawContentTypeClient {
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
         throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+      }
+      catch (JsonProcessingException e) {
+        throw new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e);
       }
       catch (IOException e) {
         throw new SeedExhaustiveException("Network error executing HTTP request", e);
@@ -110,7 +118,7 @@ public class RawContentTypeClient {
         }
         RequestBody body;
         try {
-          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json; charset=utf-8"));
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaType.parse("application/json-patch+json; charset=utf-8"));
         }
         catch(JsonProcessingException e) {
           throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -125,6 +133,9 @@ public class RawContentTypeClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
           client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+          okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
           ResponseBody responseBody = response.body();
           if (response.isSuccessful()) {
@@ -133,6 +144,9 @@ public class RawContentTypeClient {
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        }
+        catch (JsonProcessingException e) {
+          throw new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e);
         }
         catch (IOException e) {
           throw new SeedExhaustiveException("Network error executing HTTP request", e);

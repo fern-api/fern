@@ -125,7 +125,6 @@ public final class UnionStreamInterruptVariant implements IUnionStreamRequestBas
 
         /**
          * <p>The input prompt.</p>
-         * <p>The input prompt.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

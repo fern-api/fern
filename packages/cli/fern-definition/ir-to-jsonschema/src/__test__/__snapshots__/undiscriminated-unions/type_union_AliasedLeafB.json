@@ -1,5 +1,6 @@
 {
   "$ref": "#/definitions/union.AliasToLeafB",
+  "description": "An alias around an alias around LeafObjectB, to exercise the alias-walk loop.",
   "definitions": {
     "union.LeafObjectB": {
       "type": "object",

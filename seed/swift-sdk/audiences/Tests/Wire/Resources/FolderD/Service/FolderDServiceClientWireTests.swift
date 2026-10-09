@@ -6,7 +6,7 @@ import Audiences
     @Test func getDirectThread1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "foo": "foo"

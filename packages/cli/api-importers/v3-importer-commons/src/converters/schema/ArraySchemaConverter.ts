@@ -2,6 +2,7 @@ import { ContainerType, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { collectNamedTypeIdsFromTypeReference } from "../../utils/ConvertProperties.js";
 import { SchemaConverter } from "./SchemaConverter.js";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter.js";
 
@@ -56,6 +57,10 @@ export class ArraySchemaConverter extends AbstractConverter<
                         });
                     });
                 }
+                // Named types referenced via $ref items (e.g. `items: { $ref }`) have no inline
+                // schema/inlinedTypes to harvest from, so capture them from the resolved type reference.
+                // Without this, audience filtering prunes the referenced type and leaves a dangling reference.
+                collectNamedTypeIdsFromTypeReference(convertedSchema.type, referencedTypes);
                 return {
                     typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
                     referencedTypes,

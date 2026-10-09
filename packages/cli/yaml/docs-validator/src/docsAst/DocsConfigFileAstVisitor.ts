@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration-loader";
+import { DocsConfigurationWithResolvedRedirects, docsYml } from "@fern-api/configuration-loader";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -9,19 +9,30 @@ export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
 };
 
 export interface DocsConfigFileAstNodeTypes {
-    file: { config: docsYml.RawSchemas.DocsConfiguration };
+    file: { config: DocsConfigurationWithResolvedRedirects };
     filepath: {
         absoluteFilepath: AbsoluteFilePath;
         value: string /* User defined value for filepath */;
         willBeUploaded?: boolean;
     };
     markdownPage: { title: string; content: string; absoluteFilepath: AbsoluteFilePath };
-    versionFile: { path: string; content: unknown };
-    productFile: { path: string; content: unknown };
+    version: { version: docsYml.RawSchemas.VersionConfig };
+    versionFile: {
+        path: string;
+        content: unknown;
+        version: docsYml.RawSchemas.VersionConfig;
+        /** Set when the version is nested under a product's `versions`. */
+        product?: docsYml.RawSchemas.InternalProduct;
+    };
+    productFile: { path: string; content: unknown; product: docsYml.RawSchemas.InternalProduct };
     apiSection: {
         config: docsYml.RawSchemas.ApiReferenceConfiguration;
         workspace: AbstractAPIWorkspace<unknown>;
         context: TaskContext;
+    };
+    unresolvedApiSection: {
+        config: docsYml.RawSchemas.ApiReferenceConfiguration;
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     };
     permissions: docsYml.RawSchemas.WithPermissions;
 }

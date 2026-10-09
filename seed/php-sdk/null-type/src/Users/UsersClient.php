@@ -51,6 +51,13 @@ class UsersClient
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      *
+     * Example:
+     * ```php
+     * $client->users->get(
+     *     'id',
+     * );
+     * ```
+     *
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,

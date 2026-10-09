@@ -3,6 +3,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type SdkRequest = FernIr.SdkRequest;
+type ServiceId = FernIr.ServiceId;
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
@@ -12,10 +13,16 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
+import { writeEndpointAuthHeaderAdd } from "./endpointAuthHeaders.js";
+import { writeLiteralHeaders } from "./literalHeaders.js";
 
 export class BytesOnlyEndpointRequest extends EndpointRequest {
-    // biome-ignore lint/complexity/noUselessConstructor: allow
-    public constructor(context: SdkGeneratorContext, sdkRequest: SdkRequest, endpoint: HttpEndpoint) {
+    public constructor(
+        context: SdkGeneratorContext,
+        sdkRequest: SdkRequest,
+        endpoint: HttpEndpoint,
+        private readonly serviceId: ServiceId
+    ) {
         super(context, sdkRequest, endpoint);
     }
 
@@ -40,13 +47,32 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
                 );
                 writer.indent();
 
+                // Add literal service- and endpoint-level headers (no request object carries them)
+                writeLiteralHeaders({
+                    writer,
+                    context: this.context,
+                    serviceId: this.serviceId,
+                    endpoint: this.endpoint
+                });
+
                 // Add client-level headers (from root client constructor)
                 writer.writeLine();
                 writer.write(".Add(_client.Options.Headers)");
 
+                // In endpoint-security mode, route this endpoint's declared auth scheme(s) here.
+                writeEndpointAuthHeaderAdd({ writer, context: this.context, endpoint: this.endpoint });
+
                 // Add client-level additional headers
                 writer.writeLine();
                 writer.write(".Add(_client.Options.AdditionalHeaders)");
+
+                // Fallback auto-generated idempotency-key header for the eligible HTTP methods carried
+                // in the IR. Emitted before the declared idempotency headers and request-option headers
+                // so a caller-provided value wins.
+                if (this.context.shouldAutoGenerateIdempotencyKey(this.endpoint)) {
+                    writer.writeLine();
+                    writer.write(".AddIdempotencyHeader()");
+                }
 
                 // For idempotent requests, add idempotency headers (as Dictionary<string, string>)
                 if (this.endpoint.idempotent) {

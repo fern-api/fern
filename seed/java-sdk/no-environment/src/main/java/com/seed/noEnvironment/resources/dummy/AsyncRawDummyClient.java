@@ -3,9 +3,11 @@
  */
 package com.seed.noEnvironment.resources.dummy;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.noEnvironment.core.ClientOptions;
 import com.seed.noEnvironment.core.ObjectMappers;
 import com.seed.noEnvironment.core.RequestOptions;
+import com.seed.noEnvironment.core.RetryInterceptor;
 import com.seed.noEnvironment.core.SeedNoEnvironmentApiException;
 import com.seed.noEnvironment.core.SeedNoEnvironmentException;
 import com.seed.noEnvironment.core.SeedNoEnvironmentHttpResponse;
@@ -51,8 +53,18 @@ public class AsyncRawDummyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedNoEnvironmentHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -66,6 +78,9 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedNoEnvironmentApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedNoEnvironmentException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedNoEnvironmentException("Network error executing HTTP request", e));
@@ -75,6 +90,11 @@ public class AsyncRawDummyClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedNoEnvironmentException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

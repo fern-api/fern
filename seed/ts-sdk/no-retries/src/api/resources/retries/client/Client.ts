@@ -24,6 +24,9 @@ export class RetriesClient {
     /**
      * @param {RetriesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNoRetriesError}
+     * @throws {@link errors.SeedNoRetriesTimeoutError}
+     *
      * @example
      *     await client.retries.getUsers()
      */
@@ -45,7 +48,7 @@ export class RetriesClient {
             headers: _headers,
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            maxRetries: 0,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,

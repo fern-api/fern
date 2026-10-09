@@ -160,7 +160,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:MediumStaged": {
             "type": "object",
@@ -384,7 +385,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:ComplexStaged": {
             "type": "object",
@@ -704,7 +706,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:MixedStaged": {
             "type": "object",
@@ -925,7 +928,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Child": {
             "type": "object",
@@ -1056,7 +1060,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Parent": {
             "type": "object",
@@ -1217,7 +1222,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -1301,7 +1307,8 @@
                         "type": "named",
                         "value": "type_types:SimpleStaged"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1387,7 +1394,8 @@
                         "type": "named",
                         "value": "type_types:MediumStaged"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1473,7 +1481,8 @@
                         "type": "named",
                         "value": "type_types:ComplexStaged"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1559,7 +1568,8 @@
                         "type": "named",
                         "value": "type_types:MixedStaged"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1645,7 +1655,8 @@
                         "type": "named",
                         "value": "type_types:Parent"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1656,5 +1667,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

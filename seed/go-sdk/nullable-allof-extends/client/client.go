@@ -27,14 +27,21 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // Returns a RootObject which inherits from a nullable schema.
+//
+// Example:
+//
+//	client.GetTest(
+//	    context.TODO(),
+//	)
 func (c *Client) GetTest(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -50,6 +57,14 @@ func (c *Client) GetTest(
 }
 
 // Creates a test object with nullable allOf in request body.
+//
+// Example:
+//
+//	request := &fern.RootObject{}
+//	client.CreateTest(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateTest(
 	ctx context.Context,
 	request *fern.RootObject,

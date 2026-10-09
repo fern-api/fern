@@ -1,7 +1,8 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
+#[non_exhaustive]
 pub enum PaymentMethod {
         #[serde(rename = "cash")]
         #[non_exhaustive]
@@ -24,6 +25,12 @@ pub enum PaymentMethod {
             #[serde(default)]
             routing_number: String,
         },
+
+        /// Catch-all variant for unrecognized discriminant values.
+        /// If the server sends a discriminant not recognized by the current SDK
+        /// version, the raw payload is captured here so callers can still inspect it.
+        #[serde(untagged)]
+        __Unknown(serde_json::Value),
 }
 
 impl PaymentMethod {
@@ -37,5 +44,9 @@ impl PaymentMethod {
 
     pub fn bank_transfer(account_number: String, routing_number: String) -> Self {
         Self::BankTransfer { account_number, routing_number }
+    }
+
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
     }
 }

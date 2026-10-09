@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Plant Store API
+  version: 0.0.0
+paths:
+  /plants:
+    get:
+      description: Returns a paginated list of all plants currently in the store inventory.
+      operationId: listPlants
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plant'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
+                      species: species
+      summary: List all plants
+  /plants/{plantId}:
+    get:
+      description: Retrieve details about a specific plant by its unique identifier.
+      operationId: getPlant
+      tags:
+        - ''
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: plantId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plant'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    species: species
+      summary: Get a plant
+components:
+  schemas:
+    Plant:
+      title: Plant
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        name:
+          type: string
+          examples:
+            - name
+        species:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - name
+  securitySchemes: {}

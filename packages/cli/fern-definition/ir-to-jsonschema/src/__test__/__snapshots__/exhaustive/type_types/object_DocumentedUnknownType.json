@@ -7,5 +7,6 @@
     "array",
     "null"
   ],
+  "description": "Tests that unknown types are able to preserve their docstrings.",
   "definitions": {}
 }

@@ -16,6 +16,9 @@ export declare class PaginationClient {
      * @param {SeedExhaustive.endpoints.ListItemsRequest} request
      * @param {PaginationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.pagination.listItems({
      *         cursor: "cursor",

@@ -6,17 +6,22 @@ packages:
   - "!**/generated"
   - "!packages/cli/cli/dist/local"
   - "!packages/cli/cli/dist/dev"
+  - "!packages/cli/cli/dist/pre-prod"
   - "!packages/cli/cli/dist/prod"
+  - "!packages/cli/cli/dist/beta"
   - "!packages/cli/cli-v2/dist/local"
   - "!packages/cli/cli-v2/dist/dev"
   - "!packages/cli/cli-v2/dist/prod"
+  - "!packages/cli/cli-v2/dist/beta"
 
 # Supply chain security settings
 # See: https://pnpm.io/settings
-onlyBuiltDependencies:
-  - "@sentry/cli"
-  - esbuild
-  - puppeteer
+allowBuilds:
+  "@scarf/scarf": false
+  "@sentry/cli": true
+  esbuild: true
+  lefthook: set this to true or false
+  puppeteer: true
 
 # Require packages to be published for at least 1 day before they can be installed.
 # This mitigates supply chain attacks like the axios compromise (March 2026) where
@@ -28,6 +33,7 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
+  - "@postman/*"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
@@ -49,8 +55,8 @@ trustPolicyExclude:
 blockExoticSubdeps: true
 
 catalog:
-  "@babel/core": ^7.29.0
-  "@babel/preset-env": ^7.29.2
+  "@babel/core": ^7.29.6
+  "@babel/preset-env": ^7.29.5
   "@babel/preset-typescript": ^7.28.5
   "@biomejs/biome": 2.4.10
   "@blueprintjs/eslint-plugin": ^6.1.24
@@ -59,13 +65,13 @@ catalog:
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
-  "@fern-api/fdr-sdk": 1.2.4-f661387fb2
-  "@fern-api/generator-cli": 0.9.22
+  "@fern-api/fdr-sdk": 1.2.165-d20adf518b
+  "@fern-api/generator-cli": 0.10.3
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
-  "@fern-api/venus-api-sdk": 0.22.34
+  "@fern-api/venus-api-sdk": 5.0.0
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
-  "@fern-fern/fiddle-sdk": 1.0.2
+  "@fern-fern/fiddle-sdk": 1.2.0
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
   "@fern-fern/ir-v53-sdk": 1.0.1
@@ -86,8 +92,9 @@ catalog:
   "@inquirer/prompts": ^7.1.0
   "@octokit/rest": ^22.0.1
   "@open-rpc/meta-schema": ^1.14.9
+  "@postman/sdk-config": 0.8.0
   "@redocly/openapi-core": ^1.4.1
-  "@rolldown/binding-darwin-arm64": 1.0.0-rc.5
+  "@rolldown/binding-darwin-arm64": 1.1.3
   "@sentry/cli": ^2.42.2
   "@types/cli-progress": ^3.11.6
   "@types/cors": ^2.8.13
@@ -151,7 +158,7 @@ catalog:
   domhandler: ^5.0.3
   endent: ^2.1.0
   es-toolkit: ^1.45.1
-  esbuild: ^0.27.3
+  esbuild: ^0.28.1
   esbuild-plugin-polyfill-node: ^0.3.0
   eslint: ^9.26.0
   estree-walker: ^3.0.3
@@ -160,7 +167,7 @@ catalog:
   fast-levenshtein: ^3.0.0
   file-type: ^21.3.4
   find-up: ^6.3.0
-  form-data: 4.0.4
+  form-data: 4.0.6
   fs-extra: ^11.3.4
   glob: ^11.1.0
   graphql: ^16.13.2
@@ -171,7 +178,7 @@ catalog:
   husky: ^9.1.7
   image-size: ^1.2.1
   is-ci: ^3.0.1
-  js-yaml: ^4.1.1
+  js-yaml: ^4.2.0
   js-yaml-source-map: ^0.2.2
   json-schema: ^0.4.0
   json-stream-stringify: ^3.1.4
@@ -199,7 +206,7 @@ catalog:
   node-fetch: 2.7.0
   number-to-words: 1.2.4
   object-hash: ^3.0.0
-  open: ^8.4.0
+  open: ^11.0.0
   ora: ^7.0.1
   package-json-type: ^1.0.3
   path-to-regexp: 6.3.0
@@ -216,6 +223,7 @@ catalog:
   remark-math: ^6.0.0
   remark-mdx: ^3.0.1
   remark-stringify: ^11.0.0
+  semver: ^7.6.2
   semver-diff: ^4.0.0
   simple-git: ^3.36.0
   sort-package-json: 3.6.1
@@ -224,7 +232,7 @@ catalog:
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0
   swagger2openapi: 7.0.8
-  tar: ^7.5.13
+  tar: ^7.5.16
   terminal-link: ^3.0.0
   tinycolor2: ^1.6.0
   title: ^3.5.3
@@ -232,13 +240,13 @@ catalog:
   ts-essentials: ^10.1.1
   ts-morph: ^27.0.2
   ts-poet: ^6.7.0
-  tsdown: 0.20.1
+  tsdown: 0.22.3
   tsup: ^8.5.1
   tsx: ^4.21.0
-  turbo: ^2.9.9
+  turbo: ^2.9.14
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
-  undici: ^6.24.0
+  undici: ^6.27.0
   unified: ^11.0.5
   unist-util-visit: ^5.0.0
   url-join: ^4.0.1
@@ -248,9 +256,26 @@ catalog:
   vitest: 4.1.4
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
-  ws: ^8.20.0
+  ws: ^8.21.0
   xml2js: ^0.6.2
   yaml: ^2.8.3
   yauzl: ^3.2.1
   yazl: ^3.3.1
   zod: ^3.22.3
+overrides:
+  ajv: 8.18.0
+  cross-spawn: ^7.0.6
+  node-fetch@2.x>whatwg-url: ^14.0.0
+  minimatch: ">=10.2.3"
+  qs: 6.15.2
+  url-join: ^4.0.1
+  "@fern-api/fdr-sdk": 1.2.165-d20adf518b
+  form-data: ^4.0.6
+  "@fern-api/ui-core-utils": 0.145.12-b50d999d1
+  vite: ^7.3.5
+  esbuild: ^0.28.1
+  yauzl: ^3.2.1
+  "@opentelemetry/core": ">=2.8.0"
+  js-yaml: ">=4.2.0"
+patchedDependencies:
+  gray-matter@4.0.3: patches/gray-matter@4.0.3.patch

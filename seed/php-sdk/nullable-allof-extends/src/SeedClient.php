@@ -64,6 +64,11 @@ class SeedClient
     /**
      * Returns a RootObject which inherits from a nullable schema.
      *
+     * Example:
+     * ```php
+     * $client->getTest();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -110,6 +115,13 @@ class SeedClient
 
     /**
      * Creates a test object with nullable allOf in request body.
+     *
+     * Example:
+     * ```php
+     * $client->createTest(
+     *     new RootObject([]),
+     * );
+     * ```
      *
      * @param RootObject $request
      * @param ?array{

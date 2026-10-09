@@ -25,6 +25,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.MyRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public post(
         request: SeedFileUpload.MyRequest,
@@ -137,6 +140,9 @@ export class ServiceClient {
      * @param {SeedFileUpload.JustFileRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
+     *
      * @example
      *     import { createReadStream } from "fs";
      *     await client.service.justFile({
@@ -198,6 +204,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public justFileWithQueryParams(
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
@@ -265,6 +274,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.JustFileWithOptionalQueryParamsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public justFileWithOptionalQueryParams(
         request: SeedFileUpload.JustFileWithOptionalQueryParamsRequest,
@@ -334,6 +346,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.WithContentTypeRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public withContentType(
         request: SeedFileUpload.WithContentTypeRequest,
@@ -396,6 +411,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.WithFormEncodingRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public withFormEncoding(
         request: SeedFileUpload.WithFormEncodingRequest,
@@ -460,6 +478,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.MyOtherRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public withFormEncodedContainers(
         request: SeedFileUpload.MyOtherRequest,
@@ -609,6 +630,9 @@ export class ServiceClient {
      * @param {SeedFileUpload.OptionalArgsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
+     *
      * @example
      *     import { createReadStream } from "fs";
      *     await client.service.optionalArgs({})
@@ -675,6 +699,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.InlineTypeRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public withInlineType(
         request: SeedFileUpload.InlineTypeRequest,
@@ -732,6 +759,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.WithJsonPropertyRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public withJsonProperty(
         request: SeedFileUpload.WithJsonPropertyRequest,
@@ -792,6 +822,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.WithRefBodyRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      *
      * @example
      *     import { createReadStream } from "fs";
@@ -860,6 +893,9 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
+     *
      * @example
      *     await client.service.simple()
      */
@@ -902,6 +938,9 @@ export class ServiceClient {
     /**
      * @param {SeedFileUpload.LiteralEnumRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedFileUploadError}
+     * @throws {@link errors.SeedFileUploadTimeoutError}
      */
     public withLiteralAndEnumTypes(
         request: SeedFileUpload.LiteralEnumRequest,

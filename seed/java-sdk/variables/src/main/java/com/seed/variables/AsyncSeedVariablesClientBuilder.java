@@ -16,6 +16,12 @@ public class AsyncSeedVariablesClientBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+    private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+    private Optional<Double> retryJitterFactor = Optional.empty();
+
     private final Map<String, String> customHeaders = new HashMap<>();
 
     private Environment environment;
@@ -24,7 +30,7 @@ public class AsyncSeedVariablesClientBuilder {
 
     private Optional<LogConfig> logging = Optional.empty();
 
-    private String rootVariable;
+    private String rootVariable = System.getenv("ROOT_VARIABLE");
 
     public AsyncSeedVariablesClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -44,6 +50,30 @@ public class AsyncSeedVariablesClientBuilder {
      */
     public AsyncSeedVariablesClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+     */
+    public AsyncSeedVariablesClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
+        this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+     */
+    public AsyncSeedVariablesClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
+        this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+     */
+    public AsyncSeedVariablesClientBuilder retryJitterFactor(double retryJitterFactor) {
+        this.retryJitterFactor = Optional.of(retryJitterFactor);
         return this;
     }
 
@@ -113,9 +143,11 @@ public class AsyncSeedVariablesClientBuilder {
      * @param builder The ClientOptions.Builder to configure
      */
     protected void setVariables(ClientOptions.Builder builder) {
-        if (this.rootVariable != null) {
-            builder.rootVariable(this.rootVariable);
+        if (this.rootVariable == null) {
+            throw new IllegalStateException(
+                    "rootVariable is required. Pass it to the builder or set the ROOT_VARIABLE environment variable.");
         }
+        builder.rootVariable(this.rootVariable);
     }
 
     /**
@@ -139,6 +171,15 @@ public class AsyncSeedVariablesClientBuilder {
     protected void setRetries(ClientOptions.Builder builder) {
         if (this.maxRetries.isPresent()) {
             builder.maxRetries(this.maxRetries.get());
+        }
+        if (this.initialRetryDelayMillis.isPresent()) {
+            builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+        }
+        if (this.maxRetryDelayMillis.isPresent()) {
+            builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+        }
+        if (this.retryJitterFactor.isPresent()) {
+            builder.retryJitterFactor(this.retryJitterFactor.get());
         }
     }
 

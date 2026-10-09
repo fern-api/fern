@@ -1,5 +1,7 @@
 # Build base image with dependencies
-FROM python:3.11.13 AS base
+# Pinned to the latest 3.13 patch release (matching the SDK generator image) to
+# pull in CPython security fixes.
+FROM python:3.13.14-slim AS base
 
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
@@ -9,8 +11,11 @@ RUN apt-get update \
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 
-# Keep in sync with the poetry-core version in pyproject.toml
-RUN pip3 install poetry==1.8.5
+# Upgrade pip to fix CVE-2026-8643 (directory traversal via malicious wheel
+# entry-point names).
+RUN pip3 install --upgrade pip==26.1.2
+# Keep in sync with the poetry-core version in pyproject.toml.
+RUN pip3 install poetry==2.4.1
 RUN poetry config virtualenvs.create false
 
 # Copy dependency files first to leverage caching

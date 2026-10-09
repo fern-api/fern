@@ -1,15 +1,15 @@
 import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
-import { CliError } from "@fern-api/task-context";
+import { type CaptureExceptionOptions, CliError } from "@fern-api/task-context";
 import * as Sentry from "@sentry/node";
 
-import { isTelemetryDisabled } from "./isTelemetryDisabled.js";
+import { shouldInitializeTelemetry, type TelemetryInitializationOptions } from "./shouldInitializeTelemetry.js";
 
 export class SentryClient {
     private readonly sentry: Sentry.NodeClient | undefined;
 
-    constructor({ release }: { release: string }) {
+    constructor({ release, telemetry }: { release: string; telemetry: TelemetryInitializationOptions }) {
         const sentryDsn = process.env.SENTRY_DSN;
-        if (!isTelemetryDisabled() && sentryDsn != null && sentryDsn.length > 0) {
+        if (shouldInitializeTelemetry(telemetry) && sentryDsn != null && sentryDsn.length > 0) {
             const sentryEnvironment = process.env.SENTRY_ENVIRONMENT;
             if (sentryEnvironment == null || sentryEnvironment.length === 0) {
                 throw new CliError({
@@ -53,17 +53,33 @@ export class SentryClient {
         }
     }
 
-    public captureException(error: unknown, code?: string): void {
+    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
         if (this.sentry == null) {
-            return;
+            return undefined;
         }
         try {
-            this.sentry.captureException(
-                error,
-                code != null ? { captureContext: { tags: { "error.code": code } } } : undefined
-            );
+            const tags = options?.tags;
+            const context = options?.context;
+            const hasTags = tags != null && Object.keys(tags).length > 0;
+            const hasContext = context != null && Object.values(context).some((value) => value != null);
+            if (!hasTags && !hasContext) {
+                return this.sentry.captureException(error);
+            }
+            return Sentry.withScope((scope) => {
+                if (hasTags) {
+                    scope.setTags(tags);
+                }
+                if (context != null) {
+                    for (const [key, value] of Object.entries(context)) {
+                        if (value != null) {
+                            scope.setContext(key, value);
+                        }
+                    }
+                }
+                return this.sentry?.captureException(error, undefined, scope);
+            });
         } catch {
-            // no-op
+            return undefined;
         }
     }
 

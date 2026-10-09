@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: Test discriminator with inline oneOf variants
+  description: |
+    A discriminator with no mapping whose oneOf members are inline schemas cannot have its
+    mapping inferred, since there are no $refs to derive it from. The variants must still be
+    preserved, as an undiscriminated union.
+  version: 1.0.0
+
+paths:
+  /plants/embed:
+    post:
+      operationId: embed-plant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                segmentation:
+                  $ref: "#/components/schemas/PlantSegmentation"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    PlantSegmentation:
+      type: object
+      description: Specifies how the platform divides the plant into segments.
+      oneOf:
+        - title: Dynamic
+          type: object
+          properties:
+            strategy:
+              type: string
+              const: dynamic
+            dynamic:
+              type: object
+              properties:
+                min_duration_sec:
+                  type: integer
+              required:
+                - min_duration_sec
+          required:
+            - strategy
+            - dynamic
+        - title: Fixed
+          type: object
+          properties:
+            strategy:
+              type: string
+              const: fixed
+            fixed:
+              type: object
+              properties:
+                duration_sec:
+                  type: integer
+              required:
+                - duration_sec
+          required:
+            - strategy
+            - fixed
+      discriminator:
+        propertyName: strategy

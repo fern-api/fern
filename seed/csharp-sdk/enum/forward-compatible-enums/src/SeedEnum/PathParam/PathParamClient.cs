@@ -12,16 +12,16 @@ public partial class PathParamClient : IPathParamClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
-    /// </code></example>
-    public async Task SendAsync(
+    private async Task<RawResponse> SendAsyncCore(
         Operand operand,
         OneOf<Color, Operand> operandOrColor,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -38,6 +38,7 @@ public partial class PathParamClient : IPathParamClient
                         ValueConvert.ToPathParameterString(operand),
                         ValueConvert.ToPathParameterString(operandOrColor)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -46,7 +47,12 @@ public partial class PathParamClient : IPathParamClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedEnum.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -55,8 +61,29 @@ public partial class PathParamClient : IPathParamClient
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedEnum.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
+    /// </code></example>
+    public WithRawResponseTask SendAsync(
+        Operand operand,
+        OneOf<Color, Operand> operandOrColor,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            SendAsyncCore(operand, operandOrColor, options, cancellationToken)
+        );
     }
 }

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Emit object keys without quotes in generated dynamic snippets when the key is
+    a valid JavaScript identifier. Previously, keys of maps and free-form objects
+    (e.g. `map<string, unknown>` values) were always quoted, producing inconsistent
+    output where `metadata: { "releaseDate": ... }` sat next to unquoted typed
+    properties. Keys that are not valid identifiers remain quoted.
+  type: fix

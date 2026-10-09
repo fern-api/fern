@@ -27,13 +27,26 @@ func NewClient(opts ...option.RequestOption) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetFooRequest{
+//	    RequiredBaz: "required_baz",
+//	    RequiredNullableBaz: fern.String(
+//	        "required_nullable_baz",
+//	    ),
+//	}
+//	client.GetFoo(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetFoo(
 	ctx context.Context,
 	request *fern.GetFooRequest,
@@ -50,6 +63,28 @@ func (c *Client) GetFoo(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.UpdateFooRequest{
+//	    XIdempotencyKey: "X-Idempotency-Key",
+//	    NullableText: fern.String(
+//	        "nullable_text",
+//	    ),
+//	    NullableNumber: fern.Float64(
+//	        1.1,
+//	    ),
+//	    NonNullableText: fern.String(
+//	        "non_nullable_text",
+//	    ),
+//	    RequiredNullableText: fern.String(
+//	        "required_nullable_text",
+//	    ),
+//	}
+//	client.UpdateFoo(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) UpdateFoo(
 	ctx context.Context,
 	id string,

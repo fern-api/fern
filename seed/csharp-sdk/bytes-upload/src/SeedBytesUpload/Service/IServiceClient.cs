@@ -2,13 +2,13 @@ namespace SeedBytesUpload;
 
 public partial interface IServiceClient
 {
-    Task UploadAsync(
+    WithRawResponseTask UploadAsync(
         Stream request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task UploadWithQueryParamsAsync(
+    WithRawResponseTask UploadWithQueryParamsAsync(
         UploadWithQueryParamsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

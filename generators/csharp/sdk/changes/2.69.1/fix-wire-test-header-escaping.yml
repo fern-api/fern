@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated wire tests failing to compile when a header, query parameter, or
+    auth header example value contains characters that are special inside a C#
+    string literal (e.g. double quotes, backslashes, or control characters). These
+    values are now emitted through `escapeForCSharpString` in the mock-server
+    `.WithHeader(...)` / `.WithParam(...)` matchers instead of being interpolated
+    raw into a double-quoted string.
+  type: fix

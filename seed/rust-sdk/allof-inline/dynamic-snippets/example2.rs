@@ -11,7 +11,7 @@ async fn main() {
         .create_rule(
             &RuleCreateRequest {
                 name: "name".to_string(),
-                execution_context: RuleExecutionContext::Prod,
+                execution_context: RuleCreateRequestExecutionContext::Prod,
             },
             None,
         )

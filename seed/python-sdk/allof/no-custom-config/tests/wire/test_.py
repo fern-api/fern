@@ -42,3 +42,30 @@ def test__get_organization() -> None:
     client = get_client(test_id)
     client.get_organization()
     verify_request_count(test_id, "GET", "/organizations", None, 1)
+
+
+def test__create_plant() -> None:
+    """Test createPlant endpoint with WireMock"""
+    test_id = "create_plant.0"
+    client = get_client(test_id)
+    client.create_plant(
+        species="species",
+        family="family",
+        genus="genus",
+        common_name="commonName",
+        watering_frequency="daily",
+        sun_exposure="full",
+    )
+    verify_request_count(test_id, "POST", "/plants", None, 1)
+
+
+def test__create_tree() -> None:
+    """Test createTree endpoint with WireMock"""
+    test_id = "create_tree.0"
+    client = get_client(test_id)
+    client.create_tree(
+        id="id",
+        tree_name="treeName",
+        tree_species="treeSpecies",
+    )
+    verify_request_count(test_id, "POST", "/trees", None, 1)

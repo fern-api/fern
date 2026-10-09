@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Index type declarations once instead of scanning every IR type on each lookup.
+    Generating models for APIs with thousands of types is now dramatically faster.
+  type: fix

@@ -9,6 +9,7 @@ import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ApiAuth,
+    AuthScheme,
     ContainerType,
     DeclaredTypeName,
     dynamic as DynamicSnippets,
@@ -25,9 +26,11 @@ import {
     InferredAuthScheme,
     IntermediateRepresentation,
     Literal,
+    NameAndWireValue,
     NameAndWireValueOrString,
     NamedType,
     NameOrString,
+    OAuthScheme,
     ObjectProperty,
     ObjectTypeDeclaration,
     PathParameter,
@@ -59,6 +62,7 @@ export declare namespace DynamicSnippetsConverter {
         ir: IntermediateRepresentation;
         generationLanguage?: generatorsYml.GenerationLanguage;
         smartCasing?: boolean;
+        smartCasingDigitWordBoundary?: boolean;
         generatorConfig?: dynamic.GeneratorConfig;
     }
 }
@@ -79,11 +83,15 @@ export class DynamicSnippetsConverter {
         this.casingsGenerator = constructCasingsGenerator({
             generationLanguage: args.generationLanguage,
             smartCasing: args.smartCasing ?? args.ir.casingsConfig?.smartCasing ?? true,
+            smartCasingDigitWordBoundary:
+                args.smartCasingDigitWordBoundary ?? args.ir.casingsConfig?.smartCasingDigitWordBoundary ?? false,
             keywords: args.ir.casingsConfig?.keywords
         });
         this.fullCasingsGenerator = constructFullCasingsGenerator({
             generationLanguage: args.generationLanguage,
             smartCasing: args.smartCasing ?? args.ir.casingsConfig?.smartCasing ?? true,
+            smartCasingDigitWordBoundary:
+                args.smartCasingDigitWordBoundary ?? args.ir.casingsConfig?.smartCasingDigitWordBoundary ?? false,
             keywords: args.ir.casingsConfig?.keywords
         });
         this.auth = this.convertAuth(this.ir.auth);
@@ -148,6 +156,7 @@ export class DynamicSnippetsConverter {
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments != null ? this.convertEnvironments(this.ir.environments) : undefined,
             variables: this.convertVariables(),
+            globalParameters: this.ir.globalParameters,
             generatorConfig: this.generatorConfig
         };
     }
@@ -221,7 +230,7 @@ export class DynamicSnippetsConverter {
             pathParameters: [...endpoint.servicePathParameters, ...endpoint.pathParameters]
         });
         if (endpoint.sdkRequest == null && endpoint.requestBody == null) {
-            return DynamicSnippets.Request.body({ pathParameters, body: undefined });
+            return DynamicSnippets.Request.body({ pathParameters, body: undefined, bodyRequired: undefined });
         }
         if (endpoint.sdkRequest == null) {
             throw new CliError({
@@ -233,7 +242,10 @@ export class DynamicSnippetsConverter {
             case "justRequestBody":
                 return DynamicSnippets.Request.body({
                     pathParameters,
-                    body: this.convertReferencedRequestBodyType({ body: endpoint.sdkRequest.shape.value })
+                    body: this.convertReferencedRequestBodyType({ body: endpoint.sdkRequest.shape.value }),
+                    // carried over from the SDK IR so a snippet generator, which never sees that IR,
+                    // can tell an omittable body from a required one. Absent means required.
+                    bodyRequired: endpoint.requestBody?.type === "reference" ? endpoint.requestBody.required : undefined
                 });
             case "wrapper":
                 return this.convertInlinedRequest({
@@ -389,6 +401,18 @@ export class DynamicSnippetsConverter {
         }
     }
 
+    private getAuthWrapperProperty(auth: ApiAuth, scheme: AuthScheme): DynamicSnippets.Name | undefined {
+        switch (auth.requirement) {
+            case "ANY":
+            case "ENDPOINT_SECURITY":
+                return this.fullCasingsGenerator.generateName(scheme.key);
+            case "ALL":
+                return undefined;
+            default:
+                assertNever(auth.requirement);
+        }
+    }
+
     private convertPathParameters({
         pathParameters
     }: {
@@ -408,7 +432,7 @@ export class DynamicSnippetsConverter {
     private convertBodyPropertiesToParameters({
         properties
     }: {
-        properties: ObjectProperty[];
+        properties: Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[];
     }): DynamicSnippets.NamedParameter[] {
         return properties.map((property) => ({
             name: this.inflateNameAndWireValue(property.name),
@@ -566,7 +590,8 @@ export class DynamicSnippetsConverter {
             declaration,
             properties,
             extends_: extendsTypeIds,
-            additionalProperties: object.extraProperties
+            additionalProperties: object.extraProperties,
+            deferredUnionBaseProperties: object.deferredUnionBaseProperties
         });
     }
 
@@ -574,18 +599,24 @@ export class DynamicSnippetsConverter {
         declaration,
         properties,
         extends_,
-        additionalProperties
+        additionalProperties,
+        deferredUnionBaseProperties
     }: {
         declaration: DynamicSnippets.Declaration;
         properties: ObjectProperty[];
         extends_?: TypeId[];
         additionalProperties: boolean;
+        deferredUnionBaseProperties?: NameAndWireValue[];
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
             properties: this.convertBodyPropertiesToParameters({ properties }),
             extends: extends_,
-            additionalProperties
+            additionalProperties,
+            // Mirror the pre-computed regular-IR fact; computed once by the IR generator, never here.
+            deferredUnionBaseProperties: deferredUnionBaseProperties?.map((property) =>
+                this.inflateNameAndWireValue(property)
+            )
         });
     }
 
@@ -600,6 +631,10 @@ export class DynamicSnippetsConverter {
         return DynamicSnippets.NamedType.discriminatedUnion({
             declaration,
             discriminant: this.inflateNameAndWireValue(union.discriminant),
+            // Mirror the pre-computed regular-IR fact; computed once by the IR generator, never here.
+            inheritedBaseProperties: (union.inheritedBaseProperties ?? []).map((property) =>
+                this.inflateNameAndWireValue(property)
+            ),
             types: Object.fromEntries(
                 union.types.map((unionType) => [
                     getWireValue(unionType.discriminantValue),
@@ -733,37 +768,54 @@ export class DynamicSnippetsConverter {
             return undefined;
         }
         const scheme = auth.schemes[0];
+        const wrapperProperty = this.getAuthWrapperProperty(auth, scheme);
         switch (scheme.type) {
             case "basic": {
-                return DynamicSnippets.Auth.basic({
+                const basicAuth = {
+                    wrapperProperty,
                     username: this.inflateName(scheme.username),
                     usernameOmit: scheme.usernameOmit,
                     password: this.inflateName(scheme.password),
                     passwordOmit: scheme.passwordOmit
-                });
+                };
+                return DynamicSnippets.Auth.basic(basicAuth);
             }
-            case "bearer":
-                return DynamicSnippets.Auth.bearer({
+            case "bearer": {
+                const bearerAuth = {
+                    wrapperProperty,
                     token: this.inflateName(scheme.token)
-                });
-            case "header":
-                return DynamicSnippets.Auth.header({
+                };
+                return DynamicSnippets.Auth.bearer(bearerAuth);
+            }
+            case "header": {
+                const headerAuth = {
+                    wrapperProperty,
                     header: {
                         name: this.inflateNameAndWireValue(scheme.name),
                         typeReference: this.convertTypeReference(scheme.valueType),
                         propertyAccess: undefined,
                         variable: undefined
                     }
-                });
-            case "oauth":
-                return DynamicSnippets.Auth.oauth({
+                };
+                return DynamicSnippets.Auth.header(headerAuth);
+            }
+            case "oauth": {
+                const customProperties = this.getOAuthCustomProperties(scheme);
+                const oauth = {
+                    wrapperProperty,
                     clientId: this.fullCasingsGenerator.generateName("clientId"),
-                    clientSecret: this.fullCasingsGenerator.generateName("clientSecret")
-                });
-            case "inferred":
-                return DynamicSnippets.Auth.inferred({
+                    clientSecret: this.fullCasingsGenerator.generateName("clientSecret"),
+                    customProperties: customProperties.length > 0 ? customProperties : undefined
+                };
+                return DynamicSnippets.Auth.oauth(oauth);
+            }
+            case "inferred": {
+                const inferredAuth = {
+                    wrapperProperty,
                     parameters: this.getInferredAuthParameters(scheme)
-                });
+                };
+                return DynamicSnippets.Auth.inferred(inferredAuth);
+            }
             default:
                 assertNever(scheme);
         }
@@ -788,11 +840,15 @@ export class DynamicSnippetsConverter {
                 return DynamicSnippets.AuthValues.header({
                     value: scheme.headerPlaceholder ?? "<value>"
                 });
-            case "oauth":
+            case "oauth": {
+                const customPropertyValues = this.getOAuthCustomPropertyValues(scheme);
                 return DynamicSnippets.AuthValues.oauth({
                     clientId: "<clientId>",
-                    clientSecret: "<clientSecret>"
+                    clientSecret: "<clientSecret>",
+                    customPropertyValues:
+                        Object.keys(customPropertyValues).length > 0 ? customPropertyValues : undefined
                 });
+            }
             case "inferred":
                 return DynamicSnippets.AuthValues.inferred({
                     values: this.getInferredAuthValues(scheme)
@@ -830,7 +886,7 @@ export class DynamicSnippetsConverter {
 
         // Extract credentials from request body
         if (tokenEndpoint.requestBody != null) {
-            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            const properties = this.getInferredAuthRequestBodyProperties(scheme, tokenEndpoint.requestBody);
             for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     parameters.push({
@@ -870,7 +926,7 @@ export class DynamicSnippetsConverter {
 
         // Extract credentials from request body - use wireValue as key
         if (tokenEndpoint.requestBody != null) {
-            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            const properties = this.getInferredAuthRequestBodyProperties(scheme, tokenEndpoint.requestBody);
             for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     const propWireValue = getWireValue(property.name);
@@ -882,8 +938,27 @@ export class DynamicSnippetsConverter {
         return values;
     }
 
-    private getRequestBodyProperties(requestBody: HttpRequestBody): ObjectProperty[] {
-        const properties: ObjectProperty[] = [];
+    private getInferredAuthRequestBodyProperties(
+        scheme: InferredAuthScheme,
+        requestBody: HttpRequestBody
+    ): Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] {
+        const properties = this.getRequestBodyProperties(requestBody);
+        const grantTypeProperty = scheme.tokenEndpoint.grantType?.requestProperty;
+        if (
+            grantTypeProperty == null ||
+            grantTypeProperty.property.type !== "body" ||
+            (grantTypeProperty.propertyPath?.length ?? 0) > 0
+        ) {
+            return properties;
+        }
+        const grantTypeWireValue = getWireValue(grantTypeProperty.property.name);
+        return properties.filter((property) => getWireValue(property.name) !== grantTypeWireValue);
+    }
+
+    private getRequestBodyProperties(
+        requestBody: HttpRequestBody
+    ): Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] {
+        const properties: Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] = [];
 
         if (requestBody.type === "inlinedRequestBody") {
             properties.push(...requestBody.properties);
@@ -898,6 +973,59 @@ export class DynamicSnippetsConverter {
         }
 
         return properties;
+    }
+
+    private getOAuthCustomProperties(scheme: OAuthScheme): DynamicSnippets.NamedParameter[] {
+        const parameters: DynamicSnippets.NamedParameter[] = [];
+        // Only the client-credentials flow has a token-request contract whose custom properties
+        // become snippet parameters. The authorization-code (PKCE) flow is a browser login with
+        // no such request-time inputs.
+        if (scheme.configuration.type !== "clientCredentials") {
+            return parameters;
+        }
+        const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
+        for (const customProperty of customProperties) {
+            if (isExcludedOAuthProperty(customProperty.property.valueType)) {
+                continue;
+            }
+            parameters.push({
+                name: this.inflateNameAndWireValue(customProperty.property.name),
+                typeReference: this.convertTypeReference(customProperty.property.valueType),
+                propertyAccess: undefined,
+                variable: undefined
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes != null && !isExcludedOAuthProperty(scopes.property.valueType)) {
+            parameters.push({
+                name: this.inflateNameAndWireValue(scopes.property.name),
+                typeReference: this.convertTypeReference(scopes.property.valueType),
+                propertyAccess: undefined,
+                variable: undefined
+            });
+        }
+        return parameters;
+    }
+
+    private getOAuthCustomPropertyValues(scheme: OAuthScheme): Record<string, unknown> {
+        const values: Record<string, unknown> = {};
+        if (scheme.configuration.type !== "clientCredentials") {
+            return values;
+        }
+        const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
+        for (const customProperty of customProperties) {
+            if (isExcludedOAuthProperty(customProperty.property.valueType)) {
+                continue;
+            }
+            const wireValue = getWireValue(customProperty.property.name);
+            values[wireValue] = `<${wireValue}>`;
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes != null && !isExcludedOAuthProperty(scopes.property.valueType)) {
+            const wireValue = getWireValue(scopes.property.name);
+            values[wireValue] = `<${wireValue}>`;
+        }
+        return values;
     }
 
     private convertEnvironments(environmentsConfig: EnvironmentsConfig): DynamicSnippets.EnvironmentsConfig {
@@ -1083,4 +1211,16 @@ export class DynamicSnippetsConverter {
         }
         return requests;
     }
+}
+
+/**
+ * Literal and optional properties should not be propagated as constructor
+ * parameters or snippet values. Literals are hardcoded in the request class,
+ * and optional properties are not included as required constructor parameters.
+ */
+function isExcludedOAuthProperty(typeReference: TypeReference): boolean {
+    if (typeReference.type !== "container") {
+        return false;
+    }
+    return typeReference.container.type === "literal" || typeReference.container.type === "optional";
 }

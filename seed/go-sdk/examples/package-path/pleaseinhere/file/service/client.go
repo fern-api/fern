@@ -27,14 +27,26 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
 // This endpoint returns a file by its name.
+//
+// Example:
+//
+//	request := &file.GetFileRequest{
+//	    XFileAPIVersion: "0.0.2",
+//	}
+//	client.File.Service.GetFile(
+//	    context.TODO(),
+//	    "file.txt",
+//	    request,
+//	)
 func (c *Client) GetFile(
 	ctx context.Context,
 	// This is a filename

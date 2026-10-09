@@ -12,6 +12,6 @@ export class NestedObjectWithRequiredFieldError extends errors.SeedExhaustiveErr
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
-        this.name = this.constructor.name;
+        this.name = "NestedObjectWithRequiredFieldError";
     }
 }

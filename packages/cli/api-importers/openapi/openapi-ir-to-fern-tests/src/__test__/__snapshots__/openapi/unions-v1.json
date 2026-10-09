@@ -115,4 +115,5 @@ error-discrimination:
 display-name: Test setting to disable usage of title param
 ",
   },
+  "specVersion": "1.0.0",
 }

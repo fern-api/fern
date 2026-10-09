@@ -9,7 +9,11 @@ import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift } from "@f
 import { pascalCase } from "../util/pascal-case.js";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
-import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
+import {
+    registerLiteralEnums,
+    registerLiteralEnumsForObjectProperties,
+    registerLiteralEnumsForTypeReference
+} from "./register-literal-enums.js";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
@@ -131,6 +135,17 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                         requestNamePascalCase: endpoint.request.declaration.name.pascalCase.unsafeName
                     });
                 }
+                // Inline literal query parameters are resolved against the source module symbol
+                // (see EndpointSnippetGenerator.getEndpointMethodQueryParameters), so their literal
+                // enums must be registered under that same scope. This mirrors the SDK generator's
+                // AbstractSwiftGeneratorContext, which registers them under the owning client symbol.
+                endpoint.request.queryParameters?.forEach((queryParameter) => {
+                    registerLiteralEnumsForTypeReference({
+                        parentSymbol: registeredSourceModuleSymbol,
+                        registry: nameRegistry,
+                        typeReference: queryParameter.typeReference
+                    });
+                });
             }
         });
 
@@ -164,12 +179,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
             literal: (ref) => {
                 return visitDiscriminatedUnion(ref.value, "type")._visit({
-                    boolean: () => referencer.referenceAsIsType("JSONValue"),
+                    boolean: () => referencer.referenceSwiftType("Bool"),
                     string: (literalType) => {
-                        const symbol = this.nameRegistry.getNestedLiteralEnumSymbolOrThrow(
-                            fromSymbol,
-                            literalType.value
-                        );
+                        const symbol = this.nameRegistry.getNestedLiteralEnumSymbol(fromSymbol, literalType.value);
+                        if (symbol == null) {
+                            return referencer.referenceAsIsType("JSONValue");
+                        }
                         return referencer.referenceType(symbol);
                     },
                     _other: () => referencer.referenceAsIsType("JSONValue")

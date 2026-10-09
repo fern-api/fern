@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# The fixture for `splitTypeCrates`. Every other split fixture produces either
+# a core crate on its own (all types root-level) or leaves on their own (no
+# type shared between subpackages), so none of them compile the configuration
+# the feature actually targets: a shared core crate that several leaf crates
+# depend on.
+#
+# This spec forces that shape. `Money` is reached from both `catalog` and
+# `billing`, so it is hoisted to core, and the `billing` crate then names it
+# across a crate boundary — which is what exercises the leaf -> core path
+# dependency, the leaf prelude's re-export of core's types, and the ordering
+# requirement in `patchCargoLockForTypePartitions` (core's lock stanza has to
+# be written before any leaf that depends on it).
+#
+# `/import` additionally sits on a root-level service, covering the case where
+# a generated request struct is owned by core while the type it references is
+# declared under a subpackage.
+api:
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

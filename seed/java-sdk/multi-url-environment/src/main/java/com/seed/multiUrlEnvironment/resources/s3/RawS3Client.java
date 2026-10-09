@@ -4,10 +4,12 @@
 package com.seed.multiUrlEnvironment.resources.s3;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.multiUrlEnvironment.core.BodyProperties;
 import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.MediaTypes;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
+import com.seed.multiUrlEnvironment.core.RetryInterceptor;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentApiException;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentException;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentHttpResponse;
@@ -46,7 +48,9 @@ public class RawS3Client {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedMultiUrlEnvironmentException("Failed to serialize request", e);
         }
@@ -61,6 +65,15 @@ public class RawS3Client {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -71,6 +84,8 @@ public class RawS3Client {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMultiUrlEnvironmentApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedMultiUrlEnvironmentException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedMultiUrlEnvironmentException("Network error executing HTTP request", e);
         }

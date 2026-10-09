@@ -10,6 +10,7 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
     auth?: FernDefinition.HttpEndpointAuth;
     idempotent?: boolean;
+    subtitle?: string;
     "stream-condition"?: string;
     request?: FernDefinition.HttpRequest;
     response?: FernDefinition.HttpResponseSchema;
@@ -20,4 +21,9 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     transport?: FernDefinition.ServiceTransport;
     source?: FernDefinition.SourceSchema;
     retries?: FernDefinition.RetriesConfiguration;
+    /**
+     * List of global parameter IDs that this endpoint opts into.
+     * Used with apply: explicit mode.
+     */
+    "global-parameters"?: string[];
 }

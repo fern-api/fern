@@ -7,7 +7,12 @@ export {
 } from "./codegen-utils/createNumericLiteralSafe.js";
 export { deduplicateExamples } from "./codegen-utils/deduplicateExamples.js";
 export { generateInlineAliasModule, generateInlinePropertiesModule } from "./codegen-utils/generateInlineModule.js";
-export { getExampleEndpointCalls, getExampleEndpointCallsForTests } from "./codegen-utils/getExampleEndpointCalls.js";
+export {
+    exampleOmitsRequestBody,
+    getExampleEndpointCalls,
+    getExampleEndpointCallsForTests,
+    mayOmitRequestBody
+} from "./codegen-utils/getExampleEndpointCalls.js";
 export {
     getParameterNameForPositionalPathParameter,
     getParameterNameForPropertyPathParameter,
@@ -25,6 +30,15 @@ export { isExpressionUndefined } from "./codegen-utils/isExpressionUndefined.js"
 export { maybeAddDocsNode, maybeAddDocsStructure } from "./codegen-utils/maybeAddDocs.js";
 export { toCamelCase } from "./codegen-utils/toCamelCase.js";
 export { writerToString } from "./codegen-utils/writerToString.js";
+export {
+    type GetTypeDeclaration,
+    getXmlChildObjectTypes,
+    getXmlEncoding,
+    getXmlPropertyKind,
+    getXmlValueShape,
+    isXmlDependentType,
+    type XmlValueShape
+} from "./codegen-utils/xmlTypes.js";
 export { type CoreUtilities } from "./core-utilities/CoreUtilities.js";
 export * from "./core-utilities/index.js";
 export { type Zurg } from "./core-utilities/Zurg.js";
@@ -41,6 +55,7 @@ export * from "./public-exports-manager/index.js";
 export * from "./referencing/index.js";
 export { removeUndefinedAndNullFromTypeNode } from "./removeUndefinedAndNullFromTypeNode.js";
 export { type TypeReferenceNode } from "./TypeReferenceNode.js";
+export { applyExactOptionalPropertyTypes } from "./typescript-project/applyExactOptionalPropertyTypes.js";
 export { convertJestImportsToVitest } from "./typescript-project/convertJestImportsToVitest.js";
 export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm.js";
 export * from "./typescript-project/index.js";

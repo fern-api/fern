@@ -9,9 +9,27 @@ export interface OpenApiIntermediateRepresentation {
      * simply echo the Fern configuration as-is.
      */
     apiVersion: unknown | undefined;
+    /**
+     * The document version from the OpenAPI `info.version` field.
+     * Preserved as-is (supports semver, CalVer, or any free-form string).
+     */
+    specVersion: string | undefined;
     title: string | undefined;
     description: string | undefined;
+    /**
+     * Environment variable name populated via `x-fern-base-url-env` that
+     * generated SDKs read to override the base URL.
+     */
+    baseUrlEnv: string | undefined;
     basePath: string | undefined;
+    /**
+     * Root-level path parameters declared by the structured form of
+     * `x-fern-base-path`. When present, these are emitted at the root of
+     * the generated Fern Definition (under `path-parameters`) and the
+     * base path is preserved on the root API file instead of being
+     * inlined onto every endpoint.
+     */
+    basePathParameters: FernOpenapiIr.PathParameter[] | undefined;
     servers: FernOpenapiIr.Server[];
     websocketServers: FernOpenapiIr.Server[];
     /** Top level group information populated through `x-fern-groups`. */
@@ -22,11 +40,12 @@ export interface OpenApiIntermediateRepresentation {
     webhooks: FernOpenapiIr.Webhook[];
     channels: Record<string, FernOpenapiIr.WebsocketChannel>;
     groupedSchemas: FernOpenapiIr.Schemas;
-    variables: Record<string, FernOpenapiIr.PrimitiveSchema>;
+    variables: Record<string, FernOpenapiIr.SdkVariable>;
     /** Whether the schema is directly referenced from a response, parameters, or other schemas */
     nonRequestReferencedSchemas: Set<FernOpenapiIr.SchemaId>;
     securitySchemes: Record<FernOpenapiIr.SecuritySchemeId, FernOpenapiIr.SecurityScheme>;
     security: FernOpenapiIr.GlobalSecurity | undefined;
     globalHeaders: FernOpenapiIr.GlobalHeader[] | undefined;
+    globalParameters: FernOpenapiIr.GlobalParameter[] | undefined;
     idempotencyHeaders: FernOpenapiIr.IdempotencyHeader[] | undefined;
 }

@@ -1,0 +1,5 @@
+- summary: |
+    Wrap `replaceImagePathsAndUrls` calls in `DocsDefinitionResolver` and `previewDocs` with
+    try/catch boundaries that convert MDX parse failures to `CliError(ParseError)`, preventing
+    user-authored MDX syntax errors from reaching Sentry as false-positive InternalErrors.
+  type: fix

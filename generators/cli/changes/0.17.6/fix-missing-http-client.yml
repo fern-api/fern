@@ -1,0 +1,5 @@
+- summary: |
+    Fix generated sdk_glue.rs missing `http_client` field in ApiClient
+    initializer for flat APIs (no sub-client groups), which caused Rust
+    compilation failures.
+  type: fix

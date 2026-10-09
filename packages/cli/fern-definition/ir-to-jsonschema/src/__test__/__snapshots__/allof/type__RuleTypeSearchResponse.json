@@ -2,23 +2,18 @@
   "type": "object",
   "properties": {
     "results": {
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RuleType"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RuleType"
+      },
+      "description": "Current page of results from the requested resource."
     },
     "paging": {
       "$ref": "#/definitions/PagingCursors"
     }
   },
   "required": [
+    "results",
     "paging"
   ],
   "additionalProperties": false,
@@ -53,7 +48,8 @@
       "type": "object",
       "properties": {
         "next": {
-          "type": "string"
+          "type": "string",
+          "description": "Cursor for the next page of results."
         },
         "previous": {
           "oneOf": [
@@ -63,7 +59,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Cursor for the previous page of results."
         }
       },
       "required": [

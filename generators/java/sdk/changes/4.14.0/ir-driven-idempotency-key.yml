@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Idempotency-key auto-generation is now driven by the IR (`SdkConfig.idempotencyKeyGeneration`)
+    instead of a per-generator config flag. When enabled, the SDK adds the configured idempotency
+    header on the configured HTTP methods unless the caller already supplied one. The header name
+    and eligible methods come from the IR, and generated output is unchanged when the feature is off.
+  type: feat

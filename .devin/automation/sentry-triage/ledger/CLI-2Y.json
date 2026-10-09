@@ -1,0 +1,9 @@
+{
+  "title": "No fern directory found with --id",
+  "disposition": "shipped",
+  "rationale": "Current delete preview flow passes ValidationError for this user invocation problem.",
+  "fixSummary": "Existing deleteDocsPreview path uses CliError.Code.ValidationError.",
+  "prOrIssue": "Already on main",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Docs preview delete --id outside a Fern project failed as InternalError instead of ValidationError guidance."
+}

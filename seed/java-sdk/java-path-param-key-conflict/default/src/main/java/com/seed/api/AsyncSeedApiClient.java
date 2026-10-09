@@ -5,11 +5,12 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.ItemData;
 import com.seed.api.types.Item;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -27,12 +28,37 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<Item> createItem(String key, String value, ItemData request) {
-        return this.rawClient.createItem(key, value, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Item>> rawFuture = this.rawClient.createItem(key, value, request);
+        CompletableFuture<Item> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Item> createItem(
             String key, String value, ItemData request, RequestOptions requestOptions) {
-        return this.rawClient.createItem(key, value, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Item>> rawFuture =
+                this.rawClient.createItem(key, value, request, requestOptions);
+        CompletableFuture<Item> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

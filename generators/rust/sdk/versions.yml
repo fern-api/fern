@@ -1,4 +1,761 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.53.1
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now read
+        the `event:` line instead of deserializing every event as `__Unknown`. Both variant styles work:
+        envelope variants (`{event, data: Payload}`) are built from the `data:` JSON, and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.53.0
+  changelogEntry:
+    - summary: |
+        Add `RequestOptions::additional_body_param` (backed by `additional_body_params`) for sending
+        extra request body properties, such as undocumented or beta fields, without a new SDK release.
+        Properties are merged into the serialized body under their wire-format keys and override
+        generated fields with the same key. When an endpoint has no body, a JSON object containing only
+        the additional properties is sent. JSON and form-urlencoded bodies are supported; multipart and
+        raw bytes bodies are sent unchanged.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 0.52.0
+  changelogEntry:
+    - summary: |
+        The generated prelude now re-exports `futures::StreamExt`, so `use <crate>::prelude::*;` is enough to
+        iterate SSE streams and paginators without adding `futures` as a direct dependency.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 0.51.0
+  changelogEntry:
+    - summary: |
+        Add `preserveCrateNameHyphens` config option (default `false`). When enabled, hyphens in `crateName`
+        are kept in the generated `Cargo.toml` package name (e.g. `my-sdk` instead of `my_sdk`), as well as in the
+        docs.rs link, README install snippet, and default crates.io publish package name. Rust `use` paths keep
+        the underscored name (`use my_sdk::prelude::*`), matching how Cargo maps hyphenated package names.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 0.50.0
+  changelogEntry:
+    - summary: |
+        Add the `userAgentFromPlatformHeaders` config option. When it is set to `true`, the default
+        `ClientConfig.user_agent` uses the IR's platform `User-Agent` value (`<package-name>/<version>`
+        by default, or the `user-agent` template from generators.yml), matching the other SDK generators.
+        The option defaults to `false`, which keeps the existing `<ApiName> Rust SDK` value. The Rust SDK
+        also falls back to `<ApiName> Rust SDK` when the IR has no platform User-Agent.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 0.49.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.49.0
+  changelogEntry:
+    - summary: |
+        Every multi-URL environment now embeds its URLs: `impl Default for <Env>Urls` per
+        environment and a constructor per environment (`Environment::staging()`), so selecting a
+        non-default environment no longer means retyping URLs from `generators.yml`. The README
+        environments snippet of a multi-URL SDK sets `environment` through that constructor instead
+        of `Environment::Production.url()`, which does not compile against a tuple variant.
+      type: feat
+    - summary: |
+        In a multi-URL environment an explicit `base_url` now wins over the default environment.
+        `ClientConfig::default()` set both `base_url` and `environment`, and every endpoint let the
+        environment win, so `ClientConfig { base_url: "https://sandbox…", ..Default::default() }`
+        silently sent every request to the default (production) environment. Requests now go to
+        `base_url` whenever it is anything other than one of the configured environment's URLs (or
+        the default environment's URL that `Default` fills in); otherwise each request goes to the
+        environment's URL for its service, as before. `ClientConfig::service_url` carries the rule.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.48.0
+  changelogEntry:
+    - summary: |
+        Generate webhook signature verification helpers (`src/webhooks.rs` plus a
+        `core::webhook_signature` runtime) when the API defines HMAC-signed webhooks.
+        Helpers verify the configured signature header (HMAC-SHA1/256/384/512, base64 or
+        hex, optional prefix) with constant-time comparison, support sorted/deduplicated
+        form parameters, `bodySHA256`-style body-hash binding for JSON requests,
+        notification URL port/legacy-query normalization, and timestamp tolerance checks.
+      type: feat
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 0.47.11
+  changelogEntry:
+    - summary: |
+        Client `mod.rs` files no longer emit `use crate::api::*;` when the glob is not
+        needed. Sub-client structs are already re-exported by the containing module, and
+        root-level endpoints only import the glob when they reference generated types.
+        Previously every nested resource module (and the root resources module) produced
+        an `unused_imports` warning on `cargo build`. Streaming (SSE and JSON-chunk)
+        response payloads now count as generated-type usage, so services whose only
+        generated type is a streamed payload keep the import they need.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 0.47.10
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 0.47.9
+  changelogEntry:
+    - summary: |
+        An undiscriminated union with a single member no longer emits an unreachable
+        `_ => None` arm in its `as_*` / `into_*` accessors. That arm produced an
+        `unreachable_patterns` warning in the generated crate, which blocks users who
+        publish with `-D warnings`.
+      type: fix
+  createdAt: "2026-09-18"
+  irVersion: 67
+- version: 0.47.8
+  changelogEntry:
+    - summary: |
+        A request body declared `application/x-www-form-urlencoded` is now form-encoded
+        instead of being sent as a JSON document under an `application/json` header. Those
+        endpoints went through `execute_request`, whose `.json()` both serializes to JSON and
+        stamps the header, so neither the bytes nor the content type matched the declaration.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 0.47.7
+  changelogEntry:
+    - summary: |
+        A JSON request body declared under a media type other than `application/json` - a
+        vendor type, or `application/merge-patch+json` - is now sent under that type instead
+        of `application/json`. `execute_request` calls reqwest's `.json()`, which stamps
+        `application/json` over whatever the endpoint declared, so those endpoints now take a
+        variant that sets the header and serializes the body identically. Emitted only when an
+        endpoint declares such a type, so an SDK that never does is unchanged.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 0.47.6
+  changelogEntry:
+    - summary: |
+        An array query parameter declared `style: form` with `explode: false` is now sent as
+        one comma-joined value instead of a repeated key. The IR has always carried `explode`
+        and the Rust generator read it nowhere, so every array went out exploded regardless of
+        what the endpoint declared. An empty array still produces no parameter.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 0.47.5
+  changelogEntry:
+    - summary: |
+        Basic auth credentials are now sent. An API whose only security scheme is basic auth
+        generated a client that applied NO credential at all: the client-wide auth path
+        applied an API key and a bearer token but had no basic branch, `username` and
+        `password` sat unread on the config, and the one `Authorization` header in the
+        generated client was gated on `config.token`, which such an API never sets. Only
+        per-endpoint auth routing handled basic auth.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 0.47.4
+  changelogEntry:
+    - summary: |
+        A string field sent alongside a file in a multipart body is now written verbatim
+        instead of being JSON-serialized first. `serde_json::to_string` wrapped it in quotes
+        and those quotes reached the server as part of the value, so a 13-character caption
+        arrived as 15. Structured parts (objects, arrays, maps) still go as JSON; numbers and
+        booleans were never affected.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 0.47.3
+  changelogEntry:
+    - summary: |
+        A raw-bytes request body is now sent under the content type the endpoint declares
+        instead of always `application/octet-stream`. The IR has always carried it on the
+        bytes body, and the C#, Python and TypeScript generators already stamped it; Rust
+        hard-coded the header in `execute_bytes_request`. An endpoint that declares no
+        content type still sends `application/octet-stream`.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 0.47.2
+  changelogEntry:
+    - summary: |
+        An offset-paginated endpoint's auto-paging method now stops on a SHORT page rather than
+        only on an empty one. A page holding fewer items than the caller's page size is the last
+        page, so treating "not empty" as "there is more" cost one wasted request against a
+        well-behaved server and never terminated at all against one that keeps answering.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 0.47.1
+  changelogEntry:
+    - summary: |
+        An offset-paginated endpoint now sends its page-size parameter on every page request
+        instead of only the first. The `step` parameter of `x-fern-pagination` was being
+        stripped from the query along with the offset, but only the offset changes between
+        pages - the page size is the same on all of them and has to be sent each time.
+      type: fix
+    - summary: |
+        Advance an offset by the number of items the page returned rather than by a step read
+        out of the response body, which was never present and so left every offset advancing
+        by one. Add `offsetSemantics`, matching the TypeScript and Python generators: the
+        default `"item-index"` advances by the page's item count, and `"page-index"` advances
+        by one.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 0.47.0
+  changelogEntry:
+    - summary: |
+        Paginated endpoints once again generate an auto-paging method. It is now emitted
+        ALONGSIDE the single-page method as `<endpoint>_paginated` rather than replacing it,
+        so the endpoint keeps its typed response and callers who want one page do not have
+        to go through a paginator.
+      type: feat
+    - summary: |
+        Fix the borrow that made the paginated method fail to compile. The page loader
+        outlives the method call, so path and body parameters are now captured as owned
+        values, and the rewrite that points the loader at those captures no longer fails to
+        match every name.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 0.46.7
+  changelogEntry:
+    - summary: |
+        Solve `Default` support for every type in one pass over the IR instead of walking
+        the type graph again for each reference. Derives are unchanged, and the answer no
+        longer depends on which type is analyzed first.
+      type: chore
+    - summary: |
+        Index type declarations once instead of scanning every IR type on each lookup.
+        Generating models for APIs with thousands of types is now dramatically faster.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
+- version: 0.46.6
+  changelogEntry:
+    - summary: |
+        List- and set-typed path parameters are now joined instead of being interpolated
+        directly, so a spec with an array path parameter produces an SDK that compiles.
+
+        Previously the parameter name was passed straight to `format!`, which does not
+        compile because `Vec<T>` has no `Display`:
+
+        ```rust
+        pub async fn path_array(&self, ids: &Vec<String>, ..) -> Result<Echo, ApiError> {
+            &format!("params/path-array/{}", ids),
+        ```
+
+        That is an E0277 in the generated crate, so the failure is not limited to the
+        endpoint declaring the parameter — the whole SDK fails to build and every other
+        endpoint in it becomes unusable.
+
+        The elements are now joined with a comma, which is OpenAPI's default `simple`
+        path style, using `to_string()` per element so that any `Display` element type
+        works and not only `String`. Optional, nullable and map containers keep their
+        previous behavior: an optional path parameter cannot be omitted from a path, and
+        a map has no defined path serialization.
+
+        The non-default `label` (`.a.b`) and `matrix` (`;ids=a,b`) path styles remain
+        unimplemented.
+      type: fix
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.46.5
+  changelogEntry:
+    - summary: |
+        Aliases of `unknown` (e.g. `AnyType` wrapping `serde_json::Value`) now derive
+        `Default`, so structs and aliases that contain them and derive `Default`
+        compile without manual patching. The struct generator's private copy of the
+        default analysis has been folded into the shared `hasDefaultImpl`, which is
+        now the single source of truth and no longer recurses forever on types that
+        reference each other. `#[serde(default)]` emission is unchanged: a required
+        `unknown` field still fails to deserialize when the key is missing.
+      type: fix
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.46.4
+  changelogEntry:
+    - summary: |
+        Fix generated code failing to compile when a property is named `self`, `Self`, `crate` or `super`.
+        Rust rejects these as raw identifiers, so they are now suffixed with an underscore (`self_`)
+        and given an explicit `#[serde(rename = "self")]` to preserve the wire name.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 0.46.3
+  changelogEntry:
+    - summary: |
+        Custom headers are applied when the SDK runs through an injected `RequestExecutor` (the path
+        used by generated CLI custom commands). `ClientConfig::custom_headers` — including an
+        `X-Source`-style override and the `X-Fern-*` platform headers — and
+        `RequestOptions::additional_headers` were previously dropped before delegating to the executor,
+        so they reached the wire on generated-path requests but not on custom-command ones. Auth and
+        retries remain the executor's responsibility.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 0.46.2
+  changelogEntry:
+    - summary: |
+        Endpoints that declare `retries: { disabled: true }` (`x-fern-retries` in OpenAPI) no longer
+        retry. The generated method pins `max_retries` to zero on the request options, overriding both
+        the client-level default and any caller-supplied value.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 0.46.1
+  changelogEntry:
+    - summary: |
+        Fixed generated WireMock stubs for OAuth client credentials APIs whose token endpoint is
+        itself marked as authenticated: the token (and refresh) endpoint stub no longer requires
+        an `Authorization` header, since the token request is made to obtain the token and cannot
+        carry one yet.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 0.46.0
+  changelogEntry:
+    - summary: |
+        Add `respectOptionalRequestBody`. When enabled, an endpoint whose request body the API does not
+        require takes the body as an `Option`, so a caller who passes `None` sends no body and no
+        `Content-Type`. Examples that omit the body render as `None` in snippets, reference docs, and
+        wire tests. The flag defaults to false, so existing SDKs keep their current method signatures.
+      type: feat
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 0.45.0
+  changelogEntry:
+    - summary: |
+        Generated clients accept a custom `reqwest::Client`. `ClientConfig` gained a
+        `reqwest_client: Option<reqwest::Client>` field, set through the new
+        `ApiClientBuilder::reqwest_client(...)`, and `HttpClient` uses it as-is when present
+        instead of building its own. This is the transport escape hatch other Fern SDKs already
+        expose (`httpx_client` in Python, `OkHttpClient` in Java, `urlSession` in Swift), and it
+        lets callers configure root certificates, client certificates, proxies and connection
+        pooling themselves. Authentication, custom headers and retries are still applied by the
+        SDK on top of the supplied client; when the field is `None` the client is built exactly
+        as before from `timeout` and `user_agent`.
+      type: feat
+  createdAt: "2026-08-14"
+  irVersion: 66
+- version: 0.44.5
+  changelogEntry:
+    - summary: |
+        Write the LICENSE file into the generated crate when a custom license is configured
+        (`github.license.custom` or `metadata.license.custom`), matching the other SDK generators.
+        When that file is written and neither `packageLicense` nor `packageLicenseFile` is set,
+        `Cargo.toml` now points `license-file` at it instead of defaulting to MIT.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 66
+- version: 0.44.4
+  changelogEntry:
+    - summary: |
+        Non-2xx responses with a body are now returned as errors instead of successes.
+        `parse_response` and `parse_response_raw` only consulted the status code inside
+        their empty-body branch, so any error response that carried a payload was
+        deserialized into the success type and returned `Ok`. When the success type can
+        absorb an arbitrary object — all-optional fields, a bare `Value`, a defaulted
+        collection — the call looked like an empty-but-successful result: a 401 surfaced
+        as "no results found" and the process exited 0, which a calling script reads as
+        "nothing to do". The status is now checked before deserialization in both
+        methods, and the response body is carried through as the `ApiError::Http`
+        message so the server's own error detail reaches the caller.
+
+        This also closes the gap left by the executor path: `send_request`
+        short-circuits to `executor.execute(...)` when a custom `RequestExecutor` is
+        installed, bypassing `execute_with_retries` — previously the only place the
+        status was inspected. Checking in the parsers covers both paths.
+      type: fix
+  createdAt: "2026-08-12"
+  irVersion: 66
+- version: 0.44.3
+  changelogEntry:
+    - summary: |
+        Fixed WireMock stubs for wire tests of APIs with `auth: any` combining Basic and
+        OAuth/Bearer schemes: stubs now accept either Authorization form instead of
+        requiring the exact Basic header the client may not send.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 66
+- version: 0.44.2
+  changelogEntry:
+    - summary: |
+        Fix discriminated union variants silently dropping inherited properties. When a variant's
+        referenced object type got all of its properties from `extends`, the variant was inlined to
+        an empty struct, so the payload deserialized successfully but every field was discarded.
+        Such types are no longer inlined and keep their `#[serde(flatten)]` wrapper.
+
+        Note: this changes the generated public API for affected unions. A variant that was inlined
+        (e.g. `FooExtended { age }`, constructor `foo_extended(age: i64)`) now wraps the referenced
+        type (`FooExtended { data: FooExtended }`, constructor `foo_extended(data: FooExtended)`), so
+        consumers on a prior version with `extends`-based union variants may need to update call sites
+        when regenerating.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 66
+- version: 0.44.1
+  changelogEntry:
+    - summary: |
+        Apply client-level custom headers to the OAuth token request. The client-credentials
+        token exchange was built directly on the underlying HTTP client, so it was the only
+        request that skipped `ClientConfig.custom_headers` — APIs whose gateway requires a
+        header on the token endpoint rejected the exchange with a 401, and the
+        `X-Fern-SDK-*` headers were missing from token requests.
+
+        Request-level headers and auth headers are intentionally still not applied: the token
+        is cached and shared across requests, and the token request is what produces the
+        credential auth headers would carry.
+      type: fix
+    - summary: |
+        Encode the OAuth token request to match the token endpoint's declared content type. The
+        client-credentials exchange previously always sent a JSON body, so APIs whose token
+        endpoint expects `application/x-www-form-urlencoded` (the OAuth 2.0 default per RFC 6749
+        §4.4.2) rejected the exchange. The content type is now resolved from the referenced
+        endpoint in the IR: form-encoded when the spec declares it, JSON otherwise — so existing
+        JSON token endpoints are unaffected.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 66
+- version: 0.44.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+        Inferred auth is not supported by the Rust SDK, so an endpoint whose only satisfiable
+        requirement is inferred auth returns a configuration error.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 66
+- version: 0.43.1
+  changelogEntry:
+    - summary: |
+        Escape Rust reserved keywords in generated enum variant names. An enum
+        value that PascalCases onto a keyword (e.g. `self` -> `Self`) is now
+        emitted as `Self_` with the wire value preserved, instead of the
+        unparseable `pub enum Foo { Self, ... }`. Generated code examples
+        (README, reference docs, snippets, and doc-test comments) now reference
+        the same keyword-safe variant name so they compile too.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 66
+- version: 0.43.0
+  changelogEntry:
+    - summary: |
+        Endpoint methods now include a usage example in their rustdoc comments (under a
+        `# Examples` section), so IDEs surface a ready-to-use code snippet on hover. The
+        examples are the same dynamic snippets used for the README and reference.md, and
+        are fenced with ```no_run so `cargo test` doctests compile but do not execute them.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 66
+- version: 0.42.2
+  changelogEntry:
+    - summary: |
+        Endpoints now send API-, service- and endpoint-level headers whose types are literals
+        (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers were silently
+        dropped. Caller-supplied values via `RequestOptions::additional_header` still take
+        precedence over the literal defaults.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 0.42.1
+  changelogEntry:
+    - summary: |
+        Enable the `gzip` feature on the generated SDK's `reqwest` dependency so that
+        gzip-encoded response bodies are decompressed automatically. Previously,
+        `reqwest` was configured with `default-features = false` and no compression
+        features, so responses to requests with a spec-defined `Accept-Encoding: gzip`
+        header were returned as raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 0.42.0
+  changelogEntry:
+    - summary: |
+        Wire up OAuth client-credentials authentication in the generated client. When an
+        OAuth client-credentials scheme is defined, the generated `ClientConfig` now carries
+        the resolved token endpoint and the `HttpClient` automatically fetches, caches, and
+        refreshes a bearer token before making authenticated requests. Previously the OAuth
+        scaffolding was present but never connected to the request flow.
+
+        The token exchange now honors the token endpoint's configured request/response
+        property mapping instead of a hardcoded `client_id`/`client_secret`/`grant_type`
+        shape: the request body is built from the configured property names (e.g. camelCase
+        `clientId`/`clientSecret`), literal properties such as `grant_type` are only sent when
+        the contract declares them, and the access token / expiry are read from the configured
+        response property names.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 0.41.2
+  changelogEntry:
+    - summary: |
+        Add a robust resolution chain for core as-is template files so the
+        generator works in standalone Docker, embedded CLI Docker, and
+        monorepo dev layouts. Supports FERN_RUST_ASIS_DIR env var override.
+      type: fix
+    - summary: |
+        Escape Rust reserved keywords in generated client method names. An
+        endpoint named e.g. "move" now generates `pub async fn r#move` instead
+        of the unparseable `pub async fn move`.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 0.41.1
+  changelogEntry:
+    - summary: |
+        Skip README, CONTRIBUTING, and reference.md generation when running in
+        cliEmbedded mode. These standalone docs require static assets (features.yml,
+        asIs/) only available in the standalone Docker image and are not needed for
+        embedded SDK crates.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 0.41.0
+  changelogEntry:
+    - summary: |
+        Expose `generateAndReturnContext()` on `SdkGeneratorCli` for
+        in-process invocation by the CLI generator. Returns the populated
+        `SdkGeneratorContext` after generation completes.
+      type: internal
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 0.40.9
+  changelogEntry:
+    - summary: |
+        Fix multipart file-upload endpoints with binary responses to use streaming method,
+        and fix file-upload endpoints with query parameters to bind the query-folded envelope
+        type instead of the bare body type. Both issues caused cargo build failures on
+        endpoints like ElevenLabs speech-to-speech (multipart + binary response + query params).
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 66
+- version: 0.40.8
+  changelogEntry:
+    - summary: |
+        Fix `unreachable pattern` warnings in generated request structs by using
+        `#[serde(skip)]` instead of `#[serde(skip_serializing)]` for query parameter
+        fields that share serde rename targets with body fields.
+      type: fix
+    - summary: |
+        Remove unused `ReqwestExecutor` struct and impl from the generated HTTP
+        client template.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 66
+- version: 0.40.7
+  changelogEntry:
+    - summary: |
+        Escape Rust reserved keywords (`static`, `override`, etc.) in generated
+        union variant constructor function names using `r#` raw identifier syntax.
+        Also skip generating the catch-all `unknown()` constructor when a union
+        already has a variant named "unknown" to avoid duplicate definitions.
+      type: fix
+  createdAt: "2026-06-23"
+  irVersion: 66
+- version: 0.40.6
+  changelogEntry:
+    - summary: |
+        Import `serde::{Deserialize, Serialize}` directly in `environment.rs` for
+        multi-URL environments instead of relying on the crate prelude. The CLI
+        generator embeds the SDK and replaces `src/prelude.rs` with a bare
+        types-crate re-export, which dropped the serde derive macros and broke
+        compilation with `cannot find derive macro `Serialize` in this scope`.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 66
+- version: 0.40.5
+  changelogEntry:
+    - summary: |
+        Fix `error.rs` failing to compile when an error body has a property whose type is
+        a named (non-primitive) type or a non-string/non-u64 primitive (e.g. `i64`). Error
+        body fields are now deserialized with `serde_json::from_value` into their actual Rust
+        type (instead of always reading `as_str()`/`as_u64()`), and the crate prelude is
+        imported when a field references a generated type so it resolves in scope. Also fixes
+        a latent bug where errors sharing a status code all reused the first error's body
+        fields; each variant is now constructed with its own fields.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 0.40.4
+  changelogEntry:
+    - summary: |
+        Always wrap IR-derived error fields in `Option` to match constructor code
+        that assigns `None` for missing fields, preventing struct/constructor type
+        mismatches. Fix thiserror format strings: `{{message}}` → `{message}` so
+        field values are actually interpolated.
+      type: fix
+    - summary: |
+        Register synthesized request-envelope types for endpoints with a
+        referenced request body AND query parameters in the model generator's
+        `types/mod.rs`. Previously these types were generated but never
+        declared as modules, causing unresolved-type errors in the SDK crate.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 0.40.3
+  changelogEntry:
+    - summary: |
+        Fix error field parsing to use camelCase JSON wire names matching REST conventions
+        (e.g. `resourceId`, `authType`, `errorId`) and derive error fields from the IR type
+        definition when available. Fix empty-body response handling: `parse_response` and
+        `parse_response_raw` now return `Ok` for empty 2xx bodies (unit/HEAD/204 responses)
+        and `Err` for empty 4xx/5xx bodies, preventing auth failures from being silently
+        swallowed on the `with_executor` path.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 0.40.2
+  changelogEntry:
+    - summary: |
+        Change `RequestExecutor::execute` return type from `Result<Response, reqwest::Error>`
+        to `Result<Response, Box<dyn std::error::Error + Send + Sync>>` and add `ApiError::Executor`
+        variant. This allows downstream crates (e.g. CLI glue) to inject custom executor errors
+        without a backwards dependency on `reqwest`.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 0.40.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error where structs incorrectly derived `Default` when
+        containing fields whose types extend base objects that don't support
+        `Default` (e.g., objects with required enum fields). The
+        `namedTypeSupportsDefault` check now also verifies parent types via
+        `extends`, not just direct properties.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 66
+- version: 0.40.0
+  changelogEntry:
+    - summary: |
+        Add `RequestExecutor` trait and `HttpClient::with_executor()` constructor
+        to enable CLI execution-sharing. When an external executor is injected,
+        the SDK delegates HTTP execution entirely — auth, headers, and retries
+        are handled by the caller's transport stack.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 66
+- version: 0.39.0
+  changelogEntry:
+    - summary: |
+        Parameterize core module path in model generator to support
+        standalone types crate usage.
+      type: internal
+  createdAt: "2026-06-05"
+  irVersion: 66
+- version: 0.38.0
+  changelogEntry:
+    - summary: |
+        Support embedding as a library crate inside CLI generator output.
+        Async command handlers, `AppContext::client()` returning a
+        forward-compatible `ApiClient` trait, and `ResolvedClientConfig`
+        for auth credential resolution.
+      type: feat
+  createdAt: "2026-06-04"
+  irVersion: 66
+- version: 0.37.1
+  changelogEntry:
+    - summary: |
+        Fix the root client failing to compile when root-level endpoints return
+        Server-Sent Event streams, return binary bodies, or use query parameters.
+        The root client now imports `SseStream`, `ByteStream`, and `QueryBuilder`
+        when those endpoints are present, matching sub-client behavior.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 66
+- version: 0.37.0
+  changelogEntry:
+    - summary: |
+        Discriminated unions are now forward-compatible. Each generated `enum` carries
+        `#[non_exhaustive]` and a final `__Unknown(serde_json::Value)` variant marked
+        `#[serde(untagged)]`. Unknown discriminant values (e.g. variants introduced
+        server-side after this SDK was generated) deserialize into `__Unknown`
+        instead of erroring, preserving the raw JSON payload for inspection and
+        round-trip serialization.
+
+        Forward-compatible unions can no longer derive `Eq`/`Hash` because
+        `serde_json::Value` doesn't implement them. `PartialEq` is still derived.
+      type: feat
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 0.36.8
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 66
+- version: 0.36.7
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` are now served verbatim instead of being passed through
+        WireMock's Handlebars transformer, which would fail to resolve them as
+        helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 0.36.6
+  changelogEntry:
+    - summary: |
+        Fix generated Rust wire tests for single-URL SDKs and pagination error
+        tests. The wire test generator no longer emits `config.environment = None;`
+        when the SDK was generated against a single base URL (since the
+        `environment` field does not exist on `ClientConfig` in that case).
+        The synchronous-paginator error-propagation tests now use
+        `ApiError::Configuration` instead of the non-existent
+        `ApiError::Serialization` variant, so the generated `pagination.rs` test
+        module compiles.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 0.36.5
+  changelogEntry:
+    - summary: |
+        Bump the Rust SDK and Rust model generator containers' Node base image from
+        `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+        with the rest of the Fern generator containers on a single Node major
+        version (Node 24) and picks up Node 24's CVE patches. The Rust SDK's
+        in-place `npm@11.13.0` self-upgrade and the bundled `ip-address` patch are
+        retained because the Node 24 `npm` ship (`11.12.1`) still vendors
+        `ip-address@10.1.0`, which is vulnerable to GHSA-v2v4-37r5-5v8g.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 0.36.4
+  changelogEntry:
+    - summary: |
+        Bump the rust toolchain stage in the rust-sdk and rust-model generator
+        containers from `rust:1.82-alpine3.20` to `rust:1.91-alpine3.23`. Alpine
+        3.20 is EOL and ships outdated openssl/musl/busybox/zlib/curl/git; 1.91
+        is the lowest rust version Docker Hub publishes for alpine3.23. The
+        Node runtime stage was already on `node:22.22-alpine3.23`, so there is
+        no longer any Alpine 3.20 layer anywhere in these images.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
 - version: 0.36.3
   changelogEntry:
     - summary: |

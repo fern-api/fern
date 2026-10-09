@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedInferredAuthImplicitNoExpiryClient } from "@fern/inferred-auth-implicit-no-expiry";
 
-const client = new SeedInferredAuthImplicitNoExpiryClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedInferredAuthImplicitNoExpiryClient({ baseUrl: "YOUR_BASE_URL" });
 await client.auth.getTokenWithClientCredentials({
     "X-Api-Key": "X-Api-Key",
     client_id: "client_id",

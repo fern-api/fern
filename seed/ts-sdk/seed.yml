@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v66
+irVersion: v67
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -79,6 +79,9 @@ fixtures:
         packagePath: src/test-packagePath
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: include-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
     - outputFolder: with-audiences
       customConfig: null
       audiences:
@@ -87,6 +90,13 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
+    - outputFolder: exact-optional-property-types
+      customConfig:
+        exactOptionalPropertyTypes: true
+    - outputFolder: exact-optional-property-types-serde-layer
+      customConfig:
+        noSerdeLayer: false
+        exactOptionalPropertyTypes: true
     - outputFolder: retain-original-casing
       customConfig:
         retainOriginalCasing: true
@@ -142,6 +152,21 @@ fixtures:
     - outputFolder: multiple-exports
       customConfig:
         generateSubpackageExports: true
+    - outputFolder: flatten-request-parameters
+      customConfig:
+        flattenRequestParameters: true
+  ts-optional-request-body:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-optional-request-body
+      customConfig:
+        respectOptionalRequestBody: true
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
@@ -164,6 +189,22 @@ fixtures:
   union-query-parameters:
     - outputFolder: no-custom-config
       customConfig: null
+  query-parameters-openapi-as-objects:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: deep-object-map-query-parameters
+      customConfig:
+        deepObjectMapQueryParameters: true
+  ts-deep-object-map-query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: deep-object-map-no-serde
+      customConfig:
+        deepObjectMapQueryParameters: true
+    - outputFolder: deep-object-map-serde
+      customConfig:
+        deepObjectMapQueryParameters: true
+        noSerdeLayer: false
   file-download:
     - outputFolder: no-custom-config
       customConfig: null
@@ -291,6 +332,12 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+  oauth-client-credentials-custom-prefix-openapi:
+    - outputFolder: .
+      customConfig: null
+  oauth-client-credentials-openapi:
+    - outputFolder: .
+      customConfig: null
   oauth-client-credentials-mandatory-auth:
     - outputFolder: no-custom-config
       customConfig: null
@@ -305,6 +352,9 @@ fixtures:
         neverThrowErrors: true
   oauth-client-credentials-reference:
     - outputFolder: .
+      customConfig: null
+  ts-oauth-token-optional:
+    - outputFolder: no-custom-config
       customConfig: null
   mixed-case:
     - outputFolder: no-custom-config
@@ -358,6 +408,10 @@ fixtures:
       customConfig:
         noSerdeLayer: true
         generateWebSocketClients: true
+    - outputFolder: accumulate-handlers
+      customConfig:
+        generateWebSocketClients: true
+        websocketHandlerMode: accumulate
   property-access:
     - outputFolder: no-custom-config
       customConfig: null
@@ -381,6 +435,44 @@ fixtures:
     - outputFolder: always-send-auth
       customConfig:
         alwaysSendAuth: true
+    - outputFolder: always-send-auth-optional-auth
+      customConfig:
+        alwaysSendAuth: true
+        optional-auth: true
+    - outputFolder: guard-process-env-access
+      customConfig:
+        guardProcessEnvAccess: true
+  ts-global-header-env:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: guard-process-env-access
+      customConfig:
+        guardProcessEnvAccess: true
+  single-url-environment-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: optional-auth
+      customConfig:
+        optional-auth: true
+  single-url-environment-no-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: require-base-url
+      customConfig:
+        requireBaseUrl: true
+  no-environment:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: require-base-url
+      customConfig:
+        requireBaseUrl: true
+  multi-url-environment-no-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    # `requireBaseUrl` is ignored for multi-base-URL APIs, so this output matches no-custom-config.
+    - outputFolder: require-base-url
+      customConfig:
+        requireBaseUrl: true
   simple-api:
     - outputFolder: use-yarn
       customConfig:
@@ -409,6 +501,20 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: optional-auth
+      customConfig:
+        optional-auth: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
+    - outputFolder: user-agent-only
+      customConfig:
+        includePlatformHeaders: true
+        userAgentOnly: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle
@@ -451,6 +557,12 @@ fixtures:
     - outputFolder: legacy-exports
       customConfig:
         useLegacyExports: true
+    - outputFolder: esm-only
+      customConfig:
+        esmOnly: true
+    - outputFolder: output-esm
+      customConfig:
+        outputEsm: true
     - outputFolder: oidc-token
       publishConfig:
         type: npm
@@ -515,9 +627,58 @@ fixtures:
     - outputFolder: .
       customConfig:
         noSerdeLayer: false
+  ts-error-name-collision:
+    - outputFolder: .
+      customConfig:
+        namespaceExport: SeedErrors
+        naming:
+          client: SeedErrors
+  ts-flatten-request-any-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: flatten-request-parameters
+      customConfig:
+        flattenRequestParameters: true
+  ts-react-query:
+    - outputFolder: .
+      customConfig:
+        generateReactQueryHooks: true
   server-sent-events-openapi:
     - outputFolder: no-custom-config
       customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
+  ts-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  ts-bytes-upload-path-param:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: bigint
+      customConfig:
+        useBigInt: true
+    - outputFolder: no-inline-path-parameters
+      customConfig:
+        inlinePathParameters: false
+  openapi-per-spec-base-path:
+    - outputFolder: no-custom-config
+      customConfig: null
+  openapi-per-spec-base-path-disabled:
+    - outputFolder: no-custom-config
+      customConfig: null
+  ts-xml-twiml:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
+    - outputFolder: forward-compatible-enums
+      customConfig:
+        enableForwardCompatibleEnums: true
 
 scripts:
   - image: fernapi/ts-seed
@@ -565,11 +726,10 @@ scripts:
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
 allowedFailures:
-  - cross-package-type-names:serde-layer
-  - exhaustive:never-throw-errors
-  - exhaustive:multiple-exports
-  - oauth-client-credentials-custom
-  - package-yml
-  - inferred-auth-implicit-reference
-  - unions:serde-layer
+  # CLI-specific OAuth fixture: the full IR client-credentials contract is not
+  # generated by the TS SDK generator. Exercised by the CLI generator.
+  - cli-oauth
   - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
+  - pagination:no-custom-config # pre-existing: TS5076 '??' and '&&' mixed without parentheses in Client.ts
+  - pagination:page-index-semantics # pre-existing: TS5076 '??' and '&&' mixed without parentheses in Client.ts
+  - webhooks:no-custom-config # pre-existing: generation failure

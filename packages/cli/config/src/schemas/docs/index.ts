@@ -111,6 +111,9 @@ export type MetadataConfigSchema = z.infer<typeof S.MetadataConfig>;
 export const RedirectConfigSchema = S.RedirectConfig;
 export type RedirectConfigSchema = z.infer<typeof S.RedirectConfig>;
 
+export const RedirectsConfigurationSchema = S.RedirectsConfiguration;
+export type RedirectsConfigurationSchema = z.infer<typeof S.RedirectsConfiguration>;
+
 // AI
 export const AiChatConfigSchema = S.AIChatConfig;
 export type AiChatConfigSchema = z.infer<typeof S.AIChatConfig>;

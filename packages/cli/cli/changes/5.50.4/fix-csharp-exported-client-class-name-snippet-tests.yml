@@ -1,0 +1,6 @@
+- summary: |
+    Fixed the local C# dynamic-snippet test runner so it strips the docs-only
+    `exported-client-class-name` override before generating snippet tests. The compiled snippets now
+    reference the generated client class instead of the customer-provided wrapper, which is not part
+    of generator output.
+  type: fix

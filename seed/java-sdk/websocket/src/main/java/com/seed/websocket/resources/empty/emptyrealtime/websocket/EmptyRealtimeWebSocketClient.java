@@ -9,6 +9,7 @@ import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.DisconnectReason;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.ReconnectingWebSocketListener;
+import com.seed.websocket.core.RequestOptions;
 import com.seed.websocket.core.WebSocketReadyState;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledExecutorService;
@@ -83,20 +84,29 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
         }
         HttpUrl.Builder urlBuilder = parsedUrl.newBuilder();
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
-        clientOptions.headers(null).forEach(requestBuilder::addHeader);
+        clientOptions.headers((RequestOptions) null).forEach(requestBuilder::addHeader);
         final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
         ReconnectingWebSocketListener.ReconnectOptions reconnectOpts = this.reconnectOptions != null
                 ? this.reconnectOptions
                 : ReconnectingWebSocketListener.ReconnectOptions.builder().build();
         this.reconnectingListener =
-                new ReconnectingWebSocketListener(reconnectOpts, () -> {
-                    if (clientOptions.webSocketFactory().isPresent()) {
-                        return clientOptions.webSocketFactory().get().create(request, this.reconnectingListener);
-                    } else {
-                        return okHttpClient.newWebSocket(request, this.reconnectingListener);
-                    }
-                }) {
+                new ReconnectingWebSocketListener(
+                        reconnectOpts,
+                        () -> {
+                            if (clientOptions.isClosed()) {
+                                throw new IllegalStateException("root client has been closed");
+                            }
+                            if (clientOptions.webSocketFactory().isPresent()) {
+                                return clientOptions
+                                        .webSocketFactory()
+                                        .get()
+                                        .create(request, this.reconnectingListener);
+                            } else {
+                                return okHttpClient.newWebSocket(request, this.reconnectingListener);
+                            }
+                        },
+                        clientOptions::isClosed) {
                     @Override
                     protected void onWebSocketOpen(WebSocket webSocket, Response response) {
                         readyState = WebSocketReadyState.OPEN;
@@ -131,6 +141,7 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
                         }
                     }
                 };
+        clientOptions.registerWebSocket(this);
         reconnectingListener.connect();
         return connectionFuture;
     }
@@ -139,7 +150,10 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
      * Disconnects the WebSocket connection and releases resources.
      */
     public void disconnect() {
-        reconnectingListener.disconnect();
+        clientOptions.unregisterWebSocket(this);
+        if (reconnectingListener != null) {
+            reconnectingListener.disconnect();
+        }
         if (timeoutExecutor != null) {
             timeoutExecutor.shutdownNow();
             timeoutExecutor = null;

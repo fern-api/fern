@@ -50,6 +50,17 @@ class FooClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->foo->find(
+     *     new FindRequest([
+     *         'optionalString' => 'optionalString',
+     *         'publicProperty' => 'publicProperty',
+     *         'privateProperty' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param FindRequest $request
      * @param ?array{
      *   baseUrl?: string,

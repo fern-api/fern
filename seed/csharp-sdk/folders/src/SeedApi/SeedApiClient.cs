@@ -16,7 +16,7 @@ public partial class SeedApiClient : ISeedApiClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedApi" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedApi.Version.Current },
                 { "User-Agent", "Fernfolders/0.0.1" },
             }
         );
@@ -36,14 +36,14 @@ public partial class SeedApiClient : ISeedApiClient
 
     public IFolderClient Folder { get; }
 
-    /// <example><code>
-    /// await client.FooAsync();
-    /// </code></example>
-    public async Task FooAsync(
+    private async Task<RawResponse> FooAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -56,6 +56,7 @@ public partial class SeedApiClient : ISeedApiClient
                 {
                     Method = HttpMethod.Post,
                     Path = "",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -64,7 +65,12 @@ public partial class SeedApiClient : ISeedApiClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedApi.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -73,8 +79,25 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.FooAsync();
+    /// </code></example>
+    public WithRawResponseTask FooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(FooAsyncCore(options, cancellationToken));
     }
 }

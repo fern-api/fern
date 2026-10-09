@@ -1,4 +1,370 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.10.4
+  changelogEntry:
+    - summary: |
+        Autoversion no longer rewrites the placeholder version inside files protected by
+        `.fernignore` or inside longer version strings. Previously, hand-maintained files such as
+        `AGENTS.md`, docs and `.fern/replay.lock` had `0.0.0-fern-placeholder` replaced, and strings
+        like `0.0.0-fern-placeholder.7` were turned into `1.0.0-dev.10.7`. Only whole occurrences of
+        the placeholder in generator-owned files are now replaced.
+      type: fix
+  createdAt: "2026-10-08"
+- version: 0.10.3
+  changelogEntry:
+    - summary: |
+        Autoversion on the hosted FAI path (remote generation) now retries chunk-by-chunk when the
+        single full-diff request fails, so a timeout or 5xx on a large diff no longer silently
+        discards the analysis. When analysis is still unavailable, the PATCH fallback carries an
+        `analysisWarning` that GithubStep renders as a "Version bump not verified" notice in the
+        PR body and that disables automerge for that PR.
+      type: fix
+  createdAt: "2026-09-29"
+- version: 0.10.2
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.19.3, which replaces the `node-diff3` fallback three-way merge with a
+        vendored binary-search LCS so replay merges of large generated files (e.g. a 23k-line Go SDK file)
+        complete in seconds instead of hanging until the pipeline watchdog kills them.
+      type: fix
+  createdAt: "2026-09-23"
+- version: 0.10.1
+  changelogEntry:
+    - summary: |
+        Auto-versioned MAJOR/MINOR bumps no longer produce a version-only `changelog.md` block when
+        the AI analysis returns an empty `changelog_entry`. AutoVersionStep now falls back to the
+        PR description, version bump reason, or commit message body so the changelog describes
+        the (often breaking) change. In chunked analysis, if no chunk at the winning bump level
+        produced an entry, that chunk's version bump reason is added alongside the lower-severity
+        entries so the breaking change is not omitted.
+      type: fix
+  createdAt: "2026-09-21"
+- version: 0.10.0
+  changelogEntry:
+    - summary: |
+        Add `workflows` to `GithubStepConfig`. When `false`, the post-generation pipeline drops newly
+        generated `.github/workflows/*` files and restores tracked ones from HEAD before any commit,
+        so SDK delivery never touches workflow files (no GitHub App `workflows` permission required).
+      type: feat
+  createdAt: "2026-09-08"
+- version: 0.9.56
+  changelogEntry:
+    - summary: |
+        Self-hosted GitHub pull-request mode in preview mode now stops after the local commit with an INFO
+        message explaining that changes were committed locally and push/PR creation were skipped. The
+        existing-PR lookup is skipped only when preview mode has no GitHub token (where it was unauthenticated
+        and surfaced as rate-limit errors), so an authenticated preview still mirrors the branch a real run
+        would use.
+      type: fix
+  createdAt: "2026-09-08"
+- version: 0.9.55
+  changelogEntry:
+    - summary: |
+        The README's `## Requirements` section is now omitted when the generator
+        supplies an empty requirements list, instead of rendering a heading followed by
+        a dangling "This SDK requires:" line.
+      type: fix
+  createdAt: "2026-08-20"
+- version: 0.9.54
+  changelogEntry:
+    - summary: |
+        Never treat the magic placeholder version as a previous version when autoversioning.
+        SDK repos that derive their published version from git tags at release time keep
+        `0.0.0-fern-placeholder` committed in `package.json`/`.fern/metadata.json`, and because
+        the placeholder parses as a valid semver pre-release it was advanced like one, stamping
+        `0.0.0-fern-placeholder.0` into the generated manifests instead of a real version.
+        Placeholder candidates are now skipped in every resolution source (pipeline
+        `baseVersion`, diff extraction, `.fern/metadata.json`, git tags) so autoversion falls
+        through to the next source, and `incrementVersion` rejects the placeholder outright.
+      type: fix
+  createdAt: "2026-08-04"
+- version: 0.9.53
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` reporting an additive Go change as a breaking MAJOR bump. The Go SDK
+        assigns each struct property a single-bit `explicitFields` constant at its positional index,
+        so inserting a new field shifts every following constant's bit index by one. That reindexing
+        churn is a mechanical artifact (the bit is set and read within the same generated version; the
+        wire format is name-based JSON), but the AI diff analyzer read the shifted bit positions as a
+        serialization-compatibility break. The diff-cleaning pass now strips `explicitFields`
+        bit-constant reindexing pairs before analysis, while preserving genuinely new fields and
+        removed-field deletions so real additions stay MINOR and real removals stay MAJOR.
+      type: fix
+  createdAt: "2026-07-24"
+- version: 0.9.52
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.19.2.
+      type: chore
+  createdAt: "2026-07-16"
+- version: 0.9.51
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` producing a false "changed"/"removed" changelog entry (e.g.
+        claiming the `User-Agent` header is no longer sent) when several version-bearing
+        lines bump together. Unified diffs group all deletions before all additions, so the
+        diff-cleaning pass left interleaved version-only deletions behind after stripping the
+        magic-version additions; the AI then read those orphan deletions as removals. Version
+        change pairs are now matched across the whole diff section regardless of layout.
+      type: fix
+    - summary: |
+        Fix `--version AUTO` dropping the `/vN` Go module suffix from the
+        `X-Fern-SDK-Name` header value and README install/import samples. The suffix
+        retrofit now covers non-import module-path string literals and Markdown docs
+        in addition to imports and `go.mod`, while leaving the composite `User-Agent`
+        value and web URLs (e.g. `pkg.go.dev`) untouched.
+      type: fix
+  createdAt: "2026-07-16"
+- version: 0.9.50
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.19.1.
+      type: chore
+  createdAt: "2026-07-15"
+- version: 0.9.49
+  changelogEntry:
+    - summary: |
+        Pin the Fern bot identity as author/committer on API-created commits when the
+        GitHub token is a personal access token (`ghp_`/`github_pat_`). PATs cannot
+        auto-sign commits, so omitting the identity fields (the 0.9.40 behavior)
+        attributed self-hosted push/PR commits to the PAT owner, breaking CI filters
+        that key off the `fern-api[bot]` committer. Signing-capable tokens (App
+        installation, OAuth) are unchanged and keep the "Verified" signature.
+      type: fix
+  createdAt: "2026-07-15"
+- version: 0.9.48
+  changelogEntry:
+    - summary: |
+        Explicitly versioned generations (`--version X.Y.Z`) now record a version-only entry in
+        `changelog.md`, and existing changelog entries are always preserved: GithubStep prepends
+        new entries instead of only creating a fresh file, and the GitHub push/PR flows restore a
+        tracked `changelog.md` that the generated output would otherwise delete.
+      type: fix
+  createdAt: "2026-07-14"
+- version: 0.9.47
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` dropping the `/vN` Go module suffix from the
+        `X-Fern-SDK-Name` header value and README install/import samples. The suffix
+        retrofit now covers non-import module-path string literals and Markdown docs
+        in addition to imports and `go.mod`, while leaving the composite `User-Agent`
+        value and web URLs (e.g. `pkg.go.dev`) untouched.
+      type: fix
+  createdAt: "2026-07-14"
+- version: 0.9.46
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning shipping the `0.0.0-fern-placeholder` version when the previous
+        generation SHA recorded in `replay.lock` is unreachable. Signed-commit pushes recreate
+        the `[fern-generated]` commit with a new remote SHA, so the recorded SHA can be absent
+        from the next clone; `AutoVersionStep` now treats it as a hint, re-anchors the diff
+        baseline on the most recent reachable `[fern-generated]` commit, and always rewrites the
+        magic placeholder instead of crashing on a bad git object.
+      type: fix
+  createdAt: "2026-07-10"
+- version: 0.9.45
+  changelogEntry:
+    - summary: |
+        Fix the broken "See full changelog" link in generated PR bodies. The link pointed at
+        `blob/<sha>/changelog.md`, but that file was never committed in the self-hosted (non-replay)
+        generation path, so the link 404'd. GithubStep now guarantees `changelog.md` lands in the
+        committed tree it pushes, and only emits the link when the file is actually tracked at the
+        pushed head SHA.
+      type: fix
+    - summary: |
+        Fix Go SDKs being flagged as a breaking change (spurious major version bump) on no-op
+        regenerations under `--version AUTO`. The freshly generated code carries the magic placeholder
+        version (major 0, no `/vN` module-path suffix) while the previously published SDK has `/vN` on
+        its module directive and every import. Because git groups all deletions before all additions in
+        an import block, the diff cleaner only stripped the first import's suffix churn and leaked the
+        rest to the AI diff analyzer, which misclassified the regeneration as breaking. The cleaner now
+        removes all Go module-path `/vN` suffix-only churn regardless of diff layout.
+      type: fix
+  createdAt: "2026-07-08"
+- version: 0.9.44
+  changelogEntry:
+    - summary: |
+        Sign every local-only commit when pushing to GitHub, not just HEAD. Replay branches
+        contain multiple commits (e.g. `[fern-generated]` + `[fern-replay]`); previously only
+        the HEAD commit was recreated via the GitHub API and signed, leaving earlier commits
+        on the PR unverified.
+      type: fix
+  createdAt: "2026-07-07"
+- version: 0.9.43
+  changelogEntry:
+    - summary: |
+        Fix replay lockfile not advancing in the no-patches flow when zero new
+        patches are detected. The lockfile's current_generation was saved to disk
+        but never committed, causing previousGenerationSha to remain stale and
+        autoversion diffs to accumulate across runs.
+      type: fix
+  createdAt: "2026-07-07"
+- version: 0.9.42
+  changelogEntry:
+    - summary: |
+        Replace sed-based magic version replacement with pure Node.js implementation.
+        Uses recursive directory walking and binary file detection instead of shelling
+        out to OS-specific sed commands, fixing "illegal byte sequence" errors on
+        binary files and eliminating platform-specific behavior.
+      type: fix
+  createdAt: "2026-06-26"
+- version: 0.9.41
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.19.0.
+      type: chore
+  createdAt: "2026-06-24"
+- changelogEntry:
+    - summary: |
+        Fix commit signing on cloud-generated PRs. `pushSignedCommit` no longer sends
+        `author` by default: the Git Data API defaults `committer` to the provided
+        `author`, so sending `author` alone (the 0.9.32 behavior) still suppressed the
+        "Verified" signature. With both fields omitted, GitHub attributes the commit to
+        the authenticated App installation (`fern-api[bot]`, same noreply email) and
+        signs it. Callers that set `GithubStepConfig.author` still pin both identities.
+      type: fix
+  createdAt: "2026-06-11"
+  version: 0.9.40
+
+- changelogEntry:
+    - summary: |
+        Re-release of 0.9.38 (whose publish failed due to a malformed versions.yml in git
+        history). Carries the `@fern-api/replay` 0.18.0 bump: `.fernignore`-aware
+        customization detection, trailing-slash pattern support, and the EPIPE crash fix.
+      type: chore
+  createdAt: "2026-06-11"
+  version: 0.9.39
+
+- changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.18.0. Replay customization detection now filters
+        `.fernignore`-protected files before materializing patch content (commits touching
+        only protected paths skip `git format-patch` entirely), correctly handles
+        gitignore-style trailing-slash patterns like `docs/`, and no longer crashes with an
+        unhandled `write EPIPE` when git exits before consuming stdin during patch
+        application. Fixes multi-minute replay runs on repos with large generated
+        directories (e.g. typedoc output).
+      type: fix
+  createdAt: "2026-06-10"
+  version: 0.9.38
+
+- changelogEntry:
+    - summary: |
+        AutoVersionStep no longer requires Replay to be enabled. When Replay is
+        not available, the step falls back to diffing HEAD vs the working tree
+        (`git diff HEAD`) and still rewrites magic version placeholders
+        (`0.0.0-fern-placeholder`, `0.0.0.dev0`, etc.) with a real computed
+        semver. This fixes autorelease producing SDKs with placeholder versions
+        for orgs that have not opted into Replay.
+      type: fix
+  createdAt: "2026-06-10"
+  version: 0.9.37
+
+- changelogEntry:
+    - summary: |
+        AutoVersionStep now calls the hosted FAI service (`/sdks/analyze-commit-diff`) using
+        `fernToken` when no BAML `ai` config is supplied — the remote-generation (fiddle)
+        path. Previously the step required `ai` and always fell back to a blind PATCH bump
+        with no changelog entry, PR description, or version-bump reason on replay-enabled
+        remote generations.
+      type: fix
+  createdAt: "2026-06-09"
+  version: 0.9.36
+
+- changelogEntry:
+    - summary: |
+        Disable minimatch negation on `.fernignore` patterns so a stray `!pattern` doesn't silently invert the match and discard generator output.
+      type: fix
+  createdAt: "2026-05-21"
+  version: 0.9.35
+
+- changelogEntry:
+    - summary: |
+        Expand `.fernignore` glob patterns before the generator wipe.
+        `getFernignoreFiles` previously matched each line literally via
+        `fileExists`, so a pattern like `src/foo/**` was checked as a file
+        literally named `**` and silently produced no matches — the wipe
+        then deleted the customer's files. Now patterns are run through
+        the same `minimatch` (with `dot: true`) that `@fern-api/replay`
+        uses, expanded against the HEAD-tracked file list, and passed
+        concrete paths to the existing `restoreFiles` step. Trailing-slash
+        (`src/foo/`), bare-directory (`src/foo`), extglob (`+(a|b)`), and
+        dotfile (`.github/**`) patterns are all honored.
+      type: fix
+    - summary: |
+        Bump @fern-api/replay to 0.16.2.
+      type: chore
+  createdAt: "2026-05-21"
+  version: 0.9.34
+
+- changelogEntry:
+    - summary: |
+        Bump @fern-api/replay to 0.16.1.
+      type: chore
+  createdAt: "2026-05-20"
+  version: 0.9.33
+
+- changelogEntry:
+    - summary: |
+        Restore GitHub web-flow signing on cloud-generated PRs. `pushSignedCommit`
+        still sends `author` (Fern bot attribution from 0.9.28) but no longer
+        sends `committer` by default — the signer keys off `committer`, so the
+        unconditional override added in 0.9.28 silently suppressed the "Verified"
+        badge on every cloud generation. Callers that need a pinned committer
+        can still opt in via `GithubStepConfig.author`.
+      type: fix
+  createdAt: "2026-05-19"
+  version: 0.9.32
+
+- changelogEntry:
+    - summary: |
+        Bump @fern-api/replay to 0.16.0 and remove the consumer-side divergent-merge
+        gauntlet. Squash-merge and force-push recovery are now handled inside the
+        replay engine via the derived scan boundary (`findPreviousGenerationFromHistory`
+        walks `git log HEAD --first-parent`), so generator-cli no longer needs to
+        resolve the `fern-generation-base` tag, compare tree distances, or call
+        `syncFromDivergentMerge` before invoking the replay. The tag is still written
+        for older deployed generator-cli versions whose bundled gauntlet still reads
+        it. Old lockfiles carrying the legacy `base_branch_head` field continue to
+        load and run; the field is no longer written.
+      type: chore
+  createdAt: "2026-05-18"
+  version: 0.9.31
+
+- changelogEntry:
+    - summary: |
+        Bump @fern-api/replay to 0.15.2.
+      type: chore
+  createdAt: "2026-05-17"
+  version: 0.9.30
+
+- changelogEntry:
+    - summary: |
+        Bump @fern-api/replay to 0.15.1.
+      type: chore
+  createdAt: "2026-05-17"
+  version: 0.9.29
+
+- changelogEntry:
+    - summary: |
+        Set explicit author and committer on API-created commits to the Fern bot
+        identity (`fern-api` / `115122769+fern-api[bot]@users.noreply.github.com`).
+        Previously, `octokit.git.createCommit()` defaulted to the authenticated user,
+        which for PAT-based authentication (e.g. GitHub Enterprise) attributed commits
+        to the PAT-owning service account instead of a stable bot identity.
+      type: fix
+  createdAt: "2026-05-06"
+  version: 0.9.28
+
+- changelogEntry:
+    - summary: |
+        Fix `createReplayBranch` crashing with `fatal: <sha> is not a valid object`
+        when the lockfile's `previousGenerationSha` is unreachable (squash-merged
+        and deleted prior PR branch). Tag update is skipped with a warning; the
+        SDK PR still opens.
+      type: fix
+  createdAt: "2026-05-13"
+  version: 0.9.27
+
 - changelogEntry:
     - summary: |
         Bump @fern-api/replay to 0.15.0.

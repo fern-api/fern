@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/AstllmNodeWithSchemaType"
+    },
+    "model": {
+      "type": "string"
+    },
+    "value_schema": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    }
+  },
+  "required": [
+    "type",
+    "model",
+    "value_schema"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AstllmNodeWithSchemaType": {
+      "type": "string",
+      "enum": [
+        "llm"
+      ]
+    }
+  }
+}

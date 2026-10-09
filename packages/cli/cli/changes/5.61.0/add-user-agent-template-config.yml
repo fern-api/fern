@@ -1,0 +1,6 @@
+- summary: |
+    Add `user-agent` generator config option that accepts a template string for
+    the User-Agent header. Supported placeholders: `{packageName}`, `{version}`,
+    `{language}`, `{generatorVersion}`, `{organization}`, `{apiName}`. When absent,
+    defaults to `{packageName}/{version}` (current behavior, non-breaking).
+  type: feat

@@ -31,5 +31,6 @@
     "grant_type"
   ],
   "additionalProperties": false,
+  "description": "A request to obtain an OAuth token.",
   "definitions": {}
 }

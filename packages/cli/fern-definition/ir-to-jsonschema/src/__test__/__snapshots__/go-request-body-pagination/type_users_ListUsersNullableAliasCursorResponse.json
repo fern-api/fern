@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "next_cursor": {
+      "$ref": "#/definitions/users.NullableCursor"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/users.User"
+      }
+    }
+  },
+  "required": [
+    "next_cursor",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "users.NullableCursor": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A named alias that resolves to a nullable string, which is also a pointer in Go."
+    },
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,4 +1,1021 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.92.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types can now carry XML comments. `Comment(text)` adds `<!--text-->` inside the element at its
+        position in the ordered content (interleaved with `AddText` segments and child elements), while
+        `CommentBefore(text)` / `CommentAfter(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `FromXml` and round-trip through `ToXml`; `XmlElement.AddComment` and
+        the new `XmlComment` runtime type expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.91.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.90.1
+  changelogEntry:
+    - summary: |
+        XML (TwiML) record types implement value equality: `Equals`/`GetHashCode` (and `==`) compare the
+        rendered XML, so `VoiceResponse.FromXml(xml).Equals(VoiceResponse.FromXml(parsed.ToXml()))` and
+        `new Say { Message = "x" }.Equals(new Say { Message = "x" })` are true. Previously the record
+        default compared the collection members by reference and was always false.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.90.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `user-agent-only` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `include-platform-headers`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omit-fern-headers` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+    - summary: |
+        Fix the generated `XmlElementTests` test project failing to compile because its `FakeNode` test
+        double did not implement `IXmlNode.ToXml(bool)`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.89.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.88.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed child elements and raw `XmlElement` children in a
+        single ordered `Content` list, so `ToXml()` emits them in the order they were added
+        (`Response.Say(a).AddChild(custom).Say(b)` yields `<Say>a</Say><Custom /><Say>b</Say>`) and
+        `FromXml()` preserves document order, including the position of unknown elements and repeated
+        wrapper elements. Adds `AddText(string)` to XML types and `XmlElement` for mixed content such as
+        `<Say>Hi <break strength="weak" /> world</Say>`. Typed child properties and `AdditionalChildren`
+        remain available; `AdditionalChildren` is now derived from `Content`.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.87.0
+  changelogEntry:
+    - summary: |
+        Support SDK variables (`variables` in `api.yml` / `x-fern-sdk-variables` in OpenAPI). Path
+        parameters bound to a variable via `x-fern-sdk-variable` are removed from endpoint
+        signatures and request types and are configured once on the client through the generated
+        `ClientOptions.<Variable>` property. String variables that declare an `env` fall back to that
+        environment variable, and a variable that is still unset fails with a clear
+        `ArgumentException` before the request is sent.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.86.3
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now return their XML representation from
+        `ToString()` instead of JSON, and `ToXml()` prepends the
+        `<?xml version="1.0" encoding="utf-8"?>` declaration by default.
+        Pass `ToXml(xmlDeclaration: false)` to omit it.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 2.86.2
+  changelogEntry:
+    - summary: |
+        Fix `RequestOptions.AdditionalBodyProperties` throwing `InvalidOperationException` on endpoints
+        without a request body (e.g. GET requests). When the request body is null, the additional
+        properties are now sent as the JSON request body.
+      type: fix
+    - summary: |
+        `RequestOptions.AdditionalBodyProperties` is now applied to form-urlencoded requests. The additional
+        properties are merged into the form body (the additional property wins on a key collision) before
+        encoding. Multipart requests remain unsupported.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 2.86.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 2.86.0
+  changelogEntry:
+    - summary: |
+        Fluent child methods on XML-encoded (TwiML) types (e.g. `response.Say(...)`, `say.Break(...)`)
+        now carry `<param>` documentation for every argument, taken from the child type's property
+        descriptions, and include the child type's own description in the method summary.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 2.85.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 2.84.3
+  changelogEntry:
+    - summary: |
+        `RawClient` now applies the configured `Timeout` to each retry attempt individually instead of
+        sharing a single budget across all attempts and backoff delays. Note that `Timeout` therefore no
+        longer bounds the total duration of a call that is retried; the worst case is roughly
+        `Timeout * (MaxRetries + 1)` plus backoff. If a retry attempt fails after an earlier attempt
+        already received an API response (e.g. a 429), that response is returned instead of a generic
+        cancellation error.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 2.84.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 2.84.1
+  changelogEntry:
+    - summary: |
+        Honor the org-level whitelabel setting (`readmeConfig.whiteLabel`) and the `apiName`/`disabledSections` (IR `disabledFeatures`) readme
+        config options when generating README.md. Previously the "Built with Fern" badge was always emitted.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 2.84.0
+  changelogEntry:
+    - summary: |
+        Object types with XML encoding metadata (e.g. TwiML) now implement `IXmlNode` with `ToXml()`/`ToXElement()`,
+        static `FromXml(string)`/`FromXElement(XElement)` parsers, and fluent child builder methods
+        (`response.Say("Hello", voice: "man").Dial(...)`). Unknown attributes and child elements are preserved in
+        `AdditionalAttributes`/`AdditionalChildren` and re-emitted; `AddChild(XmlElement)` adds arbitrary elements.
+        Parsing rejects malformed XML, mismatched root elements and DTDs. Types without XML metadata are unchanged.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 2.83.3
+  changelogEntry:
+    - summary: |
+        Fix the generated root client passing a `grantType` argument to `OAuthTokenProvider`
+        when the token endpoint declares a required, non-literal `grant_type` property.
+        `OAuthTokenProvider` hardcodes `grant_type: "client_credentials"` and never took that
+        parameter, so the generated SDK failed to compile with
+        `'OAuthTokenProvider' does not contain a constructor that takes 4 arguments`.
+      type: fix
+  createdAt: "2026-09-07"
+  irVersion: 67
+- version: 2.83.2
+  changelogEntry:
+    - summary: |
+        Stop dropping the examples of endpoints whose request body is bytes or a file upload. The IR's
+        `ExampleRequestBody` cannot carry those bodies, so such examples read as bodyless and the
+        endpoint lost its snippets and generated tests.
+      type: fix
+  createdAt: "2026-08-24"
+  irVersion: 67
+- version: 2.83.1
+  changelogEntry:
+    - summary: |
+        Honor the `x-fern-retries: { disabled: true }` extension (`retries: { disabled: true }` in a Fern
+        definition) at the endpoint level. Requests for those endpoints are now sent exactly once, even when
+        the client or the per-request options configure retries.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 2.83.0
+  changelogEntry:
+    - summary: |
+        Added a `generate-documentation-file` config option (default `true`) so the
+        generated csproj emits XML documentation and the published NuGet package ships
+        `lib/<tfm>/<Namespace>.xml`, giving consumers IntelliSense. CS1591 is
+        suppressed so enabling documentation does not introduce warnings for
+        undocumented members.
+      type: feat
+    - summary: |
+        Added a `package-metadata` config block for NuGet metadata written into the
+        generated csproj: `description`, `authors`, `tags`, `copyright`, `icon`,
+        `project-url`, `repository-url`, `repository-type`, `include-source-link`
+        (adds `Microsoft.SourceLink.GitHub`) and `include-symbols` (produces a
+        `.snupkg`).
+      type: feat
+    - summary: |
+        Global header values set on `ClientOptions` are now respected in the default
+        (non-unified) client shape. Previously the generated root client read only the
+        constructor parameter for a promoted global header, so
+        `new Client(clientOptions: new ClientOptions { Version = "..." })` was silently
+        ignored and a stray environment variable could win instead. The resolution
+        order is now: explicit constructor argument, `ClientOptions` property,
+        environment variable, then the literal/client default.
+      type: fix
+    - summary: |
+        `ClientOptions.Clone()` now copies literal global header properties (e.g.
+        `Version`), which were previously dropped when the options were cloned.
+      type: fix
+    - summary: |
+        Escape markup characters in the attribute values of documentation comment tags. Descriptions
+        containing links such as `<a href="https://example.com/docs?a=1&b=2">` no longer emit invalid
+        XML (CS1570) in generated documentation comments, while attribute values that already contain
+        character or entity references are left untouched.
+      type: fix
+    - summary: |
+        The generated README's `## Requirements` section is now populated with the
+        project's target frameworks (".NET 8 and above", ".NET Framework 4.6.2 and
+        above", ".NET Standard 2.0 and above"). Previously the C# generator passed an
+        empty requirements list, so the section rendered as a dangling
+        "This SDK requires:" with no entries.
+      type: fix
+    - summary: |
+        README and dynamic snippets no longer pass an upper-cased placeholder for
+        global header constructor parameters (e.g. `new Client("TOKEN", "VERSION")`,
+        which sent the literal header value `VERSION` at runtime). Snippets now use
+        the header's literal or client default value when one is known.
+      type: fix
+    - summary: |
+        Fixed invalid C# in the generated README: `RequestOptions` examples used
+        object-initializer syntax with `:` instead of `=` (`new RequestOptions { MaxRetries: 0 }`),
+        and the `WithRawResponse` section declared `var data` twice in one block.
+      type: fix
+    - summary: |
+        Fix invalid `<see cref="..."/>` documentation comments generated for union types. Type names
+        are now converted to documentation comment identifiers (`List<string>` becomes
+        `List{String}`, `object?` becomes `object`), and types that cannot be expressed as an
+        identifier (arrays, nested generic arguments) are rendered as escaped inline code instead.
+        This removes CS1570/CS1584/CS1658 warnings from generated SDKs that contain unions when XML
+        documentation is enabled.
+      type: fix
+    - summary: |
+        Escaped generic type syntax in the XML doc comments of the generated core
+        files (`Optional`, `OptionalAttribute`, `NullableAttribute`, `Extensions`),
+        and added the missing `param` tags on `Extensions.Assert`. Building generated
+        SDKs with XML documentation enabled no longer emits CS1570/CS1573 warnings.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 2.82.1
+  changelogEntry:
+    - summary: |
+        Global headers typed as a `literal<"...">` with an `env` fallback no longer throw when
+        neither the constructor parameter nor the environment variable is set. The literal is
+        known at compile time, so it is now used as the header's default value.
+      type: fix
+    - summary: |
+        The generated `X-Fern-SDK-Version` header value is now emitted as a globally qualified
+        reference, so it can no longer be shadowed by a constructor parameter or local that
+        PascalCases to `Version` (previously `error CS1061: 'string' does not contain a
+        definition for 'Current'`).
+      type: fix
+  createdAt: "2026-08-18"
+  irVersion: 67
+- version: 2.82.0
+  changelogEntry:
+    - summary: |
+        With `respect-optional-request-body` enabled, examples that omit an optional request body are no
+        longer dropped from the generated snippets and reference.
+      type: fix
+    - summary: |
+        Add a `respect-optional-request-body` option. When enabled, an endpoint whose request body the API
+        does not require takes that body as `Body? request = null`, so the caller can leave the argument out
+        and the request is sent with no body and no body content type. Examples that supply no body render
+        as `client.BulkRefundAsync()`. The option defaults to false, so existing signatures and snippets are
+        unchanged.
+      type: feat
+    - summary: |
+        Skip endpoint examples that omit a request body the endpoint declares. The generated request
+        type requires the body, so rendering such an example produced a call missing a required
+        argument in the reference, the snippets and the mock server tests.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 2.81.1
+  changelogEntry:
+    - summary: |
+        Percent-encode `;` in query parameter names and values. RFC 3986 permits it, but it
+        remains a legacy parameter separator for many servers, which truncated values such as
+        `?mail2=a@example.com;%20b@example.com` at the first `;`.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 2.81.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `prefer-explicit-auth` configuration option. When enabled (and the API composes
+        OAuth client-credentials with basic auth via `auth: any`), auth credentials passed
+        explicitly to the client constructor take precedence over environment-variable
+        defaults when selecting the auth scheme — e.g. explicitly provided basic auth
+        credentials win over OAuth client ID/secret environment variables. Disabled by
+        default, so existing generated output and runtime behavior are unchanged.
+      type: feat
+  createdAt: "2026-08-09"
+  irVersion: 67
+- version: 2.80.1
+  changelogEntry:
+    - summary: |
+        Fix generated mock server tests for examples that omit an optional request body. The
+        stub no longer matches on a `Content-Type` header that the bodyless request does not send.
+      type: fix
+  createdAt: "2026-08-07"
+  irVersion: 67
+- version: 2.80.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allow-user-agent-app-info` config. When enabled, generated clients expose an
+        optional `AppInfo` client option (`Name`, `Version?`, `Comment?`) whose sanitized product
+        token is appended to whatever `User-Agent` the SDK would otherwise send
+        (`{sdk}/{version} ... {product}/{product-version} ({comment})`), following RFC 9110.
+        Disabled by default, so existing generated output is byte-identical, and it composes with
+        `include-platform-headers`, the configured `user-agent` template value, and the
+        `user-agent-name-from-package` fallback. Caller-supplied values are trimmed and encoded
+        (name/version percent-encoded to RFC 7230 `tchar`; comment delimiters `(`, `)`, `\` and
+        control characters incl. CR/LF escaped), so untrusted values cannot inject header content.
+        Still overridable by an explicit `User-Agent` header and suppressed by `omit-fern-headers`.
+        Works in both unified and non-unified client-options modes; generated code compiles for
+        `net462`, `net8.0`, and `netstandard2.0`.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
+- version: 2.79.4
+  changelogEntry:
+    - summary: |
+        Respect the `user-agent` config template when `include-platform-headers` is enabled. The
+        structured User-Agent previously always used the NuGet package id, ignoring the
+        configured template.
+      type: fix
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 2.79.3
+  changelogEntry:
+    - summary: |
+        Only reference `README.md` in the generated `.csproj` when the file actually exists. The
+        `<PackageReadmeFile>` property and the packed `<None Include>` item are now guarded with an
+        MSBuild `Exists` condition, so `dotnet pack` no longer fails with NU5019 for outputs that do
+        not include a README (e.g. local-file-system output).
+      type: fix
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 2.79.2
+  changelogEntry:
+    - summary: |
+        SDKs generated to `local-file-system` output now stamp the package name and version
+        from the IR's `nuget` filesystem publish target (populated by the Fern CLI when
+        `--version` is passed) into `Version.cs`, the `.csproj` `<Version>` property, and the
+        structured `User-Agent` header. Previously local-file-system output always produced
+        `Version.Current = "0.0.0"` and used the root namespace as the User-Agent identity.
+      type: fix
+    - summary: |
+        The `X-Fern-SDK-Name` platform header now uses the package identity (the configured
+        `package-id`, or the nuget filesystem publish target's package name) instead of the root
+        namespace, matching the SDK name reported in the `User-Agent` header. SDKs without a
+        configured package id keep sending the root namespace.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 2.79.1
+  changelogEntry:
+    - summary: |
+        Global headers now honor their `client-default` value. The constructor
+        initializes the header from the explicit argument, then the environment
+        variable, then the client default. Previously the client default was only
+        applied on the header-dictionary path and was dropped entirely under
+        `any`-composed multi-scheme auth and endpoint-level security.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 2.79.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 2.78.0
+  changelogEntry:
+    - summary: |
+        Support webhook body-hash binding in the generated `WebhooksHelper.VerifySignature`
+        helper. When a webhook's HMAC signature configuration declares a `bodyHashBinding`
+        (as used by providers such as Twilio for JSON bodies), verification now first
+        recomputes an unkeyed hash of the raw request body and compares it, in constant time,
+        against the hash carried in the notification URL's query parameter, failing closed on
+        a missing or mismatched value before performing the existing HMAC check over the
+        verbatim notification URL. The body-hash algorithm and encoding are independent of the
+        outer HMAC's. Output is unchanged when no `bodyHashBinding` is configured.
+      type: feat
+    - summary: |
+        Add webhook signature verification. For APIs that configure HMAC webhook signature
+        verification, the C# SDK now generates a static `WebhooksHelper.VerifySignature`
+        helper (plus per-config override helpers when webhooks use distinct configs) backed
+        by a stdlib-only `WebhookSignature` core utility for HMAC computation and
+        constant-time comparison.
+      type: feat
+    - summary: |
+        Extend the generated `WebhooksHelper.VerifySignature` helper to be Twilio-compatible,
+        mirroring the TypeScript reference. When a webhook's HMAC configuration declares
+        `payloadFormat.bodySort`, `requestBody` widens to `object` and accepts either a raw
+        string or an `IReadOnlyDictionary<string, ...>` of POST body parameters whose values
+        are a string or a collection of strings; keys are sorted, per-key values are deduped
+        and sorted, and `key + value` pairs are concatenated with no separator before signing.
+        When a `bodyHashBinding` is configured, verification branches at runtime on whether the
+        body-hash query parameter is present on the notification URL: a JSON request recomputes
+        `hash(rawBody)`, constant-time compares it, and signs the URL only, while a classic
+        form request signs the URL plus the sorted/deduped params with no body-hash check.
+        When `notificationUrlNormalization` is configured, the signature is verified against
+        several normalized forms of the notification URL (standard/absent port, and legacy
+        query re-encoding), succeeding on the first constant-time match via a new stdlib-only
+        `NotificationUrlCandidates` helper on the core `WebhookSignature` utility. The verifier
+        is now a pure boolean and never throws: every failure on the verification path
+        (null/empty inputs, a missing or malformed timestamp, an unparseable URL, a missing
+        body-hash parameter on the JSON path, or an unexpected request-body type) fails closed
+        with `false`. Output is unchanged for webhooks that do not configure these fields.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.77.0
+  changelogEntry:
+    - summary: |
+        Add a `server-url-variables` configuration flag (default `true`) that controls whether server
+        URL variables declared on the API's environments are exposed as client options and
+        interpolated into the environment URL template(s) at construction time. When set to `false`,
+        those client options and the URL-template interpolation are suppressed and the generated SDK
+        falls back to the base-URL behavior from before the feature. Defaults to `true`, so existing
+        generated output is unchanged.
+      type: feat
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.76.6
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated `OAuthTokenProvider`. The token
+        cache is now guarded by a `SemaphoreSlim` with double-checked locking (the
+        same pattern already used by `InferredAuthTokenProvider`), so only one
+        caller refreshes the token under concurrent load and cached values are
+        published safely. The cache-hit path stays lock-free.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.76.5
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both a named environment and server URL
+        variables (e.g. `Region`), the generated client now renders the selected
+        environment's URL template(s) instead of always using the first (default)
+        environment's template. Explicitly provided custom base URLs and custom
+        environment values are never overridden.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 2.76.4
+  changelogEntry:
+    - summary: |
+        Global API headers configured with an `env` fallback (e.g. `X-Twilio-Version` with
+        `env: TWILIO_VERSION`) now fall back to the environment variable in the root client
+        constructor when the parameter is not passed explicitly. Optional headers never throw
+        when both the parameter and the environment variable are missing.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 2.76.3
+  changelogEntry:
+    - summary: |
+        The README "Environments" usage example now passes the client options via the
+        `clientOptions:` named argument so the generated snippet compiles. The root
+        client constructor's first positional parameter is the auth token string, so
+        the previous `new Client(new ClientOptions { ... })` snippet passed
+        `ClientOptions` where a `string?` token was expected.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.76.2
+  changelogEntry:
+    - summary: |
+        A generated nested type whose name matches the SDK's root namespace segment now emits 
+        `global::`-qualified references. Previously such a nested type shadowed the namespace 
+        root within its enclosing type's body, so references like `Acme.Api.SomeType` resolved to the
+        nested type and failed to compile. The `global::` qualifier is applied
+        only to references written inside the enclosing type where the shadow is visible, so
+        unrelated references to the same root segment elsewhere in the SDK are left
+        unqualified.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.76.1
+  changelogEntry:
+    - summary: |
+        Endpoints without a request wrapper (no request object, a request that is just
+        a body, or a bytes request) now send service- and endpoint-level headers whose
+        types are literals (e.g. `Accept-Encoding: literal<"gzip">`). Previously these
+        headers were silently dropped because there was no request object to carry them.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 2.76.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `dedupe-union-base-properties` configuration flag (default off) that stops
+        duplicating a discriminated union's base properties on its `samePropertiesAsObject` variant
+        leaves. The decision is read from the IR fact
+        `ObjectTypeDeclaration.deferredUnionBaseProperties` (computed once in the IR with structural
+        type equality and an exclusive-variant guard), so the generator never re-derives it. When
+        enabled, the union envelope owns the shared base properties, the variant leaf class and its
+        example initializers omit them, and the union's JSON reader strips union-owned properties
+        before deserializing a variant. Off by default, so existing generated output is unchanged; the
+        default is expected to flip in a future major version with a migration.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 2.75.2
+  changelogEntry:
+    - summary: |
+        Fix a compile error in the generated `OAuthTokenProvider` when the token endpoint's
+        `expires-in` response property is optional. The provider now null-checks the value
+        before computing the token expiry instead of passing a nullable number to
+        `DateTime.AddSeconds`.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 2.75.1
+  changelogEntry:
+    - summary: |
+        Wire OAuth client-credentials authentication into the root client when the OAuth
+        scheme is not the first scheme in the API's auth configuration (e.g.
+        `auth: any` with basic auth listed before OAuth). Previously the OAuth token
+        provider was only generated when OAuth was the first auth scheme, so the root
+        client silently fell back to the other schemes and never used the OAuth
+        credentials. When both an OAuth and an inferred auth scheme are present, the
+        provider-based scheme that appears first in the auth configuration is used.
+      type: fix
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the
+        token endpoint's `grant_type` property is a non-literal string. Previously the
+        property was omitted (when optional) or surfaced as a required constructor
+        parameter (when required), so token endpoints that require `grant_type`
+        rejected the request.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 2.75.0
+  changelogEntry:
+    - summary: |
+        Add support for auto-generating an `Idempotency-Key` header on generated SDK
+        clients, driven by the IR. When `sdkConfig.idempotencyKeyGeneration` is present
+        (configured once via the `auto-generate-idempotency-key` generator config key
+        and resolved by the CLI), the SDK attaches an idempotency-key request header
+        whose value is a freshly generated UUIDv4 (`System.Guid.NewGuid().ToString()`)
+        at request time. The wire header name and the eligible HTTP methods come from
+        the IR, so behavior is consistent across every generator. A caller-provided
+        value always wins: a declared idempotency header or a header supplied through
+        request-options takes precedence, and the generated UUID is only a fallback.
+        The header is only injected on the eligible methods. Disabled by default, so
+        existing generated output is unchanged.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 2.74.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (region/edge routing). When an API's servers
+        declare URL variables (e.g. `https://api.{region}.example.com`), each variable is
+        now exposed as an optional string property on `ClientOptions` (idiomatic PascalCase,
+        e.g. `Region`). Variable names that collide with an existing client option are
+        prefixed with `ServerUrl` (e.g. an `environment` variable becomes `ServerUrlEnvironment`).
+        When set at construction time, the values are interpolated into the environment base
+        URL(s), falling back to each variable's default otherwise. Explicit `BaseUrl` or
+        `Environment` options take precedence, and interpolation fails clearly when a required
+        variable has neither a client option nor a default.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 2.73.2
+  changelogEntry:
+    - summary: |
+        Enable automatic response decompression on the default HttpClient. The default client
+        is now created with an HttpClientHandler configured with AutomaticDecompression
+        (DecompressionMethods.All on .NET 5+, GZip | Deflate on older targets), so responses
+        with a Content-Encoding of gzip or deflate are decompressed transparently — including
+        when an Accept-Encoding request header is set explicitly by the API spec. User-supplied
+        HttpClients provided via ClientOptions are not modified.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 2.73.1
+  changelogEntry:
+    - summary: |
+        Make the structured `User-Agent` (emitted when `includePlatformHeaders` is
+        enabled) comply with the RFC 7230 token grammar. The runtime token is now
+        `dotnet` instead of `.NET`, since a leading dot is not a valid token
+        character (e.g. `dotnet/8.0.4`). The architecture label is also normalized so
+        the 64-bit x86 aliases (`x64`, `amd64`, `x86_64`) all report as the canonical
+        `x86_64`.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 2.73.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+        (e.g. `my-sdk/1.2.0 (linux; x64) .NET/8.0.4`). The OS, architecture, and
+        runtime version are resolved at runtime via
+        `System.Runtime.InteropServices.RuntimeInformation` and `System.Environment`.
+        This is gated behind a new `include-platform-headers` config option and is
+        disabled by default, so existing generated output is unchanged. When enabled
+        it remains subject to the `omit-fern-headers` config option.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 2.72.2
+  changelogEntry:
+    - summary: |
+        Make each scheme's credentials optional under `any`-composed auth. Previously,
+        with a multi-scheme `auth: any: [...]` config the generated client treated OAuth
+        (and other) credentials as unconditionally required at construction, so a caller
+        who only wanted API-key auth could not instantiate the client. Credentials now
+        fall back to environment variables without throwing, and the OAuth/inferred token
+        provider and auth headers are only set up when that scheme's credentials are present.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
+- version: 2.72.1
+  changelogEntry:
+    - summary: |
+        Bump the bundled `@fern-api/generator-cli` to 0.9.44 so every local-only commit
+        is signed when pushing to GitHub, not just HEAD. Replay branches contain multiple
+        commits (e.g. `[fern-generated]` + `[fern-replay]`); previously only the HEAD
+        commit was recreated via the GitHub API and signed, leaving earlier commits on
+        the PR unverified.
+      type: chore
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 2.72.0
+  changelogEntry:
+    - summary: |
+        Add a `default-timeout-in-milliseconds` config option to the C# SDK generator
+        for expressing the default network timeout in milliseconds (mapping to .NET's
+        `TimeSpan`). The generated `ClientOptions.Timeout` is now computed from
+        milliseconds (or `Timeout.InfiniteTimeSpan` when set to `"infinity"`).
+        The `default-timeout-in-seconds` option is now deprecated but remains fully
+        backwards compatible: when only the seconds key is set, it is converted to
+        milliseconds. The new key takes precedence when both are set.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 2.71.2
+  changelogEntry:
+    - summary: |
+        Fix mock-server tests and XML-doc `<example>` snippets calling client methods with
+        path parameters in the wrong order (CS1503) when a user-authored example lists its
+        path-parameters in a different order than the URL path template. The generated method
+        signature follows the IR's canonical (URL-template) order, but the snippet writer was
+        consuming the example's path-parameters positionally in the author's declared order.
+        Example values are now bound to each parameter by name and emitted in the endpoint's
+        canonical path-parameter order, matching the generated signature.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 2.71.1
+  changelogEntry:
+    - summary: |
+        Fix SSE stream reconnection correctness to match the reference implementation:
+        (1) Do not reconnect when no terminator is configured (the client cannot
+        distinguish a completed stream from a dropped connection).
+        (2) Apply a default 1-second backoff between reconnect attempts when the
+        server sends no retry: directive (previously zero delay).
+        (3) Use the last *dispatched* event ID for reconnection rather than the
+        last *parsed* id, preventing silent event loss on mid-event drops.
+        (4) Treat reconnect function failures as consumed attempts; throw
+        IOException with the last failure as InnerException when the cap is
+        exhausted, instead of silently truncating the stream.
+        (5) Let OperationCanceledException propagate immediately from reconnectFn
+        instead of swallowing it as a retry attempt.
+        (6) Dispose the old HTTP response only after a new one is successfully
+        obtained, preventing ObjectDisposedException on retry.
+      type: fix
+  createdAt: "2026-07-05"
+  irVersion: 66
+- version: 2.71.0
+  changelogEntry:
+    - summary: |
+        Add opt-in SSE stream reconnection for resumable endpoints.
+        When an SSE endpoint is marked as resumable, the generated SDK
+        automatically reconnects using the Last-Event-ID header.
+        New RequestOptions fields: MaxStreamReconnectAttempts, DisableStreamReconnection.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
+- version: 2.70.0
+  changelogEntry:
+    - summary: |
+        Add support for undocumented/extra parameters: AdditionalQueryParameters from
+        RequestOptions are now applied to all endpoints (previously only endpoints with
+        defined query parameters would merge them). Also add ADDITIONAL_BODY_PROPERTIES
+        feature to README generation.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
+- version: 2.69.2
+  changelogEntry:
+    - summary: |
+        Fix shell injection code scanning alert in OIDC publish workflow by passing
+        API key through env block instead of direct interpolation.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 2.69.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests failing to compile when a header, query parameter, or
+        auth header example value contains characters that are special inside a C#
+        string literal (e.g. double quotes, backslashes, or control characters). These
+        values are now emitted through `escapeForCSharpString` in the mock-server
+        `.WithHeader(...)` / `.WithParam(...)` matchers instead of being interpolated
+        raw into a double-quoted string.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 2.69.0
+  changelogEntry:
+    - summary: |
+        Add NuGet Trusted Publishing (OIDC) support as a config-gated publish
+        strategy. Set `api-key: OIDC` in generators.yml to emit a GitHub Actions
+        workflow that uses NuGet/login for short-lived OIDC tokens instead of a
+        long-lived API key secret.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 66
+- version: 2.68.12
+  changelogEntry:
+    - summary: |
+        Generated request paths no longer contain duplicate slashes when an endpoint's
+        API/service base-paths join into an empty segment (e.g. a service `base-path: /`).
+        The client now requests `/{id}/{nestedId}` instead of `/{id}//{nestedId}`, matching
+        the path the server exposes and the behavior of the other SDK generators. Mock-server
+        test expectations are normalized the same way so they stay consistent with the client.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.11
+  changelogEntry:
+    - summary: |
+        Fixed a C# compile error (CS0102) for discriminated unions whose discriminant property name
+        collides with one of the union's variant type names. The colliding nested variant type is now
+        suffixed with `Inner` (e.g. `EventInner`), consistent with the existing handling for `Value`/`Type`.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.10
+  changelogEntry:
+    - summary: |
+        Fix a compile error in the generated raw-client retry tests when an API
+        defines a model named `StreamRequest`. The test now references the Core
+        streaming request type via its fully qualified name so it no longer
+        collides with the generated model.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.9
+  changelogEntry:
+    - summary: |
+        Generate URI/path pagination endpoints as regular (unpaged) methods instead of
+        skipping them. Previously these endpoints were omitted from the client entirely,
+        leaving generated example snippets referencing methods that did not exist.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.8
+  changelogEntry:
+    - summary: |
+        Fixed serialization of discriminated union members that have no properties.
+        Such members now represent their value as a nullable object so they round-trip
+        correctly with only their discriminant (e.g. `{"type":"empty"}`).
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.7
+  changelogEntry:
+    - summary: |
+        Fixed request URLs for endpoints with enum-typed path parameters and for
+        multi-value query parameters whose element type is a complex type (e.g. an
+        undiscriminated union). Multi-value query parameters are now serialized as
+        repeated flat key=value pairs instead of deep-object bracket notation, and
+        generated WireMock tests now match the decoded request path.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.6
+  changelogEntry:
+    - summary: |
+        Fix generated code for literal-typed values. Literal path parameters are now emitted as
+        required arguments in dynamic snippets even when `generate-literals` is enabled, and mock
+        server tests now include literal-typed required request properties in the expected request
+        body so the SDK's serialized output matches.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.5
+  changelogEntry:
+    - summary: |
+        Fixed compilation of generated dynamic-snippet tests when `exported-client-class-name` is set.
+        The exported client class name is a docs-only override that names a customer-provided wrapper
+        class which is not part of generator output, so the compiled snippet tests now reference the
+        internal generated client while documentation snippets continue to use the exported name.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.4
+  changelogEntry:
+    - summary: |
+        Fix argument ordering for endpoints that have both a request body and a path parameter with a
+        client default. Such path parameters are optional in the generated method signature and are placed
+        after the request body, so the generated snippets, wire tests, and dynamic snippets now order their
+        arguments to match (placing required path parameters before the body and optional ones after, and
+        using named arguments in dynamic snippets where ordering is otherwise ambiguous).
+      type: fix
+  createdAt: "2026-06-19"
+  irVersion: 66
+- version: 2.68.3
+  changelogEntry:
+    - summary: |
+        Fixed C# generation failures for APIs that declare a model type named `Test`.
+        The generated test project no longer emits a `{Namespace}.Test` namespace that
+        collides with the model type, so serialization tests compile. Also taught the
+        OneOf equality comparer to treat undiscriminated-union string-enum members with
+        the same wire value as equal, since the concrete member type is not recoverable
+        when deserializing.
+      type: fix
+  createdAt: "2026-06-19"
+  irVersion: 66
+- version: 2.68.2
+  changelogEntry:
+    - summary: |
+        Document the new `RawResponse` property on thrown API exceptions in the generated README's Exception Handling section, and note that `.WithRawResponse()` also works on streaming and void endpoints in the Raw Response section.
+      type: chore
+  createdAt: "2026-06-11"
+  irVersion: 66
+- version: 2.68.1
+  changelogEntry:
+    - summary: |
+        Fix `ObjectDisposedException` thrown from `RawClient.CloneRequestAsync` when retrying a request
+        with retryable content (JSON or buffered multipart). The retry loop previously sent the original
+        `HttpRequestMessage` for the initial attempt and only cloned for retries; under HTTP/2 (and some
+        other configurations) `HttpClient` disposes the Content of every request it sends, leaving the
+        original's Content disposed by the time the first retry tried to clone it. The loop now always
+        sends a clone — never the original — for retryable content with at least one retry budgeted.
+
+        Same fix also: clamps negative `MaxRetries` values to `0` (would have surfaced as
+        `NullReferenceException` under the new loop structure); short-circuits `MaxRetries == 0` and the
+        non-retryable content path through a fast lane that sends the original directly with no cloning
+        cost; and threads the caller's `CancellationToken` into `CloneRequestAsync`'s body-buffering so
+        cancellation requests during large-body clones are honoured promptly (.NET 5+).
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 66
+- version: 2.68.0
+  changelogEntry:
+    - summary: |
+        Generate raw-response wrappers for streaming and void endpoints. Streaming endpoints now return a new `WithRawResponseStream<T>` struct that implements `IAsyncEnumerable<T>` (so `await foreach` still works) and exposes `.WithRawResponse()` for HTTP metadata. Void endpoints now return a non-generic `WithRawResponseTask` with the same `.WithRawResponse()` accessor. Also fixes a pre-existing bug where JSON streaming endpoints never yielded their deserialized results.
+      type: feat
+  createdAt: "2026-06-11"
+  irVersion: 66
+- version: 2.67.0
+  changelogEntry:
+    - summary: |
+        `Page<T>` now exposes `Url` alongside `StatusCode` and `Headers`, matching the shape of the `RawResponse` exposed on `*ApiException` and on `WithRawResponse<T>`.
+      type: feat
+    - summary: |
+        `*ApiException` now exposes a `RawResponse` property carrying the failed HTTP response's status code, URL, and headers. Lets callers read `Retry-After` off a 429, pull `X-Request-Id` for support tickets, or inspect rate-limit headers off a thrown exception. Existing constructors still work — this is purely additive.
+      type: feat
+  createdAt: "2026-06-10"
+  irVersion: 66
+- version: 2.66.9
+  changelogEntry:
+    - summary: |
+        Upgrade CSharpier formatter to 1.3.0.
+      type: chore
+  createdAt: "2026-06-08"
+  irVersion: 66
+- version: 2.66.8
+  changelogEntry:
+    - summary: |
+        Fixed a compile error (CS9035) for discriminated unions that have required base properties.
+        The internal constructor used for property-name deserialization is now annotated with
+        `[SetsRequiredMembers]`, so callers are no longer forced to set the required base properties
+        at that call site.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 66
+- version: 2.66.7
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 66
+- version: 2.66.6
+  changelogEntry:
+    - summary: |
+        `MockServerTestGenerator` now normalizes nullable date-time query and header parameters to millisecond precision, matching the fix previously applied to `MockEndpointGenerator`. Without this, mock-server tests for nullable date-time fields emitted matchers like `"2024-01-15T09:30:00Z"` while the SDK actually sent `"2024-01-15T09:30:00.000Z"`.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 66
+- version: 2.66.5
+  changelogEntry:
+    - summary: |
+        Mock-server tests now serialize nullable date-time query and header parameters with millisecond precision so they match what the runtime sends. Previously, when a date-time field was wrapped in a nullable container (e.g. with `respect-nullable-schemas: true` and `coerce-optional-schemas-to-nullable: false`), the generated `WithParam("since", "2024-01-15T09:30:00Z")` omitted milliseconds while the SDK actually sent `2024-01-15T09:30:00.000Z`, causing WireMock to return 404.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 2.66.4
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 2.66.3
+  changelogEntry:
+    - summary: |
+        Bump WireMock.Net from 2.2.0 to 2.6.0 in generated test projects to resolve Snyk
+        vulnerability reports flagging the older version.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 2.66.2
+  changelogEntry:
+    - summary: |
+        Patch C# SDK generator container CVEs flagged in the AWS ECR / grype scan.
+        Switch the apk upgrade to pick up the latest Alpine 3.23 patches (nghttp2,
+        openssl, libcrypto, libssl, sqlite-libs, expat, etc.), pin a non-vulnerable
+        set of `System.*` NuGet dependencies, drop the bundled PowerShell warmup
+        so its vendored `System.Net.Http 4.3.0` / `System.Security.Cryptography.Xml`
+        DLLs are no longer included in the published image, and clear the
+        `System.Net.Http 4.3.0` artifact the `/dependencies.csproj` warmup leaves
+        in the NuGet cache after restore.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 2.66.1
+  changelogEntry:
+    - summary: |
+        Bump the C# SDK and C# model generator containers' Node base image from
+        `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+        with the rest of the Fern generator containers on a single Node major
+        version (Node 24) and picks up Node 24's CVE patches. The bundled npm
+        11.12.1 in `node:24.15` already ships patched `brace-expansion@5.0.4`, so
+        the C# SDK's `brace-expansion 2.0.3` replacement step is removed. The
+        `ip-address` and `picomatch` patches are retained because the bundled
+        versions in `node:24.15` (10.1.0 and 4.0.3 respectively) are still
+        vulnerable.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 2.66.0
+  changelogEntry:
+    - summary: |
+        Add a `default-timeout-in-seconds` config option to the C# SDK generator.
+        When set, the generated `ClientOptions.Timeout` defaults to the configured
+        value (or `Timeout.InfiniteTimeSpan` when set to `"infinity"`) instead of
+        the previously hardcoded 30 seconds. SDK users can still override the
+        timeout per-request via `RequestOptions.Timeout`.
+      type: feat
+    - summary: |
+        Add an opt-in `user-agent-name-from-package` custom config option. When set
+        to `true`, the generated client falls back to a
+        `<NuGetPackageId>/<version>` `User-Agent` header when no
+        `platformHeaders.userAgent` is set in the IR (e.g. for SDKs imported from
+        OpenAPI), matching the TypeScript generator's npm-package-name fallback.
+        Defaults to `false`, preserving the existing behavior of emitting no
+        `User-Agent` header in that case.
+      type: feat
+  createdAt: "2026-05-08"
+  irVersion: 66
 - version: 2.65.2
   changelogEntry:
     - summary: |

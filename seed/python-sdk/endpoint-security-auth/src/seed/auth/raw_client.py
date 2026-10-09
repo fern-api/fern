@@ -37,6 +37,7 @@ class RawAuthClient:
         -------
         HttpResponse[TokenResponse]
         """
+        _endpoint_auth_headers = self._client_wrapper.get_auth_headers_for_endpoint(security=None)
         _response = self._client_wrapper.httpx_client.request(
             "token",
             method="POST",
@@ -45,6 +46,9 @@ class RawAuthClient:
                 "client_secret": client_secret,
                 "audience": "https://api.example.com",
                 "grant_type": "client_credentials",
+            },
+            headers={
+                **_endpoint_auth_headers,
             },
             request_options=request_options,
             omit=OMIT,
@@ -90,6 +94,7 @@ class AsyncRawAuthClient:
         -------
         AsyncHttpResponse[TokenResponse]
         """
+        _endpoint_auth_headers = await self._client_wrapper.async_get_auth_headers_for_endpoint(security=None)
         _response = await self._client_wrapper.httpx_client.request(
             "token",
             method="POST",
@@ -98,6 +103,9 @@ class AsyncRawAuthClient:
                 "client_secret": client_secret,
                 "audience": "https://api.example.com",
                 "grant_type": "client_credentials",
+            },
+            headers={
+                **_endpoint_auth_headers,
             },
             request_options=request_options,
             omit=OMIT,

@@ -1,0 +1,48 @@
+%% C4-style system context — fern-cli-sdk
+%% Renders in GitHub-flavored markdown when embedded in a fenced ```mermaid block.
+
+flowchart TB
+    subgraph external_in["Spec sources"]
+        SpecAuthor["Spec author<br/><i>customer or vendored repo</i>"]
+        OpenAPISpec["OpenAPI YAML<br/><i>3.0 / 3.1</i>"]
+        GraphQLIntro["GraphQL introspection JSON"]
+        Overlays["OpenAPI Overlay v1.0.0<br/>+ Fern overrides"]
+    end
+
+    subgraph system["fern-cli-sdk crate"]
+        Library["Library<br/><i>src/</i>"]
+        Binaries["~18 binary targets<br/><i>cli/&lt;name&gt;/main.rs<br/>+ embedded spec</i>"]
+    end
+
+    subgraph users["Invokers"]
+        Human["Human user"]
+        Agent["AI / LLM agent<br/><i>untrusted input</i>"]
+        CI["CI pipeline"]
+    end
+
+    subgraph targets["Target services"]
+        HTTPAPI["HTTP / REST APIs"]
+        GraphQLAPI["GraphQL APIs"]
+        WSAPI["WebSocket endpoints<br/><i>ElevenLabs Convai, etc.</i>"]
+    end
+
+    SpecAuthor -- "authors" --> OpenAPISpec
+    SpecAuthor -- "authors" --> GraphQLIntro
+    SpecAuthor -- "authors" --> Overlays
+    OpenAPISpec -- "include_str! at build" --> Binaries
+    GraphQLIntro -- "include_str! at build" --> Binaries
+    Overlays -- "deep-merged pre-parse" --> Binaries
+    Binaries -- "depends on" --> Library
+
+    Human --> Binaries
+    Agent --> Binaries
+    CI --> Binaries
+
+    Binaries -- "reqwest" --> HTTPAPI
+    Binaries -- "reqwest (POST /graphql)" --> GraphQLAPI
+    Binaries -- "tokio-tungstenite" --> WSAPI
+
+    classDef inside fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    classDef outside fill:#fff8e1,stroke:#f57f17,stroke-width:1px
+    class Library,Binaries inside
+    class SpecAuthor,OpenAPISpec,GraphQLIntro,Overlays,Human,Agent,CI,HTTPAPI,GraphQLAPI,WSAPI outside

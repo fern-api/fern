@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed nested optional/nullable type generation in code examples under
+    `collapse-optional-nullable`. The snippet type mapper now collapses nested
+    same-kind wrappers (`optional<optional<T>>`, `nullable<nullable<T>>`) into a
+    single `OptionalNullable<T>`, matching the literal mapper and avoiding
+    type/value mismatches in generated examples.
+  type: fix

@@ -735,7 +735,9 @@ await client.service.createBigEntity({
 <dd>
 
 ```typescript
-await client.service.refreshToken(undefined);
+await client.service.refreshToken({
+    ttl: 420
+});
 
 ```
 </dd>

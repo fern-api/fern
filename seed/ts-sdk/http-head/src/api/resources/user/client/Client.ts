@@ -24,6 +24,9 @@ export class UserClient {
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedHttpHeadError}
+     * @throws {@link errors.SeedHttpHeadTimeoutError}
+     *
      * @example
      *     await client.user.head()
      */
@@ -66,6 +69,9 @@ export class UserClient {
     /**
      * @param {SeedHttpHead.ListUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedHttpHeadError}
+     * @throws {@link errors.SeedHttpHeadTimeoutError}
      *
      * @example
      *     await client.user.list({

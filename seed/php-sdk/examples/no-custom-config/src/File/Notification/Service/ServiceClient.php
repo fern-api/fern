@@ -49,6 +49,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->file->notification->service->getException(
+     *     'notification-hsy129x',
+     * );
+     * ```
+     *
      * @param string $notificationId
      * @param ?array{
      *   baseUrl?: string,

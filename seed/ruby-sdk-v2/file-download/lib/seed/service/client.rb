@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.simple
+      #
       # @return [untyped]
       def simple(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -46,7 +49,10 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [untyped]
+      # @example
+      #   client.service.download_file
+      #
+      # @return [String]
       def download_file(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -60,7 +66,7 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
+        return response.body if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)

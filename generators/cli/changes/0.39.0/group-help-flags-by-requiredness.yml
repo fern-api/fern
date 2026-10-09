@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated `--help` output now groups flags into `Required parameters`,
+    `Optional parameters`, `Request options` (`--json`, `--params`, pagination,
+    retries, ...) and `Global options` (output format, base URL, env-backed
+    variables, `--help`/`--version`) instead of one flat `Options:` list, so
+    users and agents can see at a glance which flags an operation needs.
+    Runtime validation is unchanged: required parameters may still be supplied
+    via `--params`/`--json`. Two cases are deliberately listed as optional
+    because the operation runs without them: a required parameter with an
+    `x-fern-default`, and a required property of an object that is itself
+    optional (`--settings.region` where `--settings` may be omitted).
+  type: feat

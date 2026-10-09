@@ -18,6 +18,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -59,11 +60,12 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        await context.snippetGenerator.populateSnippetsCache();
+
         this.generateClients(context);
         this.generateRawClients(context);
         this.generateInternalFiles(context);
-
-        await context.snippetGenerator.populateSnippetsCache();
+        this.generateWebhooksHelper(context);
 
         await this.generateWireTestFiles(context);
 
@@ -168,6 +170,13 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     : undefined
         });
         context.project.addGoFiles(client.generate());
+    }
+
+    private generateWebhooksHelper(context: SdkGeneratorContext) {
+        const generator = new WebhooksHelperGenerator({ context });
+        for (const file of generator.generate()) {
+            context.project.addGoFiles(file);
+        }
     }
 
     private generateInternalFiles(context: SdkGeneratorContext) {

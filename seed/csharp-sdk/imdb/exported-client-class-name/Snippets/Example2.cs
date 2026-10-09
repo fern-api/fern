@@ -3,7 +3,7 @@ using SeedApi;
 public partial class Examples
 {
     public async Task Example2() {
-        var client = new CustomClient(
+        var client = new BaseClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
@@ -11,7 +11,9 @@ public partial class Examples
         );
 
         await client.Imdb.GetMovieAsync(
-            "movieId"
+            new GetMovieImdbRequest {
+                MovieId = "movieId"
+            }
         );
     }
 

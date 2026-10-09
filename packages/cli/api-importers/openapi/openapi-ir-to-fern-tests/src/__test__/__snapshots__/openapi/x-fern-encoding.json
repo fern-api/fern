@@ -103,4 +103,5 @@ error-discrimination:
 display-name: Test extension `x-fern-encoding` for schemas
 ",
   },
+  "specVersion": "1.0.0",
 }

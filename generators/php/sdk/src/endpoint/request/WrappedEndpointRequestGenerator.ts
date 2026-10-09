@@ -8,6 +8,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 
 export declare namespace WrappedEndpointRequestGenerator {
     export interface Args {
@@ -59,6 +60,9 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
         if (includePathParameters) {
             for (const pathParameter of this.endpoint.allPathParameters) {
+                if (this.context.getSdkVariableForPathParameter(pathParameter) != null) {
+                    continue;
+                }
                 const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(
                     pathParameter.clientDefault
                 );
@@ -129,12 +133,15 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
+                const bodyType = this.context.phpTypeMapper.convert({ reference: reference.requestBodyType });
                 this.addFieldWithMethods({
                     clazz,
                     name: this.wrapper.bodyKey,
                     field: php.field({
                         name: this.context.getPropertyName(this.wrapper.bodyKey),
-                        type: this.context.phpTypeMapper.convert({ reference: reference.requestBodyType }),
+                        type: mayOmitRequestBody({ context: this.context, endpoint: this.endpoint })
+                            ? php.Type.optional(bodyType)
+                            : bodyType,
                         access: this.context.getPropertyAccess(),
                         docs: reference.docs
                     }),

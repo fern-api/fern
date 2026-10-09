@@ -22,6 +22,9 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :id
         #
+        # @example
+        #   client.health.service.check(id: "id-2sdx82h")
+        #
         # @return [untyped]
         def check(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -53,6 +56,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.health.service.ping
+        #
         # @return [Boolean]
         def ping(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
@@ -67,10 +73,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
       end
     end

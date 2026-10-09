@@ -3,7 +3,9 @@
 module Seed
   module Ast
     module Types
-      class Acai < Internal::Types::Model; end
+      class Acai < Internal::Types::Model
+        field :animal, -> { Seed::Ast::Types::Animal }, optional: false, nullable: false
+      end
     end
   end
 end

@@ -21,6 +21,9 @@ module Seed
         # @option params [String] :ids
         # @option params [String] :tags
         #
+        # @example
+        #   client.folder_a.service.get_direct_thread
+        #
         # @return [Seed::FolderA::Service::Types::Response]
         def get_direct_thread(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -42,7 +45,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::FolderA::Service::Types::Response.load(response.body)
+            (response.body.to_s.empty? ? nil : Seed::FolderA::Service::Types::Response.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

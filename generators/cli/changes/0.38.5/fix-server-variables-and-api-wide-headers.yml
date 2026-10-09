@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Resolve OpenAPI server variables and `x-fern-default-url` instead of sending the raw
+    URL template. The runtime spec parser dropped `servers[].variables` and
+    `x-fern-default-url`, so a server such as `https://api.{region}.twilio.com` reached
+    reqwest with a literal `{region}` and failed with "Parsed Url is not a valid Uri".
+    Each spec-declared server variable now surfaces as a global flag (carrying the
+    variable's `default`, `description` and `enum`), and when the caller pins no
+    variable the server's `x-fern-default-url` is used. Applies to per-operation
+    `servers:` entries too.
+  type: fix
+
+- summary: |
+    Send API-wide headers (the `headers:` block / `x-fern-global-headers`) on every
+    request. They live in the IR's `headers` rather than `globalParameters` and were
+    never emitted into the generated CLI, so a header declared with `env` and
+    `client-default` was silently absent from requests. They are now lowered to
+    header-location global parameters with `auto` apply, preserving `env`,
+    `client-default` and optionality; a `globalParameters` entry targeting the same
+    header still wins.
+  type: fix

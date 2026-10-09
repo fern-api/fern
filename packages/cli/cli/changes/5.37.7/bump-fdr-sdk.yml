@@ -1,0 +1,4 @@
+- summary: |
+    Bump @fern-api/fdr-sdk to 1.2.16 to fix crash when generating examples for
+    endpoints that reference types excluded by audience filtering.
+  type: fix

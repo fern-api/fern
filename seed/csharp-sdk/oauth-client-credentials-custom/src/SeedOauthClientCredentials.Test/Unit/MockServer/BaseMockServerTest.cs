@@ -24,7 +24,11 @@ public class BaseMockServerTest
               "entity_id": "entity_id",
               "audience": "https://api.example.com",
               "grant_type": "client_credentials",
-              "scope": "scope"
+              "scope": "scope",
+              "permissions": [
+                "permissions",
+                "permissions"
+              ]
             }
             """;
 

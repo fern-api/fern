@@ -8,7 +8,8 @@ export const XFernStreaming: NodeType = {
     properties: {
         "stream-condition": { type: "string" },
         response: "Schema",
-        "response-stream": "Schema"
+        "response-stream": "Schema",
+        resumable: { type: "boolean" }
     },
     required: ["stream-condition", "response", "response-stream"],
     extensionsPrefix: "x-"
@@ -58,6 +59,14 @@ export const FernOpenAPIExtension = {
      *   /path/to/my/endpoint:
      */
     BASE_PATH: "x-fern-base-path",
+
+    /**
+     * The name of an environment variable that generated SDKs read to override
+     * the base URL (e.g. MY_API_BASE_URL). Set at the root of the document.
+     *
+     * x-fern-base-url-env: MY_API_BASE_URL
+     */
+    BASE_URL_ENV: "x-fern-base-url-env",
 
     /**
      * Should align with the OpenAPI spec's `x-fern-sdk-group-name` extension.
@@ -165,6 +174,22 @@ export const FernOpenAPIExtension = {
      *           $ref: ./path/to/response/type.yaml
      *         response-stream:
      *           $ref: ./path/to/response-stream/type.yaml
+     *
+     * For SSE endpoints, `resumable: true` opts the endpoint into
+     * client-side reconnection using `Last-Event-ID` / `retry:`. The
+     * default is `false`. The flag is inheritable: setting
+     * `x-fern-streaming.resumable: true` at the document level applies
+     * to all SSE endpoints unless an operation overrides it explicitly.
+     *
+     * Example usage:
+     *   x-fern-streaming:
+     *     resumable: true
+     *
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-streaming:
+     *         format: sse
+     *         resumable: false # overrides the document default
      */
     STREAMING: "x-fern-streaming",
 
@@ -236,6 +261,7 @@ export const FernOpenAPIExtension = {
      * x-fern-sdk-variables:
      *   appName:
      *     type: string
+     *     x-fern-env: APP_NAME  # optional: fall back to this env var when not passed to the client
      * paths:
      *   /path/to/my/endpoint/{id}:
      *     parameters:
@@ -246,6 +272,7 @@ export const FernOpenAPIExtension = {
      */
     SDK_VARIABLES: "x-fern-sdk-variables",
     SDK_VARIABLE: "x-fern-sdk-variable",
+    SDK_VARIABLE_ENV: "x-fern-env",
 
     /**
      * Used to customize the name of the parameter used for a header.
@@ -324,6 +351,16 @@ export const FernOpenAPIExtension = {
      *       x-fern-ignore: true
      */
     IGNORE: "x-fern-ignore",
+
+    /**
+     * A short subtitle for the endpoint, rendered below the title in the docs UI.
+     *
+     * paths:
+     *  /path/to/my:
+     *    get:
+     *      x-fern-subtitle: Retrieve a plant by its unique identifier
+     */
+    SUBTITLE: "x-fern-subtitle",
 
     /**
      * paths:
@@ -434,6 +471,36 @@ export const FernOpenAPIExtension = {
     FERN_GLOBAL_HEADERS: "x-fern-global-headers",
 
     /**
+     * Allows users to specify global request parameter defaults that are
+     * injected into requests at the SDK/CLI level.
+     *
+     * x-fern-global-parameters:
+     *  - name: currency
+     *    in: query
+     *    type: string
+     *    env: DEFAULT_CURRENCY
+     *    default: USD
+     *    apply: auto
+     *  - name: api-version
+     *    in: header
+     *    target: X-API-Version
+     *    type: string
+     *    parameter-name: apiVersion
+     *    apply: explicit
+     */
+    FERN_GLOBAL_PARAMETERS: "x-fern-global-parameters",
+
+    /**
+     * Per-operation opt-in for global parameters with apply: explicit.
+     *
+     * paths:
+     *   /payments:
+     *     post:
+     *       x-fern-global-parameter: [currency]
+     */
+    FERN_GLOBAL_PARAMETER: "x-fern-global-parameter",
+
+    /**
      * Allows users to specify which headers are idempotent.
      *
      * x-fern-idempotency-headers:
@@ -501,6 +568,26 @@ export const FernOpenAPIExtension = {
      *      type: user.v1.User
      */
     ENCODING: "x-fern-encoding",
+
+    /**
+     * On a property of an XML element schema (one declaring an OpenAPI `xml` object), marks the
+     * property as the element's text content rather than an attribute or child element.
+     *
+     * Say:
+     *  xml:
+     *    name: Say
+     *  properties:
+     *    message:
+     *      type: string
+     *      x-fern-xml-text: true
+     */
+    XML_TEXT: "x-fern-xml-text",
+
+    /**
+     * On a list-valued attribute or text property of an XML element schema, the string used to
+     * join items into a single value (e.g. `" "` for space-delimited lists).
+     */
+    XML_LIST_SEPARATOR: "x-fern-xml-list-separator",
 
     /**
      * Allows users to configure gRPC services. This must be specified on individual service

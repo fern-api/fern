@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "amount"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

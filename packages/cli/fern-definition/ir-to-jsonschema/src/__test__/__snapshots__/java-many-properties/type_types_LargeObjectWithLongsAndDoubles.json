@@ -2003,5 +2003,6 @@
     }
   },
   "additionalProperties": false,
+  "description": "Object with long and double fields to test precise JVM slot counting.\nEach long/double field consumes 2 JVM parameter slots instead of 1.",
   "definitions": {}
 }

@@ -1,0 +1,9 @@
+{
+  "title": "Received 429 Too Many Requests",
+  "disposition": "shipped",
+  "rationale": "HTTP 429 rate-limit from remote generation service. retryWithRateLimit now throws CliError(NetworkError) on exhaustion, and generateOne passes error object through failWithoutThrowing so resolveErrorCode propagates the code.",
+  "fixSummary": "Change retryWithRateLimit exhaustion code from InternalError to NetworkError; pass error object in generateOne catch to failWithoutThrowing.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "TooManyRequestsError from retryWithRateLimit reaching Sentry because failWithoutThrowing(message) lost the error object and code."
+}

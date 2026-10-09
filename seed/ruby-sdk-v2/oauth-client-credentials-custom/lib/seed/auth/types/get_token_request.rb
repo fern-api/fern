@@ -17,6 +17,8 @@ module Seed
         field :grant_type, -> { String }, optional: false, nullable: false
 
         field :scope, -> { String }, optional: true, nullable: false
+
+        field :permissions, -> { Internal::Types::Array[String] }, optional: true, nullable: false
       end
     end
   end

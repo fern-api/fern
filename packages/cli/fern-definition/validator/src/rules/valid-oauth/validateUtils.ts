@@ -349,7 +349,8 @@ function validateResponseProperty({
 }
 
 function isIntegerType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
-    return maybePrimitiveType(resolvedType) === "INTEGER";
+    const primitiveType = maybePrimitiveType(resolvedType);
+    return primitiveType === "INTEGER" || primitiveType === "LONG";
 }
 
 function isStringType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {

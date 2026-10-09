@@ -1,0 +1,3 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.33 (picks up @fern-api/replay 0.16.1).
+  type: chore

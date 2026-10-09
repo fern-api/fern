@@ -6,6 +6,12 @@ types:
     properties:
       default-url: optional<string>
       default-environment: optional<string>
+      base-url-env:
+        type: optional<string>
+        docs: |
+          The name of an environment variable (e.g. MY_API_BASE_URL) that generated SDKs
+          read to override the base URL. When the variable is set, it takes precedence over
+          the default environment; an explicitly provided base URL still wins.
       environments: optional<map<string, EnvironmentSchema>>
 
   EnvironmentSchema:

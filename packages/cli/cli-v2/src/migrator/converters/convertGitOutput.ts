@@ -29,6 +29,16 @@ export function convertGitOutput(
         const gitOutput: schemas.GitOutputSchema = {
             repository: githubConfig.uri
         };
+        if (githubConfig.mode != null) {
+            const mode = githubConfig.mode;
+            if (mode === "pull-request") {
+                gitOutput.mode = "pr";
+            } else if (mode === "push") {
+                gitOutput.mode = "push";
+            } else if (mode === "commit-and-release") {
+                gitOutput.mode = "release";
+            }
+        }
         if (githubConfig.branch != null) {
             gitOutput.branch = githubConfig.branch;
         }

@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExtendsClient } from "@fern/extends";
 
-const client = new SeedExtendsClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedExtendsClient({ baseUrl: "YOUR_BASE_URL" });
 await client.extendedInlineRequestBody({
     unique: "unique",
     name: "name",

@@ -10,8 +10,8 @@ public partial class Examples
         );
 
         await client.EchoAsync(
-            "id-ksfd9c1",
-            new EchoRequest {
+            id: "id-ksfd9c1",
+            request: new EchoRequest {
                 Name = "Hello world!",
                 Size = 20
             }

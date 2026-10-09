@@ -26,13 +26,23 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &fern.MyUnion{
+//	    String: "string",
+//	}
+//	client.Union.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *fern.MyUnion,
@@ -49,6 +59,11 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Union.GetMetadata(
+//	    context.TODO(),
+//	)
 func (c *Client) GetMetadata(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -63,6 +78,19 @@ func (c *Client) GetMetadata(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.MetadataUnion{
+//	    OptionalMetadata: map[string]any{
+//	        "string": map[string]any{
+//	            "key": "value",
+//	        },
+//	    },
+//	}
+//	client.Union.UpdateMetadata(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateMetadata(
 	ctx context.Context,
 	request *fern.MetadataUnion,
@@ -79,6 +107,21 @@ func (c *Client) UpdateMetadata(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.Request{
+//	    Union: &fern.MetadataUnion{
+//	        OptionalMetadata: map[string]any{
+//	            "string": map[string]any{
+//	                "key": "value",
+//	            },
+//	        },
+//	    },
+//	}
+//	client.Union.Call(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Call(
 	ctx context.Context,
 	request *fern.Request,
@@ -95,6 +138,15 @@ func (c *Client) Call(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.UnionWithDuplicateTypes{
+//	    String: "string",
+//	}
+//	client.Union.DuplicateTypesUnion(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) DuplicateTypesUnion(
 	ctx context.Context,
 	request *fern.UnionWithDuplicateTypes,
@@ -111,6 +163,15 @@ func (c *Client) DuplicateTypesUnion(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.NestedUnionRoot{
+//	    String: "string",
+//	}
+//	client.Union.NestedUnions(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) NestedUnions(
 	ctx context.Context,
 	request *fern.NestedUnionRoot,
@@ -127,6 +188,15 @@ func (c *Client) NestedUnions(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.OuterNestedUnion{
+//	    String: "string",
+//	}
+//	client.Union.NestedObjectUnions(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) NestedObjectUnions(
 	ctx context.Context,
 	request *fern.OuterNestedUnion,
@@ -143,6 +213,18 @@ func (c *Client) NestedObjectUnions(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.AliasedObjectUnion{
+//	    AliasedLeafA: &fern.LeafObjectA{
+//	        OnlyInA: "onlyInA",
+//	        SharedNumber: 1,
+//	    },
+//	}
+//	client.Union.AliasedObjectUnion(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) AliasedObjectUnion(
 	ctx context.Context,
 	request *fern.AliasedObjectUnion,
@@ -159,6 +241,22 @@ func (c *Client) AliasedObjectUnion(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.UnionWithBaseProperties{
+//	    NamedMetadata: &fern.NamedMetadata{
+//	        Name: "name",
+//	        Value: map[string]any{
+//	            "value": map[string]any{
+//	                "key": "value",
+//	            },
+//	        },
+//	    },
+//	}
+//	client.Union.GetWithBaseProperties(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithBaseProperties(
 	ctx context.Context,
 	request *fern.UnionWithBaseProperties,
@@ -175,6 +273,20 @@ func (c *Client) GetWithBaseProperties(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.PaymentRequest{
+//	    PaymentMethod: &fern.PaymentMethodUnion{
+//	        TokenizeCard: &fern.TokenizeCard{
+//	            Method: "card",
+//	            CardNumber: "1234567890123456",
+//	        },
+//	    },
+//	}
+//	client.Union.TestCamelCaseProperties(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) TestCamelCaseProperties(
 	ctx context.Context,
 	request *fern.PaymentRequest,

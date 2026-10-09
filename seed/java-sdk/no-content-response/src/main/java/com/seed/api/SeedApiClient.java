@@ -8,7 +8,7 @@ import com.seed.api.core.Suppliers;
 import com.seed.api.resources.contacts.ContactsClient;
 import java.util.function.Supplier;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ContactsClient> contactsClient;
@@ -20,6 +20,16 @@ public class SeedApiClient {
 
     public ContactsClient contacts() {
         return this.contactsClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

@@ -33,6 +33,9 @@ export class EventsClient {
      * @param {SeedMixedFileDirectory.user.ListUserEventsRequest} request
      * @param {EventsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedMixedFileDirectoryError}
+     * @throws {@link errors.SeedMixedFileDirectoryTimeoutError}
+     *
      * @example
      *     await client.user.events.listEvents({
      *         limit: 1

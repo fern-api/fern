@@ -87,6 +87,7 @@ function createSdkRequest(name: string): FernIr.SdkRequest {
         requestParameterName: casingsGenerator.generateName(name),
         shape: FernIr.SdkRequestShape.justRequestBody(
             FernIr.SdkRequestBodyType.typeReference({
+                required: undefined,
                 requestBodyType: FernIr.TypeReference.primitive({
                     v1: "STRING",
                     v2: undefined

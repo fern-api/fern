@@ -23,6 +23,9 @@ module Seed
           # @option request_options [Integer] :timeout_in_seconds
           # @option params [Seed::Types::ID] :id
           #
+          # @example
+          #   client.user.events.metadata.get_metadata(id: "id")
+          #
           # @return [Seed::User::Events::Metadata::Types::Metadata]
           def get_metadata(request_options: {}, **params)
             params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -43,7 +46,7 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::User::Events::Metadata::Types::Metadata.load(response.body)
+              (response.body.to_s.empty? ? nil : Seed::User::Events::Metadata::Types::Metadata.load(response.body))
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)

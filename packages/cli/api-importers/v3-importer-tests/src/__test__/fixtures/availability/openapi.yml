@@ -209,11 +209,65 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotDeprecatedSettings"
       x-fern-availability: "legacy"
+  /success-ref-property-deprecation:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deprecated_ref_setting:
+                  $ref: "#/components/schemas/DeprecatedParam"
+                deprecated_allof_setting:
+                  allOf:
+                    - $ref: "#/components/schemas/NotDeprecatedParam"
+                  deprecated: true
+                beta_allof_setting:
+                  allOf:
+                    - $ref: "#/components/schemas/NotDeprecatedParam"
+                  x-fern-availability: "beta"
+                fine_ref_setting:
+                  $ref: "#/components/schemas/NotDeprecatedParam"
+                deprecated_allof_sibling_setting:
+                  allOf:
+                    - $ref: "#/components/schemas/NotDeprecatedParam"
+                    - deprecated: true
+                ga_ref_sibling_setting:
+                  $ref: "#/components/schemas/DeprecatedParam"
+                  x-fern-availability: "ga"
+                ga_allof_setting:
+                  allOf:
+                    - $ref: "#/components/schemas/DeprecatedParam"
+                  x-fern-availability: "ga"
+                chained_ref_setting:
+                  $ref: "#/components/schemas/DeprecatedParamAlias"
+                nested_object_setting:
+                  type: object
+                  properties:
+                    nested_deprecated_ref_setting:
+                      $ref: "#/components/schemas/DeprecatedParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_deprecated_ref_setting:
+                    $ref: "#/components/schemas/DeprecatedParam"
+                  response_fine_ref_setting:
+                    $ref: "#/components/schemas/NotDeprecatedParam"
 components:
   schemas:
+    NotDeprecatedParam:
+      type: string
     DeprecatedParam:
       type: string
       deprecated: true
+    DeprecatedParamAlias:
+      $ref: "#/components/schemas/DeprecatedParam"
     Settings:
       type: object
       properties:

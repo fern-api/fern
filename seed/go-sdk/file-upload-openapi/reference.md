@@ -28,16 +28,15 @@ Upload a file to the database
 
 ```go
 request := &fern.UploadFileRequest{
-        File: strings.NewReader(
-            "",
-        ),
-        Name: "name",
-    }
-client.FileUploadExample.UploadFile(
-        context.TODO(),
-        request,
-    )
+    File: strings.NewReader(
+        "",
+    ),
+    Name: "name",
 }
+client.FileUploadExample.UploadFile(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

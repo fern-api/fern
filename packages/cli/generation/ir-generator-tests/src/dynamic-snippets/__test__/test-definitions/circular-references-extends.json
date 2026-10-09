@@ -103,7 +103,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_common:ChildType": {
             "type": "object",
@@ -239,7 +240,8 @@
             "extends": [
                 "type_common:BaseType"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_derived:DerivedType": {
             "type": "object",
@@ -375,7 +377,8 @@
             "extends": [
                 "type_common:BaseType"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -383,5 +386,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

@@ -29,8 +29,13 @@ export abstract class AbstractEndpointGenerator {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
         const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
+        // Sort parameters so required params (no initializer) come before optional params (with initializer).
+        // PHP requires this ordering to avoid "required parameter follows optional parameter" errors.
+        const allParams = [...pathParameters, requestParameter].filter((p): p is php.Parameter => p != null);
+        const requiredParams = allParams.filter((p) => p.initializer == null);
+        const optionalParams = allParams.filter((p) => p.initializer != null);
         return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is php.Parameter => p != null),
+            baseParameters: [...requiredParams, ...optionalParams],
             pathParameters,
             pathParameterReferences,
             request,
@@ -56,6 +61,15 @@ export abstract class AbstractEndpointGenerator {
             ...endpoint.pathParameters
         ]) {
             const parameterName = this.context.getParameterName(pathParam.name);
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParam);
+            if (sdkVariable != null) {
+                // Bound to an SDK variable: resolved from the client's options, not a method argument.
+                pathParameterReferences[getOriginalName(pathParam.name)] = this.renderPathParameterReference({
+                    pathParameter: pathParam,
+                    reference: this.context.getSdkVariableOptionAccess(sdkVariable)
+                });
+                continue;
+            }
             pathParameterReferences[getOriginalName(pathParam.name)] = this.accessPathParameterValue({
                 pathParameter: pathParam,
                 sdkRequest: endpoint.sdkRequest,
@@ -81,16 +95,17 @@ export abstract class AbstractEndpointGenerator {
     }
 
     private getRequestParameter({ request }: { request: EndpointRequest }): php.Parameter {
+        const defaultInitializer = request.shouldIncludeDefaultInitializer()
+            ? php.codeblock((writer) => {
+                  writer.write("new ");
+                  writer.writeNode(request.getRequestParameterType());
+                  writer.write("()");
+              })
+            : undefined;
         return php.parameter({
             type: request.getRequestParameterType(),
             name: request.getRequestParameterName(),
-            initializer: request.shouldIncludeDefaultInitializer()
-                ? php.codeblock((writer) => {
-                      writer.write("new ");
-                      writer.writeNode(request.getRequestParameterType());
-                      writer.write("()");
-                  })
-                : undefined
+            initializer: request.getRequestParameterInitializer() ?? defaultInitializer
         });
     }
 
@@ -121,12 +136,33 @@ export abstract class AbstractEndpointGenerator {
         pathParameter: FernIr.PathParameter;
         includePathParametersInEndpointSignature: boolean;
     }): string {
-        if (sdkRequest == null || includePathParametersInEndpointSignature) {
-            return `$${this.context.getPropertyName(pathParameter.name)}`;
+        const reference =
+            sdkRequest == null || includePathParametersInEndpointSignature
+                ? `$${this.context.getPropertyName(pathParameter.name)}`
+                : this.context.accessRequestProperty({
+                      requestParameterName: sdkRequest.requestParameterName,
+                      propertyName: pathParameter.name
+                  });
+        return this.renderPathParameterReference({ pathParameter, reference });
+    }
+
+    private renderPathParameterReference({
+        pathParameter,
+        reference
+    }: {
+        pathParameter: FernIr.PathParameter;
+        reference: string;
+    }): string {
+        if (this.isBooleanPathParameter(pathParameter)) {
+            // PHP coerces a bool to "1"/"" when interpolated into a string, so a boolean path
+            // parameter must be rendered explicitly as "true"/"false" to produce a valid URL.
+            return `${reference} ? 'true' : 'false'`;
         }
-        return this.context.accessRequestProperty({
-            requestParameterName: sdkRequest.requestParameterName,
-            propertyName: pathParameter.name
-        });
+        return reference;
+    }
+
+    private isBooleanPathParameter(pathParameter: FernIr.PathParameter): boolean {
+        const dereferenced = this.context.dereferenceOptional(pathParameter.valueType);
+        return dereferenced.type === "primitive" && dereferenced.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
     }
 }

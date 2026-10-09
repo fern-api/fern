@@ -4,9 +4,9 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.movie import Movie
+from ..types.movie_id import MovieId
 from .raw_client import AsyncRawImdbClient, RawImdbClient
-from .types.movie import Movie
-from .types.movie_id import MovieId
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -45,6 +45,7 @@ class ImdbClient:
         Returns
         -------
         MovieId
+            Success
 
         Examples
         --------
@@ -74,6 +75,7 @@ class ImdbClient:
         Returns
         -------
         Movie
+            Success
 
         Examples
         --------
@@ -124,6 +126,7 @@ class AsyncImdbClient:
         Returns
         -------
         MovieId
+            Success
 
         Examples
         --------
@@ -161,6 +164,7 @@ class AsyncImdbClient:
         Returns
         -------
         Movie
+            Success
 
         Examples
         --------

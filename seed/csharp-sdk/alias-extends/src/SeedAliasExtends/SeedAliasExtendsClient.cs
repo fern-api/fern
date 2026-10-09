@@ -14,7 +14,7 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAliasExtends" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedAliasExtends.Version.Current },
                 { "User-Agent", "Fernalias-extends/0.0.1" },
             }
         );
@@ -28,17 +28,15 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.ExtendedInlineRequestBodyAsync(
-    ///     new InlinedChildRequest { Child = "child", Parent = "parent" }
-    /// );
-    /// </code></example>
-    public async Task ExtendedInlineRequestBodyAsync(
+    private async Task<RawResponse> ExtendedInlineRequestBodyAsyncCore(
         InlinedChildRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedAliasExtends.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedAliasExtends.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -52,6 +50,7 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
                     Method = HttpMethod.Post,
                     Path = "/extends/extended-inline-request-body",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -60,7 +59,12 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedAliasExtends.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -69,8 +73,30 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
             throw new SeedAliasExtendsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedAliasExtends.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.ExtendedInlineRequestBodyAsync(
+    ///     new InlinedChildRequest { Child = "child", Parent = "parent" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask ExtendedInlineRequestBodyAsync(
+        InlinedChildRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            ExtendedInlineRequestBodyAsyncCore(request, options, cancellationToken)
+        );
     }
 }

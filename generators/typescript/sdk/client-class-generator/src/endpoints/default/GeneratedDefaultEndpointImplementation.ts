@@ -22,7 +22,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         endpoint: FernIr.HttpEndpoint;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeout: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
@@ -40,7 +40,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     public readonly response: GeneratedEndpointResponse;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly includeCredentialsOnCrossOriginRequests: boolean;
-    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly defaultTimeout: number | "infinity" | undefined;
     private readonly request: GeneratedEndpointRequest;
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
@@ -53,7 +53,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         response,
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
-        defaultTimeoutInSeconds,
+        defaultTimeout,
         request,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -64,7 +64,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
-        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+        this.defaultTimeout = defaultTimeout;
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -158,7 +158,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const allExamples: string[] = [];
-        for (const example of getExampleEndpointCalls(this.endpoint)) {
+        for (const example of getExampleEndpointCalls(this.endpoint, context.respectOptionalRequestBody)) {
             const generatedExample = this.getExample({
                 context,
                 example,
@@ -224,7 +224,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         invocation: ts.Expression;
         context: FileContext;
     }): ts.Node[] | undefined {
-        if (this.endpoint.pagination == null || !context.config.generatePaginatedClients) {
+        if (this.endpoint.pagination == null) {
             return undefined;
         }
 
@@ -308,13 +308,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             ts.factory.createBinaryExpression(
                                 ts.factory.createIdentifier(pageVariableName),
                                 ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                ts.factory.createCallExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier(pageVariableName),
-                                        ts.factory.createIdentifier("getNextPage")
-                                    ),
-                                    undefined,
-                                    []
+                                ts.factory.createAwaitExpression(
+                                    ts.factory.createCallExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier(pageVariableName),
+                                            ts.factory.createIdentifier("getNextPage")
+                                        ),
+                                        undefined,
+                                        []
+                                    )
                                 )
                             )
                         )
@@ -566,7 +568,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 );
             }
 
-            // Initial call: list(endpointUrl)
+            // The first page is a regular request, so that the query parameters, body and headers
+            // built from the caller's request are sent. Only subsequent pages go through `list`,
+            // since the next URL already contains all necessary parameters.
             // For path pagination, reuse the already-emitted _baseUrl identifier instead of
             // re-evaluating getBaseUrl() (which would produce a duplicate Supplier.get call).
             const initialUrl =
@@ -592,7 +596,48 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                               ? context.coreUtilities.urlUtils.join._invoke([baseUrlIdentifier, endpointPath])
                               : baseUrlIdentifier;
                       })()
-                    : this.getReferenceToBaseUrl(context);
+                    : undefined;
+            const initialRequestFnName = "initialRequest";
+            const initialRequestBody = [
+                ...(this.generateEndpointMetadata
+                    ? generateEndpointMetadata({
+                          httpEndpoint: this.endpoint,
+                          context
+                      })
+                    : []),
+                ...this.request.getBuildRequestStatements(context),
+                ...this.invokeFetcherAndReturnResponse(context, initialUrl)
+            ];
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(initialRequestFnName),
+                                undefined,
+                                undefined,
+                                context.coreUtilities.fetcher.HttpResponsePromise.interceptFunction(
+                                    ts.factory.createArrowFunction(
+                                        [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                                        undefined,
+                                        [],
+                                        ts.factory.createTypeReferenceNode("Promise", [
+                                            context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                                responseReturnType
+                                            )
+                                        ]),
+                                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                        ts.factory.createBlock(initialRequestBody, undefined)
+                                    )
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+
             const initialResponseVar = ts.factory.createIdentifier("dataWithRawResponse");
             statements.push(
                 ts.factory.createVariableStatement(
@@ -607,9 +652,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                     ts.factory.createCallExpression(
                                         ts.factory.createPropertyAccessExpression(
                                             ts.factory.createCallExpression(
-                                                ts.factory.createIdentifier("list"),
+                                                ts.factory.createIdentifier(initialRequestFnName),
                                                 undefined,
-                                                [initialUrl]
+                                                []
                                             ),
                                             ts.factory.createIdentifier("withRawResponse")
                                         ),
@@ -770,7 +815,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const timeoutExpression = getTimeoutExpression({
-            defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+            defaultTimeout: this.defaultTimeout,
             timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                 this.generatedSdkClientClass
             ),
@@ -781,6 +826,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const maxRetriesExpression = getMaxRetriesExpression({
+            endpoint: this.endpoint,
             maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                 this.generatedSdkClientClass
             ),
@@ -911,13 +957,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             url: urlOverride ?? this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
-                defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+                defaultTimeout: this.defaultTimeout,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                     this.generatedSdkClientClass
                 ),
                 referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
             }),
             maxRetries: getMaxRetriesExpression({
+                endpoint: this.endpoint,
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
                 ),

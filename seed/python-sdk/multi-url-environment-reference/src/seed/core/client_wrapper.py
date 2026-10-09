@@ -17,6 +17,8 @@ class BaseClientWrapper:
         environment: SeedApiEnvironment,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self._token = token
@@ -24,9 +26,11 @@ class BaseClientWrapper:
         self._environment = environment
         self._timeout = timeout
         self._max_retries = max_retries
+        self._stream_reconnection_enabled = stream_reconnection_enabled
+        self._max_stream_reconnection_attempts = max_stream_reconnection_attempts
         self._logging = logging
 
-    def get_headers(self) -> typing.Dict[str, str]:
+    def get_headers(self, *, include_token: bool = True) -> typing.Dict[str, str]:
         import platform
 
         headers: typing.Dict[str, str] = {
@@ -38,9 +42,10 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        token = self._get_token()
-        if token is not None:
-            headers["Authorization"] = f"Bearer {token}"
+        if include_token:
+            token = self._get_token()
+            if token is not None:
+                headers["Authorization"] = f"Bearer {token}"
         return headers
 
     def _get_token(self) -> typing.Optional[str]:
@@ -61,6 +66,12 @@ class BaseClientWrapper:
     def get_max_retries(self) -> int:
         return self._max_retries
 
+    def get_stream_reconnection_enabled(self) -> bool:
+        return self._stream_reconnection_enabled if self._stream_reconnection_enabled is not None else True
+
+    def get_max_stream_reconnection_attempts(self) -> typing.Optional[int]:
+        return self._max_stream_reconnection_attempts
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
@@ -71,6 +82,8 @@ class SyncClientWrapper(BaseClientWrapper):
         environment: SeedApiEnvironment,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
@@ -80,6 +93,8 @@ class SyncClientWrapper(BaseClientWrapper):
             environment=environment,
             timeout=timeout,
             max_retries=max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self.httpx_client = HttpClient(
@@ -100,6 +115,8 @@ class AsyncClientWrapper(BaseClientWrapper):
         environment: SeedApiEnvironment,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
@@ -110,6 +127,8 @@ class AsyncClientWrapper(BaseClientWrapper):
             environment=environment,
             timeout=timeout,
             max_retries=max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self._async_token = async_token
@@ -123,7 +142,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         )
 
     async def async_get_headers(self) -> typing.Dict[str, str]:
-        headers = self.get_headers()
+        headers = self.get_headers(include_token=self._async_token is None)
         if self._async_token is not None:
             token = await self._async_token()
             headers["Authorization"] = f"Bearer {token}"

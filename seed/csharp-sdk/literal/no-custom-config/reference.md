@@ -47,6 +47,31 @@ await client.Headers.SendAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Headers.<a href="/src/SeedLiteral/Headers/HeadersClient.cs">SendLiteralsOnlyAsync</a>() -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Headers.SendLiteralsOnlyAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.Inlined.<a href="/src/SeedLiteral/Inlined/InlinedClient.cs">SendAsync</a>(SendLiteralsInlinedRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>

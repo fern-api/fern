@@ -8,13 +8,13 @@ public partial interface ISeedObjectClient
         CancellationToken cancellationToken = default
     );
 
-    Task GetDiscriminatedUnionAsync(
+    WithRawResponseTask GetDiscriminatedUnionAsync(
         GetDiscriminatedUnionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task GetUndiscriminatedUnionAsync(
+    WithRawResponseTask GetUndiscriminatedUnionAsync(
         GetUndiscriminatedUnionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

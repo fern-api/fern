@@ -51,6 +51,13 @@ class BigunionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->bigunion->get(
+     *     'id',
+     * );
+     * ```
+     *
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,
@@ -97,6 +104,15 @@ class BigunionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->bigunion->update(
+     *     BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+     *         'value' => 'value',
+     *     ]), new DateTime('2024-01-15T09:30:00Z')),
+     * );
+     * ```
+     *
      * @param BigUnion $request
      * @param ?array{
      *   baseUrl?: string,
@@ -144,6 +160,20 @@ class BigunionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->bigunion->updateMany(
+     *     [
+     *         BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+     *             'value' => 'value',
+     *         ]), new DateTime('2024-01-15T09:30:00Z')),
+     *         BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+     *             'value' => 'value',
+     *         ]), new DateTime('2024-01-15T09:30:00Z')),
+     *     ],
+     * );
+     * ```
+     *
      * @param array<BigUnion> $request
      * @param ?array{
      *   baseUrl?: string,

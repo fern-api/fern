@@ -1,0 +1,440 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "Break": {
+            "docs": undefined,
+            "encoding": {
+              "xml": {
+                "name": "break",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
+            "inline": undefined,
+            "properties": {
+              "strength": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<BreakStrength>",
+              },
+              "time": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "BreakStrength": {
+            "enum": [
+              "none",
+              {
+                "name": "XWeak",
+                "value": "x-weak",
+              },
+              "weak",
+              "medium",
+              "strong",
+              {
+                "name": "XStrong",
+                "value": "x-strong",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Dial": {
+            "docs": undefined,
+            "encoding": {
+              "xml": {
+                "name": "Dial",
+                "namespace": "https://www.twilio.com/twiml",
+                "prefix": "tw",
+              },
+            },
+            "inline": undefined,
+            "properties": {
+              "number": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": true,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
+              "numbers": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": "Numbers",
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": true,
+                  },
+                },
+                "type": "optional<list<Number>>",
+              },
+              "status_callback_event": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": "statusCallbackEvent",
+                    "separator": " ",
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<list<string>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Number": {
+            "docs": undefined,
+            "encoding": {
+              "xml": {
+                "name": "Number",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
+            "inline": undefined,
+            "properties": {
+              "phone_number": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": true,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
+              "send_digits": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": "sendDigits",
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Pause": {
+            "docs": "XML element without an explicit xml.name; falls back to the schema name.",
+            "encoding": {
+              "xml": {
+                "name": "Pause",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
+            "inline": undefined,
+            "properties": {
+              "length": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<integer>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PlainObject": {
+            "docs": "Not XML-encoded; properties must not carry xml metadata.",
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Response": {
+            "docs": "Root TwiML element.",
+            "encoding": {
+              "xml": {
+                "name": "Response",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
+            "inline": undefined,
+            "properties": {
+              "children": "optional<list<ResponseChildrenItem>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ResponseChildrenItem": {
+            "base-properties": undefined,
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "Say",
+              "Dial",
+            ],
+          },
+          "Say": {
+            "docs": undefined,
+            "encoding": {
+              "xml": {
+                "name": "Say",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
+            "inline": undefined,
+            "properties": {
+              "children": "optional<list<Break>>",
+              "loop": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<integer>",
+              },
+              "message": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": true,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
+              "voice": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  ResponseChildrenItem:
+    discriminated: false
+    union:
+      - Say
+      - Dial
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  Response:
+    docs: Root TwiML element.
+    properties:
+      children: optional<list<ResponseChildrenItem>>
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Response
+  Say:
+    properties:
+      message:
+        type: optional<string>
+        encoding:
+          xml:
+            text: true
+      voice:
+        type: optional<string>
+        encoding:
+          xml:
+            attribute: true
+      loop:
+        type: optional<integer>
+        encoding:
+          xml:
+            attribute: true
+      children: optional<list<Break>>
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Say
+  BreakStrength:
+    enum:
+      - none
+      - value: x-weak
+        name: XWeak
+      - weak
+      - medium
+      - strong
+      - value: x-strong
+        name: XStrong
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  Break:
+    properties:
+      strength:
+        type: optional<BreakStrength>
+        encoding:
+          xml:
+            attribute: true
+      time:
+        type: optional<string>
+        encoding:
+          xml:
+            attribute: true
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: break
+  Dial:
+    properties:
+      number:
+        type: optional<string>
+        encoding:
+          xml:
+            text: true
+      status_callback_event:
+        type: optional<list<string>>
+        encoding:
+          xml:
+            name: statusCallbackEvent
+            attribute: true
+            separator: ' '
+      numbers:
+        type: optional<list<Number>>
+        encoding:
+          xml:
+            name: Numbers
+            wrapped: true
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Dial
+        namespace: https://www.twilio.com/twiml
+        prefix: tw
+  Number:
+    properties:
+      phone_number:
+        type: optional<string>
+        encoding:
+          xml:
+            text: true
+      send_digits:
+        type: optional<string>
+        encoding:
+          xml:
+            name: sendDigits
+            attribute: true
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Number
+  Pause:
+    docs: XML element without an explicit xml.name; falls back to the schema name.
+    properties:
+      length:
+        type: optional<integer>
+        encoding:
+          xml:
+            attribute: true
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Pause
+  PlainObject:
+    docs: Not XML-encoded; properties must not carry xml metadata.
+    properties:
+      id: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "TwiML-style XML encoding",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: TwiML-style XML encoding
+",
+  },
+  "specVersion": "1.0.0",
+}
