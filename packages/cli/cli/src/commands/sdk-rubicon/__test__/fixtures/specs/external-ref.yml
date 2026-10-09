@@ -1,0 +1,12 @@
+openapi: 3.1.0
+info: { title: Acme, version: "1" }
+paths:
+  /token:
+    post:
+      operationId: getToken
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema: { $ref: "./schemas/token.yml" }
