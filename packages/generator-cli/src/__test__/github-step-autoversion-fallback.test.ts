@@ -4,7 +4,8 @@ import {
     appendAutoVersionWarning,
     enrichPrBodyForAutomation,
     resolvePrFields,
-    shouldEnableAutomerge
+    shouldEnableAutomerge,
+    shouldWriteChangelogBlock
 } from "../pipeline/steps/GithubStep.js";
 import type { AutoVersionStepResult, GithubStepConfig } from "../pipeline/types.js";
 
@@ -75,7 +76,8 @@ describe("resolvePrFields", () => {
             versionBump: "PATCH",
             hasBreakingChanges: false,
             breakingChangesSummary: "manual summary",
-            analysisWarning: undefined
+            analysisWarning: undefined,
+            isAutoVersioned: false
         });
     });
 
@@ -204,5 +206,33 @@ describe("autoVersion analysisWarning (FAI unavailable, PATCH fallback)", () => 
         const resolved = resolvePrFields(config, fallbackAutoVersion);
         expect(shouldEnableAutomerge(config, resolved)).toBe(false);
         expect(shouldEnableAutomerge(config, { hasBreakingChanges: false })).toBe(true);
+    });
+});
+
+describe("shouldWriteChangelogBlock", () => {
+    const patchAutoVersion: AutoVersionStepResult = {
+        ...autoVersion,
+        version: "1.3.1",
+        versionBump: "PATCH",
+        changelogEntry: undefined
+    };
+
+    it("skips the block for an AUTO PATCH with an empty entry (no consumer-visible change)", () => {
+        expect(shouldWriteChangelogBlock(resolvePrFields(baseConfig, patchAutoVersion))).toBe(false);
+    });
+
+    it("writes the block for an AUTO PATCH with an entry", () => {
+        const resolved = resolvePrFields(baseConfig, { ...patchAutoVersion, changelogEntry: "### Fixed\n- x" });
+        expect(shouldWriteChangelogBlock(resolved)).toBe(true);
+    });
+
+    it("writes a version-only block for an explicit --version run", () => {
+        expect(shouldWriteChangelogBlock(resolvePrFields({ ...baseConfig, newVersion: "2.0.0" }, undefined))).toBe(
+            true
+        );
+    });
+
+    it("skips the block when there is neither an entry nor a new version", () => {
+        expect(shouldWriteChangelogBlock(resolvePrFields(baseConfig, undefined))).toBe(false);
     });
 });
