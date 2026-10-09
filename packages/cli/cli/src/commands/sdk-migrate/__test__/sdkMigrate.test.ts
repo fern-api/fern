@@ -103,7 +103,8 @@ describe("SDK Config migration", () => {
             source: createSource()
         });
 
-        expect(result.diagnostics).toEqual(
+        expect(result.sdkConfig.docs).toEqual({ snippets: { enabled: true } });
+        expect(result.diagnostics).not.toEqual(
             expect.arrayContaining([
                 expect.objectContaining({ path: ["group", "generators", 0, "outputMode", "downloadSnippets"] })
             ])
