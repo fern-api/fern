@@ -60,7 +60,7 @@ async function getAuthToken(cliContext: CliContext): Promise<FernToken> {
     return token;
 }
 
-async function resolveOrgId(cliContext: CliContext, orgOverride?: string): Promise<string> {
+export async function resolveOrgId(cliContext: CliContext, orgOverride?: string): Promise<string> {
     if (orgOverride != null) {
         return orgOverride;
     }
