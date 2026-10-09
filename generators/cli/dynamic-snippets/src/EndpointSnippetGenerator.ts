@@ -318,7 +318,15 @@ export class EndpointSnippetGenerator {
             ? resolveMultipartFieldFlagName(wireValue)
             : resolveParamFlagName({ location }, wireValue);
         if (flagName == null) {
-            builder.routeToParams([wireValue], value);
+            if (multipart) {
+                // A reserved multipart field has no dedicated flag but the runtime still accepts it
+                // through the --params catch-all (its wire name is a valid argument id).
+                builder.routeToParams([wireValue], value);
+            }
+            // A non-multipart parameter whose name can't be sanitized into a flag (non-ASCII /
+            // control characters) has NO registered argument at all, so the runtime can supply it via
+            // neither a flag nor --params — passing it in --params panics the CLI. Omit it rather than
+            // emit a command that fails. Rare; see the package README.
             return;
         }
         // resolveParamFlagName returns the bare flag name (e.g. "account-sid"); the command uses the

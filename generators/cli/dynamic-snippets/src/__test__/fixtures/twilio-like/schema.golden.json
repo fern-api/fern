@@ -1,6 +1,49 @@
 {
   "commands": [
     {
+      "operation": "addresses.create-address",
+      "command": [
+        "addresses",
+        "create-address"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Addresses.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "Address",
+          "location": "body",
+          "flag": "--address",
+          "type": "object"
+        },
+        {
+          "wireName": "Address.City",
+          "location": "body",
+          "flag": "--address.-city",
+          "type": "string"
+        },
+        {
+          "wireName": "Address.Zip",
+          "location": "body",
+          "flag": "--address.-zip",
+          "type": "string"
+        },
+        {
+          "wireName": "CustomerName",
+          "location": "body",
+          "flag": "--customer-name",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
       "operation": "calls.create-call",
       "command": [
         "calls",
@@ -34,11 +77,6 @@
           "location": "header",
           "flag": "--x-custom-header",
           "type": "string"
-        },
-        {
-          "wireName": "日本語",
-          "location": "query",
-          "type": "string"
         }
       ]
     },
@@ -68,6 +106,50 @@
           "wireName": "To",
           "location": "body",
           "flag": "--to",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation": "chat.v1.send",
+      "command": [
+        "chat",
+        "v1",
+        "send"
+      ],
+      "httpMethod": "POST",
+      "path": "/Chat/v1/Messages",
+      "inputs": [
+        {
+          "wireName": "Body",
+          "location": "body",
+          "flag": "--body",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation": "media.upload-media",
+      "command": [
+        "media",
+        "upload-media"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Media.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "File",
+          "location": "body",
+          "flag": "--file",
           "type": "string",
           "required": true
         }

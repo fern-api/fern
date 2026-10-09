@@ -87,20 +87,51 @@ describe("flag emission from the real dynamic IR", () => {
         );
     });
 
-    it("derives a header flag from the wire name and routes a non-ASCII query to --params", () => {
+    it("keeps the header X- prefix and reserved-suffixes a built-in body flag", () => {
         // X-Custom-Header's SDK name is `customHeader` in the dynamic IR (the importer drops the X-),
-        // but the flag must stay `--x-custom-header` to match the runtime. The non-ASCII query name has
-        // no valid flag, so it falls back to --params; the reserved `json` body field becomes --json-param.
+        // but the flag must stay `--x-custom-header`. The reserved `json` body field becomes --json-param.
         const result = generator().generateSync({
             endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Calls.json" },
             pathParameters: { AccountSid: "AC123" },
             headers: { "X-Custom-Header": "hval" },
-            queryParameters: { 日本語: "q" },
             requestBody: { To: "+15558675310", json: "raw" }
         });
         expect(result.errors).toBeUndefined();
         expect(result.snippet).toBe(
-            `twilio-like calls create-call --account-sid AC123 --x-custom-header hval --to +15558675310 --json-param raw --params '{"日本語":"q"}'`
+            "twilio-like calls create-call --account-sid AC123 --x-custom-header hval --to +15558675310 --json-param raw"
+        );
+    });
+
+    it("flattens a nested object body field into --params (accepted by the runtime)", () => {
+        const result = generator().generateSync({
+            endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Addresses.json" },
+            pathParameters: { AccountSid: "AC123" },
+            requestBody: { CustomerName: "Ada", Address: { City: "SF", Zip: "94105" } }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe(
+            `twilio-like addresses create-address --account-sid AC123 --customer-name Ada --params '{"Address":{"City":"SF","Zip":"94105"}}'`
+        );
+    });
+
+    it("emits a namespaced (multi-part) command path", () => {
+        const result = generator().generateSync({
+            endpoint: { method: "POST", path: "/Chat/v1/Messages" },
+            requestBody: { Body: "hi" }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe("twilio-like chat v1 send --body hi");
+    });
+
+    it("gives a reserved multipart field no flag and routes it to --params", () => {
+        const result = generator().generateSync({
+            endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Media.json" },
+            pathParameters: { AccountSid: "AC123" },
+            requestBody: { File: "/tmp/image.png", output: "meta" }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe(
+            `twilio-like media upload-media --account-sid AC123 --file /tmp/image.png --params '{"output":"meta"}'`
         );
     });
 

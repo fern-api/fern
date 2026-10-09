@@ -72,11 +72,6 @@ paths:
           required: false
           schema: { type: string }
           example: custom-value
-        - name: "日本語"
-          in: query
-          required: false
-          schema: { type: string }
-          example: unicode-value
       requestBody:
         required: true
         content:
@@ -127,3 +122,81 @@ paths:
                 type: object
                 properties:
                   sid: { type: string }
+  /Chat/v1/Messages:
+    post:
+      operationId: sendChatMessage
+      x-fern-sdk-group-name: [chat, v1]
+      x-fern-sdk-method-name: send
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [Body]
+              properties:
+                Body: { type: string, example: "hi" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { type: object, properties: { sid: { type: string } } }
+  /2010-04-01/Accounts/{AccountSid}/Addresses.json:
+    post:
+      operationId: createAddress
+      tags: [addresses]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [CustomerName]
+              properties:
+                CustomerName: { type: string, example: "Ada" }
+                # Nested object body field: the runtime exposes dotted flags; this port routes it to --params.
+                Address:
+                  type: object
+                  properties:
+                    City: { type: string, example: "SF" }
+                    Zip: { type: string, example: "94105" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { type: object, properties: { sid: { type: string } } }
+  /2010-04-01/Accounts/{AccountSid}/Media.json:
+    post:
+      operationId: uploadMedia
+      tags: [media]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [File]
+              properties:
+                File: { type: string, format: binary }
+                # Reserved multipart field name: the runtime gives it no flag (reachable only via --params).
+                output: { type: string, example: "meta" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { type: object, properties: { sid: { type: string } } }

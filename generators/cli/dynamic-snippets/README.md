@@ -26,7 +26,14 @@ toolchain):
 - **Command-name parity** — `src/__test__/fixtures/<name>/dynamic-ir.json` is the real dynamic IR for
   the fixture spec. `src/__test__/dynamic-ir.e2e.test.ts` runs the generator over it and asserts the
   command path against the `--schema` golden, proving the importer-derived `fernFilepath` +
-  `declaration.name` agree with the runtime's Rust-parser command names.
+  `declaration.name` agree with the runtime's Rust-parser command names (including namespaced,
+  multi-part paths like `chat v1 send`).
+- **Acceptance (dry-run)** — `src/__test__/dryrun.e2e.test.ts` (cargo-gated) feeds every assembled
+  command back to the real binary with `--dry-run` and asserts it is accepted. This is what proves the
+  `--params` / `--json` / repeated-flag / multipart assembly actually runs — e.g. a nested object body
+  sent as `--params '{"Address":{…}}'` is confirmed accepted (no need for the runtime's dotted
+  `--address.city` flags). It runs in the cargo-enabled `cli-runtime` CI job and locally; it skips
+  where `cargo` is unavailable (CI's TypeScript image).
 
 ### Regenerating `dynamic-ir.json`
 
@@ -57,6 +64,10 @@ A change to the importer's command naming surfaces as an `dynamic-ir.e2e.test.ts
 - **Flag-collision winner.** When two parameters resolve to the same flag the runtime sorts by wire
   name and keeps the first; this port keeps whichever it emits first in IR order and drops the rest. It
   never emits a duplicate flag, but for the rare genuine collision the two can pick different winners.
+- **Non-ASCII / control-character parameter names are omitted.** Such a name can't be sanitized into a
+  flag, so the runtime registers no argument for it — it can be supplied via neither a flag nor
+  `--params` (passing it in `--params` panics the CLI, i.e. the operation is effectively unusable in
+  the runtime itself). The generator omits the parameter rather than emit a command that fails.
 - **Binary-name fallback.** When `customConfig.binaryName` is unset, the binary name falls back to the
   workspace name (`generatorConfig.apiName`). The Rust generator falls back to `apiDisplayName`, which
   the dynamic IR does not carry; the workspace name is its closest available analogue.
