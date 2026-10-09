@@ -9,6 +9,7 @@ import { dirname } from "path";
 import { PostHog } from "posthog-node";
 import { v4 as uuidv4 } from "uuid";
 
+import { getCliReleaseEnvironment } from "./feature-flags/CliReleaseEnvironment.js";
 import { PosthogManager } from "./PosthogManager.js";
 
 const DISTINCT_ID_FILENAME = "id";
@@ -45,6 +46,7 @@ export class UserPosthogManager implements PosthogManager {
                 ...event,
                 ...event.properties,
                 usingAccessToken: false,
+                cliReleaseEnvironment: getCliReleaseEnvironment(),
                 agent: detectCodingAgent(),
                 ...(userEmail != null ? { userEmail } : {}),
                 ...getRunIdProperties()

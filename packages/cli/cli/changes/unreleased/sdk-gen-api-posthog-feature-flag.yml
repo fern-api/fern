@@ -9,3 +9,9 @@
     lets an organization be kept off sdk-gen-api entirely. The flag is off when PostHog is unreachable or the flag is
     not configured.
   type: feat
+- summary: |
+    Tag every CLI telemetry event with `cliReleaseEnvironment` (`prod`, `pre-prod`, `beta`, `dev`, `local`) so
+    events from different CLI distributions can be told apart. On the `fern generate` event, `sdkGenApiEnabled` now
+    reflects the `use-sdk-gen-api` flag (true when at least one requested generator is routed), each
+    `requestedGenerators` entry carries its own `sdkGenApiEnabled`, and `fernUseSdkGenApiEnv` is removed.
+  type: chore

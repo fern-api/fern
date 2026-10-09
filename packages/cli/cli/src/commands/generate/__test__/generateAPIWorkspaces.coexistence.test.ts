@@ -146,8 +146,7 @@ describe("generateAPIWorkspaces coexistence", () => {
             orgId: "test",
             command: "fern generate",
             properties: {
-                sdkGenApiEnabled: true,
-                cliReleaseEnvironment: "local"
+                sdkGenApiEnabled: true
             }
         });
         expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", {
@@ -174,7 +173,8 @@ describe("generateAPIWorkspaces coexistence", () => {
             })
         ]);
         // Identity and auth already come from the distinct ID, `userEmail`, and `usingAccessToken`.
-        for (const redundant of ["userId", "authType", "generatorNames"]) {
+        // The release environment is a base property on every CLI event (added by the PostHog manager).
+        for (const redundant of ["userId", "authType", "generatorNames", "cliReleaseEnvironment"]) {
             expect(event?.properties).not.toHaveProperty(redundant);
         }
     });

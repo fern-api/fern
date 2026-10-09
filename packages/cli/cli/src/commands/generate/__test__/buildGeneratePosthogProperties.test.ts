@@ -85,7 +85,6 @@ function build(
         groupNames: ["sdks"],
         generatorName: undefined,
         sdkGenApiEnabledByGenerator: new Map(),
-        cliReleaseEnvironment: "prod",
         ...overrides
     });
 }
@@ -278,8 +277,7 @@ describe("buildGeneratePosthogProperties", () => {
             sdkGenApiEnabledByGenerator: new Map([
                 ["fernapi/fern-python-sdk", true],
                 ["fernapi/fern-typescript-sdk", false]
-            ]),
-            cliReleaseEnvironment: "pre-prod"
+            ])
         });
 
         expect(
@@ -288,7 +286,7 @@ describe("buildGeneratePosthogProperties", () => {
             { name: "fernapi/fern-python-sdk", sdkGenApiEnabled: true },
             { name: "fernapi/fern-typescript-sdk", sdkGenApiEnabled: false }
         ]);
-        expect(properties).toMatchObject({ sdkGenApiEnabled: true, cliReleaseEnvironment: "pre-prod" });
+        expect(properties.sdkGenApiEnabled).toBe(true);
     });
 
     it.each([

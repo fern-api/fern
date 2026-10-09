@@ -1,6 +1,5 @@
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
-import type { CliReleaseEnvironment } from "@fern-api/posthog-manager";
 import type { Project } from "@fern-api/project-loader";
 import type { FernSdkConfigV1Payload } from "@fern-api/remote-workspace-runner";
 import type { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
@@ -45,8 +44,6 @@ export interface GeneratePosthogProperties {
      * `requestedGenerators` entry for the per-generator value. Undefined for local (Docker) generation.
      */
     sdkGenApiEnabled: boolean | undefined;
-    /** The CLI distribution (`prod`, `pre-prod`, `beta`, ...) the flag was evaluated for. */
-    cliReleaseEnvironment: CliReleaseEnvironment;
 }
 
 export function buildGeneratePosthogProperties({
@@ -55,8 +52,7 @@ export function buildGeneratePosthogProperties({
     isAutomation,
     groupNames,
     generatorName,
-    sdkGenApiEnabledByGenerator,
-    cliReleaseEnvironment
+    sdkGenApiEnabledByGenerator
 }: {
     project: Project;
     generations: GenerationTelemetryInput[];
@@ -66,7 +62,6 @@ export function buildGeneratePosthogProperties({
     generatorName: string | undefined;
     /** `use-sdk-gen-api` values by generator name; undefined when no flag was evaluated (local generation). */
     sdkGenApiEnabledByGenerator: ReadonlyMap<string, boolean> | undefined;
-    cliReleaseEnvironment: CliReleaseEnvironment;
 }): GeneratePosthogProperties {
     const requestedGenerators = listRequestedGenerators({ generations, isAutomation }).map((generator) => ({
         ...generator,
@@ -79,8 +74,7 @@ export function buildGeneratePosthogProperties({
         sdkGenApiEnabled:
             sdkGenApiEnabledByGenerator == null
                 ? undefined
-                : requestedGenerators.some(({ sdkGenApiEnabled }) => sdkGenApiEnabled === true),
-        cliReleaseEnvironment
+                : requestedGenerators.some(({ sdkGenApiEnabled }) => sdkGenApiEnabled === true)
     };
 }
 

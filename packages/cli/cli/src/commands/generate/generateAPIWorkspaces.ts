@@ -4,7 +4,6 @@ import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, dirname, doesPathExist, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import { getCliReleaseEnvironment } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import {
     type AutomationRunOptions,
@@ -258,8 +257,7 @@ export async function generateAPIWorkspaces({
                     isAutomation,
                     groupNames,
                     generatorName,
-                    sdkGenApiEnabledByGenerator: await sdkGenApiEnabledByGenerator,
-                    cliReleaseEnvironment: getCliReleaseEnvironment()
+                    sdkGenApiEnabledByGenerator: await sdkGenApiEnabledByGenerator
                 })
             }
         });

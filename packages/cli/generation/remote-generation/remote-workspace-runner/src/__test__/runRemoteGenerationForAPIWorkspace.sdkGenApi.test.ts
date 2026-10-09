@@ -583,7 +583,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         it.each([true, false])("rejects it before generation (sdk-gen-api enabled=%s)", (enabled) => {
             const [prepared] = prepareFernSdkGenApiRoutes({
                 generators: [directRubyGemsGenerator()],
-                enabled,
+                isSdkGenApiEnabled: () => enabled,
                 requireEnvVars: true,
                 isPreview: false
             });
@@ -600,7 +600,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         it("allows previews, which download files instead of publishing", () => {
             const [prepared] = prepareFernSdkGenApiRoutes({
                 generators: [directRubyGemsGenerator()],
-                enabled: false,
+                isSdkGenApiEnabled: () => false,
                 requireEnvVars: true,
                 isPreview: true
             });
@@ -624,7 +624,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
 
             const [prepared] = prepareFernSdkGenApiRoutes({
                 generators: [generator],
-                enabled: false,
+                isSdkGenApiEnabled: () => false,
                 requireEnvVars: false,
                 isPreview: false
             });
