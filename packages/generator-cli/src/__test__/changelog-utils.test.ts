@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { changelogContainsVersion, prependChangelogBlock } from "../autoversion/changelogUtils.js";
+import {
+    changelogContainsVersion,
+    mergeChangelogSections,
+    prependChangelogBlock
+} from "../autoversion/changelogUtils.js";
 
 describe("prependChangelogBlock", () => {
     it("creates a fresh changelog with a title when there is no existing content", () => {
@@ -67,5 +71,40 @@ describe("changelogContainsVersion", () => {
     it("returns false when the version is not recorded", () => {
         const content = "# Changelog\n\n## [1.0.0] - 2024-01-01\n- Initial release\n";
         expect(changelogContainsVersion(content, "1.1.0")).toBe(false);
+    });
+});
+
+describe("mergeChangelogSections", () => {
+    it("combines repeated headers into one set of sections in Keep a Changelog order", () => {
+        const merged = mergeChangelogSections([
+            "### Added\n- **`fern`** added.\n\n### Changed\n- **`moss`** changed.",
+            "### Breaking Changes\n- **`ivy`** removed.\n\n### Added\n- **`clover`** added.",
+            "### Fixed\n- **`sage`** fixed.\n\n### Changed\n- **`thyme`** changed."
+        ]);
+        expect(merged).toBe(
+            "### Breaking Changes\n- **`ivy`** removed.\n\n" +
+                "### Added\n- **`fern`** added.\n- **`clover`** added.\n\n" +
+                "### Changed\n- **`moss`** changed.\n- **`thyme`** changed.\n\n" +
+                "### Fixed\n- **`sage`** fixed."
+        );
+    });
+
+    it("drops exact duplicate bullets and keeps one 'See full changelog' line at the end of a section", () => {
+        const merged = mergeChangelogSections([
+            "### Added\n- **`fern`** added.\n- See full changelog for all changes",
+            "### Added\n- **`fern`** added.\n- **`moss`** added.\n- See full changelog for all changes"
+        ]);
+        expect(merged).toBe(
+            "### Added\n- **`fern`** added.\n- **`moss`** added.\n- See full changelog for all changes"
+        );
+    });
+
+    it("matches headers case-insensitively and keeps unknown sections and header-less text", () => {
+        const merged = mergeChangelogSections([
+            "Intro",
+            "### added\n- one",
+            "### Added\n- two\n\n### Deprecated\n- three"
+        ]);
+        expect(merged).toBe("Intro\n\n### added\n- one\n- two\n\n### Deprecated\n- three");
     });
 });
