@@ -114,6 +114,21 @@ describe("flag emission from the real dynamic IR", () => {
         );
     });
 
+    it("recovers an x-fern-parameter-name rename for a special-character wire name", () => {
+        // `DateCreated<` (x-fern-parameter-name: dateCreatedBefore) can't sanitize to its flag from the
+        // wire name — it would become `--date-created` and collide with `DateCreated`. The heuristic
+        // uses the SDK name from the real dynamic IR, producing the runtime's `--date-created-before`.
+        const result = generator().generateSync({
+            endpoint: { method: "GET", path: "/2010-04-01/Accounts/{AccountSid}/Messages.json" },
+            pathParameters: { AccountSid: "AC123" },
+            queryParameters: { PageSize: 20, "DateCreated<": "2024-01-01" }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe(
+            "twilio-like messages list-messages --account-sid AC123 --page-size 20 --date-created-before 2024-01-01"
+        );
+    });
+
     it("emits a namespaced (multi-part) command path", () => {
         const result = generator().generateSync({
             endpoint: { method: "POST", path: "/Chat/v1/Messages" },

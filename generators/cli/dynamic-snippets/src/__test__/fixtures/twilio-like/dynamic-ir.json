@@ -1086,6 +1086,37 @@
               },
               "type": "optional"
             }
+          },
+          {
+            "name": {
+              "wireValue": "DateCreated<",
+              "name": {
+                "originalName": "dateCreatedBefore",
+                "camelCase": {
+                  "unsafeName": "dateCreatedBefore",
+                  "safeName": "dateCreatedBefore"
+                },
+                "snakeCase": {
+                  "unsafeName": "date_created_before",
+                  "safeName": "date_created_before"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DATE_CREATED_BEFORE",
+                  "safeName": "DATE_CREATED_BEFORE"
+                },
+                "pascalCase": {
+                  "unsafeName": "DateCreatedBefore",
+                  "safeName": "DateCreatedBefore"
+                }
+              }
+            },
+            "typeReference": {
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
           }
         ],
         "headers": [],

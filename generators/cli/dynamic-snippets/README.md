@@ -55,12 +55,15 @@ A change to the importer's command naming surfaces as an `dynamic-ir.e2e.test.ts
 
 ## Known gaps
 
-- **`x-fern-parameter-name` renames are not reproduced.** Flags derive from the parameter's wire name.
-  The dynamic IR's SDK-facing name is rewritten by the importer beyond any explicit rename (it drops
-  the `X-` prefix from headers, camelizes, etc.) and carries no field distinguishing an
-  `x-fern-parameter-name` override from those automatic renames — so a genuine rename cannot be
-  reproduced without IR support. Sourcing the flag from the wire name is correct for every other case,
-  including headers (`X-Custom-Header` → `--x-custom-header`).
+- **`x-fern-parameter-name` renames are only partially reproduced.** Flags derive from the wire name,
+  which is correct for most parameters (including auto-renamed headers: `X-Custom-Header` →
+  `--x-custom-header`). The dynamic IR can't distinguish an explicit rename from the importer's
+  automatic casing, so we recover the common case heuristically: when the wire name contains a
+  character sanitizing would drop (outside `[A-Za-z0-9_-]`), the runtime must be using an explicit
+  rename, so the SDK name is used instead — this covers e.g. Twilio's `DateCreated<` →
+  `dateCreatedBefore` → `--date-created-before`. The residual gap is a rename whose wire name is itself
+  flag-expressible (all `[A-Za-z0-9_-]`): there's no signal to detect it, so the wire name is used.
+  The full fix is to carry the explicit override in the dynamic IR.
 - **Flag-collision winner.** When two parameters resolve to the same flag the runtime sorts by wire
   name and keeps the first; this port keeps whichever it emits first in IR order and drops the rest
   (surfacing a warning for the dropped one). It never emits a duplicate flag, but for the rare genuine

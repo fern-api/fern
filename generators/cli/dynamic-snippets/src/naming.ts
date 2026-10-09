@@ -247,6 +247,24 @@ export function resolveMultipartFieldFlagName(
 }
 
 /**
+ * Choose the source string a parameter's flag is derived from.
+ *
+ * Flags normally come from the wire name, which is correct for the overwhelming majority of
+ * parameters — including auto-renamed headers like `X-Custom-Header` → `--x-custom-header`. But the
+ * dynamic IR can't distinguish an explicit `x-fern-parameter-name` rename from the importer's
+ * automatic casing. We recover the common, high-value case heuristically: if the wire name contains a
+ * character that sanitizing would drop (anything outside `[A-Za-z0-9_-]`), the wire name cannot be the
+ * runtime's flag source — the runtime must have an explicit rename — so use the SDK `originalName`
+ * instead. This fixes e.g. Twilio's date-range filters (`DateCreated<` → `dateCreatedBefore` →
+ * `--date-created-before`, which otherwise sanitize to `--date-created` and collide with `DateCreated`),
+ * while leaving every `[A-Za-z0-9_-]`-only name on the wire-name path. A rename whose wire name is
+ * itself flag-expressible still can't be recovered without IR support (see README).
+ */
+export function flagSourceName(wireValue: string, sdkName: string): string {
+    return /[^A-Za-z0-9_-]/.test(wireValue) ? sdkName : wireValue;
+}
+
+/**
  * Normalize a binary name the way the CLI generator's `deriveBinaryName` does
  * (generators/cli/src/identity.ts `toKebabCase`): lowercase first, then collapse non-alphanumeric
  * runs to single dashes and trim. This differs from `camelToKebab` — e.g. `MyCLI` → `mycli` (the

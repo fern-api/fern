@@ -364,6 +364,32 @@ describe("DynamicSnippetsGenerator", () => {
         expect(result.snippet).toBe("twilio messages create --profile-param x");
     });
 
+    it("uses the SDK name for a special-character (renamed) wire name, avoiding a collision", () => {
+        // Heuristic: `DateCreated<` has a char sanitizing drops, so it must be an x-fern-parameter-name
+        // rename — use the SDK name (dateCreatedBefore → --date-created-before) instead of sanitizing the
+        // wire name to --date-created (which would collide with a plain DateCreated).
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["messages"],
+                method: "list",
+                location: { method: "GET", path: "/Messages" },
+                queryParameters: [
+                    param("DateCreated"),
+                    param("DateCreated<", { sdkName: "dateCreatedBefore" }),
+                    param("DateCreated>", { sdkName: "dateCreatedAfter" })
+                ]
+            })
+        );
+        const result = generate(ir, {
+            endpoint: { method: "GET", path: "/Messages" },
+            queryParameters: { DateCreated: "d", "DateCreated<": "b", "DateCreated>": "a" }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe(
+            "twilio messages list --date-created d --date-created-before b --date-created-after a"
+        );
+    });
+
     it("sends a non-object referenced body through --json", () => {
         const declaration: FernIr.dynamic.Declaration = {
             fernFilepath: { allParts: [nm("exports")], packagePath: [nm("exports")] },

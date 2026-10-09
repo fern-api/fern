@@ -48,6 +48,12 @@ paths:
           required: false
           schema: { type: integer }
           example: 20
+        - name: "DateCreated<"
+          in: query
+          required: false
+          x-fern-parameter-name: dateCreatedBefore
+          schema: { type: string }
+          example: "2024-01-01"
       responses:
         "200":
           description: OK

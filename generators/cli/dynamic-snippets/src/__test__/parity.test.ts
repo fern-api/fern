@@ -63,6 +63,15 @@ describe("flag parity with the CLI runtime --schema golden", () => {
                 for (const input of command.inputs) {
                     it(`${command.operation}: ${input.wireName} (${input.location}) → ${input.flag ?? "--params"}`, () => {
                         expect(PARAMETER_LOCATIONS).toContain(input.location as ParameterLocation);
+                        // This test validates the pure wire-name → flag rule. A wire name containing a
+                        // character sanitizing would drop (e.g. `DateCreated<`) can only get its flag from
+                        // an x-fern-parameter-name rename, which needs the SDK name — out of scope for a
+                        // wire-name-only check. Those are covered end-to-end (with the real dynamic IR) by
+                        // dynamic-ir.e2e.test.ts; skip them here.
+                        if (/[^A-Za-z0-9_-]/.test(input.wireName)) {
+                            expect(input.flag).toBeDefined();
+                            return;
+                        }
                         const resolved = resolveParamFlagName(
                             { location: input.location as ParameterLocation },
                             input.wireName

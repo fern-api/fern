@@ -132,9 +132,11 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
                 request: {
                     endpoint: { method: "GET", path: "/2010-04-01/Accounts/{AccountSid}/Messages.json" },
                     pathParameters: { AccountSid: "AC123" },
-                    queryParameters: { PageSize: 20 }
+                    // `DateCreated<` is renamed (x-fern-parameter-name) to dateCreatedBefore; the generator
+                    // emits --date-created-before, which the runtime maps back to the `DateCreated<` query key.
+                    queryParameters: { PageSize: 20, "DateCreated<": "2024-01-01" }
                 },
-                expected: { query: ["PageSize"], headers: [], body: [], form: [] }
+                expected: { query: ["DateCreated<", "PageSize"], headers: [], body: [], form: [] }
             },
             {
                 request: {

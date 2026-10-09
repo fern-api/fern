@@ -10,7 +10,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { CliCommandBuilder, isPlainObject } from "./command.js";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
-import { ParameterLocation, resolveMultipartFieldFlagName, resolveParamFlagName } from "./naming.js";
+import { flagSourceName, ParameterLocation, resolveMultipartFieldFlagName, resolveParamFlagName } from "./naming.js";
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
@@ -304,21 +304,21 @@ export class EndpointSnippetGenerator {
             return;
         }
         const wireValue = name.wireValue;
-        // The flag is derived from the WIRE name, matching the runtime's default path
-        // (display_name ?? wire_name). The dynamic IR's SDK-facing name is NOT used: the importer
-        // rewrites it beyond any `x-fern-parameter-name` rename — e.g. it drops the `X-` prefix from
-        // headers (X-Custom-Header → customHeader) — so sourcing from it would emit `--custom-header`
-        // where the runtime emits `--x-custom-header`. A genuine `x-fern-parameter-name` override is a
-        // known gap: the dynamic IR does not distinguish it from the importer's automatic renames, so
-        // it cannot be reproduced here without IR support. See the package README.
+        // The flag is derived from the wire name, matching the runtime's default path — including
+        // auto-renamed headers (`X-Custom-Header` → `--x-custom-header`). The one exception
+        // `flagSourceName` recovers: when the wire name has characters sanitizing would drop (e.g.
+        // Twilio's `DateCreated<`), the runtime must be using an explicit `x-fern-parameter-name`
+        // rename, so the SDK name is the real source (`dateCreatedBefore` → `--date-created-before`
+        // rather than a `--date-created` collision). See the package README for the residual gap.
         //
         // Multipart (file-upload) fields follow the multipart flag rule: a reserved name gets NO flag.
         // `getReservedFlagNames()` adds the config-dependent reservations (renamed user-agent flag,
         // `profile` when profiles are enabled) so a parameter colliding with one gets the `-param` suffix.
         const reserved = this.context.getReservedFlagNames();
+        const flagSource = flagSourceName(wireValue, name.name.originalName);
         const flagName = multipart
-            ? resolveMultipartFieldFlagName(wireValue, reserved)
-            : resolveParamFlagName({ location }, wireValue, reserved);
+            ? resolveMultipartFieldFlagName(flagSource, reserved)
+            : resolveParamFlagName({ location, displayName: flagSource }, wireValue, reserved);
         if (flagName == null) {
             // The field has no flag the runtime will accept, and it can't be supplied through --params
             // either: a non-multipart unsanitizable name (non-ASCII / control chars) has no registered

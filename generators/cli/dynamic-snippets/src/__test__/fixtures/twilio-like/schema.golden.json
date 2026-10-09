@@ -209,6 +209,12 @@
           "required": true
         },
         {
+          "wireName": "DateCreated<",
+          "location": "query",
+          "flag": "--date-created-before",
+          "type": "string"
+        },
+        {
           "wireName": "PageSize",
           "location": "query",
           "flag": "--page-size",
