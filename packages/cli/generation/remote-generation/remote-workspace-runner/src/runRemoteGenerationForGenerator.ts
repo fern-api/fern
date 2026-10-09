@@ -255,9 +255,16 @@ export async function runRemoteGenerationForGenerator({
     // When the version is AUTO, pass the magic placeholder to the IR so that any
     // version strings embedded in generated code (e.g., User-Agent header,
     // X-Fern-SDK-Version) use the safe placeholder that Fiddle's AutoVersionStep
-    // will correctly replace post-generation.
+    // will correctly replace post-generation. The placeholder is mapped per language
+    // (e.g. Python "0.0.0.dev0") to match the version in the publishing config, which is
+    // the one AutoVersionStep replaces.
     const effectiveIrVersion =
-        resolvedVersion != null && isAutoVersion(resolvedVersion) ? MAGIC_VERSION : resolvedVersion;
+        resolvedVersion != null && isAutoVersion(resolvedVersion)
+            ? mapMagicVersionForLanguage(
+                  MAGIC_VERSION,
+                  generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name)
+              )
+            : resolvedVersion;
 
     const userAgentTemplate = getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
     const idempotencyKeyGeneration = getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation);
