@@ -299,10 +299,14 @@ export class EndpointSnippetGenerator {
             return;
         }
         const wireValue = name.wireValue;
-        // The runtime derives the flag from the SDK-facing identifier, which already folds in any
-        // `x-fern-parameter-name` rename (the Rust `flag_name_override`). Use that name as the source so
-        // a renamed parameter gets the renamed flag; it collapses to the wire name when no rename exists.
-        const flagName = resolveParamFlagName({ location, displayName: name.name.originalName }, wireValue);
+        // The flag is derived from the WIRE name, matching the runtime's default path
+        // (display_name ?? wire_name). The dynamic IR's SDK-facing name is NOT used: the importer
+        // rewrites it beyond any `x-fern-parameter-name` rename — e.g. it drops the `X-` prefix from
+        // headers (X-Custom-Header → customHeader) — so sourcing from it would emit `--custom-header`
+        // where the runtime emits `--x-custom-header`. A genuine `x-fern-parameter-name` override is a
+        // known gap: the dynamic IR does not distinguish it from the importer's automatic renames, so
+        // it cannot be reproduced here without IR support. See the package README.
+        const flagName = resolveParamFlagName({ location }, wireValue);
         if (flagName == null) {
             builder.routeToParams([wireValue], value);
             return;

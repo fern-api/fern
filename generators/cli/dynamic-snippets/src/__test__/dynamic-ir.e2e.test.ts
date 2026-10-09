@@ -87,6 +87,23 @@ describe("flag emission from the real dynamic IR", () => {
         );
     });
 
+    it("derives a header flag from the wire name and routes a non-ASCII query to --params", () => {
+        // X-Custom-Header's SDK name is `customHeader` in the dynamic IR (the importer drops the X-),
+        // but the flag must stay `--x-custom-header` to match the runtime. The non-ASCII query name has
+        // no valid flag, so it falls back to --params; the reserved `json` body field becomes --json-param.
+        const result = generator().generateSync({
+            endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Calls.json" },
+            pathParameters: { AccountSid: "AC123" },
+            headers: { "X-Custom-Header": "hval" },
+            queryParameters: { 日本語: "q" },
+            requestBody: { To: "+15558675310", json: "raw" }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe(
+            `twilio-like calls create-call --account-sid AC123 --x-custom-header hval --to +15558675310 --json-param raw --params '{"日本語":"q"}'`
+        );
+    });
+
     it("sends a literal-dotted body through --json", () => {
         const result = generator().generateSync({
             endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Calls/Stream.json" },

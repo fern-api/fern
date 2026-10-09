@@ -60,6 +60,7 @@ function inlinedEndpoint({
     location,
     pathParameters,
     queryParameters,
+    headers,
     body
 }: {
     group: string[];
@@ -67,6 +68,7 @@ function inlinedEndpoint({
     location: FernIr.dynamic.EndpointLocation;
     pathParameters?: FernIr.dynamic.NamedParameter[];
     queryParameters?: FernIr.dynamic.NamedParameter[];
+    headers?: FernIr.dynamic.NamedParameter[];
     body?: FernIr.dynamic.InlinedRequestBody;
 }): FernIr.dynamic.Endpoint {
     const declaration: FernIr.dynamic.Declaration = {
@@ -76,7 +78,7 @@ function inlinedEndpoint({
     return {
         declaration,
         location,
-        request: { type: "inlined", declaration, pathParameters, queryParameters, body },
+        request: { type: "inlined", declaration, pathParameters, queryParameters, headers, body },
         response: { type: "json" }
     } as unknown as FernIr.dynamic.Endpoint;
 }
@@ -182,13 +184,18 @@ describe("DynamicSnippetsGenerator", () => {
         expect(result.snippet).toBe("twilio messages create --json-param raw");
     });
 
-    it("derives the flag from the renamed SDK name (x-fern-parameter-name)", () => {
+    it("derives the flag from the wire name, not the importer's SDK name", () => {
+        // The dynamic IR's SDK name is rewritten by the importer beyond any x-fern-parameter-name
+        // rename (e.g. it drops the `X-` prefix from headers), so the flag must come from the wire
+        // name to match the runtime. KNOWN GAP: a genuine x-fern-parameter-name rename can't be
+        // reproduced because the dynamic IR doesn't distinguish it from automatic renames — the flag
+        // falls back to the wire name here (see README).
         const ir = buildIr(
             inlinedEndpoint({
                 group: ["messages"],
                 method: "create",
                 location: { method: "POST", path: "/Messages" },
-                // wire name PageSize, but renamed to "limit" in the SDK surface
+                // wire name PageSize; importer SDK name differs ("limit") but the flag is wire-based.
                 queryParameters: [param("PageSize", { sdkName: "limit" })]
             })
         );
@@ -197,7 +204,26 @@ describe("DynamicSnippetsGenerator", () => {
             queryParameters: { PageSize: 20 }
         });
         expect(result.errors).toBeUndefined();
-        expect(result.snippet).toBe("twilio messages create --limit 20");
+        expect(result.snippet).toBe("twilio messages create --page-size 20");
+    });
+
+    it("derives a header flag from the wire name, keeping the X- prefix", () => {
+        // Regression guard: the importer renames X-Custom-Header's SDK name to `customHeader`; the
+        // flag must stay wire-based (`--x-custom-header`), matching the runtime --schema golden.
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["messages"],
+                method: "create",
+                location: { method: "POST", path: "/Messages" },
+                headers: [param("X-Custom-Header", { sdkName: "customHeader" })]
+            })
+        );
+        const result = generate(ir, {
+            endpoint: { method: "POST", path: "/Messages" },
+            headers: { "X-Custom-Header": "custom-value" }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe("twilio messages create --x-custom-header custom-value");
     });
 
     it("drops the second parameter when two resolve to the same flag (keep-first)", () => {
