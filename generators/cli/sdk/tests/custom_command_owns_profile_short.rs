@@ -123,6 +123,25 @@ fn short_p_before_the_command_path_is_still_the_profile() {
 
 #[test]
 #[serial]
+fn a_profile_named_like_the_command_does_not_hand_over_the_short() {
+    with_temp_home(|| {
+        // `-p serverless` is a profile value, not the `serverless` command.
+        let (code, out) = run(&[
+            "probe",
+            "-p",
+            "serverless",
+            "serverless",
+            "start",
+            "-p",
+            "9",
+        ]);
+        assert_ne!(code, 0, "{out}");
+        assert!(out.contains("unknown profile `serverless`"), "{out}");
+    });
+}
+
+#[test]
+#[serial]
 fn long_profile_after_the_command_path_is_still_the_profile() {
     with_temp_home(|| {
         let (code, out) = run(&["probe", "serverless", "start", "--profile", "acme"]);

@@ -764,13 +764,6 @@ impl CliApp {
         }
     }
 
-    /// Argv index past which `-p` no longer means `--profile`, because argv
-    /// has named a custom command that declares its own `-p`. `usize::MAX`
-    /// when no such command is named (or none exists).
-    ///
-    /// Mirrors `shadow_global_short` in the clap tree: clap gives `-p` to
-    /// the command's own arg there, so the pre-clap scanner must stop
-    /// claiming it at the same point.
     fn profile_flag_help(&self, config: &crate::profiles::ProfilesConfig) -> String {
         format!(
             "Run this command under a named profile (see `{} {}`). \
@@ -781,6 +774,13 @@ impl CliApp {
         )
     }
 
+    /// Argv index past which `-p` no longer means `--profile`, because argv
+    /// has named a custom command that declares its own `-p`. `usize::MAX`
+    /// when no such command is named (or none exists).
+    ///
+    /// Mirrors `shadow_global_short` in the clap tree: clap gives `-p` to
+    /// the command's own arg there, so the pre-clap scanner must stop
+    /// claiming it at the same point.
     fn profile_short_cutoff(&self, str_args: &[String]) -> usize {
         self.cli_commands
             .iter()
@@ -791,7 +791,16 @@ impl CliApp {
                     crate::profiles::selection::PROFILE_SHORT,
                 )
             })
-            .filter_map(|path| crate::custom_commands::path_end_in_argv(str_args, &path))
+            .filter_map(|path| {
+                crate::custom_commands::path_end_in_argv(
+                    str_args,
+                    &path,
+                    Some((
+                        crate::profiles::selection::PROFILE_FLAG,
+                        crate::profiles::selection::PROFILE_SHORT,
+                    )),
+                )
+            })
             .min()
             .unwrap_or(usize::MAX)
     }
@@ -1938,12 +1947,15 @@ fn apply_describe(cli: clap::Command, path: &[String], about: &str) -> clap::Com
 /// visible one there; the clone is itself global, so it carries the hidden
 /// state down the rest of the subtree while still parsing identically.
 fn apply_hide_global_flags(cli: clap::Command, path: &[String], flags: &[String]) -> clap::Command {
+    if path.is_empty() {
+        return cli;
+    }
     let hidden: Vec<clap::Arg> = cli
         .get_arguments()
         .filter(|a| a.is_global_set() && flags.iter().any(|f| f == a.get_id().as_str()))
         .map(|a| a.clone().hide(true))
         .collect();
-    if hidden.is_empty() || path.is_empty() {
+    if hidden.is_empty() {
         return cli;
     }
     modify_at_path(cli, path, &|mut c| {

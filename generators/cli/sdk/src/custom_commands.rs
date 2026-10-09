@@ -86,12 +86,34 @@ fn collect_paths_owning_short(
 ///
 /// Segments must appear in order; tokens between them are skipped so that
 /// globals placed mid-path (`cli serverless --debug start`) still match.
-/// Scanning stops at a bare `--`.
-pub fn path_end_in_argv(argv: &[String], path: &[PathSegment]) -> Option<usize> {
+/// Scanning stops at a bare `--`. An empty `path` never matches.
+///
+/// Like the other raw-argv scanners in this crate this cannot tell a
+/// command name from a flag *value* that happens to equal it; the one
+/// value-taking flag that matters here, `-<short>`/`--<flag>` itself, is
+/// skipped together with its value when `value_flag` is given.
+pub fn path_end_in_argv(
+    argv: &[String],
+    path: &[PathSegment],
+    value_flag: Option<(&str, char)>,
+) -> Option<usize> {
+    if path.is_empty() {
+        return None;
+    }
     let mut depth = 0;
+    let mut skip_value = false;
     for (index, token) in argv.iter().enumerate().skip(1) {
         if token == "--" {
             return None;
+        }
+        if std::mem::take(&mut skip_value) {
+            continue;
+        }
+        if let Some((flag, short)) = value_flag {
+            if token == &format!("--{flag}") || token == &format!("-{short}") {
+                skip_value = true;
+                continue;
+            }
         }
         if path[depth].iter().any(|spelling| spelling == token) {
             depth += 1;
