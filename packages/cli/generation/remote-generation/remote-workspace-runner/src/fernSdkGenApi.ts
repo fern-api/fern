@@ -4,7 +4,7 @@ import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
-import { getFeatureFlagClient } from "@fern-api/posthog-manager";
+import { type FeatureFlagContext, getFeatureFlagClient } from "@fern-api/posthog-manager";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
@@ -204,22 +204,69 @@ export interface FernSdkGenApiPublishCredentials {
 }
 
 /**
- * PostHog feature flag that routes an organization's generation through sdk-gen-api. Evaluated with
- * the org and the CLI release environment (`prod`, `pre-prod`, `beta`, ...) as properties, so
- * release conditions can target specific orgs and/or distributions. Off unless PostHog says otherwise.
+ * PostHog feature flag that routes generation through sdk-gen-api. It is evaluated once per
+ * (organization, generator) with these properties, so release conditions can target any combination:
+ *
+ * - `org`: the Fern organization
+ * - `generator`: the generator name, e.g. `fernapi/fern-python-sdk`
+ * - `language`: the generator's sdk-gen-api language, e.g. `python` (absent for generators sdk-gen-api does not know)
+ * - `environment`: the CLI release environment (`prod`, `pre-prod`, `beta`, ...)
+ *
+ * Configure it as a multivariate flag with `true` / `false` variants and give every condition set a
+ * variant override. PostHog uses the first matching set, so order them most specific first: an
+ * org + language set, then an org-wide set (all languages for one org), then a language-wide set (one
+ * language for every org), then a catch-all set holding the default. A flag that is missing, off, or
+ * unreachable keeps every generator on Fiddle.
  */
 export const USE_SDK_GEN_API_FEATURE_FLAG = "use-sdk-gen-api";
 
-export async function isFernSdkGenApiEnabled({ organization }: { organization: string }): Promise<boolean> {
-    return getFeatureFlagClient().isEnabled(USE_SDK_GEN_API_FEATURE_FLAG, { org: organization });
+/** One generator in one organization: the unit the `use-sdk-gen-api` flag is evaluated for. */
+export interface FernSdkGenApiFlagTarget {
+    organization: string;
+    /** The full generator name, e.g. `fernapi/fern-python-sdk`. */
+    generatorName: string;
+}
+
+export function isFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): Promise<boolean> {
+    return getFeatureFlagClient().isEnabled(USE_SDK_GEN_API_FEATURE_FLAG, getFlagContext(target));
 }
 
 /**
  * The flag value already resolved in this process, without a network request. For latency-bound
  * paths such as the exit-time upgrade nudge; `undefined` means the flag has not been evaluated.
  */
-export function getResolvedFernSdkGenApiEnabled({ organization }: { organization: string }): boolean | undefined {
-    return getFeatureFlagClient().getCachedValue(USE_SDK_GEN_API_FEATURE_FLAG, { org: organization });
+export function getResolvedFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): boolean | undefined {
+    return getFeatureFlagClient().getCachedValue(USE_SDK_GEN_API_FEATURE_FLAG, getFlagContext(target));
+}
+
+/**
+ * Evaluates the flag for each distinct generator in parallel. Never rejects: the flag client already
+ * resolves failures to off, and the catch keeps that guarantee for callers that start this early.
+ */
+export async function resolveFernSdkGenApiEnabledByGenerator({
+    organization,
+    generatorNames
+}: {
+    organization: string;
+    generatorNames: readonly string[];
+}): Promise<ReadonlyMap<string, boolean>> {
+    const uniqueGeneratorNames = [...new Set(generatorNames)];
+    const enabled = await Promise.all(
+        uniqueGeneratorNames.map(async (generatorName) => {
+            try {
+                return await isFernSdkGenApiEnabled({ organization, generatorName });
+            } catch {
+                // Routing falls back to Fiddle rather than failing generation on a flag error.
+                return false;
+            }
+        })
+    );
+    return new Map(uniqueGeneratorNames.map((generatorName, index) => [generatorName, enabled[index] === true]));
+}
+
+function getFlagContext({ organization, generatorName }: FernSdkGenApiFlagTarget): FeatureFlagContext {
+    const language = getFernSdkGenApiLanguage(generatorName);
+    return { org: organization, generator: generatorName, ...(language != null ? { language } : {}) };
 }
 
 /**

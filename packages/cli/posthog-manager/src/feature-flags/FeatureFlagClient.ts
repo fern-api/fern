@@ -2,10 +2,17 @@ import { PostHog } from "posthog-node";
 
 import type { CliReleaseEnvironment } from "./CliReleaseEnvironment.js";
 
-/** Inputs PostHog release conditions can target. */
+/**
+ * Inputs PostHog release conditions can target. Each is sent as a person and group property, alongside the
+ * CLI release `environment`, so a condition can match any combination of org, generator, and language.
+ */
 export interface FeatureFlagContext {
     /** The Fern organization from `fern.config.json` / `fern.yml`. */
     org: string;
+    /** The generator the flag is evaluated for, e.g. `fernapi/fern-python-sdk`. */
+    generator?: string;
+    /** The generator's language, e.g. `python`, which also covers every alias of that language's generator. */
+    language?: string;
 }
 
 /** The parts of a PostHog flag result that decide whether it is on; `undefined` when no value was returned. */
@@ -23,8 +30,9 @@ export interface FeatureFlagClient {
 
 /**
  * A flag is on when PostHog returns `true` for a boolean flag, or the `"true"` variant for a
- * multivariate flag. Multivariate flags let a release condition force `"false"` for one org
- * ahead of a catch-all condition that turns the flag on for everyone else.
+ * multivariate flag. Multivariate flags make overrides possible: PostHog uses the first matching
+ * condition set, so sets that force `"false"` (or `"true"`) for an org, a generator, or both can sit
+ * ahead of a catch-all set that holds the default for everyone else.
  */
 export function isFeatureFlagValueEnabled(value: FeatureFlagResultValue): boolean {
     if (value == null || !value.enabled) {
@@ -89,8 +97,9 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
         return this.resolved.get(getCacheKey(flag, context));
     }
 
-    private async evaluate(flag: string, { org }: FeatureFlagContext): Promise<boolean> {
-        const properties = { org, environment: this.environment };
+    private async evaluate(flag: string, context: FeatureFlagContext): Promise<boolean> {
+        const { org } = context;
+        const properties = getTargetingProperties(context, this.environment);
         try {
             const result = await this.evaluator.getFeatureFlagResult(flag, getFlagDistinctId(org), {
                 personProperties: properties,
@@ -115,6 +124,18 @@ export function getFlagDistinctId(org: string): string {
     return `org:${org}`;
 }
 
-function getCacheKey(flag: string, { org }: FeatureFlagContext): string {
-    return JSON.stringify([flag, org]);
+function getTargetingProperties(
+    { org, generator, language }: FeatureFlagContext,
+    environment: CliReleaseEnvironment
+): Record<string, string> {
+    return {
+        org,
+        environment,
+        ...(generator != null ? { generator } : {}),
+        ...(language != null ? { language } : {})
+    };
+}
+
+function getCacheKey(flag: string, { org, generator, language }: FeatureFlagContext): string {
+    return JSON.stringify([flag, org, generator ?? null, language ?? null]);
 }

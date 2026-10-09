@@ -91,7 +91,7 @@ function build(
         groupNames: ["sdks"],
         generatorName: undefined,
         token: undefined,
-        sdkGenApiEnabled: false,
+        sdkGenApiEnabledByGenerator: new Map(),
         cliReleaseEnvironment: "prod",
         ...overrides
     });
@@ -108,7 +108,8 @@ describe("buildGeneratePosthogProperties", () => {
                 group: "sdks",
                 name: "fernapi/fern-python-sdk",
                 version: "4.0.0",
-                outputMode: "downloadFiles"
+                outputMode: "downloadFiles",
+                sdkGenApiEnabled: false
             },
             {
                 workspace: "payments",
@@ -116,7 +117,8 @@ describe("buildGeneratePosthogProperties", () => {
                 group: "sdks",
                 name: "fernapi/fern-typescript-sdk",
                 version: "4.1.0",
-                outputMode: "downloadFiles"
+                outputMode: "downloadFiles",
+                sdkGenApiEnabled: false
             }
         ]);
         expect(properties.generatorNames).toEqual(["fernapi/fern-python-sdk", "fernapi/fern-typescript-sdk"]);
@@ -167,7 +169,8 @@ describe("buildGeneratePosthogProperties", () => {
                 group: "sdk-config",
                 name: "fernapi/fern-go-sdk",
                 version: "1.2.3",
-                outputMode: "downloadFiles"
+                outputMode: "downloadFiles",
+                sdkGenApiEnabled: false
             },
             {
                 workspace: "payments",
@@ -175,7 +178,8 @@ describe("buildGeneratePosthogProperties", () => {
                 group: "sdk-config",
                 name: "fernapi/fern-python-sdk",
                 version: "6.0.0",
-                outputMode: "downloadFiles"
+                outputMode: "downloadFiles",
+                sdkGenApiEnabled: false
             }
         ]);
         expect(properties.generatorNames).toEqual([
@@ -291,17 +295,36 @@ describe("buildGeneratePosthogProperties", () => {
         expect(build({ token: undefined })).toMatchObject({ authType: "none", userId: undefined });
     });
 
-    it.each([
-        { sdkGenApiEnabled: true, cliReleaseEnvironment: "pre-prod" as const },
-        { sdkGenApiEnabled: false, cliReleaseEnvironment: "prod" as const },
-        { sdkGenApiEnabled: undefined, cliReleaseEnvironment: "beta" as const }
-    ])("reports sdkGenApiEnabled=$sdkGenApiEnabled for the $cliReleaseEnvironment release environment", ({
-        sdkGenApiEnabled,
-        cliReleaseEnvironment
-    }) => {
-        expect(build({ sdkGenApiEnabled, cliReleaseEnvironment })).toMatchObject({
-            sdkGenApiEnabled,
-            cliReleaseEnvironment
+    it("reports the sdk-gen-api flag per generator and whether any generator is routed", () => {
+        const properties = build({
+            sdkGenApiEnabledByGenerator: new Map([
+                ["fernapi/fern-python-sdk", true],
+                ["fernapi/fern-typescript-sdk", false]
+            ]),
+            cliReleaseEnvironment: "pre-prod"
         });
+
+        expect(
+            properties.requestedGenerators.map(({ name, sdkGenApiEnabled }) => ({ name, sdkGenApiEnabled }))
+        ).toEqual([
+            { name: "fernapi/fern-python-sdk", sdkGenApiEnabled: true },
+            { name: "fernapi/fern-typescript-sdk", sdkGenApiEnabled: false }
+        ]);
+        expect(properties).toMatchObject({ sdkGenApiEnabled: true, cliReleaseEnvironment: "pre-prod" });
+    });
+
+    it.each([
+        { sdkGenApiEnabledByGenerator: new Map([["fernapi/fern-go-sdk", true]]), expected: false },
+        { sdkGenApiEnabledByGenerator: undefined, expected: undefined }
+    ])("reports sdkGenApiEnabled=$expected when no requested generator is routed", ({
+        sdkGenApiEnabledByGenerator,
+        expected
+    }) => {
+        const properties = build({ sdkGenApiEnabledByGenerator });
+
+        expect(properties.sdkGenApiEnabled).toBe(expected);
+        expect(properties.requestedGenerators.every(({ sdkGenApiEnabled }) => sdkGenApiEnabled === expected)).toBe(
+            true
+        );
     });
 });

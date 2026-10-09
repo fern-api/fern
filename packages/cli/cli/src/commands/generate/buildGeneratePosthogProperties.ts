@@ -29,6 +29,11 @@ export interface RequestedGeneratorTelemetry {
     name: string;
     version: string;
     outputMode: string;
+    /**
+     * The `use-sdk-gen-api` flag value for this generator in this org. Undefined for local (Docker)
+     * generation, which never routes through sdk-gen-api, so no flag request is made.
+     */
+    sdkGenApiEnabled: boolean | undefined;
 }
 
 export type GenerateAuthType = "user" | "organization" | "none";
@@ -45,8 +50,8 @@ export interface GeneratePosthogProperties {
     /** The Fern user ID when a user token authenticated the request; undefined for org tokens. */
     userId: string | undefined;
     /**
-     * The `use-sdk-gen-api` feature flag value for this org and release environment. Undefined for
-     * local (Docker) generation, which never routes through sdk-gen-api, so no flag request is made.
+     * True when the `use-sdk-gen-api` flag is on for at least one requested generator; see each
+     * `requestedGenerators` entry for the per-generator value. Undefined for local (Docker) generation.
      */
     sdkGenApiEnabled: boolean | undefined;
     /** The CLI distribution (`prod`, `pre-prod`, `beta`, ...) the flag was evaluated for. */
@@ -60,7 +65,7 @@ export function buildGeneratePosthogProperties({
     groupNames,
     generatorName,
     token,
-    sdkGenApiEnabled,
+    sdkGenApiEnabledByGenerator,
     cliReleaseEnvironment
 }: {
     project: Project;
@@ -70,24 +75,43 @@ export function buildGeneratePosthogProperties({
     groupNames: string[] | undefined;
     generatorName: string | undefined;
     token: FernToken | undefined;
-    sdkGenApiEnabled: boolean | undefined;
+    /** `use-sdk-gen-api` values by generator name; undefined when no flag was evaluated (local generation). */
+    sdkGenApiEnabledByGenerator: ReadonlyMap<string, boolean> | undefined;
     cliReleaseEnvironment: CliReleaseEnvironment;
 }): GeneratePosthogProperties {
-    const requestedGenerators = generations.flatMap((generation) => getRequestedGenerators(generation, isAutomation));
+    const requestedGenerators = listRequestedGenerators({ generations, isAutomation }).map((generator) => ({
+        ...generator,
+        sdkGenApiEnabled:
+            sdkGenApiEnabledByGenerator == null ? undefined : sdkGenApiEnabledByGenerator.get(generator.name) === true
+    }));
     return {
         workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName }),
         requestedGenerators,
         generatorNames: [...new Set(requestedGenerators.map(({ name }) => name))].sort(),
         ...getAuthProperties(token),
-        sdkGenApiEnabled,
+        sdkGenApiEnabled:
+            sdkGenApiEnabledByGenerator == null
+                ? undefined
+                : requestedGenerators.some(({ sdkGenApiEnabled }) => sdkGenApiEnabled === true),
         cliReleaseEnvironment
     };
 }
 
-function getRequestedGenerators(
+/** Every generator a planned `fern generate` run will execute, in workspace, group, and declaration order. */
+export function listRequestedGenerators({
+    generations,
+    isAutomation
+}: {
+    generations: GenerationTelemetryInput[];
+    isAutomation: boolean;
+}): Array<Omit<RequestedGeneratorTelemetry, "sdkGenApiEnabled">> {
+    return generations.flatMap((generation) => listRequestedGeneratorsForGeneration(generation, isAutomation));
+}
+
+function listRequestedGeneratorsForGeneration(
     generation: GenerationTelemetryInput,
     isAutomation: boolean
-): RequestedGeneratorTelemetry[] {
+): Array<Omit<RequestedGeneratorTelemetry, "sdkGenApiEnabled">> {
     const groups =
         generation.workspace.generatorsConfiguration?.groups.filter((group) =>
             generation.resolvedGroupNames.includes(group.groupName)

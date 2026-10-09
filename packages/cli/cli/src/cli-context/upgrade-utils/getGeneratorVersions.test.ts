@@ -115,14 +115,56 @@ describe("generator upgrade version reporting", () => {
         expect(fetchMock).not.toHaveBeenCalled();
     });
 
-    it("evaluates the sdk-gen-api flag once per lookup for the project's organization", async () => {
+    it("evaluates the sdk-gen-api flag per generator and picks each generator's version source", async () => {
+        h.loadGeneratorsConfiguration.mockResolvedValue({
+            groups: [
+                {
+                    groupName: "production",
+                    generators: [
+                        { name: "fernapi/fern-typescript-node-sdk", version: "0.40.0" },
+                        { name: "fern-python-sdk", version: "4.0.0" }
+                    ]
+                }
+            ]
+        });
+        h.isFernSdkGenApiEnabled.mockImplementation(
+            async ({ generatorName }: { generatorName: string }) => generatorName === "fernapi/fern-typescript-node-sdk"
+        );
+        h.getLatestGeneratorVersion.mockResolvedValue("4.1.0");
+        const fetchMock = vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                targets: [{ targetId: "generator", state: "RESOLVED", compatibleVersion: "0.51.7" }]
+            })
+        });
+        vi.stubGlobal("fetch", fetchMock);
+
+        const result = await getLatestGeneratorVersions({ cliContext, project });
+
+        expect(h.isFernSdkGenApiEnabled.mock.calls).toEqual([
+            [{ organization: "test-org", generatorName: "fernapi/fern-typescript-node-sdk" }],
+            [{ organization: "test-org", generatorName: "fernapi/fern-python-sdk" }]
+        ]);
+        expect(fetchMock).toHaveBeenCalledOnce();
+        expect(h.getLatestGeneratorVersion).toHaveBeenCalledOnce();
+        expect(result).toEqual({
+            type: "singleApi",
+            versions: {
+                production: {
+                    "fernapi/fern-typescript-node-sdk": { previousVersion: "0.40.0", latestVersion: "0.51.7" },
+                    "fern-python-sdk": { previousVersion: "4.0.0", latestVersion: "4.1.0" }
+                }
+            }
+        });
+    });
+
+    it("does not log in when the flag routes no generator through sdk-gen-api", async () => {
         h.getLatestGeneratorVersion.mockResolvedValue("0.52.0");
         vi.stubGlobal("fetch", vi.fn());
 
         await getLatestGeneratorVersions({ cliContext, project });
 
-        expect(h.isFernSdkGenApiEnabled).toHaveBeenCalledOnce();
-        expect(h.isFernSdkGenApiEnabled).toHaveBeenCalledWith({ organization: "test-org" });
+        expect(h.askToLogin).not.toHaveBeenCalled();
     });
 
     it("reuses an already-resolved flag without a request when skipFeatureFlagRequest is set", async () => {

@@ -21,7 +21,7 @@ const sdkGenApiHelpers = vi.hoisted(() => ({
         }
         return undefined;
     }),
-    isEnabled: vi.fn(async (_options: { organization: string }) => false),
+    isEnabled: vi.fn(async (_options: { organization: string; generatorName: string }) => false),
     askToLogin: vi.fn(async () => ({ type: "organization" as const, value: "test-token" }))
 }));
 const getSdkGenApiToken = sdkGenApiHelpers.askToLogin;
@@ -628,12 +628,57 @@ groups:
 
         expect(fetchMock).not.toHaveBeenCalled();
         expect(getLatestGeneratorVersion).not.toHaveBeenCalled();
+        expect(sdkGenApiHelpers.isEnabled).not.toHaveBeenCalled();
         expect(sdkGenApiHelpers.askToLogin).not.toHaveBeenCalled();
         expect(result.appliedUpgrades).toEqual([]);
         expect(result.alreadyUpToDate).toEqual([
             { generatorName: "fernapi/fern-typescript-sdk", groupName: "production", version: "latest" }
         ]);
         expect(result.updatedConfiguration).toContain("version: latest");
+    });
+
+    it("evaluates the sdk-gen-api flag per generator with its full name and picks each version source", async () => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fern-go-sdk\n        version: 0.30.0\n      - name: fernapi/fern-csharp-sdk\n        version: 1.0.0\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue("1.0.0");
+        sdkGenApiHelpers.isEnabled.mockImplementation(
+            async ({ generatorName }) => generatorName === "fernapi/fern-go-sdk"
+        );
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+        const fetchMock = vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                targets: [{ targetId: "generator", state: "RESOLVED", compatibleVersion: "0.30.0" }]
+            })
+        });
+        vi.stubGlobal("fetch", fetchMock);
+
+        await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: true,
+            skipAutoreleaseDisabled: false,
+            channel: undefined,
+            cliVersion: "1.0.0",
+            organization: "test-org",
+            getSdkGenApiToken
+        });
+
+        expect(sdkGenApiHelpers.isEnabled.mock.calls).toEqual([
+            [{ organization: "test-org", generatorName: "fernapi/fern-go-sdk" }],
+            [{ organization: "test-org", generatorName: "fernapi/fern-csharp-sdk" }]
+        ]);
+        expect(fetchMock).toHaveBeenCalledOnce();
+        expect(getLatestGeneratorVersion).toHaveBeenCalledOnce();
+        expect(getLatestGeneratorVersion).toHaveBeenCalledWith(
+            expect.objectContaining({ currentGeneratorVersion: "1.0.0" })
+        );
     });
 
     it("adds SDK Gen API context to network errors", async () => {

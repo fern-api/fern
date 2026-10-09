@@ -20,7 +20,7 @@ vi.mock("@fern-api/login", () => ({
 }));
 
 const featureFlags = vi.hoisted(() => ({
-    isEnabled: vi.fn(async (_flag: string, _context: { org: string }) => false),
+    isEnabled: vi.fn(async (_flag: string, _context: { org: string; generator?: string }) => false),
     getCachedValue: vi.fn((): boolean | undefined => undefined)
 }));
 
@@ -74,6 +74,7 @@ describe("generateAPIWorkspaces coexistence", () => {
     });
 
     afterEach(async () => {
+        featureFlags.isEnabled.mockImplementation(async () => false);
         await rm(temporaryDirectory, { recursive: true, force: true });
     });
 
@@ -133,7 +134,9 @@ describe("generateAPIWorkspaces coexistence", () => {
     });
 
     it("reports requested generators, auth, and the sdk-gen-api flag in the generate telemetry event", async () => {
-        featureFlags.isEnabled.mockResolvedValueOnce(true);
+        featureFlags.isEnabled.mockImplementation(
+            async (_flag: string, context: { generator?: string }) => context.generator === "fernapi/fern-python-sdk"
+        );
 
         await runGenerate({ project, cliContext, groupNames: ["python-sdk"], targetNames: ["typescript"] });
 
@@ -150,10 +153,28 @@ describe("generateAPIWorkspaces coexistence", () => {
                 cliReleaseEnvironment: "local"
             }
         });
-        expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", { org: "test" });
+        expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", {
+            org: "test",
+            generator: "fernapi/fern-python-sdk",
+            language: "python"
+        });
+        expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", {
+            org: "test",
+            generator: "fernapi/fern-typescript-sdk",
+            language: "typescript"
+        });
         expect(event?.properties?.requestedGenerators).toEqual([
-            expect.objectContaining({ kind: "legacy", group: "python-sdk", name: "fernapi/fern-python-sdk" }),
-            expect.objectContaining({ kind: "sdk-config", name: "fernapi/fern-typescript-sdk" })
+            expect.objectContaining({
+                kind: "legacy",
+                group: "python-sdk",
+                name: "fernapi/fern-python-sdk",
+                sdkGenApiEnabled: true
+            }),
+            expect.objectContaining({
+                kind: "sdk-config",
+                name: "fernapi/fern-typescript-sdk",
+                sdkGenApiEnabled: false
+            })
         ]);
     });
 

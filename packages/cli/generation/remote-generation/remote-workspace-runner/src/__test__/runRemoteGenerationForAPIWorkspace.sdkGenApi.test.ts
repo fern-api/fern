@@ -242,7 +242,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
 
         const prepared = prepareFernSdkGenApiRoutes({
             generators,
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1,
             requireEnvVars: true,
             isPreview: false
@@ -494,7 +494,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
 
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [generator],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });

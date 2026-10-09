@@ -109,7 +109,7 @@ describe("createSdkConfigWorkspace", () => {
         };
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [generatorInvocation],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1,
             requireEnvVars: true,
             isPreview: false

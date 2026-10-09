@@ -43,6 +43,36 @@ describe("PosthogFeatureFlagClient", () => {
         });
     });
 
+    it("adds the generator and its language as targeting properties", async () => {
+        const { client, getFeatureFlagResult } = createClient({
+            key: "use-sdk-gen-api",
+            enabled: true,
+            variant: "false",
+            payload: undefined
+        });
+        const properties = {
+            org: "acme",
+            environment: "pre-prod",
+            generator: "fernapi/fern-python-sdk",
+            language: "python"
+        };
+
+        await expect(
+            client.isEnabled("use-sdk-gen-api", {
+                org: "acme",
+                generator: "fernapi/fern-python-sdk",
+                language: "python"
+            })
+        ).resolves.toBe(false);
+
+        expect(getFeatureFlagResult).toHaveBeenCalledWith("use-sdk-gen-api", "org:acme", {
+            personProperties: properties,
+            groups: { organization: "acme" },
+            groupProperties: { organization: properties },
+            sendFeatureFlagEvents: false
+        });
+    });
+
     it.each([
         { name: "a missing flag", result: undefined },
         {
@@ -56,7 +86,7 @@ describe("PosthogFeatureFlagClient", () => {
         await expect(client.isEnabled("use-sdk-gen-api", { org: "acme" })).resolves.toBe(false);
     });
 
-    it("makes one request per flag and org and exposes the resolved value from cache", async () => {
+    it("makes one request per flag, org, and generator and exposes the resolved value from cache", async () => {
         const { client, getFeatureFlagResult } = createClient({
             key: "use-sdk-gen-api",
             enabled: true,
@@ -70,9 +100,13 @@ describe("PosthogFeatureFlagClient", () => {
             client.isEnabled("use-sdk-gen-api", { org: "acme" })
         ]);
         await client.isEnabled("use-sdk-gen-api", { org: "other" });
+        await client.isEnabled("use-sdk-gen-api", { org: "acme", generator: "fernapi/fern-go-sdk", language: "go" });
 
-        expect(getFeatureFlagResult).toHaveBeenCalledTimes(2);
+        expect(getFeatureFlagResult).toHaveBeenCalledTimes(3);
         expect(client.getCachedValue("use-sdk-gen-api", { org: "acme" })).toBe(true);
+        expect(client.getCachedValue("use-sdk-gen-api", { org: "acme", generator: "fernapi/fern-python-sdk" })).toBe(
+            undefined
+        );
     });
 });
 
