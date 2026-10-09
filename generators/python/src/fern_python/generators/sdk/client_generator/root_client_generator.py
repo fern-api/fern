@@ -1431,6 +1431,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 for param in constructor_parameters:
                     if param.private_member_name is not None:
                         writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                client_wrapper_constructor_kwargs.extend(
+                    self._get_refresh_auth_kwargs(token_provider_var_names=["oauth_token_provider"])
+                )
                 writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
                 writer.write_node(
                     AST.ClassInstantiation(
@@ -1524,6 +1527,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 for param in constructor_parameters:
                     if param.private_member_name is not None:
                         writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                client_wrapper_constructor_kwargs.extend(
+                    self._get_refresh_auth_kwargs(
+                        token_provider_var_names=[self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME]
+                        if inferred_auth_scheme is not None
+                        else []
+                    )
+                )
                 writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
                 writer.write_node(
                     AST.ClassInstantiation(
@@ -1903,6 +1913,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             # inferred-auth token endpoint is driven by the OAuth client_id/client_secret
             # credentials, which are not available (and not narrowed to non-None) here, so an
             # endpoint requiring inferred auth cannot be satisfied in token-only mode anyway.
+            client_wrapper_constructor_kwargs.extend(self._get_refresh_auth_kwargs(token_provider_var_names=[]))
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
             writer.write_node(
                 AST.ClassInstantiation(
@@ -2042,6 +2053,16 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         transport_variable_name=transport_variable_name,
                     )
                 )
+            final_client_wrapper_kwargs.extend(
+                self._get_refresh_auth_kwargs(
+                    token_provider_var_names=["oauth_token_provider"]
+                    + (
+                        [self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME]
+                        if endpoint_security_inferred_scheme is not None
+                        else []
+                    )
+                )
+            )
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
             writer.write_node(
                 AST.ClassInstantiation(
@@ -2070,6 +2091,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     exclude_auth=True,
                     transport_variable_name=transport_variable_name,
                 )
+                header_only_kwargs.extend(self._get_refresh_auth_kwargs(token_provider_var_names=[]))
                 writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
                 writer.write_node(
                     AST.ClassInstantiation(
@@ -2116,6 +2138,22 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 kwargs=[("socket_options", socket_options)],
             )
         )
+
+    def _get_refresh_auth_kwargs(
+        self, *, token_provider_var_names: List[str]
+    ) -> List[typing.Tuple[str, AST.Expression]]:
+        if not self._context.custom_config.refresh_auth_on_failed_permissions:
+            return []
+        # Cached token providers are invalidated if they still hold the failed request's credentials;
+        # callable credentials are re-read on every attempt.
+        if not token_provider_var_names:
+            refresh_auth = "lambda _failed_headers: None"
+        elif len(token_provider_var_names) == 1:
+            refresh_auth = f"{token_provider_var_names[0]}.invalidate"
+        else:
+            invalidations = ", ".join(f"{name}.invalidate(failed_headers)" for name in token_provider_var_names)
+            refresh_auth = f"lambda failed_headers: ({invalidations})"
+        return [(ClientWrapperGenerator.REFRESH_AUTH_PARAMETER_NAME, AST.Expression(refresh_auth))]
 
     def _get_client_wrapper_kwargs(
         self,
