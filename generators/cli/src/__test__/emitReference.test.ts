@@ -519,4 +519,296 @@ describe("emitReference", () => {
 
         expect(reference).toContain("# my-tool CLI Reference");
     });
+    // ── Parity with the runtime's command model ──────────────────────
+
+    it("omits OPTIONS and HEAD operations, which the runtime has no command for", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Pets", version: "1.0.0" },
+            paths: {
+                "/pets": {
+                    get: { operationId: "pets_list", tags: ["Pets"], responses: { "200": { description: "OK" } } },
+                    options: {
+                        operationId: "pets_preflight",
+                        tags: ["Pets"],
+                        responses: { "204": { description: "" } }
+                    },
+                    head: { operationId: "pets_head", tags: ["Pets"], responses: { "200": { description: "" } } }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "pets",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("`pets pets list`");
+        expect(reference).not.toContain("preflight");
+        expect(reference).not.toContain("pets pets head");
+    });
+
+    it("hoists a group named like its namespace and nests `/` namespaces", async () => {
+        const spec = (tag: string) => ({
+            openapi: "3.0.0",
+            info: { title: "Api", version: "1.0.0" },
+            paths: {
+                "/items": { get: { operationId: "list", tags: [tag], responses: { "200": { description: "OK" } } } }
+            }
+        });
+        const emailPath = await writeSpec("email.json", spec("Email"));
+        const bulkPath = await writeSpec("bulk.json", spec("BulkMessages"));
+        await writeManifest([
+            { type: "openapi", specPath: emailPath, namespace: "email" },
+            { type: "openapi", specPath: bulkPath, namespace: "messaging/sub" }
+        ]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("`acme email list`");
+        expect(reference).not.toContain("acme email email");
+        expect(reference).toContain("`acme messaging sub bulk-messages list`");
+    });
+
+    it("lists one flag per request-body field, with the runtime's names and required markers", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Msgs", version: "1.0.0" },
+            components: {
+                schemas: {
+                    Address: {
+                        type: "object",
+                        required: ["street"],
+                        properties: { street: { type: "string" }, zipCode: { type: "string" } }
+                    },
+                    CreateMessage: {
+                        type: "object",
+                        required: ["To"],
+                        properties: {
+                            To: { type: "string", description: "Recipient." },
+                            messagingServiceSID: { type: "string" },
+                            id: { type: "string", readOnly: true },
+                            query: { type: "string" },
+                            address: { $ref: "#/components/schemas/Address" }
+                        }
+                    }
+                }
+            },
+            paths: {
+                "/messages": {
+                    post: {
+                        operationId: "messages_send",
+                        tags: ["Messages"],
+                        requestBody: {
+                            required: true,
+                            content: {
+                                "application/x-www-form-urlencoded": {
+                                    schema: { $ref: "#/components/schemas/CreateMessage" }
+                                }
+                            }
+                        },
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "msgs",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("| `--to` | `string` | Yes | Recipient. |");
+        expect(reference).toContain("| `--messaging-service-s-i-d` | `string` | No |");
+        expect(reference).toContain("| `--query-param` | `string` | No |");
+        expect(reference).toContain("| `--address` | `JSON` | No |");
+        expect(reference).toContain("| `--address.street` | `string` | Yes |");
+        expect(reference).toContain("| `--address.zip-code` | `string` | No |");
+        expect(reference).not.toContain("`--id`");
+        // Body fields can satisfy the body, so `--json` itself is optional.
+        expect(reference).toContain("| `--json` | `JSON` | No |");
+    });
+
+    it("lists only top-level multipart parts, skipping built-in collisions", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Media", version: "1.0.0" },
+            paths: {
+                "/media": {
+                    post: {
+                        operationId: "media_upload",
+                        tags: ["Media"],
+                        requestBody: {
+                            content: {
+                                "multipart/form-data": {
+                                    schema: {
+                                        type: "object",
+                                        required: ["file"],
+                                        properties: {
+                                            file: { type: "string", format: "binary" },
+                                            meta: { type: "object", properties: { label: { type: "string" } } },
+                                            format: { type: "string" }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "media",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("| `--file` | `file` | Yes |");
+        expect(reference).toContain("| `--meta` |");
+        expect(reference).not.toContain("`--meta.label`");
+        expect(reference).not.toContain("`--format-param`");
+    });
+
+    it("stops at cyclic allOf inheritance", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Loop", version: "1.0.0" },
+            components: {
+                schemas: {
+                    A: {
+                        allOf: [{ $ref: "#/components/schemas/B" }],
+                        properties: { alpha: { type: "string" } }
+                    },
+                    B: {
+                        allOf: [{ $ref: "#/components/schemas/A" }],
+                        properties: { beta: { type: "string" } }
+                    }
+                }
+            },
+            paths: {
+                "/things": {
+                    post: {
+                        operationId: "things_create",
+                        tags: ["Things"],
+                        requestBody: {
+                            content: { "application/json": { schema: { $ref: "#/components/schemas/A" } } }
+                        },
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "loop",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("| `--alpha` |");
+        expect(reference).toContain("| `--beta` |");
+    });
+
+    it("uses x-fern-parameter-name and the runtime's sanitizing for parameter flags", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Msgs", version: "1.0.0" },
+            paths: {
+                "/messages": {
+                    get: {
+                        operationId: "messages_list",
+                        tags: ["Messages"],
+                        parameters: [
+                            {
+                                name: "DateSent<",
+                                in: "query",
+                                "x-fern-parameter-name": "DateSentBefore",
+                                schema: { type: "string" }
+                            },
+                            { name: "Page[Size]", in: "query", schema: { type: "integer" } }
+                        ],
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "msgs",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("`--date-sent-before`");
+        expect(reference).toContain("`--page-size`");
+    });
+
+    it("renders Markdown headings inside descriptions as bold text", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Docs", version: "1.0.0" },
+            paths: {
+                "/things": {
+                    get: {
+                        operationId: "things_list",
+                        tags: ["Things"],
+                        description: "Lists things.\n\n## Rate limits\n\nTen per second.",
+                        parameters: [
+                            {
+                                name: "filter",
+                                in: "query",
+                                description: "## Syntax\nA filter\nexpression.",
+                                schema: { type: "string" }
+                            }
+                        ],
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "docs",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("**Rate limits**");
+        expect(reference).not.toMatch(/^## Rate limits/m);
+        expect(reference).toContain("| `--filter` | `string` | No | Syntax A filter expression. |");
+    });
 });

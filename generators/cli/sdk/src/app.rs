@@ -1220,6 +1220,7 @@ impl CliApp {
         // 1e. Group every global flag under its own `--help` section so leaf
         // help leads with the operation's own required/optional parameters.
         cli = crate::cli_args::apply_global_help_heading(cli);
+        cli = crate::cli_args::fill_help_placeholders(cli, &self.name);
 
         // 1f. Validate hook patterns against the command tree.
         self.hooks.validate_patterns(&cli)?;
@@ -1259,10 +1260,14 @@ impl CliApp {
                 }
                 return Ok(PipelineOutcome::HelpShown);
             }
-            crate::man::generate_man_to(cli, &self.name, out)
-                .map_err(|e| CliError::Other(e.into()))?;
+            let request = crate::man::parse_man_request(&cli, &str_args)?;
+            crate::man::run_man_request(cli, &self.name, &request, out)?;
             return Ok(PipelineOutcome::HelpShown);
         }
+
+        // 2. Collapse the repeated global-flag block in subcommand `--help`.
+        // After `completion`/`man`, which render from the full tree.
+        cli = crate::cli_args::collapse_subcommand_global_help(cli, &self.name);
 
         // 3. Parse argv.
         let matches = match cli.try_get_matches_from(&args) {
