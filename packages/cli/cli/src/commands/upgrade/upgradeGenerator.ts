@@ -252,11 +252,11 @@ export async function loadAndUpdateGenerators({
                     organization,
                     generatorName: addDefaultDockerOrgIfNotPresent(generatorName)
                 }));
-            if (useSdkGenApi && !tracksLatest && getSdkGenApiToken == null) {
+            if (useSdkGenApi && getSdkGenApiToken == null) {
                 throw new Error("SDK Gen API generator version discovery requires authentication");
             }
             let sdkGenApiVersions: Awaited<ReturnType<typeof getSdkGenApiGeneratorVersions>> | undefined;
-            if (useSdkGenApi && !tracksLatest && getSdkGenApiToken != null) {
+            if (useSdkGenApi && getSdkGenApiToken != null) {
                 sdkGenApiVersions = await getSdkGenApiGeneratorVersions({
                     // SDK Gen API preserves legacy generator identities that FDR normalizes to a shared generator.
                     generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
