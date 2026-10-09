@@ -65,6 +65,8 @@ fn app() -> CliApp {
             clap::Command::new("get").about("Get a variable"),
             OpenApiBinding::handler(|_, _| Ok(())),
         )
+        .alias(&["serverless"], "sls")
+        .alias(&["serverless", "start"], "run")
         .describe(&["serverless"], "Serverless toolkit")
         .describe(&["serverless", "env"], "Environment variables")
         .hide_global_flags(&["serverless"], &["dry-run", "query", "spec", "spec-raw"])
@@ -118,6 +120,16 @@ fn short_p_before_the_command_path_is_still_the_profile() {
         let (code, out) = run(&["probe", "-p", "acme", "serverless", "start"]);
         assert_ne!(code, 0, "{out}");
         assert!(out.contains("unknown profile `acme`"), "{out}");
+    });
+}
+
+#[test]
+#[serial]
+fn aliases_registered_with_cli_app_alias_own_the_short_too() {
+    with_temp_home(|| {
+        let (code, out) = run(&["probe", "sls", "run", "-p", "9002"]);
+        assert_eq!(code, 0, "{out}");
+        assert_eq!(last_port(), "9002");
     });
 }
 
