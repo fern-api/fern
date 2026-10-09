@@ -2541,6 +2541,11 @@ types:
         type: optional<boolean>
         docs: |
           Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
+      robots-txt-on-instance-url:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          Experimental flag: when set to `true`, the custom robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep the `X-Robots-Tag: noindex, nofollow` header, so search engines still won't index them. Has no effect without a custom robots.txt. Only the static docs renderer needs this flag: the Next.js renderer already serves a custom robots.txt on the instance URL.
       external-sitemaps:
         type: optional<list<ExternalSitemap>>
         availability: pre-release
