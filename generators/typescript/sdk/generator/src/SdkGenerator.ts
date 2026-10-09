@@ -583,7 +583,8 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
-            alwaysSendAuth: config.alwaysSendAuth
+            alwaysSendAuth: config.alwaysSendAuth,
+            guardProcessEnvAccess: config.guardProcessEnvAccess
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
@@ -780,8 +781,8 @@ export class SdkGenerator {
             this.generateReactQueryHooks();
         }
 
+        this.generateSnippets();
         if (this.config.snippetFilepath != null) {
-            this.generateSnippets();
             const snippets: FernGeneratorExec.Snippets = {
                 endpoints: this.endpointSnippets,
                 types: {}
@@ -798,12 +799,6 @@ export class SdkGenerator {
                 throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
-            try {
-                await this.generateReference();
-            } catch (e) {
-                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
-            }
-
             if (!this.config.whitelabel) {
                 try {
                     await this.generateContributing();
@@ -811,6 +806,12 @@ export class SdkGenerator {
                     throw new Error(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
                 }
             }
+        }
+
+        try {
+            await this.generateReference();
+        } catch (e) {
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
 
         const subpackageExportPaths = this.config.generateSubpackageExports ? this.getSubpackageExportPaths() : [];

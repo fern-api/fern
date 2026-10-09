@@ -1,0 +1,57 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "28a1cf47",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityOauthTokenOverride.SeedJavaEndpointSecurityOauthTokenOverrideClient;\nimport com.seed.javaEndpointSecurityOauthTokenOverride.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityOauthTokenOverrideClient client = SeedJavaEndpointSecurityOauthTokenOverrideClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityOauthTokenOverride.SeedJavaEndpointSecurityOauthTokenOverrideClient;\nimport com.seed.javaEndpointSecurityOauthTokenOverride.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityOauthTokenOverrideClient client = SeedJavaEndpointSecurityOauthTokenOverrideClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e61d75e3",
+            "id": {
+                "method": "GET",
+                "path": "/users/oauth",
+                "identifier_override": "endpoint_user.getWithOAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityOauthTokenOverride.SeedJavaEndpointSecurityOauthTokenOverrideClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityOauthTokenOverrideClient client = SeedJavaEndpointSecurityOauthTokenOverrideClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithOAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityOauthTokenOverride.SeedJavaEndpointSecurityOauthTokenOverrideClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityOauthTokenOverrideClient client = SeedJavaEndpointSecurityOauthTokenOverrideClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithOAuth();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e61d75e3",
+            "id": {
+                "method": "GET",
+                "path": "/users/api-key",
+                "identifier_override": "endpoint_user.getWithApiKey"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityOauthTokenOverride.SeedJavaEndpointSecurityOauthTokenOverrideClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityOauthTokenOverrideClient client = SeedJavaEndpointSecurityOauthTokenOverrideClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithApiKey();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityOauthTokenOverride.SeedJavaEndpointSecurityOauthTokenOverrideClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityOauthTokenOverrideClient client = SeedJavaEndpointSecurityOauthTokenOverrideClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithApiKey();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e61d75e3",
+            "id": {
+                "method": "GET",
+                "path": "/users/any",
+                "identifier_override": "endpoint_user.getWithAnyAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityOauthTokenOverride.SeedJavaEndpointSecurityOauthTokenOverrideClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityOauthTokenOverrideClient client = SeedJavaEndpointSecurityOauthTokenOverrideClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithAnyAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityOauthTokenOverride.SeedJavaEndpointSecurityOauthTokenOverrideClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityOauthTokenOverrideClient client = SeedJavaEndpointSecurityOauthTokenOverrideClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithAnyAuth();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

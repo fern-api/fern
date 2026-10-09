@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->streamDataContextWithEnvelopeSchema(
+$client->streamProtocolMixedSchema(
     new StreamRequest([]),
 );

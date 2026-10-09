@@ -1,4 +1,52 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.52.0
+  changelogEntry:
+    - summary: |
+        A custom command may now declare its own `-p` even when profiles reserve `-p` for `--profile` globally
+        (e.g. Twilio's `serverless start -p <port>`). Clap previously refused to build the tree ("short option
+        names must be unique"); now the command gets a long-only `--profile` stand-in, and the pre-clap profile
+        scanner stops reading `-p` as a profile once argv has named that command — `cli -p acme serverless
+        start -p 9000` still selects profile `acme` and passes port `9000` through.
+      type: fix
+    - summary: |
+        Add `CliApp::describe(path, about)` to give a one-line description to the intermediate groups
+        `command_under` creates (they previously rendered with a blank description in `--help`), and
+        `CliApp::hide_global_flags(path, flags)` to hide named root globals such as `--dry-run`, `--query` or
+        `--spec` from the help of a custom subtree they do not apply to. Hidden flags remain accepted.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 0.51.2
+  changelogEntry:
+    - summary: |
+        `profiles create --provision` and `profiles remove --revoke` now resolve the request URL the same way a
+        direct command does: `--base-url` is honored and the spec's `servers[].variables` / `x-fern-default-url`
+        are applied. Previously the provision/revoke call kept the raw server template (e.g.
+        `https://api.{region}.{city}.twilio.com`) and failed with an invalid URL unless `<NAME>_BASE_URL` or a
+        profile base URL was set.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.51.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.1 updates.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.51.0
+  changelogEntry:
+    - summary: |
+        Add `config.profiles.provisionOperation`, the create-side counterpart of `revokeOperation`. When set,
+        `profiles create` gains `--provision`, which calls the named operation (e.g. `iam.keys.create`) with the
+        credentials already in the caller's environment, maps the response onto the profile's credential
+        (`credential: { username: sid, password: secret }`) and stores it in the OS keychain without ever printing
+        the secret. `revokeParameters: { Sid: sid }` records the key's identity as `credential_parameters` on the
+        profile — consulted only by `profiles remove --revoke`, never as a request default — so a profile owns its
+        API key end to end: minted on create, revoked on remove.
+      type: feat
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 0.50.0
   changelogEntry:
     - summary: |

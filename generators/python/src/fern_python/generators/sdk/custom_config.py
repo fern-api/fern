@@ -306,6 +306,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # false, where OAuth env vars win over explicitly provided basic auth.
     prefer_explicit_auth: bool = False
 
+    # When true, the inferred auth token provider leaves optional token request body
+    # parameters that are unset (None after constructor and environment defaults) out of
+    # the get-token request, instead of sending them as null (JSON) or empty (form).
+    omit_unset_inferred_auth_params: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 

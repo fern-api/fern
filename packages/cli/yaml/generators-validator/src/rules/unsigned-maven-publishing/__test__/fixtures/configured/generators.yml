@@ -1,0 +1,29 @@
+groups:
+  java-signed:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 1.0.0
+        output:
+          location: maven
+          coordinate: com.acme:acme-java
+          signature:
+            keyId: ${MAVEN_SIGNATURE_KID}
+            password: ${MAVEN_SIGNATURE_PASSWORD}
+            secretKey: ${MAVEN_SIGNATURE_SECRET_KEY}
+        github:
+          repository: acme/acme-java
+  java-custom-registry:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 1.0.0
+        output:
+          location: maven
+          coordinate: com.acme:acme-java
+          url: https://maven.acme.com/releases
+  java-download:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 1.0.0
+        output:
+          location: local-file-system
+          path: ../sdks/java
