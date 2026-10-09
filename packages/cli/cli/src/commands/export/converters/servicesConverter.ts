@@ -32,7 +32,7 @@ import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
 import { getDeclaredTypeNameKey, getErrorTypeNameKey, Mode } from "../convertIrToOpenApi.js";
 import { convertObject } from "./convertObject.js";
-import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter.js";
+import { convertTypeReference, OpenApiComponentSchema, unwrapOptional } from "./typeConverter.js";
 
 export function convertServices({
     ir,
@@ -306,7 +306,7 @@ function convertRequestBody({
         },
         reference: (reference) => {
             const convertedRequest: OpenAPIV3.MediaTypeObject = {
-                schema: convertTypeReference(reference.requestBodyType)
+                schema: convertTypeReference(unwrapOptional(reference.requestBodyType))
             };
             if (size(openapiExamples) > 0) {
                 convertedRequest.examples = openapiExamples;
@@ -339,7 +339,7 @@ function convertRequestBody({
                                     bodyProperty: (bodyProperty) => {
                                         acc[getWireValue(bodyProperty.name)] = {
                                             description: bodyProperty.docs ?? undefined,
-                                            ...convertTypeReference(bodyProperty.valueType)
+                                            ...convertTypeReference(unwrapOptional(bodyProperty.valueType))
                                         };
                                     },
                                     _other: () => {
@@ -737,8 +737,10 @@ function convertQueryParameter({
         description: queryParameter.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: queryParameter.valueType, typesByName }),
         schema: queryParameter.allowMultiple
-            ? convertTypeReference(TypeReference.container(ContainerType.list(queryParameter.valueType)))
-            : convertTypeReference(queryParameter.valueType)
+            ? convertTypeReference(
+                  TypeReference.container(ContainerType.list(unwrapOptional(queryParameter.valueType)))
+              )
+            : convertTypeReference(unwrapOptional(queryParameter.valueType))
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
@@ -783,7 +785,7 @@ function convertHeader({
         in: "header",
         description: httpHeader.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: httpHeader.valueType, typesByName }),
-        schema: convertTypeReference(httpHeader.valueType)
+        schema: convertTypeReference(unwrapOptional(httpHeader.valueType))
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};

@@ -1,0 +1,70 @@
+types:
+  Address:
+    properties:
+      street: string
+
+  OptionalString: optional<string>
+
+  User:
+    properties:
+      id: string
+      nickname: optional<string>
+      deletedAt: nullable<datetime>
+      bio: optional<nullable<string>>
+      address: optional<Address>
+      tags: list<optional<string>>
+      metadata: map<string, optional<string>>
+      alias: OptionalString
+
+  Event:
+    base-properties:
+      id: string
+      note: optional<string>
+    union:
+      created: User
+      deleted: optional<string>
+
+  UpdateUserRequest:
+    properties:
+      nickname: optional<string>
+      bio: optional<nullable<string>>
+
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    get:
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: string
+      request:
+        name: GetUserRequest
+        query-parameters:
+          include: optional<string>
+          fields:
+            type: optional<string>
+            allow-multiple: true
+        headers:
+          X-Trace-Id: optional<string>
+      response: optional<User>
+
+    update:
+      method: PATCH
+      path: /{id}
+      path-parameters:
+        id: string
+      request: optional<UpdateUserRequest>
+      response: User
+
+    uploadAvatar:
+      method: POST
+      path: /{id}/avatar
+      path-parameters:
+        id: string
+      request:
+        name: UploadAvatarRequest
+        body:
+          properties:
+            file: file
+            caption: optional<string>

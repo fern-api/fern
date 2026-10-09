@@ -7,7 +7,12 @@ import {
 } from "@fern-api/ir-sdk";
 import { getWireValue } from "@fern-api/ir-utils";
 import { OpenAPIV3 } from "openapi-types";
-import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter.js";
+import {
+    convertTypeReference,
+    getReferenceFromDeclaredTypeName,
+    OpenApiComponentSchema,
+    unwrapOptional
+} from "./typeConverter.js";
 
 export interface ObjectProperty {
     docs: string | undefined;
@@ -28,7 +33,7 @@ export function convertObject({
     const convertedProperties: Record<string, OpenApiComponentSchema> = {};
     const required: string[] = [];
     properties.forEach((objectProperty) => {
-        const convertedObjectProperty = convertTypeReference(objectProperty.valueType);
+        const convertedObjectProperty = convertTypeReference(unwrapOptional(objectProperty.valueType));
 
         let example: unknown = undefined;
         if (objectProperty.example != null && objectProperty.valueType.type === "primitive") {
