@@ -12,8 +12,9 @@ vi.mock("@fern-api/register", () => ({
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { convertIrToFdrApi } = await import("@fern-api/register");
+const { convertIrToFdrApi, injectCliSnippets } = await import("@fern-api/register");
 const mockConvertIrToFdrApi = convertIrToFdrApi as Mock;
+const mockInjectCliSnippets = injectCliSnippets as Mock;
 
 function makeApiDefinition(overrides: Partial<APIV1Write.ApiDefinition> = {}): APIV1Write.ApiDefinition {
     return {
@@ -56,6 +57,7 @@ function makeContext(): TaskContext {
 describe("buildLocaleApiDefinitions", () => {
     beforeEach(() => {
         mockConvertIrToFdrApi.mockReset();
+        mockInjectCliSnippets.mockReset();
     });
 
     it("replaces base definitions with translated ones for matching API IDs", async () => {
@@ -168,5 +170,39 @@ describe("buildLocaleApiDefinitions", () => {
             context,
             apiNameOverride: "plant-api"
         });
+    });
+    it("injects CLI snippets into the translated definition when cliSnippetsConfig is set", async () => {
+        const translatedDef = makeApiDefinition();
+        mockConvertIrToFdrApi.mockReturnValue(translatedDef);
+        const cliSnippetsConfig = {
+            catalogAbsolutePath: "/tmp/cli-catalog.json",
+            namespaces: { v2010: "core" }
+        } as unknown as NonNullable<TranslatedApiSpec["cliSnippetsConfig"]>;
+        const context = makeContext();
+
+        const result = await buildLocaleApiDefinitions({
+            baseApiDefinitions: new Map([["api-1", makeApiDefinition()]]),
+            translatedSpecs: new Map([["api-1", makeTranslatedSpec({ cliSnippetsConfig })]]),
+            context
+        });
+
+        expect(mockInjectCliSnippets).toHaveBeenCalledWith({
+            apiDefinition: translatedDef,
+            config: cliSnippetsConfig,
+            context
+        });
+        expect(result.get("api-1")).toBe(translatedDef);
+    });
+
+    it("does not inject CLI snippets when cliSnippetsConfig is absent", async () => {
+        mockConvertIrToFdrApi.mockReturnValue(makeApiDefinition());
+
+        await buildLocaleApiDefinitions({
+            baseApiDefinitions: new Map([["api-1", makeApiDefinition()]]),
+            translatedSpecs: new Map([["api-1", makeTranslatedSpec()]]),
+            context: makeContext()
+        });
+
+        expect(mockInjectCliSnippets).not.toHaveBeenCalled();
     });
 });

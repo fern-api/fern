@@ -238,4 +238,59 @@ describe("assembleCliCommand", () => {
         const code = assembleCliCommand(command, makeExample({ requestBody: { Body: "hi" } }));
         expect(code).toBe("twilio x create --body hi");
     });
+    it("renders repeated object elements as JSON, one flag per element", () => {
+        const command: CliCatalogCommand = {
+            command: ["twilio", "x", "create"],
+            httpMethod: "POST",
+            path: "/x",
+            inputs: [{ wireName: "Rules", location: "body", flag: "--rules", repeated: true }]
+        };
+        const code = assembleCliCommand(
+            command,
+            makeExample({ requestBodyV3: { type: "json", value: { Rules: [{ type: "allow" }, { type: "deny" }] } } })
+        );
+        expect(code).toBe(`twilio x create --rules '{"type":"allow"}' --rules '{"type":"deny"}'`);
+    });
+
+    it("keys flagless nested body fields in --params by their dotted path", () => {
+        const command: CliCatalogCommand = {
+            command: ["twilio", "x", "create"],
+            httpMethod: "POST",
+            path: "/x",
+            inputs: [{ wireName: "City", location: "body", path: ["Address", "City"] }]
+        };
+        const code = assembleCliCommand(
+            command,
+            makeExample({ requestBodyV3: { type: "json", value: { Address: { City: "SF" } } } })
+        );
+        expect(code).toBe(`twilio x create --params '{"Address.City":"SF"}'`);
+    });
+
+    it("skips an object parent input when its leaves are their own inputs", () => {
+        const command: CliCatalogCommand = {
+            command: ["twilio", "x", "create"],
+            httpMethod: "POST",
+            path: "/x",
+            inputs: [
+                { wireName: "Address", location: "body", flag: "--address" },
+                { wireName: "Address.City", location: "body", flag: "--address.city", path: ["Address", "City"] }
+            ]
+        };
+        const code = assembleCliCommand(
+            command,
+            makeExample({ requestBodyV3: { type: "json", value: { Address: { City: "SF" } } } })
+        );
+        expect(code).toBe("twilio x create --address.city SF");
+    });
+
+    it("shell-quotes catalog command tokens and flags that contain shell syntax", () => {
+        const command: CliCatalogCommand = {
+            command: ["twilio", "x;rm -rf ~", "create"],
+            httpMethod: "POST",
+            path: "/x",
+            inputs: [{ wireName: "To", location: "body", flag: "--to$(id)" }]
+        };
+        const code = assembleCliCommand(command, makeExample({ requestBodyV3: { type: "json", value: { To: "a" } } }));
+        expect(code).toBe(`twilio 'x;rm -rf ~' create '--to$(id)' a`);
+    });
 });

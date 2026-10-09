@@ -26,7 +26,7 @@ const JSON_BODY_FLAG = "--json";
  * single `--params '<...>'` payload, the runtime's catch-all for everything a flat flag can't carry.
  */
 export function assembleCliCommand(command: CliCatalogCommand, example: ExampleEndpointCall): string {
-    const tokens: string[] = [...command.command];
+    const tokens: string[] = command.command.map(shellQuote);
     const bodyValue = extractBodyValue(example);
     const paramsPayload: Record<string, unknown> = {};
     let hasParamsPayload = false;
@@ -38,8 +38,10 @@ export function assembleCliCommand(command: CliCatalogCommand, example: ExampleE
         (input) => input.location === "body" && input.path == null && input.wireName.includes(".")
     );
 
+    // The runtime keys --params by its own parameter names, which for a nested body field is the
+    // dotted path (`Address.City`), not a nested object.
     const routeToParams = (input: CliCatalogInput, value: unknown): void => {
-        setByPath(paramsPayload, input.path ?? [input.wireName], value);
+        paramsPayload[keyPath(input).join(".")] = value;
         hasParamsPayload = true;
     };
 
@@ -54,6 +56,12 @@ export function assembleCliCommand(command: CliCatalogCommand, example: ExampleE
             continue;
         }
 
+        // An object parent whose leaves are their own inputs is carried by those leaves; sending both
+        // makes the runtime reject the object-shorthand + leaf-flag combination.
+        if (isPlainObject(value) && hasDescendantInput(command, input)) {
+            continue;
+        }
+
         // No dedicated flag → the runtime only accepts this input via --params.
         if (input.flag == null) {
             routeToParams(input, value);
@@ -64,7 +72,7 @@ export function assembleCliCommand(command: CliCatalogCommand, example: ExampleE
             if (input.repeated === true) {
                 for (const element of value) {
                     if (element !== undefined && element !== null) {
-                        tokens.push(input.flag, shellQuote(formatScalar(element)));
+                        tokens.push(shellQuote(input.flag), shellQuote(formatFlagValue(element)));
                     }
                 }
             } else {
@@ -80,7 +88,7 @@ export function assembleCliCommand(command: CliCatalogCommand, example: ExampleE
             continue;
         }
 
-        tokens.push(input.flag, shellQuote(formatScalar(value)));
+        tokens.push(shellQuote(input.flag), shellQuote(formatFlagValue(value)));
     }
 
     if (bodyNeedsJson && isPlainObject(bodyValue) && Object.keys(bodyValue).length > 0) {
@@ -91,6 +99,21 @@ export function assembleCliCommand(command: CliCatalogCommand, example: ExampleE
     }
 
     return tokens.join(" ");
+}
+
+function keyPath(input: CliCatalogInput): string[] {
+    return input.path ?? [input.wireName];
+}
+
+function hasDescendantInput(command: CliCatalogCommand, input: CliCatalogInput): boolean {
+    const parent = keyPath(input).map((segment) => segment.toLowerCase());
+    return command.inputs.some((other) => {
+        if (other === input || other.location !== input.location) {
+            return false;
+        }
+        const child = keyPath(other);
+        return child.length > parent.length && parent.every((segment, i) => child[i]?.toLowerCase() === segment);
+    });
 }
 
 function resolveContainer(
@@ -183,22 +206,13 @@ function normalizeIdentifier(value: string): string {
     return value.toLowerCase().replace(/[-_]/g, "");
 }
 
-function setByPath(target: Record<string, unknown>, path: string[], value: unknown): void {
-    let current = target;
-    for (let i = 0; i < path.length - 1; i++) {
-        const segment = path[i] as string;
-        const next = current[segment];
-        if (!isPlainObject(next)) {
-            current[segment] = {};
-        }
-        current = current[segment] as Record<string, unknown>;
-    }
-    current[path[path.length - 1] as string] = value;
-}
-
-function formatScalar(value: unknown): string {
+/** Scalars render as-is; object/array elements of a repeated flag render as JSON, which the runtime parses. */
+function formatFlagValue(value: unknown): string {
     if (typeof value === "boolean") {
         return value ? "true" : "false";
+    }
+    if (typeof value === "object" && value != null) {
+        return JSON.stringify(value);
     }
     return String(value);
 }

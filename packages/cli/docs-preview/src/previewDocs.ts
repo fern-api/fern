@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import { getUserToken } from "@fern-api/auth";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
@@ -566,13 +566,13 @@ async function applyGlobalThemeIfNeeded(
     return stitchGlobalTheme({ docsWorkspace, organization, fdrOrigin, token, taskContext: context });
 }
 
-const previewCliCatalogCache = new Map<string, CliCatalog>();
+const previewCliCatalogCache = new Map<string, { mtimeMs: number; catalog: CliCatalog }>();
 
 /**
- * Load (and cache) the committed CLI catalog synchronously and inject CLI command snippets for local
- * `fern docs dev`. Preview is single-process and the catalog file is stable within a run, so a simple
- * per-path cache avoids re-reading. NOTE: the cache lives for the dev-server process, so editing
- * cli-catalog.json during a running `fern docs dev` session requires a restart to take effect.
+ * Load the committed CLI catalog and inject CLI command snippets for local `fern docs dev`.
+ * Synchronous because both callers (`addReferencedAPI`, `convertTranslatedIrToReadApi`) are sync;
+ * the catalog is a small JSON file. The cache is keyed on path + mtime so edits to the catalog are
+ * picked up on the next reload without restarting the dev server.
  * Fail-open: a bad/missing catalog just omits the CLI tab.
  */
 function injectCliSnippetsForPreview(
@@ -581,12 +581,21 @@ function injectCliSnippetsForPreview(
     context: TaskContext
 ): void {
     try {
-        let catalog = previewCliCatalogCache.get(config.catalogAbsolutePath);
-        if (catalog == null) {
-            catalog = parseCliCatalog(JSON.parse(readFileSync(config.catalogAbsolutePath, "utf-8")));
-            previewCliCatalogCache.set(config.catalogAbsolutePath, catalog);
+        const { mtimeMs } = statSync(config.catalogAbsolutePath);
+        let cached = previewCliCatalogCache.get(config.catalogAbsolutePath);
+        if (cached == null || cached.mtimeMs !== mtimeMs) {
+            cached = {
+                mtimeMs,
+                catalog: parseCliCatalog(JSON.parse(readFileSync(config.catalogAbsolutePath, "utf-8")))
+            };
+            previewCliCatalogCache.set(config.catalogAbsolutePath, cached);
         }
-        injectCliSnippetsIntoApiDefinition({ apiDefinition, catalog, namespaces: config.namespaces, context });
+        injectCliSnippetsIntoApiDefinition({
+            apiDefinition,
+            catalog: cached.catalog,
+            namespaces: config.namespaces,
+            context
+        });
     } catch (error) {
         context.logger.warn(`Skipping CLI snippet injection in preview: ${(error as Error).message}`);
     }

@@ -13,12 +13,12 @@
  *      plus a full coverage count.
  *
  * Skipped automatically when `cargo` is unavailable (e.g. the TypeScript CI image), so it only
- * runs where a Rust toolchain exists. The first run compiles the crate (~40s); subsequent runs are
- * incremental.
+ * runs where a Rust toolchain exists. Each run compiles the crate (~40s) in a fresh temp dir, which
+ * is removed afterwards.
  */
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { cpSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join as pathJoin, resolve } from "node:path";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
@@ -27,7 +27,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import assert from "assert";
-import { beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { convertIrToFdrApi } from "../../ir-to-fdr-converter/convertIrToFdrApi.js";
 import { parseCliCatalog } from "../catalog.js";
 import { CLI_SNIPPET_LANGUAGE, injectCliSnippetsIntoApiDefinition } from "../injectCliSnippets.js";
@@ -67,9 +67,8 @@ function findCargo(): string | undefined {
 
 const cargo = findCargo();
 
-/** Build a throwaway CLI binary embedding the fixture spec; returns its path. */
-function buildFixtureBinary(cargoBin: string): string {
-    const buildDir = mkdtempSync(pathJoin(tmpdir(), "cli-snippets-e2e-"));
+/** Build a throwaway CLI binary embedding the fixture spec in `buildDir`; returns its path. */
+function buildFixtureBinary(cargoBin: string, buildDir: string): string {
     mkdirSync(pathJoin(buildDir, "src"), { recursive: true });
     cpSync(pathJoin(FIXTURE_DIR, "openapi.yml"), pathJoin(buildDir, "openapi.yaml"));
     writeFileSync(
@@ -168,17 +167,25 @@ async function buildFdrApiFromFixture(): Promise<ApiDefinition> {
 }
 
 describe.skipIf(cargo == null)("CLI snippet injection e2e (--dry-run against built runtime)", () => {
+    let buildDir: string | undefined;
     let binary: string;
     let api: ApiDefinition;
     let stats: ReturnType<typeof injectCliSnippetsIntoApiDefinition>;
 
     beforeAll(async () => {
         assert(cargo != null);
-        binary = buildFixtureBinary(cargo);
+        buildDir = mkdtempSync(pathJoin(tmpdir(), "cli-snippets-e2e-"));
+        binary = buildFixtureBinary(cargo, buildDir);
         const catalog = generateCatalog(binary);
         api = await buildFdrApiFromFixture();
         stats = injectCliSnippetsIntoApiDefinition({ apiDefinition: api, catalog });
     }, 600_000);
+
+    afterAll(() => {
+        if (buildDir != null) {
+            rmSync(buildDir, { recursive: true, force: true });
+        }
+    });
 
     it("matches every fixture endpoint from the runtime-generated catalog", () => {
         expect(stats.totalEndpoints).toBe(2);
