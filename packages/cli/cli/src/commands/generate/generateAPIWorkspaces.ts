@@ -16,6 +16,7 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
+import { CLI_LANGUAGE, prepareCliTargetWorkspace } from "./cliGeneratorConfigAdapter/prepareCliTargetWorkspace.js";
 import { createSdkConfigWorkspace } from "./createSdkConfigWorkspace.js";
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
@@ -44,10 +45,17 @@ interface WorkspaceGeneration {
     generatorIndex?: number;
     sdkConfigV1?: FernSdkConfigV1Payload;
     sdkConfigPath?: string;
+    /** Used when `--version` is not passed. */
+    version?: string;
+    /**
+     * Who owns the generation's languages for the ownership check, when that differs from `kind`: an
+     * sdk-config.yml cli target runs as a group of a translated generators.yml, but sdk-config.yml owns it.
+     */
+    ownerKind?: WorkspaceGeneration["kind"];
+    ownerLabel?: string;
 }
 
 interface PreparedSdkConfigGeneration extends WorkspaceGeneration {
-    kind: "sdk-config";
     configPath: string;
     cleanup: () => Promise<void>;
 }
@@ -261,7 +269,7 @@ export async function generateAPIWorkspaces({
                         workspace,
                         projectConfig: project.config,
                         context,
-                        version,
+                        version: version ?? generation.version,
                         resolvedGroupNames: generation.resolvedGroupNames,
                         generatorName: generation.generatorName,
                         generatorIndex: generation.generatorIndex,
@@ -408,7 +416,8 @@ async function prepareSdkConfigGenerations({
                         : getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex });
                 const selectedTargets = loaded.config.targets.filter((_, index) => selectedTargetIndexes.has(index));
                 for (const target of selectedTargets) {
-                    if (target.generatorVersion == null) {
+                    // The cli target is translated locally (cliGeneratorConfigAdapter), not routed as SDK Config.
+                    if (target.generatorVersion == null || target.language === CLI_LANGUAGE) {
                         continue;
                     }
                     const generatorId = getSdkConfigGeneratorName(target.language);
@@ -430,9 +439,43 @@ async function prepareSdkConfigGenerations({
                     }
                 }
             }
+            if (loaded.config.targets.some((target) => target.language === CLI_LANGUAGE)) {
+                const cliTarget = await cliContext.runTask(async (context) =>
+                    prepareCliTargetWorkspace({
+                        context,
+                        sdkConfig: loaded.config,
+                        absolutePathToConfig: loaded.absolutePath,
+                        organization: project.config.organization,
+                        workspaceName: candidate.owner?.workspaceName,
+                        cliVersion: cliContext.environment.packageVersion
+                    })
+                );
+                prepared.push({
+                    kind: "legacy",
+                    workspace: cliTarget.workspace,
+                    resolvedGroupNames: [cliTarget.groupName],
+                    ...(cliTarget.version != null ? { version: cliTarget.version } : {}),
+                    ownerKind: "sdk-config",
+                    ownerLabel: loaded.absolutePath,
+                    configPath: loaded.absolutePath,
+                    cleanup: cliTarget.cleanup
+                });
+            }
+            const nonCliTargets = loaded.config.targets.filter((target) => target.language !== CLI_LANGUAGE);
+            if (nonCliTargets.length === 0) {
+                cliContext.logger.info(`Using SDK Config v1 from ${loaded.absolutePath}`);
+                continue;
+            }
+            const sdkConfigTargets = {
+                config: { ...loaded.config, targets: nonCliTargets },
+                payload: {
+                    ...loaded.payload,
+                    targets: loaded.payload.targets.filter((target) => target.language !== CLI_LANGUAGE)
+                }
+            };
             const created = await cliContext.runTask(async (context) =>
                 createSdkConfigWorkspace({
-                    sdkConfig: loaded.config,
+                    sdkConfig: sdkConfigTargets.config,
                     absolutePathToConfig: loaded.absolutePath,
                     sourceRoot: resolveSourceRoot(candidate.owner, loaded.absolutePath),
                     cliVersion: cliContext.environment.packageVersion,
@@ -454,7 +497,7 @@ async function prepareSdkConfigGenerations({
                 workspace: created.workspace,
                 resolvedGroupNames: [sdkConfigGroup],
                 ...(targetNames == null && sdkConfigPath != null ? { generatorName, generatorIndex } : {}),
-                sdkConfigV1: loaded.payload,
+                sdkConfigV1: sdkConfigTargets.payload,
                 sdkConfigPath: loaded.absolutePath,
                 configPath: loaded.absolutePath,
                 cleanup: created.cleanup
@@ -526,16 +569,17 @@ function validateUniqueLanguageOwnership({
             owners = new Map();
             ownersByWorkspace.set(workspaceName, owners);
         }
+        const kind = generation.ownerKind ?? generation.kind;
         for (const { language, owner } of selectedLanguages(generation)) {
             const existing = owners.get(language);
-            if (existing != null && existing.kind !== generation.kind) {
+            if (existing != null && existing.kind !== kind) {
                 cliContext.failAndThrow(
                     `API '${workspaceName}' selects language '${language}' from both ${existing.owner} and ${owner}. Remove one selector before generating.`,
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
             }
-            owners.set(language, { kind: generation.kind, owner });
+            owners.set(language, { kind, owner });
         }
     }
 }
@@ -565,7 +609,9 @@ function selectedLanguages(generation: WorkspaceGeneration): Array<{ language: s
         }
         return filtered.generators.flatMap((generator) => {
             const language = generator.language ?? getFernSdkGenApiLanguage(generator.name);
-            return language == null ? [] : [{ language, owner: `legacy group '${group.groupName}'` }];
+            return language == null
+                ? []
+                : [{ language, owner: generation.ownerLabel ?? `legacy group '${group.groupName}'` }];
         });
     });
 }

@@ -1,0 +1,136 @@
+{
+  "generatorVersion": "0.49.0",
+  "fixtures": {
+    "cli-any-auth": {
+      "diff": [
+        "api.auth",
+        "auth-schemes",
+        "groups.cli.generators[0].config"
+      ],
+      "reason": "migrate drops the whole auth block when any scheme cannot be mapped (FERN_API_AUTH_REQUIRES_REVIEW); migrate drops generator config SDK Config cannot hold (binaryName, customCommands); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "docker": {
+        "translated": 12
+      }
+    },
+    "cli-basic-auth": {
+      "diff": [
+        "groups.cli.generators[0].config.binaryName"
+      ],
+      "reason": "migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "docker": {
+        "translated": 0
+      }
+    },
+    "cli-header-auth": {
+      "diff": [
+        "groups.cli.generators[0].config.binaryName"
+      ],
+      "reason": "migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "docker": {
+        "translated": 0
+      }
+    },
+    "cli-multi-scheme-routing": {
+      "diff": [
+        "groups.cli.generators[0].config"
+      ],
+      "reason": "migrate drops generator config SDK Config cannot hold (binaryName, customCommands); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "docker": {
+        "translated": 12
+      }
+    },
+    "cli-multi-spec": {
+      "diff": [
+        "groups.cli.generators[0].config"
+      ],
+      "reason": "migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "docker": {
+        "translated": 13
+      }
+    },
+    "cli-multi-spec-namespaced": {
+      "diff": [
+        "groups.cli.generators[0].config"
+      ],
+      "reason": "migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED. migrate also writes the API-key scheme key `apiKey` as a header name; the translation skips it (no header diff).",
+      "docker": {
+        "translated": 13
+      }
+    },
+    "cli-namespace-stutter": {
+      "diff": [],
+      "reason": "No difference.",
+      "docker": {
+        "translated": 0
+      }
+    },
+    "cli-oauth": {
+      "diff": [
+        "api.auth",
+        "auth-schemes",
+        "groups.cli.generators[0].config"
+      ],
+      "reason": "migrate drops the whole auth block when any scheme cannot be mapped (FERN_API_AUTH_REQUIRES_REVIEW); migrate drops generator config SDK Config cannot hold (binaryName, customCommands); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "docker": {
+        "translated": 12
+      }
+    },
+    "cli-oauth-login-flow": {
+      "diff": [
+        "api.auth",
+        "auth-schemes",
+        "groups.cli.generators[0].config.binaryName"
+      ],
+      "reason": "migrate drops the whole auth block when any scheme cannot be mapped (FERN_API_AUTH_REQUIRES_REVIEW) (with the browser-login client id); migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "docker": {
+        "translated": 15
+      }
+    },
+    "cli-profiles": {
+      "diff": [
+        "groups.cli.generators[0].config"
+      ],
+      "reason": "migrate drops generator config SDK Config cannot hold (binaryName, profiles); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "docker": {
+        "translated": 1
+      }
+    },
+    "cli-reserved-keywords": {
+      "diff": [],
+      "reason": "No difference.",
+      "docker": {
+        "translated": 0
+      }
+    },
+    "cli-shared-types": {
+      "diff": [
+        "groups.cli.generators[0].config"
+      ],
+      "reason": "migrate drops generator config SDK Config cannot hold (binaryName, splitTypeCrates); FERN_CONFIG_FIELD_UNSUPPORTED. splitTypeCrates is not on the D12 carry-over list.",
+      "docker": {
+        "translated": 9
+      }
+    },
+    "x-fern-global-parameters": {
+      "diff": [],
+      "reason": "No difference.",
+      "docker": {
+        "translated": 0
+      }
+    },
+    "query-parameters-openapi": {
+      "diff": [],
+      "reason": "No difference.",
+      "docker": {
+        "translated": 0
+      }
+    },
+    "file-upload-openapi": {
+      "diff": [],
+      "reason": "No difference.",
+      "docker": {
+        "translated": 0
+      }
+    }
+  }
+}
