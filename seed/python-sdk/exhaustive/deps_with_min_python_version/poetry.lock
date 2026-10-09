@@ -1049,14 +1049,14 @@ files = [
 
 [[package]]
 name = "jsonpatch"
-version = "1.33"
-description = "Apply JSON-Patches (RFC 6902)"
+version = "1.34"
+description = "Apply JSON-Patches (RFC 6902) "
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "jsonpatch-1.33-py2.py3-none-any.whl", hash = "sha256:0ae28c0cd062bbd8b8ecc26d7d164fbbea9652a1a3693f3b956c1eae5145dade"},
-    {file = "jsonpatch-1.33.tar.gz", hash = "sha256:9fcd4009c41e6d12348b4a0ff2563ba56a2923a7dfee731d004e212e1ee5030c"},
+    {file = "jsonpatch-1.34-py3-none-any.whl", hash = "sha256:be7726e7fa0969bc4100b3d9f4259f16aadda68a244c6e9e1066157a0c524ec3"},
+    {file = "jsonpatch-1.34.tar.gz", hash = "sha256:e60c9f2d903d261d6eddcbd12cf3193efdb58cd9376a36ccc4db2e29d6cc88e3"},
 ]
 
 [package.dependencies]
