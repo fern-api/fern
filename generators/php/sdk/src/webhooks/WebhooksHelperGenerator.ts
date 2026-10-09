@@ -6,6 +6,10 @@ import type { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+const HMAC_ALGORITHMS = ["sha1", "sha256", "sha384", "sha512"] as const;
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
 interface WebhookVerificationEntry {
@@ -209,6 +213,15 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null || config.payloadFormat.components.includes("TIMESTAMP")) {
             parameters.push(php.parameter({ name: "timestampHeader", type: nullableString }));
         }
+        parameters.push(
+            php.parameter({
+                name: "algorithm",
+                type: php.Type.optional(
+                    php.Type.union(HMAC_ALGORITHMS.map((algorithm) => php.Type.literalString(algorithm)))
+                ),
+                initializer: php.codeblock("null")
+            })
+        );
         return parameters;
     }
 
@@ -220,9 +233,13 @@ export class WebhooksHelperGenerator {
                 config.payloadFormat.bodySort == null
                     ? "$requestBody === null || $requestBody === ''"
                     : "$requestBody === null || $requestBody === '' || $requestBody === []";
-            writer.writeLine(
-                `if (${emptyRequestBodyCheck} || $signatureHeader === null || $signatureHeader === '' || $signatureKey === null || $signatureKey === '') {`
-            );
+            writer.writeLine("if ($signatureHeader === null || $signatureHeader === '') {");
+            writer.indent();
+            writer.writeLine(`error_log(${this.phpString(MISSING_SIGNATURE_MESSAGE)});`);
+            writer.writeLine("return false;");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine(`if (${emptyRequestBodyCheck} || $signatureKey === null || $signatureKey === '') {`);
             writer.indent();
             writer.writeLine("return false;");
             writer.dedent();
@@ -273,9 +290,15 @@ export class WebhooksHelperGenerator {
             this.writeHmacComputation(writer, config, "$payload");
 
             writer.newLine();
-            writer.write("return ");
+            writer.write("$valid = ");
             writer.writeNode(this.webhookSignatureReference());
             writer.writeLine("::timingSafeEqual($signature, $expected);");
+            writer.writeLine("if (!$valid) {");
+            writer.indent();
+            writer.writeLine(`error_log(${this.phpString(VERIFICATION_FAILED_MESSAGE)});`);
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine("return $valid;");
         });
     }
 
@@ -297,7 +320,7 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine(`payload: ${payloadExpression},`);
         writer.writeLine("secret: $signatureKey,");
-        writer.writeLine(`algorithm: ${this.phpString(this.mapHmacAlgorithm(config.algorithm))},`);
+        writer.writeLine(`algorithm: $algorithm ?? ${this.phpString(this.mapHmacAlgorithm(config.algorithm))},`);
         writer.writeLine(`encoding: ${this.phpString(this.mapEncoding(config.encoding))},`);
         writer.dedent();
         writer.writeLine(");");
@@ -492,6 +515,7 @@ export class WebhooksHelperGenerator {
         writer.writeNode(this.webhookSignatureReference());
         writer.writeLine("::timingSafeEqual($expectedBodyHash, $transmittedBodyHash)) {");
         writer.indent();
+        writer.writeLine(`error_log(${this.phpString(VERIFICATION_FAILED_MESSAGE)});`);
         writer.writeLine("return false;");
         writer.dedent();
         writer.writeLine("}");
@@ -561,6 +585,7 @@ export class WebhooksHelperGenerator {
         writer.writeLine("}");
 
         writer.newLine();
+        writer.writeLine(`error_log(${this.phpString(VERIFICATION_FAILED_MESSAGE)});`);
         writer.writeLine("return false;");
     }
 

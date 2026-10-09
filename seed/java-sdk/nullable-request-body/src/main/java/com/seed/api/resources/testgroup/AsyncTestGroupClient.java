@@ -5,6 +5,7 @@ package com.seed.api.resources.testgroup;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;
 import com.seed.api.types.PlainObject;
 import java.util.Optional;
@@ -31,7 +32,14 @@ public class AsyncTestGroupClient {
      * Post a nullable request body
      */
     public CompletableFuture<Object> testMethodName(String pathParam, Optional<PlainObject> body) {
-        return this.rawClient.testMethodName(pathParam, body).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Object>> rawFuture = this.rawClient.testMethodName(pathParam, body);
+        CompletableFuture<Object> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -39,14 +47,29 @@ public class AsyncTestGroupClient {
      */
     public CompletableFuture<Object> testMethodName(
             String pathParam, Optional<PlainObject> body, RequestOptions requestOptions) {
-        return this.rawClient.testMethodName(pathParam, body, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Object>> rawFuture =
+                this.rawClient.testMethodName(pathParam, body, requestOptions);
+        CompletableFuture<Object> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Post a nullable request body
      */
     public CompletableFuture<Object> testMethodName(String pathParam, TestMethodNameTestGroupRequest request) {
-        return this.rawClient.testMethodName(pathParam, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Object>> rawFuture = this.rawClient.testMethodName(pathParam, request);
+        CompletableFuture<Object> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -54,6 +77,14 @@ public class AsyncTestGroupClient {
      */
     public CompletableFuture<Object> testMethodName(
             String pathParam, TestMethodNameTestGroupRequest request, RequestOptions requestOptions) {
-        return this.rawClient.testMethodName(pathParam, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Object>> rawFuture =
+                this.rawClient.testMethodName(pathParam, request, requestOptions);
+        CompletableFuture<Object> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -1,6 +1,10 @@
 import { FernToken } from "@fern-api/auth";
 import { askToLogin } from "@fern-api/login";
-import { getFernSdkGenApiLanguage, getFernSdkGenApiOrigin } from "@fern-api/remote-workspace-runner";
+import {
+    getFernSdkGenApiLanguage,
+    getFernSdkGenApiOrigin,
+    USE_SDK_GEN_API_FEATURE_FLAG
+} from "@fern-api/remote-workspace-runner";
 import {
     discoverSdkGenApiGeneratorVersions,
     type SdkGenApiGeneratorVersions
@@ -96,18 +100,18 @@ export async function getSdkGenApiGeneratorVersions({
     if (channel != null) {
         throw new Error(
             `SDK Gen API generator version discovery does not support the requested upgrade channel "${channel}". ` +
-                "Remove --channel to use executable index versions, or disable FERN_USE_SDK_GEN_API to use FDR channel metadata."
+                `Remove --channel to use executable index versions; FDR channel metadata is used only when the ${USE_SDK_GEN_API_FEATURE_FLAG} feature flag is off for this organization.`
         );
     }
     const origin = getFernSdkGenApiOrigin();
     if (origin == null) {
-        throw new Error("FERN_SDK_GEN_API_ORIGIN is required when FERN_USE_SDK_GEN_API=true");
+        throw new Error("FERN_SDK_GEN_API_ORIGIN is required when sdk-gen-api generation is enabled");
     }
     const language = getFernSdkGenApiLanguage(generatorId);
     if (language == null) {
         context.logger.error(
             `SDK Gen API cannot discover versions for unsupported generator ${generatorId}. ` +
-                "Use a canonical first-party SDK generator name or disable FERN_USE_SDK_GEN_API."
+                "Use a canonical first-party SDK generator name."
         );
         return {};
     }

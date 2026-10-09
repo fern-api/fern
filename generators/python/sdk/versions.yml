@@ -1,4 +1,229 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.40.0
+  changelogEntry:
+    - summary: |
+        Support inferred bearer auth with `type: refresh-token`. The generated `InferredAuthTokenProvider`
+        always sends `grant_type="refresh_token"` to the get-token endpoint, and `grant_type` is no longer
+        a client constructor parameter. Users pass only the refresh token (and any other non-literal
+        token endpoint parameters).
+      type: feat
+    - summary: |
+        Inferred auth now works next to other auth schemes (`auth: any` and endpoint-security) when it has
+        credentials of its own, e.g. a `type: refresh-token` scheme next to OAuth client credentials.
+        The client takes the inferred credentials as optional constructor parameters (shared ones such as
+        `client_id` are added once) and uses the inferred token provider when they are passed, so
+        `Client(refresh_token=...)` and `Client(client_id=..., client_secret=...)` both work.
+      type: feat
+    - summary: |
+        With `type: refresh-token`, inferred auth only exposes and sends the token endpoint parameters used by
+        the OAuth refresh token grant (`refresh_token`, `scope`, `client_id`, `client_secret`) plus any
+        required ones. Optional parameters of other grants on a shared token endpoint, such as `code`,
+        `code_verifier` and `redirect_uri`, are no longer client constructor parameters.
+      type: feat
+    - summary: |
+        Add the `omit_unset_inferred_auth_params` config option (default `false`). When enabled, the inferred auth
+        token provider leaves unset optional token request parameters out of the get-token request instead of
+        sending them as `null` (JSON) or empty values (form-encoded).
+      type: feat
+    - summary: |
+        Inferred auth with `type: refresh-token` now rotates the refresh token. When the token response returns a new
+        `refresh_token`, the provider uses it for the next refresh, and the client calls the optional
+        `on_refresh_token_rotated` callback with it so it can be persisted.
+      type: feat
+    - summary: |
+        Fix wire test setup for inferred auth. `tests/wire/conftest.py` now passes a test value for each
+        required token endpoint parameter (e.g. `client_id`, `client_secret`) instead of always passing
+        `api_key`, which raised `TypeError` when the client had no `api_key` parameter.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.5
+  changelogEntry:
+    - summary: |
+        Fix the root client docstring example for global headers and root path parameters
+        that have a `client-default`. The example now passes the default as a keyword
+        argument (e.g. `version="2024-01-01"`) instead of a bare positional value, which
+        was a `SyntaxError` when it followed another keyword argument.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.4
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now parse
+        both variant styles: envelope variants (`{event, data: Payload}`) are built from the `data:` JSON,
+        and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.3
+  changelogEntry:
+    - summary: |
+        Stop automatically replaying requests after server disconnects or incomplete responses (`httpx.RemoteProtocolError`), which could duplicate non-idempotent POST/PATCH operations, even after a 200 status was received. Connection-establishment failures and HTTP-status retries are unchanged. Set `request_options={"retry_remote_protocol_errors": True}` only when replaying the request is safe to explicitly restore the previous behavior.
+      type: fix
+    - summary: |
+        With `pydantic_config.skip_validation: true`, a union value that matches no known member is now
+        returned as its original data (the raw dict) instead of `None`. Previously a response carrying a
+        union variant added after the SDK was generated (e.g. a new `product` on a discriminated union), or
+        one missing its discriminant, silently decoded to `None` and its fields were lost. Known variants
+        still decode to their classes.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.2
+  changelogEntry:
+    - summary: |
+        Generated `core/pydantic_utilities.py` now type-checks under pydantic 2.14, which made mypy report
+        `var-annotated` on the module-level `TypeAdapter` instances.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.1
+  changelogEntry:
+    - summary: |
+        XML (TwiML) fluent child methods (`response.say(...)`, `gather.play(...)`, ...) keep document order on
+        Python 3.12+. The ordered content list is a pydantic private attribute, and the `runtime_checkable`
+        Protocol used to find it stopped matching on 3.12 (where `isinstance` uses `inspect.getattr_static`),
+        so children appended by the fluent methods were ordered after text and `add_child(...)` elements, e.g.
+        `r.say("a"); r.add_child(XmlElement("Custom")); r.say("b")` rendered `<Custom/><Say>a</Say><Say>b</Say>`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) models can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `add_text` segments and child elements), while
+        `comment_before(text)` / `comment_after(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `from_xml` and round-trip through `to_xml`; `XmlElement.add_comment`
+        and the new `XmlComment` node expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.38.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.37.2
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builders keep their legacy names when they collide with the element's text
+        field: `dial.number("+15551234567")` and `message.body("b")` now work instead of raising
+        `TypeError: 'NoneType' object is not callable`. The text is still passed as the same constructor
+        keyword (`Dial(number="+1555")`) but is stored under a trailing underscore (`dial.number_`) so the
+        builder method stays callable; `add_number`/`add_body` are no longer generated.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.37.1
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        a list, matching the legacy call style: `response.gather(input="speech dtmf")` no longer
+        raises a validation error and serializes as `input="speech dtmf"`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.37.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `user_agent_only` config (also accepted as `userAgentOnly`). When enabled,
+        generated clients send the `User-Agent` header (including the structured form from
+        `include_platform_headers`) but omit the `X-Fern-Language`, `X-Fern-SDK-Name`,
+        `X-Fern-SDK-Version`, `X-Fern-Runtime`, and `X-Fern-Platform` headers. Disabled by default,
+        so existing generated output is unchanged. `omit_fern_headers` still takes precedence and
+        drops the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.36.1
+  changelogEntry:
+    - summary: |
+        With endpoint-security auth, the client now fetches an OAuth or inferred-auth token only when the
+        endpoint's security requirements reference that scheme. Previously every authenticated call fetched
+        one first, so an endpoint that doesn't use it (e.g. the token endpoint itself) made an extra token
+        request and failed if that fetch failed.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.36.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.35.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) models keep text segments, typed children and undeclared `XmlElement` children in one
+        ordered content sequence, so `to_xml()` writes them in insertion order (`say("a")`, `add_child(...)`,
+        `say("b")` renders `<Say>a</Say><Custom /><Say>b</Say>`) and `from_xml()` preserves document order,
+        including nested mixed content in undeclared children. Builders gain `add_text(text)` for mixed
+        content such as `Say("Hi ").break_(...).add_text(" world")`. Typed child properties and
+        `add_child()` keep working as before.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.34.5
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.34.4
+  changelogEntry:
+    - summary: |
+        On Python 3.10 and older, `str()` on a generated enum member now returns its value (e.g. `WALMART_US`)
+        instead of `ClassName.WALMART_US`, matching `enum.StrEnum` on Python 3.11+. Previously, enum query
+        parameters were sent as `ClassName.MEMBER` on those versions when `enum_type: forward_compatible_python_enums`
+        or `python_enums` was used.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.34.3
+  changelogEntry:
+    - summary: |
+        Redact every header auth scheme's header (e.g. `PLAID-SECRET`) in debug logs, in addition to
+        `Authorization` and API-key headers, and merge request headers case-insensitively so a
+        `plaid-secret` override replaces `PLAID-SECRET` instead of sending both.
+      type: fix
+    - summary: |
+        Map `4XX`/`5XX` wildcard error responses to their typed error classes (concrete status codes
+        still win) and keep the real HTTP status code on the raised error.
+      type: fix
+    - summary: |
+        Fix offset pagination when the offset is an omitted body parameter (no more `OMIT + 1`), and
+        advance nested offsets such as `$request.options.offset` on each page, creating `options` when
+        it was omitted (through its model, so aliased fields keep their wire names) and preserving its
+        other fields.
+      type: fix
+    - summary: |
+        Read environment-variable-backed client parameters (e.g. API keys) when the client is
+        constructed instead of when the module is imported. Passing `api_key=None` explicitly now
+        falls back to the environment variable, the same as omitting the argument.
+      type: fix
+    - summary: |
+        Generate README.md for GitHub output even when no snippet path is configured (e.g. `fern generate --local`),
+        and document binary (`format: binary`) body parameters as `bytes` in reference.md.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 5.34.2
   changelogEntry:
     - summary: |

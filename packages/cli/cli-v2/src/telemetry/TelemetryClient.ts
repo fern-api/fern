@@ -1,5 +1,6 @@
 import { getRunIdProperties, setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getCliReleaseEnvironment } from "@fern-api/posthog-manager";
 import { type CaptureExceptionOptions, CliError } from "@fern-api/task-context";
 import * as Sentry from "@sentry/node";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -37,9 +38,14 @@ export class TelemetryClient {
             os: os.platform(),
             tty: isTTY,
             usingAccessToken: process.env.FERN_TOKEN != null,
+            cliReleaseEnvironment: getCliReleaseEnvironment(),
             ...getRunIdProperties()
         };
-        this.posthog = apiKey != null && apiKey.length > 0 && isTelemetryEnabled ? new PostHog(apiKey) : undefined;
+        // isServer: false keeps posthog-node >=5.36 from tagging CLI events with `$is_server: true`.
+        this.posthog =
+            apiKey != null && apiKey.length > 0 && isTelemetryEnabled
+                ? new PostHog(apiKey, { isServer: false })
+                : undefined;
 
         const sentryDsn = process.env.SENTRY_DSN;
         if (sentryDsn != null && sentryDsn.length > 0 && isTelemetryEnabled) {

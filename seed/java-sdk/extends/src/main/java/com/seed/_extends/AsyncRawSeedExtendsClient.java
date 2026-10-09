@@ -4,6 +4,7 @@
 package com.seed._extends;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed._extends.core.BodyProperties;
 import com.seed._extends.core.ClientOptions;
 import com.seed._extends.core.MediaTypes;
 import com.seed._extends.core.ObjectMappers;
@@ -51,7 +52,9 @@ public class AsyncRawSeedExtendsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedExtendsException("Failed to serialize request", e);
         }
@@ -75,7 +78,8 @@ public class AsyncRawSeedExtendsClient {
                     .build();
         }
         CompletableFuture<SeedExtendsHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -99,6 +103,11 @@ public class AsyncRawSeedExtendsClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedExtendsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

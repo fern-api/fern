@@ -51,7 +51,7 @@ class SeedApi:
     from seed import SeedApi
 
     client = SeedApi(
-        "v1beta",
+        api_version="v1beta",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -155,7 +155,7 @@ class AsyncSeedApi:
     from seed import AsyncSeedApi
 
     client = AsyncSeedApi(
-        "v1beta",
+        api_version="v1beta",
         base_url="https://yourhost.com/path/to/api",
     )
     """

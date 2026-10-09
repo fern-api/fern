@@ -1,4 +1,257 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.38.1
+  changelogEntry:
+    - summary: |
+        Fix paginated results silently skipping records. Every `each`/`map`/`to_a`/`first`/`any?`/`count`
+        over a pager (or its `pages`) now starts again from the first page, reading `pages` no longer
+        moves item iteration forward, items are no longer removed from fetched pages as they are read,
+        and `each` without a block returns an `Enumerator`. Manual `next_element`/`next_page` loops,
+        including retrying after a failed page, behave as before. Because each loop starts again,
+        reading the same pager more than once (or reading both `pages` and items) requests the pages
+        again, except a first page kept by `load_first_page` (or `fetchFirstPageOnCall`), which every
+        loop reuses.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.38.0
+  changelogEntry:
+    - summary: |
+        Cursor and offset paginated methods now document what they return. The YARD `@return` tag and
+        the `reference.md` signature name the `CursorItemIterator` / `OffsetItemIterator` instead of the
+        response type, the method docs say which items it yields, that `pages` gives each page's full
+        response, and when the request is sent and API errors are raised. The README pagination example
+        uses a paginated endpoint even when the default endpoint is not paginated, and shows `pages`
+        instead of the nonexistent `results` method. Iterators gain `load_first_page`, which sends the
+        first request immediately so its API error is raised at that call.
+      type: fix
+    - summary: |
+        Add opt-in `fetchFirstPageOnCall` config. When enabled, cursor and offset paginated methods send
+        the request for the first page before returning the iterator, so an API error for that page is
+        raised by the method call, as in non-paginated methods. Disabled by default because existing
+        callers may rescue errors around the loop, or build an iterator without iterating it.
+      type: feat
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.37.3
+  changelogEntry:
+    - summary: |
+        Connection-level failures now raise the SDK's new `Errors::ConnectionError` (a subclass of
+        `Errors::ApiError`) instead of leaking raw `Errno::ECONNREFUSED`, `Errno::ECONNRESET`,
+        `EOFError`, `SocketError` (DNS) or `OpenSSL::SSL::SSLError`, so `rescue Errors::ApiError`
+        catches every failed call as the README documents. The original exception is kept as `cause`.
+        `Errno::ETIMEDOUT` now raises `Errors::TimeoutError` like the other socket timeouts.
+        Other `SystemCallError`s (e.g. file errors) are not wrapped. Code that rescued the wrapped classes
+        directly should rescue `Errors::ConnectionError` instead (or inspect `cause`). Transport failures are still not retried. The README errors example shows the new class.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.37.2
+  changelogEntry:
+    - summary: |
+        Parsing an XML (TwiML) element without a text property keeps the text before its first child in the
+        ordered content, so `Gather.from_xml('<Gather>Press a key, then <Say>one</Say></Gather>')` round-trips
+        instead of dropping `Press a key, then `. Types with a text property (e.g. `Say`) are unchanged: that
+        text is still the property's value.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.37.1
+  changelogEntry:
+    - summary: |
+        Generate `float` and `double` fields and parameters as Ruby `Float` instead of `Integer`.
+        Decimal values (e.g. a balance of `100.57`) previously lost their fractional part when a
+        response was decoded or a request was sent. Integer types stay `Integer`.
+        Generated wire tests now also assert that numbers in request bodies reach the wire unchanged
+        and that numbers in mocked responses decode unchanged.
+        Integer and Float map keys nested in models now decode as numbers instead of staying symbols.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 1.37.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) models can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `add_text` segments and child elements), while
+        `comment_before(text)` / `comment_after(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `from_xml` and round-trip through `to_xml`; `Element#add_comment` and
+        the new `Internal::Xml::Comment` node expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 1.36.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 1.35.2
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes and text accept a space-separated String or a single
+        value (including a Symbol) in addition to an Array, matching the legacy call style:
+        `response.gather(input: "speech dtmf")` and `dial(status_callback_event: :answered)` no
+        longer raise `NoMethodError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.35.1
+  changelogEntry:
+    - summary: |
+        Fluent XML (TwiML) child methods accept the text content as a keyword as well as positionally,
+        matching the legacy call style: `response.say(message: "x")`, `response.dial(number: "+1555")` and
+        `response.message(body: "hi")` now emit the text instead of silently dropping it. Passing the text
+        both positionally and as a keyword raises `ArgumentError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.35.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types support the legacy twilio-ruby building style: constructors and fluent child methods yield the
+        new element to a block (`VoiceResponse.new { |r| r.say("hi") }`, `r.gather { |g| g.say("one") }`), and
+        `add_child` also accepts an element name with text and attributes (`r.add_child("Custom", "v", a: "1")`).
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.2
+  changelogEntry:
+    - summary: |
+        Enum-typed attributes and text on XML (TwiML) types are open on the wire: `from_xml` keeps a value the enum does
+        not declare (e.g. a voice added after the SDK was generated) instead of raising, and it round-trips through
+        `to_xml`. This matches how the same enums already behave in JSON.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.1
+  changelogEntry:
+    - summary: |
+        Endpoints whose request body is an array, set, map, primitive, enum, optional/nullable object, or an alias of
+        one of these now send the body argument itself (e.g. `[{"name":"Monstera"}]`) instead of wrapping it with the
+        other keyword arguments (e.g. `{"request": [...]}`). This also applies to such bodies on endpoints with headers
+        or query parameters, which no longer leak into the body. Objects inside these bodies (optional/nullable objects,
+        list and set items, and map values) are serialized through their model so fields use their wire names, sets are
+        sent as JSON arrays, and an omitted optional body is still sent without a body.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omitFernHeaders` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.33.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.32.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed child models and raw `Element` children in a single
+        ordered `content` list, so `to_xml` emits them in the order they were added
+        (`response.say("a"); response.add_child(Element.new("Custom")); response.say("b")` yields
+        `<Say>a</Say><Custom/><Say>b</Say>`) and `from_xml` preserves document order, including the
+        position of unknown elements. Adds `add_text(String)` to XML types and `Element` for mixed content
+        such as `<Say>Hi <break strength="weak"/> world</Say>`. Typed child properties and additional
+        children remain available and are reconciled into the content order on serialization.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.31.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.31.0
+  changelogEntry:
+    - summary: |
+        Add support for SDK variables (`x-fern-sdk-variables` / `variables` in `api.yml`).
+        Each variable is exposed as an optional keyword on the root client (e.g.
+        `Client.new(target_account_sid: "AC...")`); path parameters bound to a variable are
+        removed from the endpoint methods and request classes, and the value is read from
+        the client instead. String variables declared with an `env` fall back to
+        `ENV.fetch("<ENV_VAR>", nil)` when the keyword is omitted, and endpoints raise an
+        `ArgumentError` with a clear message when a required variable is still unset.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.30.1
+  changelogEntry:
+    - summary: |
+        The `additional_body_parameters` request option is now applied to request bodies. Previously it was
+        documented on every endpoint method but silently ignored. Extra properties are merged into the serialized
+        JSON (or form-urlencoded) body using their API wire-format names, override SDK-set fields with the same name,
+        and create a body when the endpoint has none
+        (except GET and HEAD requests, which are still sent without a body). Multipart (file upload) requests are not affected.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Fix pagination for endpoints whose cursor or offset lives in the request body
+        (e.g. `$request.cursor` or `$request.options.offset`). The generated iterators
+        previously referenced an undeclared `query_params` and raised `NameError` on first
+        use; they now read and advance the body property, creating omitted parent objects.
+      type: fix
+    - summary: |
+        Nil values are no longer serialized as `{}` (`nil.to_h`), and `optional<nullable<T>>`
+        fields keep their nullable metadata so explicit `nil` values are preserved, while
+        omitted optional fields are still left out of the request.
+      type: fix
+    - summary: |
+        Add a `timeout:` option to the root client and honor `request_options[:timeout_in_seconds]`
+        per request (an explicit `0` is respected). The timeout also applies to OAuth and inferred-auth
+        token requests. Net::HTTP open/read/write timeouts are raised as the SDK's `TimeoutError`.
+        README timeout snippets now show the real API.
+      type: fix
+    - summary: |
+        Endpoints returning text, bytes, or a file download now return the raw response body
+        instead of `nil`.
+      type: fix
+    - summary: |
+        Generated `.rubocop.yml` disables `Style/CommentAnnotation` (API docstrings such as
+        "Note:" tripped it), and the generated retry tests follow the `retryStatusCodes` setting.
+      type: fix
+    - summary: |
+        Error responses now expose the body parsed into the endpoint's declared error type
+        as `error.body` (exact status codes take precedence over `4XX`/`5XX` wildcards).
+        `error.message` and `error.code` are unchanged; `body` is `nil` when no error type
+        matches or the body is not valid JSON.
+      type: feat
+    - summary: |
+        Add the opt-in `wrapInvalidJsonResponses` config. When enabled, a 2xx response whose
+        body is not valid JSON raises `Errors::ResponseError` (with the raw body and status
+        code) instead of leaking `JSON::ParserError`.
+      type: feat
+    - summary: |
+        Add the opt-in `requireAuthCredentials` config. When enabled, the client
+        constructor raises `ArgumentError` if a bearer or header credential is neither
+        passed nor set in its environment variable, instead of sending an empty auth header.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 1.29.0
   changelogEntry:
     - summary: |

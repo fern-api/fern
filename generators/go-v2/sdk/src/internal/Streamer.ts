@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -191,8 +191,17 @@ export class Streamer {
         if (eventDiscriminator != null) {
             arguments_.push({
                 name: "EventDiscriminator",
-                value: eventDiscriminator
+                value: go.TypeInstantiation.string(eventDiscriminator.field)
             });
+            if (eventDiscriminator.envelopeEvents.length > 0) {
+                arguments_.push({
+                    name: "EnvelopeEvents",
+                    value: go.TypeInstantiation.slice({
+                        valueType: go.Type.string(),
+                        values: eventDiscriminator.envelopeEvents.map((event) => go.TypeInstantiation.string(event))
+                    })
+                });
+            }
         }
         if (args.request != null) {
             arguments_.push({
@@ -202,14 +211,16 @@ export class Streamer {
         }
         // In per-endpoint mode, use the locally generated error codes variable.
         // In global mode, use the ErrorCodes variable from the namespace where the endpoint is defined.
-        const errorCodesReference =
-            this.context.isPerEndpointErrorCodes() && args.errorCodes != null
-                ? args.errorCodes
-                : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference(args.namespaceImportPath));
-        arguments_.push({
-            name: "ErrorDecoder",
-            value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
-        });
+        // In per-endpoint mode, endpoints without errors have no local errorCodes and no global ErrorCodes exists.
+        const errorCodesReference = this.context.isPerEndpointErrorCodes()
+            ? args.errorCodes
+            : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference(args.namespaceImportPath));
+        if (errorCodesReference != null) {
+            arguments_.push({
+                name: "ErrorDecoder",
+                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
+            });
+        }
         const methodName = resumable ? Streamer.STREAM_WITH_RECONNECT_METHOD_NAME : Streamer.STREAM_METHOD_NAME;
         return go.codeblock((writer) => {
             writer.writeNode(
@@ -295,7 +306,9 @@ export class Streamer {
         });
     }
 
-    private getEventDiscriminator(streamingResponse: FernIr.StreamingResponse): go.TypeInstantiation | undefined {
+    private getEventDiscriminator(
+        streamingResponse: FernIr.StreamingResponse
+    ): { field: string; envelopeEvents: string[] } | undefined {
         if (streamingResponse.type !== "sse") {
             return undefined;
         }
@@ -314,7 +327,22 @@ export class Streamer {
         ) {
             return undefined;
         }
-        return go.TypeInstantiation.string(getWireValue(union.discriminant));
+        return {
+            field: getWireValue(union.discriminant),
+            envelopeEvents: getSseEnvelopeEventNames({
+                union,
+                getObjectPropertyWireValues: (variant) => {
+                    const variantDeclaration = this.context.getTypeDeclarationOrThrow(variant.typeId);
+                    if (variantDeclaration.shape.type !== "object") {
+                        return undefined;
+                    }
+                    return [
+                        ...(variantDeclaration.shape.extendedProperties ?? []),
+                        ...variantDeclaration.shape.properties
+                    ].map((property) => getWireValue(property.name));
+                }
+            })
+        };
     }
 }
 

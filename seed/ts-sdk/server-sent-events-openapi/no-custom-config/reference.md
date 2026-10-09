@@ -329,6 +329,72 @@ for await (const item of response) {
 </dl>
 </details>
 
+<details><summary><code>client.<a href="/src/Client.ts">streamProtocolMixedSchema</a>({ ...params }) -> core.Stream&lt;SeedApi.StreamProtocolMixedSchemaResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.streamProtocolMixedSchema({});
+for await (const item of response) {
+    console.log(item);
+}
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.StreamRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SeedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="/src/Client.ts">streamDataContextWithEnvelopeSchema</a>({ ...params }) -> core.Stream&lt;SeedApi.StreamDataContextWithEnvelopeSchemaResponse&gt;</code></summary>
 <dl>
 <dd>

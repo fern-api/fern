@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.SharedCompletionRequest;
 import com.seed.api.requests.StreamXFernStreamingConditionRequest;
 import com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;
@@ -19,6 +20,7 @@ import com.seed.api.types.StreamDataContextResponse;
 import com.seed.api.types.StreamDataContextWithEnvelopeSchemaResponse;
 import com.seed.api.types.StreamNoContextResponse;
 import com.seed.api.types.StreamProtocolCollisionResponse;
+import com.seed.api.types.StreamProtocolMixedSchemaResponse;
 import com.seed.api.types.StreamProtocolNoCollisionResponse;
 import com.seed.api.types.StreamProtocolWithFlatSchemaResponse;
 import com.seed.api.types.StreamRequest;
@@ -49,7 +51,16 @@ public class AsyncSeedApiClient implements AutoCloseable {
      * Uses discriminator with mapping, x-fern-discriminator-context set to protocol. Because the discriminant is at the protocol level, the data field can be any type or absent entirely. Demonstrates heartbeat (no data), string literal, number literal, and object data payloads.
      */
     public CompletableFuture<Iterable<StreamProtocolNoCollisionResponse>> streamProtocolNoCollision() {
-        return this.rawClient.streamProtocolNoCollision().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolNoCollisionResponse>>> rawFuture =
+                this.rawClient.streamProtocolNoCollision();
+        CompletableFuture<Iterable<StreamProtocolNoCollisionResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -57,7 +68,16 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamProtocolNoCollisionResponse>> streamProtocolNoCollision(
             RequestOptions requestOptions) {
-        return this.rawClient.streamProtocolNoCollision(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolNoCollisionResponse>>> rawFuture =
+                this.rawClient.streamProtocolNoCollision(requestOptions);
+        CompletableFuture<Iterable<StreamProtocolNoCollisionResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -65,7 +85,16 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamProtocolNoCollisionResponse>> streamProtocolNoCollision(
             StreamRequest request) {
-        return this.rawClient.streamProtocolNoCollision(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolNoCollisionResponse>>> rawFuture =
+                this.rawClient.streamProtocolNoCollision(request);
+        CompletableFuture<Iterable<StreamProtocolNoCollisionResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -73,14 +102,32 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamProtocolNoCollisionResponse>> streamProtocolNoCollision(
             StreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.streamProtocolNoCollision(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolNoCollisionResponse>>> rawFuture =
+                this.rawClient.streamProtocolNoCollision(request, requestOptions);
+        CompletableFuture<Iterable<StreamProtocolNoCollisionResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Same as endpoint 1, but the object data payload contains its own &quot;event&quot; property, which collides with the SSE envelope's &quot;event&quot; discriminator field. Tests whether generators correctly separate the protocol-level discriminant from the data-level field when context=protocol is specified.
      */
     public CompletableFuture<Iterable<StreamProtocolCollisionResponse>> streamProtocolCollision() {
-        return this.rawClient.streamProtocolCollision().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolCollisionResponse>>> rawFuture =
+                this.rawClient.streamProtocolCollision();
+        CompletableFuture<Iterable<StreamProtocolCollisionResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -88,14 +135,32 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamProtocolCollisionResponse>> streamProtocolCollision(
             RequestOptions requestOptions) {
-        return this.rawClient.streamProtocolCollision(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolCollisionResponse>>> rawFuture =
+                this.rawClient.streamProtocolCollision(requestOptions);
+        CompletableFuture<Iterable<StreamProtocolCollisionResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Same as endpoint 1, but the object data payload contains its own &quot;event&quot; property, which collides with the SSE envelope's &quot;event&quot; discriminator field. Tests whether generators correctly separate the protocol-level discriminant from the data-level field when context=protocol is specified.
      */
     public CompletableFuture<Iterable<StreamProtocolCollisionResponse>> streamProtocolCollision(StreamRequest request) {
-        return this.rawClient.streamProtocolCollision(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolCollisionResponse>>> rawFuture =
+                this.rawClient.streamProtocolCollision(request);
+        CompletableFuture<Iterable<StreamProtocolCollisionResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -103,28 +168,64 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamProtocolCollisionResponse>> streamProtocolCollision(
             StreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.streamProtocolCollision(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolCollisionResponse>>> rawFuture =
+                this.rawClient.streamProtocolCollision(request, requestOptions);
+        CompletableFuture<Iterable<StreamProtocolCollisionResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * x-fern-discriminator-context is explicitly set to &quot;data&quot; (the default value). Each variant uses allOf to extend a payload schema and adds the &quot;event&quot; discriminant property at the same level. There is no &quot;data&quot; wrapper. The discriminant and payload fields coexist in a single flat object. This matches the real-world pattern used by customers with context=data.
      */
     public CompletableFuture<Iterable<StreamDataContextResponse>> streamDataContext() {
-        return this.rawClient.streamDataContext().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamDataContextResponse>>> rawFuture =
+                this.rawClient.streamDataContext();
+        CompletableFuture<Iterable<StreamDataContextResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * x-fern-discriminator-context is explicitly set to &quot;data&quot; (the default value). Each variant uses allOf to extend a payload schema and adds the &quot;event&quot; discriminant property at the same level. There is no &quot;data&quot; wrapper. The discriminant and payload fields coexist in a single flat object. This matches the real-world pattern used by customers with context=data.
      */
     public CompletableFuture<Iterable<StreamDataContextResponse>> streamDataContext(RequestOptions requestOptions) {
-        return this.rawClient.streamDataContext(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamDataContextResponse>>> rawFuture =
+                this.rawClient.streamDataContext(requestOptions);
+        CompletableFuture<Iterable<StreamDataContextResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * x-fern-discriminator-context is explicitly set to &quot;data&quot; (the default value). Each variant uses allOf to extend a payload schema and adds the &quot;event&quot; discriminant property at the same level. There is no &quot;data&quot; wrapper. The discriminant and payload fields coexist in a single flat object. This matches the real-world pattern used by customers with context=data.
      */
     public CompletableFuture<Iterable<StreamDataContextResponse>> streamDataContext(StreamRequest request) {
-        return this.rawClient.streamDataContext(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamDataContextResponse>>> rawFuture =
+                this.rawClient.streamDataContext(request);
+        CompletableFuture<Iterable<StreamDataContextResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -132,28 +233,61 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamDataContextResponse>> streamDataContext(
             StreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.streamDataContext(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamDataContextResponse>>> rawFuture =
+                this.rawClient.streamDataContext(request, requestOptions);
+        CompletableFuture<Iterable<StreamDataContextResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * The x-fern-discriminator-context extension is omitted entirely. Tests whether Fern correctly infers the default behavior (context=data) when the extension is absent. Same flat allOf pattern as endpoint 3.
      */
     public CompletableFuture<Iterable<StreamNoContextResponse>> streamNoContext() {
-        return this.rawClient.streamNoContext().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamNoContextResponse>>> rawFuture =
+                this.rawClient.streamNoContext();
+        CompletableFuture<Iterable<StreamNoContextResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * The x-fern-discriminator-context extension is omitted entirely. Tests whether Fern correctly infers the default behavior (context=data) when the extension is absent. Same flat allOf pattern as endpoint 3.
      */
     public CompletableFuture<Iterable<StreamNoContextResponse>> streamNoContext(RequestOptions requestOptions) {
-        return this.rawClient.streamNoContext(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamNoContextResponse>>> rawFuture =
+                this.rawClient.streamNoContext(requestOptions);
+        CompletableFuture<Iterable<StreamNoContextResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * The x-fern-discriminator-context extension is omitted entirely. Tests whether Fern correctly infers the default behavior (context=data) when the extension is absent. Same flat allOf pattern as endpoint 3.
      */
     public CompletableFuture<Iterable<StreamNoContextResponse>> streamNoContext(StreamRequest request) {
-        return this.rawClient.streamNoContext(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamNoContextResponse>>> rawFuture =
+                this.rawClient.streamNoContext(request);
+        CompletableFuture<Iterable<StreamNoContextResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -161,14 +295,31 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamNoContextResponse>> streamNoContext(
             StreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.streamNoContext(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamNoContextResponse>>> rawFuture =
+                this.rawClient.streamNoContext(request, requestOptions);
+        CompletableFuture<Iterable<StreamNoContextResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Mismatched combination: context=protocol with the flat allOf schema pattern that is normally used with context=data. Shows what happens when the discriminant is declared as protocol-level but the schema uses allOf to flatten the event field alongside payload fields instead of wrapping them in a data field.
      */
     public CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> streamProtocolWithFlatSchema() {
-        return this.rawClient.streamProtocolWithFlatSchema().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolWithFlatSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolWithFlatSchema();
+        CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -176,7 +327,16 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> streamProtocolWithFlatSchema(
             RequestOptions requestOptions) {
-        return this.rawClient.streamProtocolWithFlatSchema(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolWithFlatSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolWithFlatSchema(requestOptions);
+        CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -184,7 +344,16 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> streamProtocolWithFlatSchema(
             StreamRequest request) {
-        return this.rawClient.streamProtocolWithFlatSchema(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolWithFlatSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolWithFlatSchema(request);
+        CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -192,9 +361,83 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> streamProtocolWithFlatSchema(
             StreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamProtocolWithFlatSchema(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolWithFlatSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolWithFlatSchema(request, requestOptions);
+        CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema() {
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolMixedSchema();
+        CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            RequestOptions requestOptions) {
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolMixedSchema(requestOptions);
+        CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            StreamRequest request) {
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolMixedSchema(request);
+        CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            StreamRequest request, RequestOptions requestOptions) {
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolMixedSchema(request, requestOptions);
+        CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -202,7 +445,16 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamDataContextWithEnvelopeSchemaResponse>>
             streamDataContextWithEnvelopeSchema() {
-        return this.rawClient.streamDataContextWithEnvelopeSchema().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamDataContextWithEnvelopeSchemaResponse>>> rawFuture =
+                this.rawClient.streamDataContextWithEnvelopeSchema();
+        CompletableFuture<Iterable<StreamDataContextWithEnvelopeSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -210,9 +462,16 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamDataContextWithEnvelopeSchemaResponse>> streamDataContextWithEnvelopeSchema(
             RequestOptions requestOptions) {
-        return this.rawClient
-                .streamDataContextWithEnvelopeSchema(requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamDataContextWithEnvelopeSchemaResponse>>> rawFuture =
+                this.rawClient.streamDataContextWithEnvelopeSchema(requestOptions);
+        CompletableFuture<Iterable<StreamDataContextWithEnvelopeSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -220,7 +479,16 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamDataContextWithEnvelopeSchemaResponse>> streamDataContextWithEnvelopeSchema(
             StreamRequest request) {
-        return this.rawClient.streamDataContextWithEnvelopeSchema(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamDataContextWithEnvelopeSchemaResponse>>> rawFuture =
+                this.rawClient.streamDataContextWithEnvelopeSchema(request);
+        CompletableFuture<Iterable<StreamDataContextWithEnvelopeSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -228,30 +496,59 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<StreamDataContextWithEnvelopeSchemaResponse>> streamDataContextWithEnvelopeSchema(
             StreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamDataContextWithEnvelopeSchema(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamDataContextWithEnvelopeSchemaResponse>>> rawFuture =
+                this.rawClient.streamDataContextWithEnvelopeSchema(request, requestOptions);
+        CompletableFuture<Iterable<StreamDataContextWithEnvelopeSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Follows the pattern from the OAS 3.2 specification's own SSE example. The itemSchema extends a base Event schema via $ref and uses inline oneOf variants with const on the event field to distinguish event types. Data fields use contentSchema/contentMediaType for structured payloads. No discriminator object is used. Event type resolution relies on const matching.
      */
     public CompletableFuture<Iterable<Event>> streamOasSpecNative() {
-        return this.rawClient.streamOasSpecNative().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<Event>>> rawFuture = this.rawClient.streamOasSpecNative();
+        CompletableFuture<Iterable<Event>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Follows the pattern from the OAS 3.2 specification's own SSE example. The itemSchema extends a base Event schema via $ref and uses inline oneOf variants with const on the event field to distinguish event types. Data fields use contentSchema/contentMediaType for structured payloads. No discriminator object is used. Event type resolution relies on const matching.
      */
     public CompletableFuture<Iterable<Event>> streamOasSpecNative(RequestOptions requestOptions) {
-        return this.rawClient.streamOasSpecNative(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<Event>>> rawFuture =
+                this.rawClient.streamOasSpecNative(requestOptions);
+        CompletableFuture<Iterable<Event>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Follows the pattern from the OAS 3.2 specification's own SSE example. The itemSchema extends a base Event schema via $ref and uses inline oneOf variants with const on the event field to distinguish event types. Data fields use contentSchema/contentMediaType for structured payloads. No discriminator object is used. Event type resolution relies on const matching.
      */
     public CompletableFuture<Iterable<Event>> streamOasSpecNative(StreamRequest request) {
-        return this.rawClient.streamOasSpecNative(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<Event>>> rawFuture = this.rawClient.streamOasSpecNative(request);
+        CompletableFuture<Iterable<Event>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -259,7 +556,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<Event>> streamOasSpecNative(
             StreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.streamOasSpecNative(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<Event>>> rawFuture =
+                this.rawClient.streamOasSpecNative(request, requestOptions);
+        CompletableFuture<Iterable<Event>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -267,7 +572,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingConditionStream(
             StreamXFernStreamingConditionStreamRequest request) {
-        return this.rawClient.streamXFernStreamingConditionStream(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<CompletionStreamChunk>>> rawFuture =
+                this.rawClient.streamXFernStreamingConditionStream(request);
+        CompletableFuture<Iterable<CompletionStreamChunk>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -275,9 +588,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingConditionStream(
             StreamXFernStreamingConditionStreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamXFernStreamingConditionStream(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<CompletionStreamChunk>>> rawFuture =
+                this.rawClient.streamXFernStreamingConditionStream(request, requestOptions);
+        CompletableFuture<Iterable<CompletionStreamChunk>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -285,7 +604,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> streamXFernStreamingCondition(
             StreamXFernStreamingConditionRequest request) {
-        return this.rawClient.streamXFernStreamingCondition(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.streamXFernStreamingCondition(request);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -293,9 +620,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> streamXFernStreamingCondition(
             StreamXFernStreamingConditionRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamXFernStreamingCondition(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.streamXFernStreamingCondition(request, requestOptions);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -303,7 +636,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingSharedSchemaStream(
             StreamXFernStreamingSharedSchemaStreamRequest request) {
-        return this.rawClient.streamXFernStreamingSharedSchemaStream(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<CompletionStreamChunk>>> rawFuture =
+                this.rawClient.streamXFernStreamingSharedSchemaStream(request);
+        CompletableFuture<Iterable<CompletionStreamChunk>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -311,9 +652,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingSharedSchemaStream(
             StreamXFernStreamingSharedSchemaStreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamXFernStreamingSharedSchemaStream(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<CompletionStreamChunk>>> rawFuture =
+                this.rawClient.streamXFernStreamingSharedSchemaStream(request, requestOptions);
+        CompletableFuture<Iterable<CompletionStreamChunk>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -321,7 +668,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> streamXFernStreamingSharedSchema(
             StreamXFernStreamingSharedSchemaRequest request) {
-        return this.rawClient.streamXFernStreamingSharedSchema(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.streamXFernStreamingSharedSchema(request);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -329,16 +684,30 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> streamXFernStreamingSharedSchema(
             StreamXFernStreamingSharedSchemaRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamXFernStreamingSharedSchema(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.streamXFernStreamingSharedSchema(request, requestOptions);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
      */
     public CompletableFuture<CompletionFullResponse> validateCompletion(SharedCompletionRequest request) {
-        return this.rawClient.validateCompletion(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.validateCompletion(request);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -346,7 +715,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> validateCompletion(
             SharedCompletionRequest request, RequestOptions requestOptions) {
-        return this.rawClient.validateCompletion(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.validateCompletion(request, requestOptions);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -354,7 +731,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingUnionStream(
             StreamXFernStreamingUnionStreamRequest request) {
-        return this.rawClient.streamXFernStreamingUnionStream(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<CompletionStreamChunk>>> rawFuture =
+                this.rawClient.streamXFernStreamingUnionStream(request);
+        CompletableFuture<Iterable<CompletionStreamChunk>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -362,9 +747,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingUnionStream(
             StreamXFernStreamingUnionStreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamXFernStreamingUnionStream(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<CompletionStreamChunk>>> rawFuture =
+                this.rawClient.streamXFernStreamingUnionStream(request, requestOptions);
+        CompletableFuture<Iterable<CompletionStreamChunk>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -372,7 +763,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> streamXFernStreamingUnion(
             StreamXFernStreamingUnionRequest request) {
-        return this.rawClient.streamXFernStreamingUnion(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.streamXFernStreamingUnion(request);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -380,14 +779,30 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> streamXFernStreamingUnion(
             StreamXFernStreamingUnionRequest request, RequestOptions requestOptions) {
-        return this.rawClient.streamXFernStreamingUnion(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.streamXFernStreamingUnion(request, requestOptions);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
      */
     public CompletableFuture<ValidateUnionRequestResponse> validateUnionRequest(UnionStreamRequestBase request) {
-        return this.rawClient.validateUnionRequest(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ValidateUnionRequestResponse>> rawFuture =
+                this.rawClient.validateUnionRequest(request);
+        CompletableFuture<ValidateUnionRequestResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -395,7 +810,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<ValidateUnionRequestResponse> validateUnionRequest(
             UnionStreamRequestBase request, RequestOptions requestOptions) {
-        return this.rawClient.validateUnionRequest(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ValidateUnionRequestResponse>> rawFuture =
+                this.rawClient.validateUnionRequest(request, requestOptions);
+        CompletableFuture<ValidateUnionRequestResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -403,9 +826,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingNullableConditionStream(
             StreamXFernStreamingNullableConditionStreamRequest request) {
-        return this.rawClient
-                .streamXFernStreamingNullableConditionStream(request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<CompletionStreamChunk>>> rawFuture =
+                this.rawClient.streamXFernStreamingNullableConditionStream(request);
+        CompletableFuture<Iterable<CompletionStreamChunk>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -413,9 +842,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingNullableConditionStream(
             StreamXFernStreamingNullableConditionStreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamXFernStreamingNullableConditionStream(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<CompletionStreamChunk>>> rawFuture =
+                this.rawClient.streamXFernStreamingNullableConditionStream(request, requestOptions);
+        CompletableFuture<Iterable<CompletionStreamChunk>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -423,7 +858,15 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> streamXFernStreamingNullableCondition(
             StreamXFernStreamingNullableConditionRequest request) {
-        return this.rawClient.streamXFernStreamingNullableCondition(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.streamXFernStreamingNullableCondition(request);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -431,30 +874,60 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<CompletionFullResponse> streamXFernStreamingNullableCondition(
             StreamXFernStreamingNullableConditionRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamXFernStreamingNullableCondition(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CompletionFullResponse>> rawFuture =
+                this.rawClient.streamXFernStreamingNullableCondition(request, requestOptions);
+        CompletableFuture<CompletionFullResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
      */
     public CompletableFuture<Iterable<String>> streamXFernStreamingSseOnly() {
-        return this.rawClient.streamXFernStreamingSseOnly().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<String>>> rawFuture =
+                this.rawClient.streamXFernStreamingSseOnly();
+        CompletableFuture<Iterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
      */
     public CompletableFuture<Iterable<String>> streamXFernStreamingSseOnly(RequestOptions requestOptions) {
-        return this.rawClient.streamXFernStreamingSseOnly(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<String>>> rawFuture =
+                this.rawClient.streamXFernStreamingSseOnly(requestOptions);
+        CompletableFuture<Iterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
      */
     public CompletableFuture<Iterable<String>> streamXFernStreamingSseOnly(StreamRequest request) {
-        return this.rawClient.streamXFernStreamingSseOnly(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<String>>> rawFuture =
+                this.rawClient.streamXFernStreamingSseOnly(request);
+        CompletableFuture<Iterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -462,14 +935,21 @@ public class AsyncSeedApiClient implements AutoCloseable {
      */
     public CompletableFuture<Iterable<String>> streamXFernStreamingSseOnly(
             StreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamXFernStreamingSseOnly(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Iterable<String>>> rawFuture =
+                this.rawClient.streamXFernStreamingSseOnly(request, requestOptions);
+        CompletableFuture<Iterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

@@ -1,7 +1,9 @@
 import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
+import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import {
@@ -13,7 +15,7 @@ import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst
 import { formatInitError } from "./formatInitError.js";
 import { getAllRules } from "./getAllRules.js";
 import { Rule } from "./Rule.js";
-import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
+import { findMissingRedirects, MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
@@ -80,12 +82,52 @@ export async function validateDocsWorkspace(
     apiWorkspaces: AbstractAPIWorkspace<unknown>[],
     ossWorkspaces: OSSWorkspace[],
     onlyCheckBrokenLinks?: boolean,
-    excludeRules?: string[]
+    excludeRules?: string[],
+    skipApiReferences?: boolean
 ): Promise<ValidationViolation[]> {
     // In the future we'll do something more sophisticated that lets you pick and choose which rules to run.
     // For right now, the only use case is to check for broken links, so only expose a choice to run that rule.
     const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks] : getAllRules(excludeRules);
-    return runRulesOnDocsWorkspace({ workspace, rules, context, apiWorkspaces, ossWorkspaces });
+    return runRulesOnDocsWorkspace({ workspace, rules, context, apiWorkspaces, ossWorkspaces, skipApiReferences });
+}
+
+/**
+ * Runs the `missing-redirects` rule against docs that the caller already resolved, so a publish
+ * doesn't build the docs navigation a second time. Callers should exclude the rule from
+ * `validateDocsWorkspace` when they use this. Severity follows `check.rules.missing-redirects`
+ * in docs.yml: "error" when configured as error, otherwise "warning".
+ */
+export async function validateMissingRedirects({
+    workspace,
+    docsDefinition,
+    instanceUrl,
+    token,
+    logger
+}: {
+    workspace: DocsWorkspace;
+    docsDefinition: DocsV1Write.DocsDefinition;
+    /** URL of the docs instance being published; its live pages are the ones compared. */
+    instanceUrl: string;
+    token: string;
+    logger: Logger;
+}): Promise<ValidationViolation[]> {
+    const violations = await findMissingRedirects({
+        workspace,
+        logger,
+        instanceUrl,
+        token,
+        resolveLocalDocs: async () => docsDefinition
+    });
+    const severity = getRuleNamesConfiguredAsErrors(workspace.config.check).has(MissingRedirectsRule.name)
+        ? "error"
+        : "warning";
+    return violations.map((violation) => ({
+        name: MissingRedirectsRule.name,
+        severity,
+        relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
+        nodePath: [],
+        message: violation.message
+    }));
 }
 
 // exported for testing
@@ -94,13 +136,19 @@ export async function runRulesOnDocsWorkspace({
     rules: selectedRules,
     context,
     apiWorkspaces,
-    ossWorkspaces
+    ossWorkspaces,
+    skipApiReferences = false
 }: {
     workspace: DocsWorkspace;
     rules: Rule[];
     context: TaskContext;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
+    /**
+     * Set by `fern docs dev --skip-api`. Keeps `valid-markdown-links` excluded even when docs.yml
+     * configures `check.rules.broken-links`, because that rule rebuilds every API reference.
+     */
+    skipApiReferences?: boolean;
 }): Promise<ValidationViolation[]> {
     const startMemory = process.memoryUsage();
     const rules = [...selectedRules];
@@ -110,7 +158,11 @@ export async function runRulesOnDocsWorkspace({
     // Include it here when docs.yml configures `check.rules.broken-links` so that config takes effect
     // until those CLI args are removed.
     if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
-        rules.push(ValidMarkdownLinks);
+        if (skipApiReferences) {
+            context.logger.debug(`Skipping ${ValidMarkdownLinks.name}: API references are skipped (--skip-api)`);
+        } else {
+            rules.push(ValidMarkdownLinks);
+        }
     }
     context.logger.debug(`Starting docs validation with ${rules.length} rules: ${rules.map((r) => r.name).join(", ")}`);
     context.logger.debug(

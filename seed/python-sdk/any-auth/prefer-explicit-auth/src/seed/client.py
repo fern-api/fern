@@ -88,7 +88,7 @@ class SeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -107,7 +107,7 @@ class SeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -124,7 +124,7 @@ class SeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -142,6 +142,7 @@ class SeedAnyAuth:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("MY_API_KEY")
         _explicit_oauth_auth = client_id is not None or client_secret is not None
         _explicit_basic_auth = username is not None or password is not None
         username = username if username is not None else os.getenv("MY_USERNAME")
@@ -339,7 +340,7 @@ class AsyncSeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -358,7 +359,7 @@ class AsyncSeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -376,7 +377,7 @@ class AsyncSeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -393,7 +394,7 @@ class AsyncSeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -412,6 +413,7 @@ class AsyncSeedAnyAuth:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("MY_API_KEY")
         _explicit_oauth_auth = client_id is not None or client_secret is not None
         _explicit_basic_auth = username is not None or password is not None
         username = username if username is not None else os.getenv("MY_USERNAME")

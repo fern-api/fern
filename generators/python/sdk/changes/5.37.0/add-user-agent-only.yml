@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add opt-in `user_agent_only` config (also accepted as `userAgentOnly`). When enabled,
+    generated clients send the `User-Agent` header (including the structured form from
+    `include_platform_headers`) but omit the `X-Fern-Language`, `X-Fern-SDK-Name`,
+    `X-Fern-SDK-Version`, `X-Fern-Runtime`, and `X-Fern-Platform` headers. Disabled by default,
+    so existing generated output is unchanged. `omit_fern_headers` still takes precedence and
+    drops the `User-Agent` too.
+  type: feat

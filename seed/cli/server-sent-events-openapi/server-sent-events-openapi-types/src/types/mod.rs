@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 23 types for API operations
+//! - **Request/Response Types**: 24 types for API operations
 //! - **Model Types**: 16 types for data representation
 
 pub mod stream_protocol_no_collision_response;
@@ -13,6 +13,7 @@ pub mod stream_protocol_collision_response;
 pub mod stream_data_context_response;
 pub mod stream_no_context_response;
 pub mod stream_protocol_with_flat_schema_response;
+pub mod stream_protocol_mixed_schema_response;
 pub mod stream_data_context_with_envelope_schema_response;
 pub mod stream_x_fern_streaming_union_stream_request;
 pub mod stream_x_fern_streaming_union_request;
@@ -53,6 +54,7 @@ pub use stream_protocol_collision_response::StreamProtocolCollisionResponse;
 pub use stream_data_context_response::StreamDataContextResponse;
 pub use stream_no_context_response::StreamNoContextResponse;
 pub use stream_protocol_with_flat_schema_response::StreamProtocolWithFlatSchemaResponse;
+pub use stream_protocol_mixed_schema_response::StreamProtocolMixedSchemaResponse;
 pub use stream_data_context_with_envelope_schema_response::StreamDataContextWithEnvelopeSchemaResponse;
 pub use stream_x_fern_streaming_union_stream_request::StreamXFernStreamingUnionStreamRequest;
 pub use stream_x_fern_streaming_union_request::StreamXFernStreamingUnionRequest;

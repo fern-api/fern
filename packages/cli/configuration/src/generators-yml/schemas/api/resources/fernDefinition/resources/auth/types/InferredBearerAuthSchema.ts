@@ -5,4 +5,6 @@ import type * as GeneratorsYml from "../../../../../index.js";
 export interface InferredBearerAuthSchema extends GeneratorsYml.fernDefinition.WithDocsSchema {
     scheme: "bearer";
     "get-token": GeneratorsYml.fernDefinition.InferredGetTokenEndpointSchema;
+    /** The kind of credential the user passes to the SDK to call the get-token endpoint. Defaults to 'api-key'. With 'refresh-token', the SDK always sends `grant_type=refresh_token` to the get-token endpoint and does not expose `grant_type` as a client option. */
+    type?: GeneratorsYml.fernDefinition.InferredAuthTypeSchema;
 }

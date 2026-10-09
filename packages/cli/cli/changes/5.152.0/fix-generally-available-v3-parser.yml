@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Recognize `x-fern-availability: generally-available` in the OpenAPI v3 parser. Previously this value was
+    dropped, so those endpoints were treated as having no availability.
+  type: fix

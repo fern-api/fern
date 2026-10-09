@@ -188,6 +188,8 @@ public final class ApiClient: Sendable {
     ///         species: "species",
     ///         family: "family",
     ///         genus: "genus",
+    ///         commonName: "commonName",
+    ///         wateringFrequency: .daily,
     ///         sunExposure: .full
     ///     ))
     /// }
@@ -216,7 +218,9 @@ public final class ApiClient: Sendable {
     ///     let client = ApiClient()
     ///
     ///     _ = try await client.createTree(request: TreeRecord(
-    ///         id: "id"
+    ///         id: "id",
+    ///         treeName: "treeName",
+    ///         treeSpecies: "treeSpecies"
     ///     ))
     /// }
     ///

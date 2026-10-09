@@ -852,6 +852,70 @@ describe("applyTranslatedNavigationOverlays", () => {
         expect(pkg?.title).toBe("認証");
         expect((pkg?.children as Array<Record<string, unknown>>)[0]?.title).toBe("トークン取得");
     });
+    it("matches children of sidebarGroup wrappers as siblings of the surrounding items", () => {
+        const root = sidebarRootFixture([
+            {
+                type: "section",
+                title: "Guides",
+                slug: "guides",
+                children: [{ type: "page", title: "Intro", slug: "guides/intro", pageId: "intro.mdx" }]
+            },
+            {
+                type: "sidebarGroup",
+                id: "group",
+                collapsed: undefined,
+                children: [
+                    {
+                        type: "section",
+                        title: "API reference",
+                        slug: "api-reference",
+                        collapsed: true,
+                        children: [{ type: "page", title: "Overview", slug: "api-reference/overview", pageId: "o.mdx" }]
+                    },
+                    { type: "page", title: "FAQ", slug: "faq", pageId: "faq.mdx" }
+                ]
+            },
+            {
+                type: "section",
+                title: "Appendix",
+                slug: "appendix",
+                children: [{ type: "page", title: "Glossary", slug: "appendix/glossary", pageId: "g.mdx" }]
+            }
+        ]);
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                {
+                    type: "section",
+                    title: "ガイド",
+                    slug: undefined,
+                    contents: [{ type: "page", title: "イントロ", slug: undefined }]
+                },
+                {
+                    type: "section",
+                    title: "APIリファレンス",
+                    slug: undefined,
+                    contents: [{ type: "page", title: "概要", slug: undefined }]
+                },
+                { type: "page", title: "よくある質問", slug: undefined },
+                {
+                    type: "section",
+                    title: "付録",
+                    slug: undefined,
+                    contents: [{ type: "page", title: "用語集", slug: undefined }]
+                }
+            ]
+        };
+
+        const children = getSidebarChildren(applyTranslatedNavigationOverlays(asRoot(root), overlay));
+        expect(children.map((c) => c.type)).toEqual(["section", "sidebarGroup", "section"]);
+        expect(children[0]?.title).toBe("ガイド");
+        const group = children[1]?.children as Array<Record<string, unknown>>;
+        expect(group.map((c) => c.title)).toEqual(["APIリファレンス", "よくある質問"]);
+        expect((group[0]?.children as Array<Record<string, unknown>>)[0]?.title).toBe("概要");
+        expect(children[2]?.title).toBe("付録");
+        expect((children[2]?.children as Array<Record<string, unknown>>)[0]?.title).toBe("用語集");
+    });
 });
 
 function sidebarRootFixture(children: unknown[]): unknown {

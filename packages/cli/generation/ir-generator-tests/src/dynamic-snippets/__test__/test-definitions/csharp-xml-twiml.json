@@ -45,6 +45,10 @@
                 {
                     "type": "named",
                     "value": "type_:Hangup"
+                },
+                {
+                    "type": "named",
+                    "value": "type_:Redirect"
                 }
             ]
         },
@@ -9507,6 +9511,136 @@
                             "value": {
                                 "type": "named",
                                 "value": "type_:Pause"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:Redirect": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Redirect",
+                    "camelCase": {
+                        "unsafeName": "redirect",
+                        "safeName": "redirect"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "redirect",
+                        "safeName": "redirect"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REDIRECT",
+                        "safeName": "REDIRECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Redirect",
+                        "safeName": "Redirect"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "url",
+                        "name": {
+                            "originalName": "url",
+                            "camelCase": {
+                                "unsafeName": "url",
+                                "safeName": "url"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "url",
+                                "safeName": "url"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "URL",
+                                "safeName": "URL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "URL",
+                                "safeName": "URL"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "method",
+                        "name": {
+                            "originalName": "method",
+                            "camelCase": {
+                                "unsafeName": "method",
+                                "safeName": "method"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "method",
+                                "safeName": "method"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METHOD",
+                                "safeName": "METHOD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Method",
+                                "safeName": "Method"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "kind",
+                        "name": {
+                            "originalName": "kind",
+                            "camelCase": {
+                                "unsafeName": "kind",
+                                "safeName": "kind"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "kind",
+                                "safeName": "kind"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "KIND",
+                                "safeName": "KIND"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Kind",
+                                "safeName": "Kind"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "literal",
+                            "value": {
+                                "type": "string",
+                                "value": "redirect"
                             }
                         }
                     },

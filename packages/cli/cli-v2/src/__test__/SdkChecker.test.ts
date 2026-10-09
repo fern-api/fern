@@ -292,6 +292,96 @@ sdks:
         });
     });
 
+    describe("Maven publish signature validation", () => {
+        async function checkJavaTarget(target: string): Promise<SdkChecker.Result> {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - openapi: openapi.yml
+sdks:
+  targets:
+    java:
+      lang: java
+      version: "1.0.0"
+${target}`
+            );
+            await writeMinimalOpenApi(testDir);
+
+            const workspace = await loadTempWorkspace(testDir);
+            const checker = new SdkChecker({
+                context: await createTestContext({ cwd: testDir }),
+                versionChecker: NOOP_VERSION_CHECKER
+            });
+            return await checker.check({ workspace });
+        }
+
+        it("warns for a git-delivered Maven target without signature or url", async () => {
+            const result = await checkJavaTarget(`      output:
+        git:
+          repository: acme/acme-java
+      publish:
+        maven:
+          coordinate: com.acme:acme-java
+`);
+
+            expect(result.errorCount).toBe(0);
+            expect(result.warningCount).toBe(1);
+            expect(result.violations).toEqual([
+                expect.objectContaining({
+                    severity: "warning",
+                    nodePath: ["sdks", "targets", "java", "publish", "maven"],
+                    message:
+                        "Maven output for java has no `signature` and no `url`. Maven Central requires signed artifacts, so this publish will be uploaded to the Central Portal staging service but never released. Add `signature` to publish to Maven Central, or set `url` to publish to another registry."
+                })
+            ]);
+        });
+
+        it.each([
+            [
+                "signature",
+                `      output:
+        git:
+          repository: acme/acme-java
+      publish:
+        maven:
+          coordinate: com.acme:acme-java
+          signature:
+            keyId: kid
+            password: pw
+            secretKey: key
+`
+            ],
+            [
+                "url",
+                `      output:
+        git:
+          repository: acme/acme-java
+      publish:
+        maven:
+          coordinate: com.acme:acme-java
+          url: https://maven.acme.com/releases
+`
+            ],
+            [
+                "local output (publish is not used)",
+                `      output:
+        path: ./sdks/java
+      publish:
+        maven:
+          coordinate: com.acme:acme-java
+`
+            ]
+        ])("does not warn with %s", async (_name, target) => {
+            const result = await checkJavaTarget(target);
+
+            expect(result.violations.filter((v) => v.message.includes("Maven output"))).toEqual([]);
+        });
+    });
+
     describe("registry unreachable", () => {
         it("warns when registry is unreachable", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));

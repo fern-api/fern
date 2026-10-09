@@ -6,6 +6,7 @@ package com.fern.sdk.resources.endpoints.urls;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
@@ -27,34 +28,90 @@ public class AsyncUrlsClient {
   }
 
   public CompletableFuture<String> withMixedCase() {
-    return this.rawClient.withMixedCase().thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.withMixedCase();
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> withMixedCase(RequestOptions requestOptions) {
-    return this.rawClient.withMixedCase(requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.withMixedCase(requestOptions);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> noEndingSlash() {
-    return this.rawClient.noEndingSlash().thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.noEndingSlash();
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> noEndingSlash(RequestOptions requestOptions) {
-    return this.rawClient.noEndingSlash(requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.noEndingSlash(requestOptions);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> withEndingSlash() {
-    return this.rawClient.withEndingSlash().thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.withEndingSlash();
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> withEndingSlash(RequestOptions requestOptions) {
-    return this.rawClient.withEndingSlash(requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.withEndingSlash(requestOptions);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> withUnderscores() {
-    return this.rawClient.withUnderscores().thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.withUnderscores();
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> withUnderscores(RequestOptions requestOptions) {
-    return this.rawClient.withUnderscores(requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.withUnderscores(requestOptions);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 }

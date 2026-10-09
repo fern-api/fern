@@ -5,6 +5,7 @@ package com.seed.trace.resources.admin;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import com.seed.trace.resources.admin.requests.StoreTracedTestCaseRequest;
 import com.seed.trace.resources.admin.requests.StoreTracedWorkspaceRequest;
 import com.seed.trace.resources.submission.types.TestSubmissionStatus;
@@ -34,101 +35,205 @@ public class AsyncAdminClient {
     }
 
     public CompletableFuture<Void> updateTestSubmissionStatus(UUID submissionId, TestSubmissionStatus request) {
-        return this.rawClient.updateTestSubmissionStatus(submissionId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.updateTestSubmissionStatus(submissionId, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> updateTestSubmissionStatus(
             UUID submissionId, TestSubmissionStatus request, RequestOptions requestOptions) {
-        return this.rawClient
-                .updateTestSubmissionStatus(submissionId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.updateTestSubmissionStatus(submissionId, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> sendTestSubmissionUpdate(UUID submissionId, TestSubmissionUpdate request) {
-        return this.rawClient.sendTestSubmissionUpdate(submissionId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.sendTestSubmissionUpdate(submissionId, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> sendTestSubmissionUpdate(
             UUID submissionId, TestSubmissionUpdate request, RequestOptions requestOptions) {
-        return this.rawClient
-                .sendTestSubmissionUpdate(submissionId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.sendTestSubmissionUpdate(submissionId, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> updateWorkspaceSubmissionStatus(
             UUID submissionId, WorkspaceSubmissionStatus request) {
-        return this.rawClient
-                .updateWorkspaceSubmissionStatus(submissionId, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.updateWorkspaceSubmissionStatus(submissionId, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> updateWorkspaceSubmissionStatus(
             UUID submissionId, WorkspaceSubmissionStatus request, RequestOptions requestOptions) {
-        return this.rawClient
-                .updateWorkspaceSubmissionStatus(submissionId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.updateWorkspaceSubmissionStatus(submissionId, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> sendWorkspaceSubmissionUpdate(UUID submissionId, WorkspaceSubmissionUpdate request) {
-        return this.rawClient
-                .sendWorkspaceSubmissionUpdate(submissionId, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.sendWorkspaceSubmissionUpdate(submissionId, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> sendWorkspaceSubmissionUpdate(
             UUID submissionId, WorkspaceSubmissionUpdate request, RequestOptions requestOptions) {
-        return this.rawClient
-                .sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> storeTracedTestCase(
             UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request) {
-        return this.rawClient
-                .storeTracedTestCase(submissionId, testCaseId, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.storeTracedTestCase(submissionId, testCaseId, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> storeTracedTestCase(
             UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .storeTracedTestCase(submissionId, testCaseId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.storeTracedTestCase(submissionId, testCaseId, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> storeTracedTestCaseV2(
             UUID submissionId, String testCaseId, List<TraceResponseV2> request) {
-        return this.rawClient
-                .storeTracedTestCaseV2(submissionId, testCaseId, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.storeTracedTestCaseV2(submissionId, testCaseId, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> storeTracedTestCaseV2(
             UUID submissionId, String testCaseId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        return this.rawClient
-                .storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> storeTracedWorkspace(UUID submissionId, StoreTracedWorkspaceRequest request) {
-        return this.rawClient.storeTracedWorkspace(submissionId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.storeTracedWorkspace(submissionId, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> storeTracedWorkspace(
             UUID submissionId, StoreTracedWorkspaceRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .storeTracedWorkspace(submissionId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.storeTracedWorkspace(submissionId, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> storeTracedWorkspaceV2(UUID submissionId, List<TraceResponseV2> request) {
-        return this.rawClient.storeTracedWorkspaceV2(submissionId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.storeTracedWorkspaceV2(submissionId, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> storeTracedWorkspaceV2(
             UUID submissionId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        return this.rawClient
-                .storeTracedWorkspaceV2(submissionId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.storeTracedWorkspaceV2(submissionId, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

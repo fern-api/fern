@@ -102,6 +102,7 @@ export async function packLocalOutputForGroup({
             });
             if (packOnly) {
                 if (artifactProduced) {
+                    await copyDocsIntoDist({ outputPath, context });
                     await removeEverythingExceptDist({ outputPath, context });
                 } else {
                     context.logger.warn(
@@ -153,14 +154,16 @@ async function packOutputForLanguage({
     switch (language) {
         case "typescript": {
             await mkdir(distDir, { recursive: true });
-            await run([["npm", "install"]]);
+            await ensureNpmPackageVersion({ outputPath, version });
+            const packageManager = await getNodePackageManagerCommand(outputPath);
+            await run([[...packageManager, "install"]]);
             // Compile the package before packing so the tarball ships runnable JavaScript and
             // consumers can require() it right after npm install, without a post-install build.
             if (await hasNpmScript({ outputPath, script: "build" })) {
                 // Generated build scripts invoke pnpm, which isn't preinstalled on the host or in
                 // the node toolchain image — npx fetches it on demand and puts it on PATH for the
                 // nested `pnpm build:*` invocations.
-                await run([["npx", "--yes", "pnpm", "run", "build"]]);
+                await run([[...packageManager, "run", "build"]]);
             } else {
                 const tsconfig = await findTsconfig(outputPath);
                 if (tsconfig != null) {
@@ -335,6 +338,53 @@ async function packOutputForLanguage({
     }
 }
 
+async function ensureNpmPackageVersion({
+    outputPath,
+    version
+}: {
+    outputPath: AbsoluteFilePath;
+    version: string | undefined;
+}): Promise<void> {
+    if (version == null) {
+        return;
+    }
+    const packageJsonPath = join(outputPath, RelativeFilePath.of("package.json"));
+    const packageJson: unknown = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+    if (typeof packageJson !== "object" || packageJson == null || Array.isArray(packageJson)) {
+        throw new Error("package.json must contain a JSON object.");
+    }
+    if ("version" in packageJson && typeof packageJson.version === "string" && packageJson.version.length > 0) {
+        return;
+    }
+    await writeFile(packageJsonPath, `${JSON.stringify({ ...packageJson, version }, null, 2)}\n`);
+}
+
+async function getNodePackageManagerCommand(outputPath: AbsoluteFilePath): Promise<string[]> {
+    const packageJsonPath = join(outputPath, RelativeFilePath.of("package.json"));
+    const packageJson: unknown = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+    if (typeof packageJson === "object" && packageJson != null && !Array.isArray(packageJson)) {
+        const packageManager = "packageManager" in packageJson ? packageJson.packageManager : undefined;
+        if (typeof packageManager === "string") {
+            if (packageManager === "npm" || packageManager.startsWith("npm@")) {
+                return ["npm"];
+            }
+            if (packageManager === "yarn" || packageManager.startsWith("yarn@")) {
+                return ["npx", "--yes", "yarn"];
+            }
+        }
+    }
+    if (
+        (await doesPathExist(join(outputPath, RelativeFilePath.of("package-lock.json")))) ||
+        (await doesPathExist(join(outputPath, RelativeFilePath.of("npm-shrinkwrap.json"))))
+    ) {
+        return ["npm"];
+    }
+    if (await doesPathExist(join(outputPath, RelativeFilePath.of("yarn.lock")))) {
+        return ["npx", "--yes", "yarn"];
+    }
+    return ["npx", "--yes", "pnpm"];
+}
+
 /**
  * Runs the toolchain commands for a language, either directly on the host (cwd = output dir) or
  * inside the language's official Docker image with the output directory mounted at /workspace.
@@ -431,6 +481,32 @@ async function zipDirectory({
         zip.outputStream.on("error", reject);
         zip.outputStream.pipe(createWriteStream(zipPath)).on("close", resolve).on("error", reject);
     });
+}
+
+/** Root-level docs generators emit alongside the SDK source that should outlive --package-only cleanup. */
+const DOC_FILES_TO_KEEP_IN_DIST = ["README.md", "reference.md"];
+
+/**
+ * Copies the generated README.md and reference.md into fern-dist/ so --package-only keeps them for
+ * every language, not just those whose package format bundles root files (e.g. gems, Go source zips).
+ */
+async function copyDocsIntoDist({
+    outputPath,
+    context
+}: {
+    outputPath: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<void> {
+    const distDir = join(outputPath, RelativeFilePath.of(PACK_OUTPUT_DIRECTORY));
+    for (const filename of DOC_FILES_TO_KEEP_IN_DIST) {
+        const source = join(outputPath, RelativeFilePath.of(filename));
+        if (!(await doesPathExist(source))) {
+            continue;
+        }
+        await mkdir(distDir, { recursive: true });
+        await copyFile(source, join(distDir, RelativeFilePath.of(filename)));
+        context.logger.debug(`Copied ${filename} into ${PACK_OUTPUT_DIRECTORY}/.`);
+    }
 }
 
 /**

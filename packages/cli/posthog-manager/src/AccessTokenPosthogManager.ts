@@ -2,13 +2,15 @@ import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
+import { getCliReleaseEnvironment } from "./feature-flags/CliReleaseEnvironment.js";
 import { PosthogManager } from "./PosthogManager.js";
 
 export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog;
 
     constructor({ posthogApiKey }: { posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey);
+        // isServer: false keeps posthog-node >=5.36 from tagging CLI events with `$is_server: true`.
+        this.posthog = new PostHog(posthogApiKey, { isServer: false });
     }
 
     public async identify(): Promise<void> {
@@ -25,6 +27,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
                     ...event.properties,
                     version: process.env.CLI_VERSION,
                     usingAccessToken: true,
+                    cliReleaseEnvironment: getCliReleaseEnvironment(),
                     ...getRunIdProperties()
                 }
             });

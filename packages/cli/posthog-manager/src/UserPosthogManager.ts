@@ -9,6 +9,7 @@ import { dirname } from "path";
 import { PostHog } from "posthog-node";
 import { v4 as uuidv4 } from "uuid";
 
+import { getCliReleaseEnvironment } from "./feature-flags/CliReleaseEnvironment.js";
 import { PosthogManager } from "./PosthogManager.js";
 
 const DISTINCT_ID_FILENAME = "id";
@@ -20,7 +21,8 @@ export class UserPosthogManager implements PosthogManager {
     private token: FernUserToken | undefined;
 
     constructor({ token, posthogApiKey }: { token: FernUserToken | undefined; posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey);
+        // isServer: false keeps posthog-node >=5.36 from tagging CLI events with `$is_server: true`.
+        this.posthog = new PostHog(posthogApiKey, { isServer: false });
         this.userId = token == null ? undefined : getUserIdFromToken(token);
         this.token = token;
     }
@@ -44,6 +46,7 @@ export class UserPosthogManager implements PosthogManager {
                 ...event,
                 ...event.properties,
                 usingAccessToken: false,
+                cliReleaseEnvironment: getCliReleaseEnvironment(),
                 agent: detectCodingAgent(),
                 ...(userEmail != null ? { userEmail } : {}),
                 ...getRunIdProperties()

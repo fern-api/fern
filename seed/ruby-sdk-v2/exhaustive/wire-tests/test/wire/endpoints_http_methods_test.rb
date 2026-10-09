@@ -36,7 +36,7 @@ class EndpointsHttpMethodsWireTest < WireMockTestCase
   def test_endpoints_http_methods_test_post_with_wiremock
     test_id = "endpoints.http_methods.test_post.0"
 
-    @client.endpoints.http_methods.test_post(
+    result = @client.endpoints.http_methods.test_post(
       string: "string",
       request_options: {
         additional_headers: {
@@ -52,12 +52,21 @@ class EndpointsHttpMethodsWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
+    )
   end
 
   def test_endpoints_http_methods_test_put_with_wiremock
     test_id = "endpoints.http_methods.test_put.0"
 
-    @client.endpoints.http_methods.test_put(
+    result = @client.endpoints.http_methods.test_put(
       id: "id",
       string: "string",
       request_options: {
@@ -74,12 +83,21 @@ class EndpointsHttpMethodsWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
+    )
   end
 
   def test_endpoints_http_methods_test_patch_with_wiremock
     test_id = "endpoints.http_methods.test_patch.0"
 
-    @client.endpoints.http_methods.test_patch(
+    result = @client.endpoints.http_methods.test_patch(
       id: "id",
       string: "string",
       integer: 1,
@@ -109,6 +127,26 @@ class EndpointsHttpMethodsWireTest < WireMockTestCase
       url_path: "/http-methods/id",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "PATCH",
+      url_path: "/http-methods/id",
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
     )
   end
 

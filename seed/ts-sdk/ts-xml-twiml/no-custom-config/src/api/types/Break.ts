@@ -16,14 +16,19 @@ export class Break implements core.xml.XmlSerializable {
     time?: string;
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments, comments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Break.Fields = {}) {
         this.strength = fields.strength;
         this.time = fields.time;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Break.Fields = {}): Break.Builder {
@@ -33,6 +38,7 @@ export class Break implements core.xml.XmlSerializable {
     /** Parses a `<break>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Break {
         const node = core.xml.parseXml(xml, "break");
+        const content = core.xml.xmlContent(node);
         return new Break({
             strength: core.xml.xmlScalar(
                 core.xml.xmlAttribute(node, "strength"),
@@ -41,11 +47,12 @@ export class Break implements core.xml.XmlSerializable {
             ),
             time: core.xml.xmlScalar(core.xml.xmlAttribute(node, "time"), core.xml.xmlString, "break.time"),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["strength", "time"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, []),
+            content,
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<break>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "break",
             attributes: [
@@ -54,7 +61,8 @@ export class Break implements core.xml.XmlSerializable {
                 ...core.xml.extraXmlAttributes(this.additionalAttributes),
             ],
             children: [],
-            additionalChildren: this.additionalChildren,
+            content: core.xml.orderXmlContent(this.content),
+            xmlDeclaration,
         });
     }
 
@@ -86,13 +94,19 @@ export namespace Break {
         time?: string;
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Break> {
         private readonly fields: Partial<Break.Fields>;
+        private content: core.xml.XmlContent[];
+        /** Comments added with `commentBefore`/`commentAfter`, rendered around this element. */
+        readonly siblingComments: core.xml.XmlSiblingComments = new core.xml.XmlSiblingComments();
 
         constructor(fields: Partial<Break.Fields> = {}) {
-            this.fields = { ...fields };
+            const { content, additionalChildren, ...rest } = fields;
+            this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
         }
 
         /** Parses a `<break>` element into a builder. */
@@ -122,18 +136,43 @@ export namespace Break {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
+            return this;
+        }
+
+        /** Appends an XML comment (`<!--text-->`) inside this element, after any content added so far. */
+        comment(text: string): this {
+            this.content.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
+        /** Adds an XML comment rendered immediately before this element: as a sibling in the parent it is added to, or before the root element. */
+        commentBefore(text: string): this {
+            this.siblingComments.before.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
+        /** Adds an XML comment rendered immediately after this element: as a sibling in the parent it is added to, or after the root element. */
+        commentAfter(text: string): this {
+            this.siblingComments.after.push(new core.xml.XmlComment(text));
             return this;
         }
 
         build(): Break {
-            return new Break({ ...this.fields });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Break({ ...this.fields, content: built.content });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.siblingComments.wrap(this.build().toXml(xmlDeclaration));
         }
 
         toString(): string {

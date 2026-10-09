@@ -32,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponseParserGenerator {
 
     private static final String FUTURE = "future";
+    private static final String OKHTTP_CALL = "okhttpCall";
 
     public AsyncHttpResponseParserGenerator(
             AbstractEndpointWriterVariableNameContext variables,
@@ -178,11 +179,16 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             CodeBlock.Builder httpResponseBuilder,
             Consumer<CodeBlock.Builder> onResponseWriter,
             Consumer<CodeBlock.Builder> onFailureWriter) {
-        httpResponseBuilder.add(
-                "$N.newCall($L).enqueue(new $T() {\n",
+        ClassName retryInterceptorClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
+        httpResponseBuilder.addStatement(
+                "$T $L = $T.newAsyncCall($N, $L)",
+                retryInterceptorClassName.nestedClass("AsyncCall"),
+                OKHTTP_CALL,
+                retryInterceptorClassName,
                 variables.getDefaultedClientName(),
-                variables.getOkhttpRequestName(),
-                Callback.class);
+                variables.getOkhttpRequestName());
+        httpResponseBuilder.add("$L.enqueue(new $T() {\n", OKHTTP_CALL, Callback.class);
         httpResponseBuilder.indent();
 
         httpResponseBuilder.add("@$T\n", Override.class);
@@ -231,6 +237,13 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
         httpResponseBuilder.unindent();
         httpResponseBuilder.add("}\n");
 
+        httpResponseBuilder.unindent();
+        httpResponseBuilder.addStatement("})");
+        httpResponseBuilder.add("$L.whenComplete((result_, throwable_) -> {\n", FUTURE);
+        httpResponseBuilder.indent();
+        httpResponseBuilder.beginControlFlow("if ($L.isCancelled())", FUTURE);
+        httpResponseBuilder.addStatement("$L.cancel()", OKHTTP_CALL);
+        httpResponseBuilder.endControlFlow();
         httpResponseBuilder.unindent();
         httpResponseBuilder.addStatement("})");
         httpResponseBuilder.addStatement("return $L", FUTURE);

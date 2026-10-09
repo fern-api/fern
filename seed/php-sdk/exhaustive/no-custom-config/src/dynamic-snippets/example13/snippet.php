@@ -11,8 +11,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->httpMethods->testPut(
-    'id',
+$client->endpoints->httpMethods->testPost(
     new ObjectWithRequiredField([
         'string' => 'string',
     ]),

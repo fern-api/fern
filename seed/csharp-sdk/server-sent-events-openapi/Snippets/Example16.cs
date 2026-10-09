@@ -9,12 +9,16 @@ public partial class Examples
             }
         );
 
-        await client.StreamXFernStreamingConditionAsync(
-            new StreamXFernStreamingConditionRequest {
+        await foreach (var item in client.StreamXFernStreamingConditionStreamAsync(
+            new StreamXFernStreamingConditionStreamRequest {
                 Query = "query",
-                Stream = false
+                Stream = true
             }
-        );
+        ))
+        {
+            /* consume each item */
+        }
+        ;
     }
 
 }

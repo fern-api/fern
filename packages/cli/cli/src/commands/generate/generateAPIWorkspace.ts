@@ -29,6 +29,7 @@ import { GenerationMode } from "./generateAPIWorkspaces.js";
 import { PackMode, packLocalOutputForGroup } from "./packLocalOutput.js";
 import { buildAutomationTargeting, selectGeneratorsForAutomation } from "./selectGeneratorsForAutomation.js";
 import { shouldSkipMissingGenerator } from "./shouldSkipMissingGenerator.js";
+import { warnOnUnsignedMavenPublishing } from "./warnOnUnsignedMavenPublishing.js";
 
 export async function generateWorkspace({
     organization,
@@ -175,6 +176,13 @@ export async function generateWorkspace({
             runnableGroups.push({ resolvedGroupName, group: assignment.group });
         }
     }
+
+    warnOnUnsignedMavenPublishing({
+        groups: runnableGroups.map(({ group }) => group),
+        publishes: absolutePathToPreview == null && !dynamicIrOnly,
+        useLocalDocker,
+        logger: context.logger
+    });
 
     if (dynamicIrOnly && runnableGroups.some(({ group }) => group.generators.some((g) => g.fernHostedOutput != null))) {
         return context.failAndThrow(

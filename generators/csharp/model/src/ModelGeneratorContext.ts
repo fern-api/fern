@@ -145,7 +145,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     public getPublicCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.FileParameter, AsIsFiles.Json.AdditionalProperties];
         if (this.hasXmlTypes()) {
-            files.push(AsIsFiles.Xml.IXmlNode, AsIsFiles.Xml.XmlElement);
+            files.push(AsIsFiles.Xml.IXmlNode, AsIsFiles.Xml.XmlComment, AsIsFiles.Xml.XmlElement);
         }
         return files;
     }

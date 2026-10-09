@@ -58,6 +58,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         enable-wire-tests: true
+  errors:
+    - outputFolder: .
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - customConfig:
         enable-wire-tests: true
@@ -194,6 +198,10 @@ fixtures:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
       outputFolder: allow-user-agent-app-info
+    - customConfig:
+        includePlatformHeaders: true
+        userAgentOnly: true
+      outputFolder: user-agent-only
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
@@ -217,6 +225,10 @@ fixtures:
         enable-wire-tests: true
         offset-semantics: "item-index"
       outputFolder: item-index-semantics
+    - customConfig:
+        enable-wire-tests: true
+        collapse-optional-nullable: true
+      outputFolder: collapse-optional-nullable
   java-multi-env-url-templating:
     - customConfig: null
       outputFolder: no-custom-config
@@ -387,6 +399,11 @@ fixtures:
     - customConfig:
         respect-optional-request-body: true
       outputFolder: respect-optional-request-body
+  java-endpoint-security-token-subpackage:
+    - outputFolder: no-custom-config
+    - customConfig:
+        omit-unused-oauth-setters: true
+      outputFolder: omit-unused-oauth-setters
   java-optional-nullable-query-params:
     - customConfig:
         use-default-request-parameter-values: true

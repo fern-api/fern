@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern generate --docs` corrupting MDX pages that mix JSX image expressions like
+    `icon={<img src="..." />}` with other components that have local image paths. Text after
+    those components (such as a closing `</Tab>`) was deleted, so the page failed to compile and
+    rendered as raw text.
+  type: fix
+
+- summary: |
+    Fix local images inside Markdown link text, like `[Docs <img src="./icon.svg" />](https://...)`
+    or `[![badge](./badge.png)](https://...)`, being published with the build machine's absolute
+    path instead of the uploaded file. Finding images to upload no longer parses each page as full
+    MDX, which makes `fern generate --docs` faster on large sites.
+  type: fix

@@ -9,15 +9,16 @@ import {
     type AutomationRunOptions,
     type FernSdkConfigV1Payload,
     getFernSdkGenApiLanguage,
+    resolveFernSdkGenApiEnabledByGenerator,
     selectGeneratorConfigRoute
 } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
+import { buildGeneratePosthogProperties, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { createSdkConfigWorkspace } from "./createSdkConfigWorkspace.js";
-import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
 import { getGeneratorSelectedTargetIndexes, loadSdkConfigV1 } from "./loadSdkConfigV1.js";
@@ -32,6 +33,9 @@ export const GenerationMode = {
 } as const;
 
 export type GenerationMode = Values<typeof GenerationMode>;
+
+/** The files the local runner reads SDK Config from, in its lookup order. */
+const LOCAL_RUNNER_SDK_CONFIG_FILENAMES: readonly string[] = [SDK_CONFIG_FILENAME, "sdk-config.yaml"];
 
 interface WorkspaceGeneration {
     kind: "legacy" | "sdk-config";
@@ -203,6 +207,18 @@ export async function generateAPIWorkspaces({
 
         validateUniqueLanguageOwnership({ generations, cliContext });
 
+        // Start the per-generator flag requests now so they overlap login and the output-directory prompts.
+        // Values are memoized per process, so the remote runner reuses them. Local (Docker) generation never
+        // routes through sdk-gen-api, so it makes no flag request. The helper never rejects, so the promise
+        // cannot go unobserved if a prompt below throws first.
+        const isAutomation = automation != null;
+        const sdkGenApiEnabledByGenerator = useLocalDocker
+            ? undefined
+            : resolveFernSdkGenApiEnabledByGenerator({
+                  organization: project.config.organization,
+                  generatorNames: listRequestedGenerators({ generations, isAutomation }).map(({ name }) => name)
+              });
+
         if (!useLocalDocker) {
             const currentToken = await cliContext.runTask(async (context) => {
                 return askToLogin(context);
@@ -235,7 +251,14 @@ export async function generateAPIWorkspaces({
             orgId: project.config.organization,
             command: resolvePosthogCommandLabel(automation),
             properties: {
-                workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
+                ...buildGeneratePosthogProperties({
+                    project,
+                    generations,
+                    isAutomation,
+                    groupNames,
+                    generatorName,
+                    sdkGenApiEnabledByGenerator: await sdkGenApiEnabledByGenerator
+                })
             }
         });
 
@@ -326,7 +349,7 @@ async function prepareSdkConfigGenerations({
     const shouldUseSdkConfig =
         sdkConfigPath != null ||
         targetNames != null ||
-        (!useLocalDocker && groupNames == null && generatorName == null && generatorIndex == null);
+        (groupNames == null && generatorName == null && generatorIndex == null);
     if (!shouldUseSdkConfig) {
         return [];
     }
@@ -376,12 +399,18 @@ async function prepareSdkConfigGenerations({
             { code: CliError.Code.ConfigError }
         );
     }
-    if (candidates.length > 0 && useLocalDocker) {
-        return cliContext.failAndThrow(
-            "SDK Config v1 generation is only supported with remote sdk-gen-api generation",
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
+    // ponytail: the local runner rereads sdk-config.yml (else .yaml) from the config's directory, so
+    // any other selected file cannot reach it. Thread the explicit path through the runner to lift this.
+    if (useLocalDocker && sdkConfigPath != null) {
+        const selectedPath = path.resolve(cwd(), sdkConfigPath);
+        const localRunnerPath = await findLocalRunnerSdkConfig(path.dirname(selectedPath));
+        if (selectedPath !== localRunnerPath) {
+            return cliContext.failAndThrow(
+                `--local reads ${path.basename(localRunnerPath ?? SDK_CONFIG_FILENAME)} from the directory of --sdk-config, so it cannot use ${path.basename(selectedPath)}. Rename the file to ${SDK_CONFIG_FILENAME}, or remove --local.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
     }
 
     const prepared: PreparedSdkConfigGeneration[] = [];
@@ -428,6 +457,7 @@ async function prepareSdkConfigGenerations({
                     sourceRoot: resolveSourceRoot(candidate.owner, loaded.absolutePath),
                     cliVersion: cliContext.environment.packageVersion,
                     workspaceName: candidate.owner?.workspaceName,
+                    local: useLocalDocker,
                     context
                 })
             );
@@ -456,6 +486,16 @@ async function prepareSdkConfigGenerations({
         await Promise.all(prepared.map(({ cleanup }) => cleanup()));
         return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
     }
+}
+
+async function findLocalRunnerSdkConfig(directory: string): Promise<string | undefined> {
+    for (const filename of LOCAL_RUNNER_SDK_CONFIG_FILENAMES) {
+        const candidate = path.join(directory, filename);
+        if (await doesPathExist(AbsoluteFilePath.of(candidate), "file")) {
+            return candidate;
+        }
+    }
+    return undefined;
 }
 
 function resolveSourceRoot(
@@ -638,35 +678,4 @@ async function confirmOutputDirectoriesForEligibleGenerators({
             }
         }
     }
-}
-
-/** Builds the `workspaces` array for the posthog event, honoring `--group` / `--generator` filters. */
-function buildPosthogWorkspaces({
-    project,
-    groupNames,
-    generatorName
-}: {
-    project: Project;
-    groupNames: string[] | undefined;
-    generatorName: string | undefined;
-}) {
-    return project.apiWorkspaces.map((workspace) => {
-        const resolvedGroupNames = expandGroupFilter(groupNames, workspace.generatorsConfiguration);
-        return {
-            name: workspace.workspaceName,
-            group: groupNames != null && groupNames.length === 1 ? groupNames[0] : groupNames,
-            generators: workspace.generatorsConfiguration?.groups
-                .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
-                .map((group) =>
-                    group.generators
-                        .filter((generator) => generatorName == null || generator.name === generatorName)
-                        .map((generator) => ({
-                            name: generator.name,
-                            version: generator.version,
-                            outputMode: generator.outputMode.type,
-                            config: generator.config
-                        }))
-                )
-        };
-    });
 }

@@ -18,6 +18,8 @@ func do() {
         Species: "species",
         Family: "family",
         Genus: "genus",
+        CommonName: "commonName",
+        WateringFrequency: fern.PlantBaseWateringFrequencyDaily,
         SunExposure: fern.PlantPostSunExposureFull,
     }
     client.CreatePlant(

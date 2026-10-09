@@ -9,7 +9,10 @@ async fn main() {
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .no_auth
-        .post_with_no_auth(&serde_json::json!({"key":"value"}), None)
+        .inlined_requests
+        .post_with_array_body_and_headers(
+            &vec!["string".to_string(), "string".to_string()],
+            Some(RequestOptions::new().additional_header("X-Custom-Header", "X-Custom-Header")),
+        )
         .await;
 }

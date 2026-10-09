@@ -38,8 +38,9 @@ class Pause extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('Pause');
+        $typed = [];
         $element->setAttribute('length', $this->length);
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren());
+        XmlUtils::addContent($element, $this->getContent(), $typed, [], $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -68,6 +69,7 @@ class Pause extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['length']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, []));
+        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren(), [], true));
         return $result;
     }
 

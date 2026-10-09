@@ -40,6 +40,10 @@ export const BaseRubyCustomConfigSchema = z.object({
     // appended to the User-Agent header (RFC 9110). Disabled by default so existing
     // output is byte-identical.
     allowUserAgentAppInfo: z.boolean().optional(),
+    // Opt-in: send only the User-Agent platform header (in whatever form the other
+    // configs produce) and omit X-Fern-Language, X-Fern-SDK-Name, and
+    // X-Fern-SDK-Version. Disabled by default; still subject to omitFernHeaders.
+    userAgentOnly: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
@@ -78,12 +82,26 @@ export const BaseRubyCustomConfigSchema = z.object({
     // the aliased model. Disabled by default because callers of a published gem may
     // already read that Hash by key.
     coerceAliasResponses: z.boolean().optional(),
+    // Opt-in: the client constructor raises `ArgumentError` if a bearer or header
+    // credential is neither passed nor set in its environment variable. Disabled by
+    // default because constructing a client without credentials currently succeeds and
+    // only fails once a request reaches the server.
+    requireAuthCredentials: z.boolean().optional(),
+    // Opt-in: a 2xx response whose body is not valid JSON raises `Errors::ResponseError`
+    // instead of `JSON::ParserError`. Disabled by default because callers may already
+    // rescue `JSON::ParserError`.
+    wrapInvalidJsonResponses: z.boolean().optional(),
     // Opt-in: expose an optional `http_client` client keyword. The object must respond to
     // `request(url, http_request)` (a URI and a Net::HTTPGenericRequest) and return a
     // Net::HTTPResponse; it replaces the SDK's own Net::HTTP transport so callers can add
     // proxies, custom TLS, connection reuse, or request/response interceptors. Retries still
     // wrap the custom client. Disabled by default so existing output is byte-identical.
-    allowCustomHttpClient: z.boolean().optional()
+    allowCustomHttpClient: z.boolean().optional(),
+    // Opt-in: cursor and offset paginated methods send the request for the first page before
+    // returning the iterator, so an API error for that page is raised by the method call
+    // instead of by the first iteration. Disabled by default because callers may rescue
+    // errors around the loop, or build an iterator without iterating it.
+    fetchFirstPageOnCall: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

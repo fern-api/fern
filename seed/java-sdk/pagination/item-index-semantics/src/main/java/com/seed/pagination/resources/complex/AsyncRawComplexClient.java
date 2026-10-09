@@ -4,6 +4,7 @@
 package com.seed.pagination.resources.complex;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.pagination.core.BodyProperties;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
 import com.seed.pagination.core.ObjectMappers;
@@ -61,7 +62,9 @@ public class AsyncRawComplexClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPaginationException("Failed to serialize request", e);
         }
@@ -87,7 +90,8 @@ public class AsyncRawComplexClient {
         }
         CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<Conversation>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -111,7 +115,11 @@ public class AsyncRawComplexClient {
                         List<Conversation> result = parsedResponse.getConversations();
                         future.complete(new SeedPaginationHttpResponse<>(
                                 new SyncPagingIterable<Conversation>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return search(index, nextRequest, requestOptions)
                                                         .get()
@@ -139,6 +147,11 @@ public class AsyncRawComplexClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedPaginationException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

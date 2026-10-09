@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithRefreshToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsInferredAuthRefreshTokenClient } from \"@fern/ts-inferred-auth-refresh-token\";\n\nconst client = new SeedTsInferredAuthRefreshTokenClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.auth.getTokenWithRefreshToken({\n    refresh_token: \"my-refresh-token\",\n    grant_type: \"refresh_token\",\n    scope: \"read\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsInferredAuthRefreshTokenClient } from \"@fern/ts-inferred-auth-refresh-token\";\n\nconst client = new SeedTsInferredAuthRefreshTokenClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n"
+            }
+        }
+    ],
+    "types": {}
+}

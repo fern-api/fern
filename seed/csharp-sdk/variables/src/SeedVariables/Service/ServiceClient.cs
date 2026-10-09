@@ -12,7 +12,6 @@ public partial class ServiceClient : IServiceClient
     }
 
     private async Task<RawResponse> PostAsyncCore(
-        string endpointParam,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -31,7 +30,17 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(endpointParam)),
+                    Path = string.Format(
+                        "/{0}",
+                        ValueConvert.ToPathParameterString(
+                            (
+                                _client.Options.RootVariable
+                                ?? throw new global::System.ArgumentException(
+                                    "The 'RootVariable' SDK variable is required. Set ClientOptions.RootVariable or set the ROOT_VARIABLE environment variable."
+                                )
+                            )
+                        )
+                    ),
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -67,14 +76,13 @@ public partial class ServiceClient : IServiceClient
     }
 
     /// <example><code>
-    /// await client.Service.PostAsync("endpointParam");
+    /// await client.Service.PostAsync();
     /// </code></example>
     public WithRawResponseTask PostAsync(
-        string endpointParam,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask(PostAsyncCore(endpointParam, options, cancellationToken));
+        return new WithRawResponseTask(PostAsyncCore(options, cancellationToken));
     }
 }

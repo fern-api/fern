@@ -19,12 +19,12 @@ func do() {
         ),
     )
     request := &types.ObjectWithMixedRequiredAndOptionalFields{
-        RequiredString: "requiredString",
-        RequiredInteger: 1,
+        RequiredString: "hello",
+        RequiredInteger: 0,
         OptionalString: fern.String(
-            "optionalString",
+            "world",
         ),
-        RequiredLong: int64(1000000),
+        RequiredLong: int64(0),
     }
     client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
         context.TODO(),

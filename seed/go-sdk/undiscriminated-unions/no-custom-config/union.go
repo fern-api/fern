@@ -21,10 +21,12 @@ type PaymentRequest struct {
 }
 
 func (p *PaymentRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetPaymentMethod sets the PaymentMethod field and marks it as non-optional;
@@ -198,10 +200,12 @@ func (c *ConvertToken) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConvertToken) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -382,10 +386,12 @@ func (l *LeafObjectA) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafObjectA) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOnlyInA sets the OnlyInA field and marks it as non-optional;
@@ -473,10 +479,12 @@ func (l *LeafObjectB) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafObjectB) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOnlyInB sets the OnlyInB field and marks it as non-optional;
@@ -566,10 +574,12 @@ func (l *LeafTypeA) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafTypeA) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetAlpha sets the Alpha field and marks it as non-optional;
@@ -657,10 +667,12 @@ func (l *LeafTypeB) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafTypeB) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetGamma sets the Gamma field and marks it as non-optional;
@@ -983,10 +995,12 @@ func (n *NamedMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NamedMetadata) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1621,10 +1635,12 @@ func (r *Request) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *Request) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetUnion sets the Union field and marks it as non-optional;
@@ -1714,10 +1730,12 @@ func (t *TokenizeCard) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenizeCard) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -1805,10 +1823,12 @@ func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TypeWithOptionalUnion) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetMyUnion sets the MyUnion field and marks it as non-optional;
@@ -2388,10 +2408,12 @@ func (w *WrapperObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (w *WrapperObject) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 // SetInner sets the Inner field and marks it as non-optional;

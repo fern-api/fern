@@ -192,6 +192,29 @@ func TestStreamProtocolWithFlatSchemaWithWireMock(
 	VerifyRequestCount(t, "TestStreamProtocolWithFlatSchemaWithWireMock", "POST", "/stream/protocol-with-flat-schema", nil, 1)
 }
 
+func TestStreamProtocolMixedSchemaWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamRequest{}
+	_, invocationErr := client.StreamProtocolMixedSchema(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamProtocolMixedSchemaWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamProtocolMixedSchemaWithWireMock", "POST", "/stream/protocol-mixed-schema", nil, 1)
+}
+
 func TestStreamDataContextWithEnvelopeSchemaWithWireMock(
 	t *testing.T,
 ) {

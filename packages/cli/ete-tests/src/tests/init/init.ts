@@ -5,8 +5,9 @@ import { runFernCli } from "../../utils/runFernCli.js";
 
 interface InitOptions {
     directory?: AbsoluteFilePath;
+    env?: Record<string, string | undefined>;
     additionalArgs?: {
-        name: "--openapi" | "--mintlify" | "--log-level" | "--fern-definition";
+        name: "--api" | "--openapi" | "--mintlify" | "--log-level" | "--fern-definition";
         value?: string;
     }[];
     signal?: AbortSignal;
@@ -28,6 +29,6 @@ export async function init(options: InitOptions = {}): Promise<AbsoluteFilePath>
         }
     }
 
-    await runFernCli(cliArgs, { cwd: directory, signal: options.signal });
+    await runFernCli(cliArgs, { cwd: directory, env: options.env, signal: options.signal });
     return directory;
 }

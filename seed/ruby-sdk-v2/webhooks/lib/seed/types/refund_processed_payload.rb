@@ -5,7 +5,7 @@ module Seed
     class RefundProcessedPayload < Internal::Types::Model
       field :refund_id, -> { String }, optional: false, nullable: false, api_name: "refundId"
 
-      field :amount, -> { Integer }, optional: false, nullable: false
+      field :amount, -> { Float }, optional: false, nullable: false
 
       field :reason, -> { String }, optional: true, nullable: false
     end

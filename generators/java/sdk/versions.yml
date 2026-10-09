@@ -1,4 +1,209 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Support inferred bearer auth with `type: refresh-token`. The token supplier always sends
+        `grant_type=refresh_token`, and `grantType` is no longer a client builder option. Only the parameters of
+        the OAuth refresh token grant (`refreshToken`, `scope`, `clientId`, `clientSecret`) plus any required
+        ones are builder options and sent. Optional parameters of other grants on a shared token endpoint, such as
+        `code`, `codeVerifier` and `redirectUri`, stay on the token endpoint method only.
+      type: feat
+    - summary: |
+        Inferred auth with `type: refresh-token` rotates the refresh token. When the token response returns a new
+        `refresh_token`, the supplier uses it for the next refresh and passes it to the optional
+        `onRefreshTokenRotated(Consumer<String>)` builder option so it can be persisted. With endpoint security, a
+        provided refresh token selects the refresh token scheme over OAuth client credentials.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 4.31.0
+  changelogEntry:
+    - summary: |
+        Add the `omit-unused-oauth-setters` config option (default `false`). When enabled, clients with
+        endpoint-level security no longer generate builder setters for OAuth token-request properties other
+        than `clientId`/`clientSecret` (for example `code`, `codeVerifier` or `redirectUri` on a token endpoint
+        shared by several grants). Those setters were stored but never sent by the client-credentials flow.
+        The token endpoint method itself still accepts every request property.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 4.30.5
+  changelogEntry:
+    - summary: |
+        With endpoint-level security, the client builder's `token(...)` override for an OAuth
+        client-credentials scheme now authenticates that scheme with the given access token, taking
+        precedence over `clientId`/`clientSecret`. Previously the value was stored but never read, so
+        calls that only accept the OAuth scheme failed with a missing-credentials error.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 4.30.4
+  changelogEntry:
+    - summary: |
+        `reference.md` is now generated for every output mode, matching the Go and Python generators. It was
+        previously skipped unless the CLI passed a snippet path (`local-file-system` output without
+        `snippets: path:` in generators.yml). `README.md` is unchanged and still requires snippets.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 4.30.3
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now parse
+        both variant styles: envelope variants (`{event, data: Payload}`) are built from the `data:` JSON,
+        and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 4.30.2
+  changelogEntry:
+    - summary: |
+        The debug logger now lower-cases header names with `Locale.ROOT` when deciding which headers to
+        redact, in both the request and response log lines. Before, it used the JVM's default locale, so on a
+        Turkish or Azerbaijani JVM a header such as `AUTHORIZATION` or `X-API-KEY` lower-cased to a dotless `ı`,
+        missed the redaction list, and its value was logged in plain text. `LogLevel.fromString` now upper-cases
+        with `Locale.ROOT` too, so `fromString("info")` no longer throws on those locales.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 4.30.1
+  changelogEntry:
+    - summary: |
+        Async clients no longer sleep on OkHttp dispatcher threads while waiting to retry. The retry is
+        scheduled after the backoff delay, so calls that are waiting to retry no longer hold OkHttp's
+        per-host request slots (5 by default) and delay unrelated calls. Cancelling the returned future
+        now stops the wait immediately and sends no further attempts.
+      type: fix
+    - summary: |
+        Interrupting a synchronous call while it waits to retry now restores the thread's interrupt
+        flag and throws `InterruptedIOException`, instead of clearing the flag and throwing a generic
+        `IOException`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 4.30.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `addText` segments and child elements), while
+        `commentBefore(text)` / `commentAfter(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `fromXml` and round-trip through `toXml`; `XmlNode.comment(...)`
+        exposes the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 4.29.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omit-fern-headers` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 4.28.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via a `verifySignature(...)` overload taking an `algorithm` argument,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 4.27.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types now keep their content in a single ordered sequence
+        (`List<XmlNode>` exposed via `getContent()`): typed child methods such as
+        `say(...)`, `addChild(XmlElement)` and the new `addText(String)` all append
+        to it, so `toXml()` emits typed children, generic children and text segments
+        in exactly the order they were added, and `fromXml()` preserves the original
+        positions. The text property (e.g. `message`) remains the leading text of the
+        element. New `XmlNode` core class; `XmlReader.leadingText`/`content` and
+        `XmlWriter.content` helpers.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 4.26.0
+  changelogEntry:
+    - summary: |
+        SDK variables that declare an environment variable fallback (`env` in `api.yml` or `x-fern-env` on
+        `x-fern-sdk-variables`) now default to `System.getenv(...)` in the client builder, and `build()`
+        throws an `IllegalStateException` with a clear message when neither the builder method nor the
+        environment variable provides a value, instead of rendering `null` into request paths. The check
+        lives in the generated `setVariables(builder)` hook, so overriding it to supply the value still works.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 4.25.0
+  changelogEntry:
+    - summary: |
+        Wire tests now cover error responses and every example, not just the first example's happy path.
+        Each endpoint gets one test per user-specified example. When none of an endpoint's user examples
+        is an error, the autogenerated error examples are added too. Error tests assert that the call throws
+        the typed error class (or the base API exception when the status code isn't declared) and check the
+        status code and error body. Success responses use the endpoint's declared status code instead of
+        always returning 200, and the test client is built with `maxRetries(0)`.
+        Set `wire-tests-fallback-to-autogenerated-error-examples: false` to leave out autogenerated error examples.
+      type: feat
+    - summary: |
+        Wire tests now compile when the API has a type named `Test` or `Exception`. The test annotation
+        and `throws` clause use fully qualified names in that case, so they no longer clash with the imported API type.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 4.24.2
+  changelogEntry:
+    - summary: |
+        With endpoint-security auth, the client builder now registers OAuth, bearer and basic
+        auth providers under the auth scheme's configured key (for example `customAuthSchemeName`)
+        instead of a hardcoded `OAuth`/`Bearer`/`Basic`. Previously, every authenticated call
+        failed with "No authentication credentials provided" when the scheme key differed.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 4.24.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now return their XML representation from
+        `toString()` instead of JSON, and `toXml()` always prepends the
+        `<?xml version="1.0" encoding="UTF-8"?>` declaration regardless of
+        whether the type is a root element. Use `toXml(false)` to omit it.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 4.24.0
+  changelogEntry:
+    - summary: |
+        Add `addBodyProperty(String, Object)` and `bodyProperties(Map<String, Object>)` request options for sending
+        request body properties that are not part of the SDK yet. They are merged into JSON and form-urlencoded bodies
+        using the keys as given, override properties with the same key, and are sent as a JSON body for endpoints
+        without one. Multipart (file upload) requests are not supported.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 4.23.3
+  changelogEntry:
+    - summary: |
+        Fix several runtime correctness issues in generated SDKs:
+        cursor pagers now stop when the next cursor is empty, absent, null, or an empty string;
+        nested offset and cursor pagination builds an omitted parent options object so the page advances;
+        pagination compiles with `collapse-optional-nullable: true` when the cursor is `OptionalNullable`;
+        `4XX`/`5XX` wildcard error responses map to their typed errors, with exact status codes taking precedence;
+        header auth scheme headers and credential-like global headers (for example `PLAID-CLIENT-ID`) are redacted in debug logs;
+        cancelling an async `CompletableFuture` cancels the underlying OkHttp call;
+        the README environment example uses the generated constant name (for example `Environment.PRODUCTION`);
+        and `reference.md` shows `LocalDate` for date parameters when `use-local-date-for-dates` is enabled.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 4.23.2
   changelogEntry:
     - summary: |

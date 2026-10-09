@@ -858,11 +858,66 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "inferred":
-                // Inferred auth - use api_key instead of _token_getter_override
-                params.push(`        api_key="test_api_key",`);
+                params.push(...this.getInferredAuthParams(scheme));
                 break;
         }
 
         return params;
+    }
+
+    /**
+     * The inferred auth client constructor takes the token endpoint's non-literal headers and
+     * body properties, so pass a fake value for each required one.
+     */
+    private getInferredAuthParams(scheme: FernIr.InferredAuthScheme): string[] {
+        // The Python root client only takes inferred auth credentials when inferred is the sole scheme.
+        if (this.ir.auth.schemes.length !== 1) {
+            return [];
+        }
+        const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
+        const endpoint = this.ir.services[tokenEndpointRef.serviceId]?.endpoints.find(
+            (e) => e.id === tokenEndpointRef.endpointId
+        );
+        if (endpoint == null) {
+            return [];
+        }
+
+        const properties: { name: FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }[] = [
+            ...endpoint.headers
+        ];
+        const requestBody = endpoint.requestBody;
+        if (requestBody?.type === "inlinedRequestBody") {
+            properties.push(...requestBody.properties);
+        } else if (requestBody?.type === "reference" && requestBody.requestBodyType.type === "named") {
+            const shape = this.resolveAliasedShape(requestBody.requestBodyType.typeId);
+            if (shape?.type === "object") {
+                properties.push(...(shape.extendedProperties ?? []), ...shape.properties);
+            }
+        }
+
+        return properties
+            .filter((property) => this.isRequiredNonLiteral(property.valueType))
+            .map((property) => {
+                const paramName = this.context.caseConverter.snakeSafe(getNameFromWireValue(property.name));
+                return `        ${paramName}="test_${paramName}",`;
+            });
+    }
+
+    private resolveAliasedShape(typeId: FernIr.TypeId): FernIr.Type | undefined {
+        const visited = new Set<FernIr.TypeId>();
+        let shape = this.ir.types[typeId]?.shape;
+        while (shape?.type === "alias" && shape.aliasOf.type === "named" && !visited.has(shape.aliasOf.typeId)) {
+            visited.add(shape.aliasOf.typeId);
+            shape = this.ir.types[shape.aliasOf.typeId]?.shape;
+        }
+        return shape;
+    }
+
+    private isRequiredNonLiteral(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type !== "container") {
+            return true;
+        }
+        const containerType = typeReference.container.type;
+        return containerType !== "optional" && containerType !== "literal";
     }
 }

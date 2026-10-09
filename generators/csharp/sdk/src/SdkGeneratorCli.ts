@@ -5,7 +5,8 @@ import {
     generateModels,
     generateTests as generateModelTests,
     generateVersion,
-    generateWellKnownProtobufFiles
+    generateWellKnownProtobufFiles,
+    generateXmlTests
 } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -261,6 +262,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 context.project.addTestFiles(file);
             }
         }
+        if (context.hasXmlTypes()) {
+            for (const file of generateXmlTests({ context })) {
+                context.project.addTestFiles(file);
+            }
+        }
 
         const subpackages = context.getSubpackages(Object.keys(context.ir.subpackages));
         for (const subpackage of subpackages) {
@@ -429,12 +435,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
+        }
 
-            try {
-                await this.generateReference({ context });
-            } catch (e) {
-                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
-            }
+        try {
+            await this.generateReference({ context });
+        } catch (e) {
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
 
         if (!context.config.whitelabel) {

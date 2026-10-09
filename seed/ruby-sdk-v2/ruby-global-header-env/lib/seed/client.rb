@@ -5,9 +5,10 @@ module Seed
     # @param base_url [String, nil]
     # @param version [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, version: ENV.fetch("MY_API_VERSION", nil), max_retries: 2)
+    def initialize(base_url: nil, version: ENV.fetch("MY_API_VERSION", nil), max_retries: 2, timeout: 60)
       headers = {
         "User-Agent" => "fern_ruby-global-header-env/0.0.1",
         "X-Fern-Language" => "Ruby"
@@ -17,7 +18,8 @@ module Seed
         base_url: base_url,
         headers: headers,
         overridable_headers: %w[X-API-Version],
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

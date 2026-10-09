@@ -1,4 +1,409 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.152.0
+  changelogEntry:
+    - summary: |
+        Add `--skip-api` to `fern docs dev`. API specs are not parsed, so large sites preview in seconds. API reference sections keep their overview page and hand-written pages and links, but endpoint and schema pages are left out. Broken-link checks and checks that read API spec files (such as OpenAPI example validation) are skipped in this mode; `fern check` still runs them.
+      type: feat
+    - summary: |
+        Add `--skip-validation` to `fern docs dev`. Skips docs validation, which on large sites competes with the docs build and delays the preview. Docs errors are not reported in this mode.
+      type: feat
+    - summary: |
+        Recognize `x-fern-availability: generally-available` in the OpenAPI v3 parser. Previously this value was
+        dropped, so those endpoints were treated as having no availability.
+      type: fix
+    - summary: |
+        Route generation through sdk-gen-api based on the `use-sdk-gen-api` PostHog feature flag instead of the
+        `FERN_USE_SDK_GEN_API` environment variable and the `DEFAULT_USE_SDK_GEN_API` build default. The flag is
+        evaluated per organization and generator, with the organization, the generator name, the generator's language,
+        and the CLI release environment (`prod`, `pre-prod`, `beta`, `dev`, `local`) as targeting properties. This lets
+        one generator or language be routed or kept on Fiddle for every organization or for a single organization, and
+        lets an organization be kept off sdk-gen-api entirely. The flag is off when PostHog is unreachable or the flag is
+        not configured.
+      type: feat
+    - summary: |
+        Tag every CLI telemetry event with `cliReleaseEnvironment` (`prod`, `pre-prod`, `beta`, `dev`, `local`) so
+        events from different CLI distributions can be told apart. On the `fern generate` event, `sdkGenApiEnabled` now
+        reflects the `use-sdk-gen-api` flag (true when at least one requested generator is routed), each
+        `requestedGenerators` entry carries its own `sdkGenApiEnabled`, and `fernUseSdkGenApiEnv` is removed.
+      type: chore
+    - summary: |
+        Add a `sort-by-availability` option to API reference entries in `docs.yml`. Endpoints are ordered by
+        their `x-fern-availability`: listed values come first in the given order, followed by the rest in the
+        default order (`unset`, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`).
+        Use `unset` to position endpoints that have no availability.
+        Endpoints with the same availability keep their order, or are alphabetized when `alphabetized` is true.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.5
+  changelogEntry:
+    - summary: |
+        Enrich the `fern generate` telemetry event with the generators selected to run (including SDK Config targets)
+        and whether `FERN_USE_SDK_GEN_API` was set to `true` alongside the effective sdk-gen-api state.
+      type: chore
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.4
+  changelogEntry:
+    - summary: |
+        Remote `fern generate` for `local-file-system` outputs now always requests snippets, so the
+        TypeScript, Java, C#, PHP and Ruby generators emit `README.md` and `reference.md` without a
+        `snippets: path:` entry in generators.yml (matching `--local`). The snippet JSON is still only
+        written to disk when `snippets.path` is configured.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.3
+  changelogEntry:
+    - summary: |
+        When a Maven output omits `url`, default to the Sonatype Central Portal OSSRH Staging API
+        (`https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/`) instead of
+        the retired OSSRH hosts (`oss.sonatype.org` / `s01.oss.sonatype.org`). This applies to signed and
+        unsigned `maven` outputs in generators.yml and to Maven publish targets in fern.yml.
+
+        Maven Central only releases signed artifacts, so an unsigned Maven output without a `url` is uploaded
+        to the Central Portal staging service but never released. `fern check` now reports a warning for this
+        (printed with `--warnings` for generators.yml) and `fern generate` logs it for generators.yml
+        `output.location: maven` (with or without a `github` block) and for fern.yml `publish.maven` targets
+        delivered through git. Add `signature` to publish to Maven Central, or set `url` to publish to another
+        registry. The warning does not fail `fern check` or block generation, so existing configurations keep
+        working.
+      type: fix
+    - summary: |
+        Reject direct RubyGems publishing before generation instead of failing at publish time with
+        "Method not implemented.". `fern check` now reports an error for a generators.yml `output.location: rubygems`
+        without a `github` block (and for an SDK Config target with `publish.registry: rubygems` that is not delivered
+        through GitHub), and remote `fern generate` rejects the selected generator before any work starts. Add a
+        `github` block so the gem is published by the generated GitHub Actions workflow. `fern generate --local`,
+        `--preview`, and `--lfs-override`, which do not publish, are unaffected.
+      type: fix
+    - summary: |
+        Include the optional `detail` and `reason` that sdk-gen-api reports for a failed publication in the error message,
+        for example `sdk-gen-api publication failed (invalid_publish_request): <message>: <detail> [package_name_mismatch]`.
+        Credentials are redacted from the detail, and servers that omit these fields produce the same message as before.
+      type: fix
+    - summary: |
+        Log a warning, instead of a debug message, when `FERN_USE_SDK_GEN_API=true` is set but a generator falls back to
+        legacy Fiddle generation because sdk-gen-api cannot handle its output (for example, direct NuGet publishing).
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.2
+  changelogEntry:
+    - summary: |
+        When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init` now also initializes the docs with the
+        API's spec, because the docs cannot read an `sdk-config.yml` API. `fern init` and `fern init --openapi <path-or-url>`
+        initialize both the API and the docs, `fern init --api` only the API, and `fern init --docs --openapi <path-or-url>`
+        only the docs. The docs read the same `openapi.json|yml` as the API's `sdk-config.yml`, and a later `fern init`
+        that moves the API into `apis/` updates the path in `docs.yml`. In a project that already has a `docs.yml`, the
+        spec is added to its first `api` entry, or to a new one, instead of only printing a warning. A spec that does not
+        live in the fern directory, such as a URL, is copied there as `openapi-1.json|yml` (and so on when the name is
+        taken), so an existing API's spec is never overwritten. A spec that `docs.yml` already reads from the fern directory is not overwritten by a later `fern init`, which gives it a free name instead. If `docs.yml` splits its navigation into tabs, it is left
+        unchanged and the command warns. Without the flag, behavior is unchanged.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.1
+  changelogEntry:
+    - summary: |
+        `fern generate --package-only` now copies the generated `README.md` and `reference.md`
+        into `fern-dist/` before removing the SDK source, so they are kept for every language
+        instead of only those whose package format bundles root files (e.g. Ruby gems, Go source zips).
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.0
+  changelogEntry:
+    - summary: |
+        Add `experimental.robots-txt-on-instance-url` to `docs.yml`. When set to `true`, the custom
+        robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL
+        (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep
+        `X-Robots-Tag: noindex, nofollow`, so search engines still won't index them.
+        `fern check` warns if the flag is set without `agents.robots-txt`.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.150.0
+  changelogEntry:
+    - summary: |
+        Add an optional `type` to inferred bearer auth schemes (`api-key` | `refresh-token`). With
+        `type: refresh-token`, the IR records the get-token endpoint's `grant_type` request property
+        (`InferredAuthSchemeTokenEndpoint.grantType`) so SDKs always send `grant_type=refresh_token`
+        and do not expose `grant_type` as a client option.
+        ```yaml
+        auth-schemes:
+          Bearer:
+            scheme: bearer
+            get-token: POST /authorize
+            type: refresh-token
+        ```
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.149.0
+  changelogEntry:
+    - summary: |
+        Add an optional `type` to inferred bearer auth schemes (`api-key` | `refresh-token`). With
+        `type: refresh-token`, the IR records the get-token endpoint's `grant_type` request property
+        (`InferredAuthSchemeTokenEndpoint.grantType`) so SDKs always send `grant_type=refresh_token`
+        and do not expose `grant_type` as a client option.
+        ```yaml
+        auth-schemes:
+          Bearer:
+            scheme: bearer
+            get-token: POST /authorize
+            type: refresh-token
+        ```
+      type: feat
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.5
+  changelogEntry:
+    - summary: |
+        Fix audience filtering dropping the variants of an inline `anyOf`/`oneOf` on a request body
+        property when importing OpenAPI. The variants were removed from the IR, so the property and
+        each variant rendered as `any` in audience-filtered API references.
+      type: fix
+    - summary: |
+        Upgrade `posthog-node` from 5.35.1 to 5.55.0. PostHog clients are created with `isServer: false` so
+        CLI events keep their existing shape and are not tagged `$is_server: true` by the newer SDK.
+      type: chore
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.4
+  changelogEntry:
+    - summary: |
+        `fern generate` with `--version AUTO` no longer rewrites the placeholder version inside
+        files protected by `.fernignore` or inside longer version strings such as
+        `0.0.0-fern-placeholder.7`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.3
+  changelogEntry:
+    - summary: |
+        When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init --docs --openapi <path-or-url>`
+        now copies the OpenAPI spec into the fern directory and declares it under the `- api: API Reference`
+        entry's `specs` in `docs.yml`, so the docs build a full API reference without a `generators.yml` or
+        `sdk-config.yml`. Previously `--openapi` was silently ignored when combined with `--docs`, and the
+        welcome page pointed to `fern init --openapi`, which does not produce an API the docs can read in this
+        mode. If `fern/openapi.json|yml` already exists, the copy is written as `openapi-1.json|yml` (and so on),
+        so an existing API's spec is never overwritten. If `docs.yml` already exists, the command now warns that
+        the spec was not added. Without the flag, behavior is unchanged.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.2
+  changelogEntry:
+    - summary: |
+        Decouple SDK Config initialization from SDK Gen API generation routing so each can be rolled out independently.
+      type: fix
+    - summary: |
+        `fern docs md generate` now prefixes generated Python library page slugs with the slug of the
+        navigation tab the pages are listed under in `docs.yml`. Generated pages previously skipped the tab
+        (e.g. `/prismo/prismo/floorplan_editor_signals` instead of
+        `/api-reference/prismo/prismo/floorplan_editor_signals`). File paths and page IDs are unchanged.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.148.1
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` no longer re-parses every OpenAPI spec of an API reference that sets
+        `tag-description-pages: true`. Tag descriptions are now read straight from the specs' `tags`,
+        which saves about 0.4s per spec on a large (4.8 MB) spec.
+      type: fix
+    - summary: |
+        OpenAPI specs with external `$ref`s to remote files convert faster. Each remote file is now
+        fetched once per conversion instead of once per `$ref` (for example 114 fetches down to 2 on a
+        large spec), and a failed fetch is retried by the next `$ref` instead of being remembered.
+      type: fix
+    - summary: |
+        The OpenAPI parser no longer rebuilds a throwaway parser context for every endpoint with a
+        request body. It reuses the one it already has, which cuts about 9% off parsing a large spec.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.148.0
+  changelogEntry:
+    - summary: |
+        Add an experimental `fern docs dev --astro` flag that renders the docs to the ledger read model, serves it from a
+        local mirror, and runs the prebuilt Astro docs preview server (downloaded and cached like the Next bundle) against
+        it with live reload. Next.js remains the default.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.9
+  changelogEntry:
+    - summary: |
+        `fern generate --local` now generates SDK Config targets after `fern sdk migrate`, instead of
+        failing with "SDK Config v1 generation is only supported with remote sdk-gen-api generation"
+        (`--target`) or silently generating nothing (no selectors). Each target runs on the on-prem
+        generator for its language, at its `generatorVersion` or, when unpinned, the SDK Config cutover
+        release. Targets with `zip` or `github` delivery generate into `generated/<language>` beside
+        `sdk-config.yml`. Targets with no on-prem generator, a pre-cutover `generatorVersion`, or a
+        repeated language, and an `--sdk-config` file other than the one the local runner reads
+        (`sdk-config.yml`, else `sdk-config.yaml`), are rejected with an explanation.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.8
+  changelogEntry:
+    - summary: |
+        `fern check` now reads and validates each markdown page once, even when several
+        navigation items or version files reference it. A page shared by 36 versions is no longer
+        parsed and link-checked 36 times, and its errors are reported once instead of once per reference.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.7
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` uses less memory on large multi-version API references. Worker threads
+        return their dynamic snippet IRs gzipped, the IRs cached for validation are released once the
+        docs navigation is built, and each worker's heap is capped at 1.5 GB (a job that runs out of
+        memory is regenerated in-process). Machines with less than about 9.5 GB of RAM, such as the
+        2-core / 7 GB GitHub Actions runner, keep generating dynamic snippet IRs in-process.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.6
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` is faster on large multi-version API references. OpenAPI parsing
+        no longer rescans the whole spec for every operation's request body, type resolution no
+        longer rebuilds the map of definition files on every lookup while generating dynamic snippet
+        IRs, and external `$ref` resolution no longer re-shifts its work queue. Dynamic snippet IRs
+        are now generated on worker threads (bounded by CPU cores, available memory and
+        `FERN_DOCS_API_REGISTRATION_CONCURRENCY`; runners with less than about 10 GB of RAM, such as
+        the 2-core GitHub Actions runner, stay in-process), starting as soon as each API's IR is built so they
+        overlap the navigation build. Set `FERN_DOCS_API_REGISTRATION_CONCURRENCY=1` to generate them
+        serially in-process.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.5
+  changelogEntry:
+    - summary: |
+        Fix translated navigation labels getting out of order after a top-level page, link, or
+        `collapsed` section. The CLI wraps those items in an internal sidebar group, and the
+        translation overlay now matches the group's items as siblings of the items around it, so
+        labels like API reference sections and endpoint titles no longer stay in English or pick up
+        another item's translation.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.4
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now registers each distinct API definition once per publish. Versioned
+        docs that reference the same API from every version no longer repeat its AI example
+        enhancement, dynamic snippet generation and upload for each version.
+      type: fix
+    - summary: |
+        `fern generate --docs` now builds each OpenAPI workspace's IR once per run. The publish
+        reuses the IR that the `valid-markdown-links` check already built, instead of converting
+        every spec a second time.
+      type: fix
+    - summary: |
+        `fern generate --docs` and `fern docs publish` no longer build the docs navigation twice.
+        The `missing-redirects` check now runs on the navigation the publish already resolves,
+        instead of resolving the docs a second time during validation. Its warnings are now
+        printed during publishing, and `missing-redirects: error` still stops the publish.
+      type: fix
+    - summary: |
+        `fern generate --docs` no longer calls the AI example enhancement service while publishing,
+        so publishing API reference pages is faster. The service has been returning errors since
+        August, so examples on published pages were not being enhanced anyway. The `ai-examples`
+        setting in `docs.yml` is still accepted but has no effect. Existing
+        `ai_examples_override.yml` files next to OpenAPI specs are still applied.
+      type: chore
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.147.3
+  changelogEntry:
+    - summary: |
+        Fix component schemas that are only a `$ref` to another schema (for example
+        `CopyBatchArg: { $ref: '#/components/schemas/RelocationBatchArgBase' }`) being imported
+        as `unknown`. Their API reference pages showed "any" instead of the referenced type's
+        fields. These schemas now become an alias of the referenced type.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.147.2
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now registers API definitions with FDR four at a time instead of one
+        after another, which shortens publishes for docs sites with many APIs or API versions. Set
+        `FERN_DOCS_API_REGISTRATION_CONCURRENCY` to change the limit (`1` restores serial registration).
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.147.1
+  changelogEntry:
+    - summary: |
+        `<Markdown src="..." />` snippets now resolve when a prop value contains `>`, e.g.
+        `<Markdown src="/snippets/intro.mdx" returnType="Promise<void>" />`. Previously the `>` inside the
+        quoted value ended the tag early, so the snippet was never inlined and the page rendered incorrectly.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.147.0
+  changelogEntry:
+    - summary: |
+        `fern init` can now create `sdk-config.yml` for new OpenAPI projects. Initialized OpenAPI
+        files are bundled into the Fern workspace, while URL sources are preserved in the generated configuration.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.146.2
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs` corrupting MDX pages that mix JSX image expressions like
+        `icon={<img src="..." />}` with other components that have local image paths. Text after
+        those components (such as a closing `</Tab>`) was deleted, so the page failed to compile and
+        rendered as raw text.
+      type: fix
+    - summary: |
+        Fix local images inside Markdown link text, like `[Docs <img src="./icon.svg" />](https://...)`
+        or `[![badge](./badge.png)](https://...)`, being published with the build machine's absolute
+        path instead of the uploaded file. Finding images to upload no longer parses each page as full
+        MDX, which makes `fern generate --docs` faster on large sites.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.146.1
+  changelogEntry:
+    - summary: |
+        Support building package artifacts from SDKs generated through SDK Gen API with `fern generate --package`, including pnpm-based TypeScript projects.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.146.0
+  changelogEntry:
+    - summary: |
+        SDK variables can now declare an environment variable fallback. In `api.yml`, use the
+        detailed form `variables: { myVar: { type: string, env: MY_VAR } }`; in OpenAPI, add
+        `x-fern-env: MY_VAR` to an `x-fern-sdk-variables` entry. The value is emitted as
+        `VariableDeclaration.envVar` in the IR so generators can make the variable optional at
+        client construction and read it from the environment when it is not passed explicitly.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.145.2
+  changelogEntry:
+    - summary: |
+        `fern org get` now names the org, shows when the CLI version policy was last updated, and shows
+        the running CLI version (e.g. `Org "acme" requires Fern CLI >= 5.106.0 (updated 2026-08-26).
+        You're on 5.140.2.`), so the output no longer reads like an error.
+      type: fix
+    - summary: |
+        `fern upgrade` no longer warns that the running CLI is outside the org's version policy ("Version
+        redirection is disabled, so it was not upgraded"), since the upgrade itself moves the project
+        to a new version.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 5.145.1
   changelogEntry:
     - summary: |

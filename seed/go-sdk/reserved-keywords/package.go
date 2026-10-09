@@ -21,10 +21,12 @@ type TestRequest struct {
 }
 
 func (t *TestRequest) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetFor sets the For field and marks it as non-optional;
@@ -189,10 +191,12 @@ func (b *BackupOverride) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BackupOverride) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetModel sets the Model field and marks it as non-optional;
@@ -282,10 +286,12 @@ func (c *CustomSipHeader) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CustomSipHeader) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetKey sets the Key field and marks it as non-optional;
@@ -499,10 +505,12 @@ func (k *KnownDependency) GetExtraProperties() map[string]interface{} {
 }
 
 func (k *KnownDependency) require(field *big.Int) {
-	if k.explicitFields == nil {
-		k.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if k.explicitFields != nil {
+		next.Set(k.explicitFields)
 	}
-	k.explicitFields.Or(k.explicitFields, field)
+	next.Or(next, field)
+	k.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -583,10 +591,12 @@ func (p *Package) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Package) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -676,10 +686,12 @@ func (r *Record) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *Record) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetFoo sets the Foo field and marks it as non-optional;

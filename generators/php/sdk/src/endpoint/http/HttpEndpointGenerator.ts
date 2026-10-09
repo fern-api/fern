@@ -162,6 +162,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 this.writeRetriesDisabledOverride({ writer, endpoint });
 
+                for (const sdkVariable of this.context.getSdkVariablesForEndpoint(endpoint)) {
+                    writer.writeNode(this.context.getSdkVariableRequiredGuard(sdkVariable));
+                }
+
                 this.writeEndpointAuthHeaders({ writer, endpoint });
 
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();

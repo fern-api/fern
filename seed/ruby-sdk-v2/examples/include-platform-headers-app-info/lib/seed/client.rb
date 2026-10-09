@@ -20,7 +20,7 @@ module Seed
         base_url: request_options[:base_url],
         method: "POST",
         path: "",
-        body: params,
+        body: params[:request],
         request_options: request_options
       )
       begin
@@ -75,10 +75,11 @@ module Seed
     # @param token [String]
     # @param base_url [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     # @param app_info [Hash[Symbol, String], nil]
     #
     # @return [void]
-    def initialize(token:, base_url: nil, max_retries: 2, app_info: nil)
+    def initialize(token:, base_url: nil, max_retries: 2, timeout: 60, app_info: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
@@ -86,7 +87,8 @@ module Seed
           "X-Fern-Language" => "Ruby",
           Authorization: "Bearer #{token}"
         },
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

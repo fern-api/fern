@@ -124,6 +124,20 @@ export function onPremAdapterLanguage(generatorName: string): string | undefined
 }
 
 /**
+ * The adapter invocation that serves an SDK Config target on a local run: the generator name the
+ * adapter is published under for `language`, and its cutover. `undefined` when no adapter generates
+ * the language, so the target cannot run locally.
+ */
+export function getOnPremAdapterForLanguage(language: string): { name: string; cutover: string } | undefined {
+    for (const [name, entry] of ONPREM_ADAPTER) {
+        if (entry.language === language) {
+            return { name, cutover: entry.cutover };
+        }
+    }
+    return undefined;
+}
+
+/**
  * Generators that receive pre-processed raw API spec files mounted into their
  * Docker container. Add new generator names here as they opt in.
  *

@@ -84,6 +84,7 @@ export const AsIsFiles = {
     },
     Xml: {
         IXmlNode: "IXmlNode.Template.cs",
+        XmlComment: "XmlComment.Template.cs",
         XmlElement: "XmlElement.Template.cs",
         XmlUtils: "XmlUtils.Template.cs"
     },
@@ -149,6 +150,7 @@ export const AsIsFiles = {
             EnumSerializerTests: "test/Json/EnumSerializerTests.Template.cs",
             JsonAccessAttributeTests: "test/Json/JsonAccessAttributeTests.Template.cs",
             OneOfSerializerTests: "test/Json/OneOfSerializerTests.Template.cs",
+            SerializeWithAdditionalPropertiesTests: "test/Json/SerializeWithAdditionalPropertiesTests.Template.cs",
             StringEnumSerializerTests: "test/Json/StringEnumSerializerTests.Template.cs"
         }
     }

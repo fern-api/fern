@@ -1,3 +1,4 @@
+export declare const TIMEOUT = "timeout";
 export declare function getTimeoutSignal(timeoutMs: number): {
     signal: AbortSignal;
     abortId: ReturnType<typeof setTimeout>;

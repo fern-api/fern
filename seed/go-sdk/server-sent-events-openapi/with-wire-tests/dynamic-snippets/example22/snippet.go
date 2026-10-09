@@ -14,11 +14,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SharedCompletionRequest{
+    request := &fern.StreamXFernStreamingSharedSchemaRequest{
         Prompt: "prompt",
         Model: "model",
     }
-    client.ValidateCompletion(
+    client.StreamXFernStreamingSharedSchema(
         context.TODO(),
         request,
     )

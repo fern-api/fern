@@ -158,7 +158,11 @@ module Seed
           (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            404 => Seed::Playlist::Types::PlaylistIDNotFoundErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 
@@ -187,14 +191,11 @@ module Seed
       # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[service_param playlist_id]
-        body_params = params.except(*path_param_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
-          body: body_params,
+          body: params[:request]&.then { |value| Seed::Playlist::Types::UpdatePlaylistRequest.new(value).to_h },
           request_options: request_options
         )
         begin
@@ -207,7 +208,11 @@ module Seed
           (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            404 => Seed::Playlist::Types::PlaylistIDNotFoundErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 

@@ -211,6 +211,10 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
                     includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
+                    // Only drops the default X-Fern-* headers when a User-Agent is emitted.
+                    userAgentOnly:
+                        this.rubyContext.customConfig.userAgentOnly === true &&
+                        this.rubyContext.ir.sdkConfig.platformHeaders.userAgent != null,
                     allowCustomHttpClient: this.rubyContext.customConfig.allowCustomHttpClient,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
@@ -233,6 +237,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders,
         includePlatformHeaders,
         allowUserAgentAppInfo,
+        userAgentOnly,
         allowCustomHttpClient,
         maxRetries,
         retryStatusCodes,
@@ -248,6 +253,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders?: boolean;
         includePlatformHeaders?: boolean;
         allowUserAgentAppInfo?: boolean;
+        userAgentOnly?: boolean;
         allowCustomHttpClient?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
@@ -265,6 +271,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 omitFernHeaders,
                 includePlatformHeaders,
                 allowUserAgentAppInfo,
+                userAgentOnly,
                 allowCustomHttpClient,
                 maxRetries,
                 respectOptionalRequestBody,
@@ -274,11 +281,21 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             })
         });
 
-        const retryStatusCodesArray =
+        const retryStatuses =
             retryStatusCodes === "recommended"
-                ? "[408, 429, 502, 503, 504].freeze"
-                : "[408, 429, 500, 502, 503, 504, 521, 522, 524].freeze";
-        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+                ? [408, 429, 502, 503, 504]
+                : [408, 429, 500, 502, 503, 504, 521, 522, 524];
+        const tested5xxStatuses = [500, 501, 502, 503, 504, 505, 510, 521, 522, 524, 599];
+        const toRubyArray = (statuses: number[]) => `[${statuses.join(", ")}]`;
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, `${toRubyArray(retryStatuses)}.freeze`);
+        rendered = rendered.replace(
+            /\{\{RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => retryStatuses.includes(status)))
+        );
+        rendered = rendered.replace(
+            /\{\{NON_RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => !retryStatuses.includes(status)))
+        );
 
         return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
@@ -332,6 +349,7 @@ function getTemplateVariables({
     omitFernHeaders,
     includePlatformHeaders,
     allowUserAgentAppInfo,
+    userAgentOnly,
     allowCustomHttpClient,
     maxRetries,
     respectOptionalRequestBody,
@@ -345,6 +363,7 @@ function getTemplateVariables({
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
     allowUserAgentAppInfo?: boolean;
+    userAgentOnly?: boolean;
     allowCustomHttpClient?: boolean;
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
@@ -364,6 +383,8 @@ function getTemplateVariables({
         // Emits the RawClient.append_app_info helper only when the opt-in flag is on,
         // so flag-off raw_client.rb stays byte-identical.
         allowUserAgentAppInfo: allowUserAgentAppInfo ?? false,
+        // Drops the default X-Fern-Language/SDK-Name/SDK-Version headers.
+        userAgentOnly: userAgentOnly ?? false,
         // Emits the RawClient `http_client:` transport override only when the opt-in
         // flag is on, so flag-off raw_client.rb stays byte-identical.
         allowCustomHttpClient: allowCustomHttpClient ?? false,

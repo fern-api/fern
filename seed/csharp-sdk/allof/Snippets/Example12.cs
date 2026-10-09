@@ -11,7 +11,9 @@ public partial class Examples
 
         await client.CreateTreeAsync(
             new TreeRecord {
-                Id = "id"
+                Id = "id",
+                TreeName = "treeName",
+                TreeSpecies = "treeSpecies"
             }
         );
     }

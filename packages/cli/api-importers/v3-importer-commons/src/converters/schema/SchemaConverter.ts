@@ -6,6 +6,7 @@ import {
 import * as FernIr from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
+import { collectNamedTypeIdsFromTypeReference } from "../../utils/ConvertProperties.js";
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType.js";
 import { ExampleConverter } from "../ExampleConverter.js";
 import { ArraySchemaConverter } from "./ArraySchemaConverter.js";
@@ -89,6 +90,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return maybeConvertedFernTypeDeclaration;
         }
 
+        const maybeConvertedReferenceSchema = this.tryConvertReferenceSchema();
+        if (maybeConvertedReferenceSchema != null) {
+            return maybeConvertedReferenceSchema;
+        }
+
         const maybeConvertedEnumSchema = this.tryConvertEnumSchema();
         if (maybeConvertedEnumSchema != null) {
             return maybeConvertedEnumSchema;
@@ -159,6 +165,45 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             path: this.breadcrumbs
         });
         return undefined;
+    }
+
+    /**
+     * Converts a schema that is itself a `$ref` (e.g. `components.schemas.A: { $ref: '#/components/schemas/B' }`)
+     * into an alias of the referenced type.
+     */
+    private tryConvertReferenceSchema(): SchemaConverter.Output | undefined {
+        if (!this.context.isReferenceObject(this.schema)) {
+            return undefined;
+        }
+        const reference: OpenAPIV3_1.ReferenceObject = this.schema;
+        if (this.visitedRefs.has(reference.$ref) || reference.$ref === `#/components/schemas/${this.id}`) {
+            return undefined;
+        }
+        const response = this.context.convertReferenceToTypeReference({
+            reference,
+            breadcrumbs: this.breadcrumbs
+        });
+        if (!response.ok) {
+            return undefined;
+        }
+        const referencedTypes = new Set<string>();
+        collectNamedTypeIdsFromTypeReference(response.reference, referencedTypes);
+        return {
+            convertedSchema: {
+                typeDeclaration: this.createTypeDeclaration({
+                    shape: FernIr.Type.alias({
+                        aliasOf: response.reference,
+                        // Placeholder; replaced with the terminal named type by resolveAliasResolvedTypes.
+                        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                        resolvedType: response.reference as any
+                    }),
+                    referencedTypes
+                }),
+                audiences: this.audiences,
+                propertiesByAudience: {}
+            },
+            inlinedTypes: response.inlinedTypes ?? {}
+        };
     }
 
     private tryConvertEnumSchema(): SchemaConverter.Output | undefined {

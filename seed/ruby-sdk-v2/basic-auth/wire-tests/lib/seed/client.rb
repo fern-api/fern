@@ -6,9 +6,10 @@ module Seed
     # @param password [String]
     # @param base_url [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(username:, password:, base_url: nil, max_retries: 2)
+    def initialize(username:, password:, base_url: nil, max_retries: 2, timeout: 60)
       headers = {
         "User-Agent" => "fern_basic-auth/0.0.1",
         "X-Fern-Language" => "Ruby"
@@ -17,7 +18,8 @@ module Seed
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: headers,
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

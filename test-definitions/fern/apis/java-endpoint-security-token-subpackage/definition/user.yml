@@ -22,6 +22,18 @@ service:
       auth:
         - OAuth: [read-only]
         - ApiKey: []
+    getWithBearer:
+      path: /users/bearer
+      method: GET
+      response: list<User>
+      auth:
+        - tokenAuth: []
+    getWithBasic:
+      path: /users/basic
+      method: GET
+      response: list<User>
+      auth:
+        - passwordAuth: []
     getAnonymous:
       path: /users/anonymous
       method: GET

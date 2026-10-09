@@ -9,7 +9,7 @@ import { getRoutingSchemes } from "../auth/RoutingAuthProviderGenerator.js";
 import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
-import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { SdkGeneratorContext, SdkVariableOption } from "../SdkGeneratorContext.js";
 import {
     getMultipleBaseUrlsTemplatedEnvironment,
     getServerVariableOptions,
@@ -363,11 +363,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // fallbacks never throw (a caller may only use a subset of the schemes).
         const endpointSecurity = this.context.isEndpointSecurity();
         const preferExplicitAuth = this.preferExplicitAuthEnabled();
-        const serverVariableOptions = getServerVariableOptions(
-            this.context.ir.environments,
-            this.case,
-            constructorParameters.all.map((parameter) => parameter.name)
-        );
+        const sdkVariableOptions = this.context.getSdkVariableOptions();
+        const serverVariableOptions = getServerVariableOptions(this.context.ir.environments, this.case, [
+            ...constructorParameters.all.map((parameter) => parameter.name),
+            ...sdkVariableOptions.map((option) => option.optionName)
+        ]);
 
         const parameters: php.Parameter[] = [];
         for (const param of [...constructorParameters.required, ...constructorParameters.optional]) {
@@ -415,6 +415,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     type: php.Type.optional(php.Type.string()),
                     initializer: php.codeblock("null"),
                     docs: this.getServerVariableParameterDocs(option)
+                })
+            );
+        }
+
+        for (const option of sdkVariableOptions) {
+            parameters.push(
+                php.parameter({
+                    name: option.optionName,
+                    type: php.Type.optional(this.context.phpTypeMapper.convert({ reference: option.variable.type })),
+                    initializer: php.codeblock("null"),
+                    docs: this.getSdkVariableParameterDocs(option)
                 })
             );
         }
@@ -468,22 +479,27 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         if (!this.context.customConfig.omitFernHeaders) {
             const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-            headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.language}'`),
-                value: php.codeblock("'PHP'")
-            });
-            headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.sdkName}'`),
-                value: php.codeblock(`'${this.context.getRootNamespace()}'`)
-            });
-            const sdkVersion = this.context.getSdkVersion();
-            if (sdkVersion != null) {
-                headerEntries.push({
-                    key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
-                    value: php.codeblock(`'${sdkVersion}'`)
-                });
-            }
             const userAgent = this.context.getUserAgent();
+            // userAgentOnly only drops the discrete headers when a User-Agent is actually
+            // emitted, so the SDK is never left without any identification header.
+            const dropDiscreteHeaders = (this.context.customConfig.userAgentOnly ?? false) && userAgent != null;
+            if (!dropDiscreteHeaders) {
+                headerEntries.push({
+                    key: php.codeblock(`'${platformHeaders.language}'`),
+                    value: php.codeblock("'PHP'")
+                });
+                headerEntries.push({
+                    key: php.codeblock(`'${platformHeaders.sdkName}'`),
+                    value: php.codeblock(`'${this.context.getRootNamespace()}'`)
+                });
+                const sdkVersion = this.context.getSdkVersion();
+                if (sdkVersion != null) {
+                    headerEntries.push({
+                        key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
+                        value: php.codeblock(`'${sdkVersion}'`)
+                    });
+                }
+            }
             if (userAgent != null) {
                 const escapedUserAgentValue = userAgent.value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
                 // The base User-Agent expression, covering all three branches: the
@@ -672,6 +688,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         writer.write(" ?? []");
                     })
                 );
+
+                this.writeSdkVariableAssignments({ writer, sdkVariableOptions });
 
                 this.writeServerVariableInterpolation({ writer, serverVariableOptions });
 
@@ -950,6 +968,44 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             })
         );
         writer.writeLine();
+    }
+
+    private getSdkVariableParameterDocs(option: SdkVariableOption): string {
+        if (option.variable.docs != null) {
+            return option.variable.docs;
+        }
+        const docs = [`The ${option.optionName} SDK variable substituted into request paths.`];
+        if (option.variable.envVar != null && option.isString) {
+            docs.push(`Defaults to the ${option.variable.envVar} environment variable.`);
+        }
+        return docs.join(" ");
+    }
+
+    /**
+     * Stores each SDK variable passed to the constructor in the shared `options` array, which
+     * every subclient receives and merges into per-request options, so bound path parameters
+     * can read `$options['<name>']`. String variables with an `env` fall back to `getenv()`.
+     * Explicit arguments win over an `options` entry, which wins over the environment.
+     */
+    private writeSdkVariableAssignments({
+        writer,
+        sdkVariableOptions
+    }: {
+        writer: php.Writer;
+        sdkVariableOptions: SdkVariableOption[];
+    }): void {
+        for (const option of sdkVariableOptions) {
+            if (option.variable.envVar != null && option.isString) {
+                writer.writeTextStatement(
+                    `$${option.optionName} ??= $this->${this.context.getClientOptionsName()}['${option.optionName}'] ?? (getenv('${this.escapeSingleQuoted(option.variable.envVar)}') ?: null)`
+                );
+            }
+            writer.controlFlow("if", php.codeblock(`$${option.optionName} !== null`));
+            writer.writeTextStatement(
+                `$this->${this.context.getClientOptionsName()}['${option.optionName}'] = $${option.optionName}`
+            );
+            writer.endControlFlow();
+        }
     }
 
     private getServerVariableParameterDocs(option: ServerVariableOption): string {

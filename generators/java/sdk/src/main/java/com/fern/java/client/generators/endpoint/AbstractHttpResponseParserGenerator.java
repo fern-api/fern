@@ -758,36 +758,30 @@ public abstract class AbstractHttpResponseParserGenerator {
             // This prevents duplicate case labels in switch statements when multiple
             // error types map to the same HTTP status code.
             Map<Integer, ErrorDeclaration> dedupedByStatusCode = new LinkedHashMap<>();
+            Map<Integer, ErrorDeclaration> wildcardsByStatusClass = new LinkedHashMap<>();
             for (ErrorDeclaration errorDeclaration : errorDeclarations) {
-                dedupedByStatusCode.putIfAbsent(errorDeclaration.getStatusCode(), errorDeclaration);
+                if (isWildcardStatusCode(errorDeclaration)) {
+                    wildcardsByStatusClass.putIfAbsent(errorDeclaration.getStatusCode() / 100, errorDeclaration);
+                } else {
+                    dedupedByStatusCode.putIfAbsent(errorDeclaration.getStatusCode(), errorDeclaration);
+                }
             }
             List<ErrorDeclaration> uniqueErrorDeclarations = new ArrayList<>(dedupedByStatusCode.values());
 
-            if (!uniqueErrorDeclarations.isEmpty()) {
+            if (!uniqueErrorDeclarations.isEmpty() || !wildcardsByStatusClass.isEmpty()) {
                 boolean multipleErrors = uniqueErrorDeclarations.size() > 1;
                 httpResponseBuilder.beginControlFlow("try");
                 if (multipleErrors) {
                     httpResponseBuilder.beginControlFlow("switch ($L.code())", variables.getResponseName());
                 }
                 uniqueErrorDeclarations.forEach(errorDeclaration -> {
-                    GeneratedJavaFile generatedError =
-                            generatedErrors.get(errorDeclaration.getName().getErrorId());
-                    ClassName errorClassName = generatedError.getClassName();
                     if (multipleErrors) {
                         httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
                     } else {
                         httpResponseBuilder.beginControlFlow(
                                 "if ($L.code() == $L)", variables.getResponseName(), errorDeclaration.getStatusCode());
                     }
-                    handleExceptionalResult(
-                            httpResponseBuilder,
-                            CodeBlock.of(
-                                    "new $T($L, $L)",
-                                    errorClassName,
-                                    objectMapperUtils.readValueCall(
-                                            CodeBlock.of("$L", variables.getResponseBodyStringName()),
-                                            errorDeclaration.getType()),
-                                    "response"));
+                    addTypedErrorResult(httpResponseBuilder, objectMapperUtils, errorDeclaration);
                     if (!multipleErrors) {
                         httpResponseBuilder.endControlFlow();
                     }
@@ -795,6 +789,16 @@ public abstract class AbstractHttpResponseParserGenerator {
                 if (multipleErrors) {
                     httpResponseBuilder.endControlFlow();
                 }
+                wildcardsByStatusClass.forEach((statusClass, errorDeclaration) -> {
+                    httpResponseBuilder.beginControlFlow(
+                            "if ($L.code() >= $L && $L.code() < $L)",
+                            variables.getResponseName(),
+                            statusClass * 100,
+                            variables.getResponseName(),
+                            (statusClass + 1) * 100);
+                    addTypedErrorResult(httpResponseBuilder, objectMapperUtils, errorDeclaration);
+                    httpResponseBuilder.endControlFlow();
+                });
                 httpResponseBuilder
                         .endControlFlow()
                         .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
@@ -817,6 +821,70 @@ public abstract class AbstractHttpResponseParserGenerator {
                         variables.getResponseName(),
                         variables.getResponseName(),
                         "response"));
+    }
+
+    private CodeBlock cursorHasNextPage(String cursorVariableName, TypeName cursorTypeName) {
+        if (cursorTypeName instanceof ParameterizedTypeName) {
+            ParameterizedTypeName parameterizedTypeName = (ParameterizedTypeName) cursorTypeName;
+            if (parameterizedTypeName.rawType.equals(ClassName.get(Optional.class))
+                    || isOptionalNullable(parameterizedTypeName)) {
+                if (parameterizedTypeName.typeArguments.get(0).equals(ClassName.get(String.class))) {
+                    return CodeBlock.of(
+                            "$L.isPresent() && !$L.get().isEmpty()", cursorVariableName, cursorVariableName);
+                }
+                return CodeBlock.of("$L.isPresent()", cursorVariableName);
+            }
+        }
+        if (cursorTypeName.equals(ClassName.get(String.class))) {
+            return CodeBlock.of("$L != null && !$L.isEmpty()", cursorVariableName, cursorVariableName);
+        }
+        return CodeBlock.of("$L != null", cursorVariableName);
+    }
+
+    private boolean isOptionalNullable(TypeName typeName) {
+        return typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName)
+                        .rawType.equals(
+                                clientGeneratorContext.getPoetClassNameFactory().getOptionalNullableClassName());
+    }
+
+    private static com.fern.ir.model.types.TypeReference getRequestPropertyType(RequestPropertyValue property) {
+        return property.visit(new RequestPropertyValue.Visitor<com.fern.ir.model.types.TypeReference>() {
+            @Override
+            public com.fern.ir.model.types.TypeReference visitQuery(QueryParameter queryParameter) {
+                return queryParameter.getValueType();
+            }
+
+            @Override
+            public com.fern.ir.model.types.TypeReference visitBody(ObjectProperty objectProperty) {
+                return objectProperty.getValueType();
+            }
+
+            @Override
+            public com.fern.ir.model.types.TypeReference _visitUnknown(Object o) {
+                throw new IllegalArgumentException("Unknown request property value type.");
+            }
+        });
+    }
+
+    private void addTypedErrorResult(
+            CodeBlock.Builder httpResponseBuilder,
+            ObjectMapperUtils objectMapperUtils,
+            ErrorDeclaration errorDeclaration) {
+        ClassName errorClassName =
+                generatedErrors.get(errorDeclaration.getName().getErrorId()).getClassName();
+        handleExceptionalResult(
+                httpResponseBuilder,
+                CodeBlock.of(
+                        "new $T($L, $L)",
+                        errorClassName,
+                        objectMapperUtils.readValueCall(
+                                CodeBlock.of("$L", variables.getResponseBodyStringName()), errorDeclaration.getType()),
+                        "response"));
+    }
+
+    private static boolean isWildcardStatusCode(ErrorDeclaration errorDeclaration) {
+        return errorDeclaration.getIsWildcardStatusCode().orElse(false);
     }
 
     protected ClassName rawHttpResponseClassName() {
@@ -1042,6 +1110,25 @@ public abstract class AbstractHttpResponseParserGenerator {
                         // Protocol-level discrimination: discriminator is at SSE envelope level
                         String discriminatorProperty =
                                 discriminationInfo.getDiscriminatorProperty().orElse("event");
+                        if (discriminationInfo.getEnvelopeEvents().isPresent()) {
+                            CodeBlock envelopeEvents = discriminationInfo.getEnvelopeEvents().get().stream()
+                                    .map(event -> CodeBlock.of("$S", event))
+                                    .collect(CodeBlock.joining(", "));
+                            return CodeBlock.of(
+                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $L, $T.asList($L))",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getStreamClassName(),
+                                    bodyTypeName,
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getResponseBodyReaderClassName(),
+                                    variables.getResponseName(),
+                                    discriminatorProperty,
+                                    terminator != null ? CodeBlock.of("$S", terminator) : CodeBlock.of("null"),
+                                    java.util.Arrays.class,
+                                    envelopeEvents);
+                        }
                         if (terminator != null) {
                             return CodeBlock.of(
                                     "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $S)",
@@ -1570,6 +1657,13 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             String propertyOverrideOnRequest = builderStartingAfterProperty;
             String propertyOverrideValueOnRequest = variables.getStartingAfterVariableName();
+            TypeName pageTypeName = clientGeneratorContext
+                    .getPoetTypeNameMapper()
+                    .convertToTypeName(
+                            true, getRequestPropertyType(cursor.getPage().getProperty()));
+            if (isOptionalNullable(nextSnippet.typeName) && !isOptionalNullable(pageTypeName)) {
+                propertyOverrideValueOnRequest += ".toOptional()";
+            }
 
             if (cursor.getPage().getPropertyPath().isPresent()
                     && !cursor.getPage().getPropertyPath().get().isEmpty()) {
@@ -1628,10 +1722,9 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (nextSnippet.typeReference.getContainer().isPresent()) {
                 com.fern.ir.model.types.ContainerType containerType =
                         nextSnippet.typeReference.getContainer().get();
-                if (containerType.isOptional()) {
-                    hasNextPageBlock = CodeBlock.of("$L.isPresent()", variables.getStartingAfterVariableName());
-                } else if (containerType.isNullable()) {
-                    hasNextPageBlock = CodeBlock.of("$L != null", variables.getStartingAfterVariableName());
+                if (containerType.isOptional() || containerType.isNullable()) {
+                    hasNextPageBlock =
+                            cursorHasNextPage(variables.getStartingAfterVariableName(), nextSnippet.typeName);
                 } else {
                     throw new IllegalStateException(
                             "Found non-optional, non-nullable container as next page token. This should be impossible "
