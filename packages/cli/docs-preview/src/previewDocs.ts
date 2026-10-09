@@ -499,7 +499,10 @@ export async function getPreviewDocsDefinition({
         translatedApiDefinitions,
         ledgerSource: {
             writeDocsDefinition,
-            writeApiDefinitions: apiCollector.getWriteAPIsForDefinition(),
+            writeApiDefinitions: withSkippedWriteApis(
+                apiCollector.getWriteAPIsForDefinition(),
+                Object.keys(resolver.getSkippedApiDefinitions())
+            ),
             resolver,
             uploadedFiles
         }
@@ -562,6 +565,25 @@ async function applyGlobalThemeIfNeeded(
     const fdrOrigin =
         process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     return stitchGlobalTheme({ docsWorkspace, organization, fdrOrigin, token, taskContext: context });
+}
+
+/** Adds an empty write-format API for each `--skip-api` placeholder so the Astro ledger can resolve it. */
+function withSkippedWriteApis(
+    writeApis: Map<string, APIV1Write.ApiDefinition>,
+    skippedApiDefinitionIds: string[]
+): Map<string, APIV1Write.ApiDefinition> {
+    if (skippedApiDefinitionIds.length === 0) {
+        return writeApis;
+    }
+    const result = new Map(writeApis);
+    for (const id of skippedApiDefinitionIds) {
+        result.set(id, {
+            rootPackage: { endpoints: [], websockets: [], webhooks: [], types: [], subpackages: [] },
+            types: {},
+            subpackages: {}
+        });
+    }
+    return result;
 }
 
 type APIDefinitionID = string;
