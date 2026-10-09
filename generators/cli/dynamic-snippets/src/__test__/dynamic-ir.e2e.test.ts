@@ -131,8 +131,11 @@ describe("flag emission from the real dynamic IR", () => {
             pathParameters: { AccountSid: "AC123" },
             requestBody: { File: "/tmp/image.png", output: "meta" }
         });
-        expect(result.errors).toBeUndefined();
         expect(result.snippet).toBe("twilio-like media upload-media --account-sid AC123 --file /tmp/image.png");
+        // The dropped reserved field surfaces as a warning so docs can flag the missing input.
+        expect(result.errors).toHaveLength(1);
+        expect(result.errors?.[0]?.severity).toBe("WARNING");
+        expect(result.errors?.[0]?.message).toContain("output");
     });
 
     it("sends a literal-dotted body through --json", () => {

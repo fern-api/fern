@@ -322,7 +322,12 @@ export class EndpointSnippetGenerator {
             // argument at all (passing it in --params panics the CLI), and a reserved-name multipart
             // field is mis-routed by the runtime into the query string instead of the form. In both
             // cases the value can't be delivered correctly, so omit it rather than emit a wrong/failing
-            // command. Both are rare; see the package README.
+            // command — but surface a warning so the docs can flag the dropped field. Both are rare;
+            // see the package README.
+            this.context.errors.add({
+                severity: Severity.Warning,
+                message: `Parameter "${wireValue}" was omitted from the CLI snippet: its name cannot be expressed as a flag and the runtime cannot accept it via --params.`
+            });
             return;
         }
         // resolveParamFlagName returns the bare flag name (e.g. "account-sid"); the command uses the

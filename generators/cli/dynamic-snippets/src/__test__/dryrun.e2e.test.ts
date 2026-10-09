@@ -109,10 +109,16 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
         writeFileSync(filePath, "fake-bytes");
     }, 600_000);
 
-    // Example values per endpoint, plus the query-param keys the request legitimately carries. Asserting
-    // the dry-run's query_params match exactly catches values that leak to the wrong place (e.g. a body
-    // or multipart field mis-routed into the query string) — exit 0 alone would not.
-    function cases(): Array<{ request: FernIr.dynamic.EndpointSnippetRequest; expectedQueryKeys: string[] }> {
+    // Example values per endpoint, plus the keys each value is expected to land under in the dry-run.
+    // Asserting all four placement buckets catches a value routed to the wrong place (e.g. a body or
+    // multipart field mis-routed into the query string) — exit 0 alone would not.
+    interface Placement {
+        query: string[];
+        headers: string[];
+        body: string[];
+        form: string[];
+    }
+    function cases(): Array<{ request: FernIr.dynamic.EndpointSnippetRequest; expected: Placement }> {
         return [
             {
                 request: {
@@ -120,7 +126,7 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
                     pathParameters: { AccountSid: "AC123" },
                     requestBody: { To: "+15558675310", From: "+15017122661", Body: "Hi" }
                 },
-                expectedQueryKeys: []
+                expected: { query: [], headers: [], body: ["Body", "From", "To"], form: [] }
             },
             {
                 request: {
@@ -128,7 +134,7 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
                     pathParameters: { AccountSid: "AC123" },
                     queryParameters: { PageSize: 20 }
                 },
-                expectedQueryKeys: ["PageSize"]
+                expected: { query: ["PageSize"], headers: [], body: [], form: [] }
             },
             {
                 request: {
@@ -137,7 +143,7 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
                     headers: { "X-Custom-Header": "hval" },
                     requestBody: { To: "+15558675310", json: "raw" }
                 },
-                expectedQueryKeys: []
+                expected: { query: [], headers: ["X-Custom-Header"], body: ["To", "json"], form: [] }
             },
             {
                 request: {
@@ -145,7 +151,8 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
                     pathParameters: { AccountSid: "AC123" },
                     requestBody: { To: "+15558675310", "Parameter1.Name": "foo" }
                 },
-                expectedQueryKeys: []
+                // literal-dotted body goes through --json; the runtime still parses it into the body
+                expected: { query: [], headers: [], body: ["Parameter1.Name", "To"], form: [] }
             },
             {
                 request: {
@@ -153,7 +160,8 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
                     pathParameters: { AccountSid: "AC123" },
                     requestBody: { CustomerName: "Ada", Address: { City: "SF", Zip: "94105" } }
                 },
-                expectedQueryKeys: []
+                // nested object sent via --params still lands in the body
+                expected: { query: [], headers: [], body: ["Address", "CustomerName"], form: [] }
             },
             {
                 request: {
@@ -162,28 +170,34 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
                     // `output` (reserved multipart) is omitted by the generator; only File is sent.
                     requestBody: { File: filePath, output: "meta" }
                 },
-                expectedQueryKeys: []
+                expected: { query: [], headers: [], body: [], form: ["File"] }
             },
             {
                 request: {
                     endpoint: { method: "POST", path: "/Chat/v1/Messages" },
                     requestBody: { Body: "hi" }
                 },
-                expectedQueryKeys: []
+                expected: { query: [], headers: [], body: ["Body"], form: [] }
             }
         ];
     }
 
     it("accepts every generated command and routes every value to the right place", () => {
         const generator = new DynamicSnippetsGenerator({ ir: dynamicIr, config: CONFIG });
+        const sorted = (xs: string[]): string => JSON.stringify([...xs].sort());
         const failures: string[] = [];
-        for (const { request, expectedQueryKeys } of cases()) {
+        for (const { request, expected } of cases()) {
             const { snippet } = generator.generateSync(request);
             // Replace the leading binary-name token with the built binary's path, then --dry-run as JSON.
             // Run through a shell so the generator's POSIX quoting (--params '{…}') is parsed as emitted.
             const withoutBinaryName = snippet.slice(snippet.indexOf(" ") + 1);
             const shellCommand = `${JSON.stringify(binary)} ${withoutBinaryName} --dry-run --format json`;
-            let parsed: { query_params?: Array<[string, string]> };
+            let parsed: {
+                query_params?: Array<[string, string]>;
+                headers?: Array<[string, string]>;
+                body?: Record<string, unknown> | null;
+                multipart_form_data?: Array<{ name: string }>;
+            };
             try {
                 parsed = JSON.parse(execSync(shellCommand, { stdio: "pipe" }).toString());
             } catch (error) {
@@ -192,15 +206,24 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
                 failures.push(`  ${snippet}\n    → ${detail}`);
                 continue;
             }
-            const queryKeys = (parsed.query_params ?? []).map(([key]) => key).sort();
-            if (JSON.stringify(queryKeys) !== JSON.stringify([...expectedQueryKeys].sort())) {
-                failures.push(
-                    `  ${snippet}\n    → query params ${JSON.stringify(queryKeys)} != expected ${JSON.stringify(expectedQueryKeys)}`
-                );
+            const actual: Placement = {
+                query: (parsed.query_params ?? []).map(([key]) => key),
+                headers: (parsed.headers ?? []).map(([key]) => key),
+                body: parsed.body != null ? Object.keys(parsed.body) : [],
+                form: (parsed.multipart_form_data ?? []).map((part) => part.name)
+            };
+            for (const bucket of ["query", "headers", "body", "form"] as const) {
+                if (sorted(actual[bucket]) !== sorted(expected[bucket])) {
+                    failures.push(
+                        `  ${snippet}\n    → ${bucket} ${sorted(actual[bucket])} != expected ${sorted(expected[bucket])}`
+                    );
+                }
             }
         }
         if (failures.length > 0) {
-            throw new Error(`${failures.length} command(s) failed the runtime --dry-run:\n${failures.join("\n")}`);
+            throw new Error(
+                `${failures.length} placement mismatch(es) in the runtime --dry-run:\n${failures.join("\n")}`
+            );
         }
     });
 });

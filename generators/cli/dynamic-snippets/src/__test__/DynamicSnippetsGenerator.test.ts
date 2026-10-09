@@ -268,8 +268,11 @@ describe("DynamicSnippetsGenerator", () => {
             endpoint: { method: "POST", path: "/Media" },
             requestBody: { ProfileImage: "/path/img.png", output: "raw", To: "+15551234567" }
         });
-        expect(result.errors).toBeUndefined();
         expect(result.snippet).toBe("twilio media upload --profile-image /path/img.png --to +15551234567");
+        // The dropped reserved multipart field surfaces as a warning rather than disappearing silently.
+        expect(result.errors).toHaveLength(1);
+        expect(result.errors?.[0]?.severity).toBe("WARNING");
+        expect(result.errors?.[0]?.message).toContain("output");
     });
 
     it("honors a binaryName custom config override", () => {
