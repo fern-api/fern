@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern.schema.json
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    getSomething:
+      path: /get-something
+      method: GET
+      auth:
+        - OAuth: []
+        - RefreshToken: []
+      examples:
+        - {}

@@ -43,7 +43,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 /**
@@ -60,6 +62,9 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String EXPIRES_IN_SECONDS_PARAMETER_NAME = "expiresInSeconds";
     private static final String CACHED_HEADERS_FIELD_NAME = "cachedHeaders";
     private static final String TOKEN_LOCK_FIELD_NAME = "tokenLock";
+    private static final String ROTATED_REFRESH_TOKEN_FIELD_NAME = "rotatedRefreshToken";
+    private static final String CURRENT_REFRESH_TOKEN_VARIABLE_NAME = "currentRefreshToken";
+    private static final String ON_REFRESH_TOKEN_ROTATED_FIELD_NAME = "onRefreshTokenRotated";
 
     private static final String FETCH_TOKEN_METHOD_NAME = "fetchToken";
     private static final String GET_METHOD_NAME = "get";
@@ -96,7 +101,21 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         ClassName authClientClassName =
                 clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage);
 
-        List<CredentialProperty> credentialProperties = collectCredentialProperties(httpEndpoint);
+        List<CredentialProperty> allProperties = collectCredentialProperties(httpEndpoint);
+        Optional<CredentialProperty> fixedGrantTypeProperty = allProperties.stream()
+                .filter(prop -> !prop.isLiteral()
+                        && InferredAuthGrantTypes.isGrantTypeProperty(inferredAuthScheme, prop.wireValue()))
+                .findFirst();
+        List<CredentialProperty> credentialProperties = allProperties.stream()
+                .filter(prop -> prop.isLiteral()
+                        || InferredAuthGrantTypes.isCredentialProperty(
+                                inferredAuthScheme, prop.wireValue(), prop.isOptional()))
+                .collect(Collectors.toList());
+        Optional<CredentialProperty> refreshTokenProperty = credentialProperties.stream()
+                .filter(prop -> !prop.isLiteral() && InferredAuthGrantTypes.isRefreshTokenProperty(prop.wireValue()))
+                .findFirst();
+        Optional<ObjectProperty> rotatedRefreshTokenProperty = InferredAuthGrantTypes.getRotatedRefreshTokenProperty(
+                clientGeneratorContext, inferredAuthScheme, httpEndpoint, refreshTokenProperty.isPresent());
 
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         HttpResponseBody tokenHttpResponseBody =
@@ -157,6 +176,24 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .beginControlFlow("synchronized ($L)", TOKEN_LOCK_FIELD_NAME)
                 .beginControlFlow(refreshNeededPredicate)
                 .addStatement("$T tokenResponse = $L()", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME);
+        if (rotatedRefreshTokenProperty.isPresent()) {
+            String getter = "get"
+                    + NameUtils.getName(rotatedRefreshTokenProperty.get().getName())
+                            .getPascalCase()
+                            .getUnsafeName();
+            getMethodSpecBuilder
+                    .addStatement(
+                            InferredAuthGrantTypes.isOptionalProperty(rotatedRefreshTokenProperty.get())
+                                    ? "String newRefreshToken = tokenResponse.$L().orElse(null)"
+                                    : "String newRefreshToken = tokenResponse.$L()",
+                            getter)
+                    .beginControlFlow("if (newRefreshToken != null)")
+                    .addStatement("this.$L = newRefreshToken", ROTATED_REFRESH_TOKEN_FIELD_NAME)
+                    .beginControlFlow("if (this.$L != null)", ON_REFRESH_TOKEN_ROTATED_FIELD_NAME)
+                    .addStatement("this.$L.accept(newRefreshToken)", ON_REFRESH_TOKEN_ROTATED_FIELD_NAME)
+                    .endControlFlow()
+                    .endControlFlow();
+        }
 
         getMethodSpecBuilder.addStatement("$T headers = new $T<>()", mapStringString, HashMap.class);
         for (InferredAuthenticatedRequestHeader authHeader : authenticatedHeaders) {
@@ -194,6 +231,11 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
 
         constructorBuilder.addParameter(authClientClassName, AUTH_CLIENT_NAME);
+        ParameterizedTypeName consumerOfString =
+                ParameterizedTypeName.get(ClassName.get(Consumer.class), ClassName.get(String.class));
+        if (rotatedRefreshTokenProperty.isPresent()) {
+            constructorBuilder.addParameter(consumerOfString, ON_REFRESH_TOKEN_ROTATED_FIELD_NAME);
+        }
 
         for (CredentialProperty prop : credentialProperties) {
             if (!prop.isLiteral()) {
@@ -201,6 +243,10 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
             }
         }
         constructorBuilder.addStatement("this.$L = $L", AUTH_CLIENT_NAME, AUTH_CLIENT_NAME);
+        if (rotatedRefreshTokenProperty.isPresent()) {
+            constructorBuilder.addStatement(
+                    "this.$L = $L", ON_REFRESH_TOKEN_ROTATED_FIELD_NAME, ON_REFRESH_TOKEN_ROTATED_FIELD_NAME);
+        }
 
         if (refreshRequired) {
             constructorBuilder.addStatement("this.$L = $T.now()", EXPIRES_AT_FIELD_NAME, Instant.class);
@@ -229,8 +275,27 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .build())
                 .addMethod(constructorBuilder.build())
                 .addMethod(buildFetchTokenMethod(
-                        fetchTokenReturnType, fetchTokenRequestType, credentialProperties, httpEndpoint))
+                        fetchTokenReturnType,
+                        fetchTokenRequestType,
+                        allProperties,
+                        credentialProperties,
+                        fixedGrantTypeProperty,
+                        rotatedRefreshTokenProperty.flatMap(ignored -> refreshTokenProperty),
+                        httpEndpoint))
                 .addMethod(getMethodSpecBuilder.build());
+
+        if (rotatedRefreshTokenProperty.isPresent()) {
+            typeSpecBuilder
+                    .addField(FieldSpec.builder(
+                                    consumerOfString,
+                                    ON_REFRESH_TOKEN_ROTATED_FIELD_NAME,
+                                    Modifier.PRIVATE,
+                                    Modifier.FINAL)
+                            .build())
+                    .addField(FieldSpec.builder(
+                                    String.class, ROTATED_REFRESH_TOKEN_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
+                            .build());
+        }
 
         if (refreshRequired) {
             typeSpecBuilder
@@ -280,7 +345,8 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                     NameUtils.getName(header.getName()).getCamelCase().getUnsafeName();
             Optional<Literal> literal = extractLiteral(header.getValueType());
             boolean isOptional = isOptionalType(header.getValueType());
-            properties.add(new CredentialProperty(fieldName, fieldName, literal, isOptional));
+            properties.add(new CredentialProperty(
+                    fieldName, fieldName, NameUtils.getWireValue(header.getName()), literal, isOptional));
         }
 
         if (httpEndpoint.getRequestBody().isPresent()) {
@@ -292,7 +358,8 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                                 NameUtils.getName(prop.getName()).getCamelCase().getUnsafeName();
                         Optional<Literal> literal = extractLiteral(prop.getValueType());
                         boolean isOptional = isOptionalType(prop.getValueType());
-                        properties.add(new CredentialProperty(fieldName, fieldName, literal, isOptional));
+                        properties.add(new CredentialProperty(
+                                fieldName, fieldName, NameUtils.getWireValue(prop.getName()), literal, isOptional));
                     }
                     return null;
                 }
@@ -311,7 +378,12 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                                             .getUnsafeName();
                                     Optional<Literal> literal = extractLiteral(prop.getValueType());
                                     boolean isOptional = isOptionalType(prop.getValueType());
-                                    properties.add(new CredentialProperty(fieldName, fieldName, literal, isOptional));
+                                    properties.add(new CredentialProperty(
+                                            fieldName,
+                                            fieldName,
+                                            NameUtils.getWireValue(prop.getName()),
+                                            literal,
+                                            isOptional));
                                 }
                             });
                     return null;
@@ -396,25 +468,57 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private MethodSpec buildFetchTokenMethod(
             TypeName fetchTokenReturnType,
             TypeName fetchTokenRequestType,
+            List<CredentialProperty> allProperties,
             List<CredentialProperty> credentialProperties,
+            Optional<CredentialProperty> fixedGrantTypeProperty,
+            Optional<CredentialProperty> rotatedRefreshTokenProperty,
             HttpEndpoint httpEndpoint) {
 
         CodeBlock.Builder requestBuilderCode = CodeBlock.builder()
                 .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType);
 
-        for (CredentialProperty prop : credentialProperties) {
+        List<CredentialProperty> requestProperties = credentialProperties;
+        if (fixedGrantTypeProperty.isPresent()) {
+            // Required properties are staged builder steps, so they're set before optional ones.
+            List<CredentialProperty> sent = allProperties.stream()
+                    .filter(prop -> prop == fixedGrantTypeProperty.get() || credentialProperties.contains(prop))
+                    .collect(Collectors.toList());
+            requestProperties = new ArrayList<>();
+            sent.stream().filter(prop -> !prop.isOptional()).forEach(requestProperties::add);
+            sent.stream().filter(CredentialProperty::isOptional).forEach(requestProperties::add);
+        }
+        String fixedGrantTypeValue = InferredAuthGrantTypes.getGrantType(inferredAuthScheme)
+                .map(grantType -> grantType.getValue())
+                .orElse(null);
+
+        for (CredentialProperty prop : requestProperties) {
             // Skip literal properties - they don't have builder methods because
             // the Java model generator hardcodes literal values in the build() method
-            if (!prop.isLiteral()) {
+            if (prop.isLiteral()) {
+                continue;
+            }
+            if (fixedGrantTypeProperty.isPresent() && prop == fixedGrantTypeProperty.get()) {
+                requestBuilderCode.add(".$L($S)", prop.builderMethodName(), fixedGrantTypeValue);
+            } else if (rotatedRefreshTokenProperty.isPresent() && prop == rotatedRefreshTokenProperty.get()) {
+                requestBuilderCode.add(".$L($L)", prop.builderMethodName(), CURRENT_REFRESH_TOKEN_VARIABLE_NAME);
+            } else {
                 requestBuilderCode.add(".$L($L)", prop.builderMethodName(), prop.fieldName());
             }
         }
 
         requestBuilderCode.add(".build()");
 
-        return MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
+        MethodSpec.Builder fetchTokenMethod = MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE)
-                .returns(fetchTokenReturnType)
+                .returns(fetchTokenReturnType);
+        rotatedRefreshTokenProperty.ifPresent(prop -> fetchTokenMethod.addStatement(
+                "$T $L = $L != null ? $L : $L",
+                String.class,
+                CURRENT_REFRESH_TOKEN_VARIABLE_NAME,
+                ROTATED_REFRESH_TOKEN_FIELD_NAME,
+                ROTATED_REFRESH_TOKEN_FIELD_NAME,
+                prop.fieldName()));
+        return fetchTokenMethod
                 .addStatement(requestBuilderCode.build())
                 .addStatement(
                         "return $L.$L($L)",
@@ -453,13 +557,19 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static class CredentialProperty {
         private final String fieldName;
         private final String builderMethodName;
+        private final String wireValue;
         private final Optional<Literal> literalValue;
         private final boolean isOptional;
 
         CredentialProperty(
-                String fieldName, String builderMethodName, Optional<Literal> literalValue, boolean isOptional) {
+                String fieldName,
+                String builderMethodName,
+                String wireValue,
+                Optional<Literal> literalValue,
+                boolean isOptional) {
             this.fieldName = fieldName;
             this.builderMethodName = builderMethodName;
+            this.wireValue = wireValue;
             this.literalValue = literalValue;
             this.isOptional = isOptional;
         }
@@ -470,6 +580,10 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
         public String builderMethodName() {
             return builderMethodName;
+        }
+
+        public String wireValue() {
+            return wireValue;
         }
 
         public Optional<Literal> literalValue() {
