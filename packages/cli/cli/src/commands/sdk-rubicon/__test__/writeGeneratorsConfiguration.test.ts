@@ -44,7 +44,7 @@ function changes(path: string, overrides: Partial<Parameters<typeof planFileChan
         overlayMerges: [],
         renames: [],
         removals: [],
-        sdkConfigWrite: undefined,
+        sdkConfigWrites: [],
         fernConfig: undefined,
         ...overrides
     });
@@ -86,7 +86,7 @@ describe("writeGeneratorsConfiguration", () => {
         const { path, read } = await setup({ "generators.legacy.yml": "groups: {}\n" });
         await applyFileChanges(
             await changes(path, {
-                sdkConfigWrite: { path: join(path, "sdk-config.yml"), contents: "edited: true\n" },
+                sdkConfigWrites: [{ path: join(path, "sdk-config.yml"), contents: "edited: true\n" }],
                 renames: [
                     { from: join(path, "generators.legacy.yml"), to: join(path, "generators.legacy.pre-rubicon.yml") }
                 ]
@@ -101,7 +101,7 @@ describe("writeGeneratorsConfiguration", () => {
     it("leaves every file unchanged when one planned change fails", async () => {
         const { path, read } = await setup({ "generators.legacy.yml": "groups: {}\n" });
         const planned = await changes(path, {
-            sdkConfigWrite: { path: join(path, "sdk-config.yml"), contents: "edited: true\n" },
+            sdkConfigWrites: [{ path: join(path, "sdk-config.yml"), contents: "edited: true\n" }],
             renames: [
                 { from: join(path, "generators.legacy.yml"), to: join(path, "generators.legacy.pre-rubicon.yml") }
             ]

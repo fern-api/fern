@@ -4,13 +4,19 @@ import YAML, { isMap, isSeq } from "yaml";
 import type { Rename } from "./planGeneratorsSlot.js";
 import type { RubiconDiagnostic } from "./types.js";
 
-/** Where sdk-config.yml goes when cli was its only target; the Fern CLI discovers only sdk-config.yml. */
+/**
+ * The cli-only SDK Config rubicon keeps for reruns. The Fern CLI discovers only sdk-config.yml, so
+ * this file never runs as an SDK Config target.
+ */
 export const RENAMED_SDK_CONFIG = "sdk-config.rubicon.yml";
 const LANGUAGE = "cli";
 
 export interface RetargetPlan {
     kind: "none" | "remove" | "rename";
+    /** The edited sdk-config.yml (remove case). */
     write: { path: string; contents: string } | undefined;
+    /** sdk-config.rubicon.yml with the cli target only (remove case). */
+    extract: { path: string; contents: string } | undefined;
     rename: Rename | undefined;
     rollback: string[];
     diagnostics: RubiconDiagnostic[];
@@ -19,8 +25,13 @@ export interface RetargetPlan {
 /**
  * Takes the cli target out of sdk-config.yml once generators.yml owns it (RUBICON-PLAN.md, D4): a
  * plain `fern generate` fails when sdk-config.yml and a generators.yml group both select `cli`.
- * Mirrors `fern sdk migrate` in reverse: remove the entry and keep it as a commented rollback block,
- * or rename the file when cli was the only target (SDK Config needs at least one).
+ *
+ * - cli was the only target: rename sdk-config.yml to sdk-config.rubicon.yml (SDK Config needs at
+ *   least one target), as `fern sdk migrate` renames generators.yml to generators.legacy.yml.
+ * - other targets remain: remove the cli entry (keeping comments and a commented rollback block),
+ *   and write sdk-config.rubicon.yml with the cli target only.
+ *
+ * Either way sdk-config.rubicon.yml holds the cli target, so a rerun reads it and edits nothing.
  */
 export function planRetarget({
     configPath,
@@ -33,37 +44,43 @@ export function planRetarget({
     generatorsPath: string;
     exists: (path: string) => boolean;
 }): RetargetPlan {
-    const none: RetargetPlan = { kind: "none", write: undefined, rename: undefined, rollback: [], diagnostics: [] };
-    const document = YAML.parseDocument(contents);
-    const targets = isMap(document.contents) ? document.contents.get("targets") : undefined;
-    if (!isSeq(targets)) {
+    const none: RetargetPlan = {
+        kind: "none",
+        write: undefined,
+        extract: undefined,
+        rename: undefined,
+        rollback: [],
+        diagnostics: []
+    };
+    if (basename(configPath) === RENAMED_SDK_CONFIG) {
         return none;
     }
-    const plainTargets: unknown = targets.toJSON();
-    const index = Array.isArray(plainTargets)
-        ? plainTargets.findIndex((target: unknown) => isRecord(target) && target.language === LANGUAGE)
-        : -1;
-    const removed = targets.items[index];
-    if (removed == null) {
+    const document = YAML.parseDocument(contents);
+    const targets = targetsOf(document);
+    const plainTargets: unknown = targets?.toJSON();
+    const plainList: unknown[] = Array.isArray(plainTargets) ? plainTargets : [];
+    const index = plainList.findIndex((target) => isRecord(target) && target.language === LANGUAGE);
+    const removed = plainList[index];
+    if (targets == null || removed == null) {
         return none;
+    }
+    const renamed = join(dirname(configPath), RENAMED_SDK_CONFIG);
+    if (exists(renamed)) {
+        return {
+            ...none,
+            diagnostics: [
+                {
+                    severity: "error",
+                    path: RENAMED_SDK_CONFIG,
+                    code: "RUBICON_RENAME_CONFLICT",
+                    message: `Cannot write ${renamed}: it already exists.`,
+                    action: `Run rubicon on it (\`--config ${renamed}\`), or remove it, then run rubicon again.`
+                }
+            ]
+        };
     }
 
     if (targets.items.length === 1) {
-        const renamed = join(dirname(configPath), RENAMED_SDK_CONFIG);
-        if (exists(renamed)) {
-            return {
-                ...none,
-                diagnostics: [
-                    {
-                        severity: "error",
-                        path: RENAMED_SDK_CONFIG,
-                        code: "RUBICON_RENAME_CONFLICT",
-                        message: `Cannot rename ${configPath}: ${renamed} already exists.`,
-                        action: `Remove or rename ${renamed}, then run rubicon again.`
-                    }
-                ]
-            };
-        }
         return {
             ...none,
             kind: "rename",
@@ -72,12 +89,17 @@ export function planRetarget({
         };
     }
 
-    const removedText = YAML.stringify([removed.toJSON()]).trimEnd();
+    const extract = YAML.parseDocument(contents);
+    const extractTargets = targetsOf(extract);
+    if (extractTargets != null) {
+        extractTargets.items = extractTargets.items.filter((_, itemIndex) => itemIndex === index);
+    }
+
+    const removedText = YAML.stringify([removed]).trimEnd();
     targets.items.splice(index, 1);
-    const generatorsFile = basename(generatorsPath);
     const note = [
-        ` The ${LANGUAGE} target moved to ${generatorsFile} (fern sdk rubicon).`,
-        ` Rollback: delete the ${LANGUAGE} group from ${generatorsFile}, then restore this target under targets:`,
+        ` The ${LANGUAGE} target moved to ${RENAMED_SDK_CONFIG} and ${basename(generatorsPath)} (fern sdk rubicon).`,
+        ` Rollback: delete the ${LANGUAGE} group from ${basename(generatorsPath)}, then restore this target under targets:`,
         ...removedText.split("\n").map((line) => `   ${line}`)
     ].join("\n");
     document.comment = document.comment != null ? `${document.comment}\n${note}` : note;
@@ -85,11 +107,17 @@ export function planRetarget({
         ...none,
         kind: "remove",
         write: { path: configPath, contents: document.toString({ lineWidth: 0 }) },
+        extract: { path: renamed, contents: extract.toString({ lineWidth: 0 }) },
         rollback: [
             `Delete the ${LANGUAGE} group from ${generatorsPath}.`,
-            `Restore the ${LANGUAGE} target in ${configPath} from the commented block at the end of the file.`
+            `Restore the ${LANGUAGE} target in ${configPath} from the commented block at the end of the file, then delete ${renamed}.`
         ]
     };
+}
+
+function targetsOf(document: YAML.Document.Parsed): YAML.YAMLSeq | undefined {
+    const targets = isMap(document.contents) ? document.contents.get("targets") : undefined;
+    return isSeq(targets) ? targets : undefined;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

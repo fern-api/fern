@@ -26,7 +26,7 @@ export async function planFileChanges({
     overlayMerges,
     renames,
     removals,
-    sdkConfigWrite,
+    sdkConfigWrites,
     fernConfig
 }: {
     generatorsPath: string;
@@ -34,7 +34,8 @@ export async function planFileChanges({
     overlayMerges: OverlayMerge[];
     renames: Rename[];
     removals: string[];
-    sdkConfigWrite: { path: string; contents: string } | undefined;
+    /** The sdk-config.yml edit and sdk-config.rubicon.yml (D4). */
+    sdkConfigWrites: Array<{ path: string; contents: string }>;
     fernConfig: { path: string; organization: string } | undefined;
 }): Promise<FileChanges> {
     const files: FileChanges["files"] = [
@@ -53,8 +54,8 @@ export async function planFileChanges({
             contents: `${JSON.stringify({ organization: fernConfig.organization, version: "*" }, null, 2)}\n`
         });
     }
-    if (sdkConfigWrite != null) {
-        files.push({ ...sdkConfigWrite, mode: await fileMode(sdkConfigWrite.path) });
+    for (const write of sdkConfigWrites) {
+        files.push({ ...write, mode: await fileMode(write.path) });
     }
     for (const rename of renames) {
         files.push({

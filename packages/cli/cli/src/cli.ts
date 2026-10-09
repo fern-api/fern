@@ -107,6 +107,7 @@ import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkMigrate } from "./commands/sdk-migrate/sdkMigrate.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
+import { sdkRubicon } from "./commands/sdk-rubicon/sdkRubicon.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
@@ -2924,6 +2925,7 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("sdk", "Configure and generate SDKs", (yargs) => {
         addSdkMigrateCommand(yargs, cliContext);
+        addSdkRubiconCommand(yargs, cliContext);
         addSdkPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
@@ -2983,6 +2985,66 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     group: argv.group,
                     language: argv.language,
                     output: argv.output,
+                    strict: argv.strict
+                }
+            });
+        }
+    );
+}
+
+/**
+ * `fern sdk rubicon`: a stopgap that translates the cli target of sdk-config.yml into a generators.yml
+ * for fernapi/fern-cli-generator. Remove with the sdk-rubicon/ folder when Postman's CLI generator ships.
+ */
+function addSdkRubiconCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+    cli.command(
+        "rubicon",
+        "Translate the cli target of sdk-config.yml into a generators.yml for the Fern CLI generator",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    type: "string",
+                    description: "The API whose sdk-config.yml to translate, in a multi-API project"
+                })
+                .option("config", {
+                    type: "string",
+                    description: "Path to the sdk-config.yml to translate, instead of the one in the fern folder"
+                })
+                .option("output", {
+                    type: "string",
+                    alias: "o",
+                    nargs: 1,
+                    description: "Folder to write generators.yml to; defaults to the folder of sdk-config.yml"
+                })
+                .option("generator-version", {
+                    type: "string",
+                    description: "fernapi/fern-cli-generator version when sdk-config.yml pins none (default 0.49.0)"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Replace a generators.yml that rubicon did not write"
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    default: false,
+                    description: "Validate and display the proposed file operations without changing files"
+                })
+                .option("strict", {
+                    type: "boolean",
+                    default: false,
+                    description: "Treat warnings as errors"
+                }),
+        async (argv) => {
+            await sdkRubicon({
+                cliContext,
+                args: {
+                    api: argv.api,
+                    config: argv.config,
+                    output: argv.output,
+                    generatorVersion: argv.generatorVersion,
+                    force: argv.force,
+                    dryRun: argv.dryRun,
                     strict: argv.strict
                 }
             });

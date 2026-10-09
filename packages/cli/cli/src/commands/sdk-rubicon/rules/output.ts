@@ -31,7 +31,11 @@ export function relativeToOutput(context: RuleContext, path: string): string {
 }
 
 export function resolveFromConfig(context: RuleContext, path: string): string {
-    return isAbsolute(path) ? path : resolve(context.input.configDir, path);
+    return resolveFromConfigDir(context.input.configDir, path);
+}
+
+export function resolveFromConfigDir(configDir: string, path: string): string {
+    return isAbsolute(path) ? path : resolve(configDir, path);
 }
 
 export function isRecord(value: unknown): value is Record<string, unknown> {
