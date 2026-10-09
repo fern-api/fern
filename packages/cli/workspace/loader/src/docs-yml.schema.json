@@ -6949,6 +6949,17 @@
             }
           ],
           "description": "If set to true, response examples in the API Reference include a raw HTTP block\nshowing the response status line and response headers alongside the body.\n\n@default: false"
+        },
+        "build-with-fern-as-prod": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, the site's `*.docs.buildwithfern.com` URL is treated like a custom domain\nfor search indexing: robots.txt allows crawling and pages are not marked `noindex`.\nUse this when the Fern-hosted URL is the site's production URL. Preview URLs stay noindexed.\n\n@default: false"
         }
       },
       "additionalProperties": false

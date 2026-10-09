@@ -111,4 +111,12 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     showHeadersInExamples?: boolean;
+    /**
+     * If set to true, the site's `*.docs.buildwithfern.com` URL is treated like a custom domain
+     * for search indexing: robots.txt allows crawling and pages are not marked `noindex`.
+     * Use this when the Fern-hosted URL is the site's production URL. Preview URLs stay noindexed.
+     *
+     * @default: false
+     */
+    buildWithFernAsProd?: boolean;
 }
