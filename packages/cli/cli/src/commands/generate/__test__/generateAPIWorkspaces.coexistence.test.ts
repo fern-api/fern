@@ -122,6 +122,34 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(kinds).toEqual(expected);
     });
 
+    it("reports requested generators and sdk-gen-api state in the generate telemetry event", async () => {
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
+        try {
+            await runGenerate({ project, cliContext, groupNames: ["python-sdk"], targetNames: ["typescript"] });
+        } finally {
+            vi.unstubAllEnvs();
+        }
+
+        expect(vi.mocked(cliContext.instrumentPostHogEvent)).toHaveBeenCalledOnce();
+        const event = vi.mocked(cliContext.instrumentPostHogEvent).mock.calls[0]?.[0];
+        expect(event).toMatchObject({
+            orgId: "test",
+            command: "fern generate",
+            properties: {
+                fernUseSdkGenApiEnv: true,
+                sdkGenApiEnabled: true
+            }
+        });
+        expect(event?.properties?.requestedGenerators).toEqual([
+            expect.objectContaining({ kind: "legacy", group: "python-sdk", name: "fernapi/fern-python-sdk" }),
+            expect.objectContaining({ kind: "sdk-config", name: "fernapi/fern-typescript-sdk" })
+        ]);
+        // Identity and auth already come from the distinct ID, `userEmail`, and `usingAccessToken`.
+        for (const redundant of ["userId", "authType", "generatorNames"]) {
+            expect(event?.properties).not.toHaveProperty(redundant);
+        }
+    });
+
     it("uses an explicitly selected SDK Config instead of the workspace default", async () => {
         const alternativePath = path.join(temporaryDirectory, "internal-sdk-config.yml");
         await writeFile(
