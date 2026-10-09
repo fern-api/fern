@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.51.2
+  changelogEntry:
+    - summary: |
+        `profiles create --provision` and `profiles remove --revoke` now resolve the request URL the same way a
+        direct command does: `--base-url` is honored and the spec's `servers[].variables` / `x-fern-default-url`
+        are applied. Previously the provision/revoke call kept the raw server template (e.g.
+        `https://api.{region}.{city}.twilio.com`) and failed with an invalid URL unless `<NAME>_BASE_URL` or a
+        profile base URL was set.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 0.51.1
   changelogEntry:
     - summary: |
