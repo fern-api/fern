@@ -376,6 +376,30 @@ fn verify_handler(args: &ArgMatches, _ctx: &AppContext) -> Result<(), CliError> 
 
 The handler receives a real `AppContext` — it can chain API calls via `ctx.invoke_by_name(...)` if needed. Note: `transform_response` / `recover_error` hooks do **not** fire for custom commands.
 
+### Nest custom commands under a group
+
+`command_under` creates any missing intermediate groups on the way to the
+leaf. Give those groups a description with `describe`, and trim root globals
+that mean nothing to a local-only subtree with `hide_global_flags` (the flags
+stay accepted, so `--format json` passed everywhere still parses):
+
+```rust
+CliApp::new("twilio")
+    .profiles(ProfilesConfig::new())
+    .command_under(&["serverless"], start_cmd(), OpenApiBinding::handler(start))
+    .command_under(&["serverless", "env"], env_get_cmd(), OpenApiBinding::handler(env_get))
+    .describe(&["serverless"], "Develop and deploy Twilio Functions")
+    .describe(&["serverless", "env"], "Manage environment variables")
+    .hide_global_flags(&["serverless"], &["dry-run", "query", "spec", "spec-raw"])
+    .run()
+```
+
+A custom command may declare a short flag the root reserves globally — most
+commonly `-p`, which profiles use for `--profile`. The command keeps it:
+`serverless start -p 9000` reaches the command's own `--port`, while
+`twilio -p acme serverless start` (before the command path) and
+`serverless start --profile acme` still select the profile.
+
 ### Override a spec-generated operation
 
 ```rust
