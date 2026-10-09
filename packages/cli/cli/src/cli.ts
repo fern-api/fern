@@ -458,7 +458,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     cliContext.logger.info(
                         `Using organization ${chalk.bold(argv.organization)} (--yes). Change it in fern/fern.config.json if needed.`
                     );
-                } else if (!process.stdout.isTTY) {
+                } else if (!process.stdin.isTTY) {
                     return cliContext.failWithoutThrowing(
                         "Cannot prompt for an organization in a non-interactive environment. Pass --organization <name> or use --yes to accept defaults.",
                         undefined,
