@@ -86,6 +86,18 @@ A change to the importer's command naming surfaces as an `dynamic-ir.e2e.test.ts
   — worth filing upstream.
 
 Honored from `customConfig`: `binaryName`, `rootGroup` (nests commands under `<binary> <rootGroup> …`),
+`namespaces` (see below),
 and the config-dependent reserved flags (`userAgentSuffixFlag`, and `profile` when `profiles` is
 enabled). An explicit `null` value is emitted as the runtime's null sentinel (`--flag null`), and a
 non-object request body (array / map / primitive) is sent whole via `--json`.
+
+### Namespaced specs (`customConfig.namespaces`)
+
+The runtime mounts each namespaced spec with `.spec_under("<namespace>", …)` and splits the namespace on
+`/` into verbatim command segments (`accounts/v1` → `twilio accounts v1 …`). The importer flattens that
+namespace into one camel-cased `fernFilepath` part (`accountsV1`), so the original can't be recovered
+from the dynamic IR alone. `customConfig.namespaces` is a map from that flattened part to the
+`generators.yml` `namespace:` (`{ "accountsV1": "accounts/v1" }`). It is written by the Fern CLI when it
+builds the `cli` dynamic IR, not by users. With an entry, the namespace is emitted as its `/` segments, and a
+first resource named like the last segment is hoisted into it (the runtime's stutter elision). Without
+the map, every `fernFilepath` part is kebab-cased as before.

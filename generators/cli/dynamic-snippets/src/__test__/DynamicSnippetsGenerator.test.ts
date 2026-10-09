@@ -330,6 +330,58 @@ describe("DynamicSnippetsGenerator", () => {
         expect(result.snippet).toBe("acme api messages create --to +1555");
     });
 
+    describe("customConfig.namespaces", () => {
+        const credentialsList = (group: string[]) =>
+            buildIr(
+                inlinedEndpoint({
+                    group,
+                    method: "list",
+                    location: { method: "GET", path: "/v1/Credentials" }
+                })
+            );
+        const request = { endpoint: { method: "GET", path: "/v1/Credentials" } } as const;
+
+        it("mounts a slash namespace as nested verbatim segments", () => {
+            const result = generate(credentialsList(["accountsV1", "credentials"]), request, {
+                binaryName: "twilio",
+                namespaces: { accountsV1: "accounts/v1" }
+            });
+            expect(result.snippet).toBe("twilio accounts v1 credentials list");
+        });
+
+        it("keeps the kebab-cased part when no namespaces map is set", () => {
+            const result = generate(credentialsList(["accountsV1", "credentials"]), request, {
+                binaryName: "twilio"
+            });
+            expect(result.snippet).toBe("twilio accounts-v1 credentials list");
+        });
+
+        it("leaves groups that are not in the map unchanged", () => {
+            const result = generate(credentialsList(["core", "credentials"]), request, {
+                binaryName: "twilio",
+                namespaces: { accountsV1: "accounts/v1" }
+            });
+            expect(result.snippet).toBe("twilio core credentials list");
+        });
+
+        it("hoists a resource named like the namespace leaf (runtime stutter elision)", () => {
+            const result = generate(credentialsList(["v3Customers", "customers"]), request, {
+                binaryName: "bigcommerce",
+                namespaces: { v3Customers: "v3/customers" }
+            });
+            expect(result.snippet).toBe("bigcommerce v3 customers list");
+        });
+
+        it("composes with rootGroup", () => {
+            const result = generate(credentialsList(["accountsV1", "credentials"]), request, {
+                binaryName: "twilio",
+                rootGroup: "api",
+                namespaces: { accountsV1: "accounts/v1" }
+            });
+            expect(result.snippet).toBe("twilio api accounts v1 credentials list");
+        });
+    });
+
     it("emits an explicit null as the runtime's null sentinel (--flag null), not dropped", () => {
         const ir = buildIr(
             inlinedEndpoint({

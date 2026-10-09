@@ -16,6 +16,12 @@ export interface CliCustomConfigSchema {
     userAgentSuffixFlag?: string;
     /** Named-profiles feature; when enabled the runtime reserves the `--profile` flag. */
     profiles?: { enabled?: boolean };
+    /**
+     * Not user config: set by the Fern CLI when it builds the `cli` dynamic IR. Maps each namespaced
+     * spec's top-level `fernFilepath` part (e.g. `accountsV1`) to its `generators.yml` `namespace:`
+     * (`accounts/v1`), which the importer flattens but the runtime mounts verbatim via `spec_under`.
+     */
+    namespaces?: Record<string, string>;
 }
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
@@ -58,9 +64,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      * The command path leading up to (and including) the leaf command, e.g.
      * `["twilio", "messages", "create"]`. When `customConfig.rootGroup` is set the CLI nests every
      * command one level under it (`<binary> <rootGroup> …`), so it is inserted right after the binary.
-     * The namespace/resource segments come from the endpoint's `fernFilepath` (each part kebab-cased
-     * the way `camel_to_kebab` kebabs group names at parser.rs:3310) and the leaf from the endpoint
-     * `declaration.name` (parser.rs:3055).
+     * The namespace/resource segments come from the endpoint's `fernFilepath` (see `getGroupPath`) and
+     * the leaf from the endpoint `declaration.name` (parser.rs:3055).
      */
     public getCommandPrefix(endpoint: FernIr.dynamic.Endpoint): string[] {
         const prefix = [this.getBinaryName()];
@@ -68,11 +73,29 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         if (rootGroup != null && rootGroup.length > 0) {
             prefix.push(camelToKebab(rootGroup));
         }
-        for (const part of endpoint.declaration.fernFilepath.allParts) {
-            prefix.push(camelToKebab(part.originalName));
-        }
+        prefix.push(...this.getGroupPath(endpoint.declaration.fernFilepath.allParts.map((part) => part.originalName)));
         prefix.push(camelToKebab(endpoint.declaration.name.originalName));
         return prefix;
+    }
+
+    /**
+     * The group segments for an endpoint's `fernFilepath` parts. Without a `namespaces` entry each part
+     * is kebab-cased like `camel_to_kebab` (parser.rs:3310). With one, the namespace is split on `/` into verbatim segments (`split_prefix`,
+     * app.rs), and a first resource named like the namespace's last segment is hoisted into it, matching
+     * the runtime's stutter elision (`merge_into_path`, app.rs).
+     */
+    private getGroupPath(parts: string[]): string[] {
+        const [head, ...rest] = parts;
+        const namespace = head != null ? this.customConfig?.namespaces?.[head] : undefined;
+        if (namespace == null) {
+            return parts.map(camelToKebab);
+        }
+        const namespacePath = namespace.split("/").filter((segment) => segment.length > 0);
+        const resources = rest.map(camelToKebab);
+        if (resources.length > 0 && resources[0] === namespacePath[namespacePath.length - 1]) {
+            resources.shift();
+        }
+        return [...namespacePath, ...resources];
     }
 
     /**
