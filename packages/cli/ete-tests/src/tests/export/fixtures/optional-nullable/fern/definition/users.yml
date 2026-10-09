@@ -22,6 +22,7 @@ types:
       note: optional<string>
     union:
       created: User
+      deleted: optional<string>
 
   UpdateUserRequest:
     properties:
@@ -55,3 +56,15 @@ service:
         id: string
       request: optional<UpdateUserRequest>
       response: User
+
+    uploadAvatar:
+      method: POST
+      path: /{id}/avatar
+      path-parameters:
+        id: string
+      request:
+        name: UploadAvatarRequest
+        body:
+          properties:
+            file: file
+            caption: optional<string>

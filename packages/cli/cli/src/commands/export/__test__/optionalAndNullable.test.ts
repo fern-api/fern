@@ -1,4 +1,10 @@
-import { ContainerType, ObjectProperty, ResolvedTypeReference, TypeReference } from "@fern-api/ir-sdk";
+import {
+    ContainerType,
+    ObjectProperty,
+    ResolvedTypeReference,
+    SingleUnionTypeProperties,
+    TypeReference
+} from "@fern-api/ir-sdk";
 import { describe, expect, it } from "vitest";
 
 import { convertObject } from "../converters/convertObject.js";
@@ -63,13 +69,21 @@ describe("fern export optional and nullable", () => {
         });
     });
 
-    it("does not mark optional union base properties nullable", () => {
+    it("does not mark optional union base properties or variant values nullable", () => {
         const schema = convertUnion({
             docs: undefined,
             unionTypeDeclaration: {
                 discriminant: "type",
                 extends: [],
-                types: [],
+                types: [
+                    {
+                        discriminantValue: "deleted",
+                        shape: SingleUnionTypeProperties.singleProperty({ name: "reason", type: optional(STRING) }),
+                        displayName: undefined,
+                        availability: undefined,
+                        docs: undefined
+                    }
+                ],
                 baseProperties: [objectProperty("id", STRING), objectProperty("note", optional(STRING))],
                 inheritedBaseProperties: undefined,
                 default: undefined,
@@ -82,6 +96,16 @@ describe("fern export optional and nullable", () => {
             note: { type: "string" }
         });
         expect(schema.required).toEqual(["id"]);
+        expect(schema.oneOf).toEqual([
+            {
+                type: "object",
+                properties: {
+                    type: { type: "string", enum: ["deleted"] },
+                    reason: { type: "string" }
+                },
+                required: ["type"]
+            }
+        ]);
     });
 
     it("keeps optional nullable where there is no required list to carry it", () => {

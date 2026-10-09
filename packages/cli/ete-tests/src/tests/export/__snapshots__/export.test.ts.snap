@@ -176,6 +176,32 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateUserRequest'
+  /users/{id}/avatar:
+    post:
+      operationId: users_uploadAvatar
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                caption:
+                  type: string
 components:
   schemas:
     Address:
@@ -237,6 +263,16 @@ components:
                   enum:
                     - created
             - $ref: '#/components/schemas/User'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - deleted
+            value:
+              type: string
           required:
             - type
       required:
@@ -362,6 +398,48 @@ exports[`overrides > optional-nullable 2`] = `
           }
         }
       }
+    },
+    "/users/{id}/avatar": {
+      "post": {
+        "operationId": "users_uploadAvatar",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "caption": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -452,6 +530,23 @@ exports[`overrides > optional-nullable 2`] = `
                 "$ref": "#/components/schemas/User"
               }
             ],
+            "required": [
+              "type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "deleted"
+                ]
+              },
+              "value": {
+                "type": "string"
+              }
+            },
             "required": [
               "type"
             ]

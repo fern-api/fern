@@ -339,7 +339,7 @@ function convertRequestBody({
                                     bodyProperty: (bodyProperty) => {
                                         acc[getWireValue(bodyProperty.name)] = {
                                             description: bodyProperty.docs ?? undefined,
-                                            ...convertTypeReference(bodyProperty.valueType)
+                                            ...convertTypeReference(unwrapOptional(bodyProperty.valueType))
                                         };
                                     },
                                     _other: () => {

@@ -167,7 +167,7 @@ export function convertUnion({
                 type: "object",
                 properties: {
                     ...discriminantProperty,
-                    [getWireValue(singleProperty.name)]: convertTypeReference(singleProperty.type)
+                    [getWireValue(singleProperty.name)]: convertTypeReference(unwrapOptional(singleProperty.type))
                 },
                 required: [getWireValue(unionTypeDeclaration.discriminant)]
             }),
