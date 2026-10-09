@@ -15,6 +15,7 @@ import { isPagerPagination } from "../../endpoint/utils/isPagerPagination.js";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { generateMockServerClientInstantiation } from "./generateMockServerClientInstantiation.js";
+import { ExpectedMockServerError, MockServerTestExample } from "./getMockServerTestExamples.js";
 import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export declare namespace TestClass {
@@ -32,7 +33,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
     constructor(
         context: SdkGeneratorContext,
-        private readonly exampleEndpointCalls: ExampleEndpointCall[],
+        private readonly testExamples: MockServerTestExample[],
         private readonly endpoint: HttpEndpoint,
         private readonly serviceId: ServiceId
     ) {
@@ -108,7 +109,20 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
             origin: this.classReference.origin,
             parentClassReference: this.Types.BaseMockServerTest
         });
-        this.exampleEndpointCalls.forEach((example, index) => {
+        const testNames = this.getTestNames();
+        this.testExamples.forEach(({ example, expectedError }, index) => {
+            const testName = testNames[index];
+            if (testName == null) {
+                throw GeneratorError.internalError("Missing mock server test name");
+            }
+            if (expectedError != null) {
+                testClass.addTestMethod({
+                    name: testName,
+                    body: this.generateErrorTestBody(example, expectedError),
+                    isAsync: false
+                });
+                return;
+            }
             let jsonExampleResponse: unknown | undefined = undefined;
             if (example.response != null) {
                 if (example.response.type !== "ok" || example.response.value.type !== "body") {
@@ -138,26 +152,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
                 writer.newLine();
 
-                // SDK variables bound to the endpoint's path parameters live on the client, so a
-                // test that needs them constructs its own client with the example values.
-                const sdkVariableClientOptions = this.endpointGenerator.getSdkVariableClientOptionArguments({
-                    endpoint: this.endpoint,
-                    example,
-                    parseDatetimes: true
-                });
-                let clientVariableName = "Client";
-                if (sdkVariableClientOptions.length > 0) {
-                    clientVariableName = "client";
-                    writer.write("var client = ");
-                    writer.writeNodeStatement(
-                        generateMockServerClientInstantiation({
-                            context: this.context,
-                            rootClientGenerator: this.getRootClientGenerator(),
-                            additionalClientOptions: sdkVariableClientOptions
-                        })
-                    );
-                    writer.newLine();
-                }
+                const clientVariableName = this.writeClientVariable(writer, example);
 
                 const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
                     example,
@@ -230,9 +225,8 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     }
                 }
             });
-            const testNumber = this.exampleEndpointCalls.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
-                name: `MockServerTest${testNumber}`,
+                name: testName,
                 body: methodBody,
                 isAsync: isAsyncTest
             });
@@ -244,6 +238,116 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.namespaces.root,
             generation: this.generation
+        });
+    }
+
+    /**
+     * Success tests keep the `MockServerTest` / `MockServerTest_<n>` names; error tests are named
+     * after the expected error, e.g. `MockServerTest_ThrowsNotFoundError`.
+     */
+    private getTestNames(): string[] {
+        const successCount = this.testExamples.filter(({ expectedError }) => expectedError == null).length;
+        const usedNames = new Set<string>();
+        let successIndex = 0;
+        return this.testExamples.map(({ expectedError }) => {
+            let baseName: string;
+            if (expectedError != null) {
+                baseName = `MockServerTest_Throws${expectedError.errorClassName}`;
+            } else {
+                successIndex++;
+                baseName = successCount > 1 ? `MockServerTest_${successIndex}` : "MockServerTest";
+            }
+            let name = baseName;
+            for (let suffix = 2; usedNames.has(name); suffix++) {
+                name = `${baseName}_${suffix}`;
+            }
+            usedNames.add(name);
+            return name;
+        });
+    }
+
+    // SDK variables bound to the endpoint's path parameters live on the client, so a
+    // test that needs them constructs its own client with the example values.
+    private writeClientVariable(writer: Writer, example: ExampleEndpointCall): string {
+        const sdkVariableClientOptions = this.endpointGenerator.getSdkVariableClientOptionArguments({
+            endpoint: this.endpoint,
+            example,
+            parseDatetimes: true
+        });
+        if (sdkVariableClientOptions.length === 0) {
+            return "Client";
+        }
+        writer.write("var client = ");
+        writer.writeNodeStatement(
+            generateMockServerClientInstantiation({
+                context: this.context,
+                rootClientGenerator: this.getRootClientGenerator(),
+                additionalClientOptions: sdkVariableClientOptions
+            })
+        );
+        writer.newLine();
+        return "client";
+    }
+
+    private generateErrorTestBody(example: ExampleEndpointCall, expectedError: ExpectedMockServerError): ast.CodeBlock {
+        return this.csharp.codeblock((writer: Writer) => {
+            writer.writeNode(this.mockEndpointGenerator.generateForExample(this.endpoint, example));
+
+            writer.newLine();
+
+            const clientVariableName = this.writeClientVariable(writer, example);
+
+            const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
+                example,
+                endpoint: this.endpoint,
+                clientVariableName,
+                serviceId: this.serviceId,
+                getResult: true,
+                parseDatetimes: true
+            });
+            if (endpointSnippet == null) {
+                throw GeneratorError.internalError("Endpoint snippet is null");
+            }
+            writer.write("var exception = Assert.ThrowsAsync<");
+            writer.writeNode(expectedError.exceptionClassReference);
+            writer.write(">(async () =>");
+            if (this.hasPaginationEnabled()) {
+                writer.pushScope();
+                writer.write("var items = ");
+                writer.writeNodeStatement(endpointSnippet);
+                writer.writeLine("await foreach (var item in items)");
+                writer.pushScope();
+                writer.writeLine("break;");
+                writer.popScope();
+                writer.popScope();
+            } else if (endpointSnippet.isAsyncEnumerable) {
+                writer.pushScope();
+                writer.write("await foreach (var item in ");
+                writer.writeNode(endpointSnippet);
+                writer.writeLine(")");
+                writer.pushScope();
+                writer.writeLine("/* consume each item */");
+                writer.popScope();
+                writer.popScope();
+            } else {
+                writer.write(" ");
+                writer.writeNode(endpointSnippet);
+            }
+            writer.writeTextStatement(")!");
+            writer.writeTextStatement(`Assert.That(exception.StatusCode, Is.EqualTo(${expectedError.statusCode}))`);
+            if (this.mockEndpointGenerator.hasMockErrorResponseBody(this.endpoint, example)) {
+                if (expectedError.isBaseApiException) {
+                    writer.writeTextStatement("Assert.That(exception.Body, Is.EqualTo(mockResponse))");
+                } else {
+                    writer.writeNodeStatement(
+                        this.csharp.invokeMethod({
+                            on: this.Types.JsonAssert,
+                            method: "AreEqual",
+                            arguments_: [this.csharp.codeblock("exception.Body"), this.csharp.codeblock("mockResponse")]
+                        })
+                    );
+                }
+            }
         });
     }
 

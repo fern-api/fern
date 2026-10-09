@@ -17,6 +17,7 @@ import { isEndpointSecurity } from "../../endpoint/request/endpointAuthHeaders.j
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody.js";
 import { normalizePathSlashes } from "../../endpoint/utils/normalizePath.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { getMockResponseStatusCode, isBodilessStatusCode } from "./getMockServerTestExamples.js";
 
 type AuthScheme = FernIr.AuthScheme;
 
@@ -48,6 +49,54 @@ export class MockEndpointGenerator extends WithGeneration {
         return this.generateForExamples(endpoint, [example]);
     }
 
+    /** Whether the mock server responds to an error example with the example's error body (as `mockResponse`). */
+    public hasMockErrorResponseBody(endpoint: HttpEndpoint, example: ExampleEndpointCall): boolean {
+        return example.response.type === "error" && this.getMockResponse(endpoint, example).responseSupported;
+    }
+
+    private getMockResponse(
+        endpoint: HttpEndpoint,
+        example: ExampleEndpointCall
+    ): {
+        jsonExampleResponse: unknown;
+        responseBodyType: string | undefined;
+        statusCode: number;
+        responseSupported: boolean;
+        respondWithEmptyErrorObject: boolean;
+    } {
+        let jsonExampleResponse: unknown | undefined = undefined;
+        if (example.response.type === "error") {
+            jsonExampleResponse =
+                example.response.body != null
+                    ? this.filterExampleTypeReference(example.response.body, { filterWriteOnly: true })
+                    : undefined;
+        } else {
+            if (example.response.value.type !== "body") {
+                throw GeneratorError.internalError("Unexpected response type");
+            }
+            const responseValue = example.response.value.value;
+            jsonExampleResponse =
+                responseValue != null
+                    ? this.filterExampleTypeReference(responseValue, { filterWriteOnly: true })
+                    : undefined;
+        }
+        // error responses are always parsed as JSON by the generated client
+        const responseBodyType = example.response.type === "error" ? "json" : endpoint.response?.body?.type;
+        const statusCode = getMockResponseStatusCode({ context: this.context, endpoint, example });
+        // whether or not we support this response type in this generator; the example json may
+        // have a response that we can return, but our generated method actually returns void
+        const responseSupported =
+            jsonExampleResponse != null &&
+            !isBodilessStatusCode(statusCode) &&
+            (responseBodyType === "json" || responseBodyType === "text");
+        // the client deserializes bodiless error responses as `object`, which needs valid JSON
+        const respondWithEmptyErrorObject =
+            example.response.type === "error" &&
+            jsonExampleResponse == null &&
+            this.context.ir.errors[example.response.error.errorId]?.type == null;
+        return { jsonExampleResponse, responseBodyType, statusCode, responseSupported, respondWithEmptyErrorObject };
+    }
+
     public generateForExamples(
         endpoint: HttpEndpoint,
         examples: ExampleEndpointCall[],
@@ -56,23 +105,13 @@ export class MockEndpointGenerator extends WithGeneration {
         return this.csharp.codeblock((writer) => {
             examples.forEach((example, index) => {
                 const suffix = examples.length === 1 ? "" : `_${index}`;
-                let responseSupported = false;
-                let jsonExampleResponse: unknown | undefined = undefined;
-                if (example.response != null) {
-                    if (example.response.type !== "ok" || example.response.value.type !== "body") {
-                        throw GeneratorError.internalError("Unexpected error response type");
-                    }
-                    const responseValue = example.response.value.value;
-                    jsonExampleResponse =
-                        responseValue != null
-                            ? this.filterExampleTypeReference(responseValue, { filterWriteOnly: true })
-                            : undefined;
-                }
-                const responseBodyType = endpoint.response?.body?.type;
-                // whether or not we support this response type in this generator; the example json may
-                // have a response that we can return, but our generated method actually returns void
-                responseSupported =
-                    jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
+                const {
+                    jsonExampleResponse,
+                    responseBodyType,
+                    statusCode,
+                    responseSupported,
+                    respondWithEmptyErrorObject
+                } = this.getMockResponse(endpoint, example);
 
                 const requestContentType = getContentTypeFromRequestBody(endpoint);
                 // For form-urlencoded requests, we don't need the requestJson variable
@@ -91,7 +130,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 }
                 writer.newLine();
 
-                if (jsonExampleResponse != null) {
+                if (responseSupported) {
                     if (responseBodyType === "json") {
                         writer.writeLine(`const string mockResponse${suffix} = """`);
                         writer.writeLine(
@@ -222,9 +261,11 @@ export class MockEndpointGenerator extends WithGeneration {
                 writer.writeLine(")");
                 writer.newLine();
                 writer.writeLine(".RespondWith(WireMock.ResponseBuilders.Response.Create()");
-                writer.writeLine(".WithStatusCode(200)");
+                writer.writeLine(`.WithStatusCode(${statusCode})`);
                 if (responseSupported) {
                     writer.writeTextStatement(`.WithBody(mockResponse${suffix}))`);
+                } else if (respondWithEmptyErrorObject) {
+                    writer.writeTextStatement('.WithBody("{}"))');
                 } else {
                     writer.writeTextStatement(")");
                 }

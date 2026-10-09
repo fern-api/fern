@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedExhaustive;
 using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Test.Utils;
 
@@ -28,5 +29,32 @@ public class GetWithPathAndErrorsTest : BaseMockServerTest
 
         var response = await Client.Endpoints.Params.GetWithPathAndErrorsAsync("param");
         JsonAssert.AreEqual(response, mockResponse);
+    }
+
+    [NUnit.Framework.Test]
+    public void MockServerTest_ThrowsBadRequestBody()
+    {
+        const string mockResponse = """
+            {
+              "message": "message"
+            }
+            """;
+
+        Server
+            .Given(
+                WireMock.RequestBuilders.Request.Create().WithPath("/params/path/param").UsingGet()
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(400)
+                    .WithBody(mockResponse)
+            );
+
+        var exception = Assert.ThrowsAsync<BadRequestBody>(async () =>
+            await Client.Endpoints.Params.GetWithPathAndErrorsAsync("param")
+        )!;
+        Assert.That(exception.StatusCode, Is.EqualTo(400));
+        JsonAssert.AreEqual(exception.Body, mockResponse);
     }
 }

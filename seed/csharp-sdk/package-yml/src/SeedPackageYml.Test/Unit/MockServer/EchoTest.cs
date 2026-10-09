@@ -9,40 +9,7 @@ namespace SeedPackageYml.Test.Unit.MockServer;
 public class EchoTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string requestJson = """
-            {
-              "name": "name",
-              "size": 1
-            }
-            """;
-
-        const string mockResponse = """
-            "string"
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/id/")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.EchoAsync("id", new EchoRequest { Name = "name", Size = 1 });
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

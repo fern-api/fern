@@ -10,46 +10,7 @@ namespace SeedApi.Test.Unit.MockServer._;
 public class CreateActivityTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string requestJson = """
-            {
-              "activity": "activity",
-              "timestamp": "timestamp"
-            }
-            """;
-
-        const string mockResponse = """
-            {
-              "activity": "activity",
-              "timestamp": "timestamp"
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/activity")
-                    .WithHeader("Content-Type", "application/json")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client._.CreateActivityAsync(
-            new Activity { Activity_ = "activity", Timestamp = "timestamp" }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {}

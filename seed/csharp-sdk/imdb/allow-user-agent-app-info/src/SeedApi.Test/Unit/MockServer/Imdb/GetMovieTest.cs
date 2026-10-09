@@ -10,7 +10,7 @@ namespace SeedApi.Test.Unit.MockServer.Imdb;
 public class GetMovieTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -36,14 +36,10 @@ public class GetMovieTest : BaseMockServerTest
     }
 
     [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public void MockServerTest_ThrowsNotFoundError()
     {
         const string mockResponse = """
-            {
-              "id": "id",
-              "title": "title",
-              "rating": 1.1
-            }
+            "string"
             """;
 
         Server
@@ -51,13 +47,14 @@ public class GetMovieTest : BaseMockServerTest
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
+                    .WithStatusCode(404)
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Imdb.GetMovieAsync(
-            new GetMovieImdbRequest { MovieId = "movieId" }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
+        var exception = Assert.ThrowsAsync<NotFoundError>(async () =>
+            await Client.Imdb.GetMovieAsync(new GetMovieImdbRequest { MovieId = "movieId" })
+        )!;
+        Assert.That(exception.StatusCode, Is.EqualTo(404));
+        JsonAssert.AreEqual(exception.Body, mockResponse);
     }
 }

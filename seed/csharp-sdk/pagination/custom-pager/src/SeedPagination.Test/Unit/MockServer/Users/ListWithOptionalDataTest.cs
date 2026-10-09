@@ -17,60 +17,6 @@ public class ListWithOptionalDataTest : BaseMockServerTest
               "page": {
                 "page": 1,
                 "next": {
-                  "page": 1,
-                  "starting_after": "starting_after"
-                },
-                "per_page": 1,
-                "total_page": 1
-              },
-              "total_count": 1,
-              "data": [
-                {
-                  "name": "name",
-                  "id": 1
-                },
-                {
-                  "name": "name",
-                  "id": 1
-                }
-              ]
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users/optional-data")
-                    .WithParam("page", "1")
-                    .UsingGet()
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var items = await Client.Users.ListWithOptionalDataAsync(
-            new ListUsersOptionalDataRequest { Page = 1 }
-        );
-        await foreach (var item in items)
-        {
-            Assert.That(item, Is.Not.Null);
-            break; // Only check the first item
-        }
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
-    {
-        const string mockResponse = """
-            {
-              "hasNextPage": true,
-              "page": {
-                "page": 1,
-                "next": {
                   "page": 2,
                   "starting_after": "next_cursor"
                 },
@@ -117,7 +63,7 @@ public class ListWithOptionalDataTest : BaseMockServerTest
     }
 
     [NUnit.Framework.Test]
-    public async Task MockServerTest_3()
+    public async Task MockServerTest_2()
     {
         const string mockResponse = """
             {

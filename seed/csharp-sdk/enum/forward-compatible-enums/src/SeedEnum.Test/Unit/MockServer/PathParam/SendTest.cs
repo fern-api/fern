@@ -9,19 +9,7 @@ namespace SeedEnum.Test.Unit.MockServer.PathParam;
 public class SendTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public void MockServerTest_1()
-    {
-        Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/path/>/red").UsingPost())
-            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
-
-        Assert.DoesNotThrowAsync(async () =>
-            await Client.PathParam.SendAsync(Operand.GreaterThan, Color.Red)
-        );
-    }
-
-    [NUnit.Framework.Test]
-    public void MockServerTest_2()
+    public void MockServerTest()
     {
         Server
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/path/>/red").UsingPost())

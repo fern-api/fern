@@ -8,31 +8,7 @@ namespace SeedApi.Test.Unit.MockServer;
 public class PostFooTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string mockResponse = """
-            {
-              "string": {
-                "key": "value"
-              }
-            }
-            """;
-
-        Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/foo").UsingPost())
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.PostFooAsync();
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

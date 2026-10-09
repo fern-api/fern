@@ -11,53 +11,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Object;
 public class GetAndReturnWithDatetimeLikeStringTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string requestJson = """
-            {
-              "datetimeLikeString": "datetimeLikeString",
-              "actualDatetime": "2024-01-15T09:30:00.000Z"
-            }
-            """;
-
-        const string mockResponse = """
-            {
-              "datetimeLikeString": "datetimeLikeString",
-              "actualDatetime": "2024-01-15T09:30:00.000Z"
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/object/get-and-return-with-datetime-like-string")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
-            new ObjectWithDatetimeLikeString
-            {
-                DatetimeLikeString = "datetimeLikeString",
-                ActualDatetime = DateTime.Parse(
-                    "2024-01-15T09:30:00.000Z",
-                    null,
-                    DateTimeStyles.AdjustToUniversal
-                ),
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

@@ -9,68 +9,7 @@ namespace SeedCsharpReadonlyRequest.Test.Unit.MockServer;
 public class BatchCreateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string requestJson = """
-            {
-              "vendors": {
-                "vendors": {
-                  "id": "id",
-                  "name": "name"
-                }
-              }
-            }
-            """;
-
-        const string mockResponse = """
-            {
-              "vendors": {
-                "vendors": {
-                  "id": "id",
-                  "name": "name"
-                }
-              }
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/vendors/batch")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.BatchCreateAsync(
-            new CreateVendorRequest
-            {
-                Vendors = new Dictionary<string, Vendor>()
-                {
-                    {
-                        "vendors",
-                        new Vendor
-                        {
-                            Id = "id",
-                            Name = "name",
-                            CreatedAt = "created_at",
-                            UpdatedAt = "updated_at",
-                        }
-                    },
-                },
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

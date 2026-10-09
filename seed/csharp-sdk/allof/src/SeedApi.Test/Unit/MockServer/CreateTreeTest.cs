@@ -9,61 +9,7 @@ namespace SeedApi.Test.Unit.MockServer;
 public class CreateTreeTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string requestJson = """
-            {
-              "treeName": "treeName",
-              "treeSpecies": "treeSpecies",
-              "plantedDate": "2023-01-15",
-              "heightInFeet": 1.1,
-              "treeDescription": "treeDescription",
-              "id": "id"
-            }
-            """;
-
-        const string mockResponse = """
-            {
-              "treeName": "treeName",
-              "treeSpecies": "treeSpecies",
-              "plantedDate": "2023-01-15",
-              "heightInFeet": 1.1,
-              "treeDescription": "treeDescription",
-              "id": "id"
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/trees")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.CreateTreeAsync(
-            new TreeRecord
-            {
-                TreeName = "treeName",
-                TreeSpecies = "treeSpecies",
-                PlantedDate = new DateOnly(2023, 1, 15),
-                HeightInFeet = 1.1,
-                TreeDescription = "treeDescription",
-                Id = "id",
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {
