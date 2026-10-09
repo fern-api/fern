@@ -204,7 +204,7 @@ export function convertUnion({
         >((acc, property) => {
             acc[getWireValue(property.name)] = {
                 description: property.docs ?? undefined,
-                ...convertTypeReference(property.valueType)
+                ...convertTypeReference(unwrapOptional(property.valueType))
             };
             if (!(property.valueType.type === "container" && property.valueType.container.type === "optional")) {
                 schema.required = [...(schema.required ?? []), getWireValue(property.name)];
@@ -230,6 +230,19 @@ export function convertUndiscriminatedUnion({
         })),
         description: docs
     };
+}
+
+/**
+ * Object properties, parameters, and request bodies express `optional<T>` by leaving the value out of `required`.
+ * Unwrap it there so the schema is not also marked `nullable`, which would turn `optional<T>` into
+ * `optional<nullable<T>>`. Everywhere else (list items, map values, aliases, responses) `optional<T>` can only
+ * appear on the wire as `null`, so `convertTypeReference` keeps marking it `nullable`.
+ */
+export function unwrapOptional(typeReference: TypeReference): TypeReference {
+    if (typeReference.type === "container" && typeReference.container.type === "optional") {
+        return typeReference.container.optional;
+    }
+    return typeReference;
 }
 
 export function convertTypeReference(typeReference: TypeReference): OpenApiComponentSchema {
