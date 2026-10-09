@@ -30,7 +30,7 @@ export interface GeneratorsSlot {
 }
 
 /**
- * Decides whether rubicon may write generators.yml into `folder` (RUBICON-PLAN.md, D5). The Fern CLI
+ * Decides whether rubicon may write generators.yml into `folder` (see README.md). The Fern CLI
  * allows one active generators file per folder, and refuses generators.yml next to
  * generators.legacy.yml, the file `fern sdk migrate` leaves behind.
  */

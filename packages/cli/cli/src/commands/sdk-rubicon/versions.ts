@@ -3,7 +3,7 @@ import semver from "semver";
 import type { RubiconDiagnostic } from "./types.js";
 
 /**
- * fern-cli-generator version rubicon writes when sdk-config.yml pins none (RUBICON-PLAN.md, D8). It is
+ * fern-cli-generator version rubicon writes when sdk-config.yml pins none (see README.md). It is
  * the newest version with a Fern pool in sdk-gen-api's production index, so it generates on both
  * remote routes. Bump it only together with a round-trip run (roundTrip.expected.json records it).
  */

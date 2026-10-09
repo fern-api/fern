@@ -23,7 +23,7 @@ export interface RetargetPlan {
 }
 
 /**
- * Takes the cli target out of sdk-config.yml once generators.yml owns it (RUBICON-PLAN.md, D4): a
+ * Takes the cli target out of sdk-config.yml once generators.yml owns it (see README.md): a
  * plain `fern generate` fails when sdk-config.yml and a generators.yml group both select `cli`.
  *
  * - cli was the only target: rename sdk-config.yml to sdk-config.rubicon.yml (SDK Config needs at

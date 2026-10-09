@@ -17,7 +17,7 @@ const GITHUB_WARNINGS: Record<string, FieldTreatment> = Object.fromEntries(
 );
 
 /**
- * Where rubicon treats a field differently from the hosted bridge (RUBICON-PLAN.md, D10). The hosted
+ * Where rubicon treats a field differently from the hosted bridge (see README.md). The hosted
  * table assumes sdk-gen-api owns delivery and that the generator version is pinned; locally, rubicon
  * writes the output block, reads local spec paths and maps a few auth fields the hosted path cannot.
  */

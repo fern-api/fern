@@ -7,7 +7,7 @@ const LOGIN_KEYS = ["client-id", "success-redirect-url", "error-redirect-url"];
 
 /**
  * Copies the options a user set by hand in a previous rubicon output into the new one
- * (RUBICON-PLAN.md, D12). Only keys SDK Config cannot express are carried; everything else comes
+ * (see README.md). Only keys SDK Config cannot express are carried; everything else comes
  * from sdk-config.yml again.
  */
 export function carryOver(
