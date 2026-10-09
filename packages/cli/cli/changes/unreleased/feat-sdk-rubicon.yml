@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern sdk rubicon`, which translates the `cli` target of `sdk-config.yml` into a `generators.yml` for
+    `fernapi/fern-cli-generator` and takes the target out of `sdk-config.yml`. It is a stopgap until Postman's
+    own CLI generator ships.
+  type: feat
