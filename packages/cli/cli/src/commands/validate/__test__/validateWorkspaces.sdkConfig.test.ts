@@ -129,12 +129,9 @@ describe("validateWorkspaces with SDK Config-only APIs", () => {
     });
 
     describe("API workspace with both generators.yml and sdk-config.yml", () => {
-        async function createMixedWorkspace(rubyOutput: Record<string, unknown>): Promise<string> {
-            const fernDirectory = await mkdtemp(path.join(tmpdir(), "fern-check-mixed-rubygems-"));
-            temporaryDirectories.push(fernDirectory);
-            const apiDirectory = path.join(fernDirectory, "apis", "payments");
+        async function writeLegacyApi(fernDirectory: string, apiName: string): Promise<string> {
+            const apiDirectory = path.join(fernDirectory, "apis", apiName);
             await mkdir(apiDirectory, { recursive: true });
-            await writeFile(path.join(fernDirectory, "fern.config.json"), '{"organization":"test","version":"*"}\n');
             await writeFile(
                 path.join(apiDirectory, "openapi.yml"),
                 "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
@@ -156,6 +153,14 @@ describe("validateWorkspaces with SDK Config-only APIs", () => {
                     }
                 })
             );
+            return apiDirectory;
+        }
+
+        async function createMixedWorkspace(rubyOutput: Record<string, unknown>): Promise<string> {
+            const fernDirectory = await mkdtemp(path.join(tmpdir(), "fern-check-mixed-rubygems-"));
+            temporaryDirectories.push(fernDirectory);
+            await writeFile(path.join(fernDirectory, "fern.config.json"), '{"organization":"test","version":"*"}\n');
+            const apiDirectory = await writeLegacyApi(fernDirectory, "payments");
             await writeFile(
                 path.join(apiDirectory, "sdk-config.yml"),
                 YAML.stringify({
@@ -179,7 +184,10 @@ describe("validateWorkspaces with SDK Config-only APIs", () => {
             });
         }
 
-        async function check(project: Project): Promise<{ checkedNames: Array<string | undefined> }> {
+        async function check(
+            project: Project,
+            commandLineApiWorkspace?: string
+        ): Promise<{ checkedNames: Array<string | undefined> }> {
             const taskContext = createMockTaskContext();
             const checkedNames: Array<string | undefined> = [];
             const cliContext = {
@@ -199,7 +207,8 @@ describe("validateWorkspaces with SDK Config-only APIs", () => {
                 cliContext,
                 logWarnings: false,
                 brokenLinks: false,
-                errorOnBrokenLinks: false
+                errorOnBrokenLinks: false,
+                commandLineApiWorkspace
             });
             return { checkedNames };
         }
@@ -228,6 +237,18 @@ describe("validateWorkspaces with SDK Config-only APIs", () => {
 
             const { checkedNames } = await check(await loadMixedProject(fernDirectory));
             expect(checkedNames).toContain("payments");
+        });
+
+        it("skips the sdk-config.yml of APIs excluded by --api", async () => {
+            const fernDirectory = await createMixedWorkspace({
+                delivery: "files",
+                publish: { registry: "rubygems" }
+            });
+            await writeLegacyApi(fernDirectory, "orders");
+
+            const { checkedNames } = await check(await loadMixedProject(fernDirectory), "orders");
+            expect(checkedNames).toContain("orders");
+            expect(checkedNames).not.toContain("payments");
         });
     });
 });
