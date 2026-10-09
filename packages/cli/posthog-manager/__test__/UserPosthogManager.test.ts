@@ -100,6 +100,23 @@ describe("UserPosthogManager", () => {
         }
     });
 
+    it("tags automation events with the CLI release environment", () => {
+        vi.stubEnv("FERN_CLI_RELEASE_ENVIRONMENT", "beta");
+        try {
+            const manager = new UserPosthogManager({ token: undefined, posthogApiKey: "test-api-key" });
+
+            manager.sendAutomationEvent({ distinctId: "run-1", event: "generation_failed", properties: {} });
+
+            expect(mockCapture).toHaveBeenCalledWith({
+                distinctId: "run-1",
+                event: "generation_failed",
+                properties: { cliReleaseEnvironment: "beta" }
+            });
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+
     it("reuses the in-memory fallback after a storage failure", async () => {
         const manager = new UserPosthogManager({ token: undefined, posthogApiKey: "test-api-key" });
         mockMkdir.mockRejectedValue(
