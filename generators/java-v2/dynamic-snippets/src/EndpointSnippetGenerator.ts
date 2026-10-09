@@ -874,8 +874,8 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.Headers);
-        const headers = this.context.associateByWireValue({
-            parameters: request.headers ?? [],
+        const headers = this.context.associateEndpointHeaders({
+            headers: request.headers ?? [],
             values: snippet.headers ?? {}
         });
         const filteredHeaders = headers.filter((header) => !this.context.isDirectLiteral(header.typeReference));
@@ -927,8 +927,8 @@ export class EndpointSnippetGenerator {
         }
 
         this.context.errors.scope(Scope.Headers);
-        const headers = this.context.associateByWireValue({
-            parameters: requestHeaders,
+        const headers = this.context.associateEndpointHeaders({
+            headers: requestHeaders,
             values: snippet.headers ?? {}
         });
         this.context.errors.unscope();

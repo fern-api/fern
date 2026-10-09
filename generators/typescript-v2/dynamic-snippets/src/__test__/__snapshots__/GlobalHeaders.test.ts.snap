@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`global headers in endpoint examples > does not report global headers as endpoint parameters 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        apiKey: "<value>",
+        xAnotherHeader: "acme",
+        xAPIVersion: "01-01-2000",
+    });
+    await client.service.getWithHeader({
+        xEndpointHeader: "acme",
+    });
+}
+main();
+"
+`;
+
+exports[`global headers in endpoint examples > passes a global header to the endpoint when the endpoint also declares it 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        apiKey: "<value>",
+        xAnotherHeader: "acme",
+        xAPIVersion: "01-01-2000",
+    });
+    await client.service.getWithHeader({
+        xAPIVersion: "01-01-2000",
+    });
+}
+main();
+"
+`;

@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`global headers in endpoint examples > does not report global headers as endpoint parameters 1`] = `
+"from acme import Acme
+
+client = Acme(
+    api_key="<value>",
+    x_another_header="acme",
+    x_api_version="01-01-2000",
+)
+
+client.service.get_with_header(
+    x_endpoint_header="acme",
+)
+"
+`;
