@@ -4,11 +4,10 @@ import {
     BUILTIN_FLAG_NAMES,
     camelToKebab,
     flagNameIsReserved,
+    resolveMultipartFieldFlagName,
     resolveParamFlagName,
     sanitizeFlagName,
-    stripTagPrefix,
-    toKebabFlag,
-    tokenize
+    toKebabFlag
 } from "../naming.js";
 
 // The camelToKebab vectors mirror the Rust test `test_camel_to_kebab`
@@ -30,28 +29,14 @@ describe("camelToKebab", () => {
     });
 });
 
-describe("tokenize", () => {
-    it("splits camelCase on capitals", () => {
-        expect(tokenize("customersList")).toEqual(["customers", "list"]);
+describe("resolveMultipartFieldFlagName", () => {
+    it("kebab-cases an ordinary multipart field", () => {
+        expect(resolveMultipartFieldFlagName("ProfileImage")).toBe("profile-image");
     });
-    it("splits non-camelCase on non-alphanumeric runs", () => {
-        expect(tokenize("Customer List")).toEqual(["customer", "list"]);
-        expect(tokenize("foo-bar_baz")).toEqual(["foo", "bar", "baz"]);
-    });
-    it("drops empties and lowercases", () => {
-        expect(tokenize("--Foo--")).toEqual(["foo"]);
-    });
-});
-
-describe("stripTagPrefix", () => {
-    it("strips a tag token prefix from the operationId", () => {
-        expect(stripTagPrefix("customersList", "Customers")).toBe("list");
-    });
-    it("is a no-op when the operationId does not start with the tag", () => {
-        expect(stripTagPrefix("listCustomers", "Customers")).toBe("listCustomers");
-    });
-    it("is a no-op when op has no more tokens than the tag", () => {
-        expect(stripTagPrefix("customers", "Customers")).toBe("customers");
+    it("returns undefined for a reserved name (no -param suffix, --params only)", () => {
+        // Unlike resolveParamFlagName, a reserved multipart field gets NO flag at all.
+        expect(resolveMultipartFieldFlagName("output")).toBeUndefined();
+        expect(resolveMultipartFieldFlagName("json")).toBeUndefined();
     });
 });
 

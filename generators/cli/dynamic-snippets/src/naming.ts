@@ -87,58 +87,11 @@ export function camelToKebab(s: string): string {
     return result;
 }
 
-/**
- * Tokenize a string the way Fern's OpenAPI importer does. Port of `tokenize` (parser.rs:1905):
- * camelCase-only strings split on each capital letter; everything else splits on non-alphanumeric
- * runs. All tokens lowercased, empties dropped.
- */
-export function tokenize(s: string): string[] {
-    const chars = [...s];
-    const isCamelCase =
-        chars.length > 0 &&
-        isAsciiLowercase(chars[0] as string) &&
-        chars.every((c) => isAsciiAlphanumeric(c)) &&
-        chars.some((c) => isAsciiUppercase(c));
-
-    let raw: string[];
-    if (isCamelCase) {
-        raw = [];
-        let current = "";
-        for (const c of chars) {
-            if (isAsciiUppercase(c) && current.length > 0) {
-                raw.push(current);
-                current = "";
-            }
-            current += c;
-        }
-        if (current.length > 0) {
-            raw.push(current);
-        }
-    } else {
-        raw = s.split(/[^A-Za-z0-9]/);
-    }
-
-    return raw.filter((t) => t.length > 0).map((t) => t.toLowerCase());
-}
-
-/**
- * When an operation's group is derived from a tag (no `x-fern-sdk-group-name`), strip tag tokens
- * that prefix the operationId. Port of `strip_tag_prefix` (parser.rs:1984). `tag="Customers",
- * operationId="customersList"` → `list`. No-op when the operationId doesn't start with the tag.
- */
-export function stripTagPrefix(operationId: string, tag: string): string {
-    const tagTokens = tokenize(tag);
-    const opTokens = tokenize(operationId);
-    if (tagTokens.length === 0 || opTokens.length <= tagTokens.length) {
-        return operationId;
-    }
-    for (let i = 0; i < tagTokens.length; i++) {
-        if (opTokens[i] !== tagTokens[i]) {
-            return operationId;
-        }
-    }
-    return opTokens.slice(tagTokens.length).join("-");
-}
+// NOTE: the command group/method names are taken from the dynamic IR's `fernFilepath` +
+// `declaration.name` (which Fern's OpenAPI importer already derived from
+// x-fern-sdk-group-name/method-name → tag → operationId, with tag-prefix stripping), so the Rust
+// `tokenize` / `strip_tag_prefix` rules are NOT re-implemented here — they would be dead code. Only
+// `camelToKebab` is needed, to kebab those already-resolved names.
 
 /**
  * Convert an identifier to a CLI flag name. Port of `to_kebab_flag` (text.rs:115): only `_` and `-`
@@ -276,14 +229,21 @@ export function resolveParamFlagName(param: FlagNameParameter, wireName: string)
     return flag;
 }
 
+/**
+ * Resolve the CLI flag name for a multipart (file-upload) field. Port of
+ * `resolve_multipart_field_flag_name` (commands.rs:1230): kebab-case the wire name, and return
+ * `undefined` when that name is reserved — unlike ordinary params, a reserved multipart field gets
+ * NO flag (no `-param` suffix) and is reachable only through `--params`.
+ */
+export function resolveMultipartFieldFlagName(wireName: string): string | undefined {
+    const kebab = toKebabFlag(wireName);
+    return flagNameIsReserved(kebab) ? undefined : kebab;
+}
+
 function isAsciiAlphanumeric(ch: string): boolean {
     return /^[A-Za-z0-9]$/.test(ch);
 }
 
 function isAsciiUppercase(ch: string): boolean {
     return ch >= "A" && ch <= "Z";
-}
-
-function isAsciiLowercase(ch: string): boolean {
-    return ch >= "a" && ch <= "z";
 }

@@ -10,7 +10,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { CliCommandBuilder, isPlainObject } from "./command.js";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
-import { ParameterLocation, resolveParamFlagName } from "./naming.js";
+import { ParameterLocation, resolveMultipartFieldFlagName, resolveParamFlagName } from "./naming.js";
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
@@ -193,7 +193,8 @@ export class EndpointSnippetGenerator {
                 this.emitObjectBody({
                     builder,
                     properties: fileUploadParameters(body),
-                    value: snippet.requestBody
+                    value: snippet.requestBody,
+                    multipart: true
                 });
                 break;
             default:
@@ -243,11 +244,13 @@ export class EndpointSnippetGenerator {
     private emitObjectBody({
         builder,
         properties,
-        value
+        value,
+        multipart = false
     }: {
         builder: CliCommandBuilder;
         properties: FernIr.dynamic.NamedParameter[];
         value: unknown;
+        multipart?: boolean;
     }): void {
         const record = this.context.getRecord(value);
         if (record == null) {
@@ -259,7 +262,7 @@ export class EndpointSnippetGenerator {
         }
         const associated = this.context.associateByWireValue({ parameters: properties, values: record });
         for (const instance of associated) {
-            this.emitValue({ builder, location: "body", name: instance.name, value: instance.value });
+            this.emitValue({ builder, location: "body", name: instance.name, value: instance.value, multipart });
         }
     }
 
@@ -288,12 +291,14 @@ export class EndpointSnippetGenerator {
         builder,
         location,
         name,
-        value
+        value,
+        multipart = false
     }: {
         builder: CliCommandBuilder;
         location: ParameterLocation;
         name: FernIr.dynamic.NameAndWireValue;
         value: unknown;
+        multipart?: boolean;
     }): void {
         if (value === undefined || value === null) {
             return;
@@ -306,7 +311,12 @@ export class EndpointSnippetGenerator {
         // where the runtime emits `--x-custom-header`. A genuine `x-fern-parameter-name` override is a
         // known gap: the dynamic IR does not distinguish it from the importer's automatic renames, so
         // it cannot be reproduced here without IR support. See the package README.
-        const flagName = resolveParamFlagName({ location }, wireValue);
+        //
+        // Multipart (file-upload) fields follow a different runtime rule: a reserved name gets NO flag
+        // (no `-param` suffix) and is reachable only via --params.
+        const flagName = multipart
+            ? resolveMultipartFieldFlagName(wireValue)
+            : resolveParamFlagName({ location }, wireValue);
         if (flagName == null) {
             builder.routeToParams([wireValue], value);
             return;

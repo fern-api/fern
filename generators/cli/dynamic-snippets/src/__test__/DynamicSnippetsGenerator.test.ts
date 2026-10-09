@@ -244,6 +244,35 @@ describe("DynamicSnippetsGenerator", () => {
         expect(result.snippet).toBe("twilio messages create --page-size 20");
     });
 
+    it("gives multipart fields no -param suffix: a reserved field goes to --params", () => {
+        // Multipart (file-upload) fields follow resolve_multipart_field_flag_name: a reserved name
+        // (output) gets NO flag and is reachable only via --params — not a bogus --output-param.
+        const fileUploadBody = {
+            type: "fileUpload",
+            properties: [
+                { type: "file", wireValue: "ProfileImage", name: nm("ProfileImage") },
+                { type: "bodyProperty", name: { wireValue: "output", name: nm("output") }, typeReference: STRING },
+                { type: "bodyProperty", name: { wireValue: "To", name: nm("To") }, typeReference: STRING }
+            ]
+        } as unknown as FernIr.dynamic.InlinedRequestBody;
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["media"],
+                method: "upload",
+                location: { method: "POST", path: "/Media" },
+                body: fileUploadBody
+            })
+        );
+        const result = generate(ir, {
+            endpoint: { method: "POST", path: "/Media" },
+            requestBody: { ProfileImage: "/path/img.png", output: "raw", To: "+15551234567" }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe(
+            `twilio media upload --profile-image /path/img.png --to +15551234567 --params '{"output":"raw"}'`
+        );
+    });
+
     it("honors a binaryName custom config override", () => {
         const ir = buildIr(
             inlinedEndpoint({
