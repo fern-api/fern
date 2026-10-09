@@ -87,6 +87,7 @@ function build(
     return buildGeneratePosthogProperties({
         project,
         generations: [{ kind: "legacy", workspace: legacyWorkspace, resolvedGroupNames: ["sdks"] }],
+        isAutomation: false,
         groupNames: ["sdks"],
         generatorName: undefined,
         token: undefined,
@@ -184,6 +185,66 @@ describe("buildGeneratePosthogProperties", () => {
         ]);
     });
 
+    it("reports only generators that automation will run", () => {
+        const optedOut: generatorsYml.GeneratorInvocation = {
+            ...createGenerator("fernapi/fern-java-sdk", "3.0.0"),
+            automation: { generate: false, preview: true, upgrade: true, verify: true }
+        };
+        const workspace = {
+            workspaceName: "payments",
+            generatorsConfiguration: createGeneratorsConfiguration([
+                { groupName: "sdks", generators: [pythonSdk, optedOut] }
+            ])
+        } satisfies GenerationTelemetryInput["workspace"];
+        const generations: GenerationTelemetryInput[] = [{ kind: "legacy", workspace, resolvedGroupNames: ["sdks"] }];
+
+        expect(build({ generations, isAutomation: true }).generatorNames).toEqual(["fernapi/fern-python-sdk"]);
+        expect(build({ generations, isAutomation: false }).generatorNames).toEqual([
+            "fernapi/fern-java-sdk",
+            "fernapi/fern-python-sdk"
+        ]);
+    });
+
+    it("reports an SDK Config target's requested output instead of the placeholder output mode", () => {
+        const workspace = {
+            workspaceName: "payments",
+            generatorsConfiguration: createGeneratorsConfiguration([
+                {
+                    groupName: "sdk-config",
+                    generators: [
+                        { ...goSdk, sdkConfigTargetIndex: 0 },
+                        { ...typescriptSdk, sdkConfigTargetIndex: 1 }
+                    ]
+                }
+            ])
+        } satisfies GenerationTelemetryInput["workspace"];
+
+        const properties = build({
+            generations: [
+                {
+                    kind: "sdk-config",
+                    workspace,
+                    resolvedGroupNames: ["sdk-config"],
+                    sdkConfigV1: {
+                        targets: [
+                            {
+                                body: Buffer.from(""),
+                                language: "go",
+                                requestedOutput: { type: "github", repository: "acme/go-sdk" }
+                            },
+                            { body: Buffer.from(""), language: "typescript" }
+                        ]
+                    }
+                }
+            ]
+        });
+
+        expect(properties.requestedGenerators.map(({ name, outputMode }) => ({ name, outputMode }))).toEqual([
+            { name: "fernapi/fern-go-sdk", outputMode: "github" },
+            { name: "fernapi/fern-typescript-sdk", outputMode: "download" }
+        ]);
+    });
+
     it("keeps the legacy workspaces payload", () => {
         expect(build().workspaces).toEqual([
             {
@@ -213,6 +274,13 @@ describe("buildGeneratePosthogProperties", () => {
         const value = createUnsignedJwt({ sub: "auth0|user-123" });
 
         expect(build({ token: { type: "user", value } })).toMatchObject({ authType: "user", userId: "auth0|user-123" });
+    });
+
+    it("reports no user ID instead of failing for an undecodable user token", () => {
+        expect(build({ token: { type: "user", value: "not-a-jwt" } })).toMatchObject({
+            authType: "user",
+            userId: undefined
+        });
     });
 
     it("reports organization tokens and anonymous runs without a user ID", () => {

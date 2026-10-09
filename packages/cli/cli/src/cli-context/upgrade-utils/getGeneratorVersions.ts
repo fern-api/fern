@@ -357,6 +357,8 @@ async function resolveSdkGenApiEnabled({
     skipFeatureFlagRequest: boolean | undefined;
 }): Promise<boolean> {
     if (skipFeatureFlagRequest === true) {
+        // Known trade-off: for a flag-on org whose command never resolved the flag (e.g. `fern check`), this
+        // reports FDR versions, which can differ from what `fern generator upgrade` (sdk-gen-api) would pick.
         return getResolvedFernSdkGenApiEnabled({ organization }) ?? false;
     }
     return isFernSdkGenApiEnabled({ organization });

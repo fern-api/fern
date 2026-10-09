@@ -208,6 +208,13 @@ export async function generateAPIWorkspaces({
 
         validateUniqueLanguageOwnership({ generations, cliContext });
 
+        // Start the flag request now so it overlaps login and the output-directory prompts. The result is
+        // memoized per process, so the remote runner reuses it. It never rejects (failures resolve to off).
+        // Local (Docker) generation never routes through sdk-gen-api, so it makes no flag request.
+        const sdkGenApiEnabled = useLocalDocker
+            ? undefined
+            : isFernSdkGenApiEnabled({ organization: project.config.organization });
+
         if (!useLocalDocker) {
             const currentToken = await cliContext.runTask(async (context) => {
                 return askToLogin(context);
@@ -243,13 +250,11 @@ export async function generateAPIWorkspaces({
                 ...buildGeneratePosthogProperties({
                     project,
                     generations,
+                    isAutomation: automation != null,
                     groupNames,
                     generatorName,
                     token,
-                    // Resolving the flag here also warms the per-process cache the remote runner reads.
-                    sdkGenApiEnabled: useLocalDocker
-                        ? undefined
-                        : await isFernSdkGenApiEnabled({ organization: project.config.organization }),
+                    sdkGenApiEnabled: await sdkGenApiEnabled,
                     cliReleaseEnvironment: getCliReleaseEnvironment()
                 })
             }
