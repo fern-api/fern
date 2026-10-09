@@ -133,7 +133,7 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(kinds).toEqual(expected);
     });
 
-    it("reports requested generators, auth, and the sdk-gen-api flag in the generate telemetry event", async () => {
+    it("reports requested generators and the sdk-gen-api flag in the generate telemetry event", async () => {
         featureFlags.isEnabled.mockImplementation(
             async (_flag: string, context: { generator?: string }) => context.generator === "fernapi/fern-python-sdk"
         );
@@ -146,9 +146,6 @@ describe("generateAPIWorkspaces coexistence", () => {
             orgId: "test",
             command: "fern generate",
             properties: {
-                generatorNames: ["fernapi/fern-python-sdk", "fernapi/fern-typescript-sdk"],
-                authType: "organization",
-                userId: undefined,
                 sdkGenApiEnabled: true,
                 cliReleaseEnvironment: "local"
             }
@@ -176,6 +173,10 @@ describe("generateAPIWorkspaces coexistence", () => {
                 sdkGenApiEnabled: false
             })
         ]);
+        // Identity and auth already come from the distinct ID, `userEmail`, and `usingAccessToken`.
+        for (const redundant of ["userId", "authType", "generatorNames"]) {
+            expect(event?.properties).not.toHaveProperty(redundant);
+        }
     });
 
     it("does not request the sdk-gen-api flag for local generation", async () => {

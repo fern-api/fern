@@ -258,7 +258,6 @@ export async function generateAPIWorkspaces({
                     isAutomation,
                     groupNames,
                     generatorName,
-                    token,
                     sdkGenApiEnabledByGenerator: await sdkGenApiEnabledByGenerator,
                     cliReleaseEnvironment: getCliReleaseEnvironment()
                 })

@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Enrich the `fern generate` telemetry event with the requested generators (including SDK Config targets),
-    the credential type and Fern user ID behind the request, the `use-sdk-gen-api` feature flag value, and the
-    CLI release environment it was evaluated for.
+    Enrich the `fern generate` telemetry event with the generators selected to run (including SDK Config targets),
+    the `use-sdk-gen-api` feature flag value overall and per generator, and the CLI release environment it was
+    evaluated for.
   type: chore
