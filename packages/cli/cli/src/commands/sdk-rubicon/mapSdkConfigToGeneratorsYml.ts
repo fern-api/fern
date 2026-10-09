@@ -48,10 +48,11 @@ export function mapSdkConfigToGeneratorsYml(
     return { ...output, generatorsYml: orderSections(output.generatorsYml) };
 }
 
-/** Writes `auth-schemes` first, then `api`, then `groups`, the order Fern's own files use. */
+/** Writes `default-group`, `auth-schemes`, `api`, then `groups`, the order Fern's own files use. */
 function orderSections(generatorsYml: Record<string, unknown>): Record<string, unknown> {
-    const { "auth-schemes": authSchemes, api, groups, ...rest } = generatorsYml;
+    const { "default-group": defaultGroup, "auth-schemes": authSchemes, api, groups, ...rest } = generatorsYml;
     return {
+        ...(defaultGroup != null ? { "default-group": defaultGroup } : {}),
         ...(authSchemes != null ? { "auth-schemes": authSchemes } : {}),
         ...(api != null ? { api } : {}),
         ...(groups != null ? { groups } : {}),

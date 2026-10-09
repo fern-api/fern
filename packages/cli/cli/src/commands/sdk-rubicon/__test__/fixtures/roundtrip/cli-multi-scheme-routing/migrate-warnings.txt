@@ -1,0 +1,2 @@
+[warning] [FERN_CONFIG_FIELD_UNSUPPORTED] group.generators.0.config.binaryName: Fern configuration field is not represented by SDK Config v1; Review this value and set the closest SDK Config field manually, or preserve the setting outside SDK Config if no equivalent exists.
+[warning] [FERN_CONFIG_FIELD_UNSUPPORTED] group.generators.0.config.customCommands: Fern configuration field is not represented by SDK Config v1; Review this value and set the closest SDK Config field manually, or preserve the setting outside SDK Config if no equivalent exists.

@@ -63,6 +63,9 @@ export const generatorRule: MapperRule = {
             ...(metadata != null ? { metadata } : {}),
             ...(Object.keys(config).length > 0 ? { config } : {})
         };
+        // Plain `fern generate` needs a default group; with it, the cli group runs alongside the
+        // targets left in sdk-config.yml.
+        context.output.generatorsYml["default-group"] = GROUP_NAME;
         context.output.generatorsYml.groups = {
             [GROUP_NAME]: {
                 generators: [generator],

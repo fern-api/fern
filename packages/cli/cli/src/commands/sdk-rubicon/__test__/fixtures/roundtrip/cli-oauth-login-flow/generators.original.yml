@@ -1,0 +1,26 @@
+auth-schemes:
+  OAuth2:
+    scheme: oauth
+    type: authorization-code
+    client-id: login-flow-test-client
+    authorization-url: https://api.example.com/oauth/authorize
+    token-url: https://api.example.com/oauth/token
+    success-redirect-url: https://acme.com/cli/success
+    error-redirect-url: https://acme.com/cli/error
+    scopes:
+      - read:widgets
+api:
+  auth: OAuth2
+  specs:
+    - openapi: ./openapi.yml
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: 0.49.0
+        output:
+          location: local-file-system
+          path: ../out
+        config:
+          binaryName: login-flow
+          generateWireTests: true

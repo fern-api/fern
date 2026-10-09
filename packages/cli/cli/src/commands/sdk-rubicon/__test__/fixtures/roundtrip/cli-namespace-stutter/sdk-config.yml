@@ -1,0 +1,16 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: v1
+      type: openapi
+      path: ./openapi.yml
+      namespace: v1
+generation:
+  wireTests:
+    enabled: true
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out

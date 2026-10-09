@@ -1,0 +1,20 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: v1
+      type: openapi
+      path: ./users-v1.yml
+      namespace: v1
+    - id: v2
+      type: openapi
+      path: ./users-v2.yml
+      namespace: v2
+api:
+  headers:
+    - name: apiKey
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out

@@ -1,0 +1,15 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: users-api
+      type: openapi
+      path: ./users-api.yml
+    - id: billing-api
+      type: openapi
+      path: ./billing-api.yml
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out

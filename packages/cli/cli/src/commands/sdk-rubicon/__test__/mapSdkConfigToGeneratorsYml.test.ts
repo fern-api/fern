@@ -24,10 +24,11 @@ describe("mapSdkConfigToGeneratorsYml", () => {
         expect(codes(result.diagnostics)).toEqual(["error RUBICON_API_KEY_LOCATION api.auth.schemes[0].location"]);
     });
 
-    it("maps a minimal cli target to api.specs and one cli group only, in Fern's section order", () => {
+    it("maps a minimal cli target to api.specs and one cli group, which is the default group", () => {
         const result = mapSdkConfigToGeneratorsYml(cliIr(), INPUT);
         expect(result.diagnostics).toEqual([]);
         expect(result.generatorsYml).toEqual({
+            "default-group": "cli",
             api: { specs: [{ openapi: "./openapi.yml" }] },
             groups: {
                 cli: {
@@ -43,12 +44,12 @@ describe("mapSdkConfigToGeneratorsYml", () => {
         });
     });
 
-    it("writes auth-schemes before api and groups", () => {
+    it("writes default-group, then auth-schemes, api and groups", () => {
         const result = mapSdkConfigToGeneratorsYml(
             cliIr({ api: { auth: { schemes: [{ id: "b", type: "bearer", environmentVariable: "T" }] } } }),
             INPUT
         );
-        expect(Object.keys(result.generatorsYml)).toEqual(["auth-schemes", "api", "groups"]);
+        expect(Object.keys(result.generatorsYml)).toEqual(["default-group", "auth-schemes", "api", "groups"]);
     });
 
     // The prototype's import-settings case (prototype:test/unit.test.mjs), unchanged by D10 for one spec.
