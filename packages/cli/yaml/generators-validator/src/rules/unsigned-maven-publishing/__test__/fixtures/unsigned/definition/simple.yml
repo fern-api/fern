@@ -1,0 +1,23 @@
+types:
+  _InvalidType:
+    properties:
+      a: string
+
+  ValidType:
+    properties:
+      b: string
+
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    exampleEndpoint:
+      path: ""
+      method: POST
+      request:
+        name: ExampleEndpointRequest
+        query-parameters:
+          some-query-param: optional<string>
+        body:
+          properties:
+            foo: integer

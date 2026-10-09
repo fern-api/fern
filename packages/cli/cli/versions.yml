@@ -1,4 +1,101 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.151.4
+  changelogEntry:
+    - summary: |
+        Remote `fern generate` for `local-file-system` outputs now always requests snippets, so the
+        TypeScript, Java, C#, PHP and Ruby generators emit `README.md` and `reference.md` without a
+        `snippets: path:` entry in generators.yml (matching `--local`). The snippet JSON is still only
+        written to disk when `snippets.path` is configured.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.3
+  changelogEntry:
+    - summary: |
+        When a Maven output omits `url`, default to the Sonatype Central Portal OSSRH Staging API
+        (`https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/`) instead of
+        the retired OSSRH hosts (`oss.sonatype.org` / `s01.oss.sonatype.org`). This applies to signed and
+        unsigned `maven` outputs in generators.yml and to Maven publish targets in fern.yml.
+
+        Maven Central only releases signed artifacts, so an unsigned Maven output without a `url` is uploaded
+        to the Central Portal staging service but never released. `fern check` now reports a warning for this
+        (printed with `--warnings` for generators.yml) and `fern generate` logs it for generators.yml
+        `output.location: maven` (with or without a `github` block) and for fern.yml `publish.maven` targets
+        delivered through git. Add `signature` to publish to Maven Central, or set `url` to publish to another
+        registry. The warning does not fail `fern check` or block generation, so existing configurations keep
+        working.
+      type: fix
+    - summary: |
+        Reject direct RubyGems publishing before generation instead of failing at publish time with
+        "Method not implemented.". `fern check` now reports an error for a generators.yml `output.location: rubygems`
+        without a `github` block (and for an SDK Config target with `publish.registry: rubygems` that is not delivered
+        through GitHub), and remote `fern generate` rejects the selected generator before any work starts. Add a
+        `github` block so the gem is published by the generated GitHub Actions workflow. `fern generate --local`,
+        `--preview`, and `--lfs-override`, which do not publish, are unaffected.
+      type: fix
+    - summary: |
+        Include the optional `detail` and `reason` that sdk-gen-api reports for a failed publication in the error message,
+        for example `sdk-gen-api publication failed (invalid_publish_request): <message>: <detail> [package_name_mismatch]`.
+        Credentials are redacted from the detail, and servers that omit these fields produce the same message as before.
+      type: fix
+    - summary: |
+        Log a warning, instead of a debug message, when `FERN_USE_SDK_GEN_API=true` is set but a generator falls back to
+        legacy Fiddle generation because sdk-gen-api cannot handle its output (for example, direct NuGet publishing).
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.2
+  changelogEntry:
+    - summary: |
+        When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init` now also initializes the docs with the
+        API's spec, because the docs cannot read an `sdk-config.yml` API. `fern init` and `fern init --openapi <path-or-url>`
+        initialize both the API and the docs, `fern init --api` only the API, and `fern init --docs --openapi <path-or-url>`
+        only the docs. The docs read the same `openapi.json|yml` as the API's `sdk-config.yml`, and a later `fern init`
+        that moves the API into `apis/` updates the path in `docs.yml`. In a project that already has a `docs.yml`, the
+        spec is added to its first `api` entry, or to a new one, instead of only printing a warning. A spec that does not
+        live in the fern directory, such as a URL, is copied there as `openapi-1.json|yml` (and so on when the name is
+        taken), so an existing API's spec is never overwritten. A spec that `docs.yml` already reads from the fern directory is not overwritten by a later `fern init`, which gives it a free name instead. If `docs.yml` splits its navigation into tabs, it is left
+        unchanged and the command warns. Without the flag, behavior is unchanged.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.1
+  changelogEntry:
+    - summary: |
+        `fern generate --package-only` now copies the generated `README.md` and `reference.md`
+        into `fern-dist/` before removing the SDK source, so they are kept for every language
+        instead of only those whose package format bundles root files (e.g. Ruby gems, Go source zips).
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.151.0
+  changelogEntry:
+    - summary: |
+        Add `experimental.robots-txt-on-instance-url` to `docs.yml`. When set to `true`, the custom
+        robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL
+        (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep
+        `X-Robots-Tag: noindex, nofollow`, so search engines still won't index them.
+        `fern check` warns if the flag is set without `agents.robots-txt`.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 5.150.0
+  changelogEntry:
+    - summary: |
+        Add an optional `type` to inferred bearer auth schemes (`api-key` | `refresh-token`). With
+        `type: refresh-token`, the IR records the get-token endpoint's `grant_type` request property
+        (`InferredAuthSchemeTokenEndpoint.grantType`) so SDKs always send `grant_type=refresh_token`
+        and do not expose `grant_type` as a client option.
+        ```yaml
+        auth-schemes:
+          Bearer:
+            scheme: bearer
+            get-token: POST /authorize
+            type: refresh-token
+        ```
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
 - version: 5.149.0
   changelogEntry:
     - summary: |

@@ -673,6 +673,7 @@ export const ExperimentalConfig = z.object({
     "ai-example-style-instructions": z.string().optional(),
     "exclude-apis": z.boolean().optional(),
     "basepath-aware": z.boolean().optional(),
+    "robots-txt-on-instance-url": z.boolean().optional(),
     "external-sitemaps": z.array(ExternalSitemapSchema).optional()
 });
 

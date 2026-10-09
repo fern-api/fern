@@ -78,6 +78,7 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1492,6 +1493,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             // For InferredAuth with a refresh token grant: the refresh token field, which takes precedence over
             // OAuth client credentials when both are provided.
             String refreshTokenUnsetCondition;
+            // For OAuth: the pre-generated access token builder field (e.g. "token") and the header it is
+            // sent in. Null for schemes without a token override.
+            String tokenOverrideFieldName;
+            String tokenOverrideHeader;
+            String tokenOverridePrefix;
 
             AuthProviderInfo(
                     String schemeKey,
@@ -2185,6 +2191,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         // Resolve the auth client from the token endpoint's actual subpackage (not
                         // a hardcoded "auth" subpackage, which may not exist).
                         oauthInfo.tokenEndpointAuthClientClassName = authClientClassName;
+                        oauthInfo.tokenOverrideFieldName = tokenOverridePropertyName;
+                        oauthInfo.tokenOverrideHeader = tokenHeader;
+                        oauthInfo.tokenOverridePrefix = tokenPrefix.orElse("");
                         authProviderInfos.add(oauthInfo);
                     } else if (configureAuthMethod != null) {
                         // Token override is always enabled - check for token first
@@ -3161,8 +3170,29 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             oauthCondition += " && " + other.refreshTokenUnsetCondition;
                         }
                     }
+                    // The token override field may be shared with a bearer scheme's field of the same
+                    // name, which already registers its own provider; only wire it when OAuth owns it.
+                    boolean useTokenOverride = info.tokenOverrideFieldName != null
+                            && authProviderInfos.stream()
+                                    .noneMatch(other ->
+                                            other != info && info.tokenOverrideFieldName.equals(other.fieldName));
+                    if (useTokenOverride) {
+                        this.configureAuthMethod
+                                .beginControlFlow("if (this.$L != null)", info.tokenOverrideFieldName)
+                                // Capture the value so later builder changes don't affect clients already built.
+                                .addStatement("String oauthAccessToken = this.$L", info.tokenOverrideFieldName)
+                                .addStatement(
+                                        "routingBuilder.addAuthProvider($S, endpointMetadata -> $T.singletonMap($S, $S + oauthAccessToken), $S)",
+                                        info.schemeKey,
+                                        Collections.class,
+                                        info.tokenOverrideHeader,
+                                        info.tokenOverridePrefix,
+                                        info.envVarHint)
+                                .nextControlFlow("else if ($L)", oauthCondition);
+                    } else {
+                        this.configureAuthMethod.beginControlFlow("if ($L)", oauthCondition);
+                    }
                     this.configureAuthMethod
-                            .beginControlFlow("if ($L)", oauthCondition)
                             .addComment("OAuth requires building an auth client for token fetching")
                             .addStatement(
                                     "$T.Builder oauthClientOptionsBuilder = $T.builder().environment(this.$L)",
