@@ -497,6 +497,7 @@ export class DocsDefinitionResolver {
         translatedIrsByLocale?: Map<string, IntermediateRepresentation>;
     }> = [];
     private pendingApiCounter = 0;
+    private skippedApiCounter = 0;
     private skippedApiDefinitions: Record<string, APIV1Read.ApiDefinition> = {};
     /**
      * Per-locale translated API definitions, keyed by locale then by the base
@@ -2326,7 +2327,7 @@ export class DocsDefinitionResolver {
     }): FernNavigation.V1.ApiReferenceNode {
         this.taskContext.logger.warn(`Skipping API reference "${item.title}" (--skip-api)`);
 
-        const apiDefinitionId = FdrAPI.ApiDefinitionId(`__skipped_api_${this.pendingApiCounter++}__`);
+        const apiDefinitionId = FdrAPI.ApiDefinitionId(`__skipped_api_${this.skippedApiCounter++}__`);
         const emptyApi: APIV1Read.ApiDefinition = {
             id: apiDefinitionId,
             rootPackage: {

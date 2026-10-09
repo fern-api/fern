@@ -60,14 +60,13 @@ describe("getDocsDevExcludeRules", () => {
     });
 
     it("excludes rules that rebuild API references when API references are skipped", () => {
-        expect(getDocsDevExcludeRules({ brokenLinks: true, apiWorkspacesLoaded: true, skipApi: true })).toEqual([
+        expect(getDocsDevExcludeRules({ brokenLinks: true, apiWorkspacesLoaded: true, skipApi: true }).sort()).toEqual([
             "missing-redirects",
             "valid-markdown-links"
         ]);
-        expect(getDocsDevExcludeRules({ brokenLinks: false, apiWorkspacesLoaded: true, skipApi: true })).toEqual([
-            "valid-markdown-links",
-            "missing-redirects"
-        ]);
+        expect(getDocsDevExcludeRules({ brokenLinks: false, apiWorkspacesLoaded: true, skipApi: true }).sort()).toEqual(
+            ["missing-redirects", "valid-markdown-links"]
+        );
     });
 
     it("keeps missing-redirects when API references are not skipped", () => {
