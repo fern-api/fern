@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern init` now accepts `--yes` (`-y`) to skip the organization prompt and default the
+    organization to the current directory name, and fails with an actionable error instead of
+    hanging on the prompt when run without a TTY (CI, coding agents) and without
+    `--organization` or `--yes`.
+  type: feat

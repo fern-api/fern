@@ -52,6 +52,8 @@ import {
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
+import { kebabCase } from "lodash-es";
+import { basename } from "path";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -399,6 +401,11 @@ async function getOrganization(cliContext: CliContext): Promise<string | undefin
     return undefined;
 }
 
+function getDefaultOrganization(): string {
+    const fromDirectory = kebabCase(basename(cwd()));
+    return fromDirectory.length > 0 ? fromDirectory : "fern";
+}
+
 function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "init",
@@ -433,12 +440,30 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("readme", {
                     type: "string",
                     description: "Migrate docs from Readme provided a URL to a Readme generated docs site"
+                })
+                .option("yes", {
+                    alias: "y",
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip prompts and accept defaults (the organization defaults to the current directory name). Intended for CI and coding agents."
                 }),
         async (argv) => {
             if (argv.organization == null) {
                 const projectConfig = await getOrganization(cliContext);
                 if (projectConfig != null) {
                     argv.organization = projectConfig;
+                } else if (argv.yes) {
+                    argv.organization = getDefaultOrganization();
+                    cliContext.logger.info(
+                        `Using organization ${chalk.bold(argv.organization)} (--yes). Change it in fern/fern.config.json if needed.`
+                    );
+                } else if (!process.stdin.isTTY) {
+                    return cliContext.failWithoutThrowing(
+                        "Cannot prompt for an organization in a non-interactive environment. Pass --organization <name> or use --yes to accept defaults.",
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
                 } else {
                     argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
                 }

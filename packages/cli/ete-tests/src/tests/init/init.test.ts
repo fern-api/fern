@@ -556,6 +556,40 @@ describe("fern init", () => {
         expect(result.stdout + result.stderr).toContain("does not resolve to an API definition");
     }, 180_000);
 
+    it.concurrent("init --docs --yes without --organization in a non-TTY environment", async ({ expect, signal }) => {
+        const tmpDir = await tmp.dir();
+        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
+
+        await runFernCli(["init", "--docs", "--yes"], { cwd: pathOfDirectory, includeAuthToken: false, signal });
+
+        const projectConfig = JSON.parse(
+            await readFile(
+                join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY), RelativeFilePath.of("fern.config.json")),
+                "utf-8"
+            )
+        );
+        expect(projectConfig.organization).toMatch(/^[a-z0-9][a-z0-9-]*$/);
+        await runFernCli(["check"], { cwd: pathOfDirectory, signal });
+    }, 180_000);
+
+    it.concurrent("init without --organization in a non-TTY environment fails with an actionable error", async ({
+        expect,
+        signal
+    }) => {
+        const tmpDir = await tmp.dir();
+        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
+
+        const result = await runFernCli(["init", "--docs"], {
+            cwd: pathOfDirectory,
+            includeAuthToken: false,
+            reject: false,
+            signal
+        });
+        expect(result.exitCode).not.toBe(0);
+        expect(result.stdout + result.stderr).toContain("--yes");
+        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))).toBe(false);
+    }, 180_000);
+
     it.concurrent("init mintlify", async ({ expect, signal }) => {
         const mintJsonPath = join(FIXTURES_DIR, RelativeFilePath.of("mintlify"), RelativeFilePath.of("mint.json"));
 
