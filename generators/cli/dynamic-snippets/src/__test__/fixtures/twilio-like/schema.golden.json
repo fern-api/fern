@@ -1,0 +1,242 @@
+{
+  "commands": [
+    {
+      "operation": "addresses.create-address",
+      "command": [
+        "addresses",
+        "create-address"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Addresses.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "Address",
+          "location": "body",
+          "flag": "--address",
+          "type": "object"
+        },
+        {
+          "wireName": "Address.City",
+          "location": "body",
+          "flag": "--address.-city",
+          "type": "string"
+        },
+        {
+          "wireName": "Address.Zip",
+          "location": "body",
+          "flag": "--address.-zip",
+          "type": "string"
+        },
+        {
+          "wireName": "CustomerName",
+          "location": "body",
+          "flag": "--customer-name",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation": "calls.create-call",
+      "command": [
+        "calls",
+        "create-call"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "json",
+          "location": "body",
+          "flag": "--json-param",
+          "type": "string"
+        },
+        {
+          "wireName": "To",
+          "location": "body",
+          "flag": "--to",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "X-Custom-Header",
+          "location": "header",
+          "flag": "--x-custom-header",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operation": "calls.create-call-stream",
+      "command": [
+        "calls",
+        "create-call-stream"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/Stream.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "Parameter1.Name",
+          "location": "body",
+          "flag": "--parameter1.-name",
+          "type": "string"
+        },
+        {
+          "wireName": "To",
+          "location": "body",
+          "flag": "--to",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation": "chat.v1.send",
+      "command": [
+        "chat",
+        "v1",
+        "send"
+      ],
+      "httpMethod": "POST",
+      "path": "/Chat/v1/Messages",
+      "inputs": [
+        {
+          "wireName": "Body",
+          "location": "body",
+          "flag": "--body",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation": "diagnostics.list-diagnostics",
+      "command": [
+        "diagnostics",
+        "list-diagnostics"
+      ],
+      "httpMethod": "GET",
+      "path": "/Diagnostics",
+      "inputs": [
+        {
+          "wireName": "日本語",
+          "location": "query",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operation": "media.upload-media",
+      "command": [
+        "media",
+        "upload-media"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Media.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "File",
+          "location": "body",
+          "flag": "--file",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation": "messages.create-message",
+      "command": [
+        "messages",
+        "create-message"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "Body",
+          "location": "body",
+          "flag": "--body",
+          "type": "string"
+        },
+        {
+          "wireName": "From",
+          "location": "body",
+          "flag": "--from",
+          "type": "string"
+        },
+        {
+          "wireName": "To",
+          "location": "body",
+          "flag": "--to",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation": "messages.list-messages",
+      "command": [
+        "messages",
+        "list-messages"
+      ],
+      "httpMethod": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "DateCreated<",
+          "location": "query",
+          "flag": "--date-created-before",
+          "type": "string"
+        },
+        {
+          "wireName": "PageSize",
+          "location": "query",
+          "flag": "--page-size",
+          "type": "integer"
+        }
+      ]
+    }
+  ]
+}
