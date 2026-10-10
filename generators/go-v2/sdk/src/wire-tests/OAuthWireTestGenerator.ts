@@ -205,10 +205,25 @@ export class OAuthWireTestGenerator {
      */
     private getRequestTypeReference(serviceInfo: OAuthServiceInfo): { name: string; importPath: string } {
         const endpoint = serviceInfo.endpoint;
+        const sdkRequest = endpoint.sdkRequest;
+
+        // A justRequestBody shape with a named request body type generates a request
+        // struct under the type's own name, not a request wrapper. Mirrors
+        // ClientGenerator.getTokenEndpointRequestTypeReference.
+        if (
+            sdkRequest?.shape.type === "justRequestBody" &&
+            sdkRequest.shape.value.type === "typeReference" &&
+            sdkRequest.shape.value.requestBodyType.type === "named"
+        ) {
+            const namedType = sdkRequest.shape.value.requestBodyType;
+            return {
+                name: this.context.getClassName(namedType.name),
+                importPath: this.context.getPackageLocation(namedType.fernFilepath).importPath
+            };
+        }
+
         const requestWrapperName =
-            endpoint.sdkRequest?.shape.type === "wrapper"
-                ? endpoint.sdkRequest.shape.wrapperName
-                : endpoint.sdkRequest?.requestParameterName;
+            sdkRequest?.shape.type === "wrapper" ? sdkRequest.shape.wrapperName : sdkRequest?.requestParameterName;
 
         if (requestWrapperName != null) {
             // Use the context helper to get the proper type reference for wrapped requests
