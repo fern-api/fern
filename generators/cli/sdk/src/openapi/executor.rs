@@ -12961,7 +12961,9 @@ fn routing_bearer_schemes(configured: &[&str], unconfigured: &[&str]) -> DynAuth
     std::sync::Arc::new(crate::auth::RoutingAuthProvider::new(schemes))
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_optional_auth_without_credentials_is_not_required() {
     // `security: [{BearerAuth: []}, {}]` — auth is optional. With no token the
     // routing provider picks the anonymous alternative and attaches nothing,
@@ -12978,7 +12980,9 @@ async fn test_dry_run_optional_auth_without_credentials_is_not_required() {
     assert_eq!(auth["schemes"], json!(["BearerAuth", ""]), "{auth}");
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_optional_auth_with_credentials_is_resolved() {
     let provider = routing_bearer_schemes(&["BearerAuth"], &[]);
     let auth = dry_run_auth_block(
@@ -12992,7 +12996,9 @@ async fn test_dry_run_optional_auth_with_credentials_is_resolved() {
     assert_eq!(auth["satisfied_by"], json!("BearerAuth"), "{auth}");
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_anonymous_alternative_listed_first_wins() {
     // Spec order decides, exactly as `RoutingAuthProvider::apply` does: with
     // `{}` first, the request goes out unauthenticated even if a token exists.
@@ -13007,7 +13013,9 @@ async fn test_dry_run_anonymous_alternative_listed_first_wins() {
     assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_names_the_requirement_that_was_satisfied() {
     // Two schemes hold credentials but the endpoint only accepts one of them.
     let provider = routing_bearer_schemes(&["BearerAuth", "OtherAuth"], &[]);
@@ -13023,7 +13031,172 @@ async fn test_dry_run_names_the_requirement_that_was_satisfied() {
     assert_eq!(auth["schemes"], json!(["MissingAuth", "OtherAuth"]), "{auth}");
 }
 
+#[cfg(test)]
+fn env_bearer(name: &str, var: &str) -> DynAuthProvider {
+    std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+        name,
+        crate::auth::AuthCredentialSource::from_env(var),
+    ))
+}
+
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
+async fn test_dry_run_lists_only_the_sources_of_the_selected_requirement() {
+    let mut guard = crate::auth::test_helpers::GlobalAuthStateGuard::new();
+    guard
+        .set_env("DRY_RUN_USED_TOKEN", "used-secret")
+        .set_env("DRY_RUN_UNUSED_TOKEN", "unused-secret");
+    let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::RoutingAuthProvider::new(
+        HashMap::from([
+            ("UsedAuth".to_string(), env_bearer("UsedAuth", "DRY_RUN_USED_TOKEN")),
+            (
+                "UnusedAuth".to_string(),
+                env_bearer("UnusedAuth", "DRY_RUN_UNUSED_TOKEN"),
+            ),
+        ]),
+    ));
+    let auth = dry_run_auth_block(bearer_scheme(), require("UsedAuth"), None, &provider).await;
+    assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
+    assert_eq!(auth["satisfied_by"], json!("UsedAuth"), "{auth}");
+    assert_eq!(
+        auth["configured_sources"],
+        json!(["DRY_RUN_USED_TOKEN environment variable"]),
+        "{auth}"
+    );
+}
+
+#[cfg(test)]
+#[tokio::test]
+#[serial_test::serial]
+async fn test_dry_run_prefers_the_requirement_the_profile_stored() {
+    // `RoutingAuthProvider::apply` picks the requirement a selected profile
+    // stored credentials for over an earlier spec-order alternative. The
+    // preview must name the same requirement.
+    let mut guard = crate::auth::test_helpers::GlobalAuthStateGuard::new();
+    guard.install_profile("test", crate::profiles::SelectionSource::Flag);
+    guard.install_keyring("dry-run-cli", "OAuth", "stored-secret");
+    guard.set_env("DRY_RUN_ENV_TOKEN", "env-secret");
+    let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::RoutingAuthProvider::new(
+        HashMap::from([
+            ("EnvAuth".to_string(), env_bearer("EnvAuth", "DRY_RUN_ENV_TOKEN")),
+            (
+                "OAuth".to_string(),
+                std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+                    "OAuth",
+                    crate::auth::AuthCredentialSource::keyring("dry-run-cli", "OAuth"),
+                )) as DynAuthProvider,
+            ),
+        ]),
+    ));
+    let keyring_hint = "keyring entry dry-run-cli:OAuth (populated by `dry-run-cli auth login`)";
+
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![requirement("EnvAuth"), requirement("OAuth")]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
+    assert_eq!(auth["satisfied_by"], json!("OAuth"), "{auth}");
+    assert_eq!(auth["configured_sources"], json!([keyring_hint]), "{auth}");
+    let rendered = auth.to_string();
+    assert!(
+        !rendered.contains("stored-secret") && !rendered.contains("env-secret"),
+        "credential values must never appear in dry-run output: {auth}"
+    );
+
+    // An anonymous alternative listed first still wins under a profile: the
+    // stored-credentials preference is vacuously true for `{}`, so `apply`
+    // attaches nothing and the preview must say so rather than name `OAuth`.
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![HashMap::new(), requirement("OAuth")]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
+}
+
+#[cfg(test)]
+#[tokio::test]
+#[serial_test::serial]
+async fn test_dry_run_reports_supplied_when_an_any_provider_has_nothing() {
+    // `AnyAuthProvider::selected_requirement` is `None` without configured
+    // credentials; the caller's explicit header still goes on the wire.
+    let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::AnyAuthProvider::new(vec![
+        env_bearer("BearerAuth", "DRY_RUN_UNSET_ANY_TOKEN"),
+    ]));
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        require("BearerAuth"),
+        Some(r#"{"Authorization":"Bearer from-the-flag"}"#),
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("supplied"), "{auth}");
+    assert_eq!(auth["satisfied_by"], json!("BearerAuth"), "{auth}");
+}
+
+#[cfg(test)]
+#[tokio::test]
+#[serial_test::serial]
+async fn test_dry_run_follows_apply_when_the_caller_supplies_another_alternative() {
+    // The caller satisfies the first alternative explicitly while a profile
+    // stores the second. `apply` is handed the declared policy, so it still
+    // attaches the stored credentials; the preview must name that requirement
+    // rather than the caller-emptied one.
+    let mut guard = crate::auth::test_helpers::GlobalAuthStateGuard::new();
+    guard.install_profile("test", crate::profiles::SelectionSource::Flag);
+    guard.install_keyring("dry-run-cli", "OAuth", "stored-secret");
+    let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::RoutingAuthProvider::new(
+        HashMap::from([
+            ("EnvAuth".to_string(), env_bearer("EnvAuth", "DRY_RUN_UNSET_ENV_TOKEN")),
+            (
+                "OAuth".to_string(),
+                std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+                    "OAuth",
+                    crate::auth::AuthCredentialSource::keyring("dry-run-cli", "OAuth"),
+                )) as DynAuthProvider,
+            ),
+        ]),
+    ));
+    let mut schemes = HashMap::new();
+    schemes.insert(
+        "EnvAuth".to_string(),
+        crate::openapi::discovery::SecurityScheme::ApiKeyQuery {
+            name: "api_key".to_string(),
+        },
+    );
+    schemes.insert(
+        "OAuth".to_string(),
+        crate::openapi::discovery::SecurityScheme::HttpBearer,
+    );
+    let auth = dry_run_auth_block(
+        schemes,
+        Some(vec![requirement("EnvAuth"), requirement("OAuth")]),
+        Some(r#"{"api_key":"from-the-flag"}"#),
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
+    assert_eq!(auth["satisfied_by"], json!("OAuth"), "{auth}");
+    assert_eq!(
+        auth["configured_sources"],
+        json!(["keyring entry dry-run-cli:OAuth (populated by `dry-run-cli auth login`)"]),
+        "{auth}"
+    );
+    assert!(
+        !auth.to_string().contains("stored-secret"),
+        "credential values must never appear in dry-run output: {auth}"
+    );
+}
+
+#[cfg(test)]
+#[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_redacts_api_key_query_params() {
     let mut security_schemes = HashMap::new();
     security_schemes.insert(
@@ -13047,7 +13220,9 @@ async fn test_dry_run_redacts_api_key_query_params() {
     );
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_reports_resolved_credentials_without_leaking_them() {
     let provider = crate::auth::test_helpers::bearer("BearerAuth", "tok-secret");
     let auth = dry_run_auth_block(bearer_scheme(), require("BearerAuth"), None, &provider).await;
@@ -13060,7 +13235,9 @@ async fn test_dry_run_reports_resolved_credentials_without_leaking_them() {
     );
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_reports_missing_credentials_with_sources_to_set() {
     let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
         "BearerAuth",
@@ -13075,7 +13252,9 @@ async fn test_dry_run_reports_missing_credentials_with_sources_to_set() {
     );
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_reports_caller_supplied_credentials() {
     let provider = crate::auth::no_auth_provider();
     let auth = dry_run_auth_block(
@@ -13088,7 +13267,9 @@ async fn test_dry_run_reports_caller_supplied_credentials() {
     assert_eq!(auth["credentials"], json!("supplied"), "{auth}");
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_reports_anonymous_endpoint_as_not_required() {
     let provider = crate::auth::test_helpers::bearer("BearerAuth", "tok-secret");
     let auth = dry_run_auth_block(bearer_scheme(), Some(Vec::new()), None, &provider).await;
@@ -13097,7 +13278,9 @@ async fn test_dry_run_reports_anonymous_endpoint_as_not_required() {
     assert!(auth.get("configured_sources").is_none(), "{auth}");
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_without_configured_auth_is_not_required() {
     let provider = crate::auth::no_auth_provider();
     let auth = dry_run_auth_block(HashMap::new(), None, None, &provider).await;
@@ -13105,7 +13288,9 @@ async fn test_dry_run_without_configured_auth_is_not_required() {
     assert_eq!(auth["schemes"], Value::Null, "{auth}");
 }
 
+#[cfg(test)]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_dry_run_redacts_credential_headers() {
     // `--dry-run` output is routinely pasted into bug reports, so it must not
     // print the credential. The value reaches `header_params` whenever the spec
