@@ -1049,29 +1049,29 @@ files = [
 
 [[package]]
 name = "jsonpatch"
-version = "1.34"
+version = "1.35"
 description = "Apply JSON-Patches (RFC 6902) "
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "jsonpatch-1.34-py3-none-any.whl", hash = "sha256:be7726e7fa0969bc4100b3d9f4259f16aadda68a244c6e9e1066157a0c524ec3"},
-    {file = "jsonpatch-1.34.tar.gz", hash = "sha256:e60c9f2d903d261d6eddcbd12cf3193efdb58cd9376a36ccc4db2e29d6cc88e3"},
+    {file = "jsonpatch-1.35-py3-none-any.whl", hash = "sha256:417e05303ebf7aef98d3ebf1e1ae7e7a4de6ec57bc5d243cd3509eff650e959f"},
+    {file = "jsonpatch-1.35.tar.gz", hash = "sha256:679ad08672b4663c7ef1e5f3331d940f5e7786661b9acc1530104be1638e7a4f"},
 ]
 
 [package.dependencies]
-jsonpointer = ">=1.9"
+jsonpointer = ">=3.2"
 
 [[package]]
 name = "jsonpointer"
-version = "3.2.0"
+version = "3.2.1"
 description = "Identify specific nodes in a JSON document (RFC 6901) "
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "jsonpointer-3.2.0-py3-none-any.whl", hash = "sha256:3e25c9bcadf5ae20c3420922234eaba1ae36ab9bef64cd72454aeaceb0b29aad"},
-    {file = "jsonpointer-3.2.0.tar.gz", hash = "sha256:807db557622fbe07a0d49e19cf4795a269d55eee5ba345fb9959d148eba5ef94"},
+    {file = "jsonpointer-3.2.1-py3-none-any.whl", hash = "sha256:b19ee68644e9ffb51440448d8f7811af2b7406eea1db90603e93f5849323119a"},
+    {file = "jsonpointer-3.2.1.tar.gz", hash = "sha256:47c846513b3a4ec46eecef1105207fba075e2a3659048e362bd7daff0fc33342"},
 ]
 
 [[package]]
@@ -1245,14 +1245,14 @@ websockets = ">=14,<17"
 
 [[package]]
 name = "langsmith"
-version = "0.14.6"
+version = "0.14.7"
 description = "Client library to connect to the LangSmith Observability and Evaluation Platform."
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "langsmith-0.14.6-py3-none-any.whl", hash = "sha256:384b1605dccf6ea6509baf76fa480538727b1b7c52dcefe0cf490b1860bd91c6"},
-    {file = "langsmith-0.14.6.tar.gz", hash = "sha256:6d8182ed6ce099e1f85096e11dbabc8ca9ff2114aebb41448fb921adfe3a2001"},
+    {file = "langsmith-0.14.7-py3-none-any.whl", hash = "sha256:748538d163cd073879106837d7f0892f34849655ba43cbb5aa5e21509e24423d"},
+    {file = "langsmith-0.14.7.tar.gz", hash = "sha256:10ead0e0134ae2ee49371091e9d996e7f32a6103bc35860d55c26ee42d975bee"},
 ]
 
 [package.dependencies]
