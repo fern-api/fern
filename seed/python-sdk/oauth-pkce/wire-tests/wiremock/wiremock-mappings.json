@@ -49,9 +49,64 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "4c3c75a0-cbf7-42af-bc4a-633f488d6b12",
+      "name": "authorize - default - oauth.authorize.0",
+      "request": {
+        "urlPathTemplate": "/oauth/authorize",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "oauth.authorize.0"
+          }
+        },
+        "queryParameters": {
+          "response_type": {
+            "equalTo": "code"
+          },
+          "client_id": {
+            "equalTo": "client_abc123"
+          },
+          "redirect_uri": {
+            "equalTo": "https://example.com/callback"
+          },
+          "code_challenge": {
+            "equalTo": "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM"
+          },
+          "code_challenge_method": {
+            "equalTo": "S256"
+          },
+          "scope": {
+            "equalTo": "read write"
+          },
+          "state": {
+            "equalTo": "xyz"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"code\": \"auth_code_xyz\",\n  \"state\": \"xyz\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4c3c75a0-cbf7-42af-bc4a-633f488d6b12",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }
