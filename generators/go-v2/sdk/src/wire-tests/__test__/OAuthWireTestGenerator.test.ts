@@ -1,12 +1,16 @@
 import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import type { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { OAuthWireTestGenerator } from "../OAuthWireTestGenerator.js";
 
 const ROOT_IMPORT_PATH = "github.com/acme/acme-go";
 
-const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
+const caseConverter = new CaseConverter({
+    generationLanguage: "go",
+    keywords: undefined,
+    smartCasing: true
+});
 
 function createName(originalName: string): FernIr.Name {
     const lower = originalName.toLowerCase();
@@ -24,7 +28,11 @@ function createNameAndWireValue(name: string, wireValue: string): FernIr.NameAnd
     return { name: createName(name), wireValue };
 }
 
-const ROOT_FILEPATH: FernIr.FernFilepath = { allParts: [], packagePath: [], file: undefined };
+const ROOT_FILEPATH: FernIr.FernFilepath = {
+    allParts: [],
+    packagePath: [],
+    file: undefined
+};
 const AUTH_FILEPATH: FernIr.FernFilepath = {
     allParts: [createName("auth")],
     packagePath: [createName("auth")],
@@ -146,8 +154,10 @@ function createContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorConte
 function generateOAuthWireTest(endpoint: FernIr.HttpEndpoint): string {
     const context = createContext(createIr(endpoint));
     const file = new OAuthWireTestGenerator(context).generate();
-    expect(file).toBeDefined();
-    return file!.toFile().fileContents as string;
+    if (file == null) {
+        throw new Error("expected OAuth wire test file to be generated");
+    }
+    return file.toFile().fileContents as string;
 }
 
 describe("OAuthWireTestGenerator", () => {
