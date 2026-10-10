@@ -2,7 +2,7 @@
 generated `from_xml`/`to_xml` round trip."""
 
 from dataclasses import dataclass
-from typing import List, Optional, Sequence, Tuple
+from typing import List, Optional, Sequence, Set, Tuple
 
 from .context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import Project
@@ -232,13 +232,14 @@ class _XmlModelTest:
         ]
 
     def _child_order_test(self) -> List[str]:
-        names = self._content_child_names()
+        children = self._content_child_declarations()
         has_text = any(_kind(p) == "text" and self._primitive(p.item_type) == "string" for p in self._properties)
         body: Optional[str] = None
-        if len(names) >= 2:
-            body = f"<{names[0]} /><{names[1]} /><{names[0]} />"
-        elif len(names) == 1 and has_text:
-            body = f"a<{names[0]} />b"
+        if len(children) >= 2:
+            first, second = self._sample_element(children[0]), self._sample_element(children[1])
+            body = f"{first}{second}{first}"
+        elif len(children) == 1 and has_text:
+            body = f"a{self._sample_element(children[0])}b"
         if body is None:
             return []
         document = self._document("", body)
@@ -344,17 +345,19 @@ class _XmlModelTest:
             return f"<{name}{namespace}{attributes} />"
         return f"<{name}{namespace}{attributes}>{text}</{name}>"
 
-    def _content_child_names(self) -> List[str]:
-        """Element names of non-namespaced child types that live in the ordered content (not wrapped)."""
-        names: List[str] = []
+    def _content_child_declarations(self) -> List[ir_types.TypeDeclaration]:
+        """Non-namespaced child types that live in the ordered content (not wrapped), one per element name."""
+        declarations: List[ir_types.TypeDeclaration] = []
+        seen: Set[str] = set()
         for property in self._properties:
             if _kind(property) != "element" or (property.xml.wrapped and property.is_list):
                 continue
             for child in self._generator.xml_object_declarations(property.item_type):
                 xml = child.encoding.xml if child.encoding is not None else None
-                if xml is not None and xml.namespace is None and xml.name not in names:
-                    names.append(xml.name)
-        return names
+                if xml is not None and xml.namespace is None and xml.name not in seen:
+                    seen.add(xml.name)
+                    declarations.append(child)
+        return declarations
 
     def _root_name(self) -> str:
         return f"{self._xml.prefix}:{self._xml.name}" if self._xml.prefix is not None else self._xml.name

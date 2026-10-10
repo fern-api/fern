@@ -11,7 +11,7 @@ public class WideXmlTest
     {
         var xml =
             "<Wide attr1=\"attr1\" attr2=\"attr2\" attr3=\"attr3\" attr4=\"attr4\" attr5=\"attr5\" attr6=\"attr6\" attr7=\"attr7\" attr8=\"attr8\" attr9=\"attr9\" attr10=\"attr10\" attr11=\"attr11\" attr12=\"attr12\" attr13=\"attr13\" attr14=\"attr14\" attr15=\"attr15\" attr16=\"attr16\" attr17=\"attr17\" attr18=\"attr18\" attr19=\"attr19\" attr20=\"attr20\" attr21=\"attr21\" attr22=\"attr22\" attr23=\"attr23\" attr24=\"attr24\" attr25=\"attr25\" attr26=\"attr26\" attr27=\"attr27\" attr28=\"attr28\" attr29=\"attr29\" attr30=\"attr30\" attr31=\"attr31\" attr32=\"attr32\" attr33=\"attr33\" attr34=\"attr34\" attr35=\"attr35\" attr36=\"attr36\" attr37=\"attr37\" attr38=\"attr38\" attr39=\"attr39\" attr40=\"attr40\" attr41=\"attr41\" attr42=\"attr42\" attr43=\"attr43\" attr44=\"attr44\" attr45=\"attr45\" attr46=\"attr46\" attr47=\"attr47\" attr48=\"attr48\" attr49=\"attr49\" attr50=\"attr50\" attr51=\"attr51\" attr52=\"attr52\" attr53=\"attr53\" attr54=\"attr54\" attr55=\"attr55\" attr56=\"attr56\" attr57=\"attr57\" attr58=\"attr58\" attr59=\"attr59\" attr60=\"attr60\" attr61=\"attr61\" attr62=\"attr62\" attr63=\"attr63\" attr64=\"attr64\" attr65=\"attr65\" attr66=\"attr66\" attr67=\"attr67\" attr68=\"attr68\" attr69=\"attr69\" attr70=\"attr70\" attr71=\"attr71\" attr72=\"attr72\" attr73=\"attr73\" attr74=\"attr74\" attr75=\"attr75\" attr76=\"attr76\" attr77=\"attr77\" attr78=\"attr78\" attr79=\"attr79\" attr80=\"attr80\" attr81=\"attr81\" attr82=\"attr82\" attr83=\"attr83\" attr84=\"attr84\" attr85=\"attr85\" attr86=\"attr86\" attr87=\"attr87\" attr88=\"attr88\" attr89=\"attr89\" attr90=\"attr90\" attr91=\"attr91\" attr92=\"attr92\" attr93=\"attr93\" attr94=\"attr94\" attr95=\"attr95\" attr96=\"attr96\" attr97=\"attr97\" attr98=\"attr98\" attr99=\"attr99\" attr100=\"attr100\" attr101=\"attr101\" attr102=\"attr102\" attr103=\"attr103\" attr104=\"attr104\" attr105=\"attr105\" attr106=\"attr106\" attr107=\"attr107\" attr108=\"attr108\" attr109=\"attr109\" attr110=\"attr110\" attr111=\"attr111\" attr112=\"attr112\" attr113=\"attr113\" attr114=\"attr114\" attr115=\"attr115\" attr116=\"attr116\" attr117=\"attr117\" attr118=\"attr118\" attr119=\"attr119\" attr120=\"attr120\" attr121=\"attr121\" attr122=\"attr122\" attr123=\"attr123\" attr124=\"attr124\" attr125=\"attr125\" attr126=\"attr126\" attr127=\"attr127\" attr128=\"attr128\" attr129=\"attr129\" attr130=\"attr130\" attr131=\"attr131\" attr132=\"attr132\" attr133=\"attr133\" attr134=\"attr134\" attr135=\"attr135\" attr136=\"attr136\" attr137=\"attr137\" attr138=\"attr138\" attr139=\"attr139\" attr140=\"attr140\" attr141=\"attr141\" attr142=\"attr142\" attr143=\"attr143\" attr144=\"attr144\" attr145=\"attr145\" attr146=\"attr146\" attr147=\"attr147\" attr148=\"attr148\" attr149=\"attr149\" attr150=\"attr150\" attr151=\"attr151\" attr152=\"attr152\" attr153=\"attr153\" attr154=\"attr154\" attr155=\"attr155\" attr156=\"attr156\" attr157=\"attr157\" attr158=\"attr158\" attr159=\"attr159\" attr160=\"attr160\" attr161=\"attr161\" attr162=\"attr162\" attr163=\"attr163\" attr164=\"attr164\" attr165=\"attr165\" attr166=\"attr166\" attr167=\"attr167\" attr168=\"attr168\" attr169=\"attr169\" attr170=\"attr170\" attr171=\"attr171\" attr172=\"attr172\" attr173=\"attr173\" attr174=\"attr174\" attr175=\"attr175\" attr176=\"attr176\" attr177=\"attr177\" attr178=\"attr178\" attr179=\"attr179\" attr180=\"attr180\" attr181=\"attr181\" attr182=\"attr182\" attr183=\"attr183\" attr184=\"attr184\" attr185=\"attr185\" attr186=\"attr186\" attr187=\"attr187\" attr188=\"attr188\" attr189=\"attr189\" attr190=\"attr190\" attr191=\"attr191\" attr192=\"attr192\" attr193=\"attr193\" attr194=\"attr194\" attr195=\"attr195\" attr196=\"attr196\" attr197=\"attr197\" attr198=\"attr198\" attr199=\"attr199\" attr200=\"attr200\" attr201=\"attr201\" attr202=\"attr202\" attr203=\"attr203\" attr204=\"attr204\" attr205=\"attr205\" attr206=\"attr206\" attr207=\"attr207\" attr208=\"attr208\" attr209=\"attr209\" attr210=\"attr210\" attr211=\"attr211\" attr212=\"attr212\" attr213=\"attr213\" attr214=\"attr214\" attr215=\"attr215\" attr216=\"attr216\" attr217=\"attr217\" attr218=\"attr218\" attr219=\"attr219\" attr220=\"attr220\" attr221=\"attr221\" attr222=\"attr222\" attr223=\"attr223\" attr224=\"attr224\" attr225=\"attr225\" attr226=\"attr226\" attr227=\"attr227\" attr228=\"attr228\" attr229=\"attr229\" attr230=\"attr230\" attr231=\"attr231\" attr232=\"attr232\" attr233=\"attr233\" attr234=\"attr234\" attr235=\"attr235\" attr236=\"attr236\" attr237=\"attr237\" attr238=\"attr238\" attr239=\"attr239\" attr240=\"attr240\" attr241=\"attr241\" attr242=\"attr242\" attr243=\"attr243\" attr244=\"attr244\" attr245=\"attr245\" attr246=\"attr246\" attr247=\"attr247\" attr248=\"attr248\" attr249=\"attr249\" attr250=\"attr250\" attr251=\"attr251\" attr252=\"attr252\" attr253=\"attr253\" attr254=\"attr254\" attr255=\"attr255\" attr256=\"attr256\"><Pause /></Wide>";
-        var parsed = Wide.FromXml(xml);
+        var parsed = global::SeedApi.Wide.FromXml(xml);
         Assert.That(parsed.Attr1, Is.EqualTo("attr1"), "Attr1");
         Assert.That(parsed.Attr2, Is.EqualTo("attr2"), "Attr2");
         Assert.That(parsed.Attr3, Is.EqualTo("attr3"), "Attr3");
@@ -526,7 +526,7 @@ public class WideXmlTest
         Assert.That(serialized, Does.Contain("attr255=\"attr255\""));
         Assert.That(serialized, Does.Contain("attr256=\"attr256\""));
         Assert.That(
-            Wide.FromXml(serialized).ToXml(false),
+            global::SeedApi.Wide.FromXml(serialized).ToXml(false),
             Is.EqualTo(serialized),
             "re-serializing the parsed document is stable"
         );
@@ -537,43 +537,54 @@ public class WideXmlTest
     [NUnit.Framework.Test]
     public void FromXml_PreservesUnknownAttributesAndChildren()
     {
-        var parsed = Wide.FromXml("<Wide data-unknown=\"1\"><Unknown a=\"1\">v</Unknown></Wide>");
+        var parsed = global::SeedApi.Wide.FromXml(
+            "<Wide data-unknown=\"1\"><Unknown a=\"1\">v</Unknown></Wide>"
+        );
         Assert.That(parsed.AdditionalAttributes["data-unknown"], Is.EqualTo("1"));
         Assert.That(parsed.AdditionalChildren, Has.Count.EqualTo(1));
         Assert.That(parsed.AdditionalChildren[0].Name, Is.EqualTo("Unknown"));
         var serialized = parsed.ToXml(false);
         Assert.That(serialized, Does.Contain("data-unknown=\"1\""));
         Assert.That(serialized, Does.Contain("<Unknown a=\"1\">v</Unknown>"));
-        Assert.That(Wide.FromXml(serialized).ToXml(false), Is.EqualTo(serialized));
+        Assert.That(global::SeedApi.Wide.FromXml(serialized).ToXml(false), Is.EqualTo(serialized));
     }
 
     [NUnit.Framework.Test]
     public void ToXml_EscapesSpecialCharacters()
     {
-        var model = new Wide { Attr1 = "a & b < c > d \"q\" 'r'" };
+        var model = new global::SeedApi.Wide { Attr1 = "a & b < c > d \"q\" 'r'" };
         var serialized = model.ToXml(false);
         Assert.That(serialized, Does.Not.Contain("a & b"));
         Assert.That(serialized, Does.Not.Contain("< c"));
-        Assert.That(Wide.FromXml(serialized).Attr1, Is.EqualTo("a & b < c > d \"q\" 'r'"));
+        Assert.That(
+            global::SeedApi.Wide.FromXml(serialized).Attr1,
+            Is.EqualTo("a & b < c > d \"q\" 'r'")
+        );
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsWrongRootElement()
     {
-        Assert.That(() => Wide.FromXml("<NotTheWide />"), Throws.ArgumentException);
+        Assert.That(() => global::SeedApi.Wide.FromXml("<NotTheWide />"), Throws.ArgumentException);
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsMalformedXml()
     {
-        Assert.That(() => Wide.FromXml("<Wide><unclosed>"), Throws.ArgumentException);
+        Assert.That(
+            () => global::SeedApi.Wide.FromXml("<Wide><unclosed>"),
+            Throws.ArgumentException
+        );
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsDoctype()
     {
         Assert.That(
-            () => Wide.FromXml("<!DOCTYPE Wide [<!ENTITY xxe \"injected\">]><Wide>&xxe;</Wide>"),
+            () =>
+                global::SeedApi.Wide.FromXml(
+                    "<!DOCTYPE Wide [<!ENTITY xxe \"injected\">]><Wide>&xxe;</Wide>"
+                ),
             Throws.ArgumentException
         );
     }
