@@ -222,7 +222,7 @@ function printViolation({
     context.logger.info("");
 }
 
-function formatViolationPath(violation: ValidationViolation): string {
+export function formatViolationPath(violation: ValidationViolation): string {
     const parts: string[] = [];
 
     // Only add relativeFilepath if it's not empty
