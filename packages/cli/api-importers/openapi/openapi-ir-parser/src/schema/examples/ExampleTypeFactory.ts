@@ -144,7 +144,13 @@ export class ExampleTypeFactory {
                     options,
                     skipReadonly
                 });
-                if (result != null && result.type === "array" && result.value.length === 0) {
+                if (
+                    result != null &&
+                    result.type === "array" &&
+                    result.value.length === 0 &&
+                    !Array.isArray(example) &&
+                    !Array.isArray(this.getSchemaExample(schema))
+                ) {
                     return undefined;
                 }
                 if (result != null && result.type === "map" && result.value.length === 0) {
@@ -327,7 +333,7 @@ export class ExampleTypeFactory {
                 const fullExample = getFullExampleAsArray(example);
                 const itemExamples = [];
                 // If you have a top-level example use that
-                if (fullExample != null && fullExample.length > 0) {
+                if (fullExample != null) {
                     for (const item of fullExample) {
                         const itemExample = this.buildExampleHelper({
                             exampleId,
@@ -343,7 +349,7 @@ export class ExampleTypeFactory {
                         }
                     }
                     // Otherwise, use a schema level example
-                } else if (schema.example != null && schema.example.length > 0) {
+                } else if (schema.example != null) {
                     for (const item of schema.example) {
                         const itemExample = this.buildExampleHelper({
                             exampleId,
