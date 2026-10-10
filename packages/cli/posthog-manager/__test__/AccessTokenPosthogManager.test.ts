@@ -36,4 +36,25 @@ describe("AccessTokenPosthogManager", () => {
             vi.unstubAllEnvs();
         }
     });
+
+    it("tags automation events with the CLI release environment", () => {
+        vi.stubEnv("FERN_CLI_RELEASE_ENVIRONMENT", "pre-prod");
+        try {
+            const manager = new AccessTokenPosthogManager({ posthogApiKey: "test-api-key" });
+
+            manager.sendAutomationEvent({
+                distinctId: "run-1",
+                event: "generation_failed",
+                properties: { error_code: "CONFIG_ERROR", cliReleaseEnvironment: "prod" }
+            });
+
+            expect(mockCapture).toHaveBeenCalledWith({
+                distinctId: "run-1",
+                event: "generation_failed",
+                properties: { error_code: "CONFIG_ERROR", cliReleaseEnvironment: "pre-prod" }
+            });
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
 });

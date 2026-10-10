@@ -38,7 +38,8 @@ export class AccessTokenPosthogManager implements PosthogManager {
         this.posthog.capture({
             distinctId: event.distinctId,
             event: event.event,
-            properties: event.properties
+            // Same base property as `CLI` events, so one filter separates beta and pre-prod from prod everywhere.
+            properties: { ...event.properties, cliReleaseEnvironment: getCliReleaseEnvironment() }
         });
     }
 
