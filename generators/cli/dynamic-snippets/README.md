@@ -80,6 +80,11 @@ A change to the importer's command naming surfaces as an `dynamic-ir.e2e.test.ts
   workspace name (`generatorConfig.apiName`). The Rust generator falls back to `apiDisplayName`, which
   the dynamic IR does not carry; the workspace name is its closest available analogue. (The name is
   normalized with the CLI's own `toKebabCase`, so acronym/mixed-case names like `MyCLI` → `mycli`.)
+- **Composition (`oneOf` / `anyOf`) request bodies get flags the runtime doesn't have.** The runtime
+  only flattens an `object` / `allOf` body into flags (`flatten_body_params_prefix`, parser.rs), so a
+  top-level `oneOf` body accepts only `--json` / `--params`. The importer collapses a single-branch
+  `oneOf` into a plain property list, so the dynamic IR can't tell the two apart and the snippet emits
+  per-field flags (e.g. Twilio `conversations v2 conversations actions create --type …`). Needs IR support.
 - **Binary (`bytes`) request bodies are omitted.** The runtime exposes a binary body as a file-path
   flag (`--file`/`--body`, or an `x-fern-parameter-name` override), but the dynamic IR carries no flag
   metadata to pick the right one, so the upload argument is dropped (with a warning). Needs IR support

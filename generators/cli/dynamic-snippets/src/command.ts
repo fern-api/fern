@@ -40,7 +40,7 @@ export class CliCommandBuilder {
             return false;
         }
         this.seenFlags.add(flag);
-        this.tokens.push(flag, shellQuote(formatScalar(value)));
+        this.pushFlagValue(flag, value);
         return true;
     }
 
@@ -55,10 +55,23 @@ export class CliCommandBuilder {
         this.seenFlags.add(flag);
         for (const element of values) {
             if (element !== undefined && element !== null) {
-                this.tokens.push(flag, shellQuote(formatScalar(element)));
+                this.pushFlagValue(flag, element);
             }
         }
         return true;
+    }
+
+    /**
+     * A value starting with `-` (a PEM block, a negative number) would be parsed by clap as another
+     * flag, so it is attached with `=` instead: `--tls-cert='-----BEGIN…'`.
+     */
+    private pushFlagValue(flag: string, value: unknown): void {
+        const formatted = formatScalar(value);
+        if (formatted.startsWith("-")) {
+            this.tokens.push(`${flag}=${shellQuote(formatted)}`);
+        } else {
+            this.tokens.push(flag, shellQuote(formatted));
+        }
     }
 
     /** Route a value the runtime can only accept through `--params` (flagless, nested, array-of-object). */

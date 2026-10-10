@@ -330,6 +330,38 @@ describe("DynamicSnippetsGenerator", () => {
         expect(result.snippet).toBe("acme api messages create --to +1555");
     });
 
+    it("attaches values that start with '-' using '=' so the runtime doesn't read them as flags", () => {
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["certificates"],
+                method: "update",
+                location: { method: "POST", path: "/Certificate" },
+                queryParameters: [param("Offset", { typeReference: { type: "primitive", value: "INTEGER" } })],
+                body: {
+                    type: "properties",
+                    value: [
+                        param("TlsCert"),
+                        param("Tags", {
+                            typeReference: { type: "list", value: STRING } as FernIr.dynamic.TypeReference
+                        })
+                    ]
+                }
+            })
+        );
+        const result = generate(
+            ir,
+            {
+                endpoint: { method: "POST", path: "/Certificate" },
+                queryParameters: { Offset: -5 },
+                requestBody: { TlsCert: "-----BEGIN CERTIFICATE-----", Tags: ["-x", "y"] }
+            },
+            { binaryName: "acme" }
+        );
+        expect(result.snippet).toBe(
+            "acme certificates update --offset=-5 --tls-cert='-----BEGIN CERTIFICATE-----' --tags=-x --tags y"
+        );
+    });
+
     describe("customConfig.namespaces", () => {
         const credentialsList = (group: string[]) =>
             buildIr(
