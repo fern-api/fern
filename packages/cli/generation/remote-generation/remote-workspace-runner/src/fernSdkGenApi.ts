@@ -241,7 +241,22 @@ export interface FernSdkGenApiFlagTarget {
     generatorName: string;
 }
 
+/** Runtime kill switch for sdk-gen-api; see {@link isFernSdkGenApiDisabledByEnv}. Never defined at build time. */
+export const DISABLE_SDK_GEN_API_ENV_VAR = "FERN_DISABLE_SDK_GEN_API";
+
+/**
+ * Kill switch for tests and debugging: `FERN_DISABLE_SDK_GEN_API=true` keeps every generator off
+ * sdk-gen-api (generation routes to Fiddle, upgrades use FDR versions) regardless of the flag, and skips
+ * the flag request. It can only turn sdk-gen-api off; routing on still requires the flag.
+ */
+export function isFernSdkGenApiDisabledByEnv(): boolean {
+    return process.env[DISABLE_SDK_GEN_API_ENV_VAR]?.trim().toLowerCase() === "true";
+}
+
 export function isFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): Promise<boolean> {
+    if (isFernSdkGenApiDisabledByEnv()) {
+        return Promise.resolve(false);
+    }
     return getFeatureFlagClient().isEnabled(USE_SDK_GEN_API_FEATURE_FLAG, getFlagContext(target));
 }
 
@@ -250,6 +265,9 @@ export function isFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): Promise
  * paths such as the exit-time upgrade nudge; `undefined` means the flag has not been evaluated.
  */
 export function getResolvedFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): boolean | undefined {
+    if (isFernSdkGenApiDisabledByEnv()) {
+        return false;
+    }
     return getFeatureFlagClient().getCachedValue(USE_SDK_GEN_API_FEATURE_FLAG, getFlagContext(target));
 }
 
