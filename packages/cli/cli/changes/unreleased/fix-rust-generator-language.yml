@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Detect Rust as the language for `fernapi/fern-rust-sdk` and `fernapi/fern-rust-model` generators in
+    `generators.yml`. Previously the language was left unset, so `fern generate --package` reported
+    "Nothing to package" for Rust groups and Rust-specific CLI behavior (reserved-word casing, crates.io
+    version checks) was skipped.
+  type: fix
