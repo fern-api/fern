@@ -2957,6 +2957,9 @@
             "show-nav-availability-badges": {
               "type": "boolean"
             },
+            "hide-webhook-method-badges": {
+              "type": "boolean"
+            },
             "breadcrumbs": {
               "type": "object",
               "properties": {
