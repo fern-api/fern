@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.152.2
+  changelogEntry:
+    - summary: |
+        Send PostHog usage events from the beta (`fern-beta`) and pre-prod (`fern-pre-prod`) CLI builds, not only from
+        prod. Each event's `cliReleaseEnvironment` property (`beta` or `pre-prod`) separates them from prod usage, and
+        automation events (`generation_failed`, `verification_failed`) now carry it too. Dev and local builds still send no
+        usage events.
+      type: chore
+  createdAt: "2026-10-10"
+  irVersion: 67
 - version: 5.152.1
   changelogEntry:
     - summary: |
