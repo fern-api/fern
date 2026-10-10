@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Include the optional `detail` and `reason` that sdk-gen-api reports for a failed publication in the error message,
+    for example `sdk-gen-api publication failed (invalid_publish_request): <message>: <detail> [package_name_mismatch]`.
+    Credentials are redacted from the detail, and servers that omit these fields produce the same message as before.
+  type: fix

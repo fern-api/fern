@@ -1,4 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.105.1
+  changelogEntry:
+    - summary: |
+        `reference.md` is now generated for every output mode, matching the Go and Python generators. It was
+        previously skipped unless the CLI passed a snippet path (`local-file-system` output without
+        `snippets: path:` in generators.yml). `README.md` is unchanged and still requires snippets. Source-only output (`outputSourceFiles`, the default for local-file-system) now also includes the root `README.md`, `reference.md` and `CONTRIBUTING.md` when they were generated.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 3.105.0
+  changelogEntry:
+    - summary: |
+        Support inferred bearer auth with `type: refresh-token`. The SDK always sends
+        `grant_type: "refresh_token"` to the get-token endpoint, and `grantType` is no longer
+        exposed as a client auth option. Users pass only the refresh token (and any other
+        non-literal token endpoint parameters).
+      type: feat
+    - summary: |
+        With `type: refresh-token`, inferred auth only exposes and sends the token endpoint parameters used by
+        the OAuth refresh token grant (`refresh_token`, `scope`, `client_id`, `client_secret`) plus any
+        required ones. Optional parameters of other grants on a shared token endpoint, such as `code`,
+        `code_verifier` and `redirect_uri`, are no longer auth options.
+      type: feat
+    - summary: |
+        Inferred auth with `type: refresh-token` now rotates the refresh token. When the token response returns a new
+        `refresh_token`, the provider uses it for the next refresh and calls the optional `onRefreshTokenRotated`
+        auth option with it so it can be persisted.
+      type: feat
+    - summary: |
+        Wire tests for inferred auth with `type: refresh-token` now mock the token request with the fixed
+        `grant_type` and only the parameters the provider sends. When that scheme is an alternative to another
+        scheme on the same token endpoint, the tests mock only the first scheme, so the two handlers no longer
+        shadow each other.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
 - version: 3.104.5
   changelogEntry:
     - summary: |

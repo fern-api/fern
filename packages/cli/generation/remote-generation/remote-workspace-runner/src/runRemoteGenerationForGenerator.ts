@@ -829,7 +829,7 @@ async function resolveLatestRuntimeGeneratorVersion({
     const origin = getFernSdkGenApiOrigin();
     const language = generatorInvocation.language ?? getFernSdkGenApiLanguage(generatorInvocation.name);
     if (origin == null) {
-        throw new Error("FERN_SDK_GEN_API_ORIGIN is required when FERN_USE_SDK_GEN_API=true");
+        throw new Error("FERN_SDK_GEN_API_ORIGIN is required when sdk-gen-api generation is enabled");
     }
     if (language == null) {
         throw new Error(`Cannot discover a generator version for unsupported generator ${generatorInvocation.name}`);

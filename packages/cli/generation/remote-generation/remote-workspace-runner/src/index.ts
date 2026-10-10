@@ -12,6 +12,7 @@ export {
 } from "./dynamicIr/DynamicIrWorkerPool.js";
 export type {
     FernSdkConfigV1Payload,
+    FernSdkGenApiFlagTarget,
     FernSdkGenApiPackageConfig,
     FernSdkGenApiRequestedOutput
 } from "./fernSdkGenApi.js";
@@ -19,9 +20,12 @@ export {
     createFernSdkGenApiRequest,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
+    getResolvedFernSdkGenApiEnabled,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
+    resolveFernSdkGenApiEnabledByGenerator,
     synthesizesSdkConfig,
+    USE_SDK_GEN_API_FEATURE_FLAG,
     validateFernSdkGenApiPublishCredentialSource,
     validateFernSdkGenApiPublishCredentialSources,
     validateFernSdkGenApiPublishTargets

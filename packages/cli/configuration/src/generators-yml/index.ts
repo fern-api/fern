@@ -8,6 +8,10 @@ export {
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "../constants.js";
 export {
+    DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE,
+    isDirectRubyGemsPublishing
+} from "./directRubyGemsPublishing.js";
+export {
     type APIDefinition,
     type APIDefinitionLocation,
     type APIDefinitionSettings,
@@ -24,4 +28,8 @@ export {
 export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema.js";
 export { resolveAutomationConfig } from "./resolveAutomationConfig.js";
 export * from "./schemas/index.js";
+export {
+    getUnsignedMavenPublishingWithoutUrlMessage,
+    isUnsignedMavenPublishingWithoutUrl
+} from "./unsignedMavenPublishing.js";
 export * from "./utils/index.js";

@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import YAML from "yaml";
 
-import { loadSdkConfigV1 } from "../loadSdkConfigV1.js";
+import { assertNoSdkConfigDirectRubyGemsPublishing, loadSdkConfigV1 } from "../loadSdkConfigV1.js";
 
 describe("loadSdkConfigV1", () => {
     const temporaryDirectories: string[] = [];
@@ -357,8 +357,44 @@ describe("loadSdkConfigV1", () => {
         const error = await loadSdkConfigV1(configPath).catch((cause: unknown) => cause);
 
         expect(error).toBeInstanceOf(Error);
-        expect(String(error)).toContain("does not support direct rubygems");
+        expect(String(error)).toContain("Direct RubyGems publishing is not supported. Use output.delivery: github");
         expect(String(error)).not.toContain("unsupported-secret");
+    });
+
+    it("lets fern check flag direct RubyGems publishing that preview loading accepts", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            output: { delivery: "files", publish: { registry: "rubygems" } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath, true);
+
+        expect(() => assertNoSdkConfigDirectRubyGemsPublishing(loaded)).toThrow(
+            "target 0 (ruby): Direct RubyGems publishing is not supported. Use output.delivery: github with publish.registry: rubygems"
+        );
+    });
+
+    it("allows RubyGems publishing through GitHub delivery during fern check", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            output: { delivery: "github", github: { repository: "acme/acme-ruby" }, publish: { registry: "rubygems" } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath, true);
+
+        expect(() => assertNoSdkConfigDirectRubyGemsPublishing(loaded)).not.toThrow();
+    });
+
+    it("allows RubyGems publishing through GitHub delivery during fern generate", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            output: { delivery: "github", github: { repository: "acme/acme-ruby" }, publish: { registry: "rubygems" } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput?.type).toBe("github");
+        expect(loaded.payload.targets[0]?.publishCredential).toBeUndefined();
     });
 
     it("strips unsupported top-level credential literals before validation errors", async () => {
@@ -380,7 +416,7 @@ describe("loadSdkConfigV1", () => {
         const serializedError = String(error);
 
         expect(error).toBeInstanceOf(Error);
-        expect(serializedError).toContain("does not support direct rubygems");
+        expect(serializedError).toContain("Direct RubyGems publishing is not supported");
         expect(serializedError).not.toContain("unsupported-token");
         expect(serializedError).not.toContain("unsupported-user");
         expect(serializedError).not.toContain("unsupported-password");

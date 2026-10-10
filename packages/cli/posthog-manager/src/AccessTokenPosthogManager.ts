@@ -2,6 +2,7 @@ import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
+import { getCliReleaseEnvironment } from "./feature-flags/CliReleaseEnvironment.js";
 import { PosthogManager } from "./PosthogManager.js";
 
 export class AccessTokenPosthogManager implements PosthogManager {
@@ -26,6 +27,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
                     ...event.properties,
                     version: process.env.CLI_VERSION,
                     usingAccessToken: true,
+                    cliReleaseEnvironment: getCliReleaseEnvironment(),
                     ...getRunIdProperties()
                 }
             });
@@ -36,7 +38,8 @@ export class AccessTokenPosthogManager implements PosthogManager {
         this.posthog.capture({
             distinctId: event.distinctId,
             event: event.event,
-            properties: event.properties
+            // Same base property as `CLI` events, so one filter separates beta and pre-prod from prod everywhere.
+            properties: { ...event.properties, cliReleaseEnvironment: getCliReleaseEnvironment() }
         });
     }
 

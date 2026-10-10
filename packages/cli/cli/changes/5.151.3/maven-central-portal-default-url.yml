@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When a Maven output omits `url`, default to the Sonatype Central Portal OSSRH Staging API
+    (`https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/`) instead of
+    the retired OSSRH hosts (`oss.sonatype.org` / `s01.oss.sonatype.org`). This applies to signed and
+    unsigned `maven` outputs in generators.yml and to Maven publish targets in fern.yml.
+
+    Maven Central only releases signed artifacts, so an unsigned Maven output without a `url` is uploaded
+    to the Central Portal staging service but never released. `fern check` now reports a warning for this
+    (printed with `--warnings` for generators.yml) and `fern generate` logs it for generators.yml
+    `output.location: maven` (with or without a `github` block) and for fern.yml `publish.maven` targets
+    delivered through git. Add `signature` to publish to Maven Central, or set `url` to publish to another
+    registry. The warning does not fail `fern check` or block generation, so existing configurations keep
+    working.
+  type: fix

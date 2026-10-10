@@ -9,15 +9,16 @@ import {
     type AutomationRunOptions,
     type FernSdkConfigV1Payload,
     getFernSdkGenApiLanguage,
+    resolveFernSdkGenApiEnabledByGenerator,
     selectGeneratorConfigRoute
 } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
+import { buildGeneratePosthogProperties, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { createSdkConfigWorkspace } from "./createSdkConfigWorkspace.js";
-import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
 import { getGeneratorSelectedTargetIndexes, loadSdkConfigV1 } from "./loadSdkConfigV1.js";
@@ -206,6 +207,18 @@ export async function generateAPIWorkspaces({
 
         validateUniqueLanguageOwnership({ generations, cliContext });
 
+        // Start the per-generator flag requests now so they overlap login and the output-directory prompts.
+        // Values are memoized per process, so the remote runner reuses them. Local (Docker) generation never
+        // routes through sdk-gen-api, so it makes no flag request. The helper never rejects, so the promise
+        // cannot go unobserved if a prompt below throws first.
+        const isAutomation = automation != null;
+        const sdkGenApiEnabledByGenerator = useLocalDocker
+            ? undefined
+            : resolveFernSdkGenApiEnabledByGenerator({
+                  organization: project.config.organization,
+                  generatorNames: listRequestedGenerators({ generations, isAutomation }).map(({ name }) => name)
+              });
+
         if (!useLocalDocker) {
             const currentToken = await cliContext.runTask(async (context) => {
                 return askToLogin(context);
@@ -238,7 +251,14 @@ export async function generateAPIWorkspaces({
             orgId: project.config.organization,
             command: resolvePosthogCommandLabel(automation),
             properties: {
-                workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
+                ...buildGeneratePosthogProperties({
+                    project,
+                    generations,
+                    isAutomation,
+                    groupNames,
+                    generatorName,
+                    sdkGenApiEnabledByGenerator: await sdkGenApiEnabledByGenerator
+                })
             }
         });
 
@@ -658,35 +678,4 @@ async function confirmOutputDirectoriesForEligibleGenerators({
             }
         }
     }
-}
-
-/** Builds the `workspaces` array for the posthog event, honoring `--group` / `--generator` filters. */
-function buildPosthogWorkspaces({
-    project,
-    groupNames,
-    generatorName
-}: {
-    project: Project;
-    groupNames: string[] | undefined;
-    generatorName: string | undefined;
-}) {
-    return project.apiWorkspaces.map((workspace) => {
-        const resolvedGroupNames = expandGroupFilter(groupNames, workspace.generatorsConfiguration);
-        return {
-            name: workspace.workspaceName,
-            group: groupNames != null && groupNames.length === 1 ? groupNames[0] : groupNames,
-            generators: workspace.generatorsConfiguration?.groups
-                .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
-                .map((group) =>
-                    group.generators
-                        .filter((generator) => generatorName == null || generator.name === generatorName)
-                        .map((generator) => ({
-                            name: generator.name,
-                            version: generator.version,
-                            outputMode: generator.outputMode.type,
-                            config: generator.config
-                        }))
-                )
-        };
-    });
 }

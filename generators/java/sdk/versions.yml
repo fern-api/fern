@@ -1,4 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Support inferred bearer auth with `type: refresh-token`. The token supplier always sends
+        `grant_type=refresh_token`, and `grantType` is no longer a client builder option. Only the parameters of
+        the OAuth refresh token grant (`refreshToken`, `scope`, `clientId`, `clientSecret`) plus any required
+        ones are builder options and sent. Optional parameters of other grants on a shared token endpoint, such as
+        `code`, `codeVerifier` and `redirectUri`, stay on the token endpoint method only.
+      type: feat
+    - summary: |
+        Inferred auth with `type: refresh-token` rotates the refresh token. When the token response returns a new
+        `refresh_token`, the supplier uses it for the next refresh and passes it to the optional
+        `onRefreshTokenRotated(Consumer<String>)` builder option so it can be persisted. With endpoint security, a
+        provided refresh token selects the refresh token scheme over OAuth client credentials.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 4.31.0
+  changelogEntry:
+    - summary: |
+        Add the `omit-unused-oauth-setters` config option (default `false`). When enabled, clients with
+        endpoint-level security no longer generate builder setters for OAuth token-request properties other
+        than `clientId`/`clientSecret` (for example `code`, `codeVerifier` or `redirectUri` on a token endpoint
+        shared by several grants). Those setters were stored but never sent by the client-credentials flow.
+        The token endpoint method itself still accepts every request property.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 4.30.5
+  changelogEntry:
+    - summary: |
+        With endpoint-level security, the client builder's `token(...)` override for an OAuth
+        client-credentials scheme now authenticates that scheme with the given access token, taking
+        precedence over `clientId`/`clientSecret`. Previously the value was stored but never read, so
+        calls that only accept the OAuth scheme failed with a missing-credentials error.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 4.30.4
+  changelogEntry:
+    - summary: |
+        `reference.md` is now generated for every output mode, matching the Go and Python generators. It was
+        previously skipped unless the CLI passed a snippet path (`local-file-system` output without
+        `snippets: path:` in generators.yml). `README.md` is unchanged and still requires snippets.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
 - version: 4.30.3
   changelogEntry:
     - summary: |

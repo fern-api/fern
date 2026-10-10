@@ -1049,14 +1049,14 @@ files = [
 
 [[package]]
 name = "jsonpatch"
-version = "1.33"
-description = "Apply JSON-Patches (RFC 6902)"
+version = "1.34"
+description = "Apply JSON-Patches (RFC 6902) "
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "jsonpatch-1.33-py2.py3-none-any.whl", hash = "sha256:0ae28c0cd062bbd8b8ecc26d7d164fbbea9652a1a3693f3b956c1eae5145dade"},
-    {file = "jsonpatch-1.33.tar.gz", hash = "sha256:9fcd4009c41e6d12348b4a0ff2563ba56a2923a7dfee731d004e212e1ee5030c"},
+    {file = "jsonpatch-1.34-py3-none-any.whl", hash = "sha256:be7726e7fa0969bc4100b3d9f4259f16aadda68a244c6e9e1066157a0c524ec3"},
+    {file = "jsonpatch-1.34.tar.gz", hash = "sha256:e60c9f2d903d261d6eddcbd12cf3193efdb58cd9376a36ccc4db2e29d6cc88e3"},
 ]
 
 [package.dependencies]
@@ -1245,14 +1245,14 @@ websockets = ">=14,<17"
 
 [[package]]
 name = "langsmith"
-version = "0.14.5"
+version = "0.14.6"
 description = "Client library to connect to the LangSmith Observability and Evaluation Platform."
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "langsmith-0.14.5-py3-none-any.whl", hash = "sha256:f631fccd65f8f57b697ba5cd6550b488a1282ba994e540b3339b1d1affe32996"},
-    {file = "langsmith-0.14.5.tar.gz", hash = "sha256:ebeb638ea94bf8434b2b12d6970b4f9c4ef481124747d5c6f81bdbd9706fd556"},
+    {file = "langsmith-0.14.6-py3-none-any.whl", hash = "sha256:384b1605dccf6ea6509baf76fa480538727b1b7c52dcefe0cf490b1860bd91c6"},
+    {file = "langsmith-0.14.6.tar.gz", hash = "sha256:6d8182ed6ce099e1f85096e11dbabc8ca9ff2114aebb41448fb921adfe3a2001"},
 ]
 
 [package.dependencies]

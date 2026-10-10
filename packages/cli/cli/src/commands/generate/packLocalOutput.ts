@@ -102,6 +102,7 @@ export async function packLocalOutputForGroup({
             });
             if (packOnly) {
                 if (artifactProduced) {
+                    await copyDocsIntoDist({ outputPath, context });
                     await removeEverythingExceptDist({ outputPath, context });
                 } else {
                     context.logger.warn(
@@ -480,6 +481,32 @@ async function zipDirectory({
         zip.outputStream.on("error", reject);
         zip.outputStream.pipe(createWriteStream(zipPath)).on("close", resolve).on("error", reject);
     });
+}
+
+/** Root-level docs generators emit alongside the SDK source that should outlive --package-only cleanup. */
+const DOC_FILES_TO_KEEP_IN_DIST = ["README.md", "reference.md"];
+
+/**
+ * Copies the generated README.md and reference.md into fern-dist/ so --package-only keeps them for
+ * every language, not just those whose package format bundles root files (e.g. gems, Go source zips).
+ */
+async function copyDocsIntoDist({
+    outputPath,
+    context
+}: {
+    outputPath: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<void> {
+    const distDir = join(outputPath, RelativeFilePath.of(PACK_OUTPUT_DIRECTORY));
+    for (const filename of DOC_FILES_TO_KEEP_IN_DIST) {
+        const source = join(outputPath, RelativeFilePath.of(filename));
+        if (!(await doesPathExist(source))) {
+            continue;
+        }
+        await mkdir(distDir, { recursive: true });
+        await copyFile(source, join(distDir, RelativeFilePath.of(filename)));
+        context.logger.debug(`Copied ${filename} into ${PACK_OUTPUT_DIRECTORY}/.`);
+    }
 }
 
 /**

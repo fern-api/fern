@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Route generation through sdk-gen-api based on the `use-sdk-gen-api` PostHog feature flag instead of the
+    `FERN_USE_SDK_GEN_API` environment variable and the `DEFAULT_USE_SDK_GEN_API` build default. The flag is
+    evaluated per organization and generator, with the organization, the generator name, the generator's language,
+    and the CLI release environment (`prod`, `pre-prod`, `beta`, `dev`, `local`) as targeting properties. This lets
+    one generator or language be routed or kept on Fiddle for every organization or for a single organization, and
+    lets an organization be kept off sdk-gen-api entirely. The flag is off when PostHog is unreachable or the flag is
+    not configured.
+  type: feat
+- summary: |
+    Tag every CLI telemetry event with `cliReleaseEnvironment` (`prod`, `pre-prod`, `beta`, `dev`, `local`) so
+    events from different CLI distributions can be told apart. On the `fern generate` event, `sdkGenApiEnabled` now
+    reflects the `use-sdk-gen-api` flag (true when at least one requested generator is routed), each
+    `requestedGenerators` entry carries its own `sdkGenApiEnabled`, and `fernUseSdkGenApiEnv` is removed.
+  type: chore

@@ -16,6 +16,7 @@ describe("initializeAPI", () => {
                 openApiPath: undefined,
                 useFernDefinition: true,
                 useSdkConfig: true,
+                includeDocs: false,
                 context
             })
         ).rejects.toBeDefined();

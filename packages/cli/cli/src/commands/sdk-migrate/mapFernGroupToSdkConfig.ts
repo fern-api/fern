@@ -456,12 +456,14 @@ function mapEnvironmentUrls(
 }
 
 function normalizeGeneratorForMapping(generator: generatorsYml.GeneratorInvocation): FernResolvedGeneratorInput {
+    const omitSynthesizedDownloadSnippets = generator.raw != null && !generator.raw.snippets?.path;
+    const outputMode = normalizeResolvedOutput(generator.outputMode);
     return {
         ...generator,
         // Migrated SDK Config targets intentionally float to the latest supported generator.
         // Customers can add generatorVersion later when they want to pin an exact version.
         version: undefined,
-        outputMode: normalizeResolvedOutput(generator.outputMode)
+        outputMode: omitSynthesizedDownloadSnippets ? omitDownloadSnippetsFromDownloadFiles(outputMode) : outputMode
     };
 }
 
@@ -490,6 +492,14 @@ function normalizeResolvedOutput(value: unknown, fieldName?: string): unknown {
             return [[key, normalizeResolvedOutput(child, key)]];
         })
     );
+}
+
+function omitDownloadSnippetsFromDownloadFiles(value: unknown): unknown {
+    if (!isRecord(value) || value.type !== "downloadFiles") {
+        return value;
+    }
+    const { downloadSnippets: _, ...outputMode } = value;
+    return outputMode;
 }
 
 function isEmptyCredential(fieldName: string, value: unknown): boolean {
