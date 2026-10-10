@@ -307,6 +307,15 @@ async function packOutputForLanguage({
             return true;
         }
         case "rust": {
+            // fern-rust-model emits bare modules with no crate manifest, so there is nothing for
+            // cargo to package; only crates (fern-rust-sdk output) produce a .crate artifact.
+            if (!(await doesPathExist(join(outputPath, RelativeFilePath.of("Cargo.toml"))))) {
+                context.logger.warn(
+                    "No Cargo.toml found in the Rust output (e.g. fern-rust-model output), so there is no crate to package. " +
+                        "Share the output directory itself, or include the modules in your own crate."
+                );
+                return false;
+            }
             await mkdir(distDir, { recursive: true });
             await run([["cargo", "package", "--allow-dirty", "--no-verify"]]);
             const packageDir = join(outputPath, RelativeFilePath.of("target/package"));
