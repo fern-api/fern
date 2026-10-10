@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `FERN_DISABLE_SDK_GEN_API=true` to keep every generator off sdk-gen-api for a run, regardless of the
+    `use-sdk-gen-api` feature flag. Generation routes to Fiddle, generator upgrades use FDR versions, and no flag
+    request is made. It is intended for tests and debugging and can only turn sdk-gen-api off.
+  type: feat
