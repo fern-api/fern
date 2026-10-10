@@ -189,8 +189,8 @@
 - version: 5.34.4
   changelogEntry:
     - summary: |
-        On Python 3.10 and older, `str()` on a generated enum member now returns its value (e.g. `WALMART_US`)
-        instead of `ClassName.WALMART_US`, matching `enum.StrEnum` on Python 3.11+. Previously, enum query
+        On Python 3.10 and older, `str()` on a generated enum member now returns its value (e.g. `ACTIVE`)
+        instead of `ClassName.ACTIVE`, matching `enum.StrEnum` on Python 3.11+. Previously, enum query
         parameters were sent as `ClassName.MEMBER` on those versions when `enum_type: forward_compatible_python_enums`
         or `python_enums` was used.
       type: fix
