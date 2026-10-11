@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"sync"
+	"unicode/utf8"
 )
 
 // MarshalJSONWithExtraProperty marshals the given value to JSON, including the extra property.
@@ -49,6 +51,13 @@ func MarshalJSONWithExtraProperties(marshaler any, extraProperties map[string]an
 }
 
 // ExtractExtraProperties extracts any extra properties from the given value.
+//
+// Generated UnmarshalJSON methods call this with the bytes they have just
+// decoded into the struct, so it decodes only what the struct does not
+// declare. The object is validated once without allocating, then scanned in
+// place: each property name is compared as it stands in the input, a declared
+// property's value is skipped without being read, and only the values of extra
+// properties are decoded.
 func ExtractExtraProperties(bytes []byte, value any, exclude ...string) (map[string]any, error) {
 	val := reflect.ValueOf(value)
 	for val.Kind() == reflect.Ptr {
@@ -57,27 +66,175 @@ func ExtractExtraProperties(bytes []byte, value any, exclude ...string) (map[str
 		}
 		val = val.Elem()
 	}
-	if err := json.Unmarshal(bytes, &value); err != nil {
-		return nil, err
+	if reflect.ValueOf(value).Kind() == reflect.Ptr {
+		// A caller that passes a pointer has always had the bytes decoded into
+		// it as well. Generated code passes the struct by value and skips this.
+		// Decoded through a copy: taking the parameter's address would move it
+		// to the heap on every call, this branch or not.
+		target := value
+		if err := json.Unmarshal(bytes, &target); err != nil {
+			return nil, err
+		}
 	}
+	if !json.Valid(bytes) || val.Kind() != reflect.Struct {
+		// Not a valid document, or nothing that declares properties: answer
+		// as encoding/json does, an error for anything but an object or null.
+		var extraProperties map[string]any
+		return nil, json.Unmarshal(bytes, &extraProperties)
+	}
+	start := skipJSONSpace(bytes, 0)
+	if bytes[start] != '{' {
+		// Valid JSON that is not an object: null answers no extra properties,
+		// anything else the error encoding/json gives.
+		var extraProperties map[string]any
+		return nil, json.Unmarshal(bytes, &extraProperties)
+	}
+	declaredKeys := declaredKeysForStructType(val.Type())
 	var extraProperties map[string]any
-	if err := json.Unmarshal(bytes, &extraProperties); err != nil {
-		return nil, err
+	for i := skipJSONSpace(bytes, start+1); i < len(bytes) && bytes[i] != '}'; {
+		nameEnd := skipJSONString(bytes, i)
+		quotedName := bytes[i:nameEnd]
+		colon := skipJSONSpace(bytes, nameEnd)
+		valueStart := skipJSONSpace(bytes, colon+1)
+		valueEnd := skipJSONValue(bytes, valueStart)
+		i = skipJSONSpace(bytes, valueEnd)
+		if i < len(bytes) && bytes[i] == ',' {
+			i = skipJSONSpace(bytes, i+1)
+		}
+
+		var key string
+		if name := quotedName[1 : len(quotedName)-1]; isPlainJSONName(name) {
+			// Looked up as it stands: string(name) in a map index or a
+			// comparison does not allocate.
+			if _, ok := declaredKeys[string(name)]; ok || containsName(exclude, name) {
+				continue
+			}
+			key = string(name)
+		} else {
+			// An escaped or invalid name is read with encoding/json's rules,
+			// into its own variable so that key does not escape on every name.
+			var decoded string
+			if err := json.Unmarshal(quotedName, &decoded); err != nil {
+				return nil, err
+			}
+			if _, ok := declaredKeys[decoded]; ok || containsName(exclude, []byte(decoded)) {
+				continue
+			}
+			key = decoded
+		}
+
+		var extraValue any
+		if err := json.Unmarshal(bytes[valueStart:valueEnd], &extraValue); err != nil {
+			return nil, err
+		}
+		if extraProperties == nil {
+			extraProperties = make(map[string]any)
+		}
+		extraProperties[key] = extraValue
 	}
-	for i := 0; i < val.Type().NumField(); i++ {
-		key := jsonKey(val.Type().Field(i))
+	return extraProperties, nil
+}
+
+// declaredKeysByStructType caches declaredKeysForStructType, which is otherwise
+// recomputed by reflection for every object decoded.
+var declaredKeysByStructType sync.Map
+
+// declaredKeysForStructType returns the JSON keys the given struct type declares
+// directly: the json tag of each field without the omitempty flag, skipping
+// fields with no tag or a "-" tag.
+func declaredKeysForStructType(structType reflect.Type) map[string]struct{} {
+	if cached, ok := declaredKeysByStructType.Load(structType); ok {
+		return cached.(map[string]struct{})
+	}
+	declaredKeys := make(map[string]struct{}, structType.NumField())
+	for i := 0; i < structType.NumField(); i++ {
+		key := jsonKey(structType.Field(i))
 		if key == "" || key == "-" {
 			continue
 		}
-		delete(extraProperties, key)
+		declaredKeys[key] = struct{}{}
 	}
-	for _, key := range exclude {
-		delete(extraProperties, key)
+	cached, _ := declaredKeysByStructType.LoadOrStore(structType, declaredKeys)
+	return cached.(map[string]struct{})
+}
+
+// containsName reports whether name is one of keys.
+func containsName(keys []string, name []byte) bool {
+	for _, key := range keys {
+		if key == string(name) {
+			return true
+		}
 	}
-	if len(extraProperties) == 0 {
-		return nil, nil
+	return false
+}
+
+// isPlainJSONName reports whether a property name, without its quotes, reads
+// the same decoded: no escapes and valid UTF-8.
+func isPlainJSONName(name []byte) bool {
+	return bytes.IndexByte(name, '\\') < 0 && utf8.Valid(name)
+}
+
+// skipJSONSpace returns the index of the first byte at or after i that is not
+// JSON whitespace.
+func skipJSONSpace(data []byte, i int) int {
+	for i < len(data) {
+		switch data[i] {
+		case ' ', '\t', '\n', '\r':
+			i++
+		default:
+			return i
+		}
 	}
-	return extraProperties, nil
+	return i
+}
+
+// skipJSONString returns the index just past the string that starts at i.
+func skipJSONString(data []byte, i int) int {
+	for i++; i < len(data); i++ {
+		switch data[i] {
+		case '\\':
+			i++
+		case '"':
+			return i + 1
+		}
+	}
+	return i
+}
+
+// skipJSONValue returns the index just past the value that starts at i. The
+// data must already be known to be valid JSON.
+func skipJSONValue(data []byte, i int) int {
+	switch data[i] {
+	case '"':
+		return skipJSONString(data, i)
+	case '{', '[':
+		depth := 0
+		for i < len(data) {
+			switch data[i] {
+			case '"':
+				i = skipJSONString(data, i)
+				continue
+			case '{', '[':
+				depth++
+			case '}', ']':
+				depth--
+				if depth == 0 {
+					return i + 1
+				}
+			}
+			i++
+		}
+		return i
+	default:
+		for i < len(data) {
+			switch data[i] {
+			case ',', '}', ']', ' ', '\t', '\n', '\r':
+				return i
+			}
+			i++
+		}
+		return i
+	}
 }
 
 // MatchesObjectKeys reports whether the given data is a JSON object that only
