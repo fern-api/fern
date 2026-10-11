@@ -1,0 +1,240 @@
+asyncapi: 3.0.0  
+info:  
+  title: Plant Store AsyncAPI  
+  version: 1.0.0  
+  description: |  
+    Real-time WebSocket companion to the Plant Store API.  
+    Subscribe to plant lifecycle events via WebSocket connection.  
+  
+defaultContentType: application/json  
+  
+servers:  
+  plantStoreWebsocket:  
+    host: ws.plantstore.dev  
+    protocol: wss  
+    description: WebSocket server for Plant Store real-time events.  
+  
+channels:  
+  plantEvents:  
+    address: /ws/plants  
+    title: Plant events WebSocket  
+    description: |  
+      Connect to receive real-time plant lifecycle events.  
+      Subscribe to specific event types or receive all events.  
+    parameters:  
+      Authorization:  
+        description: Bearer token for authentication.  
+        location: $message.header#/Authorization  
+      eventTypes:  
+        description: |  
+          Comma-separated list of event types to subscribe to.  
+          Valid values: plant.created, plant.updated, plant.status.changed  
+          If omitted, all events are delivered.  
+        location: $message.payload#/eventTypes  
+      plantId:  
+        description: Filter events for a specific plant ID.  
+        location: $message.payload#/plantId  
+    servers:  
+      - $ref: "#/servers/plantStoreWebsocket"  
+    messages:  
+      plantCreated:  
+        $ref: "#/components/messages/PlantCreated"  
+      plantUpdated:  
+        $ref: "#/components/messages/PlantUpdated"  
+      plantStatusChanged:  
+        $ref: "#/components/messages/PlantStatusChanged"  
+      subscribeRequest:  
+        $ref: "#/components/messages/SubscribeRequest"  
+  
+operations:  
+  subscribe:  
+    action: send  
+    channel:  
+      $ref: "#/channels/plantEvents"  
+    messages:  
+      - $ref: "#/channels/plantEvents/messages/subscribeRequest"  
+    description: Send a subscription request to filter events.  
+  
+  receivePlantEvents:  
+    action: receive  
+    channel:  
+      $ref: "#/channels/plantEvents"  
+    messages:  
+      - $ref: "#/channels/plantEvents/messages/plantCreated"  
+      - $ref: "#/channels/plantEvents/messages/plantUpdated"  
+      - $ref: "#/channels/plantEvents/messages/plantStatusChanged"  
+    description: Receive plant lifecycle events from the server.  
+  
+components:  
+  messages:  
+    SubscribeRequest:  
+      name: SubscribeRequest  
+      title: Subscribe to event types  
+      payload:  
+        $ref: "#/components/schemas/SubscribeRequestPayload"  
+      examples:  
+        - name: subscribeToCreated  
+          payload:  
+            action: subscribe  
+            eventTypes:  
+              - plant.created  
+              - plant.updated  
+  
+    PlantCreated:  
+      name: PlantCreated  
+      title: Plant created event  
+      payload:  
+        $ref: "#/components/schemas/PlantEventEnvelope"  
+      examples:  
+        - name: fernCreated  
+          payload:  
+            type: plant.created  
+            occurredAt: "2026-02-09T14:12:00Z"  
+            data:  
+              id: 101  
+              name: Fern  
+              status: available  
+              tags:  
+                - green  
+                - leafy  
+  
+    PlantUpdated:  
+      name: PlantUpdated  
+      title: Plant updated event  
+      payload:  
+        $ref: "#/components/schemas/PlantEventEnvelope"  
+      examples:  
+        - name: fernUpdated  
+          payload:  
+            type: plant.updated  
+            occurredAt: "2026-02-09T14:20:00Z"  
+            data:  
+              id: 101  
+              name: Fern  
+              status: sold  
+              tags:  
+                - green  
+                - leafy  
+  
+    PlantStatusChanged:  
+      name: PlantStatusChanged  
+      title: Plant status changed event  
+      payload:  
+        $ref: "#/components/schemas/PlantStatusChangedEnvelope"  
+      examples:  
+        - name: statusChange  
+          payload:  
+            type: plant.status.changed  
+            occurredAt: "2026-02-09T14:21:00Z"  
+            plantId: 101  
+            previousStatus: available  
+            newStatus: sold  
+  
+  schemas:  
+    SubscribeRequestPayload:  
+      type: object  
+      additionalProperties: false  
+      required:  
+        - action  
+      properties:  
+        action:  
+          type: string  
+          enum:  
+            - subscribe  
+            - unsubscribe  
+        eventTypes:  
+          type: array  
+          items:  
+            type: string  
+            enum:  
+              - plant.created  
+              - plant.updated  
+              - plant.status.changed  
+        plantId:  
+          type: integer  
+          description: Filter events for a specific plant ID.  
+  
+    Plant:  
+      type: object  
+      additionalProperties: false  
+      properties:  
+        name:  
+          type: string  
+        category:  
+          type: string  
+        tags:  
+          type: array  
+          items:  
+            type: string  
+        status:  
+          type: string  
+          enum:  
+            - available  
+            - pending  
+            - sold  
+  
+    PlantResponse:  
+      type: object  
+      additionalProperties: false  
+      properties:  
+        id:  
+          type: integer  
+        name:  
+          type: string  
+        status:  
+          type: string  
+        tags:  
+          type: array  
+          items:  
+            type: string  
+  
+    PlantEventEnvelope:  
+      type: object  
+      additionalProperties: false  
+      required:  
+        - type  
+        - occurredAt  
+        - data  
+      properties:  
+        type:  
+          type: string  
+          enum:  
+            - plant.created  
+            - plant.updated  
+        occurredAt:  
+          type: string  
+          format: date-time  
+        data:  
+          $ref: "#/components/schemas/PlantResponse"  
+  
+    PlantStatusChangedEnvelope:  
+      type: object  
+      additionalProperties: false  
+      required:  
+        - type  
+        - occurredAt  
+        - plantId  
+        - previousStatus  
+        - newStatus  
+      properties:  
+        type:  
+          type: string  
+          enum:  
+            - plant.status.changed  
+        occurredAt:  
+          type: string  
+          format: date-time  
+        plantId:  
+          type: integer  
+        previousStatus:  
+          type: string  
+          enum:  
+            - available  
+            - pending  
+            - sold  
+        newStatus:  
+          type: string  
+          enum:  
+            - available  
+            - pending  
+            - sold

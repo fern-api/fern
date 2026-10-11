@@ -1,0 +1,74 @@
+# Layout-3 deltas merged onto the base docs.yml.
+#
+# Unlike layout-1/2 (which share the base's single "Docs" tab), layout-3 uses a
+# distinct information architecture: a marketing-style Home landing, a separate
+# Docs tab, and a dedicated Changelog tab. navigation is a list, so the merge
+# replaces it wholesale — this block is the complete nav for layout-3 (using the
+# base's real pages and API Reference structure, not the source repo's).
+tabs:
+  home:
+    display-name: Home
+    icon: home
+  docs:
+    display-name: Docs
+    icon: book
+  API Reference:
+    display-name: API Reference
+    icon: puzzle
+  changelog:
+    display-name: Changelog
+    icon: clock
+
+navigation:
+  - tab: home
+    layout:
+      - page: Home
+        path: docs/pages/welcome.mdx
+        slug: welcome
+  - tab: docs
+    layout:
+      - section: Get started
+        contents:
+          - page: Edit your docs
+            path: docs/pages/editing-your-docs.mdx
+            icon: fa-duotone fa-pen-to-square
+          - page: Write content
+            path: docs/pages/writing-content.mdx
+            icon: fa-duotone fa-file-lines
+          - page: Set up navigation
+            path: docs/pages/navigation.mdx
+            icon: fa-duotone fa-sitemap
+          - page: Customize your docs
+            path: docs/pages/customization.mdx
+            icon: fa-duotone fa-palette
+          - page: Support
+            path: docs/pages/support.mdx
+            icon: fa-duotone fa-headset
+  - tab: API Reference
+    layout:
+      - section: Overview
+        contents:
+          - page: API reference
+            path: docs/pages/api-reference-overview.mdx
+            icon: fa-duotone fa-book
+      - api: Plant Store API
+        layout:
+          - section: Plants
+            referenced-packages:
+              - plant
+            contents: []
+          - section: Users
+            referenced-packages:
+              - user
+            contents: []
+  - tab: changelog
+    layout:
+      - changelog: docs/changelog
+
+# theme.tabs must be the scalar `bubble` form: production Ledger registration
+# rejects the nested { style, alignment, placement } object. Header placement is
+# inherited from the base's layout.tabs-placement; centering is done in
+# styles.css (.fern-header-tabs { justify-content: center }).
+theme:
+  tabs: bubble
+js: custom.js
