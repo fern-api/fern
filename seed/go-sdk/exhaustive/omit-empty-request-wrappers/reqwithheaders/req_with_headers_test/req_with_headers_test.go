@@ -86,6 +86,7 @@ func TestReqWithHeadersGetWithCustomHeaderWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &fern.ReqWithHeaders{

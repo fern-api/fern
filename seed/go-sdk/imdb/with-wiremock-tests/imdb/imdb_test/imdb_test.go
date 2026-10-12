@@ -86,6 +86,7 @@ func TestImdbCreateMovieWithWireMock(
 	}
 	client := client.NewIMDBClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &testPackageName.CreateMovieRequest{
 		Title:  "title",
@@ -112,6 +113,7 @@ func TestImdbGetMovieWithWireMock(
 	}
 	client := client.NewIMDBClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &testPackageName.GetMovieImdbRequest{
 		MovieID: "movieId",
@@ -126,4 +128,37 @@ func TestImdbGetMovieWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestImdbGetMovieWithWireMock", "GET", "/movies/movieId", nil, 1)
+}
+
+func TestImdbGetMovieWithWireMock_ThrowsNotFoundError(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewIMDBClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := &testPackageName.GetMovieImdbRequest{
+		MovieID: "movieId",
+	}
+	_, invocationErr := client.Imdb.GetMovie(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestImdbGetMovieWithWireMock_ThrowsNotFoundError"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *testPackageName.NotFoundError
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with NotFoundError")
+	require.Equal(t, 404, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "\"string\"", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestImdbGetMovieWithWireMock_ThrowsNotFoundError", "GET", "/movies/movieId", nil, 1)
 }

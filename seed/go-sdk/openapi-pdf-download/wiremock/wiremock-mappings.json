@@ -27,6 +27,68 @@
       }
     },
     {
+      "id": "e71bc575-a7f3-49dc-8630-b379fd480906",
+      "name": "getPdf - default - TestAssetReportGetPdfWithWireMock",
+      "request": {
+        "urlPathTemplate": "/asset_report/pdf/get",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestAssetReportGetPdfWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "{\n  \"error_type\": \"error_type\",\n  \"error_code\": \"error_code\",\n  \"error_message\": \"error_message\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e71bc575-a7f3-49dc-8630-b379fd480906",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "3e0aa0eb-fcfd-4120-8378-df7cb9b6f836",
+      "name": "getPdf - default - TestAssetReportGetPdfWithWireMock_ThrowsInternalServerError",
+      "request": {
+        "urlPathTemplate": "/asset_report/pdf/get",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestAssetReportGetPdfWithWireMock_ThrowsInternalServerError"
+          }
+        }
+      },
+      "response": {
+        "status": 500,
+        "body": "{\n  \"error_type\": \"error_type\",\n  \"error_code\": \"error_code\",\n  \"error_message\": \"error_message\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "3e0aa0eb-fcfd-4120-8378-df7cb9b6f836",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "a3fda999-cdd9-4f7c-8d10-1019d3fb739f",
       "name": "get - default",
       "request": {
@@ -51,9 +113,71 @@
           }
         }
       }
+    },
+    {
+      "id": "24f5a6e7-8c06-40c9-a28e-c7e8fe6da634",
+      "name": "get - default - TestAssetReportGetWithWireMock",
+      "request": {
+        "urlPathTemplate": "/asset_report/get",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestAssetReportGetWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"request_id\": \"request_id\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "24f5a6e7-8c06-40c9-a28e-c7e8fe6da634",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "97daa3de-bebf-43d1-b95c-5f22d59cb026",
+      "name": "get - default - TestAssetReportGetWithWireMock_ThrowsBadRequestError",
+      "request": {
+        "urlPathTemplate": "/asset_report/get",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestAssetReportGetWithWireMock_ThrowsBadRequestError"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "{\n  \"error_type\": \"error_type\",\n  \"error_code\": \"error_code\",\n  \"error_message\": \"error_message\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "97daa3de-bebf-43d1-b95c-5f22d59cb026",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 2
+    "total": 6
   }
 }

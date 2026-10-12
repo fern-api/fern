@@ -121,6 +121,7 @@ func TestUserGetWithBearerWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),
@@ -150,6 +151,7 @@ func TestUserGetWithAPIKeyWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),
@@ -179,6 +181,7 @@ func TestUserGetWithOAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),
@@ -208,6 +211,7 @@ func TestUserGetWithBasicWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),
@@ -237,6 +241,7 @@ func TestUserGetWithInferredAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),
@@ -266,6 +271,7 @@ func TestUserGetWithAnyAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),
@@ -295,6 +301,7 @@ func TestUserGetWithAllAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),

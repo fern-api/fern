@@ -86,6 +86,7 @@ func TestOauthAuthorizeWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.AuthorizeRequest{
 		ClientID:      "client_abc123",

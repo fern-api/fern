@@ -86,6 +86,7 @@ func TestHeadersSendWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.SendLiteralsInHeadersRequest{
 		Query: "What is the weather today",
@@ -111,6 +112,7 @@ func TestHeadersSendLiteralsOnlyWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	_, invocationErr := client.Headers.SendLiteralsOnly(
 		context.TODO(),

@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "59acca31-5271-4794-a6f5-28bd69ca23ea",
+      "name": "simple - default - TestServiceSimpleWithWireMock",
+      "request": {
+        "urlPathTemplate": "/snippet",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestServiceSimpleWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "59acca31-5271-4794-a6f5-28bd69ca23ea",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "1cfe72d6-e9f4-4b82-bcf6-af3352b6fea0",
       "name": "downloadFile - default",
       "request": {
@@ -51,9 +82,40 @@
           }
         }
       }
+    },
+    {
+      "id": "d98efe86-9c90-4d63-b698-25ae947d2008",
+      "name": "downloadFile - default - TestServiceDownloadFileWithWireMock",
+      "request": {
+        "urlPathTemplate": "/",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestServiceDownloadFileWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "base64Body": "JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSA+PgplbmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAwNjQgMDAwMDAgbiAKMDAwMDAwMDEyMSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjE5MgolJUVPRgo=",
+        "headers": {
+          "Content-Type": "application/octet-stream"
+        }
+      },
+      "uuid": "d98efe86-9c90-4d63-b698-25ae947d2008",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 2
+    "total": 4
   }
 }

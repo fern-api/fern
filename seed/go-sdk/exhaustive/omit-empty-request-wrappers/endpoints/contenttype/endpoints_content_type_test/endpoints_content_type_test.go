@@ -88,6 +88,7 @@ func TestEndpointsContentTypePostJSONPatchContentTypeWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithOptionalField{
@@ -159,6 +160,7 @@ func TestEndpointsContentTypePostJSONPatchContentWithCharsetTypeWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithOptionalField{

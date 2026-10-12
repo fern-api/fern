@@ -85,6 +85,7 @@ func TestUserGetWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),
@@ -110,6 +111,7 @@ func TestUserGetAdminsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
 		option.WithClientCredentials("test_client_id", "test_client_secret"),

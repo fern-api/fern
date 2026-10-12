@@ -10,6 +10,7 @@ import (
 	os "os"
 	testing "testing"
 
+	fern "github.com/basic-auth-pw-omitted/fern"
 	client "github.com/basic-auth-pw-omitted/fern/client"
 	option "github.com/basic-auth-pw-omitted/fern/option"
 	require "github.com/stretchr/testify/require"
@@ -85,6 +86,7 @@ func TestBasicAuthGetWithBasicAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithBasicAuth("test-username"),
 	)
 	_, invocationErr := client.BasicAuth.GetWithBasicAuth(
@@ -98,6 +100,36 @@ func TestBasicAuthGetWithBasicAuthWithWireMock(
 	VerifyRequestCount(t, "TestBasicAuthGetWithBasicAuthWithWireMock", "GET", "/basic-auth", nil, 1)
 }
 
+func TestBasicAuthGetWithBasicAuthWithWireMock_ThrowsUnauthorizedRequest(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+		option.WithBasicAuth("test-username"),
+	)
+	_, invocationErr := client.BasicAuth.GetWithBasicAuth(
+		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBasicAuthGetWithBasicAuthWithWireMock_ThrowsUnauthorizedRequest"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *fern.UnauthorizedRequest
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with UnauthorizedRequest")
+	require.Equal(t, 401, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "{\"message\":\"message\"}", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestBasicAuthGetWithBasicAuthWithWireMock_ThrowsUnauthorizedRequest", "GET", "/basic-auth", nil, 1)
+}
+
 func TestBasicAuthPostWithBasicAuthWithWireMock(
 	t *testing.T,
 ) {
@@ -107,6 +139,7 @@ func TestBasicAuthPostWithBasicAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithBasicAuth("test-username"),
 	)
 	request := map[string]any{
@@ -122,4 +155,69 @@ func TestBasicAuthPostWithBasicAuthWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestBasicAuthPostWithBasicAuthWithWireMock", "POST", "/basic-auth", nil, 1)
+}
+
+func TestBasicAuthPostWithBasicAuthWithWireMock_ThrowsUnauthorizedRequest(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+		option.WithBasicAuth("test-username"),
+	)
+	request := map[string]any{
+		"key": "value",
+	}
+	_, invocationErr := client.BasicAuth.PostWithBasicAuth(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBasicAuthPostWithBasicAuthWithWireMock_ThrowsUnauthorizedRequest"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *fern.UnauthorizedRequest
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with UnauthorizedRequest")
+	require.Equal(t, 401, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "{\"message\":\"message\"}", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestBasicAuthPostWithBasicAuthWithWireMock_ThrowsUnauthorizedRequest", "POST", "/basic-auth", nil, 1)
+}
+
+func TestBasicAuthPostWithBasicAuthWithWireMock_ThrowsBadRequest(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+		option.WithBasicAuth("test-username"),
+	)
+	request := map[string]any{
+		"key": "value",
+	}
+	_, invocationErr := client.BasicAuth.PostWithBasicAuth(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBasicAuthPostWithBasicAuthWithWireMock_ThrowsBadRequest"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *fern.BadRequest
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequest")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+
+	VerifyRequestCount(t, "TestBasicAuthPostWithBasicAuthWithWireMock_ThrowsBadRequest", "POST", "/basic-auth", nil, 1)
 }

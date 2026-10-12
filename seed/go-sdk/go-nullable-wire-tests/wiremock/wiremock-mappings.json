@@ -26,9 +26,41 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "4c6cd4f0-8cf9-4777-83a1-bf3fa9f8b7f9",
+      "name": "getThing - default - TestThingsGetThingWithWireMock",
+      "request": {
+        "urlPathTemplate": "/thing",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestThingsGetThingWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"thing\": {\n    \"id\": \"thing-1\",\n    \"logo\": null,\n    \"rank\": null,\n    \"nested\": null\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4c6cd4f0-8cf9-4777-83a1-bf3fa9f8b7f9",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }

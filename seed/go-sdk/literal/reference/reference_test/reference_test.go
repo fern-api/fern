@@ -86,6 +86,7 @@ func TestReferenceSendWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.SendRequest{
 		Query: "What is the weather today",

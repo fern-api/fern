@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "430817b1-9891-404f-af77-7812a7c26613",
+      "name": "createMovie - default - TestImdbCreateMovieWithWireMock",
+      "request": {
+        "urlPathTemplate": "/movies/create-movie",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestImdbCreateMovieWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "430817b1-9891-404f-af77-7812a7c26613",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "53de2297-8f8c-41a3-9e07-390505254c72",
       "name": "getMovie - default",
       "request": {
@@ -56,9 +87,81 @@
           }
         }
       }
+    },
+    {
+      "id": "92162fc8-303a-478d-90f3-25b301ac06f3",
+      "name": "getMovie - default - TestImdbGetMovieWithWireMock",
+      "request": {
+        "urlPathTemplate": "/movies/{movieId}",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestImdbGetMovieWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "movieId": {
+            "equalTo": "movieId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"title\": \"title\",\n  \"rating\": 1.1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "92162fc8-303a-478d-90f3-25b301ac06f3",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1d89cade-f010-4050-a19b-f61e740f3140",
+      "name": "getMovie - default - TestImdbGetMovieWithWireMock_ThrowsNotFoundError",
+      "request": {
+        "urlPathTemplate": "/movies/{movieId}",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestImdbGetMovieWithWireMock_ThrowsNotFoundError"
+          }
+        },
+        "pathParameters": {
+          "movieId": {
+            "equalTo": "movieId"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1d89cade-f010-4050-a19b-f61e740f3140",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 2
+    "total": 5
   }
 }

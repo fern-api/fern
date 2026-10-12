@@ -86,6 +86,7 @@ func TestEndpointsDuplicateNamesACreateWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &fern.CreateRequestA{
@@ -113,6 +114,7 @@ func TestEndpointsDuplicateNamesAGetWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &fern.GetRequestA{
@@ -142,6 +144,7 @@ func TestEndpointsDuplicateNamesAListWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &fern.ListRequestA{

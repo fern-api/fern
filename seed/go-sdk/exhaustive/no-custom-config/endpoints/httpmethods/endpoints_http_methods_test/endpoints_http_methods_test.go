@@ -88,6 +88,7 @@ func TestEndpointsHTTPMethodsTestGetWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.HTTPMethods.TestGet(
@@ -111,6 +112,7 @@ func TestEndpointsHTTPMethodsTestPostWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithRequiredField{
@@ -137,6 +139,7 @@ func TestEndpointsHTTPMethodsTestPutWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithRequiredField{
@@ -164,6 +167,7 @@ func TestEndpointsHTTPMethodsTestPatchWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithOptionalField{
@@ -236,6 +240,7 @@ func TestEndpointsHTTPMethodsTestDeleteWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.HTTPMethods.TestDelete(

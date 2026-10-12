@@ -87,6 +87,7 @@ func TestServiceSimpleWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	invocationErr := client.Service.Simple(
 		context.TODO(),
@@ -108,6 +109,7 @@ func TestServiceDownloadFileWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	response, invocationErr := client.Service.WithRawResponse.DownloadFile(
 		context.TODO(),

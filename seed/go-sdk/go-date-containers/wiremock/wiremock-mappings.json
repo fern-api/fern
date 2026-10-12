@@ -26,9 +26,41 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "646c3508-c454-44d8-9976-f93a69cabcca",
+      "name": "getLoan - default - TestLoansGetLoanWithWireMock",
+      "request": {
+        "urlPathTemplate": "/loan",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestLoansGetLoanWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"disbursement_dates\": [\n    \"2002-08-28\"\n  ],\n  \"unique_dates\": [\n    \"2002-08-28\"\n  ],\n  \"dates_by_label\": {\n    \"first\": \"2002-08-28\"\n  },\n  \"optional_dates\": [\n    \"2002-08-28\"\n  ],\n  \"aliased_dates\": [\n    \"2002-08-28\"\n  ],\n  \"timestamps\": [\n    \"2002-08-28T12:30:00Z\"\n  ],\n  \"unique_timestamps\": [\n    \"2002-08-28T12:30:00Z\"\n  ],\n  \"timestamps_by_label\": {\n    \"first\": \"2002-08-28T12:30:00Z\"\n  },\n  \"aliased_timestamps\": [\n    \"2002-08-28T12:30:00Z\"\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "646c3508-c454-44d8-9976-f93a69cabcca",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }

@@ -87,6 +87,7 @@ func TestEndpointsPaginationListItemsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &endpoints.ListItemsRequest{

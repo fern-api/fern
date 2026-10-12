@@ -88,6 +88,7 @@ func TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.PostWithObjectBody{
 		FieldString: "string",
@@ -151,4 +152,86 @@ func TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock", "POST", "/req-bodies/object", nil, 1)
+}
+
+func TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock_ThrowsBadRequestBody(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := &fern.PostWithObjectBody{
+		FieldString: "string",
+		Integer:     1,
+		NestedObject: &types.ObjectWithOptionalField{
+			FieldString: fern.String(
+				"string",
+			),
+			Integer: fern.Int(
+				1,
+			),
+			Long: fern.Int64(
+				int64(1000000),
+			),
+			Double: fern.Float64(
+				1.1,
+			),
+			Bool: fern.Bool(
+				true,
+			),
+			Datetime: fern.Time(
+				fern.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			),
+			Date: fern.Time(
+				fern.MustParseDate(
+					"2023-01-15",
+				),
+			),
+			UUID: fern.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+			Base64: fern.Bytes(
+				[]byte("SGVsbG8gd29ybGQh"),
+			),
+			List: []string{
+				"list",
+				"list",
+			},
+			Set: []string{
+				"set",
+			},
+			Map: map[int]string{
+				1: "map",
+			},
+			Bigint: fern.String(
+				"1000000",
+			),
+		},
+	}
+	_, invocationErr := client.InlinedRequests.PostWithObjectBodyandResponse(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock_ThrowsBadRequestBody"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *fern.BadRequestBody
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequestBody")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "{\"message\":\"message\"}", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock_ThrowsBadRequestBody", "POST", "/req-bodies/object", nil, 1)
 }

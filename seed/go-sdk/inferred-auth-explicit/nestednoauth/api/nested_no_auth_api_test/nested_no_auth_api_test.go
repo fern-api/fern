@@ -85,6 +85,7 @@ func TestNestedNoAuthAPIGetSomethingWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	invocationErr := client.NestedNoAuth.API.GetSomething(
 		context.TODO(),

@@ -86,6 +86,7 @@ func TestEventsSubscribeWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.SubscribeEventsRequest{
 		EventType: &fern.EventTypeParam{

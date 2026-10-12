@@ -86,6 +86,7 @@ func TestQuerySendWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.SendLiteralsInQueryRequest{
 		OptionalPrompt: fern.String(

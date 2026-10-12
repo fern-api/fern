@@ -88,6 +88,7 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithOptionalField{
@@ -159,6 +160,7 @@ func TestEndpointsObjectGetAndReturnWithRequiredFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithRequiredField{
@@ -185,6 +187,7 @@ func TestEndpointsObjectGetAndReturnWithMapOfMapWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithMapOfMap{
@@ -215,6 +218,7 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.NestedObjectWithOptionalField{
@@ -291,6 +295,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.NestedObjectWithRequiredField{
@@ -366,6 +371,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := []*types.NestedObjectWithRequiredField{
@@ -493,6 +499,7 @@ func TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithUnknownField{
@@ -521,6 +528,7 @@ func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithDatetimeLikeString{
