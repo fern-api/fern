@@ -1,7 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
-import type { FernCliCustomConfig } from "./customConfig.js";
-import type { FernCliProfilesProvisionConfig } from "./customConfig.js";
+import type { FernCliCustomConfig, FernCliProfilesProvisionConfig } from "./customConfig.js";
 import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
