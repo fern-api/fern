@@ -119,6 +119,7 @@ describe("runPipeline", () => {
 
     const localFilesConfig: ResolvedOutputConfig = {
         version: undefined,
+        ignoredRequestedVersion: undefined,
         isGithubOutput: false,
         repoUrl: undefined,
         npmPublishInfo: undefined
@@ -126,6 +127,7 @@ describe("runPipeline", () => {
 
     const githubConfigNoNpm: ResolvedOutputConfig = {
         version: "1.0.0",
+        ignoredRequestedVersion: undefined,
         isGithubOutput: true,
         repoUrl: "https://github.com/acme/cli",
         npmPublishInfo: undefined
@@ -133,6 +135,7 @@ describe("runPipeline", () => {
 
     const githubConfig: ResolvedOutputConfig = {
         version: "1.5.0",
+        ignoredRequestedVersion: undefined,
         isGithubOutput: true,
         repoUrl: "https://github.com/acme/cli",
         npmPublishInfo: {
@@ -386,6 +389,7 @@ describe("runPipeline", () => {
 
         const versionedConfig: ResolvedOutputConfig = {
             version: "2.3.1",
+            ignoredRequestedVersion: undefined,
             isGithubOutput: false,
             repoUrl: undefined,
             npmPublishInfo: undefined

@@ -28,6 +28,28 @@ describe("resolveOutputConfig", () => {
         };
     }
 
+    function publishOutput(version: string): FernGeneratorExec.GeneratorOutputConfig {
+        return {
+            path: "/out",
+            mode: FernGeneratorExec.OutputMode.publish({
+                registries: {
+                    maven: { registryUrl: "", username: "", password: "", group: "" },
+                    npm: { registryUrl: "", token: "", scope: "" }
+                },
+                registriesV2: {
+                    maven: { registryUrl: "", username: "", password: "", coordinate: "" },
+                    npm: { registryUrl: "", token: "", packageName: "" },
+                    pypi: { registryUrl: "", username: "", password: "", packageName: "" },
+                    rubygems: { registryUrl: "", apiKey: "", packageName: "" },
+                    nuget: { registryUrl: "", apiKey: "", packageName: "" },
+                    crates: { registryUrl: "", token: "", packageName: "" }
+                },
+                publishTarget: undefined,
+                version
+            })
+        };
+    }
+
     // ── output mode: github ────────────────────────────────────────
 
     it("github mode with npm publishInfo returns version + npmPublishInfo", () => {
@@ -88,20 +110,54 @@ describe("resolveOutputConfig", () => {
         expect(result.version).toBe("2.3.4");
     });
 
-    it("output mode version wins over the IR's requested version", () => {
+    it("github mode version wins over the IR's requested version", () => {
         const result = resolveOutputConfig(githubOutput({ version: "1.0.0" }), "2.3.4");
 
         expect(result.version).toBe("1.0.0");
+        expect(result.ignoredRequestedVersion).toBeUndefined();
     });
 
-    it.each(["AUTO", "v1.2.3", "1.2", "latest", ""])("ignores a requested version Cargo would reject: %j", (raw) => {
+    it("publish mode version wins over the IR's requested version", () => {
+        const result = resolveOutputConfig(publishOutput("1.0.0"), "2.3.4");
+
+        expect(result.version).toBe("1.0.0");
+        expect(result.ignoredRequestedVersion).toBeUndefined();
+    });
+
+    it.each([
+        ["github", githubOutput({ version: "1.0.0" })],
+        ["publish", publishOutput("1.0.0")]
+    ])("%s mode does not report a non-semver requested version as ignored", (_mode, output) => {
+        const result = resolveOutputConfig(output, "v9.9.9");
+
+        expect(result.version).toBe("1.0.0");
+        expect(result.ignoredRequestedVersion).toBeUndefined();
+    });
+
+    it.each([
+        "v1.2.3",
+        "1.2",
+        "latest",
+        ""
+    ])("ignores and reports a requested version Cargo would reject: %j", (raw) => {
         const result = resolveOutputConfig({ path: "/out", mode: FernGeneratorExec.OutputMode.downloadFiles() }, raw);
 
         expect(result.version).toBeUndefined();
+        expect(result.ignoredRequestedVersion).toBe(raw);
+    });
+
+    it("ignores AUTO without reporting it", () => {
+        const result = resolveOutputConfig(
+            { path: "/out", mode: FernGeneratorExec.OutputMode.downloadFiles() },
+            "AUTO"
+        );
+
+        expect(result.version).toBeUndefined();
+        expect(result.ignoredRequestedVersion).toBeUndefined();
     });
 
     it.each(["0.0.1", "7.8.9", "1.0.0-rc.1", "1.0.0+build.5"])("accepts a semver requested version: %j", (raw) => {
-        expect(resolveRequestedVersion(raw)).toBe(raw);
+        expect(resolveRequestedVersion(raw)).toEqual({ version: raw, ignored: undefined });
     });
 
     // ── npm publish info edge cases ────────────────────────────────

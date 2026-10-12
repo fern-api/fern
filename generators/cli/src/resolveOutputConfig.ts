@@ -18,6 +18,12 @@ import { assertNeverNoThrow } from "@fern-api/core-utils";
 export interface ResolvedOutputConfig {
     version: string | undefined;
     /**
+     * The IR's requested version when it was set but dropped because Cargo
+     * would reject it. Always `undefined` when the output mode supplies the
+     * version, or when the requested version is `AUTO`.
+     */
+    ignoredRequestedVersion: string | undefined;
+    /**
      * True when the output mode is `github` — the pipeline uses this
      * to decide whether to emit `.github/workflows/ci.yml` at all
      * (build+test jobs are always emitted for GitHub outputs).
@@ -54,13 +60,25 @@ type OutputMode = GeneratorConfig["output"]["mode"];
 const SEMVER_PATTERN =
     /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
 
+export interface RequestedVersionResolution {
+    version: string | undefined;
+    ignored: string | undefined;
+}
+
 /**
  * The IR's raw `requestedVersion`, if it can be stamped into `Cargo.toml`.
  * `AUTO` and anything else that is not semver are dropped rather than
- * written into a manifest `cargo build` would then reject.
+ * written into a manifest `cargo build` would then reject; non-`AUTO`
+ * values are reported in `ignored` so the caller can warn.
  */
-export function resolveRequestedVersion(requestedVersion: string | undefined): string | undefined {
-    return requestedVersion != null && SEMVER_PATTERN.test(requestedVersion) ? requestedVersion : undefined;
+export function resolveRequestedVersion(requestedVersion: string | undefined): RequestedVersionResolution {
+    if (requestedVersion == null) {
+        return { version: undefined, ignored: undefined };
+    }
+    if (SEMVER_PATTERN.test(requestedVersion)) {
+        return { version: requestedVersion, ignored: undefined };
+    }
+    return { version: undefined, ignored: requestedVersion === "AUTO" ? undefined : requestedVersion };
 }
 
 /**
@@ -80,6 +98,7 @@ export function resolveOutputConfig(
         case "github": {
             return {
                 version: mode.version,
+                ignoredRequestedVersion: undefined,
                 isGithubOutput: true,
                 repoUrl: mode.repoUrl,
                 npmPublishInfo: resolveNpmPublishInfo(mode.publishInfo)
@@ -88,27 +107,29 @@ export function resolveOutputConfig(
         case "publish":
             return {
                 version: mode.version,
+                ignoredRequestedVersion: undefined,
                 isGithubOutput: false,
                 repoUrl: undefined,
                 npmPublishInfo: undefined
             };
         case "downloadFiles":
-            return {
-                version: resolveRequestedVersion(requestedVersion),
-                isGithubOutput: false,
-                repoUrl: undefined,
-                npmPublishInfo: undefined
-            };
+            return resolveFromRequestedVersion(requestedVersion);
         default:
             // Forward-compatible: unknown output modes fall back to the requested version with no npm publishing.
             assertNeverNoThrow(mode as never);
-            return {
-                version: resolveRequestedVersion(requestedVersion),
-                isGithubOutput: false,
-                repoUrl: undefined,
-                npmPublishInfo: undefined
-            };
+            return resolveFromRequestedVersion(requestedVersion);
     }
+}
+
+function resolveFromRequestedVersion(requestedVersion: string | undefined): ResolvedOutputConfig {
+    const { version, ignored } = resolveRequestedVersion(requestedVersion);
+    return {
+        version,
+        ignoredRequestedVersion: ignored,
+        isGithubOutput: false,
+        repoUrl: undefined,
+        npmPublishInfo: undefined
+    };
 }
 
 type GithubPublishInfo = NonNullable<Extract<OutputMode, { type: "github" }>["publishInfo"]>;
