@@ -2,7 +2,9 @@ import type { FernDefinition } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { describe, expect, it } from "vitest";
+import YAML from "yaml";
 
 import { mapFernDefinitionToSdkConfigApi, mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
 import { mergeSdkConfig } from "../mergeSdkConfig.js";
@@ -11,8 +13,7 @@ type RootContents = FernDefinition["rootApiFile"]["contents"];
 type AuthSchemes = NonNullable<RootContents["auth-schemes"]>;
 type DefinitionService = FernDefinition["namedDefinitionFiles"][RelativeFilePath]["contents"]["service"];
 
-const CLI_GENERATOR = "fernapi/fern-cli-generator";
-const RUST_GENERATOR = "fernapi/fern-rust-sdk";
+const TYPESCRIPT_GENERATOR = "fernapi/fern-typescript-sdk";
 
 const CLIENT_CREDENTIALS: AuthSchemes[string] = {
     scheme: "oauth",
@@ -93,143 +94,6 @@ const MIGRATED_SUPPORTED_SCHEMES = [
         description: "Client credentials"
     }
 ];
-
-const CLI_CONFIG = {
-    packageIdentity: {
-        name: "acme-cli",
-        description: "Acme CLI",
-        repository: "https://github.com/acme/cli",
-        homepage: "https://acme.test/cli",
-        keywords: ["acme", "cli"],
-        authors: ["Ada Lovelace <ada@acme.test>", "Acme Team"],
-        license: "MIT"
-    },
-    extraDependencies: {
-        serde: "1",
-        local: { path: "../local" },
-        pinned: { git: "https://github.com/acme/pinned", rev: "abc123", features: ["derive"] },
-        mirrored: { version: "2", registry: "acme-registry" }
-    },
-    extraDevDependencies: { "tokio-test": { version: "1", features: ["yaml"] } }
-};
-
-const MIGRATED_CLI_PACKAGE = {
-    packageName: "acme-cli",
-    description: "Acme CLI",
-    repository: "https://github.com/acme/cli",
-    homepage: "https://acme.test/cli",
-    keywords: ["acme", "cli"],
-    authors: [{ name: "Ada Lovelace", email: "ada@acme.test" }, { name: "Acme Team" }],
-    license: { type: "MIT" },
-    extraDependencies: [
-        { name: "serde", version: "1" },
-        { name: "local", source: { type: "path", path: "../local" } },
-        {
-            name: "pinned",
-            source: { type: "git", url: "https://github.com/acme/pinned", ref: "abc123" },
-            features: ["derive"]
-        },
-        { name: "mirrored", version: "2", source: { type: "registry", registry: "acme-registry" } }
-    ],
-    extraDevDependencies: [{ name: "tokio-test", version: "1", features: ["yaml"] }]
-};
-
-describe("fern sdk migrate package metadata", () => {
-    it("preserves CLI package identity and Cargo dependencies without diagnostics", () => {
-        const result = migrate([createGenerator(CLI_GENERATOR, undefined, CLI_CONFIG)]);
-
-        expect(result.sdkConfig.targets[0]?.package).toEqual(MIGRATED_CLI_PACKAGE);
-        expect(result.diagnostics).toEqual([]);
-    });
-
-    it("preserves Rust license and Cargo dependency sources", () => {
-        const result = migrate([
-            createGenerator(RUST_GENERATOR, "rust", {
-                crateName: "acme",
-                packageLicense: "Apache-2.0",
-                extraDependencies: { pinned: { version: "1", git: "https://github.com/acme/pinned", rev: "abc" } },
-                extraDevDependencies: { "tokio-test": "1" }
-            })
-        ]);
-
-        expect(result.sdkConfig.targets[0]?.package).toEqual({
-            packageName: "acme",
-            license: { type: "APACHE" },
-            extraDependencies: [
-                {
-                    name: "pinned",
-                    version: "1",
-                    source: { type: "git", url: "https://github.com/acme/pinned", ref: "abc" }
-                }
-            ],
-            extraDevDependencies: [{ name: "tokio-test", version: "1" }]
-        });
-        expect(result.diagnostics).toEqual([]);
-    });
-
-    it("keeps non-canonical SPDX expressions verbatim", () => {
-        const result = migrate([
-            createGenerator(CLI_GENERATOR, undefined, { packageIdentity: { license: "MIT OR Apache-2.0" } })
-        ]);
-
-        expect(result.sdkConfig.targets[0]?.package?.license).toEqual({ type: "MIT OR Apache-2.0" });
-    });
-
-    it("leaves authors for review when any entry is not valid SDK Config author metadata", () => {
-        const result = migrate([
-            createGenerator(CLI_GENERATOR, undefined, { packageIdentity: { authors: ["Ada <not-an-email>", "Bob"] } })
-        ]);
-
-        expect(result.sdkConfig.targets[0]?.package?.authors).toBeUndefined();
-        expect(result.diagnostics).toEqual(
-            expect.arrayContaining([
-                expect.objectContaining({
-                    code: "FERN_CONFIG_FIELD_UNSUPPORTED",
-                    path: ["group", "generators", 0, "config", "packageIdentity", "authors", 0]
-                })
-            ])
-        );
-    });
-
-    it("preserves metadata.license for non-GitHub outputs", () => {
-        const result = migrate([
-            createGenerator("fernapi/fern-typescript-sdk", "typescript", {}, { metadata: { license: "Apache-2.0" } })
-        ]);
-
-        expect(result.sdkConfig.targets[0]?.package).toEqual({ license: { type: "APACHE" } });
-        expect(result.diagnostics).toEqual([]);
-    });
-
-    it("reports custom and conflicting metadata licenses instead of dropping them", () => {
-        const custom = migrate([
-            createGenerator(CLI_GENERATOR, undefined, {}, { metadata: { license: { custom: "./LICENSE" } } })
-        ]);
-        const conflicting = migrate([
-            createGenerator(
-                CLI_GENERATOR,
-                undefined,
-                { packageIdentity: { license: "MIT" } },
-                { metadata: { license: "Apache-2.0" } }
-            )
-        ]);
-
-        expect(custom.sdkConfig.targets[0]?.package).toBeUndefined();
-        expect(custom.diagnostics).toEqual([
-            expect.objectContaining({
-                code: "FERN_CONFIG_FIELD_UNSUPPORTED",
-                path: ["group", "generators", 0, "metadata", "license"],
-                sdkConfigPath: ["targets", 0, "package", "license"]
-            })
-        ]);
-        expect(conflicting.sdkConfig.targets[0]?.package?.license).toEqual({ type: "MIT" });
-        expect(conflicting.diagnostics).toEqual([
-            expect.objectContaining({
-                path: ["group", "generators", 0, "metadata", "license"],
-                reason: expect.stringContaining("conflicts")
-            })
-        ]);
-    });
-});
 
 describe("fern sdk migrate auth", () => {
     it("preserves the complete auth block when every scheme is representable", () => {
@@ -648,13 +512,14 @@ describe("fern sdk migrate idempotency", () => {
             auth: { any: ["BasicAuth", "BearerAuth", "ApiKey", "OAuth2", "BrowserLogin"] },
             "auth-schemes": { ...SUPPORTED_SCHEMES, BrowserLogin: AUTHORIZATION_CODE }
         });
-        const generators = [createGenerator(CLI_GENERATOR, undefined, CLI_CONFIG, { metadata: { license: "MIT" } })];
+        const generators = [createGenerator(TYPESCRIPT_GENERATOR, "typescript", {})];
         const definitionBefore = structuredClone(definition.rootApiFile.contents);
         const configBefore = structuredClone(generators[0]?.config);
 
         const first = migrate(generators, definition);
         const second = migrate(generators, definition);
 
+        expect(first.sdkConfig.api?.auth?.schemes).toEqual(MIGRATED_SUPPORTED_SCHEMES);
         expect(second).toEqual(first);
         expect(definition.rootApiFile.contents).toEqual(definitionBefore);
         expect(generators[0]?.config).toEqual(configBefore);
@@ -663,56 +528,28 @@ describe("fern sdk migrate idempotency", () => {
         );
     });
 
-    it("reaches a fixed point when the CLI generator configuration is rebuilt from migrated SDK Config", () => {
-        const first = migrate([createGenerator(CLI_GENERATOR, undefined, CLI_CONFIG)]);
-        const rebuilt = toCliGeneratorConfig(first.sdkConfig.targets[0]?.package ?? {});
-        const second = migrate([createGenerator(CLI_GENERATOR, undefined, rebuilt)]);
+    it("round-trips migrated auth through the written SDK Config without loss", () => {
+        const first = migrate(
+            [createGenerator(TYPESCRIPT_GENERATOR, "typescript", {})],
+            createDefinition({ auth: { "endpoint-security": {} }, "auth-schemes": SUPPORTED_SCHEMES })
+        );
+        const written = mergeSdkConfig({ existingContents: undefined, mapped: first, outputPath: "sdk-config.yml" });
+        const reread = validateSdkConfigV1(YAML.parse(written));
 
-        expect(rebuilt).toEqual(CLI_CONFIG);
-        expect(second.sdkConfig).toEqual(first.sdkConfig);
-        expect(second.diagnostics).toEqual([]);
+        expect(reread.api?.auth).toEqual({ endpointSecurity: true, schemes: MIGRATED_SUPPORTED_SCHEMES });
+        expect(reread.api?.auth).toEqual(first.sdkConfig.api?.auth);
     });
 });
 
 function migrate(
     generators: generatorsYml.GeneratorInvocation[],
-    definition: FernDefinition = createDefinition({})
+    definition: FernDefinition
 ): ReturnType<typeof mapFernGroupToSdkConfig> {
     return mapFernGroupToSdkConfig({
         fernWorkspace: { definition },
         group: { audiences: { type: "select", audiences: [] }, generators, groupName: "cli", reviewers: undefined },
         source: { specs: [{ id: "api", type: "openapi" as const, path: "./openapi.yml" }] }
     });
-}
-
-/** The inverse the CLI generator adapter applies: SDK Config package fields back to `packageIdentity` and Cargo tables. */
-function toCliGeneratorConfig(pkg: NonNullable<ReturnType<typeof migrate>["sdkConfig"]["targets"][number]["package"]>) {
-    const cargoTable = (dependencies: typeof pkg.extraDependencies) =>
-        Object.fromEntries(
-            (dependencies ?? []).map(({ name, version, source, features }) => {
-                const spec = {
-                    ...(version == null ? {} : { version }),
-                    ...(features == null ? {} : { features }),
-                    ...(source?.type === "path" ? { path: source.path } : {}),
-                    ...(source?.type === "git" ? { git: source.url, rev: source.ref } : {}),
-                    ...(source?.type === "registry" ? { registry: source.registry } : {})
-                };
-                return [name, Object.keys(spec).length === 1 && version != null ? version : spec];
-            })
-        );
-    return {
-        packageIdentity: {
-            name: pkg.packageName,
-            description: pkg.description,
-            repository: pkg.repository,
-            homepage: pkg.homepage,
-            keywords: pkg.keywords,
-            authors: pkg.authors?.map(({ name, email }) => (email == null ? name : `${name} <${email}>`)),
-            license: pkg.license?.type
-        },
-        extraDependencies: cargoTable(pkg.extraDependencies),
-        extraDevDependencies: cargoTable(pkg.extraDevDependencies)
-    };
 }
 
 function inferredBearer(): AuthSchemes[string] {
@@ -739,8 +576,7 @@ function createDefinition(contents: Partial<RootContents>): FernDefinition {
 function createGenerator(
     name: string,
     language: generatorsYml.GenerationLanguage | undefined,
-    config: unknown,
-    raw: Record<string, unknown> = {}
+    config: unknown
 ): generatorsYml.GeneratorInvocation {
     return {
         absolutePathToLocalOutput: undefined,
@@ -756,7 +592,7 @@ function createGenerator(
         name,
         outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles({}),
         publishMetadata: undefined,
-        raw: { name, version: "0.49.0", ...raw } as generatorsYml.GeneratorInvocationSchema,
+        raw: { name, version: "0.49.0" } as generatorsYml.GeneratorInvocationSchema,
         readme: undefined,
         settings: undefined,
         smartCasing: true,

@@ -11,7 +11,6 @@ import {
 } from "@postman/sdk-config/sdk-config/v1";
 
 import { mapFernAuthToSdkConfig } from "./mapFernAuthToSdkConfig.js";
-import { preserveLegacyPackageMetadata } from "./preserveLegacyPackageMetadata.js";
 import type { SourceDerivedApiFields } from "./projectMigrationSource.js";
 
 export interface MappingResult {
@@ -47,18 +46,13 @@ export function mapFernGroupToSdkConfig({
         }
     };
     const mapped = mapFernConfigToSdkConfigV1(input);
-    const withPackageMetadata = preserveLegacyPackageMetadata({
-        generators: group.generators,
-        sdkConfig: mapped.sdkConfig,
-        diagnostics: mapped.unsupportedFields
-    });
     const sdkConfig =
-        clientPathParameterStyle == null || withPackageMetadata.sdkConfig.client?.pathParameterStyle != null
-            ? withPackageMetadata.sdkConfig
+        clientPathParameterStyle == null || mapped.sdkConfig.client?.pathParameterStyle != null
+            ? mapped.sdkConfig
             : {
-                  ...withPackageMetadata.sdkConfig,
+                  ...mapped.sdkConfig,
                   client: {
-                      ...(withPackageMetadata.sdkConfig.client ?? {}),
+                      ...(mapped.sdkConfig.client ?? {}),
                       pathParameterStyle: clientPathParameterStyle
                   }
               };
@@ -69,7 +63,7 @@ export function mapFernGroupToSdkConfig({
     return {
         diagnostics: [
             ...apiProjection.diagnostics,
-            ...withPackageMetadata.diagnostics.filter((diagnostic) => !isPublishCredentialDiagnostic(diagnostic)),
+            ...mapped.unsupportedFields.filter((diagnostic) => !isPublishCredentialDiagnostic(diagnostic)),
             ...migrationCredentials.flatMap((result) => result.diagnostics)
         ],
         sdkConfig: {
