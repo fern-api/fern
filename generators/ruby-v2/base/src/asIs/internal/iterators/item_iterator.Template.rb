@@ -21,7 +21,7 @@ module <%= gem_namespace %>
         # share a position with each other or with `next_element`.
         pass = @item_pages.dup.tap(&:rewind)
         while (page = pass.next_page)
-          (page.send(@item_field) || []).each(&)
+          (read_field(page, @item_field) || []).each(&)
         end
         nil
       end
@@ -86,7 +86,7 @@ module <%= gem_namespace %>
       def cached_page_items
         return [] unless @page
 
-        @page.send(@item_field) || []
+        read_field(@page, @item_field) || []
       end
 
       def next_item_from_cached_page
@@ -105,6 +105,15 @@ module <%= gem_namespace %>
       def load_next_page
         @page = @item_pages.next_page
         @item_index = 0
+      end
+
+      # Reads a field from an API response, walking through enclosing objects when the field is nested.
+      #
+      # @param value [Object, nil] The API response.
+      # @param field [Symbol, Array<Symbol>] The field name, or the path of field names for a nested field.
+      # @return [Object, nil]
+      def read_field(value, field)
+        Array(field).reduce(value) { |object, name| object&.send(name) }
       end
     end
   end
