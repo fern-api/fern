@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { getCliReleaseEnvironment } from "../src/feature-flags/CliReleaseEnvironment.js";
 import {
     type FeatureFlagEvaluator,
+    getFlagResponse,
     isFeatureFlagValueEnabled,
     NoopFeatureFlagClient,
     PosthogFeatureFlagClient
@@ -25,12 +26,13 @@ function createClient(
             throw flushResult;
         }
     });
+    const capture = vi.fn();
     const client = new PosthogFeatureFlagClient({
         environment: "pre-prod",
         sendFeatureFlagEvents,
-        evaluator: { getFeatureFlagResult, flush } satisfies FeatureFlagEvaluator
+        evaluator: { getFeatureFlagResult, capture, flush } satisfies FeatureFlagEvaluator
     });
-    return { client, getFeatureFlagResult, flush };
+    return { client, getFeatureFlagResult, capture, flush };
 }
 
 describe("PosthogFeatureFlagClient", () => {
@@ -82,21 +84,79 @@ describe("PosthogFeatureFlagClient", () => {
         });
     });
 
-    it("sends flag usage events and flushes them when event telemetry is enabled", async () => {
-        const { client, getFeatureFlagResult, flush } = createClient(
-            { key: "use-sdk-gen-api", enabled: true, variant: undefined, payload: undefined },
+    it("captures a flag usage event with the targeting properties and flushes it", async () => {
+        const { client, getFeatureFlagResult, capture, flush } = createClient(
+            {
+                key: "use-sdk-gen-api",
+                enabled: true,
+                variant: "true",
+                payload: undefined,
+                reason: "Matched condition set 1"
+            },
             { sendFeatureFlagEvents: true }
         );
+        vi.stubEnv("CLI_VERSION", "5.155.0");
+        try {
+            await client.isEnabled("use-sdk-gen-api", {
+                org: "acme",
+                generator: "fernapi/fern-python-sdk",
+                language: "python"
+            });
+            await client.flush();
+        } finally {
+            vi.unstubAllEnvs();
+        }
 
-        await client.isEnabled("use-sdk-gen-api", { org: "acme" });
-        await client.flush();
-
+        // posthog-node's own event is off: it omits targeting properties and dedupes per org.
         expect(getFeatureFlagResult).toHaveBeenCalledWith(
             "use-sdk-gen-api",
             "org:acme",
-            expect.objectContaining({ sendFeatureFlagEvents: true })
+            expect.objectContaining({ sendFeatureFlagEvents: false })
         );
+        expect(capture).toHaveBeenCalledWith({
+            distinctId: "org:acme",
+            event: "$feature_flag_called",
+            groups: { organization: "acme" },
+            properties: {
+                org: "acme",
+                environment: "pre-prod",
+                generator: "fernapi/fern-python-sdk",
+                language: "python",
+                $feature_flag: "use-sdk-gen-api",
+                $feature_flag_response: "true",
+                "$feature/use-sdk-gen-api": "true",
+                $feature_flag_reason: "Matched condition set 1",
+                version: "5.155.0"
+            }
+        });
         expect(flush).toHaveBeenCalledTimes(1);
+    });
+
+    it("captures one usage event per generator in the same org", async () => {
+        const { client, capture } = createClient(
+            { key: "use-sdk-gen-api", enabled: true, variant: "true", payload: undefined },
+            { sendFeatureFlagEvents: true }
+        );
+
+        await client.isEnabled("use-sdk-gen-api", { org: "acme", generator: "fernapi/fern-python-sdk" });
+        await client.isEnabled("use-sdk-gen-api", { org: "acme", generator: "fernapi/fern-go-sdk" });
+        await client.isEnabled("use-sdk-gen-api", { org: "acme", generator: "fernapi/fern-go-sdk" });
+
+        expect(capture.mock.calls.map(([event]) => event.properties?.generator)).toEqual([
+            "fernapi/fern-python-sdk",
+            "fernapi/fern-go-sdk"
+        ]);
+    });
+
+    it.each([
+        { name: "telemetry is disabled", result: undefined, sendFeatureFlagEvents: false },
+        { name: "the flag request fails", result: new Error("network down"), sendFeatureFlagEvents: true }
+    ])("captures no usage event when $name", async ({ result, sendFeatureFlagEvents }) => {
+        const { client, capture } = createClient(result, { sendFeatureFlagEvents });
+
+        await client.isEnabled("use-sdk-gen-api", { org: "acme" });
+
+        expect(capture).not.toHaveBeenCalled();
     });
 
     it("waits for in-flight flag checks before flushing their usage events", async () => {
@@ -114,10 +174,13 @@ describe("PosthogFeatureFlagClient", () => {
         const flush = vi.fn(async (): Promise<void> => {
             order.push("flushed");
         });
+        const capture = vi.fn(() => {
+            order.push("captured");
+        });
         const client = new PosthogFeatureFlagClient({
             environment: "pre-prod",
             sendFeatureFlagEvents: true,
-            evaluator: { getFeatureFlagResult, flush } satisfies FeatureFlagEvaluator
+            evaluator: { getFeatureFlagResult, capture, flush } satisfies FeatureFlagEvaluator
         });
 
         const evaluation = client.isEnabled("use-sdk-gen-api", { org: "acme" });
@@ -125,7 +188,7 @@ describe("PosthogFeatureFlagClient", () => {
         answer(undefined);
         await Promise.all([evaluation, flushed]);
 
-        expect(order).toEqual(["evaluated", "flushed"]);
+        expect(order).toEqual(["evaluated", "captured", "flushed"]);
     });
 
     it("skips the flush when event telemetry is disabled", async () => {
@@ -192,6 +255,17 @@ describe("isFeatureFlagValueEnabled", () => {
     });
 });
 
+describe("getFlagResponse", () => {
+    it.each([
+        { result: { key: "f", enabled: true, variant: "false", payload: undefined }, expected: "false" },
+        { result: { key: "f", enabled: true, variant: undefined, payload: undefined }, expected: true },
+        { result: { key: "f", enabled: false, variant: undefined, payload: undefined }, expected: false },
+        { result: undefined, expected: undefined }
+    ])("reports $result as $expected", ({ result, expected }) => {
+        expect(getFlagResponse(result)).toBe(expected);
+    });
+});
+
 describe("NoopFeatureFlagClient", () => {
     it("keeps every flag off", async () => {
         const client = new NoopFeatureFlagClient();
@@ -226,10 +300,11 @@ describe("getFeatureFlagClient", () => {
         vi.stubEnv("POSTHOG_FEATURE_FLAGS_API_KEY", "phc_test");
         vi.stubEnv("POSTHOG_API_KEY", posthogApiKey);
         vi.stubEnv("FERN_DISABLE_TELEMETRY", disableTelemetry);
-        const getFeatureFlagResult = vi.fn(async () => undefined);
+        const capture = vi.fn();
         vi.doMock("posthog-node", () => ({
             PostHog: class {
-                getFeatureFlagResult = getFeatureFlagResult;
+                getFeatureFlagResult = vi.fn(async () => undefined);
+                capture = capture;
                 flush = vi.fn(async () => undefined);
             }
         }));
@@ -238,11 +313,7 @@ describe("getFeatureFlagClient", () => {
 
             await getFeatureFlagClient().isEnabled("use-sdk-gen-api", { org: "acme" });
 
-            expect(getFeatureFlagResult).toHaveBeenCalledWith(
-                "use-sdk-gen-api",
-                "org:acme",
-                expect.objectContaining({ sendFeatureFlagEvents: expected })
-            );
+            expect(capture).toHaveBeenCalledTimes(expected ? 1 : 0);
         } finally {
             vi.doUnmock("posthog-node");
             vi.unstubAllEnvs();
