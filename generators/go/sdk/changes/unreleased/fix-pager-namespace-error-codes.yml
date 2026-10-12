@@ -4,5 +4,8 @@
     Fix paginated endpoints in subpackages referencing the root package's `ErrorCodes`,
     which doesn't exist when errors are declared in the subpackage. The pager's
     `ErrorDecoder` now uses the endpoint's namespace `ErrorCodes` (e.g. `users.ErrorCodes`),
-    matching non-paginated endpoints.
+    matching non-paginated endpoints. In SDKs that already compiled (because the root package
+    had its own `ErrorCodes`), paginated subpackage endpoints now return the namespace's typed
+    error (e.g. `*users.NotFoundError`) instead of `*core.APIError` or a root error.
+    `errors.As(err, &apiErr)` with `*core.APIError` still matches through `Unwrap()`.
   type: fix
