@@ -1,6 +1,12 @@
+import importlib
 import json
+import shutil
+import sys
+import types
 import typing
+from pathlib import Path
 
+import pytest
 import typing_extensions
 
 import pydantic
@@ -84,3 +90,55 @@ def test_models_that_ignore_extras_are_unchanged() -> None:
         value: float
 
     assert json.loads(_validate(Ignores, {"value": 1, "VALUE": 2}).json()) == {"value": 1}
+
+
+_SHARED = Path(__file__).resolve().parents[2] / "core_utilities" / "shared"
+
+
+def _load_variant(tmp_path: Path, variant: str) -> types.ModuleType:
+    """The variant templates use relative imports, so import them from a copy laid out like a generated `core`."""
+    package = tmp_path / f"variant_core_{variant.replace('/', '_')}"
+    package.mkdir()
+    for module in ("__init__.py", "datetime_utils.py", "serialization.py"):
+        shutil.copy(_SHARED / module, package / module)
+    shutil.copy(_SHARED / variant / "pydantic_utilities.py", package / "pydantic_utilities.py")
+    sys.path.insert(0, str(tmp_path))
+    try:
+        return importlib.import_module(f"{package.name}.pydantic_utilities")
+    finally:
+        sys.path.remove(str(tmp_path))
+
+
+def _assert_variant_drops_colliding_extras(module: types.ModuleType, v1_api: typing.Any) -> None:
+    field = v1_api.Field if v1_api is not None else pydantic.Field
+
+    class VariantAmount(module.UniversalBaseModel):  # type: ignore[name-defined, misc]
+        value: float
+        account_id: str = field(alias="accountId")  # type: ignore[call-overload]
+
+        if v1_api is None and IS_PYDANTIC_V2:
+            model_config = pydantic.ConfigDict(extra="allow")  # type: ignore[typeddict-unknown-key]
+        else:
+
+            class Config:
+                extra = (v1_api or pydantic).Extra.allow
+
+    parsed = VariantAmount.parse_obj(
+        {"value": 1, "VALUE": 99999, "accountId": "a", "ACCOUNTID": "x", "brand_new_field": "keep-me"}
+    )
+    sent = json.loads(parsed.json())
+    assert sent["value"] == 1.0
+    assert sent["brand_new_field"] == "keep-me"
+    assert "VALUE" not in sent and "ACCOUNTID" not in sent
+
+
+def test_with_pydantic_aliases_variant(tmp_path: Path) -> None:
+    _assert_variant_drops_colliding_extras(_load_variant(tmp_path, "with_pydantic_aliases"), None)
+
+
+@pytest.mark.skipif(not IS_PYDANTIC_V2, reason="v1_on_v2 templates need pydantic.v1 from Pydantic 2")
+@pytest.mark.parametrize("variant", ["with_pydantic_v1_on_v2", "with_pydantic_v1_on_v2/with_aliases"])
+def test_v1_on_v2_variants(tmp_path: Path, variant: str) -> None:
+    import pydantic.v1 as pydantic_v1  # type: ignore[import-not-found]
+
+    _assert_variant_drops_colliding_extras(_load_variant(tmp_path, variant), pydantic_v1)

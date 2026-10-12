@@ -265,7 +265,8 @@ def _get_declared_keys(model: type) -> Tuple[FrozenSet[str], FrozenSet[str]]:
 def _allows_extra_fields(model: type) -> bool:
     if IS_PYDANTIC_V2:
         return getattr(model, "model_config", {}).get("extra") == "allow"
-    return getattr(getattr(model, "__config__", None), "extra", None) == "allow"
+    extra = getattr(getattr(model, "__config__", None), "extra", None)
+    return getattr(extra, "value", extra) == "allow"
 
 
 def _drop_extras_colliding_with_fields(model: type, data: Any) -> Any:
