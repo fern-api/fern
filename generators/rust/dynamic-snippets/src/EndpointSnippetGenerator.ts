@@ -255,14 +255,14 @@ export class EndpointSnippetGenerator {
             if (namedType.type === "discriminatedUnion") {
                 const unionType = namedType as FernIr.dynamic.DiscriminatedUnionType;
                 if (Object.keys(unionType.types).includes(discriminantValue)) {
-                    imports.add(this.context.getStructName(namedType.declaration.name));
+                    imports.add(this.context.getStructName(namedType.declaration));
 
                     // Also add the variant types
                     const variantType = unionType.types[discriminantValue];
                     if (variantType && variantType.type === "samePropertiesAsObject") {
                         const referencedType = this.context.ir.types[variantType.typeId];
                         if (referencedType) {
-                            imports.add(this.context.getStructName(referencedType.declaration.name));
+                            imports.add(this.context.getStructName(referencedType.declaration));
                             this.collectNestedTypeImports(referencedType, imports);
                         }
                     }
@@ -287,7 +287,7 @@ export class EndpointSnippetGenerator {
         switch (namedType.type) {
             case "object":
                 // Add the object type itself
-                imports.add(this.context.getStructName(namedType.declaration.name));
+                imports.add(this.context.getStructName(namedType.declaration));
 
                 // Recursively collect imports from object properties
                 for (const property of namedType.properties) {
@@ -296,19 +296,19 @@ export class EndpointSnippetGenerator {
                 break;
             case "alias":
                 // Add the alias type itself
-                imports.add(this.context.getStructName(namedType.declaration.name));
+                imports.add(this.context.getStructName(namedType.declaration));
 
                 // Recursively collect imports from the aliased type
                 this.collectTypeReferenceImports(namedType.typeReference, imports, visited);
                 break;
             case "enum":
                 // Add the enum type
-                imports.add(this.context.getEnumName(namedType.declaration.name));
+                imports.add(this.context.getEnumName(namedType.declaration));
                 break;
             case "discriminatedUnion":
             case "undiscriminatedUnion":
                 // Add the union type
-                imports.add(this.context.getStructName(namedType.declaration.name));
+                imports.add(this.context.getStructName(namedType.declaration));
 
                 // For discriminated unions, collect imports from union members
                 if (namedType.type === "discriminatedUnion") {
@@ -906,7 +906,7 @@ export class EndpointSnippetGenerator {
                             if (firstVariant) {
                                 // Use the keyword-safe name so the reference matches the generated
                                 // variant declaration (e.g. `self` becomes `Self_`, not `Self`).
-                                const variantName = firstVariant.name.pascalCase.safeName;
+                                const variantName = this.context.pascalSafe(firstVariant.name);
                                 return rust.Expression.raw(`${typeName}::${variantName}`);
                             }
                         }
@@ -1197,7 +1197,7 @@ export class EndpointSnippetGenerator {
     ): string {
         const hasQueryParams = (request.queryParameters ?? []).length > 0;
         const hasBody = request.body != null;
-        const methodName = endpoint.declaration.name.pascalCase.safeName;
+        const methodName = this.context.pascalSafe(endpoint.declaration.name);
 
         if (hasQueryParams && !hasBody) {
             // Query-only: look up the pre-registered deduplicated name from the context
@@ -1238,11 +1238,11 @@ export class EndpointSnippetGenerator {
             // a synthetic name (e.g., AddResponseRequest)
             if (request.body.type === "properties") {
                 // Use the request struct's declaration name from the IR
-                return this.context.getStructNameByDeclaration(request.declaration);
+                return this.context.getInlineRequestStructName(request.declaration);
             }
             
             // For other body types (e.g., fileUpload), fall back to endpoint-based naming
-            return `${methodName}Request`;
+            return this.context.getFileUploadRequestNameByEndpoint(endpoint.declaration) ?? `${methodName}Request`;
         }
 
         // Default fallback: use the request struct's declaration name

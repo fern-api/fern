@@ -84,6 +84,7 @@ import Testing
         stub.setResponse(body: Foundation.Data("{}".utf8))
 
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )

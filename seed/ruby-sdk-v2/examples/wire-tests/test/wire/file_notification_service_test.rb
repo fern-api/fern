@@ -8,7 +8,8 @@ class FileNotificationServiceWireTest < WireMockTestCase
 
     @client = Seed::Client.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 

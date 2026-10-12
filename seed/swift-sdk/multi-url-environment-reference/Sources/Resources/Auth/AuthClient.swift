@@ -12,7 +12,10 @@ public final class AuthClient: Sendable {
     /// import Api
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(token: "<token>")
+    ///     let client = ApiClient(
+    ///         baseURL: "https://api.example.com/2.0",
+    ///         token: "<token>"
+    ///     )
     ///
     ///     _ = try await client.auth.gettoken(request: .init(
     ///         clientId: "client_id",
