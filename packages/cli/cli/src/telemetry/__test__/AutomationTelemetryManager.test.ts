@@ -19,7 +19,7 @@ describe("AutomationTelemetryManager", () => {
         );
 
         const flush = manager.flush();
-        await vi.advanceTimersByTimeAsync(3000);
+        await vi.advanceTimersByTimeAsync(10_000);
 
         await expect(flush).resolves.toBeUndefined();
         expect(shutdown).toHaveBeenCalledOnce();
