@@ -418,7 +418,7 @@ class UniversalBaseModel(pydantic.BaseModel):
 
         @pydantic.root_validator(pre=True)
         def _drop_case_colliding_extras(cls, values: Any) -> Any:
-            return _drop_extras_colliding_with_fields(cls, values)
+            return _drop_extras_colliding_with_fields(cls, values)  # type: ignore[arg-type]
 
     def json(self, **kwargs: Any) -> str:
         kwargs_with_defaults = {
