@@ -1,0 +1,5 @@
+- summary: |
+    Add the `layout.hide-webhook-method-badges` docs.yml setting. When set to true,
+    webhook entries in the sidebar render without an HTTP method badge (e.g. `POST`),
+    so webhooks no longer read like callable endpoints. Defaults to false.
+  type: feat

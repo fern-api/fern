@@ -126,6 +126,11 @@ export interface LayoutConfig {
      * availability badge is unaffected by this setting.
      */
     showNavAvailabilityBadges?: boolean;
+    /**
+     * If `hide-webhook-method-badges` is set to true, webhook entries in the sidebar render without
+     * an HTTP method badge (e.g. `POST`). Defaults to false. The webhook page itself is unaffected.
+     */
+    hideWebhookMethodBadges?: boolean;
     /** Configures the breadcrumb trail rendered above the page title. */
     breadcrumbs?: FernDocsConfig.BreadcrumbsConfig;
 }
