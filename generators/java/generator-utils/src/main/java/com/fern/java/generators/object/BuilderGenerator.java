@@ -92,6 +92,7 @@ public final class BuilderGenerator {
                 .map(EnrichedObjectProperty::camelCaseKey)
                 .collect(Collectors.toSet());
         this.declaredWireKeys = objectPropertyWithFields.stream()
+                .filter(property -> !property.queryParameter())
                 .map(EnrichedObjectProperty::wireKey)
                 .flatMap(Optional::stream)
                 .filter(wireKey -> !wireKey.isEmpty())
@@ -434,9 +435,10 @@ public final class BuilderGenerator {
      * re-emitted after the declared field and win in case-insensitive, last-wins decoders downstream.
      */
     private MethodSpec getAdditionalPropertyJsonSetter() {
-        String methodName = allPropertyCamelCaseNames.contains(ADDITIONAL_PROPERTY_JSON_SETTER_NAME)
-                ? "_" + ADDITIONAL_PROPERTY_JSON_SETTER_NAME
-                : ADDITIONAL_PROPERTY_JSON_SETTER_NAME;
+        String methodName = ADDITIONAL_PROPERTY_JSON_SETTER_NAME;
+        while (allPropertyCamelCaseNames.contains(methodName)) {
+            methodName = "_" + methodName;
+        }
         MethodSpec.Builder setter = MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PRIVATE)
                 .addAnnotation(JsonAnySetter.class)
