@@ -186,6 +186,7 @@ export declare namespace SdkGenerator {
         resolveQueryParameterNameConflicts: boolean;
         maxRetries: number | undefined;
         alwaysSendAuth: boolean;
+        refreshAuthOnFailedPermissions: boolean;
         optionalAuth: boolean;
         guardProcessEnvAccess: boolean;
         websocketHandlerMode: "replace" | "accumulate";
@@ -584,6 +585,7 @@ export class SdkGenerator {
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
             alwaysSendAuth: config.alwaysSendAuth,
+            refreshAuthOnFailedPermissions: config.refreshAuthOnFailedPermissions,
             guardProcessEnvAccess: config.guardProcessEnvAccess
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
@@ -1644,7 +1646,8 @@ export class SdkGenerator {
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
                 optionalAuth: this.config.optionalAuth,
-                guardProcessEnvAccess: this.config.guardProcessEnvAccess
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess,
+                refreshAuthOnFailedPermissions: this.config.refreshAuthOnFailedPermissions
             });
             if (!authProvidersGenerator.shouldWriteFile()) {
                 continue;
@@ -1668,7 +1671,8 @@ export class SdkGenerator {
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
                 optionalAuth: this.config.optionalAuth,
-                guardProcessEnvAccess: this.config.guardProcessEnvAccess
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess,
+                refreshAuthOnFailedPermissions: this.config.refreshAuthOnFailedPermissions
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1686,7 +1690,8 @@ export class SdkGenerator {
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
                 optionalAuth: this.config.optionalAuth,
-                guardProcessEnvAccess: this.config.guardProcessEnvAccess
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess,
+                refreshAuthOnFailedPermissions: this.config.refreshAuthOnFailedPermissions
             });
             this.withSourceFile({
                 filepath: routingAuthProvidersGenerator.getFilePath(),

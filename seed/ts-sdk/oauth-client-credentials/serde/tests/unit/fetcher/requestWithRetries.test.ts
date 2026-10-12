@@ -280,6 +280,107 @@ describe("requestWithRetries", () => {
         expect(response.status).toBe(200);
     });
 
+    describe("with refreshAuth", () => {
+        beforeEach(() => {
+            setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+                process.nextTick(callback);
+                return null as any;
+            });
+        });
+
+        it("should not retry 401 or 403 without refreshAuth", async () => {
+            for (const status of [401, 403]) {
+                mockFetch.mockReset();
+                mockFetch.mockResolvedValue(new Response("", { status }));
+
+                const responsePromise = requestWithRetries(() => mockFetch(), 3);
+                await vi.runAllTimersAsync();
+                const response = await responsePromise;
+
+                expect(mockFetch).toHaveBeenCalledTimes(1);
+                expect(response.status).toBe(status);
+            }
+        });
+
+        it.each([401, 403])("should refresh auth before retrying a %d", async (status) => {
+            const refreshAuth = vi.fn().mockResolvedValue(undefined);
+            const callOrder: string[] = [];
+            refreshAuth.mockImplementation(async () => {
+                callOrder.push("refresh");
+            });
+            mockFetch.mockImplementation(async () => {
+                callOrder.push("request");
+                return callOrder.length === 1 ? new Response("", { status }) : new Response("", { status: 200 });
+            });
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 2, undefined, refreshAuth);
+            await vi.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(response.status).toBe(200);
+            expect(refreshAuth).toHaveBeenCalledTimes(1);
+            expect(callOrder).toEqual(["request", "refresh", "request"]);
+        });
+
+        it("should use maxRetries and backoff for auth failures", async () => {
+            const refreshAuth = vi.fn().mockResolvedValue(undefined);
+            mockFetch.mockResolvedValue(new Response("", { status: 401 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 2, undefined, refreshAuth);
+            await vi.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(response.status).toBe(401);
+            expect(mockFetch).toHaveBeenCalledTimes(3);
+            expect(refreshAuth).toHaveBeenCalledTimes(2);
+            expect(setTimeoutSpy).toHaveBeenNthCalledWith(1, expect.any(Function), 1000);
+            expect(setTimeoutSpy).toHaveBeenNthCalledWith(2, expect.any(Function), 2000);
+        });
+
+        it("should not refresh auth when maxRetries is 0", async () => {
+            const refreshAuth = vi.fn().mockResolvedValue(undefined);
+            mockFetch.mockResolvedValue(new Response("", { status: 403 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 0, undefined, refreshAuth);
+            await vi.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(response.status).toBe(403);
+            expect(mockFetch).toHaveBeenCalledTimes(1);
+            expect(refreshAuth).not.toHaveBeenCalled();
+        });
+
+        it("should only refresh auth for 401 and 403", async () => {
+            const refreshAuth = vi.fn().mockResolvedValue(undefined);
+            mockFetch
+                .mockResolvedValueOnce(new Response("", { status: 503 }))
+                .mockResolvedValueOnce(new Response("", { status: 401 }))
+                .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 3, undefined, refreshAuth);
+            await vi.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(response.status).toBe(200);
+            expect(mockFetch).toHaveBeenCalledTimes(3);
+            expect(refreshAuth).toHaveBeenCalledTimes(1);
+        });
+
+        it("should not send the request again when refreshAuth fails", async () => {
+            const refreshError = new Error("token endpoint failed");
+            const refreshAuth = vi.fn().mockRejectedValue(refreshError);
+            mockFetch.mockResolvedValue(new Response("", { status: 401 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 2, undefined, refreshAuth);
+            const assertion = expect(responsePromise).rejects.toBe(refreshError);
+            await vi.runAllTimersAsync();
+            await assertion;
+
+            expect(mockFetch).toHaveBeenCalledTimes(1);
+            expect(refreshAuth).toHaveBeenCalledTimes(1);
+        });
+    });
+
     it("should stop waiting and not retry when aborted during the backoff", async () => {
         vi.restoreAllMocks();
         const controller = new AbortController();

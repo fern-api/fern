@@ -3,10 +3,12 @@ import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import { getAuthRequestArgType } from "./getAuthRequestParameter.js";
 
 export declare namespace AnyAuthProviderGenerator {
     export interface Init {
         ir: FernIr.IntermediateRepresentation;
+        refreshAuthOnFailedPermissions?: boolean;
     }
 }
 
@@ -18,9 +20,11 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     public static readonly AUTH_PROVIDERS_FIELD_NAME = AUTH_PROVIDERS_FIELD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
+    private readonly refreshAuthOnFailedPermissions: boolean;
 
     constructor(init: AnyAuthProviderGenerator.Init) {
         this.ir = init.ir;
+        this.refreshAuthOnFailedPermissions = init.refreshAuthOnFailedPermissions ?? false;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -155,16 +159,9 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
                         {
                             name: "arg",
                             hasQuestionToken: true,
-                            type: getTextOfTsNode(
-                                ts.factory.createTypeLiteralNode([
-                                    ts.factory.createPropertySignature(
-                                        undefined,
-                                        "endpointMetadata",
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                        context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
-                                    )
-                                ])
-                            )
+                            type: getAuthRequestArgType(context, {
+                                includeForceRefresh: this.refreshAuthOnFailedPermissions
+                            })
                         }
                     ],
                     returnType: getTextOfTsNode(

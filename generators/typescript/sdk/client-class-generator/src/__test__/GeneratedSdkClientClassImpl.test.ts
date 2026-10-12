@@ -158,7 +158,8 @@ function createClientClass(opts?: {
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,
         parameterNaming: opts?.parameterNaming ?? "default",
         offsetSemantics: opts?.offsetSemantics ?? "item-index",
-        alwaysSendAuth: opts?.alwaysSendAuth ?? false
+        alwaysSendAuth: opts?.alwaysSendAuth ?? false,
+        refreshAuthOnFailedPermissions: false
     });
 }
 

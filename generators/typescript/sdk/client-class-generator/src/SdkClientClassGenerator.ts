@@ -35,6 +35,7 @@ export declare namespace SdkClientClassGenerator {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         alwaysSendAuth: boolean;
+        refreshAuthOnFailedPermissions: boolean;
         guardProcessEnvAccess?: boolean;
     }
 
@@ -76,6 +77,7 @@ export class SdkClientClassGenerator {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly alwaysSendAuth: boolean;
+    private readonly refreshAuthOnFailedPermissions: boolean;
     private readonly guardProcessEnvAccess: boolean;
 
     constructor({
@@ -106,6 +108,7 @@ export class SdkClientClassGenerator {
         parameterNaming,
         offsetSemantics,
         alwaysSendAuth,
+        refreshAuthOnFailedPermissions,
         guardProcessEnvAccess
     }: SdkClientClassGenerator.Init) {
         this.case = caseConverter;
@@ -135,6 +138,7 @@ export class SdkClientClassGenerator {
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
         this.alwaysSendAuth = alwaysSendAuth;
+        this.refreshAuthOnFailedPermissions = refreshAuthOnFailedPermissions;
         this.guardProcessEnvAccess = guardProcessEnvAccess ?? false;
     }
 
@@ -175,6 +179,7 @@ export class SdkClientClassGenerator {
             parameterNaming: this.parameterNaming,
             offsetSemantics: this.offsetSemantics,
             alwaysSendAuth: this.alwaysSendAuth,
+            refreshAuthOnFailedPermissions: this.refreshAuthOnFailedPermissions,
             guardProcessEnvAccess: this.guardProcessEnvAccess
         });
     }

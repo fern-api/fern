@@ -100,5 +100,6 @@ export interface SdkCustomConfig {
     guardProcessEnvAccess: boolean;
     websocketHandlerMode: "replace" | "accumulate";
     retryStatusCodes: "legacy" | "recommended";
+    refreshAuthOnFailedPermissions: boolean;
     generateReactQueryHooks: boolean;
 }

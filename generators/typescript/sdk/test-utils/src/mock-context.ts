@@ -112,12 +112,14 @@ export function createMockGeneratedSdkClientClass(opts?: {
     hasAuthProvider?: boolean;
     generateEndpointMetadata?: boolean;
     alwaysSendAuth?: boolean;
+    refreshAuthOnFailedPermissions?: boolean;
     guardProcessEnvAccess?: boolean;
 }) {
     return {
         hasAuthProvider: () => opts?.hasAuthProvider ?? false,
         getGenerateEndpointMetadata: () => opts?.generateEndpointMetadata ?? false,
         getAlwaysSendAuth: () => opts?.alwaysSendAuth ?? false,
+        getRefreshAuthOnFailedPermissions: () => opts?.refreshAuthOnFailedPermissions ?? false,
         getGuardProcessEnvAccess: () => opts?.guardProcessEnvAccess ?? false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata")
