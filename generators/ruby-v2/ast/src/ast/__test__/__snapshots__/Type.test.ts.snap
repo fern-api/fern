@@ -10,6 +10,8 @@ exports[`Type > bot 1`] = `"bot"`;
 
 exports[`Type > class 1`] = `"MyApi::V1::Client"`;
 
+exports[`Type > float 1`] = `"Float"`;
+
 exports[`Type > generics 1`] = `"Foo[String, Integer]"`;
 
 exports[`Type > hash 1`] = `"Hash[String, Integer]"`;

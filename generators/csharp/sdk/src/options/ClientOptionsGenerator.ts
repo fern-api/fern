@@ -34,6 +34,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
     private baseUrlExplicitlySetField: ast.Field | undefined;
     private environmentExplicitlySetField: ast.Field | undefined;
     private serverVariableFields: ast.Field[] = [];
+    /** The client options generated for SDK variables bound to path parameters. */
+    private sdkVariableFields: ast.Field[] = [];
     private unifiedFields: UnifiedField[] = [];
     /** The client options generated for literal-typed global headers (e.g. an API version header). */
     private literalHeaderFields: ast.Field[] = [];
@@ -58,6 +60,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         );
         this.createBaseUrlField(class_, serverVariableOptions.length > 0);
         this.addServerVariableFields(class_, serverVariableOptions);
+        this.addSdkVariableFields(class_);
         this.baseOptionsGenerator.getHttpClientField(class_, optionArgs);
 
         // Headers property is used for lazy auth header evaluation in root client
@@ -163,6 +166,34 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                     get: true,
                     init: true,
                     type: this.Primitive.string.asOptional(),
+                    summary: docs.length > 0 ? docs.join(" ") : undefined
+                })
+            );
+        }
+    }
+
+    /**
+     * Adds one settable, nullable property per SDK variable. Path parameters bound to the
+     * variable are resolved from it instead of being passed to every endpoint method; string
+     * variables that declare an `env` fall back to that environment variable in the root
+     * client constructor.
+     */
+    private addSdkVariableFields(class_: ast.Class): void {
+        for (const option of this.context.getSdkVariableOptions()) {
+            const docs: string[] = [];
+            if (option.variable.docs != null) {
+                docs.push(option.variable.docs);
+            }
+            if (option.variable.envVar != null && option.isString) {
+                docs.push(`Defaults to the ${option.variable.envVar} environment variable when not set.`);
+            }
+            this.sdkVariableFields.push(
+                class_.addField({
+                    origin: class_.explicit(option.optionName),
+                    access: ast.Access.Public,
+                    get: true,
+                    set: true,
+                    type: this.context.csharpTypeMapper.convert({ reference: option.variable.type }).asOptional(),
                     summary: docs.length > 0 ? docs.join(" ") : undefined
                 })
             );
@@ -606,7 +637,10 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         const hasRequiredUnifiedFields = this.unifiedFields.some((f) => !f.isOptional && !f.hasEnvironmentVariable);
         const hasRequiredBaseUrl = this.hasRequiredBaseUrlWithoutDefault();
         const needsCopyConstructor =
-            hasRequiredUnifiedFields || hasRequiredBaseUrl || this.serverVariableFields.length > 0;
+            hasRequiredUnifiedFields ||
+            hasRequiredBaseUrl ||
+            this.serverVariableFields.length > 0 ||
+            this.sdkVariableFields.length > 0;
 
         if (needsCopyConstructor) {
             // A copy constructor preserves server-variable tracking state and supports
@@ -698,6 +732,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                     );
                 }
                 for (const field of this.serverVariableFields) {
+                    writer.writeLine(`${field.name} = other.${field.name};`);
+                }
+                for (const field of this.sdkVariableFields) {
                     writer.writeLine(`${field.name} = other.${field.name};`);
                 }
                 writer.writeLine("HttpClient = other.HttpClient;");

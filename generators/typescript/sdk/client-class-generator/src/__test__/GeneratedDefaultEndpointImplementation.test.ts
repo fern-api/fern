@@ -104,6 +104,7 @@ function createMockClientClass(opts?: { hasRequestOptions?: boolean }): any {
             ts.factory.createPropertyAccessExpression(referenceToRootClient, ts.factory.createIdentifier("service")),
         hasAuthProvider: () => false,
         getGenerateEndpointMetadata: () => false,
+        getGuardProcessEnvAccess: () => false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getEnvironment: () => undefined
     };

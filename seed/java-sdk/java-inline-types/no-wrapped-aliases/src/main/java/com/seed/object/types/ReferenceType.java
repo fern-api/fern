@@ -86,7 +86,6 @@ public final class ReferenceType {
     public static final class Builder implements FooStage, _FinalStage {
         private String foo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -111,6 +110,14 @@ public final class ReferenceType {
         @java.lang.Override
         public ReferenceType build() {
             return new ReferenceType(foo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -6,6 +6,9 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { Comments } from "../utils/comments.js";
 
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+
 const DEFAULT_HELPER_CLASS_NAME = "WebhooksHelper";
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
@@ -85,6 +88,15 @@ export class WebhooksHelperGenerator {
     } {
         const grouped = new Map<string, WebhookVerificationEntry>();
 
+        // The API-wide scheme (generators.yml `api.settings.webhook-signature`) always backs the
+        // default WebhooksHelper, even when the definition models no webhooks.
+        const apiWideConfig = this.context.ir.sdkConfig.webhookSignatureVerification;
+        let apiWideEntry: WebhookVerificationEntry | undefined;
+        if (apiWideConfig?.type === "hmac") {
+            apiWideEntry = { config: apiWideConfig, webhookNames: [] };
+            grouped.set(this.computeVerificationKey(apiWideConfig), apiWideEntry);
+        }
+
         for (const webhookGroup of Object.values(this.context.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 const verification = webhook.signatureVerification;
@@ -105,13 +117,16 @@ export class WebhooksHelperGenerator {
             return { defaultEntry: undefined, overrideEntries: [] };
         }
 
-        // The most frequent config becomes the default WebhooksHelper (ties broken by insertion order).
-        let defaultEntry: WebhookVerificationEntry | undefined;
-        let maxCount = 0;
-        for (const entry of grouped.values()) {
-            if (entry.webhookNames.length > maxCount) {
-                maxCount = entry.webhookNames.length;
-                defaultEntry = entry;
+        // Without an API-wide scheme, the most frequent config becomes the default WebhooksHelper
+        // (ties broken by insertion order).
+        let defaultEntry: WebhookVerificationEntry | undefined = apiWideEntry;
+        if (defaultEntry == null) {
+            let maxCount = 0;
+            for (const entry of grouped.values()) {
+                if (entry.webhookNames.length > maxCount) {
+                    maxCount = entry.webhookNames.length;
+                    defaultEntry = entry;
+                }
             }
         }
 
@@ -156,6 +171,13 @@ export class WebhooksHelperGenerator {
                           headerName: getWireValue(config.timestamp.headerName),
                           format: config.timestamp.format,
                           tolerance: config.timestamp.tolerance ?? null
+                      },
+            notificationUrlNormalization:
+                config.notificationUrlNormalization == null
+                    ? null
+                    : {
+                          portVariants: config.notificationUrlNormalization.portVariants,
+                          legacyQueryEncoding: config.notificationUrlNormalization.legacyQueryEncoding
                       }
         });
     }
@@ -403,15 +425,26 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null) {
             params.push(ruby.parameters.keyword({ name: "timestamp_header", type: ruby.Type.string() }));
         }
+        params.push(
+            ruby.parameters.keyword({
+                name: "algorithm",
+                type: ruby.Type.nilable(ruby.Type.string()),
+                initializer: ruby.codeblock("nil")
+            })
+        );
         return params;
     }
 
     private static writeMethodBody(writer: ruby.Writer, config: FernIr.HmacSignatureVerification): void {
         // Input validation. A verification helper returns a boolean and never raises, so
         // missing inputs fail closed with `false`.
-        writer.writeLine(
-            "return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?"
-        );
+        writer.writeLine("if signature_header.nil? || signature_header.empty?");
+        writer.indent();
+        writer.writeLine(`warn(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)})`);
+        writer.writeLine("return false");
+        writer.dedent();
+        writer.writeLine("end");
+        writer.writeLine("return false if request_body.nil? || signature_key.nil? || signature_key.empty?");
 
         if (config.timestamp != null) {
             writer.newLine();
@@ -455,13 +488,15 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine("payload: payload,");
         writer.writeLine("secret: signature_key,");
-        writer.writeLine(`algorithm: "${algorithm}",`);
+        writer.writeLine(`algorithm: algorithm || "${algorithm}",`);
         writer.writeLine(`encoding: "${encoding}"`);
         writer.dedent();
         writer.writeLine(")");
 
         writer.newLine();
-        writer.writeLine(`Internal::WebhookSignature.timing_safe_equal(${signatureExpr}, expected)`);
+        writer.writeLine(`valid = Internal::WebhookSignature.timing_safe_equal(${signatureExpr}, expected)`);
+        writer.writeLine(`warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)}) unless valid`);
+        writer.writeLine("valid");
     }
 
     private static writeTimestampValidation(writer: ruby.Writer, timestamp: FernIr.WebhookTimestampConfig): void {
@@ -686,8 +721,13 @@ export class WebhooksHelperGenerator {
         writer.dedent();
         writer.writeLine(")");
         writer.writeLine(
-            "return false unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)"
+            "unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)"
         );
+        writer.indent();
+        writer.writeLine(`warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)})`);
+        writer.writeLine("return false");
+        writer.dedent();
+        writer.writeLine("end");
     }
 
     /**
@@ -755,7 +795,7 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine("payload: payload,");
         writer.writeLine("secret: signature_key,");
-        writer.writeLine(`algorithm: "${algorithm}",`);
+        writer.writeLine(`algorithm: algorithm || "${algorithm}",`);
         writer.writeLine(`encoding: "${encoding}"`);
         writer.dedent();
         writer.writeLine(")");
@@ -763,6 +803,7 @@ export class WebhooksHelperGenerator {
         writer.dedent();
         writer.writeLine("end");
         writer.newLine();
+        writer.writeLine(`warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)})`);
         writer.writeLine("false");
     }
 

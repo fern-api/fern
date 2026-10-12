@@ -118,7 +118,6 @@ public final class JustFileWithOptionalQueryParamsRequest {
 
         private Optional<String> maybeString = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -167,6 +166,16 @@ public final class JustFileWithOptionalQueryParamsRequest {
         @java.lang.Override
         public JustFileWithOptionalQueryParamsRequest build() {
             return new JustFileWithOptionalQueryParamsRequest(file, maybeString, maybeInteger, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("file")
+                    || key.equalsIgnoreCase("maybeString")
+                    || key.equalsIgnoreCase("maybeInteger")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

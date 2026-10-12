@@ -5,8 +5,8 @@ import (
 
     fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
-    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -18,15 +18,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.ListItemsRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-        Limit: fern.Int(
-            1,
+    request := &types.ObjectWithDatetimeLikeString{
+        DatetimeLikeString: "datetimeLikeString",
+        ActualDatetime: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
         ),
     }
-    client.Endpoints.Pagination.ListItems(
+    client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
         context.TODO(),
         request,
     )

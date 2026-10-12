@@ -1,5 +1,5 @@
+import { exposesSourceSpecs } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration-loader";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import {
     createGroupedSpecsTarGzArchiveSettled,
     createSpecsTarGzArchive,
@@ -34,7 +34,7 @@ export function createFernSourceArchiveResolver({
                   : ({ type: "select", audiences: sdkConfigV1.audiences } as const);
         const sourceArchives: FernSourceArchiveResolution["sourceArchives"] = new Map();
         const errors = new Map<number, unknown>();
-        if (!(workspace instanceof OSSWorkspace)) {
+        if (!exposesSourceSpecs(workspace)) {
             for (const request of requests) {
                 if (requestRequiresSourceArchive(request)) {
                     errors.set(
@@ -55,12 +55,8 @@ export function createFernSourceArchiveResolver({
                 }
                 const specs = await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
                 if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-                    const configTarget = sdkConfigV1?.targets.find(
-                        (target) => target.language === request.sdkGenApiRoute?.language
-                    );
                     validateSdkConfigImportSettings(specs, {
-                        clientPathParameterStyle:
-                            configTarget?.clientPathParameterStyle ?? sdkConfigV1?.clientPathParameterStyle
+                        clientPathParameterStyle: getClientPathParameterStyle(request, sdkConfigV1)
                     });
                 }
                 return specs;
@@ -103,7 +99,7 @@ export function createFernSourceArchiveResolver({
         if (rootRequests.length > 0) {
             try {
                 const archive = await createSpecsTarGzArchive({
-                    specs: workspace.allSpecs,
+                    specs: await workspace.getSourceSpecs(),
                     context,
                     audiences
                 });
@@ -141,6 +137,19 @@ export function createFernSourceArchiveResolver({
         }
         return { sourceArchives, errors };
     };
+}
+
+function getClientPathParameterStyle(
+    request: FernSourceArchiveRequest,
+    sdkConfigV1: FernSdkConfigV1Payload | undefined
+): "inline" | "wrapped" | "language-default" | undefined {
+    if (request.sdkConfigTargetIndex == null) {
+        return sdkConfigV1?.clientPathParameterStyle;
+    }
+    return (
+        sdkConfigV1?.targets[request.sdkConfigTargetIndex]?.clientPathParameterStyle ??
+        sdkConfigV1?.clientPathParameterStyle
+    );
 }
 
 function requestRequiresSourceArchive(request: FernSourceArchiveRequest): boolean {

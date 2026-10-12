@@ -19,7 +19,7 @@ func do() {
             "query",
         ),
     }
-    client.StreamDataContextWithEnvelopeSchema(
+    client.StreamProtocolMixedSchema(
         context.TODO(),
         request,
     )

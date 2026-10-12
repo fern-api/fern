@@ -6,6 +6,7 @@ import {
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getUserAgentTemplateFromGeneratorConfig,
+    getWebhookSignatureFromGeneratorConfig,
     type Spec
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -237,6 +238,7 @@ export class GenerationRunner {
             packageName: generatorsYml.getPackageName({ generatorInvocation }),
             userAgentTemplate: getUserAgentTemplateFromGeneratorConfig(generatorInvocation),
             idempotencyKeyGeneration: getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation),
+            webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, context),
             organization,
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),

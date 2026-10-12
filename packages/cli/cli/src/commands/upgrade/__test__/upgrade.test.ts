@@ -1,5 +1,5 @@
 import { runMigrations } from "@fern-api/cli-migrations";
-import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
+import { getFernDirectory, isValidProjectConfigVersion, loadProjectConfig } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
@@ -38,6 +38,7 @@ describe("upgrade", () => {
     beforeEach(() => {
         vi.clearAllMocks();
         delete process.env[PREVIOUS_VERSION_ENV_VAR];
+        vi.mocked(isValidProjectConfigVersion).mockReturnValue(true);
 
         mockLogger = {
             info: vi.fn(),

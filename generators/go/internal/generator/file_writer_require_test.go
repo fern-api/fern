@@ -27,6 +27,7 @@ func newRequireTestWriter(types map[common.TypeId]*ir.TypeDeclaration) *fileWrit
 		true,  // serverURLVariables
 		false, // exportAllRequestsAtRoot
 		false, // omitEmptyRequestWrappers
+		false, // legacyNullableAliasPointers
 		userAgentConfig{},
 		UnionVersionUnspecified,
 		"",

@@ -1,0 +1,6 @@
+- summary: |
+    XML-encoded (TwiML) types now return their XML representation from
+    `ToString()` instead of JSON, and `ToXml()` prepends the
+    `<?xml version="1.0" encoding="utf-8"?>` declaration by default.
+    Pass `ToXml(xmlDeclaration: false)` to omit it.
+  type: fix

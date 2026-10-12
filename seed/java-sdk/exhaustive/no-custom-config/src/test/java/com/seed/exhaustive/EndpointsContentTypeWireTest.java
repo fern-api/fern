@@ -30,6 +30,7 @@ public class EndpointsContentTypeWireTest {
         server.start();
         client = SeedExhaustiveClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .token("test-token")
                 .build();
     }

@@ -67,7 +67,6 @@ public final class TestCaseExpects {
     public static final class Builder {
         private Optional<String> expectedStdout = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class TestCaseExpects {
 
         public TestCaseExpects build() {
             return new TestCaseExpects(expectedStdout, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("expectedStdout")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

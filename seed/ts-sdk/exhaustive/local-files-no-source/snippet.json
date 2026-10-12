@@ -79,6 +79,17 @@
         },
         {
             "id": {
+                "path": "/container/map-integer-to-object",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfIntegerToObject"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"./src/Client\";\n\nconst client = new SeedExhaustiveClient({ baseUrl: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnMapOfIntegerToObject({\n    1: {\n        string: \"string\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/container/opt-objects",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"

@@ -224,7 +224,7 @@ export function convertUndiscriminatedUnion({
     docs: string | undefined;
 }): OpenAPIV3.SchemaObject {
     return {
-        oneOf: undiscriminatedUnionDeclaration.members.map((member) => ({
+        anyOf: undiscriminatedUnionDeclaration.members.map((member) => ({
             description: member.docs ?? undefined,
             ...convertTypeReference(member.type)
         })),

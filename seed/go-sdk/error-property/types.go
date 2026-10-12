@@ -38,10 +38,12 @@ func (p *PropertyBasedErrorTestBody) GetExtraProperties() map[string]interface{}
 }
 
 func (p *PropertyBasedErrorTestBody) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;

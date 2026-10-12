@@ -91,7 +91,6 @@ public final class SingleFilterSearchRequest {
 
         private Optional<String> value = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -138,6 +137,14 @@ public final class SingleFilterSearchRequest {
 
         public SingleFilterSearchRequest build() {
             return new SingleFilterSearchRequest(field, operator, value, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("field") || key.equalsIgnoreCase("operator") || key.equalsIgnoreCase("value")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -321,6 +321,53 @@ client.endpoints().container().getAndReturnMapOfPrimToUndiscriminatedUnion(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.getAndReturnMapOfIntegerToObject(request) -> Map&amp;lt;Integer, ObjectWithRequiredField&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().container().getAndReturnMapOfIntegerToObject(
+    new HashMap<Integer, ObjectWithRequiredField>() {{
+        put(1, ObjectWithRequiredField
+            .builder()
+            .string("string")
+            .build());
+    }}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Map<Integer, ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>

@@ -52,10 +52,12 @@ func (s *SendResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SendResponse) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;

@@ -57,6 +57,17 @@
         },
         {
             "id": {
+                "path": "/stream/protocol-mixed-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolMixedSchema"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst response = await client.streamProtocolMixedSchema({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/stream/data-context-with-envelope-schema",
                 "method": "POST",
                 "identifier_override": "endpoint_.streamDataContextWithEnvelopeSchema"

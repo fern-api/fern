@@ -181,7 +181,6 @@ public final class SendLiteralsInlinedRequest {
 
         private Optional<String> context = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -261,6 +260,21 @@ public final class SendLiteralsInlinedRequest {
         public SendLiteralsInlinedRequest build() {
             return new SendLiteralsInlinedRequest(
                     context, query, temperature, aliasedContext, maybeContext, objectWithLiteral, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prompt")
+                    || key.equalsIgnoreCase("context")
+                    || key.equalsIgnoreCase("query")
+                    || key.equalsIgnoreCase("temperature")
+                    || key.equalsIgnoreCase("stream")
+                    || key.equalsIgnoreCase("aliasedContext")
+                    || key.equalsIgnoreCase("maybeContext")
+                    || key.equalsIgnoreCase("objectWithLiteral")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

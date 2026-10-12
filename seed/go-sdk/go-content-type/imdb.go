@@ -47,10 +47,12 @@ func (c *CreateMovieRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CreateMovieRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetTitle sets the Title field and marks it as non-optional;

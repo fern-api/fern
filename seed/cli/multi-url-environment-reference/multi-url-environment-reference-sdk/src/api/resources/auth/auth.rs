@@ -45,9 +45,7 @@ impl AuthClient {
         let base_url = self
             .http_client
             .config()
-            .environment
-            .as_ref()
-            .map_or(self.http_client.base_url(), |env| env.auth_url());
+            .service_url(|environment| environment.auth_url());
         self.http_client
             .execute_request_with_base_url(
                 base_url,

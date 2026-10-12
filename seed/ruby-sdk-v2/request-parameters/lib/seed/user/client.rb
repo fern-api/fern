@@ -120,7 +120,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/user/username-optional",
-          body: params,
+          body: params[:request]&.then { |value| Seed::User::Types::CreateUsernameBodyOptionalProperties.new(value).to_h },
           request_options: request_options
         )
         begin

@@ -41,11 +41,13 @@
     "@fern-api/task-context": "workspace:*",
     "chalk": "catalog:",
     "js-yaml": "catalog:",
+    "lodash-es": "catalog:",
     "tmp-promise": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/js-yaml": "catalog:",
+    "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

@@ -95,7 +95,6 @@ public final class StderrResponse {
 
         private String stderr;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class StderrResponse {
         @java.lang.Override
         public StderrResponse build() {
             return new StderrResponse(submissionId, stderr, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId") || key.equalsIgnoreCase("stderr")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -5,6 +5,7 @@ package com.seed.trace.resources.migration;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import com.seed.trace.resources.migration.requests.GetAttemptedMigrationsRequest;
 import com.seed.trace.resources.migration.types.Migration;
 import java.util.List;
@@ -28,11 +29,27 @@ public class AsyncMigrationClient {
     }
 
     public CompletableFuture<List<Migration>> getAttemptedMigrations(GetAttemptedMigrationsRequest request) {
-        return this.rawClient.getAttemptedMigrations(request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<Migration>>> rawFuture =
+                this.rawClient.getAttemptedMigrations(request);
+        CompletableFuture<List<Migration>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Migration>> getAttemptedMigrations(
             GetAttemptedMigrationsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getAttemptedMigrations(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<Migration>>> rawFuture =
+                this.rawClient.getAttemptedMigrations(request, requestOptions);
+        CompletableFuture<List<Migration>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

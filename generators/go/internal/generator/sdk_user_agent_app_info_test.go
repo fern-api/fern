@@ -28,6 +28,7 @@ func newAppInfoTestWriter() *fileWriter {
 		true,  // serverURLVariables
 		false, // exportAllRequestsAtRoot
 		false, // omitEmptyRequestWrappers
+		false, // legacyNullableAliasPointers
 		userAgentConfig{allowUserAgentAppInfo: true},
 		UnionVersionUnspecified,
 		"",
@@ -92,6 +93,7 @@ func TestAppInfoTypeEmittedRegardlessOfVersionAndPlatformHeaders(t *testing.T) {
 		"",              // sdkVersion (empty -> platform headers early-return)
 		nil,             // environmentsConfig
 		nil,             // inferredParams
+		nil,             // variables
 	)
 	if err != nil {
 		t.Fatalf("WriteRequestOptionsDefinition returned error: %v", err)
@@ -129,6 +131,7 @@ func TestAppInfoTypeNotEmittedWhenFeatureDisabled(t *testing.T) {
 		true,              // serverURLVariables
 		false,             // exportAllRequestsAtRoot
 		false,             // omitEmptyRequestWrappers
+		false,             // legacyNullableAliasPointers
 		userAgentConfig{}, // allowUserAgentAppInfo disabled
 		UnionVersionUnspecified,
 		"",
@@ -144,6 +147,7 @@ func TestAppInfoTypeNotEmittedWhenFeatureDisabled(t *testing.T) {
 		&ir.SdkConfig{},
 		&ModuleConfig{},
 		"",
+		nil,
 		nil,
 		nil,
 	)

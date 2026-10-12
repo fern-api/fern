@@ -88,7 +88,6 @@ public final class GetWithMultipleQuery {
 
     private List<Integer> number = new ArrayList<>();
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -160,6 +159,14 @@ public final class GetWithMultipleQuery {
 
     public GetWithMultipleQuery build() {
       return new GetWithMultipleQuery(query, number, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("query") || key.equalsIgnoreCase("number")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     public Builder additionalProperty(String key, Object value) {

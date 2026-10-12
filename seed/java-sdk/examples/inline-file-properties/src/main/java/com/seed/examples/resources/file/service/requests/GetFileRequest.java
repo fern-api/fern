@@ -79,7 +79,6 @@ public final class GetFileRequest {
     public static final class Builder implements XFileApiVersionStage, _FinalStage {
         private String xFileApiVersion;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -99,6 +98,11 @@ public final class GetFileRequest {
         @java.lang.Override
         public GetFileRequest build() {
             return new GetFileRequest(xFileApiVersion, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

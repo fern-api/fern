@@ -5,6 +5,7 @@ package com.seed.api.resources.auth;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.auth.types.GetTokenResponse;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncAuthClient {
     }
 
     public CompletableFuture<GetTokenResponse> getToken() {
-        return this.rawClient.getToken().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<GetTokenResponse>> rawFuture = this.rawClient.getToken();
+        CompletableFuture<GetTokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<GetTokenResponse> getToken(RequestOptions requestOptions) {
-        return this.rawClient.getToken(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<GetTokenResponse>> rawFuture = this.rawClient.getToken(requestOptions);
+        CompletableFuture<GetTokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

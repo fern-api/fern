@@ -110,7 +110,6 @@ public final class NestedType implements IJson, IDocs {
 
         private String name;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -147,6 +146,14 @@ public final class NestedType implements IJson, IDocs {
         @java.lang.Override
         public NestedType build() {
             return new NestedType(raw, docs, name, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("raw") || key.equalsIgnoreCase("docs") || key.equalsIgnoreCase("name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -11,8 +11,10 @@ import {
     deployHostedMcpServer,
     getModuleContentType,
     getSlugValidationError,
+    getToolNameValidationErrors,
     isDeployableModuleFile,
-    normalizeJsonc
+    normalizeJsonc,
+    suggestToolName
 } from "../deployMcpServer.js";
 
 describe("normalizeJsonc", () => {
@@ -70,6 +72,71 @@ describe("getSlugValidationError", () => {
         expect(getSlugValidationError("pet_store", "The slug")).toContain("lowercase");
         expect(getSlugValidationError("pet--store", "The slug")).toContain("lowercase");
         expect(getSlugValidationError("-petstore", "The slug")).toContain("lowercase");
+    });
+});
+
+describe("getToolNameValidationErrors", () => {
+    it("returns no errors for valid names, non-object metadata, and missing tools", () => {
+        expect(getToolNameValidationErrors({ tools: [{ name: "get_pet" }] })).toEqual([]);
+        expect(getToolNameValidationErrors(null)).toEqual([]);
+        expect(getToolNameValidationErrors({ name: "petstore" })).toEqual([]);
+    });
+
+    it("flags overlong names with a method and path hint", () => {
+        const name = "x".repeat(70);
+        const [error] = getToolNameValidationErrors({
+            tools: [{ name, method: "GET", path: "/attachments/{id}" }]
+        });
+
+        expect(error).toContain(
+            `Tool name "${name}" is 70 characters; MCP tool names must be 1-64 characters of letters, digits, "_" or "-".`
+        );
+        expect(error).toContain(`$.paths['/attachments/{id}'].get`);
+        expect(error).toContain("x-fern-mcp-name: x");
+    });
+
+    it("flags names containing disallowed characters", () => {
+        const [error] = getToolNameValidationErrors({ tools: [{ name: "get.pet" }] });
+
+        expect(error).toContain(
+            'Tool name "get.pet" contains unsupported characters; MCP tool names must be 1-64 characters of letters, digits, "_" or "-".'
+        );
+        expect(error).toContain("x-fern-mcp-name: get_pet");
+    });
+
+    it("suggests an x-fern-mcp-name overlay for an operation", () => {
+        const [error] = getToolNameValidationErrors({
+            tools: [
+                {
+                    name: "get_attachment_point_attribute_mappings_attachment_point_form_type_id",
+                    method: "GET",
+                    path: "/AttachmentPoint/AttributeMappings/{attachmentPointFormTypeId}"
+                }
+            ]
+        });
+
+        expect(error).toContain("$.paths['/AttachmentPoint/AttributeMappings/{attachmentPointFormTypeId}'].get");
+        expect(error).toContain("x-fern-mcp-name: get_attachment_point_attribute_mappings_attachment_point_form");
+    });
+});
+
+describe("suggestToolName", () => {
+    it("truncates the real overlong example at a separator", () => {
+        expect(suggestToolName("get_attachment_point_attribute_mappings_attachment_point_form_type_id")).toBe(
+            "get_attachment_point_attribute_mappings_attachment_point_form"
+        );
+    });
+
+    it("replaces unsupported characters", () => {
+        expect(suggestToolName("get.pet")).toBe("get_pet");
+    });
+
+    it("hard cuts names without separators", () => {
+        expect(suggestToolName("x".repeat(70))).toBe("x".repeat(64));
+    });
+
+    it("falls back to tool when sanitization is empty", () => {
+        expect(suggestToolName(".")).toBe("tool");
     });
 });
 
@@ -212,16 +279,18 @@ const tempDirs: string[] = [];
 
 async function writeBundle({
     inputs,
-    moduleCount = 1
+    moduleCount = 1,
+    metadata = { name: "petstore", toolsets: {} }
 }: {
     /** Files to write under `inputs/`; the directory is omitted when undefined. */
     inputs?: Record<string, Buffer | string>;
     /** Total Worker modules; the first is always `engine.mjs`. */
     moduleCount?: number;
+    metadata?: Record<string, unknown>;
 } = {}): Promise<string> {
     const dir = await mkdtemp(path.join(tmpdir(), "fern-mcp-deploy-test-"));
     tempDirs.push(dir);
-    await writeFile(path.join(dir, "metadata.json"), JSON.stringify({ name: "petstore", toolsets: {} }));
+    await writeFile(path.join(dir, "metadata.json"), JSON.stringify(metadata));
     await writeFile(path.join(dir, "wrangler.jsonc"), WRANGLER_JSONC);
     await writeFile(path.join(dir, "catalog.json"), "{}");
     await writeFile(path.join(dir, "index.mjs"), "// local stdio runner");
@@ -458,6 +527,22 @@ describe("deployHostedMcpServer", () => {
         expect(requests).toHaveLength(0);
     });
 
+    it("rejects a bundle with an overlong tool name before uploading anything", async () => {
+        const requests = installFetchMock();
+        const logger = createTestLogger();
+        const toolName = "x".repeat(65);
+        const bundleDir = await writeBundle({
+            metadata: { name: "petstore", toolsets: {}, tools: [{ name: toolName, method: "GET", path: "/x" }] }
+        });
+
+        await expect(deployHostedMcpServer(deployArgs(bundleDir, logger))).rejects.toThrow();
+
+        expect(requests).toHaveLength(0);
+        const errorText = loggedMessages(logger.error).join("\n");
+        expect(errorText).toContain(toolName);
+        expect(errorText).toContain("x-fern-mcp-name");
+    });
+
     it("sends the CLI version, CI source, and deployer identity headers when known", async () => {
         const requests = installFetchMock();
         const bundleDir = await writeBundle();
@@ -518,5 +603,40 @@ describe("deployHostedMcpServer", () => {
         const errorText = loggedMessages(logger.error).join("\n");
         expect(errorText).toContain(serverMessage);
         expect(errorText).toContain("that deployment is still serving");
+    });
+
+    it("prints each validation issue from a 400 deploy response", async () => {
+        installFetchMock({
+            deployResponse: jsonResponse(400, {
+                defined: false,
+                code: "BAD_REQUEST",
+                status: 400,
+                message: "Input validation failed",
+                data: {
+                    issues: [
+                        {
+                            code: "custom",
+                            path: ["metadata", "toolsets", "default", 29],
+                            message:
+                                'tool name "get_attachment_point_attribute_mappings_attachment_point_form_type_id" must match /^[a-zA-Z0-9_-]{1,64}$/'
+                        },
+                        {
+                            code: "custom",
+                            path: ["metadata", "tools", 29, "name"],
+                            message: 'tool name "..." must match /^[a-zA-Z0-9_-]{1,64}$/'
+                        }
+                    ]
+                }
+            })
+        });
+        const logger = createTestLogger();
+        const bundleDir = await writeBundle();
+
+        await expect(deployHostedMcpServer(deployArgs(bundleDir, logger))).rejects.toThrow();
+
+        const errorText = loggedMessages(logger.error).join("\n");
+        expect(errorText).toContain("Input validation failed");
+        expect(errorText).toContain("must match /^[a-zA-Z0-9_-]{1,64}$/");
+        expect(errorText).toContain("metadata.tools.29.name");
     });
 });

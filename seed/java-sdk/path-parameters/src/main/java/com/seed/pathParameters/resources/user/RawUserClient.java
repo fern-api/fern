@@ -5,6 +5,7 @@ package com.seed.pathParameters.resources.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.pathParameters.core.BodyProperties;
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.MediaTypes;
 import com.seed.pathParameters.core.ObjectMappers;
@@ -114,7 +115,9 @@ public class RawUserClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPathParametersException("Failed to serialize request", e);
         }
@@ -174,7 +177,9 @@ public class RawUserClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPathParametersException("Failed to serialize request", e);
         }

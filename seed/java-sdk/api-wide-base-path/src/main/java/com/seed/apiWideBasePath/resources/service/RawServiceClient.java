@@ -4,6 +4,7 @@
 package com.seed.apiWideBasePath.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.apiWideBasePath.core.BodyProperties;
 import com.seed.apiWideBasePath.core.ClientOptions;
 import com.seed.apiWideBasePath.core.ObjectMappers;
 import com.seed.apiWideBasePath.core.RequestOptions;
@@ -47,7 +48,11 @@ public class RawServiceClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();

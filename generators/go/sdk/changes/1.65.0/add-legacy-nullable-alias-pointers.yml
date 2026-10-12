@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the opt-in `legacyNullableAliasPointers` custom config option. When enabled, optional or
+    nullable fields that reference an alias which already renders as a Go pointer
+    (e.g. `type DiscoveryURL = *string`) keep the outer pointer (`*DiscoveryURL`), matching
+    SDKs generated before v1.46.1. Field types, setters, and code snippets all use the legacy
+    shape. The option is off by default, so existing output is unchanged.
+  type: feat

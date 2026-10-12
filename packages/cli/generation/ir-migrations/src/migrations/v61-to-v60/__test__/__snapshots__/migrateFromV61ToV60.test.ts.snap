@@ -677,6 +677,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
       "sdkVersion": "X-Fern-SDK-Version",
       "userAgent": null,
     },
+    "webhookSignatureVerification": null,
   },
   "selfHosted": false,
   "serviceTypeReferenceInfo": {

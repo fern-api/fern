@@ -96,7 +96,6 @@ public final class GetDiscriminatedUnionRequest {
 
         private String foo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class GetDiscriminatedUnionRequest {
         @java.lang.Override
         public GetDiscriminatedUnionRequest build() {
             return new GetDiscriminatedUnionRequest(bar, foo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("foo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

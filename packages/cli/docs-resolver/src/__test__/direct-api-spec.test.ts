@@ -8,7 +8,11 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { DocsDefinitionResolver, type RegisterApiFn } from "../DocsDefinitionResolver.js";
+import {
+    DocsDefinitionResolver,
+    type OnApiRegistrationQueuedFn,
+    type RegisterApiFn
+} from "../DocsDefinitionResolver.js";
 
 describe("DocsDefinitionResolver direct API specs", () => {
     const temporaryDirectories: string[] = [];
@@ -62,6 +66,250 @@ describe("DocsDefinitionResolver direct API specs", () => {
             throw new Error("Expected docs workspace");
         }
         const registerApi = vi.fn<RegisterApiFn>(async () => "payments-api-definition");
+        const onApiRegistrationQueued = vi.fn<OnApiRegistrationQueuedFn>();
+        const resolver = new DocsDefinitionResolver({
+            domain: "docs.example.com",
+            docsWorkspace,
+            ossWorkspaces: [],
+            apiWorkspaces: [],
+            taskContext: context,
+            uploadFiles: async () => [],
+            registerApi,
+            onApiRegistrationQueued
+        });
+
+        await resolver.resolve();
+
+        expect(registerApi).toHaveBeenCalledOnce();
+        expect(registerApi.mock.calls[0]?.[0]).toMatchObject({ apiName: "payments" });
+        // Queued during navigation with the same inputs the deferred registration later receives.
+        expect(onApiRegistrationQueued).toHaveBeenCalledOnce();
+        const queued = onApiRegistrationQueued.mock.calls[0]?.[0];
+        const registered = registerApi.mock.calls[0]?.[0];
+        expect(queued?.apiName).toBe(registered?.apiName);
+        expect(queued?.workspace).toBe(registered?.workspace);
+        expect(queued?.snippetsConfig).toBe(registered?.snippetsConfig);
+        expect(onApiRegistrationQueued.mock.invocationCallOrder[0]).toBeLessThan(
+            registerApi.mock.invocationCallOrder[0] ?? 0
+        );
+    });
+
+    it("creates tag description pages from the spec's tag descriptions", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-tags-"));
+        temporaryDirectories.push(directory);
+        const fernDirectory = path.join(directory, "fern");
+        await mkdir(path.join(directory, "specs"));
+        await mkdir(fernDirectory);
+        await writeFile(
+            path.join(directory, "specs", "openapi.yml"),
+            [
+                "openapi: 3.0.0",
+                "info:",
+                "  title: Garden",
+                "  version: 1.0.0",
+                "tags:",
+                "  - name: Plant Care",
+                "    description: Watering and pruning",
+                "  - name: seeds",
+                "paths:",
+                "  /plants:",
+                "    get:",
+                "      operationId: listPlants",
+                "      tags: [Plant Care]",
+                "      responses:",
+                "        '200':",
+                "          description: Success",
+                "  /seeds:",
+                "    get:",
+                "      operationId: listSeeds",
+                "      tags: [seeds]",
+                "      responses:",
+                "        '200':",
+                "          description: Success",
+                ""
+            ].join("\n")
+        );
+        await writeFile(
+            path.join(fernDirectory, "docs.yml"),
+            [
+                "instances: []",
+                "navigation:",
+                "  - api: API reference",
+                "    api-name: garden",
+                "    tag-description-pages: true",
+                "    specs:",
+                "      - type: openapi",
+                "        path: ../specs/openapi.yml",
+                ""
+            ].join("\n")
+        );
+        const context = createMockTaskContext();
+        const docsWorkspace = await loadDocsWorkspace({
+            fernDirectory: AbsoluteFilePath.of(fernDirectory),
+            context
+        });
+        if (docsWorkspace == null) {
+            throw new Error("Expected docs workspace");
+        }
+        const resolver = new DocsDefinitionResolver({
+            domain: "docs.example.com",
+            docsWorkspace,
+            ossWorkspaces: [],
+            apiWorkspaces: [],
+            taskContext: context,
+            uploadFiles: async () => [],
+            registerApi: async () => "garden-definition"
+        });
+
+        const definition = await resolver.resolve();
+
+        const tagPages = Object.entries(definition.pages).filter(([pageId]) => pageId.startsWith("tag-"));
+        expect(tagPages.map(([pageId, page]) => [pageId, page?.markdown])).toEqual([
+            ["tag-plantCare.md", "# Plant Care\n\nWatering and pruning\n"]
+        ]);
+    });
+
+    it("registers an API referenced by several sections once per spec file", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-api-"));
+        temporaryDirectories.push(directory);
+        const fernDirectory = path.join(directory, "fern");
+        await mkdir(path.join(directory, "specs"));
+        await mkdir(fernDirectory);
+        const spec = [
+            "openapi: 3.0.0",
+            "info:",
+            "  title: Payments",
+            "  version: 1.0.0",
+            "paths:",
+            "  /payments:",
+            "    get:",
+            "      operationId: listPayments",
+            "      responses:",
+            "        '200':",
+            "          description: Success",
+            ""
+        ].join("\n");
+        await writeFile(path.join(directory, "specs", "openapi.yml"), spec);
+        await writeFile(path.join(directory, "specs", "openapi-copy.yml"), spec);
+        const apiSection = (title: string, apiName: string, specFile = "openapi.yml") => [
+            `  - api: ${title}`,
+            `    api-name: ${apiName}`,
+            "    specs:",
+            "      - type: openapi",
+            `        path: ../specs/${specFile}`
+        ];
+        await writeFile(
+            path.join(fernDirectory, "docs.yml"),
+            [
+                "instances: []",
+                "navigation:",
+                ...apiSection("Payments v1", "payments"),
+                ...apiSection("Payments v2", "payments"),
+                ...apiSection("Billing", "billing"),
+                ...apiSection("Payments copy", "payments", "openapi-copy.yml"),
+                ""
+            ].join("\n")
+        );
+        const context = createMockTaskContext();
+        const docsWorkspace = await loadDocsWorkspace({
+            fernDirectory: AbsoluteFilePath.of(fernDirectory),
+            context
+        });
+        if (docsWorkspace == null) {
+            throw new Error("Expected docs workspace");
+        }
+        const registerApi = vi.fn<RegisterApiFn>(async ({ apiName }) => `${apiName}-definition`);
+        const resolver = new DocsDefinitionResolver({
+            domain: "docs.example.com",
+            docsWorkspace,
+            ossWorkspaces: [],
+            apiWorkspaces: [],
+            taskContext: context,
+            uploadFiles: async () => [],
+            registerApi
+        });
+
+        const definition = await resolver.resolve();
+
+        expect(registerApi.mock.calls.map(([opts]) => opts.apiName).sort()).toEqual([
+            "billing",
+            "payments",
+            "payments"
+        ]);
+        const serialized = JSON.stringify(definition.config.root);
+        expect(serialized).toContain("payments-definition");
+        expect(serialized).toContain("billing-definition");
+    });
+
+    it("applies docs import settings to direct API specs", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-settings-"));
+        temporaryDirectories.push(directory);
+        const fernDirectory = path.join(directory, "fern");
+        await mkdir(path.join(directory, "specs"));
+        await mkdir(fernDirectory);
+        await writeFile(
+            path.join(directory, "specs", "openapi.yml"),
+            [
+                "openapi: 3.0.0",
+                "info:",
+                "  title: Events",
+                "  version: 1.0.0",
+                "paths:",
+                "  /events:",
+                "    get:",
+                "      operationId: listEvents",
+                "      responses:",
+                "        '200':",
+                "          description: Success",
+                "          content:",
+                "            application/json:",
+                "              schema:",
+                "                $ref: '#/components/schemas/Event'",
+                "components:",
+                "  schemas:",
+                "    Event:",
+                "      type: object",
+                "      required: [createdAt]",
+                "      properties:",
+                "        createdAt:",
+                "          type: string",
+                "          format: date-time",
+                ""
+            ].join("\n")
+        );
+        await writeFile(
+            path.join(fernDirectory, "docs.yml"),
+            [
+                "instances: []",
+                "navigation:",
+                "  - api: API reference",
+                "    specs:",
+                "      - type: openapi",
+                "        path: ../specs/openapi.yml",
+                "        settings:",
+                "          type-dates-as-strings: true",
+                "          use-bytes-for-binary-response: false",
+                "          respect-parameter-content: true",
+                "          respect-operation-id-word-boundaries: true",
+                "          infer-forward-compatible: true",
+                "          preserve-one-of-in-all-of: true",
+                "          any-of-sibling-properties-as-object: true",
+                "          error-responses:",
+                "            schema:",
+                "              type: object",
+                "            apply-to: untyped",
+                ""
+            ].join("\n")
+        );
+        const context = createMockTaskContext();
+        const docsWorkspace = await loadDocsWorkspace({
+            fernDirectory: AbsoluteFilePath.of(fernDirectory),
+            context
+        });
+        if (docsWorkspace == null) {
+            throw new Error("Expected docs workspace");
+        }
+        const registerApi = vi.fn<RegisterApiFn>(async () => "events-api-definition");
         const resolver = new DocsDefinitionResolver({
             domain: "docs.example.com",
             docsWorkspace,
@@ -74,8 +322,22 @@ describe("DocsDefinitionResolver direct API specs", () => {
 
         await resolver.resolve();
 
-        expect(registerApi).toHaveBeenCalledOnce();
-        expect(registerApi.mock.calls[0]?.[0]).toMatchObject({ apiName: "payments" });
+        const ir = registerApi.mock.calls[0]?.[0].ir;
+        const eventType = ir?.types.Event;
+        expect(eventType?.shape.type).toBe("object");
+        if (eventType?.shape.type !== "object") {
+            throw new Error("Expected Event to be an object type");
+        }
+        const createdAt = eventType.shape.properties.find((property) =>
+            typeof property.name === "string" ? property.name === "createdAt" : property.name.wireValue === "createdAt"
+        );
+        expect(createdAt?.valueType).toMatchObject({
+            type: "primitive",
+            primitive: {
+                v1: "STRING",
+                v2: { type: "string", validation: { format: "date-time" } }
+            }
+        });
     });
 
     it("resolves a GraphQL-only API reference without generators.yml", async () => {

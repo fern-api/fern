@@ -1,0 +1,293 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createPlant": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "nickname": null,
+                    "species": "species",
+                  },
+                  "response": {
+                    "body": {
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "internal_notes": "internal_notes",
+                      "label": "label",
+                      "nickname": "nickname",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/plants",
+              "request": {
+                "body": {
+                  "properties": {
+                    "internal_notes": {
+                      "audiences": [
+                        "internal",
+                      ],
+                      "docs": undefined,
+                      "type": "optional<string>",
+                    },
+                    "label": {
+                      "encoding": {
+                        "xml": {
+                          "attribute": true,
+                          "name": "Label",
+                          "separator": undefined,
+                          "text": undefined,
+                          "wrapped": undefined,
+                        },
+                      },
+                      "type": "optional<string>",
+                    },
+                    "legacy_tag": {
+                      "availability": "deprecated",
+                      "docs": undefined,
+                      "name": "legacyTag",
+                      "type": "optional<string>",
+                    },
+                    "nickname": "nullable<string>",
+                    "species": "string",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PlantCreate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "PlantDetails",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "PlantDetails": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "created_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+              "id": "string",
+              "internal_notes": {
+                "audiences": [
+                  "internal",
+                ],
+                "type": "optional<string>",
+              },
+              "label": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": "Label",
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
+              "legacy_tag": {
+                "availability": "deprecated",
+                "name": "legacyTag",
+                "type": "optional<string>",
+              },
+              "nickname": "nullable<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PlantMetadata": {
+            "docs": undefined,
+            "encoding": {
+              "xml": {
+                "name": "PlantMetadata",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
+            "inline": undefined,
+            "properties": {
+              "created_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+              "internal_notes": {
+                "audiences": [
+                  "internal",
+                ],
+                "type": "optional<string>",
+              },
+              "label": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": "Label",
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
+              "legacy_tag": {
+                "availability": "deprecated",
+                "name": "legacyTag",
+                "type": "optional<string>",
+              },
+              "nickname": "optional<nullable<string>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createPlant:
+      path: /plants
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: PlantCreate
+        body:
+          properties:
+            nickname: nullable<string>
+            species: string
+            legacy_tag:
+              type: optional<string>
+              name: legacyTag
+              availability: deprecated
+            internal_notes:
+              type: optional<string>
+              audiences: &ref_0
+                - internal
+            label:
+              type: optional<string>
+              encoding:
+                xml:
+                  name: Label
+                  attribute: true
+        content-type: application/json
+      response:
+        docs: OK
+        type: PlantDetails
+        status-code: 200
+      examples:
+        - request:
+            nickname: null
+            species: species
+          response:
+            body:
+              created_at: '2024-01-15T09:30:00Z'
+              nickname: nickname
+              internal_notes: internal_notes
+              label: label
+              id: id
+  source:
+    openapi: ../openapi.yml
+types:
+  PlantMetadata:
+    properties:
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      nickname: optional<nullable<string>>
+      legacy_tag:
+        type: optional<string>
+        availability: deprecated
+        name: legacyTag
+      internal_notes:
+        type: optional<string>
+        audiences: *ref_0
+      label:
+        type: optional<string>
+        encoding:
+          xml:
+            name: Label
+            attribute: true
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: PlantMetadata
+  PlantDetails:
+    properties:
+      nickname: nullable<string>
+      id: string
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      legacy_tag:
+        type: optional<string>
+        availability: deprecated
+        name: legacyTag
+      internal_notes:
+        type: optional<string>
+        audiences: *ref_0
+      label:
+        type: optional<string>
+        encoding:
+          xml:
+            name: Label
+            attribute: true
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Default",
+      "display-name": "allOf inlined parent metadata",
+      "environments": {
+        "Default": "https://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: allOf inlined parent metadata
+environments:
+  Default: https://api.example.com
+default-environment: Default
+",
+  },
+  "specVersion": "1.0.0",
+}

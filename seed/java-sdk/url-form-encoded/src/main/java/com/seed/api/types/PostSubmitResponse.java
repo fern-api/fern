@@ -78,7 +78,6 @@ public final class PostSubmitResponse {
 
         private Optional<String> message = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -113,6 +112,14 @@ public final class PostSubmitResponse {
 
         public PostSubmitResponse build() {
             return new PostSubmitResponse(status, message, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("status") || key.equalsIgnoreCase("message")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

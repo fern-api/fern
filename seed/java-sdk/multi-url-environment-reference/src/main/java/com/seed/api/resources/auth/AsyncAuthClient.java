@@ -5,6 +5,7 @@ package com.seed.api.resources.auth;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.auth.requests.AuthGetTokenRequest;
 import com.seed.api.resources.auth.types.AuthGetTokenResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,11 +28,26 @@ public class AsyncAuthClient {
     }
 
     public CompletableFuture<AuthGetTokenResponse> gettoken(AuthGetTokenRequest request) {
-        return this.rawClient.gettoken(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<AuthGetTokenResponse>> rawFuture = this.rawClient.gettoken(request);
+        CompletableFuture<AuthGetTokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<AuthGetTokenResponse> gettoken(
             AuthGetTokenRequest request, RequestOptions requestOptions) {
-        return this.rawClient.gettoken(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<AuthGetTokenResponse>> rawFuture =
+                this.rawClient.gettoken(request, requestOptions);
+        CompletableFuture<AuthGetTokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

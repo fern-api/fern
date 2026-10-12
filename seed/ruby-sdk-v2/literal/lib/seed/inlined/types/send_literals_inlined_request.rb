@@ -10,7 +10,7 @@ module Seed
 
         field :query, -> { String }, optional: false, nullable: false
 
-        field :temperature, -> { Integer }, optional: true, nullable: false
+        field :temperature, -> { Float }, optional: true, nullable: false
 
         field :stream, -> { Internal::Types::Boolean }, optional: false, nullable: false
 

@@ -1,0 +1,6 @@
+- summary: |
+    `fern generate --docs --preview --id <id> --no-prompt` no longer asks for
+    confirmation when the preview ID already exists, so an existing preview can
+    be overwritten non-interactively (as `--force` and CI environments already
+    allowed).
+  type: fix

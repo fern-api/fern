@@ -6,7 +6,13 @@ export interface HttpErrorWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSource {
+    /**
+     * The concrete status code, or the first status code of the range for a
+     * wildcard (400 for 4XX, 500 for 5XX).
+     */
     statusCode: FernOpenapiIr.StatusCode;
+    /** True when this error was declared with a 4XX or 5XX wildcard response. */
+    isWildcardStatusCode: boolean | undefined;
     schema: FernOpenapiIr.SchemaWithExample;
     fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;
     /** Namespace declared via `x-fern-sdk-namespace` on the response object itself. */

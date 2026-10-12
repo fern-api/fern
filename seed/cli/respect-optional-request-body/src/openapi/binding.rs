@@ -417,9 +417,25 @@ impl Binding for OpenApiBinding {
         &'a self,
         op_path: &'a [String],
         params: &'a serde_json::Value,
+        root_matches: &'a clap::ArgMatches,
+        profile: Option<&'a crate::profiles::ResolvedProfile>,
     ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
         Box::pin(async move {
             let prepared = self.ensure_prepared()?;
+            let mut doc_owned;
+            let doc = if self.inner.needs_server_var_resolution(&prepared.doc) {
+                doc_owned = prepared.doc.clone();
+                self.inner
+                    .apply_server_vars_for(&mut doc_owned, root_matches, profile);
+                &doc_owned
+            } else {
+                &prepared.doc
+            };
+            // Same rung order as a selected profile: flag > profile > env.
+            let base_url = match profile.and_then(|p| p.base_url.clone()) {
+                Some(url) if root_matches.get_one::<String>("base-url").is_none() => Some(url),
+                _ => crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
+            };
             // Strip the namespace prefix the same way `dispatch` does, so a
             // caller names the operation as it appears on the command line.
             let effective: &[String] = match &self.command_namespace {
@@ -427,7 +443,7 @@ impl Binding for OpenApiBinding {
                 Some(_) if !op_path.is_empty() => return Ok(None),
                 _ => op_path,
             };
-            let Some(method) = resolve_method_by_path(&prepared.doc, effective) else {
+            let Some(method) = resolve_method_by_path(doc, effective) else {
                 // Not ours — the caller tries the next binding.
                 return Ok(None);
             };
@@ -447,7 +463,7 @@ impl Binding for OpenApiBinding {
                 ..Default::default()
             };
             executor::execute_method(
-                &prepared.doc,
+                doc,
                 method,
                 params_json,
                 None,
@@ -460,7 +476,7 @@ impl Binding for OpenApiBinding {
                 &executor::PaginationConfig::default(),
                 &pipeline,
                 true,
-                crate::cli_args::resolve_base_url_override_for(&self.inner.name)?.as_deref(),
+                base_url.as_deref(),
                 &prepared.http_config,
                 false,
                 false,
@@ -470,6 +486,10 @@ impl Binding for OpenApiBinding {
                 &[],
             )
             .await
+            // A bodiless success (`204` on a delete) is still a success:
+            // `None` is reserved for "not my path", so it must not leak
+            // through here or the caller would try the next binding.
+            .map(|value| Some(value.unwrap_or(serde_json::Value::Null)))
         })
     }
 
@@ -700,13 +720,14 @@ impl Binding for OpenApiBinding {
             // `default_value` because the flag is registered per operation, in
             // `build_resource_command`, which has no access to the CLI name
             // needed for `<PREFIX>_RETRIES`. Same precedence either way:
-            // flag > env > profile > whatever the spec declared.
+            // flag > selected profile > env > whatever the spec declared.
             crate::openapi::discovery::set_retries_override(
                 matched_args
                     .try_get_one::<u32>("retries")
                     .ok()
                     .flatten()
                     .copied()
+                    .or_else(crate::profiles::retries)
                     .or_else(|| {
                         std::env::var(format!(
                             "{}_RETRIES",
@@ -714,8 +735,7 @@ impl Binding for OpenApiBinding {
                         ))
                         .ok()
                         .and_then(|raw| raw.trim().parse::<u32>().ok())
-                    })
-                    .or_else(crate::profiles::retries),
+                    }),
             );
             let no_stream = matched_args
                 .try_get_one::<bool>("no-stream")
@@ -871,6 +891,7 @@ impl Binding for OpenApiBinding {
             .await?;
 
             match result {
+                Some(value) if dry_run => Ok(DispatchResult::Record(value)),
                 Some(value) => Ok(DispatchResult::Value(value)),
                 None => Ok(DispatchResult::Handled),
             }

@@ -10,7 +10,6 @@ import (
 	time "time"
 )
 
-// Represents a client application
 var (
 	clientFieldClientID                = big.NewInt(1 << 0)
 	clientFieldTenant                  = big.NewInt(1 << 1)
@@ -44,6 +43,7 @@ var (
 	clientFieldMobile                  = big.NewInt(1 << 29)
 )
 
+// Represents a client application
 type Client struct {
 	// The unique client identifier
 	ClientID string `json:"client_id" url:"client_id"`
@@ -331,10 +331,12 @@ func (c *Client) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Client) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -589,7 +591,6 @@ func (c *Client) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Represents an identity provider connection
 var (
 	connectionFieldID                 = big.NewInt(1 << 0)
 	connectionFieldName               = big.NewInt(1 << 1)
@@ -602,6 +603,7 @@ var (
 	connectionFieldMetadata           = big.NewInt(1 << 8)
 )
 
+// Represents an identity provider connection
 type Connection struct {
 	// Connection identifier
 	ID string `json:"id" url:"id"`
@@ -700,10 +702,12 @@ func (c *Connection) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Connection) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -912,10 +916,12 @@ func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CreateUserRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -1097,10 +1103,12 @@ func (i *Identity) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *Identity) require(field *big.Int) {
-	if i.explicitFields == nil {
-		i.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
 	}
-	i.explicitFields.Or(i.explicitFields, field)
+	next.Or(next, field)
+	i.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -1187,7 +1195,6 @@ func (i *Identity) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
-// Paginated response for clients listing
 var (
 	paginatedClientResponseFieldStart   = big.NewInt(1 << 0)
 	paginatedClientResponseFieldLimit   = big.NewInt(1 << 1)
@@ -1196,6 +1203,7 @@ var (
 	paginatedClientResponseFieldClients = big.NewInt(1 << 4)
 )
 
+// Paginated response for clients listing
 type PaginatedClientResponse struct {
 	// Starting index (zero-based)
 	Start int `json:"start" url:"start"`
@@ -1258,10 +1266,12 @@ func (p *PaginatedClientResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PaginatedClientResponse) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -1341,7 +1351,6 @@ func (p *PaginatedClientResponse) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Response with pagination info like Auth0
 var (
 	paginatedUserResponseFieldUsers  = big.NewInt(1 << 0)
 	paginatedUserResponseFieldStart  = big.NewInt(1 << 1)
@@ -1350,6 +1359,7 @@ var (
 	paginatedUserResponseFieldTotal  = big.NewInt(1 << 4)
 )
 
+// Response with pagination info like Auth0
 type PaginatedUserResponse struct {
 	Users  []*User `json:"users" url:"users"`
 	Start  int     `json:"start" url:"start"`
@@ -1407,10 +1417,12 @@ func (p *PaginatedUserResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PaginatedUserResponse) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetUsers sets the Users field and marks it as non-optional;
@@ -1564,10 +1576,12 @@ func (r *Resource) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *Resource) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1713,10 +1727,12 @@ func (s *SearchResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SearchResponse) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetResults sets the Results field and marks it as non-optional;
@@ -1883,10 +1899,12 @@ func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateUserRequest) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -1994,7 +2012,6 @@ func (u *UpdateUserRequest) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// User object similar to Auth0 users
 var (
 	userFieldUserID        = big.NewInt(1 << 0)
 	userFieldEmail         = big.NewInt(1 << 1)
@@ -2019,6 +2036,7 @@ var (
 	userFieldFamilyName    = big.NewInt(1 << 20)
 )
 
+// User object similar to Auth0 users
 type User struct {
 	UserID        string         `json:"user_id" url:"user_id"`
 	Email         string         `json:"email" url:"email"`
@@ -2204,10 +2222,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;

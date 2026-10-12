@@ -14,13 +14,13 @@ describe("UsersClient", () => {
                 { name: "Bob", id: 2 },
             ],
         };
-        const mockResponseBody = { ...rawResponseBody, next: `${server.baseUrl}/accounts/acct_1/uri` };
+
         server
             .mockEndpoint()
             .get("/accounts/acct_1/uri")
             .respondWith()
             .statusCode(200)
-            .jsonBody(mockResponseBody)
+            .jsonBody(rawResponseBody)
             .build();
 
         const expected = rawResponseBody;
@@ -42,13 +42,13 @@ describe("UsersClient", () => {
                 { name: "Bob", id: 2 },
             ],
         };
-        const mockResponseBody = { ...rawResponseBody, next: "/accounts/acct_1/path" };
+
         server
             .mockEndpoint()
             .get("/accounts/acct_1/path")
             .respondWith()
             .statusCode(200)
-            .jsonBody(mockResponseBody)
+            .jsonBody(rawResponseBody)
             .build();
 
         const expected = rawResponseBody;
@@ -65,14 +65,14 @@ describe("UsersClient", () => {
         const client = new SeedTsPaginationUriRequestParamsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "alice" };
         const rawResponseBody = { data: [{ name: "Alice", id: 1 }] };
-        const mockResponseBody = { ...rawResponseBody, next: `${server.baseUrl}/accounts/acct_1/search` };
+
         server
             .mockEndpoint()
             .post("/accounts/acct_1/search")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
-            .jsonBody(mockResponseBody)
+            .jsonBody(rawResponseBody)
             .build();
 
         const expected = rawResponseBody;

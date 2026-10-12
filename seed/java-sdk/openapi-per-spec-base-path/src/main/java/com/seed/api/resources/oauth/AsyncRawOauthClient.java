@@ -4,6 +4,7 @@
 package com.seed.api.resources.oauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
@@ -14,6 +15,8 @@ import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.oauth.requests.GetTokenRequest;
 import com.seed.api.resources.oauth.types.GetTokenResponse;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -49,8 +52,14 @@ public class AsyncRawOauthClient {
         }
         FormBody.Builder body = new FormBody.Builder();
         try {
-            body.add("client_id", String.valueOf(request.getClientId()));
-            body.add("client_secret", String.valueOf(request.getClientSecret()));
+            Map<String, Object> formParams = new LinkedHashMap<>();
+            formParams.put("client_id", request.getClientId());
+            formParams.put("client_secret", request.getClientSecret());
+            for (Map.Entry<String, Object> entry : BodyProperties.mergeFormParams(
+                            formParams, requestOptions != null ? requestOptions.getBodyProperties() : null)
+                    .entrySet()) {
+                body.add(entry.getKey(), String.valueOf(entry.getValue()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +84,8 @@ public class AsyncRawOauthClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<GetTokenResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -101,6 +111,11 @@ public class AsyncRawOauthClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

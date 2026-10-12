@@ -2,6 +2,7 @@ import {
     applyTranslatedApiTitlesToNavTree,
     type DocsDefinitionResolver,
     findIncompatibleTranslatedApiIds,
+    markUntranslatedNavNodesNoindex,
     type TranslatedApiSpec
 } from "@fern-api/docs-resolver";
 import {
@@ -661,6 +662,7 @@ export async function buildAllTranslationInputs({
             // Build locale-specific API definitions from translated OpenAPI specs.
             const localeTranslatedSpecs = translatedApiSpecsByLocale.get(locale);
             let localeApiDefinitions = apiDefinitions;
+            let translatedApiDefinitionIds: ReadonlySet<string> = new Set();
             if (localeTranslatedSpecs != null && localeTranslatedSpecs.size > 0) {
                 localeApiDefinitions = buildLocaleApiDefinitions({
                     baseApiDefinitions: apiDefinitions,
@@ -716,6 +718,11 @@ export async function buildAllTranslationInputs({
                     const rewritableApiIds = new Set(
                         Object.keys(translatedApisForTitles).filter((apiId) => !incompatibleApiIds.has(apiId))
                     );
+                    translatedApiDefinitionIds = new Set(
+                        Array.from(rewritableApiIds).filter(
+                            (apiId) => localeApiDefinitions.get(apiId) !== apiDefinitions.get(apiId)
+                        )
+                    );
 
                     if (Object.keys(translatedApisForTitles).length > 0) {
                         translatedDefinition.config.root = applyTranslatedApiTitlesToNavTree(
@@ -727,6 +734,10 @@ export async function buildAllTranslationInputs({
                     }
                 }
             }
+
+            translatedDefinition.config.root = markUntranslatedNavNodesNoindex(translatedDefinition.config.root, {
+                translatedApiDefinitionIds
+            });
 
             const { localeEntry, blobs } = buildLedgerInput({
                 docsDefinition: translatedDefinition,

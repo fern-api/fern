@@ -95,7 +95,6 @@ public final class CustomTestCasesUnsupported {
 
         private UUID submissionId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class CustomTestCasesUnsupported {
         @java.lang.Override
         public CustomTestCasesUnsupported build() {
             return new CustomTestCasesUnsupported(problemId, submissionId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("problemId") || key.equalsIgnoreCase("submissionId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -1,0 +1,22 @@
+# API-wide scheme declared once here, with no signature config in the definition.
+api:
+  specs: []
+  settings:
+    webhook-signature:
+      type: hmac
+      header: X-Twilio-Signature
+      algorithm: sha1
+      encoding: base64
+      payload-format:
+        components: [notification-url, body]
+        delimiter: ""
+        body-sort: alphabetical
+      body-hash-binding:
+        algorithm: sha256
+        encoding: hex
+        location:
+          type: query-parameter
+          name: bodySHA256
+      url-normalization:
+        port-variants: true
+        legacy-query-encoding: true

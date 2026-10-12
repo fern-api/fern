@@ -5,6 +5,7 @@ package com.seed.trace.resources.problem;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import com.seed.trace.resources.problem.requests.GetDefaultStarterFilesRequest;
 import com.seed.trace.resources.problem.types.CreateProblemRequest;
 import com.seed.trace.resources.problem.types.CreateProblemResponse;
@@ -33,7 +34,15 @@ public class AsyncProblemClient {
      * Creates a problem
      */
     public CompletableFuture<CreateProblemResponse> createProblem(CreateProblemRequest request) {
-        return this.rawClient.createProblem(request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<CreateProblemResponse>> rawFuture =
+                this.rawClient.createProblem(request);
+        CompletableFuture<CreateProblemResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -41,14 +50,30 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<CreateProblemResponse> createProblem(
             CreateProblemRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createProblem(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<CreateProblemResponse>> rawFuture =
+                this.rawClient.createProblem(request, requestOptions);
+        CompletableFuture<CreateProblemResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Updates a problem
      */
     public CompletableFuture<UpdateProblemResponse> updateProblem(String problemId, CreateProblemRequest request) {
-        return this.rawClient.updateProblem(problemId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<UpdateProblemResponse>> rawFuture =
+                this.rawClient.updateProblem(problemId, request);
+        CompletableFuture<UpdateProblemResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -56,21 +81,44 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<UpdateProblemResponse> updateProblem(
             String problemId, CreateProblemRequest request, RequestOptions requestOptions) {
-        return this.rawClient.updateProblem(problemId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<UpdateProblemResponse>> rawFuture =
+                this.rawClient.updateProblem(problemId, request, requestOptions);
+        CompletableFuture<UpdateProblemResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Soft deletes a problem
      */
     public CompletableFuture<Void> deleteProblem(String problemId) {
-        return this.rawClient.deleteProblem(problemId).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture = this.rawClient.deleteProblem(problemId);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Soft deletes a problem
      */
     public CompletableFuture<Void> deleteProblem(String problemId, RequestOptions requestOptions) {
-        return this.rawClient.deleteProblem(problemId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.deleteProblem(problemId, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -78,7 +126,15 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<GetDefaultStarterFilesResponse> getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request) {
-        return this.rawClient.getDefaultStarterFiles(request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<GetDefaultStarterFilesResponse>> rawFuture =
+                this.rawClient.getDefaultStarterFiles(request);
+        CompletableFuture<GetDefaultStarterFilesResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -86,6 +142,14 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<GetDefaultStarterFilesResponse> getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getDefaultStarterFiles(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<GetDefaultStarterFilesResponse>> rawFuture =
+                this.rawClient.getDefaultStarterFiles(request, requestOptions);
+        CompletableFuture<GetDefaultStarterFilesResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

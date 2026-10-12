@@ -88,7 +88,6 @@ public final class ObjectWithDocumentedUnknownType {
   public static final class Builder implements DocumentedUnknownTypeStage, _FinalStage {
     private DocumentedUnknownType documentedUnknownType;
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -110,6 +109,14 @@ public final class ObjectWithDocumentedUnknownType {
     @java.lang.Override
     public ObjectWithDocumentedUnknownType build() {
       return new ObjectWithDocumentedUnknownType(documentedUnknownType, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("documentedUnknownType")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

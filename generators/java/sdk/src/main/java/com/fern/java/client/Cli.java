@@ -32,6 +32,7 @@ import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.AsyncRootClientGenerator;
 import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
+import com.fern.java.client.generators.BodyPropertiesGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.ConsoleLoggerGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
@@ -179,6 +180,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             JavaSdkDownloadFilesCustomConfig customConfig) {
         JavaSdkCustomConfig sdkCustomConfig = JavaSdkCustomConfig.builder()
                 .wrappedAliases(customConfig.wrappedAliases())
+                .packagePrefix(customConfig.packagePrefix())
+                .packageLayout(customConfig.packageLayout())
                 .clientClassName(customConfig.clientClassName())
                 .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
                 .baseExceptionClassName(customConfig.baseExceptionClassName())
@@ -193,6 +196,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .enableForwardCompatibleEnum(customConfig.enableForwardCompatibleEnums())
                 .includePlatformHeaders(customConfig.includePlatformHeaders())
                 .allowUserAgentAppInfo(customConfig.allowUserAgentAppInfo())
+                .userAgentOnly(customConfig.userAgentOnly())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -428,6 +432,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                                     corePackageName);
             this.addGeneratedFile(reconnectingListenerGenerator.generateListener());
 
+            com.fern.java.client.generators.websocket.WebSocketLifecycleTestGenerator webSocketLifecycleTestGenerator =
+                    new com.fern.java.client.generators.websocket.WebSocketLifecycleTestGenerator(context);
+            this.addGeneratedFile(webSocketLifecycleTestGenerator.generateFile());
+
             // Generate shared WebSocket types in core package
             com.fern.java.client.generators.websocket.DisconnectReasonGenerator disconnectReasonGenerator =
                     new com.fern.java.client.generators.websocket.DisconnectReasonGenerator(corePackageName);
@@ -558,6 +566,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         CoreMediaTypesGenerator mediaTypesGenerator = new CoreMediaTypesGenerator(context);
         GeneratedResourcesJavaFile generatedMediaTypesFile = mediaTypesGenerator.generateFile();
         this.addGeneratedFile(generatedMediaTypesFile);
+
+        BodyPropertiesGenerator bodyPropertiesGenerator = new BodyPropertiesGenerator(context);
+        this.addGeneratedFile(bodyPropertiesGenerator.generateFile());
 
         List<GeneratedJavaFile> generatedWebhooksHelpers = WebhooksHelperGenerator.generateFiles(context);
         if (!generatedWebhooksHelpers.isEmpty()) {

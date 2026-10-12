@@ -80,7 +80,6 @@ public final class DeepEqualityCorrectnessCheck {
     public static final class Builder implements ExpectedValueParameterIdStage, _FinalStage {
         private String expectedValueParameterId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class DeepEqualityCorrectnessCheck {
         @java.lang.Override
         public DeepEqualityCorrectnessCheck build() {
             return new DeepEqualityCorrectnessCheck(expectedValueParameterId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("expectedValueParameterId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -101,7 +101,6 @@ public final class ListWithOffsetPaginationHasNextPageRequest {
 
         private Optional<Order> order = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -156,6 +155,14 @@ public final class ListWithOffsetPaginationHasNextPageRequest {
 
         public ListWithOffsetPaginationHasNextPageRequest build() {
             return new ListWithOffsetPaginationHasNextPageRequest(page, limit, order, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("page") || key.equalsIgnoreCase("limit") || key.equalsIgnoreCase("order")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

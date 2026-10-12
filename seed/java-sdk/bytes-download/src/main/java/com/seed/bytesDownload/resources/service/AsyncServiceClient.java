@@ -5,6 +5,7 @@ package com.seed.bytesDownload.resources.service;
 
 import com.seed.bytesDownload.core.ClientOptions;
 import com.seed.bytesDownload.core.RequestOptions;
+import com.seed.bytesDownload.core.SeedBytesDownloadHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -25,18 +26,47 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Void> simple() {
-        return this.rawClient.simple().thenApply(response -> response.body());
+        CompletableFuture<SeedBytesDownloadHttpResponse<Void>> rawFuture = this.rawClient.simple();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> simple(RequestOptions requestOptions) {
-        return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesDownloadHttpResponse<Void>> rawFuture = this.rawClient.simple(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<byte[]> download(String id) {
-        return this.rawClient.download(id).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesDownloadHttpResponse<byte[]>> rawFuture = this.rawClient.download(id);
+        CompletableFuture<byte[]> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<byte[]> download(String id, RequestOptions requestOptions) {
-        return this.rawClient.download(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesDownloadHttpResponse<byte[]>> rawFuture =
+                this.rawClient.download(id, requestOptions);
+        CompletableFuture<byte[]> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

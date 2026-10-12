@@ -1,6 +1,6 @@
 import typing
 from abc import ABC, abstractmethod
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 from ...context.pydantic_generator_context import has_xml_types
 from ...context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
@@ -15,9 +15,19 @@ from fern_python.generators.sdk.declaration_referencers.root_client_declaration_
     RootClientDeclarationReferencer,
 )
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
+from fern_python.utils import get_wire_value
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
+
+
+def _get_auth_header_names(ir: ir_types.IntermediateRepresentation) -> List[str]:
+    names: List[str] = []
+    for scheme in ir.auth.schemes:
+        scheme_member = scheme.get_as_union()
+        if scheme_member.type == "header":
+            names.append(get_wire_value(scheme_member.name))
+    return names
 
 
 class SdkGeneratorContext(ABC):
@@ -62,7 +72,10 @@ class SdkGeneratorContext(ABC):
             for service in ir.services.values()
             for ep in service.endpoints
         )
-        _has_webhook_signature_verification = any(
+        _has_webhook_signature_verification = (
+            ir.sdk_config.webhook_signature_verification is not None
+            and ir.sdk_config.webhook_signature_verification.get_as_union().type == "hmac"
+        ) or any(
             webhook.signature_verification is not None and webhook.signature_verification.get_as_union().type == "hmac"
             for webhook_group in ir.webhook_groups.values()
             for webhook in webhook_group
@@ -89,6 +102,7 @@ class SdkGeneratorContext(ABC):
             has_webhook_signature_verification=_has_webhook_signature_verification,
             has_streaming_endpoints=_has_streaming_endpoints,
             has_xml_types=has_xml_types(ir),
+            auth_header_names=_get_auth_header_names(ir),
         )
         self.custom_config = custom_config
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)

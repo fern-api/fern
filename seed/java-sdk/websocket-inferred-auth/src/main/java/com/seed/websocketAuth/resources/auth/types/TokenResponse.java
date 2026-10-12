@@ -96,7 +96,6 @@ public final class TokenResponse {
 
         private Optional<String> refreshToken = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class TokenResponse {
         @java.lang.Override
         public TokenResponse build() {
             return new TokenResponse(accessToken, refreshToken, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("access_token") || key.equalsIgnoreCase("refresh_token")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

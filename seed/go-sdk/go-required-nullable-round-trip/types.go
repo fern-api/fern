@@ -67,7 +67,6 @@ func (g *GetAccountsRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-// An account with a nested model that also has required-nullable fields.
 var (
 	accountFieldAccountID    = big.NewInt(1 << 0)
 	accountFieldBalances     = big.NewInt(1 << 1)
@@ -79,14 +78,15 @@ var (
 	accountFieldOwner        = big.NewInt(1 << 7)
 )
 
-// accountRequiredNullableFields maps the wire names of Account's required, nullable fields to their field bits.
-var accountRequiredNullableFields = map[string]*big.Int{
+// accountNullableFields maps the wire names of Account's nullable fields (required or optional) to their field bits.
+var accountNullableFields = map[string]*big.Int{
 	"mask":          accountFieldMask,
 	"official_name": accountFieldOfficialName,
 	"subtype":       accountFieldSubtype,
 	"owner":         accountFieldOwner,
 }
 
+// An account with a nested model that also has required-nullable fields.
 type Account struct {
 	AccountID    string          `json:"account_id" url:"account_id"`
 	Balances     *AccountBalance `json:"balances" url:"balances"`
@@ -244,7 +244,7 @@ func (a *Account) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, accountRequiredNullableFields)
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, accountNullableFields)
 	if err != nil {
 		return err
 	}
@@ -281,9 +281,6 @@ func (a *Account) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
-// Balance information with required-nullable scalars. A required-nullable
-// field that arrives as null must be re-encoded as null; a field that is
-// absent must stay absent.
 var (
 	accountBalanceFieldAvailable              = big.NewInt(1 << 0)
 	accountBalanceFieldCurrent                = big.NewInt(1 << 1)
@@ -293,13 +290,16 @@ var (
 	accountBalanceFieldLastUpdatedDatetime    = big.NewInt(1 << 5)
 )
 
-// accountBalanceRequiredNullableFields maps the wire names of AccountBalance's required, nullable fields to their field bits.
-var accountBalanceRequiredNullableFields = map[string]*big.Int{
+// accountBalanceNullableFields maps the wire names of AccountBalance's nullable fields (required or optional) to their field bits.
+var accountBalanceNullableFields = map[string]*big.Int{
 	"limit":                    accountBalanceFieldLimit,
 	"iso_currency_code":        accountBalanceFieldIsoCurrencyCode,
 	"unofficial_currency_code": accountBalanceFieldUnofficialCurrencyCode,
 }
 
+// Balance information with required-nullable scalars. A required-nullable
+// field that arrives as null must be re-encoded as null; a field that is
+// absent must stay absent.
 type AccountBalance struct {
 	Available              float64    `json:"available" url:"available"`
 	Current                float64    `json:"current" url:"current"`
@@ -433,7 +433,7 @@ func (a *AccountBalance) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, accountBalanceRequiredNullableFields)
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, accountBalanceNullableFields)
 	if err != nil {
 		return err
 	}
@@ -579,8 +579,8 @@ var (
 	ownerFieldEmail = big.NewInt(1 << 1)
 )
 
-// ownerRequiredNullableFields maps the wire names of Owner's required, nullable fields to their field bits.
-var ownerRequiredNullableFields = map[string]*big.Int{
+// ownerNullableFields maps the wire names of Owner's nullable fields (required or optional) to their field bits.
+var ownerNullableFields = map[string]*big.Int{
 	"email": ownerFieldEmail,
 }
 
@@ -651,7 +651,7 @@ func (o *Owner) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	o.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, ownerRequiredNullableFields)
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, ownerNullableFields)
 	if err != nil {
 		return err
 	}

@@ -1040,7 +1040,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -1758,10 +1761,32 @@
             "basepath-aware": {
               "type": "boolean"
             },
+            "robots-txt-on-instance-url": {
+              "type": "boolean"
+            },
             "external-sitemaps": {
               "type": "array",
               "items": {
-                "type": "string"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "url"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
               }
             }
           },
@@ -2932,6 +2957,9 @@
             "show-nav-availability-badges": {
               "type": "boolean"
             },
+            "hide-webhook-method-badges": {
+              "type": "boolean"
+            },
             "breadcrumbs": {
               "type": "object",
               "properties": {
@@ -3099,6 +3127,39 @@
                 "toggle",
                 "tabs"
               ]
+            },
+            "site-switcher": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "order": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hide": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "labels": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "show-products": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -5298,7 +5359,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -5416,7 +5480,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -5516,6 +5583,99 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "settings": {
+                    "type": "object",
+                    "properties": {
+                      "type-dates-as-strings": {
+                        "type": "boolean"
+                      },
+                      "use-bytes-for-binary-response": {
+                        "type": "boolean"
+                      },
+                      "respect-parameter-content": {
+                        "type": "boolean"
+                      },
+                      "respect-operation-id-word-boundaries": {
+                        "type": "boolean"
+                      },
+                      "infer-forward-compatible": {
+                        "type": "boolean"
+                      },
+                      "preserve-one-of-in-all-of": {
+                        "type": "boolean"
+                      },
+                      "any-of-sibling-properties-as-object": {
+                        "type": "boolean"
+                      },
+                      "error-responses": {
+                        "type": "object",
+                        "properties": {
+                          "schema": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              }
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "apply-to": {
+                            "type": "string",
+                            "enum": [
+                              "all",
+                              "untyped"
+                            ]
+                          },
+                          "ensure": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "status-code": {
+                                  "type": "integer",
+                                  "minimum": 400,
+                                  "maximum": 599
+                                },
+                                "methods": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "get",
+                                      "post",
+                                      "put",
+                                      "patch",
+                                      "delete",
+                                      "head",
+                                      "options",
+                                      "trace"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "status-code"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "schema"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
                   }
                 },
                 "required": [
@@ -5802,7 +5962,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             },
             "skip-slug": {
@@ -5810,6 +5973,24 @@
             },
             "alphabetized": {
               "type": "boolean"
+            },
+            "sort-by-availability": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "unset",
+                  "stable",
+                  "generally-available",
+                  "in-development",
+                  "pre-release",
+                  "deprecated",
+                  "beta",
+                  "alpha",
+                  "preview",
+                  "legacy"
+                ]
+              }
             },
             "flattened": {
               "type": "boolean"
@@ -6223,7 +6404,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -6329,7 +6513,10 @@
                       "in-development",
                       "pre-release",
                       "deprecated",
-                      "beta"
+                      "beta",
+                      "alpha",
+                      "preview",
+                      "legacy"
                     ]
                   },
                   "slug": {
@@ -6499,7 +6686,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             },
             "playground": {
@@ -6623,7 +6813,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             },
             "playground": {
@@ -6744,7 +6937,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -6836,7 +7032,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },

@@ -1,6 +1,6 @@
 import { logViolations } from "@fern-api/api-workspace-validator";
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import { validateDocsWorkspace } from "@fern-api/docs-validator";
+import { getRuleNamesConfiguredAsErrors, validateDocsWorkspace } from "@fern-api/docs-validator";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -18,7 +18,8 @@ export async function collectDocsWorkspaceViolations({
     ossWorkspaces,
     context,
     errorOnBrokenLinks,
-    excludeRules
+    excludeRules,
+    skipApiReferences
 }: {
     workspace: DocsWorkspace;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -26,6 +27,8 @@ export async function collectDocsWorkspaceViolations({
     context: TaskContext;
     errorOnBrokenLinks?: boolean;
     excludeRules?: string[];
+    /** Set by `fern docs dev --skip-api`; see `runRulesOnDocsWorkspace`. */
+    skipApiReferences?: boolean;
 }): Promise<CollectedDocsViolations> {
     // Apply env var substitution if settings.substitute-env-vars is enabled
     if (workspace.config.settings?.substituteEnvVars) {
@@ -41,7 +44,8 @@ export async function collectDocsWorkspaceViolations({
         apiWorkspaces,
         ossWorkspaces,
         false,
-        excludeRules
+        excludeRules,
+        skipApiReferences
     );
     const elapsedMillis = performance.now() - startTime;
 
@@ -65,7 +69,8 @@ export async function validateDocsWorkspaceWithoutExiting({
     logWarnings,
     errorOnBrokenLinks,
     logSummary = true,
-    excludeRules
+    excludeRules,
+    skipApiReferences
 }: {
     workspace: DocsWorkspace;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -75,6 +80,8 @@ export async function validateDocsWorkspaceWithoutExiting({
     errorOnBrokenLinks?: boolean;
     logSummary?: boolean;
     excludeRules?: string[];
+    /** Set by `fern docs dev --skip-api`; see `runRulesOnDocsWorkspace`. */
+    skipApiReferences?: boolean;
 }): Promise<{ hasErrors: boolean }> {
     // Apply env var substitution if settings.substitute-env-vars is enabled
     // This matches the behavior of `fern generate --docs` which throws errors for missing env vars
@@ -92,7 +99,8 @@ export async function validateDocsWorkspaceWithoutExiting({
         apiWorkspaces,
         ossWorkspaces,
         false,
-        excludeRules
+        excludeRules,
+        skipApiReferences
     );
     const elapsedMillis = performance.now() - startTime;
     let { hasErrors } = logViolations({
@@ -103,6 +111,14 @@ export async function validateDocsWorkspaceWithoutExiting({
         logBreadcrumbs: false,
         elapsedMillis
     });
+
+    const rulesConfiguredAsErrors = getRuleNamesConfiguredAsErrors(workspace.config.check);
+    hasErrors =
+        hasErrors ||
+        violations.some(
+            (violation) =>
+                violation.severity === "error" && violation.name != null && rulesConfiguredAsErrors.has(violation.name)
+        );
 
     if (errorOnBrokenLinks) {
         hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");

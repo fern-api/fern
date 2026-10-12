@@ -26,7 +26,7 @@ const (
 	// an import path or module path configuration. This is included to help
 	// the user understand how to improve the import paths used in the
 	// generated SDK.
-	localFileGenerationDocsLink = "https://github.com/fern-api/fern-go#local-file-generation"
+	localFileGenerationDocsLink = "https://github.com/fern-api/fern/blob/main/generators/go/README.md#using-local-file-generation"
 
 	// defaultModulePath is used as the default go.mod path used in the generated
 	// SDK.
@@ -71,6 +71,8 @@ type Config struct {
 	OmitFernHeaders                bool
 	IncludePlatformHeaders         bool
 	AllowUserAgentAppInfo          bool
+	UserAgentOnly                  bool
+	LegacyNullableAliasPointers    bool
 	Organization                   string
 	CoordinatorURL                 string
 	CoordinatorTaskID              string
@@ -249,6 +251,8 @@ func newConfig(configFilename string) (*Config, error) {
 		OmitFernHeaders:                *customConfig.OmitFernHeaders,
 		IncludePlatformHeaders:         *customConfig.IncludePlatformHeaders,
 		AllowUserAgentAppInfo:          *customConfig.AllowUserAgentAppInfo,
+		UserAgentOnly:                  *customConfig.UserAgentOnly,
+		LegacyNullableAliasPointers:    *customConfig.LegacyNullableAliasPointers,
 		Organization:                   config.Organization,
 		AlwaysSendRequiredProperties:   *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                     config.Whitelabel,
@@ -320,6 +324,8 @@ type customConfig struct {
 	OmitFernHeaders                *bool         `json:"omitFernHeaders,omitempty"`
 	IncludePlatformHeaders         *bool         `json:"includePlatformHeaders,omitempty"`
 	AllowUserAgentAppInfo          *bool         `json:"allowUserAgentAppInfo,omitempty"`
+	UserAgentOnly                  *bool         `json:"userAgentOnly,omitempty"`
+	LegacyNullableAliasPointers    *bool         `json:"legacyNullableAliasPointers,omitempty"`
 	ClientName                     string        `json:"clientName,omitempty"`
 	ClientConstructorName          string        `json:"clientConstructorName,omitempty"`
 	ImportPath                     string        `json:"importPath,omitempty"`
@@ -555,6 +561,12 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.AllowUserAgentAppInfo == nil {
 		customConfig.AllowUserAgentAppInfo = gospec.Ptr(false)
+	}
+	if customConfig.UserAgentOnly == nil {
+		customConfig.UserAgentOnly = gospec.Ptr(false)
+	}
+	if customConfig.LegacyNullableAliasPointers == nil {
+		customConfig.LegacyNullableAliasPointers = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"

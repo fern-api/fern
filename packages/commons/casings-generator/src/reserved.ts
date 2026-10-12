@@ -301,6 +301,8 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "__ENCODING__",
         "__LINE__",
         "__FILE__",
+        "BEGIN",
+        "END",
         "alias",
         "and",
         "begin",

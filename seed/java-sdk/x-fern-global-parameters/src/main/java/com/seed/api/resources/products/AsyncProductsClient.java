@@ -5,6 +5,7 @@ package com.seed.api.resources.products;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.products.requests.GetProductsRequest;
 import com.seed.api.resources.products.requests.SearchProductsRequest;
 import com.seed.api.resources.products.types.SearchProductsResponse;
@@ -29,36 +30,97 @@ public class AsyncProductsClient {
     }
 
     public CompletableFuture<SearchProductsResponse> search(String regionId) {
-        return this.rawClient.search(regionId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<SearchProductsResponse>> rawFuture = this.rawClient.search(regionId);
+        CompletableFuture<SearchProductsResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SearchProductsResponse> search(String regionId, RequestOptions requestOptions) {
-        return this.rawClient.search(regionId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<SearchProductsResponse>> rawFuture =
+                this.rawClient.search(regionId, requestOptions);
+        CompletableFuture<SearchProductsResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SearchProductsResponse> search(String regionId, SearchProductsRequest request) {
-        return this.rawClient.search(regionId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<SearchProductsResponse>> rawFuture =
+                this.rawClient.search(regionId, request);
+        CompletableFuture<SearchProductsResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SearchProductsResponse> search(
             String regionId, SearchProductsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.search(regionId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<SearchProductsResponse>> rawFuture =
+                this.rawClient.search(regionId, request, requestOptions);
+        CompletableFuture<SearchProductsResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Product> get(String regionId, String productId) {
-        return this.rawClient.get(regionId, productId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Product>> rawFuture = this.rawClient.get(regionId, productId);
+        CompletableFuture<Product> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Product> get(String regionId, String productId, RequestOptions requestOptions) {
-        return this.rawClient.get(regionId, productId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Product>> rawFuture =
+                this.rawClient.get(regionId, productId, requestOptions);
+        CompletableFuture<Product> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Product> get(String regionId, String productId, GetProductsRequest request) {
-        return this.rawClient.get(regionId, productId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Product>> rawFuture = this.rawClient.get(regionId, productId, request);
+        CompletableFuture<Product> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Product> get(
             String regionId, String productId, GetProductsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(regionId, productId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Product>> rawFuture =
+                this.rawClient.get(regionId, productId, request, requestOptions);
+        CompletableFuture<Product> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

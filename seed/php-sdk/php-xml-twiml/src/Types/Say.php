@@ -9,28 +9,31 @@ use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlUtils;
 use InvalidArgumentException;
 
+/**
+ * <Say> TwiML Verb
+ */
 class Say extends XmlSerializableType
 {
     /**
-     * @var ?string $message
+     * @var ?string $message Message to say
      */
     #[JsonProperty('message')]
     public ?string $message;
 
     /**
-     * @var ?string $voice
+     * @var ?string $voice Voice to use
      */
     #[JsonProperty('voice')]
     public ?string $voice;
 
     /**
-     * @var ?int $loop
+     * @var ?int $loop Times to loop message
      */
     #[JsonProperty('loop')]
     public ?int $loop;
 
     /**
-     * @var ?array<Break_> $children
+     * @var ?array<Break_> $children Nested TwiML elements, rendered in order.
      */
     #[JsonProperty('children'), ArrayType([Break_::class])]
     public ?array $children;
@@ -42,6 +45,10 @@ class Say extends XmlSerializableType
      *   loop?: ?int,
      *   children?: ?array<Break_>,
      * } $values
+     *   - `message`: Message to say
+     *   - `voice`: Voice to use
+     *   - `loop`: Times to loop message
+     *   - `children`: Nested TwiML elements, rendered in order.
      */
     public function __construct(
         array $values = [],
@@ -60,13 +67,14 @@ class Say extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('Say');
+        $typed = [];
         $element->text = XmlUtils::toXmlString($this->message);
         $element->setAttribute('voice', $this->voice);
         $element->setAttribute('loop', $this->loop);
         foreach ($this->children ?? [] as $item) {
-            $element->addChild($item);
+            $typed[] = $item;
         }
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren());
+        XmlUtils::addContent($element, $this->getContent(), $typed, [], $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -98,16 +106,22 @@ class Say extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['voice', 'loop']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, ['break']));
+        $result->setContent(XmlUtils::content($element, [[['break'], $result->children ?? []]], $result->getAdditionalChildren()));
         return $result;
     }
 
     /**
      * Adds a <break> child element and returns it (for nesting further children).
      *
+     * Adding a Pause in <Say>
+     *
      * @param (
      *    Break_
      *   |array{
-     *   strength?: ?value-of<BreakStrength>,
+     *   strength?: (
+     *    value-of<BreakStrength>
+     *   |BreakStrength
+     * )|null,
      *   time?: ?string,
      * }
      * ) $child The <break> to add, or the properties to construct it with.
@@ -117,6 +131,7 @@ class Say extends XmlSerializableType
     {
         $childElement = $child instanceof Break_ ? $child : new Break_($child);
         $this->children = [...($this->children ?? []), $childElement];
+        $this->recordContent($childElement);
         return $childElement;
     }
 

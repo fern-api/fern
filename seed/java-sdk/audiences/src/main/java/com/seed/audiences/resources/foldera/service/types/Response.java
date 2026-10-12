@@ -68,7 +68,6 @@ public final class Response {
     public static final class Builder {
         private Optional<Foo> foo = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -91,6 +90,14 @@ public final class Response {
 
         public Response build() {
             return new Response(foo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

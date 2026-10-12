@@ -24,6 +24,7 @@ The CustomName Java library provides convenient access to the CustomName APIs fr
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Custom Headers](#custom-headers)
+  - [Additional Body Properties](#additional-body-properties)
   - [Access Raw Response Data](#access-raw-response-data)
 
 ## Documentation
@@ -126,7 +127,7 @@ import com.seed.examples.core.Environment;
 
 SeedExamplesClient client = SeedExamplesClient
     .builder()
-    .environment(Environment.Production)
+    .environment(Environment.PRODUCTION)
     .build();
 ```
 
@@ -274,6 +275,25 @@ client.service().createMovie(
     RequestOptions
         .builder()
         .addHeader("X-Request-Header", "request-value")
+        .build()
+);
+```
+
+### Additional Body Properties
+
+If you need to send a request body property that is not yet part of the SDK (for example, a beta field),
+use the `addBodyProperty` request option. Properties are sent with the key exactly as given and override
+any property with the same key; for endpoints without a request body, they are sent as a JSON body.
+This is supported for JSON and form-urlencoded request bodies, but not for multipart (file upload) requests.
+
+```java
+import com.seed.examples.core.RequestOptions;
+
+client.service().createMovie(
+    ...,
+    RequestOptions
+        .builder()
+        .addBodyProperty("extra_field", "extra-value")
         .build()
 );
 ```

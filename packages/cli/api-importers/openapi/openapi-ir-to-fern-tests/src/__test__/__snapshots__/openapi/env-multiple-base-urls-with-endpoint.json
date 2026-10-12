@@ -208,6 +208,7 @@
           "messages": {
             "event": {
               "body": "string",
+              "docs": "Server-sent event.",
               "origin": "server",
             },
           },
@@ -223,6 +224,7 @@
     event:
       origin: server
       body: string
+      docs: Server-sent event.
   examples:
     - messages:
         - type: event
@@ -247,6 +249,7 @@
           "messages": {
             "uploadProgress": {
               "body": "string",
+              "docs": "Upload progress update.",
               "origin": "server",
             },
           },
@@ -262,6 +265,7 @@
     uploadProgress:
       origin: server
       body: string
+      docs: Upload progress update.
   examples:
     - messages:
         - type: uploadProgress

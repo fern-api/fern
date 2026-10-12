@@ -10,7 +10,7 @@ enum Example23 {
 
         _ = try await client.endpoints.object.getAndReturnWithUnknownField(request: ObjectWithUnknownField(
             unknown: .object([
-                "key": .string("value")
+                "$ref": .string("https://example.com/schema")
             ])
         ))
     }

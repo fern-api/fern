@@ -345,6 +345,8 @@ class SeedClient
      *         'species' => 'species',
      *         'family' => 'family',
      *         'genus' => 'genus',
+     *         'commonName' => 'commonName',
+     *         'wateringFrequency' => PlantBaseWateringFrequency::Daily->value,
      *         'sunExposure' => PlantPostSunExposure::Full->value,
      *     ]),
      * );
@@ -404,6 +406,8 @@ class SeedClient
      * $client->createTree(
      *     new TreeRecord([
      *         'id' => 'id',
+     *         'treeName' => 'treeName',
+     *         'treeSpecies' => 'treeSpecies',
      *     ]),
      * );
      * ```

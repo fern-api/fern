@@ -86,8 +86,8 @@ impl GlobalAuthStateGuard {
     }
 
     /// Install a profile named `name` as the selection made by `source`, so a
-    /// test can exercise the `--profile`-outranks-env rung
-    /// (`SelectionSource::Flag`) against the ambient one (`Active`).
+    /// test can exercise the profile-outranks-env rung under each
+    /// `SelectionSource`.
     pub fn install_profile(
         &mut self,
         name: &str,

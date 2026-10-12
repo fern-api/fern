@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) record types implement value equality: `Equals`/`GetHashCode` (and `==`) compare the
+    rendered XML, so `VoiceResponse.FromXml(xml).Equals(VoiceResponse.FromXml(parsed.ToXml()))` and
+    `new Say { Message = "x" }.Equals(new Say { Message = "x" })` are true. Previously the record
+    default compared the collection members by reference and was always false.
+  type: fix

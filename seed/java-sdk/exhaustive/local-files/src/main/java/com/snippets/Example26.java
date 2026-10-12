@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
+import com.fern.sdk.resources.types.object.types.DocumentedUnknownType;
+import java.util.HashMap;
 
 public class Example26 {
     public static void main(String[] args) {
@@ -11,14 +12,12 @@ public class Example26 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().object().getAndReturnWithMixedRequiredAndOptionalFields(
-            ObjectWithMixedRequiredAndOptionalFields
-                .builder()
-                .requiredString("hello")
-                .requiredInteger(0)
-                .requiredLong(0L)
-                .optionalString("world")
-                .build()
+        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(
+            new HashMap<String, Object>() {{
+                put("string", DocumentedUnknownType.of(new 
+                HashMap<String, Object>() {{put("key", "value");
+                }}));
+            }}
         );
     }
 }

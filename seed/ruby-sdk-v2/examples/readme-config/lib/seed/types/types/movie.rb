@@ -12,7 +12,7 @@ module Seed
 
         field :from, -> { String }, optional: false, nullable: false
 
-        field :rating, -> { Integer }, optional: false, nullable: false
+        field :rating, -> { Float }, optional: false, nullable: false
 
         field :type, -> { String }, optional: false, nullable: false
 

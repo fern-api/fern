@@ -96,7 +96,6 @@ public final class WorkspaceRanResponse {
 
         private WorkspaceRunDetails runDetails;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class WorkspaceRanResponse {
         @java.lang.Override
         public WorkspaceRanResponse build() {
             return new WorkspaceRanResponse(submissionId, runDetails, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId") || key.equalsIgnoreCase("runDetails")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

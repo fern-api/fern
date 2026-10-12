@@ -4,6 +4,7 @@
 package com.seed.audiences.resources.foo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.audiences.core.BodyProperties;
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.MediaTypes;
 import com.seed.audiences.core.ObjectMappers;
@@ -51,7 +52,9 @@ public class RawFooClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

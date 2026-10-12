@@ -108,7 +108,6 @@ public final class Foo {
 
         private String write;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class Foo {
         @java.lang.Override
         public Foo build() {
             return new Foo(normal, read, write, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("normal") || key.equalsIgnoreCase("read") || key.equalsIgnoreCase("write")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -17,19 +17,19 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersDoubleOffsetPaginationRequest{
-        Page: fern.Float64(
-            1.1,
+    request := &fern.ListUsersOffsetPaginationRequest{
+        Page: fern.Int(
+            1,
         ),
-        PerPage: fern.Float64(
-            1.1,
+        PerPage: fern.Int(
+            1,
         ),
         Order: fern.OrderAsc.Ptr(),
         StartingAfter: fern.String(
             "starting_after",
         ),
     }
-    client.Users.ListWithDoubleOffsetPagination(
+    client.Users.ListWithOffsetPagination(
         context.TODO(),
         request,
     )

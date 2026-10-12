@@ -32,7 +32,7 @@ impl UsersClient {
     ///             &UsersListWithCursorPaginationQueryRequest {
     ///                 page: Some(1),
     ///                 per_page: Some(1),
-    ///                 order: Some(Order::Asc),
+    ///                 order: Some(Order2::Asc),
     ///                 starting_after: Some("starting_after".to_string()),
     ///                 ..Default::default()
     ///             },
@@ -476,7 +476,7 @@ impl UsersClient {
     ///             &UsersListWithCursorPaginationQueryRequest {
     ///                 page: Some(1),
     ///                 per_page: Some(1),
-    ///                 order: Some(Order::Asc),
+    ///                 order: Some(Order2::Asc),
     ///                 starting_after: Some("starting_after".to_string()),
     ///                 ..Default::default()
     ///             },
@@ -593,7 +593,7 @@ impl UsersClient {
     ///             &UsersListWithDoubleOffsetPaginationQueryRequest {
     ///                 page: Some(1.1),
     ///                 per_page: Some(1.1),
-    ///                 order: Some(Order::Asc),
+    ///                 order: Some(Order2::Asc),
     ///                 starting_after: Some("starting_after".to_string()),
     ///                 ..Default::default()
     ///             },
@@ -819,7 +819,7 @@ impl UsersClient {
     ///             &UsersListWithOffsetStepPaginationQueryRequest {
     ///                 page: Some(1),
     ///                 limit: Some(1),
-    ///                 order: Some(Order::Asc),
+    ///                 order: Some(Order2::Asc),
     ///                 ..Default::default()
     ///             },
     ///             None,
@@ -940,7 +940,7 @@ impl UsersClient {
     ///             &UsersListWithOffsetStepPaginationQueryRequest {
     ///                 page: Some(1),
     ///                 limit: Some(3),
-    ///                 order: Some(Order::Asc),
+    ///                 order: Some(Order2::Asc),
     ///                 ..Default::default()
     ///             },
     ///             None,

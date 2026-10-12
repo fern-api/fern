@@ -38,7 +38,7 @@ $client->service->simple();
 <dd>
 
 ```php
-$client->service->downloadFile(): string;
+$client->service->downloadFile();
 ```
 </dd>
 </dl>

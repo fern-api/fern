@@ -236,7 +236,6 @@ public final class PatchComplexRequest {
 
         private Optional<Map<String, Object>> settings = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -433,6 +432,23 @@ public final class PatchComplexRequest {
                     profileImageUrl,
                     settings,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("age")
+                    || key.equalsIgnoreCase("active")
+                    || key.equalsIgnoreCase("metadata")
+                    || key.equalsIgnoreCase("tags")
+                    || key.equalsIgnoreCase("email")
+                    || key.equalsIgnoreCase("nickname")
+                    || key.equalsIgnoreCase("bio")
+                    || key.equalsIgnoreCase("profileImageUrl")
+                    || key.equalsIgnoreCase("settings")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

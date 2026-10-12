@@ -115,9 +115,13 @@ func WithFormat(format StreamFormat) StreamOption {
 // SSE event field value as a JSON discriminator into the data payload.
 // This is used for protocol-level discrimination where the union discriminant
 // comes from the SSE event: field rather than from within the JSON data.
-func WithEventDiscriminator(field string) StreamOption {
+//
+// Events listed in envelopeEvents are instead wrapped as {"<field>":"<event>","data":<data>},
+// for union variants that model the SSE envelope rather than the data payload.
+func WithEventDiscriminator(field string, envelopeEvents ...string) StreamOption {
 	return func(opts *streamOptions) {
 		opts.eventDiscriminator = field
+		opts.envelopeEvents = envelopeEvents
 	}
 }
 
@@ -550,6 +554,7 @@ type streamOptions struct {
 	format             StreamFormat
 	maxBufSize         int
 	eventDiscriminator string
+	envelopeEvents     []string
 	reconnectFn        ReconnectFunc
 	reconnectMax       uint
 }
@@ -601,6 +606,7 @@ type SseStreamReader struct {
 	discriminatorQuotedField []byte // e.g. `"type"`
 	discriminatorKeyCheck    []byte // e.g. `"type":`
 	discriminatorKeyCheckSp  []byte // e.g. `"type" :`
+	envelopeEvents           map[string]struct{}
 }
 
 func newSseStreamReader(
@@ -617,6 +623,12 @@ func newSseStreamReader(
 		stream.discriminatorQuotedField = []byte(quoted)
 		stream.discriminatorKeyCheck = []byte(quoted + ":")
 		stream.discriminatorKeyCheckSp = []byte(quoted + " :")
+		if len(options.envelopeEvents) > 0 {
+			stream.envelopeEvents = make(map[string]struct{}, len(options.envelopeEvents))
+			for _, event := range options.envelopeEvents {
+				stream.envelopeEvents[event] = struct{}{}
+			}
+		}
 	}
 	scanner.Buffer(make([]byte, min(defaultInitBufSize, options.maxBufSize)), options.maxBufSize)
 	scanner.Split(scanSSELines)
@@ -699,7 +711,11 @@ func (s *SseStreamReader) ReadEvent() (*SseEvent, error) {
 			continue
 		}
 		if len(s.discriminatorQuotedField) > 0 && event.Event != "" {
-			event.Data = s.injectDiscriminator(event.Data, event.Event)
+			if _, ok := s.envelopeEvents[event.Event]; ok {
+				event.Data = s.wrapInEnvelope(event.Data, event.Event)
+			} else {
+				event.Data = s.injectDiscriminator(event.Data, event.Event)
+			}
 		}
 		return event, nil
 	}
@@ -772,6 +788,19 @@ func (event *SseEvent) size() int {
 
 func (event *SseEvent) String() string {
 	return fmt.Sprintf("SseEvent{id: %q, event: %q, data: %q, retry: %d}", event.ID, event.Event, event.Data, event.Retry)
+}
+
+// wrapInEnvelope wraps the data payload as {"<field>":"<event>","data":<data>}.
+func (s *SseStreamReader) wrapInEnvelope(data []byte, value string) []byte {
+	result := make([]byte, 0, len(data)+len(s.discriminatorQuotedField)+len(value)+16)
+	result = append(result, '{')
+	result = append(result, s.discriminatorQuotedField...)
+	result = append(result, ':')
+	result = strconv.AppendQuote(result, value)
+	result = append(result, `,"data":`...)
+	result = append(result, data...)
+	result = append(result, '}')
+	return result
 }
 
 // injectDiscriminator inserts a JSON key-value pair for the discriminator

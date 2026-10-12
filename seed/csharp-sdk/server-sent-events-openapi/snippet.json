@@ -64,6 +64,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/stream/protocol-mixed-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolMixedSchema"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamProtocolMixedSchemaAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/stream/data-context-with-envelope-schema",
                 "method": "POST",
                 "identifier_override": "endpoint_.streamDataContextWithEnvelopeSchema"

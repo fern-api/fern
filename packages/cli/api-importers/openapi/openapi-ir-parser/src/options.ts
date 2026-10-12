@@ -1,5 +1,14 @@
 import { generatorsYml } from "@fern-api/configuration";
 
+/**
+ * Which `x-twilio.*Visibility` tiers to keep.
+ * - `all`: no filtering.
+ * - `public`: keep only `public` elements.
+ * - `private`: keep `public` and `private` elements.
+ * `hidden` elements are never kept when filtering is enabled.
+ */
+export type VisibilityFilter = "all" | "public" | "private";
+
 export interface ParseOpenAPIOptions {
     /* Whether or not to disable OpenAPI example generation */
     disableExamples: boolean;
@@ -45,6 +54,20 @@ export interface ParseOpenAPIOptions {
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
+
+    /**
+     * Filters elements by their `x-twilio.libraryVisibility` (operation -> path item -> info, then
+     * schema/property/parameter level). Defaults to `all`; SDK generation uses `public`
+     * (`fern generate`) or `private` (`fern generate --private`).
+     */
+    libraryVisibility: VisibilityFilter;
+
+    /**
+     * Filters elements by their `x-twilio.docsVisibility`, with the same resolution rules as
+     * `libraryVisibility`. Defaults to `all`; docs generation uses `public`
+     * (`fern generate --docs`, `fern docs dev`) or `private` (`--private`).
+     */
+    docsVisibility: VisibilityFilter;
 
     // For now, we include an AsyncAPI-specific option here, but this is better
     // handled with a discriminated union.
@@ -234,6 +257,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     shouldUseUndiscriminatedUnionsWithLiterals: false,
     shouldUseIdiomaticRequestNames: true,
     filter: undefined,
+    libraryVisibility: "all",
+    docsVisibility: "all",
     asyncApiNaming: "v1",
     exampleGeneration: undefined,
     defaultFormParameterEncoding: "json",

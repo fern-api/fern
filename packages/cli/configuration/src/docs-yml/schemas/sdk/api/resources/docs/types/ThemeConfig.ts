@@ -10,4 +10,10 @@ export interface ThemeConfig {
     footerNav?: FernDocsConfig.FooterNavThemeConfig;
     languageSwitcher?: FernDocsConfig.LanguageSwitcherThemeConfig;
     productSwitcher?: FernDocsConfig.ProductSwitcherThemeConfig;
+    /**
+     * Header switcher listing the other docs sites published to the same
+     * domain under different basepaths. Membership is discovered
+     * automatically at publish time; this only controls presentation.
+     */
+    siteSwitcher?: FernDocsConfig.SiteSwitcherThemeConfig;
 }

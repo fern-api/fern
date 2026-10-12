@@ -116,7 +116,6 @@ public final class StreamXFernStreamingSharedSchemaStreamRequest {
 
         private String model;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -153,6 +152,14 @@ public final class StreamXFernStreamingSharedSchemaStreamRequest {
         @java.lang.Override
         public StreamXFernStreamingSharedSchemaStreamRequest build() {
             return new StreamXFernStreamingSharedSchemaStreamRequest(prompt, model, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prompt") || key.equalsIgnoreCase("model") || key.equalsIgnoreCase("stream")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

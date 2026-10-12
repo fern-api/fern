@@ -25,10 +25,12 @@ type PostSubmitRequest struct {
 }
 
 func (p *PostSubmitRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -104,10 +106,12 @@ func (p *PostSubmitResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PostSubmitResponse) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -206,10 +210,12 @@ func (t *TokenRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenRequest) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -306,10 +312,12 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

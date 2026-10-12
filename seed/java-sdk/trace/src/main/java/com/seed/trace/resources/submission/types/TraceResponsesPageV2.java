@@ -84,7 +84,6 @@ public final class TraceResponsesPageV2 {
 
         private List<TraceResponseV2> traceResponses = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -133,6 +132,14 @@ public final class TraceResponsesPageV2 {
 
         public TraceResponsesPageV2 build() {
             return new TraceResponsesPageV2(offset, traceResponses, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("offset") || key.equalsIgnoreCase("traceResponses")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

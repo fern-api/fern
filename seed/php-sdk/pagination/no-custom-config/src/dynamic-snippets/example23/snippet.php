@@ -15,7 +15,7 @@ $client = new SeedClient(
 $client->users->listWithOffsetPaginationHasNextPage(
     new ListWithOffsetPaginationHasNextPageRequest([
         'page' => 1,
-        'limit' => 10,
+        'limit' => 3,
         'order' => Order::Asc->value,
     ]),
 );

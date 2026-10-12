@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs md generate` prints non-fatal library-docs parser warnings (e.g. a skipped Cython module).
+  type: fix
+- summary: |
+    Python library docs: fix 404 links to empty submodules and to private modules, emit cross-page
+    links as relative `.mdx` references so generated folders work under any navigation section,
+    use the shortest public import path in signatures, and link types named in docstring
+    `Parameters`/`Returns` sections to their class pages.
+  type: fix

@@ -205,11 +205,17 @@ module Seed
 
       # Appends a <Pause> child element and returns it. Pass an existing Pause to append it as-is.
       #
+      # XML element without an explicit xml.name; falls back to the schema name.
+      #
       # @param attributes [Hash] attribute values keyed by field name; unknown keys become extra attributes
+      # @option attributes [Integer, nil] :length
+      # @yieldparam child [Pause] the new element, for nesting children inline
       # @return [Pause]
       def pause(**attributes)
         child = Seed::Types::Pause.new(**attributes)
         self.children = [*children, child]
+        record_content(child)
+        yield child if block_given?
         child
       end
     end

@@ -3,8 +3,10 @@ import { runMigrations } from "@fern-api/cli-migrations";
 import {
     FERN_DIRECTORY,
     getFernDirectory,
+    isValidProjectConfigVersion,
     loadProjectConfig,
-    PROJECT_CONFIG_FILENAME
+    PROJECT_CONFIG_FILENAME,
+    PROJECT_CONFIG_VERSION_REQUIREMENT
 } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -316,6 +318,13 @@ export async function upgrade({
 
     // Determine target version
     let resolvedTargetVersion = targetVersion?.trim();
+    if (resolvedTargetVersion && !isValidProjectConfigVersion(resolvedTargetVersion)) {
+        return cliContext.failAndThrow(
+            `Invalid version "${resolvedTargetVersion}": must be ${PROJECT_CONFIG_VERSION_REQUIREMENT}`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
     if (!resolvedTargetVersion) {
         const fernUpgradeInfo = await cliContext.isUpgradeAvailable({ includePreReleases });
         const cliUpgradeInfo = fernUpgradeInfo.cliUpgradeInfo;

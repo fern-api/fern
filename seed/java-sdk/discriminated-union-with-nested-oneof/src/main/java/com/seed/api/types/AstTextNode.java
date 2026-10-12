@@ -80,7 +80,6 @@ public final class AstTextNode {
     public static final class Builder implements ContentStage, _FinalStage {
         private String content;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class AstTextNode {
         @java.lang.Override
         public AstTextNode build() {
             return new AstTextNode(content, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("content")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

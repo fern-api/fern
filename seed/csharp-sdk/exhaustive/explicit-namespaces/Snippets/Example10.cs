@@ -1,5 +1,6 @@
 using SeedExhaustive;
-using SeedExhaustive.Types.Enum;
+using SeedExhaustive.Types.Object;
+using System.Globalization;
 
 public partial class Examples
 {
@@ -11,8 +12,32 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Enum.GetAndReturnEnumAsync(
-            WeatherReport.Sunny
+        await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
+            new ObjectWithOptionalField {
+                String = "string",
+                Integer = 1,
+                Long = 1000000L,
+                Double = 1.1,
+                Bool = true,
+                Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
+                Date = DateOnly.Parse("2023-01-15"),
+                Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                Base64 = "SGVsbG8gd29ybGQh",
+                List = new List<string>(){
+                    "list",
+                    "list",
+                }
+                ,
+                Set = new HashSet<string>(){
+                    "set",
+                }
+                ,
+                Map = new Dictionary<int, string>(){
+                    [1] = "map",
+                }
+                ,
+                Bigint = "1000000"
+            }
         );
     }
 

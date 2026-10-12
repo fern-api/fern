@@ -5,6 +5,7 @@ package com.seed.validation;
 
 import com.seed.validation.core.ClientOptions;
 import com.seed.validation.core.RequestOptions;
+import com.seed.validation.core.SeedValidationHttpResponse;
 import com.seed.validation.requests.CreateRequest;
 import com.seed.validation.requests.GetRequest;
 import com.seed.validation.types.Type;
@@ -28,24 +29,53 @@ public class AsyncSeedValidationClient implements AutoCloseable {
     }
 
     public CompletableFuture<Type> create(CreateRequest request) {
-        return this.rawClient.create(request).thenApply(response -> response.body());
+        CompletableFuture<SeedValidationHttpResponse<Type>> rawFuture = this.rawClient.create(request);
+        CompletableFuture<Type> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Type> create(CreateRequest request, RequestOptions requestOptions) {
-        return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedValidationHttpResponse<Type>> rawFuture = this.rawClient.create(request, requestOptions);
+        CompletableFuture<Type> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Type> get(GetRequest request) {
-        return this.rawClient.get(request).thenApply(response -> response.body());
+        CompletableFuture<SeedValidationHttpResponse<Type>> rawFuture = this.rawClient.get(request);
+        CompletableFuture<Type> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Type> get(GetRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedValidationHttpResponse<Type>> rawFuture = this.rawClient.get(request, requestOptions);
+        CompletableFuture<Type> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

@@ -173,10 +173,17 @@ class SocketClientGenerator:
         return _write_constructor_body
 
     def _get_iterator_method(self, is_async: bool) -> AST.FunctionDeclaration:
+        response_type_hint = AST.TypeHint(
+            AST.ClassReference(qualified_name_excluding_import=(self._get_response_type_name(),))
+        )
         return AST.FunctionDeclaration(
             name="__aiter__" if is_async else "__iter__",
             is_async=is_async,
-            signature=AST.FunctionSignature(),
+            signature=AST.FunctionSignature(
+                return_type=AST.TypeHint.async_iterator(response_type_hint)
+                if is_async
+                else AST.TypeHint.iterator(response_type_hint),
+            ),
             body=AST.CodeWriter(self._get_iterator_method_body(is_async=is_async)),
         )
 
@@ -194,7 +201,7 @@ class SocketClientGenerator:
             with writer.indent():
                 writer.write_line("if isinstance(message, bytes):")
                 with writer.indent():
-                    writer.write_line("yield message")
+                    writer.write_line("yield message  # type: ignore")
                 writer.write_line("else:")
                 with writer.indent():
                     writer.write_line("try:")

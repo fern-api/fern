@@ -1,5 +1,7 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Endpoints;
+using SeedExhaustive.Types;
 
 public partial class Examples
 {
@@ -11,8 +13,13 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.GetWithBooleanPathAsync(
-            true
+        await client.Endpoints.Params.CreateWithBodyAndQueryAsync(
+            new CreateWithBodyAndQuery {
+                Fields = "_fields",
+                Body = new ObjectWithRequiredField {
+                    String = "string"
+                }
+            }
         );
     }
 

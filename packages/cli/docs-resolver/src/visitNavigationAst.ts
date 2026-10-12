@@ -90,6 +90,7 @@ async function visitNavigationItem({
 }): Promise<void> {
     await visitObjectAsync(navigationItem, {
         alphabetized: noop,
+        sortByAvailability: noop,
         api: noop,
         apiName: noop,
         specs: noop,

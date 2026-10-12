@@ -14,9 +14,9 @@ public class Example11 {
                 .species("species")
                 .family("family")
                 .genus("genus")
-                .sunExposure(PlantPostSunExposure.FULL)
                 .commonName("commonName")
                 .wateringFrequency(PlantBaseWateringFrequency.DAILY)
+                .sunExposure(PlantPostSunExposure.FULL)
                 .plantedAt("2023-01-15")
                 .soilType("soilType")
                 .build());

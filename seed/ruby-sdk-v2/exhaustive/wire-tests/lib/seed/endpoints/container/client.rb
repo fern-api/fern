@@ -29,7 +29,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/list-of-primitives",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -68,7 +68,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/list-of-objects",
-            body: params,
+            body: params[:request]&.map { |item| Seed::Types::Object_::Types::ObjectWithRequiredField.new(item).to_h },
             request_options: request_options
           )
           begin
@@ -103,7 +103,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/set-of-primitives",
-            body: params,
+            body: params[:request]&.to_a,
             request_options: request_options
           )
           begin
@@ -140,7 +140,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/set-of-objects",
-            body: params,
+            body: params[:request]&.map { |item| Seed::Types::Object_::Types::ObjectWithRequiredField.new(item).to_h },
             request_options: request_options
           )
           begin
@@ -177,7 +177,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-prim",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -216,7 +216,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-object",
-            body: params,
+            body: params[:request]&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
             request_options: request_options
           )
           begin
@@ -253,7 +253,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-union",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -292,7 +292,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-integer-to-object",
-            body: params,
+            body: params[:request]&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
             request_options: request_options
           )
           begin
@@ -329,7 +329,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/opt-objects",
-            body: params,
+            body: params[:request]&.then { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
             request_options: request_options
           )
           begin

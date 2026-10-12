@@ -96,7 +96,6 @@ public final class OrphanParentWithSharedChild {
 
         private Optional<Child> child = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class OrphanParentWithSharedChild {
         @java.lang.Override
         public OrphanParentWithSharedChild build() {
             return new OrphanParentWithSharedChild(label, child, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("label") || key.equalsIgnoreCase("child")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
@@ -224,7 +231,6 @@ public final class OrphanParentWithSharedChild {
 
             private String detail;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -253,6 +259,14 @@ public final class OrphanParentWithSharedChild {
             @java.lang.Override
             public Child build() {
                 return new Child(name, detail, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("detail")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

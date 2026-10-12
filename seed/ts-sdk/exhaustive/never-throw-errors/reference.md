@@ -357,6 +357,59 @@ await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfIntegerToObject</a>({ ...params }) -> core.APIResponse&lt;Record&lt;number, SeedExhaustive.ObjectWithRequiredField&gt;, SeedExhaustive.endpoints.container.getAndReturnMapOfIntegerToObject.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.container.getAndReturnMapOfIntegerToObject({
+    1: {
+        string: "string"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<number, SeedExhaustive.ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithRequiredField | undefined, SeedExhaustive.endpoints.container.getAndReturnOptional.Error&gt;</code></summary>
 <dl>
 <dd>

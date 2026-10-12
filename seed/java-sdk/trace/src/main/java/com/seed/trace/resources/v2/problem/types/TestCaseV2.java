@@ -136,7 +136,6 @@ public final class TestCaseV2 {
 
         private Map<String, VariableValue> arguments = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -204,6 +203,17 @@ public final class TestCaseV2 {
         @java.lang.Override
         public TestCaseV2 build() {
             return new TestCaseV2(metadata, implementation, arguments, expects, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("metadata")
+                    || key.equalsIgnoreCase("implementation")
+                    || key.equalsIgnoreCase("arguments")
+                    || key.equalsIgnoreCase("expects")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -12,6 +12,9 @@ import fern.ir.resources as ir_types
 
 WEBHOOKS_MODULE_NAME = "webhooks"
 WEBHOOKS_HELPER_FILE_NAME = "webhooks_helper"
+MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header"
+VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch"
+
 DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300
 
 
@@ -82,6 +85,8 @@ class WebhooksHelperGenerator:
         root_exports.append("WebhooksHelper")
 
         for entry in override_entries:
+            if len(entry.webhook_names) == 0:
+                continue
             first_webhook_name = entry.webhook_names[0]
             class_name = f"{_webhook_name_to_pascal(first_webhook_name)}WebhooksHelper"
             self._write_helper(
@@ -101,6 +106,20 @@ class WebhooksHelperGenerator:
         self,
     ) -> Tuple[Optional[_WebhookVerificationEntry], List[_WebhookVerificationEntry]]:
         grouped: "dict[str, _WebhookVerificationEntry]" = {}
+
+        # The API-wide scheme (generators.yml `api.settings.webhook-signature`) always backs the
+        # default WebhooksHelper, even when the definition models no webhooks.
+        api_wide_entry: Optional[_WebhookVerificationEntry] = None
+        api_wide_verification = self._context.ir.sdk_config.webhook_signature_verification
+        if api_wide_verification is not None:
+            api_wide_config = api_wide_verification.visit(
+                hmac=lambda hmac: hmac,
+                asymmetric=lambda _: None,
+            )
+            if api_wide_config is not None:
+                api_wide_entry = _WebhookVerificationEntry(config=api_wide_config, webhook_names=[])
+                grouped[self._compute_verification_key(api_wide_config)] = api_wide_entry
+
         for webhook_group in self._context.ir.webhook_groups.values():
             for webhook in webhook_group:
                 verification = webhook.signature_verification
@@ -122,13 +141,15 @@ class WebhooksHelperGenerator:
         if len(grouped) == 0:
             return None, []
 
-        # The most frequent config becomes the default WebhooksHelper (ties broken by insertion order).
-        default_entry: Optional[_WebhookVerificationEntry] = None
-        max_count = 0
-        for entry in grouped.values():
-            if len(entry.webhook_names) > max_count:
-                max_count = len(entry.webhook_names)
-                default_entry = entry
+        # Without an API-wide scheme, the most frequent config becomes the default WebhooksHelper
+        # (ties broken by insertion order).
+        default_entry: Optional[_WebhookVerificationEntry] = api_wide_entry
+        if default_entry is None:
+            max_count = 0
+            for entry in grouped.values():
+                if len(entry.webhook_names) > max_count:
+                    max_count = len(entry.webhook_names)
+                    default_entry = entry
 
         override_entries = [entry for entry in grouped.values() if entry is not default_entry]
         return default_entry, override_entries
@@ -241,8 +262,8 @@ class _HmacHelperWriter:
             if timestamp.format == ir_types.WebhookTimestampFormat.ISO_8601:
                 imports.append("import datetime")
             imports.append("import time")
-        if self._has_body_sort:
-            imports.append("import typing")
+        imports.append("import logging")
+        imports.append("import typing")
         imports.append("")
         signature_imports = ["compute_hmac_signature"]
         if self._body_hash_binding is not None:
@@ -254,7 +275,7 @@ class _HmacHelperWriter:
         return imports
 
     def _build_constants(self) -> List[str]:
-        constants: List[str] = []
+        constants: List[str] = ["_logger = logging.getLogger(__name__)"]
         if self._has_timestamp:
             tolerance = DEFAULT_TIMESTAMP_TOLERANCE_SECONDS
             if self._config.timestamp is not None and self._config.timestamp.tolerance is not None:
@@ -286,6 +307,7 @@ class _HmacHelperWriter:
             params.append("notification_url: str")
         if self._has_timestamp:
             params.append("timestamp_header: str")
+        params.append('algorithm: typing.Optional[typing.Literal["sha1", "sha256", "sha384", "sha512"]] = None')
         return params
 
     def _build_body(self) -> List[str]:
@@ -293,7 +315,10 @@ class _HmacHelperWriter:
 
         # A verification helper returns a boolean and never raises, so missing inputs fail
         # closed with False rather than throwing.
-        lines.append("if request_body is None or signature_header is None or signature_key is None:")
+        lines.append('if signature_header is None or signature_header == "":')
+        lines.append(f"    _logger.warning({json.dumps(MISSING_SIGNATURE_MESSAGE)})")
+        lines.append("    return False")
+        lines.append("if request_body is None or signature_key is None:")
         lines.append("    return False")
 
         if self._has_timestamp and self._config.timestamp is not None:
@@ -329,12 +354,15 @@ class _HmacHelperWriter:
         lines.append("expected = compute_hmac_signature(")
         lines.append("    payload=payload,")
         lines.append("    secret=signature_key,")
-        lines.append(f'    algorithm="{algorithm}",')
+        lines.append(f'    algorithm=algorithm or "{algorithm}",')
         lines.append(f'    encoding="{encoding}",')
         lines.append(")")
 
         lines.append("")
-        lines.append(f"return timing_safe_equal({signature_expr}, expected)")
+        lines.append(f"valid = timing_safe_equal({signature_expr}, expected)")
+        lines.append("if not valid:")
+        lines.append(f"    _logger.warning({json.dumps(VERIFICATION_FAILED_MESSAGE)})")
+        lines.append("return valid")
         return lines
 
     def _build_body_hash_branched_payload(self, binding: ir_types.WebhookBodyHashBinding) -> List[str]:
@@ -352,6 +380,7 @@ class _HmacHelperWriter:
             f'        encoding="{encoding}",',
             "    )",
             "    if not timing_safe_equal(expected_body_hash, transmitted_body_hash):",
+            f"        _logger.warning({json.dumps(VERIFICATION_FAILED_MESSAGE)})",
             "        return False",
             "    payload = notification_url",
             "else:",
@@ -386,6 +415,7 @@ class _HmacHelperWriter:
                     f'        encoding="{body_hash_encoding}",',
                     "    )",
                     "    if not timing_safe_equal(expected_body_hash, transmitted_body_hash):",
+                    f"        _logger.warning({json.dumps(VERIFICATION_FAILED_MESSAGE)})",
                     "        return False",
                 ]
             )
@@ -412,11 +442,12 @@ class _HmacHelperWriter:
                 "    expected = compute_hmac_signature(",
                 "        payload=payload,",
                 "        secret=signature_key,",
-                f'        algorithm="{algorithm}",',
+                f'        algorithm=algorithm or "{algorithm}",',
                 f'        encoding="{encoding}",',
                 "    )",
                 f"    if timing_safe_equal({signature_expr}, expected):",
                 "        return True",
+                f"_logger.warning({json.dumps(VERIFICATION_FAILED_MESSAGE)})",
                 "return False",
             ]
         )

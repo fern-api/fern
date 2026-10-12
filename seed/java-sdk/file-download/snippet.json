@@ -12,6 +12,19 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.fileDownload.SeedFileDownloadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileDownloadClient client = SeedFileDownloadClient\n            .builder()\n            .build();\n\n        client.service().simple();\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.fileDownload.SeedFileDownloadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileDownloadClient client = SeedFileDownloadClient\n            .builder()\n            .build();\n\n        client.service().simple();\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "5465b825",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_service.downloadFile"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.fileDownload.SeedFileDownloadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileDownloadClient client = SeedFileDownloadClient\n            .builder()\n            .build();\n\n        client.service().downloadFile();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.fileDownload.SeedFileDownloadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileDownloadClient client = SeedFileDownloadClient\n            .builder()\n            .build();\n\n        client.service().downloadFile();\n    }\n}\n"
+            }
         }
     ],
     "types": {}

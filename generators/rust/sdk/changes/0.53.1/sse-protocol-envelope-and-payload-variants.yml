@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now read
+    the `event:` line instead of deserializing every event as `__Unknown`. Both variant styles work:
+    envelope variants (`{event, data: Payload}`) are built from the `data:` JSON, and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+    The event name no longer has to be repeated inside the `data:` JSON.
+  type: fix

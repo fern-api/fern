@@ -1,0 +1,19 @@
+{
+  "oneOf": [
+    {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "description": "An arbitrary value, or null.",
+  "definitions": {}
+}

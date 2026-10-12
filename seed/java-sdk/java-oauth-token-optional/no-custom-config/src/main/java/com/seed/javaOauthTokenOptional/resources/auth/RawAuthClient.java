@@ -4,6 +4,7 @@
 package com.seed.javaOauthTokenOptional.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.javaOauthTokenOptional.core.BodyProperties;
 import com.seed.javaOauthTokenOptional.core.ClientOptions;
 import com.seed.javaOauthTokenOptional.core.ObjectMappers;
 import com.seed.javaOauthTokenOptional.core.RequestOptions;
@@ -14,6 +15,8 @@ import com.seed.javaOauthTokenOptional.core.SeedJavaOauthTokenOptionalHttpRespon
 import com.seed.javaOauthTokenOptional.resources.auth.requests.CreateOauth2TokenRequest;
 import com.seed.javaOauthTokenOptional.resources.auth.types.TokenResponse;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -45,10 +48,16 @@ public class RawAuthClient {
         }
         FormBody.Builder body = new FormBody.Builder();
         try {
-            body.add("client_id", String.valueOf(request.getClientId()));
-            body.add("client_secret", String.valueOf(request.getClientSecret()));
+            Map<String, Object> formParams = new LinkedHashMap<>();
+            formParams.put("client_id", request.getClientId());
+            formParams.put("client_secret", request.getClientSecret());
             if (request.getGrantType().isPresent()) {
-                body.add("grant_type", String.valueOf(request.getGrantType().get()));
+                formParams.put("grant_type", request.getGrantType().get());
+            }
+            for (Map.Entry<String, Object> entry : BodyProperties.mergeFormParams(
+                            formParams, requestOptions != null ? requestOptions.getBodyProperties() : null)
+                    .entrySet()) {
+                body.add(entry.getKey(), String.valueOf(entry.getValue()));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

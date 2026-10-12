@@ -22,36 +22,44 @@ components:
               - $ref: "#/components/schemas/Redirect"
     Say:
       type: object
+      description: <Say> TwiML Verb
       xml:
         name: Say
       properties:
         message:
           type: string
+          description: Message to say
           x-fern-xml-text: true
         voice:
           type: string
+          description: Voice to use
           xml:
             attribute: true
         loop:
           type: integer
+          description: Times to loop message
           xml:
             attribute: true
         children:
           type: array
+          description: Nested TwiML elements, rendered in order.
           items:
             $ref: "#/components/schemas/Break"
     Break:
       type: object
+      description: Adding a Pause in <Say>
       xml:
         name: break
       properties:
         strength:
           type: string
+          description: Set a pause based on strength
           enum: [none, x-weak, weak, medium, strong, x-strong]
           xml:
             attribute: true
         time:
           type: string
+          description: "Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms"
           xml:
             attribute: true
     Dial:

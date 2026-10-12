@@ -126,6 +126,22 @@ Enable it in `generators.yml`:
       # credential; adds `--revoke` to `profiles remove`. Omit it and the
       # flag is never registered.
       revokeOperation: iam.keys.remove
+      # Optional. Names an operation that *mints* a profile's remote
+      # credential (an API key) and maps its response onto the credential;
+      # adds `--provision` to `profiles create`. `credential` keys are the
+      # halves the auth scheme stores (`username`/`password` for basic,
+      # `client_id`/`client_secret` for OAuth2 client credentials, `token`
+      # for a single-value scheme); `revokeParameters` records response
+      # fields the revoke operation needs, kept apart from request defaults.
+      # They are stored in plaintext profile metadata (shown by `profiles
+      # show`), so map identifiers here, never secrets.
+      provisionOperation:
+        operation: iam.keys.create
+        credential:
+          username: sid
+          password: secret
+        revokeParameters:
+          Sid: sid
 ```
 
 Off by default: enabling it adds a top-level subcommand group and a global
@@ -146,6 +162,11 @@ acme messages list -p prod    # one command against another tenant; the active p
 acme profiles list            # "which account am I about to hit?"
 acme profiles current         # …and why
 acme profiles remove au       # confirms; also deletes that profile's stored credential
+
+# with provisionOperation / revokeOperation configured: a key per profile,
+# minted with the credentials already in your shell and never shown to you
+acme profiles create ci --set AccountSid=AC11… --provision
+acme profiles remove ci --yes --revoke   # revokes that key before deleting the profile
 ```
 
 Agents and scripts should use the stateless form — `-p` per invocation mutates
@@ -155,12 +176,12 @@ no global state, so parallel invocations cannot race:
 for tenant in prod acme; do acme messages list -p "$tenant" --format json; done
 ```
 
-CI keeps using environment variables and ignores profiles entirely.
+CI with no profile selected keeps using environment variables exactly as before.
 
-**Precedence per value** is `explicit flag → environment variable → profile →
-the spec's own default`. Environment variables sit above profiles deliberately,
-so a pipeline that exports them is never silently overridden by a profile a
-developer stored on the same machine.
+**Precedence per value** is `explicit flag → selected profile → environment
+variable → the spec's own default`. Whenever a profile is in play — `-p`,
+`<NAME>_PROFILE`, or the active one from `profiles use` — its stored values
+win; environment variables fill in only what the profile leaves unset.
 
 **The quickest way in is `profiles set`,** which takes the names you already
 use — no scheme names, no stdin piping:
@@ -175,7 +196,21 @@ acme profiles set prod \
 setting like `<NAME>_RETRIES` / `<NAME>_BASE_URL` / `<NAME>_OUTPUT` /
 `<NAME>_<SERVER_VAR>` — or an API parameter by its spec name. **Credentials go
 to the OS keyring** under that profile's slot; everything else to
-`profiles.toml`. The profile is created if it does not exist.
+`profiles.toml`. If the profile does not exist, `set` asks before creating
+it, so a mistyped name is caught before anything is written. When an existing
+profile has a similar name it first offers that one:
+
+```
+$ acme profiles set prd ACME_RETRIES=3
+Profile `prd` doesn't exist. Did you mean `prod`? [y/N] n
+Create profile `prd`? [y/N] y
+```
+
+Answering yes to the first question writes to `prod`; no to both changes
+nothing. Without a similar profile it only asks `Create it? [y/N]`. Pass
+`--yes` to create it without asking. When stdin or stderr is not a terminal (a
+script or an agent), nobody can answer, so `set` on a missing profile fails
+unless `--yes` is passed.
 
 One assignment reaches **every scheme that declares the variable**. When a
 vendor spec plus a layered auth block produces several schemes sharing one
@@ -215,7 +250,7 @@ stored and silently ignored.
 
 **Retries are per profile.** `--retries <N>` counts attempts *after* the first,
 so `--retries 0` is the same as `--no-retry`. It overrides `x-fern-retries` for
-the operation and resolves `flag > <PREFIX>_RETRIES > profile > spec`:
+the operation and resolves `flag > profile > <PREFIX>_RETRIES > spec`:
 
 ```bash
 acme profiles create flaky-sandbox --retries 6
@@ -260,18 +295,16 @@ tenant-sub   AC12345678…  us1     2        sierra-prod
 ```
 
 `ACCOUNT` is the identifier behind the stored credential — the username half of
-a basic credential — truncated, and absent for schemes that have no username
-(bearer, API key). Columns between `PROFILE` and `ACTIVE` are discovered from
+a basic credential, or the OAuth client id when that is all the profile has —
+and absent for schemes that have no username (bearer, API key). Columns between `PROFILE` and `ACTIVE` are discovered from
 what your profiles actually set, so a CLI with no regions shows no `REGION`
 column. `CREDENTIALS_FROM` appears only when a profile borrows another's
 credential. Add `--format json` for the machine-readable form.
 
 **When environment variables are in play,** `profiles current` says so.
-A *complete* env credential outranks an ambient profile's stored one and is
-reported as `credential_overridden_by_env`; env vars supplying only part of a
-multi-value credential are reported as `credential_partially_shadowed_by_env`,
-because nothing authenticates in that state and calling it an override would
-contradict `auth status`. `profiles list` also warns about a variable that is
+Credential env vars never override a selected profile's stored credential;
+they are consulted only for what the profile has not stored, and are listed as
+`credential_env_fallback`. `profiles list` also warns about a variable that is
 set, closely resembles one this CLI reads, and is not read:
 
 ```
@@ -342,6 +375,30 @@ fn verify_handler(args: &ArgMatches, _ctx: &AppContext) -> Result<(), CliError> 
 ```
 
 The handler receives a real `AppContext` — it can chain API calls via `ctx.invoke_by_name(...)` if needed. Note: `transform_response` / `recover_error` hooks do **not** fire for custom commands.
+
+### Nest custom commands under a group
+
+`command_under` creates any missing intermediate groups on the way to the
+leaf. Give those groups a description with `describe`, and trim root globals
+that mean nothing to a local-only subtree with `hide_global_flags` (the flags
+stay accepted, so `--format json` passed everywhere still parses):
+
+```rust
+CliApp::new("twilio")
+    .profiles(ProfilesConfig::new())
+    .command_under(&["serverless"], start_cmd(), OpenApiBinding::handler(start))
+    .command_under(&["serverless", "env"], env_get_cmd(), OpenApiBinding::handler(env_get))
+    .describe(&["serverless"], "Develop and deploy Twilio Functions")
+    .describe(&["serverless", "env"], "Manage environment variables")
+    .hide_global_flags(&["serverless"], &["dry-run", "query", "spec", "spec-raw"])
+    .run()
+```
+
+A custom command may declare a short flag the root reserves globally — most
+commonly `-p`, which profiles use for `--profile`. The command keeps it:
+`serverless start -p 9000` reaches the command's own `--port`, while
+`twilio -p acme serverless start` (before the command path) and
+`serverless start --profile acme` still select the profile.
 
 ### Override a spec-generated operation
 

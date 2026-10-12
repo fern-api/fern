@@ -207,7 +207,6 @@ public final class UserResponse {
 
         private Optional<String> email = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -324,6 +323,20 @@ public final class UserResponse {
         @java.lang.Override
         public UserResponse build() {
             return new UserResponse(id, username, email, phone, createdAt, updatedAt, address, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("username")
+                    || key.equalsIgnoreCase("email")
+                    || key.equalsIgnoreCase("phone")
+                    || key.equalsIgnoreCase("createdAt")
+                    || key.equalsIgnoreCase("updatedAt")
+                    || key.equalsIgnoreCase("address")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

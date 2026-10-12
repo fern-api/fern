@@ -14,12 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.StreamRequest{
-        Query: fern.String(
-            "query",
-        ),
+    request := &fern.StreamXFernStreamingNullableConditionRequest{
+        Query: "query",
     }
-    client.StreamXFernStreamingSseOnly(
+    client.StreamXFernStreamingNullableCondition(
         context.TODO(),
         request,
     )

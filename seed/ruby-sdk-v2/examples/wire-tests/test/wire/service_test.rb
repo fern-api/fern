@@ -8,14 +8,15 @@ class ServiceWireTest < WireMockTestCase
 
     @client = Seed::Client.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
   def test_service_get_movie_with_wiremock
     test_id = "service.get_movie.0"
 
-    @client.service.get_movie(
+    result = @client.service.get_movie(
       movie_id: "movie-c06a4ad7",
       request_options: {
         additional_headers: {
@@ -30,6 +31,16 @@ class ServiceWireTest < WireMockTestCase
       url_path: "/movie/movie-c06a4ad7",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/rating" => 8,
+        "/metadata/ratings/rottenTomatoes" => 97,
+        "/metadata/ratings/imdb" => 7.6,
+        "/revenue" => 1000000
+      }
     )
   end
 
@@ -66,6 +77,18 @@ class ServiceWireTest < WireMockTestCase
       url_path: "/movie",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/movie",
+      expected: {
+        "/rating" => 8,
+        "/metadata/ratings/rottenTomatoes" => 97,
+        "/metadata/ratings/imdb" => 7.6,
+        "/revenue" => 1000000
+      }
     )
   end
 
@@ -241,6 +264,16 @@ class ServiceWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/big-entity",
+      expected: {
+        "/extendedMovie/rating" => 1.1,
+        "/extendedMovie/revenue" => 1000000
+      }
+    )
   end
 
   def test_service_refresh_token_with_wiremock
@@ -258,6 +291,36 @@ class ServiceWireTest < WireMockTestCase
       url_path: "/refresh-token",
       query_params: nil,
       expected: 1
+    )
+  end
+
+  def test_service_refresh_token_2_with_wiremock
+    test_id = "service.refresh_token.1"
+
+    @client.service.refresh_token(
+      request: {
+        ttl: 420
+      },
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "service.refresh_token.1"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/refresh-token",
+      query_params: nil,
+      expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/refresh-token",
+      expected_body: JSON.parse('{"ttl":420}')
     )
   end
 end

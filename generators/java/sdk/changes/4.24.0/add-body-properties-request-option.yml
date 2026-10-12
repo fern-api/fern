@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `addBodyProperty(String, Object)` and `bodyProperties(Map<String, Object>)` request options for sending
+    request body properties that are not part of the SDK yet. They are merged into JSON and form-urlencoded bodies
+    using the keys as given, override properties with the same key, and are sent as a JSON body for endpoints
+    without one. Multipart (file upload) requests are not supported.
+  type: feat

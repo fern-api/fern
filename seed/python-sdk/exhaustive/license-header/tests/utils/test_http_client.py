@@ -13,6 +13,8 @@ from seed.matryoshka.doll.structure.core.http_client import (
     AsyncHttpClient,
     HttpClient,
     _build_url,
+    _merge_headers,
+    _redact_headers,
     _should_retry,
     drop_content_type_without_body,
     get_request_body,
@@ -410,8 +412,8 @@ def test_sync_retries_on_connect_error(mock_sleep: MagicMock) -> None:
 
 
 @patch("seed.matryoshka.doll.structure.core.http_client.time.sleep", return_value=None)
-def test_sync_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
-    """Sync: connection error retries on httpx.RemoteProtocolError."""
+def test_sync_opt_in_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
+    """Sync: ambiguous disconnect retries require an explicit opt-in."""
     mock_client = MagicMock()
     mock_client.request.side_effect = [
         httpx.RemoteProtocolError("Remote end closed connection without response"),
@@ -419,7 +421,7 @@ def test_sync_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
     ]
     http_client = _make_sync_http_client(mock_client)
 
-    response = http_client.request(path="/test", method="GET")
+    response = http_client.request(path="/test", method="POST", request_options={"retry_remote_protocol_errors": True})
 
     assert response.status_code == 200
     assert mock_client.request.call_count == 2
@@ -486,8 +488,8 @@ async def test_async_retries_on_connect_error(mock_sleep: AsyncMock) -> None:
 
 @pytest.mark.asyncio
 @patch("seed.matryoshka.doll.structure.core.http_client.asyncio.sleep", new_callable=AsyncMock)
-async def test_async_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> None:
-    """Async: connection error retries on httpx.RemoteProtocolError."""
+async def test_async_opt_in_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> None:
+    """Async: ambiguous disconnect retries require an explicit opt-in."""
     mock_client = MagicMock()
     mock_client.request = AsyncMock(
         side_effect=[
@@ -497,7 +499,9 @@ async def test_async_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> 
     )
     http_client = _make_async_http_client(mock_client)
 
-    response = await http_client.request(path="/test", method="GET")
+    response = await http_client.request(
+        path="/test", method="POST", request_options={"retry_remote_protocol_errors": True}
+    )
 
     assert response.status_code == 200
     assert mock_client.request.call_count == 2
@@ -737,26 +741,18 @@ def _make_response(status_code: int) -> httpx.Response:
     return httpx.Response(status_code=status_code, content=b"")
 
 
-@pytest.mark.parametrize(
-    "status_code",
-    [408, 409, 429, 500, 501, 502, 503, 504, 599],
-)
+RETRYABLE_STATUS_CODES = [408, 409, 429, 500, 501, 502, 503, 504, 599]
+NON_RETRYABLE_STATUS_CODES = [200, 201, 301, 400, 401, 403, 404]
+
+
+@pytest.mark.parametrize("status_code", RETRYABLE_STATUS_CODES)
 def test_should_retry_retryable_status_codes(status_code: int) -> None:
-    """Legacy mode: retries on 408, 409, 429, and all >= 500."""
     assert _should_retry(_make_response(status_code)) is True
 
 
-@pytest.mark.parametrize(
-    "status_code",
-    [200, 201, 301, 400, 401, 403, 404],
-)
+@pytest.mark.parametrize("status_code", NON_RETRYABLE_STATUS_CODES)
 def test_should_not_retry_non_retryable_status_codes(status_code: int) -> None:
     assert _should_retry(_make_response(status_code)) is False
-
-
-def test_should_retry_599_upper_boundary() -> None:
-    """Legacy mode retries on >= 500, which includes 599."""
-    assert _should_retry(_make_response(599)) is True
 
 
 # ---------------------------------------------------------------------------
@@ -854,3 +850,36 @@ def test_drop_content_type_without_body_leaves_required_body_endpoints_alone() -
     headers = {"Content-Type": "application/json"}
 
     assert drop_content_type_without_body(headers, json_body=None, data_body=None, optional_body=False) == headers
+
+
+def test_merge_headers_replaces_case_variants() -> None:
+    merged = _merge_headers(
+        {"PLAID-SECRET": "base", "X-Other": "1"},
+        {"plaid-secret": "endpoint"},
+        None,
+        {"Plaid-Secret": "override"},
+    )
+    assert merged == {"X-Other": "1", "Plaid-Secret": "override"}
+
+
+def test_redact_headers_is_case_insensitive() -> None:
+    redacted = _redact_headers({"AUTHORIZATION": "Bearer t", "X-Api-Key": "k", "Accept": "application/json"})
+    assert redacted == {"AUTHORIZATION": "[REDACTED]", "X-Api-Key": "[REDACTED]", "Accept": "application/json"}
+
+
+def test_http_client_sends_single_header_for_case_variant_override() -> None:
+    dummy_client = _DummySyncClient()
+    http_client = HttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {"PLAID-SECRET": "base"},
+        base_url=lambda: "https://example.com",
+    )
+    http_client.request(
+        path="resource",
+        method="GET",
+        request_options={"additional_headers": {"plaid-secret": "override"}},
+    )
+    sent = dummy_client.last_request_kwargs["headers"]
+    assert [k for k in sent if k.lower() == "plaid-secret"] == ["plaid-secret"]
+    assert sent["plaid-secret"] == "override"

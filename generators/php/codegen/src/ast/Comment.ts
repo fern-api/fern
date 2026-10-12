@@ -30,6 +30,8 @@ export declare namespace Comment {
         name?: string;
         /* The in-line docs associated with the type, if any */
         docs?: string;
+        /* Extra lines written as an indented continuation of this tag, if any */
+        detailDocs?: string[];
     }
 }
 
@@ -56,7 +58,7 @@ export class Comment extends AstNode {
         writer.writeLine("/**");
         if (this.docs != null) {
             this.docs.split("\n").forEach((line) => {
-                writer.writeLine(` * ${line}`);
+                writer.writeLine(` * ${this.escapeDocs(line)}`);
             });
             if (this.codeExample != null || this.tags.length > 0) {
                 writer.writeLine(" *");
@@ -87,7 +89,7 @@ export class Comment extends AstNode {
         const docsSplit = tag.docs != null ? tag.docs.split("\n") : undefined;
         if (docsSplit != null && docsSplit.length > 1) {
             docsSplit.forEach((line) => {
-                writer.writeLine(` * ${line}`);
+                writer.writeLine(` * ${this.escapeDocs(line)}`);
             });
             writer.writeLine(" *");
         }
@@ -99,9 +101,12 @@ export class Comment extends AstNode {
         }
 
         if (docsSplit != null && docsSplit.length === 1) {
-            writer.write(` ${docsSplit[0]}`);
+            writer.write(` ${this.escapeDocs(docsSplit[0] ?? "")}`);
         }
 
         writer.newLine();
+        for (const line of tag.detailDocs ?? []) {
+            writer.writeLine(` *   ${this.escapeDocs(line)}`);
+        }
     }
 }

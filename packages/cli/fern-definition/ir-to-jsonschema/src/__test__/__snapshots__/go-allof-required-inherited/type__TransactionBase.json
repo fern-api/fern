@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "properties": {
+    "transaction_id": {
+      "type": "string"
+    },
+    "pending": {
+      "type": "boolean"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "pending_transaction_id": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "account_owner": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "merchant_name": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "iso_currency_code": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "transaction_id",
+    "pending",
+    "date",
+    "iso_currency_code"
+  ],
+  "additionalProperties": false,
+  "description": "Defines nullable properties without requiring them.",
+  "definitions": {}
+}

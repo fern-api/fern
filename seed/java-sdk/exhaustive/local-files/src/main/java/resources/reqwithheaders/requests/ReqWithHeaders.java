@@ -117,7 +117,6 @@ public final class ReqWithHeaders {
 
     private String body;
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -153,6 +152,14 @@ public final class ReqWithHeaders {
     @java.lang.Override
     public ReqWithHeaders build() {
       return new ReqWithHeaders(xTestServiceHeader, xTestEndpointHeader, body, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("body")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

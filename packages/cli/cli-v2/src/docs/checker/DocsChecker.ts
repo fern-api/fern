@@ -71,10 +71,13 @@ export class DocsChecker {
      */
     public async check({
         workspace,
-        strict = false
+        strict = false,
+        excludeRules: callerExcludeRules = []
     }: {
         workspace: Workspace;
         strict?: boolean;
+        /** Names of rules to skip, e.g. ones the caller runs itself later. */
+        excludeRules?: string[];
     }): Promise<DocsChecker.Result> {
         if (workspace.docs == null) {
             return {
@@ -104,7 +107,7 @@ export class DocsChecker {
         const ossWorkspaces = await filterOssWorkspaces(project);
 
         const isRunningOnSelfHosted = process.env["FERN_FDR_ORIGIN"] != null;
-        const excludeRules: string[] = [];
+        const excludeRules: string[] = [...callerExcludeRules];
         if (isRunningOnSelfHosted) {
             excludeRules.push(Rules.ValidFileTypes.name);
         }

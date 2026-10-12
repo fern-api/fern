@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `RetryInterceptor` no longer discards an API response it has already received (e.g. a 429)
+    when a later retry attempt fails, such as when the call timeout expires mid-retry. The
+    previous response is buffered and returned instead of surfacing a generic `IOException`.
+  type: fix

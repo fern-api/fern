@@ -32,9 +32,18 @@ module Seed
           merge_additional_headers(sdk_headers, protected_keys:)
         end
 
-        # @return [String, nil] The encoded HTTP request body.
+        # @return [String, nil] The encoded HTTP request body, including any additional_body_parameters
+        #   from request_options.
         def encode_body
-          @body.nil? ? nil : ::JSON.generate(@body)
+          body = request_body
+          body.nil? ? nil : ::JSON.generate(body)
+        end
+
+        private
+
+        # @return [Object, nil] The request body merged with additional_body_parameters.
+        def request_body
+          merge_additional_body_parameters(@body)
         end
       end
     end

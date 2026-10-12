@@ -201,12 +201,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 xmlObjectEncoding.get().xmlEncoding,
                 genericObjectGenerator.getAllEnrichedProperties(),
                 genericObjectGenerator.getAdditionalPropertiesFieldNameIfSupported(),
-                genericObjectGenerator
-                        .getAdditionalChildrenFieldNameIfSupported()
-                        .get(),
-                genericObjectGenerator
-                        .getAdditionalChildrenGetterNameIfSupported()
-                        .get(),
+                genericObjectGenerator.getContentFieldNameIfSupported().get(),
+                genericObjectGenerator.getContentGetterNameIfSupported().get(),
                 genericObjectGenerator.usesBuilderConstructor());
         return xmlMethodsGenerator.addXmlSupport(typeSpec);
     }

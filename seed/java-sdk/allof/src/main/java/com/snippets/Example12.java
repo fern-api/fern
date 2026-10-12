@@ -8,6 +8,10 @@ public class Example12 {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.createTree(TreeRecord.builder().id("id").build());
+        client.createTree(TreeRecord.builder()
+                .id("id")
+                .treeName("treeName")
+                .treeSpecies("treeSpecies")
+                .build());
     }
 }

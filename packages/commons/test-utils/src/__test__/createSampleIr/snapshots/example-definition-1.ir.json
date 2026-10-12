@@ -686,6 +686,7 @@
       "sdkVersion": "X-Fern-SDK-Version",
       "userAgent": undefined,
     },
+    "webhookSignatureVerification": undefined,
   },
   "selfHosted": false,
   "serviceTypeReferenceInfo": {

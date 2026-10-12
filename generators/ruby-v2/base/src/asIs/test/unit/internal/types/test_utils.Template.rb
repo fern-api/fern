@@ -93,6 +93,13 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
         assert_equal 1_713_916_800, Utils.coerce(Integer, Time.utc(2024, 4, 24))
       end
 
+      it "coerces numeric Symbols such as symbolized JSON keys" do
+        assert_equal 1, Utils.coerce(Integer, :"1")
+        assert_equal(-20, Utils.coerce(Integer, :"-20"))
+        assert_equal :foo, Utils.coerce(Integer, :foo)
+        assert_equal :"1.5", Utils.coerce(Integer, :"1.5")
+      end
+
       it "passes through value if it cannot be coerced and not strict" do
         obj = Object.new
 
@@ -113,6 +120,12 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
         assert_in_delta(1.0, Utils.coerce(Float, Complex.rect(1)))
         assert_in_delta(1.0, Utils.coerce(Float, Rational(1)))
         assert_in_delta(1_713_916_800.0, Utils.coerce(Integer, Time.utc(2024, 4, 24)))
+      end
+
+      it "coerces numeric Symbols such as symbolized JSON keys" do
+        assert_in_delta(1.5, Utils.coerce(Float, :"1.5"))
+        assert_in_delta(2.0, Utils.coerce(Float, :"2"))
+        assert_equal :foo, Utils.coerce(Float, :foo)
       end
 
       it "passes through value if it cannot be coerced and not strict" do

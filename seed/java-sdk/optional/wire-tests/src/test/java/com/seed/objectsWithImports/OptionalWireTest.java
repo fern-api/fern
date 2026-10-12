@@ -27,6 +27,7 @@ public class OptionalWireTest {
         server.start();
         client = SeedObjectsWithImportsClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .build();
     }
 

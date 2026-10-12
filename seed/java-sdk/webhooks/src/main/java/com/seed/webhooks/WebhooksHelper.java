@@ -4,8 +4,11 @@
 package com.seed.webhooks;
 
 import com.seed.webhooks.core.WebhookSignature;
+import java.util.logging.Logger;
 
 public final class WebhooksHelper {
+    private static final Logger LOGGER = Logger.getLogger(WebhooksHelper.class.getName());
+
     private static final int TIMESTAMP_TOLERANCE_SECONDS = 300;
 
     private static final String SIGNATURE_PREFIX = "sha256=";
@@ -20,12 +23,24 @@ public final class WebhooksHelper {
      */
     public static boolean verifySignature(
             String requestBody, String signatureHeader, String signatureKey, String timestampHeader) {
-        if (requestBody == null
-                || requestBody.isEmpty()
-                || signatureHeader == null
-                || signatureHeader.isEmpty()
-                || signatureKey == null
-                || signatureKey.isEmpty()) {
+        return verifySignature(requestBody, signatureHeader, signatureKey, timestampHeader, "HmacSHA256");
+    }
+
+    /**
+     * Verify an HMAC webhook signature.
+     *
+     * Extract the signature from the "x-webhook-signature" header and pass it as the {@code signatureHeader} parameter.
+     * Extract the timestamp from the "x-webhook-timestamp" header and pass it as the {@code timestampHeader} parameter.
+     *
+     * The {@code algorithm} parameter selects the HMAC algorithm ("sha1", "sha256", "sha384" or "sha512"); pass {@code null} to use the configured default ("HmacSHA256").
+     */
+    public static boolean verifySignature(
+            String requestBody, String signatureHeader, String signatureKey, String timestampHeader, String algorithm) {
+        if (signatureHeader == null || signatureHeader.isEmpty()) {
+            LOGGER.warning("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || requestBody.isEmpty() || signatureKey == null || signatureKey.isEmpty()) {
             return false;
         }
         if (timestampHeader == null || timestampHeader.isEmpty()) {
@@ -44,7 +59,12 @@ public final class WebhooksHelper {
                 ? signatureHeader.substring(SIGNATURE_PREFIX.length())
                 : signatureHeader;
         String payload = String.join(".", timestampHeader, requestBody);
-        String expected = WebhookSignature.computeHmacSignature(payload, signatureKey, "HmacSHA256", "hex");
-        return WebhookSignature.timingSafeEqual(signature, expected);
+        String expected = WebhookSignature.computeHmacSignature(
+                payload, signatureKey, WebhookSignature.toMacAlgorithm(algorithm, "HmacSHA256"), "hex");
+        boolean valid = WebhookSignature.timingSafeEqual(signature, expected);
+        if (!valid) {
+            LOGGER.warning("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }

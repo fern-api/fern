@@ -3,16 +3,18 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\UnionStreamRequestBase;
+use Seed\Types\StreamXFernStreamingUnionRequest;
+use Seed\Types\UnionStreamMessageVariant;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->validateUnionRequest(
-    new UnionStreamRequestBase([
-        'streamResponse' => true,
+$client->streamXFernStreamingUnion(
+    StreamXFernStreamingUnionRequest::message(false, new UnionStreamMessageVariant([
+        'streamResponse' => false,
         'prompt' => 'prompt',
-    ]),
+        'message' => 'message',
+    ])),
 );

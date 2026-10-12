@@ -1,0 +1,16 @@
+groups:
+  ruby-direct:
+    generators:
+      - name: fernapi/fern-ruby-sdk
+        version: 1.0.0
+        output:
+          location: rubygems
+          package-name: acme
+          api-key: ${RUBYGEMS_API_KEY}
+  ruby-download:
+    generators:
+      - name: fernapi/fern-ruby-sdk
+        version: 1.0.0
+        output:
+          location: local-file-system
+          path: ../sdks/ruby

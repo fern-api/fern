@@ -14,6 +14,8 @@ export declare namespace Parameter {
         type: Type;
         /* Docs for the parameter */
         docs?: string;
+        /* Extra doc lines written as an indented continuation of the @param tag */
+        detailDocs?: string[];
         /* The initializer for the parameter */
         initializer?: CodeBlock;
         /* The access of the parameter */
@@ -27,15 +29,17 @@ export class Parameter extends AstNode {
     public readonly name: string;
     public readonly type: Type;
     public readonly docs: string | undefined;
+    public readonly detailDocs: string[] | undefined;
     public readonly initializer: CodeBlock | undefined;
     public readonly access: Access | undefined;
     public readonly readonly_: boolean;
 
-    constructor({ name, type, docs, initializer, access, readonly_ }: Parameter.Args) {
+    constructor({ name, type, docs, detailDocs, initializer, access, readonly_ }: Parameter.Args) {
         super();
         this.name = convertToPhpVariableName(name);
         this.type = type;
         this.docs = docs;
+        this.detailDocs = detailDocs;
         this.initializer = initializer;
         this.access = access;
         this.readonly_ = readonly_ ?? false;
@@ -46,7 +50,8 @@ export class Parameter extends AstNode {
             tagType: "param",
             type: this.type,
             name: this.name,
-            docs: this.docs
+            docs: this.docs,
+            detailDocs: this.detailDocs
         };
     }
 

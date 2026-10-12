@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The OpenAPI importer now honors `x-twilio.libraryVisibility` (`public` | `private` | `hidden`) during SDK
+    generation. Visibility is read from the operation, path item, or `info` object (most specific wins), and from
+    parameters, schemas, and object properties. `fern generate` keeps only `public` elements; the new
+    `fern generate --private` flag also keeps `private` elements. `hidden` elements are never generated.
+    Other commands (`fern check`, `fern generate-ir`) are unaffected.
+  type: feat
+- summary: |
+    Docs generation now honors `x-twilio.docsVisibility` (`public` | `private` | `hidden`) with the same
+    resolution rules, independently of `libraryVisibility`. `fern generate --docs` and `fern docs dev` publish
+    only `public` elements in API references; `--private` also includes `private` elements. `hidden` elements
+    never appear in docs.
+  type: feat

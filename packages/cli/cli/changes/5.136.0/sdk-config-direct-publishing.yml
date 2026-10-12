@@ -1,0 +1,3 @@
+- summary: |
+    Support secure SDK Config v1 direct publishing to npm, Maven, PyPI, and crates.io through sdk-gen-api.
+  type: feat

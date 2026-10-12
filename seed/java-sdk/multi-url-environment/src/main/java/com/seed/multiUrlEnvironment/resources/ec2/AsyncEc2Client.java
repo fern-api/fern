@@ -5,6 +5,7 @@ package com.seed.multiUrlEnvironment.resources.ec2;
 
 import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
+import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentHttpResponse;
 import com.seed.multiUrlEnvironment.resources.ec2.requests.BootInstanceRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,25 @@ public class AsyncEc2Client {
     }
 
     public CompletableFuture<Void> bootInstance(BootInstanceRequest request) {
-        return this.rawClient.bootInstance(request).thenApply(response -> response.body());
+        CompletableFuture<SeedMultiUrlEnvironmentHttpResponse<Void>> rawFuture = this.rawClient.bootInstance(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> bootInstance(BootInstanceRequest request, RequestOptions requestOptions) {
-        return this.rawClient.bootInstance(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMultiUrlEnvironmentHttpResponse<Void>> rawFuture =
+                this.rawClient.bootInstance(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -5,6 +5,7 @@ package com.seed.propertyAccess;
 
 import com.seed.propertyAccess.core.ClientOptions;
 import com.seed.propertyAccess.core.RequestOptions;
+import com.seed.propertyAccess.core.SeedPropertyAccessHttpResponse;
 import com.seed.propertyAccess.types.User;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,16 +27,32 @@ public class AsyncSeedPropertyAccessClient implements AutoCloseable {
     }
 
     public CompletableFuture<User> createUser(User request) {
-        return this.rawClient.createUser(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPropertyAccessHttpResponse<User>> rawFuture = this.rawClient.createUser(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> createUser(User request, RequestOptions requestOptions) {
-        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPropertyAccessHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

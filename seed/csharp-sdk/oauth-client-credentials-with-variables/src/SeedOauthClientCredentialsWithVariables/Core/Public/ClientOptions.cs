@@ -5,6 +5,19 @@ namespace SeedOauthClientCredentialsWithVariables;
 [Serializable]
 public partial class ClientOptions
 {
+    public ClientOptions() { }
+
+    internal ClientOptions(ClientOptions other)
+    {
+        BaseUrl = other.BaseUrl;
+        RootVariable = other.RootVariable;
+        HttpClient = other.HttpClient;
+        MaxRetries = other.MaxRetries;
+        Timeout = other.Timeout;
+        Headers = new Headers(new Dictionary<string, HeaderValue>(other.Headers));
+        AdditionalHeaders = other.AdditionalHeaders;
+    }
+
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
@@ -20,6 +33,8 @@ public partial class ClientOptions
         set;
 #endif
     } = "";
+
+    public string? RootVariable { get; set; }
 
     /// <summary>
     /// The http client used to make requests.
@@ -71,14 +86,6 @@ public partial class ClientOptions
     /// </summary>
     internal ClientOptions Clone()
     {
-        return new ClientOptions
-        {
-            BaseUrl = BaseUrl,
-            HttpClient = HttpClient,
-            MaxRetries = MaxRetries,
-            Timeout = Timeout,
-            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
-            AdditionalHeaders = AdditionalHeaders,
-        };
+        return new ClientOptions(this);
     }
 }

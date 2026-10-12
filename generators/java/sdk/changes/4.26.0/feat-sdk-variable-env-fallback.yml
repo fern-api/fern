@@ -1,0 +1,7 @@
+- summary: |
+    SDK variables that declare an environment variable fallback (`env` in `api.yml` or `x-fern-env` on
+    `x-fern-sdk-variables`) now default to `System.getenv(...)` in the client builder, and `build()`
+    throws an `IllegalStateException` with a clear message when neither the builder method nor the
+    environment variable provides a value, instead of rendering `null` into request paths. The check
+    lives in the generated `setVariables(builder)` hook, so overriding it to supply the value still works.
+  type: feat

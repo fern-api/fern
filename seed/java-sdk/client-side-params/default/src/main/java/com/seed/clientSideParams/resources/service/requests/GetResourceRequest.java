@@ -84,7 +84,6 @@ public final class GetResourceRequest {
 
         private Optional<String> format = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class GetResourceRequest {
 
         public GetResourceRequest build() {
             return new GetResourceRequest(includeMetadata, format, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("include_metadata") || key.equalsIgnoreCase("format")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -320,14 +320,11 @@ export class RootClientGenerator {
     }
 
     /**
-     * Generates the Rust expression to resolve a URL from the environment,
-     * falling back to config.base_url when environment is None.
+     * Generates the Rust expression resolving a service's URL: an explicit config.base_url wins,
+     * otherwise the environment's URL for the service (see ClientConfig::service_url).
      */
     private resolveUrlExpression(urlMethod: string, configVar: string): string {
-        return (
-            `${configVar}.environment.as_ref()\n` +
-            `                    .map_or_else(|| ${configVar}.base_url.clone(), |env| env.${urlMethod}().to_string())`
-        );
+        return `${configVar}.service_url(|environment| environment.${urlMethod}()).to_string()`;
     }
 
     private generateConstructor(subpackages: FernIr.Subpackage[]): rust.Client.SimpleMethod {

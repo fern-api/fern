@@ -8,6 +8,10 @@ enum Example25 {
             token: "<token>"
         )
 
-        _ = try await client.users.listWithExtendedResults(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
+        _ = try await client.users.listWithOffsetPaginationHasNextPage(
+            page: 1,
+            limit: 1,
+            order: .asc
+        )
     }
 }

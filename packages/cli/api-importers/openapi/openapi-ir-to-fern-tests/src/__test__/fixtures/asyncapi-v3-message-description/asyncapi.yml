@@ -1,0 +1,63 @@
+asyncapi: 3.0.0
+
+info:
+  title: Message Description Test API
+  version: 1.0.0
+  description: Tests that message summary/description propagate to channel message docs
+
+servers:
+  production:
+    host: api.example.com
+    protocol: wss
+    pathname: /v1/ws
+
+channels:
+  garden:
+    address: /v1/ws/garden
+    messages:
+      waterPlant:
+        $ref: "#/components/messages/WaterPlant"
+      plantStatus:
+        $ref: "#/components/messages/PlantStatus"
+
+operations:
+  sendWaterPlant:
+    action: send
+    channel:
+      $ref: "#/channels/garden"
+    messages:
+      - $ref: "#/channels/garden/messages/waterPlant"
+
+  receivePlantStatus:
+    action: receive
+    channel:
+      $ref: "#/channels/garden"
+    messages:
+      - $ref: "#/channels/garden/messages/plantStatus"
+
+components:
+  messages:
+    WaterPlant:
+      name: WaterPlant
+      summary: Water a plant
+      description: Request that the server water the specified plant.
+      contentType: application/json
+      payload:
+        type: object
+        required:
+          - plantId
+        properties:
+          plantId:
+            type: string
+
+    PlantStatus:
+      name: PlantStatus
+      summary: Current moisture level of a plant
+      contentType: application/json
+      payload:
+        type: object
+        required:
+          - moisture
+        properties:
+          moisture:
+            type: number

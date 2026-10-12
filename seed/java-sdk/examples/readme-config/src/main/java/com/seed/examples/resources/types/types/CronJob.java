@@ -80,7 +80,6 @@ public final class CronJob {
     public static final class Builder implements ExpressionStage, _FinalStage {
         private String expression;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class CronJob {
         @java.lang.Override
         public CronJob build() {
             return new CronJob(expression, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("expression")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

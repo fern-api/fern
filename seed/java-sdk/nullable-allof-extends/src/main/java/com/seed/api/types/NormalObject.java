@@ -68,7 +68,6 @@ public final class NormalObject implements INormalObject {
     public static final class Builder {
         private Optional<String> normalField = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -91,6 +90,14 @@ public final class NormalObject implements INormalObject {
 
         public NormalObject build() {
             return new NormalObject(normalField, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("normalField")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

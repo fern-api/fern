@@ -7,12 +7,17 @@ import {
 } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
-import { isVersionAhead } from "@fern-api/semver-utils";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { getResolvedFernSdkGenApiEnabled, isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
+import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
-
+import {
+    compareGeneratorVersions,
+    createSdkGenApiTokenProvider,
+    GetSdkGenApiToken,
+    getSdkGenApiGeneratorVersions
+} from "../../commands/upgrade/getSdkGenApiGeneratorVersions.js";
 import { CliContext } from "../CliContext.js";
 
 export interface FernGeneratorUpgradeInfo {
@@ -44,11 +49,12 @@ export type GeneratorVersions = MultiApiWorkspaceGeneratorVersions | SingleApiWo
 
 export async function getLatestGeneratorVersions({
     cliContext,
-    project: { apiWorkspaces },
+    project,
     generatorFilter,
     groupFilter,
     channel,
-    includeMajor
+    includeMajor,
+    skipFeatureFlagRequest
 }: {
     cliContext: CliContext;
     project: Project;
@@ -56,7 +62,12 @@ export async function getLatestGeneratorVersions({
     groupFilter?: string;
     channel?: ReleaseType;
     includeMajor?: boolean;
+    /** Use only a feature flag value already resolved in this process (see {@link resolveSdkGenApiEnabled}). */
+    skipFeatureFlagRequest?: boolean;
 }): Promise<GeneratorVersions> {
+    const { apiWorkspaces } = project;
+    // Lazy: only generators the flag routes through sdk-gen-api trigger a login.
+    const getSdkGenApiToken = createSdkGenApiTokenProvider(cliContext);
     if (apiWorkspaces.length === 1) {
         const versions: SingleApiWorkspaceGeneratorVersions = { type: "singleApi", versions: {} };
         await processGeneratorsYml({
@@ -73,12 +84,16 @@ export async function getLatestGeneratorVersions({
                     return;
                 }
 
-                const latestVersion = await getLatestGeneratorVersion({
-                    generatorName: normalizedGeneratorName,
+                const latestVersion = await lookupLatestGeneratorVersion({
+                    generatorName: generator.name,
+                    normalizedGeneratorName,
                     cliVersion: cliContext.environment.packageVersion,
                     currentGeneratorVersion: generator.version,
                     channel,
                     includeMajor,
+                    organization: project.config.organization,
+                    skipFeatureFlagRequest,
+                    getSdkGenApiToken,
                     context
                 });
 
@@ -120,12 +135,16 @@ export async function getLatestGeneratorVersions({
                 return;
             }
 
-            const latestVersion = await getLatestGeneratorVersion({
-                generatorName: normalizedGeneratorName,
+            const latestVersion = await lookupLatestGeneratorVersion({
+                generatorName: generator.name,
+                normalizedGeneratorName,
                 cliVersion: cliContext.environment.packageVersion,
                 currentGeneratorVersion: generator.version,
                 channel,
                 includeMajor,
+                organization: project.config.organization,
+                skipFeatureFlagRequest,
+                getSdkGenApiToken,
                 context
             });
 
@@ -203,15 +222,12 @@ export function processGeneratorGroups(
     for (const [groupName, group] of Object.entries(groups)) {
         for (const [generatorName, generatorVersions] of Object.entries(group)) {
             logger.debug(`Checking if ${generatorName} in group ${groupName} has an upgrade available...`);
-            let isUpgradeAvailable: boolean;
-            try {
-                isUpgradeAvailable = isVersionAhead(generatorVersions.latestVersion, generatorVersions.previousVersion);
-            } catch {
-                throw new CliError({
-                    message: `Generator "${generatorName}" has an invalid version "${generatorVersions.previousVersion}" in generators.yml. Use an exact version like 1.2.3.`,
-                    code: CliError.Code.ConfigError
-                });
-            }
+            const isUpgradeAvailable =
+                compareGeneratorVersions({
+                    generatorId: generatorName,
+                    candidateVersion: generatorVersions.latestVersion,
+                    currentVersion: generatorVersions.previousVersion
+                }) === 1;
 
             logger.debug(
                 `Latest version: ${generatorVersions.latestVersion}. ` +
@@ -231,13 +247,68 @@ export function processGeneratorGroups(
     return upgradeInfo;
 }
 
+async function lookupLatestGeneratorVersion({
+    generatorName,
+    normalizedGeneratorName,
+    cliVersion,
+    currentGeneratorVersion,
+    channel,
+    includeMajor,
+    organization,
+    skipFeatureFlagRequest,
+    getSdkGenApiToken,
+    context
+}: {
+    generatorName: string;
+    normalizedGeneratorName: string;
+    cliVersion: string;
+    currentGeneratorVersion: string;
+    channel?: ReleaseType;
+    includeMajor?: boolean;
+    organization: string;
+    skipFeatureFlagRequest: boolean | undefined;
+    getSdkGenApiToken: GetSdkGenApiToken;
+    context: TaskContext;
+}): Promise<string | undefined> {
+    if (currentGeneratorVersion === "latest") {
+        return "latest";
+    }
+    const useSdkGenApi = await resolveSdkGenApiEnabled({
+        organization,
+        generatorName: addDefaultDockerOrgIfNotPresent(generatorName),
+        skipFeatureFlagRequest
+    });
+    if (useSdkGenApi) {
+        return (
+            await getSdkGenApiGeneratorVersions({
+                generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
+                currentVersion: currentGeneratorVersion,
+                includeMajor: includeMajor ?? false,
+                channel,
+                organization,
+                getToken: getSdkGenApiToken,
+                context
+            })
+        ).compatibleVersion;
+    }
+    return getLatestGeneratorVersion({
+        generatorName: normalizedGeneratorName,
+        cliVersion,
+        currentGeneratorVersion,
+        channel,
+        includeMajor,
+        context
+    });
+}
+
 export async function getProjectGeneratorUpgrades({
     project,
     cliContext,
     generatorFilter,
     groupFilter,
     channel,
-    includeMajor
+    includeMajor,
+    skipFeatureFlagRequest
 }: {
     project: Project | undefined;
     cliContext: CliContext;
@@ -245,6 +316,8 @@ export async function getProjectGeneratorUpgrades({
     groupFilter?: string;
     channel?: ReleaseType;
     includeMajor?: boolean;
+    /** Use only a feature flag value already resolved in this process (see {@link resolveSdkGenApiEnabled}). */
+    skipFeatureFlagRequest?: boolean;
 }): Promise<FernGeneratorUpgradeInfo[]> {
     const generatorUpgrades: FernGeneratorUpgradeInfo[] = [];
     if (project != null) {
@@ -254,7 +327,8 @@ export async function getProjectGeneratorUpgrades({
             generatorFilter,
             groupFilter,
             channel,
-            includeMajor
+            includeMajor,
+            skipFeatureFlagRequest
         });
 
         if (latestVersions.type === "multiApi") {
@@ -266,4 +340,28 @@ export async function getProjectGeneratorUpgrades({
         }
     }
     return generatorUpgrades;
+}
+
+/**
+ * Whether this generator's versions come from sdk-gen-api, per the `use-sdk-gen-api` flag for the
+ * org and generator. Latency-bound callers (the exit-time upgrade nudge, which races a 300ms timeout
+ * on every command) pass `skipFeatureFlagRequest` to reuse a value an earlier command step already
+ * fetched instead of adding a PostHog request; with no earlier value they fall back to FDR versions.
+ */
+async function resolveSdkGenApiEnabled({
+    organization,
+    generatorName,
+    skipFeatureFlagRequest
+}: {
+    organization: string;
+    generatorName: string;
+    skipFeatureFlagRequest: boolean | undefined;
+}): Promise<boolean> {
+    if (skipFeatureFlagRequest === true) {
+        // Known trade-off: for a flag-on generator this command never resolved the flag for (e.g. after
+        // `fern check`, or a generator outside the generated group), this reports FDR versions, which can
+        // differ from what `fern generator upgrade` (sdk-gen-api) would pick.
+        return getResolvedFernSdkGenApiEnabled({ organization, generatorName }) ?? false;
+    }
+    return isFernSdkGenApiEnabled({ organization, generatorName });
 }

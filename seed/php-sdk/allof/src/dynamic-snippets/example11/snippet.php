@@ -15,11 +15,11 @@ $client = new SeedClient(
 );
 $client->createPlant(
     new PlantPost([
-        'commonName' => 'commonName',
-        'wateringFrequency' => PlantBaseWateringFrequency::Daily->value,
         'species' => 'species',
         'family' => 'family',
         'genus' => 'genus',
+        'commonName' => 'commonName',
+        'wateringFrequency' => PlantBaseWateringFrequency::Daily->value,
         'sunExposure' => PlantPostSunExposure::Full->value,
         'plantedAt' => new DateTime('2023-01-15'),
         'soilType' => 'soilType',

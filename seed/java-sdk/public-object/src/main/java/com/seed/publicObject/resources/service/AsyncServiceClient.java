@@ -5,6 +5,7 @@ package com.seed.publicObject.resources.service;
 
 import com.seed.publicObject.core.ClientOptions;
 import com.seed.publicObject.core.RequestOptions;
+import com.seed.publicObject.core.SeedPublicObjectHttpResponse;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<InputStream> get() {
-        return this.rawClient.get().thenApply(response -> response.body());
+        CompletableFuture<SeedPublicObjectHttpResponse<InputStream>> rawFuture = this.rawClient.get();
+        CompletableFuture<InputStream> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<InputStream> get(RequestOptions requestOptions) {
-        return this.rawClient.get(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPublicObjectHttpResponse<InputStream>> rawFuture = this.rawClient.get(requestOptions);
+        CompletableFuture<InputStream> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

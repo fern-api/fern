@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve explicit `null` on optional nullable (`optional<nullable<T>>`) object
+    properties across a JSON decode/re-encode round trip. Previously only required
+    nullable properties were tracked on decode, so a response field such as
+    `"holder_category": null` was dropped when the value was marshaled again.
+    Fields absent from the input remain absent, and plain `optional<T>` fields are
+    unaffected. The generated `<type>RequiredNullableFields` map is renamed to
+    `<type>NullableFields`, and generated SDKs now include an optional-nullable
+    round-trip test for each affected type.
+  type: fix

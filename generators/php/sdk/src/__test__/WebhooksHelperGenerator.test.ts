@@ -22,7 +22,8 @@ function buildContext(
                         signatureVerification: verification
                     }
                 ]
-            }
+            },
+            sdkConfig: { webhookSignatureVerification: undefined }
         },
         customConfig: {},
         case: {

@@ -35,7 +35,7 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
+        return response.body if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -66,7 +66,7 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
+        return response.body if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -97,7 +97,7 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
+        return response.body if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)

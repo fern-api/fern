@@ -111,7 +111,6 @@ public final class UnionStreamInterruptVariant implements IUnionStreamRequestBas
 
         private Optional<Boolean> streamResponse = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -157,6 +156,14 @@ public final class UnionStreamInterruptVariant implements IUnionStreamRequestBas
         @java.lang.Override
         public UnionStreamInterruptVariant build() {
             return new UnionStreamInterruptVariant(streamResponse, prompt, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("stream_response") || key.equalsIgnoreCase("prompt")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

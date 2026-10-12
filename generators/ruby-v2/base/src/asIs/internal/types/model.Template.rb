@@ -94,6 +94,18 @@ module <%= gem_namespace %>
             define_setter(name)
           end
 
+          # Whether an unknown input key is dropped instead of kept as an extra field: it matches a declared
+          # field's name or API name, ignoring case
+          #
+          # @api private
+          #
+          # @param key [Symbol, String]
+          # @return [Boolean]
+          def drop_extra_key?(key)
+            key = key.to_s
+            fields.any? { |name, field| name.to_s.casecmp?(key) || field.api_name.to_s.casecmp?(key) }
+          end
+
           # @api private
           private def define_accessor(name)
             method_name = name.to_sym
@@ -108,6 +120,7 @@ module <%= gem_namespace %>
             method_name = :"#{name}="
 
             define_method(method_name) do |val|
+              @explicit_fields[name] = true
               @data[name] = val
             end
           end
@@ -137,6 +150,7 @@ module <%= gem_namespace %>
         # @return [self]
         def initialize(values = {})
           @data = {}
+          @explicit_fields = {}
 
           values = Utils.symbolize_keys(values.dup)
 
@@ -145,6 +159,7 @@ module <%= gem_namespace %>
             [field.api_name.to_sym, field_name].uniq.each do |key|
               next unless values.key?(key)
 
+              @explicit_fields[field_name] = true
               candidate = values.delete(key)
               value = candidate if value.nil?
             end
@@ -160,8 +175,12 @@ module <%= gem_namespace %>
             @data[field_name] = Utils.coerce(field.type, field_value)
           end
 
-          # Any remaining values in the input become extra fields
+          # Any remaining values in the input become extra fields, except keys that match a declared field
+          # case-insensitively (e.g. `VALUE` next to `value`): re-emitting those would let a case-insensitive
+          # JSON decoder downstream read the extra key instead of the declared field.
           values.each do |name, value|
+            next if self.class.drop_extra_key?(name)
+
             self.class.add_extra_field_definition(name: name, type: value.class)
 
             @data[name.to_sym] = value
@@ -173,14 +192,15 @@ module <%= gem_namespace %>
             # If there is a value present in the data, use that value
             # If there is a `nil` value present in the data, and it is optional but NOT nullable, exclude key altogether
             # If there is a `nil` value present in the data, and it is optional and nullable, use the nil value
+            # only when it was explicitly provided; an omitted optional field is excluded
 
             value = @data[name]
 
-            next if value.nil? && field.optional && !field.nullable
+            next if value.nil? && field.optional && (!field.nullable || !@explicit_fields&.key?(name))
 
             if value.is_a?(::Array)
-              value = value.map { |item| item.respond_to?(:to_h) ? item.to_h : item }
-            elsif value.respond_to?(:to_h)
+              value = value.map { |item| !item.nil? && item.respond_to?(:to_h) ? item.to_h : item }
+            elsif !value.nil? && value.respond_to?(:to_h)
               value = value.to_h
             end
 

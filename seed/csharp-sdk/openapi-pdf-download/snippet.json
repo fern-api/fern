@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/asset_report/pdf/get",
+                "method": "POST",
+                "identifier_override": "endpoint_assetReport.getPdf"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.AssetReport.GetPdfAsync(\n    new AssetReportPdfGetRequest { AssetReportToken = \"asset_report_token\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/asset_report/get",
+                "method": "POST",
+                "identifier_override": "endpoint_assetReport.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.AssetReport.GetAsync(\n    new AssetReportPdfGetRequest { AssetReportToken = \"asset_report_token\" }\n);\n"
+            }
+        }
+    ]
+}

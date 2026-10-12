@@ -80,7 +80,6 @@ public final class TestRequest {
     public static final class Builder implements ForStage, _FinalStage {
         private String for_;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class TestRequest {
         @java.lang.Override
         public TestRequest build() {
             return new TestRequest(for_, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("for")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

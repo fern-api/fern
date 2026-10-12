@@ -80,7 +80,6 @@ public final class PrivatePayload {
     public static final class Builder implements SecretStage, _FinalStage {
         private String secret;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class PrivatePayload {
         @java.lang.Override
         public PrivatePayload build() {
             return new PrivatePayload(secret, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("secret")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

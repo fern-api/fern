@@ -68,6 +68,18 @@ func TestMarshalJSONWithExtraProperties(t *testing.T) {
 			wantError:           `cannot add extra property "name" because it is already defined on the type`,
 		},
 		{
+			desc:                "invalid struct overwrite case-insensitive",
+			giveMarshaler:       new(testMarshaler),
+			giveExtraProperties: map[string]interface{}{"NAME": "bob"},
+			wantError:           `cannot add extra property "NAME" because it is already defined on the type`,
+		},
+		{
+			desc:                "invalid map overwrite case-insensitive",
+			giveMarshaler:       map[string]interface{}{"key": "value"},
+			giveExtraProperties: map[string]interface{}{"Key": "overwrite"},
+			wantError:           `cannot add extra property "Key" because it is already defined on the type`,
+		},
+		{
 			desc:                "nil",
 			giveMarshaler:       nil,
 			giveExtraProperties: nil,
@@ -225,4 +237,90 @@ func TestExtractExtraProperties(t *testing.T) {
 		require.NoError(t, err)
 		assert.Nil(t, extraProperties)
 	})
+
+	t.Run("drops keys that collide case-insensitively with declared keys", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		value := &user{}
+		extraProperties, err := ExtractExtraProperties(
+			[]byte(`{"name": "alice", "NAME": "mallory", "Name": "eve", "age": 42}`),
+			value,
+		)
+		require.NoError(t, err)
+		assert.Equal(t, map[string]interface{}{"age": float64(42)}, extraProperties)
+	})
+
+	t.Run("drops keys that collide case-insensitively with excluded keys", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		value := &user{}
+		extraProperties, err := ExtractExtraProperties([]byte(`{"name": "alice", "TYPE": "admin"}`), value, "type")
+		require.NoError(t, err)
+		assert.Nil(t, extraProperties)
+	})
+
+	t.Run("re-emitted extra properties cannot override declared keys", func(t *testing.T) {
+		type amount struct {
+			Value           float64                `json:"value"`
+			ExtraProperties map[string]interface{} `json:"-"`
+		}
+		data := []byte(`{"value": 99999, "VALUE": 99999, "brand_new_field": "kept"}`)
+		value := &amount{}
+		require.NoError(t, json.Unmarshal(data, value))
+		extraProperties, err := ExtractExtraProperties(data, value)
+		require.NoError(t, err)
+		assert.Equal(t, map[string]interface{}{"brand_new_field": "kept"}, extraProperties)
+
+		value.Value = 1
+		bytes, err := MarshalJSONWithExtraProperties(struct {
+			Value float64 `json:"value"`
+		}{Value: value.Value}, extraProperties)
+		require.NoError(t, err)
+		assert.JSONEq(t, `{"value": 1, "brand_new_field": "kept"}`, string(bytes))
+	})
+}
+
+func TestMatchesObjectKeys(t *testing.T) {
+	known := []string{"name", "age"}
+	required := []string{"name"}
+	tests := []struct {
+		desc string
+		data string
+		want bool
+	}{
+		{desc: "all keys", data: `{"name": "alice", "age": 42}`, want: true},
+		{desc: "required keys only", data: `{"name": "alice"}`, want: true},
+		{desc: "missing required key", data: `{"age": 42}`, want: false},
+		{desc: "unknown key", data: `{"name": "alice", "other": true}`, want: false},
+		{desc: "null", data: `null`, want: false},
+		{desc: "array", data: `["name"]`, want: false},
+		{desc: "string", data: `"name"`, want: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			assert.Equal(t, tt.want, MatchesObjectKeys([]byte(tt.data), known, required))
+		})
+	}
+}
+
+func TestHasObjectKeys(t *testing.T) {
+	required := []string{"name"}
+	tests := []struct {
+		desc string
+		data string
+		want bool
+	}{
+		{desc: "required key", data: `{"name": "alice"}`, want: true},
+		{desc: "unknown key", data: `{"name": "alice", "other": true}`, want: true},
+		{desc: "missing required key", data: `{"age": 42}`, want: false},
+		{desc: "null", data: `null`, want: false},
+		{desc: "array", data: `["name"]`, want: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			assert.Equal(t, tt.want, HasObjectKeys([]byte(tt.data), required))
+		})
+	}
 }

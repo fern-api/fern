@@ -61,6 +61,14 @@ features:
     description: |
       The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
+  - id: ADDITIONAL_BODY_PROPERTIES
+    advanced: true
+    description: |
+      If you need to send a request body property that is not yet part of the SDK (for example, a beta field),
+      use the `addBodyProperty` request option. Properties are sent with the key exactly as given and override
+      any property with the same key; for endpoints without a request body, they are sent as a JSON body.
+      This is supported for JSON and form-urlencoded request bodies, but not for multipart (file upload) requests.
+
   - id: ACCESS_RAW_RESPONSE_DATA
     advanced: true
     description: |

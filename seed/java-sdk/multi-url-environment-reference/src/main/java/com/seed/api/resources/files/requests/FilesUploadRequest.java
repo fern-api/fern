@@ -94,7 +94,6 @@ public final class FilesUploadRequest {
 
         private String parentId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class FilesUploadRequest {
         @java.lang.Override
         public FilesUploadRequest build() {
             return new FilesUploadRequest(name, parentId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("parent_id")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -10,7 +10,12 @@ export interface OpenApiErrorResponsesSchema {
      * schema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to.
      */
     schema: GeneratorsYml.OpenApiErrorResponsesSchemaSource;
-    /** Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`. */
+    /**
+     * Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`.
+     * If the spec already defines a different schema under this name, it is replaced as long as
+     * nothing references it once the error responses have been rewritten (e.g. a legacy error
+     * body only used by 4xx/5xx responses under `apply-to: all`); otherwise `fern check` fails.
+     */
     name?: string;
     /**
      * `all` replaces the body of every 4xx/5xx response with the configured schema.

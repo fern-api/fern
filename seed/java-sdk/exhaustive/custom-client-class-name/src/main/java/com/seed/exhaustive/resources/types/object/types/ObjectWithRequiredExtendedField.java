@@ -81,7 +81,6 @@ public final class ObjectWithRequiredExtendedField {
     public static final class Builder implements RequiredExtendedStage, _FinalStage {
         private ExtendedObjectWithInheritedEnum requiredExtended;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class ObjectWithRequiredExtendedField {
         @java.lang.Override
         public ObjectWithRequiredExtendedField build() {
             return new ObjectWithRequiredExtendedField(requiredExtended, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("requiredExtended")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

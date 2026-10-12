@@ -28,6 +28,38 @@
       "postServeActions": []
     },
     {
+      "id": "156d7dbc-fbbd-45cf-86a2-d793115f2249",
+      "name": "Search rule types with paginated results - default - search_rule_types.0",
+      "request": {
+        "urlPathTemplate": "/rule-types",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "search_rule_types.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"paging\": {\n    \"next\": \"next\",\n    \"previous\": \"previous\"\n  },\n  \"results\": [\n    {\n      \"id\": \"id\",\n      \"name\": \"name\",\n      \"description\": \"description\"\n    }\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "156d7dbc-fbbd-45cf-86a2-d793115f2249",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "1a934299-52ab-4d86-aa31-9f873790df88",
       "name": "Create a rule with constrained execution context - default",
       "request": {
@@ -54,6 +86,37 @@
       }
     },
     {
+      "id": "5d1cd174-a9d4-4913-88d2-d9e361e2de34",
+      "name": "Create a rule with constrained execution context - default - create_rule.0",
+      "request": {
+        "urlPathTemplate": "/rules",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "create_rule.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"createdBy\": \"createdBy\",\n  \"createdDateTime\": \"2024-01-15T09:30:00Z\",\n  \"modifiedBy\": \"modifiedBy\",\n  \"modifiedDateTime\": \"2024-01-15T09:30:00Z\",\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"executionContext\": \"prod\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "5d1cd174-a9d4-4913-88d2-d9e361e2de34",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "c4083f9d-e8ad-4944-abe5-163125679505",
       "name": "List users with paginated results - default",
       "request": {
@@ -70,6 +133,38 @@
       "uuid": "c4083f9d-e8ad-4944-abe5-163125679505",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "c560148c-d7f7-4bef-ab6e-59d952ce9aee",
+      "name": "List users with paginated results - default - list_users.0",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "list_users.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"paging\": {\n    \"next\": \"next\",\n    \"previous\": \"previous\"\n  },\n  \"results\": [\n    {\n      \"id\": \"id\",\n      \"email\": \"email\"\n    }\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c560148c-d7f7-4bef-ab6e-59d952ce9aee",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -108,6 +203,38 @@
       "postServeActions": []
     },
     {
+      "id": "a351c10f-19d2-4bba-a6e9-046c3c7b0b18",
+      "name": "Get an entity that combines multiple parents - default - get_entity.0",
+      "request": {
+        "urlPathTemplate": "/entities",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "get_entity.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"name\": \"name\",\n  \"summary\": \"summary\",\n  \"id\": \"id\",\n  \"status\": \"active\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a351c10f-19d2-4bba-a6e9-046c3c7b0b18",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "1c7f93bf-abf3-4466-99e9-5e2b1de4aac3",
       "name": "Get an organization with merged object-typed properties - default",
       "request": {
@@ -124,6 +251,38 @@
       "uuid": "1c7f93bf-abf3-4466-99e9-5e2b1de4aac3",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "d51fa782-7cd1-456a-b4b8-bb42b2b7d292",
+      "name": "Get an organization with merged object-typed properties - default - get_organization.0",
+      "request": {
+        "urlPathTemplate": "/organizations",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "get_organization.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"metadata\": {\n    \"region\": \"region\",\n    \"tier\": \"tier\"\n  },\n  \"id\": \"id\",\n  \"name\": \"name\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d51fa782-7cd1-456a-b4b8-bb42b2b7d292",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -161,6 +320,37 @@
       }
     },
     {
+      "id": "dc599289-31b3-4c38-9083-14f28b319829",
+      "name": "Create a plant (nested allOf with $ref chain) - default - create_plant.0",
+      "request": {
+        "urlPathTemplate": "/plants",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "create_plant.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"species\": \"species\",\n  \"family\": \"family\",\n  \"genus\": \"genus\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "dc599289-31b3-4c38-9083-14f28b319829",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "b78e388b-bdbb-4fab-a683-45f8819e89ec",
       "name": "Create a tree (multiple nested $ref in parent allOf) - default",
       "request": {
@@ -185,9 +375,40 @@
           }
         }
       }
+    },
+    {
+      "id": "8eade116-640b-4cb7-9c47-c7696603e379",
+      "name": "Create a tree (multiple nested $ref in parent allOf) - default - create_tree.0",
+      "request": {
+        "urlPathTemplate": "/trees",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "create_tree.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"treeName\": \"treeName\",\n  \"treeDescription\": \"treeDescription\",\n  \"id\": \"id\",\n  \"treeSpecies\": \"treeSpecies\",\n  \"heightInFeet\": 1.1,\n  \"plantedDate\": \"2023-01-15\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8eade116-640b-4cb7-9c47-c7696603e379",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 7
+    "total": 14
   }
 }

@@ -6,6 +6,7 @@ package com.fern.sdk.resources.noauth;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.util.concurrent.CompletableFuture;
@@ -31,13 +32,27 @@ public class AsyncNoAuthClient {
    * POST request with no auth
    */
   public CompletableFuture<Boolean> postWithNoAuth(Object request) {
-    return this.rawClient.postWithNoAuth(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> rawFuture = this.rawClient.postWithNoAuth(request);
+    CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   /**
    * POST request with no auth
    */
   public CompletableFuture<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
-    return this.rawClient.postWithNoAuth(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> rawFuture = this.rawClient.postWithNoAuth(request, requestOptions);
+    CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 }

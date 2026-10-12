@@ -112,7 +112,6 @@ public final class Parameter {
 
         private VariableType variableType;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -149,6 +148,16 @@ public final class Parameter {
         @java.lang.Override
         public Parameter build() {
             return new Parameter(parameterId, name, variableType, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("parameterId")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("variableType")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

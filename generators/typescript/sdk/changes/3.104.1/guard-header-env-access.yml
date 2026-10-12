@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `guardProcessEnvAccess: true` now also guards the environment-variable fallback of global headers
+    (headers declared with `env`, e.g. `requestOptions?.version ?? this._options?.version ?? process.env?.["API_VERSION"]`).
+    Before, only auth and base-URL reads were guarded, so omitting an optional header option still threw
+    `ReferenceError: process is not defined` in browsers, Deno and Cloudflare Workers. Output is unchanged
+    when the option is off.
+  type: fix

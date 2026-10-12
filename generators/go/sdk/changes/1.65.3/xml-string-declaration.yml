@@ -1,0 +1,6 @@
+- summary: |
+    XML-encoded (TwiML) types now return their XML representation from
+    `String()` instead of JSON, and `ToXml()` prepends the
+    `<?xml version="1.0" encoding="UTF-8"?>` declaration. Use
+    `ToXmlElement().ToXml()` to serialize without the declaration.
+  type: fix

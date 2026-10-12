@@ -16,7 +16,6 @@ import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js"
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
 import { sanitizeSecurityScopes } from "../../../../utils/sanitizeSecurityScopes.js";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
-import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext.js";
 import { OpenAPIExtension } from "../../extensions/extensions.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension.js";
@@ -204,13 +203,7 @@ export function convertHttpOperation({
                             mediaTypeObject,
                             description: resolvedRequestBody.description,
                             document,
-                            context: new DummyOpenAPIV3ParserContext({
-                                document: context.document,
-                                taskContext: context.taskContext,
-                                options: context.options,
-                                source: context.source,
-                                namespace: context.namespace
-                            }),
+                            context: context.DUMMY,
                             requestBreadcrumbs,
                             source,
                             namespace: context.namespace,
@@ -263,13 +256,7 @@ export function convertHttpOperation({
                 content: resolvedRequestBody.content,
                 description: resolvedRequestBody.description,
                 document,
-                context: new DummyOpenAPIV3ParserContext({
-                    document: context.document,
-                    taskContext: context.taskContext,
-                    options: context.options,
-                    source: context.source,
-                    namespace: context.namespace
-                }),
+                context: context.DUMMY,
                 requestBreadcrumbs,
                 source,
                 namespace: context.namespace,

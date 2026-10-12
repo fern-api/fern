@@ -1,4 +1,4 @@
-import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
+import { AbstractAPIWorkspace, getWebhookSignatureFromGeneratorsConfiguration } from "@fern-api/api-workspace-commons";
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
@@ -106,7 +106,8 @@ async function getIntermediateRepresentation({
             smartCasing,
             disableExamples,
             readme,
-            disableDynamicExamples: true
+            disableDynamicExamples: true,
+            webhookSignature: getWebhookSignatureFromGeneratorsConfiguration(workspace.generatorsConfiguration, context)
         });
     }
 

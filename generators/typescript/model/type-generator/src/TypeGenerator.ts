@@ -45,7 +45,6 @@ export declare namespace TypeGenerator {
             retainOriginalCasing: boolean;
             inline: boolean;
             xml?: FernIr.XmlEncoding;
-            isXmlRoot?: boolean;
         }
     }
 }
@@ -97,8 +96,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         fernFilepath,
         getReferenceToSelf,
         inline,
-        xml,
-        isXmlRoot = false
+        xml
     }: TypeGenerator.generateType.Args<Context>): GeneratedType<Context> {
         return FernIr.Type._visit<GeneratedType<Context>>(shape, {
             union: (shape) =>
@@ -120,8 +118,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                     docs,
                     fernFilepath,
                     getReferenceToSelf,
-                    xml,
-                    isXmlRoot
+                    xml
                 }),
             enum: (shape) => this.generateEnum({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
             alias: (shape) =>
@@ -213,8 +210,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         docs,
         fernFilepath,
         getReferenceToSelf,
-        xml,
-        isXmlRoot
+        xml
     }: {
         typeName: string;
         shape: FernIr.ObjectTypeDeclaration;
@@ -223,7 +219,6 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         fernFilepath: FernIr.FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
         xml: FernIr.XmlEncoding | undefined;
-        isXmlRoot: boolean;
     }): GeneratedObjectType<Context> {
         return new GeneratedObjectTypeImpl({
             typeName,
@@ -233,8 +228,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             fernFilepath,
             getReferenceToSelf,
             xml,
-            isXmlRoot,
             useBigInt: this.useBigInt,
+            enableForwardCompatibleEnums: this.enableForwardCompatibleEnums,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,

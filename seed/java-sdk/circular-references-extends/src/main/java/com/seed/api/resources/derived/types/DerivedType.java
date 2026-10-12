@@ -99,7 +99,6 @@ public final class DerivedType implements IBaseType {
 
         private Optional<ChildType> childRef = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -134,6 +133,14 @@ public final class DerivedType implements IBaseType {
         @java.lang.Override
         public DerivedType build() {
             return new DerivedType(childRef, derivedName, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("child_ref") || key.equalsIgnoreCase("derived_name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

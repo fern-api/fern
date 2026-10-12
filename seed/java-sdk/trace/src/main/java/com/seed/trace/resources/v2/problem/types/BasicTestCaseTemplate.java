@@ -131,7 +131,6 @@ public final class BasicTestCaseTemplate {
 
         private String expectedValueParameterId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -178,6 +177,17 @@ public final class BasicTestCaseTemplate {
         public BasicTestCaseTemplate build() {
             return new BasicTestCaseTemplate(
                     templateId, name, description, expectedValueParameterId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("templateId")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("description")
+                    || key.equalsIgnoreCase("expectedValueParameterId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

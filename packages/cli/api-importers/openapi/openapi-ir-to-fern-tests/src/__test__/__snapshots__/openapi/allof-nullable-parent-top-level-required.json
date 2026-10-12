@@ -1,0 +1,217 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createPaymentSchedule": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "interval": "WEEKLY",
+                    "interval_execution_day": 1,
+                    "start_date": "2023-01-15",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/payment_initiation/payment/create",
+              "request": {
+                "body": {
+                  "properties": {
+                    "adjusted_start_date": "optional<nullable<date>>",
+                    "description": "optional<string>",
+                    "end_date": "optional<nullable<date>>",
+                    "interval": "PaymentScheduleInterval",
+                    "interval_execution_day": "integer",
+                    "start_date": "date",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "ExternalPaymentScheduleRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getPaymentSchedule": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "adjusted_start_date": "2023-01-15",
+                      "end_date": "2023-01-15",
+                      "interval": "WEEKLY",
+                      "interval_execution_day": 1,
+                      "start_date": "2023-01-15",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/payment_initiation/payment/get",
+              "response": {
+                "docs": "The payment schedule",
+                "status-code": 200,
+                "type": "nullable<ExternalPaymentScheduleGet>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ExternalPaymentScheduleBase": {
+            "docs": undefined,
+            "extra-properties": true,
+            "inline": undefined,
+            "properties": {
+              "adjusted_start_date": "optional<nullable<date>>",
+              "description": "optional<string>",
+              "end_date": "optional<nullable<date>>",
+              "interval": "optional<PaymentScheduleInterval>",
+              "interval_execution_day": "optional<integer>",
+              "start_date": "optional<date>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ExternalPaymentScheduleGet": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "adjusted_start_date": "nullable<date>",
+              "description": "optional<string>",
+              "end_date": "nullable<date>",
+              "interval": "PaymentScheduleInterval",
+              "interval_execution_day": "integer",
+              "start_date": "date",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PaymentScheduleInterval": {
+            "enum": [
+              "WEEKLY",
+              "MONTHLY",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getPaymentSchedule:
+      path: /payment_initiation/payment/get
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: The payment schedule
+        type: nullable<ExternalPaymentScheduleGet>
+        status-code: 200
+      examples:
+        - response:
+            body:
+              adjusted_start_date: '2023-01-15'
+              end_date: '2023-01-15'
+              interval: WEEKLY
+              interval_execution_day: 1
+              start_date: '2023-01-15'
+    createPaymentSchedule:
+      path: /payment_initiation/payment/create
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ExternalPaymentScheduleRequest
+        body:
+          properties:
+            start_date: date
+            interval: PaymentScheduleInterval
+            interval_execution_day: integer
+            end_date: optional<nullable<date>>
+            adjusted_start_date: optional<nullable<date>>
+            description: optional<string>
+        content-type: application/json
+      examples:
+        - request:
+            start_date: '2023-01-15'
+            interval: WEEKLY
+            interval_execution_day: 1
+  source:
+    openapi: ../openapi.yml
+types:
+  PaymentScheduleInterval:
+    enum:
+      - WEEKLY
+      - MONTHLY
+    source:
+      openapi: ../openapi.yml
+  ExternalPaymentScheduleBase:
+    properties:
+      interval: optional<PaymentScheduleInterval>
+      interval_execution_day: optional<integer>
+      start_date: optional<date>
+      end_date: optional<nullable<date>>
+      adjusted_start_date: optional<nullable<date>>
+      description: optional<string>
+    extra-properties: true
+    source:
+      openapi: ../openapi.yml
+  ExternalPaymentScheduleGet:
+    properties:
+      adjusted_start_date: nullable<date>
+      end_date: nullable<date>
+      interval: PaymentScheduleInterval
+      interval_execution_day: integer
+      start_date: date
+      description: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Payment Schedules",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Payment Schedules
+",
+  },
+  "specVersion": "1.0.0",
+}

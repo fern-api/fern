@@ -8,7 +8,8 @@ class ReqWithHeadersWireTest < WireMockTestCase
 
     @client = Seed::MyClient.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -32,6 +33,13 @@ class ReqWithHeadersWireTest < WireMockTestCase
       url_path: "/test-headers/custom-header",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/test-headers/custom-header",
+      expected_body: JSON.parse('"string"')
     )
   end
 end

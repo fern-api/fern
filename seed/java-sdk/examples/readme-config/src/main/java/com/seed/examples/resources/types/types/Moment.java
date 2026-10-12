@@ -110,7 +110,6 @@ public final class Moment {
 
         private OffsetDateTime datetime;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -147,6 +146,14 @@ public final class Moment {
         @java.lang.Override
         public Moment build() {
             return new Moment(id, date, datetime, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id") || key.equalsIgnoreCase("date") || key.equalsIgnoreCase("datetime")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -257,7 +257,8 @@
                     }
                 }
             },
-            "docs": null
+            "envVar": "ROOT_VARIABLE",
+            "docs": "Falls back to the ROOT_VARIABLE environment variable when not passed to the client."
         }
     ],
     "globalParameters": null,
@@ -478,6 +479,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

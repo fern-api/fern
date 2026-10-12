@@ -67,7 +67,6 @@ public final class ObjectWithMapOfMap {
     public static final class Builder {
         private Map<String, Map<String, String>> map = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class ObjectWithMapOfMap {
 
         public ObjectWithMapOfMap build() {
             return new ObjectWithMapOfMap(map, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("map")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

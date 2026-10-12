@@ -334,6 +334,54 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfIntegerToObject(request) -> map[int]*types.ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[int]*types.ObjectWithRequiredField{
+    1: &types.ObjectWithRequiredField{
+        FieldString: "string",
+    },
+}
+client.Endpoints.Container.GetAndReturnMapOfIntegerToObject(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `map[int]*types.ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Container.GetAndReturnOptional(request) -> *types.ObjectWithRequiredField</code></summary>
 <dl>
 <dd>

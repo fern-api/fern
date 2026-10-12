@@ -59,9 +59,10 @@ describe("WebhooksHelperGenerator", () => {
     describe("no-throw behavior", () => {
         it("returns false on missing required inputs rather than raising", () => {
             const body = render(hmacConfig());
-            expect(body).toContain(
-                "return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?"
-            );
+            expect(body).toContain("if signature_header.nil? || signature_header.empty?");
+            expect(body).toContain('warn("Webhook signature verification could not run: missing signature header")');
+            expect(body).toContain('warn("Webhook signature verification failed: signature mismatch") unless valid');
+            expect(body).toContain("return false if request_body.nil? || signature_key.nil? || signature_key.empty?");
             expect(body).not.toContain("raise");
         });
 
@@ -158,8 +159,7 @@ describe("WebhooksHelperGenerator", () => {
             // JSON path: signs the URL only and compares the recomputed body hash.
             expect(body).toContain("expected_body_hash = Internal::WebhookBodyHash.compute_hash(");
             expect(body).toContain(
-                "return false unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, " +
-                    "transmitted_body_hash)"
+                "unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, " + "transmitted_body_hash)"
             );
             expect(body).toContain("notification_url");
         });

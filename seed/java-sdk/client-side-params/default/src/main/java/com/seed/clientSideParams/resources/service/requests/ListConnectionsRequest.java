@@ -100,7 +100,6 @@ public final class ListConnectionsRequest {
 
         private Optional<String> fields = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -156,6 +155,14 @@ public final class ListConnectionsRequest {
 
         public ListConnectionsRequest build() {
             return new ListConnectionsRequest(strategy, name, fields, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("strategy") || key.equalsIgnoreCase("name") || key.equalsIgnoreCase("fields")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

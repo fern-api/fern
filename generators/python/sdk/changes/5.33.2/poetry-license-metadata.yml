@@ -1,0 +1,5 @@
+- summary: |
+    Also emit the SPDX `license` in `[tool.poetry]` alongside the PEP 639 `[project]` license. Poetry 1.x
+    (including the `poetry` version pinned in the generated publish workflow) ignores the `[project]`
+    table, so since 5.32.0 packages built with it were published to PyPI without any license metadata.
+  type: fix

@@ -2,7 +2,7 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": null,
+            "example_identifier": "WithNextPage",
             "id": {
                 "path": "/users/uri",
                 "method": "GET",
@@ -14,7 +14,31 @@
             }
         },
         {
-            "example_identifier": null,
+            "example_identifier": "WithoutNextPage",
+            "id": {
+                "path": "/users/uri",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithUriPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPaginationUriPath;\n\nvar client = new SeedPaginationUriPathClient(\"TOKEN\");\nawait client.Users.ListWithUriPaginationAsync();\n"
+            }
+        },
+        {
+            "example_identifier": "WithNextPage",
+            "id": {
+                "path": "/users/path",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithPathPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPaginationUriPath;\n\nvar client = new SeedPaginationUriPathClient(\"TOKEN\");\nawait client.Users.ListWithPathPaginationAsync();\n"
+            }
+        },
+        {
+            "example_identifier": "WithoutNextPage",
             "id": {
                 "path": "/users/path",
                 "method": "GET",
