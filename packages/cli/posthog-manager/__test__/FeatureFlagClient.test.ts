@@ -99,6 +99,35 @@ describe("PosthogFeatureFlagClient", () => {
         expect(flush).toHaveBeenCalledTimes(1);
     });
 
+    it("waits for in-flight flag checks before flushing their usage events", async () => {
+        const order: string[] = [];
+        let answer: (result: FlagResult) => void = () => undefined;
+        const getFeatureFlagResult = vi.fn(
+            () =>
+                new Promise<FlagResult>((resolve) => {
+                    answer = (result) => {
+                        order.push("evaluated");
+                        resolve(result);
+                    };
+                })
+        );
+        const flush = vi.fn(async (): Promise<void> => {
+            order.push("flushed");
+        });
+        const client = new PosthogFeatureFlagClient({
+            environment: "pre-prod",
+            sendFeatureFlagEvents: true,
+            evaluator: { getFeatureFlagResult, flush } satisfies FeatureFlagEvaluator
+        });
+
+        const evaluation = client.isEnabled("use-sdk-gen-api", { org: "acme" });
+        const flushed = client.flush();
+        answer(undefined);
+        await Promise.all([evaluation, flushed]);
+
+        expect(order).toEqual(["evaluated", "flushed"]);
+    });
+
     it("skips the flush when event telemetry is disabled", async () => {
         const { client, flush } = createClient();
 

@@ -18,6 +18,7 @@ export async function getPosthogManager(): Promise<PosthogManager> {
 async function createPosthogManager(): Promise<PosthogManager> {
     try {
         const posthogApiKey = process.env.POSTHOG_API_KEY;
+        // `isEventTelemetryEnabled` already rejects a missing key; the null check only narrows the type.
         if (posthogApiKey == null || !isEventTelemetryEnabled()) {
             return new NoopPosthogManager();
         }

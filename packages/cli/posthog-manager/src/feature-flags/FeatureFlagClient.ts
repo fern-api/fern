@@ -121,14 +121,26 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
         if (!this.sendFeatureFlagEvents) {
             return;
         }
+        let timeout: NodeJS.Timeout | undefined;
         try {
             await Promise.race([
-                this.evaluator.flush(),
-                new Promise<void>((resolve) => setTimeout(resolve, FLUSH_TIMEOUT_MS).unref())
+                this.flushAfterPendingEvaluations(),
+                new Promise<void>((resolve) => {
+                    timeout = setTimeout(resolve, FLUSH_TIMEOUT_MS);
+                    timeout.unref();
+                })
             ]);
         } catch {
             // Flag usage events are analytics only and must never block or fail the CLI.
+        } finally {
+            clearTimeout(timeout);
         }
+    }
+
+    /** In-flight checks queue their usage event only once PostHog answers, so wait for them first. */
+    private async flushAfterPendingEvaluations(): Promise<void> {
+        await Promise.allSettled(this.pending.values());
+        await this.evaluator.flush();
     }
 
     private async evaluate(flag: string, context: FeatureFlagContext): Promise<boolean> {
