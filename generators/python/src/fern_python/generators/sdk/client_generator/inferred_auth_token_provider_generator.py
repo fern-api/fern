@@ -114,8 +114,49 @@ class InferredAuthTokenProviderGenerator:
         )
         if has_expiry:
             class_declaration.add_method(self._get_expires_at_function_declaration())
+        if self._context.custom_config.refresh_auth_on_failed_permissions:
+            class_declaration.add_method(
+                self._get_invalidate_function_declaration(
+                    member_name=self._get_cached_headers_member_name(), is_async=is_async
+                )
+            )
 
         return class_declaration
+
+    def _get_invalidate_function_declaration(self, *, member_name: str, is_async: bool) -> AST.FunctionDeclaration:
+        def _write_invalidate_body(writer: AST.NodeWriter) -> None:
+            # Drop the cached headers only if the failed request sent them; otherwise another request already refreshed them.
+            keep_cached = (
+                f"failed_headers is not None and self.{member_name} is not None and any("
+                f"failed_headers.get(key) != value for key, value in self.{member_name}.items())"
+            )
+            if is_async:
+                # No await between the check and the reset, so this is atomic on the event loop.
+                writer.write_line(f"if not ({keep_cached}):")
+                with writer.indent():
+                    writer.write_line(f"self.{member_name} = None")
+                return
+            writer.write_line(f"with self.{self._get_lock_member_name()}:")
+            with writer.indent():
+                writer.write_line(f"if not ({keep_cached}):")
+                with writer.indent():
+                    writer.write_line(f"self.{member_name} = None")
+
+        return AST.FunctionDeclaration(
+            name="invalidate",
+            docstring=None,
+            signature=AST.FunctionSignature(
+                parameters=[
+                    AST.FunctionParameter(
+                        name="failed_headers",
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
+                        initializer=AST.Expression("None"),
+                    )
+                ],
+                return_type=AST.TypeHint.none(),
+            ),
+            body=AST.CodeWriter(_write_invalidate_body),
+        )
 
     def _get_constructor_parameters(
         self, *, credential_properties: List[CredentialProperty], is_async: bool
