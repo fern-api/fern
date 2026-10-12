@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { aggregateChunkAnalyses, resolveChangelogEntryFallback } from "../pipeline/steps/AutoVersionStep";
+import {
+    aggregateChunkAnalyses,
+    mergeMarkdownSections,
+    resolveChangelogEntryFallback
+} from "../pipeline/steps/AutoVersionStep";
 
 const TRAILER = "\n\n🌿 Generated with Fern";
 
@@ -118,5 +122,32 @@ describe("resolveChangelogEntryFallback", () => {
                 message: `feat: add bar${TRAILER}`
             })
         ).toBeUndefined();
+    });
+});
+
+describe("mergeMarkdownSections", () => {
+    it("folds chunks that share a heading under one header, in first-seen order", () => {
+        const merged = mergeMarkdownSections([
+            "### Breaking Changes\n\n- `A` removed",
+            "### Added\n\n- `B`\n\n### Breaking Changes\n\n- `C` removed\n- `D` removed",
+            "### breaking changes\n\n- `E` removed"
+        ]);
+        expect(merged).toBe(
+            "### Breaking Changes\n\n- `A` removed\n- `C` removed\n- `D` removed\n- `E` removed\n\n### Added\n\n- `B`"
+        );
+    });
+
+    it("keeps different heading levels separate and ignores headings inside code fences", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n```ts\n# not a heading\nclient.a()\n```",
+            "### Breaking Changes\n\n- x"
+        ]);
+        expect(merged).toBe(
+            "## Breaking Changes\n\n```ts\n# not a heading\nclient.a()\n```\n\n### Breaking Changes\n\n- x"
+        );
+    });
+
+    it("leaves heading-less entries joined by blank lines", () => {
+        expect(mergeMarkdownSections(["- one", "- two"])).toBe("- one\n\n- two");
     });
 });

@@ -1132,8 +1132,8 @@ export class AutoVersionStep extends BaseStep {
             analysis: {
                 versionBump: bestBump,
                 message: bestMessage,
-                changelogEntry: changelogEntries.length > 0 ? changelogEntries.join("\n\n") : undefined,
-                prDescription: prDescriptions.length > 0 ? prDescriptions.join("\n\n") : undefined,
+                changelogEntry: changelogEntries.length > 0 ? mergeMarkdownSections(changelogEntries) : undefined,
+                prDescription: prDescriptions.length > 0 ? mergeMarkdownSections(prDescriptions) : undefined,
                 versionBumpReason: bestVersionBumpReason
             },
             analysisWarning
@@ -1286,6 +1286,57 @@ export function aggregateChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): Aggregat
     }
 
     return { bestBump, bestMessage, bestVersionBumpReason, changelogEntries, usedBumpReasonAsEntry };
+}
+
+const MARKDOWN_HEADING = /^(#{1,6})\s+(.+?)\s*#*\s*$/;
+const MARKDOWN_FENCE = /^\s*(```|~~~)/;
+
+/**
+ * Joins per-chunk markdown (changelog entries / PR descriptions) into one document, folding
+ * sections that share a heading (same level and text, case-insensitive) under a single header
+ * so a multi-chunk analysis reads as one `### Breaking Changes` list instead of one per chunk.
+ * Headings inside fenced code blocks are ignored. Text before a chunk's first heading is kept as-is,
+ * in chunk order, ahead of the merged sections; section order follows first appearance.
+ */
+export function mergeMarkdownSections(texts: string[]): string {
+    const preamble: string[] = [];
+    const sections = new Map<string, { heading: string; bodies: string[] }>();
+    for (const text of texts) {
+        let current: { heading: string } | undefined;
+        let fence: string | undefined;
+        const lines: string[] = [];
+        const flush = () => {
+            const body = lines.join("\n").trim();
+            lines.length = 0;
+            if (body.length === 0) {
+                return;
+            }
+            if (current == null) {
+                preamble.push(body);
+                return;
+            }
+            const key = current.heading.toLowerCase().replace(/\s+/g, " ");
+            const section = sections.get(key) ?? { heading: current.heading, bodies: [] };
+            section.bodies.push(body);
+            sections.set(key, section);
+        };
+        for (const line of text.trim().split("\n")) {
+            const fenceMatch = MARKDOWN_FENCE.exec(line);
+            if (fenceMatch != null) {
+                const marker = fenceMatch[1];
+                fence = fence == null ? marker : fence === marker ? undefined : fence;
+            }
+            const heading = fence == null ? MARKDOWN_HEADING.exec(line) : null;
+            if (heading != null) {
+                flush();
+                current = { heading: `${heading[1]} ${heading[2]?.trim()}` };
+                continue;
+            }
+            lines.push(line);
+        }
+        flush();
+    }
+    return [...preamble, ...[...sections.values()].map((s) => `${s.heading}\n\n${s.bodies.join("\n")}`)].join("\n\n");
 }
 
 function hasText(value: string | undefined): value is string {
