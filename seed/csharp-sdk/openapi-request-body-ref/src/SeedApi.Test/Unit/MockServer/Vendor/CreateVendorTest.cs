@@ -10,57 +10,7 @@ namespace SeedApi.Test.Unit.MockServer.Vendor;
 public class CreateVendorTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string requestJson = """
-            {
-              "name": "name",
-              "address": "address"
-            }
-            """;
-
-        const string mockResponse = """
-            {
-              "id": "id",
-              "name": "name",
-              "status": "ACTIVE",
-              "update_request": {
-                "name": "name",
-                "status": "ACTIVE"
-              }
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/vendors")
-                    .WithHeader("idempotency_key", "idempotencyKey")
-                    .WithHeader("Content-Type", "application/json")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Vendor.CreateVendorAsync(
-            new CreateVendorRequest
-            {
-                IdempotencyKey = "idempotencyKey",
-                Name = "name",
-                Address = "address",
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

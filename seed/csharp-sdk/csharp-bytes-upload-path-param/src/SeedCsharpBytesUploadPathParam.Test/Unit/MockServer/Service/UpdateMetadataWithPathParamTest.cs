@@ -15,31 +15,6 @@ public class UpdateMetadataWithPathParamTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/upload-content/tenantId/objectPath/metadata")
-                    .WithParam("label", "label")
-                    .UsingPost()
-            )
-            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
-
-        Assert.DoesNotThrowAsync(async () =>
-            await Client.Service.UpdateMetadataWithPathParamAsync(
-                new UpdateMetadataRequest
-                {
-                    TenantId = "tenantId",
-                    ObjectPath = "objectPath",
-                    Label = "label",
-                }
-            )
-        );
-    }
-
-    [NUnit.Framework.Test]
-    public void MockServerTest_2()
-    {
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
                     .WithPath("/upload-content/acme/path/to/object.txt/metadata")
                     .WithParam("label", "primary")
                     .UsingPost()
@@ -59,7 +34,7 @@ public class UpdateMetadataWithPathParamTest : BaseMockServerTest
     }
 
     [NUnit.Framework.Test]
-    public void MockServerTest_3()
+    public void MockServerTest_2()
     {
         Server
             .Given(

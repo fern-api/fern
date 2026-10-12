@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedBasicAuth;
 using SeedBasicAuth.Test.Unit.MockServer;
 using SeedBasicAuth.Test.Utils;
 
@@ -9,7 +10,7 @@ namespace SeedBasicAuth.Test.Unit.MockServer.BasicAuth;
 public class GetWithBasicAuthTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             true
@@ -29,10 +30,12 @@ public class GetWithBasicAuthTest : BaseMockServerTest
     }
 
     [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public void MockServerTest_ThrowsUnauthorizedRequest()
     {
         const string mockResponse = """
-            true
+            {
+              "message": "message"
+            }
             """;
 
         Server
@@ -40,11 +43,14 @@ public class GetWithBasicAuthTest : BaseMockServerTest
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
+                    .WithStatusCode(401)
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.BasicAuth.GetWithBasicAuthAsync();
-        JsonAssert.AreEqual(response, mockResponse);
+        var exception = Assert.ThrowsAsync<UnauthorizedRequest>(async () =>
+            await Client.BasicAuth.GetWithBasicAuthAsync()
+        )!;
+        Assert.That(exception.StatusCode, Is.EqualTo(401));
+        JsonAssert.AreEqual(exception.Body, mockResponse);
     }
 }

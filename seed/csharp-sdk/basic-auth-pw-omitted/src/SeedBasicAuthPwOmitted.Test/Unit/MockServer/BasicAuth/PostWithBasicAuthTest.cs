@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedBasicAuthPwOmitted;
 using SeedBasicAuthPwOmitted.Test.Unit.MockServer;
 using SeedBasicAuthPwOmitted.Test.Utils;
 
@@ -9,7 +10,7 @@ namespace SeedBasicAuthPwOmitted.Test.Unit.MockServer.BasicAuth;
 public class PostWithBasicAuthTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -43,7 +44,7 @@ public class PostWithBasicAuthTest : BaseMockServerTest
     }
 
     [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public void MockServerTest_ThrowsUnauthorizedRequest()
     {
         const string requestJson = """
             {
@@ -52,7 +53,9 @@ public class PostWithBasicAuthTest : BaseMockServerTest
             """;
 
         const string mockResponse = """
-            true
+            {
+              "message": "message"
+            }
             """;
 
         Server
@@ -66,13 +69,45 @@ public class PostWithBasicAuthTest : BaseMockServerTest
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
+                    .WithStatusCode(401)
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.BasicAuth.PostWithBasicAuthAsync(
-            new Dictionary<object, object?>() { { "key", "value" } }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
+        var exception = Assert.ThrowsAsync<UnauthorizedRequest>(async () =>
+            await Client.BasicAuth.PostWithBasicAuthAsync(
+                new Dictionary<object, object?>() { { "key", "value" } }
+            )
+        )!;
+        Assert.That(exception.StatusCode, Is.EqualTo(401));
+        JsonAssert.AreEqual(exception.Body, mockResponse);
+    }
+
+    [NUnit.Framework.Test]
+    public void MockServerTest_ThrowsBadRequest()
+    {
+        const string requestJson = """
+            {
+              "key": "value"
+            }
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/basic-auth")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(
+                WireMock.ResponseBuilders.Response.Create().WithStatusCode(400).WithBody("{}")
+            );
+
+        var exception = Assert.ThrowsAsync<BadRequest>(async () =>
+            await Client.BasicAuth.PostWithBasicAuthAsync(
+                new Dictionary<object, object?>() { { "key", "value" } }
+            )
+        )!;
+        Assert.That(exception.StatusCode, Is.EqualTo(400));
     }
 }
