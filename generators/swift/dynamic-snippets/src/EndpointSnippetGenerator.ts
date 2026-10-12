@@ -192,15 +192,10 @@ export class EndpointSnippetGenerator {
             return null;
         }
         if (snippet.baseURL != null) {
-            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
-                // TODO(kafkas): Not implemented yet
-                return null;
-            } else {
-                return swift.functionArgument({
-                    label: "baseURL",
-                    value: swift.Expression.escapedStringLiteral(snippet.baseURL)
-                });
-            }
+            return swift.functionArgument({
+                label: "baseURL",
+                value: swift.Expression.escapedStringLiteral(snippet.baseURL)
+            });
         }
         return null;
     }
