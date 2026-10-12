@@ -443,7 +443,12 @@ export async function assertGeneratorProducedOutput({
     generatorName: string;
     absolutePathToTmpOutputDirectory: AbsoluteFilePath;
 }): Promise<void> {
-    const entries = await readdir(absolutePathToTmpOutputDirectory).catch(() => []);
+    const entries = await readdir(absolutePathToTmpOutputDirectory).catch((error: unknown) => {
+        if (isEnoentError(error)) {
+            return [];
+        }
+        throw error;
+    });
     if (entries.length === 0) {
         throw new CliError({
             message:
@@ -452,4 +457,8 @@ export async function assertGeneratorProducedOutput({
             code: CliError.Code.ContainerError
         });
     }
+}
+
+function isEnoentError(error: unknown): boolean {
+    return error instanceof Error && "code" in error && error.code === "ENOENT";
 }
