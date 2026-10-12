@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Auto-versioned runs no longer write a version-only `## [x.y.z]` block to `changelog.md`
+    when the AI analysis returns an empty changelog entry (for example, a PATCH with no
+    consumer-visible effect). Explicit `--version X.Y.Z` runs still record a version-only block.
+  type: fix

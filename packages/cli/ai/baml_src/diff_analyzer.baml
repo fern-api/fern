@@ -17,7 +17,7 @@ class AnalyzeCommitDiffResponse {
         @description("Developer-facing git commit message. Use conventional commit format. Reference specific code symbols (function names, class names). Keep summary under 72 chars.")
 
     changelog_entry string
-        @description("User-facing release note in Keep a Changelog format. Group under ### Breaking Changes, ### Added, ### Changed, ### Fixed section headers. Bold symbol names, one tight sentence per bullet. Prose only, no code fences. Append migration action inline for breaking changes. Empty string for PATCH.")
+        @description("User-facing release note in Keep a Changelog format. Group under ### Breaking Changes, ### Added, ### Changed, ### Fixed section headers. Bold symbol names, one tight sentence per bullet. Prose only, no code fences. Append migration action inline for breaking changes. For PATCH, a short ### Fixed or ### Changed entry describing the consumer-visible effect. Empty string only for NO_CHANGE or PATCH diffs with no consumer-visible effect.")
 
     version_bump VersionBump
         @description("The recommended semantic version bump: MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes and other changes, NO_CHANGE for empty diffs")
@@ -627,7 +627,7 @@ function AnalyzeSdkDiff(
       - MAJOR changes go under ### Breaking Changes
       - MINOR additions go under ### Added
       - MINOR behavioral changes go under ### Changed
-      - PATCH fixes go under ### Fixed (or empty string if trivial)
+      - PATCH fixes go under ### Fixed; PATCH improvements that are not bug fixes go under ### Changed
     - **Breaking Changes** section MUST come first when present
     - Bold the symbol name, then a dash, then one tight sentence
     - No code fences in the changelog — prose and backtick-wrapped symbols only
@@ -643,7 +643,10 @@ function AnalyzeSdkDiff(
       or fields were removed, each *category* must appear — but you don't need to list every individual value.
       GOOD: "- **New enum values** added across several types including `ProviderType` and `OrderStatus`."
       BAD:  listing every enum value
-    - PATCH: leave empty string — patch changes don't warrant changelog entries
+    - PATCH: write a short entry (usually 1-3 bullets) describing the effect SDK consumers will notice.
+      Many PATCH releases come from SDK generator fixes, so describe what now behaves correctly, e.g.
+      "- **Multipart uploads** no longer drop the filename when a `Blob` is passed."
+      Use an empty string only when the diff has no consumer-visible effect (formatting, comments, import ordering)
     - Do not use conventional commit prefixes (no "feat:", "fix:", etc.)
     - Write in third person present tense
     - Prefer fewer, richer entries over many thin ones. Aim for 3-5 entries per chunk by grouping related changes.
@@ -654,7 +657,7 @@ function AnalyzeSdkDiff(
 
     Remember again that YOU MUST return a structured JSON response with these four fields:
     - message: A git commit message formatted like the example previously provided
-    - changelog_entry: A user-facing release note (empty string for PATCH)
+    - changelog_entry: A user-facing release note (empty string only for NO_CHANGE or PATCH diffs with no consumer-visible effect)
     - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
     - version_bump_reason: One sentence explaining WHY this bump level was chosen.
       For MAJOR, name the specific breaking symbol(s) and explain why existing callers break.

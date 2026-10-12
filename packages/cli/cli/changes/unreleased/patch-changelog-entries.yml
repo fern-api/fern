@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    AUTO versioning now writes changelog entries for PATCH bumps. The local AI prompt asks
+    for a short `### Fixed` or `### Changed` entry describing the consumer-visible effect of a
+    patch (for example, a generator fix), and only returns an empty entry when the diff has no
+    consumer-visible effect.
+  type: fix
