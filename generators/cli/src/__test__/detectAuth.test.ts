@@ -30,11 +30,16 @@ const bearer = (overrides: { key: string; tokenEnvVar?: string }): FernIr.AuthSc
         docs: undefined
     });
 
-const header = (overrides: { key: string; headerName?: string; headerEnvVar?: string }): FernIr.AuthScheme =>
+const header = (overrides: {
+    key: string;
+    headerName?: string;
+    headerEnvVar?: string;
+    prefix?: string;
+}): FernIr.AuthScheme =>
     FernIr.AuthScheme.header({
         key: overrides.key,
         name: overrides.headerName ?? "X-Api-Key",
-        prefix: undefined,
+        prefix: overrides.prefix,
         headerEnvVar: overrides.headerEnvVar,
         headerPlaceholder: undefined,
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
@@ -107,6 +112,43 @@ describe("detectAuthBindings", () => {
         expect(bindings[0]?.rustCall).toBe(
             '.auth(ApiKeyAuth::new("ApiKey").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("CLOSE_API_KEY")])))'
         );
+    });
+
+    it("header scheme with a prefix registers it on the ApiKeyAuth builder", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(header({ key: "apiKey", headerEnvVar: "API_KEY_VALUE", prefix: "Key" })),
+            binaryName: "close"
+        });
+        expect(bindings[0]?.rustCall).toBe(
+            '.auth(ApiKeyAuth::new("apiKey").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("API_KEY_VALUE")])).prefix("Key"))'
+        );
+        expect(bindings[0]?.envVars).toEqual(["API_KEY_VALUE"]);
+        expect(bindings[0]?.headerAuth).toEqual({ headerName: "X-Api-Key", prefix: "Key" });
+    });
+
+    it("header scheme prefix is trimmed, and a blank prefix sends the raw credential", () => {
+        const [padded, blank, absent] = detectAuthBindings({
+            auth: auth(
+                header({ key: "A", headerName: "X-A", prefix: " Token " }),
+                header({ key: "B", headerName: "X-B", prefix: "  " }),
+                header({ key: "C", headerName: "X-C" })
+            ),
+            binaryName: "close"
+        });
+        expect(padded?.rustCall).toContain(')).prefix("Token"))');
+        expect(padded?.headerAuth).toEqual({ headerName: "X-A", prefix: "Token" });
+        for (const binding of [blank, absent]) {
+            expect(binding?.rustCall).not.toContain(".prefix(");
+            expect(binding?.headerAuth?.prefix).toBeNull();
+        }
+    });
+
+    it("header scheme prefix is emitted as an escaped Rust string literal", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(header({ key: "apiKey", prefix: 'Key"x' })),
+            binaryName: "close"
+        });
+        expect(binding?.rustCall).toContain('.prefix("Key\\"x"))');
     });
 
     it("multiple header schemes disambiguate the CLI flag from each key", () => {

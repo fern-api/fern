@@ -28,7 +28,7 @@
       "headerMatchers": [
         {
           "name": "x-api-key",
-          "matches": ".+"
+          "equalTo": "test"
         }
       ],
       "requiresAuth": true,
@@ -61,7 +61,7 @@
       "headerMatchers": [
         {
           "name": "x-api-key",
-          "matches": ".+"
+          "equalTo": "test"
         }
       ],
       "requiresAuth": true,

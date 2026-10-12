@@ -42,6 +42,14 @@ pub enum AuthStrategy {
 pub enum SchemeBinding {
     /// Single-value source — bearer / apiKey / oauth2 schemes.
     Token(AuthCredentialSource),
+    /// Single-value source sent as `<prefix> <value>`, e.g. an apiKey scheme
+    /// configured with `prefix: Key` → `X-Api-Key: Key <value>`. The prefix
+    /// replaces the `Bearer ` a [`Token`](Self::Token) would get when the
+    /// scheme lowers to the `Authorization` header.
+    PrefixedToken {
+        source: AuthCredentialSource,
+        prefix: String,
+    },
     /// Two-value source — http basic. Both must resolve for the provider
     /// to claim credentials.
     Basic {
@@ -58,6 +66,11 @@ impl std::fmt::Debug for SchemeBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             SchemeBinding::Token(s) => f.debug_tuple("Token").field(s).finish(),
+            SchemeBinding::PrefixedToken { source, prefix } => f
+                .debug_struct("PrefixedToken")
+                .field("source", source)
+                .field("prefix", prefix)
+                .finish(),
             SchemeBinding::Basic { .. } => f.write_str("Basic { .. }"),
             SchemeBinding::Custom(p) => write!(f, "Custom({})", p.name()),
         }
@@ -71,7 +84,9 @@ impl SchemeBinding {
     /// (the user owns the provider) so they contribute nothing here.
     pub fn cli_args(&self) -> Vec<&str> {
         match self {
-            SchemeBinding::Token(src) => src.cli_args(),
+            SchemeBinding::Token(src) | SchemeBinding::PrefixedToken { source: src, .. } => {
+                src.cli_args()
+            }
             SchemeBinding::Basic { username, password } => {
                 let mut out = username.cli_args();
                 out.extend(password.cli_args());
@@ -88,6 +103,10 @@ impl SchemeBinding {
     pub fn finalize(self, matches: &Arc<clap::ArgMatches>) -> Self {
         match self {
             SchemeBinding::Token(src) => SchemeBinding::Token(src.finalize(matches)),
+            SchemeBinding::PrefixedToken { source, prefix } => SchemeBinding::PrefixedToken {
+                source: source.finalize(matches),
+                prefix,
+            },
             SchemeBinding::Basic { username, password } => SchemeBinding::Basic {
                 username: username.finalize(matches),
                 password: password.finalize(matches),
@@ -167,7 +186,9 @@ pub fn render_auth_layers_help(layers: &[(String, Vec<String>)]) -> Option<Strin
 
 fn describe_binding_sources(binding: &SchemeBinding) -> String {
     match binding {
-        SchemeBinding::Token(src) => describe_credential_source(src),
+        SchemeBinding::Token(src) | SchemeBinding::PrefixedToken { source: src, .. } => {
+            describe_credential_source(src)
+        }
         SchemeBinding::Basic { username, password } => {
             format!(
                 "basic auth · username: {} · password: {}",
@@ -264,43 +285,10 @@ fn provider_for_binding(
     use crate::openapi::discovery::SecurityScheme as S;
     match binding {
         SchemeBinding::Custom(p) => Some(p.clone()),
-        SchemeBinding::Token(source) => match declared {
-            // Bearer/OAuth2 → standard Authorization: Bearer <token>.
-            // Undeclared schemes default to bearer (legacy parity).
-            Some(S::HttpBearer) | Some(S::OAuth2) | None => Some(Arc::new(
-                BearerAuthProvider::new(scheme_name, source.clone()),
-            )),
-            Some(S::ApiKeyHeader { name }) => Some(Arc::new(HeaderAuthProvider::new(
-                scheme_name,
-                name,
-                source.clone(),
-                false,
-            ))),
-            Some(S::ApiKeyQuery { .. }) => {
-                tracing::warn!(
-                    scheme = scheme_name,
-                    "auth_scheme: apiKey-in-query schemes are not yet supported; binding ignored",
-                );
-                None
-            }
-            Some(S::HttpBasic) => {
-                tracing::warn!(
-                    scheme = scheme_name,
-                    "auth_scheme: scheme is HTTP Basic but a single-value Token binding was supplied; \
-                     use auth_basic_scheme instead",
-                );
-                None
-            }
-            Some(S::Other(kind)) => {
-                tracing::warn!(
-                    scheme = scheme_name,
-                    kind = kind,
-                    "auth_scheme: unsupported scheme type; bind via auth_provider with a custom \
-                     provider instead",
-                );
-                None
-            }
-        },
+        SchemeBinding::Token(source) => token_provider(scheme_name, source, None, declared),
+        SchemeBinding::PrefixedToken { source, prefix } => {
+            token_provider(scheme_name, source, Some(prefix), declared)
+        }
         SchemeBinding::Basic { username, password } => match declared {
             Some(S::HttpBasic) | None => Some(Arc::new(BasicAuthProvider::new(
                 scheme_name,
@@ -315,6 +303,69 @@ fn provider_for_binding(
                 None
             }
         },
+    }
+}
+
+/// Lower a single-value binding. `prefix` is a configured header-value
+/// prefix: it is applied verbatim on an apiKey header, and on the
+/// `Authorization` header it takes the place of the default `Bearer `, so a
+/// request never carries two prefixes.
+fn token_provider(
+    scheme_name: &str,
+    source: &AuthCredentialSource,
+    prefix: Option<&str>,
+    declared: Option<&crate::openapi::discovery::SecurityScheme>,
+) -> Option<DynAuthProvider> {
+    use crate::openapi::discovery::SecurityScheme as S;
+    match declared {
+        // Bearer/OAuth2 → standard Authorization: Bearer <token>.
+        // Undeclared schemes default to bearer (legacy parity).
+        Some(S::HttpBearer) | Some(S::OAuth2) | None => match prefix {
+            None => Some(Arc::new(BearerAuthProvider::new(
+                scheme_name,
+                source.clone(),
+            ))),
+            Some(prefix) => Some(Arc::new(
+                HeaderAuthProvider::new(
+                    scheme_name,
+                    reqwest::header::AUTHORIZATION.as_str(),
+                    source.clone(),
+                    false,
+                )
+                .with_prefix(prefix),
+            )),
+        },
+        Some(S::ApiKeyHeader { name }) => {
+            let provider = HeaderAuthProvider::new(scheme_name, name, source.clone(), false);
+            Some(Arc::new(match prefix {
+                Some(prefix) => provider.with_prefix(prefix),
+                None => provider,
+            }))
+        }
+        Some(S::ApiKeyQuery { .. }) => {
+            tracing::warn!(
+                scheme = scheme_name,
+                "auth_scheme: apiKey-in-query schemes are not yet supported; binding ignored",
+            );
+            None
+        }
+        Some(S::HttpBasic) => {
+            tracing::warn!(
+                scheme = scheme_name,
+                "auth_scheme: scheme is HTTP Basic but a single-value Token binding was supplied; \
+                 use auth_basic_scheme instead",
+            );
+            None
+        }
+        Some(S::Other(kind)) => {
+            tracing::warn!(
+                scheme = scheme_name,
+                kind = kind,
+                "auth_scheme: unsupported scheme type; bind via auth_provider with a custom \
+                 provider instead",
+            );
+            None
+        }
     }
 }
 
@@ -531,6 +582,118 @@ mod tests {
         let p = build_provider_from_doc(&doc, &bindings);
         let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-api-key").as_deref(), Some("k"));
+    }
+
+    fn x_api_key_doc() -> crate::openapi::discovery::RestDescription {
+        doc_with_schemes(&[(
+            "apiKey",
+            crate::openapi::discovery::SecurityScheme::ApiKeyHeader {
+                name: "X-Api-Key".to_string(),
+            },
+        )])
+    }
+
+    fn api_key_matches(value: Option<&str>) -> Arc<clap::ArgMatches> {
+        let cmd = clap::Command::new("t")
+            .arg(clap::Arg::new("api-key").long("api-key").num_args(1));
+        let mut argv = vec!["t".to_string()];
+        if let Some(v) = value {
+            argv.extend(["--api-key".to_string(), v.to_string()]);
+        }
+        Arc::new(cmd.try_get_matches_from(argv).unwrap())
+    }
+
+    /// Mirrors the generated `main.rs` registration and `CliApp`'s keyring
+    /// injection + post-parse finalization, then reports the `X-Api-Key`
+    /// header the lowered provider sends.
+    fn prefixed_api_key_header(source: AuthCredentialSource, flag: Option<&str>) -> Option<String> {
+        use crate::auth::root_builder::{ApiKeyAuth, AuthSchemeBuilder};
+        let mut bindings = vec![ApiKeyAuth::new("apiKey")
+            .source(source)
+            .prefix("Key")
+            .into_binding()];
+        crate::auth::login::inject_keyring_sources("gen3-cli", &mut bindings);
+        let bindings = finalize_bindings(bindings, &api_key_matches(flag));
+        let p = build_provider_from_doc(&x_api_key_doc(), &bindings);
+        header(
+            p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap(),
+            "x-api-key",
+        )
+    }
+
+    fn flag_then_env_source() -> AuthCredentialSource {
+        AuthCredentialSource::any(vec![
+            AuthCredentialSource::cli("api-key"),
+            AuthCredentialSource::from_env("GEN3_PREFIX_API_KEY"),
+        ])
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn prefixed_api_key_applies_prefix_once_for_every_credential_source() {
+        let mut guard = crate::auth::test_helpers::GlobalAuthStateGuard::new();
+        guard.install_keyring("gen3-cli", "apiKey", "keyring-key");
+
+        assert_eq!(
+            prefixed_api_key_header(AuthCredentialSource::literal("literal-key"), None).as_deref(),
+            Some("Key literal-key"),
+        );
+        assert_eq!(
+            prefixed_api_key_header(flag_then_env_source(), None).as_deref(),
+            Some("Key keyring-key"),
+        );
+        guard.set_env("GEN3_PREFIX_API_KEY", "env-key");
+        assert_eq!(
+            prefixed_api_key_header(flag_then_env_source(), None).as_deref(),
+            Some("Key env-key"),
+        );
+        assert_eq!(
+            prefixed_api_key_header(flag_then_env_source(), Some("flag-key")).as_deref(),
+            Some("Key flag-key"),
+        );
+    }
+
+    #[tokio::test]
+    async fn prefixed_token_on_undeclared_scheme_replaces_bearer_prefix() {
+        let bindings = vec![(
+            "apiKey".to_string(),
+            SchemeBinding::PrefixedToken {
+                source: AuthCredentialSource::literal("k"),
+                prefix: "Key".to_string(),
+            },
+        )];
+        let p = build_provider_from_bindings(&bindings, &HashMap::new(), false);
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        assert_eq!(auth_header(r).as_deref(), Some("Key k"));
+    }
+
+    #[test]
+    fn prefixed_token_for_basic_scheme_is_skipped() {
+        let doc = doc_with_schemes(&[(
+            "basic",
+            crate::openapi::discovery::SecurityScheme::HttpBasic,
+        )]);
+        let bindings = vec![(
+            "basic".to_string(),
+            SchemeBinding::PrefixedToken {
+                source: AuthCredentialSource::literal("k"),
+                prefix: "Key".to_string(),
+            },
+        )];
+        assert!(!build_provider_from_doc(&doc, &bindings).has_credentials());
+    }
+
+    #[test]
+    fn render_auth_help_section_describes_prefixed_token_sources() {
+        let bindings = vec![(
+            "apiKey".to_string(),
+            SchemeBinding::PrefixedToken {
+                source: flag_then_env_source(),
+                prefix: "Key".to_string(),
+            },
+        )];
+        let out = render_auth_help_section(&bindings).unwrap();
+        assert!(out.contains("--api-key flag / GEN3_PREFIX_API_KEY env var"), "{out}");
     }
 
     #[tokio::test]
