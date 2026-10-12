@@ -1,0 +1,119 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "string",
+      "enum": [
+        "heartbeat",
+        "entity",
+        "object_data"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event": {
+          "const": "heartbeat"
+        },
+        "timestamp": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "event"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "entity"
+        },
+        "entityId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eventType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/EntityEventPayloadEventType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedTime": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "event"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "object_data"
+        },
+        "data": {
+          "$ref": "#/definitions/StatusPayload"
+        }
+      },
+      "required": [
+        "event",
+        "data"
+      ]
+    }
+  ],
+  "definitions": {
+    "EntityEventPayloadEventType": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "UPDATED",
+        "DELETED",
+        "PREEXISTING"
+      ]
+    },
+    "StatusPayload": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "message",
+        "timestamp"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

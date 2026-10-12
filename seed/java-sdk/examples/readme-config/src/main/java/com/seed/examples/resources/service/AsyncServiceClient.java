@@ -5,6 +5,7 @@ package com.seed.examples.resources.service;
 
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.RequestOptions;
+import com.seed.examples.core.SeedExamplesHttpResponse;
 import com.seed.examples.resources.service.requests.GetMetadataRequest;
 import com.seed.examples.resources.types.types.BigEntity;
 import com.seed.examples.resources.types.types.Metadata;
@@ -32,58 +33,161 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Movie> getMovie(String movieId) {
-        return this.rawClient.getMovie(movieId).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Movie>> rawFuture = this.rawClient.getMovie(movieId);
+        CompletableFuture<Movie> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Movie> getMovie(String movieId, RequestOptions requestOptions) {
-        return this.rawClient.getMovie(movieId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Movie>> rawFuture = this.rawClient.getMovie(movieId, requestOptions);
+        CompletableFuture<Movie> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createMovie(Movie request) {
-        return this.rawClient.createMovie(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<String>> rawFuture = this.rawClient.createMovie(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createMovie(Movie request, RequestOptions requestOptions) {
-        return this.rawClient.createMovie(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<String>> rawFuture =
+                this.rawClient.createMovie(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Metadata> getMetadata(GetMetadataRequest request) {
-        return this.rawClient.getMetadata(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Metadata>> rawFuture = this.rawClient.getMetadata(request);
+        CompletableFuture<Metadata> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Metadata> getMetadata(GetMetadataRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getMetadata(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Metadata>> rawFuture =
+                this.rawClient.getMetadata(request, requestOptions);
+        CompletableFuture<Metadata> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Response> createBigEntity() {
-        return this.rawClient.createBigEntity().thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Response>> rawFuture = this.rawClient.createBigEntity();
+        CompletableFuture<Response> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Response> createBigEntity(RequestOptions requestOptions) {
-        return this.rawClient.createBigEntity(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Response>> rawFuture =
+                this.rawClient.createBigEntity(requestOptions);
+        CompletableFuture<Response> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Response> createBigEntity(BigEntity request) {
-        return this.rawClient.createBigEntity(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Response>> rawFuture = this.rawClient.createBigEntity(request);
+        CompletableFuture<Response> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Response> createBigEntity(BigEntity request, RequestOptions requestOptions) {
-        return this.rawClient.createBigEntity(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Response>> rawFuture =
+                this.rawClient.createBigEntity(request, requestOptions);
+        CompletableFuture<Response> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> refreshToken() {
-        return this.rawClient.refreshToken().thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Void>> rawFuture = this.rawClient.refreshToken();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> refreshToken(RequestOptions requestOptions) {
-        return this.rawClient.refreshToken(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Void>> rawFuture = this.rawClient.refreshToken(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> refreshToken(Optional<RefreshTokenRequest> request) {
-        return this.rawClient.refreshToken(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Void>> rawFuture = this.rawClient.refreshToken(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> refreshToken(Optional<RefreshTokenRequest> request, RequestOptions requestOptions) {
-        return this.rawClient.refreshToken(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Void>> rawFuture =
+                this.rawClient.refreshToken(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

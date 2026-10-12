@@ -195,7 +195,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**temperature:** `Integer` 
+**temperature:** `Float` 
     
 </dd>
 </dl>

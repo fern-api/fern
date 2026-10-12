@@ -38,10 +38,12 @@ func (c *Circle) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Circle) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetRadius sets the Radius field and marks it as non-optional;
@@ -122,10 +124,12 @@ func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetShapeRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -352,10 +356,12 @@ func (s *Square) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *Square) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetLength sets the Length field and marks it as non-optional;
@@ -436,10 +442,12 @@ func (w *WithName) GetExtraProperties() map[string]interface{} {
 }
 
 func (w *WithName) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

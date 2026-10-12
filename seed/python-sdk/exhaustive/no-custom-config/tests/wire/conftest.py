@@ -46,12 +46,14 @@ def get_client(test_id: str) -> SeedExhaustive:
         return SeedExhaustive(
             base_url=base_url,
             headers=test_headers,
+            max_retries=0,
             token="test_token",
         )
 
     return SeedExhaustive(
         base_url=base_url,
         httpx_client=httpx.Client(headers=test_headers),
+        max_retries=0,
         token="test_token",
     )
 

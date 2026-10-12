@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Enum-typed attributes and text on XML (TwiML) types are open on the wire: `FromXml` keeps a value the enum does
+    not declare (e.g. a voice added after the SDK was generated) instead of returning an error, and it round-trips
+    through `ToXml`. This matches how the same enums already behave in JSON.
+  type: fix

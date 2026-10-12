@@ -5,6 +5,7 @@ package com.seed.undiscriminatedUnions.resources.union;
 
 import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
+import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsHttpResponse;
 import com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;
 import com.seed.undiscriminatedUnions.resources.union.types.AliasedObjectUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
@@ -36,92 +37,265 @@ public class AsyncUnionClient {
     }
 
     public CompletableFuture<MyUnion> get(MyUnion request) {
-        return this.rawClient.get(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<MyUnion>> rawFuture = this.rawClient.get(request);
+        CompletableFuture<MyUnion> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<MyUnion> get(MyUnion request, RequestOptions requestOptions) {
-        return this.rawClient.get(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<MyUnion>> rawFuture =
+                this.rawClient.get(request, requestOptions);
+        CompletableFuture<MyUnion> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<Key, String>> getMetadata() {
-        return this.rawClient.getMetadata().thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<Map<Key, String>>> rawFuture =
+                this.rawClient.getMetadata();
+        CompletableFuture<Map<Key, String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<Key, String>> getMetadata(RequestOptions requestOptions) {
-        return this.rawClient.getMetadata(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<Map<Key, String>>> rawFuture =
+                this.rawClient.getMetadata(requestOptions);
+        CompletableFuture<Map<Key, String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> updateMetadata(MetadataUnion request) {
-        return this.rawClient.updateMetadata(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<Boolean>> rawFuture =
+                this.rawClient.updateMetadata(request);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> updateMetadata(MetadataUnion request, RequestOptions requestOptions) {
-        return this.rawClient.updateMetadata(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<Boolean>> rawFuture =
+                this.rawClient.updateMetadata(request, requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> call() {
-        return this.rawClient.call().thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<Boolean>> rawFuture = this.rawClient.call();
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> call(RequestOptions requestOptions) {
-        return this.rawClient.call(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<Boolean>> rawFuture =
+                this.rawClient.call(requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> call(Request request) {
-        return this.rawClient.call(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<Boolean>> rawFuture = this.rawClient.call(request);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> call(Request request, RequestOptions requestOptions) {
-        return this.rawClient.call(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<Boolean>> rawFuture =
+                this.rawClient.call(request, requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UnionWithDuplicateTypes> duplicateTypesUnion(UnionWithDuplicateTypes request) {
-        return this.rawClient.duplicateTypesUnion(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<UnionWithDuplicateTypes>> rawFuture =
+                this.rawClient.duplicateTypesUnion(request);
+        CompletableFuture<UnionWithDuplicateTypes> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UnionWithDuplicateTypes> duplicateTypesUnion(
             UnionWithDuplicateTypes request, RequestOptions requestOptions) {
-        return this.rawClient.duplicateTypesUnion(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<UnionWithDuplicateTypes>> rawFuture =
+                this.rawClient.duplicateTypesUnion(request, requestOptions);
+        CompletableFuture<UnionWithDuplicateTypes> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> nestedUnions(NestedUnionRoot request) {
-        return this.rawClient.nestedUnions(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> rawFuture =
+                this.rawClient.nestedUnions(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> nestedUnions(NestedUnionRoot request, RequestOptions requestOptions) {
-        return this.rawClient.nestedUnions(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> rawFuture =
+                this.rawClient.nestedUnions(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> nestedObjectUnions(OuterNestedUnion request) {
-        return this.rawClient.nestedObjectUnions(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> rawFuture =
+                this.rawClient.nestedObjectUnions(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> nestedObjectUnions(OuterNestedUnion request, RequestOptions requestOptions) {
-        return this.rawClient.nestedObjectUnions(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> rawFuture =
+                this.rawClient.nestedObjectUnions(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> aliasedObjectUnion(AliasedObjectUnion request) {
-        return this.rawClient.aliasedObjectUnion(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> rawFuture =
+                this.rawClient.aliasedObjectUnion(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> aliasedObjectUnion(AliasedObjectUnion request, RequestOptions requestOptions) {
-        return this.rawClient.aliasedObjectUnion(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> rawFuture =
+                this.rawClient.aliasedObjectUnion(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UnionWithBaseProperties> getWithBaseProperties(UnionWithBaseProperties request) {
-        return this.rawClient.getWithBaseProperties(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<UnionWithBaseProperties>> rawFuture =
+                this.rawClient.getWithBaseProperties(request);
+        CompletableFuture<UnionWithBaseProperties> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UnionWithBaseProperties> getWithBaseProperties(
             UnionWithBaseProperties request, RequestOptions requestOptions) {
-        return this.rawClient.getWithBaseProperties(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<UnionWithBaseProperties>> rawFuture =
+                this.rawClient.getWithBaseProperties(request, requestOptions);
+        CompletableFuture<UnionWithBaseProperties> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> testCamelCaseProperties(PaymentRequest request) {
-        return this.rawClient.testCamelCaseProperties(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> rawFuture =
+                this.rawClient.testCamelCaseProperties(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> testCamelCaseProperties(PaymentRequest request, RequestOptions requestOptions) {
-        return this.rawClient.testCamelCaseProperties(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> rawFuture =
+                this.rawClient.testCamelCaseProperties(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -49,10 +49,12 @@ func (n *Name) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *Name) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -111,7 +113,6 @@ func (n *Name) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Exercises all of the built-in types.
 var (
 	typeFieldOne         = big.NewInt(1 << 0)
 	typeFieldTwo         = big.NewInt(1 << 1)
@@ -139,6 +140,7 @@ var (
 	typeFieldTwentyfive  = big.NewInt(1 << 23)
 )
 
+// Exercises all of the built-in types.
 type Type struct {
 	One         int              `json:"one" url:"one"`
 	Two         float64          `json:"two" url:"two"`
@@ -353,10 +355,12 @@ func (t *Type) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *Type) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetOne sets the One field and marks it as non-optional;

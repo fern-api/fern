@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix component schemas that are only a `$ref` to another schema (for example
+    `CopyBatchArg: { $ref: '#/components/schemas/RelocationBatchArgBase' }`) being imported
+    as `unknown`. Their API reference pages showed "any" instead of the referenced type's
+    fields. These schemas now become an alias of the referenced type.
+  type: fix

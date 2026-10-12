@@ -32,6 +32,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
     private static EXPLICIT_NULL_FEATURE_ID: FernGeneratorCli.FeatureId = "EXPLICIT_NULL";
+    private static ADDITIONAL_BODY_PROPERTIES_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_BODY_PROPERTIES";
     private static OAUTH_FEATURE_ID: FernGeneratorCli.FeatureId = "OAUTH";
 
     private readonly context: SdkGeneratorContext;
@@ -90,6 +91,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 renderer: this.renderWithRawResponseHeadersSnippet.bind(this)
             },
             [ReadmeSnippetBuilder.EXPLICIT_NULL_FEATURE_ID]: { renderer: this.renderExplicitNullSnippet.bind(this) },
+            [ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID]: {
+                renderer: this.renderAdditionalBodyPropertiesSnippet.bind(this)
+            },
             [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
                 renderer: this.renderRequestOptionsSnippet.bind(this)
             },
@@ -384,6 +388,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             defer cancel()
 
             response, err := ${this.getMethodCall(endpoint)}(ctx, ...)
+        `);
+    }
+
+    private renderAdditionalBodyPropertiesSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            response, err := ${this.getMethodCall(endpoint)}(
+                ...,
+                option.WithBodyProperties(map[string]interface{}{
+                    "custom_field": "custom-value",
+                }),
+            )
         `);
     }
 

@@ -10,7 +10,7 @@ enum Example24 {
 
         _ = try await client.users.listWithOffsetPaginationHasNextPage(
             page: 1,
-            limit: 1,
+            limit: 10,
             order: .asc
         )
     }

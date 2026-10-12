@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "4abe9787",
+            "id": {
+                "method": "POST",
+                "path": "/items",
+                "identifier_override": "endpoint_items.createItem"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.items.requests.CreateItemRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.items().createItem(\n            CreateItemRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.items.requests.CreateItemRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.items().createItem(\n            CreateItemRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "43cd4dcc",
+            "id": {
+                "method": "GET",
+                "path": "/items/{item_id}",
+                "identifier_override": "endpoint_items.getItem"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.items.requests.GetItemRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.items().getItem(\n            \"item_id\",\n            GetItemRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.items.requests.GetItemRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.items().getItem(\n            \"item_id\",\n            GetItemRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

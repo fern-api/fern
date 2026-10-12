@@ -38,10 +38,12 @@ func (d *DeployParams) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DeployParams) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetUpdateDraft sets the UpdateDraft field and marks it as non-optional;
@@ -122,10 +124,12 @@ func (d *DeployResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DeployResponse) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetSuccess sets the Success field and marks it as non-optional;
@@ -206,10 +210,12 @@ func (s *SendOptionalBodyRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SendOptionalBodyRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;

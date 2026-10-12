@@ -329,6 +329,52 @@ class RawContainerClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_and_return_map_of_integer_to_object(
+        self,
+        *,
+        request: typing.Dict[int, ObjectWithRequiredField],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Dict[int, ObjectWithRequiredField]]:
+        """
+        Parameters
+        ----------
+        request : typing.Dict[int, ObjectWithRequiredField]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Dict[int, ObjectWithRequiredField]]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "container/map-integer-to-object",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Dict[int, ObjectWithRequiredField], direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Dict[int, ObjectWithRequiredField],
+                    parse_obj_as(
+                        type_=typing.Dict[int, ObjectWithRequiredField],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get_and_return_optional(
         self,
         *,
@@ -673,6 +719,52 @@ class AsyncRawContainerClient:
                     typing.Dict[str, MixedType],
                     parse_obj_as(
                         type_=typing.Dict[str, MixedType],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_and_return_map_of_integer_to_object(
+        self,
+        *,
+        request: typing.Dict[int, ObjectWithRequiredField],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.Dict[int, ObjectWithRequiredField]]:
+        """
+        Parameters
+        ----------
+        request : typing.Dict[int, ObjectWithRequiredField]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Dict[int, ObjectWithRequiredField]]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "container/map-integer-to-object",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Dict[int, ObjectWithRequiredField], direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Dict[int, ObjectWithRequiredField],
+                    parse_obj_as(
+                        type_=typing.Dict[int, ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

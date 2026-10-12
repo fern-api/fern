@@ -24,10 +24,12 @@ type NamedMixedPatchRequest struct {
 }
 
 func (n *NamedMixedPatchRequest) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetAppID sets the AppID field and marks it as non-optional;
@@ -92,10 +94,12 @@ type OptionalMergePatchRequest struct {
 }
 
 func (o *OptionalMergePatchRequest) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetRequiredField sets the RequiredField field and marks it as non-optional;
@@ -168,10 +172,12 @@ type PatchProxyRequest struct {
 }
 
 func (p *PatchProxyRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetApplication sets the Application field and marks it as non-optional;
@@ -239,10 +245,12 @@ type PatchComplexRequest struct {
 }
 
 func (p *PatchComplexRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -350,10 +358,12 @@ type RegularPatchRequest struct {
 }
 
 func (r *RegularPatchRequest) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetField1 sets the Field1 field and marks it as non-optional;

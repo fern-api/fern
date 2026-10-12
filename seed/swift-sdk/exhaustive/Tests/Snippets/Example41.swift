@@ -8,9 +8,9 @@ enum Example41 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.params.uploadWithPath(
-            param: "upload-path",
-            request: Data("data".utf8)
+        _ = try await client.endpoints.params.modifyWithInlinePath(
+            param: "param",
+            request: "string"
         )
     }
 }

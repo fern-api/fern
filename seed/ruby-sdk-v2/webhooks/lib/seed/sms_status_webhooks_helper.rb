@@ -20,10 +20,15 @@ module Seed
     # @param signature_header [String]
     # @param signature_key [String]
     # @param notification_url [String]
+    # @param algorithm [String, nil]
     #
     # @return [Boolean]
-    def self.verify_signature(request_body:, signature_header:, signature_key:, notification_url:) # rubocop:disable Naming/PredicateMethod
-      return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?
+    def self.verify_signature(request_body:, signature_header:, signature_key:, notification_url:, algorithm: nil) # rubocop:disable Naming/PredicateMethod
+      if signature_header.nil? || signature_header.empty?
+        warn("Webhook signature verification could not run: missing signature header")
+        return false
+      end
+      return false if request_body.nil? || signature_key.nil? || signature_key.empty?
 
       transmitted_body_hash = Internal::WebhookBodyHash.get_query_parameter(notification_url, "bodySHA256")
       unless transmitted_body_hash.nil?
@@ -32,7 +37,10 @@ module Seed
           algorithm: "sha256",
           encoding: "hex"
         )
-        return false unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)
+        unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)
+          warn("Webhook signature verification failed: signature mismatch")
+          return false
+        end
       end
       body_string =
         if request_body.is_a?(::Hash)
@@ -54,12 +62,13 @@ module Seed
         expected = Internal::WebhookSignature.compute_hmac_signature(
           payload: payload,
           secret: signature_key,
-          algorithm: "sha1",
+          algorithm: algorithm || "sha1",
           encoding: "base64"
         )
         return true if Internal::WebhookSignature.timing_safe_equal(signature_header, expected)
       end
 
+      warn("Webhook signature verification failed: signature mismatch")
       false
     end
   end

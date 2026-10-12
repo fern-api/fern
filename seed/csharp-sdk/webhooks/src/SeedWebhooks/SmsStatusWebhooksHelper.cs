@@ -11,10 +11,18 @@ public static class SmsStatusWebhooksHelper
         object requestBody,
         string signatureHeader,
         string signatureKey,
-        string notificationUrl
+        string notificationUrl,
+        string? algorithm = null
     )
     {
-        if (requestBody == null || signatureHeader == null || signatureKey == null)
+        if (string.IsNullOrEmpty(signatureHeader))
+        {
+            System.Diagnostics.Trace.TraceWarning(
+                "Webhook signature verification could not run: missing signature header"
+            );
+            return false;
+        }
+        if (requestBody == null || signatureKey == null)
         {
             return false;
         }
@@ -29,6 +37,9 @@ public static class SmsStatusWebhooksHelper
             var expectedBodyHash = WebhookSignature.ComputeHash(rawBody, "sha256", "hex");
             if (!WebhookSignature.TimingSafeEqual(expectedBodyHash, transmittedBodyHash))
             {
+                System.Diagnostics.Trace.TraceWarning(
+                    "Webhook signature verification failed: signature mismatch"
+                );
                 return false;
             }
         }
@@ -94,7 +105,7 @@ public static class SmsStatusWebhooksHelper
             var expected = WebhookSignature.ComputeHmacSignature(
                 payload,
                 signatureKey,
-                "sha1",
+                algorithm ?? "sha1",
                 "base64"
             );
             if (WebhookSignature.TimingSafeEqual(signatureHeader, expected))
@@ -102,6 +113,9 @@ public static class SmsStatusWebhooksHelper
                 return true;
             }
         }
+        System.Diagnostics.Trace.TraceWarning(
+            "Webhook signature verification failed: signature mismatch"
+        );
         return false;
     }
 }

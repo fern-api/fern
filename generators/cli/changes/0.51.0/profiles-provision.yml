@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `config.profiles.provisionOperation`, the create-side counterpart of `revokeOperation`. When set,
+    `profiles create` gains `--provision`, which calls the named operation (e.g. `iam.keys.create`) with the
+    credentials already in the caller's environment, maps the response onto the profile's credential
+    (`credential: { username: sid, password: secret }`) and stores it in the OS keychain without ever printing
+    the secret. `revokeParameters: { Sid: sid }` records the key's identity as `credential_parameters` on the
+    profile — consulted only by `profiles remove --revoke`, never as a request default — so a profile owns its
+    API key end to end: minted on create, revoked on remove.
+  type: feat

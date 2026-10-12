@@ -1,0 +1,7 @@
+- type: fix
+  summary: >
+    Stop automatically replaying requests after server disconnects or incomplete responses
+    (`httpx.RemoteProtocolError`), which could duplicate non-idempotent POST/PATCH operations,
+    even after a 200 status was received. Connection-establishment failures and HTTP-status
+    retries are unchanged. Set `request_options={"retry_remote_protocol_errors": True}` only
+    when replaying the request is safe to explicitly restore the previous behavior.

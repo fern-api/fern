@@ -29,3 +29,10 @@ func (b *BadRequestBody) MarshalJSON() ([]byte, error) {
 func (b *BadRequestBody) Unwrap() error {
 	return b.APIError
 }
+
+func (b *BadRequestBody) GetBody() *BadObjectRequestInfo {
+	if b == nil {
+		return nil
+	}
+	return b.Body
+}

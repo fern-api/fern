@@ -4,6 +4,7 @@
 package com.seed.multiUrlEnvironment.resources.ec2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.multiUrlEnvironment.core.BodyProperties;
 import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.MediaTypes;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
@@ -51,7 +52,9 @@ public class AsyncRawEc2Client {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedMultiUrlEnvironmentException("Failed to serialize request", e);
         }
@@ -75,7 +78,8 @@ public class AsyncRawEc2Client {
                     .build();
         }
         CompletableFuture<SeedMultiUrlEnvironmentHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -101,6 +105,11 @@ public class AsyncRawEc2Client {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedMultiUrlEnvironmentException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

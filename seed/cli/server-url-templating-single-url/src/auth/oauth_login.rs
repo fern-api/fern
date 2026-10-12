@@ -1774,11 +1774,11 @@ mod tests {
     }
 
     /// The end-to-end shape of the bug: a CLI offering env-backed basic auth
-    /// first and an OAuth login flow second. Under `--profile` the stored login
-    /// token must win; under ambient selection spec order still does.
+    /// first and an OAuth login flow second. Whenever a profile is in play
+    /// the stored login token must win; unprofiled, spec order does.
     #[tokio::test(flavor = "multi_thread")]
     #[serial]
-    async fn named_profile_prefers_login_token_over_env_scheme() {
+    async fn a_profile_prefers_login_token_over_env_scheme() {
         use crate::auth::compose::AnyAuthProvider;
         use crate::auth::credential::AuthCredentialSource;
         use crate::auth::provider::EndpointAuthMetadata;
@@ -1810,19 +1810,20 @@ mod tests {
             guard
         };
 
-        {
-            let _flag = state(SelectionSource::Flag);
+        for source in [
+            SelectionSource::Flag,
+            SelectionSource::Env,
+            SelectionSource::Active,
+        ] {
+            let _state = state(source);
             let out = composed()
                 .apply(req(), &EndpointAuthMetadata::unspecified())
                 .unwrap();
-            assert_eq!(auth_header(out).as_deref(), Some("Bearer tok"));
-        }
-        {
-            let _active = state(SelectionSource::Active);
-            let out = composed()
-                .apply(req(), &EndpointAuthMetadata::unspecified())
-                .unwrap();
-            assert!(auth_header(out).unwrap().starts_with("Basic "));
+            assert_eq!(
+                auth_header(out).as_deref(),
+                Some("Bearer tok"),
+                "{source:?}"
+            );
         }
     }
 

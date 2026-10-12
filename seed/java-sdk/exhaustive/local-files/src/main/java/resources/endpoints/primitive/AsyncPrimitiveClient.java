@@ -6,6 +6,7 @@ package com.fern.sdk.resources.endpoints.primitive;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.Integer;
@@ -33,79 +34,205 @@ public class AsyncPrimitiveClient {
   }
 
   public CompletableFuture<String> getAndReturnString(String request) {
-    return this.rawClient.getAndReturnString(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.getAndReturnString(request);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> getAndReturnString(String request,
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnString(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.getAndReturnString(request, requestOptions);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Integer> getAndReturnInt(int request) {
-    return this.rawClient.getAndReturnInt(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Integer>> rawFuture = this.rawClient.getAndReturnInt(request);
+    CompletableFuture<Integer> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Integer> getAndReturnInt(int request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnInt(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Integer>> rawFuture = this.rawClient.getAndReturnInt(request, requestOptions);
+    CompletableFuture<Integer> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Long> getAndReturnLong(long request) {
-    return this.rawClient.getAndReturnLong(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Long>> rawFuture = this.rawClient.getAndReturnLong(request);
+    CompletableFuture<Long> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Long> getAndReturnLong(long request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnLong(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Long>> rawFuture = this.rawClient.getAndReturnLong(request, requestOptions);
+    CompletableFuture<Long> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Double> getAndReturnDouble(double request) {
-    return this.rawClient.getAndReturnDouble(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Double>> rawFuture = this.rawClient.getAndReturnDouble(request);
+    CompletableFuture<Double> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Double> getAndReturnDouble(double request,
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnDouble(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Double>> rawFuture = this.rawClient.getAndReturnDouble(request, requestOptions);
+    CompletableFuture<Double> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Boolean> getAndReturnBool(boolean request) {
-    return this.rawClient.getAndReturnBool(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> rawFuture = this.rawClient.getAndReturnBool(request);
+    CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Boolean> getAndReturnBool(boolean request,
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnBool(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> rawFuture = this.rawClient.getAndReturnBool(request, requestOptions);
+    CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request) {
-    return this.rawClient.getAndReturnDatetime(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<OffsetDateTime>> rawFuture = this.rawClient.getAndReturnDatetime(request);
+    CompletableFuture<OffsetDateTime> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request,
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnDatetime(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<OffsetDateTime>> rawFuture = this.rawClient.getAndReturnDatetime(request, requestOptions);
+    CompletableFuture<OffsetDateTime> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> getAndReturnDate(String request) {
-    return this.rawClient.getAndReturnDate(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.getAndReturnDate(request);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> getAndReturnDate(String request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnDate(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.getAndReturnDate(request, requestOptions);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<UUID> getAndReturnUuid(UUID request) {
-    return this.rawClient.getAndReturnUuid(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<UUID>> rawFuture = this.rawClient.getAndReturnUuid(request);
+    CompletableFuture<UUID> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<UUID> getAndReturnUuid(UUID request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnUuid(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<UUID>> rawFuture = this.rawClient.getAndReturnUuid(request, requestOptions);
+    CompletableFuture<UUID> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<byte[]> getAndReturnBase64(byte[] request) {
-    return this.rawClient.getAndReturnBase64(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<byte[]>> rawFuture = this.rawClient.getAndReturnBase64(request);
+    CompletableFuture<byte[]> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<byte[]> getAndReturnBase64(byte[] request,
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnBase64(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<byte[]>> rawFuture = this.rawClient.getAndReturnBase64(request, requestOptions);
+    CompletableFuture<byte[]> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 }

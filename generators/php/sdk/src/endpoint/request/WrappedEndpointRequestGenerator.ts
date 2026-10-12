@@ -60,6 +60,9 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
         if (includePathParameters) {
             for (const pathParameter of this.endpoint.allPathParameters) {
+                if (this.context.getSdkVariableForPathParameter(pathParameter) != null) {
+                    continue;
+                }
                 const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(
                     pathParameter.clientDefault
                 );

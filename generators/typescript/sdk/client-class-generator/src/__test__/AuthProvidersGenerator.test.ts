@@ -127,6 +127,7 @@ describe("AuthProvidersGenerator", () => {
                         subpackageId: undefined
                     },
                     expiryProperty: undefined,
+                    grantType: undefined,
                     authenticatedRequestHeaders: []
                 },
                 docs: undefined

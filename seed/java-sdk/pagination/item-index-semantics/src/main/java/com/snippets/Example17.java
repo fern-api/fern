@@ -12,8 +12,8 @@ public class Example17 {
 
         client.users()
                 .listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest.builder()
-                        .cursor("cursor")
-                        .filter("filter")
+                        .cursor("initial_cursor")
+                        .filter("active")
                         .build());
     }
 }

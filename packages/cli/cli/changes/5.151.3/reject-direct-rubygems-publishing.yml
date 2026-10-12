@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Reject direct RubyGems publishing before generation instead of failing at publish time with
+    "Method not implemented.". `fern check` now reports an error for a generators.yml `output.location: rubygems`
+    without a `github` block (and for an SDK Config target with `publish.registry: rubygems` that is not delivered
+    through GitHub), and remote `fern generate` rejects the selected generator before any work starts. Add a
+    `github` block so the gem is published by the generated GitHub Actions workflow. `fern generate --local`,
+    `--preview`, and `--lfs-override`, which do not publish, are unaffected.
+  type: fix

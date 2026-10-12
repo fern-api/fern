@@ -102,7 +102,8 @@ public final class ApiClient: Sendable {
     ///         request: .init(
     ///             nullableText: .value("nullable_text"),
     ///             nullableNumber: .value(1.1),
-    ///             nonNullableText: "non_nullable_text"
+    ///             nonNullableText: "non_nullable_text",
+    ///             requiredNullableText: .value("required_nullable_text")
     ///         )
     ///     )
     /// }

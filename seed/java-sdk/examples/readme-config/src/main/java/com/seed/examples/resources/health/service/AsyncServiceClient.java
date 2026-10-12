@@ -5,6 +5,7 @@ package com.seed.examples.resources.health.service;
 
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.RequestOptions;
+import com.seed.examples.core.SeedExamplesHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -28,27 +29,55 @@ public class AsyncServiceClient {
      * This endpoint checks the health of a resource.
      */
     public CompletableFuture<Void> check(String id) {
-        return this.rawClient.check(id).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Void>> rawFuture = this.rawClient.check(id);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * This endpoint checks the health of a resource.
      */
     public CompletableFuture<Void> check(String id, RequestOptions requestOptions) {
-        return this.rawClient.check(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Void>> rawFuture = this.rawClient.check(id, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * This endpoint checks the health of the service.
      */
     public CompletableFuture<Boolean> ping() {
-        return this.rawClient.ping().thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Boolean>> rawFuture = this.rawClient.ping();
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * This endpoint checks the health of the service.
      */
     public CompletableFuture<Boolean> ping(RequestOptions requestOptions) {
-        return this.rawClient.ping(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Boolean>> rawFuture = this.rawClient.ping(requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

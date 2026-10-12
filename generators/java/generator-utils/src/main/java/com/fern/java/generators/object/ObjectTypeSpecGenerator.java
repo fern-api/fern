@@ -9,6 +9,7 @@ import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeWithClassName;
 import com.fern.java.generators.ObjectMappersGenerator;
+import com.fern.java.generators.XmlCoreGenerator;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -48,8 +49,9 @@ public final class ObjectTypeSpecGenerator {
     private final Optional<ClassName> additionalChildrenItemType;
 
     /**
-     * @param additionalChildrenItemType when present, the object also carries a {@code List} of this type holding child
-     *     elements not described by the API (used by xml-encoded types).
+     * @param additionalChildrenItemType when present (xml-encoded types), the object also carries its ordered mixed
+     *     content: a {@code List<XmlNode>} of text segments and child elements, where generic children not described by
+     *     the API are instances of this type.
      */
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
@@ -124,20 +126,31 @@ public final class ObjectTypeSpecGenerator {
             typeSpecBuilder.addMethod(getAdditionalPropertiesMethodSpec());
         }
         if (additionalChildrenItemType.isPresent()) {
-            typeSpecBuilder.addField(FieldSpec.builder(getAdditionalChildrenType(), getAdditionalChildrenFieldName())
+            typeSpecBuilder.addField(FieldSpec.builder(getContentType(), getContentFieldName())
                     .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                     .build());
+            typeSpecBuilder.addMethod(MethodSpec.methodBuilder(getContentGetterName())
+                    .addJavadoc("The ordered content of this element: text segments and child elements (typed or "
+                            + "generic) in the order they were added or parsed.\n")
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(getContentType())
+                    .addAnnotation(JsonIgnore.class)
+                    .addStatement("return this.$L", getContentFieldName())
+                    .build());
             typeSpecBuilder.addMethod(MethodSpec.methodBuilder(getAdditionalChildrenGetterName())
+                    .addJavadoc("The child elements that are not described by the API definition, in order.\n")
                     .addModifiers(Modifier.PUBLIC)
                     .returns(getAdditionalChildrenType())
                     .addAnnotation(JsonIgnore.class)
-                    .addStatement("return this.$L", getAdditionalChildrenFieldName())
+                    .addStatement("return $T.additionalChildren(this.$L)", getXmlNodeClassName(), getContentFieldName())
                     .build());
         }
 
         equalsMethod.getEqualToMethodSpec().ifPresent(typeSpecBuilder::addMethod);
         generateHashCode().ifPresent(typeSpecBuilder::addMethod);
-        typeSpecBuilder.addMethod(generateToString());
+        if (!additionalChildrenItemType.isPresent()) {
+            typeSpecBuilder.addMethod(generateToString());
+        }
         if (maybeObjectBuilder.isPresent()) {
             ObjectBuilder objectBuilder = maybeObjectBuilder.get();
             typeSpecBuilder.addMethod(objectBuilder.getBuilderStaticMethod());
@@ -203,8 +216,8 @@ public final class ObjectTypeSpecGenerator {
                     "this.$L = $L", additionalPropertiesFieldName, additionalPropertiesFieldName);
         }
         if (additionalChildrenItemType.isPresent()) {
-            String fieldName = getAdditionalChildrenFieldName();
-            constructorBuilder.addParameter(getAdditionalChildrenType(), fieldName);
+            String fieldName = getContentFieldName();
+            constructorBuilder.addParameter(getContentType(), fieldName);
             constructorBuilder.addStatement("this.$L = $L", fieldName, fieldName);
         }
         return constructorBuilder.build();
@@ -231,7 +244,7 @@ public final class ObjectTypeSpecGenerator {
                     "this.$L = builder.$L", additionalPropertiesFieldName, additionalPropertiesFieldName);
         }
         if (additionalChildrenItemType.isPresent()) {
-            String fieldName = getAdditionalChildrenFieldName();
+            String fieldName = getContentFieldName();
             constructorBuilder.addStatement("this.$L = builder.$L", fieldName, fieldName);
         }
         return constructorBuilder.build();
@@ -242,10 +255,12 @@ public final class ObjectTypeSpecGenerator {
         return useBuilderConstructor;
     }
 
-    public Optional<String> getAdditionalChildrenFieldNameIfSupported() {
-        return additionalChildrenItemType.isPresent()
-                ? Optional.of(getAdditionalChildrenFieldName())
-                : Optional.empty();
+    public Optional<String> getContentFieldNameIfSupported() {
+        return additionalChildrenItemType.isPresent() ? Optional.of(getContentFieldName()) : Optional.empty();
+    }
+
+    public Optional<String> getContentGetterNameIfSupported() {
+        return additionalChildrenItemType.isPresent() ? Optional.of(getContentGetterName()) : Optional.empty();
     }
 
     public Optional<String> getAdditionalChildrenGetterNameIfSupported() {
@@ -258,16 +273,28 @@ public final class ObjectTypeSpecGenerator {
         return ParameterizedTypeName.get(ClassName.get(List.class), additionalChildrenItemType.get());
     }
 
+    private ClassName getXmlNodeClassName() {
+        return additionalChildrenItemType.get().peerClass(XmlCoreGenerator.XML_NODE_CLASS_NAME);
+    }
+
+    private TypeName getContentType() {
+        return ParameterizedTypeName.get(ClassName.get(List.class), getXmlNodeClassName());
+    }
+
+    private String getContentFieldName() {
+        return hasPropertyNamed(BuilderGenerator.CONTENT_NAME)
+                ? "_" + BuilderGenerator.CONTENT_NAME
+                : BuilderGenerator.CONTENT_NAME;
+    }
+
+    private String getContentGetterName() {
+        return hasPropertyNamed(BuilderGenerator.CONTENT_NAME) ? "_getContent" : "getContent";
+    }
+
     private boolean hasPropertyNamed(String camelCaseKey) {
         return allEnrichedProperties.stream()
                 .anyMatch(enrichedObjectProperty ->
                         enrichedObjectProperty.camelCaseKey().equals(camelCaseKey));
-    }
-
-    private String getAdditionalChildrenFieldName() {
-        return hasPropertyNamed(BuilderGenerator.ADDITIONAL_CHILDREN_NAME)
-                ? "_" + BuilderGenerator.ADDITIONAL_CHILDREN_NAME
-                : BuilderGenerator.ADDITIONAL_CHILDREN_NAME;
     }
 
     private String getAdditionalChildrenGetterName() {

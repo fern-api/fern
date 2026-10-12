@@ -34,7 +34,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly taskContext: TaskContext;
     public readonly authHeaders: Set<string>;
     public readonly refOccurrences: Record<string, number>;
-    public readonly DUMMY: SchemaParserContext;
+    public readonly DUMMY: AbstractOpenAPIV3ParserContext;
     public readonly options: ParseOpenAPIOptions;
     public readonly source: Source;
     public readonly filter: OpenAPIFilter;
@@ -46,7 +46,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         authHeaders,
         options,
         source,
-        namespace
+        namespace,
+        refOccurrences
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
@@ -54,12 +55,14 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         options: ParseOpenAPIOptions;
         source: Source;
         namespace: string | undefined;
+        /** Precomputed `getReferenceOccurrences(document)`, reused by contexts over the same document. */
+        refOccurrences?: Record<string, number>;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
-        this.refOccurrences = getReferenceOccurrences(document);
+        this.refOccurrences = refOccurrences ?? getReferenceOccurrences(document);
         this.options = options;
         this.source = source;
         this.filter = new OpenAPIFilter({ context: taskContext, options });
@@ -281,7 +284,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public abstract getReferencedSchemas(): Set<SchemaId>;
 
-    public abstract getDummy(): SchemaParserContext;
+    public abstract getDummy(): AbstractOpenAPIV3ParserContext;
 
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,

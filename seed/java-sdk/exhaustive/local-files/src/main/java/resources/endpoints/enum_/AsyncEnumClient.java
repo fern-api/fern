@@ -6,6 +6,7 @@ package com.fern.sdk.resources.endpoints.enum_;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.types.enum_.types.WeatherReport;
 import java.util.concurrent.CompletableFuture;
 
@@ -27,11 +28,25 @@ public class AsyncEnumClient {
   }
 
   public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request) {
-    return this.rawClient.getAndReturnEnum(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<WeatherReport>> rawFuture = this.rawClient.getAndReturnEnum(request);
+    CompletableFuture<WeatherReport> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request,
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnEnum(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<WeatherReport>> rawFuture = this.rawClient.getAndReturnEnum(request, requestOptions);
+    CompletableFuture<WeatherReport> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 }

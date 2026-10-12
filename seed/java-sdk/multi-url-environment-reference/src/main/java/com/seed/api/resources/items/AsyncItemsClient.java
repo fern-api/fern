@@ -5,6 +5,7 @@ package com.seed.api.resources.items;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncItemsClient {
@@ -25,10 +26,24 @@ public class AsyncItemsClient {
     }
 
     public CompletableFuture<String> listItems() {
-        return this.rawClient.listItems().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<String>> rawFuture = this.rawClient.listItems();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> listItems(RequestOptions requestOptions) {
-        return this.rawClient.listItems(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<String>> rawFuture = this.rawClient.listItems(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

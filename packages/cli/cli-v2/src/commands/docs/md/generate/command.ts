@@ -1,3 +1,4 @@
+import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { runLibraryDocsGeneration } from "@fern-api/library-docs-generator";
 import { LogLevel } from "@fern-api/logger";
@@ -56,7 +57,8 @@ export class GenerateCommand {
             orgId: workspace.org,
             tokenValue: token.value,
             context: taskContext,
-            wrapStep: withSpinner
+            wrapStep: withSpinner,
+            docsConfig: workspace.docs.raw as docsYml.RawSchemas.DocsConfiguration
         });
     }
 }

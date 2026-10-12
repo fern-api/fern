@@ -5,6 +5,7 @@ package com.seed.unions.resources.bigunion;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.RequestOptions;
+import com.seed.unions.core.SeedUnionsHttpResponse;
 import com.seed.unions.resources.bigunion.types.BigUnion;
 import java.util.List;
 import java.util.Map;
@@ -28,26 +29,69 @@ public class AsyncBigunionClient {
     }
 
     public CompletableFuture<BigUnion> get(String id) {
-        return this.rawClient.get(id).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<BigUnion>> rawFuture = this.rawClient.get(id);
+        CompletableFuture<BigUnion> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<BigUnion> get(String id, RequestOptions requestOptions) {
-        return this.rawClient.get(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<BigUnion>> rawFuture = this.rawClient.get(id, requestOptions);
+        CompletableFuture<BigUnion> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> update(BigUnion request) {
-        return this.rawClient.update(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<Boolean>> rawFuture = this.rawClient.update(request);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> update(BigUnion request, RequestOptions requestOptions) {
-        return this.rawClient.update(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<Boolean>> rawFuture = this.rawClient.update(request, requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, Boolean>> updateMany(List<BigUnion> request) {
-        return this.rawClient.updateMany(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<Map<String, Boolean>>> rawFuture = this.rawClient.updateMany(request);
+        CompletableFuture<Map<String, Boolean>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, Boolean>> updateMany(List<BigUnion> request, RequestOptions requestOptions) {
-        return this.rawClient.updateMany(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<Map<String, Boolean>>> rawFuture =
+                this.rawClient.updateMany(request, requestOptions);
+        CompletableFuture<Map<String, Boolean>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

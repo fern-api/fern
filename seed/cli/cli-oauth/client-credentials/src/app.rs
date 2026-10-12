@@ -70,6 +70,14 @@ enum DeferredOp {
         path: Vec<String>,
         stability: Stability,
     },
+    Describe {
+        path: Vec<String>,
+        about: String,
+    },
+    HideGlobalFlags {
+        path: Vec<String>,
+        flags: Vec<String>,
+    },
 }
 
 // ── Root CliApp ─────────────────────────────────────────────────────
@@ -268,10 +276,7 @@ impl CliApp {
     ///     .binding(OpenApiBinding::new().spec(include_str!("openapi.yaml")))
     ///     .run()
     /// ```
-    pub fn global_parameter(
-        mut self,
-        param: crate::openapi::discovery::GlobalParameter,
-    ) -> Self {
+    pub fn global_parameter(mut self, param: crate::openapi::discovery::GlobalParameter) -> Self {
         self.global_parameters.push(param);
         self
     }
@@ -311,8 +316,10 @@ impl CliApp {
                      flow's request-time provider is what you want."
                 );
             }
-            self.auth_bindings
-                .push((scheme, crate::auth::builder::SchemeBinding::Custom(provider)));
+            self.auth_bindings.push((
+                scheme,
+                crate::auth::builder::SchemeBinding::Custom(provider),
+            ));
         }
         self.login_flows.push(std::sync::Arc::new(flow));
         self
@@ -417,11 +424,11 @@ impl CliApp {
     {
         let augmented = A::augment_args(cmd);
         let erased: CliCommandHandler = Box::new(move |matches, ctx| {
-            let args = A::from_arg_matches(matches)
-                .map_err(|e| CliError::Validation(e.to_string()))?;
-            let ctx = ctx.downcast_ref::<C>().ok_or_else(|| {
-                CliError::Validation("binding context type mismatch".into())
-            })?;
+            let args =
+                A::from_arg_matches(matches).map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx
+                .downcast_ref::<C>()
+                .ok_or_else(|| CliError::Validation("binding context type mismatch".into()))?;
             handler(args, ctx)
         });
         self.cli_commands.push(CliCommand {
@@ -505,11 +512,11 @@ impl CliApp {
     {
         let augmented = A::augment_args(cmd);
         let erased: CliCommandHandler = Box::new(move |matches, ctx| {
-            let args = A::from_arg_matches(matches)
-                .map_err(|e| CliError::Validation(e.to_string()))?;
-            let ctx = ctx.downcast_ref::<C>().ok_or_else(|| {
-                CliError::Validation("binding context type mismatch".into())
-            })?;
+            let args =
+                A::from_arg_matches(matches).map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx
+                .downcast_ref::<C>()
+                .ok_or_else(|| CliError::Validation("binding context type mismatch".into()))?;
             handler(args, ctx)
         });
         self.cli_commands.push(CliCommand {
@@ -528,6 +535,35 @@ impl CliApp {
         self.deferred_ops.push(DeferredOp::Alias {
             path: path.iter().map(|s| s.to_string()).collect(),
             alias: alias.to_string(),
+        });
+        self
+    }
+
+    /// Set the one-line description of the command at `path`.
+    ///
+    /// Intended for the intermediate groups `command_under` creates on the
+    /// way to a nested custom command (`command_under(&["serverless",
+    /// "env"], …)` grows an `env` group with no description); works on any
+    /// command in the tree.
+    pub fn describe(mut self, path: &[&str], about: &str) -> Self {
+        self.deferred_ops.push(DeferredOp::Describe {
+            path: path.iter().map(|s| s.to_string()).collect(),
+            about: about.to_string(),
+        });
+        self
+    }
+
+    /// Hide the named root-level global flags from `--help` of the command
+    /// at `path` and everything beneath it.
+    ///
+    /// The flags are still accepted there — scripts that pass `--format`
+    /// everywhere keep working — they just stop cluttering the help of a
+    /// custom subtree they do not apply to (`--dry-run`, `--query`, `--spec`
+    /// on a command that never calls the API). Unknown names are ignored.
+    pub fn hide_global_flags(mut self, path: &[&str], flags: &[&str]) -> Self {
+        self.deferred_ops.push(DeferredOp::HideGlobalFlags {
+            path: path.iter().map(|s| s.to_string()).collect(),
+            flags: flags.iter().map(|s| s.to_string()).collect(),
         });
         self
     }
@@ -570,10 +606,8 @@ impl CliApp {
         F: Fn(Value, Vec<String>) -> Fut + Send + Sync + 'static,
         Fut: std::future::Future<Output = Result<Value, CliError>> + Send + 'static,
     {
-        self.hooks.add_transform_response(
-            path,
-            Box::new(move |v, p| Box::pin(f(v, p))),
-        );
+        self.hooks
+            .add_transform_response(path, Box::new(move |v, p| Box::pin(f(v, p))));
         self
     }
 
@@ -585,10 +619,8 @@ impl CliApp {
         F: Fn(CliError, Vec<String>) -> Fut + Send + Sync + 'static,
         Fut: std::future::Future<Output = Result<Option<Value>, CliError>> + Send + 'static,
     {
-        self.hooks.add_recover_error(
-            path,
-            Box::new(move |e, p| Box::pin(f(e, p))),
-        );
+        self.hooks
+            .add_recover_error(path, Box::new(move |e, p| Box::pin(f(e, p))));
         self
     }
 
@@ -711,7 +743,8 @@ impl CliApp {
             return Ok(());
         }
 
-        match crate::profiles::resolve_selection(&self.name, &str_args) {
+        let short_cutoff = self.profile_short_cutoff(&str_args);
+        match crate::profiles::resolve_selection_until(&self.name, &str_args, short_cutoff) {
             Ok(selection) => {
                 crate::profiles::selection::install(selection);
                 Ok(())
@@ -724,6 +757,68 @@ impl CliApp {
                 Err(error)
             }
         }
+    }
+
+    fn profile_flag_help(&self, config: &crate::profiles::ProfilesConfig) -> String {
+        format!(
+            "Run this command under a named profile (see `{} {}`). \
+             Overrides {} and the active profile.",
+            self.name,
+            config.command_name,
+            crate::profiles::selection::profile_env_var(&self.name),
+        )
+    }
+
+    /// Argv index past which `-p` no longer means `--profile`, because argv
+    /// has named a custom command that declares its own `-p`. `usize::MAX`
+    /// when no such command is named (or none exists).
+    ///
+    /// Mirrors `shadow_global_short` in the clap tree: clap gives `-p` to
+    /// the command's own arg there, so the pre-clap scanner must stop
+    /// claiming it at the same point.
+    fn profile_short_cutoff(&self, str_args: &[String]) -> usize {
+        self.cli_commands
+            .iter()
+            .flat_map(|cc| {
+                crate::custom_commands::paths_owning_short(
+                    &cc.path,
+                    &cc.cmd,
+                    crate::profiles::selection::PROFILE_SHORT,
+                )
+            })
+            .map(|path| self.with_deferred_aliases(path))
+            .filter_map(|path| {
+                crate::custom_commands::path_end_in_argv(
+                    str_args,
+                    &path,
+                    Some((
+                        crate::profiles::selection::PROFILE_FLAG,
+                        crate::profiles::selection::PROFILE_SHORT,
+                    )),
+                )
+            })
+            .min()
+            .unwrap_or(usize::MAX)
+    }
+
+    /// Add the spellings registered through `CliApp::alias` to each segment
+    /// of `path`; those live in `deferred_ops` until the tree is built, so
+    /// `paths_owning_short` cannot see them on the clap commands.
+    fn with_deferred_aliases(
+        &self,
+        mut path: Vec<crate::custom_commands::PathSegment>,
+    ) -> Vec<crate::custom_commands::PathSegment> {
+        let primary: Vec<String> = path.iter().map(|seg| seg[0].clone()).collect();
+        for op in &self.deferred_ops {
+            if let DeferredOp::Alias { path: at, alias } = op {
+                if let Some(depth) = at.len().checked_sub(1) {
+                    if primary.get(..at.len()) == Some(at.as_slice()) {
+                        path[depth].push(alias.clone());
+                    }
+                }
+            }
+        }
+        path
     }
 
     /// The parameter and server-variable names `profiles create` will accept,
@@ -811,7 +906,8 @@ impl CliApp {
         profile_error: Option<CliError>,
         out: &mut W,
     ) -> i32 {
-        let str_args: Vec<String> = args.iter()
+        let str_args: Vec<String> = args
+            .iter()
             .filter_map(|a| a.to_str().map(String::from))
             .collect();
         let subcommand_path = crate::cli_args::extract_subcommand_path(&str_args);
@@ -856,7 +952,8 @@ impl CliApp {
         self.validate_auth()?;
 
         // 0. Convert args to strings for early interception checks.
-        let str_args: Vec<String> = args.iter()
+        let str_args: Vec<String> = args
+            .iter()
             .filter_map(|a| a.to_str().map(String::from))
             .collect();
 
@@ -978,10 +1075,7 @@ impl CliApp {
                         return Ok(PipelineOutcome::Success);
                     }
                     Ok(None) => {}
-                    Err(e) => tracing::warn!(
-                        "--schema: binding `{}` errored: {e}",
-                        binding.name()
-                    ),
+                    Err(e) => tracing::warn!("--schema: binding `{}` errored: {e}", binding.name()),
                 }
             }
             // A path with no schema is an error for an explicit `--schema` —
@@ -1011,10 +1105,7 @@ impl CliApp {
                     Ok(None) => {}
                     Err(e) => {
                         let flag = if raw { "--spec-raw" } else { "--spec" };
-                        tracing::warn!(
-                            "{flag}: binding `{}` errored: {e}",
-                            binding.name()
-                        );
+                        tracing::warn!("{flag}: binding `{}` errored: {e}", binding.name());
                     }
                 }
             }
@@ -1040,8 +1131,7 @@ impl CliApp {
                 output
             };
 
-            write!(out, "{output}")
-                .map_err(|e| CliError::Other(e.into()))?;
+            write!(out, "{output}").map_err(|e| CliError::Other(e.into()))?;
             return Ok(PipelineOutcome::Success);
         }
 
@@ -1135,13 +1225,7 @@ impl CliApp {
                     .long(crate::profiles::selection::PROFILE_FLAG)
                     .short(crate::profiles::selection::PROFILE_SHORT)
                     .value_name("NAME")
-                    .help(format!(
-                        "Run this command under a named profile (see `{} {}`). \
-                         Overrides {} and the active profile.",
-                        self.name,
-                        config.command_name,
-                        crate::profiles::selection::profile_env_var(&self.name),
-                    ))
+                    .help(self.profile_flag_help(config))
                     .global(true),
             );
         }
@@ -1150,8 +1234,7 @@ impl CliApp {
         // command and build the full leaf-path → binding-index map.
         // Errors surface (as `CliError::Validation`) if two bindings
         // declare the same full leaf path — before any dispatch.
-        let (merged_subtree, leaf_map, binding_cmds) =
-            merge_binding_subtrees(&self.bindings)?;
+        let (merged_subtree, leaf_map, binding_cmds) = merge_binding_subtrees(&self.bindings)?;
 
         // Does the spec itself claim a top-level `auth` group? When it
         // does, the built-in credential subcommands are folded into it
@@ -1162,10 +1245,11 @@ impl CliApp {
         // Same question for the `profiles` group. Computed here, alongside
         // `spec_owns_auth`, because `merged_subtree` is consumed by the graft
         // below.
-        let spec_owns_profiles = self
-            .profiles
-            .as_ref()
-            .is_some_and(|config| merged_subtree.find_subcommand(&config.command_name).is_some());
+        let spec_owns_profiles = self.profiles.as_ref().is_some_and(|config| {
+            merged_subtree
+                .find_subcommand(&config.command_name)
+                .is_some()
+        });
         let profiles_vocabulary = self.profiles_vocabulary();
 
         // Graft the merged subtree's subcommands and binding-level
@@ -1173,9 +1257,22 @@ impl CliApp {
         // the per-binding commands already built above.
         cli = graft_merged_subtree(cli, &binding_cmds, merged_subtree, self.title.is_some());
 
-        // 1b. Register CLI-level custom commands (may be nested).
+        // 1b. Register CLI-level custom commands (may be nested). With
+        // profiles on, a custom command that declares its own `-p` keeps it:
+        // it gets a long-only `--profile` stand-in so the global's short does
+        // not collide (see `shadow_global_short` / `profile_short_cutoff`).
         for cc in &self.cli_commands {
-            cli = crate::custom_commands::graft_subcommand(cli, &cc.path, cc.cmd.clone());
+            let mut cmd = cc.cmd.clone();
+            if let Some(ref config) = self.profiles {
+                cmd = crate::custom_commands::shadow_global_short(
+                    cmd,
+                    crate::profiles::selection::PROFILE_FLAG,
+                    crate::profiles::selection::PROFILE_SHORT,
+                    "NAME",
+                    &self.profile_flag_help(config),
+                );
+            }
+            cli = crate::custom_commands::graft_subcommand(cli, &cc.path, cmd);
         }
 
         // 1c. Register `completion`, `man`, and `auth` subcommands.
@@ -1193,10 +1290,7 @@ impl CliApp {
         if let Some(ref config) = self.profiles {
             cli = graft_builtin_command(
                 cli,
-                crate::profiles::commands::build_profiles_command(
-                    config,
-                    &profiles_vocabulary,
-                ),
+                crate::profiles::commands::build_profiles_command(config, &profiles_vocabulary),
             );
         }
 
@@ -1214,6 +1308,12 @@ impl CliApp {
                 DeferredOp::Stability { path, stability } => {
                     cli = apply_stability(cli, path, stability);
                 }
+                DeferredOp::Describe { path, about } => {
+                    cli = apply_describe(cli, path, about);
+                }
+                DeferredOp::HideGlobalFlags { path, flags } => {
+                    cli = apply_hide_global_flags(cli, path, flags);
+                }
             }
         }
 
@@ -1226,13 +1326,14 @@ impl CliApp {
 
         // 1g. Intercept `completion` and `man` before clap parses.
         if crate::completions::wants_completion(&str_args) {
-            let raw_shell_arg =
-                crate::early_intercept::nth_positional(&str_args, 1);
+            let raw_shell_arg = crate::early_intercept::nth_positional(&str_args, 1);
             match raw_shell_arg {
                 Some(s) => match crate::completions::parse_shell(s) {
                     Some(shell) => {
-                        crate::completions::generate_completion_to(shell, &mut cli, &self.name, out)
-                            .map_err(|e| CliError::Other(e.into()))?;
+                        crate::completions::generate_completion_to(
+                            shell, &mut cli, &self.name, out,
+                        )
+                        .map_err(|e| CliError::Other(e.into()))?;
                         return Ok(PipelineOutcome::HelpShown);
                     }
                     None => {
@@ -1250,8 +1351,11 @@ impl CliApp {
             }
         }
         if crate::man::wants_man(&str_args) {
-            let has_help = str_args.iter().skip(1)
-                .skip_while(|a| a.as_str() != "man").skip(1)
+            let has_help = str_args
+                .iter()
+                .skip(1)
+                .skip_while(|a| a.as_str() != "man")
+                .skip(1)
                 .any(|a| a == "--help" || a == "-h");
             if has_help {
                 if let Some(sub) = cli.find_subcommand_mut("man") {
@@ -1299,9 +1403,10 @@ impl CliApp {
         // Skipped for the `profiles` group itself: it runs unprofiled by
         // design, and `profiles create --profile <name>` overloads the flag to
         // mean the name being created, so a mismatch there is expected.
-        let invocation_is_profiles_group = self.profiles.as_ref().is_some_and(|config| {
-            matches.subcommand_name() == Some(config.command_name.as_str())
-        });
+        let invocation_is_profiles_group = self
+            .profiles
+            .as_ref()
+            .is_some_and(|config| matches.subcommand_name() == Some(config.command_name.as_str()));
         if self.profiles.is_some() && !invocation_is_profiles_group {
             let from_clap = matches
                 .try_get_one::<String>(crate::profiles::selection::PROFILE_FLAG)
@@ -1366,7 +1471,9 @@ impl CliApp {
                                 cli_name: &self.name,
                                 bindings: &self.bindings,
                                 revoke_op_path: config.revoke_op_path(),
+                                provision: config.provision_operation.clone(),
                                 command_name: &config.command_name,
+                                root_matches: &matches,
                                 auth_bindings: &self.auth_bindings,
                                 login_flows: &self.login_flows,
                                 vocabulary: &profiles_vocabulary,
@@ -1383,7 +1490,9 @@ impl CliApp {
         // 4a. Check CLI-level custom commands first.
         for cc in &self.cli_commands {
             if let Some(target) = crate::custom_commands::walk_matches_to_custom(
-                &matches, &cc.path, cc.cmd.get_name(),
+                &matches,
+                &cc.path,
+                cc.cmd.get_name(),
             ) {
                 // Collect contexts from ALL bindings so the handler can
                 // invoke operations from any binding transparently.
@@ -1397,13 +1506,12 @@ impl CliApp {
             }
         }
 
-        let binding_idx = resolve_binding_for_leaf(&op_path, &leaf_map)
-            .ok_or_else(|| {
-                CliError::Discovery(format!(
-                    "No binding found for command path: {}",
-                    op_path.join(" "),
-                ))
-            })?;
+        let binding_idx = resolve_binding_for_leaf(&op_path, &leaf_map).ok_or_else(|| {
+            CliError::Discovery(format!(
+                "No binding found for command path: {}",
+                op_path.join(" "),
+            ))
+        })?;
 
         // 5. Dispatch to the binding. NO SHORTCUT — always goes through
         //    the full pipeline.
@@ -1425,8 +1533,17 @@ impl CliApp {
                     .map_err(|e| CliError::Other(e.into()))?;
                 Ok(PipelineOutcome::Success)
             }
+            Ok(DispatchResult::Record(value)) => {
+                let transformed = self.hooks.run_transform_response(value, &op_path).await?;
+                let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
+                    .map_err(|e| CliError::Validation(e.to_string()))?;
+                pipeline
+                    .emit_record(out, &transformed)
+                    .map_err(|e| CliError::Other(e.into()))?;
+                Ok(PipelineOutcome::Success)
+            }
             Ok(DispatchResult::Handled) => {
-                // Binding already handled output (dry-run, streaming, etc.).
+                // Binding already handled output (streaming, pager, etc.).
                 Ok(PipelineOutcome::Success)
             }
             Err(err) => {
@@ -1438,8 +1555,9 @@ impl CliApp {
                 if self.hooks.has_recover_error() {
                     match self.hooks.run_recover_error(err, &op_path).await {
                         Ok(value) => {
-                            let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
-                                .map_err(|e| CliError::Validation(e.to_string()))?;
+                            let pipeline =
+                                formatter::OutputPipeline::from_matches(&matches, &self.name)
+                                    .map_err(|e| CliError::Validation(e.to_string()))?;
                             pipeline
                                 .emit(out, &value, false, true)
                                 .map_err(|e| CliError::Other(e.into()))?;
@@ -1785,10 +1903,7 @@ fn collect_leaves(cmd: &clap::Command, path: &mut Vec<String>, idx: usize, out: 
 /// case is structurally unreachable for spec-driven bindings; it
 /// can only arise from hand-rolled `.command(...)` registrations
 /// that mix leaf and group nodes at the same path.
-fn merge_command_subtree(
-    parent: clap::Command,
-    incoming: clap::Command,
-) -> clap::Command {
+fn merge_command_subtree(parent: clap::Command, incoming: clap::Command) -> clap::Command {
     let incoming_name = incoming.get_name().to_string();
     if parent.find_subcommand(&incoming_name).is_some() {
         // Recurse: deep-merge incoming's children into the existing subcommand.
@@ -1830,6 +1945,42 @@ fn apply_alias(cli: clap::Command, path: &[String], alias: &str) -> clap::Comman
 /// Apply `hide(true)` to the command at `path`.
 fn apply_hide(cli: clap::Command, path: &[String]) -> clap::Command {
     modify_at_path(cli, path, &|c| c.hide(true))
+}
+
+/// Set the `about` of the command at `path`.
+fn apply_describe(cli: clap::Command, path: &[String], about: &str) -> clap::Command {
+    let about = about.to_string();
+    modify_at_path(cli, path, &|c| c.about(about.clone()))
+}
+
+/// Hide the root globals named in `flags` from the subtree at `path`.
+///
+/// Clap only propagates a `global(true)` arg into a subcommand that has no
+/// arg of the same id, so planting a hidden clone at `path` stops the
+/// visible one there; the clone is itself global, so it carries the hidden
+/// state down the rest of the subtree while still parsing identically.
+fn apply_hide_global_flags(cli: clap::Command, path: &[String], flags: &[String]) -> clap::Command {
+    if path.is_empty() {
+        return cli;
+    }
+    let hidden: Vec<clap::Arg> = cli
+        .get_arguments()
+        .filter(|a| a.is_global_set() && flags.iter().any(|f| f == a.get_id().as_str()))
+        .map(|a| a.clone().hide(true))
+        .collect();
+    if hidden.is_empty() {
+        return cli;
+    }
+    modify_at_path(cli, path, &|mut c| {
+        for arg in &hidden {
+            if c.get_arguments()
+                .all(|existing| existing.get_id() != arg.get_id())
+            {
+                c = c.arg(arg.clone());
+            }
+        }
+        c
+    })
 }
 
 /// Apply a stability badge to the command at `path`.
@@ -1986,8 +2137,7 @@ fn builtin_commands(
     ];
     if let Some(config) = profiles {
         commands.push(crate::profiles::commands::build_profiles_command(
-            config,
-            vocabulary,
+            config, vocabulary,
         ));
     }
 
@@ -2065,12 +2215,8 @@ mod tests {
     #[test]
     fn resolve_op_path_extracts_chain() {
         let cmd = clap::Command::new("test")
-            .subcommand(
-                clap::Command::new("users").subcommand(clap::Command::new("get")),
-            );
-        let matches = cmd
-            .try_get_matches_from(["test", "users", "get"])
-            .unwrap();
+            .subcommand(clap::Command::new("users").subcommand(clap::Command::new("get")));
+        let matches = cmd.try_get_matches_from(["test", "users", "get"]).unwrap();
         let (path, _) = resolve_op_path(&matches);
         assert_eq!(path, vec!["users".to_string(), "get".to_string()]);
     }
@@ -2085,12 +2231,17 @@ mod tests {
 
     impl TestBinding {
         fn new(name: &str, command: clap::Command) -> Self {
-            Self { name: name.to_string(), command }
+            Self {
+                name: name.to_string(),
+                command,
+            }
         }
     }
 
     impl Binding for TestBinding {
-        fn name(&self) -> &str { &self.name }
+        fn name(&self) -> &str {
+            &self.name
+        }
         fn set_cli_name(&mut self, _name: &str) {}
         fn build_command(&self) -> Result<clap::Command, CliError> {
             Ok(self.command.clone())
@@ -2124,12 +2275,24 @@ mod tests {
         let (merged, leaf_map, _) = merge_binding_subtrees(&bindings).expect("merge ok");
 
         // Both top-level groups present.
-        assert!(merged.find_subcommand("users").is_some(), "users should be present");
-        assert!(merged.find_subcommand("posts").is_some(), "posts should be present");
+        assert!(
+            merged.find_subcommand("users").is_some(),
+            "users should be present"
+        );
+        assert!(
+            merged.find_subcommand("posts").is_some(),
+            "posts should be present"
+        );
 
         // Both leaves owned by their respective binding indexes.
-        assert_eq!(resolve_binding_for_leaf(&p(&["users", "list"]), &leaf_map), Some(0));
-        assert_eq!(resolve_binding_for_leaf(&p(&["posts", "get"]), &leaf_map), Some(1));
+        assert_eq!(
+            resolve_binding_for_leaf(&p(&["users", "list"]), &leaf_map),
+            Some(0)
+        );
+        assert_eq!(
+            resolve_binding_for_leaf(&p(&["posts", "get"]), &leaf_map),
+            Some(1)
+        );
     }
 
     #[test]
@@ -2139,12 +2302,10 @@ mod tests {
             clap::Command::new("convai")
                 .subcommand(clap::Command::new("agents").subcommand(clap::Command::new("list"))),
         );
-        let b = clap::Command::new("b").subcommand(
-            clap::Command::new("convai")
-                .subcommand(
-                    clap::Command::new("conversations").subcommand(clap::Command::new("get")),
-                ),
-        );
+        let b =
+            clap::Command::new("b").subcommand(clap::Command::new("convai").subcommand(
+                clap::Command::new("conversations").subcommand(clap::Command::new("get")),
+            ));
         let bindings: Vec<Box<dyn Binding>> = vec![
             Box::new(TestBinding::new("a", a)),
             Box::new(TestBinding::new("b", b)),
@@ -2155,7 +2316,10 @@ mod tests {
         let convai = merged
             .find_subcommand("convai")
             .expect("convai should be merged into one parent");
-        assert!(convai.find_subcommand("agents").is_some(), "agents should be present");
+        assert!(
+            convai.find_subcommand("agents").is_some(),
+            "agents should be present"
+        );
         assert!(
             convai.find_subcommand("conversations").is_some(),
             "conversations should be present",
@@ -2259,8 +2423,7 @@ mod tests {
         // A spec operation named exactly like a built-in loses to the
         // framework leaf — same rule as `graft_subcommand`.
         let spec = clap::Command::new("root").subcommand(
-            clap::Command::new("auth")
-                .subcommand(clap::Command::new("login").about("spec-owned")),
+            clap::Command::new("auth").subcommand(clap::Command::new("login").about("spec-owned")),
         );
         let cli = graft_builtin_command(spec, crate::auth::login::build_auth_command());
 
@@ -2326,8 +2489,14 @@ mod tests {
         ];
 
         // Known path → Some(owner index).
-        assert_eq!(resolve_binding_for_leaf(&p(&["users", "list"]), &leaf_map), Some(0));
-        assert_eq!(resolve_binding_for_leaf(&p(&["posts", "get"]), &leaf_map), Some(1));
+        assert_eq!(
+            resolve_binding_for_leaf(&p(&["users", "list"]), &leaf_map),
+            Some(0)
+        );
+        assert_eq!(
+            resolve_binding_for_leaf(&p(&["posts", "get"]), &leaf_map),
+            Some(1)
+        );
 
         // Unknown path → None.
         assert_eq!(resolve_binding_for_leaf(&p(&["unknown"]), &leaf_map), None);
@@ -2345,8 +2514,10 @@ mod tests {
 
     #[test]
     fn deduplicate_after_help_removes_identical_blocks() {
-        let a = "Environment variables:\n  BOX_BASE_URL  Override\n  BOX_CA_BUNDLE  Path".to_string();
-        let b = "Environment variables:\n  BOX_BASE_URL  Override\n  BOX_CA_BUNDLE  Path".to_string();
+        let a =
+            "Environment variables:\n  BOX_BASE_URL  Override\n  BOX_CA_BUNDLE  Path".to_string();
+        let b =
+            "Environment variables:\n  BOX_BASE_URL  Override\n  BOX_CA_BUNDLE  Path".to_string();
         let result = deduplicate_after_help(&[a, b]);
         assert_eq!(
             result,

@@ -23,6 +23,8 @@ info:
     output looks like when the schema pattern doesn't match the context value.
     Endpoint 5 uses context=protocol with the flat allOf pattern. Endpoint 6
     uses context=data with the envelope+data pattern.
+    The protocol-mixed-schema endpoint uses context=protocol with both
+    patterns in one union.
 
     Endpoint 7 tests the OAS 3.2 spec-native pattern: inline oneOf variants
     extending a base Event schema, using const on event fields and
@@ -238,6 +240,39 @@ paths:
                   mapping:
                     heartbeat: "#/components/schemas/DataContextHeartbeat"
                     entity: "#/components/schemas/DataContextEntityEvent"
+
+  /stream/protocol-mixed-schema:
+    post:
+      operationId: streamProtocolMixedSchema
+      summary: Protocol context mixing envelope+data and flat schema variants
+      description: >
+        context=protocol where some variants use the envelope+data pattern and
+        others use the flat allOf pattern. Envelope variants are parsed from
+        {event, data}; flat variants are parsed from the data payload with the
+        event discriminant injected.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream with protocol context and mixed variant schemas
+          content:
+            text/event-stream:
+              itemSchema:
+                oneOf:
+                  - $ref: "#/components/schemas/DataContextHeartbeat"
+                  - $ref: "#/components/schemas/DataContextEntityEvent"
+                  - $ref: "#/components/schemas/ProtocolObjectEvent"
+                discriminator:
+                  propertyName: event
+                  x-fern-discriminator-context: protocol
+                  mapping:
+                    heartbeat: "#/components/schemas/DataContextHeartbeat"
+                    entity: "#/components/schemas/DataContextEntityEvent"
+                    object_data: "#/components/schemas/ProtocolObjectEvent"
 
   /stream/data-context-with-envelope-schema:
     post:

@@ -4,6 +4,7 @@
 package com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.oauthClientCredentialsEnvironmentVariables.core.BodyProperties;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.MediaTypes;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ObjectMappers;
@@ -49,7 +50,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedOauthClientCredentialsEnvironmentVariablesException("Failed to serialize request", e);
         }
@@ -110,7 +113,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedOauthClientCredentialsEnvironmentVariablesException("Failed to serialize request", e);
         }

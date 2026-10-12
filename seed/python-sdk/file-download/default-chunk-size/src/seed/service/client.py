@@ -55,6 +55,15 @@ class ServiceClient:
         Returns
         -------
         typing.Iterator[bytes]
+
+        Examples
+        --------
+        from seed import SeedFileDownload
+
+        client = SeedFileDownload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.download_file()
         """
         with self._raw_client.download_file(request_options=request_options) as r:
             yield from r.data
@@ -118,6 +127,23 @@ class AsyncServiceClient:
         Returns
         -------
         typing.AsyncIterator[bytes]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedFileDownload
+
+        client = AsyncSeedFileDownload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.download_file()
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.download_file(request_options=request_options) as r:
             async for _chunk in r.data:

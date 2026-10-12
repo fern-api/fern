@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A custom command may now declare its own `-p` even when profiles reserve `-p` for `--profile` globally
+    (e.g. Twilio's `serverless start -p <port>`). Clap previously refused to build the tree ("short option
+    names must be unique"); now the command gets a long-only `--profile` stand-in, and the pre-clap profile
+    scanner stops reading `-p` as a profile once argv has named that command — `cli -p acme serverless
+    start -p 9000` still selects profile `acme` and passes port `9000` through.
+  type: fix
+- summary: |
+    Add `CliApp::describe(path, about)` to give a one-line description to the intermediate groups
+    `command_under` creates (they previously rendered with a blank description in `--help`), and
+    `CliApp::hide_global_flags(path, flags)` to hide named root globals such as `--dry-run`, `--query` or
+    `--spec` from the help of a custom subtree they do not apply to. Hidden flags remain accepted.
+  type: feat

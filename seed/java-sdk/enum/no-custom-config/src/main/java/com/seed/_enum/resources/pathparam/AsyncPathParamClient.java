@@ -5,6 +5,7 @@ package com.seed._enum.resources.pathparam;
 
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.RequestOptions;
+import com.seed._enum.core.SeedEnumHttpResponse;
 import com.seed._enum.types.ColorOrOperand;
 import com.seed._enum.types.Operand;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,25 @@ public class AsyncPathParamClient {
     }
 
     public CompletableFuture<Void> send(Operand operand, ColorOrOperand operandOrColor) {
-        return this.rawClient.send(operand, operandOrColor).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.send(operand, operandOrColor);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> send(Operand operand, ColorOrOperand operandOrColor, RequestOptions requestOptions) {
-        return this.rawClient.send(operand, operandOrColor, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture =
+                this.rawClient.send(operand, operandOrColor, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

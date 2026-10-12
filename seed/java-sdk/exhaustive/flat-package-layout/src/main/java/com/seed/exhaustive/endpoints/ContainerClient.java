@@ -100,6 +100,18 @@ public class ContainerClient {
                 .body();
     }
 
+    public Map<Integer, ObjectWithRequiredField> getAndReturnMapOfIntegerToObject(
+            Map<Integer, ObjectWithRequiredField> request) {
+        return this.rawClient.getAndReturnMapOfIntegerToObject(request).body();
+    }
+
+    public Map<Integer, ObjectWithRequiredField> getAndReturnMapOfIntegerToObject(
+            Map<Integer, ObjectWithRequiredField> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnMapOfIntegerToObject(request, requestOptions)
+                .body();
+    }
+
     public Optional<ObjectWithRequiredField> getAndReturnOptional() {
         return this.rawClient.getAndReturnOptional().body();
     }

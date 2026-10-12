@@ -8,6 +8,6 @@ enum Example1 {
             token: "<token>"
         )
 
-        _ = try await client.users.listWithPathPagination()
+        _ = try await client.users.listWithUriPagination()
     }
 }

@@ -5,6 +5,7 @@ package com.seed.pathParameters.resources.user;
 
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.core.SeedPathParametersHttpResponse;
 import com.seed.pathParameters.resources.user.requests.GetUserMetadataRequest;
 import com.seed.pathParameters.resources.user.requests.GetUserSpecificsRequest;
 import com.seed.pathParameters.resources.user.requests.GetUsersRequest;
@@ -32,73 +33,188 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<User> getUser(String userId) {
-        return this.rawClient.getUser(userId).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture = this.rawClient.getUser(userId);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getUser(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getUser(userId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUser(userId, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getUser(String userId, GetUsersRequest request) {
-        return this.rawClient.getUser(userId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture = this.rawClient.getUser(userId, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getUser(String userId, GetUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getUser(userId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUser(userId, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> createUser(User request) {
-        return this.rawClient.createUser(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture = this.rawClient.createUser(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> createUser(User request, RequestOptions requestOptions) {
-        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request) {
-        return this.rawClient.updateUser(userId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture = this.rawClient.updateUser(userId, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.updateUser(userId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.updateUser(userId, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> searchUsers(String userId) {
-        return this.rawClient.searchUsers(userId).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<List<User>>> rawFuture = this.rawClient.searchUsers(userId);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> searchUsers(String userId, RequestOptions requestOptions) {
-        return this.rawClient.searchUsers(userId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<List<User>>> rawFuture =
+                this.rawClient.searchUsers(userId, requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> searchUsers(String userId, SearchUsersRequest request) {
-        return this.rawClient.searchUsers(userId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<List<User>>> rawFuture =
+                this.rawClient.searchUsers(userId, request);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> searchUsers(
             String userId, SearchUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.searchUsers(userId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<List<User>>> rawFuture =
+                this.rawClient.searchUsers(userId, request, requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Test endpoint with path parameter that has a text prefix (v{version})
      */
     public CompletableFuture<User> getUserMetadata(String userId, int version) {
-        return this.rawClient.getUserMetadata(userId, version).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUserMetadata(userId, version);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Test endpoint with path parameter that has a text prefix (v{version})
      */
     public CompletableFuture<User> getUserMetadata(String userId, int version, RequestOptions requestOptions) {
-        return this.rawClient.getUserMetadata(userId, version, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUserMetadata(userId, version, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Test endpoint with path parameter that has a text prefix (v{version})
      */
     public CompletableFuture<User> getUserMetadata(String userId, int version, GetUserMetadataRequest request) {
-        return this.rawClient.getUserMetadata(userId, version, request).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUserMetadata(userId, version, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -106,16 +222,30 @@ public class AsyncUserClient {
      */
     public CompletableFuture<User> getUserMetadata(
             String userId, int version, GetUserMetadataRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getUserMetadata(userId, version, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUserMetadata(userId, version, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Test endpoint with path parameters listed in different order than found in path
      */
     public CompletableFuture<User> getUserSpecifics(String userId, int version, String thought) {
-        return this.rawClient.getUserSpecifics(userId, version, thought).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUserSpecifics(userId, version, thought);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -123,9 +253,15 @@ public class AsyncUserClient {
      */
     public CompletableFuture<User> getUserSpecifics(
             String userId, int version, String thought, RequestOptions requestOptions) {
-        return this.rawClient
-                .getUserSpecifics(userId, version, thought, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUserSpecifics(userId, version, thought, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -133,9 +269,15 @@ public class AsyncUserClient {
      */
     public CompletableFuture<User> getUserSpecifics(
             String userId, int version, String thought, GetUserSpecificsRequest request) {
-        return this.rawClient
-                .getUserSpecifics(userId, version, thought, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUserSpecifics(userId, version, thought, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -147,8 +289,14 @@ public class AsyncUserClient {
             String thought,
             GetUserSpecificsRequest request,
             RequestOptions requestOptions) {
-        return this.rawClient
-                .getUserSpecifics(userId, version, thought, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUserSpecifics(userId, version, thought, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

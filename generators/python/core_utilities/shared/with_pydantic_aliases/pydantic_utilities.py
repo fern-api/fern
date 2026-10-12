@@ -33,8 +33,8 @@ if TYPE_CHECKING:
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
-    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
+    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined,var-annotated]
+    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined,var-annotated]
 
     def parse_datetime(value: Any) -> dt.datetime:  # type: ignore[misc]
         if isinstance(value, dt.datetime):

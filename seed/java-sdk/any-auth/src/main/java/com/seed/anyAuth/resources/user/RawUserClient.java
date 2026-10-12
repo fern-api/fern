@@ -5,6 +5,7 @@ package com.seed.anyAuth.resources.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.anyAuth.core.BodyProperties;
 import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.ObjectMappers;
 import com.seed.anyAuth.core.RequestOptions;
@@ -45,7 +46,11 @@ public class RawUserClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
                 .build();

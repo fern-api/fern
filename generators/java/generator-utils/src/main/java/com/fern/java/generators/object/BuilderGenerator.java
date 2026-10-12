@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fern.java.PoetTypeWithClassName;
+import com.fern.java.generators.XmlCoreGenerator;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.google.common.base.Preconditions;
@@ -43,7 +44,12 @@ public final class BuilderGenerator {
     private static final String STATIC_BUILDER_METHOD_NAME = "builder";
 
     public static final String ADDITIONAL_CHILDREN_NAME = "additionalChildren";
+    public static final String CONTENT_NAME = "content";
     private static final String ADD_CHILD_METHOD_NAME = "addChild";
+    private static final String ADD_TEXT_METHOD_NAME = "addText";
+    private static final String COMMENT_METHOD_NAME = "comment";
+    private static final String COMMENT_BEFORE_METHOD_NAME = "commentBefore";
+    private static final String COMMENT_AFTER_METHOD_NAME = "commentAfter";
 
     private final ClassName objectClassName;
     private final ClassName nestedBuilderClassName;
@@ -60,6 +66,7 @@ public final class BuilderGenerator {
     private final Set<String> allPropertyCamelCaseNames;
     private final Optional<ClassName> additionalChildrenItemType;
     private final String additionalChildrenFieldName;
+    private final String contentFieldName;
 
     public BuilderGenerator(
             ClassName objectClassName,
@@ -94,8 +101,9 @@ public final class BuilderGenerator {
         this.additionalChildrenFieldName = allPropertyCamelCaseNames.contains(ADDITIONAL_CHILDREN_NAME)
                 ? "_" + ADDITIONAL_CHILDREN_NAME
                 : ADDITIONAL_CHILDREN_NAME;
+        this.contentFieldName = allPropertyCamelCaseNames.contains(CONTENT_NAME) ? "_" + CONTENT_NAME : CONTENT_NAME;
         if (additionalChildrenItemType.isPresent()) {
-            buildMethodArguments.add(additionalChildrenFieldName);
+            buildMethodArguments.add(contentFieldName);
         }
         this.nestedBuilderClassName = objectClassName.nestedClass(NESTED_BUILDER_CLASS_NAME);
         this.isSerialized = isSerialized;
@@ -195,6 +203,7 @@ public final class BuilderGenerator {
                     StageBuilderConstants.FROM_METHOD_OTHER_PARAMETER_NAME,
                     objectProperty.enrichedObjectProperty.getterProperty());
         });
+        addContentFromStatement(fromSetterImpl);
         builderImplTypeSpec.addMethod(fromSetterImpl.addStatement("return this").build());
 
         for (EnrichedObjectPropertyWithField enrichedProperty : defaultBuilderConfig.properties()) {
@@ -316,6 +325,7 @@ public final class BuilderGenerator {
                             StageBuilderConstants.FROM_METHOD_OTHER_PARAMETER_NAME,
                             objectProperty.enrichedObjectProperty.getterProperty());
                 });
+                addContentFromStatement(fromSetterImpl);
                 builderImpl.addReversedMethods(fromSetterImpl
                         .addAnnotation(ClassName.get("", "java.lang.Override"))
                         .addStatement("return this")
@@ -463,54 +473,138 @@ public final class BuilderGenerator {
                 : ADD_CHILD_METHOD_NAME;
     }
 
+    private String getAddTextMethodName() {
+        return getContentMethodName(ADD_TEXT_METHOD_NAME);
+    }
+
+    private String getContentMethodName(String name) {
+        return allPropertyCamelCaseNames.contains(name) ? "_" + name : name;
+    }
+
     private TypeName getAdditionalChildrenType() {
         return ParameterizedTypeName.get(ClassName.get(List.class), additionalChildrenItemType.get());
+    }
+
+    private ClassName getXmlNodeClassName() {
+        return additionalChildrenItemType.get().peerClass(XmlCoreGenerator.XML_NODE_CLASS_NAME);
+    }
+
+    private TypeName getContentType() {
+        return ParameterizedTypeName.get(ClassName.get(List.class), getXmlNodeClassName());
+    }
+
+    /**
+     * The ordered-content members of an xml-encoded type's builder: {@code addChild(XmlElement)},
+     * {@code addText(String)}, {@code comment(String)}, {@code commentBefore(String)}, {@code commentAfter(String)} and
+     * bulk setters, all appending to one {@code content} sequence so that typed children, generic children, text and
+     * comments keep their relative order.
+     */
+    private List<MethodSpec.Builder> getContentBuilderMethods(ClassName returnClass, boolean withBody) {
+        List<MethodSpec.Builder> methods = new ArrayList<>();
+        MethodSpec.Builder addChild = MethodSpec.methodBuilder(getAddChildMethodName())
+                .addJavadoc("Appends a child element that is not described by the API definition, after any content "
+                        + "added so far.\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(additionalChildrenItemType.get(), "child");
+        MethodSpec.Builder addText = MethodSpec.methodBuilder(getAddTextMethodName())
+                .addJavadoc("Appends a text segment after any content added so far, so text can be interleaved with "
+                        + "child elements.\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(String.class, "text");
+        MethodSpec.Builder comment = MethodSpec.methodBuilder(getContentMethodName(COMMENT_METHOD_NAME))
+                .addJavadoc("Appends an xml comment ({@code <!--text-->}) inside this element, after any content "
+                        + "added so far.\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(String.class, "text");
+        MethodSpec.Builder commentBefore = MethodSpec.methodBuilder(getContentMethodName(COMMENT_BEFORE_METHOD_NAME))
+                .addJavadoc("Adds an xml comment rendered immediately before this element (as a sibling in its "
+                        + "parent, or before the root element).\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(String.class, "text");
+        MethodSpec.Builder commentAfter = MethodSpec.methodBuilder(getContentMethodName(COMMENT_AFTER_METHOD_NAME))
+                .addJavadoc("Adds an xml comment rendered immediately after this element (as a sibling in its "
+                        + "parent, or after the root element).\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(String.class, "text");
+        MethodSpec.Builder additionalChildren = MethodSpec.methodBuilder(getAdditionalChildrenMethodName())
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(getAdditionalChildrenType(), additionalChildrenFieldName);
+        MethodSpec.Builder content = MethodSpec.methodBuilder(contentFieldName)
+                .addJavadoc("Appends ordered content (text segments and child elements).\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(getContentType(), contentFieldName);
+        if (withBody) {
+            addChild.addStatement("this.$L.add($T.element(child))", contentFieldName, getXmlNodeClassName())
+                    .addStatement("return this");
+            addText.addStatement("this.$L.add($T.text(text))", contentFieldName, getXmlNodeClassName())
+                    .addStatement("return this");
+            comment.addStatement("this.$L.add($T.comment(text))", contentFieldName, getXmlNodeClassName())
+                    .addStatement("return this");
+            commentBefore
+                    .addStatement("this.$L.add($T.commentBefore(text))", contentFieldName, getXmlNodeClassName())
+                    .addStatement("return this");
+            commentAfter
+                    .addStatement("this.$L.add($T.commentAfter(text))", contentFieldName, getXmlNodeClassName())
+                    .addStatement("return this");
+            additionalChildren
+                    .beginControlFlow(
+                            "for ($T child : $L)", additionalChildrenItemType.get(), additionalChildrenFieldName)
+                    .addStatement("this.$L.add($T.element(child))", contentFieldName, getXmlNodeClassName())
+                    .endControlFlow()
+                    .addStatement("return this");
+            content.addStatement("this.$L.addAll($L)", contentFieldName, contentFieldName)
+                    .addStatement("return this");
+        }
+        methods.add(addChild);
+        methods.add(addText);
+        methods.add(comment);
+        methods.add(commentBefore);
+        methods.add(commentAfter);
+        methods.add(additionalChildren);
+        methods.add(content);
+        return methods;
     }
 
     private void addAdditionalChildrenBuilderMembers(TypeSpec.Builder builderTypeSpec, boolean isOverridden) {
         if (additionalChildrenItemType.isEmpty()) {
             return;
         }
-        builderTypeSpec.addField(FieldSpec.builder(getAdditionalChildrenType(), additionalChildrenFieldName)
+        builderTypeSpec.addField(FieldSpec.builder(getContentType(), contentFieldName)
                 .addModifiers(Modifier.PRIVATE)
                 .addAnnotation(JsonIgnore.class)
                 .initializer("new $T<>()", ArrayList.class)
                 .build());
-        MethodSpec.Builder singleSetter = MethodSpec.methodBuilder(getAddChildMethodName())
-                .addJavadoc("Appends a child element that is not described by the API definition.\n")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(nestedBuilderClassName)
-                .addParameter(additionalChildrenItemType.get(), "child")
-                .addStatement("this.$L.add(child)", additionalChildrenFieldName)
-                .addStatement("return this");
-        MethodSpec.Builder bulkSetter = MethodSpec.methodBuilder(getAdditionalChildrenMethodName())
-                .addModifiers(Modifier.PUBLIC)
-                .returns(nestedBuilderClassName)
-                .addParameter(getAdditionalChildrenType(), additionalChildrenFieldName)
-                .addStatement("this.$L.addAll($L)", additionalChildrenFieldName, additionalChildrenFieldName)
-                .addStatement("return this");
-        if (isOverridden) {
-            singleSetter.addAnnotation(ClassName.get("", "java.lang.Override"));
-            bulkSetter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        for (MethodSpec.Builder method : getContentBuilderMethods(nestedBuilderClassName, true)) {
+            if (isOverridden) {
+                method.addAnnotation(ClassName.get("", "java.lang.Override"));
+            }
+            builderTypeSpec.addMethod(method.build());
         }
-        builderTypeSpec.addMethod(singleSetter.build());
-        builderTypeSpec.addMethod(bulkSetter.build());
     }
 
     private void addAdditionalChildrenInterfaceMethods(TypeSpec.Builder interfaceBuilder, ClassName returnClass) {
         if (additionalChildrenItemType.isEmpty()) {
             return;
         }
-        interfaceBuilder.addMethod(MethodSpec.methodBuilder(getAddChildMethodName())
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .returns(returnClass)
-                .addParameter(additionalChildrenItemType.get(), "child")
-                .build());
-        interfaceBuilder.addMethod(MethodSpec.methodBuilder(getAdditionalChildrenMethodName())
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .returns(returnClass)
-                .addParameter(getAdditionalChildrenType(), additionalChildrenFieldName)
-                .build());
+        for (MethodSpec.Builder method : getContentBuilderMethods(returnClass, false)) {
+            interfaceBuilder.addMethod(method.addModifiers(Modifier.ABSTRACT).build());
+        }
+    }
+
+    private void addContentFromStatement(MethodSpec.Builder fromSetter) {
+        if (additionalChildrenItemType.isEmpty()) {
+            return;
+        }
+        String getter = allPropertyCamelCaseNames.contains(CONTENT_NAME) ? "_getContent" : "getContent";
+        fromSetter.addStatement(
+                "$L($L.$L())", contentFieldName, StageBuilderConstants.FROM_METHOD_OTHER_PARAMETER_NAME, getter);
     }
 
     private MethodSpec.Builder getFromSetter() {

@@ -24,6 +24,7 @@ const makeRequest_js_1 = require("./makeRequest.js");
 const RawResponse_js_1 = require("./RawResponse.js");
 const redactUrl_js_1 = require("./redactUrl.js");
 const requestWithRetries_js_1 = require("./requestWithRetries.js");
+const signals_js_1 = require("./signals.js");
 const SENSITIVE_HEADERS = new Set([
     "authorization",
     "www-authenticate",
@@ -95,6 +96,11 @@ function getHeaders(args) {
         return newHeaders;
     });
 }
+function isJsonContentType(contentType) {
+    var _a, _b;
+    const mediaType = (_b = (_a = contentType === null || contentType === void 0 ? void 0 : contentType.split(";")[0]) === null || _a === void 0 ? void 0 : _a.trim().toLowerCase()) !== null && _b !== void 0 ? _b : "";
+    return mediaType === "application/json" || mediaType === "text/json" || mediaType.endsWith("+json");
+}
 function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
@@ -122,10 +128,19 @@ function fetcherImpl(args) {
             };
             logger.debug("Making HTTP request", metadata);
         }
+        // Bodies that are read in full here stay covered by the timeout; streamed bodies are read by the caller.
+        const keepTimeoutUntilBodyRead = args.responseType !== "streaming" && args.responseType !== "sse" && args.responseType !== "binary-response";
+        const attemptResponses = [];
         try {
             const response = yield (0, requestWithRetries_js_1.requestWithRetries)(() => __awaiter(this, void 0, void 0, function* () {
-                return (0, makeRequest_js_1.makeRequest)(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse");
-            }), args.maxRetries);
+                // A retry means the previous attempt is over; stop its timer now rather than at the end.
+                for (const previousResponse of attemptResponses) {
+                    (0, makeRequest_js_1.clearResponseTimeout)(previousResponse);
+                }
+                const attemptResponse = yield (0, makeRequest_js_1.makeRequest)(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse", keepTimeoutUntilBodyRead);
+                attemptResponses.push(attemptResponse);
+                return attemptResponse;
+            }), args.maxRetries, args.abortSignal);
             if (response.status >= 200 && response.status < 400) {
                 if (logger.isDebug()) {
                     const metadata = {
@@ -137,6 +152,16 @@ function fetcherImpl(args) {
                     logger.debug("HTTP request succeeded", metadata);
                 }
                 const body = yield (0, getResponseBody_js_1.getResponseBody)(response, args.responseType);
+                // Only a body the server labelled as JSON is an error here; void endpoints may return plain text.
+                if ((0, getResponseBody_js_1.isResponseBodyError)(body) &&
+                    body.error.reason === "non-json" &&
+                    isJsonContentType(response.headers.get("Content-Type"))) {
+                    return {
+                        ok: false,
+                        error: body.error,
+                        rawResponse: (0, RawResponse_js_1.toRawResponse)(response),
+                    };
+                }
                 return {
                     ok: true,
                     body: body,
@@ -184,7 +209,7 @@ function fetcherImpl(args) {
                     rawResponse: RawResponse_js_1.abortRawResponse,
                 };
             }
-            else if (error instanceof Error && error.name === "AbortError") {
+            else if (error === signals_js_1.TIMEOUT || (error instanceof Error && error.name === "AbortError")) {
                 if (logger.isError()) {
                     const metadata = {
                         method: args.method,
@@ -238,6 +263,11 @@ function fetcherImpl(args) {
                 },
                 rawResponse: RawResponse_js_1.unknownRawResponse,
             };
+        }
+        finally {
+            for (const attemptResponse of attemptResponses) {
+                (0, makeRequest_js_1.clearResponseTimeout)(attemptResponse);
+            }
         }
     });
 }

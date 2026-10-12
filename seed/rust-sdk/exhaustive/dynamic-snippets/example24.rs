@@ -11,9 +11,9 @@ async fn main() {
     client
         .endpoints
         .object
-        .get_and_return_with_documented_unknown_type(
-            &ObjectWithDocumentedUnknownType {
-                documented_unknown_type: DocumentedUnknownType(serde_json::json!({"key":"value"})),
+        .get_and_return_with_unknown_field(
+            &ObjectWithUnknownField {
+                unknown: serde_json::json!({"key":"value"}),
                 ..Default::default()
             },
             None,

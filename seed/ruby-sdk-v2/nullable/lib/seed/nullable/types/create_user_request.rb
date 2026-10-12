@@ -10,7 +10,7 @@ module Seed
 
         field :metadata, -> { Seed::Nullable::Types::Metadata }, optional: true, nullable: false
 
-        field :avatar, -> { String }, optional: true, nullable: false
+        field :avatar, -> { String }, optional: true, nullable: true
       end
     end
   end

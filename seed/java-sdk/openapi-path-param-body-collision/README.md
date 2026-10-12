@@ -18,6 +18,7 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Custom Headers](#custom-headers)
+  - [Additional Body Properties](#additional-body-properties)
   - [Access Raw Response Data](#access-raw-response-data)
 - [Contributing](#contributing)
 
@@ -89,7 +90,7 @@ import com.seed.api.core.Environment;
 
 SeedApiClient client = SeedApiClient
     .builder()
-    .environment(Environment.Default)
+    .environment(Environment.DEFAULT)
     .build();
 ```
 
@@ -217,6 +218,25 @@ client.updateProfileIdentifier(
     RequestOptions
         .builder()
         .addHeader("X-Request-Header", "request-value")
+        .build()
+);
+```
+
+### Additional Body Properties
+
+If you need to send a request body property that is not yet part of the SDK (for example, a beta field),
+use the `addBodyProperty` request option. Properties are sent with the key exactly as given and override
+any property with the same key; for endpoints without a request body, they are sent as a JSON body.
+This is supported for JSON and form-urlencoded request bodies, but not for multipart (file upload) requests.
+
+```java
+import com.seed.api.core.RequestOptions;
+
+client.updateProfileIdentifier(
+    ...,
+    RequestOptions
+        .builder()
+        .addBodyProperty("extra_field", "extra-value")
         .build()
 );
 ```

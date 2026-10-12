@@ -14,10 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
-        Query: "query",
+    request := &fern.UnionStreamRequestBase{
+        StreamResponse: fern.Bool(
+            true,
+        ),
+        Prompt: "prompt",
     }
-    client.StreamXFernStreamingNullableConditionStream(
+    client.ValidateUnionRequest(
         context.TODO(),
         request,
     )

@@ -205,6 +205,9 @@ function getEndpointParameters({
     const parameters: FernGeneratorCli.ParameterReference[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
+        if (context.getSdkVariableForPathParameter(pathParam) != null) {
+            return;
+        }
         parameters.push({
             name: `$${context.case.camelSafe(pathParam.name)}`,
             type: getPhpTypeStringFromTypeReference({ context, typeReference: pathParam.valueType }),

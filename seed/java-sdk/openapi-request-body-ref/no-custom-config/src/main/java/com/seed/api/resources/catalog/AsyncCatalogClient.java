@@ -5,6 +5,7 @@ package com.seed.api.resources.catalog;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.catalog.requests.CreateCatalogImageBody;
 import com.seed.api.resources.catalog.requests.GetCatalogImageRequest;
 import com.seed.api.types.CatalogImage;
@@ -33,60 +34,131 @@ public class AsyncCatalogClient {
 
     public CompletableFuture<CatalogImage> createCatalogImage(
             Optional<File> imageFile, CreateCatalogImageBody request) {
-        return this.rawClient.createCatalogImage(imageFile, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.createCatalogImage(imageFile, request);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> createCatalogImage(
             Optional<File> imageFile, CreateCatalogImageBody request, RequestOptions requestOptions) {
-        return this.rawClient
-                .createCatalogImage(imageFile, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.createCatalogImage(imageFile, request, requestOptions);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename) {
-        return this.rawClient.createCatalogImage(imageFile, stream, filename).thenApply(response -> response.body());
+            CreateCatalogImageBody request, InputStream stream, String filename) {
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.createCatalogImage(request, stream, filename);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient
-                .createCatalogImage(imageFile, stream, filename, mediaType)
-                .thenApply(response -> response.body());
+            CreateCatalogImageBody request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.createCatalogImage(request, stream, filename, mediaType);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient
-                .createCatalogImage(imageFile, stream, filename, requestOptions)
-                .thenApply(response -> response.body());
+            CreateCatalogImageBody request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.createCatalogImage(request, stream, filename, requestOptions);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> createCatalogImage(
-            Optional<File> imageFile,
+            CreateCatalogImageBody request,
             InputStream stream,
             String filename,
             MediaType mediaType,
             RequestOptions requestOptions) {
-        return this.rawClient
-                .createCatalogImage(imageFile, stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.createCatalogImage(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> getCatalogImage(String imageId) {
-        return this.rawClient.getCatalogImage(imageId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture = this.rawClient.getCatalogImage(imageId);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> getCatalogImage(String imageId, RequestOptions requestOptions) {
-        return this.rawClient.getCatalogImage(imageId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.getCatalogImage(imageId, requestOptions);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> getCatalogImage(String imageId, GetCatalogImageRequest request) {
-        return this.rawClient.getCatalogImage(imageId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.getCatalogImage(imageId, request);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CatalogImage> getCatalogImage(
             String imageId, GetCatalogImageRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getCatalogImage(imageId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CatalogImage>> rawFuture =
+                this.rawClient.getCatalogImage(imageId, request, requestOptions);
+        CompletableFuture<CatalogImage> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -8,8 +8,11 @@ import com.seed.webhooks.core.WebhookSignature;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 public final class SmsStatusWebhooksHelper {
+    private static final Logger LOGGER = Logger.getLogger(SmsStatusWebhooksHelper.class.getName());
+
     private SmsStatusWebhooksHelper() {}
 
     /**
@@ -24,29 +27,48 @@ public final class SmsStatusWebhooksHelper {
      */
     public static boolean verifySignature(
             String requestBody, String signatureHeader, String signatureKey, String notificationUrl) {
-        if (requestBody == null
-                || requestBody.isEmpty()
-                || signatureHeader == null
-                || signatureHeader.isEmpty()
-                || signatureKey == null
-                || signatureKey.isEmpty()) {
+        return verifySignature(requestBody, signatureHeader, signatureKey, notificationUrl, "HmacSHA1");
+    }
+
+    /**
+     * Verify an HMAC webhook signature.
+     *
+     * Extract the signature from the "x-twilio-signature" header and pass it as the {@code signatureHeader} parameter.
+     * The {@code requestBody} parameter accepts either a raw string or a map of POST body parameters.
+     * When a map is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing.
+     * This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.
+     * For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.
+     * The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches.
+     *
+     * The {@code algorithm} parameter selects the HMAC algorithm ("sha1", "sha256", "sha384" or "sha512"); pass {@code null} to use the configured default ("HmacSHA1").
+     */
+    public static boolean verifySignature(
+            String requestBody, String signatureHeader, String signatureKey, String notificationUrl, String algorithm) {
+        if (signatureHeader == null || signatureHeader.isEmpty()) {
+            LOGGER.warning("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || requestBody.isEmpty() || signatureKey == null || signatureKey.isEmpty()) {
             return false;
         }
         String transmittedBodyHash = WebhookBodyHash.getQueryParameter(notificationUrl, "bodySHA256");
         if (transmittedBodyHash != null) {
             String expectedBodyHash = WebhookBodyHash.computeHash(requestBody, "SHA-256", "hex");
             if (!WebhookSignature.timingSafeEqual(expectedBodyHash, transmittedBodyHash)) {
+                LOGGER.warning("Webhook signature verification failed: signature mismatch");
                 return false;
             }
         }
         List<String> candidates = WebhookSignature.notificationUrlCandidates(notificationUrl, true, true);
         for (String candidateUrl : candidates) {
             String payload = transmittedBodyHash != null ? candidateUrl : String.join("", candidateUrl, requestBody);
-            String expected = WebhookSignature.computeHmacSignature(payload, signatureKey, "HmacSHA1", "base64");
+            String expected = WebhookSignature.computeHmacSignature(
+                    payload, signatureKey, WebhookSignature.toMacAlgorithm(algorithm, "HmacSHA1"), "base64");
             if (WebhookSignature.timingSafeEqual(signatureHeader, expected)) {
                 return true;
             }
         }
+        LOGGER.warning("Webhook signature verification failed: signature mismatch");
         return false;
     }
 
@@ -62,6 +84,27 @@ public final class SmsStatusWebhooksHelper {
      */
     public static boolean verifySignature(
             Map<String, ?> requestBody, String signatureHeader, String signatureKey, String notificationUrl) {
+        return verifySignature(requestBody, signatureHeader, signatureKey, notificationUrl, "HmacSHA1");
+    }
+
+    /**
+     * Verify an HMAC webhook signature.
+     *
+     * Extract the signature from the "x-twilio-signature" header and pass it as the {@code signatureHeader} parameter.
+     * The {@code requestBody} parameter accepts either a raw string or a map of POST body parameters.
+     * When a map is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing.
+     * This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.
+     * For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.
+     * The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches.
+     *
+     * The {@code algorithm} parameter selects the HMAC algorithm ("sha1", "sha256", "sha384" or "sha512"); pass {@code null} to use the configured default ("HmacSHA1").
+     */
+    public static boolean verifySignature(
+            Map<String, ?> requestBody,
+            String signatureHeader,
+            String signatureKey,
+            String notificationUrl,
+            String algorithm) {
         if (requestBody == null) {
             return false;
         }
@@ -81,6 +124,6 @@ public final class SmsStatusWebhooksHelper {
             }
         }
         String bodyString = bodyStringBuilder.toString();
-        return verifySignature(bodyString, signatureHeader, signatureKey, notificationUrl);
+        return verifySignature(bodyString, signatureHeader, signatureKey, notificationUrl, algorithm);
     }
 }

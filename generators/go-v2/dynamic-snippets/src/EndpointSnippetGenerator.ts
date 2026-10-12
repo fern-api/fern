@@ -5,6 +5,7 @@ import { go } from "@fern-api/go-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
+import { getSdkVariableNames } from "./sdkVariables.js";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -206,7 +207,9 @@ export class EndpointSnippetGenerator {
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.write(`${CLIENT_VAR_NAME} := `);
-            writer.writeNode(this.getRootClientFuncInvocation(this.getWiremockTestConstructorArgs()));
+            writer.writeNode(
+                this.getRootClientFuncInvocation(this.getWiremockTestConstructorArgs({ endpoint, snippet }))
+            );
         });
     }
 
@@ -324,10 +327,17 @@ export class EndpointSnippetGenerator {
             args.push(...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers }));
         }
         this.context.errors.unscope();
+        args.push(...this.getConstructorSdkVariableArgs({ endpoint, snippet }));
         return args;
     }
 
-    private getWiremockTestConstructorArgs(): go.AstNode[] {
+    private getWiremockTestConstructorArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): go.AstNode[] {
         return [
             go.codeblock((writer) => {
                 writer.writeNode(
@@ -339,8 +349,62 @@ export class EndpointSnippetGenerator {
                         arguments_: [go.codeblock(WIREMOCK_BASE_URL)]
                     })
                 );
-            })
+            }),
+            ...this.getConstructorSdkVariableArgs({ endpoint, snippet })
         ];
+    }
+
+    /**
+     * Path parameters bound to an SDK variable are configured on the client via
+     * option.With<Variable>(...) rather than passed to the endpoint method.
+     */
+    private getConstructorSdkVariableArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): go.AstNode[] {
+        const boundParameters = [
+            ...(this.context.ir.pathParameters ?? []),
+            ...(endpoint.request.pathParameters ?? [])
+        ].filter((parameter) => parameter.variable != null);
+        if (boundParameters.length === 0) {
+            return [];
+        }
+        const args: go.AstNode[] = [];
+        const seen = new Set<string>();
+        this.context.errors.scope(Scope.PathParameters);
+        const instances = this.context.associateByWireValueOrDefault({
+            parameters: boundParameters,
+            values: snippet.pathParameters ?? {}
+        });
+        const instancesByWireValue = new Map(instances.map((instance) => [instance.name.wireValue, instance]));
+        for (const parameter of boundParameters) {
+            const instance = instancesByWireValue.get(parameter.name.wireValue);
+            const variableId = parameter.variable;
+            if (instance == null || variableId == null || seen.has(variableId)) {
+                continue;
+            }
+            seen.add(variableId);
+            const variable = (this.context.ir.variables ?? []).find((candidate) => candidate.id === variableId);
+            const name = variable?.name ?? parameter.name.name;
+            const { fieldName } = getSdkVariableNames({
+                pascal: name.pascalCase.unsafeName,
+                camel: name.camelCase.safeName
+            });
+            args.push(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: `With${fieldName}`,
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [this.context.dynamicTypeInstantiationMapper.convert(instance)]
+                })
+            );
+        }
+        this.context.errors.unscope();
+        return args;
     }
 
     private getConstructorAuthArgs({
@@ -795,14 +859,20 @@ export class EndpointSnippetGenerator {
             inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? true
         };
 
-        const includePathParamsInRequest = this.context.includePathParametersInWrappedRequest({
-            request,
-            inlinePathParameters
-        });
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        // Path parameters bound to an SDK variable live on the client, so a wrapper that would
+        // only have carried bound path parameters is omitted by the SDK (mirrors
+        // SdkGeneratorContext.includePathParametersInWrappedRequest).
+        const hasPerCallPathParameters = pathParameters.some((parameter) => parameter.variable == null);
+        const includePathParamsInRequest =
+            hasPerCallPathParameters &&
+            this.context.includePathParametersInWrappedRequest({
+                request,
+                inlinePathParameters
+            });
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: go.StructField[] = [];
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
             pathParameterFields.push(
                 ...this.getPathParameters({
@@ -827,7 +897,13 @@ export class EndpointSnippetGenerator {
         }
 
         const requestArg: go.AstNode | undefined = this.context.needsRequestParameter({
-            request,
+            request: {
+                ...request,
+                metadata: {
+                    includePathParameters: includePathParamsInRequest,
+                    onlyPathParameters: request.metadata?.onlyPathParameters ?? false
+                }
+            },
             inlinePathParameters,
             inlineFileProperties
         })
@@ -1058,7 +1134,8 @@ export class EndpointSnippetGenerator {
         const args: go.StructField[] = [];
 
         const pathParameters = this.context.associateByWireValueOrDefault({
-            parameters: namedParameters,
+            // Parameters bound to a client-level SDK variable are passed to the constructor instead.
+            parameters: namedParameters.filter((parameter) => parameter.variable == null),
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {

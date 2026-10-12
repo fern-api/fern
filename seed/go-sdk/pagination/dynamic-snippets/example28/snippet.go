@@ -17,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsernamesWithOptionalResponseRequest{
+    request := &fern.ListUsernamesRequest{
         StartingAfter: fern.String(
             "starting_after",
         ),
     }
-    client.Users.ListUsernamesWithOptionalResponse(
+    client.Users.ListUsernames(
         context.TODO(),
         request,
     )

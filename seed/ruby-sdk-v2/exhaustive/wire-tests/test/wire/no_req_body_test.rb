@@ -15,7 +15,7 @@ class NoReqBodyWireTest < WireMockTestCase
   def test_no_req_body_get_with_no_request_body_with_wiremock
     test_id = "no_req_body.get_with_no_request_body.0"
 
-    @client.no_req_body.get_with_no_request_body(request_options: {
+    result = @client.no_req_body.get_with_no_request_body(request_options: {
       additional_headers: {
         "X-Test-Id" => "no_req_body.get_with_no_request_body.0"
       }
@@ -27,6 +27,15 @@ class NoReqBodyWireTest < WireMockTestCase
       url_path: "/no-req-body",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
     )
   end
 

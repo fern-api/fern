@@ -23,10 +23,12 @@ type ListPlantsRequest struct {
 }
 
 func (l *ListPlantsRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -57,10 +59,12 @@ type ListPlantsWithBodyOffsetRequest struct {
 }
 
 func (l *ListPlantsWithBodyOffsetRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -112,10 +116,12 @@ type ListPlantsWithRequiredOffsetRequest struct {
 }
 
 func (l *ListPlantsWithRequiredOffsetRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -170,10 +176,12 @@ func (l *ListPlantsResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *ListPlantsResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetTotalCount sets the TotalCount field and marks it as non-optional;
@@ -270,10 +278,12 @@ func (p *Plant) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Plant) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;

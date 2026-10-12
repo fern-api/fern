@@ -5,8 +5,8 @@ namespace Seed\Types;
 use Seed\Core\Xml\XmlSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
-use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlUtils;
+use Seed\Core\Xml\XmlElement;
 use InvalidArgumentException;
 
 class Dial extends XmlSerializableType
@@ -38,8 +38,17 @@ class Dial extends XmlSerializableType
     /**
      * @param array{
      *   number?: ?string,
-     *   statusCallbackEvent?: ?array<string>,
-     *   record?: ?array<value-of<DialRecordItem>>,
+     *   statusCallbackEvent?: (
+     *    array<string>
+     *   |string
+     * )|null,
+     *   record?: (
+     *    array<(
+     *    value-of<DialRecordItem>
+     *   |DialRecordItem
+     * )>
+     *   |string
+     * )|null,
      *   numbers?: ?array<Number>,
      * } $values
      */
@@ -47,8 +56,13 @@ class Dial extends XmlSerializableType
         array $values = [],
     ) {
         $this->number = $values['number'] ?? null;
-        $this->statusCallbackEvent = $values['statusCallbackEvent'] ?? null;
-        $this->record = $values['record'] ?? null;
+        /** @var ?array<string> $statusCallbackEvent */
+        $statusCallbackEvent = XmlUtils::toList($values['statusCallbackEvent'] ?? null, ' ');
+        $this->statusCallbackEvent = $statusCallbackEvent;
+
+        /** @var ?array<value-of<DialRecordItem>> $record */
+        $record = XmlUtils::toList($values['record'] ?? null, ' ');
+        $this->record = $record;
         $this->numbers = $values['numbers'] ?? null;
     }
 
@@ -60,16 +74,21 @@ class Dial extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('Dial', namespace: 'https://www.twilio.com/twiml', prefix: 'tw');
+        $typed = [];
+        /** @var array<string, list<\Seed\Core\Xml\XmlNode>> $wrapped */
+        $wrapped = [];
         $element->text = XmlUtils::toXmlString($this->number);
         $element->setAttribute('statusCallbackEvent', XmlUtils::joinValues($this->statusCallbackEvent, ' '));
         $element->setAttribute('record', XmlUtils::joinValues($this->record, ' '));
         if ($this->numbers !== null) {
-            $numbersWrapper = XmlUtils::addWrapper($element, 'Numbers');
+            if (!isset($wrapped['Numbers'])) {
+                $wrapped['Numbers'] = [];
+            }
             foreach ($this->numbers as $item) {
-                $numbersWrapper->addChild($item);
+                $wrapped['Numbers'][] = $item;
             }
         }
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren(), ['Numbers']);
+        XmlUtils::addContent($element, $this->getContent(), $typed, $wrapped, $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -101,6 +120,7 @@ class Dial extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['statusCallbackEvent', 'record']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, [], ['Numbers' => ['Number']]));
+        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren(), ['Numbers']));
         return $result;
     }
 
@@ -121,6 +141,7 @@ class Dial extends XmlSerializableType
     {
         $phoneNumberElement = $phoneNumber instanceof Number ? $phoneNumber : new Number([...$attributes, 'phoneNumber' => $phoneNumber]);
         $this->numbers = [...($this->numbers ?? []), $phoneNumberElement];
+        $this->recordContent($phoneNumberElement);
         return $phoneNumberElement;
     }
 

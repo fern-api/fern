@@ -4,6 +4,7 @@
 package com.seed.javaIdempotencyHeadersFileUpload.core;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +31,8 @@ public final class IdempotentRequestOptions {
 
     private final Map<String, Supplier<String>> queryParameterSuppliers;
 
+    private final Map<String, Object> bodyProperties;
+
     private IdempotentRequestOptions(
             String token,
             String idempotencyKey,
@@ -40,7 +43,8 @@ public final class IdempotentRequestOptions {
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             Map<String, String> queryParameters,
-            Map<String, Supplier<String>> queryParameterSuppliers) {
+            Map<String, Supplier<String>> queryParameterSuppliers,
+            Map<String, Object> bodyProperties) {
         this.token = token;
         this.idempotencyKey = idempotencyKey;
         this.idempotencyExpiration = idempotencyExpiration;
@@ -51,6 +55,7 @@ public final class IdempotentRequestOptions {
         this.headerSuppliers = headerSuppliers;
         this.queryParameters = queryParameters;
         this.queryParameterSuppliers = queryParameterSuppliers;
+        this.bodyProperties = bodyProperties;
     }
 
     public Optional<Integer> getTimeout() {
@@ -91,6 +96,13 @@ public final class IdempotentRequestOptions {
         return queryParameters;
     }
 
+    /**
+     * Additional properties merged into the request body, keyed by their wire names.
+     */
+    public Map<String, Object> getBodyProperties() {
+        return new LinkedHashMap<>(this.bodyProperties);
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -115,6 +127,8 @@ public final class IdempotentRequestOptions {
         private final Map<String, String> queryParameters = new HashMap<>();
 
         private final Map<String, Supplier<String>> queryParameterSuppliers = new HashMap<>();
+
+        private final Map<String, Object> bodyProperties = new LinkedHashMap<>();
 
         public Builder token(String token) {
             this.token = token;
@@ -167,6 +181,22 @@ public final class IdempotentRequestOptions {
             return this;
         }
 
+        /**
+         * Adds a property to the JSON or form-urlencoded request body, keyed by its wire name. It overrides any request body property with the same key, and is sent as the whole body for endpoints without one. Multipart (file upload) bodies are not supported.
+         */
+        public Builder addBodyProperty(String key, Object value) {
+            this.bodyProperties.put(key, value);
+            return this;
+        }
+
+        /**
+         * Adds each entry as a request body property. See {@link #addBodyProperty}.
+         */
+        public Builder bodyProperties(Map<String, Object> bodyProperties) {
+            this.bodyProperties.putAll(bodyProperties);
+            return this;
+        }
+
         public IdempotentRequestOptions build() {
             return new IdempotentRequestOptions(
                     token,
@@ -178,7 +208,8 @@ public final class IdempotentRequestOptions {
                     headers,
                     headerSuppliers,
                     queryParameters,
-                    queryParameterSuppliers);
+                    queryParameterSuppliers,
+                    bodyProperties);
         }
     }
 }

@@ -9,7 +9,7 @@ public partial class Examples
             }
         );
 
-        await foreach (var item in client.StreamDataContextWithEnvelopeSchemaAsync(
+        await foreach (var item in client.StreamProtocolMixedSchemaAsync(
             new StreamRequest()
         ))
         {

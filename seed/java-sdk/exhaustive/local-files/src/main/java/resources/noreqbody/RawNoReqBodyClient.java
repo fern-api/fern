@@ -5,6 +5,7 @@
 package com.fern.sdk.resources.noreqbody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
@@ -88,7 +89,7 @@ public class RawNoReqBodyClient {
         }
         Request okhttpRequest = new Request.Builder()
           .url(httpUrl.build())
-          .method("POST", RequestBody.create("", null))
+          .method("POST", BodyProperties.toRequestBody(requestOptions != null ? requestOptions.getBodyProperties() : null, RequestBody.create("", null)))
           .headers(Headers.of(clientOptions.headers(requestOptions)))
           .addHeader("Accept", "application/json")
           .build();

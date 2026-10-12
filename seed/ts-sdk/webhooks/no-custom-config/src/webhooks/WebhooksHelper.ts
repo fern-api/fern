@@ -17,8 +17,13 @@ export class WebhooksHelper {
         signatureHeader: string,
         signatureKey: string,
         timestampHeader: string,
+        algorithm?: "sha1" | "sha256" | "sha384" | "sha512",
     ): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -45,10 +50,14 @@ export class WebhooksHelper {
         const expected = await core.computeHmacSignature({
             payload: payload,
             secret: signatureKey,
-            algorithm: "sha256",
+            algorithm: algorithm ?? "sha256",
             encoding: "hex",
         });
 
-        return await core.timingSafeEqual(sig, expected);
+        const valid = await core.timingSafeEqual(sig, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }

@@ -13,11 +13,11 @@ $client = new SeedClient(
 );
 $client->createTree(
     new TreeRecord([
-        'treeSpecies' => 'treeSpecies',
-        'heightInFeet' => 1.1,
         'id' => 'id',
         'treeName' => 'treeName',
-        'treeDescription' => 'treeDescription',
+        'treeSpecies' => 'treeSpecies',
         'plantedDate' => new DateTime('2023-01-15'),
+        'heightInFeet' => 1.1,
+        'treeDescription' => 'treeDescription',
     ]),
 );

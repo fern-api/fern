@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix audience filtering dropping the variants of an inline `anyOf`/`oneOf` on a request body
+    property when importing OpenAPI. The variants were removed from the IR, so the property and
+    each variant rendered as `any` in audience-filtered API references.
+  type: fix

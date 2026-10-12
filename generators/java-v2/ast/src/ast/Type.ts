@@ -148,7 +148,11 @@ export class Type extends AstNode {
                 writer.write("byte[]");
                 break;
             case "date":
-                writer.write("String");
+                if (writer.customConfig?.["use-local-date-for-dates"] === true) {
+                    writer.writeNode(LocalDateTypeClassReference);
+                } else {
+                    writer.write("String");
+                }
                 break;
             case "dateTime":
                 writer.writeNode(OffsetDateTimeClassReference);
@@ -436,6 +440,11 @@ export const ListClassReference = new ClassReference({
 export const MapClassReference = new ClassReference({
     name: "Map",
     packageName: "java.util"
+});
+
+const LocalDateTypeClassReference = new ClassReference({
+    name: "LocalDate",
+    packageName: "java.time"
 });
 
 export const OffsetDateTimeClassReference = new ClassReference({

@@ -209,6 +209,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     ///
     /// This method is used for file uploads using reqwest's built-in multipart support.
     /// Note: Multipart requests are not retried because they cannot be cloned.
+    /// \`RequestOptions::additional_body_params\` are not applied to multipart bodies.
     ///
     /// # Example
     /// \`\`\`no_run
@@ -284,6 +285,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     ///
     /// This method is used for file uploads that return binary data (e.g., audio conversion).
     /// Note: Multipart requests are not retried because they cannot be cloned.
+    /// \`RequestOptions::additional_body_params\` are not applied to multipart bodies.
     #[cfg(feature = "multipart")]
     pub async fn execute_multipart_stream_request(
         &self,
@@ -376,7 +378,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             }
         }
 
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             request = request.form(&body);
         }
 
@@ -426,7 +428,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             }
         }
 
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             // \`.json()\` would stamp \`application/json\` over the declared type, so the body is
             // serialized by hand and the header set explicitly.
             let encoded = serde_json::to_vec(&body).map_err(ApiError::Serialization)?;
@@ -450,6 +452,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
                 /\{\{BYTES_METHOD\}\}/g,
                 `    /// Execute a request with a raw bytes body, sent under the content type the
     /// endpoint declares.
+    /// \`RequestOptions::additional_body_params\` are not applied to raw bytes bodies.
     pub async fn execute_bytes_request<T>(
         &self,
         method: Method,
@@ -557,7 +560,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         }
 
         // Apply body if provided
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             request = request.json(&body);
         }
 
@@ -651,7 +654,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         }
 
         // Apply body if provided
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             request = request.json(&body);
         }
 

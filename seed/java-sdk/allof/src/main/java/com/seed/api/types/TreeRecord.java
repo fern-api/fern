@@ -20,54 +20,36 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TreeRecord.Builder.class)
-public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDescribable {
-    private final Optional<String> treeSpecies;
+public final class TreeRecord implements ITreeIdentifiable {
+    private final String id;
+
+    private final String treeName;
+
+    private final String treeSpecies;
+
+    private final Optional<String> plantedDate;
 
     private final Optional<Double> heightInFeet;
 
-    private final String id;
-
-    private final Optional<String> treeName;
-
     private final Optional<String> treeDescription;
-
-    private final Optional<String> plantedDate;
 
     private final Map<String, Object> additionalProperties;
 
     private TreeRecord(
-            Optional<String> treeSpecies,
-            Optional<Double> heightInFeet,
             String id,
-            Optional<String> treeName,
-            Optional<String> treeDescription,
+            String treeName,
+            String treeSpecies,
             Optional<String> plantedDate,
+            Optional<Double> heightInFeet,
+            Optional<String> treeDescription,
             Map<String, Object> additionalProperties) {
-        this.treeSpecies = treeSpecies;
-        this.heightInFeet = heightInFeet;
         this.id = id;
         this.treeName = treeName;
-        this.treeDescription = treeDescription;
+        this.treeSpecies = treeSpecies;
         this.plantedDate = plantedDate;
+        this.heightInFeet = heightInFeet;
+        this.treeDescription = treeDescription;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return The species of tree.
-     */
-    @JsonProperty("treeSpecies")
-    @java.lang.Override
-    public Optional<String> getTreeSpecies() {
-        return treeSpecies;
-    }
-
-    /**
-     * @return Height of the tree in feet.
-     */
-    @JsonProperty("heightInFeet")
-    @java.lang.Override
-    public Optional<Double> getHeightInFeet() {
-        return heightInFeet;
     }
 
     /**
@@ -83,18 +65,16 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
      * @return Display name of the tree.
      */
     @JsonProperty("treeName")
-    @java.lang.Override
-    public Optional<String> getTreeName() {
+    public String getTreeName() {
         return treeName;
     }
 
     /**
-     * @return A description of the tree.
+     * @return The species of tree.
      */
-    @JsonProperty("treeDescription")
-    @java.lang.Override
-    public Optional<String> getTreeDescription() {
-        return treeDescription;
+    @JsonProperty("treeSpecies")
+    public String getTreeSpecies() {
+        return treeSpecies;
     }
 
     /**
@@ -103,6 +83,22 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
     @JsonProperty("plantedDate")
     public Optional<String> getPlantedDate() {
         return plantedDate;
+    }
+
+    /**
+     * @return Height of the tree in feet.
+     */
+    @JsonProperty("heightInFeet")
+    public Optional<Double> getHeightInFeet() {
+        return heightInFeet;
+    }
+
+    /**
+     * @return A description of the tree.
+     */
+    @JsonProperty("treeDescription")
+    public Optional<String> getTreeDescription() {
+        return treeDescription;
     }
 
     @java.lang.Override
@@ -117,18 +113,18 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
     }
 
     private boolean equalTo(TreeRecord other) {
-        return treeSpecies.equals(other.treeSpecies)
-                && heightInFeet.equals(other.heightInFeet)
-                && id.equals(other.id)
+        return id.equals(other.id)
                 && treeName.equals(other.treeName)
-                && treeDescription.equals(other.treeDescription)
-                && plantedDate.equals(other.plantedDate);
+                && treeSpecies.equals(other.treeSpecies)
+                && plantedDate.equals(other.plantedDate)
+                && heightInFeet.equals(other.heightInFeet)
+                && treeDescription.equals(other.treeDescription);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.treeSpecies, this.heightInFeet, this.id, this.treeName, this.treeDescription, this.plantedDate);
+                this.id, this.treeName, this.treeSpecies, this.plantedDate, this.heightInFeet, this.treeDescription);
     }
 
     @java.lang.Override
@@ -144,9 +140,23 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
         /**
          * <p>Unique tree identifier.</p>
          */
-        _FinalStage id(@NotNull String id);
+        TreeNameStage id(@NotNull String id);
 
         Builder from(TreeRecord other);
+    }
+
+    public interface TreeNameStage {
+        /**
+         * <p>Display name of the tree.</p>
+         */
+        TreeSpeciesStage treeName(@NotNull String treeName);
+    }
+
+    public interface TreeSpeciesStage {
+        /**
+         * <p>The species of tree.</p>
+         */
+        _FinalStage treeSpecies(@NotNull String treeSpecies);
     }
 
     public interface _FinalStage {
@@ -157,11 +167,11 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>The species of tree.</p>
+         * <p>Date the tree was planted.</p>
          */
-        _FinalStage treeSpecies(Optional<String> treeSpecies);
+        _FinalStage plantedDate(Optional<String> plantedDate);
 
-        _FinalStage treeSpecies(String treeSpecies);
+        _FinalStage plantedDate(String plantedDate);
 
         /**
          * <p>Height of the tree in feet.</p>
@@ -171,40 +181,26 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
         _FinalStage heightInFeet(Double heightInFeet);
 
         /**
-         * <p>Display name of the tree.</p>
-         */
-        _FinalStage treeName(Optional<String> treeName);
-
-        _FinalStage treeName(String treeName);
-
-        /**
          * <p>A description of the tree.</p>
          */
         _FinalStage treeDescription(Optional<String> treeDescription);
 
         _FinalStage treeDescription(String treeDescription);
-
-        /**
-         * <p>Date the tree was planted.</p>
-         */
-        _FinalStage plantedDate(Optional<String> plantedDate);
-
-        _FinalStage plantedDate(String plantedDate);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, _FinalStage {
+    public static final class Builder implements IdStage, TreeNameStage, TreeSpeciesStage, _FinalStage {
         private String id;
 
-        private Optional<String> plantedDate = Optional.empty();
+        private String treeName;
+
+        private String treeSpecies;
 
         private Optional<String> treeDescription = Optional.empty();
 
-        private Optional<String> treeName = Optional.empty();
-
         private Optional<Double> heightInFeet = Optional.empty();
 
-        private Optional<String> treeSpecies = Optional.empty();
+        private Optional<String> plantedDate = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -213,12 +209,12 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
 
         @java.lang.Override
         public Builder from(TreeRecord other) {
-            treeSpecies(other.getTreeSpecies());
-            heightInFeet(other.getHeightInFeet());
             id(other.getId());
             treeName(other.getTreeName());
-            treeDescription(other.getTreeDescription());
+            treeSpecies(other.getTreeSpecies());
             plantedDate(other.getPlantedDate());
+            heightInFeet(other.getHeightInFeet());
+            treeDescription(other.getTreeDescription());
             return this;
         }
 
@@ -228,28 +224,30 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
          */
         @java.lang.Override
         @JsonSetter("id")
-        public _FinalStage id(@NotNull String id) {
+        public TreeNameStage id(@NotNull String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         /**
-         * <p>Date the tree was planted.</p>
+         * <p>Display name of the tree.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage plantedDate(String plantedDate) {
-            this.plantedDate = Optional.ofNullable(plantedDate);
+        @JsonSetter("treeName")
+        public TreeSpeciesStage treeName(@NotNull String treeName) {
+            this.treeName = Objects.requireNonNull(treeName, "treeName must not be null");
             return this;
         }
 
         /**
-         * <p>Date the tree was planted.</p>
+         * <p>The species of tree.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter(value = "plantedDate", nulls = Nulls.SKIP)
-        public _FinalStage plantedDate(Optional<String> plantedDate) {
-            this.plantedDate = plantedDate;
+        @JsonSetter("treeSpecies")
+        public _FinalStage treeSpecies(@NotNull String treeSpecies) {
+            this.treeSpecies = Objects.requireNonNull(treeSpecies, "treeSpecies must not be null");
             return this;
         }
 
@@ -274,26 +272,6 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
         }
 
         /**
-         * <p>Display name of the tree.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage treeName(String treeName) {
-            this.treeName = Optional.ofNullable(treeName);
-            return this;
-        }
-
-        /**
-         * <p>Display name of the tree.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "treeName", nulls = Nulls.SKIP)
-        public _FinalStage treeName(Optional<String> treeName) {
-            this.treeName = treeName;
-            return this;
-        }
-
-        /**
          * <p>Height of the tree in feet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -314,29 +292,29 @@ public final class TreeRecord implements ITreeBase, ITreeIdentifiable, ITreeDesc
         }
 
         /**
-         * <p>The species of tree.</p>
+         * <p>Date the tree was planted.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage treeSpecies(String treeSpecies) {
-            this.treeSpecies = Optional.ofNullable(treeSpecies);
+        public _FinalStage plantedDate(String plantedDate) {
+            this.plantedDate = Optional.ofNullable(plantedDate);
             return this;
         }
 
         /**
-         * <p>The species of tree.</p>
+         * <p>Date the tree was planted.</p>
          */
         @java.lang.Override
-        @JsonSetter(value = "treeSpecies", nulls = Nulls.SKIP)
-        public _FinalStage treeSpecies(Optional<String> treeSpecies) {
-            this.treeSpecies = treeSpecies;
+        @JsonSetter(value = "plantedDate", nulls = Nulls.SKIP)
+        public _FinalStage plantedDate(Optional<String> plantedDate) {
+            this.plantedDate = plantedDate;
             return this;
         }
 
         @java.lang.Override
         public TreeRecord build() {
             return new TreeRecord(
-                    treeSpecies, heightInFeet, id, treeName, treeDescription, plantedDate, additionalProperties);
+                    id, treeName, treeSpecies, plantedDate, heightInFeet, treeDescription, additionalProperties);
         }
 
         @java.lang.Override

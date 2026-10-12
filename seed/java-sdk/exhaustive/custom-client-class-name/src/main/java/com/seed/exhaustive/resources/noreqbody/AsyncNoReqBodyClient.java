@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.resources.noreqbody;
 
+import com.seed.exhaustive.core.BestHttpResponse;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
@@ -26,18 +27,47 @@ public class AsyncNoReqBodyClient {
     }
 
     public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody() {
-        return this.rawClient.getWithNoRequestBody().thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.getWithNoRequestBody();
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody(RequestOptions requestOptions) {
-        return this.rawClient.getWithNoRequestBody(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.getWithNoRequestBody(requestOptions);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> postWithNoRequestBody() {
-        return this.rawClient.postWithNoRequestBody().thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<String>> rawFuture = this.rawClient.postWithNoRequestBody();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> postWithNoRequestBody(RequestOptions requestOptions) {
-        return this.rawClient.postWithNoRequestBody(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<String>> rawFuture = this.rawClient.postWithNoRequestBody(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

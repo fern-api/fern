@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) types keep text segments, typed child elements and raw `XmlElement` children in a
+    single ordered content list, so `toXml()` emits them in the order they were added
+    (`$response->say(['message' => 'a']); $response->addChild(new XmlElement('Custom')); $response->say(['message' => 'b']);`
+    yields `<Say>a</Say><Custom/><Say>b</Say>`) and `fromXml()` preserves document order, including
+    the position of unknown elements. Adds `addText(string)` to XML types and `XmlElement` for mixed
+    content such as `<Say>Hi <break strength="weak"/> world</Say>`. Typed child properties and
+    additional children remain available and are reconciled into the content order on serialization.
+  type: feat

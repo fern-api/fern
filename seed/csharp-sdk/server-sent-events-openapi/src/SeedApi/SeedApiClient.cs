@@ -477,6 +477,95 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamProtocolMixedSchemaResponse>>
+    > StreamProtocolMixedSchemaAsyncCore(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/protocol-mixed-schema",
+                    Body = request,
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<StreamProtocolMixedSchemaResponse>>()
+            {
+                Data = StreamProtocolMixedSchemaAsyncBody(response, cancellationToken),
+                RawResponse = new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<StreamProtocolMixedSchemaResponse> StreamProtocolMixedSchemaAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                StreamProtocolMixedSchemaResponse? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamProtocolMixedSchemaResponse>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
         WithRawResponse<IAsyncEnumerable<StreamDataContextWithEnvelopeSchemaResponse>>
     > StreamDataContextWithEnvelopeSchemaAsyncCore(
         StreamRequest request,
@@ -1679,6 +1768,24 @@ public partial class SeedApiClient : ISeedApiClient
     {
         return new WithRawResponseStream<StreamProtocolWithFlatSchemaResponse>(
             StreamProtocolWithFlatSchemaAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
+    }
+
+    /// <summary>
+    /// context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+    /// </summary>
+    /// <example><code>
+    /// client.StreamProtocolMixedSchemaAsync(new StreamRequest());
+    /// </code></example>
+    public WithRawResponseStream<StreamProtocolMixedSchemaResponse> StreamProtocolMixedSchemaAsync(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseStream<StreamProtocolMixedSchemaResponse>(
+            StreamProtocolMixedSchemaAsyncCore(request, options, cancellationToken),
             cancellationToken
         );
     }

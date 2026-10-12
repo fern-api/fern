@@ -22,6 +22,7 @@ public class ServiceWireTest {
         server.start();
         client = SeedHeaderTokenClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .headerTokenAuth("test-api-key")
                 .build();
     }

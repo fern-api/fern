@@ -11,9 +11,9 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
-            new GetWithInlinePathAndQuery {
-                Param = "param",
+        await client.Endpoints.Params.GetWithPathAndQueryAsync(
+            param: "param",
+            request: new GetWithPathAndQuery {
                 Query = "query"
             }
         );
