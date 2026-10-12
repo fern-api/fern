@@ -443,13 +443,7 @@ export async function assertGeneratorProducedOutput({
     generatorName: string;
     absolutePathToTmpOutputDirectory: AbsoluteFilePath;
 }): Promise<void> {
-    const entries = await readdir(absolutePathToTmpOutputDirectory).catch((error: unknown) => {
-        if (isEnoentError(error)) {
-            return [];
-        }
-        throw error;
-    });
-    if (entries.length === 0) {
+    if (!(await containsAnyFile(absolutePathToTmpOutputDirectory))) {
         throw new CliError({
             message:
                 `Generator ${generatorName} exited without writing any files, so the existing output was left untouched. ` +
@@ -457,6 +451,21 @@ export async function assertGeneratorProducedOutput({
             code: CliError.Code.ContainerError
         });
     }
+}
+
+async function containsAnyFile(directory: string): Promise<boolean> {
+    const entries = await readdir(directory, { withFileTypes: true }).catch((error: unknown) => {
+        if (isEnoentError(error)) {
+            return [];
+        }
+        throw error;
+    });
+    for (const entry of entries) {
+        if (!entry.isDirectory() || (await containsAnyFile(path.join(directory, entry.name)))) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function isEnoentError(error: unknown): boolean {

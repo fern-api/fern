@@ -46,8 +46,19 @@ describe("assertGeneratorProducedOutput", () => {
         ).resolves.toBeUndefined();
     });
 
-    it("passes when the generator wrote only a directory", async () => {
-        await mkdir(join(dir, "src"));
+    it("throws when the generator wrote only empty directories", async () => {
+        await mkdir(join(dir, "src", "api"), { recursive: true });
+        await expect(
+            assertGeneratorProducedOutput({
+                generatorName: "fernapi/fern-typescript-sdk",
+                absolutePathToTmpOutputDirectory: AbsoluteFilePath.of(dir)
+            })
+        ).rejects.toThrow(/exited without writing any files/);
+    });
+
+    it("passes when the generator wrote a file in a nested directory", async () => {
+        await mkdir(join(dir, "src", "api"), { recursive: true });
+        await writeFile(join(dir, "src", "api", "index.ts"), "");
         await expect(
             assertGeneratorProducedOutput({
                 generatorName: "fernapi/fern-typescript-sdk",
