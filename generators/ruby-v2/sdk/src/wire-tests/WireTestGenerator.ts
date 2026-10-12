@@ -443,29 +443,12 @@ export class WireTestGenerator {
                     : [];
             const requestBodyNumbers = this.getExpectedRequestBodyNumbers(endpoint, dynamicExample);
 
-            const callLines: string[] = [];
-            const snippetLines = snippetCode.split("\n");
-            if (isLazyPagination) {
-                // For lazy paginated endpoints, we need to trigger the first HTTP request
-                // by calling .pages.next_page on the returned iterator
-                for (let i = 0; i < snippetLines.length; i++) {
-                    const line = snippetLines[i] ?? "";
-                    if (line.trim()) {
-                        // Continuation lines keep the snippet's own 2-space indent and get
-                        // the same prefix as the `result =` line, so multi-line method calls
-                        // indent one step past the method start (matching rubocop's
-                        // Layout/FirstArgumentIndentation).
-                        callLines.push(i === 0 ? `result = ${line}` : line);
-                    }
-                }
-                callLines.push("result.pages.next_page");
-            } else {
-                snippetLines
-                    .filter((line) => line.trim())
-                    .forEach((line, i) => {
-                        callLines.push(i === 0 && responseNumbers.length > 0 ? `result = ${line}` : line);
-                    });
-            }
+            const callLines = buildWireTestCallLines({
+                snippetCode,
+                isLazyPagination,
+                expectsError: expectedError != null,
+                assignResult: responseNumbers.length > 0
+            });
 
             if (expectedError != null) {
                 lines.push(`    error = assert_raises(${expectedError.errorClassReference}) do`);
@@ -1127,6 +1110,36 @@ export class WireTestGenerator {
 }
 
 const EXAMPLE_STABLE_PRIMITIVES = new Set<string>(["STRING", "INTEGER", "LONG", "UINT", "UINT_64", "BOOLEAN", "UUID"]);
+
+/**
+ * The statements a wire test runs to call the endpoint. Lazy paginated endpoints return an iterator,
+ * so the first page is fetched with `.pages.next_page` to send the request. When the call is expected
+ * to raise, it is a single expression because `assert_raises` must wrap only the raising call
+ * (rubocop Minitest/AssertRaisesCompoundBody).
+ */
+export function buildWireTestCallLines({
+    snippetCode,
+    isLazyPagination,
+    expectsError,
+    assignResult
+}: {
+    snippetCode: string;
+    isLazyPagination: boolean;
+    expectsError: boolean;
+    assignResult: boolean;
+}): string[] {
+    // Continuation lines keep the snippet's own 2-space indent and get the same prefix as the
+    // `result =` line, so multi-line method calls indent one step past the method start (matching
+    // rubocop's Layout/FirstArgumentIndentation).
+    const snippetLines = snippetCode.split("\n").filter((line) => line.trim());
+    if (!isLazyPagination) {
+        return snippetLines.map((line, i) => (i === 0 && assignResult ? `result = ${line}` : line));
+    }
+    if (expectsError) {
+        return snippetLines.map((line, i) => (i === snippetLines.length - 1 ? `${line}.pages.next_page` : line));
+    }
+    return [...snippetLines.map((line, i) => (i === 0 ? `result = ${line}` : line)), "result.pages.next_page"];
+}
 
 /**
  * Ruby string literal that satisfies RuboCop's `Style/StringLiterals: double_quotes`: single quotes (no
