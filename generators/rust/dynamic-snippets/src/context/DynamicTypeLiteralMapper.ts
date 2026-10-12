@@ -339,7 +339,7 @@ export class DynamicTypeLiteralMapper {
                 return this.convertObjectType({ objectType: namedType, value });
             case "alias": {
                 // For aliases, create the type constructor with the converted value
-                const aliasTypeName = this.context.getStructName(namedType.declaration.name);
+                const aliasTypeName = this.context.getStructName(namedType.declaration);
                 const innerValue = this.convert({ typeReference: namedType.typeReference, value });
                 return rust.Expression.functionCall(aliasTypeName, [innerValue]);
             }
@@ -418,7 +418,7 @@ export class DynamicTypeLiteralMapper {
             return rust.Expression.raw("Default::default()");
         }
 
-        const structName = this.context.getStructName(objectType.declaration.name);
+        const structName = this.context.getStructName(objectType.declaration);
         const valueRecord = this.context.getRecord(value) ?? {};
 
         // Check if this object extends another object (flattening case)
@@ -622,7 +622,7 @@ export class DynamicTypeLiteralMapper {
             }
         }
 
-        const baseStructName = this.context.getStructName(extendsInfo.baseObjectType.declaration.name);
+        const baseStructName = this.context.getStructName(extendsInfo.baseObjectType.declaration);
         const baseStruct = rust.Expression.structConstruction(baseStructName, baseStructFields, baseUseDefault);
 
         // Add the flattened base object field
@@ -685,7 +685,7 @@ export class DynamicTypeLiteralMapper {
             return rust.Expression.raw('todo!("Expected string value for enum type")');
         }
 
-        const enumName = this.context.getEnumName(enumType.declaration.name);
+        const enumName = this.context.getEnumName(enumType.declaration);
 
         // Find the enum variant that matches the wire value
         const enumVariant = enumType.values.find((variant) => variant.wireValue === value);
@@ -695,7 +695,7 @@ export class DynamicTypeLiteralMapper {
 
         // Use the keyword-safe name so the reference matches the generated variant
         // declaration (e.g. a wire value of `self` becomes `Self_`, not the reserved `Self`).
-        const variantName = enumVariant.name.pascalCase.safeName;
+        const variantName = this.context.pascalSafe(enumVariant.name);
         return rust.Expression.reference(`${enumName}::${variantName}`);
     }
 
@@ -718,7 +718,7 @@ export class DynamicTypeLiteralMapper {
 
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const unionName = this.context.getStructNameByDeclaration(unionType.declaration);
-        const rawVariantName = unionVariant.discriminantValue.name.pascalCase.unsafeName;
+        const rawVariantName = this.context.pascalUnsafe(unionVariant.discriminantValue.name);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
 
         // Handle different union variant types with correct Rust syntax
@@ -898,7 +898,7 @@ export class DynamicTypeLiteralMapper {
         switch (typeReference.type) {
             case "named": {
                 const namedType = this.context.ir.types[typeReference.value];
-                return namedType?.declaration.name.pascalCase.safeName;
+                return namedType != null ? this.context.pascalUnsafe(namedType.declaration.name) : undefined;
             }
             case "primitive":
                 switch (typeReference.value) {
