@@ -3057,6 +3057,9 @@
                 "grouped"
               ]
             },
+            "build-with-fern-as-prod": {
+              "type": "boolean"
+            },
             "embedding": {
               "type": "object",
               "properties": {
