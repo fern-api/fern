@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    An auth scheme declared under the name `bearer`, `basic` or `oauth` in `auth-schemes` is now
+    used when `api.auth` references it. Previously the reference resolved to the built-in shorthand
+    of the same name and dropped the declaration, so settings such as `token.env` were lost and
+    generators fell back to a derived environment variable (for example `<CLI_NAME>_TOKEN`).
+  type: fix
