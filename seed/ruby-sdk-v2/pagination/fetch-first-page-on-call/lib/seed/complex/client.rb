@@ -44,7 +44,7 @@ module Seed
       def search(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :starting_after,
+          cursor_field: %i[pages next_ starting_after],
           item_field: :conversations,
           initial_cursor: Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h)[:starting_after]
         ) do |next_cursor|

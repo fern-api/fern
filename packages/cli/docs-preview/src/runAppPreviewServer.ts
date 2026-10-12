@@ -326,7 +326,7 @@ export async function runAppPreviewServer({
     skipApi?: boolean;
 }): Promise<void> {
     if (forceDownload) {
-        const appPreviewFolder = getPathToPreviewFolder({ app: true, cacheDir });
+        const appPreviewFolder = getPathToPreviewFolder({ cacheDir });
         if (await doesPathExist(appPreviewFolder)) {
             context.logger.info("Force download requested. Deleting cached bundle...");
             await rm(appPreviewFolder, { recursive: true });
@@ -348,7 +348,6 @@ export async function runAppPreviewServer({
                 bucketUrl: url,
                 logger: context.logger,
                 preferCached: true,
-                app: true,
                 tryTar: true,
                 cacheDir
             });
@@ -372,12 +371,11 @@ export async function runAppPreviewServer({
                     bucketUrl: url,
                     logger: context.logger,
                     preferCached: true,
-                    app: true,
                     tryTar: false,
                     cacheDir
                 });
             } catch (err) {
-                if (await doesPathExist(getPathToBundleFolder({ app: true, cacheDir }))) {
+                if (await doesPathExist(getPathToBundleFolder({ cacheDir }))) {
                     context.logger.warn("Falling back to cached bundle...");
                 } else {
                     context.logger.warn("Please reach out to support@buildwithfern.com.");
@@ -387,7 +385,7 @@ export async function runAppPreviewServer({
         }
     }
 
-    const bundleRoot = bundlePath || getPathToBundleFolder({ app: true, cacheDir });
+    const bundleRoot = bundlePath || getPathToBundleFolder({ cacheDir });
     const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
 
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);

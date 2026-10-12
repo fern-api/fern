@@ -3,7 +3,7 @@ import Api
 
 enum Example4 {
     static func snippet() async throws {
-        let client = ApiClient()
+        let client = ApiClient(baseURL: "https://api.fern.com")
 
         _ = try await client.getToken(request: .init(
             clientId: "client_id",

@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/docs-bundle-smoke-test.yml"
       - "packages/cli/docs-preview/**"
+      - "packages/cli/cli/src/commands/docs-dev/**"
       - "packages/cli/docs-resolver/**"
       - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
@@ -15,6 +16,7 @@ on:
     paths:
       - ".github/workflows/docs-bundle-smoke-test.yml"
       - "packages/cli/docs-preview/**"
+      - "packages/cli/cli/src/commands/docs-dev/**"
       - "packages/cli/docs-resolver/**"
       - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
@@ -134,8 +136,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Each leg runs the suite twice: the prod CLI (`fern`, Next bundle) and the
-      # dev CLI (`fern-dev`, `--astro` preview-SSR bundle from the dev2 bucket).
+      # Each leg runs the suite twice: the prod CLI (`fern --legacy`, Next bundle) and
+      # the dev CLI (`fern-dev`, default Astro preview-SSR bundle from the dev2 bucket).
       - name: Download CLI artifact (prod)
         if: steps.node-check.outputs.available == 'true'
         uses: actions/download-artifact@v7
@@ -192,7 +194,7 @@ jobs:
         env:
           FERN_NO_VERSION_REDIRECTION: "true"
           FERN_BIN: fern
-          FERN_DOCS_DEV_ARGS: ""
+          FERN_DOCS_DEV_ARGS: "--legacy"
           SMOKE_RENDERER: next
         with:
           timeout_minutes: 15
@@ -218,7 +220,7 @@ jobs:
         env:
           FERN_NO_VERSION_REDIRECTION: "true"
           FERN_BIN: fern-dev
-          FERN_DOCS_DEV_ARGS: "--astro --log-level debug"
+          FERN_DOCS_DEV_ARGS: "--log-level debug"
           SMOKE_RENDERER: astro
         with:
           timeout_minutes: 15

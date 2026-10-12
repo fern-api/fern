@@ -6,8 +6,8 @@ module Seed
       # Instantiates an OffsetItemIterator, an Enumerable class which wraps calls to an offset-based paginated API and yields the individual items from it.
       #
       # @param initial_page [Integer] The initial page or offset to start from when iterating.
-      # @param item_field [Symbol] The name of the field in API responses to extract the items to iterate over.
-      # @param has_next_field [Symbol] The name of the field in API responses containing a boolean of whether another page exists.
+      # @param item_field [Symbol, Array<Symbol>] The name (or nested path) of the field in API responses to extract the items to iterate over.
+      # @param has_next_field [Symbol, Array<Symbol>] The name (or nested path) of the field in API responses containing a boolean of whether another page exists.
       # @param step [Boolean] If true, treats the page number as a true offset (i.e. increments the page number by the number of items returned from each call rather than just 1)
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
       #

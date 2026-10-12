@@ -14,6 +14,7 @@ import Testing
         )
 
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
@@ -47,6 +48,7 @@ import Testing
         )
 
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
@@ -80,6 +82,7 @@ import Testing
         )
 
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
@@ -115,6 +118,7 @@ import Testing
         )
 
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
@@ -148,6 +152,7 @@ import Testing
         )
 
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
@@ -183,6 +188,7 @@ import Testing
         )
 
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
@@ -216,6 +222,7 @@ import Testing
         )
 
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )

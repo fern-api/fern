@@ -23,7 +23,6 @@ buildCli({
         SENTRY_DSN: process.env.SENTRY_DSN ?? "",
         SENTRY_ENVIRONMENT: "production",
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
-        DOCS_PREVIEW_BUCKET: "https://prod-local-preview-bundle2.s3.amazonaws.com/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "https://prod-local-preview-bundle4.s3.amazonaws.com/",
         APP_DOCS_PREVIEW_BUCKET: "https://prod-local-preview-bundle3.s3.amazonaws.com/",
         APP_DOCS_ASTRO_PREVIEW_BUCKET: "https://prod-local-preview-astro-bundle.s3.amazonaws.com/",

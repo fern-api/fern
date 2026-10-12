@@ -23,7 +23,6 @@ buildCli({
         SENTRY_DSN: null,
         SENTRY_ENVIRONMENT: "local",
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
-        DOCS_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         APP_DOCS_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         APP_DOCS_ASTRO_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
