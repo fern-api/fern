@@ -1,4 +1,4 @@
-import { runAppPreviewServer, runAstroPreviewServer, runPreviewServer } from "@fern-api/docs-preview";
+import { runAppPreviewServer, runAstroPreviewServer } from "@fern-api/docs-preview";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -13,8 +13,7 @@ export async function previewDocsWorkspace({
     port,
     bundlePath,
     brokenLinks,
-    legacyPreview,
-    astro,
+    legacy = false,
     backendPort,
     forceDownload,
     includePrivate = false,
@@ -26,8 +25,8 @@ export async function previewDocsWorkspace({
     port: number;
     bundlePath?: string;
     brokenLinks: boolean;
-    legacyPreview?: boolean;
-    astro?: boolean;
+    /** Run the Next.js preview server instead of the default Astro one. */
+    legacy?: boolean;
     backendPort: number;
     forceDownload?: boolean;
     /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
@@ -72,16 +71,16 @@ export async function previewDocsWorkspace({
         });
     };
 
-    if (astro) {
+    if (legacy) {
         cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
-            command: "fern docs dev --astro"
+            command: "fern docs dev --legacy"
         });
 
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-            context.logger.info("Bootstrapping Astro docs preview (this may take a few seconds)...");
+            context.logger.info("Bootstrapping legacy Next.js docs preview (this may take a few seconds)...");
 
-            await runAstroPreviewServer({
+            await runAppPreviewServer({
                 initialProject: project,
                 reloadProject: loadProject,
                 validateProject: (project) => validateProject(project, context),
@@ -90,43 +89,22 @@ export async function previewDocsWorkspace({
                 bundlePath,
                 backendPort,
                 forceDownload,
+                includePrivate,
                 skipApi
             });
         });
         return;
     }
 
-    if (legacyPreview) {
-        cliContext.instrumentPostHogEvent({
-            orgId: project.config.organization,
-            command: "fern docs dev --legacy"
-        });
-
-        await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-            context.logger.info(`Starting server on port ${port}`);
-
-            await runPreviewServer({
-                initialProject: project,
-                reloadProject: loadProject,
-                validateProject: (project) => validateProject(project, context),
-                context,
-                port,
-                bundlePath,
-                includePrivate,
-                skipApi
-            });
-        });
-    }
-
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern docs dev --beta"
+        command: "fern docs dev"
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         context.logger.info("Bootstrapping docs preview (this may take a few seconds)...");
 
-        await runAppPreviewServer({
+        await runAstroPreviewServer({
             initialProject: project,
             reloadProject: loadProject,
             validateProject: (project) => validateProject(project, context),
@@ -139,6 +117,4 @@ export async function previewDocsWorkspace({
             skipApi
         });
     });
-
-    return;
 }
