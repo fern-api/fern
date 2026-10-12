@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `distribution.docker`, which publishes a multi-arch (`linux/amd64`,
+    `linux/arm64`) container image of the generated CLI on every release tag:
+
+    ```yaml
+    distribution:
+      docker:
+        image: ghcr.io/acme/acme-cli
+    ```
+
+    A new `publish-docker` job in `release.yml` waits on `host`, downloads the
+    musl archives cargo-dist already built, and pushes an `alpine`-based image
+    with the binary as its entrypoint. Every release pushes `<image>:<version>`;
+    `latest` only moves for non-prereleases. `ghcr.io` images push with the
+    workflow's built-in `GITHUB_TOKEN`; any other registry (Docker Hub, ECR, ...)
+    takes `usernameEnvironmentVariable` / `tokenEnvironmentVariable` secret names.
+    The README gains a `docker run` install section. Omitting `docker` leaves
+    generated output unchanged.
+  type: feat

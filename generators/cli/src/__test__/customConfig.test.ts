@@ -310,6 +310,73 @@ describe("validateCustomConfig — distribution", () => {
     });
 });
 
+describe("validateCustomConfig — distribution.docker", () => {
+    it("accepts a ghcr.io image with no credentials", () => {
+        expect(validateCustomConfig({ distribution: { docker: { image: "ghcr.io/acme/acme-cli" } } })).toEqual({
+            distribution: { docker: { image: "ghcr.io/acme/acme-cli" } }
+        });
+    });
+
+    it("accepts any registry with both credential secrets", () => {
+        const docker = {
+            image: "docker.io/acme/acme-cli",
+            usernameEnvironmentVariable: "DOCKERHUB_USERNAME",
+            tokenEnvironmentVariable: "DOCKERHUB_TOKEN"
+        };
+        expect(validateCustomConfig({ distribution: { docker } })).toEqual({ distribution: { docker } });
+        const ecr = { ...docker, image: "123456789012.dkr.ecr.us-east-1.amazonaws.com/acme/cli" };
+        expect(validateCustomConfig({ distribution: { docker: ecr } })).toEqual({ distribution: { docker: ecr } });
+        const local = { ...docker, image: "localhost:5000/acme-cli" };
+        expect(validateCustomConfig({ distribution: { docker: local } })).toEqual({ distribution: { docker: local } });
+    });
+
+    it("requires a registry host, lowercase, and no tag or digest", () => {
+        for (const image of [
+            "acme/acme-cli",
+            "acme-cli",
+            "ghcr.io/Acme/acme-cli",
+            "ghcr.io/acme/acme-cli:latest",
+            "ghcr.io/acme/acme-cli@sha256:abc",
+            "ghcr.io",
+            42
+        ]) {
+            expect(() => validateCustomConfig({ distribution: { docker: { image } } })).toThrow(
+                /docker\.image: .* is not a fully qualified image repository/
+            );
+        }
+    });
+
+    it("requires credentials for registries other than ghcr.io", () => {
+        expect(() => validateCustomConfig({ distribution: { docker: { image: "docker.io/acme/acme-cli" } } })).toThrow(
+            /only ghcr\.io images can push with the workflow's built-in GITHUB_TOKEN/
+        );
+    });
+
+    it("requires the two credential secrets together", () => {
+        expect(() =>
+            validateCustomConfig({
+                distribution: {
+                    docker: { image: "ghcr.io/acme/acme-cli", tokenEnvironmentVariable: "GHCR_TOKEN" }
+                }
+            })
+        ).toThrow(/must be set together/);
+    });
+
+    it("rejects malformed secret names", () => {
+        expect(() =>
+            validateCustomConfig({
+                distribution: {
+                    docker: {
+                        image: "docker.io/acme/acme-cli",
+                        usernameEnvironmentVariable: "dockerhub-user",
+                        tokenEnvironmentVariable: "DOCKERHUB_TOKEN"
+                    }
+                }
+            })
+        ).toThrow(/not a valid GitHub Actions secret name/);
+    });
+});
+
 describe("validateCustomConfig — distribution.githubApp", () => {
     const githubApp = { appIdSecret: "PUBLISH_APP_ID", privateKeySecret: "PUBLISH_APP_PRIVATE_KEY" };
 

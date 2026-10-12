@@ -13,6 +13,7 @@ export {
     DEFAULT_SCOOP_TOKEN_ENV_VAR,
     type FernCliCustomConfig,
     type FernCliDistributionConfig,
+    type FernCliDockerConfig,
     type FernCliGitHubAppConfig,
     type FernCliHomebrewConfig,
     type FernCliScoopConfig,
@@ -26,6 +27,7 @@ export {
     type DetectedAuthBinding,
     detectAuthBindings
 } from "./detectAuth.js";
+export { constructDockerJobYaml, type DockerJobArgs } from "./emitDockerWorkflow.js";
 export { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 export { emitReadme } from "./emitReadme.js";
 export { emitReference } from "./emitReference.js";

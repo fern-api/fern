@@ -284,6 +284,20 @@ function generateInstallation(args: {
         );
     }
 
+    if (distribution?.docker != null) {
+        const { image } = distribution.docker;
+        sections.push(
+            "### Docker",
+            "",
+            "```bash",
+            `docker run --rm ${image}:latest --help`,
+            "```",
+            "",
+            `Pin a release by its version tag (e.g. \`${image}:1.2.3\`) for reproducible CI jobs.`,
+            ""
+        );
+    }
+
     sections.push(
         "### Build from source",
         "",

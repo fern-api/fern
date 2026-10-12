@@ -569,6 +569,20 @@ describe("emitReadme — distribution channels", () => {
         expect(readme).toContain("ARM64 Windows under emulation");
     });
 
+    it("renders a docker run line with the latest tag and a pinning hint", async () => {
+        await emitReadme({ outputDir, ...base, distribution: { docker: { image: "ghcr.io/acme/acme-cli" } } });
+        const readme = await readReadme();
+        expect(readme).toContain("### Docker");
+        expect(readme).toContain("docker run --rm ghcr.io/acme/acme-cli:latest --help");
+        expect(readme).toContain("`ghcr.io/acme/acme-cli:1.2.3`");
+        expect(readme.indexOf("### Docker")).toBeLessThan(readme.indexOf("### Build from source"));
+    });
+
+    it("shows no docker stanza when docker is unconfigured", async () => {
+        await emitReadme({ outputDir, ...base, distribution: { homebrew: { tap: "acme/homebrew-tap" } } });
+        expect(await readReadme()).not.toContain("### Docker");
+    });
+
     it("lists every configured channel in the table of contents", async () => {
         await emitReadme({
             outputDir,

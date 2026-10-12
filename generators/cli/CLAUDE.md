@@ -233,7 +233,25 @@ config:
     scoop:
       bucket: acme/scoop-bucket     # required, "<owner>/<repo>"
       tokenEnvironmentVariable: SCOOP_BUCKET_TOKEN   # optional, default
+    docker:
+      image: ghcr.io/acme/acme-cli  # required, "<registry>/<path>", no tag
+      # Both or neither. Neither = ghcr.io + the built-in GITHUB_TOKEN.
+      usernameEnvironmentVariable: DOCKERHUB_USERNAME
+      tokenEnvironmentVariable: DOCKERHUB_TOKEN
 ```
+
+### Docker
+
+`publish-docker` ([`emitDockerWorkflow.ts`](src/emitDockerWorkflow.ts))
+waits on `host`, downloads the two musl archives from the release, and
+builds a `linux/amd64,linux/arm64` image whose Dockerfile only `COPY`s the
+binary onto `alpine` (shell for CI runners, CA bundle for rustls native
+roots) — so buildx needs no QEMU and the image carries the exact bytes
+every other channel ships. Unlike a tap or bucket, a registry has version
+tags, so the job has no prerelease skip: it always pushes `<version>` and
+only moves `latest` when `announcement_is_prerelease` is false. It never
+uses the GitHub App (registry credentials are not GitHub tokens), so it is
+not part of `preflight-distribution`.
 
 ### Push authentication
 

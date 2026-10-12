@@ -163,6 +163,16 @@ fixtures:
       outputFolder: github-distribution-app
       outputMode: github
       outputVersion: "1.0.0"
+    # Docker image publishing. Pins the `publish-docker` job in
+    # `release.yml` and the README's `docker run` stanza. Outside those two
+    # files the output must match `github-distribution`.
+    - customConfig:
+        distribution:
+          docker:
+            image: ghcr.io/acme/acme-cli
+      outputFolder: github-distribution-docker
+      outputMode: github
+      outputVersion: "1.0.0"
     # Opt-in wire tests — emits `wiremock/wire-test-cases.json` and
     # `tests/wire_test.rs`. seed's `cargo test --all-features` compiles and
     # runs the emitted suite (in-process wiremock, no docker), so this is the
