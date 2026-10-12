@@ -898,6 +898,7 @@ export class DynamicTypeLiteralMapper {
         switch (typeReference.type) {
             case "named": {
                 const namedType = this.context.ir.types[typeReference.value];
+                // Matches UndiscriminatedUnionGenerator, which names variants with `pascalUnsafe`.
                 return namedType != null ? this.context.pascalUnsafe(namedType.declaration.name) : undefined;
             }
             case "primitive":

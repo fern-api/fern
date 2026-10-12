@@ -9,7 +9,10 @@ const TEST_DEFINITIONS = AbsoluteFilePath.of(
     `${__dirname}/../../../../../packages/cli/generation/ir-generator-tests/src/dynamic-snippets/__test__/test-definitions`
 );
 
-function buildContext(definition: string, customConfig?: { capitalizeInitialisms?: boolean }): DynamicSnippetsGeneratorContext {
+function buildContext(
+    definition: string,
+    customConfig?: { capitalizeInitialisms?: boolean }
+): DynamicSnippetsGeneratorContext {
     const ir: FernIr.dynamic.DynamicIntermediateRepresentation = JSON.parse(
         readFileSync(join(TEST_DEFINITIONS, definition), "utf-8")
     );
