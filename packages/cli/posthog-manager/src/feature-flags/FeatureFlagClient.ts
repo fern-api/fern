@@ -61,6 +61,7 @@ export class NoopFeatureFlagClient implements FeatureFlagClient {
 export type FeatureFlagEvaluator = Pick<PostHog, "getFeatureFlagResult" | "capture" | "flush">;
 
 type FlagResult = Awaited<ReturnType<FeatureFlagEvaluator["getFeatureFlagResult"]>>;
+type CaptureMessage = Parameters<FeatureFlagEvaluator["capture"]>[0];
 
 /**
  * One event per flag evaluation, with the same targeting properties as `$feature_flag_called`. Exists
@@ -199,31 +200,36 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
             ...(result?.reason != null ? { $feature_flag_reason: result.reason } : {}),
             ...(process.env.CLI_VERSION != null ? { version: process.env.CLI_VERSION } : {})
         };
+        this.tryCapture({
+            distinctId: getFlagDistinctId(org),
+            event: "$feature_flag_called",
+            groups: { organization: org },
+            // Leave `$feature_flag_has_experiment` unset: posthog-node strips every non-flag property
+            // from `$feature_flag_called` events that set it to `false` when PostHog asks for minimal events.
+            properties: {
+                ...sharedProperties,
+                $feature_flag: flag,
+                $feature_flag_response: response,
+                [`$feature/${flag}`]: response
+            }
+        });
+        this.tryCapture({
+            distinctId: getFlagDistinctId(org),
+            event: FEATURE_FLAG_EVALUATED_EVENT,
+            groups: { organization: org },
+            properties: {
+                ...sharedProperties,
+                flag,
+                response,
+                enabled: isFeatureFlagValueEnabled(result)
+            }
+        });
+    }
+
+    /** Captures one event on its own, so a failure in one usage event never skips the other. */
+    private tryCapture(message: CaptureMessage): void {
         try {
-            this.evaluator.capture({
-                distinctId: getFlagDistinctId(org),
-                event: "$feature_flag_called",
-                groups: { organization: org },
-                // Leave `$feature_flag_has_experiment` unset: posthog-node strips every non-flag property
-                // from `$feature_flag_called` events that set it to `false` when PostHog asks for minimal events.
-                properties: {
-                    ...sharedProperties,
-                    $feature_flag: flag,
-                    $feature_flag_response: response,
-                    [`$feature/${flag}`]: response
-                }
-            });
-            this.evaluator.capture({
-                distinctId: getFlagDistinctId(org),
-                event: FEATURE_FLAG_EVALUATED_EVENT,
-                groups: { organization: org },
-                properties: {
-                    ...sharedProperties,
-                    flag,
-                    response,
-                    enabled: isFeatureFlagValueEnabled(result)
-                }
-            });
+            this.evaluator.capture(message);
         } catch {
             // Flag usage events are analytics only and must never fail the CLI.
         }

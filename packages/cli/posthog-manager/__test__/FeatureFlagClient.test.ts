@@ -165,6 +165,25 @@ describe("PosthogFeatureFlagClient", () => {
         ).toEqual(["fernapi/fern-python-sdk", "fernapi/fern-go-sdk"]);
     });
 
+    it("still captures the evaluated event when the $feature_flag_called capture throws", async () => {
+        const { client, capture } = createClient(
+            { key: "use-sdk-gen-api", enabled: true, variant: "true", payload: undefined },
+            { sendFeatureFlagEvents: true }
+        );
+        capture.mockImplementation(({ event }: { event: string }) => {
+            if (event === "$feature_flag_called") {
+                throw new Error("capture failed");
+            }
+        });
+
+        await expect(client.isEnabled("use-sdk-gen-api", { org: "acme" })).resolves.toBe(true);
+
+        expect(capture.mock.calls.map(([message]) => message.event)).toEqual([
+            "$feature_flag_called",
+            FEATURE_FLAG_EVALUATED_EVENT
+        ]);
+    });
+
     it.each([
         { name: "telemetry is disabled", result: undefined, sendFeatureFlagEvents: false },
         { name: "the flag request fails", result: new Error("network down"), sendFeatureFlagEvents: true }
