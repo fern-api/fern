@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated wire tests and client tests not compiling for APIs with multiple base URLs.
+    The client initializer requires `baseURL` in that case, but the snippet generator
+    dropped it; it's now passed (`ApiClient(baseURL: ..., urlSession: ...)`).
+  type: fix

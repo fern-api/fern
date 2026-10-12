@@ -84,6 +84,7 @@ import Testing
         stub.setResponse(body: Foundation.Data("{}".utf8))
 
         let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
@@ -110,6 +111,7 @@ import Testing
         let additionalBodyProperties: [String: JSONValue]? = ["fernExtraBool": true]
 
         let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
