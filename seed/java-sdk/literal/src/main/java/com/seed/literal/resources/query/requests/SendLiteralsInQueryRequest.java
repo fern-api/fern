@@ -197,7 +197,6 @@ public final class SendLiteralsInQueryRequest {
 
         private Optional<String> optionalPrompt = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -298,6 +297,22 @@ public final class SendLiteralsInQueryRequest {
                     aliasStream,
                     aliasOptionalStream,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prompt")
+                    || key.equalsIgnoreCase("optional_prompt")
+                    || key.equalsIgnoreCase("alias_prompt")
+                    || key.equalsIgnoreCase("alias_optional_prompt")
+                    || key.equalsIgnoreCase("query")
+                    || key.equalsIgnoreCase("stream")
+                    || key.equalsIgnoreCase("optional_stream")
+                    || key.equalsIgnoreCase("alias_stream")
+                    || key.equalsIgnoreCase("alias_optional_stream")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

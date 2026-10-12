@@ -80,7 +80,6 @@ public final class NoAuthReceiveEvent {
     public static final class Builder implements ResponseStage, _FinalStage {
         private String response;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class NoAuthReceiveEvent {
         @java.lang.Override
         public NoAuthReceiveEvent build() {
             return new NoAuthReceiveEvent(response, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("response")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

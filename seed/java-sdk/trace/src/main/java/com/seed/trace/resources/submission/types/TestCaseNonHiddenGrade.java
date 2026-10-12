@@ -133,7 +133,6 @@ public final class TestCaseNonHiddenGrade {
 
         private Optional<VariableValue> actualResult = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -190,6 +189,17 @@ public final class TestCaseNonHiddenGrade {
         @java.lang.Override
         public TestCaseNonHiddenGrade build() {
             return new TestCaseNonHiddenGrade(passed, actualResult, exception, stdout, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("passed")
+                    || key.equalsIgnoreCase("actualResult")
+                    || key.equalsIgnoreCase("exception")
+                    || key.equalsIgnoreCase("stdout")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

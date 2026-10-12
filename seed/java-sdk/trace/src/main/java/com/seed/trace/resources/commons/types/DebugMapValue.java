@@ -68,7 +68,6 @@ public final class DebugMapValue {
     public static final class Builder {
         private List<DebugKeyValuePairs> keyValuePairs = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class DebugMapValue {
 
         public DebugMapValue build() {
             return new DebugMapValue(keyValuePairs, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("keyValuePairs")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

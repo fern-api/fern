@@ -80,7 +80,6 @@ public final class AssetReportPdfGetRequest {
     public static final class Builder implements AssetReportTokenStage, _FinalStage {
         private String assetReportToken;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class AssetReportPdfGetRequest {
         @java.lang.Override
         public AssetReportPdfGetRequest build() {
             return new AssetReportPdfGetRequest(assetReportToken, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("asset_report_token")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

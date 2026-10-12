@@ -98,7 +98,6 @@ public final class WithJsonPropertyRequest {
 
         private Optional<MyObject> json = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -133,6 +132,14 @@ public final class WithJsonPropertyRequest {
         @java.lang.Override
         public WithJsonPropertyRequest build() {
             return new WithJsonPropertyRequest(file, json, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("file") || key.equalsIgnoreCase("json")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

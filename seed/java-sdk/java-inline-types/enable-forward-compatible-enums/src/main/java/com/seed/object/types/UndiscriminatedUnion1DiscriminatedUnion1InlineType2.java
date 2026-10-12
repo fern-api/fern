@@ -108,7 +108,6 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1InlineType2 {
 
         private ReferenceType ref;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1InlineType2 {
         @java.lang.Override
         public UndiscriminatedUnion1DiscriminatedUnion1InlineType2 build() {
             return new UndiscriminatedUnion1DiscriminatedUnion1InlineType2(baz, ref, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("baz") || key.equalsIgnoreCase("ref")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -136,7 +136,6 @@ public final class BasicCustomFiles {
 
         private Map<Language, Files> additionalFiles = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -200,6 +199,17 @@ public final class BasicCustomFiles {
         public BasicCustomFiles build() {
             return new BasicCustomFiles(
                     methodName, signature, additionalFiles, basicTestCaseTemplate, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("methodName")
+                    || key.equalsIgnoreCase("signature")
+                    || key.equalsIgnoreCase("additionalFiles")
+                    || key.equalsIgnoreCase("basicTestCaseTemplate")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

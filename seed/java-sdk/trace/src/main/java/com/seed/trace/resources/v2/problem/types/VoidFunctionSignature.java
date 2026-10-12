@@ -68,7 +68,6 @@ public final class VoidFunctionSignature {
     public static final class Builder {
         private List<Parameter> parameters = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class VoidFunctionSignature {
 
         public VoidFunctionSignature build() {
             return new VoidFunctionSignature(parameters, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("parameters")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

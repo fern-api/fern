@@ -81,7 +81,6 @@ public final class DoublyLinkedListValue {
 
         private Map<String, DoublyLinkedListNodeValue> nodes = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -126,6 +125,14 @@ public final class DoublyLinkedListValue {
 
         public DoublyLinkedListValue build() {
             return new DoublyLinkedListValue(head, nodes, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("head") || key.equalsIgnoreCase("nodes")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

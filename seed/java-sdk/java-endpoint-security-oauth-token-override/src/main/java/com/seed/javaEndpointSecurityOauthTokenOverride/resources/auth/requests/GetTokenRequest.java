@@ -99,7 +99,6 @@ public final class GetTokenRequest {
 
         private String clientSecret;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -128,6 +127,16 @@ public final class GetTokenRequest {
         @java.lang.Override
         public GetTokenRequest build() {
             return new GetTokenRequest(clientId, clientSecret, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("client_id")
+                    || key.equalsIgnoreCase("client_secret")
+                    || key.equalsIgnoreCase("grant_type")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

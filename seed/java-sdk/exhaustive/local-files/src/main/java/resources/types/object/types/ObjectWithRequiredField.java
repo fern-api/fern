@@ -87,7 +87,6 @@ public final class ObjectWithRequiredField {
   public static final class Builder implements StringStage, _FinalStage {
     private String string;
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -109,6 +108,14 @@ public final class ObjectWithRequiredField {
     @java.lang.Override
     public ObjectWithRequiredField build() {
       return new ObjectWithRequiredField(string, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("string")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

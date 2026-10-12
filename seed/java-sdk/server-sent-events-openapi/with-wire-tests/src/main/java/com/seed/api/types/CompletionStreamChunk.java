@@ -84,7 +84,6 @@ public final class CompletionStreamChunk {
 
         private Optional<Integer> tokens = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class CompletionStreamChunk {
 
         public CompletionStreamChunk build() {
             return new CompletionStreamChunk(delta, tokens, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("delta") || key.equalsIgnoreCase("tokens")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -74,7 +74,6 @@ public final class ListUsersBodyOffsetPaginationRequest {
     public static final class Builder {
         private Optional<WithPage> pagination = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ListUsersBodyOffsetPaginationRequest {
 
         public ListUsersBodyOffsetPaginationRequest build() {
             return new ListUsersBodyOffsetPaginationRequest(pagination, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("pagination")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

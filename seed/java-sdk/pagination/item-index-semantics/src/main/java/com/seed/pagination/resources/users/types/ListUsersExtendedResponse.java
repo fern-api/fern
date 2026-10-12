@@ -120,7 +120,6 @@ public final class ListUsersExtendedResponse implements IUserPage {
 
         private Optional<UUID> next = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -167,6 +166,14 @@ public final class ListUsersExtendedResponse implements IUserPage {
         @java.lang.Override
         public ListUsersExtendedResponse build() {
             return new ListUsersExtendedResponse(data, next, totalCount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data") || key.equalsIgnoreCase("next") || key.equalsIgnoreCase("total_count")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

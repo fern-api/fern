@@ -116,7 +116,6 @@ public final class Directory {
 
         private Optional<List<File>> files = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -165,6 +164,14 @@ public final class Directory {
         @java.lang.Override
         public Directory build() {
             return new Directory(name, files, directories, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("files") || key.equalsIgnoreCase("directories")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

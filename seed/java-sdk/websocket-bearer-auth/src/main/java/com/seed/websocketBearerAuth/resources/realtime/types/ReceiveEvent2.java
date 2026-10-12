@@ -108,7 +108,6 @@ public final class ReceiveEvent2 {
 
         private boolean epsilon;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class ReceiveEvent2 {
         @java.lang.Override
         public ReceiveEvent2 build() {
             return new ReceiveEvent2(gamma, delta, epsilon, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("gamma") || key.equalsIgnoreCase("delta") || key.equalsIgnoreCase("epsilon")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -167,7 +167,6 @@ public final class OptionalMergePatchRequest {
 
         private Optional<String> optionalString = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -262,6 +261,18 @@ public final class OptionalMergePatchRequest {
                     optionalBoolean,
                     nullableString,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("requiredField")
+                    || key.equalsIgnoreCase("optionalString")
+                    || key.equalsIgnoreCase("optionalInteger")
+                    || key.equalsIgnoreCase("optionalBoolean")
+                    || key.equalsIgnoreCase("nullableString")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

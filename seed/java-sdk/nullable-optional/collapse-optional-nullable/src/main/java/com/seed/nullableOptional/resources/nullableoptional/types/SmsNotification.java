@@ -113,7 +113,6 @@ public final class SmsNotification {
 
         private Optional<String> shortCode = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -156,6 +155,16 @@ public final class SmsNotification {
         @java.lang.Override
         public SmsNotification build() {
             return new SmsNotification(phoneNumber, message, shortCode, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("phoneNumber")
+                    || key.equalsIgnoreCase("message")
+                    || key.equalsIgnoreCase("shortCode")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

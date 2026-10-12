@@ -192,7 +192,6 @@ public final class Say implements XmlSerializable {
 
         private Optional<List<Break>> children = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
@@ -279,6 +278,17 @@ public final class Say implements XmlSerializable {
 
         public Say build() {
             return new Say(message, voice, loop, children, additionalProperties, content);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("message")
+                    || key.equalsIgnoreCase("voice")
+                    || key.equalsIgnoreCase("loop")
+                    || key.equalsIgnoreCase("children")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

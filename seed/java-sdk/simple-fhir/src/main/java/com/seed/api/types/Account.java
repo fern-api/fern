@@ -176,7 +176,6 @@ public final class Account implements IBaseResource {
 
         private List<ResourceList> relatedResources = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -266,6 +265,20 @@ public final class Account implements IBaseResource {
         @java.lang.Override
         public Account build() {
             return new Account(id, relatedResources, memo, name, patient, practitioner, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("related_resources")
+                    || key.equalsIgnoreCase("memo")
+                    || key.equalsIgnoreCase("resource_type")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("patient")
+                    || key.equalsIgnoreCase("practitioner")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

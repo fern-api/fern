@@ -102,7 +102,6 @@ public final class VoidFunctionSignatureThatTakesActualResult {
 
         private List<Parameter> parameters = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -148,6 +147,14 @@ public final class VoidFunctionSignatureThatTakesActualResult {
         @java.lang.Override
         public VoidFunctionSignatureThatTakesActualResult build() {
             return new VoidFunctionSignatureThatTakesActualResult(parameters, actualResultType, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("parameters") || key.equalsIgnoreCase("actualResultType")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

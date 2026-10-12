@@ -80,7 +80,6 @@ public final class GetPresignedUrlRequest {
     public static final class Builder implements S3KeyStage, _FinalStage {
         private String s3Key;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class GetPresignedUrlRequest {
         @java.lang.Override
         public GetPresignedUrlRequest build() {
             return new GetPresignedUrlRequest(s3Key, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("s3Key")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

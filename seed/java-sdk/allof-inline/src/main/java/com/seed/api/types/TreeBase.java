@@ -178,7 +178,6 @@ public final class TreeBase {
 
         private Optional<String> treeName = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -287,6 +286,18 @@ public final class TreeBase {
         @java.lang.Override
         public TreeBase build() {
             return new TreeBase(id, treeName, treeDescription, treeSpecies, heightInFeet, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("treeName")
+                    || key.equalsIgnoreCase("treeDescription")
+                    || key.equalsIgnoreCase("treeSpecies")
+                    || key.equalsIgnoreCase("heightInFeet")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

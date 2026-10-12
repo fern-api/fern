@@ -81,7 +81,6 @@ public final class PaymentRequest {
     public static final class Builder implements PaymentMethodStage, _FinalStage {
         private PaymentMethodUnion paymentMethod;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class PaymentRequest {
         @java.lang.Override
         public PaymentRequest build() {
             return new PaymentRequest(paymentMethod, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("paymentMethod")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

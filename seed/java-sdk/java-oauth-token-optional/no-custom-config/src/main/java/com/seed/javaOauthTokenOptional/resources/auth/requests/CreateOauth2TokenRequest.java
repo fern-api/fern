@@ -116,7 +116,6 @@ public final class CreateOauth2TokenRequest {
 
         private Optional<String> grantType = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -159,6 +158,16 @@ public final class CreateOauth2TokenRequest {
         @java.lang.Override
         public CreateOauth2TokenRequest build() {
             return new CreateOauth2TokenRequest(clientId, clientSecret, grantType, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("client_id")
+                    || key.equalsIgnoreCase("client_secret")
+                    || key.equalsIgnoreCase("grant_type")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

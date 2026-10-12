@@ -95,7 +95,6 @@ public final class DebugKeyValuePairs {
 
         private DebugVariableValue value;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class DebugKeyValuePairs {
         @java.lang.Override
         public DebugKeyValuePairs build() {
             return new DebugKeyValuePairs(key, value, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("key") || key.equalsIgnoreCase("value")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

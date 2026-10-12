@@ -100,7 +100,6 @@ public final class WorkspaceFiles {
 
         private List<FileInfo> readOnlyFiles = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class WorkspaceFiles {
         @java.lang.Override
         public WorkspaceFiles build() {
             return new WorkspaceFiles(mainFile, readOnlyFiles, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("mainFile") || key.equalsIgnoreCase("readOnlyFiles")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

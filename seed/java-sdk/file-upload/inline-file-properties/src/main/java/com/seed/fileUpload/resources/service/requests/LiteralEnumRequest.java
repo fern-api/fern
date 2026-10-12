@@ -134,7 +134,6 @@ public final class LiteralEnumRequest {
 
         private Optional<String> modelType = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -197,6 +196,17 @@ public final class LiteralEnumRequest {
         @java.lang.Override
         public LiteralEnumRequest build() {
             return new LiteralEnumRequest(file, modelType, openEnum, maybeName, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("file")
+                    || key.equalsIgnoreCase("model_type")
+                    || key.equalsIgnoreCase("open_enum")
+                    || key.equalsIgnoreCase("maybe_name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

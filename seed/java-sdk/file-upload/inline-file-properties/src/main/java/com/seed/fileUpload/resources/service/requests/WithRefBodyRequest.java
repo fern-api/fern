@@ -98,7 +98,6 @@ public final class WithRefBodyRequest {
 
         private Optional<File> imageFile = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -133,6 +132,14 @@ public final class WithRefBodyRequest {
         @java.lang.Override
         public WithRefBodyRequest build() {
             return new WithRefBodyRequest(imageFile, request, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("image_file") || key.equalsIgnoreCase("request")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -86,7 +86,6 @@ public final class TreeDescribable implements ITreeDescribable {
 
         private Optional<String> treeDescription = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -127,6 +126,14 @@ public final class TreeDescribable implements ITreeDescribable {
 
         public TreeDescribable build() {
             return new TreeDescribable(treeName, treeDescription, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("treeName") || key.equalsIgnoreCase("treeDescription")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

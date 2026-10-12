@@ -157,7 +157,6 @@ public final class Foo {
 
         private Optional<String> bar = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -244,6 +243,17 @@ public final class Foo {
         @java.lang.Override
         public Foo build() {
             return new Foo(bar, nullableBar, nullableRequiredBar, requiredBar, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("bar")
+                    || key.equalsIgnoreCase("nullable_bar")
+                    || key.equalsIgnoreCase("nullable_required_bar")
+                    || key.equalsIgnoreCase("required_bar")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

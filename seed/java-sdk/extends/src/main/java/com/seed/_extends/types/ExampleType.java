@@ -96,7 +96,6 @@ public final class ExampleType implements IExampleType, IDocs {
 
         private String docs;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class ExampleType implements IExampleType, IDocs {
         @java.lang.Override
         public ExampleType build() {
             return new ExampleType(name, docs, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("docs")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

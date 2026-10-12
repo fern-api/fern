@@ -95,7 +95,6 @@ public final class BinaryTreeNodeAndTreeValue {
 
         private BinaryTreeValue fullTree;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class BinaryTreeNodeAndTreeValue {
         @java.lang.Override
         public BinaryTreeNodeAndTreeValue build() {
             return new BinaryTreeNodeAndTreeValue(nodeId, fullTree, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("nodeId") || key.equalsIgnoreCase("fullTree")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

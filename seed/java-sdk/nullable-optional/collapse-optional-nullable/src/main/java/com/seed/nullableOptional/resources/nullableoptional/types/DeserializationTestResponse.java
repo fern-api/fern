@@ -132,7 +132,6 @@ public final class DeserializationTestResponse {
 
         private int presentFieldsCount;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -178,6 +177,17 @@ public final class DeserializationTestResponse {
         public DeserializationTestResponse build() {
             return new DeserializationTestResponse(
                     echo, processedAt, nullCount, presentFieldsCount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("echo")
+                    || key.equalsIgnoreCase("processedAt")
+                    || key.equalsIgnoreCase("nullCount")
+                    || key.equalsIgnoreCase("presentFieldsCount")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

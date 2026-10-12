@@ -106,7 +106,6 @@ public final class PostSubmitRequest {
 
         private String email;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -143,6 +142,14 @@ public final class PostSubmitRequest {
         @java.lang.Override
         public PostSubmitRequest build() {
             return new PostSubmitRequest(username, email, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("username") || key.equalsIgnoreCase("email")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

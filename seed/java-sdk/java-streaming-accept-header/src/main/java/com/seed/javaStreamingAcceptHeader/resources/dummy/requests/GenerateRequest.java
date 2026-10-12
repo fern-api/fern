@@ -79,7 +79,6 @@ public final class GenerateRequest {
     public static final class Builder implements NumEventsStage, _FinalStage {
         private int numEvents;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class GenerateRequest {
         @java.lang.Override
         public GenerateRequest build() {
             return new GenerateRequest(numEvents, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("num_events")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

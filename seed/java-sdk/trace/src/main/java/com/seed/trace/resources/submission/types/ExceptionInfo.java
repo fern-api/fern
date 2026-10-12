@@ -115,7 +115,6 @@ public final class ExceptionInfo {
 
         private String exceptionStacktrace;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -153,6 +152,16 @@ public final class ExceptionInfo {
         @java.lang.Override
         public ExceptionInfo build() {
             return new ExceptionInfo(exceptionType, exceptionMessage, exceptionStacktrace, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("exceptionType")
+                    || key.equalsIgnoreCase("exceptionMessage")
+                    || key.equalsIgnoreCase("exceptionStacktrace")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -122,7 +122,6 @@ public final class PaginatedConversationResponse {
 
         private List<Conversation> conversations = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -182,6 +181,17 @@ public final class PaginatedConversationResponse {
         @java.lang.Override
         public PaginatedConversationResponse build() {
             return new PaginatedConversationResponse(conversations, pages, totalCount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("conversations")
+                    || key.equalsIgnoreCase("pages")
+                    || key.equalsIgnoreCase("total_count")
+                    || key.equalsIgnoreCase("type")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

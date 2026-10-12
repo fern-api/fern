@@ -93,7 +93,6 @@ public final class ExpressionLocation {
 
         private int offset;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -122,6 +121,14 @@ public final class ExpressionLocation {
         @java.lang.Override
         public ExpressionLocation build() {
             return new ExpressionLocation(start, offset, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("start") || key.equalsIgnoreCase("offset")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

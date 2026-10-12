@@ -95,7 +95,6 @@ public final class InvalidRequestResponse {
 
         private InvalidRequestCause cause;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class InvalidRequestResponse {
         @java.lang.Override
         public InvalidRequestResponse build() {
             return new InvalidRequestResponse(request, cause, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("request") || key.equalsIgnoreCase("cause")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
