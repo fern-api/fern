@@ -8,7 +8,8 @@ class ServiceWireTest < WireMockTestCase
 
     @client = Seed::Client.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -290,6 +291,36 @@ class ServiceWireTest < WireMockTestCase
       url_path: "/refresh-token",
       query_params: nil,
       expected: 1
+    )
+  end
+
+  def test_service_refresh_token_2_with_wiremock
+    test_id = "service.refresh_token.1"
+
+    @client.service.refresh_token(
+      request: {
+        ttl: 420
+      },
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "service.refresh_token.1"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/refresh-token",
+      query_params: nil,
+      expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/refresh-token",
+      expected_body: JSON.parse('{"ttl":420}')
     )
   end
 end
