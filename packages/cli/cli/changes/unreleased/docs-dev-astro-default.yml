@@ -4,4 +4,5 @@
     `fern docs dev` now runs the Astro docs preview server by default, matching how published Fern Docs sites render.
     Pass `--legacy` to run the previous Next.js preview server. `--astro` is still accepted but no longer needed,
     and `--beta` is now a deprecated alias for `--legacy`. `--private` now applies to the Astro preview too.
+    The older pages-router preview server that `--legacy` used to start is no longer available.
   type: feat

@@ -131,7 +131,7 @@ async function waitForOk(
         }
         await new Promise((resolve) => setTimeout(resolve, interval));
     }
-    return await fetch(url, { signal });
+    throw new Error(`Timed out after ${timeout}ms waiting for a 2xx from ${url}`);
 }
 
 async function waitForServer(

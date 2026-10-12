@@ -2448,7 +2448,7 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
         async (argv) => {
             if (argv.beta) {
                 cliContext.logger.warn(
-                    "--beta is deprecated and runs the legacy Next.js docs preview server. Use --legacy instead."
+                    "--beta is deprecated and is now an alias for --legacy (the Next.js docs preview server). Use --legacy instead."
                 );
             }
             const legacy = argv.legacy || argv.beta;
