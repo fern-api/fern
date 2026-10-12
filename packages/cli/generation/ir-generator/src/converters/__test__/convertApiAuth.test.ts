@@ -74,6 +74,33 @@ describe("convertApiAuth", () => {
         expect(scheme.passwordEnvVar).toBe("ACME_PASS");
     });
 
+    it("keeps the declaration docs of a declared scheme named `bearer`", () => {
+        const auth = convert({
+            auth: "bearer",
+            "auth-schemes": { bearer: { scheme: "bearer", docs: "Use your API token" } }
+        });
+
+        expect(auth.schemes[0]?.docs).toBe("Use your API token");
+    });
+
+    it("keeps the declaration docs of a declared scheme with a custom name", () => {
+        const auth = convert({
+            auth: { any: ["ApiKey"] },
+            "auth-schemes": { ApiKey: { header: "X-Api-Key", docs: "Your API key" } }
+        });
+
+        expect(auth.schemes[0]?.docs).toBe("Your API key");
+    });
+
+    it("prefers reference docs over declaration docs", () => {
+        const auth = convert({
+            auth: { any: [{ scheme: "basic", docs: "Reference docs" }] },
+            "auth-schemes": { basic: { scheme: "basic", docs: "Declaration docs" } }
+        });
+
+        expect(auth.schemes[0]?.docs).toBe("Reference docs");
+    });
+
     it("lets a declaration named `bearer` define a non-bearer scheme", () => {
         const auth = convert({
             auth: "bearer",

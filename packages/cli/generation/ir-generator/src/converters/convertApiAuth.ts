@@ -105,11 +105,12 @@ function convertSchemeReference({
     endpointResolver: EndpointResolver;
     typeResolver: TypeResolver;
 }): AuthScheme {
-    const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
+    const convertNamedAuthSchemeReference = (reference: string, referenceDocs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];
         if (declaration == null) {
             throw new CliError({ message: "Unknown auth scheme: " + reference, code: CliError.Code.ReferenceError });
         }
+        const docs = referenceDocs ?? (typeof declaration === "object" ? declaration.docs : undefined);
         const playgroundDocs = typeof declaration === "object" ? declaration["playground-docs"] : undefined;
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>

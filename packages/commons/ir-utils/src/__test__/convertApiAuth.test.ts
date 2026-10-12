@@ -23,6 +23,18 @@ describe("convertApiAuth", () => {
         expect(scheme.tokenPlaceholder).toBe("tok");
     });
 
+    it("keeps the declaration docs of a declared scheme named `bearer`", () => {
+        const auth = convertApiAuth({
+            rawApiFileSchema: {
+                auth: "bearer",
+                "auth-schemes": { bearer: { scheme: "bearer", docs: "Use your API token" } }
+            },
+            casingsGenerator
+        });
+
+        expect(auth.schemes[0]?.docs).toBe("Use your API token");
+    });
+
     it("keeps the built-in `bearer` shorthand when no scheme is declared under that name", () => {
         const auth = convertApiAuth({ rawApiFileSchema: { auth: "bearer" }, casingsGenerator });
 
