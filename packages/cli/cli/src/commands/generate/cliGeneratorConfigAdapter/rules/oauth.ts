@@ -192,33 +192,53 @@ function properties(
     );
 }
 
-/** Matches a URL's path, after stripping a spec server URL or an environment URL, to a spec POST operation. */
+/** Matches a URL only to operations from a compatible spec origin, rejecting ambiguous path matches. */
 function findPostOperation(context: RuleContext, url: string): [string, SpecPostOperation] | undefined {
-    const baseUrls = [
-        ...context.input.specFacts.flatMap((facts) => facts?.serverUrls ?? []),
-        ...(context.ir.api.environments ?? []).flatMap((environment) => environment.urls.map((entry) => entry.url))
-    ];
-    const candidates = [
-        ...baseUrls.flatMap((base) => {
-            const stripped = stripBase(url, base);
-            return stripped != null ? [stripped] : [];
-        }),
-        urlPath(url)
-    ];
+    const absolute = absoluteUrl(url);
+    const environmentUrls = (context.ir.api.environments ?? []).flatMap((environment) =>
+        environment.urls.map((entry) => entry.url)
+    );
+    const matches: Array<[string, SpecPostOperation]> = [];
     for (const facts of context.input.specFacts) {
+        if (facts == null) {
+            continue;
+        }
+        const candidates = new Set(
+            absolute == null
+                ? [urlPath(url)]
+                : [...facts.serverUrls, ...environmentUrls].flatMap((base) => {
+                      const stripped = stripCompatibleBase(absolute, base);
+                      return stripped != null ? [stripped] : [];
+                  })
+        );
         for (const candidate of candidates) {
             const operation = facts?.postOperations[candidate];
             if (operation != null) {
-                return [candidate, operation];
+                matches.push([candidate, operation]);
             }
         }
     }
-    return undefined;
+    return matches.length === 1 ? matches[0] : undefined;
 }
 
-function stripBase(url: string, base: string): string | undefined {
-    const trimmed = base.replace(/\/+$/, "");
-    return url.startsWith(`${trimmed}/`) ? url.slice(trimmed.length) : undefined;
+function stripCompatibleBase(url: URL, base: string): string | undefined {
+    const parsedBase = absoluteUrl(base);
+    if (parsedBase == null || parsedBase.origin !== url.origin) {
+        return undefined;
+    }
+    const basePath = parsedBase.pathname.replace(/\/+$/, "");
+    if (url.pathname === basePath) {
+        return "/";
+    }
+    return url.pathname.startsWith(`${basePath}/`) ? url.pathname.slice(basePath.length) : undefined;
+}
+
+function absoluteUrl(url: string): URL | undefined {
+    try {
+        return new URL(url);
+    } catch {
+        return undefined;
+    }
 }
 
 function urlPath(url: string): string {

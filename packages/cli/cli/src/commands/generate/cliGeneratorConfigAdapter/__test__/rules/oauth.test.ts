@@ -17,13 +17,13 @@ const TOKEN_FACTS = facts({
 
 function map(
     scheme: Record<string, unknown>,
-    { specFacts = TOKEN_FACTS, api = {} }: { specFacts?: SpecFacts; api?: Record<string, unknown> } = {}
+    { specFacts = TOKEN_FACTS, api = {} }: { specFacts?: SpecFacts | SpecFacts[]; api?: Record<string, unknown> } = {}
 ) {
     return mapSdkConfigToGeneratorsYml(cliIr({ api: { ...api, auth: { schemes: [{ id: "oauth", ...scheme }] } } }), {
         configDir: "/work",
         outDir: "/work",
         generatorVersion: "0.49.0",
-        specFacts: [specFacts]
+        specFacts: Array.isArray(specFacts) ? specFacts : [specFacts]
     });
 }
 
@@ -70,6 +70,35 @@ describe("oauth rule", () => {
         expect(entry(map(clientCredentials({ tokenUrl: "/oauth/token" })))).toMatchObject({
             "get-token": { endpoint: "POST /oauth/token" }
         });
+    });
+
+    it("matches an absolute token URL only within the spec with the same origin", () => {
+        const result = map(clientCredentials({ tokenUrl: "https://api.b.test/token" }), {
+            specFacts: [
+                facts({
+                    serverUrls: ["https://auth.a.test"],
+                    postOperations: {
+                        "/token": { requestProperties: [], responseProperties: ["access_token"] }
+                    }
+                }),
+                facts({
+                    serverUrls: ["https://api.b.test"],
+                    postOperations: { "/token": { requestProperties: [], responseProperties: ["token"] } }
+                })
+            ]
+        });
+        expect(errorCodes(result.diagnostics)).toEqual(["CLI_TARGET_TOKEN_RESPONSE"]);
+    });
+
+    it("rejects an ambiguous relative token URL across specs", () => {
+        const operation = { requestProperties: [], responseProperties: ["access_token"] };
+        const result = map(clientCredentials({ tokenUrl: "/token" }), {
+            specFacts: [
+                facts({ postOperations: { "/token": operation } }),
+                facts({ postOperations: { "/token": operation } })
+            ]
+        });
+        expect(errorCodes(result.diagnostics)).toEqual(["CLI_TARGET_TOKEN_ENDPOINT"]);
     });
 
     it("infers get-token request properties client-id and client-secret by RFC 6749 names", () => {

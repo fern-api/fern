@@ -48,10 +48,8 @@
       "backoffFactor": 2,
       "methods": [
         "GET",
-        "POST",
         "PUT",
         "DELETE",
-        "PATCH",
         "HEAD",
         "OPTIONS"
       ],

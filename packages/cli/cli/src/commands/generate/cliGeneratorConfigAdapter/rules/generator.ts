@@ -58,7 +58,7 @@ export const generatorRule: MapperRule = {
         const generator = {
             name: GENERATOR_NAME,
             version: context.input.generatorVersion,
-            output: outputBlock(context, ir.output),
+            ...deliveryBlock(context, ir.output),
             ...(metadata != null ? { metadata } : {}),
             ...(Object.keys(config).length > 0 ? { config } : {})
         };
@@ -152,12 +152,14 @@ function cargoDependency(dependency: Dependency): unknown {
     return keys.length === 1 && keys[0] === "version" ? table.version : table;
 }
 
-function outputBlock(context: RuleContext, output: SdkConfigIrV1["output"]): Record<string, unknown> {
+function deliveryBlock(context: RuleContext, output: SdkConfigIrV1["output"]): Record<string, unknown> {
     switch (output.delivery) {
         case "files":
             return {
-                location: "local-file-system",
-                path: relativeToOutput(context, output.path ?? DEFAULT_OUTPUT_PATH)
+                output: {
+                    location: "local-file-system",
+                    path: relativeToOutput(context, output.path ?? DEFAULT_OUTPUT_PATH)
+                }
             };
         case "zip":
             context.warn(
@@ -166,7 +168,9 @@ function outputBlock(context: RuleContext, output: SdkConfigIrV1["output"]): Rec
                 "Zip delivery is a hosted concept; generators.yml writes files instead.",
                 "None needed."
             );
-            return { location: "local-file-system", path: relativeToOutput(context, DEFAULT_OUTPUT_PATH) };
+            return {
+                output: { location: "local-file-system", path: relativeToOutput(context, DEFAULT_OUTPUT_PATH) }
+            };
         case "github":
             context.warn(
                 "output.github",
@@ -175,10 +179,11 @@ function outputBlock(context: RuleContext, output: SdkConfigIrV1["output"]): Rec
                 "Review the output block before generating."
             );
             return {
-                location: "github",
-                repository: output.github.repository,
-                ...(output.github.mode != null ? { mode: output.github.mode } : {}),
-                ...(output.github.branch != null ? { branch: output.github.branch } : {})
+                github: {
+                    repository: output.github.repository,
+                    ...(output.github.mode != null ? { mode: output.github.mode } : {}),
+                    ...(output.github.branch != null ? { branch: output.github.branch } : {})
+                }
             };
         default:
             assertNever(output);

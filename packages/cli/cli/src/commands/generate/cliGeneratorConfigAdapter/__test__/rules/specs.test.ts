@@ -28,6 +28,27 @@ describe("specs rule", () => {
         expect(api(map({ specs: [spec()] }, "/work/fern/out")).specs).toEqual([{ openapi: "../openapi.yml" }]);
     });
 
+    it("resolves specs, overrides and overlays from a separate source root", () => {
+        const ir = cliIr({
+            source: {
+                specs: [spec({ overrides: ["./override.yml"], overlays: ["./first.yml", "./second.yml"] })]
+            }
+        });
+        const result = mapSdkConfigToGeneratorsYml(ir, {
+            ...DIRS,
+            sourceDir: "/work",
+            specFacts: [facts()]
+        });
+        expect(api(result).specs).toEqual([
+            {
+                openapi: "../openapi.yml",
+                overrides: "../override.yml",
+                overlays: "./.cli-target/overlay-0.yml"
+            }
+        ]);
+        expect(result.overlayMerges[0]?.overlayPaths).toEqual(["/work/first.yml", "/work/second.yml"]);
+    });
+
     it("writes a swagger spec under openapi as well", () => {
         expect(api(map({ specs: [spec({ specType: "swagger", specUrl: "./swagger.json" })] })).specs).toEqual([
             { openapi: "./swagger.json" }

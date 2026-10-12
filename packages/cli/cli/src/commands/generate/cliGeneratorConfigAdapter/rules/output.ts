@@ -34,6 +34,16 @@ export function resolveFromConfig(context: RuleContext, path: string): string {
     return resolveFromConfigDir(context.input.configDir, path);
 }
 
+/** A source path rewritten relative to the generators.yml folder. */
+export function relativeSourceToOutput(context: RuleContext, path: string): string {
+    const target = relative(context.input.outDir, resolveFromSource(context, path)).split(sep).join("/");
+    return target.startsWith(".") ? target : `./${target}`;
+}
+
+export function resolveFromSource(context: RuleContext, path: string): string {
+    return resolveFromConfigDir(context.input.sourceDir ?? context.input.configDir, path);
+}
+
 export function resolveFromConfigDir(configDir: string, path: string): string {
     return isAbsolute(path) ? path : resolve(configDir, path);
 }

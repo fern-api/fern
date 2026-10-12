@@ -18,6 +18,8 @@ export interface TranslateCliTargetOptions {
     /** The loaded SDK Config; its cli target is translated. */
     sdkConfig: SdkConfigV1;
     absolutePathToConfig: string;
+    /** Root used by the owning workspace for spec, override and overlay paths. */
+    sourceRoot?: string;
     /** Folder the generators.yml will live in; paths in it are relative to this folder. */
     outDir: string;
     apiName: string;
@@ -64,9 +66,11 @@ export async function translateCliTarget(options: TranslateCliTargetOptions): Pr
     const ir = expanded.ir;
 
     const version = resolveGeneratorVersion({ pinned: ir.target.generatorVersion });
-    const inspected = await inspectSpecs(options.context, ir, configDir);
+    const sourceDir = options.sourceRoot ?? configDir;
+    const inspected = await inspectSpecs(options.context, ir, sourceDir);
     const mapped = mapSdkConfigToGeneratorsYml(ir, {
         configDir,
+        sourceDir,
         outDir: options.outDir,
         specFacts: inspected.facts,
         generatorVersion: version.version
@@ -106,7 +110,7 @@ function multiSpecWarning(ir: SdkConfigIrV1): CliTargetDiagnostic[] {
 async function inspectSpecs(
     context: TaskContext,
     ir: SdkConfigIrV1,
-    configDir: string
+    sourceDir: string
 ): Promise<{ facts: Array<SpecFacts | undefined>; diagnostics: CliTargetDiagnostic[] }> {
     const temporary = await mkdtemp(join(tmpdir(), "fern-cli-target-specs-"));
     try {
@@ -116,13 +120,13 @@ async function inspectSpecs(
                     // The specs rule reports these.
                     return { facts: undefined, diagnostics: [] };
                 }
-                const resolve = (path: string) => resolveFromConfigDir(configDir, path);
+                const resolve = (path: string) => resolveFromConfigDir(sourceDir, path);
                 const overlays = (spec.overlays ?? []).map(resolve);
                 const [firstOverlay] = overlays;
                 let overlayPath = firstOverlay;
                 if (overlays.length > 1) {
                     overlayPath = join(temporary, `overlay-${index}.yml`);
-                    await writeFile(overlayPath, await mergeOverlays(overlays));
+                    await writeFile(overlayPath, await mergeOverlays(overlays, overlayPath));
                 }
                 return loadSpecFacts({
                     context,

@@ -110,12 +110,12 @@ describe("generator rule", () => {
             },
             output: { delivery: "github", github: { repository: "acme/cli", mode: "pull-request", branch: "main" } }
         });
-        expect(generator(result).output).toEqual({
-            location: "github",
+        expect(generator(result).github).toEqual({
             repository: "acme/cli",
             mode: "pull-request",
             branch: "main"
         });
+        expect(generator(result)).not.toHaveProperty("output");
         expect(codes(result.diagnostics)).toContain("warning CLI_TARGET_UNTESTED output.github");
     });
 

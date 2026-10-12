@@ -240,7 +240,23 @@ export const HOSTED_FIELD_TREATMENTS: Record<string, FieldTreatment> = {
         treatment: "Warn",
         note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
     },
+    "client.idempotencyKeyGeneration.enabled": {
+        treatment: "Warn",
+        note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
+    },
+    "client.idempotencyKeyGeneration.headerName": {
+        treatment: "Warn",
+        note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
+    },
+    "client.idempotencyKeyGeneration.methods": {
+        treatment: "Warn",
+        note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
+    },
     "client.multiTenant": {
+        treatment: "Warn",
+        note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
+    },
+    "client.offsetSemantics": {
         treatment: "Warn",
         note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
     },
@@ -325,6 +341,18 @@ export const HOSTED_FIELD_TREATMENTS: Record<string, FieldTreatment> = {
         note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
     },
     "client.useDefaultRequestParameterValues": {
+        treatment: "Warn",
+        note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
+    },
+    "client.userAgent.allowAppInfo": {
+        treatment: "Warn",
+        note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
+    },
+    "client.userAgent.includePlatformInfo": {
+        treatment: "Warn",
+        note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
+    },
+    "client.userAgent.template": {
         treatment: "Warn",
         note: "Library client behavior (retries, timeouts, request styles). The CLI's Rust runtime has fixed behavior; no FCG input."
     },

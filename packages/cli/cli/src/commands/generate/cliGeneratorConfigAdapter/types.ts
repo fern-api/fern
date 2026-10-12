@@ -35,8 +35,10 @@ export interface SpecFacts {
 }
 
 export interface MapperInput {
-    /** Folder of sdk-config.yml; spec paths in the IR are relative to it. */
+    /** Folder of sdk-config.yml; output and package paths in the IR are relative to it. */
     configDir: string;
+    /** Root that spec, override and overlay paths in the IR are relative to. */
+    sourceDir?: string;
     /** Folder of the written generators.yml; paths in it are relative to this folder. */
     outDir: string;
     /** Facts for `ir.source.specs[i]`, or undefined when the spec could not be read. */

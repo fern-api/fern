@@ -54,6 +54,7 @@ interface WorkspaceGeneration {
      */
     ownerKind?: WorkspaceGeneration["kind"];
     ownerLabel?: string;
+    previewBasePath?: AbsoluteFilePath;
 }
 
 interface PreparedSdkConfigGeneration extends WorkspaceGeneration {
@@ -277,7 +278,10 @@ export async function generateAPIWorkspaces({
                     const absolutePathToPreview = preview
                         ? outputDir != null
                             ? AbsoluteFilePath.of(resolve(cwd(), outputDir))
-                            : join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
+                            : join(
+                                  generation.previewBasePath ?? workspace.absoluteFilePath,
+                                  RelativeFilePath.of(PREVIEW_DIRECTORY)
+                              )
                         : undefined;
 
                     if (absolutePathToPreview != null) {
@@ -429,13 +433,24 @@ async function prepareSdkConfigGenerations({
                 preview,
                 targetNames != null ? { targetNames } : sdkConfigPath != null ? { generatorName, generatorIndex } : {}
             );
+            const selectedTargetIndexes =
+                sdkConfigPath != null && targetNames == null
+                    ? getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex })
+                    : new Set(loaded.config.targets.map((_, index) => index));
+            const selectedTargets = loaded.config.targets
+                .map((target, index) => ({ target, payload: loaded.payload.targets[index], index }))
+                .filter(({ index }) => selectedTargetIndexes.has(index));
+            if (sdkConfigPath != null && generatorName != null && selectedTargets.length === 0) {
+                return cliContext.failAndThrow(
+                    `SDK Config generator '${generatorName}' not found. Available generators: ${loaded.config.targets
+                        .map((target) => getSdkConfigGeneratorName(target.language) ?? target.language)
+                        .join(", ")}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             if (sdkConfigPath != null) {
-                const selectedTargetIndexes =
-                    targetNames != null
-                        ? new Set(loaded.config.targets.map((_, index) => index))
-                        : getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex });
-                const selectedTargets = loaded.config.targets.filter((_, index) => selectedTargetIndexes.has(index));
-                for (const target of selectedTargets) {
+                for (const { target } of selectedTargets) {
                     // The cli target is translated locally (cliGeneratorConfigAdapter), not routed as SDK Config.
                     if (target.generatorVersion == null || target.language === CLI_LANGUAGE) {
                         continue;
@@ -459,12 +474,15 @@ async function prepareSdkConfigGenerations({
                     }
                 }
             }
-            if (loaded.config.targets.some((target) => target.language === CLI_LANGUAGE)) {
+            const sourceRoot = resolveSourceRoot(candidate.owner, loaded.absolutePath);
+            const selectedCliTargets = selectedTargets.filter(({ target }) => target.language === CLI_LANGUAGE);
+            if (selectedCliTargets.length > 0) {
                 const cliTarget = await cliContext.runTask(async (context) =>
                     prepareCliTargetWorkspace({
                         context,
-                        sdkConfig: loaded.config,
+                        sdkConfig: { ...loaded.config, targets: selectedTargets.map(({ target }) => target) },
                         absolutePathToConfig: loaded.absolutePath,
+                        sourceRoot,
                         organization: project.config.organization,
                         workspaceName: candidate.owner?.workspaceName,
                         cliVersion: cliContext.environment.packageVersion
@@ -477,27 +495,28 @@ async function prepareSdkConfigGenerations({
                     ...(cliTarget.version != null ? { version: cliTarget.version } : {}),
                     ownerKind: "sdk-config",
                     ownerLabel: loaded.absolutePath,
+                    previewBasePath: AbsoluteFilePath.of(path.dirname(loaded.absolutePath)),
                     configPath: loaded.absolutePath,
                     cleanup: cliTarget.cleanup
                 });
             }
-            const nonCliTargets = loaded.config.targets.filter((target) => target.language !== CLI_LANGUAGE);
+            const nonCliTargets = selectedTargets.filter(({ target }) => target.language !== CLI_LANGUAGE);
             if (nonCliTargets.length === 0) {
                 cliContext.logger.info(`Using SDK Config v1 from ${loaded.absolutePath}`);
                 continue;
             }
             const sdkConfigTargets = {
-                config: { ...loaded.config, targets: nonCliTargets },
+                config: { ...loaded.config, targets: nonCliTargets.map(({ target }) => target) },
                 payload: {
                     ...loaded.payload,
-                    targets: loaded.payload.targets.filter((target) => target.language !== CLI_LANGUAGE)
+                    targets: nonCliTargets.flatMap(({ payload }) => (payload != null ? [payload] : []))
                 }
             };
             const created = await cliContext.runTask(async (context) =>
                 createSdkConfigWorkspace({
                     sdkConfig: sdkConfigTargets.config,
                     absolutePathToConfig: loaded.absolutePath,
-                    sourceRoot: resolveSourceRoot(candidate.owner, loaded.absolutePath),
+                    sourceRoot,
                     cliVersion: cliContext.environment.packageVersion,
                     workspaceName: candidate.owner?.workspaceName,
                     local: useLocalDocker,
@@ -516,7 +535,6 @@ async function prepareSdkConfigGenerations({
                 kind: "sdk-config",
                 workspace: created.workspace,
                 resolvedGroupNames: [sdkConfigGroup],
-                ...(targetNames == null && sdkConfigPath != null ? { generatorName, generatorIndex } : {}),
                 sdkConfigV1: sdkConfigTargets.payload,
                 sdkConfigPath: loaded.absolutePath,
                 configPath: loaded.absolutePath,
@@ -545,15 +563,14 @@ function resolveSourceRoot(
     owner: SdkConfigWorkspaceOwner | undefined,
     absolutePathToConfig: string
 ): string | undefined {
-    if (owner?.getAbsoluteFilePaths == null) {
+    if (owner == null) {
         return undefined;
     }
-    return owner
-        .getAbsoluteFilePaths()
-        .reduce<string>(
-            (boundary, absoluteFilePath) => commonAncestor(boundary, absoluteFilePath),
-            path.dirname(path.resolve(absolutePathToConfig))
-        );
+    const boundary = commonAncestor(path.dirname(path.resolve(absolutePathToConfig)), owner.absoluteFilePath);
+    return (owner.getAbsoluteFilePaths?.() ?? []).reduce<string>(
+        (current, absoluteFilePath) => commonAncestor(current, absoluteFilePath),
+        boundary
+    );
 }
 
 function commonAncestor(candidateRoot: string, candidatePath: string): string {

@@ -37,7 +37,9 @@ async function readExpectations(): Promise<Expectations> {
 
 function run(args: string[], fern: string, timeoutMs?: number): string {
     const result = runBuiltFern(args, fern, timeoutMs);
-    expect(result.status, result.output).toBe(0);
+    if (result.status !== 0) {
+        throw new Error(result.output);
+    }
     return result.output;
 }
 

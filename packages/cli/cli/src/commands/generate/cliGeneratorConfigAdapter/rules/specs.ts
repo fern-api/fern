@@ -2,7 +2,7 @@ import { join } from "node:path";
 import type { ApiImportSettings } from "@postman/sdk-config";
 
 import type { MapperRule, RuleContext } from "../types.js";
-import { apiSection, relativeToOutput, resolveFromConfig } from "./output.js";
+import { apiSection, relativeSourceToOutput, resolveFromSource } from "./output.js";
 
 /**
  * SDK Config import setting to generators.yml `settings` key. `discriminatedUnionV2` and
@@ -77,7 +77,7 @@ export const specsRule: MapperRule = {
             const settings = kebabSettings({ ...rootSettings, ...spec.apiImportSettings });
             specSettings.push({ index, settings });
             specs.push({
-                openapi: relativeToOutput(context, spec.specUrl),
+                openapi: relativeSourceToOutput(context, spec.specUrl),
                 ...(spec.namespace != null ? { namespace: spec.namespace } : {}),
                 ...overrideEntries(context, spec.overrides ?? [], path),
                 ...overlayEntries(context, spec.overlays ?? [], spec.id ?? String(index)),
@@ -109,7 +109,7 @@ function overrideEntries(context: RuleContext, overrides: string[], path: string
             "Check the generated CLI."
         );
     }
-    const paths = overrides.map((override) => relativeToOutput(context, override));
+    const paths = overrides.map((override) => relativeSourceToOutput(context, override));
     return { overrides: paths.length === 1 ? paths[0] : paths };
 }
 
@@ -119,13 +119,13 @@ function overlayEntries(context: RuleContext, overlays: string[], specId: string
         return {};
     }
     if (rest.length === 0) {
-        return { overlays: relativeToOutput(context, first) };
+        return { overlays: relativeSourceToOutput(context, first) };
     }
     // Fern takes one overlay file; the writer concatenates the actions of every overlay into it.
     const mergedPath = join(context.input.outDir, TRANSLATION_FILES_DIRECTORY, `overlay-${specId}.yml`);
     context.output.overlayMerges.push({
         path: mergedPath,
-        overlayPaths: overlays.map((overlay) => resolveFromConfig(context, overlay))
+        overlayPaths: overlays.map((overlay) => resolveFromSource(context, overlay))
     });
     return { overlays: `./${TRANSLATION_FILES_DIRECTORY}/overlay-${specId}.yml` };
 }

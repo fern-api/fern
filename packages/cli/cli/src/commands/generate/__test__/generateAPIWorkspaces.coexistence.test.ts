@@ -284,6 +284,42 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
     });
 
+    it.each([
+        { targets: ["cli", "typescript"], generatorIndex: 1, expected: "typescript" },
+        { targets: ["typescript", "cli"], generatorIndex: 0, expected: "typescript" },
+        { targets: ["typescript", "cli"], generatorIndex: 1, expected: "cli" }
+    ])("runs only target index $generatorIndex from $targets", async ({ targets, generatorIndex, expected }) => {
+        const configPath = path.join(temporaryDirectory, "selected-sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "payments",
+                source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
+                targets: targets.map((language) => ({ language, output: { delivery: "files" } }))
+            })
+        );
+        await runGenerate({
+            project,
+            cliContext,
+            groupNames: undefined,
+            targetNames: undefined,
+            generatorIndex,
+            sdkConfigPath: configPath
+        });
+        expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
+        const call = vi.mocked(generateWorkspace).mock.calls[0]?.[0];
+        expect(call?.sdkConfigV1 == null ? "cli" : call.sdkConfigV1.targets[0]?.language).toBe(expected);
+    });
+
+    it("writes a default CLI preview beside sdk-config.yml instead of the temporary workspace", async () => {
+        await writeSdkConfig([{ language: "cli", output: { delivery: "files" } }]);
+        await runGenerate({ project, cliContext, groupNames: undefined, targetNames: ["cli"], preview: true });
+        expect(vi.mocked(generateWorkspace).mock.calls[0]?.[0].absolutePathToPreview).toBe(
+            path.join(temporaryDirectory, ".preview")
+        );
+    });
+
     it("does not validate a pre-cutover target excluded by --target", async () => {
         const configPath = path.join(temporaryDirectory, "mixed-sdk-config.yml");
         await writeFile(
@@ -307,6 +343,47 @@ describe("generateAPIWorkspaces coexistence", () => {
             sdkConfigPath: configPath
         });
 
+        expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
+    });
+
+    it("rejects an unknown generator name for an explicit SDK Config", async () => {
+        await expect(
+            runGenerate({
+                project,
+                cliContext,
+                groupNames: undefined,
+                targetNames: undefined,
+                generatorName: "fernapi/not-present",
+                sdkConfigPath: path.join(temporaryDirectory, "sdk-config.yml")
+            })
+        ).rejects.toBeDefined();
+        expect(vi.mocked(cliContext.failAndThrow)).toHaveBeenCalledWith(
+            expect.stringContaining("SDK Config generator 'fernapi/not-present' not found"),
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+        expect(vi.mocked(generateWorkspace)).not.toHaveBeenCalled();
+    });
+
+    it("resolves a nested explicit SDK Config source from its owning workspace root", async () => {
+        const configPath = path.join(temporaryDirectory, "configs", "sdk-config.yml");
+        await mkdir(path.dirname(configPath), { recursive: true });
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "payments",
+                source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
+                targets: [{ language: "cli", output: { delivery: "files" } }]
+            })
+        );
+        await runGenerate({
+            project,
+            cliContext,
+            groupNames: undefined,
+            targetNames: undefined,
+            sdkConfigPath: configPath
+        });
         expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
     });
 
@@ -580,7 +657,8 @@ async function runGenerate({
     sdkConfigPath,
     generatorName,
     generatorIndex,
-    useLocalDocker = false
+    useLocalDocker = false,
+    preview = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -590,6 +668,7 @@ async function runGenerate({
     generatorName?: string;
     generatorIndex?: number;
     useLocalDocker?: boolean;
+    preview?: boolean;
 }): Promise<void> {
     await generateAPIWorkspaces({
         project,
@@ -602,7 +681,7 @@ async function runGenerate({
         shouldLogS3Url: false,
         keepDocker: false,
         useLocalDocker,
-        preview: false,
+        preview,
         mode: undefined,
         force: true,
         runner: undefined,

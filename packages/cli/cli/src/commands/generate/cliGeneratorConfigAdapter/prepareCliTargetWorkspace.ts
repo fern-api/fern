@@ -35,6 +35,7 @@ export async function prepareCliTargetWorkspace({
     context,
     sdkConfig,
     absolutePathToConfig,
+    sourceRoot,
     organization,
     workspaceName,
     cliVersion
@@ -42,6 +43,7 @@ export async function prepareCliTargetWorkspace({
     context: TaskContext;
     sdkConfig: SdkConfigV1;
     absolutePathToConfig: string;
+    sourceRoot?: string;
     organization: string;
     workspaceName: string | undefined;
     cliVersion: string;
@@ -53,6 +55,7 @@ export async function prepareCliTargetWorkspace({
             context,
             sdkConfig,
             absolutePathToConfig,
+            sourceRoot,
             outDir: folder,
             apiName: workspaceName ?? "api",
             organization
@@ -77,7 +80,7 @@ export async function prepareCliTargetWorkspace({
         await writeFile(join(folder, GENERATORS_CONFIGURATION_FILENAME), YAML.stringify(translation.generatorsYml));
         for (const merge of translation.overlayMerges) {
             await mkdir(dirname(merge.path), { recursive: true });
-            await writeFile(merge.path, await mergeOverlays(merge.overlayPaths));
+            await writeFile(merge.path, await mergeOverlays(merge.overlayPaths, merge.path));
         }
         context.logger.debug(`Generating the cli target from ${join(folder, GENERATORS_CONFIGURATION_FILENAME)}`);
 

@@ -2,8 +2,10 @@ import { access, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { afterEach, describe, expect, it } from "vitest";
+import YAML from "yaml";
 
 import { loadSdkConfigV1 } from "../../loadSdkConfigV1.js";
+import { mergeOverlays } from "../overlays.js";
 import { prepareCliTargetWorkspace } from "../prepareCliTargetWorkspace.js";
 import { formatDiagnostic, translateCliTarget } from "../translateCliTarget.js";
 import { SPECS, type TempFolder, tempFolder, yaml } from "./helpers.js";
@@ -154,6 +156,51 @@ describe("translateCliTarget", () => {
         expect(notes.some((note) => note.includes("binaryName"))).toBe(true);
         expect(notes.some((note) => note.includes("api.auth"))).toBe(true);
     });
+
+    it("resolves specs from the owning workspace source root", async () => {
+        const { path } = await setup({
+            "api/sdk-config.yml": sdkConfig({
+                source: { specs: [{ id: "main", type: "openapi", path: "./openapi.yml" }] }
+            })
+        });
+        const loaded = await loadSdkConfigV1(join(path, "api", "sdk-config.yml"));
+        const result = await translateCliTarget({
+            context: createMockTaskContext(),
+            sdkConfig: loaded.config,
+            absolutePathToConfig: loaded.absolutePath,
+            sourceRoot: path,
+            outDir: join(path, "translated"),
+            apiName: "api",
+            organization: "acme"
+        });
+        expect(result.diagnostics).toEqual([]);
+        expect(record(result.generatorsYml).api).toEqual({ specs: [{ openapi: "../openapi.yml" }] });
+    });
+
+    it("rebases relative references when merging overlays", async () => {
+        const { path, write } = await setup();
+        await write(
+            "overlays/a/first.yml",
+            yaml({ overlay: "1.0.0", actions: [{ update: { $ref: "./schema.yml#/A" } }] })
+        );
+        await write(
+            "overlays/b/second.yml",
+            yaml({ overlay: "1.0.0", actions: [{ update: { $ref: "./schema.yml#/B" } }] })
+        );
+        const mergedPath = join(path, "translated", "merged.yml");
+        const merged = record(
+            YAML.parse(
+                await mergeOverlays(
+                    [join(path, "overlays/a/first.yml"), join(path, "overlays/b/second.yml")],
+                    mergedPath
+                )
+            )
+        );
+        expect(merged.actions).toEqual([
+            { update: { $ref: "../overlays/a/schema.yml#/A" } },
+            { update: { $ref: "../overlays/b/schema.yml#/B" } }
+        ]);
+    });
 });
 
 describe("prepareCliTargetWorkspace", () => {
@@ -186,6 +233,22 @@ describe("prepareCliTargetWorkspace", () => {
             await prepared.cleanup();
         }
         expect(await exists(prepared.workspace.absoluteFilePath)).toBe(false);
+    });
+
+    it("loads GitHub delivery through the generators.yml github block", async () => {
+        const { path } = await setup({
+            "sdk-config.yml": sdkConfig({
+                output: { delivery: "github", github: { repository: "acme/cli", mode: "pull-request" } }
+            })
+        });
+        const prepared = await prepare(path);
+        try {
+            expect(prepared.workspace.generatorsConfiguration?.groups[0]?.generators[0]?.outputMode.type).toBe(
+                "githubV2"
+            );
+        } finally {
+            await prepared.cleanup();
+        }
     });
 
     it("throws a config error listing every error diagnostic, and leaves no temporary folder", async () => {

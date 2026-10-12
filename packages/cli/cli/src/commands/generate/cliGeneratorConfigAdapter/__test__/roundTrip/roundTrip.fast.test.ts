@@ -39,7 +39,7 @@ async function readExpectations(): Promise<Expectations> {
 /** Translates the captured migrate output's cli target, in a copy of the fixture's specs. */
 async function translate(
     fixture: string
-): Promise<{ original: Record<string, unknown>; translated: Record<string, unknown> }> {
+): Promise<{ original: Record<string, unknown>; translated: Record<string, unknown>; errors: unknown[] }> {
     const folder = await mkdtemp(join(tmpdir(), "cli-target-roundtrip-"));
     try {
         const fern = join(folder, "fern");
@@ -59,12 +59,11 @@ async function translate(
             organization: "fern"
         });
         const errors = result.diagnostics.filter((diagnostic) => diagnostic.severity === "error");
-        expect(errors).toEqual([]);
         const original: unknown = YAML.parse(
             await readFile(join(ROUND_TRIP_FIXTURES, fixture, "generators.original.yml"), "utf8")
         );
         const translated: unknown = result.generatorsYml;
-        return { original: asRecord(original), translated: asRecord(translated) };
+        return { original: asRecord(original), translated: asRecord(translated), errors };
     } finally {
         await rm(folder, { recursive: true, force: true });
     }
@@ -90,7 +89,8 @@ describe("round trip (fast): migrate output translated, compared with the origin
     it.each(
         fixtures
     )("%s: the translated generators.yml differs from the original only where expected", async (fixture) => {
-        const { original, translated } = await translate(fixture);
+        const { original, translated, errors } = await translate(fixture);
+        expect(errors).toEqual([]);
         const actual = generatorsDiff(original, translated);
         if (recording) {
             const empty: Expectations = { generatorVersion: DEFAULT_GENERATOR_VERSION, fixtures: {} };
