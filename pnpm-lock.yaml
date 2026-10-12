@@ -5688,9 +5688,6 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
-      '@fern-api/fdr-sdk':
-        specifier: 1.2.165-d20adf518b
-        version: 1.2.165-d20adf518b(@opentelemetry/api@1.9.1)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils

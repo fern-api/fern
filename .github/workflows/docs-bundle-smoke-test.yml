@@ -9,7 +9,6 @@ on:
       - "packages/cli/docs-preview/**"
       - "packages/cli/cli/src/commands/docs-dev/**"
       - "packages/cli/docs-resolver/**"
-      - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
       - "docs-preview-smoke-test/**"
   pull_request:
@@ -18,7 +17,6 @@ on:
       - "packages/cli/docs-preview/**"
       - "packages/cli/cli/src/commands/docs-dev/**"
       - "packages/cli/docs-resolver/**"
-      - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
       - "docs-preview-smoke-test/**"
   workflow_dispatch:
@@ -43,10 +41,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install
 
-      - name: Build CLI (prod)
-        run: pnpm fern:build
-
-      # The astro run uses the dev CLI, which downloads the Astro preview bundle
+      # The smoke run uses the dev CLI, which downloads the Astro preview bundle
       # from the dev2 bucket (populated on every merge to fern-platform `app`).
       - name: Build CLI (dev)
         run: pnpm fern-dev:build
@@ -65,25 +60,16 @@ jobs:
           ")
           echo "Resolved @boundaryml/baml version: $BAML_VERSION"
 
-          for DIST in prod dev; do
-            node -e "
-              const fs = require('fs');
-              const file = 'packages/cli/cli/dist/' + process.argv[2] + '/package.json';
-              const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));
-              pkg.dependencies = pkg.dependencies || {};
-              pkg.dependencies['@boundaryml/baml'] = process.argv[1];
-              fs.writeFileSync(file, JSON.stringify(pkg, null, 2) + '\n');
-            " "$BAML_VERSION" "$DIST"
-            echo "Patched $DIST package.json:"
-            cat "packages/cli/cli/dist/$DIST/package.json"
-          done
-
-      - name: Upload CLI artifact (prod)
-        uses: actions/upload-artifact@v6
-        with:
-          name: fern-cli-prod
-          path: packages/cli/cli/dist/prod/
-          retention-days: 1
+          node -e "
+            const fs = require('fs');
+            const file = 'packages/cli/cli/dist/dev/package.json';
+            const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));
+            pkg.dependencies = pkg.dependencies || {};
+            pkg.dependencies['@boundaryml/baml'] = process.argv[1];
+            fs.writeFileSync(file, JSON.stringify(pkg, null, 2) + '\n');
+          " "$BAML_VERSION"
+          echo "Patched dev package.json:"
+          cat packages/cli/cli/dist/dev/package.json
 
       - name: Upload CLI artifact (dev)
         uses: actions/upload-artifact@v6
@@ -136,15 +122,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Each leg runs the suite twice: the prod CLI (`fern --legacy`, Next bundle) and
-      # the dev CLI (`fern-dev`, default Astro preview-SSR bundle from the dev2 bucket).
-      - name: Download CLI artifact (prod)
-        if: steps.node-check.outputs.available == 'true'
-        uses: actions/download-artifact@v7
-        with:
-          name: fern-cli-prod
-          path: cli-dist/prod/
-
+      # The dev CLI (`fern-dev`) runs the default Astro preview-SSR bundle from the dev2 bucket.
       - name: Download CLI artifact (dev)
         if: steps.node-check.outputs.available == 'true'
         uses: actions/download-artifact@v7
@@ -158,18 +136,15 @@ jobs:
       # and Node resolves modules relative to the symlink target, where
       # node_modules doesn't exist. A tarball install copies files into the
       # global prefix just like a registry install would.
-      - name: Install CLIs globally
+      - name: Install CLI globally
         if: steps.node-check.outputs.available == 'true'
         shell: bash
         run: |
-          for DIST in prod dev; do
-            echo "Packing $DIST CLI artifact into tarball..."
-            (cd "cli-dist/$DIST" && npm pack)
-            TARBALL=$(ls -t cli-dist/$DIST/*.tgz | head -n1)
-            echo "Installing globally from $TARBALL (simulating npm install -g fern-api)..."
-            npm install -g "$TARBALL"
-          done
-          fern --version || echo "fern --version exited with $?"
+          echo "Packing dev CLI artifact into tarball..."
+          (cd cli-dist/dev && npm pack)
+          TARBALL=$(ls -t cli-dist/dev/*.tgz | head -n1)
+          echo "Installing globally from $TARBALL (simulating npm install -g fern-api)..."
+          npm install -g "$TARBALL"
           fern-dev --version || echo "fern-dev --version exited with $?"
 
       # The smoke-test docs use a custom component that imports a third-party
@@ -188,34 +163,8 @@ jobs:
         run: |
           cd docs-preview-smoke-test/playwright && npm install && npx playwright install chromium
 
-      - name: Run smoke tests (next, with server restart on crash)
-        if: steps.node-check.outputs.available == 'true'
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
-        env:
-          FERN_NO_VERSION_REDIRECTION: "true"
-          FERN_BIN: fern
-          FERN_DOCS_DEV_ARGS: "--legacy"
-          SMOKE_RENDERER: next
-        with:
-          timeout_minutes: 15
-          max_attempts: 3
-          retry_wait_seconds: 10
-          shell: bash
-          command: |
-            bash docs-preview-smoke-test/run-smoke.sh
-
-      - name: Upload Playwright report (next)
-        uses: actions/upload-artifact@v6
-        if: always() && steps.node-check.outputs.available == 'true'
-        continue-on-error: true
-        with:
-          name: smoke-test-playwright-report-next-${{ matrix.os }}-node${{ matrix.node-version }}
-          path: docs-preview-smoke-test/playwright/playwright-report/
-          retention-days: 7
-
       - name: Run smoke tests (astro, with server restart on crash)
-        # Run even if the Next run failed so each renderer gets independent coverage
-        if: ${{ !cancelled() && steps.node-check.outputs.available == 'true' }}
+        if: steps.node-check.outputs.available == 'true'
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         env:
           FERN_NO_VERSION_REDIRECTION: "true"

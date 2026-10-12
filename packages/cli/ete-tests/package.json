@@ -35,7 +35,6 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/fdr-sdk": "catalog:",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
