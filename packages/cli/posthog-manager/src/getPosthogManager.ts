@@ -1,6 +1,7 @@
 import { getAccessToken, getUserToken } from "@fern-api/auth";
 
 import { AccessTokenPosthogManager } from "./AccessTokenPosthogManager.js";
+import { isEventTelemetryEnabled } from "./isEventTelemetryEnabled.js";
 import { NoopPosthogManager } from "./NoopPosthogManager.js";
 import { PosthogManager } from "./PosthogManager.js";
 import { UserPosthogManager } from "./UserPosthogManager.js";
@@ -17,9 +18,7 @@ export async function getPosthogManager(): Promise<PosthogManager> {
 async function createPosthogManager(): Promise<PosthogManager> {
     try {
         const posthogApiKey = process.env.POSTHOG_API_KEY;
-        const disableTelemetry = process.env.FERN_DISABLE_TELEMETRY === "true";
-        // Builds inject `""` when the publish job has no key; treat that like an unset key.
-        if (posthogApiKey == null || posthogApiKey.trim().length === 0 || disableTelemetry) {
+        if (posthogApiKey == null || !isEventTelemetryEnabled()) {
             return new NoopPosthogManager();
         }
         const userToken = await getUserToken();

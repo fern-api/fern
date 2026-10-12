@@ -1,6 +1,6 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
+import { flushFeatureFlagClient, getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import {
@@ -193,7 +193,7 @@ export class CliContext {
         }
         this.ttyAwareLogger.finish();
         try {
-            await this.posthogManager.flush();
+            await Promise.all([this.posthogManager.flush(), flushFeatureFlagClient()]);
         } catch {
             // Silently swallow – analytics should never block the CLI
         }

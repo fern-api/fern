@@ -26,6 +26,8 @@ export interface FeatureFlagClient {
     isEnabled(flag: string, context: FeatureFlagContext): Promise<boolean>;
     /** Returns a previously resolved value without making a request, or `undefined` if none exists yet. */
     getCachedValue(flag: string, context: FeatureFlagContext): boolean | undefined;
+    /** Sends queued `$feature_flag_called` events. Never rejects. */
+    flush(): Promise<void>;
 }
 
 /**
@@ -49,31 +51,49 @@ export class NoopFeatureFlagClient implements FeatureFlagClient {
     public getCachedValue(): boolean | undefined {
         return undefined;
     }
+
+    public flush(): Promise<void> {
+        return Promise.resolve();
+    }
 }
 
 /** The subset of the PostHog client the flag client uses, so tests can substitute it. */
-export type FeatureFlagEvaluator = Pick<PostHog, "getFeatureFlagResult">;
+export type FeatureFlagEvaluator = Pick<PostHog, "getFeatureFlagResult" | "flush">;
 
 const FLAG_REQUEST_TIMEOUT_MS = 3000;
+const FLUSH_TIMEOUT_MS = 3000;
 
 export class PosthogFeatureFlagClient implements FeatureFlagClient {
     private readonly evaluator: FeatureFlagEvaluator;
     private readonly environment: CliReleaseEnvironment;
+    private readonly sendFeatureFlagEvents: boolean;
     private readonly pending = new Map<string, Promise<boolean>>();
     private readonly resolved = new Map<string, boolean>();
 
     constructor({
         environment,
+        sendFeatureFlagEvents,
         posthogApiKey,
         evaluator
     }: {
         environment: CliReleaseEnvironment;
+        /**
+         * Whether evaluations emit `$feature_flag_called` events, which power PostHog's flag usage
+         * metrics. Flags are evaluated even when telemetry is disabled, so callers pass `false` then.
+         */
+        sendFeatureFlagEvents: boolean;
         posthogApiKey?: string;
         evaluator?: FeatureFlagEvaluator;
     }) {
         this.environment = environment;
+        this.sendFeatureFlagEvents = sendFeatureFlagEvents;
         this.evaluator =
-            evaluator ?? new PostHog(posthogApiKey ?? "", { featureFlagsRequestTimeoutMs: FLAG_REQUEST_TIMEOUT_MS });
+            evaluator ??
+            new PostHog(posthogApiKey ?? "", {
+                featureFlagsRequestTimeoutMs: FLAG_REQUEST_TIMEOUT_MS,
+                // Matches UserPosthogManager: keeps posthog-node from tagging CLI events with `$is_server: true`.
+                isServer: false
+            });
     }
 
     public isEnabled(flag: string, context: FeatureFlagContext): Promise<boolean> {
@@ -97,6 +117,20 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
         return this.resolved.get(getCacheKey(flag, context));
     }
 
+    public async flush(): Promise<void> {
+        if (!this.sendFeatureFlagEvents) {
+            return;
+        }
+        try {
+            await Promise.race([
+                this.evaluator.flush(),
+                new Promise<void>((resolve) => setTimeout(resolve, FLUSH_TIMEOUT_MS).unref())
+            ]);
+        } catch {
+            // Flag usage events are analytics only and must never block or fail the CLI.
+        }
+    }
+
     private async evaluate(flag: string, context: FeatureFlagContext): Promise<boolean> {
         const { org } = context;
         const properties = getTargetingProperties(context, this.environment);
@@ -105,8 +139,7 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
                 personProperties: properties,
                 groups: { organization: org },
                 groupProperties: { organization: properties },
-                // Flag checks run even when telemetry is disabled, so they never emit events.
-                sendFeatureFlagEvents: false
+                sendFeatureFlagEvents: this.sendFeatureFlagEvents
             });
             return isFeatureFlagValueEnabled(result);
         } catch {
