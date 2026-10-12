@@ -58,8 +58,9 @@ export function addApiReference({
 
 /** `API Reference`, or `API Reference 2`, `API Reference 3`, ... when `usedTitles` has the ones before it. */
 function getUniqueApiReferenceTitle(usedTitles: unknown[]): string {
+    const used = new Set(usedTitles);
     let title = API_REFERENCE_TITLE;
-    for (let number = 2; usedTitles.includes(title); number++) {
+    for (let number = 2; used.has(title); number++) {
         title = `${API_REFERENCE_TITLE} ${number}`;
     }
     return title;
