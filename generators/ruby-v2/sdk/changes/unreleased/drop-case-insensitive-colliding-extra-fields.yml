@@ -5,5 +5,5 @@
     case-insensitively (e.g. `VALUE` next to `value`). Previously the extra key was re-emitted after the
     declared field, so a case-insensitive, last-wins JSON decoder downstream (such as Go's `encoding/json`)
     read the extra key's value instead of the declared field's. Non-colliding unknown keys are still
-    preserved and re-emitted.
+    preserved and re-emitted. XML-encoded models are unchanged, since XML attribute names are case-sensitive.
   type: fix

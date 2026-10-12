@@ -94,13 +94,14 @@ module Seed
             define_setter(name)
           end
 
-          # Whether the key matches a declared field's name or API name, ignoring case
+          # Whether an unknown input key is dropped instead of kept as an extra field: it matches a declared
+          # field's name or API name, ignoring case
           #
           # @api private
           #
           # @param key [Symbol, String]
           # @return [Boolean]
-          def declared_field_key?(key)
+          def drop_extra_key?(key)
             key = key.to_s
             fields.any? { |name, field| name.to_s.casecmp?(key) || field.api_name.to_s.casecmp?(key) }
           end
@@ -178,7 +179,7 @@ module Seed
           # case-insensitively (e.g. `VALUE` next to `value`): re-emitting those would let a case-insensitive
           # JSON decoder downstream read the extra key instead of the declared field.
           values.each do |name, value|
-            next if self.class.declared_field_key?(name)
+            next if self.class.drop_extra_key?(name)
 
             self.class.add_extra_field_definition(name: name, type: value.class)
 
