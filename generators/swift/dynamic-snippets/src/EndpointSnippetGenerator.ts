@@ -224,6 +224,8 @@ export class EndpointSnippetGenerator {
         defaultEnvironment: FernIr.dynamic.EnvironmentId | undefined;
         environment: FernIr.dynamic.EnvironmentValues | undefined;
     }): string | undefined {
+        // TODO: the dynamic IR doesn't say which base URL an endpoint uses, and the root client takes a single
+        // `baseURL`, so this picks the first base URL even for endpoints served from another one.
         const firstBaseUrlId = environments.baseUrls[0]?.id;
         if (environment != null && typeof environment !== "string") {
             return (firstBaseUrlId != null ? environment[firstBaseUrlId] : undefined) ?? Object.values(environment)[0];

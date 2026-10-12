@@ -25,9 +25,9 @@ const bootInstance: FernIr.dynamic.EndpointSnippetRequest = {
 };
 
 describe("multiple base URLs", () => {
-    it("passes a custom baseURL to the root client", async () => {
-        const generator = buildDynamicSnippetsGenerator({ irFilepath: IR_FILEPATH, config: buildGeneratorConfig() });
+    const generator = buildDynamicSnippetsGenerator({ irFilepath: IR_FILEPATH, config: buildGeneratorConfig() });
 
+    it("passes a custom baseURL to the root client", async () => {
         const response = await generator.generate({ ...bootInstance, baseURL: "http://localhost:8080" });
 
         expect(response.errors).toBeUndefined();
@@ -35,8 +35,6 @@ describe("multiple base URLs", () => {
     });
 
     it("falls back to the default environment's first base URL", async () => {
-        const generator = buildDynamicSnippetsGenerator({ irFilepath: IR_FILEPATH, config: buildGeneratorConfig() });
-
         const response = await generator.generate(bootInstance);
 
         expect(response.errors).toBeUndefined();
@@ -44,8 +42,6 @@ describe("multiple base URLs", () => {
     });
 
     it("uses the requested environment's first base URL", async () => {
-        const generator = buildDynamicSnippetsGenerator({ irFilepath: IR_FILEPATH, config: buildGeneratorConfig() });
-
         const response = await generator.generate({ ...bootInstance, environment: "Staging" });
 
         expect(response.errors).toBeUndefined();
