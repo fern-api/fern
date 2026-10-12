@@ -22,12 +22,14 @@ import {
     FernSdkGenApiPreparationBatch,
     type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
+    getFernSdkGenApiEnvOverride,
     getFernSdkGenApiLanguage,
     isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     resolveFernSdkGenApiEnabledByGenerator,
     selectFernSdkGenApiRoute,
     synthesizesSdkConfig,
+    USE_SDK_GEN_API_ENV_VAR,
     validateFernSdkGenApiDirectPublishCredentials,
     validateFernSdkGenApiPublishTargets,
     validateFernSdkGenApiTargetCount
@@ -505,7 +507,10 @@ export function prepareFernSdkGenApiRoutes({
                 // generation, where they would fail opaquely.
                 if (isSdkGenApiOnly(resolved.name)) {
                     throw new CliError({
-                        message: `${resolved.name} requires sdk-gen-api generation, which is not enabled for this generator in this organization (or the feature flag service could not be reached). Retry, or contact Fern support to enable it.`,
+                        message:
+                            getFernSdkGenApiEnvOverride() === false
+                                ? `${resolved.name} requires sdk-gen-api generation, which ${USE_SDK_GEN_API_ENV_VAR}=false turns off. Unset ${USE_SDK_GEN_API_ENV_VAR} to generate it.`
+                                : `${resolved.name} requires sdk-gen-api generation, which is not enabled for this generator in this organization (or the feature flag service could not be reached). Retry, or contact Fern support to enable it.`,
                         code: CliError.Code.ConfigError
                     });
                 }

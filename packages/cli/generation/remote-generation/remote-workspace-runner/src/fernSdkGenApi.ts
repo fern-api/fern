@@ -241,7 +241,30 @@ export interface FernSdkGenApiFlagTarget {
     generatorName: string;
 }
 
+/** Runtime override of the `use-sdk-gen-api` flag; see {@link getFernSdkGenApiEnvOverride}. Never defined at build time. */
+export const USE_SDK_GEN_API_ENV_VAR = "FERN_USE_SDK_GEN_API";
+
+/**
+ * Runtime override for tests and debugging. `FERN_USE_SDK_GEN_API=true` routes every generator through
+ * sdk-gen-api and `false` keeps every generator off it (generation on Fiddle, upgrades on FDR versions),
+ * whatever the flag says, without a flag request. Unset or any other value defers to the flag.
+ */
+export function getFernSdkGenApiEnvOverride(): boolean | undefined {
+    const value = process.env[USE_SDK_GEN_API_ENV_VAR]?.trim().toLowerCase();
+    if (value === "true") {
+        return true;
+    }
+    if (value === "false") {
+        return false;
+    }
+    return undefined;
+}
+
 export function isFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): Promise<boolean> {
+    const override = getFernSdkGenApiEnvOverride();
+    if (override != null) {
+        return Promise.resolve(override);
+    }
     return getFeatureFlagClient().isEnabled(USE_SDK_GEN_API_FEATURE_FLAG, getFlagContext(target));
 }
 
@@ -250,6 +273,10 @@ export function isFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): Promise
  * paths such as the exit-time upgrade nudge; `undefined` means the flag has not been evaluated.
  */
 export function getResolvedFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): boolean | undefined {
+    const override = getFernSdkGenApiEnvOverride();
+    if (override != null) {
+        return override;
+    }
     return getFeatureFlagClient().getCachedValue(USE_SDK_GEN_API_FEATURE_FLAG, getFlagContext(target));
 }
 
