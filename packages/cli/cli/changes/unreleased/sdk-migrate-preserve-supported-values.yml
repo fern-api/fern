@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern sdk migrate` now keeps settings that SDK Config already supports. It used to drop them:
+    CLI `packageIdentity` homepage, keywords, authors, and license; Rust `packageLicense`; generator
+    `metadata.license` for non-GitHub outputs; and Cargo `rev` and `registry` dependency sources. It now
+    also migrates OAuth client-credentials auth. If one auth scheme cannot be migrated, the other schemes
+    are still written to `api.auth`. A `FERN_API_AUTH_SCHEME_OMITTED` warning names the scheme that was
+    left out and the fields it affects. `FERN_API_AUTH_FIELD_UNSUPPORTED` reports OAuth settings that SDK
+    Config cannot hold.
+  type: fix

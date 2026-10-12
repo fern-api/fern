@@ -1,6 +1,5 @@
 import type { FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
-import { type RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
 import {
     type FernConfigMappingDiagnostic,
     type FernResolvedGeneratorGroupInput,
@@ -11,6 +10,8 @@ import {
     validateSdkConfigV1
 } from "@postman/sdk-config/sdk-config/v1";
 
+import { mapFernAuthToSdkConfig } from "./mapFernAuthToSdkConfig.js";
+import { preserveLegacyPackageMetadata } from "./preserveLegacyPackageMetadata.js";
 import type { SourceDerivedApiFields } from "./projectMigrationSource.js";
 
 export interface MappingResult {
@@ -46,13 +47,18 @@ export function mapFernGroupToSdkConfig({
         }
     };
     const mapped = mapFernConfigToSdkConfigV1(input);
+    const withPackageMetadata = preserveLegacyPackageMetadata({
+        generators: group.generators,
+        sdkConfig: mapped.sdkConfig,
+        diagnostics: mapped.unsupportedFields
+    });
     const sdkConfig =
-        clientPathParameterStyle == null || mapped.sdkConfig.client?.pathParameterStyle != null
-            ? mapped.sdkConfig
+        clientPathParameterStyle == null || withPackageMetadata.sdkConfig.client?.pathParameterStyle != null
+            ? withPackageMetadata.sdkConfig
             : {
-                  ...mapped.sdkConfig,
+                  ...withPackageMetadata.sdkConfig,
                   client: {
-                      ...(mapped.sdkConfig.client ?? {}),
+                      ...(withPackageMetadata.sdkConfig.client ?? {}),
                       pathParameterStyle: clientPathParameterStyle
                   }
               };
@@ -63,7 +69,7 @@ export function mapFernGroupToSdkConfig({
     return {
         diagnostics: [
             ...apiProjection.diagnostics,
-            ...mapped.unsupportedFields.filter((diagnostic) => !isPublishCredentialDiagnostic(diagnostic)),
+            ...withPackageMetadata.diagnostics.filter((diagnostic) => !isPublishCredentialDiagnostic(diagnostic)),
             ...migrationCredentials.flatMap((result) => result.diagnostics)
         ],
         sdkConfig: {
@@ -278,7 +284,7 @@ export function mapFernDefinitionToSdkConfigApi(
                       ...(header.docs == null ? {} : { description: header.docs })
                   }
         );
-    const auth = sourceDerivedApiFields?.auth ? { diagnostics: [] } : mapFernAuth(root);
+    const auth = sourceDerivedApiFields?.auth ? { diagnostics: [] } : mapFernAuthToSdkConfig(definition);
     const baseUrl = sourceDerivedApiFields?.environments
         ? undefined
         : (root["default-url"] ?? definition.rootApiFile.defaultUrl);
@@ -293,151 +299,6 @@ export function mapFernDefinitionToSdkConfigApi(
             ...(auth.auth == null ? {} : { auth: auth.auth })
         },
         diagnostics: auth.diagnostics
-    };
-}
-
-type FernApiContents = FernDefinition["rootApiFile"]["contents"];
-type SdkConfigAuth = NonNullable<SdkConfigV1ApiConfigInput["auth"]>;
-type SdkConfigAuthScheme = SdkConfigAuth["schemes"][number];
-type FernAuthReference = string | RawSchemas.AuthSchemeReferenceSchema;
-type FernAuthSelection = {
-    references: FernAuthReference[];
-    endpointSecurity: boolean | undefined;
-    requirements: Array<{ schemes: string[] }> | undefined;
-};
-
-function mapFernAuth(root: FernApiContents): {
-    auth?: SdkConfigAuth;
-    diagnostics: FernConfigMappingDiagnostic[];
-} {
-    const declarations = root["auth-schemes"] ?? {};
-    const selection: FernAuthSelection | undefined =
-        root.auth == null
-            ? Object.keys(declarations).length === 0
-                ? undefined
-                : {
-                      references: Object.keys(declarations),
-                      endpointSecurity: true,
-                      requirements: undefined
-                  }
-            : visitRawApiAuth<FernAuthSelection>(root.auth, {
-                  single: (reference) => ({
-                      references: [reference],
-                      endpointSecurity: undefined,
-                      requirements: [{ schemes: [authReferenceId(reference)] }]
-                  }),
-                  any: ({ any }) => ({
-                      references: any,
-                      endpointSecurity: undefined,
-                      requirements: any.map((reference) => ({ schemes: [authReferenceId(reference)] }))
-                  }),
-                  endpointSecurity: () => ({
-                      references: Object.keys(declarations),
-                      endpointSecurity: true,
-                      requirements: undefined
-                  })
-              });
-    if (selection == null) {
-        return { diagnostics: [] };
-    }
-
-    const schemes = selection.references.map((reference) => ({
-        id: authReferenceId(reference),
-        scheme: mapFernAuthScheme(reference, declarations)
-    }));
-    const unsupportedSchemeIds = [...new Set(schemes.filter(({ scheme }) => scheme == null).map(({ id }) => id))];
-    const mappedSchemes = schemes.flatMap(({ scheme }) => (scheme == null ? [] : [scheme]));
-    if (unsupportedSchemeIds.length > 0 || mappedSchemes.length === 0) {
-        return {
-            diagnostics: [unsupportedAuthDiagnostic(unsupportedSchemeIds)]
-        };
-    }
-
-    // SDK Config declares each scheme once by id while requirements retain Fern's auth selection.
-    // When an id is repeated, the last reference supplies its optional reference-level docs.
-    const uniqueSchemes = [...new Map(mappedSchemes.map((scheme) => [scheme.id, scheme])).values()];
-    return {
-        auth: {
-            schemes: uniqueSchemes,
-            ...(selection.requirements == null ? {} : { requirements: selection.requirements }),
-            ...(selection.endpointSecurity == null ? {} : { endpointSecurity: selection.endpointSecurity })
-        },
-        diagnostics: []
-    };
-}
-
-function mapFernAuthScheme(
-    reference: FernAuthReference,
-    declarations: NonNullable<FernApiContents["auth-schemes"]>
-): SdkConfigAuthScheme | undefined {
-    const id = authReferenceId(reference);
-    const referenceDocs = typeof reference === "string" ? undefined : reference.docs;
-    if (id === "bearer" && declarations[id] == null) {
-        return { id, type: "bearer", ...(referenceDocs == null ? {} : { description: referenceDocs }) };
-    }
-    if (id === "basic" && declarations[id] == null) {
-        return { id, type: "basic", ...(referenceDocs == null ? {} : { description: referenceDocs }) };
-    }
-
-    const declaration = declarations[id];
-    if (declaration == null) {
-        return undefined;
-    }
-    const description = referenceDocs ?? declaration.docs;
-    return visitRawAuthSchemeDeclaration<SdkConfigAuthScheme | undefined>(declaration, {
-        header: (header) => ({
-            id,
-            type: "api-key",
-            location: "header",
-            name: header.header,
-            ...(header.prefix == null ? {} : { prefix: header.prefix }),
-            ...(header.env == null ? {} : { environmentVariable: header.env }),
-            ...(description == null ? {} : { description })
-        }),
-        basic: (basic) => ({
-            id,
-            type: "basic",
-            ...(basic.username == null ? {} : { username: mapFernAuthVariable(basic.username) }),
-            ...(basic.password == null ? {} : { password: mapFernAuthVariable(basic.password) }),
-            ...(description == null ? {} : { description })
-        }),
-        tokenBearer: (bearer) => ({
-            id,
-            type: "bearer",
-            ...(bearer.token?.env == null ? {} : { environmentVariable: bearer.token.env }),
-            ...(description == null ? {} : { description })
-        }),
-        oauth: () => undefined,
-        inferredBearer: () => undefined
-    });
-}
-
-function mapFernAuthVariable(variable: { name?: string; env?: string; omit?: boolean }): {
-    name?: string;
-    environmentVariable?: string;
-    omit?: boolean;
-} {
-    return {
-        ...(variable.name == null ? {} : { name: variable.name }),
-        ...(variable.env == null ? {} : { environmentVariable: variable.env }),
-        ...(variable.omit == null ? {} : { omit: variable.omit })
-    };
-}
-
-function authReferenceId(reference: FernAuthReference): string {
-    return typeof reference === "string" ? reference : reference.scheme;
-}
-
-function unsupportedAuthDiagnostic(schemeIds: readonly string[]): FernConfigMappingDiagnostic {
-    const schemeDetail =
-        schemeIds.length === 0 ? "" : ` Unsupported or unresolved scheme ids: ${schemeIds.join(", ")}.`;
-    return {
-        code: "FERN_API_AUTH_REQUIRES_REVIEW",
-        severity: "warning",
-        path: ["api", "auth"],
-        reason: `Fern API authentication includes a scheme that cannot be represented safely by this migration command.${schemeDetail}`,
-        sdkConfigPath: ["api", "auth"],
-        suggestedAction: "Review the Fern auth schemes and configure api.auth manually in SDK Config v1."
     };
 }
 
