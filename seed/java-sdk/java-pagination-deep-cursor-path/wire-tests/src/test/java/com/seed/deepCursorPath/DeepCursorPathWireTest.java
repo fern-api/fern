@@ -34,6 +34,7 @@ public class DeepCursorPathWireTest {
         server.start();
         client = SeedDeepCursorPathClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .build();
     }
 

@@ -8,9 +8,10 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_x_fern_streaming_sse_only(
-            &StreamRequest {
-                ..Default::default()
+        .stream_x_fern_streaming_nullable_condition(
+            &StreamXFernStreamingNullableConditionRequest {
+                query: "query".to_string(),
+                stream: false,
             },
             None,
         )

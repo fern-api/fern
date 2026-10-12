@@ -87,6 +87,8 @@ export class TemplateDataGenerator {
                 return this.generateTemplateDataForClientRetryTests();
             case "ClientRetriesDisabledTests":
                 return this.generateTemplateDataForClientRetriesDisabledTests();
+            case "ClientAdditionalBodyParametersTests":
+                return this.generateTemplateDataForClientAdditionalBodyParametersTests();
             case "HTTPStub":
                 return this.generateTemplateDataForHTTPStub();
             default:
@@ -186,6 +188,73 @@ export class TemplateDataGenerator {
                 this.generateEndpointMethodCallExpressionWithMaxRetries(sampleEndpoint, 5)
             ).toStringWithIndentation(4)
         };
+    }
+
+    private generateTemplateDataForClientAdditionalBodyParametersTests() {
+        const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const jsonBodyEndpoint = this.getSampleEndpoint(this.getEndpointWithJsonObjectBody());
+        const noBodyEndpoint = this.getSampleEndpoint(this.getEndpointWithoutBody());
+        const getEndpoint = this.getSampleEndpoint(this.getGetOrHeadEndpointWithoutBody());
+        if (!jsonBodyEndpoint && !noBodyEndpoint && !getEndpoint) {
+            return null;
+        }
+        const renderEndpoint = (sampleEndpoint: SampleEndpoint | null) => {
+            if (!sampleEndpoint) {
+                return { clientDeclaration: "", endpointCall: "" };
+            }
+            return {
+                clientDeclaration:
+                    this.generateRootClientInitializationStatement(sampleEndpoint).toStringWithIndentation(3),
+                endpointCall: swift.Statement.discardAssignment(
+                    this.generateEndpointMethodCallExpressionWithAdditionalBodyParameters(sampleEndpoint)
+                ).toStringWithIndentation(4)
+            };
+        };
+        const jsonBody = renderEndpoint(jsonBodyEndpoint);
+        const noBody = renderEndpoint(noBodyEndpoint);
+        const getNoBody = renderEndpoint(getEndpoint);
+        return {
+            moduleName: moduleSymbol.name,
+            jsonBodyClientDeclaration: jsonBody.clientDeclaration,
+            jsonBodyEndpointCall: jsonBody.endpointCall,
+            noBodyClientDeclaration: noBody.clientDeclaration,
+            noBodyEndpointCall: noBody.endpointCall,
+            getNoBodyClientDeclaration: getNoBody.clientDeclaration,
+            getNoBodyEndpointCall: getNoBody.endpointCall
+        };
+    }
+
+    private generateEndpointMethodCallExpressionWithAdditionalBodyParameters(sampleEndpoint: SampleEndpoint) {
+        const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
+        return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+            endpoint: dynamicEndpoint,
+            snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
+            additionalArguments: [
+                swift.functionArgument({
+                    label: "requestOptions",
+                    value: swift.Expression.structInitialization({
+                        unsafeName: "RequestOptions",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "additionalHeaders",
+                                value: swift.Expression.memberAccess({
+                                    target: swift.Expression.reference("stub"),
+                                    memberName: "headers"
+                                })
+                            }),
+                            swift.functionArgument({
+                                label: "additionalBodyParameters",
+                                value: swift.Expression.reference("additionalBodyParameters")
+                            }),
+                            swift.functionArgument({
+                                label: "additionalBodyProperties",
+                                value: swift.Expression.reference("additionalBodyProperties")
+                            })
+                        ]
+                    })
+                })
+            ]
+        });
     }
 
     private generateMaxRetriesExhaustedStubResponses(defaultMaxRetries: number): string {
@@ -302,6 +371,82 @@ export class TemplateDataGenerator {
         for (const serviceId in services) {
             const service = services[serviceId];
             const endpoint = service?.endpoints.find((endpoint) => areRetriesDisabled(endpoint.retries));
+            if (endpoint) {
+                return endpoint;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Finds an endpoint whose request body always serializes to a JSON object, so the additional body
+     * parameters tests can assert that extra properties are merged into it.
+     */
+    private getEndpointWithJsonObjectBody() {
+        return this.findEndpoint((endpoint) => {
+            const requestBody = endpoint.requestBody;
+            if (requestBody == null) {
+                return false;
+            }
+            if (requestBody.type === "inlinedRequestBody") {
+                const hasRequiredProperty = [...(requestBody.extendedProperties ?? []), ...requestBody.properties].some(
+                    (property) =>
+                        property.valueType.type !== "container" || property.valueType.container.type !== "optional"
+                );
+                return hasRequiredProperty && !this.isFormUrlEncoded(requestBody.contentType);
+            }
+            if (requestBody.type === "reference") {
+                const bodyType = requestBody.requestBodyType;
+                if (bodyType.type !== "named" || this.isFormUrlEncoded(requestBody.contentType)) {
+                    return false;
+                }
+                const typeDeclaration = this.context.ir.types[bodyType.typeId];
+                return (
+                    typeDeclaration?.shape.type === "object" &&
+                    [...(typeDeclaration.shape.extendedProperties ?? []), ...typeDeclaration.shape.properties].some(
+                        (property) =>
+                            property.valueType.type !== "container" || property.valueType.container.type !== "optional"
+                    )
+                );
+            }
+            return false;
+        });
+    }
+
+    /**
+     * Finds an endpoint without a request body. GET and HEAD are skipped because URLSession may reject
+     * requests with those methods that carry a body.
+     */
+    private getEndpointWithoutBody() {
+        return this.findEndpoint(
+            (endpoint) =>
+                endpoint.requestBody == null &&
+                endpoint.method !== FernIr.HttpMethod.Get &&
+                endpoint.method !== FernIr.HttpMethod.Head
+        );
+    }
+
+    /**
+     * Finds a GET or HEAD endpoint without a request body. Additional body parameters are not applied to these.
+     */
+    private getGetOrHeadEndpointWithoutBody() {
+        return this.findEndpoint(
+            (endpoint) =>
+                endpoint.requestBody == null &&
+                (endpoint.method === FernIr.HttpMethod.Get || endpoint.method === FernIr.HttpMethod.Head)
+        );
+    }
+
+    private isFormUrlEncoded(contentType: string | undefined): boolean {
+        return contentType?.includes("application/x-www-form-urlencoded") ?? false;
+    }
+
+    private findEndpoint(predicate: (endpoint: FernIr.HttpEndpoint) => boolean) {
+        const { services } = this.context.ir;
+        for (const serviceId in services) {
+            const endpoint = services[serviceId]?.endpoints.find(
+                (endpoint) => predicate(endpoint) && this.dynamicIr.endpoints[endpoint.id]?.examples?.[0] != null
+            );
             if (endpoint) {
                 return endpoint;
             }

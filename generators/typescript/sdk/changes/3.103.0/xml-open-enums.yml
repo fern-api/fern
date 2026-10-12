@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With `enableForwardCompatibleEnums: true`, enum-typed attributes and text on XML (TwiML) types are open on the
+    wire: `fromXml` keeps a value the enum does not declare (e.g. a voice added after the SDK was generated) instead
+    of throwing, and it round-trips through `toXml`. Without the flag the parse error now lists at most 10 of the
+    allowed values instead of all of them.
+  type: feat

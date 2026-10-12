@@ -17,45 +17,99 @@ module <%= gem_namespace %>
       #   The block should return a two-element array: [parsed_page, raw_http_response].
       # @return [<%= gem_namespace %>::Internal::CursorPageIterator]
       def initialize(initial_cursor:, cursor_field:, &block)
-        @need_initial_load = initial_cursor.nil?
-        @cursor = initial_cursor
+        @initial_cursor = initial_cursor
         @cursor_field = cursor_field
         @get_next_page = block
         @http_response = nil
+        @first_page_requested = false
+        @first_page = nil
+        rewind
       end
 
-      # Iterates over each page returned by the API.
+      # Sends the request for the first page now instead of on the first iteration, so an API error for that page
+      # is raised here. The page is kept, and every loop that starts from the first page reuses it instead of
+      # requesting it again. Does nothing if the first page was already requested.
+      #
+      # @return [self]
+      def load_first_page
+        return self if @first_page_requested
+
+        @first_page = fetch_page(@initial_cursor)
+        rewind
+        self
+      end
+
+      # Uses the first page that `other` loaded with `load_first_page`, unless this iterator already sent a request.
+      #
+      # @param other [<%= gem_namespace %>::Internal::CursorPageIterator]
+      # @return [NilClass]
+      def reuse_first_page(other)
+        return if @first_page_requested || other.first_page.nil?
+
+        @first_page = other.first_page
+        rewind
+      end
+
+      # Iterates over each page returned by the API, starting again from the first page on every call.
       #
       # @param block [Proc] The block which each retrieved page is yielded to.
-      # @return [NilClass]
+      # @return [NilClass, Enumerator] An Enumerator when no block is given.
       def each(&block)
+        return enum_for(:each) unless block_given?
+
+        rewind
         while (page = next_page)
           block.call(page)
         end
+      end
+
+      # Resets page-by-page iteration (`next_page` / `next?`) to the first page.
+      #
+      # @return [NilClass]
+      def rewind
+        @need_initial_load = @initial_cursor.nil?
+        @cursor = @initial_cursor
+        @at_first_page = true
+        nil
       end
 
       # Whether another page will be available from the API.
       #
       # @return [Boolean]
       def next?
-        @need_initial_load || !@cursor.nil?
+        (@at_first_page && !@first_page.nil?) || @need_initial_load || !@cursor.nil?
       end
 
       # Retrieves the next page from the API.
       #
       # @return [Object, nil]
       def next_page
-        return if !@need_initial_load && @cursor.nil?
-
-        @need_initial_load = false
-        result = @get_next_page.call(@cursor)
-        if result.is_a?(Array)
-          fetched_page, raw_response = result
-          @http_response = raw_response
+        if @at_first_page && !@first_page.nil?
+          page = @first_page
         else
-          fetched_page = result
+          return if !@need_initial_load && @cursor.nil?
+
+          page = fetch_page(@cursor)
         end
-        @cursor = fetched_page.send(@cursor_field)
+        @at_first_page = false
+        @need_initial_load = false
+        @cursor = page.send(@cursor_field)
+        page
+      end
+
+      protected
+
+      attr_reader :first_page
+
+      private
+
+      def fetch_page(cursor)
+        result = @get_next_page.call(cursor)
+        @first_page_requested = true
+        return result unless result.is_a?(Array)
+
+        fetched_page, raw_response = result
+        @http_response = raw_response
         fetched_page
       end
     end

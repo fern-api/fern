@@ -32,6 +32,8 @@ public final class UpdateFooRequest {
 
     private final Optional<String> nonNullableText;
 
+    private final Optional<String> requiredNullableText;
+
     private final Map<String, Object> additionalProperties;
 
     private UpdateFooRequest(
@@ -39,11 +41,13 @@ public final class UpdateFooRequest {
             Optional<String> nullableText,
             Optional<Double> nullableNumber,
             Optional<String> nonNullableText,
+            Optional<String> requiredNullableText,
             Map<String, Object> additionalProperties) {
         this.xIdempotencyKey = xIdempotencyKey;
         this.nullableText = nullableText;
         this.nullableNumber = nullableNumber;
         this.nonNullableText = nonNullableText;
+        this.requiredNullableText = requiredNullableText;
         this.additionalProperties = additionalProperties;
     }
 
@@ -82,6 +86,17 @@ public final class UpdateFooRequest {
         return nonNullableText;
     }
 
+    /**
+     * @return Must be sent, but may be null to clear the value
+     */
+    @JsonIgnore
+    public Optional<String> getRequiredNullableText() {
+        if (requiredNullableText == null) {
+            return Optional.empty();
+        }
+        return requiredNullableText;
+    }
+
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("nullable_text")
     private Optional<String> _getNullableText() {
@@ -92,6 +107,12 @@ public final class UpdateFooRequest {
     @JsonProperty("nullable_number")
     private Optional<Double> _getNullableNumber() {
         return nullableNumber;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("required_nullable_text")
+    private Optional<String> _getRequiredNullableText() {
+        return requiredNullableText;
     }
 
     @java.lang.Override
@@ -109,12 +130,18 @@ public final class UpdateFooRequest {
         return xIdempotencyKey.equals(other.xIdempotencyKey)
                 && nullableText.equals(other.nullableText)
                 && nullableNumber.equals(other.nullableNumber)
-                && nonNullableText.equals(other.nonNullableText);
+                && nonNullableText.equals(other.nonNullableText)
+                && requiredNullableText.equals(other.requiredNullableText);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.xIdempotencyKey, this.nullableText, this.nullableNumber, this.nonNullableText);
+        return Objects.hash(
+                this.xIdempotencyKey,
+                this.nullableText,
+                this.nullableNumber,
+                this.nonNullableText,
+                this.requiredNullableText);
     }
 
     @java.lang.Override
@@ -163,11 +190,22 @@ public final class UpdateFooRequest {
         _FinalStage nonNullableText(Optional<String> nonNullableText);
 
         _FinalStage nonNullableText(String nonNullableText);
+
+        /**
+         * <p>Must be sent, but may be null to clear the value</p>
+         */
+        _FinalStage requiredNullableText(Optional<String> requiredNullableText);
+
+        _FinalStage requiredNullableText(String requiredNullableText);
+
+        _FinalStage requiredNullableText(Nullable<String> requiredNullableText);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements XIdempotencyKeyStage, _FinalStage {
         private String xIdempotencyKey;
+
+        private Optional<String> requiredNullableText = Optional.empty();
 
         private Optional<String> nonNullableText = Optional.empty();
 
@@ -186,12 +224,49 @@ public final class UpdateFooRequest {
             nullableText(other.getNullableText());
             nullableNumber(other.getNullableNumber());
             nonNullableText(other.getNonNullableText());
+            requiredNullableText(other.getRequiredNullableText());
             return this;
         }
 
         @java.lang.Override
         public _FinalStage xIdempotencyKey(@NotNull String xIdempotencyKey) {
             this.xIdempotencyKey = Objects.requireNonNull(xIdempotencyKey, "xIdempotencyKey must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Must be sent, but may be null to clear the value</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage requiredNullableText(Nullable<String> requiredNullableText) {
+            if (requiredNullableText.isNull()) {
+                this.requiredNullableText = null;
+            } else if (requiredNullableText.isEmpty()) {
+                this.requiredNullableText = Optional.empty();
+            } else {
+                this.requiredNullableText = Optional.of(requiredNullableText.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Must be sent, but may be null to clear the value</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage requiredNullableText(String requiredNullableText) {
+            this.requiredNullableText = Optional.ofNullable(requiredNullableText);
+            return this;
+        }
+
+        /**
+         * <p>Must be sent, but may be null to clear the value</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "required_nullable_text", nulls = Nulls.SKIP)
+        public _FinalStage requiredNullableText(Optional<String> requiredNullableText) {
+            this.requiredNullableText = requiredNullableText;
             return this;
         }
 
@@ -290,7 +365,12 @@ public final class UpdateFooRequest {
         @java.lang.Override
         public UpdateFooRequest build() {
             return new UpdateFooRequest(
-                    xIdempotencyKey, nullableText, nullableNumber, nonNullableText, additionalProperties);
+                    xIdempotencyKey,
+                    nullableText,
+                    nullableNumber,
+                    nonNullableText,
+                    requiredNullableText,
+                    additionalProperties);
         }
 
         @java.lang.Override

@@ -5,6 +5,7 @@ package com.seed.oauthClientCredentialsDefault.resources.auth;
 
 import com.seed.oauthClientCredentialsDefault.core.ClientOptions;
 import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
+import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultHttpResponse;
 import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentialsDefault.resources.auth.types.TokenResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,26 @@ public class AsyncAuthClient {
     }
 
     public CompletableFuture<TokenResponse> getToken(GetTokenRequest request) {
-        return this.rawClient.getToken(request).thenApply(response -> response.body());
+        CompletableFuture<SeedOauthClientCredentialsDefaultHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.getToken(request);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TokenResponse> getToken(GetTokenRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedOauthClientCredentialsDefaultHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.getToken(request, requestOptions);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

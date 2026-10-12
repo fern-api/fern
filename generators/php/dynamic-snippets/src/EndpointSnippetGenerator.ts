@@ -1,7 +1,7 @@
 import { AbstractAstNode, NamedArgument, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { php } from "@fern-api/php-codegen";
+import { getSdkVariableOptionNames, php } from "@fern-api/php-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
@@ -252,6 +252,10 @@ export class EndpointSnippetGenerator {
         if (environmentArg != null) {
             args.push(environmentArg);
         }
+
+        this.context.errors.scope(Scope.PathParameters);
+        args.push(...this.getConstructorSdkVariableArgs({ endpoint, snippet }));
+        this.context.errors.unscope();
 
         if (optionArgs.length > 0) {
             args.push({
@@ -818,39 +822,21 @@ export class EndpointSnippetGenerator {
         const args: php.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        // IR-level path params with variables have defaults in the SDK and must come after required params.
-        const irPathParameters = this.context.ir.pathParameters ?? [];
-        const requiredIrPathParameters = irPathParameters.filter((p) => p.variable == null);
-        const optionalIrPathParameters = irPathParameters.filter((p) => p.variable != null);
-        const requiredPathParameters = [...requiredIrPathParameters, ...(request.pathParameters ?? [])];
-        if (requiredPathParameters.length > 0) {
+        // Path parameters bound to an SDK variable are set on the client, not passed per call.
+        const pathParameters = this.getUnboundPathParameters(request.pathParameters);
+        if (pathParameters.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: requiredPathParameters, snippet }).map(
-                    (field) => field.value
-                )
+                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
             );
         }
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        // A body left out of the call can only be dropped when nothing positional follows it.
-        const omitBody = optionalIrPathParameters.length === 0 && this.callOmitsRequestBody({ request, snippet });
-        if (request.body != null && !omitBody) {
+        if (request.body != null && !this.callOmitsRequestBody({ request, snippet })) {
             const bodyArg = this.getBodyRequestArg({ body: request.body, value: snippet.requestBody });
             if (!php.TypeLiteral.isNop(bodyArg)) {
                 args.push(bodyArg);
             }
-        }
-        this.context.errors.unscope();
-
-        // Optional IR-level path parameters (with variables/defaults) come after body.
-        this.context.errors.scope(Scope.PathParameters);
-        if (optionalIrPathParameters.length > 0) {
-            args.push(
-                ...this.getPathParameters({ namedParameters: optionalIrPathParameters, snippet }).map(
-                    (field) => field.value
-                )
-            );
         }
         this.context.errors.unscope();
 
@@ -917,25 +903,12 @@ export class EndpointSnippetGenerator {
         const inlinePathParameters = this.context.customConfig?.inlinePathParameters ?? false;
 
         this.context.errors.scope(Scope.PathParameters);
-        // IR-level path params with variables have defaults in the SDK and must come after required params.
-        const irPathParameters = this.context.ir.pathParameters ?? [];
-        const requiredIrPathParameters = irPathParameters.filter((p) => p.variable == null);
-        const optionalIrPathParameters = irPathParameters.filter((p) => p.variable != null);
-
-        const requiredPathParameterFields: php.ConstructorField[] = [];
-        const requiredPathParams = [...requiredIrPathParameters, ...(request.pathParameters ?? [])];
-        if (requiredPathParams.length > 0) {
-            requiredPathParameterFields.push(
-                ...this.getPathParameters({ namedParameters: requiredPathParams, snippet })
-            );
+        // Path parameters bound to an SDK variable are set on the client, not passed per call.
+        const pathParameters = this.getUnboundPathParameters(request.pathParameters);
+        const pathParameterFields: php.ConstructorField[] = [];
+        if (pathParameters.length > 0) {
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
         }
-        const optionalPathParameterFields: php.ConstructorField[] = [];
-        if (optionalIrPathParameters.length > 0) {
-            optionalPathParameterFields.push(
-                ...this.getPathParameters({ namedParameters: optionalIrPathParameters, snippet })
-            );
-        }
-        const pathParameterFields = [...requiredPathParameterFields, ...optionalPathParameterFields];
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
@@ -943,7 +916,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
-            args.push(...requiredPathParameterFields.map((field) => field.value));
+            args.push(...pathParameterFields.map((field) => field.value));
         }
 
         if (
@@ -968,12 +941,100 @@ export class EndpointSnippetGenerator {
             );
         }
 
-        // Optional IR-level path parameters (with variables/defaults) come after body.
-        if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
-            args.push(...optionalPathParameterFields.map((field) => field.value));
-        }
-
         return args;
+    }
+
+    /**
+     * The IR-level and endpoint-level path parameters that remain method arguments, i.e. those
+     * not bound to an SDK variable (bound parameters are resolved from the client).
+     */
+    private getUnboundPathParameters(
+        endpointPathParameters: FernIr.dynamic.NamedParameter[] | undefined
+    ): FernIr.dynamic.NamedParameter[] {
+        return [...(this.context.ir.pathParameters ?? []), ...(endpointPathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
+    }
+
+    /**
+     * Named constructor arguments for the SDK variables bound to this endpoint's path parameters,
+     * taking each value from the snippet's path parameters (matched by wire value). Variables
+     * without a value are omitted so the generated client falls back to its env var/default.
+     */
+    private getConstructorSdkVariableArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): NamedArgument[] {
+        const variables = this.context.ir.variables ?? [];
+        if (variables.length === 0) {
+            return [];
+        }
+        const optionNames = getSdkVariableOptionNames(
+            variables.map((variable) => this.context.getPropertyName(variable.name)),
+            this.getSdkVariableReservedOptionNames(endpoint)
+        );
+        const pathParameters = [
+            ...(this.context.ir.pathParameters ?? []),
+            ...(endpoint.request.type === "body" || endpoint.request.type === "inlined"
+                ? (endpoint.request.pathParameters ?? [])
+                : [])
+        ];
+        const args: NamedArgument[] = [];
+        variables.forEach((variable, index) => {
+            const optionName = optionNames[index];
+            if (optionName == null) {
+                return;
+            }
+            const boundParameter = pathParameters.find(
+                (parameter) =>
+                    parameter.variable === variable.id && snippet.pathParameters?.[parameter.name.wireValue] != null
+            );
+            if (boundParameter == null) {
+                return;
+            }
+            const value = this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: boundParameter.typeReference,
+                value: snippet.pathParameters?.[boundParameter.name.wireValue]
+            });
+            if (!php.TypeLiteral.isNop(value)) {
+                args.push({ name: optionName, assignment: value });
+            }
+        });
+        return args;
+    }
+
+    private getSdkVariableReservedOptionNames(endpoint: FernIr.dynamic.Endpoint): string[] {
+        const names: string[] = [];
+        for (const header of this.context.ir.headers ?? []) {
+            names.push(this.context.getPropertyName(header.name.name));
+        }
+        const auth = endpoint.auth;
+        if (auth == null) {
+            return names;
+        }
+        switch (auth.type) {
+            case "basic":
+                names.push(this.context.getPropertyName(auth.username), this.context.getPropertyName(auth.password));
+                break;
+            case "bearer":
+                names.push(this.context.getPropertyName(auth.token));
+                break;
+            case "header":
+                names.push(this.context.getPropertyName(auth.header.name.name));
+                break;
+            case "oauth":
+                names.push("clientId", "clientSecret");
+                break;
+            case "inferred":
+                // The snippet generator emits no constructor arguments for inferred auth.
+                break;
+            default:
+                assertNever(auth);
+        }
+        return names;
     }
 
     private getFilePropertyInfo({
@@ -1144,25 +1205,9 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField[] {
         const args: php.ConstructorField[] = [];
 
-        // Variable-backed path parameters (e.g. a path param typed by a Fern `variable`) are
-        // required positional arguments on the generated SDK method, but their values are not
-        // provided as explicit snippet path-parameter values. Synthesize a placeholder so the
-        // required argument is still emitted and the snippet type-checks.
-        const values: FernIr.dynamic.Values = { ...(snippet.pathParameters ?? {}) };
-        for (const parameter of namedParameters) {
-            if (
-                parameter.variable != null &&
-                values[parameter.name.wireValue] == null &&
-                parameter.typeReference.type === "primitive" &&
-                parameter.typeReference.value === "STRING"
-            ) {
-                values[parameter.name.wireValue] = `<${parameter.name.wireValue}>`;
-            }
-        }
-
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
-            values
+            values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
             args.push({

@@ -4,6 +4,7 @@
 package com.seed.basicAuth.resources.basicauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.basicAuth.core.BodyProperties;
 import com.seed.basicAuth.core.ClientOptions;
 import com.seed.basicAuth.core.MediaTypes;
 import com.seed.basicAuth.core.ObjectMappers;
@@ -117,7 +118,9 @@ public class RawBasicAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedBasicAuthException("Failed to serialize request", e);
         }

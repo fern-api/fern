@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.30.0] - 2026-10-06
+
+- Add `InferredAuthSchemeTokenEndpoint.grantType` (optional `InferredAuthGrantType`): a token endpoint
+  request property and the fixed value the SDK sends for it instead of exposing it as a client option.
+  Populated with `grant_type` / `refresh_token` when an inferred bearer auth scheme sets
+  `type: refresh-token`.
+
+## [v67.29.0] - 2026-10-05
+
+- Add `VariableDeclaration.envVar` (optional `string`): the name of an environment variable the
+  generated SDK reads at client construction when the caller does not pass the SDK variable
+  explicitly. When set, the variable is optional in the client constructor. Populated from `env`
+  on a detailed `variables` declaration in `api.yml` and from `x-fern-env` on an
+  `x-fern-sdk-variables` entry in OpenAPI specs.
+
 ## [v67.28.0] - 2026-09-24
 
 - Add `SdkConfig.webhookSignatureVerification` (optional `webhooks.WebhookSignatureVerification`):

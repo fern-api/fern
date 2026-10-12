@@ -38,6 +38,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         const modules = this.getClientModuleNames().map((name) => ruby.module({ name }));
 
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const sdkVariableOptions = this.context.getSdkVariableOptions();
         const initializeParams: ruby.KeywordParameter[] = [
             ruby.parameters.keyword({
                 name: "client",
@@ -60,6 +61,16 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             );
         }
 
+        for (const option of sdkVariableOptions) {
+            initializeParams.push(
+                ruby.parameters.keyword({
+                    name: option.optionName,
+                    type: ruby.Type.nilable(this.context.typeMapper.convert({ reference: option.variable.type })),
+                    initializer: ruby.nilValue()
+                })
+            );
+        }
+
         clientClass.addStatement(
             ruby.method({
                 name: "initialize",
@@ -73,6 +84,11 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                         if (isMultiUrl) {
                             writer.writeLine("@base_url = base_url");
                             writer.writeLine("@environment = environment");
+                        }
+                        for (const option of sdkVariableOptions) {
+                            writer.writeLine(
+                                `${this.context.getSdkVariableInstanceVariable(option)} = ${option.optionName}`
+                            );
                         }
                     })
                 ]
@@ -145,6 +161,10 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const sdkVariableArgs = this.context
+            .getSdkVariableOptions()
+            .map((option) => `, ${option.optionName}: ${this.context.getSdkVariableInstanceVariable(option)}`)
+            .join("");
         return new ruby.Method({
             name: this.case.snakeSafe(subpackage.name),
             kind: ruby.MethodKind.Instance,
@@ -162,14 +182,14 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
-                                `Client.new(client: @client, base_url: @base_url, environment: @environment)`
+                                `Client.new(client: @client, base_url: @base_url, environment: @environment${sdkVariableArgs})`
                         );
                     } else {
                         writer.writeLine(
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
-                                `Client.new(client: @client)`
+                                `Client.new(client: @client${sdkVariableArgs})`
                         );
                     }
                 })

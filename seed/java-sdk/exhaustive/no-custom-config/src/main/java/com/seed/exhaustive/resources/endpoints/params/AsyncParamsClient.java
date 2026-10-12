@@ -5,6 +5,7 @@ package com.seed.exhaustive.resources.endpoints.params;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.endpoints.params.requests.CreateWithBodyAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
@@ -39,35 +40,73 @@ public class AsyncParamsClient {
      * GET with path param
      */
     public CompletableFuture<String> getWithPath(String param) {
-        return this.rawClient.getWithPath(param).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.getWithPath(param);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with path param
      */
     public CompletableFuture<String> getWithPath(String param, RequestOptions requestOptions) {
-        return this.rawClient.getWithPath(param, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.getWithPath(param, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with path param
      */
     public CompletableFuture<String> getWithInlinePath(String param) {
-        return this.rawClient.getWithInlinePath(param).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.getWithInlinePath(param);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with path param
      */
     public CompletableFuture<String> getWithInlinePath(String param, RequestOptions requestOptions) {
-        return this.rawClient.getWithInlinePath(param, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.getWithInlinePath(param, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with path param
      */
     public CompletableFuture<String> getWithInlinePath(String param, GetWithInlinePath request) {
-        return this.rawClient.getWithInlinePath(param, request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.getWithInlinePath(param, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -75,28 +114,59 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<String> getWithInlinePath(
             String param, GetWithInlinePath request, RequestOptions requestOptions) {
-        return this.rawClient.getWithInlinePath(param, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.getWithInlinePath(param, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with query param
      */
     public CompletableFuture<Void> getWithQuery(GetWithQuery request) {
-        return this.rawClient.getWithQuery(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.getWithQuery(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with query param
      */
     public CompletableFuture<Void> getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
-        return this.rawClient.getWithQuery(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture =
+                this.rawClient.getWithQuery(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with multiple of same query param
      */
     public CompletableFuture<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
-        return this.rawClient.getWithAllowMultipleQuery(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture =
+                this.rawClient.getWithAllowMultipleQuery(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -104,14 +174,30 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<Void> getWithAllowMultipleQuery(
             GetWithMultipleQuery request, RequestOptions requestOptions) {
-        return this.rawClient.getWithAllowMultipleQuery(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture =
+                this.rawClient.getWithAllowMultipleQuery(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with path and query params
      */
     public CompletableFuture<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request) {
-        return this.rawClient.getWithPathAndQuery(param, request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture =
+                this.rawClient.getWithPathAndQuery(param, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -119,16 +205,30 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<Void> getWithPathAndQuery(
             String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getWithPathAndQuery(param, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture =
+                this.rawClient.getWithPathAndQuery(param, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with path and query params
      */
     public CompletableFuture<Void> getWithInlinePathAndQuery(String param, GetWithInlinePathAndQuery request) {
-        return this.rawClient.getWithInlinePathAndQuery(param, request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture =
+                this.rawClient.getWithInlinePathAndQuery(param, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -136,30 +236,59 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<Void> getWithInlinePathAndQuery(
             String param, GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getWithInlinePathAndQuery(param, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture =
+                this.rawClient.getWithInlinePathAndQuery(param, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * PUT to update with path param
      */
     public CompletableFuture<String> modifyWithPath(String param, String request) {
-        return this.rawClient.modifyWithPath(param, request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.modifyWithPath(param, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * PUT to update with path param
      */
     public CompletableFuture<String> modifyWithPath(String param, String request, RequestOptions requestOptions) {
-        return this.rawClient.modifyWithPath(param, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.modifyWithPath(param, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * PUT to update with path param
      */
     public CompletableFuture<String> modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request) {
-        return this.rawClient.modifyWithInlinePath(param, request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.modifyWithInlinePath(param, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -167,16 +296,30 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<String> modifyWithInlinePath(
             String param, ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
-        return this.rawClient
-                .modifyWithInlinePath(param, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.modifyWithInlinePath(param, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST bytes with path param returning object
      */
     public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param, InputStream request) {
-        return this.rawClient.uploadWithPath(param, request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> rawFuture =
+                this.rawClient.uploadWithPath(param, request);
+        CompletableFuture<ObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -184,14 +327,30 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<ObjectWithRequiredField> uploadWithPath(
             String param, InputStream request, RequestOptions requestOptions) {
-        return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> rawFuture =
+                this.rawClient.uploadWithPath(param, request, requestOptions);
+        CompletableFuture<ObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST bytes with path param returning object
      */
     public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param, byte[] request) {
-        return this.rawClient.uploadWithPath(param, request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> rawFuture =
+                this.rawClient.uploadWithPath(param, request);
+        CompletableFuture<ObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -199,14 +358,30 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<ObjectWithRequiredField> uploadWithPath(
             String param, byte[] request, RequestOptions requestOptions) {
-        return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> rawFuture =
+                this.rawClient.uploadWithPath(param, request, requestOptions);
+        CompletableFuture<ObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST with referenced body + query params
      */
     public CompletableFuture<ObjectWithOptionalField> createWithBodyAndQuery(ObjectWithRequiredField body) {
-        return this.rawClient.createWithBodyAndQuery(body).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.createWithBodyAndQuery(body);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -214,14 +389,30 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<ObjectWithOptionalField> createWithBodyAndQuery(
             ObjectWithRequiredField body, RequestOptions requestOptions) {
-        return this.rawClient.createWithBodyAndQuery(body, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.createWithBodyAndQuery(body, requestOptions);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST with referenced body + query params
      */
     public CompletableFuture<ObjectWithOptionalField> createWithBodyAndQuery(CreateWithBodyAndQuery request) {
-        return this.rawClient.createWithBodyAndQuery(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.createWithBodyAndQuery(request);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -229,28 +420,60 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<ObjectWithOptionalField> createWithBodyAndQuery(
             CreateWithBodyAndQuery request, RequestOptions requestOptions) {
-        return this.rawClient.createWithBodyAndQuery(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.createWithBodyAndQuery(request, requestOptions);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST bytes body + query params
      */
     public CompletableFuture<ObjectWithOptionalField> uploadBytesWithQuery(byte[] body) {
-        return this.rawClient.uploadBytesWithQuery(body).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.uploadBytesWithQuery(body);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST bytes body + query params
      */
     public CompletableFuture<ObjectWithOptionalField> uploadBytesWithQuery(byte[] body, RequestOptions requestOptions) {
-        return this.rawClient.uploadBytesWithQuery(body, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.uploadBytesWithQuery(body, requestOptions);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST bytes body + query params
      */
     public CompletableFuture<ObjectWithOptionalField> uploadBytesWithQuery(UploadBytesWithQuery request) {
-        return this.rawClient.uploadBytesWithQuery(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.uploadBytesWithQuery(request);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -258,34 +481,72 @@ public class AsyncParamsClient {
      */
     public CompletableFuture<ObjectWithOptionalField> uploadBytesWithQuery(
             UploadBytesWithQuery request, RequestOptions requestOptions) {
-        return this.rawClient.uploadBytesWithQuery(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.uploadBytesWithQuery(request, requestOptions);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with boolean path param
      */
     public CompletableFuture<String> getWithBooleanPath(boolean param) {
-        return this.rawClient.getWithBooleanPath(param).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.getWithBooleanPath(param);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with boolean path param
      */
     public CompletableFuture<String> getWithBooleanPath(boolean param, RequestOptions requestOptions) {
-        return this.rawClient.getWithBooleanPath(param, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.getWithBooleanPath(param, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with path param that can throw errors
      */
     public CompletableFuture<String> getWithPathAndErrors(String param) {
-        return this.rawClient.getWithPathAndErrors(param).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.getWithPathAndErrors(param);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET with path param that can throw errors
      */
     public CompletableFuture<String> getWithPathAndErrors(String param, RequestOptions requestOptions) {
-        return this.rawClient.getWithPathAndErrors(param, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.getWithPathAndErrors(param, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

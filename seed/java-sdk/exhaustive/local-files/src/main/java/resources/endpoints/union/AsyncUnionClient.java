@@ -6,6 +6,7 @@ package com.fern.sdk.resources.endpoints.union;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.types.union.types.Animal;
 import java.util.concurrent.CompletableFuture;
 
@@ -27,11 +28,25 @@ public class AsyncUnionClient {
   }
 
   public CompletableFuture<Animal> getAndReturnUnion(Animal request) {
-    return this.rawClient.getAndReturnUnion(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Animal>> rawFuture = this.rawClient.getAndReturnUnion(request);
+    CompletableFuture<Animal> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Animal> getAndReturnUnion(Animal request,
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnUnion(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Animal>> rawFuture = this.rawClient.getAndReturnUnion(request, requestOptions);
+    CompletableFuture<Animal> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 }

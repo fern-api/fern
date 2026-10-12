@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/asset_report/pdf/get",
+                "method": "POST",
+                "identifier_override": "endpoint_assetReport.getPdf"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-pdf-download\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.assetReport.getPdf({\n    asset_report_token: \"asset_report_token\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/asset_report/get",
+                "method": "POST",
+                "identifier_override": "endpoint_assetReport.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-pdf-download\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.assetReport.get({\n    asset_report_token: \"asset_report_token\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

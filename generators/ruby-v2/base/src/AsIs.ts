@@ -12,6 +12,7 @@ export const AsIsFiles = {
     ResponseError: "errors/response_error.Template.rb",
     ServerError: "errors/server_error.Template.rb",
     TimeoutError: "errors/timeout_error.Template.rb",
+    ConnectionError: "errors/connection_error.Template.rb",
 
     // Internal error classes
     ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
@@ -84,6 +85,12 @@ export const AsIsFiles = {
     // HTTP tests
     TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb",
 
+    // JSON tests
+    TestJsonRequest: "test/unit/internal/json/test_request.Template.rb",
+
+    // URL-encoded tests
+    TestUrlEncodedRequest: "test/unit/internal/url_encoded/test_request.Template.rb",
+
     // Multipart tests
     TestMultipartFormData: "test/unit/internal/multipart/test_form_data.Template.rb",
 
@@ -149,5 +156,7 @@ const asIsTopoValue = {
     // hard constraint is that these load after the types they are mixed into.
     [AsIsFiles.XmlElement]: 36,
     [AsIsFiles.XmlUtils]: 37,
-    [AsIsFiles.XmlSerializable]: 38
+    [AsIsFiles.XmlSerializable]: 38,
+    // Only needs ApiError (20). Ordered last so it does not shift any pre-existing require.
+    [AsIsFiles.ConnectionError]: 39
 };

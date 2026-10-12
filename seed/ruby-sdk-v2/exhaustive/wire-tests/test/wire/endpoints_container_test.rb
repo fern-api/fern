@@ -31,6 +31,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/list-of-primitives",
+      expected_body: JSON.parse('["string","string"]')
+    )
   end
 
   def test_endpoints_container_get_and_return_list_of_objects_with_wiremock
@@ -56,6 +63,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/list-of-objects",
+      expected_body: JSON.parse('[{"string":"string"},{"string":"string"}]')
+    )
   end
 
   def test_endpoints_container_get_and_return_set_of_primitives_with_wiremock
@@ -76,6 +90,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       url_path: "/container/set-of-primitives",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/set-of-primitives",
+      expected_body: JSON.parse('["string"]')
     )
   end
 
@@ -100,6 +121,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/set-of-objects",
+      expected_body: JSON.parse('[{"string":"string"}]')
+    )
   end
 
   def test_endpoints_container_get_and_return_map_prim_to_prim_with_wiremock
@@ -122,6 +150,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       url_path: "/container/map-prim-to-prim",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/map-prim-to-prim",
+      expected_body: JSON.parse('{"string":"string"}')
     )
   end
 
@@ -148,12 +183,19 @@ class EndpointsContainerWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/map-prim-to-object",
+      expected_body: JSON.parse('{"string":{"string":"string"}}')
+    )
   end
 
   def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union_with_wiremock
     test_id = "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
 
-    @client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+    result = @client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
       request: {
         string: 1.1
       },
@@ -170,6 +212,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       url_path: "/container/map-prim-to-union",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/string" => 1.1
+      }
     )
   end
 
@@ -196,6 +245,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/map-integer-to-object",
+      expected_body: JSON.parse('{"1":{"string":"string"}}')
+    )
   end
 
   def test_endpoints_container_get_and_return_optional_with_wiremock
@@ -218,6 +274,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       url_path: "/container/opt-objects",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/opt-objects",
+      expected_body: JSON.parse('{"string":"string"}')
     )
   end
 end

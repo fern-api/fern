@@ -88,6 +88,20 @@ def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union
     verify_request_count(test_id, "POST", "/container/map-prim-to-union", None, 1)
 
 
+def test_endpoints_container_get_and_return_map_of_integer_to_object() -> None:
+    """Test getAndReturnMapOfIntegerToObject endpoint with WireMock"""
+    test_id = "endpoints.container.get_and_return_map_of_integer_to_object.0"
+    client = get_client(test_id)
+    client.endpoints.container.get_and_return_map_of_integer_to_object(
+        request={
+            1: ObjectWithRequiredField(
+                string="string",
+            )
+        },
+    )
+    verify_request_count(test_id, "POST", "/container/map-integer-to-object", None, 1)
+
+
 def test_endpoints_container_get_and_return_optional() -> None:
     """Test getAndReturnOptional endpoint with WireMock"""
     test_id = "endpoints.container.get_and_return_optional.0"

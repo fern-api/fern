@@ -13,10 +13,10 @@ public partial class Examples
 
         await client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
             new ObjectWithMixedRequiredAndOptionalFields {
-                RequiredString = "requiredString",
-                RequiredInteger = 1,
-                OptionalString = "optionalString",
-                RequiredLong = 1000000L
+                RequiredString = "hello",
+                RequiredInteger = 0,
+                OptionalString = "world",
+                RequiredLong = 0L
             }
         );
     }

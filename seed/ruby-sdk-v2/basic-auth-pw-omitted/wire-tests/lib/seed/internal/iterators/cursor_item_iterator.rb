@@ -10,11 +10,16 @@ module Seed
       # @param item_field [Symbol] The field in API responses to extract the items to iterate over.
       # @param block [Proc] A block which is responsible for receiving a cursor to use and returning the given page from the API.
       # @return [Seed::Internal::CursorItemIterator]
-      def initialize(initial_cursor:, cursor_field:, item_field:, &)
+      def initialize(initial_cursor:, cursor_field:, item_field:, &block)
         super()
         @item_field = item_field
-        @page_iterator = CursorPageIterator.new(initial_cursor:, cursor_field:, &)
+        @http_response = nil
+        get_page = track_http_responses(block)
+        @page_iterator = CursorPageIterator.new(initial_cursor:, cursor_field:, &get_page)
+        # Items are read through their own page cursor so that reading `pages` never skips items.
+        @item_pages = CursorPageIterator.new(initial_cursor:, cursor_field:, &get_page)
         @page = nil
+        @item_index = 0
       end
 
       # Returns the CursorPageIterator mediating access to the underlying API.

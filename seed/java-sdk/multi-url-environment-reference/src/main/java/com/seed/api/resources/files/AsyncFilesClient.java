@@ -5,6 +5,7 @@ package com.seed.api.resources.files;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.files.requests.FilesUploadRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncFilesClient {
     }
 
     public CompletableFuture<String> upload(FilesUploadRequest request) {
-        return this.rawClient.upload(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<String>> rawFuture = this.rawClient.upload(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> upload(FilesUploadRequest request, RequestOptions requestOptions) {
-        return this.rawClient.upload(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<String>> rawFuture = this.rawClient.upload(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

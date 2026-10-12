@@ -22,6 +22,8 @@ class SeedVariables:
         The base url to use for requests from the client.
 
     root_variable : str
+        Falls back to the ROOT_VARIABLE environment variable when not passed to the client.
+
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -126,6 +128,8 @@ class AsyncSeedVariables:
         The base url to use for requests from the client.
 
     root_variable : str
+        Falls back to the ROOT_VARIABLE environment variable when not passed to the client.
+
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 

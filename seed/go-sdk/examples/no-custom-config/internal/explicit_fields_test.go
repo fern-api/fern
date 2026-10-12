@@ -928,3 +928,59 @@ func intPtr(i int) *int {
 func boolPtr(b bool) *bool {
 	return &b
 }
+
+func TestExplicitFieldsFromJSON(t *testing.T) {
+	fields := map[string]*big.Int{
+		"name": testFieldName,
+		"code": testFieldCode,
+	}
+
+	t.Run("null and non-null keys are present", func(t *testing.T) {
+		result, err := ExplicitFieldsFromJSON([]byte(`{"name": null, "code": "abc", "count": null}`), fields)
+		require.NoError(t, err)
+		require.NotNil(t, result)
+		assert.Equal(t, uint(1), result.Bit(0))
+		assert.Equal(t, uint(1), result.Bit(1))
+		assert.Equal(t, uint(0), result.Bit(2))
+	})
+
+	t.Run("absent keys are not marked", func(t *testing.T) {
+		result, err := ExplicitFieldsFromJSON([]byte(`{"code": null}`), fields)
+		require.NoError(t, err)
+		require.NotNil(t, result)
+		assert.Equal(t, uint(0), result.Bit(0))
+		assert.Equal(t, uint(1), result.Bit(1))
+	})
+
+	t.Run("alternate-case keys match like encoding/json", func(t *testing.T) {
+		result, err := ExplicitFieldsFromJSON([]byte(`{"NAME": null}`), fields)
+		require.NoError(t, err)
+		require.NotNil(t, result)
+		assert.Equal(t, uint(1), result.Bit(0))
+		assert.Equal(t, uint(0), result.Bit(1))
+	})
+
+	t.Run("no mapped keys present", func(t *testing.T) {
+		result, err := ExplicitFieldsFromJSON([]byte(`{"count": 1}`), fields)
+		require.NoError(t, err)
+		assert.Nil(t, result)
+	})
+
+	t.Run("empty mapping", func(t *testing.T) {
+		result, err := ExplicitFieldsFromJSON([]byte(`{"name": null}`), nil)
+		require.NoError(t, err)
+		assert.Nil(t, result)
+	})
+
+	t.Run("round trip preserves null for present keys only", func(t *testing.T) {
+		var value testExplicitFieldsStruct
+		data := []byte(`{"name":null,"count":2}`)
+		require.NoError(t, json.Unmarshal(data, &value))
+		result, err := ExplicitFieldsFromJSON(data, fields)
+		require.NoError(t, err)
+		value.require(result)
+		bytes, err := json.Marshal(&value)
+		require.NoError(t, err)
+		assert.JSONEq(t, `{"name":null,"count":2}`, string(bytes))
+	})
+}

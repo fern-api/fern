@@ -206,10 +206,12 @@ func (a *AstNodeLlm) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstNodeLlm) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetModel sets the Model field and marks it as non-optional;
@@ -292,10 +294,12 @@ func (a *AstNullNode) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstNullNode) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 func (a *AstNullNode) UnmarshalJSON(data []byte) error {
@@ -369,10 +373,12 @@ func (a *AstTextNode) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstTextNode) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetContent sets the Content field and marks it as non-optional;
@@ -568,10 +574,12 @@ func (a *AstllmNodeWithPrompt) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstllmNodeWithPrompt) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -703,10 +711,12 @@ func (a *AstllmNodeWithSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstllmNodeWithSchema) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;

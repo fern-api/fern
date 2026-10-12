@@ -24,6 +24,10 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
     ),
     excludeApis: core.serialization.property("exclude-apis", core.serialization.boolean().optional()),
     basepathAware: core.serialization.property("basepath-aware", core.serialization.boolean().optional()),
+    robotsTxtOnInstanceUrl: core.serialization.property(
+        "robots-txt-on-instance-url",
+        core.serialization.boolean().optional(),
+    ),
     externalSitemaps: core.serialization.property(
         "external-sitemaps",
         core.serialization.list(ExternalSitemap).optional(),
@@ -41,6 +45,7 @@ export declare namespace ExperimentalConfig {
         "ai-example-style-instructions"?: string | null;
         "exclude-apis"?: boolean | null;
         "basepath-aware"?: boolean | null;
+        "robots-txt-on-instance-url"?: boolean | null;
         "external-sitemaps"?: ExternalSitemap.Raw[] | null;
     }
 }

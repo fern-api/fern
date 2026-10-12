@@ -5,6 +5,7 @@ package com.seed.javaStreamingAcceptHeader.resources.dummy;
 
 import com.seed.javaStreamingAcceptHeader.core.ClientOptions;
 import com.seed.javaStreamingAcceptHeader.core.RequestOptions;
+import com.seed.javaStreamingAcceptHeader.core.SeedJavaStreamingAcceptHeaderHttpResponse;
 import com.seed.javaStreamingAcceptHeader.resources.dummy.requests.GenerateRequest;
 import com.seed.javaStreamingAcceptHeader.resources.dummy.requests.GenerateStreamRequest;
 import com.seed.javaStreamingAcceptHeader.resources.dummy.types.StreamResponse;
@@ -28,19 +29,51 @@ public class AsyncDummyClient {
     }
 
     public CompletableFuture<Iterable<StreamResponse>> generateStream(GenerateStreamRequest request) {
-        return this.rawClient.generateStream(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaStreamingAcceptHeaderHttpResponse<Iterable<StreamResponse>>> rawFuture =
+                this.rawClient.generateStream(request);
+        CompletableFuture<Iterable<StreamResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamResponse>> generateStream(
             GenerateStreamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.generateStream(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaStreamingAcceptHeaderHttpResponse<Iterable<StreamResponse>>> rawFuture =
+                this.rawClient.generateStream(request, requestOptions);
+        CompletableFuture<Iterable<StreamResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<StreamResponse> generate(GenerateRequest request) {
-        return this.rawClient.generate(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaStreamingAcceptHeaderHttpResponse<StreamResponse>> rawFuture =
+                this.rawClient.generate(request);
+        CompletableFuture<StreamResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<StreamResponse> generate(GenerateRequest request, RequestOptions requestOptions) {
-        return this.rawClient.generate(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaStreamingAcceptHeaderHttpResponse<StreamResponse>> rawFuture =
+                this.rawClient.generate(request, requestOptions);
+        CompletableFuture<StreamResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

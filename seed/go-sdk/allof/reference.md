@@ -210,6 +210,8 @@ request := &fern.PlantPost{
     Species: "species",
     Family: "family",
     Genus: "genus",
+    CommonName: "commonName",
+    WateringFrequency: fern.PlantBaseWateringFrequencyDaily,
     SunExposure: fern.PlantPostSunExposureFull,
 }
 client.CreatePlant(
@@ -226,6 +228,22 @@ client.CreatePlant(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**commonName:** `string` — The common name of the plant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**wateringFrequency:** `fern.PlantBaseWateringFrequency` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -287,6 +305,8 @@ Tests that when a parent's allOf contains multiple $ref entries, all of them are
 ```go
 request := &fern.TreeRecord{
     ID: "id",
+    TreeName: "treeName",
+    TreeSpecies: "treeSpecies",
 }
 client.CreateTree(
     context.TODO(),

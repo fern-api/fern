@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Connection-level failures now raise the SDK's new `Errors::ConnectionError` (a subclass of
+    `Errors::ApiError`) instead of leaking raw `Errno::ECONNREFUSED`, `Errno::ECONNRESET`,
+    `EOFError`, `SocketError` (DNS) or `OpenSSL::SSL::SSLError`, so `rescue Errors::ApiError`
+    catches every failed call as the README documents. The original exception is kept as `cause`.
+    `Errno::ETIMEDOUT` now raises `Errors::TimeoutError` like the other socket timeouts.
+    Other `SystemCallError`s (e.g. file errors) are not wrapped. Code that rescued the wrapped classes
+    directly should rescue `Errors::ConnectionError` instead (or inspect `cause`). Transport failures are still not retried. The README errors example shows the new class.
+  type: fix

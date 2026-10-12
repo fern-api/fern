@@ -347,3 +347,159 @@ describe("ReconnectingWebSocket reconnect policy", () => {
         expect(FakeWebSocket.instances).toHaveLength(1);
     });
 });
+
+describe("ReconnectingWebSocket waitForOpen", () => {
+    let socket: ReconnectingWebSocket | undefined;
+
+    beforeEach(() => {
+        FakeWebSocket.instances = [];
+    });
+
+    afterEach(() => {
+        socket?.close();
+        socket = undefined;
+    });
+
+    const settleState = async (promise: Promise<unknown>): Promise<"resolved" | "rejected" | "pending"> => {
+        let state: "resolved" | "rejected" | "pending" = "pending";
+        promise.then(
+            () => {
+                state = "resolved";
+            },
+            () => {
+                state = "rejected";
+            },
+        );
+        await flush();
+        return state;
+    };
+
+    const latestFakeSocket = (): FakeWebSocket => FakeWebSocket.instances[FakeWebSocket.instances.length - 1] as FakeWebSocket;
+
+    it("resolves when the connection opens", async () => {
+        socket = createSocket();
+        const waiting = socket.waitForOpen();
+        await flush();
+        latestFakeSocket().simulateOpen();
+
+        expect(await settleState(waiting)).toBe("resolved");
+    });
+
+    it("resolves immediately when the connection is already open", async () => {
+        socket = createSocket();
+        await flush();
+        latestFakeSocket().simulateOpen();
+
+        expect(await settleState(socket.waitForOpen())).toBe("resolved");
+    });
+
+    it("rejects with the error event when the connection errors", async () => {
+        socket = createSocket({ maxRetries: 0 });
+        const waiting = socket.waitForOpen();
+        await flush();
+        latestFakeSocket().simulateError();
+
+        await expect(waiting).rejects.toBeInstanceOf(ErrorEvent);
+    });
+
+    it("rejects when called after close()", async () => {
+        socket = createSocket();
+        await flush();
+        latestFakeSocket().simulateOpen();
+        socket.close();
+
+        expect(socket.readyState).toBe(ReconnectingWebSocket.CLOSED);
+        await expect(socket.waitForOpen()).rejects.toThrow("WebSocket closed before the connection was opened");
+    });
+
+    it("rejects when close() is called while connecting", async () => {
+        socket = createSocket();
+        await flush();
+        const waiting = socket.waitForOpen();
+        socket.close();
+
+        expect(await settleState(waiting)).toBe("rejected");
+    });
+
+    it("rejects when the abort signal fires during the handshake", async () => {
+        const controller = new AbortController();
+        socket = createSocket({}, controller.signal);
+        await flush();
+        expect(FakeWebSocket.instances).toHaveLength(1);
+        const waiting = socket.waitForOpen();
+        controller.abort();
+
+        expect(await settleState(waiting)).toBe("rejected");
+        expect(socket.readyState).toBe(ReconnectingWebSocket.CLOSED);
+    });
+
+    it("rejects and emits close when aborted before the underlying WebSocket exists", async () => {
+        const controller = new AbortController();
+        socket = createSocket({}, controller.signal);
+        const onClose = jest.fn();
+        socket.addEventListener("close", onClose);
+        const waiting = socket.waitForOpen();
+        controller.abort();
+
+        expect(await settleState(waiting)).toBe("rejected");
+        expect(socket.readyState).toBe(ReconnectingWebSocket.CLOSED);
+        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(FakeWebSocket.instances).toHaveLength(0);
+        await expect(socket.waitForOpen()).rejects.toThrow("WebSocket closed before the connection was opened");
+    });
+
+    it("rejects when the abort signal is already aborted", async () => {
+        socket = createSocket({}, AbortSignal.abort());
+
+        expect(socket.readyState).toBe(ReconnectingWebSocket.CLOSED);
+        expect(await settleState(socket.waitForOpen())).toBe("rejected");
+        expect(FakeWebSocket.instances).toHaveLength(0);
+    });
+
+    it("rejects when the server closes without a reconnect", async () => {
+        socket = createSocket();
+        await flush();
+        const waiting = socket.waitForOpen();
+        latestFakeSocket().simulateServerClose(1000);
+
+        expect(await settleState(waiting)).toBe("rejected");
+    });
+
+    it("keeps waiting while a reconnect is pending and resolves once reconnected", async () => {
+        socket = createSocket();
+        await flush();
+        const waiting = socket.waitForOpen();
+        latestFakeSocket().simulateServerClose(1006);
+
+        expect(await settleState(waiting)).toBe("pending");
+        expect(FakeWebSocket.instances).toHaveLength(2);
+        latestFakeSocket().simulateOpen();
+        expect(await settleState(waiting)).toBe("resolved");
+    });
+
+    it("rejects with an error event when the URL provider fails", async () => {
+        socket = new ReconnectingWebSocket({
+            url: () => Promise.reject(new Error("url lookup failed")),
+            options: { WebSocket: FakeWebSocket, maxRetries: 0 },
+        });
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+
+        await expect(socket.waitForOpen()).rejects.toBeInstanceOf(ErrorEvent);
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(FakeWebSocket.instances).toHaveLength(0);
+        await expect(socket.waitForOpen()).rejects.toThrow("WebSocket closed before the connection was opened");
+    });
+
+    it("rejects when close() is called while a reconnect is pending", async () => {
+        socket = createSocket({ minReconnectionDelay: 1000, maxReconnectionDelay: 1000 });
+        await flush();
+        latestFakeSocket().simulateOpen();
+        latestFakeSocket().simulateServerClose(1006);
+        const waiting = socket.waitForOpen();
+        expect(await settleState(waiting)).toBe("pending");
+        socket.close();
+
+        expect(await settleState(waiting)).toBe("rejected");
+    });
+});

@@ -38,10 +38,12 @@ func (c *ContainerObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ContainerObject) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetNestedObjects sets the NestedObjects field and marks it as non-optional;
@@ -132,10 +134,12 @@ func (n *NestedObjectWithLiterals) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NestedObjectWithLiterals) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetStrProp sets the StrProp field and marks it as non-optional;
@@ -262,10 +266,12 @@ func (s *SendRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SendRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;

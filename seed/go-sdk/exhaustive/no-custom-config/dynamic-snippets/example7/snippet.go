@@ -17,10 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithRequiredField{
-        FieldString: "string",
+    request := map[int]*types.ObjectWithRequiredField{
+        1: &types.ObjectWithRequiredField{
+            FieldString: "string",
+        },
     }
-    client.Endpoints.Container.GetAndReturnOptional(
+    client.Endpoints.Container.GetAndReturnMapOfIntegerToObject(
         context.TODO(),
         request,
     )

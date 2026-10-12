@@ -241,6 +241,42 @@ describe("runLibraryDocsGeneration", () => {
         );
     });
 
+    it("prefixes generated slugs with the tab the pages are listed under in docs.yml", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({ ir: mockPythonIr });
+
+        await runLibraryDocsGeneration({
+            libraries: {
+                "my-sdk": {
+                    input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
+                    output: { path: "./docs" },
+                    lang: "python"
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            context: makeContext(),
+            local: true,
+            docsConfig: {
+                tabs: { api: { displayName: "API Reference" } },
+                navigation: [
+                    {
+                        tab: "api",
+                        layout: [
+                            {
+                                section: "Python API Reference",
+                                contents: [{ page: "my_sdk", path: "./docs/my-sdk/my_sdk/index.mdx" }]
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+
+        expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
+            expect.objectContaining({ slug: "my-sdk", slugPrefix: "api-reference" })
+        );
+    });
+
     it("happy path: start → poll → download IR → generate (Python)", async () => {
         const { mockFn, startCalls } = makeMockFetch({
             startResponse: { body: { jobId: "job-1" } },

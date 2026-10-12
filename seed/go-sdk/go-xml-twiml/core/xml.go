@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"reflect"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -25,8 +27,79 @@ type XmlAttribute struct {
 	Value string
 }
 
+// XmlText is a text segment in an element's mixed content. It is an XmlNode so
+// that text and child elements share one ordered list.
+type XmlText string
+
+// ToXmlElement implements XmlNode; text has no element representation.
+func (XmlText) ToXmlElement() *XmlElement {
+	return nil
+}
+
+// XmlCommentPlacement says where an XmlComment is rendered relative to the
+// element whose content holds it.
+type XmlCommentPlacement int
+
+const (
+	// XmlCommentInside renders the comment inside the element, at its position
+	// in the content.
+	XmlCommentInside XmlCommentPlacement = iota
+	// XmlCommentBeforeElement renders the comment immediately before the element.
+	XmlCommentBeforeElement
+	// XmlCommentAfterElement renders the comment immediately after the element.
+	XmlCommentAfterElement
+)
+
+// XmlComment is an XML comment (<!--Text-->) in an element's mixed content. It
+// is an XmlNode so that comments, text and child elements share one ordered list.
+type XmlComment struct {
+	Text      string
+	Placement XmlCommentPlacement
+}
+
+// XmlCommentBefore returns a comment rendered immediately before the element
+// whose content holds it.
+func XmlCommentBefore(text string) XmlComment {
+	return XmlComment{Text: text, Placement: XmlCommentBeforeElement}
+}
+
+// XmlCommentAfter returns a comment rendered immediately after the element
+// whose content holds it.
+func XmlCommentAfter(text string) XmlComment {
+	return XmlComment{Text: text, Placement: XmlCommentAfterElement}
+}
+
+// ToXmlElement implements XmlNode; a comment has no element representation.
+func (XmlComment) ToXmlElement() *XmlElement {
+	return nil
+}
+
+func (c XmlComment) write(buffer *bytes.Buffer) {
+	buffer.WriteString("<!--")
+	buffer.WriteString(xmlCommentText(c.Text))
+	buffer.WriteString("-->")
+}
+
+// xmlCommentText makes text safe to place inside a comment: XML forbids "--"
+// within a comment and a trailing "-", and either would otherwise end the
+// comment early and turn the rest into markup.
+func xmlCommentText(text string) string {
+	var out strings.Builder
+	for i := 0; i < len(text); i++ {
+		out.WriteByte(text[i])
+		if text[i] == '-' && (i+1 == len(text) || text[i+1] == '-') {
+			out.WriteByte(' ')
+		}
+	}
+	return out.String()
+}
+
 // XmlElement is a generic XML element. It carries the children the generated
 // types don't know about, and is the escape hatch for emitting arbitrary tags.
+//
+// Text is the text before the first child; Children holds the child elements
+// and any further text segments (XmlText) and comments (XmlComment) in document
+// order.
 type XmlElement struct {
 	Name       string
 	Namespace  string
@@ -34,6 +107,11 @@ type XmlElement struct {
 	Text       string
 	Attributes []XmlAttribute
 	Children   []XmlNode
+
+	// WrappedItemCount is the number of typed items a wrapper element held when it
+	// was parsed. Generated types use it to deal the items of a wrapped list back
+	// out to repeated wrappers.
+	WrappedItemCount int
 }
 
 // NewXmlElement returns an XmlElement with the given tag name.
@@ -80,7 +158,19 @@ func (x *XmlElement) AddChild(child XmlNode) *XmlElement {
 	return x
 }
 
-// ChildElements returns the children as XmlElements.
+// AddComment appends an XML comment (<!--text-->) after the children added so far and returns the element.
+func (x *XmlElement) AddComment(text string) *XmlElement {
+	x.Children = append(x.Children, XmlComment{Text: text})
+	return x
+}
+
+// AddText appends a text segment after the children added so far and returns the element.
+func (x *XmlElement) AddText(text string) *XmlElement {
+	x.Children = append(x.Children, XmlText(text))
+	return x
+}
+
+// ChildElements returns the child elements, leaving out text segments.
 func (x *XmlElement) ChildElements() []*XmlElement {
 	elements := make([]*XmlElement, 0, len(x.Children))
 	for _, child := range x.Children {
@@ -120,6 +210,29 @@ func (x *XmlElement) ToXmlDocument() string {
 }
 
 func (x *XmlElement) write(buffer *bytes.Buffer, declared map[string]string) {
+	var before, after []XmlComment
+	for _, child := range x.Children {
+		comment, ok := child.(XmlComment)
+		if !ok {
+			continue
+		}
+		switch comment.Placement {
+		case XmlCommentBeforeElement:
+			before = append(before, comment)
+		case XmlCommentAfterElement:
+			after = append(after, comment)
+		}
+	}
+	for _, comment := range before {
+		comment.write(buffer)
+	}
+	x.writeElement(buffer, declared)
+	for _, comment := range after {
+		comment.write(buffer)
+	}
+}
+
+func (x *XmlElement) writeElement(buffer *bytes.Buffer, declared map[string]string) {
 	name := x.QualifiedName()
 	buffer.WriteByte('<')
 	buffer.WriteString(name)
@@ -141,19 +254,61 @@ func (x *XmlElement) write(buffer *bytes.Buffer, declared map[string]string) {
 		xmlEscape(buffer, attribute.Value)
 		buffer.WriteByte('"')
 	}
-	children := x.ChildElements()
-	if x.Text == "" && len(children) == 0 {
+	if !x.hasContent() {
 		buffer.WriteString(" />")
 		return
 	}
 	buffer.WriteByte('>')
 	xmlEscape(buffer, x.Text)
-	for _, child := range children {
-		child.write(buffer, declared)
+	for _, child := range x.Children {
+		writeXmlNode(buffer, child, declared)
 	}
 	buffer.WriteString("</")
 	buffer.WriteString(name)
 	buffer.WriteByte('>')
+}
+
+func (x *XmlElement) hasContent() bool {
+	if x.Text != "" {
+		return true
+	}
+	for _, child := range x.Children {
+		if text, ok := child.(XmlText); ok {
+			if text != "" {
+				return true
+			}
+			continue
+		}
+		if comment, ok := child.(XmlComment); ok {
+			if comment.Placement == XmlCommentInside {
+				return true
+			}
+			continue
+		}
+		if child != nil && child.ToXmlElement() != nil {
+			return true
+		}
+	}
+	return false
+}
+
+func writeXmlNode(buffer *bytes.Buffer, node XmlNode, declared map[string]string) {
+	if node == nil {
+		return
+	}
+	if text, ok := node.(XmlText); ok {
+		xmlEscape(buffer, string(text))
+		return
+	}
+	if comment, ok := node.(XmlComment); ok {
+		if comment.Placement == XmlCommentInside {
+			comment.write(buffer)
+		}
+		return
+	}
+	if element := node.ToXmlElement(); element != nil {
+		element.write(buffer, declared)
+	}
 }
 
 func copyDeclarations(declared map[string]string) map[string]string {
@@ -201,6 +356,9 @@ func ParseXml(document string) (*XmlElement, error) {
 				root = element
 			} else {
 				parent := stack[len(stack)-1]
+				if len(parent.Children) == 0 && IsXmlIndentation(parent.Text) {
+					parent.Text = ""
+				}
 				parent.Children = append(parent.Children, element)
 			}
 			stack = append(stack, element)
@@ -212,7 +370,15 @@ func ParseXml(document string) (*XmlElement, error) {
 			scopes = scopes[:len(scopes)-1]
 		case xml.CharData:
 			if len(stack) > 0 {
-				stack[len(stack)-1].Text += string(token)
+				stack[len(stack)-1].appendParsedText(string(token))
+			}
+		case xml.Comment:
+			if len(stack) > 0 {
+				parent := stack[len(stack)-1]
+				if len(parent.Children) == 0 && IsXmlIndentation(parent.Text) {
+					parent.Text = ""
+				}
+				parent.Children = append(parent.Children, XmlComment{Text: string(token)})
 			}
 		}
 	}
@@ -220,6 +386,204 @@ func ParseXml(document string) (*XmlElement, error) {
 		return nil, errors.New("invalid xml: no root element")
 	}
 	return root, nil
+}
+
+// appendParsedText adds character data read by the parser: to Text before the
+// first child element, and as an XmlText segment after it. Whitespace-only text
+// spanning a line break is pretty-print indentation and is dropped.
+func (x *XmlElement) appendParsedText(text string) {
+	if len(x.Children) == 0 {
+		x.Text += text
+		return
+	}
+	if IsXmlIndentation(text) {
+		return
+	}
+	if last, ok := x.Children[len(x.Children)-1].(XmlText); ok {
+		x.Children[len(x.Children)-1] = last + XmlText(text)
+		return
+	}
+	x.Children = append(x.Children, XmlText(text))
+}
+
+// IsXmlIndentation reports whether text is whitespace that spans a line break,
+// i.e. pretty-print indentation rather than content.
+func IsXmlIndentation(text string) bool {
+	return strings.TrimSpace(text) == "" && strings.ContainsAny(text, "\r\n")
+}
+
+// XmlNodes converts a slice of nodes to []XmlNode, leaving out nil items.
+func XmlNodes[T XmlNode](items []T) []XmlNode {
+	nodes := make([]XmlNode, 0, len(items))
+	for _, item := range items {
+		if node := XmlNode(item); node != nil && !isNilXmlNode(node) {
+			nodes = append(nodes, node)
+		}
+	}
+	return nodes
+}
+
+func isNilXmlNode(node XmlNode) bool {
+	if _, ok := node.(XmlText); ok {
+		return false
+	}
+	value := reflect.ValueOf(node)
+	switch value.Kind() {
+	case reflect.Ptr, reflect.Interface, reflect.Map, reflect.Slice, reflect.Func, reflect.Chan:
+		return value.IsNil()
+	}
+	return false
+}
+
+// isComparableXmlNode reports whether node can be used as a map key.
+func isComparableXmlNode(node XmlNode) bool {
+	return reflect.TypeOf(node).Comparable()
+}
+
+// OrderXmlContent reconciles a type's ordered Content with the nodes its typed
+// fields reference. Text segments, comments and XmlElements keep their position, and so does
+// any node still referenced by a field, one position per reference. Nodes no
+// longer referenced are dropped; referenced nodes missing from content (assigned
+// to a field directly) are appended in field order.
+func OrderXmlContent(content []XmlNode, referenced ...[]XmlNode) []XmlNode {
+	remaining := make(map[XmlNode]int)
+	var all []XmlNode
+	for _, nodes := range referenced {
+		for _, node := range nodes {
+			if node == nil || isNilXmlNode(node) {
+				continue
+			}
+			all = append(all, node)
+			if isComparableXmlNode(node) {
+				remaining[node]++
+			}
+		}
+	}
+	ordered := make([]XmlNode, 0, len(content)+len(all))
+	for _, node := range content {
+		if node == nil {
+			continue
+		}
+		if isComparableXmlNode(node) && remaining[node] > 0 {
+			remaining[node]--
+			ordered = append(ordered, node)
+			continue
+		}
+		if _, ok := node.(XmlText); ok {
+			ordered = append(ordered, node)
+			continue
+		}
+		if _, ok := node.(XmlComment); ok {
+			ordered = append(ordered, node)
+			continue
+		}
+		if element, ok := node.(*XmlElement); ok && element != nil {
+			ordered = append(ordered, node)
+		}
+	}
+	for _, node := range all {
+		if !isComparableXmlNode(node) {
+			ordered = append(ordered, node)
+			continue
+		}
+		if remaining[node] > 0 {
+			remaining[node]--
+			ordered = append(ordered, node)
+		}
+	}
+	return ordered
+}
+
+// AddXmlContent appends ordered content to element. A marker XmlElement whose name
+// is a key of wrapped is rendered as that wrapper holding the next items of the
+// wrapped list: each marker takes the number of items it held when parsed and
+// the last marker takes the rest. Wrapped lists without a marker are appended
+// at the end; an empty wrapper is only emitted when its marker has content of
+// its own (attributes, text or unknown children).
+func AddXmlContent(element *XmlElement, ordered []XmlNode, wrapped map[string][]XmlNode) {
+	markerCounts := make(map[string]int)
+	for _, node := range ordered {
+		if marker, ok := node.(*XmlElement); ok && marker != nil {
+			if _, isWrapped := wrapped[marker.Name]; isWrapped {
+				markerCounts[marker.Name]++
+			}
+		}
+	}
+	seen := make(map[string]int)
+	positions := make(map[string]int)
+	for _, node := range ordered {
+		marker, ok := node.(*XmlElement)
+		if !ok || marker == nil || markerCounts[marker.Name] == 0 {
+			element.Children = append(element.Children, node)
+			continue
+		}
+		items := wrapped[marker.Name]
+		position := positions[marker.Name]
+		index := seen[marker.Name]
+		seen[marker.Name] = index + 1
+		take := len(items) - position
+		if index < markerCounts[marker.Name]-1 && marker.WrappedItemCount < take {
+			take = marker.WrappedItemCount
+		}
+		if take < 0 {
+			take = 0
+		}
+		wrapper := &XmlElement{
+			Name:       marker.Name,
+			Namespace:  marker.Namespace,
+			Prefix:     marker.Prefix,
+			Text:       marker.Text,
+			Attributes: append([]XmlAttribute(nil), marker.Attributes...),
+		}
+		wrapper.Children = append(wrapper.Children, items[position:position+take]...)
+		wrapper.Children = append(wrapper.Children, marker.Children...)
+		positions[marker.Name] = position + take
+		if len(wrapper.Children) > 0 || len(wrapper.Attributes) > 0 || wrapper.Text != "" {
+			element.Children = append(element.Children, wrapper)
+		}
+	}
+	names := make([]string, 0, len(wrapped))
+	for name := range wrapped {
+		if markerCounts[name] == 0 && len(wrapped[name]) > 0 {
+			names = append(names, name)
+		}
+	}
+	sort.Strings(names)
+	for _, name := range names {
+		wrapper := NewXmlElement(name)
+		wrapper.Children = append(wrapper.Children, wrapped[name]...)
+		element.Children = append(element.Children, wrapper)
+	}
+}
+
+// TakeXmlElement removes the first XmlElement named 'name' from nodes and returns
+// it together with the remaining nodes.
+func TakeXmlElement(nodes []XmlNode, name string) (*XmlElement, []XmlNode) {
+	for i, node := range nodes {
+		element, ok := node.(*XmlElement)
+		if !ok || element == nil || element.Name != name {
+			continue
+		}
+		remaining := make([]XmlNode, 0, len(nodes)-1)
+		remaining = append(remaining, nodes[:i]...)
+		return element, append(remaining, nodes[i+1:]...)
+	}
+	return nil, nodes
+}
+
+// Merge copies the attributes, text and children of other onto x and returns x.
+func (x *XmlElement) Merge(other *XmlElement) *XmlElement {
+	if other == nil {
+		return x
+	}
+	for _, attribute := range other.Attributes {
+		x.SetAttribute(attribute.Name, attribute.Value)
+	}
+	if other.Text != "" {
+		x.Text = other.Text
+	}
+	x.Children = append(x.Children, other.Children...)
+	return x
 }
 
 const xmlNamespace = "http://www.w3.org/XML/1998/namespace"
@@ -296,37 +660,6 @@ func XmlRootError(expected string, element *XmlElement) error {
 		return fmt.Errorf("expected root element <%s>, got <%s> (namespace %q)", expected, element.QualifiedName(), element.Namespace)
 	}
 	return fmt.Errorf("expected root element <%s>, got <%s>", expected, element.QualifiedName())
-}
-
-// TakeXmlElement removes the first XmlElement named 'name' from nodes and returns
-// it together with the remaining nodes. It is used to merge the unknown content of
-// a wrapped list back into the wrapper the generated types emit.
-func TakeXmlElement(nodes []XmlNode, name string) (*XmlElement, []XmlNode) {
-	for i, node := range nodes {
-		element, ok := node.(*XmlElement)
-		if !ok || element == nil || element.Name != name {
-			continue
-		}
-		remaining := make([]XmlNode, 0, len(nodes)-1)
-		remaining = append(remaining, nodes[:i]...)
-		return element, append(remaining, nodes[i+1:]...)
-	}
-	return nil, nodes
-}
-
-// Merge copies the attributes, text and children of other onto x and returns x.
-func (x *XmlElement) Merge(other *XmlElement) *XmlElement {
-	if other == nil {
-		return x
-	}
-	for _, attribute := range other.Attributes {
-		x.SetAttribute(attribute.Name, attribute.Value)
-	}
-	if other.Text != "" {
-		x.Text = other.Text
-	}
-	x.Children = append(x.Children, other.Children...)
-	return x
 }
 
 // ParseXmlBool parses an XML boolean ("true"/"false"/"1"/"0").

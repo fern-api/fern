@@ -43,7 +43,7 @@ module <%= gem_namespace %>
           @timeout = timeout
           @auth_provider = auth_provider
 <% if (allowCustomHttpClient) { %>          @http_client = http_client
-<% } %>          @default_headers = <% if (!omitFernHeaders) { %>{
+<% } %>          @default_headers = <% if (!omitFernHeaders && !userAgentOnly) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
             "X-Fern-SDK-Version": "0.0.1"
@@ -170,6 +170,7 @@ module <%= gem_namespace %>
           # Resolve auth headers once per request (not per retry) so token-based
           # providers refresh at most once here; static providers are cheap.
           auth_headers = resolve_auth_headers
+          timeout = request_timeout(request)
           attempt = 0
           response = nil
 
@@ -182,14 +183,14 @@ module <%= gem_namespace %>
               auth_headers: auth_headers
             )
 
-<% if (allowCustomHttpClient) { %>            response = perform_request(url, http_request)
+<% if (allowCustomHttpClient) { %>            response = wrap_transport_errors { perform_request(url, http_request, timeout) }
 <% } else { %>            conn = connect(url)
-            conn.open_timeout = @timeout
-            conn.read_timeout = @timeout
-            conn.write_timeout = @timeout
-            conn.continue_timeout = @timeout
+            conn.open_timeout = timeout
+            conn.read_timeout = timeout
+            conn.write_timeout = timeout
+            conn.continue_timeout = timeout
 
-            response = conn.request(http_request)
+            response = wrap_transport_errors { conn.request(http_request) }
 <% } %>
             break unless should_retry?(response, attempt<% if (requestLevelMaxRetries) { %>, max_retries: request.max_retries<% } %>)
 
@@ -199,6 +200,35 @@ module <%= gem_namespace %>
           end
 
           response
+        end
+
+        # Socket-level `Errno` failures. Other `SystemCallError`s, such as file errors raised by a
+        # custom HTTP client, are not connection failures and propagate unchanged.
+        NETWORK_ERRNOS = [
+          Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::ECONNABORTED, Errno::EPIPE,
+          Errno::EHOSTUNREACH, Errno::ENETUNREACH, Errno::ENETDOWN, Errno::EHOSTDOWN,
+          Errno::EADDRNOTAVAIL
+        ].freeze
+
+        # Runs a single request attempt, re-raising transport failures as SDK errors so that
+        # rescuing `Errors::ApiError` covers them. The original exception is kept as `cause`.
+        # These failures are not retried: the server may already have processed the request.
+        # @return [Net::HTTPResponse] The HTTP response.
+        def wrap_transport_errors
+          yield
+        rescue Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout, Errno::ETIMEDOUT => e
+          raise <%= gem_namespace %>::Errors::TimeoutError, e.message
+        rescue EOFError, SocketError, OpenSSL::SSL::SSLError, *NETWORK_ERRNOS,
+               Net::ProtocolError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError => e
+          raise <%= gem_namespace %>::Errors::ConnectionError, e.message
+        end
+
+        # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
+        # @return [Float] The request's `timeout_in_seconds` option, or the client-level timeout.
+        def request_timeout(request)
+          options = request.request_options || {}
+          timeout = options.key?(:timeout_in_seconds) ? options[:timeout_in_seconds] : options["timeout_in_seconds"]
+          (timeout.nil? ? @timeout : timeout).to_f
         end
 
         # The client-level header names that `additional_headers` must not replace: every default
@@ -375,15 +405,16 @@ module <%= gem_namespace %>
         # was supplied, or through a fresh Net::HTTP connection otherwise.
         # @param url [URI::Generic] The url of the resource.
         # @param http_request [Net::HTTPGenericRequest] The HTTP request.
+        # @param timeout [Float] The timeout for the built-in Net::HTTP connection.
         # @return [Net::HTTPResponse] The HTTP response.
-        def perform_request(url, http_request)
+        def perform_request(url, http_request, timeout)
           return @http_client.request(url, http_request) unless @http_client.nil?
 
           conn = connect(url)
-          conn.open_timeout = @timeout
-          conn.read_timeout = @timeout
-          conn.write_timeout = @timeout
-          conn.continue_timeout = @timeout
+          conn.open_timeout = timeout
+          conn.read_timeout = timeout
+          conn.write_timeout = timeout
+          conn.continue_timeout = timeout
           conn.request(http_request)
         end
 

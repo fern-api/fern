@@ -3,7 +3,7 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractPhpGeneratorCli } from "@fern-api/php-base";
 import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
-import { generateModels, generateTraits } from "@fern-api/php-model";
+import { generateModels, generateTraits, generateXmlTests } from "@fern-api/php-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
@@ -62,6 +62,9 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await context.snippetGenerator.populateSnippetsCache();
         generateModels(context);
+        if (context.hasXmlTypes()) {
+            generateXmlTests(context);
+        }
         generateTraits(context);
         this.generateRootClient(context);
         this.generateSubpackages(context);
@@ -88,12 +91,12 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
+        }
 
-            try {
-                await this.generateReference({ context });
-            } catch (e) {
-                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
-            }
+        try {
+            await this.generateReference({ context });
+        } catch (e) {
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
 
         await context.project.persist();

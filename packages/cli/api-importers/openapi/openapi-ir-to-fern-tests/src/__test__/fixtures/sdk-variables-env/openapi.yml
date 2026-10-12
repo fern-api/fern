@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: SDK variables with environment variable fallback
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+x-fern-sdk-variables:
+  accountId:
+    type: string
+    description: The account to operate on. Falls back to the ACCOUNT_ID environment variable.
+    x-fern-env: ACCOUNT_ID
+  regionCode:
+    type: string
+    description: A required variable without an environment variable fallback.
+paths:
+  /accounts/{accountId}/regions/{regionCode}/messages:
+    post:
+      operationId: createMessage
+      tags:
+        - Messages
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-fern-sdk-variable: accountId
+        - name: regionCode
+          in: path
+          required: true
+          schema:
+            type: string
+          x-fern-sdk-variable: regionCode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid:
+                    type: string

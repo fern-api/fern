@@ -20,10 +20,12 @@ type BootInstanceRequest struct {
 }
 
 func (b *BootInstanceRequest) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetSize sets the Size field and marks it as non-optional;

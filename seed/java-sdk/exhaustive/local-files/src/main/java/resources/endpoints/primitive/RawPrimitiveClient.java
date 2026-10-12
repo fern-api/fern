@@ -5,6 +5,7 @@
 package com.fern.sdk.resources.endpoints.primitive;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
@@ -52,7 +53,7 @@ public class RawPrimitiveClient {
       }
       RequestBody body;
       try {
-        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
       }
       catch(JsonProcessingException e) {
         throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -103,7 +104,7 @@ public class RawPrimitiveClient {
         }
         RequestBody body;
         try {
-          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
         }
         catch(JsonProcessingException e) {
           throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -154,7 +155,7 @@ public class RawPrimitiveClient {
           }
           RequestBody body;
           try {
-            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
           }
           catch(JsonProcessingException e) {
             throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -205,7 +206,7 @@ public class RawPrimitiveClient {
             }
             RequestBody body;
             try {
-              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
             }
             catch(JsonProcessingException e) {
               throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -256,7 +257,7 @@ public class RawPrimitiveClient {
               }
               RequestBody body;
               try {
-                body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
               }
               catch(JsonProcessingException e) {
                 throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -308,7 +309,7 @@ public class RawPrimitiveClient {
                 }
                 RequestBody body;
                 try {
-                  body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                  body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                 }
                 catch(JsonProcessingException e) {
                   throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -359,7 +360,7 @@ public class RawPrimitiveClient {
                   }
                   RequestBody body;
                   try {
-                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                   }
                   catch(JsonProcessingException e) {
                     throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -410,7 +411,7 @@ public class RawPrimitiveClient {
                     }
                     RequestBody body;
                     try {
-                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                     }
                     catch(JsonProcessingException e) {
                       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -461,7 +462,7 @@ public class RawPrimitiveClient {
                       }
                       RequestBody body;
                       try {
-                        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                       }
                       catch(JsonProcessingException e) {
                         throw new SeedExhaustiveException("Failed to serialize request", e);

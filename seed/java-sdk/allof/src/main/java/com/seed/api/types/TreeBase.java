@@ -20,50 +20,32 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TreeBase.Builder.class)
-public final class TreeBase implements ITreeBase, ITreeIdentifiable, ITreeDescribable {
-    private final Optional<String> treeSpecies;
-
-    private final Optional<Double> heightInFeet;
-
+public final class TreeBase implements ITreeIdentifiable, ITreeDescribable {
     private final String id;
 
     private final Optional<String> treeName;
 
     private final Optional<String> treeDescription;
 
+    private final Optional<String> treeSpecies;
+
+    private final Optional<Double> heightInFeet;
+
     private final Map<String, Object> additionalProperties;
 
     private TreeBase(
-            Optional<String> treeSpecies,
-            Optional<Double> heightInFeet,
             String id,
             Optional<String> treeName,
             Optional<String> treeDescription,
+            Optional<String> treeSpecies,
+            Optional<Double> heightInFeet,
             Map<String, Object> additionalProperties) {
-        this.treeSpecies = treeSpecies;
-        this.heightInFeet = heightInFeet;
         this.id = id;
         this.treeName = treeName;
         this.treeDescription = treeDescription;
+        this.treeSpecies = treeSpecies;
+        this.heightInFeet = heightInFeet;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return The species of tree.
-     */
-    @JsonProperty("treeSpecies")
-    @java.lang.Override
-    public Optional<String> getTreeSpecies() {
-        return treeSpecies;
-    }
-
-    /**
-     * @return Height of the tree in feet.
-     */
-    @JsonProperty("heightInFeet")
-    @java.lang.Override
-    public Optional<Double> getHeightInFeet() {
-        return heightInFeet;
     }
 
     /**
@@ -93,6 +75,22 @@ public final class TreeBase implements ITreeBase, ITreeIdentifiable, ITreeDescri
         return treeDescription;
     }
 
+    /**
+     * @return The species of tree.
+     */
+    @JsonProperty("treeSpecies")
+    public Optional<String> getTreeSpecies() {
+        return treeSpecies;
+    }
+
+    /**
+     * @return Height of the tree in feet.
+     */
+    @JsonProperty("heightInFeet")
+    public Optional<Double> getHeightInFeet() {
+        return heightInFeet;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -105,16 +103,16 @@ public final class TreeBase implements ITreeBase, ITreeIdentifiable, ITreeDescri
     }
 
     private boolean equalTo(TreeBase other) {
-        return treeSpecies.equals(other.treeSpecies)
-                && heightInFeet.equals(other.heightInFeet)
-                && id.equals(other.id)
+        return id.equals(other.id)
                 && treeName.equals(other.treeName)
-                && treeDescription.equals(other.treeDescription);
+                && treeDescription.equals(other.treeDescription)
+                && treeSpecies.equals(other.treeSpecies)
+                && heightInFeet.equals(other.heightInFeet);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.treeSpecies, this.heightInFeet, this.id, this.treeName, this.treeDescription);
+        return Objects.hash(this.id, this.treeName, this.treeDescription, this.treeSpecies, this.heightInFeet);
     }
 
     @java.lang.Override
@@ -143,20 +141,6 @@ public final class TreeBase implements ITreeBase, ITreeIdentifiable, ITreeDescri
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>The species of tree.</p>
-         */
-        _FinalStage treeSpecies(Optional<String> treeSpecies);
-
-        _FinalStage treeSpecies(String treeSpecies);
-
-        /**
-         * <p>Height of the tree in feet.</p>
-         */
-        _FinalStage heightInFeet(Optional<Double> heightInFeet);
-
-        _FinalStage heightInFeet(Double heightInFeet);
-
-        /**
          * <p>Display name of the tree.</p>
          */
         _FinalStage treeName(Optional<String> treeName);
@@ -169,19 +153,33 @@ public final class TreeBase implements ITreeBase, ITreeIdentifiable, ITreeDescri
         _FinalStage treeDescription(Optional<String> treeDescription);
 
         _FinalStage treeDescription(String treeDescription);
+
+        /**
+         * <p>The species of tree.</p>
+         */
+        _FinalStage treeSpecies(Optional<String> treeSpecies);
+
+        _FinalStage treeSpecies(String treeSpecies);
+
+        /**
+         * <p>Height of the tree in feet.</p>
+         */
+        _FinalStage heightInFeet(Optional<Double> heightInFeet);
+
+        _FinalStage heightInFeet(Double heightInFeet);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, _FinalStage {
         private String id;
 
-        private Optional<String> treeDescription = Optional.empty();
-
-        private Optional<String> treeName = Optional.empty();
-
         private Optional<Double> heightInFeet = Optional.empty();
 
         private Optional<String> treeSpecies = Optional.empty();
+
+        private Optional<String> treeDescription = Optional.empty();
+
+        private Optional<String> treeName = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -190,11 +188,11 @@ public final class TreeBase implements ITreeBase, ITreeIdentifiable, ITreeDescri
 
         @java.lang.Override
         public Builder from(TreeBase other) {
-            treeSpecies(other.getTreeSpecies());
-            heightInFeet(other.getHeightInFeet());
             id(other.getId());
             treeName(other.getTreeName());
             treeDescription(other.getTreeDescription());
+            treeSpecies(other.getTreeSpecies());
+            heightInFeet(other.getHeightInFeet());
             return this;
         }
 
@@ -206,46 +204,6 @@ public final class TreeBase implements ITreeBase, ITreeIdentifiable, ITreeDescri
         @JsonSetter("id")
         public _FinalStage id(@NotNull String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
-            return this;
-        }
-
-        /**
-         * <p>A description of the tree.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage treeDescription(String treeDescription) {
-            this.treeDescription = Optional.ofNullable(treeDescription);
-            return this;
-        }
-
-        /**
-         * <p>A description of the tree.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "treeDescription", nulls = Nulls.SKIP)
-        public _FinalStage treeDescription(Optional<String> treeDescription) {
-            this.treeDescription = treeDescription;
-            return this;
-        }
-
-        /**
-         * <p>Display name of the tree.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage treeName(String treeName) {
-            this.treeName = Optional.ofNullable(treeName);
-            return this;
-        }
-
-        /**
-         * <p>Display name of the tree.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "treeName", nulls = Nulls.SKIP)
-        public _FinalStage treeName(Optional<String> treeName) {
-            this.treeName = treeName;
             return this;
         }
 
@@ -289,9 +247,49 @@ public final class TreeBase implements ITreeBase, ITreeIdentifiable, ITreeDescri
             return this;
         }
 
+        /**
+         * <p>A description of the tree.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage treeDescription(String treeDescription) {
+            this.treeDescription = Optional.ofNullable(treeDescription);
+            return this;
+        }
+
+        /**
+         * <p>A description of the tree.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "treeDescription", nulls = Nulls.SKIP)
+        public _FinalStage treeDescription(Optional<String> treeDescription) {
+            this.treeDescription = treeDescription;
+            return this;
+        }
+
+        /**
+         * <p>Display name of the tree.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage treeName(String treeName) {
+            this.treeName = Optional.ofNullable(treeName);
+            return this;
+        }
+
+        /**
+         * <p>Display name of the tree.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "treeName", nulls = Nulls.SKIP)
+        public _FinalStage treeName(Optional<String> treeName) {
+            this.treeName = treeName;
+            return this;
+        }
+
         @java.lang.Override
         public TreeBase build() {
-            return new TreeBase(treeSpecies, heightInFeet, id, treeName, treeDescription, additionalProperties);
+            return new TreeBase(id, treeName, treeDescription, treeSpecies, heightInFeet, additionalProperties);
         }
 
         @java.lang.Override

@@ -63,7 +63,8 @@ public class AsyncRawServiceClient {
         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedApiHttpResponse<User>> future = new CompletableFuture<>();
-      client.newCall(okhttpRequest).enqueue(new Callback() {
+      RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+      okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
@@ -87,6 +88,11 @@ public class AsyncRawServiceClient {
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
           future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+        }
+      });
+      future.whenComplete((result_, throwable_) -> {
+        if (future.isCancelled()) {
+          okhttpCall.cancel();
         }
       });
       return future;

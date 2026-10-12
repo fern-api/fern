@@ -40,10 +40,12 @@ func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DoubleOptional) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetOptionalAlias sets the OptionalAlias field and marks it as non-optional;
@@ -133,10 +135,12 @@ func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interfac
 }
 
 func (n *NestedObjectWithOptionalField) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -233,10 +237,12 @@ func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interfac
 }
 
 func (n *NestedObjectWithRequiredField) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -295,14 +301,14 @@ func (n *NestedObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// This type tests that string fields containing datetime-like values
-// are NOT reformatted by the wire test generator. The string field
-// should preserve its exact value even if it looks like a datetime.
 var (
 	objectWithDatetimeLikeStringFieldDatetimeLikeString = big.NewInt(1 << 0)
 	objectWithDatetimeLikeStringFieldActualDatetime     = big.NewInt(1 << 1)
 )
 
+// This type tests that string fields containing datetime-like values
+// are NOT reformatted by the wire test generator. The string field
+// should preserve its exact value even if it looks like a datetime.
 type ObjectWithDatetimeLikeString struct {
 	// A string field that happens to contain a datetime-like value
 	DatetimeLikeString string `json:"datetimeLikeString" url:"datetimeLikeString"`
@@ -338,10 +344,12 @@ func (o *ObjectWithDatetimeLikeString) GetExtraProperties() map[string]interface
 }
 
 func (o *ObjectWithDatetimeLikeString) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetDatetimeLikeString sets the DatetimeLikeString field and marks it as non-optional;
@@ -437,10 +445,12 @@ func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithMapOfMap) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetMap sets the Map field and marks it as non-optional;
@@ -630,10 +640,12 @@ func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithOptionalField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -810,10 +822,12 @@ func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithRequiredField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -865,12 +879,12 @@ func (o *ObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that unknown/any values containing backslashes in map keys
-// are properly escaped in Go string literals.
 var (
 	objectWithUnknownFieldFieldUnknown = big.NewInt(1 << 0)
 )
 
+// Tests that unknown/any values containing backslashes in map keys
+// are properly escaped in Go string literals.
 type ObjectWithUnknownField struct {
 	Unknown any `json:"unknown" url:"unknown"`
 
@@ -896,10 +910,12 @@ func (o *ObjectWithUnknownField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithUnknownField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetUnknown sets the Unknown field and marks it as non-optional;

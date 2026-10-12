@@ -245,7 +245,6 @@ client.Nested.API.GetSomething(
 ```go
 client.Service.Post(
     context.TODO(),
-    "<endpointParam>",
 )
 ```
 </dd>

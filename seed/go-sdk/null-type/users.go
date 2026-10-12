@@ -21,10 +21,12 @@ type GetUsersRequest struct {
 }
 
 func (g *GetUsersRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -39,6 +41,11 @@ var (
 	userFieldName      = big.NewInt(1 << 1)
 	userFieldDeletedAt = big.NewInt(1 << 2)
 )
+
+// userNullableFields maps the wire names of User's nullable fields (required or optional) to their field bits.
+var userNullableFields = map[string]*big.Int{
+	"deleted_at": userFieldDeletedAt,
+}
 
 type User struct {
 	ID   string `json:"id" url:"id"`
@@ -82,10 +89,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -121,6 +130,13 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, userNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -14,6 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import okhttp3.Response;
@@ -54,6 +55,8 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
 
     private final Supplier<? extends WebSocket> connectionSupplier;
 
+    private final BooleanSupplier closedCheck;
+
     /**
      * Creates a new reconnecting WebSocket listener.
      *
@@ -62,12 +65,29 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
      */
     public ReconnectingWebSocketListener(
             ReconnectingWebSocketListener.ReconnectOptions options, Supplier<? extends WebSocket> connectionSupplier) {
+        this(options, connectionSupplier, () -> false);
+    }
+
+    /**
+     * Creates a new reconnecting WebSocket listener.
+     *
+     * @param options Reconnection configuration options
+     * @param connectionSupplier Supplier that creates new WebSocket connections
+     * @param closedCheck Returns true once the owning client has been closed; connect and
+     *     reconnect attempts made after that point fail with an {@link IllegalStateException}
+     *     instead of being retried
+     */
+    public ReconnectingWebSocketListener(
+            ReconnectingWebSocketListener.ReconnectOptions options,
+            Supplier<? extends WebSocket> connectionSupplier,
+            BooleanSupplier closedCheck) {
         this.minReconnectionDelayMs = options.minReconnectionDelayMs;
         this.maxReconnectionDelayMs = options.maxReconnectionDelayMs;
         this.reconnectionDelayGrowFactor = options.reconnectionDelayGrowFactor;
         this.maxRetries = options.maxRetries;
         this.maxEnqueuedMessages = options.maxEnqueuedMessages;
         this.connectionSupplier = connectionSupplier;
+        this.closedCheck = closedCheck;
     }
 
     /**
@@ -82,9 +102,16 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
      * - TimeoutException: Includes retry attempt context
      * - InterruptedException: Preserves thread interruption status
      * - ExecutionException: Extracts actual cause and adds context
+     * - Owning client closed: reports an IllegalStateException once and stops reconnecting
      */
     public void connect() {
         if (!connectLock.compareAndSet(false, true)) {
+            return;
+        }
+        if (closedCheck.getAsBoolean()) {
+            shouldReconnect.set(false);
+            connectLock.set(false);
+            onWebSocketFailure(null, new IllegalStateException("root client has been closed"), null);
             return;
         }
         if (retryCount.get() >= maxRetries) {
@@ -100,7 +127,7 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
                 TimeoutException timeoutError =
                         new TimeoutException("WebSocket connection timeout after " + 4000 + " milliseconds"
                                 + (retryCount.get() > 0
-                                        ? " (retry attempt #" + retryCount.get()
+                                        ? " (retry attempt #" + retryCount.get() + ")"
                                         : " (initial connection attempt)"));
                 onWebSocketFailure(null, timeoutError, null);
                 if (shouldReconnect.get()) {
@@ -397,8 +424,13 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     /**
      * Schedules a reconnection attempt with appropriate delay.
      * Increments retry count and uses exponential backoff.
+     * Does nothing once the owning client has been closed.
      */
     private void scheduleReconnect() {
+        if (closedCheck.getAsBoolean()) {
+            shouldReconnect.set(false);
+            return;
+        }
         retryCount.incrementAndGet();
         long delay = getNextDelay();
         reconnectExecutor.schedule(this::connect, delay, MILLISECONDS);

@@ -1,0 +1,7 @@
+instances: []
+navigation:
+  - api: API Reference
+    alphabetized: true
+    sort-by-availability:
+      - beta
+      - deprecated

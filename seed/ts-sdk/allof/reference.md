@@ -254,6 +254,8 @@ await client.createPlant({
     species: "species",
     family: "family",
     genus: "genus",
+    commonName: "commonName",
+    wateringFrequency: "daily",
     sunExposure: "full"
 });
 
@@ -319,7 +321,9 @@ Tests that when a parent's allOf contains multiple $ref entries, all of them are
 
 ```typescript
 await client.createTree({
-    id: "id"
+    treeName: "treeName",
+    id: "id",
+    treeSpecies: "treeSpecies"
 });
 
 ```

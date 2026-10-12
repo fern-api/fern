@@ -5,6 +5,7 @@ package com.seed.api.resources.folder;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.core.Suppliers;
 import com.seed.api.resources.folder.service.AsyncServiceClient;
 import java.util.concurrent.CompletableFuture;
@@ -31,11 +32,25 @@ public class AsyncFolderClient {
     }
 
     public CompletableFuture<Void> foo() {
-        return this.rawClient.foo().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.foo();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> foo(RequestOptions requestOptions) {
-        return this.rawClient.foo(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.foo(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public AsyncServiceClient service() {

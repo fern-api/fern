@@ -103,7 +103,8 @@ public class AsyncRawPaginationClient {
         }
         CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -119,7 +120,11 @@ public class AsyncRawPaginationClient {
                         List<ObjectWithRequiredField> result = parsedResponse.getItems();
                         future.complete(new SeedExhaustiveHttpResponse<>(
                                 new SyncPagingIterable<ObjectWithRequiredField>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return listItems(nextRequest, requestOptions)
                                                         .get()
@@ -146,6 +151,11 @@ public class AsyncRawPaginationClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

@@ -1,1 +1,1 @@
-export { MissingRedirectsRule } from "./missing-redirects.js";
+export { findMissingRedirects, MissingRedirectsRule } from "./missing-redirects.js";

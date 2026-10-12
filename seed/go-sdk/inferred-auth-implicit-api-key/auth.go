@@ -21,10 +21,12 @@ type GetTokenRequest struct {
 }
 
 func (g *GetTokenRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetAPIKey sets the APIKey field and marks it as non-optional;
@@ -34,7 +36,6 @@ func (g *GetTokenRequest) SetAPIKey(apiKey string) {
 	g.require(getTokenRequestFieldAPIKey)
 }
 
-// An auth token response.
 var (
 	tokenResponseFieldAccessToken = big.NewInt(1 << 0)
 	tokenResponseFieldTokenType   = big.NewInt(1 << 1)
@@ -42,6 +43,7 @@ var (
 	tokenResponseFieldScope       = big.NewInt(1 << 3)
 )
 
+// An auth token response.
 type TokenResponse struct {
 	AccessToken string  `json:"access_token" url:"access_token"`
 	TokenType   string  `json:"token_type" url:"token_type"`
@@ -91,10 +93,12 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

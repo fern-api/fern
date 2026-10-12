@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedVariables;
 using SeedVariables.Test.Unit.MockServer;
 
 namespace SeedVariables.Test.Unit.MockServer.Service;
@@ -14,7 +15,16 @@ public class PostTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/endpointParam").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(async () => await Client.Service.PostAsync("endpointParam"));
+        var client = new SeedVariablesClient(
+            clientOptions: new ClientOptions
+            {
+                BaseUrl = Server.Urls[0],
+                MaxRetries = 0,
+                RootVariable = "endpointParam",
+            }
+        );
+
+        Assert.DoesNotThrowAsync(async () => await client.Service.PostAsync());
     }
 
     [NUnit.Framework.Test]
@@ -24,6 +34,15 @@ public class PostTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/endpointParam").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(async () => await Client.Service.PostAsync("endpointParam"));
+        var client = new SeedVariablesClient(
+            clientOptions: new ClientOptions
+            {
+                BaseUrl = Server.Urls[0],
+                MaxRetries = 0,
+                RootVariable = "endpointParam",
+            }
+        );
+
+        Assert.DoesNotThrowAsync(async () => await client.Service.PostAsync());
     }
 }

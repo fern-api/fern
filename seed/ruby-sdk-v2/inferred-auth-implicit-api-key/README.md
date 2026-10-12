@@ -15,6 +15,7 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
   - [Timeouts](#timeouts)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Additional Body Properties](#additional-body-properties)
 - [Contributing](#contributing)
 
 ## Reference
@@ -61,6 +62,8 @@ begin
     result = client.auth.get_token
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
+rescue Seed::Errors::ConnectionError => e
+    puts "Could not reach the API (connection refused, reset, DNS or TLS failure): #{e.message}"
 rescue Seed::Errors::ServiceUnavailableError
     puts "API returned status 503, is probably overloaded, try again later"
 rescue Seed::Errors::ServerError
@@ -108,9 +111,16 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
+# Set the default timeout (in seconds) for every request made by the client.
+client = Seed::Client.new(
+    base_url: "https://example.com",
+    timeout: 30
+)
+
+# Override the timeout for an individual request.
 response = client.auth.get_token(
     ...,
-    timeout: 30  # 30 second timeout
+    request_options: { timeout_in_seconds: 10 }
 )
 ```
 
@@ -143,6 +153,25 @@ response = client.auth.get_token(
     request_options: {
         additional_query_parameters: {
             "custom_param" => "custom-value"
+        }
+    }
+)
+```
+
+### Additional Body Properties
+
+If you would like to send additional body properties as part of the request, use the `additional_body_parameters` request option.
+Properties are merged into the serialized request body using their API (wire-format) names and override any field the SDK sets with the same name. If the endpoint has no body, one is created from these properties, except for GET and HEAD requests, which are always sent without a body (the properties are ignored).
+This applies to JSON and form-urlencoded requests; it is not applied to multipart (file upload) requests.
+
+```ruby
+require "seed"
+
+response = client.auth.get_token(
+    ...,
+    request_options: {
+        additional_body_parameters: {
+            "custom_field" => "custom-value"
         }
     }
 )

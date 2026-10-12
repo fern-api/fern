@@ -9,10 +9,11 @@ public partial class Examples
             }
         );
 
-        await client.ValidateCompletionAsync(
-            new SharedCompletionRequest {
+        await client.StreamXFernStreamingSharedSchemaAsync(
+            new StreamXFernStreamingSharedSchemaRequest {
                 Prompt = "prompt",
-                Model = "model"
+                Model = "model",
+                Stream = false
             }
         );
     }

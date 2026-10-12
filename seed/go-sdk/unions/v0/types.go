@@ -39,10 +39,12 @@ func (b *Bar) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *Bar) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -125,10 +127,12 @@ func (f *FirstItemType) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FirstItemType) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -216,10 +220,12 @@ func (f *Foo) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *Foo) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -309,10 +315,12 @@ func (f *FooExtended) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FooExtended) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -402,10 +410,12 @@ func (s *SecondItemType) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SecondItemType) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -502,10 +512,12 @@ func (t *TypeWithOptionalMap) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TypeWithOptionalMap) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetKey sets the Key field and marks it as non-optional;
@@ -602,10 +614,12 @@ func (t *TypeWithOptionalReferenceMap) GetExtraProperties() map[string]interface
 }
 
 func (t *TypeWithOptionalReferenceMap) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetReferences sets the References field and marks it as non-optional;
@@ -1637,6 +1651,195 @@ func (u *UnionWithDuplicativeDiscriminants) validate() error {
 	}
 	if u.SecondItemType != nil {
 		fields = append(fields, "secondItemType")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
+type UnionWithGlobalNameCollisions struct {
+	Type  string
+	Date  string
+	Error string
+	Aim   string
+
+	rawJSON json.RawMessage
+}
+
+func NewUnionWithGlobalNameCollisionsFromDate(value string) *UnionWithGlobalNameCollisions {
+	return &UnionWithGlobalNameCollisions{Type: "Date", Date: value}
+}
+
+func NewUnionWithGlobalNameCollisionsFromError(value string) *UnionWithGlobalNameCollisions {
+	return &UnionWithGlobalNameCollisions{Type: "Error", Error: value}
+}
+
+func NewUnionWithGlobalNameCollisionsFromAim(value string) *UnionWithGlobalNameCollisions {
+	return &UnionWithGlobalNameCollisions{Type: "Aim", Aim: value}
+}
+
+func (u *UnionWithGlobalNameCollisions) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithGlobalNameCollisions) GetDate() string {
+	if u == nil {
+		return ""
+	}
+	return u.Date
+}
+
+func (u *UnionWithGlobalNameCollisions) GetError() string {
+	if u == nil {
+		return ""
+	}
+	return u.Error
+}
+
+func (u *UnionWithGlobalNameCollisions) GetAim() string {
+	if u == nil {
+		return ""
+	}
+	return u.Aim
+}
+
+func (u *UnionWithGlobalNameCollisions) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "Date":
+		var valueUnmarshaler struct {
+			Date string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.Date = valueUnmarshaler.Date
+	case "Error":
+		var valueUnmarshaler struct {
+			Error string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.Error = valueUnmarshaler.Error
+	case "Aim":
+		var valueUnmarshaler struct {
+			Aim string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.Aim = valueUnmarshaler.Aim
+	}
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u UnionWithGlobalNameCollisions) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	switch u.Type {
+	default:
+		if len(u.rawJSON) > 0 {
+			return u.rawJSON, nil
+		}
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "Date":
+		var marshaler = struct {
+			Type string `json:"type"`
+			Date string `json:"value"`
+		}{
+			Type: "Date",
+			Date: u.Date,
+		}
+		return json.Marshal(marshaler)
+	case "Error":
+		var marshaler = struct {
+			Type  string `json:"type"`
+			Error string `json:"value"`
+		}{
+			Type:  "Error",
+			Error: u.Error,
+		}
+		return json.Marshal(marshaler)
+	case "Aim":
+		var marshaler = struct {
+			Type string `json:"type"`
+			Aim  string `json:"value"`
+		}{
+			Type: "Aim",
+			Aim:  u.Aim,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type UnionWithGlobalNameCollisionsVisitor interface {
+	VisitDate(string) error
+	VisitError(string) error
+	VisitAim(string) error
+}
+
+func (u *UnionWithGlobalNameCollisions) Accept(visitor UnionWithGlobalNameCollisionsVisitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "Date":
+		return visitor.VisitDate(u.Date)
+	case "Error":
+		return visitor.VisitError(u.Error)
+	case "Aim":
+		return visitor.VisitAim(u.Aim)
+	}
+}
+
+func (u *UnionWithGlobalNameCollisions) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Date != "" {
+		fields = append(fields, "Date")
+	}
+	if u.Error != "" {
+		fields = append(fields, "Error")
+	}
+	if u.Aim != "" {
+		fields = append(fields, "Aim")
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {

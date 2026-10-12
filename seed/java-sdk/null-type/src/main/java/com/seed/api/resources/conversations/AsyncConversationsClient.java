@@ -5,6 +5,7 @@ package com.seed.api.resources.conversations;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.conversations.requests.OutboundCallConversationsRequest;
 import com.seed.api.resources.conversations.types.OutboundCallConversationsResponse;
 import java.util.concurrent.CompletableFuture;
@@ -30,7 +31,15 @@ public class AsyncConversationsClient {
      * Place an outbound call or validate call setup with dry_run.
      */
     public CompletableFuture<OutboundCallConversationsResponse> outboundCall(OutboundCallConversationsRequest request) {
-        return this.rawClient.outboundCall(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<OutboundCallConversationsResponse>> rawFuture =
+                this.rawClient.outboundCall(request);
+        CompletableFuture<OutboundCallConversationsResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -38,6 +47,14 @@ public class AsyncConversationsClient {
      */
     public CompletableFuture<OutboundCallConversationsResponse> outboundCall(
             OutboundCallConversationsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.outboundCall(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<OutboundCallConversationsResponse>> rawFuture =
+                this.rawClient.outboundCall(request, requestOptions);
+        CompletableFuture<OutboundCallConversationsResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -11,6 +11,7 @@
         "type_types:UnionWithLiteral": "from seed.types import UnionWithLiteral_Fern\n\nUnionWithLiteral_Fern()\n",
         "type_types:UnionWithBaseProperties": "from seed.types import UnionWithBaseProperties_Integer\n\nUnionWithBaseProperties_Integer(value=5, id=\"id\")\n",
         "type_types:UnionWithTime": "from seed.types import UnionWithTime_Value\n\nUnionWithTime_Value(value=5)\n",
+        "type_types:UnionWithGlobalNameCollisions": "from seed.types import UnionWithGlobalNameCollisions_Date\n\nUnionWithGlobalNameCollisions_Date(value=\"collides-with-the-js-global\")\n",
         "type_types:UnionWithOptionalTime": "import datetime\n\nfrom seed.types import UnionWithOptionalTime_Date\n\nUnionWithOptionalTime_Date(\n    value=datetime.date.fromisoformat(\n        \"1994-01-01\",\n    )\n)\n",
         "type_types:UnionWithSingleElement": "from seed.types import UnionWithSingleElement_Foo\n\nUnionWithSingleElement_Foo(\n    name=\"example1\",\n)\n",
         "type_types:UnionWithDuplicateTypes": "from seed.types import UnionWithDuplicateTypes_Foo1\n\nUnionWithDuplicateTypes_Foo1(\n    name=\"example1\",\n)\n",

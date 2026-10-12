@@ -33132,6 +33132,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                 "default": null,
                 "inline": null
             },
+            "envVar": null,
             "docs": "I am a variable"
         }
     ],

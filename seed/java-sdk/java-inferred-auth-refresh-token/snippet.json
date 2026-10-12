@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "c0e17ddd",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getTokenWithRefreshToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaInferredAuthRefreshToken.SeedJavaInferredAuthRefreshTokenClient;\nimport com.seed.javaInferredAuthRefreshToken.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaInferredAuthRefreshTokenClient client = SeedJavaInferredAuthRefreshTokenClient\n            .builder()\n            .build();\n\n        client.auth().getTokenWithRefreshToken(\n            GetTokenRequest\n                .builder()\n                .refreshToken(\"my-refresh-token\")\n                .grantType(\"refresh_token\")\n                .scope(\"read\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaInferredAuthRefreshToken.SeedJavaInferredAuthRefreshTokenClient;\nimport com.seed.javaInferredAuthRefreshToken.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaInferredAuthRefreshTokenClient client = SeedJavaInferredAuthRefreshTokenClient\n            .builder()\n            .build();\n\n        client.auth().getTokenWithRefreshToken(\n            GetTokenRequest\n                .builder()\n                .refreshToken(\"my-refresh-token\")\n                .grantType(\"refresh_token\")\n                .scope(\"read\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5465b825",
+            "id": {
+                "method": "GET",
+                "path": "/get-something",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaInferredAuthRefreshToken.SeedJavaInferredAuthRefreshTokenClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaInferredAuthRefreshTokenClient client = SeedJavaInferredAuthRefreshTokenClient\n            .builder()\n            .build();\n\n        client.simple().getSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaInferredAuthRefreshToken.SeedJavaInferredAuthRefreshTokenClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaInferredAuthRefreshTokenClient client = SeedJavaInferredAuthRefreshTokenClient\n            .builder()\n            .build();\n\n        client.simple().getSomething();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

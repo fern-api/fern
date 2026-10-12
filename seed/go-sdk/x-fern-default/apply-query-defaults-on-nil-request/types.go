@@ -23,10 +23,12 @@ type TestGetRequest struct {
 }
 
 func (t *TestGetRequest) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetRegion sets the Region field and marks it as non-optional;
@@ -72,10 +74,12 @@ func (t *TestGetResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TestGetResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;

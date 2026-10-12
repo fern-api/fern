@@ -223,7 +223,8 @@ export function generateIntermediateRepresentation({
                       docs: typeof variable !== "string" ? variable.docs : undefined,
                       id: key,
                       name: rootApiFileContext.casingsGenerator.generateName(key),
-                      type: rootApiFileContext.parseTypeReference(variable)
+                      type: rootApiFileContext.parseTypeReference(variable),
+                      envVar: typeof variable !== "string" ? getVariableEnvVar(variable.env) : undefined
                   }))
                 : [],
         globalParameters:
@@ -703,4 +704,9 @@ function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReference
         typesReferencedOnlyByService,
         sharedTypes
     };
+}
+
+function getVariableEnvVar(env: string | undefined): string | undefined {
+    const trimmed = env?.trim();
+    return trimmed != null && trimmed.length > 0 ? trimmed : undefined;
 }

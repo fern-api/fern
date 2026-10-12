@@ -71,7 +71,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         const additionalProperties = this.addAdditionalPropertiesProperty(class_);
         this.addOnDeserialized(class_, additionalProperties);
         this.addOnSerializing(class_, additionalProperties);
-        this.context.getToStringMethod(class_);
+        const xml = this.typeDeclaration.encoding?.xml;
+        if (xml == null) {
+            this.context.getToStringMethod(class_);
+        }
 
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
             this.addProtobufMappers({
@@ -80,7 +83,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             });
         }
 
-        const xml = this.typeDeclaration.encoding?.xml;
         if (xml != null) {
             new XmlObjectGenerator(this.context, class_, properties, fields, xml).generate();
         }

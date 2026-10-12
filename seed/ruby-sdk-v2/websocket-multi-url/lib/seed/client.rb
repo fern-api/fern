@@ -6,9 +6,10 @@ module Seed
     # @param base_url [String, nil]
     # @param environment [Hash[Symbol, String], nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(token:, base_url: nil, environment: Seed::Environment::PRODUCTION, max_retries: 2)
+    def initialize(token:, base_url: nil, environment: Seed::Environment::PRODUCTION, max_retries: 2, timeout: 60)
       @base_url = base_url
       @environment = environment
 
@@ -19,7 +20,8 @@ module Seed
           "X-Fern-Language" => "Ruby",
           Authorization: "Bearer #{token}"
         },
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

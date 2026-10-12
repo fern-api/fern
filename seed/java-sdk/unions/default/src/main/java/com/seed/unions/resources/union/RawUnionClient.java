@@ -4,6 +4,7 @@
 package com.seed.unions.resources.union;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.unions.core.BodyProperties;
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.MediaTypes;
 import com.seed.unions.core.ObjectMappers;
@@ -94,7 +95,9 @@ public class RawUnionClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedUnionsException("Failed to serialize request", e);
         }

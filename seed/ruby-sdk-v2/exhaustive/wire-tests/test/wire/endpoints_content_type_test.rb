@@ -45,6 +45,17 @@ class EndpointsContentTypeWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/foo/bar",
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
+    )
   end
 
   def test_endpoints_content_type_post_json_patch_content_with_charset_type_with_wiremock
@@ -79,6 +90,17 @@ class EndpointsContentTypeWireTest < WireMockTestCase
       url_path: "/foo/baz",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/foo/baz",
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
     )
   end
 end

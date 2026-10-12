@@ -12,6 +12,7 @@ export * from "./EndpointSecuritySchema.js";
 export * from "./EndpointSecuritySchemaDetails.js";
 export * from "./HeaderAuthSchemeSchema.js";
 export * from "./InferredAuthenticatedRequestHeader.js";
+export * from "./InferredAuthTypeSchema.js";
 export * from "./InferredBearerAuthSchema.js";
 export * from "./InferredGetTokenEndpointSchema.js";
 export * from "./InferredGetTokenEndpointSchemaObject.js";

@@ -7,14 +7,19 @@ export class Number implements core.xml.XmlSerializable {
     sendDigits?: string;
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments, comments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Number.Fields = {}) {
         this.phoneNumber = fields.phoneNumber;
         this.sendDigits = fields.sendDigits;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Number.Fields = {}): Number.Builder {
@@ -24,19 +29,21 @@ export class Number implements core.xml.XmlSerializable {
     /** Parses a `<Number>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Number {
         const node = core.xml.parseXml(xml, "Number");
+        const content = core.xml.xmlContent(node, { skipLeadingText: true });
         return new Number({
-            phoneNumber: core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "Number.phone_number"),
+            phoneNumber: core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "Number.phone_number"),
             sendDigits: core.xml.xmlScalar(
                 core.xml.xmlAttribute(node, "sendDigits"),
                 core.xml.xmlString,
                 "Number.sendDigits",
             ),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["sendDigits"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, []),
+            content,
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Number>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Number",
             attributes: [
@@ -45,7 +52,8 @@ export class Number implements core.xml.XmlSerializable {
             ],
             text: this.phoneNumber,
             children: [],
-            additionalChildren: this.additionalChildren,
+            content: core.xml.orderXmlContent(this.content),
+            xmlDeclaration,
         });
     }
 
@@ -60,13 +68,19 @@ export namespace Number {
         sendDigits?: string;
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Number> {
         private readonly fields: Partial<Number.Fields>;
+        private content: core.xml.XmlContent[];
+        /** Comments added with `commentBefore`/`commentAfter`, rendered around this element. */
+        readonly siblingComments: core.xml.XmlSiblingComments = new core.xml.XmlSiblingComments();
 
         constructor(fields: Partial<Number.Fields> = {}) {
-            this.fields = { ...fields };
+            const { content, additionalChildren, ...rest } = fields;
+            this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
         }
 
         /** Parses a `<Number>` element into a builder. */
@@ -90,18 +104,43 @@ export namespace Number {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
+            return this;
+        }
+
+        /** Appends an XML comment (`<!--text-->`) inside this element, after any content added so far. */
+        comment(text: string): this {
+            this.content.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
+        /** Adds an XML comment rendered immediately before this element: as a sibling in the parent it is added to, or before the root element. */
+        commentBefore(text: string): this {
+            this.siblingComments.before.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
+        /** Adds an XML comment rendered immediately after this element: as a sibling in the parent it is added to, or after the root element. */
+        commentAfter(text: string): this {
+            this.siblingComments.after.push(new core.xml.XmlComment(text));
             return this;
         }
 
         build(): Number {
-            return new Number({ ...this.fields });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Number({ ...this.fields, content: built.content });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.siblingComments.wrap(this.build().toXml(xmlDeclaration));
         }
 
         toString(): string {

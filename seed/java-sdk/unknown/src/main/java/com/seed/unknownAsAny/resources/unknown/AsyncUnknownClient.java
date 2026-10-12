@@ -5,6 +5,7 @@ package com.seed.unknownAsAny.resources.unknown;
 
 import com.seed.unknownAsAny.core.ClientOptions;
 import com.seed.unknownAsAny.core.RequestOptions;
+import com.seed.unknownAsAny.core.SeedUnknownAsAnyHttpResponse;
 import com.seed.unknownAsAny.resources.unknown.types.MyObject;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -27,18 +28,48 @@ public class AsyncUnknownClient {
     }
 
     public CompletableFuture<List<Object>> post(Object request) {
-        return this.rawClient.post(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUnknownAsAnyHttpResponse<List<Object>>> rawFuture = this.rawClient.post(request);
+        CompletableFuture<List<Object>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Object>> post(Object request, RequestOptions requestOptions) {
-        return this.rawClient.post(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnknownAsAnyHttpResponse<List<Object>>> rawFuture =
+                this.rawClient.post(request, requestOptions);
+        CompletableFuture<List<Object>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Object>> postObject(MyObject request) {
-        return this.rawClient.postObject(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUnknownAsAnyHttpResponse<List<Object>>> rawFuture = this.rawClient.postObject(request);
+        CompletableFuture<List<Object>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Object>> postObject(MyObject request, RequestOptions requestOptions) {
-        return this.rawClient.postObject(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnknownAsAnyHttpResponse<List<Object>>> rawFuture =
+                this.rawClient.postObject(request, requestOptions);
+        CompletableFuture<List<Object>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

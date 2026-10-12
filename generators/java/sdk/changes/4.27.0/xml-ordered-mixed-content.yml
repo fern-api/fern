@@ -1,0 +1,10 @@
+- summary: |
+    XML (TwiML) types now keep their content in a single ordered sequence
+    (`List<XmlNode>` exposed via `getContent()`): typed child methods such as
+    `say(...)`, `addChild(XmlElement)` and the new `addText(String)` all append
+    to it, so `toXml()` emits typed children, generic children and text segments
+    in exactly the order they were added, and `fromXml()` preserves the original
+    positions. The text property (e.g. `message`) remains the leading text of the
+    element. New `XmlNode` core class; `XmlReader.leadingText`/`content` and
+    `XmlWriter.content` helpers.
+  type: feat

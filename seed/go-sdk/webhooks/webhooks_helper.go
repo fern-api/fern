@@ -18,12 +18,30 @@ import (
 // Extract the timestamp from the "x-webhook-timestamp" header and pass it as the timestampHeader parameter.
 type WebhooksHelper struct{}
 
-// VerifySignature verifies an HMAC webhook signature.
-func (WebhooksHelper) VerifySignature(
+// VerifySignature verifies an HMAC webhook signature using the configured "sha256" algorithm.
+func (h WebhooksHelper) VerifySignature(
 	requestBody string,
 	signatureHeader string,
 	signatureKey string,
 	timestampHeader string,
+) (bool, error) {
+	return h.VerifySignatureWithAlgorithm(
+		requestBody,
+		signatureHeader,
+		signatureKey,
+		timestampHeader,
+		"sha256",
+	)
+}
+
+// VerifySignatureWithAlgorithm verifies an HMAC webhook signature using the given HMAC algorithm
+// ("sha1", "sha256", "sha384" or "sha512"), overriding the configured default.
+func (WebhooksHelper) VerifySignatureWithAlgorithm(
+	requestBody string,
+	signatureHeader string,
+	signatureKey string,
+	timestampHeader string,
+	algorithm string,
 ) (bool, error) {
 	if requestBody == "" || signatureHeader == "" || signatureKey == "" {
 		return false, errors.New("Missing required parameters for webhook signature verification")
@@ -50,7 +68,7 @@ func (WebhooksHelper) VerifySignature(
 
 	payload := strings.Join([]string{timestampHeader, requestBody}, ".")
 
-	expected, err := core.ComputeHmacSignature(payload, signatureKey, "sha256", "hex")
+	expected, err := core.ComputeHmacSignature(payload, signatureKey, algorithm, "hex")
 	if err != nil {
 		return false, err
 	}

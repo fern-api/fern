@@ -143,6 +143,14 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedJavaFile generateFile() {
         TypeSpec.Builder helper = TypeSpec.classBuilder(className)
+                .addField(FieldSpec.builder(
+                                java.util.logging.Logger.class,
+                                "LOGGER",
+                                Modifier.PRIVATE,
+                                Modifier.STATIC,
+                                Modifier.FINAL)
+                        .initializer("$T.getLogger($T.class.getName())", java.util.logging.Logger.class, className)
+                        .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
@@ -163,8 +171,10 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                         .initializer("$S", prefix)
                         .build()));
 
+        helper.addMethod(buildDefaultAlgorithmOverload(String.class));
         helper.addMethod(buildVerifySignatureMethod());
         if (config.getPayloadFormat().getBodySort().isPresent()) {
+            helper.addMethod(buildDefaultAlgorithmOverload(MAP_REQUEST_BODY_TYPE));
             helper.addMethod(buildMapVerifySignatureMethod());
         }
 
@@ -175,15 +185,54 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private static final TypeName MAP_REQUEST_BODY_TYPE = ParameterizedTypeName.get(
+            ClassName.get(Map.class), ClassName.get(String.class), WildcardTypeName.subtypeOf(Object.class));
+
+    private static final String MISSING_SIGNATURE_MESSAGE =
+            "Webhook signature verification could not run: missing signature header";
+    private static final String VERIFICATION_FAILED_MESSAGE =
+            "Webhook signature verification failed: signature mismatch";
+
+    private static final ParameterSpec ALGORITHM_PARAMETER =
+            ParameterSpec.builder(String.class, "algorithm").build();
+
+    /** Overload without the {@code algorithm} parameter: verifies using the configured default HMAC algorithm. */
+    private MethodSpec buildDefaultAlgorithmOverload(TypeName requestBodyType) {
+        MethodSpec.Builder method = MethodSpec.methodBuilder("verifySignature")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(TypeName.BOOLEAN)
+                .addJavadoc(buildJavadoc());
+        List<ParameterSpec> parameters = buildParameters(requestBodyType);
+        method.addParameters(parameters);
+        CodeBlock.Builder invocation = CodeBlock.builder().add("return verifySignature(");
+        boolean first = true;
+        for (ParameterSpec parameter : parameters) {
+            invocation.add(first ? "$L" : ", $L", parameter.name);
+            first = false;
+        }
+        invocation.add(", $S)", mapHmacAlgorithm(config.getAlgorithm()));
+        method.addStatement(invocation.build());
+        return method.build();
+    }
+
+    private MethodSpec buildDefaultAlgorithmOverload(Class<?> requestBodyType) {
+        return buildDefaultAlgorithmOverload(TypeName.get(requestBodyType));
+    }
+
     private MethodSpec buildVerifySignatureMethod() {
         // A verification helper returns a boolean and never throws, so missing inputs fail closed with `false`.
         MethodSpec.Builder method = MethodSpec.methodBuilder("verifySignature")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(TypeName.BOOLEAN)
-                .addJavadoc(buildJavadoc())
+                .addJavadoc(buildAlgorithmJavadoc())
                 .addParameters(buildParameters(String.class))
+                .addParameter(ALGORITHM_PARAMETER)
+                .beginControlFlow("if (signatureHeader == null || signatureHeader.isEmpty())")
+                .addStatement("LOGGER.warning($S)", MISSING_SIGNATURE_MESSAGE)
+                .addStatement("return false")
+                .endControlFlow()
                 .beginControlFlow(
-                        "if (requestBody == null || requestBody.isEmpty() || signatureHeader == null || signatureHeader.isEmpty() || signatureKey == null || signatureKey.isEmpty())")
+                        "if (requestBody == null || requestBody.isEmpty() || signatureKey == null || signatureKey.isEmpty())")
                 .addStatement("return false")
                 .endControlFlow();
 
@@ -224,15 +273,20 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         }
 
         method.addStatement(
-                        "$T expected = $T.computeHmacSignature(payload, signatureKey, $S, $S)",
+                        "$T expected = $T.computeHmacSignature(payload, signatureKey, $T.toMacAlgorithm(algorithm, $S), $S)",
                         String.class,
+                        generatorContext.getPoetClassNameFactory().getCoreClassName("WebhookSignature"),
                         generatorContext.getPoetClassNameFactory().getCoreClassName("WebhookSignature"),
                         mapHmacAlgorithm(config.getAlgorithm()),
                         mapEncoding(config.getEncoding()))
                 .addStatement(
-                        "return $T.timingSafeEqual($L, expected)",
+                        "boolean valid = $T.timingSafeEqual($L, expected)",
                         generatorContext.getPoetClassNameFactory().getCoreClassName("WebhookSignature"),
-                        signatureExpression);
+                        signatureExpression)
+                .beginControlFlow("if (!valid)")
+                .addStatement("LOGGER.warning($S)", VERIFICATION_FAILED_MESSAGE)
+                .endControlFlow()
+                .addStatement("return valid");
         return method.build();
     }
 
@@ -243,11 +297,9 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         MethodSpec.Builder method = MethodSpec.methodBuilder("verifySignature")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(TypeName.BOOLEAN)
-                .addJavadoc(buildJavadoc())
-                .addParameters(buildParameters(ParameterizedTypeName.get(
-                        ClassName.get(Map.class),
-                        ClassName.get(String.class),
-                        WildcardTypeName.subtypeOf(Object.class))))
+                .addJavadoc(buildAlgorithmJavadoc())
+                .addParameters(buildParameters(MAP_REQUEST_BODY_TYPE))
+                .addParameter(ALGORITHM_PARAMETER)
                 .beginControlFlow("if (requestBody == null)")
                 .addStatement("return false")
                 .endControlFlow();
@@ -258,7 +310,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         for (ParameterSpec parameter : buildAdditionalParameters()) {
             invocation.add(", $L", parameter.name);
         }
-        invocation.add(")");
+        invocation.add(", algorithm)");
         method.addStatement(invocation.build());
         return method.build();
     }
@@ -419,6 +471,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 mapBodyHashAlgorithm(binding.getAlgorithm()),
                 mapEncoding(binding.getEncoding()));
         method.beginControlFlow("if (!$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))", signatureClass)
+                .addStatement("LOGGER.warning($S)", VERIFICATION_FAILED_MESSAGE)
                 .addStatement("return false")
                 .endControlFlow();
         method.addStatement("payload = notificationUrl");
@@ -461,6 +514,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                     mapBodyHashAlgorithm(binding.getAlgorithm()),
                     mapEncoding(binding.getEncoding()));
             method.beginControlFlow("if (!$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))", signatureClass)
+                    .addStatement("LOGGER.warning($S)", VERIFICATION_FAILED_MESSAGE)
                     .addStatement("return false")
                     .endControlFlow();
             method.endControlFlow();
@@ -485,8 +539,9 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             method.addStatement("$T payload = $L", String.class, formPayload);
         }
         method.addStatement(
-                "$T expected = $T.computeHmacSignature(payload, signatureKey, $S, $S)",
+                "$T expected = $T.computeHmacSignature(payload, signatureKey, $T.toMacAlgorithm(algorithm, $S), $S)",
                 String.class,
+                signatureClass,
                 signatureClass,
                 mapHmacAlgorithm(config.getAlgorithm()),
                 mapEncoding(config.getEncoding()));
@@ -494,6 +549,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 .addStatement("return true")
                 .endControlFlow();
         method.endControlFlow();
+        method.addStatement("LOGGER.warning($S)", VERIFICATION_FAILED_MESSAGE);
         method.addStatement("return false");
     }
 
@@ -548,6 +604,13 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 .orElseThrow(() -> new IllegalArgumentException(
                         "Unsupported webhook body hash location: " + binding.getLocation()));
         return location.getName();
+    }
+
+    private String buildAlgorithmJavadoc() {
+        return buildJavadoc()
+                + "\nThe {@code algorithm} parameter selects the HMAC algorithm (\"sha1\", \"sha256\", \"sha384\" or \"sha512\");"
+                + " pass {@code null} to use the configured default (\""
+                + mapHmacAlgorithm(config.getAlgorithm()) + "\").\n";
     }
 
     private String buildJavadoc() {

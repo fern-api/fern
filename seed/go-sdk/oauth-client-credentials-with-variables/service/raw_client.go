@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+	errors "errors"
 	http "net/http"
 
 	core "github.com/oauth-client-credentials-with-variables/fern/core"
@@ -33,7 +34,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Post(
 	ctx context.Context,
-	endpointParam string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -42,9 +42,18 @@ func (r *RawClient) Post(
 		r.baseURL,
 		"",
 	)
+	_rootVariable := options.RootVariable
+	if _rootVariable == "" {
+		_rootVariable = r.options.RootVariable
+	}
+	if _rootVariable == "" {
+		return nil, errors.New(
+			"rootVariable is required. Pass option.WithRootVariable.",
+		)
+	}
 	endpointURL := internal.EncodeURL(
 		baseURL+"/service/%v",
-		endpointParam,
+		_rootVariable,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

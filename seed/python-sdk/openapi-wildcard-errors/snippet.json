@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/items",
+                "method": "POST",
+                "identifier_override": "endpoint_items.createItem"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.items.create_item(\n    name=\"name\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.items.create_item(\n        name=\"name\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/items/{item_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_items.getItem"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.items.get_item(\n    item_id=\"item_id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.items.get_item(\n        item_id=\"item_id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

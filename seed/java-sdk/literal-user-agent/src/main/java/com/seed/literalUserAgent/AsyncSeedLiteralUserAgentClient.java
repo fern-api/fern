@@ -5,6 +5,7 @@ package com.seed.literalUserAgent;
 
 import com.seed.literalUserAgent.core.ClientOptions;
 import com.seed.literalUserAgent.core.RequestOptions;
+import com.seed.literalUserAgent.core.SeedLiteralUserAgentHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncSeedLiteralUserAgentClient implements AutoCloseable {
@@ -25,16 +26,31 @@ public class AsyncSeedLiteralUserAgentClient implements AutoCloseable {
     }
 
     public CompletableFuture<String> ping() {
-        return this.rawClient.ping().thenApply(response -> response.body());
+        CompletableFuture<SeedLiteralUserAgentHttpResponse<String>> rawFuture = this.rawClient.ping();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> ping(RequestOptions requestOptions) {
-        return this.rawClient.ping(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedLiteralUserAgentHttpResponse<String>> rawFuture = this.rawClient.ping(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

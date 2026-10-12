@@ -10,9 +10,16 @@ import { ValidationViolation } from "./ValidationViolation.js";
 
 export async function validateGeneratorsWorkspace(
     workspace: FernWorkspace,
-    logger: Logger
+    logger: Logger,
+    {
+        includeCheckOnlyRules = false
+    }: {
+        /** Set by `fern check` to also run rules marked {@link Rule.checkOnly}. */
+        includeCheckOnlyRules?: boolean;
+    } = {}
 ): Promise<ValidationViolation[]> {
-    return runRulesOnWorkspace({ workspace, rules: getAllRules(), logger });
+    const rules = getAllRules().filter((rule) => includeCheckOnlyRules || rule.checkOnly !== true);
+    return runRulesOnWorkspace({ workspace, rules, logger });
 }
 
 // exported for testing

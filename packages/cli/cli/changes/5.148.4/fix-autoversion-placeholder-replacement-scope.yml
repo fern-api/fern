@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate` with `--version AUTO` no longer rewrites the placeholder version inside
+    files protected by `.fernignore` or inside longer version strings such as
+    `0.0.0-fern-placeholder.7`.
+  type: fix

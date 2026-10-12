@@ -126,6 +126,22 @@ Enable it in `generators.yml`:
       # credential; adds `--revoke` to `profiles remove`. Omit it and the
       # flag is never registered.
       revokeOperation: iam.keys.remove
+      # Optional. Names an operation that *mints* a profile's remote
+      # credential (an API key) and maps its response onto the credential;
+      # adds `--provision` to `profiles create`. `credential` keys are the
+      # halves the auth scheme stores (`username`/`password` for basic,
+      # `client_id`/`client_secret` for OAuth2 client credentials, `token`
+      # for a single-value scheme); `revokeParameters` records response
+      # fields the revoke operation needs, kept apart from request defaults.
+      # They are stored in plaintext profile metadata (shown by `profiles
+      # show`), so map identifiers here, never secrets.
+      provisionOperation:
+        operation: iam.keys.create
+        credential:
+          username: sid
+          password: secret
+        revokeParameters:
+          Sid: sid
 ```
 
 Off by default: enabling it adds a top-level subcommand group and a global
@@ -146,6 +162,11 @@ acme messages list -p prod    # one command against another tenant; the active p
 acme profiles list            # "which account am I about to hit?"
 acme profiles current         # …and why
 acme profiles remove au       # confirms; also deletes that profile's stored credential
+
+# with provisionOperation / revokeOperation configured: a key per profile,
+# minted with the credentials already in your shell and never shown to you
+acme profiles create ci --set AccountSid=AC11… --provision
+acme profiles remove ci --yes --revoke   # revokes that key before deleting the profile
 ```
 
 Agents and scripts should use the stateless form — `-p` per invocation mutates
@@ -354,6 +375,30 @@ fn verify_handler(args: &ArgMatches, _ctx: &AppContext) -> Result<(), CliError> 
 ```
 
 The handler receives a real `AppContext` — it can chain API calls via `ctx.invoke_by_name(...)` if needed. Note: `transform_response` / `recover_error` hooks do **not** fire for custom commands.
+
+### Nest custom commands under a group
+
+`command_under` creates any missing intermediate groups on the way to the
+leaf. Give those groups a description with `describe`, and trim root globals
+that mean nothing to a local-only subtree with `hide_global_flags` (the flags
+stay accepted, so `--format json` passed everywhere still parses):
+
+```rust
+CliApp::new("twilio")
+    .profiles(ProfilesConfig::new())
+    .command_under(&["serverless"], start_cmd(), OpenApiBinding::handler(start))
+    .command_under(&["serverless", "env"], env_get_cmd(), OpenApiBinding::handler(env_get))
+    .describe(&["serverless"], "Develop and deploy Twilio Functions")
+    .describe(&["serverless", "env"], "Manage environment variables")
+    .hide_global_flags(&["serverless"], &["dry-run", "query", "spec", "spec-raw"])
+    .run()
+```
+
+A custom command may declare a short flag the root reserves globally — most
+commonly `-p`, which profiles use for `--profile`. The command keeps it:
+`serverless start -p 9000` reaches the command's own `--port`, while
+`twilio -p acme serverless start` (before the command path) and
+`serverless start --profile acme` still select the profile.
 
 ### Override a spec-generated operation
 

@@ -168,3 +168,16 @@ describe("ReadmeSnippetBuilder environments", () => {
         expect(single?.description).toBe(FEATURES_YML_DESCRIPTION);
     });
 });
+
+describe("ReadmeSnippetBuilder additional body properties", () => {
+    it("documents option.WithBodyProperties on a per-request call", () => {
+        const context = createContext({ environments: undefined, clientConstructorName: "NewClient" });
+        const builder = new ReadmeSnippetBuilder({ context, endpointSnippets: createEndpointSnippets() });
+
+        const snippets = builder.buildReadmeSnippetsByFeatureId()["ADDITIONAL_BODY_PROPERTIES"] ?? [];
+
+        expect(snippets).toHaveLength(1);
+        expect(snippets[0]).toContain("option.WithBodyProperties(map[string]interface{}{");
+        expect(snippets[0]).toContain('"custom_field": "custom-value",');
+    });
+});

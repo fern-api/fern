@@ -1,4 +1,4 @@
-import { CaseConverter, File, GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
@@ -21,6 +21,7 @@ export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly case: CaseConverter;
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
+    private setUpSdkVariableValues: Map<string, unknown> = new Map();
     private wireMockConfigContent: Record<string, WireMockMapping>;
     private readonly dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
@@ -129,90 +130,107 @@ export class WireTestGenerator {
         return `${pascalCase}WireTest`;
     }
 
-    private generateSetUpMethod(): php.Method {
+    private generateSetUpMethod(endpoints: FernIr.HttpEndpoint[]): php.Method {
+        this.setUpSdkVariableValues = this.collectSdkVariableValues(
+            endpoints.map((endpoint) => ({ endpoint, example: this.dynamicIr.endpoints[endpoint.id]?.examples?.[0] }))
+        );
         return php.method({
             name: "setUp",
             access: "protected",
             parameters: [],
             body: php.codeblock((writer) => {
                 writer.writeTextStatement("parent::setUp()");
-                writer.writeTextStatement("$wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080'");
+                this.writeClientInstantiation({ writer, sdkVariableValues: this.setUpSdkVariableValues });
+            })
+        });
+    }
 
-                // Build auth parameters
-                const authParams = this.buildAuthParamsForTest();
+    /**
+     * Writes `$this->client = new <RootClient>(...)` with the test credentials, the WireMock base
+     * URL and the given SDK variable values as named constructor arguments.
+     */
+    private writeClientInstantiation({
+        writer,
+        sdkVariableValues
+    }: {
+        writer: php.Writer;
+        sdkVariableValues: Map<string, unknown>;
+    }): void {
+        writer.writeTextStatement("$wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080'");
 
-                // Instantiate the client with auth and environment
-                writer.write("$this->client = new ");
-                writer.writeNode(
-                    php.classReference({
-                        namespace: this.context.getRootNamespace(),
-                        name: this.context.getRootClientClassName()
-                    })
-                );
-                writer.write("(");
+        // Build auth parameters (plus any SDK variables bound to the tested endpoints)
+        const authParams = this.buildAuthParamsForTest() + this.buildSdkVariableParams(sdkVariableValues);
 
-                if (authParams.length > 0) {
-                    writer.write("\n");
-                    writer.indent();
-                    writer.write(authParams.trimEnd());
-                    if (!authParams.trimEnd().endsWith(",")) {
-                        writer.write(",");
-                    }
-                    writer.write("\n");
-                    writer.dedent();
-                }
+        // Instantiate the client with auth and environment
+        writer.write("$this->client = new ");
+        writer.writeNode(
+            php.classReference({
+                namespace: this.context.getRootNamespace(),
+                name: this.context.getRootClientClassName()
+            })
+        );
+        writer.write("(");
 
-                // Add options parameter
-                if (this.isMultiUrlEnvironment()) {
-                    const environment = this.getMultiUrlEnvironmentForTest();
-                    if (environment) {
-                        // Create environment parameter using Environments::custom()
-                        const envValues = Object.values(environment);
-                        if (envValues.length > 0) {
-                            if (authParams.length === 0) {
-                                writer.write("\n");
-                                writer.indent();
-                            } else {
-                                // When auth params exist, we need to add the proper indentation
-                                writer.write("    ");
-                            }
-                            writer.write("environment: ");
-                            writer.writeNode(
-                                php.classReference({
-                                    namespace: this.context.getRootNamespace(),
-                                    name: "Environments"
-                                })
-                            );
-                            writer.write(`::custom(${envValues.map(() => "$wiremockUrl").join(", ")}),`);
-                            if (authParams.length === 0) {
-                                writer.write("\n");
-                                writer.dedent();
-                            } else {
-                                writer.write("\n");
-                            }
-                        }
-                    }
-                } else {
+        if (authParams.length > 0) {
+            writer.write("\n");
+            writer.indent();
+            writer.write(authParams.trimEnd());
+            if (!authParams.trimEnd().endsWith(",")) {
+                writer.write(",");
+            }
+            writer.write("\n");
+            writer.dedent();
+        }
+
+        // Add options parameter
+        if (this.isMultiUrlEnvironment()) {
+            const environment = this.getMultiUrlEnvironmentForTest();
+            if (environment) {
+                // Create environment parameter using Environments::custom()
+                const envValues = Object.values(environment);
+                if (envValues.length > 0) {
                     if (authParams.length === 0) {
                         writer.write("\n");
                         writer.indent();
+                    } else {
+                        // When auth params exist, we need to add the proper indentation
+                        writer.write("    ");
                     }
-                    writer.writeLine("options: [");
-                    writer.indent();
-                    writer.writeLine("'baseUrl' => $wiremockUrl,");
-                    writer.dedent();
-                    writer.write("]");
+                    writer.write("environment: ");
+                    writer.writeNode(
+                        php.classReference({
+                            namespace: this.context.getRootNamespace(),
+                            name: "Environments"
+                        })
+                    );
+                    writer.write(`::custom(${envValues.map(() => "$wiremockUrl").join(", ")}),`);
                     if (authParams.length === 0) {
                         writer.write("\n");
                         writer.dedent();
                     } else {
-                        writer.write(",\n");
+                        writer.write("\n");
                     }
                 }
+            }
+        } else {
+            if (authParams.length === 0) {
+                writer.write("\n");
+                writer.indent();
+            }
+            writer.writeLine("options: [");
+            writer.indent();
+            writer.writeLine("'baseUrl' => $wiremockUrl,");
+            writer.dedent();
+            writer.write("]");
+            if (authParams.length === 0) {
+                writer.write("\n");
+                writer.dedent();
+            } else {
+                writer.write(",\n");
+            }
+        }
 
-                writer.writeTextStatement(")");
-            })
-        });
+        writer.writeTextStatement(")");
     }
 
     private async buildTestFileContent(
@@ -248,7 +266,7 @@ export class WireTestGenerator {
         );
 
         // Add setUp method that instantiates the client once
-        class_.addMethod(this.generateSetUpMethod());
+        class_.addMethod(this.generateSetUpMethod(testCases.map((testCase) => testCase.endpoint)));
 
         for (const { endpoint, example, service, exampleIndex } of testCases) {
             const testMethod = await this.generateEndpointTestMethod({
@@ -311,6 +329,11 @@ export class WireTestGenerator {
                 body: php.codeblock((writer) => {
                     // $testId = '...';
                     writer.writeStatement(`$testId = '${testId}'`);
+
+                    const sdkVariableValues = this.collectSdkVariableValues([{ endpoint, example }]);
+                    if (this.needsClientWithExampleSdkVariables(sdkVariableValues)) {
+                        this.writeClientInstantiation({ writer, sdkVariableValues });
+                    }
 
                     if (isPaginated) {
                         writer.write("$response = ");
@@ -569,6 +592,69 @@ export class WireTestGenerator {
         }
 
         return dedupedParams.map((param) => `${param},\n    `).join("");
+    }
+
+    /**
+     * Collects, per SDK variable id, the example path value of the first bound path parameter
+     * found across the given endpoint examples. Wire tests pass these to the client constructor
+     * so the generated requests hit the paths the WireMock stubs expect.
+     */
+    private collectSdkVariableValues(
+        examples: { endpoint: FernIr.HttpEndpoint; example: FernIr.dynamic.EndpointExample | undefined }[]
+    ): Map<string, unknown> {
+        const values = new Map<string, unknown>();
+        for (const { endpoint, example } of examples) {
+            if (example?.pathParameters == null) {
+                continue;
+            }
+            for (const pathParameter of endpoint.allPathParameters) {
+                const variableId = pathParameter.variable;
+                if (
+                    variableId == null ||
+                    values.has(variableId) ||
+                    this.context.getSdkVariableForPathParameter(pathParameter) == null
+                ) {
+                    continue;
+                }
+                const value = example.pathParameters[getOriginalName(pathParameter.name)];
+                if (value != null) {
+                    values.set(variableId, value);
+                }
+            }
+        }
+        return values;
+    }
+
+    /** Named constructor arguments (`<option>: <literal>,`) for the given SDK variable values. */
+    private buildSdkVariableParams(values: Map<string, unknown>): string {
+        return this.context
+            .getSdkVariableOptions()
+            .filter((option) => values.has(option.variable.id))
+            .map((option) => `${option.optionName}: ${this.toPhpLiteral(values.get(option.variable.id))},\n    `)
+            .join("");
+    }
+
+    /**
+     * True when the example binds an SDK variable to a path value other than the one the shared
+     * `setUp()` client was constructed with, in which case the test needs its own client.
+     */
+    private needsClientWithExampleSdkVariables(values: Map<string, unknown>): boolean {
+        for (const [variableId, value] of values) {
+            if (this.setUpSdkVariableValues.get(variableId) !== value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private toPhpLiteral(value: unknown): string {
+        if (typeof value === "boolean") {
+            return value ? "true" : "false";
+        }
+        if (typeof value === "number") {
+            return String(value);
+        }
+        return `'${String(value).replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
     }
 
     /**

@@ -1,13 +1,24 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.NamedType;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.SingleUnionType;
+import com.fern.ir.model.types.SingleUnionTypeProperties;
+import com.fern.ir.model.types.SingleUnionTypeProperty;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.types.UnionDiscriminatorContext;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.utils.NameUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,10 +45,21 @@ public final class SseDiscriminationAnalyzer {
     public static final class SseDiscriminationInfo {
         private final DiscriminationType type;
         private final String discriminatorProperty;
+        private final List<String> envelopeEvents;
 
-        private SseDiscriminationInfo(DiscriminationType type, String discriminatorProperty) {
+        private SseDiscriminationInfo(
+                DiscriminationType type, String discriminatorProperty, List<String> envelopeEvents) {
             this.type = type;
             this.discriminatorProperty = discriminatorProperty;
+            this.envelopeEvents = envelopeEvents;
+        }
+
+        /**
+         * For protocol-level unions that mix envelope-shaped ({data, id?, retry?}) and payload-shaped variants, the
+         * event names of the envelope-shaped variants. Empty when every variant can be parsed from the SSE envelope.
+         */
+        public Optional<List<String>> getEnvelopeEvents() {
+            return Optional.ofNullable(envelopeEvents);
         }
 
         public DiscriminationType getType() {
@@ -49,15 +71,19 @@ public final class SseDiscriminationAnalyzer {
         }
 
         public static SseDiscriminationInfo none() {
-            return new SseDiscriminationInfo(DiscriminationType.NONE, null);
+            return new SseDiscriminationInfo(DiscriminationType.NONE, null, null);
         }
 
         public static SseDiscriminationInfo dataLevel(String discriminatorProperty) {
-            return new SseDiscriminationInfo(DiscriminationType.DATA_LEVEL, discriminatorProperty);
+            return new SseDiscriminationInfo(DiscriminationType.DATA_LEVEL, discriminatorProperty, null);
         }
 
         public static SseDiscriminationInfo protocolLevel(String discriminatorProperty) {
-            return new SseDiscriminationInfo(DiscriminationType.PROTOCOL_LEVEL, discriminatorProperty);
+            return new SseDiscriminationInfo(DiscriminationType.PROTOCOL_LEVEL, discriminatorProperty, null);
+        }
+
+        public static SseDiscriminationInfo protocolLevel(String discriminatorProperty, List<String> envelopeEvents) {
+            return new SseDiscriminationInfo(DiscriminationType.PROTOCOL_LEVEL, discriminatorProperty, envelopeEvents);
         }
     }
 
@@ -90,13 +116,77 @@ public final class SseDiscriminationAnalyzer {
         // Use the IR's discriminatorContext to determine discrimination level
         Optional<UnionDiscriminatorContext> context = unionDeclaration.get().getDiscriminatorContext();
         if (context.isPresent() && context.get().equals(UnionDiscriminatorContext.PROTOCOL)) {
-            return SseDiscriminationInfo.protocolLevel(discriminatorProperty);
+            return SseDiscriminationInfo.protocolLevel(
+                    discriminatorProperty,
+                    getEnvelopeEventsIfMixed(unionDeclaration.get(), discriminatorProperty, typeDeclarations));
         } else {
             return SseDiscriminationInfo.dataLevel(discriminatorProperty);
         }
     }
 
     /** Resolves a TypeReference to its UnionTypeDeclaration, following aliases if necessary. */
+    private static final java.util.Set<String> SSE_ENVELOPE_FIELDS =
+            new HashSet<>(Arrays.asList("data", "id", "retry"));
+
+    /**
+     * Returns the event names of envelope-shaped variants ({data, id?, retry?}) if the union also has payload-shaped
+     * variants, or null if every variant can be parsed from the SSE envelope.
+     */
+    private static List<String> getEnvelopeEventsIfMixed(
+            UnionTypeDeclaration union, String discriminatorProperty, Map<TypeId, TypeDeclaration> typeDeclarations) {
+        List<String> envelopeEvents = new ArrayList<>();
+        boolean hasPayloadVariant = false;
+        for (SingleUnionType variant : union.getTypes()) {
+            List<String> propertyNames = variant.getShape()
+                    .visit(new SingleUnionTypeProperties.Visitor<List<String>>() {
+                        @Override
+                        public List<String> visitSamePropertiesAsObject(DeclaredTypeName declaredTypeName) {
+                            TypeDeclaration declaration = typeDeclarations.get(declaredTypeName.getTypeId());
+                            if (declaration == null || !declaration.getShape().isObject()) {
+                                return null;
+                            }
+                            ObjectTypeDeclaration object =
+                                    declaration.getShape().getObject().get();
+                            List<ObjectProperty> properties = new ArrayList<>();
+                            object.getExtendedProperties().ifPresent(properties::addAll);
+                            properties.addAll(object.getProperties());
+                            List<String> names = new ArrayList<>();
+                            for (ObjectProperty property : properties) {
+                                names.add(NameUtils.getWireValue(property.getName()));
+                            }
+                            return names;
+                        }
+
+                        @Override
+                        public List<String> visitSingleProperty(SingleUnionTypeProperty singleProperty) {
+                            return Collections.singletonList(NameUtils.getWireValue(singleProperty.getName()));
+                        }
+
+                        @Override
+                        public List<String> visitNoProperties() {
+                            return Collections.emptyList();
+                        }
+
+                        @Override
+                        public List<String> _visitUnknown(Object unknownType) {
+                            return Collections.emptyList();
+                        }
+                    });
+            if (propertyNames == null) {
+                hasPayloadVariant = true;
+                continue;
+            }
+            List<String> names = new ArrayList<>(propertyNames);
+            names.remove(discriminatorProperty);
+            if (names.contains("data") && SSE_ENVELOPE_FIELDS.containsAll(names)) {
+                envelopeEvents.add(NameUtils.getWireValue(variant.getDiscriminantValue()));
+            } else if (!names.isEmpty()) {
+                hasPayloadVariant = true;
+            }
+        }
+        return hasPayloadVariant ? envelopeEvents : null;
+    }
+
     private static Optional<UnionTypeDeclaration> resolveUnionType(
             TypeReference typeReference, Map<TypeId, TypeDeclaration> typeDeclarations) {
 

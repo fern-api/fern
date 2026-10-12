@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `timeoutInSeconds` now also covers reading the response body. Before, the timer stopped as soon as
+    headers arrived, so a response whose JSON body was slow to arrive could take far longer than the
+    timeout. Timeouts are also reported as the SDK's timeout error on every Node version (before, Node 20+
+    surfaced a generic `"timeout"` error and Node 18 a `TypeError: invalid_argument`), and the timeout timer
+    is cleared on every exit, including failed requests. An error status (4xx/5xx) whose body is slower than
+    the timeout now also returns the timeout error. Streaming, SSE and binary responses, and the passthrough
+    `client.fetch()` (which returns the raw response), still stop the timer when headers arrive. When
+    `client.fetch()` times out it now rejects like `fetch` does, with an `Error` whose `name` is `"TimeoutError"`;
+    before, it rejected with the bare string `"timeout"`.
+  type: fix

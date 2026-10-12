@@ -5,6 +5,7 @@ package com.seed.api.resources.widgets;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.types.Widget;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncWidgetsClient {
     }
 
     public CompletableFuture<Widget> create(Widget request) {
-        return this.rawClient.create(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Widget>> rawFuture = this.rawClient.create(request);
+        CompletableFuture<Widget> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Widget> create(Widget request, RequestOptions requestOptions) {
-        return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Widget>> rawFuture = this.rawClient.create(request, requestOptions);
+        CompletableFuture<Widget> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }
