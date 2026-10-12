@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.1
+  changelogEntry:
+    - summary: |
+        Models that keep unknown JSON keys no longer keep one that matches a declared field except for case
+        (e.g. `VALUE` next to `value`). Such a key used to be sent again after the declared field, so a
+        case-insensitive decoder on the receiving end (e.g. Go's `encoding/json`) read it instead of the
+        field's value. Other unknown keys (e.g. `brand_new_field`) are still kept and sent as before.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
 - version: 5.41.0
   changelogEntry:
     - summary: |
