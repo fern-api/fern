@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.153.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.hide-webhook-method-badges` docs.yml setting. When set to true,
+        webhook entries in the sidebar render without an HTTP method badge (e.g. `POST`),
+        so webhooks no longer read like callable endpoints. Defaults to false.
+      type: feat
+  createdAt: "2026-10-12"
+  irVersion: 67
 - version: 5.152.2
   changelogEntry:
     - summary: |
