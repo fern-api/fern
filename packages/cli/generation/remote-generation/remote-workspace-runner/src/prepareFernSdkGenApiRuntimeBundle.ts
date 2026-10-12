@@ -43,7 +43,10 @@ export async function prepareFernSdkGenApiRuntimeBundle({
         context,
         irVersionOverride
     });
-    const runtimeSnippetPath = generatorInvocation.readme != null ? RUNTIME_SNIPPET_PATH : undefined;
+    const runtimeSnippetPath =
+        generatorInvocation.readme != null || shouldDownloadSnippets(generatorInvocation)
+            ? RUNTIME_SNIPPET_PATH
+            : undefined;
     const config = getGeneratorConfig({
         workspaceName: apiName,
         organization,
@@ -74,4 +77,9 @@ export async function prepareFernSdkGenApiRuntimeBundle({
             })
         )
     );
+}
+
+function shouldDownloadSnippets(generatorInvocation: generatorsYml.GeneratorInvocation): boolean {
+    const outputMode = generatorInvocation.outputMode;
+    return outputMode.type === "downloadFiles" && outputMode.downloadSnippets === true;
 }

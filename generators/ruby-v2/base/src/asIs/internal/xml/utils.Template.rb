@@ -28,9 +28,29 @@ module <%= gem_namespace %>
             output
           end
 
+          # @param node [Element, Serializable, Text, Comment]
+          # @return [Boolean] whether `node` is a {Text} segment or a {Comment} rather than an element
+          def non_element?(node)
+            node.is_a?(Text) || node.is_a?(Comment)
+          end
+
+          # Writes `element` to `output` together with the comments it renders as siblings
+          # ({Comment.before} / {Comment.after}).
+          private def write_element(output, element, scope)
+            write_sibling_comments(output, element, :before)
+            write_element_tag(output, element, scope)
+            write_sibling_comments(output, element, :after)
+          end
+
+          private def write_sibling_comments(output, element, placement)
+            element.children.each do |child|
+              output << child.to_s if child.is_a?(Comment) && child.placement == placement
+            end
+          end
+
           # Writes `element` and its subtree to `output`. `scope` maps the namespace prefixes in scope
           # ("" for the default namespace) to their URIs so declarations are only emitted where they change.
-          private def write_element(output, element, scope)
+          private def write_element_tag(output, element, scope)
             scope = scope.dup
             declarations = {}
             declare = ->(declared_prefix, uri) {
@@ -81,13 +101,22 @@ module <%= gem_namespace %>
             attributes.each do |name, value|
               output << " " << name << "=\"" << escape_attribute(value) << "\""
             end
-            if element.text.nil? && element.children.empty?
+            content = element.children.reject { |child| child.is_a?(Comment) && !child.inside? }
+            if element.text.nil? && content.empty?
               output << "/>"
               return
             end
             output << ">"
             output << escape_text(element.text) unless element.text.nil?
-            element.children.each { |child| write_element(output, child.to_xml_element, scope) }
+            content.each do |child|
+              if child.is_a?(Text)
+                output << escape_text(child.value)
+              elsif child.is_a?(Comment)
+                output << child.to_s
+              else
+                write_element(output, child.to_xml_element, scope)
+              end
+            end
             output << "</" << qualified_name << ">"
           end
 
@@ -117,27 +146,26 @@ module <%= gem_namespace %>
           end
 
           # Joins a list of values with a separator for a list-valued attribute or text node.
+          # A String is already in wire form (e.g. "speech dtmf") and is written as-is; any
+          # other single value (for example a Symbol) is written on its own.
           #
-          # @param values [Enumerable, nil]
+          # @param values [Enumerable, String, Object, nil]
           # @param separator [String]
           # @return [String, nil]
           def join_values(values, separator)
             return nil if values.nil?
+            return to_xml_string(values) if values.is_a?(::String)
 
-            values.map { |value| to_xml_string(value) }.compact.join(separator)
+            list_items(values).map { |value| to_xml_string(value) }.compact.join(separator)
           end
 
-          # Appends a text-only child element unless the value is nil.
+          # Normalizes a list-valued property so a single value is treated as a one-item list.
+          # A Hash is a single (model-like) value, not a list of pairs.
           #
-          # @param element [Element]
-          # @param name [String]
-          # @param value [Object]
-          # @return [void]
-          def add_child_value(element, name, value)
-            text = to_xml_string(value)
-            return if text.nil?
-
-            element.add_child(Element.new(name, text: text))
+          # @param value [Enumerable, Object]
+          # @return [Array]
+          def list_items(value)
+            value.is_a?(::Enumerable) && !value.is_a?(::Hash) ? value.to_a : [value]
           end
 
           # Adds unknown attributes and children back onto an element. Unknown content found inside
@@ -157,14 +185,115 @@ module <%= gem_namespace %>
               if child.is_a?(Element) && wrapper_names.include?(child.name)
                 wrapper = element.child(child.name)
                 unless wrapper.nil?
-                  child.namespace_declarations.each { |prefix, uri| wrapper.namespace_declarations[prefix] ||= uri }
-                  child.attributes.each { |name, value| wrapper.attributes[name] = value unless wrapper.attributes.key?(name) }
-                  wrapper.text ||= child.text
-                  child.children.each { |grand_child| wrapper.add_child(grand_child) }
+                  merge_wrapper!(wrapper, child)
                   next
                 end
               end
               element.add_child(child)
+            end
+          end
+
+          # Appends the typed children, the additional children and the text segments to `element` in
+          # content order. `content` decides the order; typed or additional children missing from it
+          # are appended after it (typed first), so directly assigned properties still render. Wrapped
+          # lists render as one wrapper element, placed where the first wrapper of that name or the
+          # first item of that list appears in `content`; a raw wrapper element added with `add_child`
+          # is merged into it rather than written as a second wrapper. Nodes in `content` that are neither typed,
+          # additional nor text are not written.
+          #
+          # @param element [Element]
+          # @param content [Array<Element, Serializable, Text, Comment>]
+          # @param typed [Array<Element, Serializable>] typed child elements, in property order
+          # @param wrapped [Hash<String, Array<Element, Serializable>>] items of each wrapped list, keyed by wrapper name
+          # @param additional [Array<Element, Serializable>]
+          # @param attributes [Hash<String, String>] additional attributes
+          # @return [void]
+          def add_content(element, content, typed, wrapped, additional, attributes = {})
+            remaining = {}.compare_by_identity
+            (typed + additional).each { |node| remaining[node] = (remaining[node] || 0) + 1 }
+            wrapper_of = {}.compare_by_identity
+            wrapped.each { |name, items| items.each { |item| wrapper_of[item] = name } }
+            wrappers = {}
+            emit_wrapper = ->(name) { emit_wrapper!(element, name, wrapped, wrappers) }
+            content.each do |node|
+              if non_element?(node)
+                element.add_child(node)
+              elsif (remaining[node] || 0).positive?
+                remaining[node] -= 1
+                if node.is_a?(Element) && wrapped.key?(node.name)
+                  emit_wrapper.call(node.name)
+                  merge_wrapper!(wrappers[node.name], node)
+                else
+                  element.add_child(node)
+                end
+              elsif wrapper_of.key?(node)
+                emit_wrapper.call(wrapper_of[node])
+              elsif node.is_a?(Element) && wrapped.key?(node.name)
+                emit_wrapper.call(node.name)
+              end
+            end
+            typed.each do |node|
+              next unless (remaining[node] || 0).positive?
+
+              remaining[node] -= 1
+              element.add_child(node)
+            end
+            wrapped.each_key { |name| emit_wrapper.call(name) }
+            leftover = additional.select do |node|
+              keep = (remaining[node] || 0).positive?
+              remaining[node] -= 1 if keep
+              keep
+            end
+            add_additional(element, attributes, leftover, wrapped.keys)
+          end
+
+          private def merge_wrapper!(wrapper, raw)
+            raw.namespace_declarations.each { |prefix, uri| wrapper.namespace_declarations[prefix] ||= uri }
+            raw.attributes.each { |name, value| wrapper.attributes[name] = value unless wrapper.attributes.key?(name) }
+            wrapper.text ||= raw.text
+            raw.children.each { |grand_child| wrapper.add_child(grand_child) }
+          end
+
+          private def emit_wrapper!(element, name, wrapped, wrappers)
+            return if wrappers.key?(name)
+
+            wrapper = Element.new(name)
+            element.add_child(wrapper)
+            wrapped[name].each { |item| wrapper.add_child(item) }
+            wrappers[name] = wrapper
+          end
+
+          # Builds the content list of a parsed element: its text segments, the typed children (taken
+          # in document order from `typed`), wrapper elements (as parsed) and the additional children.
+          #
+          # @param element [Element]
+          # @param typed [Array<Array(Array<String>, Array<Serializable>)>] pairs of element names and
+          #   the typed children parsed from elements with those names, in document order
+          # @param additional [Array<Element, Serializable>]
+          # @param wrapper_names [Array<String>]
+          # @param include_text [Boolean] whether the element's text (character data before its first
+          #   child) is part of the content; false for types with a text property, which holds it instead
+          # @return [Array<Element, Serializable, Text, Comment>]
+          def content(element, typed, additional, wrapper_names = [], include_text: false)
+            by_name = {}
+            typed.each_with_index { |(names, _nodes), index| names.each { |name| by_name[name] = index } }
+            positions = Array.new(typed.length, 0)
+            additional_ids = {}.compare_by_identity
+            additional.each { |node| additional_ids[node] = true }
+            leading = include_text && !element.text.nil? ? [Text.new(element.text)] : []
+            leading + element.children.filter_map do |child|
+              next child if non_element?(child)
+
+              name = child.to_xml_element.name
+              index = by_name[name]
+              if index.nil?
+                next child if wrapper_names.include?(name) || additional_ids.key?(child)
+
+                next nil
+              end
+              node = typed[index][1][positions[index]]
+              positions[index] += 1 unless node.nil?
+              node
             end
           end
 
@@ -242,18 +371,46 @@ module <%= gem_namespace %>
               end
             end
             text = +""
+            has_element = false
             node.each_child do |child|
               case child
               when ::REXML::Text
-                text << child.value
+                if has_element
+                  append_parsed_text(element, child.value)
+                else
+                  text << child.value
+                end
               when ::REXML::Element
+                has_element = true
                 element.add_child(from_rexml(child))
+              when ::REXML::Comment
+                has_element = true
+                element.add_child(Comment.new(child.string))
               end
             end
-            # Text nodes are concatenated (whitespace-only text is dropped); interleaving with child
-            # elements is not preserved, matching serialization which writes text before children.
+            # Text before the first child element or comment is the element's text (dropped when
+            # whitespace-only); text between and after them is kept as Text segments in document order.
             element.text = text.strip.empty? ? nil : text
             element
+          end
+
+          # Appends character data read after a child element. Whitespace-only text spanning a line
+          # break is pretty-print indentation and is dropped; whitespace-only text without a line break
+          # (e.g. a space between two inline children) is significant and kept. Adjacent segments are
+          # merged.
+          private def append_parsed_text(element, text)
+            return if indentation?(text)
+
+            last = element.children.last
+            if last.is_a?(Text)
+              last.value += text
+            else
+              element.add_text(text)
+            end
+          end
+
+          private def indentation?(text)
+            text.strip.empty? && text.match?(/[\r\n]/)
           end
 
           # @raise [ArgumentError] if the attribute is missing
@@ -308,8 +465,7 @@ module <%= gem_namespace %>
           def parse_children(parent, parsers)
             return [] if parent.nil?
 
-            parent.children.filter_map do |child|
-              element = child.to_xml_element
+            parent.child_elements.filter_map do |element|
               parser = parsers[element.name]
               parser&.call(element)
             end
@@ -317,8 +473,7 @@ module <%= gem_namespace %>
 
           # @return [Object, nil] the first child with a parser, parsed
           def parse_child(parent, parsers)
-            parent.children.each do |child|
-              element = child.to_xml_element
+            parent.child_elements.each do |element|
               parser = parsers[element.name]
               return parser.call(element) unless parser.nil?
             end
@@ -361,13 +516,13 @@ module <%= gem_namespace %>
             raise ArgumentError, "Expected a boolean but found '#{raw}'"
           end
 
-          # @param enum [Module] an `Internal::Types::Enum`
-          # @raise [ArgumentError] if the value is not a member of the enum
-          def parse_enum(raw, enum)
-            value = raw.strip
-            raise ArgumentError, "'#{raw}' is not a valid #{enum.name}" unless enum.values.include?(value)
-
-            value
+          # Enums are open on the wire: a value the enum does not declare is kept so documents
+          # written by a newer API version still parse and round-trip.
+          #
+          # @param _enum [Module] an `Internal::Types::Enum`
+          # @return [String] the stripped value, whether or not it is a declared member
+          def parse_enum(raw, _enum)
+            raw.strip
           end
 
           # @raise [ArgumentError] if the value differs from the literal
@@ -409,6 +564,8 @@ module <%= gem_namespace %>
           def additional_children(element, known_names, wrappers = {})
             result = []
             element.children.each do |child|
+              next if non_element?(child)
+
               child_element = child.to_xml_element
               known_items = wrappers[child_element.name]
               if known_items.nil?
@@ -424,7 +581,7 @@ module <%= gem_namespace %>
               )
               rest.namespace_declarations.merge!(child_element.namespace_declarations)
               child_element.children.each do |item|
-                rest.add_child(item) unless known_items.include?(item.to_xml_element.name)
+                rest.add_child(item) unless !non_element?(item) && known_items.include?(item.to_xml_element.name)
               end
               result << rest if !rest.text.nil? || !rest.attributes.empty? || !rest.children.empty?
             end

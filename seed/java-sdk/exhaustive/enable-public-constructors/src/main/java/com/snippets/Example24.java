@@ -1,8 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.types.object.types.DocumentedUnknownType;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithDocumentedUnknownType;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;
 import java.util.HashMap;
 
 public class Example24 {
@@ -14,12 +13,12 @@ public class Example24 {
 
         client.endpoints()
                 .object()
-                .getAndReturnWithDocumentedUnknownType(ObjectWithDocumentedUnknownType.builder()
-                        .documentedUnknownType(DocumentedUnknownType.of(new HashMap<String, Object>() {
+                .getAndReturnWithUnknownField(ObjectWithUnknownField.builder()
+                        .unknown(new HashMap<String, Object>() {
                             {
                                 put("key", "value");
                             }
-                        }))
+                        })
                         .build());
     }
 }

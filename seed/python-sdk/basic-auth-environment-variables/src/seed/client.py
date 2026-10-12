@@ -64,8 +64,8 @@ class SeedBasicAuthEnvironmentVariables:
         self,
         *,
         base_url: str,
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("USERNAME"),
-        access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -77,8 +77,10 @@ class SeedBasicAuthEnvironmentVariables:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        username = username if username is not None else os.getenv("USERNAME")
         if username is None:
             raise ApiError(body="The client must be instantiated be either passing in username or setting USERNAME")
+        access_token = access_token if access_token is not None else os.getenv("PASSWORD")
         if access_token is None:
             raise ApiError(body="The client must be instantiated be either passing in access_token or setting PASSWORD")
         self._client_wrapper = SyncClientWrapper(
@@ -176,8 +178,8 @@ class AsyncSeedBasicAuthEnvironmentVariables:
         self,
         *,
         base_url: str,
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("USERNAME"),
-        access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -189,8 +191,10 @@ class AsyncSeedBasicAuthEnvironmentVariables:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        username = username if username is not None else os.getenv("USERNAME")
         if username is None:
             raise ApiError(body="The client must be instantiated be either passing in username or setting USERNAME")
+        access_token = access_token if access_token is not None else os.getenv("PASSWORD")
         if access_token is None:
             raise ApiError(body="The client must be instantiated be either passing in access_token or setting PASSWORD")
         self._client_wrapper = AsyncClientWrapper(

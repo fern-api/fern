@@ -1,5 +1,6 @@
 using global::System.Globalization;
 using global::System.IO;
+using global::System.Runtime.CompilerServices;
 using global::System.Text.Json;
 using global::System.Xml;
 using global::System.Xml.Linq;
@@ -17,7 +18,7 @@ internal static class XmlUtils
     {
         DtdProcessing = DtdProcessing.Prohibit,
         XmlResolver = null,
-        IgnoreComments = true,
+        IgnoreComments = false,
         IgnoreProcessingInstructions = true,
     };
 
@@ -39,7 +40,92 @@ internal static class XmlUtils
     internal static string Serialize(XElement element, bool xmlDeclaration = false)
     {
         var xml = element.ToString(SaveOptions.DisableFormatting);
+        var siblings = element.Annotation<SiblingComments>();
+        if (siblings != null)
+        {
+            xml = siblings.Wrap(xml);
+        }
         return xmlDeclaration ? XmlDeclaration + xml : xml;
+    }
+
+    /// <summary>
+    /// Comments rendered immediately before and after an element (<see cref="XmlComment.Before"/> /
+    /// <see cref="XmlComment.After"/>), attached to the rendered <see cref="XElement"/> as an annotation
+    /// so the parent, or <see cref="Serialize"/> for the root, can emit them as siblings.
+    /// </summary>
+    internal sealed class SiblingComments
+    {
+        internal readonly List<XComment> Before = new();
+        internal readonly List<XComment> After = new();
+
+        internal static SiblingComments Of(XElement element)
+        {
+            var siblings = element.Annotation<SiblingComments>();
+            if (siblings == null)
+            {
+                siblings = new SiblingComments();
+                element.AddAnnotation(siblings);
+            }
+            return siblings;
+        }
+
+        internal void Add(XmlComment comment)
+        {
+            (comment.Placement == XmlComment.CommentPlacement.After ? After : Before).Add(
+                new XComment(comment.XmlText())
+            );
+        }
+
+        internal object[] Surround(XElement element)
+        {
+            var nodes = new List<object>(Before);
+            nodes.Add(element);
+            nodes.AddRange(After);
+            return nodes.ToArray();
+        }
+
+        private static string Render(XComment comment) => "<!--" + comment.Value + "-->";
+
+        internal string Wrap(string xml)
+        {
+            return string.Concat(Before.Select(Render)) + xml + string.Concat(After.Select(Render));
+        }
+    }
+
+    /// <summary>
+    /// The element together with its sibling comments, if any, in a form <see cref="XContainer.Add(object)"/>
+    /// flattens into consecutive nodes.
+    /// </summary>
+    internal static object WithSiblings(XElement element)
+    {
+        var siblings = element.Annotation<SiblingComments>();
+        return siblings == null ? element : siblings.Surround(element);
+    }
+
+    /// <summary>
+    /// Value equality for XML-encoded models: two values are equal when they are of the same type and
+    /// render to the same XML (same element, attributes, text and ordered children).
+    /// </summary>
+    internal static bool XmlEquals(IXmlNode? left, IXmlNode? right)
+    {
+        if (ReferenceEquals(left, right))
+        {
+            return true;
+        }
+        if (left is null || right is null || left.GetType() != right.GetType())
+        {
+            return false;
+        }
+        return XNode.DeepEquals(left.ToXElement(), right.ToXElement());
+    }
+
+    /// <summary>
+    /// Hash code consistent with <see cref="XmlEquals"/>, derived from the rendered XML. Like
+    /// <see cref="string.GetHashCode()"/> it is only stable within a process; do not persist it.
+    /// </summary>
+    internal static int XmlHashCode(IXmlNode node)
+    {
+        return Serialize(node.ToXElement()).GetHashCode();
     }
 
     /// <summary>
@@ -235,17 +321,17 @@ internal static class XmlUtils
     }
 
     /// <summary>
-    /// Parses every child named <paramref name="name"/> under <paramref name="parent"/> as a scalar.
-    /// Returns null when the parent (a wrapper) is absent.
+    /// Parses every element in <paramref name="candidates"/> named <paramref name="name"/> as a scalar.
+    /// Returns null when <paramref name="candidates"/> is null (an absent wrapper).
     /// </summary>
-    internal static List<T>? ParseChildList<T>(XElement? parent, string name)
+    internal static List<T>? ParseChildList<T>(IEnumerable<XElement>? candidates, string name)
     {
-        if (parent == null)
+        if (candidates == null)
         {
             return null;
         }
         var result = new List<T>();
-        foreach (var child in parent.Elements())
+        foreach (var child in candidates)
         {
             if (child.Name.LocalName == name)
             {
@@ -255,64 +341,84 @@ internal static class XmlUtils
         return result;
     }
 
-    internal static HashSet<T>? ParseChildSet<T>(XElement? parent, string name)
+    internal static HashSet<T>? ParseChildSet<T>(IEnumerable<XElement>? candidates, string name)
     {
-        var list = ParseChildList<T>(parent, name);
+        var list = ParseChildList<T>(candidates, name);
         return list == null ? null : new HashSet<T>(list);
     }
 
     /// <summary>
-    /// Parses every child of <paramref name="parent"/> whose name is in <paramref name="names"/>.
-    /// Returns null when the parent (a wrapper) is absent.
+    /// Parses every element in <paramref name="candidates"/> whose name is in <paramref name="names"/>.
+    /// Returns null when <paramref name="candidates"/> is null (an absent wrapper).
     /// </summary>
-    internal static List<T>? ParseChildren<T>(XElement? parent, string[] names, Func<XElement, T> parse)
+    internal static List<T>? ParseChildren<T>(IEnumerable<XElement>? candidates, string[] names, Func<XElement, T> parse)
     {
-        if (parent == null)
+        if (candidates == null)
         {
             return null;
         }
         var result = new List<T>();
-        foreach (var child in GetChildren(parent, names))
+        foreach (var child in candidates)
         {
-            result.Add(parse(child));
+            if (Array.IndexOf(names, child.Name.LocalName) >= 0)
+            {
+                result.Add(parse(child));
+            }
         }
         return result;
     }
 
-    internal static HashSet<T>? ParseChildrenSet<T>(XElement? parent, string[] names, Func<XElement, T> parse)
+    internal static HashSet<T>? ParseChildrenSet<T>(IEnumerable<XElement>? candidates, string[] names, Func<XElement, T> parse)
     {
-        var list = ParseChildren(parent, names, parse);
+        var list = ParseChildren(candidates, names, parse);
         return list == null ? null : new HashSet<T>(list);
     }
 
-    internal static IEnumerable<XElement> GetChildren(XElement element, params string[] names)
+    /// <summary>
+    /// The items of every wrapper element named <paramref name="wrapperName"/>, in document order.
+    /// Returns null when there is no such wrapper.
+    /// </summary>
+    internal static IEnumerable<XElement>? GetWrapperItems(XElement element, string wrapperName)
     {
-        foreach (var child in element.Elements())
-        {
-            if (Array.IndexOf(names, child.Name.LocalName) >= 0)
-            {
-                yield return child;
-            }
-        }
-    }
-
-    internal static XElement? GetWrapper(XElement element, string wrapperName)
-    {
+        List<XElement>? items = null;
         foreach (var child in element.Elements())
         {
             if (child.Name.LocalName == wrapperName)
             {
-                return child;
+                items ??= new List<XElement>();
+                items.AddRange(child.Elements());
             }
         }
-        return null;
+        return items;
     }
 
-    internal static XElement AddWrapper(XElement element, string wrapperName)
+    /// <summary>
+    /// Builds the element for a scalar wrapped-list item. Null values yield null (the item is skipped).
+    /// </summary>
+    internal static XElement? ChildValue(string name, string? value)
     {
-        var wrapper = new XElement(wrapperName);
-        element.Add(wrapper);
-        return wrapper;
+        return value == null ? null : new XElement(name, value);
+    }
+
+    /// <summary>
+    /// Renders the items of a wrapped list property. Returns null when the list itself is null.
+    /// </summary>
+    internal static List<XElement>? RenderWrappedItems<T>(IEnumerable<T>? items, Func<T, XElement?> render)
+    {
+        if (items == null)
+        {
+            return null;
+        }
+        var result = new List<XElement>();
+        foreach (var item in items)
+        {
+            var rendered = render(item);
+            if (rendered != null)
+            {
+                result.Add(rendered);
+            }
+        }
+        return result;
     }
 
     internal static XElement ToXElement(object? value)
@@ -324,6 +430,356 @@ internal static class XmlUtils
         throw new ArgumentException(
             $"Value of type {value?.GetType().Name ?? "null"} cannot be serialized to XML"
         );
+    }
+
+    /// <summary>
+    /// Renders one content item: a text segment or a child element.
+    /// </summary>
+    internal static object ToXNode(object item)
+    {
+        switch (item)
+        {
+            case string text:
+                return new XText(text);
+            case XmlComment comment:
+                return new XComment(comment.XmlText());
+            default:
+                return WithSiblings(ToXElement(item));
+        }
+    }
+
+    internal static string? ConcatText(IEnumerable<object> content)
+    {
+        string? text = null;
+        foreach (var item in content)
+        {
+            if (item is string segment)
+            {
+                text = (text ?? "") + segment;
+            }
+        }
+        return text;
+    }
+
+    /// <summary>
+    /// The text before the first child element, or null when there is none. This is the part of
+    /// mixed content held by a model's text property; the rest is kept in its content list.
+    /// </summary>
+    internal static string? GetLeadingText(XElement element)
+    {
+        string? text = null;
+        foreach (var node in element.Nodes())
+        {
+            if (node is XElement || node is XComment)
+            {
+                break;
+            }
+            if (node is XText textNode)
+            {
+                text = (text ?? "") + textNode.Value;
+            }
+        }
+        return text;
+    }
+
+    internal static string RequireLeadingText(XElement element)
+    {
+        return GetLeadingText(element)
+            ?? throw new ArgumentException($"Missing required text content on <{element.Name.LocalName}>");
+    }
+
+    /// <summary>
+    /// Whitespace-only text that spans a line break comes from pretty-printing and is not content.
+    /// </summary>
+    private static bool IsContentText(string text)
+    {
+        if (text.Length == 0)
+        {
+            return false;
+        }
+        return text.Trim().Length > 0 || (text.IndexOf('\n') < 0 && text.IndexOf('\r') < 0);
+    }
+
+    /// <summary>
+    /// Reads an element's content in document order. Text nodes become strings (leading text is
+    /// skipped when <paramref name="skipLeadingText"/>, as it belongs to the text property) and
+    /// comments become <see cref="XmlComment"/>s.
+    /// Child elements go through <paramref name="parseChild"/> (returning null for elements it does
+    /// not know) and otherwise become <see cref="XmlElement"/>s. Elements named in
+    /// <paramref name="skipNames"/> (scalar element properties) are left out. Wrapper elements
+    /// listed in <paramref name="wrappers"/> (wrapper name → item names) become marker
+    /// <see cref="XmlElement"/>s holding their attributes and undeclared content, so the wrapper's
+    /// position survives a round trip; the typed items themselves are parsed by the list property.
+    /// </summary>
+    internal static List<object> ReadContent(
+        XElement element,
+        Func<XElement, object?>? parseChild,
+        bool skipLeadingText,
+        string[]? skipNames,
+        Dictionary<string, string[]>? wrappers
+    )
+    {
+        var content = new List<object>();
+        var beforeFirstElement = true;
+        foreach (var node in element.Nodes())
+        {
+            if (node is XText text)
+            {
+                if ((skipLeadingText && beforeFirstElement) || !IsContentText(text.Value))
+                {
+                    continue;
+                }
+                content.Add(text.Value);
+                continue;
+            }
+            if (node is XComment comment)
+            {
+                beforeFirstElement = false;
+                content.Add(new XmlComment(comment.Value));
+                continue;
+            }
+            if (node is not XElement child)
+            {
+                continue;
+            }
+            beforeFirstElement = false;
+            var name = child.Name.LocalName;
+            if (wrappers != null && wrappers.TryGetValue(name, out var itemNames))
+            {
+                var marker = XmlElement.FromXElement(child);
+                marker.WrappedItemCount = marker.Content.RemoveAll(item =>
+                    item is XmlElement e && Array.IndexOf(itemNames, e.Name) >= 0
+                );
+                content.Add(marker);
+                continue;
+            }
+            if (skipNames != null && Array.IndexOf(skipNames, name) >= 0)
+            {
+                continue;
+            }
+            content.Add(parseChild?.Invoke(child) ?? XmlElement.FromXElement(child));
+        }
+        return content;
+    }
+
+    /// <summary>
+    /// Reconciles a model's ordered content with its typed child properties. Text segments and
+    /// <see cref="XmlElement"/>s keep their position. Typed children keep their position as long
+    /// as a typed property still references them (one position per reference); those no longer
+    /// referenced are dropped, and extra references (children assigned to a property directly) are
+    /// appended at the end in property order.
+    /// </summary>
+    internal static List<object> OrderContent(IEnumerable<object> content, params object?[] typedChildren)
+    {
+        var remaining = new Dictionary<object, int>(ReferenceComparer.Instance);
+        var typed = new List<object>();
+        foreach (var value in typedChildren)
+        {
+            CollectTypedChildren(value, typed);
+        }
+        foreach (var child in typed)
+        {
+            remaining[child] = remaining.TryGetValue(child, out var count) ? count + 1 : 1;
+        }
+        var ordered = new List<object>();
+        foreach (var item in content)
+        {
+            if (item is string || item is XmlElement || item is XmlComment)
+            {
+                ordered.Add(item);
+            }
+            else if (TakeTypedChild(remaining, item))
+            {
+                ordered.Add(item);
+            }
+        }
+        foreach (var child in typed)
+        {
+            if (TakeTypedChild(remaining, child))
+            {
+                ordered.Add(child);
+            }
+        }
+        return ordered;
+    }
+
+    private static bool TakeTypedChild(Dictionary<object, int> remaining, object child)
+    {
+        if (!remaining.TryGetValue(child, out var count) || count == 0)
+        {
+            return false;
+        }
+        remaining[child] = count - 1;
+        return true;
+    }
+
+    private static void CollectTypedChildren(object? value, List<object> into)
+    {
+        switch (value)
+        {
+            case null:
+            case string:
+                return;
+            case IXmlNode node:
+                into.Add(node);
+                return;
+            case System.Collections.IEnumerable items:
+                foreach (var item in items)
+                {
+                    CollectTypedChildren(item, into);
+                }
+                return;
+            default:
+                into.Add(value);
+                return;
+        }
+    }
+
+    private sealed class ReferenceComparer : IEqualityComparer<object>
+    {
+        internal static readonly ReferenceComparer Instance = new();
+
+        public new bool Equals(object? x, object? y) => ReferenceEquals(x, y);
+
+        public int GetHashCode(object obj) => RuntimeHelpers.GetHashCode(obj);
+    }
+
+    /// <summary>
+    /// Appends ordered content to <paramref name="element"/>. Marker <see cref="XmlElement"/>s
+    /// whose name is a key of <paramref name="wrapped"/> are rendered as that wrapper, each taking
+    /// the number of items it held when parsed and the last one taking the rest; wrapped lists with
+    /// no marker are appended at the end. A null wrapped list renders no wrapper unless a marker
+    /// exists for it.
+    /// </summary>
+    internal static void AddContent(
+        XElement element,
+        IEnumerable<object> ordered,
+        IDictionary<string, List<XElement>?>? wrapped = null
+    )
+    {
+        var markers = new Dictionary<string, List<XmlElement>>();
+        var items = new List<object>(ordered);
+        if (wrapped != null)
+        {
+            foreach (var item in items)
+            {
+                if (item is XmlElement marker && wrapped.ContainsKey(marker.Name))
+                {
+                    if (!markers.TryGetValue(marker.Name, out var list))
+                    {
+                        markers[marker.Name] = list = new List<XmlElement>();
+                    }
+                    list.Add(marker);
+                }
+            }
+        }
+        var positions = new Dictionary<string, int>();
+        var seen = new Dictionary<string, int>();
+        foreach (var item in items)
+        {
+            if (wrapped != null && item is XmlElement marker && markers.TryGetValue(marker.Name, out var list))
+            {
+                var rendered = wrapped[marker.Name] ?? new List<XElement>();
+                positions.TryGetValue(marker.Name, out var position);
+                seen.TryGetValue(marker.Name, out var index);
+                seen[marker.Name] = index + 1;
+                var isLast = index == list.Count - 1;
+                var take = isLast
+                    ? rendered.Count - position
+                    : Math.Min(marker.WrappedItemCount, rendered.Count - position);
+                element.Add(RenderWrapper(marker.Name, rendered.GetRange(position, take), marker));
+                positions[marker.Name] = position + take;
+                continue;
+            }
+            if (item is XmlComment comment && comment.Placement != XmlComment.CommentPlacement.Inside)
+            {
+                SiblingComments.Of(element).Add(comment);
+                continue;
+            }
+            element.Add(ToXNode(item));
+        }
+        if (wrapped == null)
+        {
+            return;
+        }
+        foreach (var entry in wrapped)
+        {
+            if (entry.Value != null && !markers.ContainsKey(entry.Key))
+            {
+                element.Add(RenderWrapper(entry.Key, entry.Value, null));
+            }
+        }
+    }
+
+    private static object RenderWrapper(string name, List<XElement> items, XmlElement? marker)
+    {
+        var wrapper = CreateElement(name, marker?.Namespace, marker?.Prefix);
+        if (marker != null)
+        {
+            foreach (var ns in marker.Namespaces)
+            {
+                if (wrapper.GetNamespaceOfPrefix(ns.Key) == null)
+                {
+                    wrapper.Add(new XAttribute(XNamespace.Xmlns + ns.Key, ns.Value));
+                }
+            }
+            foreach (var attribute in marker.Attributes)
+            {
+                SetAttribute(wrapper, attribute.Key, attribute.Value);
+            }
+        }
+        foreach (var item in items)
+        {
+            wrapper.Add(WithSiblings(item));
+        }
+        if (marker != null)
+        {
+            foreach (var item in marker.Content)
+            {
+                if (item is XmlComment comment && comment.Placement != XmlComment.CommentPlacement.Inside)
+                {
+                    SiblingComments.Of(wrapper).Add(comment);
+                    continue;
+                }
+                wrapper.Add(ToXNode(item));
+            }
+        }
+        return WithSiblings(wrapper);
+    }
+
+    /// <summary>
+    /// The typed children of one property, in content order.
+    /// </summary>
+    internal static List<T> ContentItems<T>(IEnumerable<object> content)
+    {
+        var result = new List<T>();
+        foreach (var item in content)
+        {
+            if (item is T typed)
+            {
+                result.Add(typed);
+            }
+        }
+        return result;
+    }
+
+    internal static List<T> ContentItems<T>(IEnumerable<object> content, Func<object, bool> matches, Func<object, T> convert)
+    {
+        var result = new List<T>();
+        foreach (var item in content)
+        {
+            if (matches(item))
+            {
+                result.Add(convert(item));
+            }
+        }
+        return result;
+    }
+
+    internal static T? FirstOrNull<T>(List<T> items)
+        where T : struct
+    {
+        return items.Count > 0 ? items[0] : (T?)null;
     }
 
     internal static ArgumentException UnexpectedElement(XElement element)
@@ -463,82 +919,15 @@ internal static class XmlUtils
         return result;
     }
 
-    /// <summary>
-    /// Collects child elements that are not part of the typed model. For wrapper elements listed in
-    /// <paramref name="wrappers"/> (wrapper name → known item names), only unknown items and
-    /// attributes inside the wrapper are retained. Every item with a known name is treated as
-    /// consumed by the typed property, so duplicates collapsed by a set-typed property are not
-    /// carried over as additional children.
-    /// </summary>
-    internal static List<XmlElement> GetAdditionalChildren(
-        XElement element,
-        string[] knownNames,
-        Dictionary<string, string[]>? wrappers = null
-    )
+    internal static void SetAttributes(XElement element, IDictionary<string, string>? attributes)
     {
-        var result = new List<XmlElement>();
-        foreach (var child in element.Elements())
-        {
-            var name = child.Name.LocalName;
-            if (wrappers != null && wrappers.TryGetValue(name, out var knownItems))
-            {
-                var wrapper = XmlElement.FromXElement(child);
-                wrapper.Children.RemoveAll(item =>
-                    item is XmlElement e && Array.IndexOf(knownItems, e.Name) >= 0
-                );
-                if (wrapper.Children.Count > 0 || wrapper.Attributes.Count > 0)
-                {
-                    wrapper.Text = null;
-                    result.Add(wrapper);
-                }
-                continue;
-            }
-            if (Array.IndexOf(knownNames, name) < 0)
-            {
-                result.Add(XmlElement.FromXElement(child));
-            }
-        }
-        return result;
-    }
-
-    /// <summary>
-    /// Writes additional attributes and children. Additional children whose name matches an
-    /// already-emitted wrapper element are merged into that wrapper.
-    /// </summary>
-    internal static void AddAdditional(
-        XElement element,
-        IDictionary<string, string>? attributes,
-        IEnumerable<XmlElement>? children,
-        params string[] wrapperNames
-    )
-    {
-        if (attributes != null)
-        {
-            foreach (var attribute in attributes)
-            {
-                SetAttribute(element, attribute.Key, attribute.Value);
-            }
-        }
-        if (children == null)
+        if (attributes == null)
         {
             return;
         }
-        foreach (var child in children)
+        foreach (var attribute in attributes)
         {
-            var wrapper = Array.IndexOf(wrapperNames, child.Name) >= 0 ? GetWrapper(element, child.Name) : null;
-            if (wrapper == null)
-            {
-                element.Add(child.ToXElement());
-                continue;
-            }
-            foreach (var attribute in child.Attributes)
-            {
-                SetAttribute(wrapper, attribute.Key, attribute.Value);
-            }
-            foreach (var item in child.Children)
-            {
-                wrapper.Add(item.ToXElement());
-            }
+            SetAttribute(element, attribute.Key, attribute.Value);
         }
     }
 

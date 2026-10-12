@@ -6,7 +6,6 @@ import {
     loadProjectConfig
 } from "@fern-api/configuration-loader";
 import { Project } from "@fern-api/project-loader";
-import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
@@ -209,7 +208,8 @@ async function upgradeGeneratorsForAllWorkspaces({
     const generators: GeneratorUpgradeEntry[] = [];
     const skippedMajor: SkippedMajorEntry[] = [];
     const alreadyUpToDate: AlreadyUpToDateEntry[] = [];
-    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
+    // Lazy: only generators the `use-sdk-gen-api` flag routes through sdk-gen-api trigger a login.
+    const getSdkGenApiToken = createSdkGenApiTokenProvider(cliContext);
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {

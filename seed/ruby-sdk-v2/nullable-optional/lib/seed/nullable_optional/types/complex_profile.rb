@@ -11,19 +11,19 @@ module Seed
 
         field :optional_role, -> { Seed::NullableOptional::Types::UserRole }, optional: true, nullable: false, api_name: "optionalRole"
 
-        field :optional_nullable_role, -> { Seed::NullableOptional::Types::UserRole }, optional: true, nullable: false, api_name: "optionalNullableRole"
+        field :optional_nullable_role, -> { Seed::NullableOptional::Types::UserRole }, optional: true, nullable: true, api_name: "optionalNullableRole"
 
         field :nullable_status, -> { Seed::NullableOptional::Types::UserStatus }, optional: false, nullable: true, api_name: "nullableStatus"
 
         field :optional_status, -> { Seed::NullableOptional::Types::UserStatus }, optional: true, nullable: false, api_name: "optionalStatus"
 
-        field :optional_nullable_status, -> { Seed::NullableOptional::Types::UserStatus }, optional: true, nullable: false, api_name: "optionalNullableStatus"
+        field :optional_nullable_status, -> { Seed::NullableOptional::Types::UserStatus }, optional: true, nullable: true, api_name: "optionalNullableStatus"
 
         field :nullable_notification, -> { Seed::NullableOptional::Types::NotificationMethod }, optional: false, nullable: true, api_name: "nullableNotification"
 
         field :optional_notification, -> { Seed::NullableOptional::Types::NotificationMethod }, optional: true, nullable: false, api_name: "optionalNotification"
 
-        field :optional_nullable_notification, -> { Seed::NullableOptional::Types::NotificationMethod }, optional: true, nullable: false, api_name: "optionalNullableNotification"
+        field :optional_nullable_notification, -> { Seed::NullableOptional::Types::NotificationMethod }, optional: true, nullable: true, api_name: "optionalNullableNotification"
 
         field :nullable_search_result, -> { Seed::NullableOptional::Types::SearchResult }, optional: false, nullable: true, api_name: "nullableSearchResult"
 
@@ -33,7 +33,7 @@ module Seed
 
         field :optional_array, -> { Internal::Types::Array[String] }, optional: true, nullable: false, api_name: "optionalArray"
 
-        field :optional_nullable_array, -> { Internal::Types::Array[String] }, optional: true, nullable: false, api_name: "optionalNullableArray"
+        field :optional_nullable_array, -> { Internal::Types::Array[String] }, optional: true, nullable: true, api_name: "optionalNullableArray"
 
         field :nullable_list_of_nullables, -> { Internal::Types::Array[String] }, optional: false, nullable: true, api_name: "nullableListOfNullables"
 

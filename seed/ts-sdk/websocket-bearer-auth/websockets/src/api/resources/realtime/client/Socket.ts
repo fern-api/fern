@@ -68,6 +68,25 @@ export class RealtimeSocket {
         this.eventHandlers[event] = callback;
     }
 
+    /**
+     * @param event - The event to detach from.
+     * @param callback - The callback previously registered with `on`. No-op if it is not the callback currently registered for this event.
+     * Usage:
+     * ```typescript
+     * const handler = () => console.log('The websocket is open');
+     * this.on('open', handler);
+     * this.off('open', handler);
+     * ```
+     */
+    public off<T extends keyof RealtimeSocket.EventHandlers>(
+        event: T,
+        callback: RealtimeSocket.EventHandlers[T],
+    ): void {
+        if (this.eventHandlers[event] === callback) {
+            delete this.eventHandlers[event];
+        }
+    }
+
     public sendSend(message: SeedWebsocketBearerAuth.SendEvent): void {
         this.assertSocketIsOpen();
         this.sendJson(message);
@@ -118,21 +137,10 @@ export class RealtimeSocket {
         this.socket.removeEventListener("error", this.handleError);
     }
 
-    /** Returns a promise that resolves when the websocket is open. */
+    /** Returns a promise that resolves when the websocket is open, and rejects if it errors or closes before opening. */
     public async waitForOpen(): Promise<core.ReconnectingWebSocket> {
-        if (this.socket.readyState === core.ReconnectingWebSocket.ReadyState.OPEN) {
-            return this.socket;
-        }
-
-        return new Promise((resolve, reject) => {
-            this.socket.addEventListener("open", () => {
-                resolve(this.socket);
-            });
-
-            this.socket.addEventListener("error", (event: unknown) => {
-                reject(event);
-            });
-        });
+        await this.socket.waitForOpen();
+        return this.socket;
     }
 
     /** Asserts that the websocket is open. */

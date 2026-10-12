@@ -4,6 +4,13 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { Scope, ts } from "ts-morph";
 
+type HelperParameter = { name: string; type: string; optional?: boolean };
+
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+
+const HMAC_ALGORITHM_TYPE = '"sha1" | "sha256" | "sha384" | "sha512"';
+
 interface MethodBodyResult {
     fileConstants: string[];
     body: string;
@@ -45,7 +52,7 @@ export class WebhooksHelperGenerator {
 
     private writeClass(
         context: FileContext,
-        parameters: Array<{ name: string; type: string }>,
+        parameters: HelperParameter[],
         result: MethodBodyResult,
         jsDoc: string
     ): void {
@@ -68,7 +75,8 @@ export class WebhooksHelperGenerator {
                     scope: Scope.Public,
                     parameters: parameters.map((p) => ({
                         name: p.name,
-                        type: p.type
+                        type: p.type,
+                        hasQuestionToken: p.optional
                     })),
                     returnType: "Promise<boolean>",
                     statements: result.body
@@ -77,10 +85,10 @@ export class WebhooksHelperGenerator {
         });
     }
 
-    private buildHmacParameters(config: FernIr.HmacSignatureVerification): Array<{ name: string; type: string }> {
+    private buildHmacParameters(config: FernIr.HmacSignatureVerification): HelperParameter[] {
         const requestBodyType =
             config.payloadFormat.bodySort != null ? "string | Record<string, string | string[]>" : "string";
-        const params: Array<{ name: string; type: string }> = [
+        const params: HelperParameter[] = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" },
             { name: "signatureKey", type: "string" }
@@ -89,16 +97,15 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null) {
             params.push({ name: "timestampHeader", type: "string" });
         }
+        params.push({ name: "algorithm", type: HMAC_ALGORITHM_TYPE, optional: true });
         return params;
     }
 
-    private buildAsymmetricParameters(
-        config: FernIr.AsymmetricKeySignatureVerification
-    ): Array<{ name: string; type: string }> {
+    private buildAsymmetricParameters(config: FernIr.AsymmetricKeySignatureVerification): HelperParameter[] {
         const payloadFormat = config.payloadFormat;
         const hasBodySort = payloadFormat?.bodySort != null;
         const requestBodyType = hasBodySort ? "string | Record<string, string | string[]>" : "string";
-        const params: Array<{ name: string; type: string }> = [
+        const params: HelperParameter[] = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" }
         ];
@@ -126,10 +133,7 @@ export class WebhooksHelperGenerator {
         return params;
     }
 
-    private addPayloadParameters(
-        params: Array<{ name: string; type: string }>,
-        payloadFormat: FernIr.WebhookPayloadFormat
-    ): void {
+    private addPayloadParameters(params: HelperParameter[], payloadFormat: FernIr.WebhookPayloadFormat): void {
         for (const component of payloadFormat.components) {
             switch (component) {
                 case "NOTIFICATION_URL":
@@ -151,7 +155,11 @@ export class WebhooksHelperGenerator {
         // Input validation. A verification helper returns a boolean and never throws,
         // so missing inputs fail closed with `false` rather than raising.
         lines.push(
-            "if (requestBody == null || signatureHeader == null || signatureKey == null) {",
+            'if (signatureHeader == null || signatureHeader === "") {',
+            `    console.warn(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)});`,
+            "    return false;",
+            "}",
+            "if (requestBody == null || signatureKey == null) {",
             "    return false;",
             "}"
         );
@@ -203,7 +211,10 @@ export class WebhooksHelperGenerator {
             [
                 ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("payload")),
                 ts.factory.createPropertyAssignment("secret", ts.factory.createIdentifier("signatureKey")),
-                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
+                ts.factory.createPropertyAssignment(
+                    "algorithm",
+                    ts.factory.createIdentifier(`algorithm ?? "${algorithm}"`)
+                ),
                 ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
             ],
             false
@@ -217,7 +228,9 @@ export class WebhooksHelperGenerator {
             ts.factory.createIdentifier(sigIdentifier),
             ts.factory.createIdentifier("expected")
         );
-        lines.push(`return ${getTextOfTsNode(compareCall)};`);
+        lines.push(`const valid = ${getTextOfTsNode(compareCall)};`);
+        lines.push("if (!valid) {", `    console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`, "}");
+        lines.push("return valid;");
 
         return { fileConstants, body: lines.join("\n") };
     }
@@ -495,7 +508,12 @@ export class WebhooksHelperGenerator {
             ts.factory.createIdentifier("expectedBodyHash"),
             ts.factory.createIdentifier("transmittedBodyHash")
         );
-        lines.push(`    if (!(${getTextOfTsNode(compareCall)})) {`, "        return false;", "    }");
+        lines.push(
+            `    if (!(${getTextOfTsNode(compareCall)})) {`,
+            `        console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`,
+            "        return false;",
+            "    }"
+        );
         lines.push("    payload = notificationUrl;");
 
         // Classic form path: URL + sorted/deduped form params, no body-hash check.
@@ -564,7 +582,12 @@ export class WebhooksHelperGenerator {
                 ts.factory.createIdentifier("expectedBodyHash"),
                 ts.factory.createIdentifier("transmittedBodyHash")
             );
-            lines.push(`    if (!(${getTextOfTsNode(bodyCompare)})) {`, "        return false;", "    }");
+            lines.push(
+                `    if (!(${getTextOfTsNode(bodyCompare)})) {`,
+                `        console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`,
+                "        return false;",
+                "    }"
+            );
             lines.push("}");
         }
 
@@ -606,7 +629,10 @@ export class WebhooksHelperGenerator {
             [
                 ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("payload")),
                 ts.factory.createPropertyAssignment("secret", ts.factory.createIdentifier("signatureKey")),
-                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
+                ts.factory.createPropertyAssignment(
+                    "algorithm",
+                    ts.factory.createIdentifier(`algorithm ?? "${algorithm}"`)
+                ),
                 ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
             ],
             false
@@ -619,6 +645,7 @@ export class WebhooksHelperGenerator {
         );
         lines.push(`    if (${getTextOfTsNode(compare)}) {`, "        return true;", "    }");
         lines.push("}");
+        lines.push(`console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`);
         lines.push("return false;");
     }
 

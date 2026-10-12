@@ -271,6 +271,34 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMo
 	VerifyRequestCount(t, "TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMock", "POST", "/container/map-prim-to-union", nil, 1)
 }
 
+func TestEndpointsContainerGetAndReturnMapOfIntegerToObjectWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := map[int]*types.ObjectWithRequiredField{
+		1: &types.ObjectWithRequiredField{
+			FieldString: "string",
+		},
+	}
+	_, invocationErr := client.Endpoints.Container.GetAndReturnMapOfIntegerToObject(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsContainerGetAndReturnMapOfIntegerToObjectWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsContainerGetAndReturnMapOfIntegerToObjectWithWireMock", "POST", "/container/map-integer-to-object", nil, 1)
+}
+
 func TestEndpointsContainerGetAndReturnOptionalWithWireMock(
 	t *testing.T,
 ) {

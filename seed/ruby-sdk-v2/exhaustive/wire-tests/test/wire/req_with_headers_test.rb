@@ -34,5 +34,12 @@ class ReqWithHeadersWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/test-headers/custom-header",
+      expected_body: JSON.parse('"string"')
+    )
   end
 end

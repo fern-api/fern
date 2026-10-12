@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreatePlantAsync(\n    new PlantPost\n    {\n        Species = \"species\",\n        Family = \"family\",\n        Genus = \"genus\",\n        SunExposure = PlantPostSunExposure.Full,\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreatePlantAsync(\n    new PlantPost\n    {\n        Species = \"species\",\n        Family = \"family\",\n        Genus = \"genus\",\n        CommonName = \"commonName\",\n        WateringFrequency = PlantBaseWateringFrequency.Daily,\n        SunExposure = PlantPostSunExposure.Full,\n    }\n);\n"
             }
         },
         {
@@ -82,7 +82,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateTreeAsync(new TreeRecord { Id = \"id\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateTreeAsync(\n    new TreeRecord\n    {\n        TreeName = \"treeName\",\n        Id = \"id\",\n        TreeSpecies = \"treeSpecies\",\n    }\n);\n"
             }
         }
     ]

@@ -13,7 +13,7 @@ async fn main() {
         .object
         .get_and_return_with_unknown_field(
             &ObjectWithUnknownField {
-                unknown: serde_json::json!({"key":"value"}),
+                unknown: serde_json::json!({"$ref":"https://example.com/schema"}),
                 ..Default::default()
             },
             None,

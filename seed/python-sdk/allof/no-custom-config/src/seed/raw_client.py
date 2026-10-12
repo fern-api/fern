@@ -243,14 +243,14 @@ class RawSeedApi:
     def create_plant(
         self,
         *,
+        common_name: str,
+        watering_frequency: PlantBaseWateringFrequency,
         sun_exposure: PlantPostSunExposure,
         species: str,
         family: str,
         genus: str,
         planted_at: typing.Optional[dt.date] = OMIT,
         soil_type: typing.Optional[str] = OMIT,
-        common_name: typing.Optional[str] = OMIT,
-        watering_frequency: typing.Optional[PlantBaseWateringFrequency] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PlantStrict]:
         """
@@ -258,6 +258,11 @@ class RawSeedApi:
 
         Parameters
         ----------
+        common_name : str
+            The common name of the plant.
+
+        watering_frequency : PlantBaseWateringFrequency
+
         sun_exposure : PlantPostSunExposure
             Required sun exposure level.
 
@@ -276,11 +281,6 @@ class RawSeedApi:
         soil_type : typing.Optional[str]
             Preferred soil type.
 
-        common_name : typing.Optional[str]
-            The common name of the plant.
-
-        watering_frequency : typing.Optional[PlantBaseWateringFrequency]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -293,11 +293,11 @@ class RawSeedApi:
             "plants",
             method="POST",
             json={
+                "commonName": common_name,
+                "wateringFrequency": watering_frequency,
                 "sunExposure": sun_exposure,
                 "plantedAt": planted_at,
                 "soilType": soil_type,
-                "commonName": common_name,
-                "wateringFrequency": watering_frequency,
                 "species": species,
                 "family": family,
                 "genus": genus,
@@ -330,11 +330,11 @@ class RawSeedApi:
     def create_tree(
         self,
         *,
+        tree_name: str,
+        tree_species: str,
         id: str,
         planted_date: typing.Optional[dt.date] = OMIT,
-        tree_species: typing.Optional[str] = OMIT,
         height_in_feet: typing.Optional[float] = OMIT,
-        tree_name: typing.Optional[str] = OMIT,
         tree_description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TreeRecord]:
@@ -343,20 +343,20 @@ class RawSeedApi:
 
         Parameters
         ----------
+        tree_name : str
+            Display name of the tree.
+
+        tree_species : str
+            The species of tree.
+
         id : str
             Unique tree identifier.
 
         planted_date : typing.Optional[dt.date]
             Date the tree was planted.
 
-        tree_species : typing.Optional[str]
-            The species of tree.
-
         height_in_feet : typing.Optional[float]
             Height of the tree in feet.
-
-        tree_name : typing.Optional[str]
-            Display name of the tree.
 
         tree_description : typing.Optional[str]
             A description of the tree.
@@ -373,12 +373,12 @@ class RawSeedApi:
             "trees",
             method="POST",
             json={
-                "plantedDate": planted_date,
-                "treeSpecies": tree_species,
-                "heightInFeet": height_in_feet,
-                "id": id,
                 "treeName": tree_name,
+                "treeSpecies": tree_species,
+                "plantedDate": planted_date,
+                "heightInFeet": height_in_feet,
                 "treeDescription": tree_description,
+                "id": id,
             },
             request_options=request_options,
             omit=OMIT,
@@ -622,14 +622,14 @@ class AsyncRawSeedApi:
     async def create_plant(
         self,
         *,
+        common_name: str,
+        watering_frequency: PlantBaseWateringFrequency,
         sun_exposure: PlantPostSunExposure,
         species: str,
         family: str,
         genus: str,
         planted_at: typing.Optional[dt.date] = OMIT,
         soil_type: typing.Optional[str] = OMIT,
-        common_name: typing.Optional[str] = OMIT,
-        watering_frequency: typing.Optional[PlantBaseWateringFrequency] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PlantStrict]:
         """
@@ -637,6 +637,11 @@ class AsyncRawSeedApi:
 
         Parameters
         ----------
+        common_name : str
+            The common name of the plant.
+
+        watering_frequency : PlantBaseWateringFrequency
+
         sun_exposure : PlantPostSunExposure
             Required sun exposure level.
 
@@ -655,11 +660,6 @@ class AsyncRawSeedApi:
         soil_type : typing.Optional[str]
             Preferred soil type.
 
-        common_name : typing.Optional[str]
-            The common name of the plant.
-
-        watering_frequency : typing.Optional[PlantBaseWateringFrequency]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -672,11 +672,11 @@ class AsyncRawSeedApi:
             "plants",
             method="POST",
             json={
+                "commonName": common_name,
+                "wateringFrequency": watering_frequency,
                 "sunExposure": sun_exposure,
                 "plantedAt": planted_at,
                 "soilType": soil_type,
-                "commonName": common_name,
-                "wateringFrequency": watering_frequency,
                 "species": species,
                 "family": family,
                 "genus": genus,
@@ -709,11 +709,11 @@ class AsyncRawSeedApi:
     async def create_tree(
         self,
         *,
+        tree_name: str,
+        tree_species: str,
         id: str,
         planted_date: typing.Optional[dt.date] = OMIT,
-        tree_species: typing.Optional[str] = OMIT,
         height_in_feet: typing.Optional[float] = OMIT,
-        tree_name: typing.Optional[str] = OMIT,
         tree_description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TreeRecord]:
@@ -722,20 +722,20 @@ class AsyncRawSeedApi:
 
         Parameters
         ----------
+        tree_name : str
+            Display name of the tree.
+
+        tree_species : str
+            The species of tree.
+
         id : str
             Unique tree identifier.
 
         planted_date : typing.Optional[dt.date]
             Date the tree was planted.
 
-        tree_species : typing.Optional[str]
-            The species of tree.
-
         height_in_feet : typing.Optional[float]
             Height of the tree in feet.
-
-        tree_name : typing.Optional[str]
-            Display name of the tree.
 
         tree_description : typing.Optional[str]
             A description of the tree.
@@ -752,12 +752,12 @@ class AsyncRawSeedApi:
             "trees",
             method="POST",
             json={
-                "plantedDate": planted_date,
-                "treeSpecies": tree_species,
-                "heightInFeet": height_in_feet,
-                "id": id,
                 "treeName": tree_name,
+                "treeSpecies": tree_species,
+                "plantedDate": planted_date,
+                "heightInFeet": height_in_feet,
                 "treeDescription": tree_description,
+                "id": id,
             },
             request_options=request_options,
             omit=OMIT,

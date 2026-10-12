@@ -10,7 +10,7 @@ module Seed
 
         field :role, -> { String }, optional: true, nullable: false
 
-        field :is_active, -> { Internal::Types::Boolean }, optional: true, nullable: false, api_name: "isActive"
+        field :is_active, -> { Internal::Types::Boolean }, optional: true, nullable: true, api_name: "isActive"
       end
     end
   end

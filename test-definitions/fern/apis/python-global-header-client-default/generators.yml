@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups:
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: latest
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/python-sdk-tests
+          branch: python-global-header-client-default

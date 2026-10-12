@@ -162,8 +162,7 @@ export class WireTestExampleSelector {
     }
 }
 
-/** Mirrors `Errors::ResponseError.subclass_for_code` in the generated SDK (errors/response_error.Template.rb). */
-// Mirrors ResponseError.subclass_for_code in generators/ruby-v2/base/src/asIs/errors/response_error.Template.rb.
+/** Mirrors `Errors::ResponseError.subclass_for_code` in generators/ruby-v2/base/src/asIs/errors/response_error.Template.rb. */
 export function getResponseErrorClassName(statusCode: number): string {
     if (statusCode >= 300 && statusCode <= 399) {
         return "RedirectError";

@@ -16,7 +16,7 @@ class EndpointsObjectWireTest < WireMockTestCase
   def test_endpoints_object_get_and_return_with_optional_field_with_wiremock
     test_id = "endpoints.object.get_and_return_with_optional_field.0"
 
-    @client.endpoints.object.get_and_return_with_optional_field(
+    result = @client.endpoints.object.get_and_return_with_optional_field(
       string: "string",
       integer: 1,
       long: 1000000,
@@ -45,6 +45,26 @@ class EndpointsObjectWireTest < WireMockTestCase
       url_path: "/object/get-and-return-with-optional-field",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-with-optional-field",
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
     )
   end
 
@@ -97,7 +117,7 @@ class EndpointsObjectWireTest < WireMockTestCase
   def test_endpoints_object_get_and_return_nested_with_optional_field_with_wiremock
     test_id = "endpoints.object.get_and_return_nested_with_optional_field.0"
 
-    @client.endpoints.object.get_and_return_nested_with_optional_field(
+    result = @client.endpoints.object.get_and_return_nested_with_optional_field(
       string: "string",
       nested_object: {
         string: "string",
@@ -130,12 +150,32 @@ class EndpointsObjectWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-nested-with-optional-field",
+      expected: {
+        "/NestedObject/integer" => 1,
+        "/NestedObject/long" => 1000000,
+        "/NestedObject/double" => 1.1
+      }
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/NestedObject/integer" => 1,
+        "/NestedObject/long" => 1000000,
+        "/NestedObject/double" => 1.1
+      }
+    )
   end
 
   def test_endpoints_object_get_and_return_nested_with_required_field_with_wiremock
     test_id = "endpoints.object.get_and_return_nested_with_required_field.0"
 
-    @client.endpoints.object.get_and_return_nested_with_required_field(
+    result = @client.endpoints.object.get_and_return_nested_with_required_field(
       string: "string",
       nested_object: {
         string: "string",
@@ -168,12 +208,32 @@ class EndpointsObjectWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-nested-with-required-field/string",
+      expected: {
+        "/NestedObject/integer" => 1,
+        "/NestedObject/long" => 1000000,
+        "/NestedObject/double" => 1.1
+      }
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/NestedObject/integer" => 1,
+        "/NestedObject/long" => 1000000,
+        "/NestedObject/double" => 1.1
+      }
+    )
   end
 
   def test_endpoints_object_get_and_return_nested_with_required_field_as_list_with_wiremock
     test_id = "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
 
-    @client.endpoints.object.get_and_return_nested_with_required_field_as_list(
+    result = @client.endpoints.object.get_and_return_nested_with_required_field_as_list(
       request: [{
         string: "string",
         nested_object: {
@@ -226,6 +286,15 @@ class EndpointsObjectWireTest < WireMockTestCase
       url_path: "/object/get-and-return-nested-with-required-field-list",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/NestedObject/integer" => 1,
+        "/NestedObject/long" => 1000000,
+        "/NestedObject/double" => 1.1
+      }
     )
   end
 
@@ -303,7 +372,7 @@ class EndpointsObjectWireTest < WireMockTestCase
   def test_endpoints_object_get_and_return_with_mixed_required_and_optional_fields_with_wiremock
     test_id = "endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0"
 
-    @client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+    result = @client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
       required_string: "hello",
       required_integer: 0,
       optional_string: "world",
@@ -321,6 +390,24 @@ class EndpointsObjectWireTest < WireMockTestCase
       url_path: "/object/get-and-return-with-mixed-required-and-optional-fields",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body_numbers(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-with-mixed-required-and-optional-fields",
+      expected: {
+        "/requiredInteger" => 0,
+        "/requiredLong" => 0
+      }
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/requiredInteger" => 0,
+        "/requiredLong" => 0
+      }
     )
   end
 

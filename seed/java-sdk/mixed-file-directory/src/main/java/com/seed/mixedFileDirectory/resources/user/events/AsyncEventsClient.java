@@ -5,6 +5,7 @@ package com.seed.mixedFileDirectory.resources.user.events;
 
 import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.RequestOptions;
+import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryHttpResponse;
 import com.seed.mixedFileDirectory.core.Suppliers;
 import com.seed.mixedFileDirectory.resources.user.events.metadata.AsyncMetadataClient;
 import com.seed.mixedFileDirectory.resources.user.events.requests.ListUserEventsRequest;
@@ -37,28 +38,59 @@ public class AsyncEventsClient {
      * List all user events.
      */
     public CompletableFuture<List<Event>> listEvents() {
-        return this.rawClient.listEvents().thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<Event>>> rawFuture = this.rawClient.listEvents();
+        CompletableFuture<List<Event>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all user events.
      */
     public CompletableFuture<List<Event>> listEvents(RequestOptions requestOptions) {
-        return this.rawClient.listEvents(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<Event>>> rawFuture =
+                this.rawClient.listEvents(requestOptions);
+        CompletableFuture<List<Event>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all user events.
      */
     public CompletableFuture<List<Event>> listEvents(ListUserEventsRequest request) {
-        return this.rawClient.listEvents(request).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<Event>>> rawFuture =
+                this.rawClient.listEvents(request);
+        CompletableFuture<List<Event>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all user events.
      */
     public CompletableFuture<List<Event>> listEvents(ListUserEventsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listEvents(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<Event>>> rawFuture =
+                this.rawClient.listEvents(request, requestOptions);
+        CompletableFuture<List<Event>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public AsyncMetadataClient metadata() {

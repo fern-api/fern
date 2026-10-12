@@ -305,6 +305,8 @@ export class SeedApiClient {
      *         species: "species",
      *         family: "family",
      *         genus: "genus",
+     *         commonName: "commonName",
+     *         wateringFrequency: "daily",
      *         sunExposure: "full"
      *     })
      */
@@ -365,7 +367,9 @@ export class SeedApiClient {
      *
      * @example
      *     await client.createTree({
-     *         id: "id"
+     *         treeName: "treeName",
+     *         id: "id",
+     *         treeSpecies: "treeSpecies"
      *     })
      */
     public createTree(

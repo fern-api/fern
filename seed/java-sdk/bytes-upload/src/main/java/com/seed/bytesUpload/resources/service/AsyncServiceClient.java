@@ -5,6 +5,7 @@ package com.seed.bytesUpload.resources.service;
 
 import com.seed.bytesUpload.core.ClientOptions;
 import com.seed.bytesUpload.core.RequestOptions;
+import com.seed.bytesUpload.core.SeedBytesUploadHttpResponse;
 import com.seed.bytesUpload.resources.service.requests.UploadWithQueryParamsRequest;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
@@ -27,27 +28,70 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Void> upload(InputStream request) {
-        return this.rawClient.upload(request).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesUploadHttpResponse<Void>> rawFuture = this.rawClient.upload(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> upload(InputStream request, RequestOptions requestOptions) {
-        return this.rawClient.upload(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesUploadHttpResponse<Void>> rawFuture = this.rawClient.upload(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> upload(byte[] request) {
-        return this.rawClient.upload(request).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesUploadHttpResponse<Void>> rawFuture = this.rawClient.upload(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> upload(byte[] request, RequestOptions requestOptions) {
-        return this.rawClient.upload(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesUploadHttpResponse<Void>> rawFuture = this.rawClient.upload(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> uploadWithQueryParams(UploadWithQueryParamsRequest request) {
-        return this.rawClient.uploadWithQueryParams(request).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesUploadHttpResponse<Void>> rawFuture = this.rawClient.uploadWithQueryParams(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> uploadWithQueryParams(
             UploadWithQueryParamsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.uploadWithQueryParams(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedBytesUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.uploadWithQueryParams(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

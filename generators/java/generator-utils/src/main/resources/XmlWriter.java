@@ -16,6 +16,8 @@ public final class XmlWriter {
     private final String qualifiedName;
     private final StringBuilder attributes = new StringBuilder();
     private final List<String> content = new ArrayList<>();
+    private final List<String> commentsBefore = new ArrayList<>();
+    private final List<String> commentsAfter = new ArrayList<>();
 
     public XmlWriter(String name) {
         this(name, null, null);
@@ -117,6 +119,39 @@ public final class XmlWriter {
     }
 
     /**
+     * Adds ordered mixed content: text segments are escaped, elements are serialized without a declaration and
+     * comments are rendered in place, or around this element for {@link XmlNode#commentBefore} and
+     * {@link XmlNode#commentAfter}.
+     */
+    public XmlWriter content(Collection<XmlNode> nodes) {
+        if (nodes == null) {
+            return this;
+        }
+        for (XmlNode node : nodes) {
+            if (node.isText()) {
+                content.add(escape(node.getText().get()));
+            } else if (node.isComment()) {
+                String rendered = XmlNode.renderComment(node.getComment().get());
+                switch (node.getCommentPlacement().get()) {
+                    case BEFORE:
+                        commentsBefore.add(rendered);
+                        break;
+                    case AFTER:
+                        commentsAfter.add(rendered);
+                        break;
+                    case INSIDE:
+                    default:
+                        content.add(rendered);
+                        break;
+                }
+            } else {
+                content.add(node.getElement().get().toXml(false));
+            }
+        }
+        return this;
+    }
+
+    /**
      * Adds child elements wrapped in a container element with the given name. Nothing is emitted when the value is
      * absent.
      */
@@ -134,15 +169,23 @@ public final class XmlWriter {
         if (xmlDeclaration) {
             xml.append(XML_DECLARATION);
         }
+        for (String comment : commentsBefore) {
+            xml.append(comment);
+        }
         xml.append('<').append(qualifiedName).append(attributes);
         if (content.isEmpty()) {
-            return xml.append(" />").toString();
+            xml.append(" />");
+        } else {
+            xml.append('>');
+            for (String part : content) {
+                xml.append(part);
+            }
+            xml.append("</").append(qualifiedName).append('>');
         }
-        xml.append('>');
-        for (String part : content) {
-            xml.append(part);
+        for (String comment : commentsAfter) {
+            xml.append(comment);
         }
-        return xml.append("</").append(qualifiedName).append('>').toString();
+        return xml.toString();
     }
 
     private void appendAttribute(String name, String value) {

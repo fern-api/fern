@@ -33,7 +33,6 @@ export { writerToString } from "./codegen-utils/writerToString.js";
 export {
     type GetTypeDeclaration,
     getXmlChildObjectTypes,
-    getXmlChildTypeIds,
     getXmlEncoding,
     getXmlPropertyKind,
     getXmlValueShape,

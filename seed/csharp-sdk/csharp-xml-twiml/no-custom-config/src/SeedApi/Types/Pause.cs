@@ -28,10 +28,16 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     public Dictionary<string, string> AdditionalAttributes { get; set; } = new();
 
     /// <summary>
-    /// Child elements that are not part of the typed model. They are written back by ToXml().
+    /// Ordered content of the element: text segments (string), comments (XmlComment), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
     /// </summary>
     [JsonIgnore]
-    public List<XmlElement> AdditionalChildren { get; set; } = new();
+    public List<object> Content { get; set; } = new();
+
+    /// <summary>
+    /// Child elements that are not part of the typed model, derived from Content (a snapshot; add children through AddChild or Content).
+    /// </summary>
+    [JsonIgnore]
+    public IReadOnlyList<XmlElement> AdditionalChildren => Content.OfType<XmlElement>().ToList();
 
     /// <summary>
     /// Parses a <c>&lt;Pause&gt;</c> XML document. Throws <see cref="ArgumentException"/> if the XML is malformed or the root element does not match.
@@ -44,11 +50,12 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     public static Pause FromXElement(XElement element)
     {
         XmlUtils.RequireName(element, "Pause");
+        var content = XmlUtils.ReadContent(element, null, false, null, null);
         var result = new Pause
         {
             Length = XmlUtils.ParseValue<int?>(XmlUtils.GetAttribute(element, "length")),
             AdditionalAttributes = XmlUtils.GetAdditionalAttributes(element, "length"),
-            AdditionalChildren = XmlUtils.GetAdditionalChildren(element, new string[] { }),
+            Content = content,
         };
         return result;
     }
@@ -63,27 +70,78 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     {
         var element = XmlUtils.CreateElement("Pause", null, null);
         XmlUtils.SetAttribute(element, "length", XmlUtils.ToXmlString(Length));
-        XmlUtils.AddAdditional(element, AdditionalAttributes, AdditionalChildren);
+        XmlUtils.AddContent(element, XmlUtils.OrderContent(Content));
+        XmlUtils.SetAttributes(element, AdditionalAttributes);
         return element;
     }
 
     /// <summary>
-    /// Serializes this value to an XML string.
+    /// Serializes this value to an XML document, prefixed with the XML declaration.
     /// </summary>
-    public string ToXml() => XmlUtils.Serialize(ToXElement());
+    public string ToXml() => ToXml(true);
 
     /// <summary>
-    /// Adds an arbitrary child element (for elements not covered by the typed model) and returns this instance for chaining.
+    /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
+
+    /// <summary>
+    /// Hash code derived from the rendered XML, consistent with Equals.
+    /// </summary>
+    public override int GetHashCode() => XmlUtils.XmlHashCode(this);
+
+    /// <summary>
+    /// Adds an arbitrary child element (for elements not covered by the typed model) after any content added so far and returns this instance for chaining.
     /// </summary>
     public Pause AddChild(XmlElement child)
     {
-        AdditionalChildren.Add(child);
+        Content.Add(child);
         return this;
     }
 
-    /// <inheritdoc />
-    public override string ToString()
+    /// <summary>
+    /// Appends a text segment after any content added so far, so text can be interleaved with child elements, and returns this instance for chaining.
+    /// </summary>
+    public Pause AddText(string text)
     {
-        return JsonUtils.Serialize(this);
+        Content.Add(text);
+        return this;
     }
+
+    /// <summary>
+    /// Appends an XML comment (&lt;!--text--&gt;) inside this element after any content added so far and returns this instance for chaining.
+    /// </summary>
+    public Pause Comment(string text)
+    {
+        Content.Add(new XmlComment(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this instance for chaining.
+    /// </summary>
+    public Pause CommentBefore(string text)
+    {
+        Content.Add(XmlComment.Before(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this instance for chaining.
+    /// </summary>
+    public Pause CommentAfter(string text)
+    {
+        Content.Add(XmlComment.After(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Two values are equal when they render to the same XML.
+    /// </summary>
+    public virtual bool Equals(Pause? other) => XmlUtils.XmlEquals(this, other);
+
+    /// <summary>
+    /// Returns the XML representation of this value.
+    /// </summary>
+    public override string ToString() => ToXml();
 }

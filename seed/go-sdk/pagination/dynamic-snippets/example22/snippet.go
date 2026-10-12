@@ -17,16 +17,16 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListWithOffsetPaginationHasNextPageRequest{
+    request := &fern.ListUsersOffsetStepPaginationRequest{
         Page: fern.Int(
             1,
         ),
         Limit: fern.Int(
-            3,
+            1,
         ),
         Order: fern.OrderAsc.Ptr(),
     }
-    client.Users.ListWithOffsetPaginationHasNextPage(
+    client.Users.ListWithOffsetStepPagination(
         context.TODO(),
         request,
     )

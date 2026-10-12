@@ -2935,6 +2935,22 @@
       ],
       "description": "Use the `layout` object to customize the order that your API endpoints\nare displayed in the docs site."
     },
+    "docs.SortByAvailabilityValue": {
+      "type": "string",
+      "enum": [
+        "unset",
+        "stable",
+        "generally-available",
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "beta",
+        "alpha",
+        "preview",
+        "legacy"
+      ],
+      "description": "An availability to sort by, or `unset` for items without an availability."
+    },
     "docs.ApiReferenceConfiguration": {
       "type": "object",
       "properties": {
@@ -3156,6 +3172,20 @@
             }
           ],
           "description": "If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object."
+        },
+        "sort-by-availability": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.SortByAvailabilityValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sorts packages and endpoints by availability, unless explicitly ordered in the `layout` object.\nListed availabilities come first, in the order provided. Use `unset` for items without an availability.\nUnlisted availabilities follow in the default order:\n`unset`, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`.\n`stable` is treated as `generally-available`, and `in-development` and `pre-release` are treated as `beta`.\nItems with the same availability keep their existing order (alphabetical when `alphabetized` is true)."
         },
         "flattened": {
           "oneOf": [
@@ -5061,6 +5091,17 @@
             }
           ],
           "description": "Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths."
+        },
+        "robots-txt-on-instance-url": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Experimental flag: when set to `true`, the custom robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep the `X-Robots-Tag: noindex, nofollow` header, so search engines still won't index them. Has no effect without a custom robots.txt. Only the static docs renderer needs this flag: the Next.js renderer already serves a custom robots.txt on the instance URL."
         },
         "external-sitemaps": {
           "oneOf": [

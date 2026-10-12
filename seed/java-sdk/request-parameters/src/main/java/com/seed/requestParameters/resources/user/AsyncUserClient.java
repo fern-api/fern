@@ -5,6 +5,7 @@ package com.seed.requestParameters.resources.user;
 
 import com.seed.requestParameters.core.ClientOptions;
 import com.seed.requestParameters.core.RequestOptions;
+import com.seed.requestParameters.core.SeedRequestParametersHttpResponse;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameReferencedRequest;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
 import com.seed.requestParameters.resources.user.requests.GetUsersRequest;
@@ -31,46 +32,121 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<Void> createUsername(CreateUsernameRequest request) {
-        return this.rawClient.createUsername(request).thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> rawFuture = this.rawClient.createUsername(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> createUsername(CreateUsernameRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createUsername(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> rawFuture =
+                this.rawClient.createUsername(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> createUsernameWithReferencedType(CreateUsernameReferencedRequest request) {
-        return this.rawClient.createUsernameWithReferencedType(request).thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> rawFuture =
+                this.rawClient.createUsernameWithReferencedType(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> createUsernameWithReferencedType(
             CreateUsernameReferencedRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .createUsernameWithReferencedType(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> rawFuture =
+                this.rawClient.createUsernameWithReferencedType(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> createUsernameOptional() {
-        return this.rawClient.createUsernameOptional().thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> rawFuture = this.rawClient.createUsernameOptional();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> createUsernameOptional(RequestOptions requestOptions) {
-        return this.rawClient.createUsernameOptional(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> rawFuture =
+                this.rawClient.createUsernameOptional(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> createUsernameOptional(Optional<CreateUsernameBodyOptionalProperties> request) {
-        return this.rawClient.createUsernameOptional(request).thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> rawFuture =
+                this.rawClient.createUsernameOptional(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> createUsernameOptional(
             Optional<CreateUsernameBodyOptionalProperties> request, RequestOptions requestOptions) {
-        return this.rawClient.createUsernameOptional(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> rawFuture =
+                this.rawClient.createUsernameOptional(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getUsername(GetUsersRequest request) {
-        return this.rawClient.getUsername(request).thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<User>> rawFuture = this.rawClient.getUsername(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getUsername(GetUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getUsername(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedRequestParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getUsername(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

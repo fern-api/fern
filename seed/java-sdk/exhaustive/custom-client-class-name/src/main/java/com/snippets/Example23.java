@@ -14,7 +14,7 @@ public class Example23 {
                 .getAndReturnWithUnknownField(ObjectWithUnknownField.builder()
                         .unknown(new HashMap<String, Object>() {
                             {
-                                put("key", "value");
+                                put("$ref", "https://example.com/schema");
                             }
                         })
                         .build());

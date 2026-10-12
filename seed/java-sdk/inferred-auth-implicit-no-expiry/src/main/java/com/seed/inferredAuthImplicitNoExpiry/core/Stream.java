@@ -6,9 +6,12 @@ package com.seed.inferredAuthImplicitNoExpiry.core;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * The {@code Stream} class implements {@link Iterable} to provide a simple mechanism for reading and parsing
@@ -39,6 +42,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     private final String streamTerminator;
     private final Reader sseReader;
     private final String discriminatorProperty;
+    private final Set<String> envelopeEvents;
     private boolean isClosed = false;
 
     /**
@@ -56,6 +60,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         this.streamTerminator = null;
         this.sseReader = null;
         this.discriminatorProperty = null;
+        this.envelopeEvents = null;
     }
 
     private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator) {
@@ -64,9 +69,20 @@ public final class Stream<T> implements Iterable<T>, Closeable {
 
     private Stream(
             Class<T> valueType, StreamType type, Reader reader, String terminator, String discriminatorProperty) {
+        this(valueType, type, reader, terminator, discriminatorProperty, null);
+    }
+
+    private Stream(
+            Class<T> valueType,
+            StreamType type,
+            Reader reader,
+            String terminator,
+            String discriminatorProperty,
+            Set<String> envelopeEvents) {
         this.valueType = valueType;
         this.streamType = type;
         this.discriminatorProperty = discriminatorProperty;
+        this.envelopeEvents = envelopeEvents;
         if (type == StreamType.JSON) {
             this.scanner = new Scanner(reader).useDelimiter(terminator);
             this.messageTerminator = terminator;
@@ -126,6 +142,36 @@ public final class Stream<T> implements Iterable<T>, Closeable {
             Class<T> valueType, Reader sseReader, String discriminatorProperty, String streamTerminator) {
         return new Stream<>(
                 valueType, StreamType.SSE_EVENT_DISCRIMINATED, sseReader, streamTerminator, discriminatorProperty);
+    }
+
+    /**
+     * Creates a stream from SSE data with event-level discrimination support.
+     * <p>
+     * Events listed in {@code envelopeEvents} are deserialized from {@code {"<discriminator>": event, "data": data}}
+     * (union variants that model the SSE envelope); all other events are deserialized from the {@code data} payload
+     * with the discriminator injected.
+     *
+     * @param valueType             The class of the objects in the stream.
+     * @param sseReader             The reader that provides the SSE data.
+     * @param discriminatorProperty The property name used for discrimination (e.g., "event").
+     * @param streamTerminator      The terminator string that signals end of stream, or null.
+     * @param envelopeEvents        The event names whose union variant models the SSE envelope.
+     * @param <T>                   The type of objects in the stream.
+     * @return A new Stream instance configured for SSE with event-level discrimination.
+     */
+    public static <T> Stream<T> fromSseWithEventDiscrimination(
+            Class<T> valueType,
+            Reader sseReader,
+            String discriminatorProperty,
+            String streamTerminator,
+            List<String> envelopeEvents) {
+        return new Stream<>(
+                valueType,
+                StreamType.SSE_EVENT_DISCRIMINATED,
+                sseReader,
+                streamTerminator,
+                discriminatorProperty,
+                new HashSet<>(envelopeEvents));
     }
 
     @Override
@@ -417,7 +463,8 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                                         currentEventId,
                                         currentRetry,
                                         valueType,
-                                        discriminatorProperty);
+                                        discriminatorProperty,
+                                        envelopeEvents);
                                 hasNextItem = true;
                                 resetEventState();
                                 return true;
@@ -483,7 +530,8 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                                 currentEventId,
                                 currentRetry,
                                 valueType,
-                                discriminatorProperty);
+                                discriminatorProperty,
+                                envelopeEvents);
                         hasNextItem = true;
                         resetEventState();
                         return true;

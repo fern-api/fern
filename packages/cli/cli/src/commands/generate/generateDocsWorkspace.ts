@@ -173,6 +173,12 @@ export async function generateDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        // `valid-markdown-links` and the publish below each resolve the full docs definition;
+        // build each API's IR once and share it.
+        for (const ossWorkspace of await filterOssWorkspaces(project)) {
+            ossWorkspace.enableResultCaching();
+        }
+
         await validateDocsWorkspaceAndLogIssues({
             workspace: docsWorkspace,
             context,
@@ -241,7 +247,8 @@ export async function generateDocsWorkspace({
 }
 
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {
-    const excludeRules: string[] = [];
+    // publishDocs runs missing-redirects on the docs it resolves, so the navigation is built once.
+    const excludeRules: string[] = [Rules.MissingRedirectsRule.name];
     if (!brokenLinks && !strictBrokenLinks) {
         excludeRules.push(Rules.ValidMarkdownLinks.name);
     }

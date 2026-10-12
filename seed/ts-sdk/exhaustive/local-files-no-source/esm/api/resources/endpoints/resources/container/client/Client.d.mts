@@ -109,6 +109,22 @@ export declare class ContainerClient {
     getAndReturnMapOfPrimToUndiscriminatedUnion(request: Record<string, SeedExhaustive.types.MixedType>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<Record<string, SeedExhaustive.types.MixedType>>;
     private __getAndReturnMapOfPrimToUndiscriminatedUnion;
     /**
+     * @param {Record<number, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnMapOfIntegerToObject({
+     *         1: {
+     *             string: "string"
+     *         }
+     *     })
+     */
+    getAndReturnMapOfIntegerToObject(request: Record<number, SeedExhaustive.types.ObjectWithRequiredField>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<Record<number, SeedExhaustive.types.ObjectWithRequiredField>>;
+    private __getAndReturnMapOfIntegerToObject;
+    /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *

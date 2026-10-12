@@ -9,7 +9,7 @@ module Seed
 
         member -> { Integer }
 
-        member -> { Integer }
+        member -> { Float }
 
         member -> { String }
       end

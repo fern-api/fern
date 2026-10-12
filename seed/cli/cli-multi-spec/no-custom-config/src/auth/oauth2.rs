@@ -457,9 +457,9 @@ fn read_env(var: &str, label: &str) -> Result<String, CliError> {
     })
 }
 
-/// The OAuth2 `client_id`: under an explicitly named `--profile`, that
-/// profile's own rungs (keyring entry, then `oauth_client_id`) before the env
-/// var; otherwise the env var first, then those same profile rungs.
+/// The OAuth2 `client_id`: when a profile is in play, that profile's own
+/// rungs (keyring entry, then `oauth_client_id`) before the env var;
+/// unprofiled, the env var first, then those same profile rungs.
 ///
 /// A client id is public by construction (RFC 6749 §2.2), which is why it can
 /// live in `profiles.toml` at all — and why only *this* value gets a plaintext
@@ -467,8 +467,8 @@ fn read_env(var: &str, label: &str) -> Result<String, CliError> {
 /// keychain under the profile-namespaced account, which the
 /// [`keyring_account`](crate::profiles::keyring_account) change already covers.
 ///
-/// Env-first for ambient selection (`<BIN>_PROFILE`, `profiles use`) is kept
-/// for backward compatibility; only `--profile`/`-p` reorders the rungs.
+/// The rung order follows [`crate::profiles::outranks_env`], however the
+/// profile was selected.
 impl OAuth2TokenProvider {
     /// The non-env rungs backing the credential whose env var is `var`, for
     /// `auth status`. Mirrors [`Self::resolve_client_id`] and
@@ -1323,8 +1323,13 @@ impl AuthProvider for OAuth2TokenProvider {
                         // reports "not logged in" for a scheme whose
                         // credential is stored against the active profile,
                         // which is the opposite of what it is for.
-                        let mut sources = vec![AuthCredentialSource::from_env(var)];
-                        sources.extend(self.stored_sources_for_env_var(var));
+                        let env = AuthCredentialSource::from_env(var);
+                        let mut sources = self.stored_sources_for_env_var(var);
+                        if crate::profiles::outranks_env() {
+                            sources.push(env);
+                        } else {
+                            sources.insert(0, env);
+                        }
                         sources
                     }
                 }),
@@ -1635,7 +1640,7 @@ mod tests {
 
     #[test]
     #[serial]
-    fn ambient_selection_prefers_env_oauth_client_id() {
+    fn ambient_selection_prefers_profile_oauth_client_id() {
         let _state = oauth_precedence_state(
             SelectionSource::Active,
             Some(STORED_CLIENT_JSON),
@@ -1646,13 +1651,13 @@ mod tests {
             precedence_provider()
                 .resolve_client_id("TEST_PROFILE_ID")
                 .unwrap(),
-            "env-id"
+            "stored-id"
         );
     }
 
     #[test]
     #[serial]
-    fn ambient_selection_prefers_env_oauth_client_secret() {
+    fn ambient_selection_prefers_profile_oauth_client_secret() {
         let _state = oauth_precedence_state(SelectionSource::Active, Some(STORED_CLIENT_JSON), None);
         let provider = precedence_provider();
 
@@ -1660,7 +1665,7 @@ mod tests {
             provider
                 .resolve_client_secret("TEST_PROFILE_SECRET")
                 .unwrap(),
-            "env-secret"
+            "stored-secret"
         );
     }
 

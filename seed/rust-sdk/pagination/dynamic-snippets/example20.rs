@@ -10,12 +10,12 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_body_offset_pagination(
-            &ListUsersBodyOffsetPaginationRequest {
-                pagination: Some(WithPage {
-                    page: Some(1),
-                    ..Default::default()
-                }),
+        .list_with_double_offset_pagination(
+            &UsersListWithDoubleOffsetPaginationQueryRequest {
+                page: Some(1.1),
+                per_page: Some(1.1),
+                order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
             None,

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) models can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+    its position in the ordered content (interleaved with `add_text` segments and child elements), while
+    `comment_before(text)` / `comment_after(text)` render a comment immediately before or after the element
+    itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+    parsed documents are preserved by `from_xml` and round-trip through `to_xml`; `Element#add_comment` and
+    the new `Internal::Xml::Comment` node expose the same for untyped elements.
+  type: feat

@@ -16,16 +16,23 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     private array $__additionalChildren = [];
 
     /**
+     * @var list<XmlNode|XmlText|XmlComment> Child elements, text segments and comments in document order, including the
+     * typed children and the additional children (shared by reference). Decides the order in which
+     * toXml() writes them; typed children that are missing here are appended at the end.
+     */
+    private array $__content = [];
+
+    /**
      * Renders this value as a generic XML element tree.
      */
     abstract public function toXmlElement(): XmlElement;
 
     /**
-     * Serializes this value to an XML string.
+     * Serializes this value to an XML document, prefixed with the `<?xml ...?>` declaration by default.
      *
      * @param bool $xmlDeclaration Whether to prepend the `<?xml ...?>` declaration.
      */
-    public function toXml(bool $xmlDeclaration = false): string
+    public function toXml(bool $xmlDeclaration = true): string
     {
         return XmlUtils::serialize($this->toXmlElement(), $xmlDeclaration);
     }
@@ -82,11 +89,77 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     }
 
     /**
-     * Adds an arbitrary child element (for elements not covered by the typed model).
+     * @return list<XmlNode|XmlText|XmlComment> Child elements, text segments and comments in document order.
+     */
+    public function getContent(): array
+    {
+        return $this->__content;
+    }
+
+    /**
+     * @param list<XmlNode|XmlText|XmlComment> $content
+     */
+    public function setContent(array $content): static
+    {
+        $this->__content = array_values($content);
+        return $this;
+    }
+
+    /**
+     * Adds an arbitrary child element (for elements not covered by the typed model) after the
+     * children added so far.
      */
     public function addChild(XmlNode $child): static
     {
         $this->__additionalChildren[] = $child;
+        $this->__content[] = $child;
         return $this;
+    }
+
+    /**
+     * Adds a text segment after the children added so far (for mixed content such as
+     * `<Say>Hi <break/> world</Say>`).
+     */
+    public function addText(string $text): static
+    {
+        $this->__content[] = new XmlText($text);
+        return $this;
+    }
+
+    /**
+     * Adds an XML comment (`<!--text-->`) inside this element after the children added so far.
+     */
+    public function comment(string $text): static
+    {
+        $this->__content[] = new XmlComment($text);
+        return $this;
+    }
+
+    /**
+     * Adds an XML comment rendered immediately before this element (as a sibling in its parent,
+     * or before the root element).
+     */
+    public function commentBefore(string $text): static
+    {
+        $this->__content[] = XmlComment::before($text);
+        return $this;
+    }
+
+    /**
+     * Adds an XML comment rendered immediately after this element (as a sibling in its parent,
+     * or after the root element).
+     */
+    public function commentAfter(string $text): static
+    {
+        $this->__content[] = XmlComment::after($text);
+        return $this;
+    }
+
+    /**
+     * Records a typed child added through a fluent builder so it keeps its position in the content.
+     */
+    protected function recordContent(XmlNode $child): void
+    {
+        $this->__content[] = $child;
     }
 }

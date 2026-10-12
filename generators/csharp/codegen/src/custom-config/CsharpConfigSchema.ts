@@ -165,6 +165,11 @@ export const CsharpConfigSchema = z.object({
     // is unchanged. Independent of `include-platform-headers`; still overridable by an
     // explicit `User-Agent` header and suppressed by `omit-fern-headers`.
     "allow-user-agent-app-info": z.boolean().optional(),
+    // When true, generated clients send only the `User-Agent` platform header (in
+    // whatever form the other configs produce) and omit the `X-Fern-Language`,
+    // `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Off by default so existing
+    // generated output is unchanged. Still subject to `omit-fern-headers`.
+    "user-agent-only": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
     // When true (default), server URL variables declared on the API's environments (e.g. region)
     // are exposed as ClientOptions properties and interpolated into the environment URL template(s)

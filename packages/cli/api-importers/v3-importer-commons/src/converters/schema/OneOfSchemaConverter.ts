@@ -575,6 +575,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         ...convertedSchema.inlinedTypes,
                         [namespacedSchemaId]: convertedSchema.convertedSchema
                     };
+                    referencedTypes.add(namespacedSchemaId);
+                    for (const inlinedTypeId of Object.keys(convertedSchema.inlinedTypes)) {
+                        referencedTypes.add(inlinedTypeId);
+                    }
                 }
                 convertedSchema.convertedSchema.typeDeclaration.referencedTypes.forEach((referencedType) => {
                     referencedTypes.add(referencedType);

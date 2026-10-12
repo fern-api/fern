@@ -5,6 +5,7 @@ package com.seed.mixedFileDirectory.resources.organization;
 
 import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.RequestOptions;
+import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryHttpResponse;
 import com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;
 import com.seed.mixedFileDirectory.resources.organization.types.Organization;
 import java.util.concurrent.CompletableFuture;
@@ -30,13 +31,28 @@ public class AsyncOrganizationClient {
      * Create a new organization.
      */
     public CompletableFuture<Organization> create(CreateOrganizationRequest request) {
-        return this.rawClient.create(request).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<Organization>> rawFuture = this.rawClient.create(request);
+        CompletableFuture<Organization> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a new organization.
      */
     public CompletableFuture<Organization> create(CreateOrganizationRequest request, RequestOptions requestOptions) {
-        return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<Organization>> rawFuture =
+                this.rawClient.create(request, requestOptions);
+        CompletableFuture<Organization> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

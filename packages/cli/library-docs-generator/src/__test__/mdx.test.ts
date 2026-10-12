@@ -5,7 +5,8 @@ import {
     escapeMdxPreservingCodeBlocks,
     escapeTableCell,
     formatTypeAnnotation,
-    generateAnchorId
+    generateAnchorId,
+    withSlugPrefix
 } from "../utils/mdx";
 
 describe("escapeMdx", () => {
@@ -215,5 +216,18 @@ describe("escapeTableCell", () => {
 
     it("escapes pipes, newlines, and JSX chars together", () => {
         expect(escapeTableCell("<a> | b\n{c}")).toBe("&lt;a&gt; \\| b &#123;c&#125;");
+    });
+});
+
+describe("withSlugPrefix", () => {
+    it("returns the slug unchanged when no prefix is given", () => {
+        expect(withSlugPrefix("lib/pkg", undefined)).toBe("lib/pkg");
+        expect(withSlugPrefix("lib/pkg", "")).toBe("lib/pkg");
+        expect(withSlugPrefix("lib/pkg", "/")).toBe("lib/pkg");
+    });
+
+    it("prepends the prefix, ignoring leading and trailing slashes", () => {
+        expect(withSlugPrefix("lib/pkg", "api-reference")).toBe("api-reference/lib/pkg");
+        expect(withSlugPrefix("lib/pkg", "/reference/python/")).toBe("reference/python/lib/pkg");
     });
 });

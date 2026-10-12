@@ -163,6 +163,13 @@ class EndpointsParamsWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "PUT",
+      url_path: "/params/path/param",
+      expected_body: JSON.parse('"string"')
+    )
   end
 
   def test_endpoints_params_modify_with_inline_path_with_wiremock
@@ -184,6 +191,13 @@ class EndpointsParamsWireTest < WireMockTestCase
       url_path: "/params/path/param",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "PUT",
+      url_path: "/params/path/param",
+      expected_body: JSON.parse('"string"')
     )
   end
 
@@ -211,7 +225,7 @@ class EndpointsParamsWireTest < WireMockTestCase
   def test_endpoints_params_create_with_body_and_query_with_wiremock
     test_id = "endpoints.params.create_with_body_and_query.0"
 
-    @client.endpoints.params.create_with_body_and_query(
+    result = @client.endpoints.params.create_with_body_and_query(
       fields: "_fields",
       string: "string",
       request_options: {
@@ -227,6 +241,15 @@ class EndpointsParamsWireTest < WireMockTestCase
       url_path: "/params/body-and-query",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
     )
   end
 

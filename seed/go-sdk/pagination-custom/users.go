@@ -25,10 +25,12 @@ type ListWithCustomPagerRequest struct {
 }
 
 func (l *ListWithCustomPagerRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetLimit sets the Limit field and marks it as non-optional;
@@ -92,10 +94,12 @@ func (l *Link) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *Link) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetRel sets the Rel field and marks it as non-optional;
@@ -226,10 +230,12 @@ func (u *UsersListResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsersListResponse) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetLimit sets the Limit field and marks it as non-optional;

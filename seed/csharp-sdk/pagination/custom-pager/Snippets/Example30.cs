@@ -10,9 +10,9 @@ public partial class Examples
             }
         );
 
-        await client.Users.ListWithOptionalDataAsync(
-            new ListUsersOptionalDataRequest {
-                Page = 1
+        await client.Users.ListWithGlobalConfigAsync(
+            new SeedPagination.ListWithGlobalConfigRequest {
+                Offset = 1
             }
         );
     }

@@ -18,6 +18,7 @@ export { CSharp } from "./csharp.js";
 export { CsharpConfigSchema } from "./custom-config/index.js";
 export { escapeForCSharpString } from "./utils/escapeForCSharpString.js";
 export { type LazyResult, lazy } from "./utils/lazy.js";
+export { getSdkVariableOptionName } from "./utils/sdkVariables.js";
 export * as text from "./utils/text.js";
 export { camelCase } from "./utils/text.js";
 export { type TypesOf } from "./utils/type-extractor.js";

@@ -1,13 +1,15 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.types.StreamRequest;
+import com.seed.api.requests.StreamXFernStreamingNullableConditionRequest;
 
 public class Example34 {
     public static void main(String[] args) {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.streamXFernStreamingSseOnly(StreamRequest.builder().build());
+        client.streamXFernStreamingNullableCondition(StreamXFernStreamingNullableConditionRequest.builder()
+                .query("query")
+                .build());
     }
 }

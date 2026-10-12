@@ -39,10 +39,12 @@ func (r *Response) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *Response) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetFoo sets the Foo field and marks it as non-optional;

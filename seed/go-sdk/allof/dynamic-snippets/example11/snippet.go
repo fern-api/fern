@@ -15,13 +15,11 @@ func do() {
         ),
     )
     request := &fern.PlantPost{
-        CommonName: fern.String(
-            "commonName",
-        ),
-        WateringFrequency: fern.PlantBaseWateringFrequencyDaily.Ptr(),
         Species: "species",
         Family: "family",
         Genus: "genus",
+        CommonName: "commonName",
+        WateringFrequency: fern.PlantBaseWateringFrequencyDaily,
         SunExposure: fern.PlantPostSunExposureFull,
         PlantedAt: fern.Time(
             fern.MustParseDate(

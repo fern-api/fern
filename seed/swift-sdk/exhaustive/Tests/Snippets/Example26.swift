@@ -8,11 +8,10 @@ enum Example26 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request: ObjectWithMixedRequiredAndOptionalFields(
-            requiredString: "hello",
-            requiredInteger: 0,
-            optionalString: "world",
-            requiredLong: 0
-        ))
+        _ = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(request: [
+            "string": .object([
+                "key": .string("value")
+            ])
+        ])
     }
 }

@@ -36,6 +36,7 @@
 pub mod builder;
 pub mod compose;
 pub mod credential;
+pub(crate) mod dry_run;
 pub mod error;
 pub mod keyring_store;
 pub mod login;
@@ -57,7 +58,7 @@ pub use builder::{
 };
 pub use compose::{AllAuthProvider, AnyAuthProvider, LayeredAuthProvider, RoutingAuthProvider};
 pub use credential::{AuthCredentialSource, CredentialSlots};
-pub use error::handle_error_response;
+pub use error::{ensure_credentials_for, handle_error_response};
 pub use keyring_store::{
     active_store, auto_store, set_active_store, FileKeyringStore, KeyringStore, MockKeyringStore,
 };

@@ -33,7 +33,7 @@ output:
 docs:
   includeApiReference: true
 generation:
-  includeWatermark: true
+  buildAllModels: true
 targets:
   - language: typescript
     package:
@@ -168,7 +168,7 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
         if (built.success) {
             expect(built.sdkConfigIr.target.sdkVersion).toBe("2.3.0");
             expect(built.sdkConfigIr.client.timeoutMs).toBe(30_000);
-            expect(built.sdkConfigIr.generation.includeWatermark).toBe(true);
+            expect(built.sdkConfigIr.generation.buildAllModels).toBe(true);
             expect(built.sdkConfigIr.docs.includeApiReference).toBe(true);
         }
     });
@@ -183,17 +183,11 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
     });
 
     it("preserves active optional fields in the generator wire payload", async () => {
-        const sdkConfig = await loadFixture(
-            SDK_CONFIG_YML.replace(
-                "generation:\n  includeWatermark: true",
-                "generation:\n  includeWatermark: true\n  generateFullProject: true"
-            )
-        );
-        const built = build(sdkConfig);
+        const built = build(await loadFixture());
         expect(built.success).toBe(true);
         if (built.success) {
             const wire = JSON.parse(Buffer.from(serializeSdkConfigIrForGenerator(built.sdkConfigIr)).toString("utf8"));
-            expect(wire.generation).toHaveProperty("generateFullProject", true);
+            expect(wire.generation).toHaveProperty("buildAllModels", true);
         }
     });
 

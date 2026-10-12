@@ -5,6 +5,7 @@ package com.seed.audiences.resources.foldera.service;
 
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.RequestOptions;
+import com.seed.audiences.core.SeedAudiencesHttpResponse;
 import com.seed.audiences.resources.foldera.service.requests.GetDirectThreadRequest;
 import com.seed.audiences.resources.foldera.service.types.Response;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,25 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Response> getDirectThread(GetDirectThreadRequest request) {
-        return this.rawClient.getDirectThread(request).thenApply(response -> response.body());
+        CompletableFuture<SeedAudiencesHttpResponse<Response>> rawFuture = this.rawClient.getDirectThread(request);
+        CompletableFuture<Response> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Response> getDirectThread(GetDirectThreadRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getDirectThread(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedAudiencesHttpResponse<Response>> rawFuture =
+                this.rawClient.getDirectThread(request, requestOptions);
+        CompletableFuture<Response> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

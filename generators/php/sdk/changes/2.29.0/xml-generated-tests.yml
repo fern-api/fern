@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+    fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+    child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+  type: feat

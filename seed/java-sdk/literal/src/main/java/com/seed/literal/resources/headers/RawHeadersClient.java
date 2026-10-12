@@ -4,6 +4,7 @@
 package com.seed.literal.resources.headers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.literal.core.BodyProperties;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.MediaTypes;
 import com.seed.literal.core.ObjectMappers;
@@ -47,7 +48,9 @@ public class RawHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -105,7 +108,11 @@ public class RawHeadersClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("X-Endpoint-Version", "02-12-2024")
                 .addHeader("X-Async", "true")

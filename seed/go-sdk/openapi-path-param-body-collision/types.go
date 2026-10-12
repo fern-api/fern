@@ -38,10 +38,12 @@ func (u *UpdateProfileIdentifierResponse) GetExtraProperties() map[string]interf
 }
 
 func (u *UpdateProfileIdentifierResponse) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -114,10 +116,12 @@ type IdentifierUpdate struct {
 }
 
 func (i *IdentifierUpdate) require(field *big.Int) {
-	if i.explicitFields == nil {
-		i.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
 	}
-	i.explicitFields.Or(i.explicitFields, field)
+	next.Or(next, field)
+	i.explicitFields = next
 }
 
 // SetProfileID sets the ProfileID field and marks it as non-optional;

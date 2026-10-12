@@ -3,25 +3,33 @@ import enum
 import uuid
 from typing import List, Optional, Union
 
-import pydantic
 import pytest
 
+import pydantic
 from core_utilities.shared.pydantic_utilities import IS_PYDANTIC_V2
 from core_utilities.shared.xml_utilities import (
     XML_DECLARATION,
+    XmlAttribute,
+    XmlChild,
+    XmlComment,
+    XmlContent,
+    XmlElement,
+    XmlNode,
     append_xml_child,
     build_xml_model,
     extra_xml_attributes,
-    XmlAttribute,
-    XmlChild,
-    XmlElement,
-    XmlNode,
+    order_xml_content,
     parse_xml,
     serialize_xml_element,
     xml_attribute,
     xml_child,
     xml_children,
+    xml_content,
+    xml_content_item,
+    xml_content_items,
     xml_extra_attributes,
+    xml_leading_text,
+    xml_model_content,
     xml_text,
     xml_unknown_children,
 )
@@ -81,7 +89,7 @@ def test_text_and_attribute_values_are_escaped() -> None:
         attributes=[XmlAttribute(name="voice", value='a"b<c')],
         text="Tom & Jerry <3",
     )
-    assert xml == '<Say voice=\'a"b&lt;c\'>Tom &amp; Jerry &lt;3</Say>'
+    assert xml == "<Say voice='a\"b&lt;c'>Tom &amp; Jerry &lt;3</Say>"
 
 
 def test_nested_serializable_children_and_primitive_children() -> None:
@@ -134,6 +142,36 @@ def test_append_xml_child_on_frozen_model() -> None:
     append_xml_child(response, "children", Say("hi"))
     append_xml_child(response, "children", Say("bye"))
     assert response.children == [Say("hi"), Say("bye")]
+
+
+def test_append_xml_child_keeps_document_order_with_private_content() -> None:
+    if IS_PYDANTIC_V2:
+
+        class Response(pydantic.BaseModel):
+            model_config = pydantic.ConfigDict(frozen=True, arbitrary_types_allowed=True)
+            children: Optional[List[Say]] = None
+            _content: List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
+
+    else:
+
+        class Response(pydantic.BaseModel):  # type: ignore[no-redef]
+            children: Optional[List[Say]] = None
+            _content: List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
+
+            class Config:
+                frozen = True
+                arbitrary_types_allowed = True
+                underscore_attrs_are_private = True
+
+    response = Response()
+    assert xml_model_content(response) == []
+    assert xml_model_content(object()) is None
+    a, b = Say("a"), Say("b")
+    custom = XmlElement(name="Custom")
+    append_xml_child(response, "children", a)
+    response._content.append(custom)
+    append_xml_child(response, "children", b)
+    assert order_xml_content(response._content, response.children) == [a, custom, b]
 
 
 def test_extra_xml_attributes_renders_undeclared_fields_escaped() -> None:
@@ -276,3 +314,164 @@ def test_build_xml_model_validates_fields_and_keeps_extra_attributes() -> None:
     assert [(a.name, a.value) for a in extra_xml_attributes(model)] == [("foo", "bar")]
     with pytest.raises(ValueError):
         build_xml_model(Pause, dict(length="x"), node, {"length"})
+
+
+def test_ordered_content_interleaves_text_typed_and_raw_children() -> None:
+    xml = serialize_xml_element(
+        name="Response",
+        content=[Say("a"), XmlElement(name="Custom"), Say("b")],
+    )
+    assert xml == "<Response><Say>a</Say><Custom /><Say>b</Say></Response>"
+    xml = serialize_xml_element(
+        name="Say",
+        content=["Hi ", XmlElement(name="break", attributes={"strength": "weak"}), " world & more"],
+    )
+    assert xml == '<Say>Hi <break strength="weak" /> world &amp; more</Say>'
+
+
+def test_order_xml_content_keeps_positions_and_appends_missing_typed_children() -> None:
+    a, b, c = Say("a"), Say("b"), Say("c")
+    raw = XmlElement(name="Custom")
+    assert order_xml_content([a, raw], [a, b], c) == [a, raw, b, c]
+    # duplicate references are matched per occurrence
+    assert order_xml_content([a], [a, a]) == [a, a]
+    assert order_xml_content([], None, [], [a]) == [a]
+
+
+def test_xml_content_parses_document_order_with_types_wrappers_and_skips() -> None:
+    node = parse_xml(
+        '<Response>lead <Say>a</Say><Custom>x <b>y</b></Custom><Items k="1"><Item>1</Item><Extra/></Items> tail</Response>'
+    )
+
+    class ParsedSay:
+        def __init__(self, message: str) -> None:
+            self.message = message
+
+        @classmethod
+        def from_xml(cls, xml: Union[str, XmlNode]) -> "ParsedSay":
+            text = xml_text(parse_xml(xml, "Say"))
+            assert isinstance(text, str)
+            return cls(text)
+
+        def to_xml(self, *, xml_declaration: bool = False) -> str:
+            return serialize_xml_element(name="Say", text=self.message, xml_declaration=xml_declaration)
+
+    content = xml_content(node, {"Say": ParsedSay}, wrappers={"Items": ["Item"]})
+    assert len(content) == 5
+    assert content[0] == "lead "
+    assert isinstance(content[1], ParsedSay) and content[1].message == "a"
+    assert content[2] == XmlElement(name="Custom", content=["x ", XmlElement(name="b", text="y")])
+    assert content[3] == XmlElement(name="Items", attributes={"k": "1"}, content=[XmlElement(name="Extra")])
+    assert content[4] == " tail"
+    assert xml_content_items(content, [ParsedSay]) == [content[1]]
+    assert xml_content_item(content, [ParsedSay]) is content[1]
+    assert xml_content(node, skip_leading_text=True, skip=["Say", "Custom", "Items"]) == [" tail"]
+
+
+def test_xml_element_mixed_content_round_trip_and_add_methods() -> None:
+    element = XmlElement(name="Custom").add_text("x ").add_child(XmlElement(name="b", text="y")).add_text(" z")
+    assert element.to_xml() == "<Custom>x <b>y</b> z</Custom>"
+    assert element.text == "x  z"
+    assert element.children == [XmlElement(name="b", text="y")]
+    assert XmlElement.from_xml(element.to_xml()) == element
+
+
+def test_prefixed_wrapper_marker_positions_wrapper_once() -> None:
+    xml = serialize_xml_element(
+        name="Root",
+        children=[XmlChild(name="ns:Items", value=[Say("a")], wrapped=True)],
+        content=[Say("lead"), XmlElement(name="ns:Items"), Say("tail")],
+    )
+    assert xml == "<Root><Say>lead</Say><ns:Items><Say>a</Say></ns:Items><Say>tail</Say></Root>"
+
+
+def test_order_xml_content_drops_children_removed_from_typed_properties() -> None:
+    a, b = Say("a"), Say("b")
+    custom = XmlElement(name="Custom")
+    content: List[XmlContent] = [a, "text", custom, b]
+    assert order_xml_content(content, [b]) == ["text", custom, b]
+    assert order_xml_content(content, [b, a]) == [a, "text", custom, b]
+
+
+def test_repeated_wrappers_keep_their_positions_and_items() -> None:
+    xml = (
+        "<Dial><Numbers><Number>+1</Number></Numbers><Custom/>"
+        '<Numbers kind="b"><Number>+2</Number><Number>+3</Number><Extra/></Numbers></Dial>'
+    )
+    node = parse_xml(xml, "Dial")
+    numbers = xml_children(node, {"Number": str}, wrapper="Numbers")
+    assert numbers == ["+1", "+2", "+3"]
+    content = xml_content(node, wrappers={"Numbers": {"Number"}})
+    assert [item.name for item in content if isinstance(item, XmlElement)] == ["Numbers", "Custom", "Numbers"]
+    rendered = serialize_xml_element(
+        name="Dial",
+        children=[XmlChild(name="Numbers", value=numbers, wrapped=True)],
+        content=content,
+    )
+    assert rendered == (
+        "<Dial><Numbers><Numbers>+1</Numbers></Numbers><Custom />"
+        '<Numbers kind="b"><Numbers>+2</Numbers><Numbers>+3</Numbers><Extra /></Numbers></Dial>'
+    )
+    # items appended to the list afterwards land in the last wrapper
+    rendered = serialize_xml_element(
+        name="Dial",
+        children=[XmlChild(name="Numbers", value=[*numbers, "+4"], wrapped=True)],
+        content=content,
+    )
+    assert rendered.count("<Numbers>+4</Numbers>") == 1 and rendered.index("+4") > rendered.index("+3")
+
+
+def test_whitespace_between_children_is_kept_but_pretty_print_indentation_is_not() -> None:
+    node = parse_xml("<Say><break/> <break/></Say>", "Say")
+    content = xml_content(node)
+    assert [item for item in content if isinstance(item, str)] == [" "]
+    assert serialize_xml_element(name="Say", content=content) == "<Say><break /> <break /></Say>"
+    node = parse_xml("<Say>\n  <break/>\n  <break/>\n</Say>", "Say")
+    assert all(not isinstance(item, str) for item in xml_content(node))
+
+
+def test_comments_are_kept_in_content_and_round_trip() -> None:
+    node = parse_xml("<Response><!-- a comment --><Say>hi</Say><!--b-->tail</Response>")
+    content = xml_content(node, {"Say": Say})
+    assert content == [XmlComment(" a comment "), Say("hi"), XmlComment("b"), "tail"]
+    assert (
+        serialize_xml_element(name="Response", content=content)
+        == "<Response><!-- a comment --><Say>hi</Say><!--b-->tail</Response>"
+    )
+    element = XmlElement.from_xml("<Custom><!--c-->x</Custom>")
+    assert element.content == [XmlComment("c"), "x"]
+    assert element.text == "x"
+    assert element.to_xml() == "<Custom><!--c-->x</Custom>"
+    assert XmlElement(name="Custom").add_comment("c").add_text("x") == element
+
+
+def test_comment_ends_leading_text() -> None:
+    node = parse_xml("<Say>Hi<!--c--> there</Say>")
+    assert xml_leading_text(node) == "Hi"
+    assert xml_content(node, skip_leading_text=True) == [XmlComment("c"), " there"]
+
+
+def test_sibling_comments_surround_the_element_after_the_declaration() -> None:
+    assert (
+        serialize_xml_element(
+            name="Response",
+            comments_before=[XmlComment("b")],
+            comments_after=[XmlComment("a")],
+            xml_declaration=True,
+        )
+        == f"{XML_DECLARATION}<!--b--><Response /><!--a-->"
+    )
+    assert serialize_xml_element(name="Say", text="x", comments_after=[XmlComment("a")]) == "<Say>x</Say><!--a-->"
+
+
+def test_comments_keep_their_position_in_ordered_content() -> None:
+    comment = XmlComment("c")
+    a = Say("a")
+    assert order_xml_content([comment, a, "text"], [a]) == [comment, a, "text"]
+    assert order_xml_content([comment]) == [comment]
+
+
+def test_comment_text_cannot_close_the_comment_early() -> None:
+    assert XmlComment("a -- b --> <Hangup/> -").to_xml() == "<!--a - - b - -> <Hangup/> - -->"
+    node = parse_xml(f"<Response>{XmlComment('x -->').to_xml()}</Response>", "Response")
+    assert xml_content(node) == [XmlComment("x - ->")]

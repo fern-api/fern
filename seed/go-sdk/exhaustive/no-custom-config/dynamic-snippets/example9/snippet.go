@@ -67,7 +67,7 @@ func do() {
             "1000000",
         ),
     }
-    client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
+    client.Endpoints.ContentType.PostJSONPatchContentType(
         context.TODO(),
         request,
     )

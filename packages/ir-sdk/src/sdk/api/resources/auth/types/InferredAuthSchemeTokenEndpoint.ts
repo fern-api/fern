@@ -6,4 +6,10 @@ export interface InferredAuthSchemeTokenEndpoint {
     endpoint: FernIr.EndpointReference;
     expiryProperty: FernIr.ResponseProperty | undefined;
     authenticatedRequestHeaders: FernIr.InferredAuthenticatedRequestHeader[];
+    /**
+     * When set, the SDK sends this fixed value for the grant type request property
+     * and does not expose that property as a client option.
+     * Populated when the auth scheme is configured with `type: refresh-token`.
+     */
+    grantType: FernIr.InferredAuthGrantType | undefined;
 }

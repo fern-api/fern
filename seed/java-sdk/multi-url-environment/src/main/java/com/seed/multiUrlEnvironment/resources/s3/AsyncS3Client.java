@@ -5,6 +5,7 @@ package com.seed.multiUrlEnvironment.resources.s3;
 
 import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
+import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentHttpResponse;
 import com.seed.multiUrlEnvironment.resources.s3.requests.GetPresignedUrlRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,26 @@ public class AsyncS3Client {
     }
 
     public CompletableFuture<String> getPresignedUrl(GetPresignedUrlRequest request) {
-        return this.rawClient.getPresignedUrl(request).thenApply(response -> response.body());
+        CompletableFuture<SeedMultiUrlEnvironmentHttpResponse<String>> rawFuture =
+                this.rawClient.getPresignedUrl(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> getPresignedUrl(GetPresignedUrlRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getPresignedUrl(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMultiUrlEnvironmentHttpResponse<String>> rawFuture =
+                this.rawClient.getPresignedUrl(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

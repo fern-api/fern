@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.RefundBody;
 import com.seed.api.requests.RequiredRefundRequest;
 import com.seed.api.types.RefundRequest;
@@ -28,41 +29,99 @@ public class AsyncSeedApiClient implements AutoCloseable {
     }
 
     public CompletableFuture<Void> refund(String id, RefundBody request) {
-        return this.rawClient.refund(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.refund(id, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> refund(String id, RefundBody request, RequestOptions requestOptions) {
-        return this.rawClient.refund(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.refund(id, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> requiredRefund(String id, RequiredRefundRequest request) {
-        return this.rawClient.requiredRefund(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.requiredRefund(id, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> requiredRefund(
             String id, RequiredRefundRequest request, RequestOptions requestOptions) {
-        return this.rawClient.requiredRefund(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture =
+                this.rawClient.requiredRefund(id, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> bulkRefund() {
-        return this.rawClient.bulkRefund().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.bulkRefund();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> bulkRefund(RequestOptions requestOptions) {
-        return this.rawClient.bulkRefund(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.bulkRefund(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> bulkRefund(RefundRequest request) {
-        return this.rawClient.bulkRefund(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.bulkRefund(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> bulkRefund(RefundRequest request, RequestOptions requestOptions) {
-        return this.rawClient.bulkRefund(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.bulkRefund(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

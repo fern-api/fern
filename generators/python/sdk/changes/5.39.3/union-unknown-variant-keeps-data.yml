@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With `pydantic_config.skip_validation: true`, a union value that matches no known member is now
+    returned as its original data (the raw dict) instead of `None`. Previously a response carrying a
+    union variant added after the SDK was generated (e.g. a new `product` on a discriminated union), or
+    one missing its discriminant, silently decoded to `None` and its fields were lost. Known variants
+    still decode to their classes.
+  type: fix

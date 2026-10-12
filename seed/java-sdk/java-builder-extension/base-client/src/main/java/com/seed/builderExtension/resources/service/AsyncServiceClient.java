@@ -3,6 +3,7 @@
  */
 package com.seed.builderExtension.resources.service;
 
+import com.seed.builderExtension.core.BaseClientHttpResponse;
 import com.seed.builderExtension.core.ClientOptions;
 import com.seed.builderExtension.core.RequestOptions;
 import com.seed.builderExtension.resources.service.types.HelloResponse;
@@ -26,10 +27,24 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<HelloResponse> hello() {
-        return this.rawClient.hello().thenApply(response -> response.body());
+        CompletableFuture<BaseClientHttpResponse<HelloResponse>> rawFuture = this.rawClient.hello();
+        CompletableFuture<HelloResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<HelloResponse> hello(RequestOptions requestOptions) {
-        return this.rawClient.hello(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BaseClientHttpResponse<HelloResponse>> rawFuture = this.rawClient.hello(requestOptions);
+        CompletableFuture<HelloResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

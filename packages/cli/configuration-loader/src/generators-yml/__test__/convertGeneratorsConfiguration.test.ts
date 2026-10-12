@@ -1,9 +1,10 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { expect, vi } from "vitest";
 
-import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration.js";
+import { convertGeneratorsConfiguration, DEFAULT_MAVEN_REGISTRY_URL } from "../convertGeneratorsConfiguration.js";
 
 describe("convertGeneratorsConfiguration", () => {
     it("local-file-system allows absolute download path", async () => {
@@ -30,6 +31,34 @@ describe("convertGeneratorsConfiguration", () => {
         });
 
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/output");
+    });
+
+    it("local-file-system always requests snippets so generators emit README.md/reference.md", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                name: "generator-name",
+                                version: "0.0.1",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/path/to/output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+        const invocation = converted.groups[0]?.generators[0];
+        expect(invocation?.outputMode.type).toEqual("downloadFiles");
+        expect(invocation?.outputMode.type === "downloadFiles" && invocation.outputMode.downloadSnippets).toBe(true);
+        expect(invocation?.absolutePathToLocalSnippets).toBeUndefined();
     });
 
     it("local-file-system resolves relative download path", async () => {
@@ -234,6 +263,124 @@ describe("convertGeneratorsConfiguration", () => {
         const publishInfo = output.githubV2.publishInfo;
         expect.assert(publishInfo?.type === "maven");
         expect(publishInfo.registryUrl).toEqual("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/");
+    });
+
+    it.each([
+        ["signed", { signature: { keyId: "keyId", password: "password", secretKey: "secretKey" } }],
+        ["unsigned", {}]
+    ])("defaults the %s Maven URL to the Central Portal OSSRH Staging API", async (_name, signature) => {
+        const mavenOutput = {
+            location: "maven" as const,
+            coordinate: "com.test:sdk",
+            username: "username",
+            password: "password",
+            ...signature
+        };
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    github: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-java-sdk",
+                                version: "0.8.8-rc0",
+                                output: mavenOutput,
+                                github: { repository: "fern-api/github-app-test" }
+                            }
+                        ]
+                    },
+                    direct: {
+                        generators: [{ name: "fernapi/fern-java-sdk", version: "0.8.8-rc0", output: mavenOutput }]
+                    }
+                }
+            },
+            context: createMockTaskContext()
+        });
+
+        const githubOutput = converted.groups.find((group) => group.groupName === "github")?.generators[0]?.outputMode;
+        expect.assert(githubOutput?.type === "githubV2");
+        expect.assert(githubOutput.githubV2.publishInfo?.type === "maven");
+        expect(githubOutput.githubV2.publishInfo.registryUrl).toEqual(DEFAULT_MAVEN_REGISTRY_URL);
+
+        const directOutput = converted.groups.find((group) => group.groupName === "direct")?.generators[0]?.outputMode;
+        expect.assert(directOutput?.type === "publishV2");
+        expect.assert(directOutput.publishV2.type === "mavenOverride");
+        expect(directOutput.publishV2.mavenOverride?.registryUrl).toEqual(DEFAULT_MAVEN_REGISTRY_URL);
+        expect(DEFAULT_MAVEN_REGISTRY_URL).toBe(
+            "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+        );
+    });
+
+    it("direct RubyGems detection agrees with the converted output mode", async () => {
+        const rubygemsOutput = { location: "rubygems" as const, "package-name": "acme", "api-key": "key" };
+        const invocations: generatorsYml.GeneratorInvocationSchema[] = [
+            { name: "fernapi/fern-ruby-sdk", version: "1.0.0", output: rubygemsOutput },
+            {
+                name: "fernapi/fern-ruby-sdk",
+                version: "1.0.0",
+                output: rubygemsOutput,
+                github: { repository: "acme/acme-ruby" }
+            },
+            {
+                name: "fernapi/fern-typescript-sdk",
+                version: "1.0.0",
+                output: { location: "npm", "package-name": "acme" }
+            }
+        ];
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: { groups: { all: { generators: invocations } } },
+            context: createMockTaskContext()
+        });
+
+        const generators = converted.groups[0]?.generators ?? [];
+        expect(generators).toHaveLength(invocations.length);
+        const results = generators.map((generator, index) => {
+            const raw = invocations[index];
+            expect.assert(raw != null);
+            const { outputMode } = generator;
+            // Mirrors isDirectRubyGemsOutputMode in remote-workspace-runner's runRemoteGenerationForAPIWorkspace.ts.
+            const convertedIsDirect =
+                outputMode.type === "publishV2" && outputMode.publishV2.type === "rubyGemsOverride";
+            expect(convertedIsDirect).toBe(generatorsYml.isDirectRubyGemsPublishing(raw));
+            return convertedIsDirect;
+        });
+        expect(results).toEqual([true, false, false]);
+    });
+
+    it("unsigned Maven detection matches outputs that fall back to the default URL without a signature", async () => {
+        const base = { location: "maven" as const, coordinate: "com.acme:acme-java" };
+        const signature = { keyId: "kid", password: "pw", secretKey: "key" };
+        const outputs = [base, { ...base, signature }, { ...base, url: "https://maven.acme.com/releases" }];
+        const invocations: generatorsYml.GeneratorInvocationSchema[] = outputs.flatMap((output) => [
+            { name: "fernapi/fern-java-sdk", version: "1.0.0", output },
+            { name: "fernapi/fern-java-sdk", version: "1.0.0", output, github: { repository: "acme/acme-java" } }
+        ]);
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: { groups: { all: { generators: invocations } } },
+            context: createMockTaskContext()
+        });
+
+        const generators = converted.groups[0]?.generators ?? [];
+        expect(generators).toHaveLength(invocations.length);
+        const results = generators.map((generator, index) => {
+            const raw = invocations[index];
+            expect.assert(raw != null);
+            const { outputMode } = generator;
+            const maven =
+                outputMode.type === "publishV2" && outputMode.publishV2.type === "mavenOverride"
+                    ? outputMode.publishV2.mavenOverride
+                    : outputMode.type === "githubV2" && outputMode.githubV2.publishInfo?.type === "maven"
+                      ? outputMode.githubV2.publishInfo
+                      : undefined;
+            expect.assert(maven != null);
+            const unsignedDefault = maven.registryUrl === DEFAULT_MAVEN_REGISTRY_URL && maven.signature == null;
+            expect(unsignedDefault).toBe(generatorsYml.isUnsignedMavenPublishingWithoutUrl(raw));
+            return unsignedDefault;
+        });
+        expect(results).toEqual([true, true, false, false, false, false]);
     });
 
     it("License Metadata", async () => {

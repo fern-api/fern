@@ -9,13 +9,16 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-/** Emits the core xml runtime (XmlSerializable, XmlWriter, XmlReader, XmlElement) used by xml-encoded types. */
+/**
+ * Emits the core xml runtime (XmlSerializable, XmlWriter, XmlReader, XmlElement, XmlNode) used by xml-encoded types.
+ */
 public final class XmlCoreGenerator extends AbstractFilesGenerator {
 
     public static final String XML_SERIALIZABLE_CLASS_NAME = "XmlSerializable";
     public static final String XML_WRITER_CLASS_NAME = "XmlWriter";
     public static final String XML_READER_CLASS_NAME = "XmlReader";
     public static final String XML_ELEMENT_CLASS_NAME = "XmlElement";
+    public static final String XML_NODE_CLASS_NAME = "XmlNode";
 
     public XmlCoreGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext);
@@ -37,13 +40,18 @@ public final class XmlCoreGenerator extends AbstractFilesGenerator {
         return generatorContext.getPoetClassNameFactory().getCoreClassName(XML_ELEMENT_CLASS_NAME);
     }
 
+    public static ClassName getXmlNodeClassName(AbstractGeneratorContext<?, ?> generatorContext) {
+        return generatorContext.getPoetClassNameFactory().getCoreClassName(XML_NODE_CLASS_NAME);
+    }
+
     @Override
     public List<GeneratedFile> generateFiles() {
         return List.of(
                 generateResource(getXmlSerializableClassName(generatorContext)),
                 generateResource(getXmlWriterClassName(generatorContext)),
                 generateResource(getXmlReaderClassName(generatorContext)),
-                generateResource(getXmlElementClassName(generatorContext)));
+                generateResource(getXmlElementClassName(generatorContext)),
+                generateResource(getXmlNodeClassName(generatorContext)));
     }
 
     private GeneratedFile generateResource(ClassName className) {

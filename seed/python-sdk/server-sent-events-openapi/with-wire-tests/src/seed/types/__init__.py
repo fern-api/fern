@@ -48,6 +48,12 @@ if typing.TYPE_CHECKING:
         StreamProtocolCollisionResponse_ObjectData,
         StreamProtocolCollisionResponse_StringData,
     )
+    from .stream_protocol_mixed_schema_response import (
+        StreamProtocolMixedSchemaResponse,
+        StreamProtocolMixedSchemaResponse_Entity,
+        StreamProtocolMixedSchemaResponse_Heartbeat,
+        StreamProtocolMixedSchemaResponse_ObjectData,
+    )
     from .stream_protocol_no_collision_response import (
         StreamProtocolNoCollisionResponse,
         StreamProtocolNoCollisionResponse_Heartbeat,
@@ -119,6 +125,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StreamProtocolCollisionResponse_NumberData": ".stream_protocol_collision_response",
     "StreamProtocolCollisionResponse_ObjectData": ".stream_protocol_collision_response",
     "StreamProtocolCollisionResponse_StringData": ".stream_protocol_collision_response",
+    "StreamProtocolMixedSchemaResponse": ".stream_protocol_mixed_schema_response",
+    "StreamProtocolMixedSchemaResponse_Entity": ".stream_protocol_mixed_schema_response",
+    "StreamProtocolMixedSchemaResponse_Heartbeat": ".stream_protocol_mixed_schema_response",
+    "StreamProtocolMixedSchemaResponse_ObjectData": ".stream_protocol_mixed_schema_response",
     "StreamProtocolNoCollisionResponse": ".stream_protocol_no_collision_response",
     "StreamProtocolNoCollisionResponse_Heartbeat": ".stream_protocol_no_collision_response",
     "StreamProtocolNoCollisionResponse_NumberData": ".stream_protocol_no_collision_response",
@@ -204,6 +214,10 @@ __all__ = [
     "StreamProtocolCollisionResponse_NumberData",
     "StreamProtocolCollisionResponse_ObjectData",
     "StreamProtocolCollisionResponse_StringData",
+    "StreamProtocolMixedSchemaResponse",
+    "StreamProtocolMixedSchemaResponse_Entity",
+    "StreamProtocolMixedSchemaResponse_Heartbeat",
+    "StreamProtocolMixedSchemaResponse_ObjectData",
     "StreamProtocolNoCollisionResponse",
     "StreamProtocolNoCollisionResponse_Heartbeat",
     "StreamProtocolNoCollisionResponse_NumberData",

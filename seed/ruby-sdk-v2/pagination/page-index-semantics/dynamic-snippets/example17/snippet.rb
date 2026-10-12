@@ -6,6 +6,6 @@ client = Seed::Client.new(
 )
 
 client.users.list_with_top_level_body_cursor_pagination(
-  cursor: "cursor",
-  filter: "filter"
+  cursor: "initial_cursor",
+  filter: "active"
 )

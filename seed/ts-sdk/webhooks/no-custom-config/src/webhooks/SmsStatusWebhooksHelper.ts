@@ -19,8 +19,13 @@ export class SmsStatusWebhooksHelper {
         signatureHeader: string,
         signatureKey: string,
         notificationUrl: string,
+        algorithm?: "sha1" | "sha256" | "sha384" | "sha512",
     ): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -32,6 +37,7 @@ export class SmsStatusWebhooksHelper {
                 encoding: "hex",
             });
             if (!(await core.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+                console.warn("Webhook signature verification failed: signature mismatch");
                 return false;
             }
         }
@@ -58,13 +64,14 @@ export class SmsStatusWebhooksHelper {
             const expected = await core.computeHmacSignature({
                 payload: payload,
                 secret: signatureKey,
-                algorithm: "sha1",
+                algorithm: algorithm ?? "sha1",
                 encoding: "base64",
             });
             if (await core.timingSafeEqual(signatureHeader, expected)) {
                 return true;
             }
         }
+        console.warn("Webhook signature verification failed: signature mismatch");
         return false;
     }
 }

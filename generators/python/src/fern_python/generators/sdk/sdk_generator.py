@@ -28,6 +28,7 @@ from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.codegen.project import ProjectConfig
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generators.context.pydantic_generator_context import has_xml_types
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
@@ -41,6 +42,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.generators.sdk.webhooks_helper_generator import WebhooksHelperGenerator
+from fern_python.generators.sdk.xml_model_tests import XmlModelTestGenerator
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import resolve_name
@@ -349,6 +351,8 @@ class SdkGenerator(AbstractGenerator):
                 context=context,
                 project=project,
             )
+            if has_xml_types(ir):
+                XmlModelTestGenerator(context=context, project=project).generate()
 
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]

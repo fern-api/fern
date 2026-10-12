@@ -42,8 +42,17 @@ const RESERVED_METHOD_NAMES = [
     "setAdditionalAttributes",
     "setAdditionalAttribute",
     "getAdditionalChildren",
-    "setAdditionalChildren"
+    "setAdditionalChildren",
+    "addText",
+    "comment",
+    "commentBefore",
+    "commentAfter",
+    "getContent",
+    "setContent",
+    "recordContent"
 ];
+const TYPED_VARIABLE = "$typed";
+const WRAPPED_VARIABLE = "$wrapped";
 
 /**
  * Adds the XML members (toXml/fromXml, fluent child builders, __toString) to an
@@ -66,6 +75,67 @@ export class XmlObjectGenerator {
             ...(this.objectDeclaration.extendedProperties ?? []),
             ...this.objectDeclaration.properties
         ].map((property) => this.analyzeProperty(property));
+    }
+
+    /**
+     * Constructor overrides that widen what the `$values` key for an attribute/text property accepts
+     * beyond the field's own type, normalizing on assignment:
+     * - enum-typed values also accept the enum case (`['strength' => BreakStrength::Weak]`), unwrapped
+     *   to its backing value by `XmlUtils::enumValue`;
+     * - list-valued string/enum properties also accept a single separator-delimited string (the legacy
+     *   `['input' => 'speech dtmf']` style) and enum cases as items, normalized by `XmlUtils::toList`.
+     */
+    public getFieldConstructorOverrides(
+        objectProperty: FernIr.ObjectProperty
+    ): Pick<php.Field.Args, "constructorType" | "constructorValueWrapper"> | undefined {
+        const fieldName = this.context.getPropertyName(objectProperty.name);
+        const property = this.properties.find((candidate) => candidate.fieldName === fieldName);
+        if (property == null || property.kind === FernIr.XmlPropertyKind.Element) {
+            return undefined;
+        }
+        const value = property.value;
+        const isEnum = value.type === "enum";
+        const isString = value.type === "scalar" && value.kind === "string";
+        if (!isEnum && !isString) {
+            return undefined;
+        }
+        const type = this.context.phpTypeMapper.convert({ reference: objectProperty.valueType });
+        const utils = this.context.getXmlUtilsClassReference();
+        if (property.isList) {
+            // accept the legacy separator-delimited string, and enum instances alongside their values
+            const itemType = isEnum
+                ? php.Type.union([php.Type.enumString(value.enum), php.Type.reference(value.enum)])
+                : php.Type.string();
+            return {
+                constructorType: this.widen(type, [php.Type.array(itemType), php.Type.string()]),
+                constructorValueWrapper: (rawValue) =>
+                    php.codeblock((writer) => {
+                        writer.writeNode(utils);
+                        writer.write("::toList(");
+                        writer.writeNode(rawValue);
+                        writer.write(`, ${this.phpString(property.listSeparator)})`);
+                    })
+            };
+        }
+        if (!isEnum) {
+            return undefined;
+        }
+        // the field stays a `value-of<Enum>` string; an enum instance is unwrapped on construction
+        return {
+            constructorType: this.widen(type, [php.Type.enumString(value.enum), php.Type.reference(value.enum)]),
+            constructorValueWrapper: (rawValue) =>
+                php.codeblock((writer) => {
+                    writer.writeNode(utils);
+                    writer.write("::enumValue(");
+                    writer.writeNode(rawValue);
+                    writer.write(")");
+                })
+        };
+    }
+
+    private widen(type: php.Type, members: php.Type[]): php.Type {
+        const union = php.Type.union(members);
+        return type.isOptional() ? php.Type.optional(union) : union;
     }
 
     public addXmlMembers(clazz: php.DataClass): void {
@@ -228,60 +298,6 @@ export class XmlObjectGenerator {
         return this.context.phpTypeMapper.convertToClassReference(declaration.name);
     }
 
-    private isRootType(): boolean {
-        for (const declaration of Object.values(this.context.ir.types)) {
-            if (declaration.encoding?.xml == null || declaration.shape.type !== "object") {
-                continue;
-            }
-            const properties = [...(declaration.shape.extendedProperties ?? []), ...declaration.shape.properties];
-            for (const property of properties) {
-                if (property.xml != null && property.xml.kind !== FernIr.XmlPropertyKind.Element) {
-                    continue;
-                }
-                const children = this.collectChildTypeIds(property.valueType, new Set());
-                if (children.has(this.typeDeclaration.name.typeId)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private collectChildTypeIds(typeReference: FernIr.TypeReference, seen: Set<FernIr.TypeId>): Set<FernIr.TypeId> {
-        if (typeReference.type === "container") {
-            const container = typeReference.container;
-            switch (container.type) {
-                case "optional":
-                    return this.collectChildTypeIds(container.optional, seen);
-                case "nullable":
-                    return this.collectChildTypeIds(container.nullable, seen);
-                case "list":
-                    return this.collectChildTypeIds(container.list, seen);
-                case "set":
-                    return this.collectChildTypeIds(container.set, seen);
-                case "map":
-                case "literal":
-                    return seen;
-                default:
-                    assertNever(container);
-            }
-        }
-        if (typeReference.type !== "named" || seen.has(typeReference.typeId)) {
-            return seen;
-        }
-        seen.add(typeReference.typeId);
-        const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
-        if (declaration.shape.type === "alias") {
-            return this.collectChildTypeIds(declaration.shape.aliasOf, seen);
-        }
-        if (declaration.shape.type === "undiscriminatedUnion") {
-            for (const member of declaration.shape.members) {
-                this.collectChildTypeIds(member.type, seen);
-            }
-        }
-        return seen;
-    }
-
     // ---------------------------------------------------------------------------------------------
     // Serialization
     // ---------------------------------------------------------------------------------------------
@@ -304,18 +320,22 @@ export class XmlObjectGenerator {
                     writer.write(`, prefix: ${this.phpString(this.xml.prefix)}`);
                 }
                 writer.writeLine(");");
+                writer.writeLine(`${TYPED_VARIABLE} = [];`);
+                if (this.getWrapperNames().length > 0) {
+                    writer.writeLine(
+                        `/** @var array<string, list<\\${this.context.getCoreNamespace()}\\Xml\\XmlNode>> ${WRAPPED_VARIABLE} */`
+                    );
+                    writer.writeLine(`${WRAPPED_VARIABLE} = [];`);
+                }
                 for (const property of this.properties) {
                     this.writeSerializeProperty(writer, property);
                 }
                 writer.writeNode(this.context.getXmlUtilsClassReference());
-                writer.write(
-                    `::addAdditional(${ELEMENT_VARIABLE}, $this->getAdditionalAttributes(), $this->getAdditionalChildren()`
+                writer.writeLine(
+                    `::addContent(${ELEMENT_VARIABLE}, $this->getContent(), ${TYPED_VARIABLE}, ${
+                        this.getWrapperNames().length > 0 ? WRAPPED_VARIABLE : "[]"
+                    }, $this->getAdditionalChildren(), $this->getAdditionalAttributes());`
                 );
-                const wrapperNames = this.getWrapperNames();
-                if (wrapperNames.length > 0) {
-                    writer.write(`, ${this.phpStringList(wrapperNames)}`);
-                }
-                writer.writeLine(");");
                 writer.writeLine(`return ${ELEMENT_VARIABLE};`);
             })
         });
@@ -366,46 +386,45 @@ export class XmlObjectGenerator {
     private writeSerializeElement(writer: php.Writer, property: XmlProperty): void {
         const field = `$this->${property.fieldName}`;
         const wire = this.phpString(property.wireName);
-        const utils = this.context.getXmlUtilsClassReference();
         const isObject = property.value.type === "object";
+        const newElement = (value: string): string =>
+            `new ${this.context.getXmlElementClassReference().name}(${wire}, ${this.toXmlStringExpression(property, value)})`;
         if (!property.isList) {
             if (isObject) {
                 if (property.isOptional) {
                     writer.writeLine(`if (${field} !== null) {`);
                     writer.indent();
-                    writer.writeLine(`${ELEMENT_VARIABLE}->addChild(${field});`);
+                    writer.writeLine(`${TYPED_VARIABLE}[] = ${field};`);
                     writer.dedent();
                     writer.writeLine("}");
                 } else {
-                    writer.writeLine(`${ELEMENT_VARIABLE}->addChild(${field});`);
+                    writer.writeLine(`${TYPED_VARIABLE}[] = ${field};`);
                 }
                 return;
             }
-            writer.writeNode(utils);
-            writer.writeLine(
-                `::addChildValue(${ELEMENT_VARIABLE}, ${wire}, ${this.toXmlStringExpression(property, field)});`
-            );
-            return;
-        }
-        let parent = ELEMENT_VARIABLE;
-        if (property.wrapped) {
-            parent = `$${property.fieldName}Wrapper`;
             writer.writeLine(`if (${field} !== null) {`);
             writer.indent();
-            writer.write(`${parent} = `);
-            writer.writeNode(utils);
-            writer.writeLine(`::addWrapper(${ELEMENT_VARIABLE}, ${wire});`);
+            writer.writeLine(`${TYPED_VARIABLE}[] = ${newElement(field)};`);
+            writer.dedent();
+            writer.writeLine("}");
+            return;
+        }
+        let target = `${TYPED_VARIABLE}[]`;
+        if (property.wrapped) {
+            target = `${WRAPPED_VARIABLE}[${wire}][]`;
+            writer.writeLine(`if (${field} !== null) {`);
+            writer.indent();
+            writer.writeLine(`if (!isset(${WRAPPED_VARIABLE}[${wire}])) {`);
+            writer.indent();
+            writer.writeLine(`${WRAPPED_VARIABLE}[${wire}] = [];`);
+            writer.dedent();
+            writer.writeLine("}");
             writer.writeLine(`foreach (${field} as $item) {`);
         } else {
             writer.writeLine(`foreach (${field}${property.isOptional ? " ?? []" : ""} as $item) {`);
         }
         writer.indent();
-        if (isObject) {
-            writer.writeLine(`${parent}->addChild($item);`);
-        } else {
-            writer.writeNode(utils);
-            writer.writeLine(`::addChildValue(${parent}, ${wire}, ${this.toXmlStringExpression(property, "$item")});`);
-        }
+        writer.writeLine(`${target} = ${isObject ? "$item" : newElement("$item")};`);
         writer.dedent();
         writer.writeLine("}");
         if (property.wrapped) {
@@ -423,6 +442,10 @@ export class XmlObjectGenerator {
 
     private isDate(property: XmlProperty): boolean {
         return property.value.type === "scalar" && property.value.kind === "date";
+    }
+
+    private hasTextProperty(): boolean {
+        return this.properties.some((property) => property.kind === FernIr.XmlPropertyKind.Text);
     }
 
     private getWrapperNames(): string[] {
@@ -508,6 +531,21 @@ export class XmlObjectGenerator {
                     writer.write("]");
                 }
                 writer.writeLine("));");
+                writer.write("$result->setContent(");
+                writer.writeNode(utils);
+                writer.write(`::content(${ELEMENT_VARIABLE}, [`);
+                writer.write(this.getTypedContentPairs().join(", "));
+                writer.write("], $result->getAdditionalChildren()");
+                const wrapperNames = this.getWrapperNames();
+                const includeText = !this.hasTextProperty();
+                // $includeText is positional, so $wrapperNames must be written whenever it is.
+                if (wrapperNames.length > 0 || includeText) {
+                    writer.write(`, ${this.phpStringList(wrapperNames)}`);
+                }
+                if (includeText) {
+                    writer.write(", true");
+                }
+                writer.writeLine("));");
                 writer.writeLine("return $result;");
             })
         });
@@ -535,9 +573,9 @@ export class XmlObjectGenerator {
             }
             if (value.type === "enum") {
                 writer.writeNode(utils);
-                writer.write(`::parseEnum(${property.isOptional ? rawOptional : rawRequired}, `);
+                writer.write(`::parseEnumValue(${property.isOptional ? rawOptional : rawRequired}, `);
                 writer.writeNode(value.enum);
-                writer.write(`::class)${property.isOptional ? "?" : ""}->value`);
+                writer.write("::class)");
                 return;
             }
             if (value.type === "literal") {
@@ -708,6 +746,30 @@ export class XmlObjectGenerator {
         }
     }
 
+    /**
+     * `[names, nodes]` pairs for XmlUtils::content: the element names of each typed object child
+     * property and the parsed objects they were read into.
+     */
+    private getTypedContentPairs(): string[] {
+        const pairs: string[] = [];
+        for (const property of this.properties) {
+            if (property.kind !== "ELEMENT" || property.value.type !== "object" || property.wrapped) {
+                continue;
+            }
+            const names = this.phpStringList(property.childTypes.map((childType) => this.getChildXmlName(childType)));
+            const field = `$result->${property.fieldName}`;
+            const nodes = property.isList
+                ? property.isOptional
+                    ? `${field} ?? []`
+                    : field
+                : property.isOptional
+                  ? `${field} !== null ? [${field}] : []`
+                  : `[${field}]`;
+            pairs.push(`[${names}, ${nodes}]`);
+        }
+        return pairs;
+    }
+
     private getKnownAttributeNames(): string[] {
         return this.properties.filter((property) => property.kind === "ATTRIBUTE").map((property) => property.wireName);
     }
@@ -804,13 +866,16 @@ export class XmlObjectGenerator {
         const textProperty = childProperties.find((child) => child.xml?.kind === FernIr.XmlPropertyKind.Text);
         const textFieldName = textProperty != null ? this.context.getPropertyName(textProperty.name) : undefined;
         const textIsOptional = textProperty != null && this.isOptionalTypeReference(textProperty.valueType);
+        const childXml = childType.encoding?.xml;
+        const childGenerator =
+            childXml != null ? new XmlObjectGenerator(this.context, childType, childShape, childXml) : undefined;
         const attributeEntries = childProperties
             .filter((child) => child !== textProperty)
             .map((child) => {
                 const type = this.context.phpTypeMapper.convert({ reference: child.valueType });
                 return {
                     key: this.context.getPropertyName(child.name),
-                    valueType: type,
+                    valueType: childGenerator?.getFieldConstructorOverrides(child)?.constructorType ?? type,
                     optional: type.isOptional(),
                     docs: child.docs
                 };
@@ -829,7 +894,8 @@ export class XmlObjectGenerator {
         if (textProperty != null) {
             const textType = php.Type.union([
                 php.Type.reference(childClass),
-                ...(textIsOptional ? [php.Type.optional(php.Type.string())] : [php.Type.string()])
+                childGenerator?.getFieldConstructorOverrides(textProperty)?.constructorType ??
+                    (textIsOptional ? php.Type.optional(php.Type.string()) : php.Type.string())
             ]);
             parameters.push(
                 php.parameter({
@@ -915,6 +981,7 @@ export class XmlObjectGenerator {
                 } else {
                     writer.writeLine(`${field} = $${childParamName}Element;`);
                 }
+                writer.writeLine(`$this->recordContent($${childParamName}Element);`);
                 writer.writeLine(`return $${childParamName}Element;`);
             })
         });
@@ -943,7 +1010,7 @@ export class XmlObjectGenerator {
             parameters: [],
             return_: php.Type.string(),
             body: php.codeblock((writer) => {
-                writer.writeLine(`return $this->toXml(${this.isRootType() ? "xmlDeclaration: true" : ""});`);
+                writer.writeLine("return $this->toXml();");
             })
         });
     }

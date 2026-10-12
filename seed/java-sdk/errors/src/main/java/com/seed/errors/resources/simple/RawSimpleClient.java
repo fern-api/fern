@@ -4,6 +4,7 @@
 package com.seed.errors.resources.simple;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.errors.core.BodyProperties;
 import com.seed.errors.core.ClientOptions;
 import com.seed.errors.core.MediaTypes;
 import com.seed.errors.core.ObjectMappers;
@@ -53,7 +54,9 @@ public class RawSimpleClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedErrorsException("Failed to serialize request", e);
         }
@@ -125,7 +128,9 @@ public class RawSimpleClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedErrorsException("Failed to serialize request", e);
         }
@@ -200,7 +205,9 @@ public class RawSimpleClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedErrorsException("Failed to serialize request", e);
         }

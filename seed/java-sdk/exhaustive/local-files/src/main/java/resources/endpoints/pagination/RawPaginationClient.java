@@ -98,7 +98,7 @@ public class RawPaginationClient {
           Optional<String> startingAfter = parsedResponse.getNext();
           ListItemsRequest nextRequest = ListItemsRequest.builder().from(request).cursor(startingAfter).build();
           List<ObjectWithRequiredField> result = parsedResponse.getItems();
-          return new SeedExhaustiveHttpResponse<>(new SyncPagingIterable<ObjectWithRequiredField>(startingAfter.isPresent(), result, parsedResponse, () -> listItems(nextRequest, requestOptions).body()), response);
+          return new SeedExhaustiveHttpResponse<>(new SyncPagingIterable<ObjectWithRequiredField>(startingAfter.isPresent() && !startingAfter.get().isEmpty(), result, parsedResponse, () -> listItems(nextRequest, requestOptions).body()), response);
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
         throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
