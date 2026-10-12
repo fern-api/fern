@@ -1,5 +1,10 @@
-import type { FernDefinition } from "@fern-api/api-workspace-commons";
-import { type RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
+import { type FernDefinition, getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import {
+    HttpEndpointReferenceParser,
+    type RawSchemas,
+    visitRawApiAuth,
+    visitRawAuthSchemeDeclaration
+} from "@fern-api/fern-definition-schema";
 import {
     type FernConfigMappingDiagnostic,
     type SdkConfigV1ApiConfigInput,
@@ -13,6 +18,14 @@ type SdkConfigAuthScheme = SdkConfigAuth["schemes"][number];
 type SdkConfigOAuthScheme = Extract<SdkConfigAuthScheme, { type: "oauth2" }>;
 type FernAuthReference = string | RawSchemas.AuthSchemeReferenceSchema;
 type Path = Array<string | number>;
+type DefinitionFiles = ReturnType<typeof getAllDefinitionFiles>;
+type EndpointUrl = { url: string } | { failure: string };
+
+interface ResolvedEndpoint {
+    endpoint: RawSchemas.HttpEndpointSchema;
+    service: RawSchemas.HttpServiceSchema;
+    defaultUrl: string | undefined;
+}
 
 interface FernAuthSelection {
     references: FernAuthReference[];
@@ -226,12 +239,13 @@ function mapFernOAuthScheme(
     if (getToken == null) {
         return { unsupportedReason: "the client-credentials flow has no get-token endpoint" };
     }
-    const tokenUrl = resolveEndpointPath(getToken.endpoint, definition);
-    if (tokenUrl == null) {
+    const token = resolveEndpointUrl(getToken.endpoint, definition);
+    if ("failure" in token) {
         return {
-            unsupportedReason: `its get-token endpoint '${getToken.endpoint}' could not be resolved to a request path for flows[].tokenUrl`
+            unsupportedReason: `its get-token endpoint '${getToken.endpoint}' ${token.failure}, so flows[].tokenUrl cannot be set`
         };
     }
+    const tokenUrl = token.url;
 
     const lostFields: LostField[] = [
         ...Object.keys(oauth)
@@ -292,11 +306,11 @@ function mapRefreshEndpoint(
     if (refresh == null) {
         return undefined;
     }
-    const refreshUrl = resolveEndpointPath(refresh.endpoint, definition);
-    if (refreshUrl == null) {
+    const refreshUrl = resolveEndpointUrl(refresh.endpoint, definition);
+    if ("failure" in refreshUrl) {
         lostFields.push({
             path: ["refresh-token", "endpoint"],
-            reason: `the refresh endpoint '${refresh.endpoint}' could not be resolved to a request path for flows[].refreshUrl`
+            reason: `the refresh endpoint '${refresh.endpoint}' ${refreshUrl.failure}, so flows[].refreshUrl was not written`
         });
         return undefined;
     }
@@ -312,7 +326,7 @@ function mapRefreshEndpoint(
             TOKEN_RESPONSE_DEFAULTS
         )
     );
-    return refreshUrl;
+    return refreshUrl.url;
 }
 
 function customPropertyNames(
@@ -325,47 +339,109 @@ function customPropertyNames(
             return [];
         }
         const wireName = value.replace(/^\$(?:request|response)\./, "");
-        return defaults[key]?.includes(wireName) === true
-            ? []
-            : [
-                  {
-                      path: [...basePath, key],
-                      reason: `SDK Config v1 cannot name token property '${wireName}'; consumers assume the RFC 6749 name`
-                  }
-              ];
+        if (defaults[key]?.includes(wireName) === true) {
+            return [];
+        }
+        const reason = wireName.includes(".")
+            ? `SDK Config v1 cannot select the nested token property '${wireName}'; consumers read the top-level RFC 6749 property`
+            : `SDK Config v1 cannot name token property '${wireName}'; consumers assume the RFC 6749 name`;
+        return [{ path: [...basePath, key], reason }];
     });
 }
 
 /**
- * Resolves a Fern endpoint reference to the request path SDK Config uses for OAuth URLs: either
- * `METHOD /path` (OpenAPI auth overrides) or `<import>.<endpoint>` (Fern definitions).
+ * Resolves a Fern endpoint reference (`[namespace::]METHOD /path` or `<import>.<endpoint>`) to the URL
+ * SDK Config uses for OAuth flows, following the IR generator's EndpointResolver and convertHttpService.
  */
-function resolveEndpointPath(reference: string, definition: FernDefinition): string | undefined {
+function resolveEndpointUrl(reference: string, definition: FernDefinition): EndpointUrl {
     const trimmed = reference.trim();
-    const methodAndPath = /^[A-Za-z]+\s+(\/\S*)$/.exec(trimmed);
-    if (methodAndPath != null) {
-        return normalizePath(methodAndPath[1] ?? "");
-    }
-    const separator = trimmed.lastIndexOf(".");
-    if (separator <= 0) {
-        return undefined;
+    const parsed = new HttpEndpointReferenceParser().tryParse(trimmed);
+    const files = getAllDefinitionFiles(definition);
+    const resolved =
+        parsed == null ? findEndpointByName(trimmed, definition, files) : findEndpointByRoute(parsed, files);
+    if (resolved == null) {
+        // A method/path reference names its request path even when no declared endpoint matches it.
+        return parsed == null
+            ? { failure: "could not be resolved to an endpoint in the Fern definition" }
+            : { url: normalizePath(parsed.path) };
     }
     const root = definition.rootApiFile.contents;
-    const importedFile = root.imports?.[trimmed.slice(0, separator)];
-    const file =
-        importedFile == null
-            ? undefined
-            : Object.entries(definition.namedDefinitionFiles).find(
-                  ([filePath]) => normalizeFilePath(filePath) === normalizeFilePath(importedFile)
-              )?.[1];
-    const service = file?.contents.service;
-    const endpoint = service?.endpoints[trimmed.slice(separator + 1)];
-    if (service == null || endpoint == null) {
+    const { endpoint, service } = resolved;
+    const path = normalizePath(
+        endpoint["base-path"] != null
+            ? `${endpoint["base-path"]}/${endpoint.path}`
+            : `${root["base-path"] ?? ""}/${service["base-path"] ?? ""}/${endpoint.path}`
+    );
+    return withEndpointBaseUrl(path, endpoint.url ?? service.url ?? resolved.defaultUrl, root);
+}
+
+function findEndpointByRoute(
+    { method, path, namespace }: HttpEndpointReferenceParser.Parsed,
+    files: DefinitionFiles
+): ResolvedEndpoint | undefined {
+    let match: ResolvedEndpoint | undefined;
+    for (const [filePath, file] of Object.entries(files)) {
+        const segments = filePath.split("/");
+        if (namespace != null && (segments.length < 2 || segments[0] !== namespace)) {
+            continue;
+        }
+        const service = file.contents.service;
+        for (const endpoint of Object.values(service?.endpoints ?? {})) {
+            if (service != null && endpoint.method === method && endpoint.path === path) {
+                match = { endpoint, service, defaultUrl: file.defaultUrl };
+            }
+        }
+    }
+    return match;
+}
+
+function findEndpointByName(
+    reference: string,
+    definition: FernDefinition,
+    files: DefinitionFiles
+): ResolvedEndpoint | undefined {
+    const separator = reference.lastIndexOf(".");
+    const importedFile =
+        separator <= 0 ? undefined : definition.rootApiFile.contents.imports?.[reference.slice(0, separator)];
+    if (importedFile == null) {
         return undefined;
     }
-    return normalizePath(
-        `${root["base-path"] ?? ""}/${endpoint["base-path"] ?? service["base-path"]}/${endpoint.path}`
-    );
+    const file = Object.entries(files).find(
+        ([filePath]) => normalizeFilePath(filePath) === normalizeFilePath(importedFile)
+    )?.[1];
+    const service = file?.contents.service;
+    const endpoint = service?.endpoints[reference.slice(separator + 1)];
+    return service == null || endpoint == null ? undefined : { endpoint, service, defaultUrl: file?.defaultUrl };
+}
+
+/**
+ * Endpoints served from the API base URL keep a relative path. An endpoint or service `url` override
+ * names a multi-URL environment entry; it becomes an absolute URL only when every environment agrees
+ * on it, because flows[].tokenUrl cannot vary by environment.
+ */
+function withEndpointBaseUrl(path: string, urlId: string | undefined, root: FernApiContents): EndpointUrl {
+    if (urlId == null || urlId === root["default-url"]) {
+        return { url: path };
+    }
+    const environmentUrls = Object.entries(root.environments ?? {}).map(([name, environment]) => ({
+        name,
+        url: typeof environment === "object" && "urls" in environment ? environment.urls[urlId] : undefined
+    }));
+    const undeclared = environmentUrls.filter(({ url }) => url == null).map(({ name }) => name);
+    if (environmentUrls.length === 0 || undeclared.length > 0) {
+        const where =
+            environmentUrls.length === 0
+                ? "no environment declares"
+                : `is missing from environments ${undeclared.join(", ")}`;
+        return { failure: `uses environment URL '${urlId}', which ${where}` };
+    }
+    const distinct = [...new Set(environmentUrls.map(({ url }) => url))];
+    const baseUrl = distinct[0];
+    if (distinct.length > 1 || baseUrl == null) {
+        const values = environmentUrls.map(({ name, url }) => `${name}: ${url}`).join(", ");
+        return { failure: `uses environment URL '${urlId}', which differs across environments (${values})` };
+    }
+    return { url: `${baseUrl.replace(/\/+$/, "")}${path}` };
 }
 
 function normalizePath(path: string): string {

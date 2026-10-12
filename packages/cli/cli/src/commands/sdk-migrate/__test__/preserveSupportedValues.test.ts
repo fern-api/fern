@@ -9,6 +9,7 @@ import { mergeSdkConfig } from "../mergeSdkConfig.js";
 
 type RootContents = FernDefinition["rootApiFile"]["contents"];
 type AuthSchemes = NonNullable<RootContents["auth-schemes"]>;
+type DefinitionService = FernDefinition["namedDefinitionFiles"][RelativeFilePath]["contents"]["service"];
 
 const CLI_GENERATOR = "fernapi/fern-cli-generator";
 const RUST_GENERATOR = "fernapi/fern-rust-sdk";
@@ -428,7 +429,193 @@ describe("fern sdk migrate auth", () => {
             })
         ]);
     });
+
+    it("lets an endpoint base-path replace the root and service base paths, as the IR does", () => {
+        const definition = createDefinition({
+            imports: { auth: "auth.yml" },
+            "base-path": "/v1",
+            auth: "OAuth2",
+            "auth-schemes": { OAuth2: oauthWithTokenEndpoint("auth.getToken") }
+        });
+        addService(definition, "auth.yml", {
+            "base-path": "/oauth",
+            endpoints: { getToken: { method: "POST", path: "/token", "base-path": "/identity" } }
+        });
+
+        expect(tokenUrls(mapFernDefinitionToSdkConfigApi(definition))).toEqual(["/identity/token"]);
+    });
+
+    it("resolves namespaced method and path references to the namespaced endpoint's request path", () => {
+        const definition = createDefinition({
+            auth: "OAuth2",
+            "auth-schemes": { OAuth2: oauthWithTokenEndpoint("billing::POST /token") }
+        });
+        addService(definition, "billing/auth.yml", {
+            "base-path": "/billing/oauth",
+            endpoints: { getToken: { method: "POST", path: "/token" } }
+        });
+        addService(definition, "auth.yml", {
+            "base-path": "/oauth",
+            endpoints: { getToken: { method: "POST", path: "/token" } }
+        });
+
+        const result = mapFernDefinitionToSdkConfigApi(definition);
+
+        expect(tokenUrls(result)).toEqual(["/billing/oauth/token"]);
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("omits a method and path reference that Fern's endpoint reference parser rejects", () => {
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({ auth: "OAuth2", "auth-schemes": { OAuth2: oauthWithTokenEndpoint("POST oauth/token") } })
+        );
+
+        expect(result.api.auth).toBeUndefined();
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                code: "FERN_API_AUTH_REQUIRES_REVIEW",
+                reason: expect.stringContaining("'POST oauth/token' could not be resolved to an endpoint")
+            })
+        ]);
+    });
+
+    it("writes an absolute token URL when the token endpoint's URL override is the same in every environment", () => {
+        const definition = createDefinition({
+            "default-url": "api",
+            environments: {
+                Production: { urls: { api: "https://api.acme.test", auth: "https://login.acme.test/" } },
+                Staging: { urls: { api: "https://api.staging.acme.test", auth: "https://login.acme.test/" } }
+            },
+            auth: "OAuth2",
+            "auth-schemes": {
+                OAuth2: { ...oauthWithTokenEndpoint("POST /token"), "refresh-token": { endpoint: "POST /refresh" } }
+            }
+        });
+        addService(definition, "auth.yml", {
+            url: "auth",
+            "base-path": "/oauth",
+            endpoints: {
+                getToken: { method: "POST", path: "/token" },
+                refresh: { method: "POST", path: "/refresh", url: "api" }
+            }
+        });
+
+        const result = mapFernDefinitionToSdkConfigApi(definition);
+
+        expect(result.api.auth?.schemes[0]).toMatchObject({
+            flows: [{ tokenUrl: "https://login.acme.test/oauth/token", refreshUrl: "/oauth/refresh" }]
+        });
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("omits an OAuth scheme whose token endpoint URL override differs across environments", () => {
+        const definition = createDefinition({
+            environments: {
+                Production: { urls: { api: "https://api.acme.test", auth: "https://login.acme.test" } },
+                Staging: { urls: { api: "https://api.staging.acme.test", auth: "https://login.staging.acme.test" } }
+            },
+            auth: { any: ["ApiKey", "OAuth2"] },
+            "auth-schemes": { ApiKey: API_KEY, OAuth2: oauthWithTokenEndpoint("POST /token") }
+        });
+        addService(definition, "auth.yml", {
+            "base-path": "",
+            endpoints: { getToken: { method: "POST", path: "/token", url: "auth" } }
+        });
+
+        const result = mapFernDefinitionToSdkConfigApi(definition);
+
+        expect(result.api.auth?.schemes.map((scheme) => scheme.id)).toEqual(["ApiKey"]);
+        expect(result.api.auth?.requirements).toEqual([{ schemes: ["ApiKey"] }]);
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                code: "FERN_API_AUTH_SCHEME_OMITTED",
+                path: ["auth-schemes", "OAuth2"],
+                reason: expect.stringContaining(
+                    "its get-token endpoint 'POST /token' uses environment URL 'auth', which differs across environments (Production: https://login.acme.test, Staging: https://login.staging.acme.test), so flows[].tokenUrl cannot be set"
+                )
+            })
+        ]);
+    });
+
+    it("drops only refreshUrl when the refresh endpoint's URL override cannot be resolved", () => {
+        const definition = createDefinition({
+            environments: { Production: { urls: { api: "https://api.acme.test" } } },
+            auth: "OAuth2",
+            "auth-schemes": {
+                OAuth2: { ...oauthWithTokenEndpoint("POST /token"), "refresh-token": { endpoint: "POST /refresh" } }
+            }
+        });
+        addService(definition, "auth.yml", {
+            "base-path": "",
+            endpoints: {
+                getToken: { method: "POST", path: "/token" },
+                refresh: { method: "POST", path: "/refresh", url: "auth" }
+            }
+        });
+
+        const result = mapFernDefinitionToSdkConfigApi(definition);
+
+        expect(result.api.auth?.schemes[0]).toMatchObject({ flows: [{ tokenUrl: "/token" }] });
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                code: "FERN_API_AUTH_FIELD_UNSUPPORTED",
+                path: ["auth-schemes", "OAuth2", "refresh-token", "endpoint"],
+                reason: expect.stringContaining(
+                    "uses environment URL 'auth', which is missing from environments Production"
+                )
+            })
+        ]);
+    });
+
+    it("explains that nested token response selectors are unsupported", () => {
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: "OAuth2",
+                "auth-schemes": {
+                    OAuth2: {
+                        ...oauthWithTokenEndpoint("POST /token"),
+                        "get-token": {
+                            endpoint: "POST /token",
+                            "response-properties": { "access-token": "$response.data.access_token" }
+                        }
+                    }
+                }
+            })
+        );
+
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                path: ["auth-schemes", "OAuth2", "get-token", "response-properties", "access-token"],
+                reason: expect.stringContaining(
+                    "cannot select the nested token property 'data.access_token'; consumers read the top-level RFC 6749 property"
+                )
+            })
+        ]);
+    });
 });
+
+function oauthWithTokenEndpoint(endpoint: string): Extract<AuthSchemes[string], { scheme: "oauth" }> {
+    return { scheme: "oauth", type: "client-credentials", "get-token": { endpoint } };
+}
+
+function addService(
+    definition: FernDefinition,
+    filePath: string,
+    service: Omit<NonNullable<DefinitionService>, "auth"> & { auth?: boolean }
+): void {
+    definition.namedDefinitionFiles[RelativeFilePath.of(filePath)] = {
+        absoluteFilePath: AbsoluteFilePath.of(`/tmp/fern/definition/${filePath}`),
+        defaultUrl: undefined,
+        rawContents: "",
+        contents: { service: { auth: false, ...service } }
+    };
+}
+
+function tokenUrls(result: ReturnType<typeof mapFernDefinitionToSdkConfigApi>): string[] {
+    return (result.api.auth?.schemes ?? []).flatMap((scheme) =>
+        scheme.type === "oauth2" ? scheme.flows.map((flow) => ("tokenUrl" in flow ? flow.tokenUrl : "")) : []
+    );
+}
 
 describe("fern sdk migrate idempotency", () => {
     it("produces identical SDK Config on a second migration without mutating its inputs", () => {
