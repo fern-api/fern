@@ -17,19 +17,19 @@ import { appendFile } from "fs/promises";
 import { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
 import {
-    DISABLE_SDK_GEN_API_ENV_VAR,
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     FernSdkGenApiPreparationBatch,
     type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
+    getFernSdkGenApiEnvOverride,
     getFernSdkGenApiLanguage,
-    isFernSdkGenApiDisabledByEnv,
     isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     resolveFernSdkGenApiEnabledByGenerator,
     selectFernSdkGenApiRoute,
     synthesizesSdkConfig,
+    USE_SDK_GEN_API_ENV_VAR,
     validateFernSdkGenApiDirectPublishCredentials,
     validateFernSdkGenApiPublishTargets,
     validateFernSdkGenApiTargetCount
@@ -507,9 +507,10 @@ export function prepareFernSdkGenApiRoutes({
                 // generation, where they would fail opaquely.
                 if (isSdkGenApiOnly(resolved.name)) {
                     throw new CliError({
-                        message: isFernSdkGenApiDisabledByEnv()
-                            ? `${resolved.name} requires sdk-gen-api generation, which ${DISABLE_SDK_GEN_API_ENV_VAR}=true turns off. Unset ${DISABLE_SDK_GEN_API_ENV_VAR} to generate it.`
-                            : `${resolved.name} requires sdk-gen-api generation, which is not enabled for this generator in this organization (or the feature flag service could not be reached). Retry, or contact Fern support to enable it.`,
+                        message:
+                            getFernSdkGenApiEnvOverride() === false
+                                ? `${resolved.name} requires sdk-gen-api generation, which ${USE_SDK_GEN_API_ENV_VAR}=false turns off. Unset ${USE_SDK_GEN_API_ENV_VAR} to generate it.`
+                                : `${resolved.name} requires sdk-gen-api generation, which is not enabled for this generator in this organization (or the feature flag service could not be reached). Retry, or contact Fern support to enable it.`,
                         code: CliError.Code.ConfigError
                     });
                 }

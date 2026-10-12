@@ -471,8 +471,8 @@ describe("isEligibleForFernSdkGenApi", () => {
         );
     });
 
-    it("names FERN_DISABLE_SDK_GEN_API when it is what keeps an sdk-gen-api-only generator off", () => {
-        vi.stubEnv("FERN_DISABLE_SDK_GEN_API", "true");
+    it("names FERN_USE_SDK_GEN_API when it is what keeps an sdk-gen-api-only generator off", () => {
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "false");
         try {
             const [mcp] = prepareFernSdkGenApiRoutes({
                 generators: [invocation({ name: "fernapi/fern-mcp-server", language: "mcp", version: "0.1.0" })],
@@ -483,7 +483,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
             expect(mcp?.error).toHaveProperty(
                 "message",
-                expect.stringContaining("FERN_DISABLE_SDK_GEN_API=true turns off")
+                expect.stringContaining("FERN_USE_SDK_GEN_API=false turns off")
             );
         } finally {
             vi.unstubAllEnvs();
@@ -3176,17 +3176,22 @@ describe("sdk-gen-api environment configuration", () => {
     });
 
     it.each([
-        "true",
-        " TRUE "
-    ])("FERN_DISABLE_SDK_GEN_API=%j turns sdk-gen-api off without a flag request", async (value) => {
-        vi.stubEnv("FERN_DISABLE_SDK_GEN_API", value);
-        featureFlags.isEnabled.mockResolvedValue(true);
-        featureFlags.getCachedValue.mockReturnValue(true);
+        { value: "true", expected: true },
+        { value: " TRUE ", expected: true },
+        { value: "false", expected: false },
+        { value: " False ", expected: false }
+    ])("FERN_USE_SDK_GEN_API=$value forces sdk-gen-api $expected without a flag request", async ({
+        value,
+        expected
+    }) => {
+        vi.stubEnv("FERN_USE_SDK_GEN_API", value);
+        featureFlags.isEnabled.mockResolvedValue(!expected);
+        featureFlags.getCachedValue.mockReturnValue(!expected);
         try {
             const target = { organization: "acme", generatorName: "fernapi/fern-python-sdk" };
 
-            await expect(isFernSdkGenApiEnabled(target)).resolves.toBe(false);
-            expect(getResolvedFernSdkGenApiEnabled(target)).toBe(false);
+            await expect(isFernSdkGenApiEnabled(target)).resolves.toBe(expected);
+            expect(getResolvedFernSdkGenApiEnabled(target)).toBe(expected);
             await expect(
                 resolveFernSdkGenApiEnabledByGenerator({
                     organization: "acme",
@@ -3194,8 +3199,8 @@ describe("sdk-gen-api environment configuration", () => {
                 })
             ).resolves.toEqual(
                 new Map([
-                    ["fernapi/fern-python-sdk", false],
-                    ["fernapi/fern-go-sdk", false]
+                    ["fernapi/fern-python-sdk", expected],
+                    ["fernapi/fern-go-sdk", expected]
                 ])
             );
             expect(featureFlags.isEnabled).not.toHaveBeenCalled();
@@ -3207,13 +3212,14 @@ describe("sdk-gen-api environment configuration", () => {
         }
     });
 
-    it.each(["false", "1", ""])("ignores FERN_DISABLE_SDK_GEN_API=%j and follows the flag", async (value) => {
-        vi.stubEnv("FERN_DISABLE_SDK_GEN_API", value);
+    it.each(["1", "yes", ""])("ignores FERN_USE_SDK_GEN_API=%j and follows the flag", async (value) => {
+        vi.stubEnv("FERN_USE_SDK_GEN_API", value);
         featureFlags.isEnabled.mockResolvedValueOnce(true);
         try {
             await expect(
                 isFernSdkGenApiEnabled({ organization: "acme", generatorName: "fernapi/fern-python-sdk" })
             ).resolves.toBe(true);
+            expect(featureFlags.isEnabled).toHaveBeenCalledOnce();
         } finally {
             vi.unstubAllEnvs();
         }
