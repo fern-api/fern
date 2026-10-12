@@ -701,14 +701,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         self
     }
 
-    /// Add a date parameter (formatted as YYYY-MM-DD)
-    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.format("%Y-%m-%d").to_string()));
-        }
-        self
-    }
-
+${this.generateQueryBuilderDateMethod()}
 `
             );
         } else {
@@ -801,16 +794,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         );
     }
 
-    #[test]
-    fn test_date_param_formats_iso_date() {
-        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
-        let result = QueryBuilder::new().date("on", Some(date)).build();
-        assert_eq!(
-            result,
-            Some(vec![("on".to_string(), "2024-01-15".to_string())])
-        );
-    }
-
+${this.generateQueryBuilderDateTest()}
 `
             );
         } else {
@@ -870,6 +854,57 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
      * and the one `Authorization` header in the generated client was gated on `config.token`,
      * which such an API never sets. `seed/rust-sdk/basic-auth` shipped in exactly that state.
      */
+    private generateQueryBuilderDateMethod(): string {
+        if (this.context.customConfig.dateQueryParamFormat === "date") {
+            return `    /// Add a date parameter (formatted as YYYY-MM-DD)
+    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.format("%Y-%m-%d").to_string()));
+        }
+        self
+    }
+`;
+        }
+        return `    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
+    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
+        if let Some(v) = value.into() {
+            // Convert NaiveDate to DateTime<Utc> at start of day
+            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
+            self.params.push((key.to_string(), datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
+        }
+        self
+    }
+`;
+    }
+
+    private generateQueryBuilderDateTest(): string {
+        if (this.context.customConfig.dateQueryParamFormat === "date") {
+            return `    #[test]
+    fn test_date_param_formats_iso_date() {
+        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
+        let result = QueryBuilder::new().date("on", Some(date)).build();
+        assert_eq!(
+            result,
+            Some(vec![("on".to_string(), "2024-01-15".to_string())])
+        );
+    }
+`;
+        }
+        return `    #[test]
+    fn test_date_param_converts_to_midnight_utc() {
+        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
+        let result = QueryBuilder::new().date("on", Some(date)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "on".to_string(),
+                "2024-01-15T00:00:00Z".to_string()
+            )])
+        );
+    }
+`;
+    }
+
     private generateFlatBasicAuthApplication(): string {
         if (!this.context.hasBasicAuthScheme()) {
             return "";
