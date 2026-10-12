@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.154.2
+  changelogEntry:
+    - summary: |
+        Feature flag checks now report usage to PostHog (`$feature_flag_called`) when CLI telemetry
+        is enabled, so flags like `use-sdk-gen-api` show usage metrics. Setting
+        `FERN_DISABLE_TELEMETRY=true` still turns these events off; flag evaluation is unchanged.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
 - version: 5.154.1
   changelogEntry:
     - summary: |
