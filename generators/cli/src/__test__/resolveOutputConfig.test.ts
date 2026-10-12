@@ -1,6 +1,6 @@
 import { FernGeneratorExec } from "@fern-api/base-generator";
 import { describe, expect, it } from "vitest";
-import { type ResolvedNpmPublishInfo, resolveOutputConfig } from "../resolveOutputConfig.js";
+import { type ResolvedNpmPublishInfo, resolveOutputConfig, resolveRequestedVersion } from "../resolveOutputConfig.js";
 
 /**
  * Direct unit tests for `resolveOutputConfig`. Exercises every output
@@ -64,15 +64,44 @@ describe("resolveOutputConfig", () => {
 
     // ── output mode: downloadFiles ─────────────────────────────────
 
-    it("downloadFiles mode returns default version with isGithubOutput false", () => {
+    it("downloadFiles mode resolves no version when none was requested", () => {
         const result = resolveOutputConfig({
             path: "/out",
             mode: FernGeneratorExec.OutputMode.downloadFiles()
         });
 
-        expect(result.version).toBe("0.0.0");
+        expect(result.version).toBeUndefined();
         expect(result.isGithubOutput).toBe(false);
         expect(result.npmPublishInfo).toBeUndefined();
+    });
+
+    // Local-file-system output (direct generators.yml and SDK Config alike)
+    // runs in downloadFiles mode, whose config has no version slot; the
+    // `--version` / `sdkVersion` value reaches the generator only through the
+    // IR's `generationMetadata.requestedVersion`.
+    it("downloadFiles mode takes the IR's requested version", () => {
+        const result = resolveOutputConfig(
+            { path: "/out", mode: FernGeneratorExec.OutputMode.downloadFiles() },
+            "2.3.4"
+        );
+
+        expect(result.version).toBe("2.3.4");
+    });
+
+    it("output mode version wins over the IR's requested version", () => {
+        const result = resolveOutputConfig(githubOutput({ version: "1.0.0" }), "2.3.4");
+
+        expect(result.version).toBe("1.0.0");
+    });
+
+    it.each(["AUTO", "v1.2.3", "1.2", "latest", ""])("ignores a requested version Cargo would reject: %j", (raw) => {
+        const result = resolveOutputConfig({ path: "/out", mode: FernGeneratorExec.OutputMode.downloadFiles() }, raw);
+
+        expect(result.version).toBeUndefined();
+    });
+
+    it.each(["0.0.1", "7.8.9", "1.0.0-rc.1", "1.0.0+build.5"])("accepts a semver requested version: %j", (raw) => {
+        expect(resolveRequestedVersion(raw)).toBe(raw);
     });
 
     // ── npm publish info edge cases ────────────────────────────────
