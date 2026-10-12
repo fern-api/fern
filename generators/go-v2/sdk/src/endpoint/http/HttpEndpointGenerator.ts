@@ -193,6 +193,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             signature,
             callerReference: this.getCallerFieldReference({ subpackage }),
             endpoint,
+            subpackage,
             errorDecoder
         });
         return go.codeblock((writer) => {
