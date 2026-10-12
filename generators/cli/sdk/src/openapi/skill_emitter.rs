@@ -446,7 +446,12 @@ fn render_group_skill(
 
     // Syntax
     let _ = writeln!(out, "```bash");
-    let _ = writeln!(out, "{bin_name} {group_name} <method> [flags]");
+    if !resource.methods.is_empty() {
+        let _ = writeln!(out, "{bin_name} {group_name} <method> [flags]");
+    }
+    if !resource.resources.is_empty() {
+        let _ = writeln!(out, "{bin_name} {group_name} <resource> <method> [flags]");
+    }
     let _ = writeln!(out, "```\n");
 
     // API Resources tree
@@ -463,7 +468,13 @@ fn render_group_skill(
     let _ = writeln!(out, "```bash");
     let _ = writeln!(out, "# Machine-readable surface (use this)");
     let _ = writeln!(out, "{bin_name} {group_name} --schema");
-    let _ = writeln!(out, "{bin_name} {group_name} <method> --schema\n");
+    if !resource.methods.is_empty() {
+        let _ = writeln!(out, "{bin_name} {group_name} <method> --schema");
+    }
+    if !resource.resources.is_empty() {
+        let _ = writeln!(out, "{bin_name} {group_name} <resource> <method> --schema");
+    }
+    let _ = writeln!(out);
     let _ = writeln!(out, "# Human-readable help (for humans)");
     let _ = writeln!(out, "{bin_name} {group_name} --help");
     let _ = writeln!(out, "```\n");
@@ -652,6 +663,36 @@ mod tests {
         assert!(names.contains(&"testcli-shared/SKILL.md".to_string()));
         assert!(names.contains(&"testcli-items/SKILL.md".to_string()));
         assert_eq!(files.len(), 2);
+    }
+
+    #[test]
+    fn group_skill_syntax_includes_the_resource_level_for_nested_groups() {
+        let mut doc = minimal_doc();
+        let items = doc.resources.remove("items").unwrap();
+        let mut nested = HashMap::new();
+        nested.insert("items".to_string(), items);
+        doc.resources.insert(
+            "catalog".to_string(),
+            RestResource {
+                methods: HashMap::new(),
+                resources: nested,
+            },
+        );
+        let files = generate_skills(
+            &doc,
+            "testcli",
+            &bindings_for("TEST_API_KEY"),
+            crate::auth::AuthStrategy::default(),
+        );
+        let group = &files[1].1;
+        assert!(
+            group.contains("testcli catalog <resource> <method> [flags]"),
+            "{group}"
+        );
+        assert!(
+            !group.contains("testcli catalog <method> [flags]"),
+            "{group}"
+        );
     }
 
     #[test]

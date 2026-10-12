@@ -113,11 +113,13 @@ fn a_renamed_groups_hints_name_the_renamed_group() {
         // `create`'s own hint goes to stderr, which
         // `try_run_from_with_output` does not capture. The equivalent
         // assertion on a surface we *can* see: `--profile`'s help text points
-        // at the group, and must point at the renamed one.
+        // at the group, and must point at the renamed one. Subcommand help
+        // indexes the global flags without descriptions, so read it from the
+        // root help.
         let (code, output) = run(
             PLAIN_SPEC,
             ProfilesConfig::new().command_name("tenants"),
-            &["collide", "things", "list", "--help"],
+            &["collide", "--help"],
         );
         assert_eq!(code, 0, "{output}");
         assert!(output.contains("collide tenants"), "{output}");

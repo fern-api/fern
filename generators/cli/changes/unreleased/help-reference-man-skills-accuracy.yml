@@ -1,0 +1,24 @@
+- summary: |
+    Make the generated CLI's own documentation match the binary.
+    `--help` and `completion --help` fill in the real binary name and
+    environment variable names (e.g. `ACME_CLI_RETRIES`) instead of
+    `<NAME>_*` and `<CLI>`. A namespaced spec's top-level command is
+    described by the spec's `info.description` instead of "Operations on
+    'X'" (in `--help` and in generated skills). Subcommand `--help` lists the
+    global flags in a short index that points to the root `--help` instead
+    of repeating the full block; the flags are still accepted.
+  type: fix
+- summary: |
+    `man` renders the page for any command (`<cli> man messages`) and
+    `man --output-dir DIR` writes every page the top-level page
+    cross-references. Page footers name the CLI and its version.
+  type: feat
+- summary: |
+    `reference.md` follows the runtime's command model: OPTIONS/HEAD
+    operations are dropped, namespaced groups are named and nested the way
+    the binary accepts them, every request-body field gets its own flag
+    (with required fields marked), parameter flags use the same names as the
+    binary, and Markdown headings inside descriptions no longer break the
+    document's outline. Generated skills show the `<resource> <method>`
+    form for groups that nest resources.
+  type: fix
