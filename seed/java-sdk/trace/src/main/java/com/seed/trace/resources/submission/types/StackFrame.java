@@ -114,7 +114,6 @@ public final class StackFrame {
 
         private List<Scope> scopes = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -168,6 +167,16 @@ public final class StackFrame {
         @java.lang.Override
         public StackFrame build() {
             return new StackFrame(methodName, lineNumber, scopes, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("methodName")
+                    || key.equalsIgnoreCase("lineNumber")
+                    || key.equalsIgnoreCase("scopes")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

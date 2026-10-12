@@ -62,7 +62,8 @@ pub mod store;
 
 pub use selection::{
     active, active_source, collides_with_profile_flag, install_for_tests, install_for_tests_from,
-    outranks_env, reserve_profile_flag, resolve_selection, Selection, SelectionSource,
+    outranks_env, reserve_profile_flag, resolve_selection, resolve_selection_until, Selection,
+    SelectionSource,
 };
 pub use store::{
     ProfileEntry, ProfileStore, ResolvedProfile, TransportSettings, PROFILES_FILENAME,

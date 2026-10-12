@@ -132,7 +132,6 @@ public final class ApiError {
 
         private Optional<String> requestId = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -183,6 +182,17 @@ public final class ApiError {
         @java.lang.Override
         public ApiError build() {
             return new ApiError(errorType, errorCode, errorMessage, requestId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("error_type")
+                    || key.equalsIgnoreCase("error_code")
+                    || key.equalsIgnoreCase("error_message")
+                    || key.equalsIgnoreCase("request_id")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

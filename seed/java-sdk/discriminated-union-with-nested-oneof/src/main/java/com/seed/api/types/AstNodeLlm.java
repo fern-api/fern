@@ -114,7 +114,6 @@ public final class AstNodeLlm {
 
         private Optional<Map<String, Object>> valueSchema = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -163,6 +162,16 @@ public final class AstNodeLlm {
         @java.lang.Override
         public AstNodeLlm build() {
             return new AstNodeLlm(model, valueSchema, prompt, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("model")
+                    || key.equalsIgnoreCase("value_schema")
+                    || key.equalsIgnoreCase("prompt")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

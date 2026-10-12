@@ -12,6 +12,7 @@ import com.fern.java.utils.JavaDocUtils;
 import com.google.common.base.Preconditions;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
@@ -45,6 +46,7 @@ public final class BuilderGenerator {
 
     public static final String ADDITIONAL_CHILDREN_NAME = "additionalChildren";
     public static final String CONTENT_NAME = "content";
+    private static final String ADDITIONAL_PROPERTY_JSON_SETTER_NAME = "putAdditionalPropertyFromJson";
     private static final String ADD_CHILD_METHOD_NAME = "addChild";
     private static final String ADD_TEXT_METHOD_NAME = "addText";
     private static final String COMMENT_METHOD_NAME = "comment";
@@ -64,6 +66,7 @@ public final class BuilderGenerator {
     private final boolean builderNotNullChecks;
     private final boolean useBuilderConstructor;
     private final Set<String> allPropertyCamelCaseNames;
+    private final List<String> declaredWireKeys;
     private final Optional<ClassName> additionalChildrenItemType;
     private final String additionalChildrenFieldName;
     private final String contentFieldName;
@@ -88,6 +91,13 @@ public final class BuilderGenerator {
         this.allPropertyCamelCaseNames = objectPropertyWithFields.stream()
                 .map(EnrichedObjectProperty::camelCaseKey)
                 .collect(Collectors.toSet());
+        this.declaredWireKeys = objectPropertyWithFields.stream()
+                .filter(property -> !property.queryParameter())
+                .map(EnrichedObjectProperty::wireKey)
+                .flatMap(Optional::stream)
+                .filter(wireKey -> !wireKey.isEmpty())
+                .distinct()
+                .collect(Collectors.toList());
         this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
         buildMethodArguments.addAll(this.objectPropertyWithFields.stream()
                 .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec.name)
@@ -169,9 +179,9 @@ public final class BuilderGenerator {
                             ParameterizedTypeName.get(Map.class, String.class, Object.class),
                             additionalPropertiesFieldName)
                     .addModifiers(Modifier.PRIVATE)
-                    .addAnnotation(JsonAnySetter.class)
                     .initializer("new $T<>()", HashMap.class)
                     .build());
+            builderImplTypeSpec.addMethod(getAdditionalPropertyJsonSetter());
             addAdditionalPropertiesBuilderMethods(builderImplTypeSpec, nestedBuilderClassName, true);
         }
         addAdditionalChildrenBuilderMembers(builderImplTypeSpec, true);
@@ -262,9 +272,9 @@ public final class BuilderGenerator {
                             ParameterizedTypeName.get(Map.class, String.class, Object.class),
                             additionalPropertiesFieldName)
                     .addModifiers(Modifier.PRIVATE)
-                    .addAnnotation(JsonAnySetter.class)
                     .initializer("new $T<>()", HashMap.class)
                     .build());
+            builderImplTypeSpec.addMethod(getAdditionalPropertyJsonSetter());
             addAdditionalPropertiesBuilderMethods(builderImplTypeSpec, nestedBuilderClassName, false);
         }
         addAdditionalChildrenBuilderMembers(builderImplTypeSpec, false);
@@ -417,6 +427,34 @@ public final class BuilderGenerator {
     private String getAdditionalPropertiesMethodName() {
         boolean hasConflict = allPropertyCamelCaseNames.contains("additionalProperties");
         return hasConflict ? "_additionalProperties" : "additionalProperties";
+    }
+
+    /**
+     * Jackson routes every unknown JSON key here. A key that only differs in case from a declared property (e.g.
+     * {@code VALUE} next to {@code value}) is dropped rather than kept as an additional property: it would otherwise be
+     * re-emitted after the declared field and win in case-insensitive, last-wins decoders downstream.
+     */
+    private MethodSpec getAdditionalPropertyJsonSetter() {
+        String methodName = ADDITIONAL_PROPERTY_JSON_SETTER_NAME;
+        while (allPropertyCamelCaseNames.contains(methodName)) {
+            methodName = "_" + methodName;
+        }
+        MethodSpec.Builder setter = MethodSpec.methodBuilder(methodName)
+                .addModifiers(Modifier.PRIVATE)
+                .addAnnotation(JsonAnySetter.class)
+                .addParameter(String.class, "key")
+                .addParameter(Object.class, "value");
+        if (!declaredWireKeys.isEmpty()) {
+            setter.beginControlFlow(
+                            "if ($L)",
+                            declaredWireKeys.stream()
+                                    .map(wireKey -> CodeBlock.of("key.equalsIgnoreCase($S)", wireKey))
+                                    .collect(CodeBlock.joining(" || ")))
+                    .addStatement("return")
+                    .endControlFlow();
+        }
+        return setter.addStatement("this.$L.put(key, value)", additionalPropertiesFieldName)
+                .build();
     }
 
     private void addAdditionalPropertiesBuilderMethods(

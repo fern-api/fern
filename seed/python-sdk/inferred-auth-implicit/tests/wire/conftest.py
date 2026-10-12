@@ -46,6 +46,7 @@ def get_client(test_id: str) -> SeedInferredAuthImplicit:
         return SeedInferredAuthImplicit(
             base_url=base_url,
             headers=test_headers,
+            max_retries=0,
             x_api_key="test_x_api_key",
             client_id="test_client_id",
             client_secret="test_client_secret",
@@ -54,6 +55,7 @@ def get_client(test_id: str) -> SeedInferredAuthImplicit:
     return SeedInferredAuthImplicit(
         base_url=base_url,
         httpx_client=httpx.Client(headers=test_headers),
+        max_retries=0,
         x_api_key="test_x_api_key",
         client_id="test_client_id",
         client_secret="test_client_secret",

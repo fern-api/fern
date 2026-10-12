@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Unknown JSON keys that match a declared field's wire name case-insensitively (e.g. `VALUE` next to a
+    declared `value`) are no longer kept in `ExtraProperties` when decoding, so they are not re-emitted
+    after the declared field on encode. Case-insensitive, last-wins decoders such as Go's `encoding/json`
+    would otherwise read the re-emitted key instead of the declared field. `MarshalJSONWithExtraProperties`
+    now also rejects extra properties that collide case-insensitively with a declared key. Unknown keys
+    that don't collide (e.g. `brand_new_field`) are still preserved and round-tripped.
+  type: fix

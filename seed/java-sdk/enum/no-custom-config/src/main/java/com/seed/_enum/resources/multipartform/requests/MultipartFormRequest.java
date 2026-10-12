@@ -137,7 +137,6 @@ public final class MultipartFormRequest {
 
         private Optional<Color> maybeColor = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -211,6 +210,17 @@ public final class MultipartFormRequest {
         @java.lang.Override
         public MultipartFormRequest build() {
             return new MultipartFormRequest(color, maybeColor, colorList, maybeColorList, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("color")
+                    || key.equalsIgnoreCase("maybeColor")
+                    || key.equalsIgnoreCase("colorList")
+                    || key.equalsIgnoreCase("maybeColorList")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

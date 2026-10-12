@@ -172,7 +172,6 @@ public final class GetPlaylistsRequest {
 
         private Optional<List<String>> optionalMultipleField = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -276,6 +275,18 @@ public final class GetPlaylistsRequest {
         public GetPlaylistsRequest build() {
             return new GetPlaylistsRequest(
                     optionalMultipleField, multipleField, limit, otherField, multiLineDocs, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("optionalMultipleField")
+                    || key.equalsIgnoreCase("multipleField")
+                    || key.equalsIgnoreCase("limit")
+                    || key.equalsIgnoreCase("otherField")
+                    || key.equalsIgnoreCase("multiLineDocs")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

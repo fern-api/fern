@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=../../../../../api-yml.schema.json
+
+imports:
+  auth: auth.yml
+
+name: java-endpoint-security-oauth-token-override
+
+# Regression fixture for the endpoint-security RoutingAuthProvider setup: with no bearer
+# scheme sharing the `token` builder field, the OAuth token override (`.token(...)`) must
+# register a provider for the OAuth scheme. It was previously set but never read.
+auth:
+  endpoint-security: {}
+
+auth-schemes:
+  OAuth:
+    scheme: oauth
+    type: client-credentials
+    client-id-env: MY_CLIENT_ID
+    client-secret-env: MY_CLIENT_SECRET
+    get-token:
+      endpoint: auth.getToken
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+  ApiKey:
+    header: X-API-Key
+    type: string
+    env: MY_API_KEY

@@ -80,7 +80,6 @@ public final class LeafTypeB {
     public static final class Builder implements GammaStage, _FinalStage {
         private String gamma;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class LeafTypeB {
         @java.lang.Override
         public LeafTypeB build() {
             return new LeafTypeB(gamma, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("gamma")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

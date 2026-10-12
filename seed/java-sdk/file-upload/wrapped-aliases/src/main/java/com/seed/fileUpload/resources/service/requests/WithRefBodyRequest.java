@@ -81,7 +81,6 @@ public final class WithRefBodyRequest {
     public static final class Builder implements RequestStage, _FinalStage {
         private MyObject request;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class WithRefBodyRequest {
         @java.lang.Override
         public WithRefBodyRequest build() {
             return new WithRefBodyRequest(request, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("request")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

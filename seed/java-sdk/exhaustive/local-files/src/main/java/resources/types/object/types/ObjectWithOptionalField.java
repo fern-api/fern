@@ -211,7 +211,6 @@ public final class ObjectWithOptionalField {
 
     private Optional<BigInteger> bigint = Optional.empty();
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -421,6 +420,14 @@ public final class ObjectWithOptionalField {
 
     public ObjectWithOptionalField build() {
       return new ObjectWithOptionalField(string, integer, long_, double_, bool, datetime, date, uuid, base64, list, set, map, bigint, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("string") || key.equalsIgnoreCase("integer") || key.equalsIgnoreCase("long") || key.equalsIgnoreCase("double") || key.equalsIgnoreCase("bool") || key.equalsIgnoreCase("datetime") || key.equalsIgnoreCase("date") || key.equalsIgnoreCase("uuid") || key.equalsIgnoreCase("base64") || key.equalsIgnoreCase("list") || key.equalsIgnoreCase("set") || key.equalsIgnoreCase("map") || key.equalsIgnoreCase("bigint")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     public Builder additionalProperty(String key, Object value) {

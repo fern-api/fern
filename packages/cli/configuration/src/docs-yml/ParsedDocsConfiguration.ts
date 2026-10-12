@@ -14,6 +14,7 @@ import {
     ExternalSitemap,
     LibraryLanguage,
     PlaygroundSettings,
+    SortByAvailabilityValue,
     Target,
     ThemeConfig,
     TranslationConfig,
@@ -439,6 +440,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
         alphabetized: boolean;
+        sortByAvailability: SortByAvailabilityValue[] | undefined;
         flattened: boolean;
         paginated: boolean;
         playground: PlaygroundSettings | undefined;

@@ -94,7 +94,6 @@ public final class ListResourcesRequest {
 
         private String beforeDate;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class ListResourcesRequest {
         @java.lang.Override
         public ListResourcesRequest build() {
             return new ListResourcesRequest(pageLimit, beforeDate, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("page_limit") || key.equalsIgnoreCase("beforeDate")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

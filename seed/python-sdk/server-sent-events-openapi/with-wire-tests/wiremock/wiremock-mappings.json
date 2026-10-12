@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "58b35175-e6ff-4dd5-a65a-dff03dee744d",
+      "name": "Protocol context with no field collision and mixed data types - default - stream_protocol_no_collision.0",
+      "request": {
+        "urlPathTemplate": "/stream/protocol-no-collision",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_protocol_no_collision.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "58b35175-e6ff-4dd5-a65a-dff03dee744d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "972ef058-2c94-4225-bf17-d8cce7541d60",
       "name": "Protocol context with event field collision and mixed data types - default",
       "request": {
@@ -43,6 +74,37 @@
       "uuid": "972ef058-2c94-4225-bf17-d8cce7541d60",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "c4458e45-48c1-41ca-b850-8ed888416e9c",
+      "name": "Protocol context with event field collision and mixed data types - default - stream_protocol_collision.0",
+      "request": {
+        "urlPathTemplate": "/stream/protocol-collision",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_protocol_collision.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "c4458e45-48c1-41ca-b850-8ed888416e9c",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -79,6 +141,37 @@
       }
     },
     {
+      "id": "d7a39e20-7600-46ec-8167-6af8354c36f5",
+      "name": "Explicit data context with discriminant flattened via allOf - default - stream_data_context.0",
+      "request": {
+        "urlPathTemplate": "/stream/data-context",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_data_context.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"timestamp\":\"2024-01-15T09:30:00Z\",\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "d7a39e20-7600-46ec-8167-6af8354c36f5",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "7570b0a9-0faf-420d-9c7b-791097b27bf6",
       "name": "No context extension, defaults to data context - default",
       "request": {
@@ -95,6 +188,37 @@
       "uuid": "7570b0a9-0faf-420d-9c7b-791097b27bf6",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "ed27f212-bae3-4c62-88f6-9cccd47f2aca",
+      "name": "No context extension, defaults to data context - default - stream_no_context.0",
+      "request": {
+        "urlPathTemplate": "/stream/no-context",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_no_context.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"timestamp\":\"2024-01-15T09:30:00Z\",\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "ed27f212-bae3-4c62-88f6-9cccd47f2aca",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -131,6 +255,37 @@
       }
     },
     {
+      "id": "c020364e-614f-42a2-bcfe-43d886932020",
+      "name": "Protocol context with flat allOf schema pattern - default - stream_protocol_with_flat_schema.0",
+      "request": {
+        "urlPathTemplate": "/stream/protocol-with-flat-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_protocol_with_flat_schema.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"timestamp\":\"2024-01-15T09:30:00Z\",\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "c020364e-614f-42a2-bcfe-43d886932020",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "13812919-a947-4096-b163-5202f346ac3b",
       "name": "Protocol context mixing envelope+data and flat schema variants - default",
       "request": {
@@ -147,6 +302,37 @@
       "uuid": "13812919-a947-4096-b163-5202f346ac3b",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "65f1abbc-8a99-49cc-adc7-0ec8e972634a",
+      "name": "Protocol context mixing envelope+data and flat schema variants - default - stream_protocol_mixed_schema.0",
+      "request": {
+        "urlPathTemplate": "/stream/protocol-mixed-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_protocol_mixed_schema.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"timestamp\":\"2024-01-15T09:30:00Z\",\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "65f1abbc-8a99-49cc-adc7-0ec8e972634a",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -183,6 +369,37 @@
       }
     },
     {
+      "id": "75345035-e92e-4b83-8115-de2a00451916",
+      "name": "Data context with envelope+data schema pattern - default - stream_data_context_with_envelope_schema.0",
+      "request": {
+        "urlPathTemplate": "/stream/data-context-with-envelope-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_data_context_with_envelope_schema.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "75345035-e92e-4b83-8115-de2a00451916",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "59e28e7e-bef9-4adc-ad2a-ab5c05774423",
       "name": "OAS 3.2 spec-native SSE pattern with inline variants and contentSchema - default",
       "request": {
@@ -199,6 +416,37 @@
       "uuid": "59e28e7e-bef9-4adc-ad2a-ab5c05774423",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7f0ee00c-4882-4056-a520-b8f0150c5d16",
+      "name": "OAS 3.2 spec-native SSE pattern with inline variants and contentSchema - default - stream_oas_spec_native.0",
+      "request": {
+        "urlPathTemplate": "/stream/oas-spec-native",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_oas_spec_native.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"data\":\"data\",\"event\":\"event\",\"id\":\"id\",\"retry\":1}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "7f0ee00c-4882-4056-a520-b8f0150c5d16",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -235,6 +483,37 @@
       }
     },
     {
+      "id": "eae0e98e-c495-47fa-87b2-26250e5dad37",
+      "name": "x-fern-streaming with stream-condition and $ref request body - default - stream_x_fern_streaming_condition_stream.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-condition",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_condition_stream.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "eae0e98e-c495-47fa-87b2-26250e5dad37",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "c4399573-7257-4afa-9a26-c13c862f7f44",
       "name": "x-fern-streaming with stream-condition and $ref request body - default",
       "request": {
@@ -251,6 +530,37 @@
       "uuid": "c4399573-7257-4afa-9a26-c13c862f7f44",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "c939a5b7-bb26-42bf-8e70-7b8693f59b78",
+      "name": "x-fern-streaming with stream-condition and $ref request body - default - stream_x_fern_streaming_condition.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-condition",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_condition.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c939a5b7-bb26-42bf-8e70-7b8693f59b78",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -287,6 +597,37 @@
       }
     },
     {
+      "id": "fa27c853-d386-4c69-9b89-03ef385b46ab",
+      "name": "x-fern-streaming with shared request schema - default - stream_x_fern_streaming_shared_schema_stream.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-shared-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_shared_schema_stream.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fa27c853-d386-4c69-9b89-03ef385b46ab",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "320847df-8c7b-42b5-b97e-2237c36bbfa5",
       "name": "x-fern-streaming with shared request schema - default",
       "request": {
@@ -303,6 +644,37 @@
       "uuid": "320847df-8c7b-42b5-b97e-2237c36bbfa5",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "212212d5-6a4b-4c7b-9077-6c13e7d2c879",
+      "name": "x-fern-streaming with shared request schema - default - stream_x_fern_streaming_shared_schema.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-shared-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_shared_schema.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "212212d5-6a4b-4c7b-9077-6c13e7d2c879",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -339,6 +711,37 @@
       }
     },
     {
+      "id": "dfa15955-7920-4a58-b9f2-ea1715b4cbf3",
+      "name": "Non-streaming endpoint sharing request schema with endpoint 10 - default - validate_completion.0",
+      "request": {
+        "urlPathTemplate": "/validate-completion",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "validate_completion.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "dfa15955-7920-4a58-b9f2-ea1715b4cbf3",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "6403c880-9bb6-4af4-96df-cf5125abf22a",
       "name": "x-fern-streaming with discriminated union request body - default",
       "request": {
@@ -355,6 +758,37 @@
       "uuid": "6403c880-9bb6-4af4-96df-cf5125abf22a",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7bc32ce8-9598-40bf-a45c-6b7f476a9cdc",
+      "name": "x-fern-streaming with discriminated union request body - default - stream_x_fern_streaming_union_stream.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-union",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_union_stream.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7bc32ce8-9598-40bf-a45c-6b7f476a9cdc",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -391,6 +825,37 @@
       }
     },
     {
+      "id": "542782ea-9a4f-43eb-b5a6-7915c269f937",
+      "name": "x-fern-streaming with discriminated union request body - default - stream_x_fern_streaming_union.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-union",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_union.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "542782ea-9a4f-43eb-b5a6-7915c269f937",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "97d9037b-42ab-4e79-ad59-583bfa3a6138",
       "name": "Non-streaming endpoint referencing the union base schema - default",
       "request": {
@@ -407,6 +872,37 @@
       "uuid": "97d9037b-42ab-4e79-ad59-583bfa3a6138",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "fa82c81a-20d2-4444-968e-77ff38d1dbc1",
+      "name": "Non-streaming endpoint referencing the union base schema - default - validate_union_request.0",
+      "request": {
+        "urlPathTemplate": "/validate-union-request",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "validate_union_request.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"valid\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fa82c81a-20d2-4444-968e-77ff38d1dbc1",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -443,6 +939,37 @@
       }
     },
     {
+      "id": "fcc8a26b-151e-467e-95e7-3a41ff6c47cf",
+      "name": "x-fern-streaming with nullable stream condition field - default - stream_x_fern_streaming_nullable_condition_stream.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-nullable-condition",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_nullable_condition_stream.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fcc8a26b-151e-467e-95e7-3a41ff6c47cf",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "1e1675a0-7b8a-4ce5-ab4a-2a3a1a04b162",
       "name": "x-fern-streaming with nullable stream condition field - default",
       "request": {
@@ -459,6 +986,37 @@
       "uuid": "1e1675a0-7b8a-4ce5-ab4a-2a3a1a04b162",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "6df63d4e-8163-4d35-a7b6-664df96b59f6",
+      "name": "x-fern-streaming with nullable stream condition field - default - stream_x_fern_streaming_nullable_condition.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-nullable-condition",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_nullable_condition.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6df63d4e-8163-4d35-a7b6-664df96b59f6",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -493,9 +1051,40 @@
           }
         }
       }
+    },
+    {
+      "id": "25beffc1-ac1f-47f4-acd4-c4f573ab5d60",
+      "name": "x-fern-streaming with SSE format but no stream-condition - default - stream_x_fern_streaming_sse_only.0",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-sse-only",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "stream_x_fern_streaming_sse_only.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: \"string\"\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "25beffc1-ac1f-47f4-acd4-c4f573ab5d60",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 19
+    "total": 38
   }
 }

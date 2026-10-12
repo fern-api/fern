@@ -68,7 +68,6 @@ public final class ObjectTypeWithSetAliasType {
     public static final class Builder {
         private Set<AliasProperty> prop = new LinkedHashSet<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ObjectTypeWithSetAliasType {
 
         public ObjectTypeWithSetAliasType build() {
             return new ObjectTypeWithSetAliasType(prop, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prop")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

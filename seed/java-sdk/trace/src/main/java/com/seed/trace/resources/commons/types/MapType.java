@@ -94,7 +94,6 @@ public final class MapType {
 
         private VariableType valueType;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class MapType {
         @java.lang.Override
         public MapType build() {
             return new MapType(keyType, valueType, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("keyType") || key.equalsIgnoreCase("valueType")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

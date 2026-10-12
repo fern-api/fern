@@ -81,7 +81,6 @@ public final class SearchProductsRequest {
 
         private Optional<SearchProductsRequestConfig> config = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -116,6 +115,14 @@ public final class SearchProductsRequest {
 
         public SearchProductsRequest build() {
             return new SearchProductsRequest(query, config, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query") || key.equalsIgnoreCase("config")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

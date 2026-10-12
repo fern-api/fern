@@ -79,7 +79,6 @@ public final class BinaryTreeValue {
 
         private Map<String, BinaryTreeNodeValue> nodes = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class BinaryTreeValue {
 
         public BinaryTreeValue build() {
             return new BinaryTreeValue(root, nodes, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("root") || key.equalsIgnoreCase("nodes")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

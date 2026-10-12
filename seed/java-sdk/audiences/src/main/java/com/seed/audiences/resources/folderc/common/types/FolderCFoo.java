@@ -81,7 +81,6 @@ public final class FolderCFoo {
     public static final class Builder implements BarPropertyStage, _FinalStage {
         private UUID barProperty;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class FolderCFoo {
         @java.lang.Override
         public FolderCFoo build() {
             return new FolderCFoo(barProperty, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("bar_property")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

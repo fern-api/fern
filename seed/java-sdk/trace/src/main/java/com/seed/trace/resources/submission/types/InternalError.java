@@ -80,7 +80,6 @@ public final class InternalError {
     public static final class Builder implements ExceptionInfoStage, _FinalStage {
         private ExceptionInfo exceptionInfo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class InternalError {
         @java.lang.Override
         public InternalError build() {
             return new InternalError(exceptionInfo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("exceptionInfo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

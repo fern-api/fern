@@ -205,7 +205,6 @@ public final class ComplexStaged {
 
         private Optional<String> optionalX = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -301,6 +300,21 @@ public final class ComplexStaged {
         public ComplexStaged build() {
             return new ComplexStaged(
                     fieldA, fieldB, fieldC, fieldD, fieldE, optionalX, optionalY, optionalZ, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("fieldA")
+                    || key.equalsIgnoreCase("fieldB")
+                    || key.equalsIgnoreCase("fieldC")
+                    || key.equalsIgnoreCase("fieldD")
+                    || key.equalsIgnoreCase("fieldE")
+                    || key.equalsIgnoreCase("optionalX")
+                    || key.equalsIgnoreCase("optionalY")
+                    || key.equalsIgnoreCase("optionalZ")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

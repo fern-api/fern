@@ -105,7 +105,6 @@ public final class CreateWithBodyAndQuery {
 
     private Optional<String> fields = Optional.empty();
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -144,6 +143,14 @@ public final class CreateWithBodyAndQuery {
     @java.lang.Override
     public CreateWithBodyAndQuery build() {
       return new CreateWithBodyAndQuery(fields, body, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("_fields") || key.equalsIgnoreCase("body")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

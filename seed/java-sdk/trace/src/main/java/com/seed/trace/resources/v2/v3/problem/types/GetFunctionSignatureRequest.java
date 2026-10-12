@@ -80,7 +80,6 @@ public final class GetFunctionSignatureRequest {
     public static final class Builder implements FunctionSignatureStage, _FinalStage {
         private FunctionSignature functionSignature;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class GetFunctionSignatureRequest {
         @java.lang.Override
         public GetFunctionSignatureRequest build() {
             return new GetFunctionSignatureRequest(functionSignature, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("functionSignature")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

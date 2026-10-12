@@ -97,7 +97,6 @@ public final class TestCaseImplementation {
 
         private TestCaseFunction function;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -126,6 +125,14 @@ public final class TestCaseImplementation {
         @java.lang.Override
         public TestCaseImplementation build() {
             return new TestCaseImplementation(description, function, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("description") || key.equalsIgnoreCase("function")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

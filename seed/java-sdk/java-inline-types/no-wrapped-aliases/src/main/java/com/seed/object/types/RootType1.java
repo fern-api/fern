@@ -212,7 +212,6 @@ public final class RootType1 {
 
         private Map<String, FooMapValue> fooMap = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -371,6 +370,19 @@ public final class RootType1 {
             return new RootType1(foo, bar, fooMap, fooList, fooSet, ref, additionalProperties);
         }
 
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo")
+                    || key.equalsIgnoreCase("bar")
+                    || key.equalsIgnoreCase("fooMap")
+                    || key.equalsIgnoreCase("fooList")
+                    || key.equalsIgnoreCase("fooSet")
+                    || key.equalsIgnoreCase("ref")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
+        }
+
         @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
@@ -474,7 +486,6 @@ public final class RootType1 {
 
             private ReferenceType ref;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -511,6 +522,14 @@ public final class RootType1 {
             @java.lang.Override
             public FooMapValue build() {
                 return new FooMapValue(foo, ref, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override
@@ -637,7 +656,6 @@ public final class RootType1 {
 
             private ReferenceType ref;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -686,6 +704,14 @@ public final class RootType1 {
             @java.lang.Override
             public Bar build() {
                 return new Bar(foo, bar, ref, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("ref")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override
@@ -839,7 +865,6 @@ public final class RootType1 {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -900,6 +925,17 @@ public final class RootType1 {
                 @java.lang.Override
                 public Bar_ build() {
                     return new Bar_(foo, bar, myEnum, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("foo")
+                            || key.equalsIgnoreCase("bar")
+                            || key.equalsIgnoreCase("myEnum")
+                            || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override
@@ -1102,7 +1138,6 @@ public final class RootType1 {
 
             private ReferenceType ref;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -1139,6 +1174,14 @@ public final class RootType1 {
             @java.lang.Override
             public FooListItem build() {
                 return new FooListItem(foo, ref, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override
@@ -1245,7 +1288,6 @@ public final class RootType1 {
 
             private ReferenceType ref;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -1282,6 +1324,14 @@ public final class RootType1 {
             @java.lang.Override
             public FooSetItem build() {
                 return new FooSetItem(foo, ref, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

@@ -199,7 +199,6 @@ public final class CreateProblemRequestV2 {
 
         private List<TestCaseTemplate> customTestCaseTemplates = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -327,6 +326,20 @@ public final class CreateProblemRequestV2 {
                     supportedLanguages,
                     isPublic,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("problemName")
+                    || key.equalsIgnoreCase("problemDescription")
+                    || key.equalsIgnoreCase("customFiles")
+                    || key.equalsIgnoreCase("customTestCaseTemplates")
+                    || key.equalsIgnoreCase("testcases")
+                    || key.equalsIgnoreCase("supportedLanguages")
+                    || key.equalsIgnoreCase("isPublic")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

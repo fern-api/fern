@@ -70,6 +70,7 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
+    "@fern-api/posthog-manager": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/venus-api-sdk": "catalog:",

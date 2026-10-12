@@ -139,6 +139,7 @@ export * from "./SkillsInstallCommand.js";
 export * from "./SkillsPageActionConfig.js";
 export * from "./SnippetLanguageConfiguration.js";
 export * from "./SnippetsConfiguration.js";
+export * from "./SortByAvailabilityValue.js";
 export * from "./SwitcherPlacement.js";
 export * from "./TabbedNavigationConfig.js";
 export * from "./TabbedNavigationItem.js";

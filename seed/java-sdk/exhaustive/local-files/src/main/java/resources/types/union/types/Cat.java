@@ -101,7 +101,6 @@ public final class Cat {
 
     private boolean likesToMeow;
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -131,6 +130,14 @@ public final class Cat {
     @java.lang.Override
     public Cat build() {
       return new Cat(name, likesToMeow, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("likesToMeow")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

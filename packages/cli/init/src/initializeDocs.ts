@@ -19,6 +19,8 @@ import yaml from "js-yaml";
 import path from "path";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
 import { getOpenAPIFileName, materializeOpenAPI } from "./createWorkspace.js";
+import { addSpec, hasFlatNavigation } from "./docsYmlSpecs.js";
+import { updateDocsYml } from "./updateDocsYml.js";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl.js";
 
 const PAGES_DIRECTORY = "pages";
@@ -48,9 +50,11 @@ export async function initializeDocs({
     if (await doesPathExist(docsYmlPath)) {
         taskContext.logger.info(chalk.yellow(`Docs configuration already exists at: ${docsYmlPath}`));
         if (useSdkConfig && openApi != null) {
-            taskContext.logger.warn(
-                "The OpenAPI spec was not added because docs.yml already exists. Add it under an `api` entry's `specs` in docs.yml."
-            );
+            await addSpecToExistingDocsYml({
+                absolutePathToFernDirectory: AbsoluteFilePath.of(path.dirname(docsYmlPath)),
+                openApi,
+                taskContext
+            });
         }
         return;
     }
@@ -69,7 +73,7 @@ export async function initializeDocs({
         try {
             const specPathInDocsYml =
                 openApiPath != null
-                    ? await copySpecIntoFernDirectory({
+                    ? await getSpecPathInDocsYml({
                           absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
                           openApiPath,
                           taskContext
@@ -102,6 +106,60 @@ export async function initializeDocs({
             throw writeError;
         }
     }
+}
+
+/** Declares the spec in an existing `docs.yml`, on its first `api` entry or on a new one. */
+async function addSpecToExistingDocsYml({
+    absolutePathToFernDirectory,
+    openApi,
+    taskContext
+}: {
+    absolutePathToFernDirectory: AbsoluteFilePath;
+    openApi: string;
+    taskContext: TaskContext;
+}): Promise<void> {
+    const wasUpdated = await updateDocsYml({
+        absolutePathToFernDirectory,
+        taskContext,
+        update: async (docsConfig) => {
+            if (!hasFlatNavigation(docsConfig)) {
+                taskContext.logger.warn(
+                    "The OpenAPI spec was not added because docs.yml has no flat `navigation` list. Add it under an `api` entry's `specs` in docs.yml."
+                );
+                return docsConfig;
+            }
+            const specPath = await getSpecPathInDocsYml({
+                absolutePathToFernDirectory,
+                openApiPath: await resolveOpenApiPath({ openApi, taskContext }),
+                taskContext
+            });
+            return addSpec({ docsConfig, specPath });
+        }
+    });
+    if (wasUpdated) {
+        taskContext.logger.info(chalk.green("Added the OpenAPI spec to docs.yml"));
+    }
+}
+
+/**
+ * The spec's path relative to `docs.yml`. A spec that already lives in the fern directory, like an SDK Config API's,
+ * is referenced as is, so the docs and the API read the same file. Any other spec is copied there.
+ */
+async function getSpecPathInDocsYml({
+    absolutePathToFernDirectory,
+    openApiPath,
+    taskContext
+}: {
+    absolutePathToFernDirectory: AbsoluteFilePath;
+    openApiPath: AbsoluteFilePath;
+    taskContext: TaskContext;
+}): Promise<string> {
+    const pathInFernDirectory = path.relative(absolutePathToFernDirectory, openApiPath);
+    const [firstSegment] = pathInFernDirectory.split(path.sep);
+    const isInFernDirectory = firstSegment !== ".." && !path.isAbsolute(pathInFernDirectory);
+    return isInFernDirectory
+        ? `./${pathInFernDirectory.split(path.sep).join("/")}`
+        : await copySpecIntoFernDirectory({ absolutePathToFernDirectory, openApiPath, taskContext });
 }
 
 /** A local path is checked for existence. A URL is downloaded, because `docs.yml` can only reference files. */
@@ -155,7 +213,7 @@ async function copySpecIntoFernDirectory({
 }
 
 /** Returns `fileName`, or the first of `name-1.ext`, `name-2.ext`, ... that does not exist in `directory` yet. */
-async function findFreeFileName({
+export async function findFreeFileName({
     directory,
     fileName
 }: {

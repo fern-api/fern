@@ -80,7 +80,6 @@ public final class CompileError {
     public static final class Builder implements MessageStage, _FinalStage {
         private String message;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class CompileError {
         @java.lang.Override
         public CompileError build() {
             return new CompileError(message, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("message")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

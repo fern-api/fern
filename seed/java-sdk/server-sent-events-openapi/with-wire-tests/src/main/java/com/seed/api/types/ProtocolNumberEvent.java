@@ -79,7 +79,6 @@ public final class ProtocolNumberEvent {
     public static final class Builder implements DataStage, _FinalStage {
         private double data;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class ProtocolNumberEvent {
         @java.lang.Override
         public ProtocolNumberEvent build() {
             return new ProtocolNumberEvent(data, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

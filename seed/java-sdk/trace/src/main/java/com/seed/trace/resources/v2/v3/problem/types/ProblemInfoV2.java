@@ -257,7 +257,6 @@ public final class ProblemInfoV2 {
 
         private Set<Language> supportedLanguages = new LinkedHashSet<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -412,6 +411,23 @@ public final class ProblemInfoV2 {
                     testcases,
                     isPublic,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("problemId")
+                    || key.equalsIgnoreCase("problemDescription")
+                    || key.equalsIgnoreCase("problemName")
+                    || key.equalsIgnoreCase("problemVersion")
+                    || key.equalsIgnoreCase("supportedLanguages")
+                    || key.equalsIgnoreCase("customFiles")
+                    || key.equalsIgnoreCase("generatedFiles")
+                    || key.equalsIgnoreCase("customTestCaseTemplates")
+                    || key.equalsIgnoreCase("testcases")
+                    || key.equalsIgnoreCase("isPublic")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

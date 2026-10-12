@@ -118,7 +118,6 @@ public final class CreatePlaylistRequest {
 
         private Optional<OffsetDateTime> optionalDatetime = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -161,6 +160,16 @@ public final class CreatePlaylistRequest {
         @java.lang.Override
         public CreatePlaylistRequest build() {
             return new CreatePlaylistRequest(datetime, optionalDatetime, body, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("datetime")
+                    || key.equalsIgnoreCase("optionalDatetime")
+                    || key.equalsIgnoreCase("body")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

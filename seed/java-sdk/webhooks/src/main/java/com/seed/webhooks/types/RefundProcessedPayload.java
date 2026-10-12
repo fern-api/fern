@@ -111,7 +111,6 @@ public final class RefundProcessedPayload {
 
         private Optional<String> reason = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -154,6 +153,14 @@ public final class RefundProcessedPayload {
         @java.lang.Override
         public RefundProcessedPayload build() {
             return new RefundProcessedPayload(refundId, amount, reason, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("refundId") || key.equalsIgnoreCase("amount") || key.equalsIgnoreCase("reason")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

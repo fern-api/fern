@@ -81,7 +81,6 @@ public final class TypeWithOptionalReferenceMap {
 
         private Map<String, Object> metadata = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -136,6 +135,14 @@ public final class TypeWithOptionalReferenceMap {
 
         public TypeWithOptionalReferenceMap build() {
             return new TypeWithOptionalReferenceMap(references, metadata, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("references") || key.equalsIgnoreCase("metadata")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

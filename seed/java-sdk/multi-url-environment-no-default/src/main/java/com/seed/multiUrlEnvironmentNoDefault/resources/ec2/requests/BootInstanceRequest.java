@@ -80,7 +80,6 @@ public final class BootInstanceRequest {
     public static final class Builder implements SizeStage, _FinalStage {
         private String size;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class BootInstanceRequest {
         @java.lang.Override
         public BootInstanceRequest build() {
             return new BootInstanceRequest(size, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("size")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

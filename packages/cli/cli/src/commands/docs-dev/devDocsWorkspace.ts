@@ -17,7 +17,9 @@ export async function previewDocsWorkspace({
     astro,
     backendPort,
     forceDownload,
-    includePrivate = false
+    includePrivate = false,
+    skipApi = false,
+    skipValidation = false
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
@@ -30,6 +32,10 @@ export async function previewDocsWorkspace({
     forceDownload?: boolean;
     /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
     includePrivate?: boolean;
+    /** Skip building API reference sections (much faster; API reference pages are empty). */
+    skipApi?: boolean;
+    /** Skip validating the docs (faster startup; docs errors are not reported). */
+    skipValidation?: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -43,13 +49,17 @@ export async function previewDocsWorkspace({
     }
 
     const validateProject = async (project: Project, context: TaskContext): Promise<void> => {
+        if (skipValidation) {
+            context.logger.warn("Skipping docs validation (--skip-validation)");
+            return;
+        }
         const docsWorkspace = project.docsWorkspaces;
         if (docsWorkspace == null) {
             return;
         }
         const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
-        const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
+        const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser, skipApi });
         await validateDocsWorkspaceWithoutExiting({
             workspace: docsWorkspace,
             context,
@@ -57,7 +67,8 @@ export async function previewDocsWorkspace({
             logSummary: false,
             apiWorkspaces: useV3Parser ? [] : project.apiWorkspaces,
             ossWorkspaces: await filterOssWorkspaces(project),
-            excludeRules
+            excludeRules,
+            skipApiReferences: skipApi
         });
     };
 
@@ -78,7 +89,8 @@ export async function previewDocsWorkspace({
                 port,
                 bundlePath,
                 backendPort,
-                forceDownload
+                forceDownload,
+                skipApi
             });
         });
         return;
@@ -100,7 +112,8 @@ export async function previewDocsWorkspace({
                 context,
                 port,
                 bundlePath,
-                includePrivate
+                includePrivate,
+                skipApi
             });
         });
     }
@@ -122,7 +135,8 @@ export async function previewDocsWorkspace({
             bundlePath,
             backendPort,
             forceDownload,
-            includePrivate
+            includePrivate,
+            skipApi
         });
     });
 

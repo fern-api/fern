@@ -109,7 +109,6 @@ public final class OutboundCallConversationsRequest {
 
         private Optional<Boolean> dryRun = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -155,6 +154,14 @@ public final class OutboundCallConversationsRequest {
         @java.lang.Override
         public OutboundCallConversationsRequest build() {
             return new OutboundCallConversationsRequest(toPhoneNumber, dryRun, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("to_phone_number") || key.equalsIgnoreCase("dry_run")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

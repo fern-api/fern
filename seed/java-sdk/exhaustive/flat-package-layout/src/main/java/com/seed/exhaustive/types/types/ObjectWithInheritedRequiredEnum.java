@@ -97,7 +97,6 @@ public final class ObjectWithInheritedRequiredEnum implements IObjectWithInherit
 
         private String requiredString;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -126,6 +125,14 @@ public final class ObjectWithInheritedRequiredEnum implements IObjectWithInherit
         @java.lang.Override
         public ObjectWithInheritedRequiredEnum build() {
             return new ObjectWithInheritedRequiredEnum(requiredEnum, requiredString, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("requiredEnum") || key.equalsIgnoreCase("requiredString")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

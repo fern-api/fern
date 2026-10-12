@@ -32,6 +32,42 @@
       }
     },
     {
+      "id": "34eda8c4-9390-4e9b-b6db-2b77b2b93034",
+      "name": "Chat endpoint with streaming support - default - chat_stream.0",
+      "request": {
+        "urlPathTemplate": "/chat",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "chat_stream.0"
+          }
+        },
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.stream == true)]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"delta\":\"delta\",\"tokens\":1}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "34eda8c4-9390-4e9b-b6db-2b77b2b93034",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "3b14b290-771f-4f23-a7c0-030362b5cc32",
       "name": "Chat endpoint with streaming support - default",
       "request": {
@@ -56,9 +92,40 @@
           }
         }
       }
+    },
+    {
+      "id": "8e45a080-0dd7-4d63-ab3b-e381f3519848",
+      "name": "Chat endpoint with streaming support - default - chat.0",
+      "request": {
+        "urlPathTemplate": "/chat",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "chat.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"message\": \"Hello! How can I help you?\",\n  \"finish_reason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8e45a080-0dd7-4d63-ab3b-e381f3519848",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 2
+    "total": 4
   }
 }

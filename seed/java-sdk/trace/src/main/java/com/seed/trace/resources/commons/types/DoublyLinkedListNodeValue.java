@@ -129,7 +129,6 @@ public final class DoublyLinkedListNodeValue {
 
         private Optional<String> next = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -186,6 +185,17 @@ public final class DoublyLinkedListNodeValue {
         @java.lang.Override
         public DoublyLinkedListNodeValue build() {
             return new DoublyLinkedListNodeValue(nodeId, val, next, prev, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("nodeId")
+                    || key.equalsIgnoreCase("val")
+                    || key.equalsIgnoreCase("next")
+                    || key.equalsIgnoreCase("prev")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

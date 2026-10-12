@@ -96,7 +96,6 @@ public final class MyObjectWithOptional {
 
         private Optional<String> optionalProp = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class MyObjectWithOptional {
         @java.lang.Override
         public MyObjectWithOptional build() {
             return new MyObjectWithOptional(prop, optionalProp, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prop") || key.equalsIgnoreCase("optionalProp")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

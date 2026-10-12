@@ -87,7 +87,6 @@ public final class UserGetLatestInsuranceRequest {
 
         private Optional<PolicyType> policyType = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -128,6 +127,14 @@ public final class UserGetLatestInsuranceRequest {
 
         public UserGetLatestInsuranceRequest build() {
             return new UserGetLatestInsuranceRequest(includeExpired, policyType, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("includeExpired") || key.equalsIgnoreCase("policyType")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

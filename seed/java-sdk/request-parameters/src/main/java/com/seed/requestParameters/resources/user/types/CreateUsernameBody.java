@@ -109,7 +109,6 @@ public final class CreateUsernameBody {
 
         private String name;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class CreateUsernameBody {
         @java.lang.Override
         public CreateUsernameBody build() {
             return new CreateUsernameBody(username, password, name, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("username") || key.equalsIgnoreCase("password") || key.equalsIgnoreCase("name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

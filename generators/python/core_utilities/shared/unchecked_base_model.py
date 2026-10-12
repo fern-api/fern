@@ -125,9 +125,16 @@ class UncheckedBaseModel(UniversalBaseModel):
         extras = {}
         pydantic_alias_fields = [field.alias for field in fields.values()]
         internal_alias_fields = list(field_aliases.values())
+        declared_keys_casefolded = {
+            key.casefold() for key in (*fields, *pydantic_alias_fields, *internal_alias_fields) if isinstance(key, str)
+        }
         for key, value in values.items():
             # If the key is not a field by name, nor an alias to a field, then it's extra
             if (key not in pydantic_alias_fields and key not in internal_alias_fields) and key not in fields:
+                # Drop extras that match a declared field case-insensitively (e.g. `VALUE` next to `value`): they
+                # would be sent again after the field, and case-insensitive decoders would read them instead of it.
+                if isinstance(key, str) and key.casefold() in declared_keys_casefolded:
+                    continue
                 if IS_PYDANTIC_V2:
                     extras[key] = value
                 else:

@@ -82,7 +82,6 @@ public final class SubscribeEventsRequest {
 
         private Optional<StringOrListParam> tags = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -117,6 +116,14 @@ public final class SubscribeEventsRequest {
 
         public SubscribeEventsRequest build() {
             return new SubscribeEventsRequest(eventType, tags, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("event_type") || key.equalsIgnoreCase("tags")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

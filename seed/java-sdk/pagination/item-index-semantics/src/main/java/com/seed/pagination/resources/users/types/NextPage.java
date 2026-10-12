@@ -94,7 +94,6 @@ public final class NextPage {
 
         private String startingAfter;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class NextPage {
         @java.lang.Override
         public NextPage build() {
             return new NextPage(page, startingAfter, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("page") || key.equalsIgnoreCase("starting_after")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

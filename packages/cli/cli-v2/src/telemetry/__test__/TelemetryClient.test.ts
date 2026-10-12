@@ -112,7 +112,9 @@ describe("TelemetryClient", () => {
                     properties: expect.objectContaining({
                         language: "typescript",
                         org: "acme",
-                        os: expect.any(String)
+                        os: expect.any(String),
+                        // Unbuilt runs have no injected FERN_CLI_RELEASE_ENVIRONMENT.
+                        cliReleaseEnvironment: "local"
                     })
                 })
             );

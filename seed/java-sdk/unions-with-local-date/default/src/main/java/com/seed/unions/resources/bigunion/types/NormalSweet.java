@@ -80,7 +80,6 @@ public final class NormalSweet {
     public static final class Builder implements ValueStage, _FinalStage {
         private String value;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class NormalSweet {
         @java.lang.Override
         public NormalSweet build() {
             return new NormalSweet(value, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("value")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

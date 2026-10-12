@@ -97,7 +97,6 @@ public final class UpdateVendorRequest {
 
         private Optional<UpdateVendorRequestStatus> status = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -132,6 +131,14 @@ public final class UpdateVendorRequest {
         @java.lang.Override
         public UpdateVendorRequest build() {
             return new UpdateVendorRequest(name, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

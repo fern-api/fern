@@ -116,7 +116,6 @@ public final class UserData {
 
         private Optional<Integer> age = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -166,6 +165,14 @@ public final class UserData {
         @java.lang.Override
         public UserData build() {
             return new UserData(name, email, age, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("email") || key.equalsIgnoreCase("age")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

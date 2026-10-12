@@ -67,7 +67,6 @@ public final class RealtimeNoAuthConnectOptions {
     public static final class Builder {
         private Optional<String> model = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class RealtimeNoAuthConnectOptions {
 
         public RealtimeNoAuthConnectOptions build() {
             return new RealtimeNoAuthConnectOptions(model, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("model")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

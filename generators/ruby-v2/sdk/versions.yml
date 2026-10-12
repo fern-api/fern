@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.38.2
+  changelogEntry:
+    - summary: |
+        Models no longer keep an unknown JSON key as an extra field when it matches a declared field
+        case-insensitively (e.g. `VALUE` next to `value`). Previously the extra key was re-emitted after the
+        declared field, so a case-insensitive, last-wins JSON decoder downstream (such as Go's `encoding/json`)
+        read the extra key's value instead of the declared field's. Non-colliding unknown keys are still
+        preserved and re-emitted. XML-encoded models are unchanged, since XML attribute names are case-sensitive.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
 - version: 1.38.1
   changelogEntry:
     - summary: |

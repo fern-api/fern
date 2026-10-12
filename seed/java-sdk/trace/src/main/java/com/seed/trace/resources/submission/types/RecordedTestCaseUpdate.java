@@ -95,7 +95,6 @@ public final class RecordedTestCaseUpdate {
 
         private int traceResponsesSize;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class RecordedTestCaseUpdate {
         @java.lang.Override
         public RecordedTestCaseUpdate build() {
             return new RecordedTestCaseUpdate(testCaseId, traceResponsesSize, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("testCaseId") || key.equalsIgnoreCase("traceResponsesSize")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

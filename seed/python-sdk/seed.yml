@@ -189,6 +189,10 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: .
+  errors:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true

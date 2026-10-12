@@ -128,7 +128,6 @@ public final class CreateUserWithOptionsRequest {
 
         private Optional<String> xRequestId = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -190,6 +189,14 @@ public final class CreateUserWithOptionsRequest {
         @java.lang.Override
         public CreateUserWithOptionsRequest build() {
             return new CreateUserWithOptionsRequest(xRequestId, validate, body, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("validate") || key.equalsIgnoreCase("body")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

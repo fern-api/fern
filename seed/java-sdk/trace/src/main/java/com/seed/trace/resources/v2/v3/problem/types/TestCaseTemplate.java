@@ -114,7 +114,6 @@ public final class TestCaseTemplate {
 
         private TestCaseImplementation implementation;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -151,6 +150,16 @@ public final class TestCaseTemplate {
         @java.lang.Override
         public TestCaseTemplate build() {
             return new TestCaseTemplate(templateId, name, implementation, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("templateId")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("implementation")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
