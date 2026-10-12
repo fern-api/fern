@@ -1,8 +1,24 @@
 # Reference
 ## Conversations
-<details><summary><code>client.complex.<a href="/lib/seed/complex/client.rb">search</a>(index:, request) -> Seed::Complex::Types::PaginatedConversationResponse</code></summary>
+<details><summary><code>client.complex.<a href="/lib/seed/complex/client.rb">search</a>(index:, request) -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Complex::Types::Conversation` in the `conversations` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Complex::Types::PaginatedConversationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -68,9 +84,25 @@ client.complex.search(
 </details>
 
 ## InlineUsers InlineUsers
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_cursor_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_cursor_pagination</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -148,9 +180,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_mixed_type_cursor_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_mixed_type_cursor_pagination</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -196,9 +244,25 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: 
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_body_cursor_pagination</a>(request) -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_body_cursor_pagination</a>(request) -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -247,9 +311,25 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_pagination</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -327,9 +407,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_double_offset_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_double_offset_pagination</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -407,9 +503,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_body_offset_pagination</a>(request) -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_body_offset_pagination</a>(request) -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -458,9 +570,25 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_step_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_step_pagination</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -529,9 +657,25 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_pagination_has_next_page</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_pagination_has_next_page</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -600,9 +744,25 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_extended_results</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_extended_results</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -648,9 +808,25 @@ client.inline_users.inline_users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_extended_results_and_optional_data</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_extended_results_and_optional_data</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::InlineUsers::InlineUsers::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -696,9 +872,25 @@ client.inline_users.inline_users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_usernames</a>() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_usernames</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `String` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Types::UsernameCursor`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -747,9 +939,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_global_config</a>() -> Seed::InlineUsers::InlineUsers::Types::UsernameContainer</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_global_config</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `String` in the `results` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::InlineUsers::InlineUsers::Types::UsernameContainer`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -796,9 +1004,25 @@ client.inline_users.inline_users.list_with_cursor_pagination
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_cursor_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_cursor_pagination</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -876,9 +1100,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_mixed_type_cursor_pagination</a>() -> Seed::Users::Types::ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_mixed_type_cursor_pagination</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersMixedTypePaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -924,9 +1164,25 @@ client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_body_cursor_pagination</a>(request) -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_body_cursor_pagination</a>(request) -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -975,7 +1231,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_top_level_body_cursor_pagination</a>(request) -> Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_top_level_body_cursor_pagination</a>(request) -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
 
@@ -990,6 +1246,10 @@ in order to fetch the next page of results.
 Pagination endpoint with a top-level cursor field in the request body.
 This tests that the mock server correctly ignores cursor mismatches
 when getNextPage() is called with a different cursor value.
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
 </dd>
 </dl>
 </dd>
@@ -1053,9 +1313,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_pagination</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1133,9 +1409,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_double_offset_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_double_offset_pagination</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1213,9 +1505,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_body_offset_pagination</a>(request) -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_body_offset_pagination</a>(request) -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1264,9 +1572,25 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_step_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_step_pagination</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1335,9 +1659,25 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_pagination_has_next_page</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_pagination_has_next_page</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1406,9 +1746,25 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_extended_results</a>() -> Seed::Users::Types::ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_extended_results</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersExtendedResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1454,9 +1810,25 @@ client.users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_extended_results_and_optional_data</a>() -> Seed::Users::Types::ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_extended_results_and_optional_data</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `users` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersExtendedOptionalListResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1502,9 +1874,25 @@ client.users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_usernames</a>() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_usernames</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `String` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Types::UsernameCursor`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1553,9 +1941,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_usernames_with_optional_response</a>() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_usernames_with_optional_response</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `String` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Types::UsernameCursor`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1604,9 +2008,25 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_global_config</a>() -> Seed::Users::Types::UsernameContainer</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_global_config</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `String` in the `results` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::UsernameContainer`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1652,9 +2072,25 @@ client.users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_optional_data</a>() -> Seed::Users::Types::ListUsersOptionalDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_optional_data</a>() -> Seed::Internal::OffsetItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersOptionalDataPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1700,9 +2136,25 @@ client.users.list_with_optional_data(page: 1)
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_aliased_data</a>() -> Seed::Users::Types::ListUsersAliasedDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_aliased_data</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each item in the `data` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Users::Types::ListUsersAliasedDataPaginationResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 

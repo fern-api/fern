@@ -6,6 +6,7 @@ import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { getEndpointRequest } from "../utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { getItemIteratorDocs, getItemIteratorReturnType } from "../utils/itemIteratorPagination.js";
 import { responseBodyLoader } from "../utils/responseBody.js";
 import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
 
@@ -47,7 +48,8 @@ export class HttpEndpointGenerator {
     }): ruby.Method {
         const rawClient = new RawClient(this.context);
 
-        const returnType = getEndpointReturnType({ context: this.context, endpoint });
+        const itemIteratorReturnType = getItemIteratorReturnType({ context: this.context, endpoint });
+        const returnType = itemIteratorReturnType ?? getEndpointReturnType({ context: this.context, endpoint });
 
         const request = getEndpointRequest({
             context: this.context,
@@ -338,6 +340,15 @@ export class HttpEndpointGenerator {
                 default:
                     assertNever(endpoint.pagination);
             }
+        }
+
+        if (this.context.customConfig.fetchFirstPageOnCall === true && itemIteratorReturnType != null) {
+            requestStatements = requestStatements.map((statement) =>
+                ruby.codeblock((writer) => {
+                    statement.write(writer);
+                    writer.write(".load_first_page");
+                })
+            );
         }
 
         statements.push(...requestStatements);
@@ -787,7 +798,8 @@ export class HttpEndpointGenerator {
         endpoint: FernIr.HttpEndpoint;
         request: ReturnType<typeof getEndpointRequest>;
     }): string {
-        return endpoint.docs ?? "";
+        const paginationDocs = getItemIteratorDocs({ context: this.context, endpoint });
+        return [endpoint.docs, paginationDocs].filter((docs) => docs != null && docs !== "").join("\n\n");
     }
 
     private getEndpointCodeExample({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {

@@ -29,6 +29,7 @@ import com.seed.api.types.StreamDataContextResponse;
 import com.seed.api.types.StreamDataContextWithEnvelopeSchemaResponse;
 import com.seed.api.types.StreamNoContextResponse;
 import com.seed.api.types.StreamProtocolCollisionResponse;
+import com.seed.api.types.StreamProtocolMixedSchemaResponse;
 import com.seed.api.types.StreamProtocolNoCollisionResponse;
 import com.seed.api.types.StreamProtocolWithFlatSchemaResponse;
 import com.seed.api.types.StreamRequest;
@@ -37,6 +38,7 @@ import com.seed.api.types.StreamXFernStreamingUnionStreamRequest;
 import com.seed.api.types.UnionStreamRequestBase;
 import com.seed.api.types.ValidateUnionRequestResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -456,7 +458,100 @@ public class RawSeedApiClient {
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
                         Stream.fromSseWithEventDiscrimination(
-                                StreamProtocolWithFlatSchemaResponse.class, new ResponseBodyReader(response), "event"),
+                                StreamProtocolWithFlatSchemaResponse.class,
+                                new ResponseBodyReader(response),
+                                "event",
+                                null,
+                                Arrays.asList()),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema() {
+        return streamProtocolMixedSchema(StreamRequest.builder().build());
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            RequestOptions requestOptions) {
+        return streamProtocolMixedSchema(StreamRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            StreamRequest request) {
+        return streamProtocolMixedSchema(request, null);
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            StreamRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("stream/protocol-mixed-schema");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
+        try {
+            Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        Stream.fromSseWithEventDiscrimination(
+                                StreamProtocolMixedSchemaResponse.class,
+                                new ResponseBodyReader(response),
+                                "event",
+                                null,
+                                Arrays.asList("object_data")),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

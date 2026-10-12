@@ -374,6 +374,19 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
     // is nothing here to collide with — but the reserved-name check stays,
     // because `create` owns a handful of long names of its own.
     let mut create = create;
+    if let Some(op) = &config.provision_operation {
+        create = create.arg(
+            Arg::new("provision")
+                .long("provision")
+                .action(ArgAction::SetTrue)
+                .conflicts_with_all(["with-token", "from-env"])
+                .help(format!(
+                    "Mint a new remote credential for this profile (runs `{}` with your \
+                     current credentials) and store it in the keychain",
+                    op.operation.replace('.', " "),
+                )),
+        );
+    }
     for name in vocabulary.tenant_keys() {
         let kebab = crate::text::to_kebab_flag(name);
         if create_owns_flag(&kebab) {
@@ -473,7 +486,7 @@ fn create_owns_flag(kebab: &str) -> bool {
         kebab,
         "name" | "parent" | "set" | "server-var" | "base-url" | "default-format"
             | "retries"
-            | "credential" | "oauth-client-id" | "with-token" | "scheme" | "from-env"
+            | "credential" | "oauth-client-id" | "with-token" | "scheme" | "from-env" | "provision"
             | "force" | "use" | "help"
     ) || kebab == PROFILE_FLAG
 }
@@ -544,10 +557,16 @@ pub struct ProfilesContext<'a> {
     pub bindings: &'a [Box<dyn crate::binding::Binding>],
     /// Command path of the revoke operation, when one is configured.
     pub revoke_op_path: Option<Vec<String>>,
+    /// The provisioning operation, when one is configured.
+    pub provision: Option<super::ProvisionOperation>,
     /// The configured group name. Carried rather than assumed, so a CLI that
     /// renamed the group (`commandName: tenants`) does not get hints telling
     /// it to run `<bin> profiles use …`, which would not resolve.
     pub command_name: &'a str,
+    /// The parsed root command line, handed to
+    /// [`Binding::invoke_operation`](crate::binding::Binding::invoke_operation)
+    /// so `--base-url` and server-variable flags reach provision/revoke calls.
+    pub root_matches: &'a ArgMatches,
     pub auth_bindings: &'a [(String, SchemeBinding)],
     pub login_flows: &'a [DynLoginFlow],
     pub vocabulary: &'a Vocabulary,
@@ -564,7 +583,7 @@ pub async fn dispatch_profiles<W: Write>(
 ) -> Result<(), CliError> {
     let mut store = open_store(ctx.cli_name)?;
     match matches.subcommand() {
-        Some(("create", m)) => handle_create(m, ctx, &mut store),
+        Some(("create", m)) => handle_create(m, ctx, &mut store).await,
         Some(("list" | "ls", m)) => handle_list(m, ctx, &store, out),
         Some(("use", m)) => handle_use(m, ctx, &mut store),
         Some(("set", m)) => handle_set(m, ctx, &mut store),
@@ -600,7 +619,7 @@ fn open_store(cli_name: &str) -> Result<ProfileStore, CliError> {
 
 // ── create ──────────────────────────────────────────────────────────────
 
-fn handle_create(
+async fn handle_create(
     matches: &ArgMatches,
     ctx: &ProfilesContext<'_>,
     store: &mut ProfileStore,
@@ -625,10 +644,25 @@ fn handle_create(
         })?;
     validate_profile_name(&name)?;
 
+    let provision = matches
+        .try_get_one::<bool>("provision")
+        .ok()
+        .flatten()
+        .copied()
+        .unwrap_or(false);
     let existing = store.entry(&name);
     if existing.is_some() && !matches.get_flag("force") {
         return Err(CliError::Validation(format!(
             "profile `{name}` already exists. Pass --force to overwrite it."
+        )));
+    }
+    if provision
+        && existing
+            .as_ref()
+            .is_some_and(|entry| !entry.credential_parameters.is_empty())
+    {
+        return Err(CliError::Validation(format!(
+            "profile `{name}` already owns a provisioned credential. Run `profiles remove {name} --revoke` first so the old key is revoked instead of orphaned."
         )));
     }
 
@@ -729,7 +763,7 @@ fn handle_create(
     //
     // An explicit `--credential` still wins: sharing a slot deliberately is a
     // supported thing to ask for.
-    if (matches.get_flag("with-token") || matches.get_flag("from-env"))
+    if (matches.get_flag("with-token") || matches.get_flag("from-env") || provision)
         && matches.get_one::<String>("credential").is_none()
     {
         entry.credential = Some(name.clone());
@@ -783,12 +817,60 @@ fn handle_create(
             )),
         );
     }
+    let minted = if provision {
+        let minted = provision_remote_credential(matches, ctx, &resolved).await?;
+        entry.credential_parameters = minted.credential_parameters.clone();
+        Some(minted)
+    } else {
+        None
+    };
 
     store.upsert(&entry);
     if matches.get_flag("use") {
         store.set_active(&name);
     }
     store.save()?;
+
+    // The profile (with the key's identity) is on disk before the secret goes
+    // into the keyring: if this write fails the key is still reachable
+    // through `profiles remove --revoke` rather than orphaned.
+    if let Some(minted) = minted {
+        let scheme = minted.scheme;
+        let account =
+            super::keyring_account_for(&scheme, resolved.credential.as_deref().unwrap_or(&name));
+        active_store().set(ctx.cli_name, &account, &minted.stored).map_err(|e| {
+            CliError::Validation(format!(
+                "provisioned a credential{} but could not store it: {e}. \
+                 Run `profiles remove {name} --revoke` to revoke it.",
+                minted
+                    .identity
+                    .as_deref()
+                    .map(|id| format!(" ({id})"))
+                    .unwrap_or_default(),
+            ))
+        })?;
+        let _ = writeln!(
+            stderr,
+            "{}",
+            login::green(&format!(
+                "✓ Provisioned a credential for profile `{name}`{} (scheme {scheme}) and stored it in {}",
+                minted
+                    .identity
+                    .as_deref()
+                    .map(|id| format!(" ({id})"))
+                    .unwrap_or_default(),
+                active_store().backend_label(),
+            )),
+        );
+        if !minted.recorded_identity {
+            let _ = writeln!(
+                stderr,
+                "  No `revokeParameters` are configured, so the credential's identity was not \
+                 recorded; `profiles remove {name} --revoke` can only pass the profile's own \
+                 parameters.",
+            );
+        }
+    }
 
     let verb = if existing_was_updated(matches) {
         "Updated"
@@ -823,7 +905,7 @@ fn handle_create(
     // Suppressed when a credential was just captured, when the profile
     // inherits one, and when env vars already supply it — in those cases
     // nothing is missing and the line would be noise.
-    let captured = matches.get_flag("with-token") || matches.get_flag("from-env");
+    let captured = matches.get_flag("with-token") || matches.get_flag("from-env") || provision;
     let inherits = entry.parent.is_some() || matches.get_one::<String>("credential").is_some();
     if !captured && !inherits && !any_env_credential(ctx) {
         let _ = writeln!(
@@ -1936,6 +2018,127 @@ async fn handle_remove(
     Ok(())
 }
 
+/// What `profiles create --provision` minted: the keyring value to store,
+/// the scheme it belongs to, and the fields `--revoke` will need later.
+struct MintedCredential {
+    scheme: String,
+    stored: String,
+    credential_parameters: BTreeMap<String, String>,
+    /// The first revoke parameter's value (the key's id), for the success line.
+    identity: Option<String>,
+    /// Whether any `revokeParameters` were configured; without them the
+    /// profile has no record of which remote credential it owns.
+    recorded_identity: bool,
+}
+
+/// Call the configured provisioning operation and map its response onto the
+/// profile's credential.
+///
+/// The request authenticates with whatever the caller's environment already
+/// supplies — the `profiles` group runs unprofiled, so this is the parent
+/// account's SID + token, which is exactly the credential a key-minting
+/// endpoint requires. Arguments are the profile's own parameters (`--set`,
+/// tenant-key flags), the same contract `--revoke` has.
+async fn provision_remote_credential(
+    matches: &ArgMatches,
+    ctx: &ProfilesContext<'_>,
+    resolved: &store::ResolvedProfile,
+) -> Result<MintedCredential, CliError> {
+    let Some(op) = ctx.provision.as_ref() else {
+        return Err(CliError::Validation(
+            "--provision is not configured for this CLI.".to_string(),
+        ));
+    };
+    let scheme = login::resolve_scheme_for(
+        matches.get_one::<String>("scheme"),
+        ctx.auth_bindings,
+        ctx.login_flows,
+    )?;
+    let fields = login::scheme_credential_fields(&scheme, ctx.auth_bindings);
+
+    let params: serde_json::Map<String, serde_json::Value> = resolved
+        .parameters
+        .iter()
+        .map(|(k, v)| (k.clone(), serde_json::Value::String(v.clone())))
+        .collect();
+    let params = serde_json::Value::Object(params);
+    let op_path = op.op_path();
+    let mut response = None;
+    for binding in ctx.bindings {
+        if let Some(value) = binding
+            .invoke_operation(&op_path, &params, ctx.root_matches, Some(resolved))
+            .await? {
+            response = Some(value);
+            break;
+        }
+    }
+    let Some(response) = response else {
+        return Err(CliError::Validation(format!(
+            "--provision: no operation `{}` found in this CLI.",
+            op_path.join(" "),
+        )));
+    };
+
+    let read = |field: &str| -> Result<String, CliError> {
+        response
+            .get(field)
+            .and_then(|v| match v {
+                serde_json::Value::String(s) => Some(s.clone()),
+                serde_json::Value::Number(n) => Some(n.to_string()),
+                _ => None,
+            })
+            .ok_or_else(|| {
+                CliError::Validation(format!(
+                    "--provision: the `{}` response has no string field `{field}`; \
+                     the credential was not stored. Revoke it manually if it was created.",
+                    op_path.join(" "),
+                ))
+            })
+    };
+
+    let stored = match fields {
+        Some(fields) => {
+            let mut halves: Vec<(&str, String)> = Vec::with_capacity(fields.len());
+            for field in &fields {
+                let Some((_, response_field)) =
+                    op.credential_fields.iter().find(|(f, _)| f == field)
+                else {
+                    return Err(CliError::Validation(format!(
+                        "--provision: scheme `{scheme}` needs a `{field}` value but the \
+                         provisioning operation does not map one; configure \
+                         `profiles.provisionOperation.credential.{field}`.",
+                    )));
+                };
+                halves.push((field, read(response_field)?));
+            }
+            login::multi_field_keyring_value(&halves)?
+        }
+        None => {
+            let Some((_, response_field)) = op.credential_fields.first() else {
+                return Err(CliError::Validation(
+                    "--provision: the provisioning operation maps no credential field.".to_string(),
+                ));
+            };
+            read(response_field)?
+        }
+    };
+
+    let mut credential_parameters = BTreeMap::new();
+    let mut identity = None;
+    for (parameter, response_field) in &op.revoke_parameters {
+        let value = read(response_field)?;
+        identity.get_or_insert_with(|| value.clone());
+        credential_parameters.insert(parameter.clone(), value);
+    }
+    Ok(MintedCredential {
+        scheme,
+        stored,
+        credential_parameters,
+        identity,
+        recorded_identity: !op.revoke_parameters.is_empty(),
+    })
+}
+
 /// Call the configured revoke operation with the profile's stored parameters.
 ///
 /// The parameters are the profile's own map, which is the only argument
@@ -1954,17 +2157,25 @@ async fn revoke_remote_credential(
         ));
     };
     let resolved = store::resolve(store, name)?;
-    let params: serde_json::Map<String, serde_json::Value> = resolved
+    let mut params: serde_json::Map<String, serde_json::Value> = resolved
         .parameters
         .iter()
         .map(|(k, v)| (k.clone(), serde_json::Value::String(v.clone())))
         .collect();
+    // The identity `--provision` recorded (the key's own SID) overlays the
+    // request defaults: it is the one argument the revoke exists to carry.
+    for (k, v) in &resolved.credential_parameters {
+        params.insert(k.clone(), serde_json::Value::String(v.clone()));
+    }
     let params = serde_json::Value::Object(params);
 
     for binding in ctx.bindings {
         // `Ok(None)` means "not my path" — keep looking, exactly as the
         // `--schema` walk does.
-        if binding.invoke_operation(op_path, &params).await?.is_some() {
+        if binding
+            .invoke_operation(op_path, &params, ctx.root_matches, Some(&resolved))
+            .await?
+            .is_some() {
             return Ok(());
         }
     }
@@ -2039,6 +2250,7 @@ fn insert_settings(
     }
     insert_map(map, "parameters", &profile.parameters);
     insert_map(map, "server_variables", &profile.server_variables);
+    insert_map(map, "credential_parameters", &profile.credential_parameters);
 }
 
 /// `profiles show <name>` — inspect a named profile without selecting it.

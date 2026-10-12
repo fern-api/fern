@@ -3,16 +3,16 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Requests\StreamXFernStreamingNullableConditionStreamRequest;
+use Seed\Types\UnionStreamRequestBase;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->streamXFernStreamingNullableConditionStream(
-    new StreamXFernStreamingNullableConditionStreamRequest([
-        'query' => 'query',
-        'stream' => true,
+$client->validateUnionRequest(
+    new UnionStreamRequestBase([
+        'streamResponse' => true,
+        'prompt' => 'prompt',
     ]),
 );

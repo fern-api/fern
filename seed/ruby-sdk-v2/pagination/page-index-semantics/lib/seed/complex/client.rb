@@ -10,6 +10,13 @@ module Seed
         @client = client
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Complex::Types::Conversation` in the
+      # `conversations` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as
+      # a `Seed::Complex::Types::PaginatedConversationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Seed::Complex::Types::SearchRequest]
       # @option request_options [String] :base_url
@@ -33,7 +40,7 @@ module Seed
       #     }
       #   )
       #
-      # @return [Seed::Complex::Types::PaginatedConversationResponse]
+      # @return [Seed::Internal::CursorItemIterator]
       def search(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::CursorItemIterator.new(

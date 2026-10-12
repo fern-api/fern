@@ -19,6 +19,7 @@ import com.seed.api.types.StreamDataContextResponse;
 import com.seed.api.types.StreamDataContextWithEnvelopeSchemaResponse;
 import com.seed.api.types.StreamNoContextResponse;
 import com.seed.api.types.StreamProtocolCollisionResponse;
+import com.seed.api.types.StreamProtocolMixedSchemaResponse;
 import com.seed.api.types.StreamProtocolNoCollisionResponse;
 import com.seed.api.types.StreamProtocolWithFlatSchemaResponse;
 import com.seed.api.types.StreamRequest;
@@ -187,6 +188,35 @@ public class SeedApiClient implements AutoCloseable {
         return this.rawClient
                 .streamProtocolWithFlatSchema(request, requestOptions)
                 .body();
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public Iterable<StreamProtocolMixedSchemaResponse> streamProtocolMixedSchema() {
+        return this.rawClient.streamProtocolMixedSchema().body();
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public Iterable<StreamProtocolMixedSchemaResponse> streamProtocolMixedSchema(RequestOptions requestOptions) {
+        return this.rawClient.streamProtocolMixedSchema(requestOptions).body();
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public Iterable<StreamProtocolMixedSchemaResponse> streamProtocolMixedSchema(StreamRequest request) {
+        return this.rawClient.streamProtocolMixedSchema(request).body();
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public Iterable<StreamProtocolMixedSchemaResponse> streamProtocolMixedSchema(
+            StreamRequest request, RequestOptions requestOptions) {
+        return this.rawClient.streamProtocolMixedSchema(request, requestOptions).body();
     }
 
     /**

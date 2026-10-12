@@ -548,6 +548,25 @@ describe("packLocalOutputForGroup", () => {
         expect(distFiles).toEqual([`${path.basename(outputDir)}-source.zip`]);
     });
 
+    it("keeps README.md and reference.md in fern-dist when packOnly is set", async () => {
+        await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
+        await writeFile(path.join(outputDir, "README.md"), "# SDK\n");
+        await writeFile(path.join(outputDir, "reference.md"), "# Reference\n");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-go-sdk", language: "go", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), packOnly: true });
+
+        expect(await readdir(outputDir)).toEqual(["fern-dist"]);
+        expect((await readdir(path.join(outputDir, "fern-dist"))).sort()).toEqual(
+            ["README.md", "reference.md", `${path.basename(outputDir)}-source.zip`].sort()
+        );
+        expect(await readFile(path.join(outputDir, "fern-dist", "reference.md"), "utf-8")).toBe("# Reference\n");
+    });
+
     it("preserves .git, .fernignore, and fernignore-listed paths when packOnly is set", async () => {
         await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
         await mkdir(path.join(outputDir, ".git"), { recursive: true });

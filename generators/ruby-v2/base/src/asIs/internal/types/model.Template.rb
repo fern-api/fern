@@ -94,6 +94,18 @@ module <%= gem_namespace %>
             define_setter(name)
           end
 
+          # Whether an unknown input key is dropped instead of kept as an extra field: it matches a declared
+          # field's name or API name, ignoring case
+          #
+          # @api private
+          #
+          # @param key [Symbol, String]
+          # @return [Boolean]
+          def drop_extra_key?(key)
+            key = key.to_s
+            fields.any? { |name, field| name.to_s.casecmp?(key) || field.api_name.to_s.casecmp?(key) }
+          end
+
           # @api private
           private def define_accessor(name)
             method_name = name.to_sym
@@ -163,8 +175,12 @@ module <%= gem_namespace %>
             @data[field_name] = Utils.coerce(field.type, field_value)
           end
 
-          # Any remaining values in the input become extra fields
+          # Any remaining values in the input become extra fields, except keys that match a declared field
+          # case-insensitively (e.g. `VALUE` next to `value`): re-emitting those would let a case-insensitive
+          # JSON decoder downstream read the extra key instead of the declared field.
           values.each do |name, value|
+            next if self.class.drop_extra_key?(name)
+
             self.class.add_extra_field_definition(name: name, type: value.class)
 
             @data[name.to_sym] = value

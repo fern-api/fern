@@ -9,12 +9,16 @@ public partial class Examples
             }
         );
 
-        await client.StreamXFernStreamingNullableConditionAsync(
-            new StreamXFernStreamingNullableConditionRequest {
+        await foreach (var item in client.StreamXFernStreamingNullableConditionStreamAsync(
+            new StreamXFernStreamingNullableConditionStreamRequest {
                 Query = "query",
-                Stream = false
+                Stream = true
             }
-        );
+        ))
+        {
+            /* consume each item */
+        }
+        ;
     }
 
 }

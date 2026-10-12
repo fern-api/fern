@@ -82,12 +82,13 @@ export async function validateDocsWorkspace(
     apiWorkspaces: AbstractAPIWorkspace<unknown>[],
     ossWorkspaces: OSSWorkspace[],
     onlyCheckBrokenLinks?: boolean,
-    excludeRules?: string[]
+    excludeRules?: string[],
+    skipApiReferences?: boolean
 ): Promise<ValidationViolation[]> {
     // In the future we'll do something more sophisticated that lets you pick and choose which rules to run.
     // For right now, the only use case is to check for broken links, so only expose a choice to run that rule.
     const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks] : getAllRules(excludeRules);
-    return runRulesOnDocsWorkspace({ workspace, rules, context, apiWorkspaces, ossWorkspaces });
+    return runRulesOnDocsWorkspace({ workspace, rules, context, apiWorkspaces, ossWorkspaces, skipApiReferences });
 }
 
 /**
@@ -135,13 +136,19 @@ export async function runRulesOnDocsWorkspace({
     rules: selectedRules,
     context,
     apiWorkspaces,
-    ossWorkspaces
+    ossWorkspaces,
+    skipApiReferences = false
 }: {
     workspace: DocsWorkspace;
     rules: Rule[];
     context: TaskContext;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
+    /**
+     * Set by `fern docs dev --skip-api`. Keeps `valid-markdown-links` excluded even when docs.yml
+     * configures `check.rules.broken-links`, because that rule rebuilds every API reference.
+     */
+    skipApiReferences?: boolean;
 }): Promise<ValidationViolation[]> {
     const startMemory = process.memoryUsage();
     const rules = [...selectedRules];
@@ -151,7 +158,11 @@ export async function runRulesOnDocsWorkspace({
     // Include it here when docs.yml configures `check.rules.broken-links` so that config takes effect
     // until those CLI args are removed.
     if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
-        rules.push(ValidMarkdownLinks);
+        if (skipApiReferences) {
+            context.logger.debug(`Skipping ${ValidMarkdownLinks.name}: API references are skipped (--skip-api)`);
+        } else {
+            rules.push(ValidMarkdownLinks);
+        }
     }
     context.logger.debug(`Starting docs validation with ${rules.length} rules: ${rules.map((r) => r.name).join(", ")}`);
     context.logger.debug(

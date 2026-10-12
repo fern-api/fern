@@ -1,0 +1,19 @@
+groups:
+  java-direct:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 1.0.0
+        output:
+          location: maven
+          coordinate: com.acme:acme-java
+          username: ${MAVEN_USERNAME}
+          password: ${MAVEN_PASSWORD}
+  java-github:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 1.0.0
+        output:
+          location: maven
+          coordinate: com.acme:acme-java
+        github:
+          repository: acme/acme-java

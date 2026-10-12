@@ -28,6 +28,7 @@ from .types.stream_data_context_response import StreamDataContextResponse
 from .types.stream_data_context_with_envelope_schema_response import StreamDataContextWithEnvelopeSchemaResponse
 from .types.stream_no_context_response import StreamNoContextResponse
 from .types.stream_protocol_collision_response import StreamProtocolCollisionResponse
+from .types.stream_protocol_mixed_schema_response import StreamProtocolMixedSchemaResponse
 from .types.stream_protocol_no_collision_response import StreamProtocolNoCollisionResponse
 from .types.stream_protocol_with_flat_schema_response import StreamProtocolWithFlatSchemaResponse
 from .types.stream_x_fern_streaming_union_request import StreamXFernStreamingUnionRequest
@@ -100,7 +101,7 @@ class RawSeedApi:
                                             ProtocolStringEvent,
                                             parse_obj_as(
                                                 type_=ProtocolStringEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -111,7 +112,7 @@ class RawSeedApi:
                                             ProtocolNumberEvent,
                                             parse_obj_as(
                                                 type_=ProtocolNumberEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -122,7 +123,7 @@ class RawSeedApi:
                                             ProtocolObjectEvent,
                                             parse_obj_as(
                                                 type_=ProtocolObjectEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -204,7 +205,7 @@ class RawSeedApi:
                                             ProtocolStringEvent,
                                             parse_obj_as(
                                                 type_=ProtocolStringEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -215,7 +216,7 @@ class RawSeedApi:
                                             ProtocolNumberEvent,
                                             parse_obj_as(
                                                 type_=ProtocolNumberEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -226,7 +227,7 @@ class RawSeedApi:
                                             ProtocolCollisionObjectEvent,
                                             parse_obj_as(
                                                 type_=ProtocolCollisionObjectEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -469,6 +470,99 @@ class RawSeedApi:
                                         )
                                     except Exception as e:
                                         warning(f"Failed to parse SSE event 'entity': {e}, sse: {_sse!r}")
+                            return
+
+                        return HttpResponse(response=_response, data=_iter())
+                    _response.read()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield _stream()
+
+    @contextlib.contextmanager
+    def stream_protocol_mixed_schema(
+        self, *, query: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamProtocolMixedSchemaResponse]]]:
+        """
+        context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+
+        Parameters
+        ----------
+        query : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[HttpResponse[typing.Iterator[StreamProtocolMixedSchemaResponse]]]
+            SSE stream with protocol context and mixed variant schemas
+        """
+        with self._client_wrapper.httpx_client.stream(
+            "stream/protocol-mixed-schema",
+            method="POST",
+            json={
+                "query": query,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        ) as _response:
+
+            def _stream() -> HttpResponse[typing.Iterator[StreamProtocolMixedSchemaResponse]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+
+                        def _iter():
+                            _event_source = EventSource(_response)
+                            for _sse in _event_source.iter_sse():
+                                if _sse.data == None:
+                                    return
+                                if len(_sse.data) == 0:
+                                    continue
+                                if _sse.event == "heartbeat":
+                                    try:
+                                        yield typing.cast(
+                                            DataContextHeartbeat,
+                                            parse_obj_as(
+                                                type_=DataContextHeartbeat,  # type: ignore
+                                                object_=json.loads(_sse.data),
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'heartbeat': {e}, sse: {_sse!r}")
+                                elif _sse.event == "entity":
+                                    try:
+                                        yield typing.cast(
+                                            DataContextEntityEvent,
+                                            parse_obj_as(
+                                                type_=DataContextEntityEvent,  # type: ignore
+                                                object_=json.loads(_sse.data),
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'entity': {e}, sse: {_sse!r}")
+                                elif _sse.event == "object_data":
+                                    try:
+                                        yield typing.cast(
+                                            ProtocolObjectEvent,
+                                            parse_obj_as(
+                                                type_=ProtocolObjectEvent,  # type: ignore
+                                                object_={"data": json.loads(_sse.data)},
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'object_data': {e}, sse: {_sse!r}")
                             return
 
                         return HttpResponse(response=_response, data=_iter())
@@ -1402,7 +1496,7 @@ class AsyncRawSeedApi:
                                             ProtocolStringEvent,
                                             parse_obj_as(
                                                 type_=ProtocolStringEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -1413,7 +1507,7 @@ class AsyncRawSeedApi:
                                             ProtocolNumberEvent,
                                             parse_obj_as(
                                                 type_=ProtocolNumberEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -1424,7 +1518,7 @@ class AsyncRawSeedApi:
                                             ProtocolObjectEvent,
                                             parse_obj_as(
                                                 type_=ProtocolObjectEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -1506,7 +1600,7 @@ class AsyncRawSeedApi:
                                             ProtocolStringEvent,
                                             parse_obj_as(
                                                 type_=ProtocolStringEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -1517,7 +1611,7 @@ class AsyncRawSeedApi:
                                             ProtocolNumberEvent,
                                             parse_obj_as(
                                                 type_=ProtocolNumberEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -1528,7 +1622,7 @@ class AsyncRawSeedApi:
                                             ProtocolCollisionObjectEvent,
                                             parse_obj_as(
                                                 type_=ProtocolCollisionObjectEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
+                                                object_={"data": json.loads(_sse.data)},
                                             ),
                                         )
                                     except Exception as e:
@@ -1771,6 +1865,99 @@ class AsyncRawSeedApi:
                                         )
                                     except Exception as e:
                                         warning(f"Failed to parse SSE event 'entity': {e}, sse: {_sse!r}")
+                            return
+
+                        return AsyncHttpResponse(response=_response, data=_iter())
+                    await _response.aread()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield await _stream()
+
+    @contextlib.asynccontextmanager
+    async def stream_protocol_mixed_schema(
+        self, *, query: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamProtocolMixedSchemaResponse]]]:
+        """
+        context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+
+        Parameters
+        ----------
+        query : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamProtocolMixedSchemaResponse]]]
+            SSE stream with protocol context and mixed variant schemas
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            "stream/protocol-mixed-schema",
+            method="POST",
+            json={
+                "query": query,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        ) as _response:
+
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamProtocolMixedSchemaResponse]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+
+                        async def _iter():
+                            _event_source = EventSource(_response)
+                            async for _sse in _event_source.aiter_sse():
+                                if _sse.data == None:
+                                    return
+                                if len(_sse.data) == 0:
+                                    continue
+                                if _sse.event == "heartbeat":
+                                    try:
+                                        yield typing.cast(
+                                            DataContextHeartbeat,
+                                            parse_obj_as(
+                                                type_=DataContextHeartbeat,  # type: ignore
+                                                object_=json.loads(_sse.data),
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'heartbeat': {e}, sse: {_sse!r}")
+                                elif _sse.event == "entity":
+                                    try:
+                                        yield typing.cast(
+                                            DataContextEntityEvent,
+                                            parse_obj_as(
+                                                type_=DataContextEntityEvent,  # type: ignore
+                                                object_=json.loads(_sse.data),
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'entity': {e}, sse: {_sse!r}")
+                                elif _sse.event == "object_data":
+                                    try:
+                                        yield typing.cast(
+                                            ProtocolObjectEvent,
+                                            parse_obj_as(
+                                                type_=ProtocolObjectEvent,  # type: ignore
+                                                object_={"data": json.loads(_sse.data)},
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'object_data': {e}, sse: {_sse!r}")
                             return
 
                         return AsyncHttpResponse(response=_response, data=_iter())

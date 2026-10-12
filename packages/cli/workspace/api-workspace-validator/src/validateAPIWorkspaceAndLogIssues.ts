@@ -30,7 +30,11 @@ export async function collectAPIWorkspaceViolations({
 
     const startTime = performance.now();
     const apiViolations = validateFernWorkspace(workspace, context.logger);
-    const generatorViolations = await validateGeneratorsWorkspace(workspace, context.logger);
+    // Backs `fern check`, so it also runs check-only generators.yml rules. Generation paths use
+    // validateAPIWorkspaceAndLogIssues, which skips them.
+    const generatorViolations = await validateGeneratorsWorkspace(workspace, context.logger, {
+        includeCheckOnlyRules: true
+    });
     const violations = [...apiViolations, ...generatorViolations];
     if (ossWorkspace) {
         violations.push(...(await validateOSSWorkspace(ossWorkspace, context)));

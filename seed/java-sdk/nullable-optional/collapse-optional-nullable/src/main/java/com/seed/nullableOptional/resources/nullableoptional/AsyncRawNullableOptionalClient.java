@@ -93,7 +93,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -182,7 +182,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -288,7 +288,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -398,7 +398,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<List<UserResponse>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -493,7 +493,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<List<UserResponse>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -585,7 +585,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -666,7 +666,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -775,7 +775,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -867,7 +867,7 @@ public class AsyncRawNullableOptionalClient {
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<DeserializationTestResponse>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -961,7 +961,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<List<UserResponse>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -1046,7 +1046,7 @@ public class AsyncRawNullableOptionalClient {
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<OptionalNullable<NotificationMethod>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -1141,7 +1141,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<List<String>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -1234,7 +1234,7 @@ public class AsyncRawNullableOptionalClient {
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<OptionalNullable<List<SearchResult>>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

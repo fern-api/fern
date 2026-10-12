@@ -13,7 +13,14 @@ import fs from "fs-extra";
 import path from "path";
 
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
-import { createDefaultOpenAPIWorkspace, createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace.js";
+import {
+    createDefaultOpenAPIWorkspace,
+    createFernWorkspace,
+    createOpenAPIWorkspace,
+    getOpenAPIFileName
+} from "./createWorkspace.js";
+import { preserveDocsSpecs, repointRelocatedSpecs } from "./docsYmlSync.js";
+import { initializeDocs } from "./initializeDocs.js";
 
 export async function initializeAPI({
     organization,
@@ -22,6 +29,7 @@ export async function initializeAPI({
     openApiUrl,
     useFernDefinition,
     useSdkConfig,
+    includeDocs,
     context
 }: {
     organization: string | undefined;
@@ -30,6 +38,8 @@ export async function initializeAPI({
     openApiUrl?: string;
     useFernDefinition: boolean;
     useSdkConfig: boolean;
+    /** Whether to also initialize the docs. Only applies with `useSdkConfig`. */
+    includeDocs: boolean;
     context: TaskContext;
 }): Promise<void> {
     if (useSdkConfig && useFernDefinition) {
@@ -51,6 +61,10 @@ export async function initializeAPI({
         openApiPath,
         taskContext: context
     });
+    if (useSdkConfig && directoryOfWorkspace === absolutePathToFernDirectory) {
+        // The API's spec is written into the fern directory, where the docs may keep a spec of their own.
+        await preserveDocsSpecs({ absolutePathToFernDirectory, taskContext: context });
+    }
     const sdkName = directoryOfWorkspace === absolutePathToFernDirectory ? "api" : path.basename(directoryOfWorkspace);
     if (relocatedOpenApiPath != null || openApiUrl != null) {
         await createOpenAPIWorkspace({
@@ -81,6 +95,32 @@ export async function initializeAPI({
 
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     }
+
+    // The docs cannot read an SDK Config API, so they are given its spec instead.
+    if (useSdkConfig) {
+        await repointRelocatedSpecs({ absolutePathToFernDirectory, taskContext: context });
+        if (includeDocs) {
+            await initializeDocs({
+                organization,
+                versionOfCli,
+                taskContext: context,
+                useSdkConfig,
+                openApi: openApiUrl ?? getSpecPathOfNewApi({ directoryOfWorkspace, relocatedOpenApiPath })
+            });
+        }
+    }
+}
+
+/** Where `createOpenAPIWorkspace` and `createDefaultOpenAPIWorkspace` wrote the spec of the new API. */
+function getSpecPathOfNewApi({
+    directoryOfWorkspace,
+    relocatedOpenApiPath
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    relocatedOpenApiPath: AbsoluteFilePath | undefined;
+}): AbsoluteFilePath {
+    const fileName = relocatedOpenApiPath != null ? getOpenAPIFileName(relocatedOpenApiPath) : "openapi.yml";
+    return join(directoryOfWorkspace, RelativeFilePath.of(fileName));
 }
 
 async function getDirectoryOfNewAPIWorkspace({

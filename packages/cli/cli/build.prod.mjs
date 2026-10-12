@@ -9,7 +9,6 @@ buildCli({
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator.buildwithfern.com",
         DEFAULT_SDK_GEN_API_ORIGIN: "https://sdk-gen.postman.co",
         DEFAULT_USE_SDK_CONFIG: "false",
-        DEFAULT_USE_SDK_GEN_API: "false",
         DEFAULT_VENUS_ORIGIN: "https://venus.buildwithfern.com",
         DEFAULT_FDR_ORIGIN: "https://registry.buildwithfern.com",
         DEFAULT_FAI_ORIGIN: "https://fai.buildwithfern.com",
@@ -18,6 +17,9 @@ buildCli({
         FERN_DASHBOARD_URL_DEFAULT: "https://dashboard.buildwithfern.com",
         LOCAL_STORAGE_FOLDER: ".fern",
         POSTHOG_API_KEY: process.env.POSTHOG_API_KEY ?? "",
+        // Feature flags are evaluated independently of event telemetry; an empty key turns every flag off.
+        POSTHOG_FEATURE_FLAGS_API_KEY: process.env.POSTHOG_API_KEY ?? "",
+        FERN_CLI_RELEASE_ENVIRONMENT: "prod",
         SENTRY_DSN: process.env.SENTRY_DSN ?? "",
         SENTRY_ENVIRONMENT: "production",
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",

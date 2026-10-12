@@ -1,0 +1,3 @@
+rootProject.name = 'java-endpoint-security-oauth-token-override'
+
+include 'sample-app'

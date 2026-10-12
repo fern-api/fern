@@ -69,7 +69,23 @@ export const Availability = z.enum([
     "in-development",
     "pre-release",
     "deprecated",
-    "beta"
+    "beta",
+    "alpha",
+    "preview",
+    "legacy"
+]);
+
+export const SortByAvailabilityValue = z.enum([
+    "unset",
+    "stable",
+    "generally-available",
+    "in-development",
+    "pre-release",
+    "deprecated",
+    "beta",
+    "alpha",
+    "preview",
+    "legacy"
 ]);
 
 export const VersionAvailability = z.enum(["deprecated", "ga", "stable", "beta"]);
@@ -331,6 +347,7 @@ export const LayoutConfig = z.object({
     "api-reference-layout": ApiReferenceLayout.optional(),
     "api-reference-expand-properties": z.boolean().optional(),
     "show-nav-availability-badges": z.boolean().optional(),
+    "hide-webhook-method-badges": z.boolean().optional(),
     breadcrumbs: BreadcrumbsConfig.optional()
 });
 
@@ -673,6 +690,7 @@ export const ExperimentalConfig = z.object({
     "ai-example-style-instructions": z.string().optional(),
     "exclude-apis": z.boolean().optional(),
     "basepath-aware": z.boolean().optional(),
+    "robots-txt-on-instance-url": z.boolean().optional(),
     "external-sitemaps": z.array(ExternalSitemapSchema).optional()
 });
 
@@ -904,6 +922,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         availability: Availability.optional(),
         "skip-slug": z.boolean().optional(),
         alphabetized: z.boolean().optional(),
+        "sort-by-availability": z.array(SortByAvailabilityValue).optional(),
         flattened: z.boolean().optional(),
         paginated: z.boolean().optional(),
         playground: PlaygroundSettings.optional()

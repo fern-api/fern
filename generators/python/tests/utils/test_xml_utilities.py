@@ -29,6 +29,7 @@ from core_utilities.shared.xml_utilities import (
     xml_content_items,
     xml_extra_attributes,
     xml_leading_text,
+    xml_model_content,
     xml_text,
     xml_unknown_children,
 )
@@ -141,6 +142,36 @@ def test_append_xml_child_on_frozen_model() -> None:
     append_xml_child(response, "children", Say("hi"))
     append_xml_child(response, "children", Say("bye"))
     assert response.children == [Say("hi"), Say("bye")]
+
+
+def test_append_xml_child_keeps_document_order_with_private_content() -> None:
+    if IS_PYDANTIC_V2:
+
+        class Response(pydantic.BaseModel):
+            model_config = pydantic.ConfigDict(frozen=True, arbitrary_types_allowed=True)
+            children: Optional[List[Say]] = None
+            _content: List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
+
+    else:
+
+        class Response(pydantic.BaseModel):  # type: ignore[no-redef]
+            children: Optional[List[Say]] = None
+            _content: List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
+
+            class Config:
+                frozen = True
+                arbitrary_types_allowed = True
+                underscore_attrs_are_private = True
+
+    response = Response()
+    assert xml_model_content(response) == []
+    assert xml_model_content(object()) is None
+    a, b = Say("a"), Say("b")
+    custom = XmlElement(name="Custom")
+    append_xml_child(response, "children", a)
+    response._content.append(custom)
+    append_xml_child(response, "children", b)
+    assert order_xml_content(response._content, response.children) == [a, custom, b]
 
 
 def test_extra_xml_attributes_renders_undeclared_fields_escaped() -> None:

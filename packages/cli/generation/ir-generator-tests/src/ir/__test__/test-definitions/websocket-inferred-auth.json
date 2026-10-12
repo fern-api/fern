@@ -49,7 +49,8 @@
                             },
                             "valuePrefix": "Bearer "
                         }
-                    ]
+                    ],
+                    "grantType": null
                 },
                 "key": "InferredAuthScheme",
                 "playgroundDocs": null,

@@ -1397,6 +1397,13 @@
         }
       ]
     },
+    "auth.InferredAuthTypeSchema": {
+      "type": "string",
+      "enum": [
+        "api-key",
+        "refresh-token"
+      ]
+    },
     "auth.InferredBearerAuthSchema": {
       "type": "object",
       "properties": {
@@ -1426,6 +1433,17 @@
         },
         "get-token": {
           "$ref": "#/definitions/auth.InferredGetTokenEndpointSchema"
+        },
+        "type": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.InferredAuthTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The kind of credential the user passes to the SDK to call the get-token endpoint. Defaults to 'api-key'. With 'refresh-token', the SDK always sends `grant_type=refresh_token` to the get-token endpoint and does not expose `grant_type` as a client option."
         }
       },
       "required": [

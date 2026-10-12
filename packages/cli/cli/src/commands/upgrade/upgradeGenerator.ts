@@ -245,12 +245,18 @@ export async function loadAndUpdateGenerators({
 
             const currentGeneratorVersion = generator.get("version") as string;
             const tracksLatest = currentGeneratorVersion === "latest";
-            const useSdkGenApi = isFernSdkGenApiEnabled();
-            if (useSdkGenApi && !tracksLatest && getSdkGenApiToken == null) {
+            // `latest` never looks up versions, so it needs no flag request.
+            const useSdkGenApi =
+                !tracksLatest &&
+                (await isFernSdkGenApiEnabled({
+                    organization,
+                    generatorName: addDefaultDockerOrgIfNotPresent(generatorName)
+                }));
+            if (useSdkGenApi && getSdkGenApiToken == null) {
                 throw new Error("SDK Gen API generator version discovery requires authentication");
             }
             let sdkGenApiVersions: Awaited<ReturnType<typeof getSdkGenApiGeneratorVersions>> | undefined;
-            if (useSdkGenApi && !tracksLatest && getSdkGenApiToken != null) {
+            if (useSdkGenApi && getSdkGenApiToken != null) {
                 sdkGenApiVersions = await getSdkGenApiGeneratorVersions({
                     // SDK Gen API preserves legacy generator identities that FDR normalizes to a shared generator.
                     generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
@@ -428,7 +434,8 @@ export async function upgradeGenerator({
     channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     const { apiWorkspaces } = project;
-    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
+    // Lazy: only generators the `use-sdk-gen-api` flag routes through sdk-gen-api trigger a login.
+    const getSdkGenApiToken = createSdkGenApiTokenProvider(cliContext);
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];
     const allAlreadyUpToDate: Array<{ workspace: string | undefined; upToDate: AlreadyUpToDate[] }> = [];

@@ -3,6 +3,7 @@ import datetime as dt
 import inspect
 import json
 import logging
+import weakref
 from collections import defaultdict
 from dataclasses import asdict
 from typing import (
@@ -11,9 +12,11 @@ from typing import (
     Callable,
     ClassVar,
     Dict,
+    FrozenSet,
     List,
     Mapping,
     Optional,
+    Set,
     Tuple,
     Type,
     TypeVar,
@@ -33,8 +36,8 @@ if TYPE_CHECKING:
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
-    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
+    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined,var-annotated]
+    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined,var-annotated]
 
     def parse_datetime(value: Any) -> dt.datetime:  # type: ignore[misc]
         if isinstance(value, dt.datetime):
@@ -321,6 +324,58 @@ def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any
     return fallback_serializer(obj)
 
 
+_declared_keys_cache: "weakref.WeakKeyDictionary[type, Tuple[FrozenSet[str], FrozenSet[str]]]" = (
+    weakref.WeakKeyDictionary()
+)
+
+
+def _get_declared_keys(model: type) -> Tuple[FrozenSet[str], FrozenSet[str]]:
+    """
+    Keys that refer to a declared field (field names and Pydantic aliases), together with
+    their casefolded forms. Computed once per model class.
+    """
+    cached = _declared_keys_cache.get(model)
+    if cached is None:
+        fields: Mapping[str, Any] = (
+            getattr(model, "model_fields", {}) if IS_PYDANTIC_V2 else getattr(model, "__fields__", {})
+        )
+        keys: Set[str] = set(fields)
+        for field in fields.values():
+            alias = getattr(field, "alias", None)
+            if isinstance(alias, str):
+                keys.add(alias)
+        cached = (frozenset(keys), frozenset(key.casefold() for key in keys))
+        _declared_keys_cache[model] = cached
+    return cached
+
+
+def _allows_extra_fields(model: type) -> bool:
+    if IS_PYDANTIC_V2:
+        return getattr(model, "model_config", {}).get("extra") == "allow"
+    extra = getattr(getattr(model, "__config__", None), "extra", None)
+    return getattr(extra, "value", extra) == "allow"
+
+
+def _drop_extras_colliding_with_fields(model: type, data: Any) -> Any:
+    """
+    Drop unknown keys that match a declared field case-insensitively (e.g. `VALUE` next to `value`). Kept as
+    extras, they would be sent again after the declared field, and a case-insensitive decoder such as Go's
+    encoding/json would read them instead of it.
+    """
+    if not isinstance(data, Mapping) or not _allows_extra_fields(model):
+        return data
+
+    declared_keys, declared_casefolded = _get_declared_keys(model)
+    colliding = {
+        key
+        for key in data
+        if isinstance(key, str) and key not in declared_keys and key.casefold() in declared_casefolded
+    }
+    if not colliding:
+        return data
+    return {key: value for key, value in data.items() if key not in colliding}
+
+
 class UniversalBaseModel(pydantic.BaseModel):
     if IS_PYDANTIC_V2:
         model_config: ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore[typeddict-unknown-key]
@@ -329,6 +384,11 @@ class UniversalBaseModel(pydantic.BaseModel):
             # Allow fields beginning with `model_` to be used in the model
             protected_namespaces=(),
         )
+
+        @pydantic.model_validator(mode="before")  # type: ignore[attr-defined]
+        @classmethod
+        def _drop_case_colliding_extras(cls, data: Any) -> Any:
+            return _drop_extras_colliding_with_fields(cls, data)
 
         @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
         def serialize_model(self) -> Any:  # type: ignore[name-defined]
@@ -353,6 +413,10 @@ class UniversalBaseModel(pydantic.BaseModel):
             json_encoders = {dt.datetime: serialize_datetime}
             # Allow fields beginning with `model_` to be used in the model
             protected_namespaces = ()
+
+        @pydantic.root_validator(pre=True)
+        def _drop_case_colliding_extras(cls, values: Any) -> Any:
+            return _drop_extras_colliding_with_fields(cls, values)  # type: ignore[arg-type]
 
     def json(self, **kwargs: Any) -> str:
         kwargs_with_defaults = {

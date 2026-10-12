@@ -2208,6 +2208,22 @@ impl CliApp {
         doc: &mut RestDescription,
         matches: &clap::ArgMatches,
     ) {
+        self.apply_server_vars_for(doc, matches, None);
+    }
+
+    /// [`apply_server_vars`](Self::apply_server_vars) with the profile rung
+    /// read from `profile` instead of the installed selection, for calls
+    /// made on behalf of a profile that is not (yet, or any longer) selected.
+    pub(crate) fn apply_server_vars_for(
+        &self,
+        doc: &mut RestDescription,
+        matches: &clap::ArgMatches,
+        profile: Option<&crate::profiles::ResolvedProfile>,
+    ) {
+        let profile_var = |name: &str| match profile {
+            Some(p) => p.server_variables.get(name).cloned(),
+            None => crate::profiles::server_variable(name),
+        };
         let spec_vars = collect_spec_server_variables(doc);
         let names = self
             .server_vars
@@ -2243,7 +2259,7 @@ impl CliApp {
                 );
                 continue;
             }
-            if let Some(value) = crate::profiles::server_variable(name) {
+            if let Some(value) = profile_var(name) {
                 caller_pinned_any = true;
                 subs.insert(name.clone(), value);
                 continue;

@@ -91,12 +91,12 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
+        }
 
-            try {
-                await this.generateReference({ context });
-            } catch (e) {
-                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
-            }
+        try {
+            await this.generateReference({ context });
+        } catch (e) {
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
 
         await context.project.persist();

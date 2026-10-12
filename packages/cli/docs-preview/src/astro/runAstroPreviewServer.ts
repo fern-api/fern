@@ -57,7 +57,8 @@ export async function runAstroPreviewServer({
     bundlePath,
     backendPort,
     forceDownload = false,
-    cacheDir
+    cacheDir,
+    skipApi
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -68,6 +69,8 @@ export async function runAstroPreviewServer({
     backendPort: number;
     forceDownload?: boolean;
     cacheDir?: AbsoluteFilePath;
+    /** Skip building API reference sections (much faster; API reference pages are empty). */
+    skipApi?: boolean;
 }): Promise<void> {
     const docsWorkspace = initialProject.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -113,7 +116,8 @@ export async function runAstroPreviewServer({
                 context,
                 previousDocsDefinition: previewResult?.docsDefinition,
                 editedAbsoluteFilepaths,
-                previousPreviewResult: previewResult
+                previousPreviewResult: previewResult,
+                skipApi
             });
             const model = await buildAstroPreviewModel({
                 previewResult: newPreviewResult,

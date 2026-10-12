@@ -12,6 +12,7 @@ export const AsIsFiles = {
     ResponseError: "errors/response_error.Template.rb",
     ServerError: "errors/server_error.Template.rb",
     TimeoutError: "errors/timeout_error.Template.rb",
+    ConnectionError: "errors/connection_error.Template.rb",
 
     // Internal error classes
     ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
@@ -155,5 +156,7 @@ const asIsTopoValue = {
     // hard constraint is that these load after the types they are mixed into.
     [AsIsFiles.XmlElement]: 36,
     [AsIsFiles.XmlUtils]: 37,
-    [AsIsFiles.XmlSerializable]: 38
+    [AsIsFiles.XmlSerializable]: 38,
+    // Only needs ApiError (20). Ordered last so it does not shift any pre-existing require.
+    [AsIsFiles.ConnectionError]: 39
 };

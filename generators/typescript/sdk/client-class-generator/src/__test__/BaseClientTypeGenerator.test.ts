@@ -67,6 +67,7 @@ function createHeader(opts: {
     wireValue: string;
     camelCase: string;
     valueType?: FernIr.TypeReference;
+    env?: string;
 }): FernIr.HttpHeader {
     return {
         name: {
@@ -74,7 +75,7 @@ function createHeader(opts: {
             wireValue: opts.wireValue
         },
         valueType: opts.valueType ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-        env: undefined,
+        env: opts.env,
         availability: undefined,
         docs: undefined,
         clientDefault: undefined,
@@ -735,6 +736,7 @@ describe("BaseClientTypeGenerator", () => {
                                 subpackageId: undefined
                             },
                             expiryProperty: undefined,
+                            grantType: undefined,
                             authenticatedRequestHeaders: []
                         },
                         docs: undefined
@@ -1058,6 +1060,30 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).not.toContain("X-Fern-Language");
         });
 
+        it.each([
+            false,
+            true
+        ])("reads a root header's env var with guardProcessEnvAccess=%s", (guardProcessEnvAccess) => {
+            const ir = createIR({
+                headers: [createHeader({ wireValue: "X-Api-Version", camelCase: "version", env: "API_VERSION" })]
+            });
+            const gen = createGenerator({ ir, omitFernHeaders: true, guardProcessEnvAccess });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            if (guardProcessEnvAccess) {
+                expect(normalizeFunction).toContain(
+                    'options?.version ?? (typeof process !== "undefined" ? process.env?.["API_VERSION"] : undefined)'
+                );
+            } else {
+                expect(normalizeFunction).toContain('options?.version ?? process.env?.["API_VERSION"]');
+                expect(normalizeFunction).not.toContain("typeof process");
+            }
+        });
+
         it("includes mergeHeaders import when there are root headers", () => {
             const ir = createIR({
                 headers: [createHeader({ wireValue: "X-Custom-Header", camelCase: "customHeader" })]
@@ -1217,6 +1243,7 @@ describe("BaseClientTypeGenerator", () => {
                                 subpackageId: undefined
                             },
                             expiryProperty: undefined,
+                            grantType: undefined,
                             authenticatedRequestHeaders: []
                         },
                         docs: undefined
@@ -1727,6 +1754,7 @@ describe("BaseClientTypeGenerator", () => {
                                 subpackageId: undefined
                             },
                             expiryProperty: undefined,
+                            grantType: undefined,
                             authenticatedRequestHeaders: []
                         },
                         docs: undefined
@@ -1782,6 +1810,7 @@ describe("BaseClientTypeGenerator", () => {
                                 subpackageId: undefined
                             },
                             expiryProperty: undefined,
+                            grantType: undefined,
                             authenticatedRequestHeaders: []
                         },
                         docs: undefined

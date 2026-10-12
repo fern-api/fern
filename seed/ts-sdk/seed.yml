@@ -442,6 +442,12 @@ fixtures:
     - outputFolder: guard-process-env-access
       customConfig:
         guardProcessEnvAccess: true
+  ts-global-header-env:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: guard-process-env-access
+      customConfig:
+        guardProcessEnvAccess: true
   single-url-environment-default:
     - outputFolder: no-custom-config
       customConfig: null

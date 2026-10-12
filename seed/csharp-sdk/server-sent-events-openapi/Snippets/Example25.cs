@@ -9,21 +9,13 @@ public partial class Examples
             }
         );
 
-        await foreach (var item in client.StreamXFernStreamingUnionStreamAsync(
-            new StreamXFernStreamingUnionStreamRequest(
-                new UnionStreamMessageVariant {
-                    StreamResponse = true,
-                    Prompt = "prompt",
-                    Message = "message"
-                }
-            ) {
-                StreamResponse = true,
+        await client.ValidateCompletionAsync(
+            new SharedCompletionRequest {
+                Prompt = "prompt",
+                Model = "model",
+                Stream = true
             }
-        ))
-        {
-            /* consume each item */
-        }
-        ;
+        );
     }
 
 }

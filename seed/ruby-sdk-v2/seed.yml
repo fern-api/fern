@@ -111,6 +111,9 @@ fixtures:
     - customConfig:
         offsetSemantics: "page-index"
       outputFolder: page-index-semantics
+    - customConfig:
+        fetchFirstPageOnCall: true
+      outputFolder: fetch-first-page-on-call
   pagination-custom:
     - customConfig:
         customPagerName: FooPager

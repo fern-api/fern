@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     getElementTypeFromArrayType,
@@ -1330,7 +1330,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getEventDiscriminator(
         payload: FernIr.TypeReference,
         context: FileContext
-    ): { eventDiscriminator: ts.Expression } | Record<string, never> {
+    ): { eventDiscriminator: ts.Expression; envelopeEvents?: ts.Expression } | Record<string, never> {
         if (payload.type !== "named") {
             return {};
         }
@@ -1341,8 +1341,28 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         if (typeDeclaration.shape.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
             return {};
         }
+        const envelopeEvents = getSseEnvelopeEventNames({
+            union: typeDeclaration.shape,
+            getObjectPropertyWireValues: (variant) => {
+                const variantDeclaration = context.type.getTypeDeclaration(variant);
+                if (variantDeclaration.shape.type !== "object") {
+                    return undefined;
+                }
+                return [
+                    ...(variantDeclaration.shape.extendedProperties ?? []),
+                    ...variantDeclaration.shape.properties
+                ].map((property) => getWireValue(property.name));
+            }
+        });
         return {
-            eventDiscriminator: ts.factory.createStringLiteral(getWireValue(typeDeclaration.shape.discriminant))
+            eventDiscriminator: ts.factory.createStringLiteral(getWireValue(typeDeclaration.shape.discriminant)),
+            ...(envelopeEvents.length > 0
+                ? {
+                      envelopeEvents: ts.factory.createArrayLiteralExpression(
+                          envelopeEvents.map((event) => ts.factory.createStringLiteral(event))
+                      )
+                  }
+                : {})
         };
     }
 }

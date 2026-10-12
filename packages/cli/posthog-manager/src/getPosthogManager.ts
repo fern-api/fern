@@ -18,7 +18,8 @@ async function createPosthogManager(): Promise<PosthogManager> {
     try {
         const posthogApiKey = process.env.POSTHOG_API_KEY;
         const disableTelemetry = process.env.FERN_DISABLE_TELEMETRY === "true";
-        if (posthogApiKey == null || disableTelemetry) {
+        // Builds inject `""` when the publish job has no key; treat that like an unset key.
+        if (posthogApiKey == null || posthogApiKey.trim().length === 0 || disableTelemetry) {
             return new NoopPosthogManager();
         }
         const userToken = await getUserToken();

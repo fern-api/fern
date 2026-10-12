@@ -193,6 +193,34 @@ public final class ApiClient: Sendable {
         )
     }
 
+    /// context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.streamProtocolMixedSchema(request: StreamRequest(
+    ///
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func streamProtocolMixedSchema(request: StreamRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/stream/protocol-mixed-schema",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: JSONValue.self
+        )
+    }
+
     /// Mismatched combination: context=data with the envelope+data schema pattern that is normally used with context=protocol. Shows what happens when the discriminant is declared as data-level but the schema separates the event field and data field into an envelope structure.
     ///
     /// ```swift
