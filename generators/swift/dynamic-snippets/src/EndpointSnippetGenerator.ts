@@ -228,7 +228,7 @@ export class EndpointSnippetGenerator {
         // `baseURL`, so this picks the first base URL even for endpoints served from another one.
         const firstBaseUrlId = environments.baseUrls[0]?.id;
         if (environment != null && typeof environment !== "string") {
-            return (firstBaseUrlId != null ? environment[firstBaseUrlId] : undefined) ?? Object.values(environment)[0];
+            return this.pickBaseUrl(environment, firstBaseUrlId) ?? this.addMissingBaseUrlError("the provided URLs");
         }
         const resolved =
             environment != null
@@ -241,10 +241,29 @@ export class EndpointSnippetGenerator {
                     severity: Severity.Critical,
                     message: `Environment "${environment}" was not found`
                 });
+                return undefined;
             }
-            return undefined;
+            return this.addMissingBaseUrlError("any environment");
         }
-        return (firstBaseUrlId != null ? resolved.urls[firstBaseUrlId] : undefined) ?? Object.values(resolved.urls)[0];
+        return (
+            this.pickBaseUrl(resolved.urls, firstBaseUrlId) ??
+            this.addMissingBaseUrlError(`environment "${resolved.id}"`)
+        );
+    }
+
+    private pickBaseUrl(
+        urls: FernIr.dynamic.MultipleEnvironmentUrlValues,
+        firstBaseUrlId: FernIr.dynamic.EnvironmentBaseUrlId | undefined
+    ): string | undefined {
+        return (firstBaseUrlId != null ? urls[firstBaseUrlId] : undefined) ?? Object.values(urls)[0];
+    }
+
+    private addMissingBaseUrlError(source: string): undefined {
+        this.context.errors.add({
+            severity: Severity.Critical,
+            message: `No base URL found in ${source}; the client requires a baseURL`
+        });
+        return undefined;
     }
 
     private getRootClientAuthArgs({
