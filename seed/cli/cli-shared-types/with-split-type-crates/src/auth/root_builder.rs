@@ -152,7 +152,11 @@ impl ApiKeyAuth {
 
 impl AuthSchemeBuilder for ApiKeyAuth {
     fn into_binding(self) -> (String, SchemeBinding) {
-        match self.prefix.filter(|prefix| !prefix.is_empty()) {
+        let prefix = self
+            .prefix
+            .map(|prefix| prefix.trim().to_string())
+            .filter(|prefix| !prefix.is_empty());
+        match prefix {
             Some(prefix) => (
                 self.name,
                 SchemeBinding::PrefixedToken {
@@ -553,6 +557,27 @@ mod tests {
     fn api_key_auth_with_empty_prefix_builds_token_binding() {
         let (_, binding) = ApiKeyAuth::new("apiKey").env("API_KEY").prefix("").into_binding();
         assert!(matches!(binding, SchemeBinding::Token(_)));
+    }
+
+    #[test]
+    fn api_key_auth_with_whitespace_only_prefix_builds_token_binding() {
+        let (_, binding) = ApiKeyAuth::new("apiKey")
+            .env("API_KEY")
+            .prefix(" \t ")
+            .into_binding();
+        assert!(matches!(binding, SchemeBinding::Token(_)));
+    }
+
+    #[test]
+    fn api_key_auth_trims_padded_prefix() {
+        let (_, binding) = ApiKeyAuth::new("apiKey")
+            .env("API_KEY")
+            .prefix("  Key ")
+            .into_binding();
+        assert!(matches!(
+            binding,
+            SchemeBinding::PrefixedToken { ref prefix, .. } if prefix == "Key"
+        ));
     }
 
     #[test]
