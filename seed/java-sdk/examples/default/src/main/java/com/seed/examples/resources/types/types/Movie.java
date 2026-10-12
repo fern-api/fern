@@ -246,7 +246,6 @@ public final class Movie implements IMovie {
 
         private Optional<String> prequel = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -364,6 +363,23 @@ public final class Movie implements IMovie {
         @java.lang.Override
         public Movie build() {
             return new Movie(id, prequel, title, from, rating, tag, book, metadata, revenue, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("prequel")
+                    || key.equalsIgnoreCase("title")
+                    || key.equalsIgnoreCase("from")
+                    || key.equalsIgnoreCase("rating")
+                    || key.equalsIgnoreCase("type")
+                    || key.equalsIgnoreCase("tag")
+                    || key.equalsIgnoreCase("book")
+                    || key.equalsIgnoreCase("metadata")
+                    || key.equalsIgnoreCase("revenue")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -95,7 +95,6 @@ public final class StatusPayload {
 
         private OffsetDateTime timestamp;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class StatusPayload {
         @java.lang.Override
         public StatusPayload build() {
             return new StatusPayload(message, timestamp, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("message") || key.equalsIgnoreCase("timestamp")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

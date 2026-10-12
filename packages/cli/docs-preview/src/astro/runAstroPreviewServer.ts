@@ -40,7 +40,7 @@ interface AstroBundle {
 }
 
 /**
- * `fern docs dev --astro`: renders the docs to the ledger read model the Astro
+ * `fern docs dev` (the default; `--legacy` runs Next.js instead): renders the docs to the ledger read model the Astro
  * app consumes in production, serves it from a loopback mirror, and runs the
  * prebuilt Astro preview-SSR renderer (downloaded from S3 and cached like the
  * Next bundle) against it. A loopback proxy on `port` stamps the `x-fern-host`
@@ -57,7 +57,9 @@ export async function runAstroPreviewServer({
     bundlePath,
     backendPort,
     forceDownload = false,
-    cacheDir
+    cacheDir,
+    includePrivate,
+    skipApi
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -68,6 +70,10 @@ export async function runAstroPreviewServer({
     backendPort: number;
     forceDownload?: boolean;
     cacheDir?: AbsoluteFilePath;
+    /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
+    includePrivate?: boolean;
+    /** Skip building API reference sections (much faster; API reference pages are empty). */
+    skipApi?: boolean;
 }): Promise<void> {
     const docsWorkspace = initialProject.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -113,7 +119,9 @@ export async function runAstroPreviewServer({
                 context,
                 previousDocsDefinition: previewResult?.docsDefinition,
                 editedAbsoluteFilepaths,
-                previousPreviewResult: previewResult
+                previousPreviewResult: previewResult,
+                includePrivate,
+                skipApi
             });
             const model = await buildAstroPreviewModel({
                 previewResult: newPreviewResult,

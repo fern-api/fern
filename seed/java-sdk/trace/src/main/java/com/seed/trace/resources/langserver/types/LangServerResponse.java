@@ -79,7 +79,6 @@ public final class LangServerResponse {
     public static final class Builder implements ResponseStage, _FinalStage {
         private Object response;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class LangServerResponse {
         @java.lang.Override
         public LangServerResponse build() {
             return new LangServerResponse(response, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("response")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

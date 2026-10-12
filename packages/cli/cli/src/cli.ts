@@ -2404,17 +2404,19 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 .option("beta", {
                     boolean: true,
                     default: false,
-                    description: "Run the app router development server"
+                    hidden: true,
+                    description: "Deprecated alias for --legacy"
                 })
                 .option("legacy", {
                     boolean: true,
                     default: false,
-                    description: "Run the legacy development server"
+                    description: "Run the legacy Next.js docs preview server instead of the default Astro one"
                 })
                 .option("astro", {
                     boolean: true,
                     default: false,
-                    description: "Run the experimental Astro docs preview server instead of Next.js"
+                    hidden: true,
+                    description: "No-op: Astro is now the default docs preview server"
                 })
                 .option("backend-port", {
                     number: true,
@@ -2430,12 +2432,32 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description:
                         "Include OpenAPI elements marked `x-twilio.docsVisibility: private` in the previewed API reference. By default only `public` elements are shown; `hidden` elements are always excluded."
+                })
+                .option("skip-api", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip building API reference sections for a much faster preview. Endpoint and schema pages are left out; overview and hand-written pages in API sections are kept."
+                })
+                .option("skip-validation", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip validating the docs while previewing, so the preview is ready sooner on large sites. Docs errors will not be reported."
                 }),
         async (argv) => {
             if (argv.beta) {
                 cliContext.logger.warn(
-                    "--beta flag now accesses the same functionality as default and will be deprecated in a future release"
+                    "--beta is deprecated and is now an alias for --legacy (the Next.js docs preview server). Use --legacy instead."
                 );
+            }
+            const legacy = argv.legacy || argv.beta;
+            if (legacy && argv.astro) {
+                throw new CliError({
+                    message:
+                        "--astro and --legacy cannot be used together. Astro is the default; pass --legacy for Next.js.",
+                    code: CliError.Code.ConfigError
+                });
             }
 
             let port: number;
@@ -2473,11 +2495,12 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                legacyPreview: argv.legacy,
-                astro: argv.astro,
+                legacy,
                 backendPort,
                 forceDownload: argv.forceDownload,
-                includePrivate: argv.private
+                includePrivate: argv.private,
+                skipApi: argv.skipApi,
+                skipValidation: argv.skipValidation
             });
         }
     );

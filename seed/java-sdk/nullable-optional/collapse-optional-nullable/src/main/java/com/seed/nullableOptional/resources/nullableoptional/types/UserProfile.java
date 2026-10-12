@@ -505,7 +505,6 @@ public final class UserProfile {
 
         private OptionalNullable<String> nullableString = OptionalNullable.absent();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -975,6 +974,31 @@ public final class UserProfile {
                     optionalNullableString,
                     optionalNullableObject,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("username")
+                    || key.equalsIgnoreCase("nullableString")
+                    || key.equalsIgnoreCase("nullableInteger")
+                    || key.equalsIgnoreCase("nullableBoolean")
+                    || key.equalsIgnoreCase("nullableDate")
+                    || key.equalsIgnoreCase("nullableObject")
+                    || key.equalsIgnoreCase("nullableList")
+                    || key.equalsIgnoreCase("nullableMap")
+                    || key.equalsIgnoreCase("optionalString")
+                    || key.equalsIgnoreCase("optionalInteger")
+                    || key.equalsIgnoreCase("optionalBoolean")
+                    || key.equalsIgnoreCase("optionalDate")
+                    || key.equalsIgnoreCase("optionalObject")
+                    || key.equalsIgnoreCase("optionalList")
+                    || key.equalsIgnoreCase("optionalMap")
+                    || key.equalsIgnoreCase("optionalNullableString")
+                    || key.equalsIgnoreCase("optionalNullableObject")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

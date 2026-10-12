@@ -48,8 +48,8 @@ module Seed
           query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
           Seed::Internal::CursorItemIterator.new(
-            cursor_field: :starting_after,
-            item_field: :users,
+            cursor_field: %i[page next_ starting_after],
+            item_field: %i[data users],
             initial_cursor: query_params["starting_after"]
           ) do |next_cursor|
             query_params["starting_after"] = next_cursor
@@ -104,7 +104,7 @@ module Seed
 
           Seed::Internal::CursorItemIterator.new(
             cursor_field: :next_,
-            item_field: :users,
+            item_field: %i[data users],
             initial_cursor: query_params["cursor"]
           ) do |next_cursor|
             query_params["cursor"] = next_cursor
@@ -153,8 +153,8 @@ module Seed
         def list_with_body_cursor_pagination(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           Seed::Internal::CursorItemIterator.new(
-            cursor_field: :starting_after,
-            item_field: :users,
+            cursor_field: %i[page next_ starting_after],
+            item_field: %i[data users],
             initial_cursor: Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h)[:cursor]
           ) do |next_cursor|
             params[:pagination] = Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h).merge(cursor: next_cursor)
@@ -219,7 +219,7 @@ module Seed
 
           Seed::Internal::OffsetItemIterator.new(
             initial_page: query_params["page"],
-            item_field: :users,
+            item_field: %i[data users],
             has_next_field: nil,
             step: false
           ) do |next_page|
@@ -285,7 +285,7 @@ module Seed
 
           Seed::Internal::OffsetItemIterator.new(
             initial_page: query_params["page"],
-            item_field: :users,
+            item_field: %i[data users],
             has_next_field: nil,
             step: false
           ) do |next_page|
@@ -336,7 +336,7 @@ module Seed
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           Seed::Internal::OffsetItemIterator.new(
             initial_page: Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h)[:page],
-            item_field: :users,
+            item_field: %i[data users],
             has_next_field: nil,
             step: false
           ) do |next_page|
@@ -398,7 +398,7 @@ module Seed
 
           Seed::Internal::OffsetItemIterator.new(
             initial_page: query_params["page"],
-            item_field: :users,
+            item_field: %i[data users],
             has_next_field: nil,
             step: false
           ) do |next_page|
@@ -460,7 +460,7 @@ module Seed
 
           Seed::Internal::OffsetItemIterator.new(
             initial_page: query_params["page"],
-            item_field: :users,
+            item_field: %i[data users],
             has_next_field: :has_next_page,
             step: false
           ) do |next_page|
@@ -515,7 +515,7 @@ module Seed
 
           Seed::Internal::CursorItemIterator.new(
             cursor_field: :next_,
-            item_field: :users,
+            item_field: %i[data users],
             initial_cursor: query_params["cursor"]
           ) do |next_cursor|
             query_params["cursor"] = next_cursor
@@ -570,7 +570,7 @@ module Seed
 
           Seed::Internal::CursorItemIterator.new(
             cursor_field: :next_,
-            item_field: :users,
+            item_field: %i[data users],
             initial_cursor: query_params["cursor"]
           ) do |next_cursor|
             query_params["cursor"] = next_cursor
@@ -623,8 +623,8 @@ module Seed
           query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
           Seed::Internal::CursorItemIterator.new(
-            cursor_field: :after,
-            item_field: :data,
+            cursor_field: %i[cursor after],
+            item_field: %i[cursor data],
             initial_cursor: query_params["starting_after"]
           ) do |next_cursor|
             query_params["starting_after"] = next_cursor

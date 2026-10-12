@@ -83,7 +83,10 @@ import Testing
         let stub = HTTPStub()
         stub.setResponse(body: Foundation.Data("{}".utf8))
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getToken(
@@ -106,7 +109,10 @@ import Testing
         let additionalBodyParameters: [String: String]? = ["fernExtraString": "beta"]
         let additionalBodyProperties: [String: JSONValue]? = ["fernExtraBool": true]
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers, additionalBodyParameters: additionalBodyParameters, additionalBodyProperties: additionalBodyProperties))

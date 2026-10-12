@@ -67,7 +67,6 @@ public final class TypeWithOptionalUnion {
     public static final class Builder {
         private Optional<MyUnion> myUnion = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class TypeWithOptionalUnion {
 
         public TypeWithOptionalUnion build() {
             return new TypeWithOptionalUnion(myUnion, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("myUnion")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

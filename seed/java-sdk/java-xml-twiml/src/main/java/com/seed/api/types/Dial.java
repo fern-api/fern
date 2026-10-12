@@ -179,7 +179,6 @@ public final class Dial implements XmlSerializable {
 
         private Optional<List<Number>> numbers = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
@@ -242,6 +241,17 @@ public final class Dial implements XmlSerializable {
 
         public Dial build() {
             return new Dial(number, statusCallbackEvent, record, numbers, additionalProperties, content);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("number")
+                    || key.equalsIgnoreCase("status_callback_event")
+                    || key.equalsIgnoreCase("record")
+                    || key.equalsIgnoreCase("numbers")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

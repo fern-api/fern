@@ -82,7 +82,6 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
     public static final class Builder implements TemplateStage, _FinalStage {
         private TestCaseTemplate template;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -103,6 +102,14 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
         @java.lang.Override
         public GetGeneratedTestCaseTemplateFileRequest build() {
             return new GetGeneratedTestCaseTemplateFileRequest(template, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("template")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

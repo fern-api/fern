@@ -1,0 +1,3 @@
+- summary: |
+    Prevent the CLI from hanging indefinitely while flushing automation telemetry during exit.
+  type: fix

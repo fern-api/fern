@@ -108,7 +108,6 @@ public final class BaseOrgMetadata {
 
         private Optional<String> tier = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -154,6 +153,14 @@ public final class BaseOrgMetadata {
         @java.lang.Override
         public BaseOrgMetadata build() {
             return new BaseOrgMetadata(region, tier, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("region") || key.equalsIgnoreCase("tier")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

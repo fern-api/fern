@@ -96,7 +96,6 @@ public final class GetExecutionSessionStateResponse {
 
         private List<String> warmingSessionIds = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -164,6 +163,16 @@ public final class GetExecutionSessionStateResponse {
         public GetExecutionSessionStateResponse build() {
             return new GetExecutionSessionStateResponse(
                     states, numWarmingInstances, warmingSessionIds, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("states")
+                    || key.equalsIgnoreCase("numWarmingInstances")
+                    || key.equalsIgnoreCase("warmingSessionIds")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

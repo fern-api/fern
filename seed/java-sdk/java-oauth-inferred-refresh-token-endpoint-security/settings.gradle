@@ -1,0 +1,3 @@
+rootProject.name = 'java-oauth-inferred-refresh-token-endpoint-security'
+
+include 'sample-app'

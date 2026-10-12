@@ -105,7 +105,6 @@ public final class UserSearchResponse {
 
         private List<User> results = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -162,6 +161,14 @@ public final class UserSearchResponse {
         @java.lang.Override
         public UserSearchResponse build() {
             return new UserSearchResponse(paging, results, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("paging") || key.equalsIgnoreCase("results")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

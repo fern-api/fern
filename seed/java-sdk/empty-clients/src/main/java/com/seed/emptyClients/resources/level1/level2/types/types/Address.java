@@ -153,7 +153,6 @@ public final class Address {
 
         private Optional<String> line2 = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -212,6 +211,19 @@ public final class Address {
         @java.lang.Override
         public Address build() {
             return new Address(line1, line2, city, state, zip, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("line1")
+                    || key.equalsIgnoreCase("line2")
+                    || key.equalsIgnoreCase("city")
+                    || key.equalsIgnoreCase("state")
+                    || key.equalsIgnoreCase("zip")
+                    || key.equalsIgnoreCase("country")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -93,7 +93,6 @@ public final class RealtimeConnectOptions {
 
         private Optional<String> languageCode = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -140,6 +139,16 @@ public final class RealtimeConnectOptions {
 
         public RealtimeConnectOptions build() {
             return new RealtimeConnectOptions(model, temperature, languageCode, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("model")
+                    || key.equalsIgnoreCase("temperature")
+                    || key.equalsIgnoreCase("language-code")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

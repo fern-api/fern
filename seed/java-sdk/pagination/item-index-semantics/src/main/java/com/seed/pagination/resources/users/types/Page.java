@@ -133,7 +133,6 @@ public final class Page {
 
         private Optional<NextPage> next = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -188,6 +187,17 @@ public final class Page {
         @java.lang.Override
         public Page build() {
             return new Page(page, next, perPage, totalPage, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("page")
+                    || key.equalsIgnoreCase("next")
+                    || key.equalsIgnoreCase("per_page")
+                    || key.equalsIgnoreCase("total_page")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

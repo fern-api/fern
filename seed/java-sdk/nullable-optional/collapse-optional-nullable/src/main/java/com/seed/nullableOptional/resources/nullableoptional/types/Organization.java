@@ -149,7 +149,6 @@ public final class Organization {
 
         private OptionalNullable<String> domain = OptionalNullable.absent();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -228,6 +227,17 @@ public final class Organization {
         @java.lang.Override
         public Organization build() {
             return new Organization(id, name, domain, employeeCount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("domain")
+                    || key.equalsIgnoreCase("employeeCount")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

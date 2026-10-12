@@ -27,12 +27,4 @@ describe("SDK Config initialization environment configuration", () => {
 
         expect(isSdkConfigInitEnabled()).toBe(false);
     });
-
-    it("does not use the SDK Gen API flag", () => {
-        vi.stubEnv("FERN_USE_SDK_CONFIG", undefined);
-        vi.stubEnv("DEFAULT_USE_SDK_CONFIG", undefined);
-        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
-
-        expect(isSdkConfigInitEnabled()).toBe(false);
-    });
 });

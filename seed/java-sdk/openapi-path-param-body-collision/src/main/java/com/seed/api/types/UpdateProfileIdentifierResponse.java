@@ -67,7 +67,6 @@ public final class UpdateProfileIdentifierResponse {
     public static final class Builder {
         private Optional<String> message = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class UpdateProfileIdentifierResponse {
 
         public UpdateProfileIdentifierResponse build() {
             return new UpdateProfileIdentifierResponse(message, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("message")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

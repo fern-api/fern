@@ -74,11 +74,23 @@ pub const PROFILE_SHORT: char = 'p';
 /// exposure is the same as for `--schema` / `--base-url`, and the real parse
 /// still happens in clap.
 pub fn extract_profile_flag(args: &[String]) -> Option<String> {
+    extract_profile_flag_until(args, usize::MAX)
+}
+
+/// [`extract_profile_flag`], but the short form is only recognised at argv
+/// indices below `short_cutoff`; `--profile` is honoured everywhere.
+///
+/// This is how a custom command gets to own `-p` for itself (`start -p 9000`
+/// as a port) while `-p <name>` keeps meaning the profile in front of it:
+/// [`CliApp`](crate::app::CliApp) passes the index just past the custom
+/// command's path, so `cli -p acme serverless start -p 9000` selects `acme`
+/// and hands `9000` to clap as the command's own argument.
+pub fn extract_profile_flag_until(args: &[String], short_cutoff: usize) -> Option<String> {
     let long = format!("--{PROFILE_FLAG}");
     let long_eq = format!("{long}=");
 
-    let mut iter = args.iter().skip(1);
-    while let Some(arg) = iter.next() {
+    let mut iter = args.iter().enumerate().skip(1);
+    while let Some((index, arg)) = iter.next() {
         if arg == "--" {
             return None;
         }
@@ -86,7 +98,10 @@ pub fn extract_profile_flag(args: &[String]) -> Option<String> {
             return non_empty(value);
         }
         if arg == &long {
-            return iter.next().and_then(|v| non_empty(v));
+            return iter.next().and_then(|(_, v)| non_empty(v));
+        }
+        if index >= short_cutoff {
+            continue;
         }
         // Short forms, including bundles. Clap combines short flags, so `-qp
         // acme` is `-q` plus `-p acme` — and missing that spelling did not
@@ -94,7 +109,8 @@ pub fn extract_profile_flag(args: &[String]) -> Option<String> {
         // while clap happily bound `profile=acme`. Sending a request to the
         // wrong tenant with exit 0 is the worst outcome this feature has, so
         // the scanner has to accept every cluster clap does.
-        if let Some(value) = short_flag_value(arg, &mut iter) {
+        let mut values = iter.by_ref().map(|(_, v)| v);
+        if let Some(value) = short_flag_value(arg, &mut values) {
             return value;
         }
     }
@@ -165,16 +181,23 @@ fn non_empty(s: &str) -> Option<String> {
 /// fallthrough to env vars. Falling through would send the request with the
 /// caller's default credentials against a tenant they did not choose, and
 /// they would not find out until they read the response.
-pub fn resolve_selection(
+pub fn resolve_selection(cli_name: &str, args: &[String]) -> Result<Option<Selection>, CliError> {
+    resolve_selection_until(cli_name, args, usize::MAX)
+}
+
+/// [`resolve_selection`] with the short-flag cutoff of
+/// [`extract_profile_flag_until`].
+pub fn resolve_selection_until(
     cli_name: &str,
     args: &[String],
+    short_cutoff: usize,
 ) -> Result<Option<Selection>, CliError> {
     let store = match ProfileStore::for_cli(cli_name) {
         Some(store) => store,
         // No home directory — no profiles, same as an empty file.
         None => return Ok(None),
     };
-    resolve_selection_in(&store, cli_name, args)
+    resolve_selection_in_until(&store, cli_name, args, short_cutoff)
 }
 
 /// [`resolve_selection`] against an explicit store. The unit-testable seam.
@@ -183,7 +206,18 @@ pub fn resolve_selection_in(
     cli_name: &str,
     args: &[String],
 ) -> Result<Option<Selection>, CliError> {
-    let (name, source) = if let Some(name) = extract_profile_flag(args) {
+    resolve_selection_in_until(store, cli_name, args, usize::MAX)
+}
+
+/// [`resolve_selection_in`] with the short-flag cutoff of
+/// [`extract_profile_flag_until`].
+pub fn resolve_selection_in_until(
+    store: &ProfileStore,
+    cli_name: &str,
+    args: &[String],
+    short_cutoff: usize,
+) -> Result<Option<Selection>, CliError> {
+    let (name, source) = if let Some(name) = extract_profile_flag_until(args, short_cutoff) {
         (name, SelectionSource::Flag)
     } else if let Some(name) = std::env::var(profile_env_var(cli_name))
         .ok()

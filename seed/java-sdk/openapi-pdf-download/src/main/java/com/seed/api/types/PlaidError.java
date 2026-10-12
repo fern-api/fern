@@ -111,7 +111,6 @@ public final class PlaidError {
 
         private String errorMessage;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -148,6 +147,16 @@ public final class PlaidError {
         @java.lang.Override
         public PlaidError build() {
             return new PlaidError(errorType, errorCode, errorMessage, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("error_type")
+                    || key.equalsIgnoreCase("error_code")
+                    || key.equalsIgnoreCase("error_message")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

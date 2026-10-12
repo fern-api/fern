@@ -104,7 +104,6 @@ public final class StoreTracedWorkspaceRequest {
 
         private List<TraceResponse> traceResponses = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -151,6 +150,14 @@ public final class StoreTracedWorkspaceRequest {
         @java.lang.Override
         public StoreTracedWorkspaceRequest build() {
             return new StoreTracedWorkspaceRequest(workspaceRunDetails, traceResponses, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("workspaceRunDetails") || key.equalsIgnoreCase("traceResponses")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

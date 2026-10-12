@@ -258,7 +258,6 @@ public final class User {
 
         private Optional<List<String>> tags = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -413,6 +412,21 @@ public final class User {
         @java.lang.Override
         public User build() {
             return new User(name, id, tags, metadata, email, favoriteNumber, numbers, strings, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("tags")
+                    || key.equalsIgnoreCase("metadata")
+                    || key.equalsIgnoreCase("email")
+                    || key.equalsIgnoreCase("favorite-number")
+                    || key.equalsIgnoreCase("numbers")
+                    || key.equalsIgnoreCase("strings")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

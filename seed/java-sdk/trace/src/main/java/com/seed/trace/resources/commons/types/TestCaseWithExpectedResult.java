@@ -95,7 +95,6 @@ public final class TestCaseWithExpectedResult {
 
         private VariableValue expectedResult;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class TestCaseWithExpectedResult {
         @java.lang.Override
         public TestCaseWithExpectedResult build() {
             return new TestCaseWithExpectedResult(testCase, expectedResult, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("testCase") || key.equalsIgnoreCase("expectedResult")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

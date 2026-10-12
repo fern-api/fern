@@ -108,7 +108,6 @@ public final class SearchPoliciesRequest {
 
         private Optional<Integer> limit = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -154,6 +153,14 @@ public final class SearchPoliciesRequest {
         @java.lang.Override
         public SearchPoliciesRequest build() {
             return new SearchPoliciesRequest(query, limit, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query") || key.equalsIgnoreCase("limit")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

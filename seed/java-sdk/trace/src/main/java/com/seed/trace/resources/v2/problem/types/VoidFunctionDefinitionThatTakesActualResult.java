@@ -103,7 +103,6 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
 
         private List<Parameter> additionalParameters = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -149,6 +148,14 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
         @java.lang.Override
         public VoidFunctionDefinitionThatTakesActualResult build() {
             return new VoidFunctionDefinitionThatTakesActualResult(additionalParameters, code, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("additionalParameters") || key.equalsIgnoreCase("code")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

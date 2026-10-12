@@ -108,7 +108,6 @@ public final class DetailedOrgMetadata {
 
         private Optional<String> domain = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -154,6 +153,14 @@ public final class DetailedOrgMetadata {
         @java.lang.Override
         public DetailedOrgMetadata build() {
             return new DetailedOrgMetadata(region, domain, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("region") || key.equalsIgnoreCase("domain")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

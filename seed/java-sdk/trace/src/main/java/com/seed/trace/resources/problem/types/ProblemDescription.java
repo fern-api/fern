@@ -68,7 +68,6 @@ public final class ProblemDescription {
     public static final class Builder {
         private List<ProblemDescriptionBoard> boards = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ProblemDescription {
 
         public ProblemDescription build() {
             return new ProblemDescription(boards, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("boards")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

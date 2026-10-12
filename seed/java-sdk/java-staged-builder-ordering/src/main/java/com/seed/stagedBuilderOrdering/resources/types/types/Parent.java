@@ -108,7 +108,6 @@ public final class Parent {
 
         private String parentName;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,16 @@ public final class Parent {
         @java.lang.Override
         public Parent build() {
             return new Parent(parentId, child, parentName, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("parentId")
+                    || key.equalsIgnoreCase("child")
+                    || key.equalsIgnoreCase("parentName")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

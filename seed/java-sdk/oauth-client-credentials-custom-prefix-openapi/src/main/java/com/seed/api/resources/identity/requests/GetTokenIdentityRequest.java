@@ -94,7 +94,6 @@ public final class GetTokenIdentityRequest {
 
         private String password;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class GetTokenIdentityRequest {
         @java.lang.Override
         public GetTokenIdentityRequest build() {
             return new GetTokenIdentityRequest(username, password, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("username") || key.equalsIgnoreCase("password")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

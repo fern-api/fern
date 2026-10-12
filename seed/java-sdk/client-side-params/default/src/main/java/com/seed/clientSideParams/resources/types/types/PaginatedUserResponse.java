@@ -151,7 +151,6 @@ public final class PaginatedUserResponse {
 
         private List<User> users = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -227,6 +226,18 @@ public final class PaginatedUserResponse {
         @java.lang.Override
         public PaginatedUserResponse build() {
             return new PaginatedUserResponse(users, start, limit, length, total, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("users")
+                    || key.equalsIgnoreCase("start")
+                    || key.equalsIgnoreCase("limit")
+                    || key.equalsIgnoreCase("length")
+                    || key.equalsIgnoreCase("total")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

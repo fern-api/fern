@@ -175,7 +175,6 @@ public final class PlantBase implements IPlantStrict {
 
         private Optional<String> commonName = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -259,6 +258,18 @@ public final class PlantBase implements IPlantStrict {
         @java.lang.Override
         public PlantBase build() {
             return new PlantBase(species, family, genus, commonName, wateringFrequency, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("species")
+                    || key.equalsIgnoreCase("family")
+                    || key.equalsIgnoreCase("genus")
+                    || key.equalsIgnoreCase("commonName")
+                    || key.equalsIgnoreCase("wateringFrequency")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -1,6 +1,6 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
+import { flushFeatureFlagClient, getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import {
@@ -193,7 +193,7 @@ export class CliContext {
         }
         this.ttyAwareLogger.finish();
         try {
-            await this.posthogManager.flush();
+            await Promise.all([this.posthogManager.flush(), flushFeatureFlagClient()]);
         } catch {
             // Silently swallow – analytics should never block the CLI
         }
@@ -205,7 +205,7 @@ export class CliContext {
     private async nudgeUpgradeIfAvailable() {
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
-                this.isUpgradeAvailable(),
+                this.isUpgradeAvailable({ skipFeatureFlagRequest: true }),
                 new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300))
             ]);
 
@@ -399,9 +399,12 @@ export class CliContext {
 
     private _isUpgradeAvailable: FernUpgradeInfo | undefined;
     public async isUpgradeAvailable({
-        includePreReleases = false
+        includePreReleases = false,
+        skipFeatureFlagRequest = false
     }: {
         includePreReleases?: boolean;
+        /** Reuse an already-resolved sdk-gen-api flag instead of requesting it (exit-time nudge). */
+        skipFeatureFlagRequest?: boolean;
     } = {}): Promise<FernUpgradeInfo> {
         if (this._isUpgradeAvailable == null) {
             // Check if the CLI is upgradable
@@ -426,7 +429,8 @@ export class CliContext {
             // Check if the generators are upgradable
             const generatorUpgrades: FernGeneratorUpgradeInfo[] = await getProjectGeneratorUpgrades({
                 project: this.project,
-                cliContext: this
+                cliContext: this,
+                skipFeatureFlagRequest
             });
 
             this._isUpgradeAvailable = {

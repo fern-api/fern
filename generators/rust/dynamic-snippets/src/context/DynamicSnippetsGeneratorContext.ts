@@ -1,5 +1,6 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
+    CaseConverter,
     FernGeneratorExec,
     Options,
     Severity,
@@ -26,10 +27,19 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
+    public readonly case: CaseConverter;
     private errorStack: string[] = [];
     private registry: RustFilenameRegistry;
     private declarationToTypeId: Map<string, string> = new Map();
     private endpointDeclarationToQueryRequestName: Map<string, string> = new Map();
+    private inlineRequestDeclarationToName: Map<string, string> = new Map();
+    private endpointDeclarationToFileUploadRequestName: Map<string, string> = new Map();
+    // Casing without language rules, used to tell casing overrides apart from computed IR casings.
+    private readonly defaultCase = new CaseConverter({
+        generationLanguage: undefined,
+        keywords: undefined,
+        smartCasing: true
+    });
 
     constructor({
         ir,
@@ -44,9 +54,20 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.ir = ir;
         this.customConfig = config.customConfig as BaseRustCustomConfigSchema | undefined;
         this.registry = RustFilenameRegistry.create();
+        // Same casing as the Rust model generator, so names match the generated SDK
+        // (e.g. "MarketplaceIDs" -> "MarketplaceIds").
+        this.case = new CaseConverter({
+            generationLanguage: this.customConfig?.capitalizeInitialisms ? undefined : "rust",
+            keywords: undefined,
+            smartCasing: true
+        });
 
         // Pre-register all type names from IR to match model generator naming
         this.preregisterTypeNames();
+
+        // Inline and file upload request names go before query request names, as in the SDK generator,
+        // so collision suffixes match.
+        this.preregisterRequestBodyNames();
 
         // Pre-register query request names to match SDK generator naming
         this.preregisterQueryRequestNames();
@@ -59,12 +80,40 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     private preregisterTypeNames(): void {
         // Register all IR types to ensure consistent naming with model generator
         for (const [typeId, type] of Object.entries(this.ir.types)) {
-            const baseName = type.declaration.name.pascalCase.safeName;
+            const baseName = this.pascalSafe(type.declaration.name);
             this.registry.registerSchemaTypeTypeName(typeId, baseName);
 
             // Create a lookup key for this declaration
             const key = this.getDeclarationKey(type.declaration);
             this.declarationToTypeId.set(key, typeId);
+        }
+    }
+
+    private preregisterRequestBodyNames(): void {
+        for (const [endpointId, endpoint] of Object.entries(this.ir.endpoints)) {
+            const request = endpoint.request;
+            if (request.type !== "inlined" || request.body?.type !== "properties") {
+                continue;
+            }
+            const name = this.registry.registerInlineRequestTypeName(
+                endpointId,
+                this.pascalUnsafe(request.declaration.name)
+            );
+            this.inlineRequestDeclarationToName.set(this.getDeclarationKey(request.declaration), name);
+        }
+        for (const [endpointId, endpoint] of Object.entries(this.ir.endpoints)) {
+            const request = endpoint.request;
+            if (request.type !== "inlined" || request.body?.type !== "fileUpload") {
+                continue;
+            }
+            const name = this.registry.registerFileUploadRequestTypeName(
+                endpointId,
+                `${this.pascalSafe(endpoint.declaration.name)}Request`
+            );
+            this.endpointDeclarationToFileUploadRequestName.set(
+                this.getEndpointDeclarationKey(endpoint.declaration),
+                name
+            );
         }
     }
 
@@ -90,7 +139,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             const hasBody = request.body != null;
 
             if (hasQueryParams && !hasBody) {
-                const methodName = endpoint.declaration.name.pascalCase.safeName;
+                const methodName = this.pascalSafe(endpoint.declaration.name);
                 queryEndpoints.push({ endpointId, endpoint, methodName });
             }
         }
@@ -108,9 +157,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             let baseQueryRequestName: string;
             if (hasCollision) {
                 // Include full subpackage path to make it unique, matching SDK generator behavior
-                const pathParts = endpoint.declaration.fernFilepath.allParts.map(
-                    (part) => part.pascalCase.safeName
-                );
+                const pathParts = endpoint.declaration.fernFilepath.allParts.map((part) => this.pascalSafe(part));
                 const subpackagePrefix = pathParts.join("");
                 baseQueryRequestName = `${subpackagePrefix}${methodName}QueryRequest`;
             } else {
@@ -118,11 +165,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             }
 
             // Register the name in the type registry to handle deduplication
-            const syntheticTypeId = `query_request:${endpointId}`;
-            const deduplicatedName = this.registry.registerSchemaTypeTypeName(
-                syntheticTypeId,
-                baseQueryRequestName
-            );
+            const deduplicatedName = this.registry.registerQueryRequestTypeName(endpointId, baseQueryRequestName);
 
             // Store the mapping from endpoint declaration to deduplicated name
             const key = this.getEndpointDeclarationKey(endpoint.declaration);
@@ -133,9 +176,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     /**
      * Create a unique key for a type declaration based on its file path and name.
      * This helps us look up the typeId when we only have the declaration.
+     * Uses allParts so same-named types in different files of one package get different keys.
      */
     private getDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
-        const fernFilepath = declaration.fernFilepath.packagePath
+        const fernFilepath = declaration.fernFilepath.allParts
             .map((part) => part.pascalCase.safeName)
             .join("/");
         const name = declaration.name.pascalCase.safeName;
@@ -162,8 +206,42 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
-    public getStructName(name: FernIr.Name): string {
-        return this.getTypeName(name);
+    /**
+     * Pascal-case name with Rust casing rules, recomputed from the original name because the
+     * precomputed IR casings keep initialisms (e.g. "IDs") that the Rust generator lowercases.
+     * Casing overrides are kept, as the SDK generator does.
+     */
+    public pascalSafe(name: FernIr.Name): string {
+        return this.hasPascalCaseOverride(name) ? name.pascalCase.safeName : this.case.pascalSafe(name.originalName);
+    }
+
+    public pascalUnsafe(name: FernIr.Name): string {
+        return this.hasPascalCaseOverride(name)
+            ? name.pascalCase.unsafeName
+            : this.case.pascalUnsafe(name.originalName);
+    }
+
+    private hasPascalCaseOverride(name: FernIr.Name): boolean {
+        const pascal = name.pascalCase.unsafeName;
+        return (
+            pascal !== this.defaultCase.pascalUnsafe(name.originalName) &&
+            pascal !== this.case.pascalUnsafe(name.originalName)
+        );
+    }
+
+    public getInlineRequestStructName(declaration: FernIr.dynamic.Declaration): string {
+        return (
+            this.inlineRequestDeclarationToName.get(this.getDeclarationKey(declaration)) ??
+            this.getStructNameByDeclaration(declaration)
+        );
+    }
+
+    public getFileUploadRequestNameByEndpoint(endpointDeclaration: FernIr.dynamic.Declaration): string | undefined {
+        return this.endpointDeclarationToFileUploadRequestName.get(this.getEndpointDeclarationKey(endpointDeclaration));
+    }
+
+    public getStructName(declaration: FernIr.dynamic.Declaration): string {
+        return this.getStructNameByDeclaration(declaration);
     }
 
     /**
@@ -178,7 +256,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             return this.registry.getSchemaTypeTypeNameOrThrow(typeId);
         }
         // Fallback to basic name if not found in registry
-        return getName(declaration.name.pascalCase.safeName);
+        return getName(this.pascalSafe(declaration.name));
     }
 
     /**
@@ -191,8 +269,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.endpointDeclarationToQueryRequestName.get(key);
     }
 
-    public getEnumName(name: FernIr.Name): string {
-        return this.getTypeName(name);
+    public getEnumName(declaration: FernIr.dynamic.Declaration): string {
+        return this.getStructNameByDeclaration(declaration);
     }
 
     /**
@@ -201,10 +279,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      */
     public getTypeNameById(typeId: string): string {
         return this.registry.getSchemaTypeTypeNameOrThrow(typeId);
-    }
-
-    private getTypeName(name: FernIr.Name): string {
-        return getName(name.pascalCase.safeName);
     }
 
     public getPropertyName(name: FernIr.Name): string {

@@ -141,7 +141,6 @@ public final class Number implements XmlSerializable {
 
         private Optional<String> sendDigits = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
@@ -180,6 +179,14 @@ public final class Number implements XmlSerializable {
 
         public Number build() {
             return new Number(phoneNumber, sendDigits, additionalProperties, content);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("phone_number") || key.equalsIgnoreCase("send_digits")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

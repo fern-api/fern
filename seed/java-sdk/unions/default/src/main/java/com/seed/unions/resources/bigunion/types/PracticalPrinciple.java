@@ -80,7 +80,6 @@ public final class PracticalPrinciple {
     public static final class Builder implements ValueStage, _FinalStage {
         private String value;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class PracticalPrinciple {
         @java.lang.Override
         public PracticalPrinciple build() {
             return new PracticalPrinciple(value, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("value")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

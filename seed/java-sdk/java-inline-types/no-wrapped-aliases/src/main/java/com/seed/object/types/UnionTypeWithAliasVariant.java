@@ -292,7 +292,6 @@ public final class UnionTypeWithAliasVariant {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -313,6 +312,14 @@ public final class UnionTypeWithAliasVariant {
             @java.lang.Override
             public AliasVariant build() {
                 return new AliasVariant(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override
@@ -393,7 +400,6 @@ public final class UnionTypeWithAliasVariant {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -414,6 +420,14 @@ public final class UnionTypeWithAliasVariant {
             @java.lang.Override
             public NonAliasVariant build() {
                 return new NonAliasVariant(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

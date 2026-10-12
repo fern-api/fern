@@ -371,7 +371,6 @@ public final class GetUsersRequest {
 
         private List<User> excludeUser = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -627,6 +626,29 @@ public final class GetUsersRequest {
                     longParam,
                     bigIntParam,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("excludeUser")
+                    || key.equalsIgnoreCase("filter")
+                    || key.equalsIgnoreCase("limit")
+                    || key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("date")
+                    || key.equalsIgnoreCase("deadline")
+                    || key.equalsIgnoreCase("bytes")
+                    || key.equalsIgnoreCase("user")
+                    || key.equalsIgnoreCase("userList")
+                    || key.equalsIgnoreCase("optionalDeadline")
+                    || key.equalsIgnoreCase("keyValue")
+                    || key.equalsIgnoreCase("optionalString")
+                    || key.equalsIgnoreCase("nestedUser")
+                    || key.equalsIgnoreCase("optionalUser")
+                    || key.equalsIgnoreCase("longParam")
+                    || key.equalsIgnoreCase("bigIntParam")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

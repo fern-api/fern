@@ -147,7 +147,6 @@ public final class SendRequest {
 
         private Optional<String> maybeContext = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -198,6 +197,20 @@ public final class SendRequest {
         @java.lang.Override
         public SendRequest build() {
             return new SendRequest(query, context, maybeContext, containerObject, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prompt")
+                    || key.equalsIgnoreCase("query")
+                    || key.equalsIgnoreCase("stream")
+                    || key.equalsIgnoreCase("ending")
+                    || key.equalsIgnoreCase("context")
+                    || key.equalsIgnoreCase("maybeContext")
+                    || key.equalsIgnoreCase("containerObject")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

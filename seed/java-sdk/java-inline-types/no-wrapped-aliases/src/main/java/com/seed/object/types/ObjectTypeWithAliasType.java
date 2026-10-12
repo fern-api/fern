@@ -80,7 +80,6 @@ public final class ObjectTypeWithAliasType {
     public static final class Builder implements PropStage, _FinalStage {
         private Prop prop;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ObjectTypeWithAliasType {
         @java.lang.Override
         public ObjectTypeWithAliasType build() {
             return new ObjectTypeWithAliasType(prop, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prop")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
@@ -180,7 +187,6 @@ public final class ObjectTypeWithAliasType {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -201,6 +207,14 @@ public final class ObjectTypeWithAliasType {
             @java.lang.Override
             public Prop build() {
                 return new Prop(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

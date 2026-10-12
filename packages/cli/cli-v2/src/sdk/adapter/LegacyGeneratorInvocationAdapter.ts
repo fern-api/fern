@@ -1,6 +1,6 @@
 import { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
-import { removeDefaultDockerOrgIfPresent } from "@fern-api/configuration-loader";
+import { DEFAULT_MAVEN_REGISTRY_URL, removeDefaultDockerOrgIfPresent } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
@@ -252,9 +252,13 @@ export class LegacyGeneratorInvocationAdapter {
         });
     }
 
+    /**
+     * Without `url` this uploads to the Central Portal staging service. Maven Central only releases signed
+     * artifacts, so SdkChecker.validateMavenPublishSignatures warns when neither `signature` nor `url` is set.
+     */
     private buildMavenPublishInfo(maven: schemas.MavenPublishSchema): FernFiddle.GithubPublishInfo {
         return FernFiddle.GithubPublishInfo.maven({
-            registryUrl: maven.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
+            registryUrl: maven.url ?? DEFAULT_MAVEN_REGISTRY_URL,
             coordinate: maven.coordinate,
             credentials:
                 maven.username != null && maven.password != null

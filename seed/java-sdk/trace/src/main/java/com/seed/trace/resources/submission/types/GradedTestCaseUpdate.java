@@ -94,7 +94,6 @@ public final class GradedTestCaseUpdate {
 
         private TestCaseGrade grade;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class GradedTestCaseUpdate {
         @java.lang.Override
         public GradedTestCaseUpdate build() {
             return new GradedTestCaseUpdate(testCaseId, grade, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("testCaseId") || key.equalsIgnoreCase("grade")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

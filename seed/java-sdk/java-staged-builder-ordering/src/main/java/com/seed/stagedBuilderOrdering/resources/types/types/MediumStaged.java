@@ -148,7 +148,6 @@ public final class MediumStaged {
 
         private Optional<String> optional = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -207,6 +206,18 @@ public final class MediumStaged {
         @java.lang.Override
         public MediumStaged build() {
             return new MediumStaged(alpha, beta, gamma, delta, optional, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("alpha")
+                    || key.equalsIgnoreCase("beta")
+                    || key.equalsIgnoreCase("gamma")
+                    || key.equalsIgnoreCase("delta")
+                    || key.equalsIgnoreCase("optional")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

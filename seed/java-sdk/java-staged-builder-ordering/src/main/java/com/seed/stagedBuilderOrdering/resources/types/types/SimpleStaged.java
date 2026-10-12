@@ -108,7 +108,6 @@ public final class SimpleStaged {
 
         private String third;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class SimpleStaged {
         @java.lang.Override
         public SimpleStaged build() {
             return new SimpleStaged(first, second, third, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("first") || key.equalsIgnoreCase("second") || key.equalsIgnoreCase("third")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

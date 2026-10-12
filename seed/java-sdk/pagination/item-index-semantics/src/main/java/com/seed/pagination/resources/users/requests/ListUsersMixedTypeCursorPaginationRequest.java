@@ -69,7 +69,6 @@ public final class ListUsersMixedTypeCursorPaginationRequest {
     public static final class Builder {
         private Optional<String> cursor = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -92,6 +91,14 @@ public final class ListUsersMixedTypeCursorPaginationRequest {
 
         public ListUsersMixedTypeCursorPaginationRequest build() {
             return new ListUsersMixedTypeCursorPaginationRequest(cursor, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("cursor")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

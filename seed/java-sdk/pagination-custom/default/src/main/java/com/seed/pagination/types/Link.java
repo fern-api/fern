@@ -108,7 +108,6 @@ public final class Link {
 
         private String href;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class Link {
         @java.lang.Override
         public Link build() {
             return new Link(rel, method, href, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("rel") || key.equalsIgnoreCase("method") || key.equalsIgnoreCase("href")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

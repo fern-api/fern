@@ -80,7 +80,6 @@ public final class ProtocolObjectEvent {
     public static final class Builder implements DataStage, _FinalStage {
         private StatusPayload data;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ProtocolObjectEvent {
         @java.lang.Override
         public ProtocolObjectEvent build() {
             return new ProtocolObjectEvent(data, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

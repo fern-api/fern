@@ -116,7 +116,6 @@ public final class ListUsersCursorPaginationRequest {
 
         private Optional<String> startingAfter = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -185,6 +184,17 @@ public final class ListUsersCursorPaginationRequest {
 
         public ListUsersCursorPaginationRequest build() {
             return new ListUsersCursorPaginationRequest(page, perPage, order, startingAfter, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("page")
+                    || key.equalsIgnoreCase("per_page")
+                    || key.equalsIgnoreCase("order")
+                    || key.equalsIgnoreCase("starting_after")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {
