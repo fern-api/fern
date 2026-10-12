@@ -33,11 +33,12 @@ export interface DetectedAuthBinding {
      */
     basicHalf?: "username" | "password" | "both";
     /**
-     * For `header`, the header the credential is sent in and the configured
-     * value prefix (`null` when the raw credential is sent). Lets the wire-test
-     * manifest assert the exact outgoing value rather than mere presence.
+     * For `header`, the header the credential is sent in, the env var that
+     * supplies it, and the configured value prefix (`null` when the raw
+     * credential is sent). Lets the wire-test manifest assert the exact
+     * outgoing value rather than mere presence.
      */
-    headerAuth?: { headerName: string; prefix: string | null };
+    headerAuth?: { headerName: string; envVar: string; prefix: string | null };
     /**
      * For `oauth-client-credentials`, the resolved token-endpoint contract the
      * generated CLI actually calls at runtime. Consumed by the wire-test
@@ -226,7 +227,11 @@ function bindingForScheme(args: {
                 authTypeImport: "ApiKeyAuth, AuthCredentialSource",
                 envVars: [env],
                 kind: "header",
-                headerAuth: { headerName: getWireValue(header.name), prefix: prefix !== "" ? prefix : null }
+                headerAuth: {
+                    headerName: getWireValue(header.name),
+                    envVar: env,
+                    prefix: prefix !== "" ? prefix : null
+                }
             };
         },
         basic: (basic) => {

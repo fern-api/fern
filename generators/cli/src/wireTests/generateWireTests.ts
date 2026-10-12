@@ -166,11 +166,14 @@ export function collectHeaderAuthValues(
     const valueByEnvVar = new Map(authEnvVars.map(({ name, value }) => [name, value]));
     const values: Array<{ headerName: string; value: string }> = [];
     for (const binding of authBindings) {
-        const credential = binding.envVars[0] != null ? valueByEnvVar.get(binding.envVars[0]) : undefined;
-        if (binding.headerAuth == null || credential == null) {
+        if (binding.kind !== "header" || binding.headerAuth == null) {
             continue;
         }
-        const { headerName, prefix } = binding.headerAuth;
+        const { headerName, envVar, prefix } = binding.headerAuth;
+        const credential = valueByEnvVar.get(envVar);
+        if (credential == null) {
+            continue;
+        }
         values.push({ headerName, value: prefix != null ? `${prefix} ${credential}` : credential });
     }
     return values;

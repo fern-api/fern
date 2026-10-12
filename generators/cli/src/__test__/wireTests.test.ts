@@ -431,7 +431,7 @@ describe("collectHeaderAuthValues", () => {
         authTypeImport: null,
         envVars: [envVar],
         kind: "header",
-        headerAuth: { headerName, prefix }
+        headerAuth: { headerName, envVar, prefix }
     });
 
     it("joins the configured prefix and the seeded credential with one space", () => {
@@ -459,6 +459,26 @@ describe("collectHeaderAuthValues", () => {
             kind: "bearer"
         };
         expect(collectHeaderAuthValues([bearerBinding], [{ name: "TOKEN", value: "test" }])).toEqual([]);
+    });
+
+    it("reads the credential from the binding's declared header env var, not envVars[0]", () => {
+        const binding: DetectedAuthBinding = {
+            ...headerBinding("API_KEY", "X-Api-Key", "Key"),
+            envVars: ["OTHER", "API_KEY"]
+        };
+        expect(
+            collectHeaderAuthValues(
+                [binding],
+                [
+                    { name: "OTHER", value: "wrong" },
+                    { name: "API_KEY", value: "right" }
+                ]
+            )
+        ).toEqual([{ headerName: "X-Api-Key", value: "Key right" }]);
+    });
+
+    it("skips a header binding whose credential env var is not exported", () => {
+        expect(collectHeaderAuthValues([headerBinding("API_KEY", "X-Api-Key", "Key")], [])).toEqual([]);
     });
 });
 

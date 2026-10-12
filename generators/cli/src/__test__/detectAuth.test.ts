@@ -123,7 +123,7 @@ describe("detectAuthBindings", () => {
             '.auth(ApiKeyAuth::new("apiKey").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("API_KEY_VALUE")])).prefix("Key"))'
         );
         expect(bindings[0]?.envVars).toEqual(["API_KEY_VALUE"]);
-        expect(bindings[0]?.headerAuth).toEqual({ headerName: "X-Api-Key", prefix: "Key" });
+        expect(bindings[0]?.headerAuth).toEqual({ headerName: "X-Api-Key", envVar: "API_KEY_VALUE", prefix: "Key" });
     });
 
     it("header scheme prefix is trimmed, and a blank prefix sends the raw credential", () => {
@@ -136,7 +136,7 @@ describe("detectAuthBindings", () => {
             binaryName: "close"
         });
         expect(padded?.rustCall).toContain(')).prefix("Token"))');
-        expect(padded?.headerAuth).toEqual({ headerName: "X-A", prefix: "Token" });
+        expect(padded?.headerAuth).toMatchObject({ headerName: "X-A", prefix: "Token" });
         for (const binding of [blank, absent]) {
             expect(binding?.rustCall).not.toContain(".prefix(");
             expect(binding?.headerAuth?.prefix).toBeNull();
