@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpEndpointSecurityOptionalAuth;\n\nvar client = new SeedCsharpEndpointSecurityOptionalAuthClient(\"USERNAME\", \"PASSWORD\", \"TOKEN\");\nawait client.Auth.GetTokenAsync(new GetTokenRequest { GrantType = \"client_credentials\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/user",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpEndpointSecurityOptionalAuth;\n\nvar client = new SeedCsharpEndpointSecurityOptionalAuthClient(\"USERNAME\", \"PASSWORD\", \"TOKEN\");\nawait client.User.GetUserAsync();\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../api-yml.schema.json
+
+name: csharp-endpoint-security-optional-auth
+
+# Regression fixture: an endpoint whose security requirements include an empty requirement
+# (auth is optional), e.g. OpenAPI `security: [{Basic: []}, {}]`. The C# generator must emit a
+# typed empty array (`new string[] { }`) for it, since `new[] { }` doesn't compile (CS0826).
+auth:
+  endpoint-security: {}
+
+auth-schemes:
+  Basic:
+    scheme: basic
+  Bearer:
+    scheme: bearer

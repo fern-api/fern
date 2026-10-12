@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a compile error (CS0826) for endpoints whose security includes an empty requirement
+    (optional auth, e.g. `security: [{basicAuth: []}, {}]`). The empty requirement is now
+    emitted as `new string[] { }` instead of `new[] { }`.
+  type: fix
