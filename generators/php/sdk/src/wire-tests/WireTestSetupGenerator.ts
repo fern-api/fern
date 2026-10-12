@@ -3,6 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WireTestExamples } from "./WireTestExamples.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -12,9 +13,16 @@ export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
+    private readonly testExamples: WireTestExamples;
+
+    constructor(
+        context: SdkGeneratorContext,
+        ir: FernIr.IntermediateRepresentation,
+        testExamples: WireTestExamples = new WireTestExamples(context)
+    ) {
         this.context = context;
         this.ir = ir;
+        this.testExamples = testExamples;
     }
 
     /**
@@ -29,12 +37,23 @@ export class WireTestSetupGenerator {
         this.generateWireTestPhpunitXml();
     }
 
-    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+    /**
+     * Converts the IR to WireMock stubs, with an extra stub per wire test example that only matches
+     * requests carrying that test's `X-Test-Id` header.
+     */
+    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation, testExamples: WireTestExamples) {
         // ir-sdk versions may differ between php-sdk and mock-utils. The newer IR only adds
         // optional fields and OAuth configuration variants that WireMock ignores, but the
         // added union variants stop the two IntermediateRepresentations from overlapping
         // structurally, so the assertion has to go through `unknown`.
-        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
+        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0], {
+            getExampleTestId: ({ service, endpoint, example }) =>
+                testExamples.getTestId(
+                    service as unknown as FernIr.HttpService,
+                    endpoint as unknown as FernIr.HttpEndpoint,
+                    example as unknown as FernIr.ExampleEndpointCall
+                )
+        });
     }
 
     /**
@@ -69,7 +88,7 @@ export class WireTestSetupGenerator {
     }
 
     private generateWireMockConfigFile(): void {
-        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir, this.testExamples);
 
         // mock-utils generates datetime values using Date.toISOString() which always includes
         // ".000Z" milliseconds. PHP's DateTimeInterface::RFC3339 format omits fractional seconds,
