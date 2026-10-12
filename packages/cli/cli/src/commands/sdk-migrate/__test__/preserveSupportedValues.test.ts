@@ -445,24 +445,49 @@ describe("fern sdk migrate auth", () => {
         expect(tokenUrls(mapFernDefinitionToSdkConfigApi(definition))).toEqual(["/identity/token"]);
     });
 
-    it("resolves namespaced method and path references to the namespaced endpoint's request path", () => {
+    it.each([
+        ["billing/auth.yml", "auth.yml"],
+        ["auth.yml", "billing/auth.yml"]
+    ])("resolves namespaced method and path references by namespace, not file order (%s, %s)", (...filePaths) => {
         const definition = createDefinition({
             auth: "OAuth2",
             "auth-schemes": { OAuth2: oauthWithTokenEndpoint("billing::POST /token") }
         });
-        addService(definition, "billing/auth.yml", {
-            "base-path": "/billing/oauth",
-            endpoints: { getToken: { method: "POST", path: "/token" } }
-        });
-        addService(definition, "auth.yml", {
-            "base-path": "/oauth",
-            endpoints: { getToken: { method: "POST", path: "/token" } }
-        });
+        for (const filePath of filePaths) {
+            addService(definition, filePath, {
+                "base-path": filePath.startsWith("billing/") ? "/billing/oauth" : "/oauth",
+                endpoints: { getToken: { method: "POST", path: "/token" } }
+            });
+        }
 
         const result = mapFernDefinitionToSdkConfigApi(definition);
 
         expect(tokenUrls(result)).toEqual(["/billing/oauth/token"]);
         expect(result.diagnostics).toEqual([]);
+    });
+
+    it("picks the endpoint the IR's EndpointResolver picks when a route is declared in several files", () => {
+        const definition = createDefinition({
+            auth: "OAuth2",
+            "auth-schemes": { OAuth2: oauthWithTokenEndpoint("POST /token") }
+        });
+        definition.packageMarkers[RelativeFilePath.of("__package__.yml")] = {
+            defaultUrl: undefined,
+            rawContents: "",
+            contents: {
+                service: {
+                    auth: false,
+                    "base-path": "/root",
+                    endpoints: { getToken: { method: "POST", path: "/token" } }
+                }
+            }
+        };
+        addService(definition, "auth.yml", {
+            "base-path": "/oauth",
+            endpoints: { getToken: { method: "POST", path: "/token" } }
+        });
+
+        expect(tokenUrls(mapFernDefinitionToSdkConfigApi(definition))).toEqual(["/root/token"]);
     });
 
     it("omits a method and path reference that Fern's endpoint reference parser rejects", () => {

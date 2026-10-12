@@ -1,4 +1,4 @@
-import { type FernDefinition, getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { type FernDefinition, getAllDefinitionFiles, getAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import {
     HttpEndpointReferenceParser,
     type RawSchemas,
@@ -358,7 +358,9 @@ function resolveEndpointUrl(reference: string, definition: FernDefinition): Endp
     const parsed = new HttpEndpointReferenceParser().tryParse(trimmed);
     const files = getAllDefinitionFiles(definition);
     const resolved =
-        parsed == null ? findEndpointByName(trimmed, definition, files) : findEndpointByRoute(parsed, files);
+        parsed == null
+            ? findEndpointByName(trimmed, definition, files)
+            : findEndpointByRoute(parsed, definition, files);
     if (resolved == null) {
         // A method/path reference names its request path even when no declared endpoint matches it.
         return parsed == null
@@ -375,12 +377,18 @@ function resolveEndpointUrl(reference: string, definition: FernDefinition): Endp
     return withEndpointBaseUrl(path, endpoint.url ?? service.url ?? resolved.defaultUrl, root);
 }
 
+/**
+ * Mirrors EndpointResolverImpl.resolveEndpointByMethodAndPath, including its scan order (all definition
+ * files, then package markers again) and last-match-wins, so a route declared in several files resolves
+ * to the endpoint the IR uses.
+ */
 function findEndpointByRoute(
     { method, path, namespace }: HttpEndpointReferenceParser.Parsed,
+    definition: FernDefinition,
     files: DefinitionFiles
 ): ResolvedEndpoint | undefined {
     let match: ResolvedEndpoint | undefined;
-    for (const [filePath, file] of Object.entries(files)) {
+    for (const [filePath, file] of [...Object.entries(files), ...Object.entries(getAllPackageMarkers(definition))]) {
         const segments = filePath.split("/");
         if (namespace != null && (segments.length < 2 || segments[0] !== namespace)) {
             continue;
