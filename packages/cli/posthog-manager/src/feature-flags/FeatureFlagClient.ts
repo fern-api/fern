@@ -58,7 +58,9 @@ export class NoopFeatureFlagClient implements FeatureFlagClient {
 }
 
 /** The subset of the PostHog client the flag client uses, so tests can substitute it. */
-export type FeatureFlagEvaluator = Pick<PostHog, "getFeatureFlagResult" | "flush">;
+export type FeatureFlagEvaluator = Pick<PostHog, "getFeatureFlagResult" | "capture" | "flush">;
+
+type FlagResult = Awaited<ReturnType<FeatureFlagEvaluator["getFeatureFlagResult"]>>;
 
 const FLAG_REQUEST_TIMEOUT_MS = 3000;
 const FLUSH_TIMEOUT_MS = 3000;
@@ -137,7 +139,7 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
         }
     }
 
-    /** In-flight checks queue their usage event only once PostHog answers, so wait for them first. */
+    /** In-flight checks capture their usage event only once PostHog answers, so wait for them first. */
     private async flushAfterPendingEvaluations(): Promise<void> {
         await Promise.allSettled(this.pending.values());
         await this.evaluator.flush();
@@ -146,19 +148,77 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
     private async evaluate(flag: string, context: FeatureFlagContext): Promise<boolean> {
         const { org } = context;
         const properties = getTargetingProperties(context, this.environment);
+        let result: FlagResult;
         try {
-            const result = await this.evaluator.getFeatureFlagResult(flag, getFlagDistinctId(org), {
+            result = await this.evaluator.getFeatureFlagResult(flag, getFlagDistinctId(org), {
                 personProperties: properties,
                 groups: { organization: org },
                 groupProperties: { organization: properties },
-                sendFeatureFlagEvents: this.sendFeatureFlagEvents
+                // posthog-node's own event omits the targeting properties and sends one event per org,
+                // flag, and value, which hides per-generator usage. We capture our own below instead.
+                sendFeatureFlagEvents: false
             });
-            return isFeatureFlagValueEnabled(result);
         } catch {
             // Flags gate rollouts; an unreachable PostHog must fall back to the default (off), never fail the CLI.
             return false;
         }
+        if (this.sendFeatureFlagEvents) {
+            this.captureFlagCalled({ flag, org, result, properties });
+        }
+        return isFeatureFlagValueEnabled(result);
     }
+
+    /**
+     * Records one `$feature_flag_called` event per evaluation (evaluations are already cached per
+     * flag, org, generator, and language), carrying the targeting properties so PostHog's flag usage
+     * view can break results down by generator, language, and environment.
+     */
+    private captureFlagCalled({
+        flag,
+        org,
+        result,
+        properties
+    }: {
+        flag: string;
+        org: string;
+        result: FlagResult;
+        properties: Record<string, string>;
+    }): void {
+        const response = getFlagResponse(result);
+        try {
+            this.evaluator.capture({
+                distinctId: getFlagDistinctId(org),
+                event: "$feature_flag_called",
+                groups: { organization: org },
+                // Leave `$feature_flag_has_experiment` unset: posthog-node strips every non-flag property
+                // from `$feature_flag_called` events that set it to `false` when PostHog asks for minimal events.
+                properties: {
+                    ...properties,
+                    $feature_flag: flag,
+                    $feature_flag_response: response,
+                    [`$feature/${flag}`]: response,
+                    ...(result?.reason != null ? { $feature_flag_reason: result.reason } : {}),
+                    ...(process.env.CLI_VERSION != null ? { version: process.env.CLI_VERSION } : {})
+                }
+            });
+        } catch {
+            // Flag usage events are analytics only and must never fail the CLI.
+        }
+    }
+}
+
+/**
+ * The flag value as PostHog reports it in `$feature_flag_response`: the variant for multivariate
+ * flags, `true`/`false` for boolean flags, and `undefined` when PostHog returned no value.
+ */
+export function getFlagResponse(result: FlagResult): string | boolean | undefined {
+    if (result == null) {
+        return undefined;
+    }
+    if (!result.enabled) {
+        return false;
+    }
+    return result.variant ?? true;
 }
 
 /**
