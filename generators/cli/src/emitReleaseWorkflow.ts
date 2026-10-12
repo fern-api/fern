@@ -2,12 +2,18 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import {
     DEFAULT_HOMEBREW_TOKEN_ENV_VAR,
+    DEFAULT_LINUX_PACKAGES_TOKEN_ENV_VAR,
     DEFAULT_SCOOP_TOKEN_ENV_VAR,
     type FernCliGitHubAppConfig,
     type FernCliHomebrewConfig,
     type ResolvedChannelAuth,
     resolveChannelAuth
 } from "./customConfig.js";
+import {
+    constructLinuxPackagesJobYaml,
+    LINUX_PACKAGES_JOB,
+    type LinuxPackagesJobArgs
+} from "./emitLinuxPackagesWorkflow.js";
 import { constructScoopJobYaml, type ScoopJobArgs } from "./emitScoopWorkflow.js";
 import {
     appTokenExpression,
@@ -44,14 +50,15 @@ export async function emitReleaseWorkflow(args: {
     outputDir: string;
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
+    linuxPackages?: LinuxPackagesJobArgs;
     githubApp?: FernCliGitHubAppConfig;
 }): Promise<void> {
-    const { outputDir, homebrew, scoop, githubApp } = args;
+    const { outputDir, homebrew, scoop, linuxPackages, githubApp } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
     await writeFile(
         path.join(workflowsDir, "release.yml"),
-        constructReleaseWorkflowYaml({ homebrew, scoop, githubApp })
+        constructReleaseWorkflowYaml({ homebrew, scoop, linuxPackages, githubApp })
     );
 }
 
@@ -61,9 +68,10 @@ export async function emitReleaseWorkflow(args: {
 export function constructReleaseWorkflowYaml(args: {
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
+    linuxPackages?: LinuxPackagesJobArgs;
     githubApp?: FernCliGitHubAppConfig;
 }): string {
-    const { homebrew, scoop, githubApp } = args;
+    const { homebrew, scoop, linuxPackages, githubApp } = args;
 
     const homebrewAuth =
         homebrew != null
@@ -81,6 +89,14 @@ export function constructReleaseWorkflowYaml(args: {
                   defaultTokenSecret: DEFAULT_SCOOP_TOKEN_ENV_VAR
               })
             : undefined;
+    const linuxPackagesAuth =
+        linuxPackages != null
+            ? resolveChannelAuth({
+                  tokenEnvironmentVariable: linuxPackages.linuxPackages.tokenEnvironmentVariable,
+                  githubApp,
+                  defaultTokenSecret: DEFAULT_LINUX_PACKAGES_TOKEN_ENV_VAR
+              })
+            : undefined;
 
     // Both channels gate on `host`, so `announce` must wait on whichever
     // are enabled — otherwise the announcement can precede a published
@@ -93,7 +109,10 @@ export function constructReleaseWorkflowYaml(args: {
     // identical ones.
     const preflightChecks = mergePreflightChecks([
         ...(homebrewAuth?.type === "githubApp" ? [{ label: "Homebrew tap", app: homebrewAuth.app }] : []),
-        ...(scoopAuth?.type === "githubApp" ? [{ label: "Scoop bucket", app: scoopAuth.app }] : [])
+        ...(scoopAuth?.type === "githubApp" ? [{ label: "Scoop bucket", app: scoopAuth.app }] : []),
+        ...(linuxPackagesAuth?.type === "githubApp"
+            ? [{ label: "Linux package repository", app: linuxPackagesAuth.app }]
+            : [])
     ]);
     // Emitted only when a channel actually uses an App, so a PAT-only
     // generation keeps the workflow it has today. PAT secrets are not
@@ -111,6 +130,10 @@ export function constructReleaseWorkflowYaml(args: {
     if (scoop != null && scoopAuth != null) {
         jobs += constructScoopJobYaml({ ...scoop, auth: scoopAuth, preflightJob });
         publishJobs.push("publish-scoop");
+    }
+    if (linuxPackages != null && linuxPackagesAuth != null) {
+        jobs += constructLinuxPackagesJobYaml({ ...linuxPackages, auth: linuxPackagesAuth, preflightJob });
+        publishJobs.push(LINUX_PACKAGES_JOB);
     }
     return RELEASE_WORKFLOW_YAML + jobs + constructAnnounceJob(publishJobs);
 }

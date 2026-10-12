@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `distribution.linuxPackages`, which publishes the generated CLI to a
+    signed APT and DNF/YUM repository on every release tag:
+
+    ```yaml
+    distribution:
+      linuxPackages:
+        repository: acme/packages
+        formats: [deb, rpm] # optional, default both
+    ```
+
+    A new `publish-linux-packages` job in `release.yml` waits on `host` and
+    packages the `x86_64` and `aarch64` musl archives that cargo-dist
+    already built as `.deb` and `.rpm` files. It commits them to the
+    repository's `gh-pages` branch (configurable with `branch`) under `deb/`
+    and `rpm/`, then regenerates the APT indexes and `createrepo_c`
+    metadata. `InRelease`, `Release.gpg`, `repomd.xml.asc` and every `.rpm`
+    are signed with the GPG key in the `LINUX_PACKAGES_SIGNING_KEY` secret,
+    which can have a passphrase (`signingKeyPassphraseEnvironmentVariable`).
+    The public key is published as `gpg.key`, and a ready-made
+    `rpm/<package>.repo` is published for `/etc/yum.repos.d`. Every version
+    is kept, so users can pin one. Pushes use `LINUX_PACKAGES_TOKEN` or the
+    shared `distribution.githubApp`. The README gains `apt install` and
+    `dnf install` sections, pointing at the GitHub Pages URL or at `url` if
+    it is set. Omitting `linuxPackages` leaves generated output unchanged.
+  type: feat
