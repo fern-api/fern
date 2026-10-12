@@ -35,44 +35,7 @@ import Literal
             optionalStream: false,
             aliasStream: false,
             aliasOptionalStream: false,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func send2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "message": "message",
-                  "status": 1,
-                  "success": true
-                }
-                """#.utf8
-            )
-        )
-        let client = LiteralClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = SendResponse(
-            message: "message",
-            status: 1,
-            success: true
-        )
-        let response = try await client.query.send(
-            prompt: .youAreAHelpfulAssistant,
-            optionalPrompt: .youAreAHelpfulAssistant,
-            aliasPrompt: .youAreAHelpfulAssistant,
-            aliasOptionalPrompt: .youAreAHelpfulAssistant,
-            query: "query",
-            stream: false,
-            optionalStream: false,
-            aliasStream: false,
-            aliasOptionalStream: false,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

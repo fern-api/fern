@@ -36,7 +36,7 @@ import EndpointSecurityAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getWithBearer(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithBearer(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -73,7 +73,7 @@ import EndpointSecurityAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getWithApiKey(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithApiKey(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -110,7 +110,7 @@ import EndpointSecurityAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getWithOAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithOAuth(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -147,7 +147,7 @@ import EndpointSecurityAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getWithBasic(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithBasic(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -184,7 +184,7 @@ import EndpointSecurityAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getWithInferredAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithInferredAuth(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -221,7 +221,7 @@ import EndpointSecurityAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getWithAnyAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithAnyAuth(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -258,7 +258,7 @@ import EndpointSecurityAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getWithAllAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithAllAuth(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

@@ -23,7 +23,7 @@ import UndiscriminatedUnions
             request: MyUnion.string(
                 "string"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -56,31 +56,7 @@ import UndiscriminatedUnions
                 .default
             ): "exampleDefault"
         ]
-        let response = try await client.union.getMetadata(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getMetadata2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "name": "string"
-                }
-                """#.utf8
-            )
-        )
-        let client = UndiscriminatedUnionsClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            Key.keyType(
-                KeyType.name
-            ): "string"
-        ]
-        let response = try await client.union.getMetadata(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.union.getMetadata(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -106,34 +82,7 @@ import UndiscriminatedUnions
                     ])
                 ]
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func updateMetadata2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                true
-                """#.utf8
-            )
-        )
-        let client = UndiscriminatedUnionsClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = true
-        let response = try await client.union.updateMetadata(
-            request: MetadataUnion.optionalMetadata(
-                [
-                    "string": .object([
-                        "key": .string("value")
-                    ])
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -162,36 +111,7 @@ import UndiscriminatedUnions
                     ]
                 )
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func call2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                true
-                """#.utf8
-            )
-        )
-        let client = UndiscriminatedUnionsClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = true
-        let response = try await client.union.call(
-            request: Request(
-                union: MetadataUnion.optionalMetadata(
-                    [
-                        "union": .object([
-                            "key": .string("value")
-                        ])
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -216,7 +136,7 @@ import UndiscriminatedUnions
             request: UnionWithDuplicateTypes.string(
                 "string"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -239,7 +159,7 @@ import UndiscriminatedUnions
             request: NestedUnionRoot.string(
                 "string"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -262,7 +182,7 @@ import UndiscriminatedUnions
             request: OuterNestedUnion.string(
                 "string"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -288,7 +208,7 @@ import UndiscriminatedUnions
                     sharedNumber: 1
                 )
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -336,7 +256,7 @@ import UndiscriminatedUnions
                     ]
                 )
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -362,33 +282,7 @@ import UndiscriminatedUnions
                     cardNumber: "1234567890123456"
                 )
             )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func testCamelCaseProperties2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                string
-                """#.utf8
-            )
-        )
-        let client = UndiscriminatedUnionsClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = "string"
-        let response = try await client.union.testCamelCaseProperties(
-            request: .init(paymentMethod: PaymentMethodUnion.tokenizeCard(
-                TokenizeCard(
-                    method: "method",
-                    cardNumber: "cardNumber"
-                )
-            )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

@@ -23,7 +23,7 @@ import ObjectsWithImports
                     "key": .string("value")
                 ])
             ],
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -46,7 +46,7 @@ import ObjectsWithImports
             request: SendOptionalBodyRequest(
                 message: "message"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -75,7 +75,7 @@ import ObjectsWithImports
             request: .value(DeployParams(
                 updateDraft: true
             )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

@@ -18,7 +18,7 @@ import SingleUrlEnvironmentNoDefault
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.dummy.getDummy(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.dummy.getDummy(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

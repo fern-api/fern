@@ -159,7 +159,7 @@ import Nullable
                 .value("tags")
             ],
             extra: .value(true),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -259,7 +259,7 @@ import Nullable
                 ),
                 avatar: .value("avatar")
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -280,7 +280,7 @@ import Nullable
         let expectedResponse = true
         let response = try await client.nullable.deleteUser(
             request: .init(username: .value("xy")),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

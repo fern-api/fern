@@ -21,7 +21,7 @@ import Audiences
         let expectedResponse = ResponseType(
             foo: "foo"
         )
-        let response = try await client.folderD.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.folderD.service.getDirectThread(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

@@ -60,7 +60,7 @@ import Exhaustive
             ]),
             bigint: Optional("1000000")
         )
-        let response = try await client.noReqBody.getWithNoRequestBody(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.noReqBody.getWithNoRequestBody(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -79,7 +79,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.noReqBody.postWithNoRequestBody(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.noReqBody.postWithNoRequestBody(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

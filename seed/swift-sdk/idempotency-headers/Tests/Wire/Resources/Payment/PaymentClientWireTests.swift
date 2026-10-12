@@ -23,8 +23,24 @@ import IdempotencyHeaders
                 amount: 1,
                 currency: .usd
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func delete1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = IdempotencyHeadersClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.payment.delete(
+            paymentId: "paymentId",
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
     }
 }

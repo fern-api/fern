@@ -18,7 +18,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.urls.withMixedCase(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.endpoints.urls.withMixedCase(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -37,7 +37,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.urls.noEndingSlash(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.endpoints.urls.noEndingSlash(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -56,7 +56,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.urls.withEndingSlash(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.endpoints.urls.withEndingSlash(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -75,7 +75,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.urls.withUnderscores(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.endpoints.urls.withUnderscores(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

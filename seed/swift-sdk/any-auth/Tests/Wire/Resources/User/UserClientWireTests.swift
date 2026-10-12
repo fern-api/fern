@@ -36,7 +36,7 @@ import AnyAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.get(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.get(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -73,7 +73,7 @@ import AnyAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getAdmins(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getAdmins(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

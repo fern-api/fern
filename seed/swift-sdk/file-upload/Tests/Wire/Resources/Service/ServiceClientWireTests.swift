@@ -3,6 +3,21 @@ import Testing
 import FileUpload
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
+    @Test func justFile1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = FileUploadClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        try await client.service.justFile(
+            request: .init(file: .init(data: Data("".utf8))),
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
+    }
+
     @Test func optionalArgs1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
@@ -19,7 +34,7 @@ import FileUpload
         let expectedResponse = "Foo"
         let response = try await client.service.optionalArgs(
             request: .init(imageFile: .init(data: Data("".utf8))),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -45,8 +60,20 @@ import FileUpload
                     foo: "bar"
                 )
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func simple1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = FileUploadClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        try await client.service.simple(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
     }
 }

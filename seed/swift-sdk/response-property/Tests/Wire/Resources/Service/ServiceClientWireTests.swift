@@ -37,7 +37,7 @@ import ResponseProperty
         )
         let response = try await client.service.getMovie(
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -76,7 +76,7 @@ import ResponseProperty
         )
         let response = try await client.service.getMovieDocs(
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -101,7 +101,7 @@ import ResponseProperty
         )
         let response = try await client.service.getMovieName(
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -140,7 +140,7 @@ import ResponseProperty
         )
         let response = try await client.service.getMovieMetadata(
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -179,7 +179,7 @@ import ResponseProperty
         ))
         let response = try await client.service.getOptionalMovie(
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -204,7 +204,7 @@ import ResponseProperty
         ))
         let response = try await client.service.getOptionalMovieDocs(
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -229,7 +229,7 @@ import ResponseProperty
         ))
         let response = try await client.service.getOptionalMovieName(
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

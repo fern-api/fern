@@ -32,7 +32,7 @@ import PathParameters
         let response = try await client.user.getUser(
             tenantId: "tenant_id",
             userId: "user_id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -72,7 +72,7 @@ import PathParameters
                     "tags"
                 ]
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -113,7 +113,7 @@ import PathParameters
                     "tags"
                 ]
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -166,7 +166,7 @@ import PathParameters
             tenantId: "tenant_id",
             userId: "user_id",
             limit: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -201,7 +201,7 @@ import PathParameters
             tenantId: "tenant_id",
             userId: "user_id",
             version: "1",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -237,7 +237,7 @@ import PathParameters
             userId: "user_id",
             version: "1",
             thought: "thought",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

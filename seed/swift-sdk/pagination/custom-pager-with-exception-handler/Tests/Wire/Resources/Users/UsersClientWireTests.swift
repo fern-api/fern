@@ -67,7 +67,7 @@ import Pagination
             perPage: 1,
             order: .asc,
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -113,7 +113,7 @@ import Pagination
         )
         let response = try await client.users.listWithMixedTypeCursorPagination(
             cursor: "cursor",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -181,7 +181,7 @@ import Pagination
             request: .init(pagination: WithCursorType(
                 cursor: "cursor"
             )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -230,7 +230,7 @@ import Pagination
                 cursor: "initial_cursor",
                 filter: "active"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -279,56 +279,7 @@ import Pagination
                 cursor: "initial_cursor",
                 filter: "active"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listWithTopLevelBodyCursorPagination3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "next_cursor": "next_cursor",
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """#.utf8
-            )
-        )
-        let client = PaginationClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersTopLevelCursorPaginationResponse(
-            nextCursor: Optional("next_cursor"),
-            data: [
-                UserType(
-                    name: "name",
-                    id: 1
-                ),
-                UserType(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listWithTopLevelBodyCursorPagination(
-            request: .init(
-                cursor: "cursor",
-                filter: "filter"
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -397,7 +348,7 @@ import Pagination
             perPage: 1,
             order: .asc,
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -466,7 +417,7 @@ import Pagination
             perPage: 1.1,
             order: .asc,
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -534,7 +485,7 @@ import Pagination
             request: .init(pagination: WithPageType(
                 page: 1
             )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -602,7 +553,7 @@ import Pagination
             page: 1,
             limit: 1,
             order: .asc,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -670,7 +621,7 @@ import Pagination
             page: 1,
             limit: 3,
             order: .asc,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -738,75 +689,7 @@ import Pagination
             page: 1,
             limit: 10,
             order: .asc,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listWithOffsetPaginationHasNextPage3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """#.utf8
-            )
-        )
-        let client = PaginationClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponseType(
-            hasNextPage: Optional(true),
-            page: Optional(PageType(
-                page: 1,
-                next: Optional(NextPageType(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                UserType(
-                    name: "name",
-                    id: 1
-                ),
-                UserType(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listWithOffsetPaginationHasNextPage(
-            page: 1,
-            limit: 1,
-            order: .asc,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -858,7 +741,7 @@ import Pagination
         )
         let response = try await client.users.listWithExtendedResults(
             cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -910,7 +793,7 @@ import Pagination
         )
         let response = try await client.users.listWithExtendedResultsAndOptionalData(
             cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -948,7 +831,7 @@ import Pagination
         )
         let response = try await client.users.listUsernames(
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -986,7 +869,7 @@ import Pagination
         ))
         let response = try await client.users.listUsernamesWithOptionalResponse(
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1018,7 +901,7 @@ import Pagination
         )
         let response = try await client.users.listWithGlobalConfig(
             offset: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1084,7 +967,7 @@ import Pagination
         )
         let response = try await client.users.listWithOptionalData(
             page: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1130,73 +1013,7 @@ import Pagination
         )
         let response = try await client.users.listWithOptionalData(
             page: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listWithOptionalData3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """#.utf8
-            )
-        )
-        let client = PaginationClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersOptionalDataPaginationResponse(
-            hasNextPage: Optional(true),
-            page: Optional(PageType(
-                page: 1,
-                next: Optional(NextPageType(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: Optional([
-                UserType(
-                    name: "name",
-                    id: 1
-                ),
-                UserType(
-                    name: "name",
-                    id: 1
-                )
-            ])
-        )
-        let response = try await client.users.listWithOptionalData(
-            page: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1264,7 +1081,7 @@ import Pagination
             page: 1,
             perPage: 1,
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

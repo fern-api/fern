@@ -87,9 +87,66 @@ import Exhaustive
                     bigint: "1000000"
                 )
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func postWithObjectBodyandResponseThrowsBadRequestBody() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            statusCode: 400,
+            body: Foundation.Data(
+                #"""
+                {
+                  "message": "message"
+                }
+                """#.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        do {
+            _ = try await client.inlinedRequests.postWithObjectBodyandResponse(
+                request: .init(
+                    string: "string",
+                    integer: 1,
+                    nestedObject: ObjectWithOptionalField(
+                        string: "string",
+                        integer: 1,
+                        long: 1000000,
+                        double: 1.1,
+                        bool: true,
+                        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        date: CalendarDate("2023-01-15")!,
+                        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                        base64: "SGVsbG8gd29ybGQh",
+                        list: [
+                            "list",
+                            "list"
+                        ],
+                        set: .array([
+                            .string("set")
+                        ]),
+                        map: [
+                            1: "map"
+                        ],
+                        bigint: "1000000"
+                    )
+                ),
+                requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+            )
+            Issue.record("Expected ExhaustiveError.httpError with status code 400")
+        } catch ExhaustiveError.httpError(let httpError) {
+            #expect(httpError.statusCode == 400)
+            let body = try #require(httpError.body)
+            #expect(body.code == 400)
+            #expect(body.type == nil)
+            #expect(body.message == "message")
+        }
     }
 
     @Test func postWithArrayBodyAndHeaders1() async throws -> Void {
@@ -113,7 +170,7 @@ import Exhaustive
                 "string",
                 "string"
             ],
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

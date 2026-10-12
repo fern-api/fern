@@ -5,6 +5,8 @@ import { DeclarationType } from "./DeclarationType.js";
 
 type EnumCaseValueBinding = {
     type: "enum-case-value-binding";
+    /** Qualifies the case with its enum type (e.g. `MyError.httpError(let error)`), required where the type can't be inferred. */
+    enumTypeName?: string;
     caseName: string;
     declarationType: DeclarationType;
     referenceName: string;
@@ -23,6 +25,9 @@ export class Pattern extends AstNode {
     public write(writer: Writer): void {
         switch (this.internalPattern.type) {
             case "enum-case-value-binding":
+                if (this.internalPattern.enumTypeName != null) {
+                    writer.write(this.internalPattern.enumTypeName);
+                }
                 writer.write(".");
                 writer.write(this.internalPattern.caseName);
                 writer.write("(");

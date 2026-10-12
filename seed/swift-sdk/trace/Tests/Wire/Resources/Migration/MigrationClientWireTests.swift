@@ -38,7 +38,7 @@ import Trace
         ]
         let response = try await client.migration.getAttemptedMigrations(
             adminKeyHeader: "admin-key-header",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

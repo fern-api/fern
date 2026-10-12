@@ -50,7 +50,7 @@ import Exhaustive
         )
         let response = try await client.endpoints.put.add(
             id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

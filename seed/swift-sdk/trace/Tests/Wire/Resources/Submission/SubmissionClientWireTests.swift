@@ -30,7 +30,7 @@ import Trace
         )
         let response = try await client.submission.createExecutionSession(
             language: "JAVA",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -62,9 +62,25 @@ import Trace
         ))
         let response = try await client.submission.getExecutionSession(
             sessionId: "sessionId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func stopExecutionSession1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = TraceClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.submission.stopExecutionSession(
+            sessionId: "sessionId",
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
     }
 
     @Test func getExecutionSessionsState1() async throws -> Void {
@@ -114,7 +130,7 @@ import Trace
                 "warmingSessionIds"
             ]
         )
-        let response = try await client.submission.getExecutionSessionsState(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.submission.getExecutionSessionsState(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

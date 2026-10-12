@@ -3,6 +3,18 @@ import Testing
 import HttpHead
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
+    @Test func head1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = HttpHeadClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        try await client.user.head(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
+    }
+
     @Test func list1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
@@ -49,7 +61,7 @@ import HttpHead
         ]
         let response = try await client.user.list(
             limit: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
