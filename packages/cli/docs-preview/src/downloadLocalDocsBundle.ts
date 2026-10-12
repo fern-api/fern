@@ -36,7 +36,7 @@ const PNPM_IGNORED_BUILDS_ERROR = "ERR_PNPM_IGNORED_BUILDS";
 /**
  * Which downloadable preview bundle a cache path or download refers to:
  * the legacy Next bundle (default), the Next app bundle (`app`), or the
- * prebuilt Astro preview-SSR server (`astro`, run by `fern docs dev --astro`).
+ * prebuilt Astro preview-SSR server (`astro`, run by default by `fern docs dev`).
  */
 export interface BundleFlavor {
     app?: boolean;

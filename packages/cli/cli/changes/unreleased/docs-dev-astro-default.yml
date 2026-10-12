@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs dev` now runs the Astro docs preview server by default, matching how published Fern Docs sites render.
+    Pass `--legacy` to run the previous Next.js preview server. `--astro` is still accepted but no longer needed,
+    and `--beta` is now a deprecated alias for `--legacy`. `--private` now applies to the Astro preview too.
+  type: feat
