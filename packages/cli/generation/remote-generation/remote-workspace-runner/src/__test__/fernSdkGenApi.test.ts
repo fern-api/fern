@@ -21,6 +21,7 @@ import {
     getResolvedFernSdkGenApiEnabled,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
+    isPostCutoverGeneratorVersion,
     mapFernSdkGenApiOutput,
     preflightFernSdkGenApiBuild,
     resolveFernSdkGenApiEnabledByGenerator,
@@ -525,20 +526,40 @@ describe("isEligibleForFernSdkGenApi", () => {
         );
     });
 
-    it("rejects explicit SDK Config generation when the backend is disabled", () => {
+    it("routes explicit SDK Config generation through sdk-gen-api without consulting the flag", () => {
+        const isSdkGenApiEnabled = vi.fn(() => false);
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
-            isSdkGenApiEnabled: () => false,
+            isSdkGenApiEnabled,
             sdkConfigV1: sdkConfigV1(),
             requireEnvVars: true,
             isPreview: false
         });
 
-        expect(result?.route).toBeUndefined();
-        expect(result?.error).toHaveProperty(
-            "message",
-            expect.stringContaining("requires the sdk-gen-api generation backend")
-        );
+        expect(result?.error).toBeUndefined();
+        expect(result?.route).toMatchObject({ configKind: "sdk-config-v1", payloadKind: "sdk-config-v1" });
+        expect(isSdkGenApiEnabled).not.toHaveBeenCalled();
+    });
+
+    it("rejects explicit SDK Config generation when FERN_USE_SDK_GEN_API=false", () => {
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "false");
+        try {
+            const [result] = prepareFernSdkGenApiRoutes({
+                generators: [invocation({ version: "4.0.0" })],
+                isSdkGenApiEnabled: () => false,
+                sdkConfigV1: sdkConfigV1(),
+                requireEnvVars: true,
+                isPreview: false
+            });
+
+            expect(result?.route).toBeUndefined();
+            expect(result?.error).toHaveProperty(
+                "message",
+                expect.stringContaining("requires the sdk-gen-api generation backend")
+            );
+        } finally {
+            vi.unstubAllEnvs();
+        }
     });
 
     it("routes cutover-1 and rejects legacy configuration at and after cutover", () => {
@@ -684,9 +705,33 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(JSON.stringify(request)).not.toContain('"latest"');
     });
 
-    it("preserves Fiddle generation at cutover when sdk-gen-api routing is disabled", () => {
+    it.each([
+        { name: "fernapi/fern-typescript-sdk", language: "typescript", version: "4.0.0" },
+        { name: "fernapi/fern-python-sdk", language: "python", version: "6.1.0" },
+        { name: "fernapi/fern-go-sdk", language: "go", version: "2.0.0" }
+    ])("requires fern sdk migrate for post-cutover $name $version from generators.yml even when the flag is off", ({
+        name,
+        language,
+        version
+    }) => {
+        const isSdkGenApiEnabled = vi.fn(() => false);
         const [result] = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ version: "4.0.0" })],
+            generators: [invocation({ name, language, version })],
+            isSdkGenApiEnabled,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("SDK_CONFIG_V1_REQUIRED"));
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("--sdk-config"));
+        expect(isSdkGenApiEnabled).not.toHaveBeenCalled();
+    });
+
+    it("keeps pre-cutover versions on Fiddle when the flag is off", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "3.999.999" })],
             isSdkGenApiEnabled: () => false,
             requireEnvVars: true,
             isPreview: false
@@ -694,7 +739,69 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         expect(result?.route).toBeUndefined();
         expect(result?.error).toBeUndefined();
-        expect(result?.generatorInvocation.version).toBe("4.0.0");
+        expect(result?.generatorInvocation.version).toBe("3.999.999");
+    });
+
+    it("resolves version substitutions before classifying a version as post-cutover", () => {
+        vi.stubEnv("FERN_TS_VERSION", "4.0.0");
+        try {
+            const [result] = prepareFernSdkGenApiRoutes({
+                generators: [invocation({ version: "${FERN_TS_VERSION}" })],
+                isSdkGenApiEnabled: () => false,
+                requireEnvVars: true,
+                isPreview: false
+            });
+
+            expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+
+    it("names FERN_USE_SDK_GEN_API when it keeps a post-cutover version off sdk-gen-api", () => {
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "false");
+        try {
+            const [result] = prepareFernSdkGenApiRoutes({
+                generators: [invocation({ version: "4.0.0" })],
+                isSdkGenApiEnabled: () => false,
+                requireEnvVars: true,
+                isPreview: false
+            });
+
+            expect(result?.error).toHaveProperty(
+                "message",
+                expect.stringContaining("fernapi/fern-typescript-sdk 4.0.0 requires sdk-gen-api generation")
+            );
+            expect(result?.error).toHaveProperty("message", expect.stringContaining("FERN_USE_SDK_GEN_API=false"));
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+
+    it.each([
+        { generatorName: "fernapi/fern-typescript-sdk", version: "3.999.999", expected: false },
+        { generatorName: "fernapi/fern-typescript-sdk", version: "4.0.0", expected: true },
+        { generatorName: "fernapi/fern-typescript-sdk", version: "4.0.0-rc.1", expected: false },
+        { generatorName: "fernapi/fern-python-sdk", version: "6.0.0", expected: true },
+        { generatorName: "fernapi/fern-typescript-sdk", version: "latest", expected: false },
+        { generatorName: "fernapi/fern-typescript-sdk", version: "^4.0.0", expected: false },
+        { generatorName: "acme/custom-sdk", version: "9.0.0", expected: false }
+    ])("classifies $generatorName $version as post-cutover: $expected", ({ generatorName, version, expected }) => {
+        expect(isPostCutoverGeneratorVersion({ generatorName, version })).toBe(expected);
+    });
+
+    it("keeps generators outside the cutover table on the flag", () => {
+        const isSdkGenApiEnabled = vi.fn(() => false);
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "acme/custom-sdk", language: undefined, version: "9.0.0" })],
+            isSdkGenApiEnabled,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toBeUndefined();
+        expect(isSdkGenApiEnabled).toHaveBeenCalledWith("acme/custom-sdk");
     });
 
     it("preserves non-exact legacy versions when sdk-gen-api routing is disabled", () => {
