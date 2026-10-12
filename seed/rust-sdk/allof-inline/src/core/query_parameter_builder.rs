@@ -124,15 +124,11 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
+    /// Add a date parameter (formatted as YYYY-MM-DD)
     pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
         if let Some(v) = value.into() {
-            // Convert NaiveDate to DateTime<Utc> at start of day
-            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
-            self.params.push((
-                key.to_string(),
-                datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
-            ));
+            self.params
+                .push((key.to_string(), v.format("%Y-%m-%d").to_string()));
         }
         self
     }
@@ -369,12 +365,12 @@ mod tests {
     }
 
     #[test]
-    fn test_date_param_converts_to_midnight_utc() {
+    fn test_date_param_formats_iso_date() {
         let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
         let result = QueryBuilder::new().date("on", Some(date)).build();
         assert_eq!(
             result,
-            Some(vec![("on".to_string(), "2024-01-15T00:00:00Z".to_string())])
+            Some(vec![("on".to_string(), "2024-01-15".to_string())])
         );
     }
 
