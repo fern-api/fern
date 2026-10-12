@@ -192,17 +192,57 @@ export class EndpointSnippetGenerator {
             return null;
         }
         if (snippet.baseURL != null) {
-            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
-                // TODO(kafkas): Not implemented yet
-                return null;
-            } else {
+            return swift.functionArgument({
+                label: "baseURL",
+                value: swift.Expression.escapedStringLiteral(snippet.baseURL)
+            });
+        }
+        const environments = this.context.ir.environments;
+        if (environments?.environments.type === "multipleBaseUrls") {
+            // The root client has no environment enum or default for multiple base URLs, so `baseURL` is required.
+            const baseURL = this.getMultipleBaseUrlsEnvironmentURL({
+                environments: environments.environments,
+                defaultEnvironment: environments.defaultEnvironment,
+                environment: snippet.environment
+            });
+            if (baseURL != null) {
                 return swift.functionArgument({
                     label: "baseURL",
-                    value: swift.Expression.escapedStringLiteral(snippet.baseURL)
+                    value: swift.Expression.escapedStringLiteral(baseURL)
                 });
             }
         }
         return null;
+    }
+
+    private getMultipleBaseUrlsEnvironmentURL({
+        environments,
+        defaultEnvironment,
+        environment
+    }: {
+        environments: FernIr.dynamic.MultipleBaseUrlsEnvironments;
+        defaultEnvironment: FernIr.dynamic.EnvironmentId | undefined;
+        environment: FernIr.dynamic.EnvironmentValues | undefined;
+    }): string | undefined {
+        const firstBaseUrlId = environments.baseUrls[0]?.id;
+        if (environment != null && typeof environment !== "string") {
+            return (firstBaseUrlId != null ? environment[firstBaseUrlId] : undefined) ?? Object.values(environment)[0];
+        }
+        const resolved =
+            environment != null
+                ? environments.environments.find((env) => env.id === environment)
+                : (environments.environments.find((env) => env.id === defaultEnvironment) ??
+                  environments.environments[0]);
+        if (resolved == null) {
+            if (environment != null) {
+                this.context.errors.add({
+                    severity: Severity.Critical,
+                    message: `Environment "${environment}" was not found`
+                });
+            }
+            return undefined;
+        }
+        return (firstBaseUrlId != null ? resolved.urls[firstBaseUrlId] : undefined) ?? Object.values(resolved.urls)[0];
     }
 
     private getRootClientAuthArgs({

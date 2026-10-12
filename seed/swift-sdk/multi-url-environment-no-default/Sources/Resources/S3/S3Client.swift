@@ -12,7 +12,10 @@ public final class S3Client: Sendable {
     /// import MultiUrlEnvironmentNoDefault
     ///
     /// private func main() async throws {
-    ///     let client = MultiUrlEnvironmentNoDefaultClient(token: "<token>")
+    ///     let client = MultiUrlEnvironmentNoDefaultClient(
+    ///         baseURL: "https://ec2.aws.com",
+    ///         token: "<token>"
+    ///     )
     ///
     ///     _ = try await client.s3.getPresignedUrl(request: .init(s3Key: "s3Key"))
     /// }
