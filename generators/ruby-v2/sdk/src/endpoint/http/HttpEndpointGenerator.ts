@@ -387,7 +387,7 @@ export class HttpEndpointGenerator {
         const path = [...(property.propertyPath ?? []), property.property].map((item) =>
             this.case.snakeSafe(item.name)
         );
-        return path.length > 1 ? `%i[${path.join(" ")}]` : `:${path.join("")}`;
+        return path.length > 1 ? `%i[${path.join(" ")}]` : `:${path[0]}`;
     }
 
     /**
