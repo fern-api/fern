@@ -62,6 +62,12 @@ export type FeatureFlagEvaluator = Pick<PostHog, "getFeatureFlagResult" | "captu
 
 type FlagResult = Awaited<ReturnType<FeatureFlagEvaluator["getFeatureFlagResult"]>>;
 
+/**
+ * One event per flag evaluation, with the same targeting properties as `$feature_flag_called`. Exists
+ * because PostHog deduplicates `$feature_flag_called` per distinct ID, flag, and value (about hourly).
+ */
+export const FEATURE_FLAG_EVALUATED_EVENT = "feature_flag_evaluated";
+
 const FLAG_REQUEST_TIMEOUT_MS = 3000;
 const FLUSH_TIMEOUT_MS = 3000;
 
@@ -163,17 +169,20 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
             return false;
         }
         if (this.sendFeatureFlagEvents) {
-            this.captureFlagCalled({ flag, org, result, properties });
+            this.captureFlagUsage({ flag, org, result, properties });
         }
         return isFeatureFlagValueEnabled(result);
     }
 
     /**
-     * Records one `$feature_flag_called` event per evaluation (evaluations are already cached per
-     * flag, org, generator, and language), carrying the targeting properties so PostHog's flag usage
-     * view can break results down by generator, language, and environment.
+     * Records each evaluation (evaluations are already cached per flag, org, generator, and language)
+     * as two events carrying the targeting properties:
+     * - `$feature_flag_called` feeds PostHog's flag usage view. PostHog keeps about one per distinct ID,
+     *   flag, and value per hour, so it shows only the first generator an org runs in that window.
+     * - {@link FEATURE_FLAG_EVALUATED_EVENT} is not deduplicated, so Insights can count evaluations
+     *   exactly by generator, language, and environment.
      */
-    private captureFlagCalled({
+    private captureFlagUsage({
         flag,
         org,
         result,
@@ -185,6 +194,11 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
         properties: Record<string, string>;
     }): void {
         const response = getFlagResponse(result);
+        const sharedProperties = {
+            ...properties,
+            ...(result?.reason != null ? { $feature_flag_reason: result.reason } : {}),
+            ...(process.env.CLI_VERSION != null ? { version: process.env.CLI_VERSION } : {})
+        };
         try {
             this.evaluator.capture({
                 distinctId: getFlagDistinctId(org),
@@ -193,12 +207,21 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
                 // Leave `$feature_flag_has_experiment` unset: posthog-node strips every non-flag property
                 // from `$feature_flag_called` events that set it to `false` when PostHog asks for minimal events.
                 properties: {
-                    ...properties,
+                    ...sharedProperties,
                     $feature_flag: flag,
                     $feature_flag_response: response,
-                    [`$feature/${flag}`]: response,
-                    ...(result?.reason != null ? { $feature_flag_reason: result.reason } : {}),
-                    ...(process.env.CLI_VERSION != null ? { version: process.env.CLI_VERSION } : {})
+                    [`$feature/${flag}`]: response
+                }
+            });
+            this.evaluator.capture({
+                distinctId: getFlagDistinctId(org),
+                event: FEATURE_FLAG_EVALUATED_EVENT,
+                groups: { organization: org },
+                properties: {
+                    ...sharedProperties,
+                    flag,
+                    response,
+                    enabled: isFeatureFlagValueEnabled(result)
                 }
             });
         } catch {

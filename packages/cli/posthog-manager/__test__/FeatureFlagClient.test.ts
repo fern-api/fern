@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { getCliReleaseEnvironment } from "../src/feature-flags/CliReleaseEnvironment.js";
 import {
+    FEATURE_FLAG_EVALUATED_EVENT,
     type FeatureFlagEvaluator,
     getFlagResponse,
     isFeatureFlagValueEnabled,
@@ -84,7 +85,7 @@ describe("PosthogFeatureFlagClient", () => {
         });
     });
 
-    it("captures a flag usage event with the targeting properties and flushes it", async () => {
+    it("captures both flag usage events with the targeting properties and flushes them", async () => {
         const { client, getFeatureFlagResult, capture, flush } = createClient(
             {
                 key: "use-sdk-gen-api",
@@ -113,26 +114,41 @@ describe("PosthogFeatureFlagClient", () => {
             "org:acme",
             expect.objectContaining({ sendFeatureFlagEvents: false })
         );
-        expect(capture).toHaveBeenCalledWith({
-            distinctId: "org:acme",
-            event: "$feature_flag_called",
-            groups: { organization: "acme" },
-            properties: {
-                org: "acme",
-                environment: "pre-prod",
-                generator: "fernapi/fern-python-sdk",
-                language: "python",
-                $feature_flag: "use-sdk-gen-api",
-                $feature_flag_response: "true",
-                "$feature/use-sdk-gen-api": "true",
-                $feature_flag_reason: "Matched condition set 1",
-                version: "5.155.0"
-            }
-        });
+        const targeting = {
+            org: "acme",
+            environment: "pre-prod",
+            generator: "fernapi/fern-python-sdk",
+            language: "python",
+            $feature_flag_reason: "Matched condition set 1",
+            version: "5.155.0"
+        };
+        expect(capture.mock.calls).toEqual([
+            [
+                {
+                    distinctId: "org:acme",
+                    event: "$feature_flag_called",
+                    groups: { organization: "acme" },
+                    properties: {
+                        ...targeting,
+                        $feature_flag: "use-sdk-gen-api",
+                        $feature_flag_response: "true",
+                        "$feature/use-sdk-gen-api": "true"
+                    }
+                }
+            ],
+            [
+                {
+                    distinctId: "org:acme",
+                    event: FEATURE_FLAG_EVALUATED_EVENT,
+                    groups: { organization: "acme" },
+                    properties: { ...targeting, flag: "use-sdk-gen-api", response: "true", enabled: true }
+                }
+            ]
+        ]);
         expect(flush).toHaveBeenCalledTimes(1);
     });
 
-    it("captures one usage event per generator in the same org", async () => {
+    it("captures one evaluated event per generator in the same org", async () => {
         const { client, capture } = createClient(
             { key: "use-sdk-gen-api", enabled: true, variant: "true", payload: undefined },
             { sendFeatureFlagEvents: true }
@@ -142,10 +158,11 @@ describe("PosthogFeatureFlagClient", () => {
         await client.isEnabled("use-sdk-gen-api", { org: "acme", generator: "fernapi/fern-go-sdk" });
         await client.isEnabled("use-sdk-gen-api", { org: "acme", generator: "fernapi/fern-go-sdk" });
 
-        expect(capture.mock.calls.map(([event]) => event.properties?.generator)).toEqual([
-            "fernapi/fern-python-sdk",
-            "fernapi/fern-go-sdk"
-        ]);
+        expect(
+            capture.mock.calls
+                .filter(([event]) => event.event === FEATURE_FLAG_EVALUATED_EVENT)
+                .map(([event]) => event.properties?.generator)
+        ).toEqual(["fernapi/fern-python-sdk", "fernapi/fern-go-sdk"]);
     });
 
     it.each([
@@ -188,7 +205,7 @@ describe("PosthogFeatureFlagClient", () => {
         answer(undefined);
         await Promise.all([evaluation, flushed]);
 
-        expect(order).toEqual(["evaluated", "captured", "flushed"]);
+        expect(order).toEqual(["evaluated", "captured", "captured", "flushed"]);
     });
 
     it("skips the flush when event telemetry is disabled", async () => {
@@ -313,7 +330,7 @@ describe("getFeatureFlagClient", () => {
 
             await getFeatureFlagClient().isEnabled("use-sdk-gen-api", { org: "acme" });
 
-            expect(capture).toHaveBeenCalledTimes(expected ? 1 : 0);
+            expect(capture).toHaveBeenCalledTimes(expected ? 2 : 0);
         } finally {
             vi.doUnmock("posthog-node");
             vi.unstubAllEnvs();
