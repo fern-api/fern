@@ -4,5 +4,6 @@
     Fix generated snippets and wire tests referencing type names that don't exist in the SDK.
     Snippets now use the same casing as the generated types (e.g. `MarketplaceIdsItem` rather than
     `MarketplaceIDsItem`) and the same collision-resolved names (e.g. `Address4` when several
-    types are named `Address`).
+    types are named `Address`), including inline, file upload and query request types. Casing
+    overrides are kept.
   type: fix

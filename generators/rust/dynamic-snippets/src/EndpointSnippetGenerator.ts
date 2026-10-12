@@ -1238,11 +1238,11 @@ export class EndpointSnippetGenerator {
             // a synthetic name (e.g., AddResponseRequest)
             if (request.body.type === "properties") {
                 // Use the request struct's declaration name from the IR
-                return this.context.getStructNameByDeclaration(request.declaration);
+                return this.context.getInlineRequestStructName(request.declaration);
             }
             
             // For other body types (e.g., fileUpload), fall back to endpoint-based naming
-            return `${methodName}Request`;
+            return this.context.getFileUploadRequestNameByEndpoint(endpoint.declaration) ?? `${methodName}Request`;
         }
 
         // Default fallback: use the request struct's declaration name
