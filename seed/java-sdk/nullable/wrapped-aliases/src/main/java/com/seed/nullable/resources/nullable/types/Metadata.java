@@ -190,7 +190,6 @@ public final class Metadata {
 
         private Optional<String> avatar = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -293,6 +292,19 @@ public final class Metadata {
         @java.lang.Override
         public Metadata build() {
             return new Metadata(createdAt, updatedAt, avatar, activated, status, values, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("createdAt")
+                    || key.equalsIgnoreCase("updatedAt")
+                    || key.equalsIgnoreCase("avatar")
+                    || key.equalsIgnoreCase("activated")
+                    || key.equalsIgnoreCase("status")
+                    || key.equalsIgnoreCase("values")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

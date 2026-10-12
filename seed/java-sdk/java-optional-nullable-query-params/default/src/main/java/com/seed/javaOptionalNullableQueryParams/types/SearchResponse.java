@@ -227,7 +227,6 @@ public final class SearchResponse {
 
         private List<String> results = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -418,6 +417,19 @@ public final class SearchResponse {
         public SearchResponse build() {
             return new SearchResponse(
                     results, totalCount, query, limit, includeArchived, sortOrder, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("results")
+                    || key.equalsIgnoreCase("totalCount")
+                    || key.equalsIgnoreCase("query")
+                    || key.equalsIgnoreCase("limit")
+                    || key.equalsIgnoreCase("includeArchived")
+                    || key.equalsIgnoreCase("sortOrder")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

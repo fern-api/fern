@@ -111,7 +111,6 @@ public final class Message {
 
         private Optional<String> body = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -160,6 +159,14 @@ public final class Message {
         @java.lang.Override
         public Message build() {
             return new Message(sid, body, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("sid") || key.equalsIgnoreCase("body") || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

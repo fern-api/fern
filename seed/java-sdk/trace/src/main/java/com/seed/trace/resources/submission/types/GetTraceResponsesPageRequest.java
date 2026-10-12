@@ -67,7 +67,6 @@ public final class GetTraceResponsesPageRequest {
     public static final class Builder {
         private Optional<Integer> offset = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class GetTraceResponsesPageRequest {
 
         public GetTraceResponsesPageRequest build() {
             return new GetTraceResponsesPageRequest(offset, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("offset")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -80,7 +80,6 @@ public final class UnionResponse {
     public static final class Builder implements DataStage, _FinalStage {
         private MyUnion data;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class UnionResponse {
         @java.lang.Override
         public UnionResponse build() {
             return new UnionResponse(data, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

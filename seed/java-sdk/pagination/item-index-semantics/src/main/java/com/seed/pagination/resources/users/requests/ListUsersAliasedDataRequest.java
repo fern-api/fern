@@ -101,7 +101,6 @@ public final class ListUsersAliasedDataRequest {
 
         private Optional<String> startingAfter = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -158,6 +157,16 @@ public final class ListUsersAliasedDataRequest {
 
         public ListUsersAliasedDataRequest build() {
             return new ListUsersAliasedDataRequest(page, perPage, startingAfter, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("page")
+                    || key.equalsIgnoreCase("per_page")
+                    || key.equalsIgnoreCase("starting_after")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

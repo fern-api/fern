@@ -81,7 +81,6 @@ public final class StopRequest {
     public static final class Builder implements SubmissionIdStage, _FinalStage {
         private UUID submissionId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class StopRequest {
         @java.lang.Override
         public StopRequest build() {
             return new StopRequest(submissionId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

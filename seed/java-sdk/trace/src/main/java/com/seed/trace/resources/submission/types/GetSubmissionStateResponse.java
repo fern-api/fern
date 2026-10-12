@@ -134,7 +134,6 @@ public final class GetSubmissionStateResponse {
 
         private Optional<OffsetDateTime> timeSubmitted = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -187,6 +186,17 @@ public final class GetSubmissionStateResponse {
         public GetSubmissionStateResponse build() {
             return new GetSubmissionStateResponse(
                     timeSubmitted, submission, language, submissionTypeState, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("timeSubmitted")
+                    || key.equalsIgnoreCase("submission")
+                    || key.equalsIgnoreCase("language")
+                    || key.equalsIgnoreCase("submissionTypeState")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -99,7 +99,6 @@ public final class TestCaseWithActualResultImplementation {
 
         private AssertCorrectnessCheck assertCorrectnessCheck;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -130,6 +129,14 @@ public final class TestCaseWithActualResultImplementation {
         public TestCaseWithActualResultImplementation build() {
             return new TestCaseWithActualResultImplementation(
                     getActualResult, assertCorrectnessCheck, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("getActualResult") || key.equalsIgnoreCase("assertCorrectnessCheck")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

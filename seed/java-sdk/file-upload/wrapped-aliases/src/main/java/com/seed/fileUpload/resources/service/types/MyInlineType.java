@@ -80,7 +80,6 @@ public final class MyInlineType {
     public static final class Builder implements BarStage, _FinalStage {
         private String bar;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class MyInlineType {
         @java.lang.Override
         public MyInlineType build() {
             return new MyInlineType(bar, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("bar")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -202,7 +202,6 @@ public final class TreeRecord implements ITreeIdentifiable {
 
         private Optional<String> plantedDate = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -315,6 +314,19 @@ public final class TreeRecord implements ITreeIdentifiable {
         public TreeRecord build() {
             return new TreeRecord(
                     id, treeName, treeSpecies, plantedDate, heightInFeet, treeDescription, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("treeName")
+                    || key.equalsIgnoreCase("treeSpecies")
+                    || key.equalsIgnoreCase("plantedDate")
+                    || key.equalsIgnoreCase("heightInFeet")
+                    || key.equalsIgnoreCase("treeDescription")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

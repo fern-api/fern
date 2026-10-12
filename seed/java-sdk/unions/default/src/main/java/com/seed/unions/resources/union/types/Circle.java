@@ -79,7 +79,6 @@ public final class Circle {
     public static final class Builder implements RadiusStage, _FinalStage {
         private double radius;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class Circle {
         @java.lang.Override
         public Circle build() {
             return new Circle(radius, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("radius")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

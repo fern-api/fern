@@ -104,7 +104,6 @@ public final class CreateUserWithRequiredHeaderRequest {
 
         private UserData body;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -136,6 +135,14 @@ public final class CreateUserWithRequiredHeaderRequest {
         @java.lang.Override
         public CreateUserWithRequiredHeaderRequest build() {
             return new CreateUserWithRequiredHeaderRequest(xApiKey, body, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("body")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

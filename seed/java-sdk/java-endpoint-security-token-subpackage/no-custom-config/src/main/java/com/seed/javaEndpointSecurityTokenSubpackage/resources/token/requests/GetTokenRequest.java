@@ -143,7 +143,6 @@ public final class GetTokenRequest {
 
         private Optional<String> state = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -200,6 +199,19 @@ public final class GetTokenRequest {
         @java.lang.Override
         public GetTokenRequest build() {
             return new GetTokenRequest(clientId, clientSecret, state, permissions, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("client_id")
+                    || key.equalsIgnoreCase("client_secret")
+                    || key.equalsIgnoreCase("audience")
+                    || key.equalsIgnoreCase("grant_type")
+                    || key.equalsIgnoreCase("state")
+                    || key.equalsIgnoreCase("permissions")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

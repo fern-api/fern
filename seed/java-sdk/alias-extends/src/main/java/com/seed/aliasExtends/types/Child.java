@@ -95,7 +95,6 @@ public final class Child implements IParent {
 
         private String child;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class Child implements IParent {
         @java.lang.Override
         public Child build() {
             return new Child(parent, child, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("parent") || key.equalsIgnoreCase("child")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

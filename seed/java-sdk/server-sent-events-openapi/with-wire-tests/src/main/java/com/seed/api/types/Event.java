@@ -129,7 +129,6 @@ public final class Event {
 
         private Optional<String> event = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -192,6 +191,17 @@ public final class Event {
         @java.lang.Override
         public Event build() {
             return new Event(data, event, id, retry, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data")
+                    || key.equalsIgnoreCase("event")
+                    || key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("retry")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

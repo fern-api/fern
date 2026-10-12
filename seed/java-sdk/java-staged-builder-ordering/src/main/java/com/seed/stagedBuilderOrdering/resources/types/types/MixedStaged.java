@@ -149,7 +149,6 @@ public final class MixedStaged {
 
         private int count;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -202,6 +201,18 @@ public final class MixedStaged {
         @java.lang.Override
         public MixedStaged build() {
             return new MixedStaged(id, name, timestamp, nested, count, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("timestamp")
+                    || key.equalsIgnoreCase("nested")
+                    || key.equalsIgnoreCase("count")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

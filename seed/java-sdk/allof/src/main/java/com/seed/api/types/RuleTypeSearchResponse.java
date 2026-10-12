@@ -106,7 +106,6 @@ public final class RuleTypeSearchResponse {
 
         private List<RuleType> results = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -163,6 +162,14 @@ public final class RuleTypeSearchResponse {
         @java.lang.Override
         public RuleTypeSearchResponse build() {
             return new RuleTypeSearchResponse(results, paging, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("results") || key.equalsIgnoreCase("paging")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

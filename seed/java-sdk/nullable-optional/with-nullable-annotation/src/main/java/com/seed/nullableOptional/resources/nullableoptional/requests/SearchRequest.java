@@ -129,7 +129,6 @@ public final class SearchRequest {
 
         private Optional<Map<String, String>> filters = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -189,6 +188,16 @@ public final class SearchRequest {
         @java.lang.Override
         public SearchRequest build() {
             return new SearchRequest(query, filters, includeTypes, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query")
+                    || key.equalsIgnoreCase("filters")
+                    || key.equalsIgnoreCase("includeTypes")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

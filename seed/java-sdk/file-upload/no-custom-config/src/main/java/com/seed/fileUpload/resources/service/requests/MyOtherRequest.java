@@ -285,7 +285,6 @@ public final class MyOtherRequest {
 
         private Optional<String> maybeString = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -511,6 +510,25 @@ public final class MyOtherRequest {
                     listOfAliasObject,
                     aliasListOfObject,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("maybe_string")
+                    || key.equalsIgnoreCase("integer")
+                    || key.equalsIgnoreCase("maybe_integer")
+                    || key.equalsIgnoreCase("optional_list_of_strings")
+                    || key.equalsIgnoreCase("list_of_objects")
+                    || key.equalsIgnoreCase("optional_metadata")
+                    || key.equalsIgnoreCase("optional_object_type")
+                    || key.equalsIgnoreCase("optional_id")
+                    || key.equalsIgnoreCase("list_of_objects_with_optionals")
+                    || key.equalsIgnoreCase("alias_object")
+                    || key.equalsIgnoreCase("list_of_alias_object")
+                    || key.equalsIgnoreCase("alias_list_of_object")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

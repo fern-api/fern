@@ -68,7 +68,6 @@ public final class ObjectTypeWithMapAliasTypeBoth {
     public static final class Builder {
         private Map<AliasProperty, OtherAliasProperty> prop = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ObjectTypeWithMapAliasTypeBoth {
 
         public ObjectTypeWithMapAliasTypeBoth build() {
             return new ObjectTypeWithMapAliasTypeBoth(prop, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prop")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

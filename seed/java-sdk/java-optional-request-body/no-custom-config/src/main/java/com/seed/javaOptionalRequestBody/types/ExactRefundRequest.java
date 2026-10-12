@@ -79,7 +79,6 @@ public final class ExactRefundRequest {
     public static final class Builder implements AmountStage, _FinalStage {
         private double amount;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class ExactRefundRequest {
         @java.lang.Override
         public ExactRefundRequest build() {
             return new ExactRefundRequest(amount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("amount")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

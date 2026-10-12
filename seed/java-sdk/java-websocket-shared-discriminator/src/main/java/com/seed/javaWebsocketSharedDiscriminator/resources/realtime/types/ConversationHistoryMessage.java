@@ -99,7 +99,6 @@ public final class ConversationHistoryMessage {
 
         private String content;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -128,6 +127,14 @@ public final class ConversationHistoryMessage {
         @java.lang.Override
         public ConversationHistoryMessage build() {
             return new ConversationHistoryMessage(role, content, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type") || key.equalsIgnoreCase("role") || key.equalsIgnoreCase("content")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

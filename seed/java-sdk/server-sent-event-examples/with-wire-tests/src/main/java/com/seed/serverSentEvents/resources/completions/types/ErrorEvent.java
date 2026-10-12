@@ -96,7 +96,6 @@ public final class ErrorEvent {
 
         private Optional<Integer> code = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class ErrorEvent {
         @java.lang.Override
         public ErrorEvent build() {
             return new ErrorEvent(error, code, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("error") || key.equalsIgnoreCase("code")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

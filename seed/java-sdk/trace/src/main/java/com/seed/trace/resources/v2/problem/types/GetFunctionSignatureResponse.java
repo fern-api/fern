@@ -69,7 +69,6 @@ public final class GetFunctionSignatureResponse {
     public static final class Builder {
         private Map<Language, String> functionByLanguage = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class GetFunctionSignatureResponse {
 
         public GetFunctionSignatureResponse build() {
             return new GetFunctionSignatureResponse(functionByLanguage, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("functionByLanguage")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

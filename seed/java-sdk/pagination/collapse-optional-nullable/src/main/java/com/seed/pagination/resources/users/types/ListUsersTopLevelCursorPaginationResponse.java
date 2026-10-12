@@ -81,7 +81,6 @@ public final class ListUsersTopLevelCursorPaginationResponse {
 
         private List<User> data = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -126,6 +125,14 @@ public final class ListUsersTopLevelCursorPaginationResponse {
 
         public ListUsersTopLevelCursorPaginationResponse build() {
             return new ListUsersTopLevelCursorPaginationResponse(nextCursor, data, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("next_cursor") || key.equalsIgnoreCase("data")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

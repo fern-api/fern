@@ -95,7 +95,6 @@ public final class CreatePaymentRequest {
 
         private Currency currency;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class CreatePaymentRequest {
         @java.lang.Override
         public CreatePaymentRequest build() {
             return new CreatePaymentRequest(amount, currency, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("amount") || key.equalsIgnoreCase("currency")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -80,7 +80,6 @@ public final class MainRequired {
     public static final class Builder implements IndirectionStage, _FinalStage {
         private IndirectionRequired indirection;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class MainRequired {
         @java.lang.Override
         public MainRequired build() {
             return new MainRequired(indirection, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("indirection")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

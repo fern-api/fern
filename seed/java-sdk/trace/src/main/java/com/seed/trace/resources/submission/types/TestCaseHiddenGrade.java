@@ -79,7 +79,6 @@ public final class TestCaseHiddenGrade {
     public static final class Builder implements PassedStage, _FinalStage {
         private boolean passed;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class TestCaseHiddenGrade {
         @java.lang.Override
         public TestCaseHiddenGrade build() {
             return new TestCaseHiddenGrade(passed, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("passed")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

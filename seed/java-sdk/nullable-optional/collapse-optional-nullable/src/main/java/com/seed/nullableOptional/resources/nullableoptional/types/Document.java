@@ -166,7 +166,6 @@ public final class Document {
 
         private OptionalNullable<String> author = OptionalNullable.absent();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -253,6 +252,18 @@ public final class Document {
         @java.lang.Override
         public Document build() {
             return new Document(id, title, content, author, tags, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("title")
+                    || key.equalsIgnoreCase("content")
+                    || key.equalsIgnoreCase("author")
+                    || key.equalsIgnoreCase("tags")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

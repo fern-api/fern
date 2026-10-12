@@ -132,7 +132,6 @@ public final class CatalogImage {
 
         private Optional<String> caption = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -195,6 +194,17 @@ public final class CatalogImage {
         @java.lang.Override
         public CatalogImage build() {
             return new CatalogImage(id, caption, url, createRequest, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("caption")
+                    || key.equalsIgnoreCase("url")
+                    || key.equalsIgnoreCase("create_request")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -95,7 +95,6 @@ public final class GetBasicSolutionFileRequest {
 
         private NonVoidFunctionSignature signature;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class GetBasicSolutionFileRequest {
         @java.lang.Override
         public GetBasicSolutionFileRequest build() {
             return new GetBasicSolutionFileRequest(methodName, signature, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("methodName") || key.equalsIgnoreCase("signature")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

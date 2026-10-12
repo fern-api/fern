@@ -163,7 +163,6 @@ public final class SearchUsersRequest {
 
         private OptionalNullable<String> department = OptionalNullable.absent();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -270,6 +269,17 @@ public final class SearchUsersRequest {
         @java.lang.Override
         public SearchUsersRequest build() {
             return new SearchUsersRequest(query, department, role, isActive, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query")
+                    || key.equalsIgnoreCase("department")
+                    || key.equalsIgnoreCase("role")
+                    || key.equalsIgnoreCase("isActive")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
