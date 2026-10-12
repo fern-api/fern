@@ -12,8 +12,8 @@ module <%= gem_namespace %>
       # Instantiates an OffsetPageIterator, an Enumerable class which wraps calls to an offset-based paginated API and yields pages of items from it.
       #
       # @param initial_page [Integer] The initial page to use when iterating, if any.
-      # @param item_field [Symbol] The field to pull the list of items to iterate over.
-      # @param has_next_field [Symbol] The field to pull the boolean of whether a next page exists from, if any.
+      # @param item_field [Symbol, Array<Symbol>] The field (or nested path) to pull the list of items to iterate over.
+      # @param has_next_field [Symbol, Array<Symbol>] The field (or nested path) to pull the boolean of whether a next page exists from, if any.
       # @param step [Boolean] If true, treats the page number as a true offset (i.e. increments the page number by the number of items returned from each call rather than just 1)
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
       #   The block should return a two-element array: [parsed_page, raw_http_response].
@@ -89,7 +89,7 @@ module <%= gem_namespace %>
         return @has_next_page = false if @next_page
 
         fetched_page = fetch_page(@page_number)
-        fetched_page_items = fetched_page&.send(@item_field)
+        fetched_page_items = read_field(fetched_page, @item_field)
         if fetched_page_items.nil? || fetched_page_items.empty?
           @has_next_page = false
         else
@@ -109,9 +109,9 @@ module <%= gem_namespace %>
           this_page = fetch_page(@page_number)
         end
 
-        @has_next_page = this_page&.send(@has_next_field) if @has_next_field
+        @has_next_page = read_field(this_page, @has_next_field) if @has_next_field
 
-        items = this_page.send(@item_field)
+        items = read_field(this_page, @item_field)
         if items.nil? || items.empty?
           @page_number = nil
           return nil
@@ -131,7 +131,7 @@ module <%= gem_namespace %>
       private
 
       def page_has_items?(page)
-        items = page.send(@item_field)
+        items = read_field(page, @item_field)
         !items.nil? && !items.empty?
       end
 
@@ -145,6 +145,15 @@ module <%= gem_namespace %>
         else
           result
         end
+      end
+
+      # Reads a field from an API response, walking through enclosing objects when the field is nested.
+      #
+      # @param value [Object, nil] The API response.
+      # @param field [Symbol, Array<Symbol>] The field name, or the path of field names for a nested field.
+      # @return [Object, nil]
+      def read_field(value, field)
+        Array(field).reduce(value) { |object, name| object&.send(name) }
       end
     end
   end

@@ -22,7 +22,7 @@ module <%= gem_namespace %>
       # Creates a new custom pager with the given initial response.
       #
       # @param initial [Object] The initial page response
-      # @param item_field [Symbol, nil] The field name containing items for iteration
+      # @param item_field [Symbol, Array<Symbol>, nil] The field name (or nested path) containing items for iteration
       # @param raw_client [Object, nil] The HTTP client for fetching additional pages
       # @param initial_http_response [Net::HTTPResponse, nil] The raw HTTP response for the initial page
       # @param has_next_proc [Proc, nil] A proc that returns true if there's a next page
@@ -107,7 +107,9 @@ module <%= gem_namespace %>
         return each_page(&block) if @item_field.nil?
 
         each_page do |page|
-          items = page.respond_to?(@item_field) ? page.send(@item_field) : []
+          items = Array(@item_field).reduce(page) do |object, name|
+            object.respond_to?(name) ? object.send(name) : nil
+          end || []
           items.each { |item| block.call(item) }
         end
       end
