@@ -70,7 +70,7 @@ describe("fern generate", () => {
         expect(stripAnsi(stdout) + stripAnsi(stderr)).toContain("Verification succeeded for image");
     }, 300_000);
 
-    it.skipIf(globalThis.process.env.FERN_ORG_TOKEN_DEV == null)(
+    it.skipIf(!globalThis.process.env.FERN_ORG_TOKEN_DEV)(
         "ir contains fdr definitionid",
         async ({ signal }) => {
             const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {

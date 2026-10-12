@@ -10,7 +10,7 @@ const FIXTURES = {
 } as const;
 
 describe("fern sdk generate", () => {
-    describe.skipIf(process.env.FERN_ORG_TOKEN_DEV == null)("basic generation", () => {
+    describe.skipIf(!process.env.FERN_ORG_TOKEN_DEV)("basic generation", () => {
         it("python", async () => {
             const result = await cliV2.generate(FIXTURES.petstore, "python");
             expect(result.exitCode).toBe(0);
@@ -67,7 +67,7 @@ describe("fern sdk generate", () => {
         });
     });
 
-    describe.skipIf(process.env.FERN_ORG_TOKEN_DEV == null)("fern definition", () => {
+    describe.skipIf(!process.env.FERN_ORG_TOKEN_DEV)("fern definition", () => {
         it("should generate SDK from fern definition", async () => {
             const result = await cliV2.generate(FIXTURES.fernDefinition, "go");
             expect(result.exitCode).toBe(0);
