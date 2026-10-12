@@ -90,7 +90,6 @@ public final class CreateUserRequest {
     public static final class Builder implements NameStage, _FinalStage {
         private String name;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -111,6 +110,14 @@ public final class CreateUserRequest {
         @java.lang.Override
         public CreateUserRequest build() {
             return new CreateUserRequest(name, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("_type") || key.equalsIgnoreCase("_version") || key.equalsIgnoreCase("name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

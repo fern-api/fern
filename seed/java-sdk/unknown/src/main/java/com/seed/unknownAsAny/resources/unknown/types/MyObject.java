@@ -79,7 +79,6 @@ public final class MyObject {
     public static final class Builder implements UnknownStage, _FinalStage {
         private Object unknown;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class MyObject {
         @java.lang.Override
         public MyObject build() {
             return new MyObject(unknown, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("unknown")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
