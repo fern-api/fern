@@ -1289,7 +1289,8 @@ export function aggregateChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): Aggregat
 }
 
 const MARKDOWN_HEADING = /^(#{1,6})\s+(.+?)\s*#*\s*$/;
-const MARKDOWN_FENCE = /^\s*(```|~~~)/;
+const MARKDOWN_FENCE = /^\s*(`{3,}|~{3,})(.*)$/;
+const MARKDOWN_LIST_ITEM = /^\s*(?:[-*+]|\d+[.)])\s/;
 
 /**
  * Joins per-chunk markdown (changelog entries / PR descriptions) into one document, folding
@@ -1323,8 +1324,16 @@ export function mergeMarkdownSections(texts: string[]): string {
         for (const line of text.trim().split("\n")) {
             const fenceMatch = MARKDOWN_FENCE.exec(line);
             if (fenceMatch != null) {
-                const marker = fenceMatch[1];
-                fence = fence == null ? marker : fence === marker ? undefined : fence;
+                const marker = fenceMatch[1] ?? "";
+                if (fence == null) {
+                    fence = marker;
+                } else if (
+                    marker[0] === fence[0] &&
+                    marker.length >= fence.length &&
+                    (fenceMatch[2] ?? "").trim() === ""
+                ) {
+                    fence = undefined;
+                }
             }
             const heading = fence == null ? MARKDOWN_HEADING.exec(line) : null;
             if (heading != null) {
@@ -1336,7 +1345,25 @@ export function mergeMarkdownSections(texts: string[]): string {
         }
         flush();
     }
-    return [...preamble, ...[...sections.values()].map((s) => `${s.heading}\n\n${s.bodies.join("\n")}`)].join("\n\n");
+    return [...preamble, ...[...sections.values()].map((s) => `${s.heading}\n\n${joinSectionBodies(s.bodies)}`)].join(
+        "\n\n"
+    );
+}
+
+/** Adjacent list bodies stay one tight list; anything else (paragraphs, code) is separated by a blank line. */
+function joinSectionBodies(bodies: string[]): string {
+    let joined = "";
+    for (const body of bodies) {
+        if (joined.length === 0) {
+            joined = body;
+            continue;
+        }
+        const lastLine = joined.slice(joined.lastIndexOf("\n") + 1);
+        const firstLine = body.slice(0, body.indexOf("\n") === -1 ? body.length : body.indexOf("\n"));
+        const bothLists = MARKDOWN_LIST_ITEM.test(lastLine) && MARKDOWN_LIST_ITEM.test(firstLine);
+        joined += `${bothLists ? "\n" : "\n\n"}${body}`;
+    }
+    return joined;
 }
 
 function hasText(value: string | undefined): value is string {

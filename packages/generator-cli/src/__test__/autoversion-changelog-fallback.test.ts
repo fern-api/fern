@@ -150,4 +150,17 @@ describe("mergeMarkdownSections", () => {
     it("leaves heading-less entries joined by blank lines", () => {
         expect(mergeMarkdownSections(["- one", "- two"])).toBe("- one\n\n- two");
     });
+
+    it("separates a paragraph from a following list with a blank line", () => {
+        const merged = mergeMarkdownSections(["### Notes\n\nSome prose.", "### Notes\n\n- item"]);
+        expect(merged).toBe("### Notes\n\nSome prose.\n\n- item");
+    });
+
+    it("only closes a fence on a bare marker at least as long as the opener", () => {
+        const merged = mergeMarkdownSections([
+            "### Example\n\n````md\n```ts\n# still code\n```\n````\n\n### Other\n\n- x",
+            "### Other\n\n- y"
+        ]);
+        expect(merged).toBe("### Example\n\n````md\n```ts\n# still code\n```\n````\n\n### Other\n\n- x\n- y");
+    });
 });
