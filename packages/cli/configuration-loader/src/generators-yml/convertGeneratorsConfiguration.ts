@@ -1250,6 +1250,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("csharp")) {
         return generatorsYml.GenerationLanguage.CSHARP;
     }
+    if (generatorName.includes("cli-generator")) {
+        return generatorsYml.GenerationLanguage.CLI;
+    }
     if (generatorName.includes("go")) {
         return generatorsYml.GenerationLanguage.GO;
     }

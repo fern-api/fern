@@ -2093,7 +2093,10 @@ async function generateLanguageSpecificDynamicIRs({
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
         swift: snippetsConfig.swiftSdk?.package,
-        rust: snippetsConfig.rustSdk?.package
+        rust: snippetsConfig.rustSdk?.package,
+        // Populated once the published @fern-api/fdr-sdk exposes `cliSdk` (fern-platform #15651);
+        // until then CLI dynamic IR is never requested. Becomes: cli: snippetsConfig.cliSdk?.package
+        cli: undefined as string | undefined
     };
 
     const allGenerators = collectSnippetGeneratorCandidates({ workspace, apiWorkspaces, context });

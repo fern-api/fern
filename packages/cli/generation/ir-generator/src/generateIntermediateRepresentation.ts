@@ -247,7 +247,16 @@ export function generateIntermediateRepresentation({
         audiences: workspace.definition.rootApiFile.contents.audiences,
         generationMetadata: generationMetadata,
         apiPlayground: true,
-        casingsConfig: { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary }
+        casingsConfig: {
+            // CLI is not an IR SupportedSdkLanguage. Its snippet names derive from the dynamic IR's
+            // originalName (not casings safeName), so record no generationLanguage (default casing)
+            // rather than widening the generated IR type.
+            generationLanguage:
+                generationLanguage === generatorsYml.GenerationLanguage.CLI ? undefined : generationLanguage,
+            keywords,
+            smartCasing,
+            smartCasingDigitWordBoundary
+        }
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
