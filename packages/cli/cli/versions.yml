@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.155.4
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` now keeps publish usernames written as plain text (such as the PyPI token
+        username `__token__`) instead of dropping them, which made `fern generate` fail with "Direct
+        pypi publication through sdk-gen-api requires username". Maven usernames are still omitted
+        unless they are environment variables, because Sonatype user tokens make them secret.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 5.155.3
   changelogEntry:
     - summary: |
