@@ -957,8 +957,13 @@ impl CliApp {
             .filter_map(|a| a.to_str().map(String::from))
             .collect();
 
+        // Dynamic completion request from the script `<cli> completion <shell>`
+        // registers. Skip the other early intercepts so flags like `--help` on
+        // the line being completed are completed rather than executed.
+        let dynamic_completion = crate::completions::dynamic_completion_shell(&self.name);
+
         // 0a. Intercept `<cli> errors` early — before loading specs.
-        if crate::cli_args::is_errors_subcommand(&str_args) {
+        if dynamic_completion.is_none() && crate::cli_args::is_errors_subcommand(&str_args) {
             crate::error::write_errors_to(&str_args, out);
             return Ok(PipelineOutcome::HelpShown);
         }
@@ -979,7 +984,7 @@ impl CliApp {
         let explicit_schema = crate::cli_args::wants_schema(&str_args);
         let help_as_schema = crate::cli_args::wants_help(&str_args)
             && crate::formatter::explicit_machine_format(&str_args);
-        if explicit_schema || help_as_schema {
+        if dynamic_completion.is_none() && (explicit_schema || help_as_schema) {
             let path = crate::cli_args::extract_subcommand_path(&str_args);
 
             if path.is_empty() {
@@ -1096,7 +1101,7 @@ impl CliApp {
         // stream (---delimited, one document per binding).
         let wants_spec = crate::cli_args::wants_spec(&str_args);
         let wants_spec_raw = crate::cli_args::wants_spec_raw(&str_args);
-        if wants_spec || wants_spec_raw {
+        if dynamic_completion.is_none() && (wants_spec || wants_spec_raw) {
             let raw = wants_spec_raw;
             let mut documents: Vec<String> = Vec::new();
             for binding in &self.bindings {
@@ -1325,15 +1330,18 @@ impl CliApp {
         self.hooks.validate_patterns(&cli)?;
 
         // 1g. Intercept `completion` and `man` before clap parses.
+        if let Some(shell) = dynamic_completion {
+            crate::completions::write_dynamic_completions(&shell, &mut cli, args.clone(), out)
+                .map_err(|e| CliError::Other(e.into()))?;
+            return Ok(PipelineOutcome::HelpShown);
+        }
         if crate::completions::wants_completion(&str_args) {
             let raw_shell_arg = crate::early_intercept::nth_positional(&str_args, 1);
             match raw_shell_arg {
                 Some(s) => match crate::completions::parse_shell(s) {
-                    Some(shell) => {
-                        crate::completions::generate_completion_to(
-                            shell, &mut cli, &self.name, out,
-                        )
-                        .map_err(|e| CliError::Other(e.into()))?;
+                    Some(_) => {
+                        crate::completions::write_registration(s, &self.name, out)
+                            .map_err(|e| CliError::Other(e.into()))?;
                         return Ok(PipelineOutcome::HelpShown);
                     }
                     None => {
