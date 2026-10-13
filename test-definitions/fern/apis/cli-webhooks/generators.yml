@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# Inbound webhooks lowered to `<cli> webhook list` / `webhook invoke`.
+# The spec declares a document-level `x-fern-webhook-signature` in the
+# Twilio shape (HMAC-SHA1/Base64 over the notification URL plus the
+# alphabetically sorted form body) and two `x-fern-webhook` operations —
+# a form-encoded POST with an example payload and a GET without one, so
+# the placeholder-payload path is exercised too. `webhookSecretEnv`
+# overrides the default `<BIN>_WEBHOOK_SECRET` env var.
+api:
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

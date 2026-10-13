@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "ringing",
+    "in-progress",
+    "completed"
+  ],
+  "definitions": {}
+}

@@ -116,6 +116,7 @@ serde_json_path = "0.7"
 serde_yaml = "0.9.34"
 secrecy = "0.10"
 serde_qs = "1.1.1"
+sha1 = "0.10"
 sha2 = "0.10"
 thiserror = "2"
 # Format-preserving TOML for `profiles.toml`. `toml_edit` rather than `toml`

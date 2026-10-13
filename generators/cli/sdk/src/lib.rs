@@ -26,6 +26,7 @@ pub mod stability;
 pub mod user_agent;
 pub mod validate;
 pub mod sdk_executor;
+pub mod webhooks;
 pub mod websocket;
 
 // Convenience re-exports for auth types

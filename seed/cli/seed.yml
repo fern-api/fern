@@ -348,6 +348,13 @@ fixtures:
         binaryName: shared-types-cli
         splitTypeCrates: true
       outputFolder: with-split-type-crates
+  # Inbound webhooks: `webhook list` / `webhook invoke <name> <url>` with
+  # HMAC signing driven by the spec's `x-fern-webhook-signature`.
+  cli-webhooks:
+    - customConfig:
+        binaryName: webhooks-cli
+        webhookSecretEnv: EXAMPLE_AUTH_TOKEN
+      outputFolder: with-secret-env
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures

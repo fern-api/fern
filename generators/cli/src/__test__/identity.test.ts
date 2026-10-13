@@ -10,6 +10,8 @@ const emptyIr = (apiDisplayName: string | undefined = undefined): IrSummary => (
     headers: [],
     services: {},
     environments: undefined,
+    webhookGroups: {},
+    types: {},
     whiteLabel: false
 });
 
