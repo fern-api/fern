@@ -97,8 +97,7 @@ class OAuthTokenProvider
             throw new SeedException(message: "Expected an access token in the token response, but received null.");
         }
         $this->accessToken = $accessToken;
-        $expiresIn = $tokenResponse->expiresIn;
-        $this->expiresAt = $expiresIn !== null ? $this->getExpiresAt($expiresIn, $this->BUFFER_IN_MINUTES) : null;
+        $this->expiresAt = $this->getExpiresAt($tokenResponse->expiresIn ?? 3600, $this->BUFFER_IN_MINUTES);
 
         return $this->accessToken;
     }

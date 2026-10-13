@@ -23,6 +23,7 @@ export declare namespace OauthTokenProviderGenerator {
 export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly CLASS_NAME = "OAuthTokenProvider";
     private static readonly BUFFER_IN_MINUTES = 2;
+    private static readonly DEFAULT_EXPIRES_IN_SECONDS = 3600;
     private static readonly CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
     private readonly case: CaseConverter;
@@ -334,9 +335,8 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 if (expiresIn != null) {
                     const expiresInProperty = this.getResponsePropertyAccess(expiresIn);
                     if (this.isOptionalResponseProperty(expiresIn)) {
-                        writer.writeLine(`$expiresIn = $tokenResponse${expiresInProperty};`);
                         writer.writeLine(
-                            "$this->expiresAt = $expiresIn !== null ? $this->getExpiresAt($expiresIn, $this->BUFFER_IN_MINUTES) : null;"
+                            `$this->expiresAt = $this->getExpiresAt($tokenResponse${expiresInProperty} ?? ${OauthTokenProviderGenerator.DEFAULT_EXPIRES_IN_SECONDS}, $this->BUFFER_IN_MINUTES);`
                         );
                     } else {
                         writer.writeLine(
