@@ -2068,16 +2068,12 @@ async function finishFernSdkGenApiTarget(
         createdSnippets: false,
         snippetsS3PreSignedReadUrl: undefined,
         actualVersion,
-        pullRequestUrl: githubDelivery.pullRequestUrl,
-        noChangesDetected: githubDelivery.noChangesDetected,
+        ...githubDelivery,
         publishTarget: mapFernSdkGenApiPublishTarget(target, actualVersion)
     };
 }
 
-interface GithubDeliveryOutcome {
-    pullRequestUrl: string | undefined;
-    noChangesDetected: boolean | undefined;
-}
+type GithubDeliveryOutcome = Pick<FernSdkGenApiBuildResponse, "pullRequestUrl" | "noChangesDetected">;
 
 /**
  * Reports what sdk-gen-api did with a requested GitHub delivery. A target that succeeded without a
@@ -2092,30 +2088,35 @@ function resolveGithubDelivery(
     if (requestedOutput?.type !== "github") {
         return { pullRequestUrl: undefined, noChangesDetected: undefined };
     }
-    const repository = requestedOutput.repository;
     if (target.publication?.status !== "success") {
         return participant.context.failAndThrow(
-            `sdk-gen-api reported the build as succeeded but did not confirm the GitHub delivery to ${repository}`,
+            `sdk-gen-api reported the build as succeeded but did not confirm the GitHub delivery to ${requestedOutput.repository}`,
             undefined,
             { code: CliError.Code.InternalError }
         );
     }
     const { output } = target.publication;
-    const logger = participant.context.logger;
-    const pullRequestUrl = output.pullRequestUrl != null ? getSafePublicationUrl(output.pullRequestUrl) : undefined;
-    const branchUrl = output.branchUrl != null ? getSafePublicationUrl(output.branchUrl) : undefined;
-    const noChangesDetected = output.noChangesDetected === true ? true : undefined;
+    const outcome: GithubDeliveryOutcome = {
+        pullRequestUrl: output.pullRequestUrl == null ? undefined : getSafePublicationUrl(output.pullRequestUrl),
+        noChangesDetected: output.noChangesDetected === true ? true : undefined
+    };
+    logGithubDelivery(participant.context.logger, requestedOutput, outcome);
+    return outcome;
+}
+
+function logGithubDelivery(
+    logger: InteractiveTaskContext["logger"],
+    { repository, mode }: Extract<FernSdkGenApiRequestedOutput, { type: "github" }>,
+    { pullRequestUrl, noChangesDetected }: GithubDeliveryOutcome
+): void {
     if (noChangesDetected) {
         logger.info(`No changes detected for ${repository}; nothing was delivered to GitHub.`);
     }
     if (pullRequestUrl != null) {
         logger.info(`Pull request: ${pullRequestUrl}`);
-    } else if (branchUrl != null) {
-        logger.info(`Changes delivered to ${branchUrl}`);
-    } else if (requestedOutput.mode === "pull-request" && !noChangesDetected) {
+    } else if (mode === "pull-request" && !noChangesDetected) {
         logger.warn(`sdk-gen-api did not return a pull request link for ${repository}.`);
     }
-    return { pullRequestUrl, noChangesDetected };
 }
 
 function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation): number | undefined {
