@@ -3607,3 +3607,135 @@ describe("fernapi/fern-mcp-server target", () => {
         });
     });
 });
+
+describe("GitHub delivery result", () => {
+    const pullRequestUrl = "https://github.com/acme/sdk/pull/7";
+
+    function githubInvocation(): generatorsYml.GeneratorInvocation {
+        return invocation({
+            outputMode: FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+            )
+        });
+    }
+
+    async function runWithPublication(publication: Record<string, unknown> | undefined) {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = githubInvocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "succeeded",
+                targets: [
+                    {
+                        targetId,
+                        status: "succeeded",
+                        logs: [],
+                        result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.3" },
+                        ...(publication == null ? {} : { publication })
+                    }
+                ]
+            }
+        } as never);
+        return runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context
+        });
+    }
+
+    function githubPublication(output: Record<string, unknown>): Record<string, unknown> {
+        return {
+            status: "success",
+            publishTarget: { type: "github", identifier: "https://github.com/acme/sdk" },
+            output
+        };
+    }
+
+    beforeEach(() => {
+        contextLogger.info.mockClear();
+        contextLogger.warn.mockClear();
+    });
+
+    it("returns and prints the pull request link when one was created", async () => {
+        const result = await runWithPublication(githubPublication({ pullRequestUrl }));
+
+        expect(result.pullRequestUrl).toBe(pullRequestUrl);
+        expect(result.noChangesDetected).toBeUndefined();
+        expect(contextLogger.info).toHaveBeenCalledWith(`Pull request: ${pullRequestUrl}`);
+    });
+
+    it("reports a skip for no changes explicitly instead of as a created pull request", async () => {
+        const result = await runWithPublication(githubPublication({ noChangesDetected: true }));
+
+        expect(result.pullRequestUrl).toBeUndefined();
+        expect(result.noChangesDetected).toBe(true);
+        expect(contextLogger.info).toHaveBeenCalledWith(
+            "No changes detected for acme/sdk; nothing was delivered to GitHub."
+        );
+        expect(contextLogger.warn).not.toHaveBeenCalled();
+    });
+
+    it("drops a pull request link that is not a safe HTTPS URL", async () => {
+        const result = await runWithPublication(
+            githubPublication({ pullRequestUrl: "https://user:secret@github.com/acme/sdk/pull/7" })
+        );
+
+        expect(result.pullRequestUrl).toBeUndefined();
+        expect(contextLogger.info).not.toHaveBeenCalledWith(expect.stringContaining("secret"));
+        expect(contextLogger.warn).toHaveBeenCalledWith(
+            "sdk-gen-api returned a pull request link for acme/sdk that was not a safe HTTPS URL."
+        );
+    });
+
+    it("prints only the origin and path of a pull request link", async () => {
+        const result = await runWithPublication(
+            githubPublication({ pullRequestUrl: `${pullRequestUrl}?token=abc#fragment` })
+        );
+
+        expect(result.pullRequestUrl).toBe(pullRequestUrl);
+        expect(contextLogger.info).toHaveBeenCalledWith(`Pull request: ${pullRequestUrl}`);
+    });
+
+    it("lets no changes win over a pull request link", async () => {
+        const result = await runWithPublication(githubPublication({ pullRequestUrl, noChangesDetected: true }));
+
+        expect(result.pullRequestUrl).toBeUndefined();
+        expect(result.noChangesDetected).toBe(true);
+        expect(contextLogger.info).toHaveBeenCalledTimes(1);
+        expect(contextLogger.info).not.toHaveBeenCalledWith(expect.stringContaining("Pull request"));
+    });
+
+    it("does not accept a publication to another destination as GitHub delivery", async () => {
+        await expect(
+            runWithPublication({
+                status: "success",
+                publishTarget: { type: "npm", identifier: "@acme/sdk" },
+                output: { packageName: "@acme/sdk" }
+            })
+        ).rejects.toThrow("did not confirm the GitHub delivery to acme/sdk");
+    });
+
+    it("fails instead of reporting success when delivery was never confirmed", async () => {
+        await expect(runWithPublication(undefined)).rejects.toThrow(
+            "sdk-gen-api reported the build as succeeded but did not confirm the GitHub delivery to acme/sdk"
+        );
+    });
+});

@@ -132,7 +132,13 @@ interface FernBuildStatus {
                       type: "github" | "npm" | "maven" | "pypi" | "crates" | "unsupported";
                       identifier: string;
                   };
-                  output: { packageName?: string };
+                  output: {
+                      packageName?: string;
+                      pullRequestUrl?: string;
+                      branchUrl?: string;
+                      commitSha?: string;
+                      noChangesDetected?: boolean;
+                  };
               }
             | {
                   status: "failure";
@@ -995,8 +1001,8 @@ export interface FernSdkGenApiBuildResponse {
     createdSnippets: false;
     snippetsS3PreSignedReadUrl: undefined;
     actualVersion: string;
-    pullRequestUrl: undefined;
-    noChangesDetected: undefined;
+    pullRequestUrl: string | undefined;
+    noChangesDetected: boolean | undefined;
     publishTarget: PublishTarget | undefined;
 }
 
@@ -1424,7 +1430,12 @@ async function executeFernSdkGenApiBuild(
         if (allTargetsTerminal || status.status === "failed" || status.status === "succeeded") {
             return Promise.allSettled(
                 participants.map((participant, index) =>
-                    finishFernSdkGenApiTarget(participant, request.targets[index]?.targetId, status)
+                    finishFernSdkGenApiTarget(
+                        participant,
+                        request.targets[index]?.targetId,
+                        status,
+                        request.targets[index]?.requestedOutput
+                    )
                 )
             );
         }
@@ -1985,7 +1996,8 @@ function isTerminal(status: FernBuildStatus, targetId: string): boolean {
 async function finishFernSdkGenApiTarget(
     participant: FernSdkGenApiBuildParameters,
     targetId: string | undefined,
-    status: FernBuildStatus
+    status: FernBuildStatus,
+    requestedOutput: FernSdkGenApiRequestedOutput | undefined
 ): Promise<FernSdkGenApiBuildResponse> {
     const target = status.targets.find((candidate) => candidate.targetId === targetId);
     if (target == null) {
@@ -2051,14 +2063,82 @@ async function finishFernSdkGenApiTarget(
         });
     }
     const actualVersion = target.result.actualVersion ?? participant.sdkVersion;
+    const githubDelivery = resolveGithubDelivery(participant, target, requestedOutput);
     return {
         createdSnippets: false,
         snippetsS3PreSignedReadUrl: undefined,
         actualVersion,
-        pullRequestUrl: undefined,
-        noChangesDetected: undefined,
+        ...githubDelivery,
         publishTarget: mapFernSdkGenApiPublishTarget(target, actualVersion)
     };
+}
+
+type GithubDeliveryOutcome = Pick<FernSdkGenApiBuildResponse, "pullRequestUrl" | "noChangesDetected">;
+
+/**
+ * Reports what sdk-gen-api did with a requested GitHub delivery. A target that succeeded without a
+ * publication result never confirmed delivery, so it fails instead of reporting success; a skip for
+ * "no changes" is reported explicitly so it cannot be mistaken for a created pull request.
+ */
+function resolveGithubDelivery(
+    participant: FernSdkGenApiBuildParameters,
+    target: FernBuildStatus["targets"][number],
+    requestedOutput: FernSdkGenApiRequestedOutput | undefined
+): GithubDeliveryOutcome {
+    if (requestedOutput?.type !== "github") {
+        return { pullRequestUrl: undefined, noChangesDetected: undefined };
+    }
+    const { publication } = target;
+    if (publication?.status !== "success" || publication.publishTarget.type !== "github") {
+        return participant.context.failAndThrow(
+            `sdk-gen-api reported the build as succeeded but did not confirm the GitHub delivery to ${requestedOutput.repository}`,
+            undefined,
+            { code: CliError.Code.InternalError }
+        );
+    }
+    const pullRequestUrl = toPullRequestLink(publication.output.pullRequestUrl);
+    const noChangesDetected = publication.output.noChangesDetected === true;
+    // A run that delivered nothing never created a pull request, so "no changes" wins over any link.
+    const outcome: GithubDeliveryOutcome = {
+        pullRequestUrl: noChangesDetected ? undefined : pullRequestUrl,
+        noChangesDetected: noChangesDetected ? true : undefined
+    };
+    const linkRejected = publication.output.pullRequestUrl != null && pullRequestUrl == null;
+    logGithubDelivery(participant.context.logger, requestedOutput, outcome, linkRejected);
+    return outcome;
+}
+
+/** Keeps only the origin and path of a safe HTTPS link, so a query string or fragment is never printed. */
+function toPullRequestLink(value: string | undefined): string | undefined {
+    const safeUrl = value == null ? undefined : getSafePublicationUrl(value);
+    if (safeUrl == null) {
+        return undefined;
+    }
+    const { origin, pathname } = new URL(safeUrl);
+    return `${origin}${pathname}`;
+}
+
+function logGithubDelivery(
+    logger: InteractiveTaskContext["logger"],
+    { repository, mode }: Extract<FernSdkGenApiRequestedOutput, { type: "github" }>,
+    { pullRequestUrl, noChangesDetected }: GithubDeliveryOutcome,
+    linkRejected: boolean
+): void {
+    if (noChangesDetected) {
+        logger.info(`No changes detected for ${repository}; nothing was delivered to GitHub.`);
+        return;
+    }
+    if (pullRequestUrl != null) {
+        logger.info(`Pull request: ${pullRequestUrl}`);
+        return;
+    }
+    if (linkRejected) {
+        logger.warn(`sdk-gen-api returned a pull request link for ${repository} that was not a safe HTTPS URL.`);
+        return;
+    }
+    if (mode === "pull-request") {
+        logger.warn(`sdk-gen-api did not return a pull request link for ${repository}.`);
+    }
 }
 
 function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation): number | undefined {
