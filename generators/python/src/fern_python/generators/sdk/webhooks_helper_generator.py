@@ -166,6 +166,17 @@ class WebhooksHelperGenerator:
                 "encoding": config.encoding.value,
                 "signaturePrefix": config.signature_prefix,
                 "signatureHeaderName": _wire_value(config.signature_header_name),
+                "algorithmHeader": (
+                    None
+                    if config.algorithm_header is None
+                    else {
+                        "headerName": _wire_value(config.algorithm_header.header_name),
+                        "keyIdDelimiter": config.algorithm_header.key_id_delimiter,
+                        "algorithms": [
+                            [option.wire_value, option.algorithm.value] for option in config.algorithm_header.algorithms
+                        ],
+                    }
+                ),
                 "payloadFormat": {
                     "components": [component.value for component in config.payload_format.components],
                     "delimiter": config.payload_format.delimiter,
@@ -277,7 +288,7 @@ class _HmacHelperWriter:
         fallback = json.dumps(_map_hmac_algorithm(self._config.algorithm))
         if self._algorithm_header is None:
             return f"algorithm or {fallback}"
-        return f"HMAC_ALGORITHMS[algorithm] if algorithm is not None else {fallback}"
+        return f"HMAC_ALGORITHMS.get(algorithm, algorithm) if algorithm is not None else {fallback}"
 
     def _build_verify_request_parameters(self) -> List[str]:
         body_type = (

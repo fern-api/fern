@@ -79,7 +79,7 @@ export class WebhooksHelperGenerator {
         if (config.algorithmHeader == null) {
             return `algorithm ?? ${fallback}`;
         }
-        return `algorithm != null ? HMAC_ALGORITHMS[algorithm] : ${fallback}`;
+        return `algorithm != null ? (HMAC_ALGORITHMS[algorithm] ?? algorithm) : ${fallback}`;
     }
 
     /**
@@ -133,7 +133,7 @@ export class WebhooksHelperGenerator {
         if (algorithmHeader.keyIdDelimiter != null) {
             lines.push(
                 `    const delimiterIndex = settingsHeader.lastIndexOf(${JSON.stringify(algorithmHeader.keyIdDelimiter)});`,
-                "    const algorithmValue = delimiterIndex >= 0 ? settingsHeader.slice(delimiterIndex + 1) : settingsHeader;",
+                `    const algorithmValue = delimiterIndex >= 0 ? settingsHeader.slice(delimiterIndex + ${algorithmHeader.keyIdDelimiter.length}) : settingsHeader;`,
                 "    keyId = delimiterIndex >= 0 ? settingsHeader.slice(0, delimiterIndex) : undefined;"
             );
         } else {

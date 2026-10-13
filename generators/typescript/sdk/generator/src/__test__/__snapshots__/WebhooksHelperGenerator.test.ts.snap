@@ -523,7 +523,7 @@ export class WebhooksHelper {
                 .join("");
         const payload = [notificationUrl, bodyString].join("");
 
-        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm != null ? HMAC_ALGORITHMS[algorithm] : "sha1", encoding: "base64" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm != null ? (HMAC_ALGORITHMS[algorithm] ?? algorithm) : "sha1", encoding: "base64" });
 
         const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
         if (!valid) {

@@ -1725,6 +1725,17 @@ export class SdkGenerator {
             case "hmac":
                 return JSON.stringify({
                     ...common,
+                    algorithmHeader:
+                        verification.algorithmHeader == null
+                            ? null
+                            : {
+                                  headerName: getWireValue(verification.algorithmHeader.headerName),
+                                  keyIdDelimiter: verification.algorithmHeader.keyIdDelimiter ?? null,
+                                  algorithms: verification.algorithmHeader.algorithms.map((option) => [
+                                      option.wireValue,
+                                      option.algorithm
+                                  ])
+                              },
                     payloadFormat: {
                         components: verification.payloadFormat.components,
                         delimiter: verification.payloadFormat.delimiter,

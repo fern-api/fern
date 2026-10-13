@@ -120,6 +120,17 @@ export class WebhooksHelperGenerator {
             encoding: config.encoding,
             signaturePrefix: config.signaturePrefix,
             signatureHeaderName: getWireValue(config.signatureHeaderName),
+            algorithmHeader:
+                config.algorithmHeader == null
+                    ? null
+                    : {
+                          headerName: getWireValue(config.algorithmHeader.headerName),
+                          keyIdDelimiter: config.algorithmHeader.keyIdDelimiter ?? null,
+                          algorithms: config.algorithmHeader.algorithms.map((option) => [
+                              option.wireValue,
+                              option.algorithm
+                          ])
+                      },
             payloadFormat: {
                 components: config.payloadFormat.components,
                 delimiter: config.payloadFormat.delimiter,
