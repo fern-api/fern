@@ -80,12 +80,9 @@ function isInternalProduct(product: docsYml.RawSchemas.ProductConfig): product i
  * Only internal products carry a slug, so an external product can only match by display name.
  */
 function findProductAtRef(
-    products: docsYml.RawSchemas.ProductConfig[] | undefined,
+    products: docsYml.RawSchemas.ProductConfig[],
     scope: { displayName: string; slug: string | undefined }
 ): docsYml.RawSchemas.ProductConfig | undefined {
-    if (products == null) {
-        return undefined;
-    }
     if (scope.slug != null) {
         const bySlug = products.find((product) => isInternalProduct(product) && product.slug === scope.slug);
         if (bySlug != null) {
@@ -126,19 +123,17 @@ export async function resolveRefContentRoot({
 
     const describeRef = `git ref '${materialized.ref}' (${materialized.sha})`;
 
-    if (scope.type === "product") {
-        const product = findProductAtRef(refDocsConfig.products, scope);
+    // A ref from before the site adopted `products:` has no product to match, so its site-level
+    // content root is used instead.
+    const refProducts = refDocsConfig.products ?? [];
+    if (scope.type === "product" && refProducts.length > 0) {
+        const product = findProductAtRef(refProducts, scope);
         if (product == null) {
-            const available =
-                refDocsConfig.products != null && refDocsConfig.products.length > 0
-                    ? refDocsConfig.products.map((p) => `'${p.displayName}'`).join(", ")
-                    : undefined;
+            const available = refProducts.map((p) => `'${p.displayName}'`).join(", ");
             throw new CliError({
                 message:
                     `Could not find product '${scope.displayName}' in the docs.yml at ${describeRef}. ` +
-                    (available != null
-                        ? `Products at the ref: ${available}. `
-                        : "The ref's docs.yml declares no products. ") +
+                    `Products at the ref: ${available}. ` +
                     "Give the product the same slug on both branches to match it independently of its display name.",
                 code: CliError.Code.ConfigError
             });

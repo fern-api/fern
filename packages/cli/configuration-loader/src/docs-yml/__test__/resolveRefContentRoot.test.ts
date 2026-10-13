@@ -209,6 +209,21 @@ describe("resolveRefContentRoot", () => {
             );
         });
 
+        it("uses the site-level content root when the ref predates products", async () => {
+            const fernFolder = await makeFernFolder({
+                "docs.yml": ["instances: []", "navigation:", "  - page: Home", "    path: ./home.mdx"].join("\n")
+            });
+
+            const result = await resolveRefContentRoot({
+                materialized: materialized(fernFolder),
+                scope: { type: "product", displayName: "Containers", slug: "containers" },
+                context
+            });
+
+            expect(result.absoluteFilepathToConfig).toBe(join(fernFolder, RelativeFilePath.of("docs.yml")));
+            expect(result.navigation).toEqual([{ page: "Home", path: "./home.mdx" }]);
+        });
+
         it("rejects a product that is an external link at the ref", async () => {
             const fernFolder = await makeProductsFolder();
 
