@@ -33993,7 +33993,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "tolerance": 300
                     },
                     "bodyHashBinding": null,
-                    "notificationUrlNormalization": null
+                    "notificationUrlNormalization": null,
+                    "algorithmHeader": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -34047,7 +34048,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "tolerance": 300
                     },
                     "bodyHashBinding": null,
-                    "notificationUrlNormalization": null
+                    "notificationUrlNormalization": null,
+                    "algorithmHeader": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
