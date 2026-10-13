@@ -57,7 +57,6 @@ describe("loadSdkConfigV1 credential guard", () => {
 
     it("never resolves or sends CLI distribution secret names as credentials", async () => {
         stubCanaryEnv();
-        const envReads = recordEnvReads();
         const configPath = await writeSdkConfig(temporaryDirectories, {
             targets: [
                 {
@@ -72,10 +71,13 @@ describe("loadSdkConfigV1 credential guard", () => {
             ]
         });
 
-        const loaded = await loadSdkConfigV1(configPath);
+        const { result, reads: envReads } = await withRecordedEnvReads(async () => {
+            const loaded = await loadSdkConfigV1(configPath);
+            return { loaded, request: createRequest(loaded) };
+        });
+        const { loaded, request } = result;
         const target = loaded.payload.targets[0];
         const body = JSON.parse(target?.body.toString("utf8") ?? "{}");
-        const request = createRequest(loaded);
 
         expect(target).not.toHaveProperty("publishCredential");
         expect(target?.requestedOutput).toEqual({ type: "github", repository: "acme/acme-cli", mode: "release" });
@@ -247,7 +249,8 @@ function stubCanaryEnv(): void {
     }
 }
 
-function recordEnvReads(): Set<string> {
+/** Runs `run` with `process.env` wrapped in a read-recording Proxy, restored as soon as it settles. */
+async function withRecordedEnvReads<T>(run: () => Promise<T>): Promise<{ result: T; reads: Set<string> }> {
     const reads = new Set<string>();
     const env = process.env;
     process.env = new Proxy(env, {
@@ -258,7 +261,11 @@ function recordEnvReads(): Set<string> {
             return Reflect.get(target, property, receiver);
         }
     });
-    return reads;
+    try {
+        return { result: await run(), reads };
+    } finally {
+        process.env = env;
+    }
 }
 
 function createRequest(loaded: LoadedSdkConfigV1): ReturnType<typeof createFernSdkGenApiRequest> {
