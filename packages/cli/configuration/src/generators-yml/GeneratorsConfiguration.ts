@@ -229,6 +229,8 @@ export interface GeneratorInvocation {
     smartCasing: boolean;
     smartCasingDigitWordBoundary: boolean;
     disableExamples: boolean;
+    /** Emit a signed provenance attestation for remote generation (see `provenance` in generators.yml). */
+    provenance?: boolean;
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;

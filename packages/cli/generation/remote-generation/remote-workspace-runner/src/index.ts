@@ -49,6 +49,7 @@ export {
     prepareFernSdkGenApiSdkConfigPayload,
     type SdkConfigMappingResult
 } from "./prepareFernSdkGenApiSdkConfigPayload.js";
+export { computeProvenanceInputs, type ProvenanceFileDigest, type ProvenanceInputs } from "./provenanceInputs.js";
 export { sanitizeRelativePathForS3 } from "./publishDocs.js";
 export type { BuiltTranslation } from "./publishDocsLedger.js";
 export { buildAllTranslationInputs, buildLedgerInput } from "./publishDocsLedger.js";

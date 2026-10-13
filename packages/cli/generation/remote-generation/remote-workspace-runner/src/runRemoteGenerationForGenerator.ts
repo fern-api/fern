@@ -60,6 +60,7 @@ import {
     type MapFernGroupToSdkConfig,
     prepareFernSdkGenApiSdkConfigPayload
 } from "./prepareFernSdkGenApiSdkConfigPayload.js";
+import type { ProvenanceInputs } from "./provenanceInputs.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
 import {
@@ -100,6 +101,7 @@ export async function runRemoteGenerationForGenerator({
     disableTelemetry,
     loginCommand,
     specsTarGzBuffer,
+    provenanceInputs,
     sdkGenApiSourceArchive,
     sdkGenApiRoute,
     sdkConfigV1,
@@ -157,6 +159,8 @@ export async function runRemoteGenerationForGenerator({
      */
     loginCommand?: string;
     specsTarGzBuffer?: Buffer;
+    /** Set when the generator opted into `provenance`; forwarded to Fiddle for the signed attestation. */
+    provenanceInputs?: ProvenanceInputs;
     sdkGenApiSourceArchive?: FernSdkGenApiSourceArchive;
     sdkGenApiRoute: GenerationConfigRoute | undefined;
     sdkConfigV1?: FernSdkConfigV1Payload;
@@ -306,6 +310,13 @@ export async function runRemoteGenerationForGenerator({
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
     const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (sdkGenApiRoute != null) {
+        if (provenanceInputs != null) {
+            return interactiveTaskContext.failAndThrow(
+                `Cannot submit ${generatorInvocation.name} to sdk-gen-api: \`provenance\` is only supported for Fiddle remote generation`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
         const candidate = {
             generatorInvocation,
             sdkVersion: resolvedVersion,
@@ -708,7 +719,8 @@ export async function runRemoteGenerationForGenerator({
             skipIfNoDiff,
             verify,
             loginCommand,
-            specsTarGzBuffer
+            specsTarGzBuffer,
+            provenanceInputs
         });
         interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 

@@ -40,6 +40,7 @@ import {
     validateFernSdkGenApiSourceCompatibility
 } from "./fernSdkGenApiSourceArchive.js";
 import type { MapFernGroupToSdkConfig } from "./prepareFernSdkGenApiSdkConfigPayload.js";
+import { computeProvenanceInputs } from "./provenanceInputs.js";
 import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
 import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
@@ -865,6 +866,15 @@ async function generateOne({
                   context: interactiveTaskContext
               })));
 
+        const provenanceInputs = resolvedGeneratorInvocation.provenance
+            ? await computeProvenanceInputs({
+                  workspace,
+                  specsOverride: resolvedGeneratorInvocation.apiOverride?.specs,
+                  generatorsYmlAbsolutePath,
+                  cliVersion: workspace.cliVersion
+              })
+            : undefined;
+
         const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
             projectConfig,
             organization,
@@ -921,6 +931,7 @@ async function generateOne({
             disableTelemetry,
             loginCommand,
             specsTarGzBuffer: specsTarGzArchive?.buffer,
+            provenanceInputs,
             sdkGenApiSourceArchive: specsTarGzArchive,
             sdkGenApiRoute,
             sdkConfigV1,

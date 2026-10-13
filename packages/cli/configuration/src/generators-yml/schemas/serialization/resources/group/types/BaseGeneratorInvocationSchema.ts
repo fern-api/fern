@@ -26,6 +26,7 @@ export const BaseGeneratorInvocationSchema: core.serialization.ObjectSchema<
     "smart-casing-digit-word-boundary": core.serialization.boolean().optional(),
     api: GeneratorApiSettingsSchema.optional(),
     "disable-examples": core.serialization.boolean().optional(),
+    provenance: core.serialization.boolean().optional(),
     "publish-metadata": GeneratorPublishMetadataSchema.optional(),
     autorelease: core.serialization.boolean().optional(),
     automation: AutomationSchema.optional(),
@@ -45,6 +46,7 @@ export declare namespace BaseGeneratorInvocationSchema {
         "smart-casing-digit-word-boundary"?: boolean | null;
         api?: GeneratorApiSettingsSchema.Raw | null;
         "disable-examples"?: boolean | null;
+        provenance?: boolean | null;
         "publish-metadata"?: GeneratorPublishMetadataSchema.Raw | null;
         autorelease?: boolean | null;
         automation?: AutomationSchema.Raw | null;

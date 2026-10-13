@@ -805,6 +805,7 @@ async function convertGenerator({
         smartCasing: generator["smart-casing"] ?? true,
         smartCasingDigitWordBoundary: generator["smart-casing-digit-word-boundary"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
+        provenance: generator.provenance ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
