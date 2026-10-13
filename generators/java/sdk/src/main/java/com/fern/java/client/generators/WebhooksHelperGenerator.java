@@ -205,8 +205,10 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 requestBodyTypes.add(MAP_REQUEST_BODY_TYPE);
             }
             for (TypeName requestBodyType : requestBodyTypes) {
-                helper.addMethod(buildVerifyRequestMethod(algorithmHeader, TypeName.get(String.class), requestBodyType));
-                helper.addMethod(buildVerifyRequestMethod(algorithmHeader, SIGNATURE_KEY_RESOLVER_TYPE, requestBodyType));
+                helper.addMethod(
+                        buildVerifyRequestMethod(algorithmHeader, TypeName.get(String.class), requestBodyType));
+                helper.addMethod(
+                        buildVerifyRequestMethod(algorithmHeader, SIGNATURE_KEY_RESOLVER_TYPE, requestBodyType));
                 helper.addMethod(buildVerifyRequestImplementation(algorithmHeader, requestBodyType));
             }
             helper.addMethod(buildGetHeaderMethod());
