@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.53.2
+  changelogEntry:
+    - summary: |
+        Header API-key schemes now send their configured prefix. An `auth-schemes` entry such as
+        `{ header: X-Api-Key, prefix: Key }` previously produced a CLI that sent the bare credential; it now
+        sends `X-Api-Key: Key <credential>` whether the key comes from the `--api-key` flag, the environment
+        variable, or the keyring entry `auth login` stores (which keeps holding the bare key). The prefix is
+        applied once, at request time, and schemes without a prefix are unchanged. The runtime gains
+        `ApiKeyAuth::prefix(...)`, `HeaderAuthProvider::with_prefix(...)`, and a
+        `SchemeBinding::PrefixedToken` variant; hand-written `custom.rs` code that matches `SchemeBinding`
+        exhaustively needs an arm for it.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 0.53.1
   changelogEntry:
     - summary: |
