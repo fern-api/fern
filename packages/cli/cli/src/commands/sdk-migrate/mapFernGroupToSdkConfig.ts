@@ -172,10 +172,11 @@ function migrateCredentialObject(
     // Usernames are identifiers, not secrets (PyPI token auth uses the fixed "__token__"), and direct
     // publishing requires one, so keep them as written. Maven is the exception: Sonatype user tokens
     // are a generated username/password pair, so a Maven username may be a secret.
-    const username =
-        registry !== "maven" && typeof value.username === "string" && value.username.trim().length > 0
-            ? value.username
-            : migrateCredentialValue(registry, "username", value.username, diagnostics, targetIndex);
+    const keepUsernameAsWritten =
+        registry !== "maven" && typeof value.username === "string" && value.username.trim().length > 0;
+    const username = keepUsernameAsWritten
+        ? (value.username as string)
+        : migrateCredentialValue(registry, "username", value.username, diagnostics, targetIndex);
     const password = migrateCredentialValue(registry, "password", value.password, diagnostics, targetIndex);
     const credentials = {
         ...(username == null ? {} : { username }),
