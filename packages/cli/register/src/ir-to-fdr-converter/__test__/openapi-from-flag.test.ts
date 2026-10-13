@@ -7,7 +7,9 @@
  */
 
 import { spawnSync } from "node:child_process";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -249,6 +251,135 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
                     { id: "version", default: "v1", values: ["v1", "v2"] }
                 ]
             }
+        ]);
+    });
+
+    it("should keep server URL templates and variables alongside WebSocket servers", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/server-url-variables-websocket")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "server-url-variables-websocket"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        const endpoint = Object.values(fdrApiDefinition.rootPackage.endpoints)[0];
+        expect(endpoint?.environments).toEqual([
+            expect.objectContaining({
+                baseUrl: "https://api.example.com/v1",
+                urlTemplate: "https://{tenant-domain}/{version}",
+                urlVariables: [
+                    { id: "tenant-domain", default: "api.example.com", values: undefined },
+                    { id: "version", default: "v1", values: ["v1", "v2"] }
+                ]
+            })
+        ]);
+    });
+
+    it("should keep server URL templates and variables alongside WebSocket servers (Fern definition path)", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/server-url-variables-websocket")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "server-url-variables-websocket"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const fernWorkspace = await workspace.workspace.toFernWorkspace({ context });
+        const intermediateRepresentation = generateIntermediateRepresentation({
+            workspace: fernWorkspace,
+            generationLanguage: undefined,
+            audiences: { type: "all" },
+            keywords: undefined,
+            smartCasing: true,
+            exampleGeneration: { disabled: true },
+            readme: undefined,
+            version: undefined,
+            packageName: undefined,
+            context,
+            sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        const endpoint = Object.values(fdrApiDefinition.rootPackage.endpoints)[0];
+        expect(endpoint?.environments).toEqual([
+            expect.objectContaining({
+                baseUrl: "https://api.example.com/v1",
+                urlTemplate: "https://{tenant-domain}/{version}",
+                urlVariables: [
+                    { id: "tenant-domain", default: "api.example.com", values: undefined },
+                    { id: "version", default: "v1", values: ["v1", "v2"] }
+                ]
+            })
         ]);
     });
 
