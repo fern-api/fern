@@ -1051,6 +1051,29 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.groups[0]?.generators[0]?.language).toEqual(generatorsYml.GenerationLanguage.CLI);
         });
 
+        it("does not resolve a non-Fern *-cli-generator to the CLI language", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "acme/go-cli-generator",
+                                    version: "0.0.1",
+                                    output: { location: "local-file-system", path: "/path/to/output" }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.language).not.toEqual(generatorsYml.GenerationLanguage.CLI);
+        });
+
         it("preserves full generator names with fernapi/ prefix", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
