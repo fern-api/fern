@@ -150,7 +150,7 @@ describe("WebhooksHelperGenerator", () => {
                 payloadFormat: {
                     components: ["NOTIFICATION_URL", "BODY"],
                     delimiter: "",
-                    bodySort: { keyOrder: "ALPHABETICAL", valueOrder: "ALPHABETICAL", delimiter: "" }
+                    bodySort: "ALPHABETICAL"
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
