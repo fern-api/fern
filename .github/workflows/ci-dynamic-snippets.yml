@@ -11,6 +11,8 @@ on:
       - generators/php/dynamic-snippets/**
       - generators/swift/dynamic-snippets/**
       - generators/java-v2/dynamic-snippets/**
+      - generators/cli/dynamic-snippets/**
+      - generators/cli/sdk/**
 
 permissions:
   contents: read
@@ -23,9 +25,61 @@ env:
   TURBO_DAEMON: "false"
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      typescript: ${{ steps.filter.outputs.typescript }}
+      python: ${{ steps.filter.outputs.python }}
+      csharp: ${{ steps.filter.outputs.csharp }}
+      go: ${{ steps.filter.outputs.go }}
+      ruby: ${{ steps.filter.outputs.ruby }}
+      php: ${{ steps.filter.outputs.php }}
+      swift: ${{ steps.filter.outputs.swift }}
+      java: ${{ steps.filter.outputs.java }}
+      cli: ${{ steps.filter.outputs.cli }}
+      cliRuntime: ${{ steps.filter.outputs.cliRuntime }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Compute changed dynamic-snippets packages
+        id: filter
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          if [ -z "$BASE" ] || [ -z "$HEAD" ]; then
+            # Non-pull_request trigger (base/head unset): fall back to the last commit.
+            CHANGED=$(git diff --name-only HEAD~1 HEAD)
+          else
+            CHANGED=$(git diff --name-only "$BASE...$HEAD")
+          fi
+          emit() {
+            if echo "$CHANGED" | grep -q "^generators/$1/dynamic-snippets/"; then
+              echo "$2=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "$2=false" >> "$GITHUB_OUTPUT"
+            fi
+          }
+          emit typescript-v2 typescript
+          emit python-v2 python
+          emit csharp csharp
+          emit go-v2 go
+          emit ruby-v2 ruby
+          emit php php
+          emit swift swift
+          emit java-v2 java
+          emit cli cli
+          if echo "$CHANGED" | grep -q "^generators/cli/sdk/"; then
+            echo "cliRuntime=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "cliRuntime=false" >> "$GITHUB_OUTPUT"
+          fi
+
   test-typescript:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'generators/typescript-v2/dynamic-snippets/')
+    needs: [changes]
+    if: needs.changes.outputs.typescript == 'true'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -57,7 +111,8 @@ jobs:
 
   test-python:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'generators/python-v2/dynamic-snippets/')
+    needs: [changes]
+    if: needs.changes.outputs.python == 'true'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -89,7 +144,8 @@ jobs:
 
   test-csharp:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'generators/csharp/dynamic-snippets/')
+    needs: [changes]
+    if: needs.changes.outputs.csharp == 'true'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -121,7 +177,8 @@ jobs:
 
   test-go:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'generators/go-v2/dynamic-snippets/')
+    needs: [changes]
+    if: needs.changes.outputs.go == 'true'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -153,7 +210,8 @@ jobs:
 
   test-ruby:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'generators/ruby-v2/dynamic-snippets/')
+    needs: [changes]
+    if: needs.changes.outputs.ruby == 'true'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -185,7 +243,8 @@ jobs:
 
   test-php:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'generators/php/dynamic-snippets/')
+    needs: [changes]
+    if: needs.changes.outputs.php == 'true'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -217,7 +276,8 @@ jobs:
 
   test-swift:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'generators/swift/dynamic-snippets/')
+    needs: [changes]
+    if: needs.changes.outputs.swift == 'true'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -249,7 +309,8 @@ jobs:
 
   test-java:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'generators/java-v2/dynamic-snippets/')
+    needs: [changes]
+    if: needs.changes.outputs.java == 'true'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -278,3 +339,65 @@ jobs:
 
       - name: 🧪 Test
         run: pnpm turbo run test --filter=@fern-api/java-dynamic-snippets
+
+  test-cli:
+    runs-on: ubuntu-latest
+    needs: [changes]
+    if: needs.changes.outputs.cli == 'true'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
+
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
+
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
+
+      - name: 🧪 Build
+        run: pnpm turbo run compile --filter=@fern-api/cli-dynamic-snippets
+
+      - name: 🧪 Test
+        run: pnpm turbo run test --filter=@fern-api/cli-dynamic-snippets
+
+  cli-runtime:
+    # Installs a Rust toolchain so the committed --schema golden can be regenerated from the real
+    # runtime and the cargo-gated --dry-run tests execute. Triggered when the CLI snippets package OR
+    # the Rust naming source changes, catching runtime naming drift.
+    needs: [changes]
+    if: needs.changes.outputs.cli == 'true' || needs.changes.outputs.cliRuntime == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Regenerate --schema golden and fail on drift
+        run: |
+          node generators/cli/dynamic-snippets/scripts/generate-schema-golden.mjs
+          git diff --exit-code -- generators/cli/dynamic-snippets/src/__test__/fixtures \
+            || (echo "::error::The committed --schema golden is stale. Regenerate it with scripts/generate-schema-golden.mjs and commit the result." && exit 1)
+
+      - name: 🧪 Build
+        run: pnpm turbo run compile --filter=@fern-api/cli-dynamic-snippets
+
+      - name: 🧪 Test (cargo present → --dry-run e2e runs)
+        run: pnpm turbo run test --filter=@fern-api/cli-dynamic-snippets
