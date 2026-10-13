@@ -207,11 +207,14 @@ const CLIENT_CREDENTIALS_MAPPED_KEYS = new Set([
     "get-token",
     "refresh-token"
 ]);
+const AUTHORIZATION_CODE_REQUIRED_FIELDS = [
+    ["client-id", "flows[].clientId"],
+    ["authorization-url", "flows[].authorizationUrl"],
+    ["token-url", "flows[].tokenUrl"]
+] as const;
 const AUTHORIZATION_CODE_MAPPED_KEYS = new Set([
     ...OAUTH_SCHEME_KEYS,
-    "client-id",
-    "authorization-url",
-    "token-url",
+    ...AUTHORIZATION_CODE_REQUIRED_FIELDS.map(([key]) => key),
     "refresh-url"
 ]);
 const ENV_CLIENT_ID_REASON =
@@ -221,11 +224,6 @@ const AUTHORIZATION_CODE_FIELD_REASONS: Record<string, string> = {
     "client-secret-env":
         "an authorization-code flow is a public client, and schemes[].clientSecret holds confidential client credentials"
 };
-const AUTHORIZATION_CODE_REQUIRED_FIELDS = [
-    ["client-id", "flows[].clientId"],
-    ["authorization-url", "flows[].authorizationUrl"],
-    ["token-url", "flows[].tokenUrl"]
-] as const;
 const UNMAPPED_OAUTH_FIELD_REASON = "SDK Config v1 has no equivalent for this OAuth setting";
 // SDK Config carries no token request/response property names; consumers use these RFC 6749 names.
 const TOKEN_REQUEST_DEFAULTS: Record<string, string[]> = {
