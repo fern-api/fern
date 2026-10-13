@@ -745,11 +745,64 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (pathParameterReference == null) {
                     continue;
                 }
-                pathParameterReferences.push(go.codeblock(pathParameterReference));
+                pathParameterReferences.push(
+                    this.formatPathParameterReference({
+                        valueType: pathParameter.valueType,
+                        reference: pathParameterReference
+                    })
+                );
             }
             writer.write("endpointURL := ");
             writer.writeNode(this.context.callEncodeUrl([go.codeblock(baseUrl), ...pathParameterReferences]));
         });
+    }
+
+    /**
+     * EncodeURL formats arguments with %v, which renders a time.Time as
+     * "2006-01-02 15:04:05 +0000 UTC", so date and datetime path parameters
+     * are formatted to their wire representation first.
+     */
+    private formatPathParameterReference({
+        valueType,
+        reference
+    }: {
+        valueType: FernIr.TypeReference;
+        reference: string;
+    }): go.AstNode {
+        switch (this.getRequiredPrimitive(valueType)) {
+            case FernIr.PrimitiveTypeV1.Date:
+                return go.codeblock(`${reference}.Format("2006-01-02")`);
+            case FernIr.PrimitiveTypeV1.DateTime:
+                return go.codeblock((writer) => {
+                    writer.write(`${reference}.Format(`);
+                    writer.writeNode(go.typeReference({ name: "RFC3339", importPath: "time" }));
+                    writer.write(")");
+                });
+            default:
+                return go.codeblock(reference);
+        }
+    }
+
+    /**
+     * Returns the primitive behind a non-optional, non-nullable type reference
+     * (resolving aliases), so callers can safely invoke methods on the Go value.
+     */
+    private getRequiredPrimitive(typeReference: FernIr.TypeReference): FernIr.PrimitiveTypeV1 | undefined {
+        switch (typeReference.type) {
+            case "primitive":
+                return typeReference.primitive.v1;
+            case "named": {
+                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                return declaration.shape.type === "alias"
+                    ? this.getRequiredPrimitive(declaration.shape.aliasOf)
+                    : undefined;
+            }
+            case "container":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
     }
 
     /**

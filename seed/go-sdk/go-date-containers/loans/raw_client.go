@@ -5,6 +5,7 @@ package loans
 import (
 	context "context"
 	http "net/http"
+	time "time"
 
 	fern "github.com/go-date-containers/fern"
 	core "github.com/go-date-containers/fern/core"
@@ -66,6 +67,101 @@ func (r *RawClient) GetLoan(
 		return nil, err
 	}
 	return &core.Response[*fern.Loan]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) ListLoansByDate(
+	ctx context.Context,
+	request *fern.ListLoansByDateRequest,
+	opts ...option.RequestOption,
+) (*core.Response[[]*fern.Loan], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://api.example.com",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/loans/by-date/%v",
+		request.AsOf.Format("2006-01-02"),
+	)
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response []*fern.Loan
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[[]*fern.Loan]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) ListLoansByTimestamp(
+	ctx context.Context,
+	request *fern.ListLoansByTimestampRequest,
+	opts ...option.RequestOption,
+) (*core.Response[[]*fern.Loan], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://api.example.com",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/loans/by-timestamp/%v",
+		request.AsOf.Format(time.RFC3339),
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response []*fern.Loan
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[[]*fern.Loan]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
