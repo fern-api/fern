@@ -462,6 +462,9 @@ catalogs:
     puppeteer:
       specifier: ^24.40.0
       version: 24.40.0
+    registry-url:
+      specifier: ^6.0.1
+      version: 6.0.1
     rehype-katex:
       specifier: ^7.0.0
       version: 7.0.1
@@ -4636,6 +4639,9 @@ importers:
       puppeteer:
         specifier: 'catalog:'
         version: 24.40.0(typescript@5.9.3)
+      registry-url:
+        specifier: 'catalog:'
+        version: 6.0.1
       semver:
         specifier: ^7.6.2
         version: 7.8.4

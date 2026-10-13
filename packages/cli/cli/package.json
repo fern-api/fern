@@ -140,6 +140,7 @@
     "pixelmatch": "catalog:",
     "pngjs": "catalog:",
     "puppeteer": "catalog:",
+    "registry-url": "catalog:",
     "semver": "^7.6.2",
     "tar": "catalog:",
     "tmp-promise": "catalog:",

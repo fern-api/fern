@@ -185,16 +185,7 @@ async function runCli() {
     };
 
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
-        const { setGlobalDispatcher, Agent } = await import("undici");
-        setGlobalDispatcher(
-            new Agent({ connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 })
-        );
-    }
-
-    if (process.env.HTTP_PROXY != null) {
-        const { setGlobalDispatcher, ProxyAgent } = await import("undici");
-        const proxyAgent = new ProxyAgent(process.env.HTTP_PROXY);
-        setGlobalDispatcher(proxyAgent);
+        await configureGlobalDispatcher();
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -346,6 +337,32 @@ async function tryRunCli(cliContext: CliContext) {
     });
 
     await cli.parse();
+}
+
+/**
+ * Node's global `fetch` ignores proxy environment variables, so configure undici
+ * explicitly. Timeouts are disabled because generation and uploads can legitimately
+ * run for a long time.
+ */
+async function configureGlobalDispatcher(): Promise<void> {
+    const { setGlobalDispatcher, Agent, ProxyAgent } = await import("undici");
+    const options = { connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 };
+    const proxyUri = getProxyUriFromEnvironment();
+    setGlobalDispatcher(proxyUri != null ? new ProxyAgent({ ...options, uri: proxyUri }) : new Agent(options));
+}
+
+/**
+ * Nearly all of the CLI's traffic is HTTPS, so prefer `HTTPS_PROXY` and fall back to
+ * `HTTP_PROXY`; both lower- and upper-case spellings are honored like curl/npm do.
+ */
+function getProxyUriFromEnvironment(): string | undefined {
+    for (const name of ["https_proxy", "HTTPS_PROXY", "http_proxy", "HTTP_PROXY"]) {
+        const value = process.env[name];
+        if (value != null && value !== "") {
+            return value;
+        }
+    }
+    return undefined;
 }
 
 async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {
