@@ -51,6 +51,27 @@ const AUTHORIZATION_CODE: AuthSchemes[string] = {
     "token-url": "https://auth.example.com/token"
 };
 
+const MIGRATED_AUTHORIZATION_CODE = {
+    id: "BrowserLogin",
+    type: "oauth2",
+    flows: [
+        {
+            type: "authorization-code",
+            authorizationUrl: "https://auth.example.com/authorize",
+            tokenUrl: "https://auth.example.com/token",
+            clientId: "public-client"
+        }
+    ]
+};
+
+const DEVICE_CODE: AuthSchemes[string] = {
+    scheme: "oauth",
+    type: "device-code",
+    "client-id": "public-client",
+    "device-authorization-url": "https://auth.example.com/device",
+    "token-url": "https://auth.example.com/token"
+};
+
 const BEARER: AuthSchemes[string] = { scheme: "bearer", token: { env: "BEARER_TOKEN" } };
 const API_KEY: AuthSchemes[string] = { header: "X-Api-Key", type: "string", env: "API_KEY_VALUE", prefix: "Key" };
 const SUPPORTED_SCHEMES: AuthSchemes = {
@@ -119,8 +140,8 @@ describe("fern sdk migrate auth", () => {
     it("keeps supported schemes and names the omitted scheme and affected fields", () => {
         const result = mapFernDefinitionToSdkConfigApi(
             createDefinition({
-                auth: { any: ["ApiKey", "BrowserLogin", "OAuth2"] },
-                "auth-schemes": { ApiKey: API_KEY, BrowserLogin: AUTHORIZATION_CODE, OAuth2: CLIENT_CREDENTIALS }
+                auth: { any: ["ApiKey", "DeviceLogin", "OAuth2"] },
+                "auth-schemes": { ApiKey: API_KEY, DeviceLogin: DEVICE_CODE, OAuth2: CLIENT_CREDENTIALS }
             })
         );
 
@@ -130,11 +151,11 @@ describe("fern sdk migrate auth", () => {
             {
                 code: "FERN_API_AUTH_SCHEME_OMITTED",
                 severity: "warning",
-                path: ["auth-schemes", "BrowserLogin"],
-                reason: "Fern auth scheme 'BrowserLogin' was omitted because OAuth authorization-code needs a public client ID, which SDK Config v1 api.auth cannot hold yet. api.auth keeps ApiKey, OAuth2; affected: api.auth.schemes, api.auth.requirements.",
+                path: ["auth-schemes", "DeviceLogin"],
+                reason: "Fern auth scheme 'DeviceLogin' was omitted because OAuth flow 'device-code' has no SDK Config v1 equivalent. api.auth keeps ApiKey, OAuth2; affected: api.auth.schemes, api.auth.requirements.",
                 sdkConfigPath: ["api", "auth", "schemes"],
                 suggestedAction:
-                    "Add 'BrowserLogin' to api.auth.schemes and api.auth.requirements manually, or keep this API on generators.yml until SDK Config supports it."
+                    "Add 'DeviceLogin' to api.auth.schemes and api.auth.requirements manually, or keep this API on generators.yml until SDK Config supports it."
             }
         ]);
     });
@@ -162,7 +183,7 @@ describe("fern sdk migrate auth", () => {
 
     it("omits api.auth with a review diagnostic only when no scheme is representable", () => {
         const result = mapFernDefinitionToSdkConfigApi(
-            createDefinition({ auth: "BrowserLogin", "auth-schemes": { BrowserLogin: AUTHORIZATION_CODE } })
+            createDefinition({ auth: "DeviceLogin", "auth-schemes": { DeviceLogin: DEVICE_CODE } })
         );
 
         expect(result.api.auth).toBeUndefined();
@@ -170,7 +191,9 @@ describe("fern sdk migrate auth", () => {
             expect.objectContaining({
                 code: "FERN_API_AUTH_REQUIRES_REVIEW",
                 path: ["api", "auth"],
-                reason: expect.stringContaining("BrowserLogin (OAuth authorization-code needs a public client ID")
+                reason: expect.stringContaining(
+                    "DeviceLogin (OAuth flow 'device-code' has no SDK Config v1 equivalent)"
+                )
             })
         ]);
     });
@@ -483,6 +506,190 @@ describe("fern sdk migrate auth", () => {
     });
 });
 
+describe("fern sdk migrate OAuth authorization-code", () => {
+    it("migrates a literal client-id to the public flows[].clientId with the rest of the flow", () => {
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: "BrowserLogin",
+                "auth-schemes": {
+                    BrowserLogin: {
+                        ...AUTHORIZATION_CODE,
+                        docs: "Browser login",
+                        scopes: ["openid", "offline_access"],
+                        "refresh-url": "https://auth.example.com/refresh",
+                        "token-header": "X-Access-Token",
+                        "token-prefix": "Token"
+                    }
+                }
+            })
+        );
+
+        expect(result.api.auth?.schemes).toEqual([
+            {
+                id: "BrowserLogin",
+                type: "oauth2",
+                flows: [
+                    {
+                        type: "authorization-code",
+                        authorizationUrl: "https://auth.example.com/authorize",
+                        tokenUrl: "https://auth.example.com/token",
+                        refreshUrl: "https://auth.example.com/refresh",
+                        scopes: [{ name: "openid" }, { name: "offline_access" }],
+                        clientId: "public-client"
+                    }
+                ],
+                tokenHeader: "X-Access-Token",
+                tokenPrefix: "Token",
+                description: "Browser login"
+            }
+        ]);
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("keeps the public flows[].clientId separate from the confidential schemes[].clientId", () => {
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: { any: ["OAuth2", "BrowserLogin"] },
+                "auth-schemes": { OAuth2: CLIENT_CREDENTIALS, BrowserLogin: AUTHORIZATION_CODE }
+            })
+        );
+
+        expect(result.api.auth?.schemes).toEqual([MIGRATED_SUPPORTED_SCHEMES[3], MIGRATED_AUTHORIZATION_CODE]);
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("reports authorization-code settings SDK Config cannot hold without dropping the scheme", () => {
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: "BrowserLogin",
+                "auth-schemes": {
+                    BrowserLogin: {
+                        ...AUTHORIZATION_CODE,
+                        "client-id-env": "ACME_CLIENT_ID",
+                        "client-secret-env": "ACME_CLIENT_SECRET",
+                        "redirect-uri": "http://127.0.0.1:8484/callback",
+                        pkce: { method: "S256" },
+                        "authorization-parameters": { audience: "https://api.example.com" }
+                    }
+                }
+            })
+        );
+
+        expect(result.api.auth?.schemes).toEqual([MIGRATED_AUTHORIZATION_CODE]);
+        expect(result.diagnostics.map(({ code, path, reason }) => ({ code, path, reason }))).toEqual([
+            {
+                code: "FERN_API_AUTH_FIELD_UNSUPPORTED",
+                path: ["auth-schemes", "BrowserLogin", "client-id-env"],
+                reason: "Fern auth scheme 'BrowserLogin' was migrated without client-id-env: flows[].clientId must be a literal public client ID, and schemes[].clientId holds a confidential client's runtime parameter, so an environment-variable client ID cannot be migrated; the literal client-id was written to flows[].clientId instead."
+            },
+            {
+                code: "FERN_API_AUTH_FIELD_UNSUPPORTED",
+                path: ["auth-schemes", "BrowserLogin", "client-secret-env"],
+                reason: "Fern auth scheme 'BrowserLogin' was migrated without client-secret-env: an authorization-code flow is a public client, and schemes[].clientSecret holds confidential client credentials."
+            },
+            ...["redirect-uri", "pkce", "authorization-parameters"].map((key) => ({
+                code: "FERN_API_AUTH_FIELD_UNSUPPORTED",
+                path: ["auth-schemes", "BrowserLogin", key],
+                reason: `Fern auth scheme 'BrowserLogin' was migrated without ${key}: SDK Config v1 has no equivalent for this OAuth setting.`
+            }))
+        ]);
+    });
+
+    it("omits an authorization-code scheme without a client-id", () => {
+        const { "client-id": _clientId, ...withoutClientId } = AUTHORIZATION_CODE as Extract<
+            AuthSchemes[string],
+            { scheme: "oauth" }
+        >;
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: { any: ["ApiKey", "BrowserLogin"] },
+                "auth-schemes": { ApiKey: API_KEY, BrowserLogin: withoutClientId }
+            })
+        );
+
+        expect(result.api.auth?.schemes.map((scheme) => scheme.id)).toEqual(["ApiKey"]);
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                code: "FERN_API_AUTH_SCHEME_OMITTED",
+                path: ["auth-schemes", "BrowserLogin"],
+                reason: "Fern auth scheme 'BrowserLogin' was omitted because its authorization-code flow has no client-id, so flows[].clientId cannot be set. api.auth keeps ApiKey; affected: api.auth.schemes, api.auth.requirements."
+            })
+        ]);
+    });
+
+    it("reports, rather than resolves, an authorization-code client-id-env without a literal client-id", () => {
+        const { "client-id": _clientId, ...withoutClientId } = AUTHORIZATION_CODE as Extract<
+            AuthSchemes[string],
+            { scheme: "oauth" }
+        >;
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: { any: ["ApiKey", "BrowserLogin"] },
+                "auth-schemes": {
+                    ApiKey: API_KEY,
+                    BrowserLogin: { ...withoutClientId, "client-id-env": "ACME_CLIENT_ID" }
+                }
+            })
+        );
+
+        expect(result.api.auth?.schemes).toEqual([
+            {
+                id: "ApiKey",
+                type: "api-key",
+                location: "header",
+                name: "X-Api-Key",
+                prefix: "Key",
+                environmentVariable: "API_KEY_VALUE"
+            }
+        ]);
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                code: "FERN_API_AUTH_SCHEME_OMITTED",
+                path: ["auth-schemes", "BrowserLogin"],
+                reason: "Fern auth scheme 'BrowserLogin' was omitted because its authorization-code flow has no client-id, so flows[].clientId cannot be set; it sets client-id-env, but flows[].clientId must be a literal public client ID, and schemes[].clientId holds a confidential client's runtime parameter, so an environment-variable client ID cannot be migrated. api.auth keeps ApiKey; affected: api.auth.schemes, api.auth.requirements."
+            })
+        ]);
+    });
+
+    it("names every missing required authorization-code field", () => {
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: "BrowserLogin",
+                "auth-schemes": {
+                    BrowserLogin: { scheme: "oauth", type: "authorization-code", "client-id": "public-client" }
+                }
+            })
+        );
+
+        expect(result.api.auth).toBeUndefined();
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                code: "FERN_API_AUTH_REQUIRES_REVIEW",
+                reason: expect.stringContaining(
+                    "BrowserLogin (its authorization-code flow has no authorization-url, token-url, so flows[].authorizationUrl, flows[].tokenUrl cannot be set)"
+                )
+            })
+        ]);
+    });
+
+    it("omits an authorization-code scheme whose client-id is not a literal public client ID", () => {
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: "BrowserLogin",
+                "auth-schemes": { BrowserLogin: { ...AUTHORIZATION_CODE, "client-id": "${ACME_CLIENT_ID}" } }
+            })
+        );
+
+        expect(result.api.auth).toBeUndefined();
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                code: "FERN_API_AUTH_REQUIRES_REVIEW",
+                reason: expect.stringContaining("must be a literal public client ID, not an environment expression")
+            })
+        ]);
+    });
+});
+
 function oauthWithTokenEndpoint(endpoint: string): Extract<AuthSchemes[string], { scheme: "oauth" }> {
     return { scheme: "oauth", type: "client-credentials", "get-token": { endpoint } };
 }
@@ -519,7 +726,10 @@ describe("fern sdk migrate idempotency", () => {
         const first = migrate(generators, definition);
         const second = migrate(generators, definition);
 
-        expect(first.sdkConfig.api?.auth?.schemes).toEqual(MIGRATED_SUPPORTED_SCHEMES);
+        expect(first.sdkConfig.api?.auth?.schemes).toEqual([
+            ...MIGRATED_SUPPORTED_SCHEMES,
+            MIGRATED_AUTHORIZATION_CODE
+        ]);
         expect(second).toEqual(first);
         expect(definition.rootApiFile.contents).toEqual(definitionBefore);
         expect(generators[0]?.config).toEqual(configBefore);
@@ -531,12 +741,18 @@ describe("fern sdk migrate idempotency", () => {
     it("round-trips migrated auth through the written SDK Config without loss", () => {
         const first = migrate(
             [createGenerator(TYPESCRIPT_GENERATOR, "typescript", {})],
-            createDefinition({ auth: { "endpoint-security": {} }, "auth-schemes": SUPPORTED_SCHEMES })
+            createDefinition({
+                auth: { "endpoint-security": {} },
+                "auth-schemes": { ...SUPPORTED_SCHEMES, BrowserLogin: AUTHORIZATION_CODE }
+            })
         );
         const written = mergeSdkConfig({ existingContents: undefined, mapped: first, outputPath: "sdk-config.yml" });
         const reread = validateSdkConfigV1(YAML.parse(written));
 
-        expect(reread.api?.auth).toEqual({ endpointSecurity: true, schemes: MIGRATED_SUPPORTED_SCHEMES });
+        expect(reread.api?.auth).toEqual({
+            endpointSecurity: true,
+            schemes: [...MIGRATED_SUPPORTED_SCHEMES, MIGRATED_AUTHORIZATION_CODE]
+        });
         expect(reread.api?.auth).toEqual(first.sdkConfig.api?.auth);
     });
 });

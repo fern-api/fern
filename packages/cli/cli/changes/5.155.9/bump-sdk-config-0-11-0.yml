@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Upgrade `@postman/sdk-config` to 0.11.0. `fern sdk migrate` now carries the CLI generator's typed
+    generation settings, package metadata, Cargo dependency sources, and `distribution` (Homebrew,
+    Scoop, and GitHub App secret names) into SDK Config, and SDK Config accepts the public OAuth
+    `clientId` on authorization-code flows.
+  type: chore
