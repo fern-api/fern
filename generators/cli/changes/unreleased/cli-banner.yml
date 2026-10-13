@@ -1,10 +1,11 @@
 - summary: |
-    Generated CLIs can opt into a monochrome or RGB-gradient startup banner:
+    Generated CLIs can opt into a startup banner on root `--help`: a solid colour, a multi-stop RGB gradient,
+    or pre-coloured ANSI art printed as given. Keep the art as an asset next to `generators.yml` with `file`,
+    or inline it with `text`:
     ```yaml
     config:
       banner:
-        text: |
-          My CLI
-        colors: ["#4949F2", "#30F1B1"]
+        file: ./assets/cli-banner.txt
+        colors: ["#2929CC", "#4949F2", "#30F2B1"]
     ```
   type: feat
