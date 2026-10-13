@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.30.3
+  changelogEntry:
+    - summary: |
+        Fix the generated `OAuthTokenProvider` so that it compiles under phpstan (level max) when the
+        token endpoint's `access_token` / `expires_in` response properties are optional or nullable
+        (e.g. OpenAPI specs that do not list them as `required`). The provider now throws the SDK's
+        base exception when the response carries no access token, and only computes `expiresAt` when
+        `expires_in` is present.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 2.30.2
   changelogEntry:
     - summary: |
