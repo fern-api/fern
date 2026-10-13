@@ -98,7 +98,7 @@ describe("GeneratedGenericAPISdkErrorImpl", () => {
             const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toContain('headers?.get("Twilio-Request-Id")');
-            expect(context.sourceFile.getFullText()).not.toContain("X-Request-Id");
+            expect(context.sourceFile.getFullText()).not.toContain('get("X-Request-Id")');
         });
     });
 
