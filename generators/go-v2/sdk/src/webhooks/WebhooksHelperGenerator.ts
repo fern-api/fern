@@ -324,6 +324,23 @@ class HmacHelperWriter {
         const settingsHeader = JSON.stringify(getWireValue(algorithmHeader.headerName));
         const payloadParameters = this.buildPayloadParameters();
 
+        const stringsAlias = writer.addImport("strings");
+        const helperName = `${varName.replace(/Algorithms$/, "")}Header`;
+        writer.writeLine(
+            `// ${helperName} reads a header case-insensitively, including keys inserted into the map without canonicalization.`
+        );
+        writer.writeLine(`func ${helperName}(headers ${httpAlias}.Header, name string) string {`);
+        writer.writeLine('\tif value := headers.Get(name); value != "" {');
+        writer.writeLine("\t\treturn value");
+        writer.writeLine("\t}");
+        writer.writeLine("\tfor key, values := range headers {");
+        writer.writeLine(`\t\tif ${stringsAlias}.EqualFold(key, name) && len(values) > 0 {`);
+        writer.writeLine("\t\t\treturn values[0]");
+        writer.writeLine("\t\t}");
+        writer.writeLine("\t}");
+        writer.writeLine('\treturn ""');
+        writer.writeLine("}");
+        writer.newLine();
         writer.writeLine(`var ${varName} = map[string]string{`);
         for (const option of algorithmHeader.algorithms) {
             writer.writeLine(`\t"${option.wireValue}": "${this.mapAlgorithm(option.algorithm)}",`);
@@ -345,16 +362,15 @@ class HmacHelperWriter {
         }
         writer.writeLine("\tsignatureKey func(keyID string) (string, error),");
         writer.writeLine(") (bool, error) {");
-        writer.writeLine(`\tsignatureHeader := headers.Get(${signatureHeader})`);
+        writer.writeLine(`\tsignatureHeader := ${helperName}(headers, ${signatureHeader})`);
         writer.writeLine('\tif signatureHeader == "" {');
         writer.writeLine(`\t\treturn false, ${errorsAlias}.New(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)})`);
         writer.writeLine("\t}");
         writer.writeLine(`\talgorithm := "${this.mapAlgorithm(this.config.algorithm)}"`);
         writer.writeLine('\tkeyID := ""');
-        writer.writeLine(`\tif settings := headers.Get(${settingsHeader}); settings != "" {`);
+        writer.writeLine(`\tif settings := ${helperName}(headers, ${settingsHeader}); settings != "" {`);
         writer.writeLine("\t\talgorithmValue := settings");
         if (algorithmHeader.keyIdDelimiter != null) {
-            const stringsAlias = writer.addImport("strings");
             writer.writeLine(
                 `\t\tif index := ${stringsAlias}.LastIndex(settings, ${JSON.stringify(algorithmHeader.keyIdDelimiter)}); index >= 0 {`
             );
@@ -388,7 +404,7 @@ class HmacHelperWriter {
         if (this.hasTimestamp || this.components.includes("TIMESTAMP")) {
             const timestampHeader =
                 this.config.timestamp != null ? JSON.stringify(getWireValue(this.config.timestamp.headerName)) : '""';
-            writer.writeLine(`\t\theaders.Get(${timestampHeader}),`);
+            writer.writeLine(`\t\t${helperName}(headers, ${timestampHeader}),`);
         }
         writer.writeLine("\t\talgorithm,");
         writer.writeLine("\t)");
