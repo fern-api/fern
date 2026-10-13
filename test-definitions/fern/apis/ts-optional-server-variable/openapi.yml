@@ -1,0 +1,51 @@
+openapi: 3.0.1
+info:
+  title: Optional Server Variable API
+  version: 1.0.0
+  description: |
+    Exercises an optional server URL variable: `edge` has an empty default, so the
+    generated client must drop the `{edge}.` segment when no edge is configured
+    (`api.us1.example.com`) and insert it otherwise (`api.sydney.us1.example.com`).
+servers:
+  - url: https://api.{edge}.{region}.example.com
+    x-fern-server-name: Production
+    x-fern-default-url: https://api.example.com
+    variables:
+      edge:
+        default: ""
+        description: Optional edge location, e.g. sydney
+      region:
+        default: us1
+        description: Region, e.g. us1 or au1
+  - url: https://api.stage-{region}.example.com
+    x-fern-server-name: Staging
+    x-fern-default-url: https://api.stage-us1.example.com
+    variables:
+      region:
+        default: us1
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: List users
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name

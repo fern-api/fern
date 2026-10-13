@@ -26,6 +26,12 @@ export interface ServerVariableOption {
     optionName: string;
     /** The local variable name used when interpolating the URL template. */
     localName: string;
+    /**
+     * True when the variable has no (or an empty) default. An optional variable that is not
+     * provided is omitted from the URL together with its adjacent `.`/`-` separator, so
+     * `api.{edge}.{region}.example.com` renders as `api.us1.example.com` without an edge.
+     */
+    optional: boolean;
 }
 
 /**
@@ -42,7 +48,12 @@ export function getServerVariableOptions(
         const optionName = RESERVED_OPTION_NAMES.has(camel)
             ? caseConverter.camelSafe(`server url ${getOriginalName(variable.name)}`)
             : camel;
-        return { variable, optionName, localName: `_${optionName}` };
+        return {
+            variable,
+            optionName,
+            localName: `_${optionName}`,
+            optional: variable.default == null || variable.default === ""
+        };
     });
 }
 
@@ -95,8 +106,43 @@ function collectServerVariables(ir: FernIr.IntermediateRepresentation): FernIr.S
  */
 export function urlTemplateToTemplateLiteral(template: string, options: ServerVariableOption[]): string {
     let result = template;
-    for (const { variable, localName } of options) {
-        result = result.split(`{${variable.id}}`).join(`\${${localName}}`);
+    for (const { variable, localName, optional } of options) {
+        const placeholder = `{${variable.id}}`;
+        result = optional
+            ? substituteOptionalPlaceholder(result, placeholder, localName)
+            : result.split(placeholder).join(`\${${localName}}`);
     }
     return `\`${result}\``;
+}
+
+const SEPARATORS = new Set([".", "-"]);
+
+/**
+ * Substitutes an optional variable's placeholder so that, when the variable is the empty
+ * string, the placeholder and one adjacent separator are dropped from the URL.
+ * `api.{edge}.{region}` -> `api.${_edge === "" ? "" : `${_edge}.`}${_region}`.
+ */
+function substituteOptionalPlaceholder(template: string, placeholder: string, localName: string): string {
+    let result = "";
+    let rest = template;
+    for (;;) {
+        const index = rest.indexOf(placeholder);
+        if (index === -1) {
+            return result + rest;
+        }
+        const before = rest.slice(0, index);
+        const after = rest.slice(index + placeholder.length);
+        const trailing = after.charAt(0);
+        const leading = before.charAt(before.length - 1);
+        if (SEPARATORS.has(trailing)) {
+            result += `${before}\${${localName} === "" ? "" : \`\${${localName}}${trailing}\`}`;
+            rest = after.slice(1);
+        } else if (SEPARATORS.has(leading)) {
+            result += `${before.slice(0, -1)}\${${localName} === "" ? "" : \`${leading}\${${localName}}\`}`;
+            rest = after;
+        } else {
+            result += `${before}\${${localName}}`;
+            rest = after;
+        }
+    }
 }

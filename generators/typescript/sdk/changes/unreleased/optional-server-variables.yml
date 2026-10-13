@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Server URL variables with an empty (or no) default are now optional: when the client is
+    constructed without them, the placeholder and its adjacent `.`/`-` separator are omitted
+    from the URL instead of leaving an empty segment. For example
+    `https://api.{edge}.{region}.example.com` with `edge: { default: "" }` yields
+    `https://api.us1.example.com` by default and `https://api.sydney.us1.example.com` with
+    `{ edge: "sydney" }`.
+  type: feat

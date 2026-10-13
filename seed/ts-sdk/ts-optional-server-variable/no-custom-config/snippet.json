@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-optional-server-variable\";\n\nconst client = new SeedApiClient;\nawait client.listUsers();\n"
+            }
+        }
+    ],
+    "types": {}
+}

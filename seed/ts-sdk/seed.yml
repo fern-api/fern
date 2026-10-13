@@ -652,6 +652,9 @@ fixtures:
   server-url-templating-single-url:
     - outputFolder: no-custom-config
       customConfig: null
+  ts-optional-server-variable:
+    - outputFolder: no-custom-config
+      customConfig: null
   ts-multi-env-url-templating:
     - outputFolder: no-custom-config
       customConfig: null

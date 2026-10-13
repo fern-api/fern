@@ -2001,6 +2001,50 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunction).toContain("if (environment == null) {");
         });
 
+        it("omits an optional (empty-default) server variable and its separator when unset", () => {
+            const edge = createServerVariable({ id: "edge", name: "edge", default: "" });
+            const region = createServerVariable({ id: "region", name: "region", default: "us1" });
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "Production",
+                baseUrlEnvVar: undefined,
+                environments: FernIr.Environments.singleBaseUrl({
+                    environments: [
+                        {
+                            id: "Production",
+                            name: casingsGenerator.generateName("Production"),
+                            url: "https://api.example.com",
+                            urlTemplate: "https://api.{edge}.{region}.example.com",
+                            urlVariables: [edge, region],
+                            audiences: undefined,
+                            defaultUrl: "https://api.example.com",
+                            docs: undefined
+                        },
+                        {
+                            id: "Staging",
+                            name: casingsGenerator.generateName("Staging"),
+                            url: "https://api.stage-us1.example.com",
+                            urlTemplate: "https://api.stage-{region}.example.com",
+                            urlVariables: [region],
+                            audiences: undefined,
+                            defaultUrl: "https://api.stage-us1.example.com",
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            const normalizeFunction = getNormalizeFunction(ir);
+            expect(normalizeFunction).toContain("options?.edge != null || options?.region != null");
+            expect(normalizeFunction).toContain('const _edge = options?.edge ?? ""');
+            expect(normalizeFunction).toContain('const _region = options?.region ?? "us1"');
+            expect(normalizeFunction).toContain(
+                '[environments.TestEnvironment.Production, `https://api.${_edge === "" ? "" : `${_edge}.`}${_region}.example.com`]'
+            );
+            expect(normalizeFunction).toContain(
+                "[environments.TestEnvironment.Staging, `https://api.stage-${_region}.example.com`]"
+            );
+        });
+
         it("interpolates server variables into a single base URL", () => {
             const normalizeFunction = getNormalizeFunction(createSingleBaseUrlIR());
             expect(normalizeFunction).toContain("options?.region != null");
