@@ -14,7 +14,7 @@ async fn main() {
             &UsersListWithOffsetPaginationHasNextPageQueryRequest {
                 page: Some(1),
                 limit: Some(3),
-                order: Some(Order::Asc),
+                order: Some(Order2::Asc),
                 ..Default::default()
             },
             None,
