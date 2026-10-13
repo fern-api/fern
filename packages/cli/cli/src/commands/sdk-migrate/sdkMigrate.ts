@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
+    type generatorsYml,
     LEGACY_GENERATORS_CONFIGURATION_FILENAME,
     SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
@@ -72,6 +73,11 @@ export async function sdkMigrate({
         });
     }
     const sourceBaseDirectory = dirname(outputPath).toString();
+    const apiName = fernWorkspace.definition.rootApiFile.contents.name;
+    const sdkName = resolveMigrationSdkName({
+        apiName,
+        organization: project.config.organization
+    });
 
     let mapped: MappingResult;
     try {
@@ -85,7 +91,8 @@ export async function sdkMigrate({
                 workspace,
                 groups,
                 definition: fernWorkspace.definition
-            })
+            }),
+            sdkName
         });
     } catch (error) {
         if (error instanceof FernConfigMappingError) {
@@ -112,6 +119,7 @@ export async function sdkMigrate({
     ]);
     const sdkConfigContents = mergeSdkConfig({
         existingContents: existingSdkConfig,
+        legacyPlaceholderSdkName: sdkName === apiName ? undefined : apiName,
         mapped,
         outputPath
     });
@@ -131,6 +139,7 @@ export async function sdkMigrate({
             selections,
             sourceGeneratorsPath
         });
+        printGeneratorVersionWarning(cliContext, group);
         return;
     }
 
@@ -154,6 +163,7 @@ export async function sdkMigrate({
     if (sourceGeneratorsPath !== legacyGeneratorsPath) {
         cliContext.stderr.info(`Renamed ${sourceGeneratorsPath} to ${legacyGeneratorsPath}`);
     }
+    printGeneratorVersionWarning(cliContext, group);
     printRollbackInstructions({
         cliContext,
         legacyGeneratorsPath,
@@ -164,6 +174,20 @@ export async function sdkMigrate({
         ),
         selections
     });
+}
+
+function resolveMigrationSdkName({ apiName, organization }: { apiName: string; organization: string }): string {
+    return apiName.trim().toLowerCase() === "api" ? organization : apiName;
+}
+
+function printGeneratorVersionWarning(cliContext: CliContext, group: generatorsYml.GeneratorGroup): void {
+    const generators = group.generators.map((generator) => {
+        const name = generator.language ?? generator.name;
+        return `${name}@${generator.version}`;
+    });
+    cliContext.stderr.warn(
+        `[warning] [FERN_GENERATOR_VERSION_NOT_PRESERVED] SDK Config migration does not preserve legacy generator versions (${generators.join(", ")}). Generated targets use the latest compatible generators unless generatorVersion is set, which can change generated public APIs. Review the generated SDK before replacing an existing release.`
+    );
 }
 
 function resolveOutputPath(
