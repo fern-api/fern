@@ -444,13 +444,20 @@ function convertAlgorithmHeader({
     if (algorithmHeader == null) {
         return undefined;
     }
+    const entries = Object.entries(algorithmHeader.algorithms);
+    if (entries.length === 0) {
+        throw new CliError({
+            message: `webhook-signature algorithm-header "${algorithmHeader.header}" must list at least one entry under "algorithms" (e.g. HMAC_SHA256: sha256).`,
+            code: CliError.Code.ValidationError
+        });
+    }
     return {
         headerName: file.casingsGenerator.generateNameAndWireValue({
             wireValue: algorithmHeader.header,
             name: algorithmHeader.header
         }),
         keyIdDelimiter: algorithmHeader["key-id-delimiter"],
-        algorithms: Object.entries(algorithmHeader.algorithms).map(([wireValue, algorithm]) => ({
+        algorithms: entries.map(([wireValue, algorithm]) => ({
             wireValue,
             algorithm: convertHmacAlgorithm(algorithm)
         }))
