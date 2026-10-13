@@ -20,7 +20,7 @@ import yaml from "js-yaml";
 import path from "path";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
 import { getOpenAPIFileName, materializeOpenAPI } from "./createWorkspace.js";
-import { addApiReference, DocsConfigWithFlatNavigation, hasFlatNavigation } from "./docsYmlSpecs.js";
+import { addApiReference, DocsConfigWithFlatNavigation, DocsSpec, hasFlatNavigation } from "./docsYmlSpecs.js";
 import { updateDocsYml } from "./updateDocsYml.js";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl.js";
 
@@ -85,7 +85,7 @@ export async function initializeDocs({
                 taskContext,
                 versionOfCli
             });
-            const apiReferences = getApiReferences({ existingApis, specPathInDocsYml });
+            const apiReferences = getApiReferences({ existingApis, specPathInDocsYml, useSdkConfig });
             if (apiReferences.length === 0) {
                 await writeWelcomePage({
                     absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
@@ -132,7 +132,7 @@ async function addSpecToExistingDocsYml({
                 openApiPath: await resolveOpenApiPath({ openApi, taskContext }),
                 taskContext
             });
-            return addApiReference({ docsConfig, specPaths: [specPath] });
+            return addApiReference({ docsConfig, specs: [{ path: specPath }] });
         }
     });
     if (wasUpdated) {
@@ -228,15 +228,15 @@ export async function findFreeFileName({
 }
 
 interface ExistingApis {
-    /** Whether a `generators.yml` or Fern Definition API loads. The docs read it without a `specs` list. */
-    hasFernApi: boolean;
-    /** The spec paths, relative to `docs.yml`, of each SDK Config API, which the docs cannot read as an API. */
-    sdkConfigApiSpecPaths: string[][];
+    /** The names of the `generators.yml` or Fern Definition APIs that load, `undefined` for one with no `apis/` folder. The docs read them without a `specs` list. */
+    fernApiNames: (string | undefined)[];
+    /** The specs, with paths relative to `docs.yml`, of each SDK Config API, which the docs cannot read as an API. */
+    sdkConfigApiSpecs: DocsSpec[][];
 }
 
 /**
- * Confirms that at least one `generators.yml` or Fern Definition API workspace actually loads, so the generated `api:`
- * item is guaranteed to resolve. An SDK Config API has nothing to load, so its specs are read from its `sdk-config.yml`.
+ * Confirms that each `generators.yml` and Fern Definition API workspace actually loads, so the generated `api:`
+ * items are guaranteed to resolve. An SDK Config API has nothing to load, so its specs are read from its `sdk-config.yml`.
  */
 async function findExistingApis({
     absolutePathToFernDirectory,
@@ -247,25 +247,27 @@ async function findExistingApis({
     taskContext: TaskContext;
     versionOfCli: string;
 }): Promise<ExistingApis> {
-    const existingApis: ExistingApis = { hasFernApi: false, sdkConfigApiSpecPaths: [] };
+    const existingApis: ExistingApis = { fernApiNames: [], sdkConfigApiSpecs: [] };
     for (const { absolutePathToWorkspace, workspaceName } of await findApiWorkspaces(absolutePathToFernDirectory)) {
         if (await isSdkConfigOnlyWorkspace(absolutePathToWorkspace)) {
-            const specPaths = await getSdkConfigSpecPaths({
+            const specs = await getSdkConfigSpecs({
                 absolutePathToWorkspace,
                 absolutePathToFernDirectory,
                 taskContext
             });
-            if (specPaths.length > 0) {
-                existingApis.sdkConfigApiSpecPaths.push(specPaths);
+            if (specs.length > 0) {
+                existingApis.sdkConfigApiSpecs.push(specs);
             }
-        } else if (!existingApis.hasFernApi) {
+        } else {
             const result = await loadAPIWorkspace({
                 absolutePathToWorkspace,
                 context: taskContext,
                 cliVersion: versionOfCli,
                 workspaceName
             });
-            existingApis.hasFernApi = result.didSucceed;
+            if (result.didSucceed) {
+                existingApis.fernApiNames.push(workspaceName);
+            }
         }
     }
     return existingApis;
@@ -309,11 +311,13 @@ async function findApiWorkspaces(
 }
 
 /**
- * The OpenAPI specs of an SDK Config API that exist as local files, relative to `docs.yml`. A spec given as a URL is
- * left out, because `docs.yml` can only reference files. Anything unreadable is left out too, so one broken
- * `sdk-config.yml` does not keep the docs from being created. It is read as is, not validated, for the same reason.
+ * The OpenAPI specs of an SDK Config API that exist as local files, with the `namespace`, `overlays` and `overrides`
+ * that SDK generation applies to them, relative to `docs.yml`. A spec that `docs.yml` cannot reference is left out
+ * with a warning: one given as a URL, or that is not OpenAPI, or whose file is missing. So is a `sdk-config.yml` that
+ * cannot be read, so that one broken file does not keep the docs from being created. It is read as is, not validated,
+ * for the same reason.
  */
-async function getSdkConfigSpecPaths({
+async function getSdkConfigSpecs({
     absolutePathToWorkspace,
     absolutePathToFernDirectory,
     taskContext
@@ -321,48 +325,88 @@ async function getSdkConfigSpecPaths({
     absolutePathToWorkspace: AbsoluteFilePath;
     absolutePathToFernDirectory: AbsoluteFilePath;
     taskContext: TaskContext;
-}): Promise<string[]> {
+}): Promise<DocsSpec[]> {
     const sdkConfigPath = join(absolutePathToWorkspace, RelativeFilePath.of(SDK_CONFIG_FILENAME));
+    const skip = (reason: string) => taskContext.logger.warn(`Leaving out of docs.yml ${reason}`);
+    const toPathInDocsYmlOf = (pathFromWorkspace: string) =>
+        toPathInDocsYml(
+            path.relative(absolutePathToFernDirectory, path.resolve(absolutePathToWorkspace, pathFromWorkspace))
+        );
+
     let sdkConfig: unknown;
     try {
         sdkConfig = yaml.load(await readFile(sdkConfigPath, "utf8"));
     } catch (error) {
-        taskContext.logger.debug(`Skipping ${sdkConfigPath} for the docs: ${extractErrorMessage(error)}`);
+        skip(`the API of ${sdkConfigPath}, which could not be read: ${extractErrorMessage(error)}`);
         return [];
     }
-    const specs = isPlainObject(sdkConfig) && isPlainObject(sdkConfig.source) ? sdkConfig.source.specs : undefined;
-    const specPaths: string[] = [];
-    for (const spec of Array.isArray(specs) ? specs : []) {
-        if (!isPlainObject(spec) || spec.type !== "openapi" || typeof spec.path !== "string") {
+    const sdkConfigSpecs =
+        isPlainObject(sdkConfig) && isPlainObject(sdkConfig.source) ? sdkConfig.source.specs : undefined;
+    const specs: DocsSpec[] = [];
+    for (const spec of Array.isArray(sdkConfigSpecs) ? sdkConfigSpecs : []) {
+        if (!isPlainObject(spec)) {
             continue;
         }
-        const absolutePathToSpec = AbsoluteFilePath.of(path.resolve(absolutePathToWorkspace, spec.path));
-        if (await doesPathExist(absolutePathToSpec)) {
-            specPaths.push(toPathInDocsYml(path.relative(absolutePathToFernDirectory, absolutePathToSpec)));
+        const name = `the spec '${String(spec.id)}' of ${sdkConfigPath}`;
+        if (spec.type !== "openapi") {
+            skip(`${name}, which is ${String(spec.type)}: docs.yml can only reference OpenAPI specs`);
+        } else if (typeof spec.path !== "string") {
+            skip(`${name}, which is not a local file: docs.yml can only reference files`);
+        } else if (!(await doesPathExist(AbsoluteFilePath.of(path.resolve(absolutePathToWorkspace, spec.path))))) {
+            skip(`${name}, because ${spec.path} does not exist`);
+        } else {
+            const specPath = toPathInDocsYmlOf(spec.path);
+            const overlays = toStrings(spec.overlays)[0];
+            const overrides = toStrings(spec.overrides);
+            if (specPath.startsWith("../")) {
+                taskContext.logger.warn(
+                    `${name} is outside the fern directory, so it is not bundled when the docs are published`
+                );
+            }
+            specs.push({
+                path: specPath,
+                ...(typeof spec.namespace === "string" ? { namespace: spec.namespace } : {}),
+                ...(overlays != null ? { overlays: toPathInDocsYmlOf(overlays) } : {}),
+                ...(overrides.length > 0 ? { overrides: overrides.map(toPathInDocsYmlOf) } : {})
+            });
         }
     }
-    return specPaths;
+    return specs;
+}
+
+function toStrings(value: unknown): string[] {
+    return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
 }
 
 /**
- * The `api` entries `docs.yml` starts with: one for a `generators.yml` or Fern Definition API, one for each SDK Config
- * API, and one for the given spec unless an entry already lists it.
+ * The `api` entries `docs.yml` starts with: one for each `generators.yml` or Fern Definition API, one for each SDK
+ * Config API, and one for the given spec unless an entry already lists it.
  * `fern init --openapi` hands over the spec of the API it just created, which is already listed.
+ * With SDK Config init enabled and more than one `generators.yml` or Fern Definition API, the docs can only tell
+ * them apart by name. Without it, they stay on one entry, as before.
  */
 function getApiReferences({
     existingApis,
-    specPathInDocsYml
+    specPathInDocsYml,
+    useSdkConfig
 }: {
     existingApis: ExistingApis;
     specPathInDocsYml: string | undefined;
+    useSdkConfig: boolean;
 }): unknown[] {
-    const specPathsOfApis = [
-        ...(existingApis.hasFernApi ? [[]] : []),
-        ...existingApis.sdkConfigApiSpecPaths,
-        ...(specPathInDocsYml != null ? [[specPathInDocsYml]] : [])
+    const needsApiName = useSdkConfig && existingApis.fernApiNames.length > 1;
+    const fernApiNames = needsApiName
+        ? existingApis.fernApiNames
+        : existingApis.fernApiNames.length > 0
+          ? [undefined]
+          : [];
+    const apis: { specs: DocsSpec[]; apiName?: string }[] = [
+        ...fernApiNames.map((apiName) => ({ specs: [], apiName })),
+        ...existingApis.sdkConfigApiSpecs.map((specs) => ({ specs })),
+        ...(specPathInDocsYml != null ? [{ specs: [{ path: specPathInDocsYml }] }] : [])
     ];
-    const docsConfig = specPathsOfApis.reduce<DocsConfigWithFlatNavigation>(
-        (config, specPaths) => addApiReference({ docsConfig: config, specPaths }),
+    const docsConfig = apis.reduce<DocsConfigWithFlatNavigation>(
+        (config, { specs, apiName }) => addApiReference({ docsConfig: config, specs, apiName }),
         { navigation: [] }
     );
     return docsConfig.navigation;

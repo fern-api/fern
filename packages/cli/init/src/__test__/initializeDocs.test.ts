@@ -469,5 +469,170 @@ describe("initializeDocs", () => {
                 ]
             });
         });
+
+        describe("what is left out or carried over", () => {
+            async function initializeAndCollectWarnings(): Promise<string[]> {
+                const warnings: string[] = [];
+                const logger = createLogger((level, ...args) => {
+                    if (level === LogLevel.Warn) {
+                        warnings.push(args.join(" "));
+                    }
+                });
+                await initialize(undefined, createMockTaskContext({ logger }));
+                return warnings;
+            }
+
+            async function writeSdkConfig(directory: string, specs: unknown[]): Promise<void> {
+                await mkdir(directory, { recursive: true });
+                await writeFile(
+                    path.join(directory, "sdk-config.yml"),
+                    yaml.dump({ schemaVersion: "sdk-config/v1", sdkName: "api", source: { specs } })
+                );
+            }
+
+            it("warns about each spec and each sdk-config.yml it leaves out", async () => {
+                const fernDirectory = await createFernDirectory();
+                const apis = path.join(fernDirectory, "apis");
+                await writeSdkConfig(path.join(apis, "api"), [
+                    { id: "remote", type: "openapi", url: "https://example.com/openapi.json" },
+                    { id: "missing", type: "openapi", path: "./missing.json" },
+                    { id: "events", type: "asyncapi", path: "./events.yml" }
+                ]);
+                await mkdir(path.join(apis, "api1"), { recursive: true });
+                await writeFile(path.join(apis, "api1", "sdk-config.yml"), "source: [unclosed");
+
+                const warnings = (await initializeAndCollectWarnings()).join("\n");
+
+                expect(warnings).toContain("'remote'");
+                expect(warnings).toContain("not a local file");
+                expect(warnings).toContain("'missing'");
+                expect(warnings).toContain("./missing.json does not exist");
+                expect(warnings).toContain("'events'");
+                expect(warnings).toContain("asyncapi");
+                expect(warnings).toContain(path.join(apis, "api1", "sdk-config.yml"));
+                expect(warnings).toContain("could not be read");
+            });
+
+            it("warns about a spec outside the fern directory, and still lists it", async () => {
+                const fernDirectory = await createFernDirectory();
+                await writeFile(path.join(projectDirectory, "shared.json"), JSON.stringify(MINIMAL_OPENAPI));
+                await writeSdkConfig(path.join(fernDirectory, "apis", "api"), [
+                    { id: "shared", type: "openapi", path: "../../../shared.json" }
+                ]);
+
+                const warnings = await initializeAndCollectWarnings();
+
+                expect(warnings.join("\n")).toContain("outside the fern directory");
+                expect(await readDocsYml()).toMatchObject({
+                    navigation: [{ api: "API Reference", specs: [{ path: "../shared.json" }] }]
+                });
+            });
+
+            it("keeps an API that shares one spec with another, with all of its specs", async () => {
+                const fernDirectory = await createFernDirectory();
+                await writeFile(path.join(fernDirectory, "common.json"), JSON.stringify(MINIMAL_OPENAPI));
+                await writeFile(path.join(fernDirectory, "orders.json"), JSON.stringify(MINIMAL_OPENAPI));
+                await writeSdkConfig(path.join(fernDirectory, "apis", "api"), [
+                    { id: "common", type: "openapi", path: "../../common.json" }
+                ]);
+                await writeSdkConfig(path.join(fernDirectory, "apis", "api1"), [
+                    { id: "common", type: "openapi", path: "../../common.json" },
+                    { id: "orders", type: "openapi", path: "../../orders.json" }
+                ]);
+
+                await initialize();
+
+                expect(await readDocsYml()).toMatchObject({
+                    navigation: [
+                        { api: "API Reference", specs: [{ path: "./common.json" }] },
+                        { api: "API Reference 2", specs: [{ path: "./common.json" }, { path: "./orders.json" }] }
+                    ]
+                });
+            });
+
+            it("carries the namespace, overlay and overrides of a spec, relative to docs.yml", async () => {
+                const fernDirectory = await createFernDirectory();
+                const directory = path.join(fernDirectory, "apis", "api");
+                await writeSdkConfig(directory, [
+                    {
+                        id: "main",
+                        type: "openapi",
+                        path: "./openapi.json",
+                        namespace: "v2",
+                        overlays: ["./overlay.yml"],
+                        overrides: ["./override-a.yml", "../shared/override-b.yml"]
+                    }
+                ]);
+                await writeFile(path.join(directory, "openapi.json"), JSON.stringify(MINIMAL_OPENAPI));
+
+                await initialize();
+
+                expect(await readDocsYml()).toMatchObject({
+                    navigation: [
+                        {
+                            api: "API Reference",
+                            specs: [
+                                {
+                                    type: "openapi",
+                                    path: "./apis/api/openapi.json",
+                                    namespace: "v2",
+                                    overlays: "./apis/api/overlay.yml",
+                                    overrides: ["./apis/api/override-a.yml", "./apis/shared/override-b.yml"]
+                                }
+                            ]
+                        }
+                    ]
+                });
+            });
+        });
+
+        describe("with several generators.yml APIs", () => {
+            async function createGeneratorsApi(directory: string): Promise<void> {
+                await mkdir(directory, { recursive: true });
+                await writeFile(path.join(directory, "openapi.json"), JSON.stringify(MINIMAL_OPENAPI));
+                await writeFile(
+                    path.join(directory, "generators.yml"),
+                    yaml.dump({ api: { specs: [{ openapi: "./openapi.json" }] } })
+                );
+            }
+
+            it("names each of them, so the docs can tell them apart", async () => {
+                const fernDirectory = await createFernDirectory();
+                await createGeneratorsApi(path.join(fernDirectory, "apis", "payments"));
+                await createGeneratorsApi(path.join(fernDirectory, "apis", "users"));
+                await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "reports") });
+
+                await initialize();
+
+                expect(await readDocsYml()).toMatchObject({
+                    navigation: [
+                        { api: "API Reference", "api-name": "payments" },
+                        { api: "API Reference 2", "api-name": "users" },
+                        { api: "API Reference 3", specs: [{ path: "./apis/reports/openapi.json" }] }
+                    ]
+                });
+            });
+
+            it("keeps them on one entry without SDK Config init, as before", async () => {
+                const fernDirectory = await createFernDirectory();
+                await createGeneratorsApi(path.join(fernDirectory, "apis", "payments"));
+                await createGeneratorsApi(path.join(fernDirectory, "apis", "users"));
+
+                await initialize(undefined, createMockTaskContext(), false);
+
+                const docsConfig = (await readDocsYml()) as { navigation: Array<Record<string, unknown>> };
+                expect(docsConfig.navigation).toEqual([{ api: "API Reference", paginated: true }]);
+            });
+
+            it("does not name a single one, as before", async () => {
+                const fernDirectory = await createFernDirectory();
+                await createGeneratorsApi(path.join(fernDirectory, "apis", "payments"));
+
+                await initialize();
+
+                const docsConfig = (await readDocsYml()) as { navigation: Array<Record<string, unknown>> };
+                expect(docsConfig.navigation).toEqual([{ api: "API Reference", paginated: true }]);
+            });
+        });
     });
 });

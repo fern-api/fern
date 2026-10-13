@@ -8,6 +8,14 @@ const NESTED_NAVIGATION_KEYS = ["contents", "layout", "variants"];
 
 const API_REFERENCE_TITLE = "API Reference";
 
+/** A spec of an `api` entry. Its paths are relative to `docs.yml`. */
+export interface DocsSpec {
+    path: string;
+    namespace?: string;
+    overlays?: string;
+    overrides?: string[];
+}
+
 /** A `docs.yml` whose `navigation` is a flat list, the only layout a new `api` entry fits into. */
 export type DocsConfigWithFlatNavigation = YamlObject & { navigation: unknown[] };
 
@@ -29,18 +37,23 @@ export function getSpecPaths(docsConfig: unknown): string[] {
 
 /**
  * Declares the specs of one API on a new `api` entry at the end of `navigation`, so that every API gets its own API
- * reference. An API with no specs is one the docs read from its workspace. An API that an `api` entry already lists a
- * spec of is not added again.
+ * reference. An API with no specs is one the docs read from its workspace, picked by `apiName` when there are several.
+ * An API is not added again when an `api` entry already lists all of its specs.
  */
 export function addApiReference({
     docsConfig,
-    specPaths
+    specs,
+    apiName
 }: {
     docsConfig: DocsConfigWithFlatNavigation;
-    specPaths: string[];
+    specs: DocsSpec[];
+    apiName?: string;
 }): DocsConfigWithFlatNavigation {
     const apiReferences = findApiReferences(docsConfig.navigation);
-    if (apiReferences.some((apiReference) => specPaths.some((specPath) => listsSpec(apiReference, specPath)))) {
+    if (
+        specs.length > 0 &&
+        specs.every((spec) => apiReferences.some((apiReference) => listsSpec(apiReference, spec.path)))
+    ) {
         return docsConfig;
     }
     return {
@@ -50,7 +63,8 @@ export function addApiReference({
             {
                 api: getUniqueApiReferenceTitle(apiReferences.map((apiReference) => apiReference.api)),
                 paginated: true,
-                ...(specPaths.length > 0 ? { specs: specPaths.map(createSpec) } : {})
+                ...(apiName != null ? { "api-name": apiName } : {}),
+                ...(specs.length > 0 ? { specs: specs.map(createSpec) } : {})
             }
         ]
     };
@@ -134,8 +148,14 @@ function mapNestedItems(item: unknown, transform: (item: unknown) => unknown): u
     return { ...item, ...nested };
 }
 
-function createSpec(specPath: string): YamlObject {
-    return { type: "openapi", path: specPath };
+function createSpec({ path: specPath, namespace, overlays, overrides }: DocsSpec): YamlObject {
+    return {
+        type: "openapi",
+        path: specPath,
+        ...(namespace != null ? { namespace } : {}),
+        ...(overlays != null ? { overlays } : {}),
+        ...(overrides != null && overrides.length > 0 ? { overrides } : {})
+    };
 }
 
 function listsSpec(apiReference: YamlObject, specPath: string): boolean {

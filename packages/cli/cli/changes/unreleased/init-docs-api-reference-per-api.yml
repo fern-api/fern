@@ -5,5 +5,9 @@
     to the welcome page. When `docs.yml` already exists, `fern init --openapi` now adds the new API's spec as an `api`
     entry of its own, titled `API Reference 2`, `API Reference 3`, and so on, instead of appending it to the specs of
     the first `api` entry, which merged separate APIs into one API reference. A spec that an `api` entry already lists
-    is still not added twice. Without the flag, behavior is unchanged.
+    is still not added twice. An API that shares one spec with another keeps all of its specs. The `namespace`,
+    `overlays` and `overrides` of each spec are carried over, and with several `generators.yml` APIs each entry names its
+    API with `api-name`. A spec or `sdk-config.yml` that cannot be listed (a URL, a non-OpenAPI spec, a missing file, an
+    unreadable config) is now reported as a warning. `apiImportSettings` are not carried over. Without the flag,
+    behavior is unchanged.
   type: fix
