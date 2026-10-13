@@ -18,15 +18,15 @@ export function sanitizeSdkConfigPublishCredentials(
     sanitizedInput: unknown;
     credentials: Array<FernSdkGenApiPublishCredentialSource | undefined>;
     /** Per target, the repository secret a NuGet release workflow reads its API key from. */
-    nugetApiKeySecretNames: Array<string | undefined>;
+    apiKeySecretNames: Array<string | undefined>;
 } {
     if (!isRecord(input) || !Array.isArray(input.targets)) {
-        return { sanitizedInput: input, credentials: [], nugetApiKeySecretNames: [] };
+        return { sanitizedInput: input, credentials: [], apiKeySecretNames: [] };
     }
     const rootOutput = sanitizeOutput(input.output);
     const sanitizedTargets = input.targets.map((target) => {
         if (!isRecord(target)) {
-            return { target, credential: undefined, nugetApiKeySecretName: undefined };
+            return { target, credential: undefined, apiKeySecretName: undefined };
         }
         const sanitized = sanitizeOutput(target.output);
         const targetOutput = isRecord(target) ? target.output : undefined;
@@ -34,7 +34,7 @@ export function sanitizeSdkConfigPublishCredentials(
         return {
             target: sanitized.output === target.output ? target : { ...target, output: sanitized.output },
             credential: isPreview ? undefined : extractPublishCredential(output),
-            nugetApiKeySecretName: extractNugetApiKeySecretName(output)
+            apiKeySecretName: extractApiKeySecretName(output)
         };
     });
     return {
@@ -44,7 +44,7 @@ export function sanitizeSdkConfigPublishCredentials(
             targets: sanitizedTargets.map(({ target }) => target)
         },
         credentials: sanitizedTargets.map(({ credential }) => credential),
-        nugetApiKeySecretNames: sanitizedTargets.map(({ nugetApiKeySecretName }) => nugetApiKeySecretName)
+        apiKeySecretNames: sanitizedTargets.map(({ apiKeySecretName }) => apiKeySecretName)
     };
 }
 
@@ -52,18 +52,20 @@ export function sanitizeSdkConfigPublishCredentials(
  * A NuGet `apiKey` names the repository secret the generated release workflow reads, so it is
  * forwarded as a name and never resolved. Anything else could be a literal key and is rejected.
  */
-function extractNugetApiKeySecretName(output: unknown): string | undefined {
-    if (!isRecord(output) || !isRecord(output.publish) || output.publish.registry !== "nuget") {
+const API_KEY_SECRET_REGISTRIES = new Set(["nuget", "rubygems"]);
+
+function extractApiKeySecretName(output: unknown): string | undefined {
+    if (!isRecord(output) || !isRecord(output.publish) || typeof output.publish.registry !== "string") {
         return undefined;
     }
-    const { apiKey } = output.publish;
-    if (apiKey == null) {
+    const { registry, apiKey } = output.publish;
+    if (!API_KEY_SECRET_REGISTRIES.has(registry) || apiKey == null) {
         return undefined;
     }
     const secretName = typeof apiKey === "string" ? parseSecretNameExpression(apiKey) : undefined;
     if (secretName == null) {
         throw new Error(
-            "output.publish.apiKey for nuget must be an environment expression naming a repository secret, such as ${NUGET_API_KEY}"
+            `output.publish.apiKey for ${registry} must be an environment expression naming a repository secret, such as \${NUGET_API_KEY}`
         );
     }
     return secretName;

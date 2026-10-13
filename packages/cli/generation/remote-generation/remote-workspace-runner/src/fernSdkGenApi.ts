@@ -76,7 +76,7 @@ export type FernSdkGenApiPublishRegistry =
 export interface FernSdkGenApiPublishConfig {
     registry: FernSdkGenApiPublishRegistry;
     url?: string;
-    /** Name of the repository secret the generated NuGet release workflow reads the API key from. */
+    /** Name of the repository secret the generated release workflow reads the API key from. */
     apiKeyEnvironmentVariable?: string;
 }
 
@@ -655,7 +655,8 @@ function mapNamedPublish(
     registry: "nuget" | "rubygems" | "crates",
     output: { registryUrl: string; packageName: string; apiKey?: string } | undefined
 ): FernSdkGenApiPublicationMapping {
-    const apiKeyEnvironmentVariable = registry === "nuget" ? parseSecretNameExpression(output?.apiKey) : undefined;
+    const apiKeyEnvironmentVariable =
+        registry === "nuget" || registry === "rubygems" ? parseSecretNameExpression(output?.apiKey) : undefined;
     return {
         ...(output?.packageName ? { package: { packageName: output.packageName } } : {}),
         publish: {

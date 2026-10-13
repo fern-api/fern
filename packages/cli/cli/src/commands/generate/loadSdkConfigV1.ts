@@ -55,7 +55,7 @@ export async function loadSdkConfigV1(
     }
 
     try {
-        const { sanitizedInput, credentials, nugetApiKeySecretNames } = sanitizeSdkConfigPublishCredentials(
+        const { sanitizedInput, credentials, apiKeySecretNames } = sanitizeSdkConfigPublishCredentials(
             input,
             isPreview
         );
@@ -98,7 +98,7 @@ export async function loadSdkConfigV1(
                     ...(target.client?.pathParameterStyle != null
                         ? { clientPathParameterStyle: target.client.pathParameterStyle }
                         : {}),
-                    requestedOutput: toRequestedOutput(output, isPreview, nugetApiKeySecretNames[index]),
+                    requestedOutput: toRequestedOutput(output, isPreview, apiKeySecretNames[index]),
                     ...(output?.delivery === "zip"
                         ? {
                               absolutePathToLocalOutputArchive: AbsoluteFilePath.of(
@@ -269,7 +269,7 @@ function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOu
 function toRequestedOutput(
     output: SdkConfigV1["output"],
     isPreview: boolean,
-    nugetApiKeySecretName: string | undefined
+    apiKeySecretName: string | undefined
 ): FernSdkGenApiRequestedOutput {
     if (isPreview) {
         return { type: "download" };
@@ -289,9 +289,7 @@ function toRequestedOutput(
             : {
                   publish: {
                       ...output.publish,
-                      ...(output.publish.registry === "nuget" && nugetApiKeySecretName != null
-                          ? { apiKeyEnvironmentVariable: nugetApiKeySecretName }
-                          : {})
+                      ...(apiKeySecretName == null ? {} : { apiKeyEnvironmentVariable: apiKeySecretName })
                   }
               })
     };
