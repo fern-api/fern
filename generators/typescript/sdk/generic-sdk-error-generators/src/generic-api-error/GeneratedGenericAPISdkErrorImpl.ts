@@ -10,6 +10,13 @@ import {
     ts
 } from "ts-morph";
 
+export declare namespace GeneratedGenericAPISdkErrorImpl {
+    export interface Init {
+        errorClassName: string;
+        requestIdHeader?: string;
+    }
+}
+
 export class GeneratedGenericAPISdkErrorImpl
     extends AbstractErrorClassGenerator<FileContext>
     implements GeneratedGenericAPISdkError
@@ -29,7 +36,14 @@ export class GeneratedGenericAPISdkErrorImpl
 
     private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
     private static readonly REQUEST_ID_PROPERTY_NAME = "requestId";
-    private static readonly REQUEST_ID_HEADER = "x-request-id";
+    private static readonly DEFAULT_REQUEST_ID_HEADER = "X-Request-Id";
+
+    private readonly requestIdHeader: string;
+
+    constructor({ errorClassName, requestIdHeader }: GeneratedGenericAPISdkErrorImpl.Init) {
+        super({ errorClassName });
+        this.requestIdHeader = requestIdHeader ?? GeneratedGenericAPISdkErrorImpl.DEFAULT_REQUEST_ID_HEADER;
+    }
 
     public writeToFile(context: FileContext): void {
         super.writeToSourceFile(context);
@@ -338,7 +352,7 @@ export class GeneratedGenericAPISdkErrorImpl
             returnType: "string | undefined",
             scope: Scope.Public,
             statements: [
-                `return this.${GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME}?.headers?.get("${GeneratedGenericAPISdkErrorImpl.REQUEST_ID_HEADER}") ?? undefined;`
+                `return this.${GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME}?.headers?.get(${JSON.stringify(this.requestIdHeader)}) ?? undefined;`
             ]
         });
     }

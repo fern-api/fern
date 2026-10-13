@@ -38,7 +38,7 @@ export class SeedHeaderTokenError extends Error {
     }
 
     public get requestId(): string | undefined {
-        return this.rawResponse?.headers?.get("x-request-id") ?? undefined;
+        return this.rawResponse?.headers?.get("X-Request-Id") ?? undefined;
     }
 }
 

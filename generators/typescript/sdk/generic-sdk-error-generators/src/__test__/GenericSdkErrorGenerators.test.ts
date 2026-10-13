@@ -49,6 +49,14 @@ describe("GenericAPISdkErrorGenerator", () => {
         const result = generator.generateGenericAPISdkError({ errorClassName: "MyApiError" });
         expect(result).toBeDefined();
     });
+
+    it("passes requestIdHeader through to the generated error", () => {
+        const generator = new GenericAPISdkErrorGenerator({ requestIdHeader: "Twilio-Request-Id" });
+        const result = generator.generateGenericAPISdkError({ errorClassName: "MyApiError" });
+        const context = createMockFileContext();
+        result.writeToFile(context);
+        expect(context.sourceFile.getFullText()).toContain('headers?.get("Twilio-Request-Id")');
+    });
 });
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -73,6 +81,24 @@ describe("GeneratedGenericAPISdkErrorImpl", () => {
             const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("reads requestId from the canonical X-Request-Id header by default", () => {
+            const impl = createImpl();
+            const context = createMockFileContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toContain('headers?.get("X-Request-Id")');
+        });
+
+        it("reads requestId from a custom header when requestIdHeader is set", () => {
+            const impl = new GeneratedGenericAPISdkErrorImpl({
+                errorClassName: "ApiError",
+                requestIdHeader: "Twilio-Request-Id"
+            });
+            const context = createMockFileContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toContain('headers?.get("Twilio-Request-Id")');
+            expect(context.sourceFile.getFullText()).not.toContain("X-Request-Id");
         });
     });
 
