@@ -137,12 +137,50 @@ describe("SDK Config migration", () => {
         });
 
         expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({ token: "${NPM_TOKEN}" });
-        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("username");
+        expect(result.sdkConfig.targets[1]?.output?.publish).toMatchObject({ username: "__token__" });
         expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("password");
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-secret");
         expect(result.diagnostics).toEqual(
             expect.arrayContaining([
-                expect.objectContaining({ code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE" })
+                expect.objectContaining({
+                    code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE",
+                    path: ["targets", "1", "output", "publish", "password"]
+                })
+            ])
+        );
+        expect(result.diagnostics).not.toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ path: ["targets", "1", "output", "publish", "username"] })
+            ])
+        );
+    });
+
+    it("omits literal Maven usernames because they can be tokens", () => {
+        const generator = createGenerator("fernapi/fern-java-sdk", "java", "3.0.0");
+        generator.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.mavenOverride({
+                registryUrl: "https://central.sonatype.com",
+                coordinate: "com.acme:sdk",
+                username: "literal-user-token",
+                password: "${MAVEN_PASSWORD}"
+            })
+        );
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("username");
+        expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-user-token");
+        expect(result.diagnostics).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE",
+                    path: ["targets", "0", "output", "publish", "username"],
+                    reason: expect.stringContaining("Sonatype user tokens")
+                })
             ])
         );
     });
