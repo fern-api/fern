@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `dateQueryParamFormat` option for how `date` query parameters are sent. `"date"` sends
+    them as `YYYY-MM-DD` (e.g. `2023-01-15`), the OpenAPI `format: date` form. The default,
+    `"datetime"`, keeps sending a midnight UTC datetime (`2023-01-15T00:00:00Z`).
+  type: feat
