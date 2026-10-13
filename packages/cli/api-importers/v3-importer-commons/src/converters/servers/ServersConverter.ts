@@ -219,7 +219,9 @@ export class ServersConverter extends AbstractConverter<
         let url = server.url;
         for (const [variableName, variable] of Object.entries(server.variables)) {
             if (variable.default != null) {
-                url = url.replace(`{${variableName}}`, encodeURIComponent(variable.default));
+                const encodedValue = encodeServerVariableValue(variable.default);
+                // A replacer function, so `$&` and friends in a default are not read as replacement patterns.
+                url = url.replaceAll(`{${variableName}}`, () => encodedValue);
             }
         }
         return url;
@@ -326,4 +328,12 @@ export class ServersConverter extends AbstractConverter<
         }
         return undefined;
     }
+}
+
+/**
+ * Keeps the `:` and `/` of a default that holds a whole host or a multi-segment path, but escapes
+ * `?` and `#` so a value used as a path segment cannot turn the rest of the URL into a query or fragment.
+ */
+function encodeServerVariableValue(value: string): string {
+    return encodeURI(value).replace(/[?#]/g, (character) => encodeURIComponent(character));
 }
