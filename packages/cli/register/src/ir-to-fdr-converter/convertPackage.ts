@@ -658,16 +658,16 @@ function convertIrWebSocketEnvironments({
     }
 }
 
-/**
- * The server URL template and its variables, so the docs can fill the variables in at runtime
- * (e.g. from the viewer's login claims). Omitted when the server has no variables.
- */
 // `urlTemplate` and `urlVariables` are absent from the pinned @fern-api/fdr-sdk type.
 export type EnvironmentWithUrlTemplate = FdrCjsSdk.Environment & {
     urlTemplate?: string;
     urlVariables?: { id: string; default?: string; values?: string[] }[];
 };
 
+/**
+ * The server URL template and its variables, so the docs can fill the variables in at runtime
+ * (e.g. from the viewer's login claims). Omitted when the server has no variables.
+ */
 function convertServerUrlTemplate(
     urlTemplate: string | undefined,
     urlVariables: Ir.environment.ServerVariable[] | undefined
