@@ -651,6 +651,14 @@ function mapMavenPublish(
     };
 }
 
+/**
+ * An `api-key` that does not name a secret is dropped here, while the same value in sdk-config.yml
+ * is rejected outright. The asymmetry is deliberate. generators.yml is Fern's own format and may
+ * legitimately carry a literal key or `OIDC` for trusted publishing, so failing would break configs
+ * that are valid where they were written; sdk-config.yml documents this field as a secret name and
+ * its schema accepts nothing else. `fern sdk migrate` never carries a non-expression value across,
+ * so a migrated config cannot reach the stricter path with one.
+ */
 function mapNamedPublish(
     registry: "nuget" | "rubygems" | "crates",
     output: { registryUrl: string; packageName: string; apiKey?: string } | undefined

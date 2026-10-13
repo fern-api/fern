@@ -150,6 +150,10 @@ describe("replaceEnvVariablesPreservingWorkflowApiKey", () => {
         if (outputMode.type !== "publishV2" || outputMode.publishV2.type !== "nugetOverride") {
             throw new Error("expected a publishV2 nugetOverride output mode");
         }
-        expect(outputMode.publishV2.nugetOverride.apiKey).toBe("the-real-key");
+        const { nugetOverride } = outputMode.publishV2;
+        if (nugetOverride == null) {
+            throw new Error("expected a nugetOverride payload");
+        }
+        expect(nugetOverride.apiKey).toBe("the-real-key");
     });
 });
