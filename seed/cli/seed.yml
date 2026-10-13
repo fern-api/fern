@@ -316,6 +316,13 @@ fixtures:
         binaryName: header-auth-cli
         generateWireTests: true
       outputFolder: with-wire-tests
+  # `auth-schemes` header prefix (`X-Api-Key: Key <credential>`); wire tests
+  # pin the exact prefixed value. `cli-header-auth` is the no-prefix control.
+  cli-header-auth-prefix:
+    - customConfig:
+        binaryName: header-prefix-cli
+        generateWireTests: true
+      outputFolder: with-wire-tests
   cli-basic-auth:
     - customConfig:
         binaryName: basic-auth-cli

@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# An apiKey-in-header CLI whose header value carries a prefix:
+# `X-Api-Key: Key <credential>`. The prefix exists only in `auth-schemes`
+# (OpenAPI has no field for it), so the generated `main.rs` must register
+# `.prefix("Key")` and the runtime must apply it exactly once. The wire tests
+# pin the header to the exact `Key test` the harness seeds, so a dropped or
+# doubled prefix fails to match. `cli-header-auth` is the no-prefix control.
+#
+# The scheme id is deliberately not `bearer`/`basic`/`oauth`, which the IR
+# conversion treats as built-in shorthands.
+auth-schemes:
+  apiKey:
+    header: X-Api-Key
+    type: string
+    env: HEADER_PREFIX_CLI_KEY
+    prefix: Key
+api:
+  auth: apiKey
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

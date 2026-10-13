@@ -200,7 +200,7 @@ pub(crate) fn scheme_credential_fields(
     match binding {
         SchemeBinding::Basic { .. } => Some(vec!["username", "password"]),
         SchemeBinding::Custom(provider) => provider.credential_fields(),
-        SchemeBinding::Token(_) => None,
+        SchemeBinding::Token(_) | SchemeBinding::PrefixedToken { .. } => None,
     }
 }
 
@@ -675,7 +675,9 @@ pub(crate) fn expand_slots(
     cli_name: &str,
 ) -> CredentialSlots {
     match binding {
-        SchemeBinding::Token(s) => CredentialSlots::required([flatten_chain(s.clone())]),
+        SchemeBinding::Token(s) | SchemeBinding::PrefixedToken { source: s, .. } => {
+            CredentialSlots::required([flatten_chain(s.clone())])
+        }
         SchemeBinding::Basic { username, password } => CredentialSlots::required([
             flatten_chain(username.clone()),
             flatten_chain(password.clone()),
@@ -1073,7 +1075,7 @@ pub fn inject_keyring_sources(
             crate::profiles::keyring_account(scheme_name.as_str()),
         );
         match binding {
-            SchemeBinding::Token(src) => {
+            SchemeBinding::Token(src) | SchemeBinding::PrefixedToken { source: src, .. } => {
                 let existing = std::mem::replace(src, AuthCredentialSource::Missing);
                 *src = splice_keyring(existing, kr);
             }
