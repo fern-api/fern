@@ -1,0 +1,33 @@
+openapi: 3.1.0
+info:
+  title: Tag Display Names
+  version: 1.0.0
+tags:
+  - name: plant
+    x-displayName: Plants
+  - name: watering-schedule
+    x-displayName: Watering Schedules
+  - name: seed
+    x-displayName: SEED
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      tags: [plant]
+      responses:
+        "200":
+          description: ok
+  /watering-schedules:
+    get:
+      operationId: listWateringSchedules
+      tags: [watering-schedule]
+      responses:
+        "200":
+          description: ok
+  /seeds:
+    get:
+      operationId: listSeeds
+      tags: [seed]
+      responses:
+        "200":
+          description: ok
