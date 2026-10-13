@@ -141,6 +141,12 @@ function convertSchemeReference({
 
     const scheme = typeof reference === "string" ? reference : reference.scheme;
 
+    // A declared scheme whose name collides with a built-in shorthand (`bearer`, `basic`, `oauth`)
+    // must win, or its env var, token name and placeholder are silently dropped.
+    if (authSchemeDeclarations?.[scheme] != null) {
+        return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
+    }
+
     switch (scheme) {
         case "bearer":
         case "oauth":

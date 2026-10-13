@@ -328,6 +328,13 @@ fixtures:
         binaryName: basic-auth-cli
         splitTypeCrates: true
       outputFolder: with-split-type-crates
+  # Explicit `token.env` on a scheme named `bearer`: the CLI must read
+  # `BEARER_TOKEN`, not the derived `BEARER_ENV_CLI_TOKEN`.
+  cli-bearer-env-var:
+    - customConfig:
+        binaryName: bearer-env-cli
+        generateWireTests: true
+      outputFolder: with-wire-tests
   # The one fixture that opts into named profiles, so the emitted `main.rs`
   # (`.profiles(ProfilesConfig::new())` plus its import) and the emitted
   # `--help` are snapshotted. Every other `cli-*` fixture omits the config
