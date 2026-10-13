@@ -2013,6 +2013,7 @@ types:
       php: optional<SnippetLanguageConfiguration>
       swift: optional<SnippetLanguageConfiguration>
       rust: optional<SnippetLanguageConfiguration>
+      cli: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
