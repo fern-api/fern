@@ -2769,9 +2769,22 @@ fn parameter_should_ignore(
 
 /// Load and convert an OpenAPI 3.0 YAML spec into the internal `RestDescription`.
 pub fn load_openapi_spec(yaml_str: &str, cli_name: &str) -> Result<RestDescription, CliError> {
-    let value: serde_yaml::Value = serde_yaml::from_str(yaml_str)
+    let value = parse_spec_value(yaml_str)
         .map_err(|e| CliError::Discovery(format!("Failed to parse OpenAPI spec: {e}")))?;
     load_openapi_spec_from_value(value, cli_name)
+}
+
+/// Parse spec text into a YAML value. JSON specs (the common case for
+/// generated CLIs) go through serde_json, which is several times faster than
+/// the YAML parser and dominates startup on CLIs with many embedded specs.
+/// Anything serde_json rejects falls back to the YAML parser unchanged.
+fn parse_spec_value(text: &str) -> Result<serde_yaml::Value, serde_yaml::Error> {
+    if text.trim_start().starts_with('{') {
+        if let Ok(value) = serde_json::from_str::<serde_yaml::Value>(text) {
+            return Ok(value);
+        }
+    }
+    serde_yaml::from_str(text)
 }
 
 /// Load and convert an OpenAPI spec from a pre-parsed `serde_yaml::Value`.
@@ -13304,4 +13317,20 @@ components:
             "Normal schema should be present",
         );
     }
+
+    #[test]
+    fn parse_spec_value_json_matches_yaml_parser() {
+        let json = r#"{"openapi":"3.0.0","info":{"title":"T","version":"1"},"paths":{"/a":{"get":{"operationId":"getA","parameters":[{"name":"n","in":"query","schema":{"type":"integer","default":3,"maximum":1.5e3}}],"responses":{"200":{"description":"ok"}}}}},"x-flag":true,"x-null":null}"#;
+        let fast = super::parse_spec_value(json).unwrap();
+        let slow: serde_yaml::Value = serde_yaml::from_str(json).unwrap();
+        assert_eq!(fast, slow);
+    }
+
+    #[test]
+    fn parse_spec_value_falls_back_to_yaml() {
+        let yaml = "openapi: 3.0.0\ninfo: {title: T, version: '1'}\npaths: {}\n";
+        let value = super::parse_spec_value(yaml).unwrap();
+        assert_eq!(value["openapi"], serde_yaml::Value::String("3.0.0".into()));
+    }
+
 }

@@ -77,7 +77,8 @@ export async function patchCargoToml(args: {
         return;
     }
 
-    let patched = applyCargoTomlPatch(contents, binaryName, version ?? "0.0.0", packageIdentity);
+    const packageVersion = version ?? DEFAULT_PACKAGE_VERSION;
+    let patched = applyCargoTomlPatch(contents, binaryName, packageVersion, packageIdentity);
     if (patched === contents) {
         throw new Error(
             `Cargo.toml at ${cargoTomlPath} did not match the expected template — no substitutions made. ` +
@@ -89,23 +90,20 @@ export async function patchCargoToml(args: {
     await writeFile(cargoTomlPath, patched);
 
     // Cargo.lock records the package's own version alongside its
-    // dependencies.  When we stamp a resolved version into Cargo.toml,
-    // the lockfile entry must match — otherwise `cargo build --locked`
-    // rejects the build.
+    // dependencies. Cargo.toml always gets a version stamped (the default
+    // when none was resolved), so the lockfile entry must always follow —
+    // otherwise `cargo build --locked` rejects the build.
+    const cargoLockPath = path.join(outputDir, "Cargo.lock");
+    let patchedLock = patchCargoLockVersion(await readFile(cargoLockPath, "utf-8"), packageVersion);
     const packageName = packageIdentity?.name;
-    if (version != null || packageName != null) {
-        const cargoLockPath = path.join(outputDir, "Cargo.lock");
-        const lockContents = await readFile(cargoLockPath, "utf-8");
-        let patchedLock = lockContents;
-        if (version != null) {
-            patchedLock = patchCargoLockVersion(patchedLock, version);
-        }
-        if (packageName != null) {
-            patchedLock = renameCargoLockPackage(patchedLock, packageName);
-        }
-        await writeFile(cargoLockPath, patchedLock);
+    if (packageName != null) {
+        patchedLock = renameCargoLockPackage(patchedLock, packageName);
     }
+    await writeFile(cargoLockPath, patchedLock);
 }
+
+/** Root `[package] version` when the invocation supplied no version. */
+export const DEFAULT_PACKAGE_VERSION = "0.0.0";
 
 /**
  * Customer-supplied `[package]` identity for the generated crate. Every

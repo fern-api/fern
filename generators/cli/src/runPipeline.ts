@@ -229,7 +229,8 @@ export async function runPipeline(args: {
             irFilepath,
             outputDir,
             binaryName,
-            splitTypeCrates: customConfig.splitTypeCrates
+            splitTypeCrates: customConfig.splitTypeCrates,
+            version: outputConfig.version
         });
         typesCrateName = typesResult.typesCrateName;
         typePartitionCrates = typesResult.partitionCrates;
@@ -240,7 +241,8 @@ export async function runPipeline(args: {
                 irFilepath,
                 outputDir,
                 binaryName,
-                typesCrateName
+                typesCrateName,
+                crateVersion: outputConfig.version
             });
             sdkCrateName = sdkResult.sdkCrateName;
 

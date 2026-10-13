@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.53.2
+  changelogEntry:
+    - summary: |
+        Header API-key schemes now send their configured prefix. An `auth-schemes` entry such as
+        `{ header: X-Api-Key, prefix: Key }` previously produced a CLI that sent the bare credential; it now
+        sends `X-Api-Key: Key <credential>` whether the key comes from the `--api-key` flag, the environment
+        variable, or the keyring entry `auth login` stores (which keeps holding the bare key). The prefix is
+        applied once, at request time, and schemes without a prefix are unchanged. The runtime gains
+        `ApiKeyAuth::prefix(...)`, `HeaderAuthProvider::with_prefix(...)`, and a
+        `SchemeBinding::PrefixedToken` variant; hand-written `custom.rs` code that matches `SchemeBinding`
+        exhaustively needs an arm for it.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.53.1
+  changelogEntry:
+    - summary: |
+        `fern generate --version <v>` (and SDK Config's `sdkVersion`) is now stamped into the generated CLI for
+        local-file-system output. That output runs in `downloadFiles` mode, whose generator config carries no
+        version, so the root `Cargo.toml`, its `Cargo.lock` entry, and `<cli> --version` always reported `0.0.0`.
+        The generator now falls back to the IR's `generationMetadata.requestedVersion` (semver only; `AUTO` and
+        non-semver values are ignored). The embedded `<cli>-sdk` and `<cli>-types` crates (including split type
+        crates) now carry the same version, so the SDK's `X-Fern-SDK-Version` header matches the CLI instead of a
+        fixed `0.1.0`. With no version supplied, output is unchanged (`0.0.0` root and types, `0.1.0` SDK).
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 0.53.0
   changelogEntry:
     - summary: |
