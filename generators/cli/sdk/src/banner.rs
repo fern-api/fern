@@ -1,9 +1,23 @@
 use std::ffi::OsStr;
 use std::fmt::Write as _;
 
+/// Axis a multi-colour banner gradient runs along.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum BannerDirection {
+    /// Left to right across the widest line.
+    #[default]
+    Horizontal,
+    /// Top to bottom across the lines.
+    Vertical,
+    /// Top-left to bottom-right. Rows count double because terminal cells are about twice as tall as they are wide.
+    Diagonal,
+}
+
 pub struct Banner {
     text: String,
     stops: Vec<(u8, u8, u8)>,
+    direction: BannerDirection,
+    line_stops: Vec<(u8, u8, u8)>,
 }
 
 impl Banner {
@@ -11,6 +25,8 @@ impl Banner {
         Self {
             text: text.to_string(),
             stops: Vec::new(),
+            direction: BannerDirection::default(),
+            line_stops: Vec::new(),
         }
     }
 
@@ -22,13 +38,49 @@ impl Banner {
         self
     }
 
+    pub fn direction(mut self, direction: BannerDirection) -> Self {
+        self.direction = direction;
+        self
+    }
+
+    /// One solid colour per line, in order; lines past the end reuse the last colour.
+    /// Takes precedence over `colors`.
+    pub fn line_colors(mut self, hex: &[&str]) -> Self {
+        self.line_stops = hex
+            .iter()
+            .filter_map(|color| parse_hex_color(color))
+            .collect();
+        self
+    }
+
+    fn color_for_cell(
+        &self,
+        line: usize,
+        column: usize,
+        lines: usize,
+        widest: usize,
+    ) -> (u8, u8, u8) {
+        if let Some(last) = self.line_stops.last() {
+            return self.line_stops.get(line).copied().unwrap_or(*last);
+        }
+        match self.direction {
+            BannerDirection::Horizontal => color_at(&self.stops, column, widest),
+            BannerDirection::Vertical => color_at(&self.stops, line, lines),
+            BannerDirection::Diagonal => color_at(
+                &self.stops,
+                column + 2 * line,
+                widest + 2 * lines.saturating_sub(1),
+            ),
+        }
+    }
+
     pub(crate) fn render(&self, color: bool) -> String {
         if color && self.text.contains('\x1b') {
             return self.text.clone();
         }
 
         let text = self.text.trim_end_matches('\n');
-        if !color || self.stops.is_empty() || text.is_empty() {
+        if !color || (self.stops.is_empty() && self.line_stops.is_empty()) || text.is_empty() {
             return text.to_string();
         }
 
@@ -51,7 +103,7 @@ impl Banner {
                     continue;
                 }
 
-                let next_color = color_at(&self.stops, column, widest);
+                let next_color = self.color_for_cell(line_index, column, lines.len(), widest);
                 if active_color != Some(next_color) {
                     let (red, green, blue) = next_color;
                     let _ = write!(rendered, "\x1b[38;2;{red};{green};{blue}m");
@@ -145,7 +197,7 @@ fn color_at(stops: &[(u8, u8, u8)], column: usize, width: usize) -> (u8, u8, u8)
 
 #[cfg(test)]
 mod tests {
-    use super::{banner_mode, color_at, Banner, BannerMode};
+    use super::{banner_mode, color_at, Banner, BannerDirection, BannerMode};
     use std::ffi::OsStr;
 
     #[test]
@@ -174,6 +226,39 @@ mod tests {
 
         assert!(rendered.starts_with("\x1b[38;2;255;0;0mA"));
         assert!(rendered.contains("\x1b[38;2;0;0;255mB\x1b[0m"));
+    }
+
+    #[test]
+    fn render_vertical_gradient_runs_down_the_lines() {
+        assert_eq!(
+            Banner::new("AB\nCD")
+                .colors(&["#ff0000", "#0000ff"])
+                .direction(BannerDirection::Vertical)
+                .render(true),
+            "\x1b[38;2;255;0;0mAB\x1b[0m\n\x1b[38;2;0;0;255mCD\x1b[0m"
+        );
+    }
+
+    #[test]
+    fn render_diagonal_gradient_spans_corner_to_corner() {
+        let rendered = Banner::new("AB\nCD")
+            .colors(&["#ff0000", "#0000ff"])
+            .direction(BannerDirection::Diagonal)
+            .render(true);
+
+        assert!(rendered.starts_with("\x1b[38;2;255;0;0mA"));
+        assert!(rendered.ends_with("\x1b[38;2;0;0;255mD\x1b[0m"));
+    }
+
+    #[test]
+    fn render_line_colors_reuse_the_last_colour() {
+        assert_eq!(
+            Banner::new("A\nB\nC")
+                .colors(&["#ffffff"])
+                .line_colors(&["#ff0000", "#00ff00"])
+                .render(true),
+            "\x1b[38;2;255;0;0mA\x1b[0m\n\x1b[38;2;0;255;0mB\x1b[0m\n\x1b[38;2;0;255;0mC\x1b[0m"
+        );
     }
 
     #[test]

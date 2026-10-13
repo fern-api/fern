@@ -286,8 +286,12 @@ function renderMainRs(args: {
 
     // Collect needed imports
     const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
+    const bannerDirection = typeof banner === "object" ? banner.direction : undefined;
+    const emitBannerDirection = bannerDirection != null && bannerDirection !== "horizontal";
     if (banner != null) {
-        imports.push("use fern_cli_sdk::app::Banner;");
+        imports.push(
+            emitBannerDirection ? "use fern_cli_sdk::app::{Banner, BannerDirection};" : "use fern_cli_sdk::app::Banner;"
+        );
     }
     if (profilesCommandName != null) {
         imports.push(
@@ -337,11 +341,18 @@ function renderMainRs(args: {
     lines.push(...imports, "", "fn main() {", `    let app = CliApp::new("${binaryName}")`);
 
     if (banner != null) {
-        const text = typeof banner === "string" ? banner : banner.text;
-        const colors = typeof banner === "string" ? undefined : banner.colors;
-        let bannerBuilder = `Banner::new("${escapeRustStringLiteral(text)}")`;
-        if (colors != null && colors.length > 0) {
-            bannerBuilder += `.colors(&[${colors.map((color) => `"${escapeRustStringLiteral(color)}"`).join(", ")}])`;
+        const config = typeof banner === "string" ? { text: banner } : banner;
+        const colorList = (colors: string[]) =>
+            `&[${colors.map((color) => `"${escapeRustStringLiteral(color)}"`).join(", ")}]`;
+        let bannerBuilder = `Banner::new("${escapeRustStringLiteral(config.text)}")`;
+        if (config.colors != null && config.colors.length > 0) {
+            bannerBuilder += `.colors(${colorList(config.colors)})`;
+        }
+        if (config.lineColors != null && config.lineColors.length > 0) {
+            bannerBuilder += `.line_colors(${colorList(config.lineColors)})`;
+        }
+        if (emitBannerDirection) {
+            bannerBuilder += `.direction(BannerDirection::${bannerDirection === "vertical" ? "Vertical" : "Diagonal"})`;
         }
         lines.push(`        .banner(${bannerBuilder})`);
     }

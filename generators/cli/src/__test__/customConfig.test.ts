@@ -42,6 +42,27 @@ describe("validateCustomConfig", () => {
         );
     });
 
+    it("accepts a gradient direction and per-line colours", () => {
+        expect(
+            validateCustomConfig({ banner: { text: "Fern", colors: ["#4949F2", "#30F1B1"], direction: "vertical" } })
+        ).toEqual({ banner: { text: "Fern", colors: ["#4949F2", "#30F1B1"], direction: "vertical" } });
+        expect(validateCustomConfig({ banner: { text: "Fern", lineColors: ["#4949F2", "#30F1B1"] } })).toEqual({
+            banner: { text: "Fern", lineColors: ["#4949F2", "#30F1B1"] }
+        });
+    });
+
+    it("rejects an unknown banner direction", () => {
+        expect(() => validateCustomConfig({ banner: { text: "Fern", direction: "radial" } })).toThrow(
+            'Invalid customConfig.banner.direction: expected "horizontal", "vertical", or "diagonal", got "radial".'
+        );
+    });
+
+    it("rejects colors combined with lineColors", () => {
+        expect(() =>
+            validateCustomConfig({ banner: { text: "Fern", colors: ["#4949F2"], lineColors: ["#30F1B1"] } })
+        ).toThrow(/either `colors`.*or `lineColors`/);
+    });
+
     it("rejects unknown banner fields", () => {
         expect(() => validateCustomConfig({ banner: { text: "Fern", color: "red" } })).toThrow(/unknown field/);
     });

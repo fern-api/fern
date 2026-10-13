@@ -142,6 +142,36 @@ describe("copySpecs", () => {
         );
     });
 
+    it("emits the banner direction and per-line colours", async () => {
+        const { specsDir, outputDir } = await scaffold();
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            banner: { text: "Fern", colors: ["#4949F2", "#30F1B1"], direction: "diagonal" }
+        });
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain("use fern_cli_sdk::app::{Banner, BannerDirection};");
+        expect(main).toContain(
+            '.banner(Banner::new("Fern").colors(&["#4949F2", "#30F1B1"]).direction(BannerDirection::Diagonal))'
+        );
+
+        const lineOutput = await scaffold();
+        await copySpecs({
+            outputDir: lineOutput.outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir: lineOutput.specsDir,
+            banner: { text: "Fern", lineColors: ["#4949F2"], direction: "horizontal" }
+        });
+        const lineMain = await readFile(path.join(lineOutput.outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(lineMain).toContain("use fern_cli_sdk::app::Banner;");
+        expect(lineMain).toContain('.banner(Banner::new("Fern").line_colors(&["#4949F2"]))');
+    });
+
     it("emits a monochrome banner for the string shorthand", async () => {
         const { specsDir, outputDir } = await scaffold();
         await copySpecs({

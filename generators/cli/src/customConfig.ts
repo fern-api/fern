@@ -17,10 +17,10 @@ export interface FernCliCustomConfig {
 
     /**
      * Opt-in banner shown above the generated CLI's root help. A string is
-     * monochrome text; the object form can add one solid colour or a
-     * multi-stop horizontal gradient.
+     * monochrome text; the object form can add one solid colour, a
+     * multi-stop gradient along `direction`, or one colour per line.
      */
-    banner?: string | { text: string; colors?: string[] };
+    banner?: string | FernCliBannerConfig;
 
     /**
      * When true (the default), the generator produces the full custom
@@ -429,7 +429,17 @@ const RESERVED_SUFFIX_FLAG_NAMES: ReadonlySet<string> = new Set([
     "debug",
     "schema"
 ]);
-const BANNER_CONFIG_FIELDS: ReadonlySet<string> = new Set(["text", "colors"]);
+export interface FernCliBannerConfig {
+    text: string;
+    colors?: string[];
+    direction?: FernCliBannerDirection;
+    lineColors?: string[];
+}
+
+export type FernCliBannerDirection = "horizontal" | "vertical" | "diagonal";
+
+const BANNER_CONFIG_FIELDS: ReadonlySet<string> = new Set(["text", "colors", "direction", "lineColors"]);
+const BANNER_DIRECTIONS: ReadonlySet<string> = new Set(["horizontal", "vertical", "diagonal"]);
 const BANNER_COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernCliCustomConfig {
@@ -545,7 +555,7 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
     return result;
 }
 
-function validateBannerConfig(raw: unknown): string | { text: string; colors?: string[] } {
+function validateBannerConfig(raw: unknown): string | FernCliBannerConfig {
     if (typeof raw === "string") {
         if (raw.length === 0) {
             throw new Error('Invalid customConfig.banner: expected non-empty text, got "".');
@@ -558,7 +568,7 @@ function validateBannerConfig(raw: unknown): string | { text: string; colors?: s
     if (unknownKeys.length > 0) {
         throw new Error(
             `Invalid customConfig.banner: unknown field(s) ${unknownKeys.map((key) => `\`${key}\``).join(", ")}. ` +
-                "Supported fields: `text`, `colors`."
+                "Supported fields: `text`, `colors`, `direction`, `lineColors`."
         );
     }
 
@@ -568,24 +578,48 @@ function validateBannerConfig(raw: unknown): string | { text: string; colors?: s
         );
     }
 
-    let colors: string[] | undefined;
-    if (obj.colors !== undefined) {
-        if (!Array.isArray(obj.colors)) {
+    const result: FernCliBannerConfig = { text: obj.text };
+    const colors = validateBannerColors(obj.colors, "colors");
+    if (colors != null) {
+        result.colors = colors;
+    }
+    const lineColors = validateBannerColors(obj.lineColors, "lineColors");
+    if (lineColors != null) {
+        if (colors != null) {
             throw new Error(
-                `Invalid customConfig.banner.colors: expected an array of 6-digit hex colours, got ${describeConfigValue(obj.colors)}.`
+                "Invalid customConfig.banner: set either `colors` (a gradient) or `lineColors` (one colour per line), not both."
             );
         }
-        colors = obj.colors.map((color, index) => {
-            if (typeof color !== "string" || !BANNER_COLOR_PATTERN.test(color)) {
-                throw new Error(
-                    `Invalid customConfig.banner.colors[${index}]: expected a 6-digit hex colour like "#4949F2", got ${describeConfigValue(color)}.`
-                );
-            }
-            return color;
-        });
+        result.lineColors = lineColors;
     }
+    if (obj.direction !== undefined) {
+        if (typeof obj.direction !== "string" || !BANNER_DIRECTIONS.has(obj.direction)) {
+            throw new Error(
+                `Invalid customConfig.banner.direction: expected "horizontal", "vertical", or "diagonal", got ${describeConfigValue(obj.direction)}.`
+            );
+        }
+        result.direction = obj.direction as FernCliBannerDirection;
+    }
+    return result;
+}
 
-    return colors == null ? { text: obj.text } : { text: obj.text, colors };
+function validateBannerColors(raw: unknown, field: "colors" | "lineColors"): string[] | undefined {
+    if (raw === undefined) {
+        return undefined;
+    }
+    if (!Array.isArray(raw)) {
+        throw new Error(
+            `Invalid customConfig.banner.${field}: expected an array of 6-digit hex colours, got ${describeConfigValue(raw)}.`
+        );
+    }
+    return raw.map((color, index) => {
+        if (typeof color !== "string" || !BANNER_COLOR_PATTERN.test(color)) {
+            throw new Error(
+                `Invalid customConfig.banner.${field}[${index}]: expected a 6-digit hex colour like "#4949F2", got ${describeConfigValue(color)}.`
+            );
+        }
+        return color;
+    });
 }
 
 function describeConfigValue(value: unknown): string {

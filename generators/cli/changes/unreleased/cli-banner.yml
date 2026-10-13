@@ -1,11 +1,12 @@
 - summary: |
-    Generated CLIs can opt into a startup banner on root `--help`: a solid colour, a multi-stop RGB gradient,
-    or pre-coloured ANSI art printed as given. Keep the art as an asset next to `generators.yml` with `file`,
-    or inline it with `text`:
+    Generated CLIs can opt into a startup banner on root `--help`: a solid colour, a multi-stop RGB gradient
+    (`direction`: `horizontal`, `vertical`, or `diagonal`), one colour per line (`lineColors`), or pre-coloured
+    ANSI art printed as given. Keep the art as an asset next to `generators.yml` with `file`, or inline it with `text`:
     ```yaml
     config:
       banner:
         file: ./assets/cli-banner.txt
         colors: ["#2929CC", "#4949F2", "#30F2B1"]
+        direction: diagonal
     ```
   type: feat

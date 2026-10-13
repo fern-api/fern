@@ -23,7 +23,7 @@ use serde_json::Value;
 
 use crate::auth::root_builder::AuthSchemeBuilder;
 use crate::auth::SchemeBinding;
-pub use crate::banner::Banner;
+pub use crate::banner::{Banner, BannerDirection};
 use crate::banner::BannerMode;
 use crate::binding::{Binding, DispatchResult};
 use crate::error::{write_error_json, CliError, ErrorDisplayContext};
