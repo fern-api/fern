@@ -1,0 +1,39 @@
+openapi: 3.0.1
+info:
+  title: Multipart Field Names
+  version: 1.0.0
+paths:
+  /knowledge:
+    post:
+      operationId: uploadKnowledge
+      tags:
+        - Knowledge
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file_0
+              properties:
+                file_0:
+                  type: string
+                  format: binary
+                file_1:
+                  type: string
+                  format: binary
+                URLPath:
+                  type: string
+                display_name_2:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string

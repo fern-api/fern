@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { aggregateChunkAnalyses, resolveChangelogEntryFallback } from "../pipeline/steps/AutoVersionStep";
+import {
+    aggregateChunkAnalyses,
+    mergeMarkdownSections,
+    resolveChangelogEntryFallback
+} from "../pipeline/steps/AutoVersionStep";
 
 const TRAILER = "\n\n🌿 Generated with Fern";
 
@@ -118,5 +122,72 @@ describe("resolveChangelogEntryFallback", () => {
                 message: `feat: add bar${TRAILER}`
             })
         ).toBeUndefined();
+    });
+});
+
+describe("mergeMarkdownSections", () => {
+    it("folds chunks that share a heading under one header, in first-seen order", () => {
+        const merged = mergeMarkdownSections([
+            "### Breaking Changes\n\n- `A` removed",
+            "### Added\n\n- `B`\n\n### Breaking Changes\n\n- `C` removed\n- `D` removed",
+            "### breaking changes\n\n- `E` removed"
+        ]);
+        expect(merged).toBe(
+            "### Breaking Changes\n\n- `A` removed\n- `C` removed\n- `D` removed\n- `E` removed\n\n### Added\n\n- `B`"
+        );
+    });
+
+    it("keeps different heading levels separate and ignores headings inside code fences", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n```ts\n# not a heading\nclient.a()\n```",
+            "### Breaking Changes\n\n- x"
+        ]);
+        expect(merged).toBe(
+            "## Breaking Changes\n\n```ts\n# not a heading\nclient.a()\n```\n\n### Breaking Changes\n\n- x"
+        );
+    });
+
+    it("leaves heading-less entries joined by blank lines", () => {
+        expect(mergeMarkdownSections(["- one", "- two"])).toBe("- one\n\n- two");
+    });
+
+    it("separates a paragraph from a following list with a blank line", () => {
+        const merged = mergeMarkdownSections(["### Notes\n\nSome prose.", "### Notes\n\n- item"]);
+        expect(merged).toBe("### Notes\n\nSome prose.\n\n- item");
+    });
+
+    it("only closes a fence on a bare marker at least as long as the opener", () => {
+        const merged = mergeMarkdownSections([
+            "### Example\n\n````md\n```ts\n# still code\n```\n````\n\n### Other\n\n- x",
+            "### Other\n\n- y"
+        ]);
+        expect(merged).toBe("### Example\n\n````md\n```ts\n# still code\n```\n````\n\n### Other\n\n- x\n- y");
+    });
+
+    it("keeps an empty parent heading and merges repeated parents with their children in order", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n### removeFoo\n\n**Migration:** Use bar",
+            "## Breaking Changes\n\n### removeBaz\n\n**Migration:** Use qux\n\n## What's New\n\n- x"
+        ]);
+        expect(merged).toBe(
+            "## Breaking Changes\n\n### removeFoo\n\n**Migration:** Use bar\n\n### removeBaz\n\n**Migration:** Use qux\n\n## What's New\n\n- x"
+        );
+    });
+
+    it("does not merge same-named headings that live under different parents", () => {
+        const merged = mergeMarkdownSections(["## A\n\n### Notes\n\n- a", "## B\n\n### Notes\n\n- b"]);
+        expect(merged).toBe("## A\n\n### Notes\n\n- a\n\n## B\n\n### Notes\n\n- b");
+    });
+
+    it("keeps a later chunk's intro text next to that chunk's own section", () => {
+        const merged = mergeMarkdownSections(["### Added\n- A", "B is a breaking change\n\n### Breaking Changes\n- B"]);
+        expect(merged).toBe("### Added\n\n- A\n\n### Breaking Changes\n\nB is a breaking change\n\n- B");
+    });
+
+    it("closes a fence with a longer run of the same marker and then recognizes later headings", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n````ts\nold()\n`````\n\n## What's New\n\nAdded bar"
+        ]);
+        expect(merged).toBe("## Breaking Changes\n\n````ts\nold()\n`````\n\n## What's New\n\nAdded bar");
     });
 });

@@ -1,4 +1,3 @@
-import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -87,12 +86,12 @@ export class FileUploadRequestBodyGenerator {
         queryParameters?: FernIr.QueryParameter[]
     ): {
         allProperties: FernIr.InlinedRequestBodyProperty[];
-        fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
+        fileProperties: FileUploadRequestGenerator.FileProperty[];
         bodyProperties: FernIr.InlinedRequestBodyProperty[];
         queryParamFieldNames: Set<string>;
     } {
         const allProperties: FernIr.InlinedRequestBodyProperty[] = [];
-        const fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }> = [];
+        const fileProperties: FileUploadRequestGenerator.FileProperty[] = [];
         const bodyProperties: FernIr.InlinedRequestBodyProperty[] = [];
 
         for (const property of properties) {
@@ -123,7 +122,7 @@ export class FileUploadRequestBodyGenerator {
 
                             allProperties.push(prop);
                             fileProperties.push({
-                                name: getOriginalName(fileSingle.key),
+                                key: fileSingle.key,
                                 isArray: false,
                                 isOptional: fileSingle.isOptional
                             });
@@ -151,7 +150,7 @@ export class FileUploadRequestBodyGenerator {
 
                             allProperties.push(prop);
                             fileProperties.push({
-                                name: getOriginalName(fileArray.key),
+                                key: fileArray.key,
                                 isArray: true,
                                 isOptional: fileArray.isOptional
                             });
