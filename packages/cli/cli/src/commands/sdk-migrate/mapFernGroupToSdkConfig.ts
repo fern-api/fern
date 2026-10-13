@@ -169,7 +169,13 @@ function migrateCredentialObject(
         const token = migrateCredentialValue(registry, "token", value.token, diagnostics, targetIndex);
         return token == null ? {} : { token };
     }
-    const username = migrateCredentialValue(registry, "username", value.username, diagnostics, targetIndex);
+    // Usernames are identifiers, not secrets (PyPI token auth uses the fixed "__token__"), and direct
+    // publishing requires one, so keep them as written. Maven is the exception: Sonatype user tokens
+    // are a generated username/password pair, so a Maven username may be a secret.
+    const username =
+        registry !== "maven" && typeof value.username === "string" && value.username.trim().length > 0
+            ? value.username
+            : migrateCredentialValue(registry, "username", value.username, diagnostics, targetIndex);
     const password = migrateCredentialValue(registry, "password", value.password, diagnostics, targetIndex);
     const credentials = {
         ...(username == null ? {} : { username }),
@@ -228,7 +234,10 @@ function credentialMigrationDiagnostic(
         code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE",
         severity: "warning",
         path: ["targets", targetIndex.toString(), "output", "publish", field],
-        reason: `The ${registry} ${field} credential is not an exact environment-variable expression and was omitted to prevent writing a resolved secret.`,
+        reason:
+            registry === "maven" && field === "username"
+                ? "The maven username is not an exact environment-variable expression and was omitted because Sonatype user tokens make the username a secret."
+                : `The ${registry} ${field} credential is not an exact environment-variable expression and was omitted to prevent writing a resolved secret.`,
         sdkConfigPath: ["targets", targetIndex.toString(), "output", "publish", field],
         suggestedAction: `Configure targets.${targetIndex}.output.publish.${field} with an environment variable such as \${REGISTRY_CREDENTIAL}.`
     };
