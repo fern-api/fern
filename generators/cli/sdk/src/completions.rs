@@ -64,12 +64,13 @@ pub fn write_registration(
         &mut buf,
     )?;
     if shell == "zsh" {
-        // Also complete on the first TAB when installed as an autoloaded
-        // `_<CLI>` file in `$fpath` rather than sourced from `.zshrc`.
+        // Also complete on the first TAB when autoloaded from a file in
+        // `$fpath` (any `_*` name) rather than sourced from `.zshrc`.
+        // `compstate` only exists inside a completion widget.
         let fn_name = format!("_clap_dynamic_completer_{}", bin_name.replace('-', "_"));
         buf.extend_from_slice(
             format!(
-                "\nif [ \"$funcstack[1]\" = \"_{bin_name}\" ]; then\n    {fn_name} \"$@\"\nfi\n"
+                "\nif [[ ${{funcstack[1]-}} == _* ]] && (( ${{+compstate}} )); then\n    {fn_name} \"$@\"\nfi\n"
             )
             .as_bytes(),
         );
@@ -78,7 +79,9 @@ pub fn write_registration(
 }
 
 /// Answer a completion request from a registered script. `args` is the raw
-/// argv: `<CLI> -- <words on the command line...>`.
+/// argv: `<CLI> -- <words on the command line...>`. With no words (e.g.
+/// `<CLI>_COMPLETE=zsh <CLI>`), prints the registration script instead,
+/// matching clap_complete's `CompleteEnv` protocol.
 pub fn write_dynamic_completions(
     shell: &str,
     cmd: &mut Command,
@@ -297,7 +300,9 @@ mod tests {
             "{script}"
         );
         assert!(
-            script.contains("if [ \"$funcstack[1]\" = \"_my-cli\" ]; then\n    _clap_dynamic_completer_my_cli \"$@\"\nfi"),
+            script.contains(
+                "if [[ ${funcstack[1]-} == _* ]] && (( ${+compstate} )); then\n    _clap_dynamic_completer_my_cli \"$@\"\nfi"
+            ),
             "{script}"
         );
     }

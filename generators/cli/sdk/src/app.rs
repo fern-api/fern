@@ -1339,8 +1339,8 @@ impl CliApp {
             let raw_shell_arg = crate::early_intercept::nth_positional(&str_args, 1);
             match raw_shell_arg {
                 Some(s) => match crate::completions::parse_shell(s) {
-                    Some(_) => {
-                        crate::completions::write_registration(s, &self.name, out)
+                    Some(shell) => {
+                        crate::completions::write_registration(&shell.to_string(), &self.name, out)
                             .map_err(|e| CliError::Other(e.into()))?;
                         return Ok(PipelineOutcome::HelpShown);
                     }
