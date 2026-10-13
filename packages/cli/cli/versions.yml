@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.155.2
+  changelogEntry:
+    - summary: |
+        Each feature flag evaluation now also sends a `feature_flag_evaluated` event with the same
+        properties (`org`, `environment`, `generator`, `language`, `version`) and the flag `response`
+        and `enabled` result. PostHog keeps only about one `$feature_flag_called` per org, flag, and
+        value per hour, so that event cannot count evaluations per generator; this one can.
+      type: fix
+    - summary: |
+        `fern generate` now routes SDK Config runs and generator versions at or past their SDK Config
+        cutover (for example TypeScript 4.0.0+, Python 6.0.0+) through sdk-gen-api regardless of the
+        `use-sdk-gen-api` feature flag, which now only governs earlier versions. A post-cutover version
+        configured in generators.yml always fails before generation with the `fern sdk migrate` /
+        `--sdk-config` error, instead of being sent to legacy generation when the flag is off.
+        `FERN_USE_SDK_GEN_API=false` still turns sdk-gen-api off, and `fernapi/fern-mcp-server` remains
+        gated by the flag.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 5.155.1
   changelogEntry:
     - summary: |
