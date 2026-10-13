@@ -685,3 +685,98 @@ def test_api_wide_config_generates_default_helper_without_webhooks() -> None:
     assert list(written_files.keys()) == [f"webhooks/{WEBHOOKS_HELPER_FILE_NAME}.py"]
     assert "class WebhooksHelper:" in written_files[f"webhooks/{WEBHOOKS_HELPER_FILE_NAME}.py"]
     assert root_init_exports == ["WebhooksHelper"]
+
+
+_ALGORITHM_HEADER = {
+    "headerName": "X-Twilio-Webhook-Signature-Settings",
+    "keyIdDelimiter": ";",
+    "algorithms": [
+        {"wireValue": "HMAC_SHA1", "algorithm": "SHA1"},
+        {"wireValue": "HMAC_SHA256", "algorithm": "SHA256"},
+    ],
+}
+_SHARED_KEYS = {"CK123": "shared_secret_123"}
+_AUTH_TOKEN = "auth_token"
+
+
+def _settings_helper() -> typing.Any:
+    return _render_helper("WebhooksHelper", _hmac_config(algorithmHeader=_ALGORITHM_HEADER))
+
+
+def _resolve_key(key_id: typing.Optional[str]) -> typing.Optional[str]:
+    return _AUTH_TOKEN if key_id is None else _SHARED_KEYS.get(key_id)
+
+
+def _sign_with(payload: str, secret: str, algorithm: str) -> str:
+    return compute_hmac_signature(payload=payload, secret=secret, algorithm=algorithm, encoding="base64")
+
+
+def test_generated_verify_request_exposes_configured_algorithm_names() -> None:
+    helper = _settings_helper()
+    assert helper.verify_request is not None
+    url = "https://example.com/sms"
+    # per-call override accepts the configured wire values, not lowercase digest names
+    assert helper.verify_signature(
+        request_body="", signature_header=_sign_with(url, _AUTH_TOKEN, "sha256"), signature_key=_AUTH_TOKEN,
+        notification_url=url, algorithm="HMAC_SHA256",
+    )
+
+
+def test_generated_verify_request_shared_key_sha256() -> None:
+    helper = _settings_helper()
+    url = "https://example.com/sms"
+    headers = {
+        "x-twilio-signature": _sign_with(url, _SHARED_KEYS["CK123"], "sha256"),
+        "X-Twilio-Webhook-Signature-Settings": "CK123;HMAC_SHA256",
+    }
+    assert helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+
+
+def test_generated_verify_request_shared_key_sha1() -> None:
+    helper = _settings_helper()
+    url = "https://example.com/sms"
+    headers = {
+        "X-Twilio-Signature": _sign_with(url, _SHARED_KEYS["CK123"], "sha1"),
+        "X-Twilio-Webhook-Signature-Settings": "CK123;HMAC_SHA1",
+    }
+    assert helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+
+
+def test_generated_verify_request_legacy_auth_token_fallback() -> None:
+    helper = _settings_helper()
+    url = "https://example.com/sms"
+    headers = {"X-Twilio-Signature": _sign_with(url, _AUTH_TOKEN, "sha1")}
+    assert helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+    assert helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_AUTH_TOKEN)
+
+
+def test_generated_verify_request_early_failures(caplog: typing.Any) -> None:
+    import logging
+
+    helper = _settings_helper()
+    url = "https://example.com/sms"
+    with caplog.at_level(logging.WARNING):
+        assert not helper.verify_request(headers={}, request_body="", notification_url=url, signature_key=_resolve_key)
+        assert "could not run: missing signature header" in caplog.text
+        caplog.clear()
+        headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhook-Signature-Settings": "CK123;HMAC_SHA512"}
+        assert not helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+        assert "unsupported algorithm" in caplog.text
+        caplog.clear()
+        headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhook-Signature-Settings": "UNKNOWN;HMAC_SHA256"}
+        assert not helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+        assert "signing key could not be resolved" in caplog.text
+
+
+def test_generated_verify_request_mismatch_logs_failure(caplog: typing.Any) -> None:
+    import logging
+
+    helper = _settings_helper()
+    url = "https://example.com/sms"
+    headers = {
+        "X-Twilio-Signature": _sign_with(url, "wrong", "sha256"),
+        "X-Twilio-Webhook-Signature-Settings": "CK123;HMAC_SHA256",
+    }
+    with caplog.at_level(logging.WARNING):
+        assert not helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+    assert "signature mismatch" in caplog.text
