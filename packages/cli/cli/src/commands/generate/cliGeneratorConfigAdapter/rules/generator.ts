@@ -19,6 +19,15 @@ const IDENTITY_FIELDS = [
 const DEPENDENCY_TABLES = ["extraDependencies", "extraDevDependencies"] as const;
 const DEPENDENCY_FIELDS = ["name", "version", "features", "optional", "defaultFeatures", "packageName"];
 const SOURCE_FIELDS = ["type", "path", "url", "ref", "registry"];
+/** SDK Config's canonical license types, as `fern sdk migrate` writes them, back to SPDX identifiers. */
+const SPDX_LICENSES: Record<string, string> = {
+    MIT: "MIT",
+    APACHE: "Apache-2.0",
+    GPL3: "GPL-3.0-only",
+    UNLICENSED: "UNLICENSED"
+};
+/** `metadata.license` in generators.yml takes only these identifiers, or a custom file. */
+const METADATA_LICENSES = new Set(["MIT", "Apache-2.0"]);
 
 /**
  * The `cli` group: one fern-cli-generator invocation with its version, output, license metadata and
@@ -116,7 +125,7 @@ function packageIdentity(pkg: SdkConfigIrV1["package"]): Record<string, unknown>
         );
     }
     if (pkg.license != null && pkg.license.type !== "custom") {
-        identity.license = pkg.license.type;
+        identity.license = spdxLicense(pkg.license.type);
     }
     return identity;
 }
@@ -129,7 +138,8 @@ function licenseMetadata(
         return undefined;
     }
     if (license.type !== "custom") {
-        return { license: license.type };
+        const spdx = spdxLicense(license.type);
+        return METADATA_LICENSES.has(spdx) ? { license: spdx } : undefined;
     }
     if (license.path == null) {
         context.error(
@@ -141,6 +151,10 @@ function licenseMetadata(
         return undefined;
     }
     return { license: { custom: relativeToOutput(context, license.path) } };
+}
+
+function spdxLicense(type: string): string {
+    return SPDX_LICENSES[type.toUpperCase()] ?? type;
 }
 
 function cargoDependency(dependency: Dependency): unknown {

@@ -72,6 +72,20 @@ describe("generator rule", () => {
         expect(generator(result).config).toEqual({ packageIdentity: { license: "MIT" } });
     });
 
+    it.each([
+        ["APACHE", "Apache-2.0", { license: "Apache-2.0" }],
+        ["apache", "Apache-2.0", { license: "Apache-2.0" }],
+        ["Apache-2.0", "Apache-2.0", { license: "Apache-2.0" }],
+        ["GPL3", "GPL-3.0-only", undefined],
+        ["UNLICENSED", "UNLICENSED", undefined],
+        ["BSD-3-Clause", "BSD-3-Clause", undefined]
+    ])("maps license type %s to the SPDX id %s, and writes metadata.license only for MIT and Apache-2.0", (type, spdx, metadata) => {
+        const result = map({ package: { license: { type } } });
+        expect(errorCodes(result.diagnostics)).toEqual([]);
+        expect(generator(result).config).toEqual({ packageIdentity: { license: spdx } });
+        expect(generator(result).metadata).toEqual(metadata);
+    });
+
     it("maps a custom license file to metadata.license.custom, relative to the output folder", () => {
         const result = map({ package: { license: { type: "custom", path: "./LICENSE" } } }, "/work/out");
         expect(generator(result).metadata).toEqual({ license: { custom: "../LICENSE" } });

@@ -58,6 +58,10 @@ as `HOMEBREW_TAP_TOKEN`, are not written, so a channel without its own token sti
 
 npm publication for the `cli` target (`output.publish`) is not translated yet and is rejected.
 
+`package.license.type` is written as an SPDX identifier: the canonical types `fern sdk migrate` writes become `MIT`,
+`Apache-2.0`, `GPL-3.0-only` and `UNLICENSED`, and any other value is kept. `metadata.license` (the LICENSE file)
+accepts only `MIT` and `Apache-2.0`, so other licenses set only `packageIdentity.license`.
+
 If `sdk-config.yml` came from `fern sdk migrate` and has no `api.auth`, migrate may have dropped the whole auth block
 (it does so when any scheme cannot be mapped). The CLI then uses the security schemes the spec declares.
 
