@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Populated with `grant_type` / `refresh_token` when an inferred bearer auth scheme sets
   `type: refresh-token`.
 
+## [v67.30.0] - 2026-10-05
+
+- Add `HmacSignatureVerification.algorithmHeader` (optional `WebhookAlgorithmHeader`): a request
+  header whose value selects the HMAC algorithm per request (optionally prefixed by a key ID,
+  e.g. Twilio's `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`). Populated from
+  `algorithm-header` on an HMAC `webhook-signature` block (definition file, webhook, or
+  `api.settings.webhook-signature`). Generators expose the configured wire values as the
+  verifier's algorithm enum and surface the key ID so callers can resolve the secret.
+
 ## [v67.29.0] - 2026-10-05
 
 - Add `VariableDeclaration.envVar` (optional `string`): the name of an environment variable the

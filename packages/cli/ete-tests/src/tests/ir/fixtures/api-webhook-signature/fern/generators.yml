@@ -20,3 +20,9 @@ api:
       url-normalization:
         port-variants: true
         legacy-query-encoding: true
+      algorithm-header:
+        header: X-Twilio-Webhook-Signature-Settings
+        key-id-delimiter: ";"
+        algorithms:
+          HMAC_SHA1: sha1
+          HMAC_SHA256: sha256

@@ -21,6 +21,7 @@ import {
     JsonResponse,
     StreamingResponse,
     Webhook,
+    WebhookAlgorithmHeader,
     WebhookBodyHashAlgorithm,
     WebhookBodyHashBinding,
     WebhookBodyHashLocation,
@@ -428,7 +429,31 @@ function convertHmacSignature({
         payloadFormat: convertPayloadFormat(hmac["payload-format"]),
         timestamp: convertTimestampConfig({ timestamp: hmac.timestamp, file }),
         bodyHashBinding: convertBodyHashBinding(hmac["body-hash-binding"]),
-        notificationUrlNormalization: convertUrlNormalization(hmac["url-normalization"])
+        notificationUrlNormalization: convertUrlNormalization(hmac["url-normalization"]),
+        algorithmHeader: convertAlgorithmHeader({ algorithmHeader: hmac["algorithm-header"], file })
+    };
+}
+
+function convertAlgorithmHeader({
+    algorithmHeader,
+    file
+}: {
+    algorithmHeader: RawSchemas.WebhookAlgorithmHeaderSchema | undefined;
+    file: FernFileContext;
+}): WebhookAlgorithmHeader | undefined {
+    if (algorithmHeader == null) {
+        return undefined;
+    }
+    return {
+        headerName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: algorithmHeader.header,
+            name: algorithmHeader.header
+        }),
+        keyIdDelimiter: algorithmHeader["key-id-delimiter"],
+        algorithms: Object.entries(algorithmHeader.algorithms).map(([wireValue, algorithm]) => ({
+            wireValue,
+            algorithm: convertHmacAlgorithm(algorithm)
+        }))
     };
 }
 
