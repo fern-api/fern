@@ -3,7 +3,7 @@ import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-valida
 import { FernToken } from "@fern-api/auth";
 import { renderGithubAnnotation, shouldEmitGithubAnnotations } from "@fern-api/cli-logger";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, resolveErrorCode, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
@@ -39,6 +39,7 @@ import {
     type FernSdkGenApiSourceArchive,
     validateFernSdkGenApiSourceCompatibility
 } from "./fernSdkGenApiSourceArchive.js";
+import { replaceEnvVariablesPreservingWorkflowApiKey } from "./githubWorkflowApiKey.js";
 import type { MapFernGroupToSdkConfig } from "./prepareFernSdkGenApiSdkConfigPayload.js";
 import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
@@ -465,7 +466,7 @@ export function prepareFernSdkGenApiRoutes({
         let resolved = generatorInvocation;
         const sdkConfigTargetIndex = getSdkConfigTargetIndex(generatorInvocation, generatorIndex);
         try {
-            resolved = replaceEnvVariables(
+            resolved = replaceEnvVariablesPreservingWorkflowApiKey(
                 generatorInvocation,
                 {
                     onError: (error) => {

@@ -34,7 +34,10 @@ export function sanitizeSdkConfigPublishCredentials(
         return {
             target: sanitized.output === target.output ? target : { ...target, output: sanitized.output },
             credential: isPreview ? undefined : extractPublishCredential(output),
-            apiKeySecretName: extractApiKeySecretName(output)
+            // A preview downloads files instead of publishing, so the secret name is discarded
+            // anyway. Reading it would only add a way for a preview to fail; schema validation
+            // still rejects a literal key on a real run, with a better message than this throws.
+            apiKeySecretName: isPreview ? undefined : extractApiKeySecretName(output)
         };
     });
     return {
