@@ -19,6 +19,8 @@ package com.fern.java.client.generators;
 import com.fern.ir.model.webhooks.HmacAlgorithm;
 import com.fern.ir.model.webhooks.HmacSignatureVerification;
 import com.fern.ir.model.webhooks.Webhook;
+import com.fern.ir.model.webhooks.WebhookAlgorithmHeader;
+import com.fern.ir.model.webhooks.WebhookAlgorithmOption;
 import com.fern.ir.model.webhooks.WebhookBodyHashAlgorithm;
 import com.fern.ir.model.webhooks.WebhookBodyHashBinding;
 import com.fern.ir.model.webhooks.WebhookBodyHashQueryParameterLocation;
@@ -45,6 +47,7 @@ import com.squareup.javapoet.WildcardTypeName;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -171,12 +174,36 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                         .initializer("$S", prefix)
                         .build()));
 
+        config.getAlgorithmHeader().ifPresent(algorithmHeader -> {
+            CodeBlock.Builder initializer = CodeBlock.builder().add("new $T<>()", LinkedHashMap.class);
+            helper.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(Map.class, String.class, String.class),
+                            "HMAC_ALGORITHMS",
+                            Modifier.PRIVATE,
+                            Modifier.STATIC,
+                            Modifier.FINAL)
+                    .initializer(initializer.build())
+                    .build());
+            CodeBlock.Builder staticInit = CodeBlock.builder();
+            for (WebhookAlgorithmOption option : algorithmHeader.getAlgorithms()) {
+                staticInit.addStatement(
+                        "HMAC_ALGORITHMS.put($S, $S)", option.getWireValue(), mapHmacAlgorithm(option.getAlgorithm()));
+            }
+            helper.addStaticBlock(staticInit.build());
+        });
+
         helper.addMethod(buildDefaultAlgorithmOverload(String.class));
         helper.addMethod(buildVerifySignatureMethod());
         if (config.getPayloadFormat().getBodySort().isPresent()) {
             helper.addMethod(buildDefaultAlgorithmOverload(MAP_REQUEST_BODY_TYPE));
             helper.addMethod(buildMapVerifySignatureMethod());
         }
+        config.getAlgorithmHeader().ifPresent(algorithmHeader -> {
+            helper.addMethod(buildVerifyRequestMethod(algorithmHeader, String.class));
+            helper.addMethod(buildVerifyRequestMethod(algorithmHeader, SIGNATURE_KEY_RESOLVER_TYPE));
+            helper.addMethod(buildVerifyRequestImplementation(algorithmHeader));
+            helper.addMethod(buildGetHeaderMethod());
+        });
 
         return GeneratedJavaFile.builder()
                 .className(className)
@@ -192,6 +219,15 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             "Webhook signature verification could not run: missing signature header";
     private static final String VERIFICATION_FAILED_MESSAGE =
             "Webhook signature verification failed: signature mismatch";
+    private static final String UNSUPPORTED_ALGORITHM_MESSAGE =
+            "Webhook signature verification could not run: unsupported algorithm";
+    private static final String UNRESOLVED_KEY_MESSAGE =
+            "Webhook signature verification could not run: signing key could not be resolved";
+
+    private static final TypeName HEADERS_TYPE = ParameterizedTypeName.get(
+            ClassName.get(Map.class), ClassName.get(String.class), WildcardTypeName.subtypeOf(Object.class));
+    private static final TypeName SIGNATURE_KEY_RESOLVER_TYPE = ParameterizedTypeName.get(
+            ClassName.get(java.util.function.Function.class), ClassName.get(String.class), ClassName.get(String.class));
 
     private static final ParameterSpec ALGORITHM_PARAMETER =
             ParameterSpec.builder(String.class, "algorithm").build();
@@ -313,6 +349,137 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         invocation.add(", algorithm)");
         method.addStatement(invocation.build());
         return method.build();
+    }
+
+    /**
+     * Public {@code verifyRequest} overloads: the signing key is either the secret itself (legacy auth token) or a
+     * {@code Function<String, String>} resolving the key ID carried in the algorithm-selection header to its secret.
+     * The SDK never holds shared-key secrets.
+     */
+    private MethodSpec buildVerifyRequestMethod(WebhookAlgorithmHeader algorithmHeader, TypeName signatureKeyType) {
+        MethodSpec.Builder method = MethodSpec.methodBuilder("verifyRequest")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(TypeName.BOOLEAN)
+                .addJavadoc(buildVerifyRequestJavadoc(algorithmHeader))
+                .addParameters(buildVerifyRequestParameters(signatureKeyType));
+        CodeBlock.Builder invocation = CodeBlock.builder().add("return verifyRequestWithKey(headers, requestBody");
+        for (ParameterSpec parameter : buildPayloadParameters()) {
+            invocation.add(", $L", parameter.name);
+        }
+        if (signatureKeyType.equals(SIGNATURE_KEY_RESOLVER_TYPE)) {
+            invocation.add(", signatureKey)");
+        } else {
+            invocation.add(", keyId -> signatureKey)");
+        }
+        method.addStatement(invocation.build());
+        return method.build();
+    }
+
+    private MethodSpec buildVerifyRequestMethod(WebhookAlgorithmHeader algorithmHeader, Class<?> signatureKeyType) {
+        return buildVerifyRequestMethod(algorithmHeader, TypeName.get(signatureKeyType));
+    }
+
+    private List<ParameterSpec> buildVerifyRequestParameters(TypeName signatureKeyType) {
+        List<ParameterSpec> parameters = new ArrayList<>();
+        parameters.add(ParameterSpec.builder(HEADERS_TYPE, "headers").build());
+        parameters.add(ParameterSpec.builder(String.class, "requestBody").build());
+        parameters.addAll(buildPayloadParameters());
+        parameters.add(ParameterSpec.builder(signatureKeyType, "signatureKey").build());
+        return parameters;
+    }
+
+    private MethodSpec buildVerifyRequestImplementation(WebhookAlgorithmHeader algorithmHeader) {
+        MethodSpec.Builder method = MethodSpec.methodBuilder("verifyRequestWithKey")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(TypeName.BOOLEAN)
+                .addParameters(buildVerifyRequestParameters(SIGNATURE_KEY_RESOLVER_TYPE))
+                .addStatement(
+                        "String signatureHeader = getHeader(headers, $S)",
+                        NameUtils.getWireValue(config.getSignatureHeaderName()))
+                .beginControlFlow("if (signatureHeader == null || signatureHeader.isEmpty())")
+                .addStatement("LOGGER.warning($S)", MISSING_SIGNATURE_MESSAGE)
+                .addStatement("return false")
+                .endControlFlow()
+                .addStatement("String keyId = null")
+                .addStatement("String algorithm = null")
+                .addStatement(
+                        "String settingsHeader = getHeader(headers, $S)",
+                        NameUtils.getWireValue(algorithmHeader.getHeaderName()))
+                .beginControlFlow("if (settingsHeader != null && !settingsHeader.isEmpty())")
+                .addStatement("String algorithmValue = settingsHeader");
+        algorithmHeader.getKeyIdDelimiter().ifPresent(delimiter -> method.addStatement(
+                        "int delimiterIndex = settingsHeader.lastIndexOf($S)", delimiter)
+                .beginControlFlow("if (delimiterIndex >= 0)")
+                .addStatement("keyId = settingsHeader.substring(0, delimiterIndex)")
+                .addStatement("algorithmValue = settingsHeader.substring(delimiterIndex + $L)", delimiter.length())
+                .endControlFlow());
+        method.beginControlFlow("if (!HMAC_ALGORITHMS.containsKey(algorithmValue))")
+                .addStatement("LOGGER.warning($S)", UNSUPPORTED_ALGORITHM_MESSAGE)
+                .addStatement("return false")
+                .endControlFlow()
+                .addStatement("algorithm = HMAC_ALGORITHMS.get(algorithmValue)")
+                .endControlFlow()
+                .addStatement("String resolvedKey = signatureKey == null ? null : signatureKey.apply(keyId)")
+                .beginControlFlow("if (resolvedKey == null || resolvedKey.isEmpty())")
+                .addStatement("LOGGER.warning($S)", UNRESOLVED_KEY_MESSAGE)
+                .addStatement("return false")
+                .endControlFlow();
+        CodeBlock.Builder invocation =
+                CodeBlock.builder().add("return verifySignature(requestBody, signatureHeader, resolvedKey");
+        for (ParameterSpec parameter : buildPayloadParameters()) {
+            invocation.add(", $L", parameter.name);
+        }
+        config.getTimestamp()
+                .ifPresent(timestamp -> invocation.add(
+                        ", getHeader(headers, $S)", NameUtils.getWireValue(timestamp.getHeaderName())));
+        invocation.add(", algorithm)");
+        method.addStatement(invocation.build());
+        return method.build();
+    }
+
+    /** Case-insensitive header lookup that unwraps single- and multi-valued header maps. */
+    private MethodSpec buildGetHeaderMethod() {
+        return MethodSpec.methodBuilder("getHeader")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(HEADERS_TYPE, "headers")
+                .addParameter(String.class, "name")
+                .beginControlFlow("if (headers == null)")
+                .addStatement("return null")
+                .endControlFlow()
+                .beginControlFlow("for ($T<String, ?> entry : headers.entrySet())", Map.Entry.class)
+                .beginControlFlow("if (entry.getKey() == null || !entry.getKey().equalsIgnoreCase(name))")
+                .addStatement("continue")
+                .endControlFlow()
+                .addStatement("Object value = entry.getValue()")
+                .beginControlFlow("if (value instanceof $T)", Iterable.class)
+                .addStatement("$T<?> iterator = (($T<?>) value).iterator()", Iterator.class, Iterable.class)
+                .addStatement("return iterator.hasNext() ? String.valueOf(iterator.next()) : null")
+                .endControlFlow()
+                .addStatement("return value == null ? null : String.valueOf(value)")
+                .endControlFlow()
+                .addStatement("return null")
+                .build();
+    }
+
+    private String buildVerifyRequestJavadoc(WebhookAlgorithmHeader algorithmHeader) {
+        StringBuilder javadoc = new StringBuilder("Verify an incoming webhook request from its headers.\n\n");
+        javadoc.append("Reads the signature from the \"")
+                .append(NameUtils.getWireValue(config.getSignatureHeaderName()))
+                .append("\" header (missing or empty means the request is unsigned and verification fails), then the \"")
+                .append(NameUtils.getWireValue(algorithmHeader.getHeaderName()))
+                .append("\" header to select the HMAC algorithm (");
+        javadoc.append(algorithmHeader.getAlgorithms().stream()
+                .map(option -> "\"" + option.getWireValue() + "\"")
+                .collect(java.util.stream.Collectors.joining(", ")));
+        javadoc.append(").\n");
+        algorithmHeader.getKeyIdDelimiter().ifPresent(delimiter -> javadoc.append(
+                        "The header value is {@code <keyId>" + delimiter
+                                + "<algorithm>}; the key ID is passed to the {@code signatureKey} resolver so the application can look up the matching secret.\n"));
+        javadoc.append("When that header is absent the configured default algorithm (\"")
+                .append(mapHmacAlgorithm(config.getAlgorithm()))
+                .append("\") is used and the resolver receives {@code null}.\n");
+        return javadoc.toString();
     }
 
     /**

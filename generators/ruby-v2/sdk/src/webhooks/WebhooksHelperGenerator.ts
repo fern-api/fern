@@ -8,6 +8,8 @@ import { Comments } from "../utils/comments.js";
 
 const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
 const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
+const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
 
 const DEFAULT_HELPER_CLASS_NAME = "WebhooksHelper";
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
@@ -199,6 +201,9 @@ export class WebhooksHelperGenerator {
         }
 
         class_.addMethod(this.buildVerifyMethod(config));
+        if (config.algorithmHeader != null) {
+            class_.addMethod(this.buildVerifyRequestMethod(config, config.algorithmHeader));
+        }
 
         rootModule.addStatement(class_);
 
@@ -367,6 +372,15 @@ export class WebhooksHelperGenerator {
         if (config.signaturePrefix != null) {
             constants.push(`SIGNATURE_PREFIX = ${rubyStringLiteral(config.signaturePrefix)}`);
         }
+        if (config.algorithmHeader != null) {
+            const entries = config.algorithmHeader.algorithms
+                .map(
+                    (option) =>
+                        `${rubyStringLiteral(option.wireValue)} => ${rubyStringLiteral(mapHmacAlgorithm(option.algorithm))}`
+                )
+                .join(", ");
+            constants.push(`HMAC_ALGORITHMS = { ${entries} }.freeze`);
+        }
         return constants;
     }
 
@@ -386,6 +400,124 @@ export class WebhooksHelperGenerator {
         });
         method.addStatement(ruby.codeblock((writer) => WebhooksHelperGenerator.writeMethodBody(writer, config)));
         return method;
+    }
+
+    private buildVerifyRequestMethod(
+        config: FernIr.HmacSignatureVerification,
+        algorithmHeader: FernIr.WebhookAlgorithmHeader
+    ): ruby.Method {
+        const params: ruby.KeywordParameter[] = [
+            ruby.parameters.keyword({
+                name: "headers",
+                type: ruby.Type.hash(
+                    ruby.Type.string(),
+                    ruby.Type.union([ruby.Type.string(), ruby.Type.array(ruby.Type.string())])
+                )
+            }),
+            ...this.buildParameters(config).filter(
+                (parameter) =>
+                    !["signature_header", "signature_key", "timestamp_header", "algorithm"].includes(parameter.name)
+            ),
+            // Either the signing secret itself or a `->(key_id) { ... }` resolver; the SDK never
+            // holds shared-key secrets, so the key ID parsed from the header is handed back.
+            ruby.parameters.keyword({
+                name: "signature_key",
+                type: ruby.Type.union([ruby.Type.string(), ruby.Type.object("Proc")])
+            })
+        ];
+        const method = ruby.method({
+            name: "verify_request",
+            kind: ruby.MethodKind.Class_,
+            parameters: { keyword: params },
+            returnType: ruby.Type.boolean(),
+            inlineComment: "rubocop:disable Naming/PredicateMethod"
+        });
+        method.addStatement(
+            ruby.codeblock((writer) => WebhooksHelperGenerator.writeVerifyRequestBody(writer, config, algorithmHeader))
+        );
+        return method;
+    }
+
+    /**
+     * Renders the body of the generated `verify_request` method to a string, for unit tests.
+     */
+    public static renderVerifyRequestBody(
+        config: FernIr.HmacSignatureVerification,
+        algorithmHeader: FernIr.WebhookAlgorithmHeader
+    ): string {
+        const writer = new ruby.Writer({ customConfig: {} });
+        WebhooksHelperGenerator.writeVerifyRequestBody(writer, config, algorithmHeader);
+        return writer.toString();
+    }
+
+    private static writeVerifyRequestBody(
+        writer: ruby.Writer,
+        config: FernIr.HmacSignatureVerification,
+        algorithmHeader: FernIr.WebhookAlgorithmHeader
+    ): void {
+        const headerLookup = (name: string): string =>
+            `headers.find { |k, _| k.to_s.casecmp?(${rubyStringLiteral(name)}) }&.last`;
+        writer.writeLine(`signature_header = ${headerLookup(getWireValue(config.signatureHeaderName))}`);
+        writer.writeLine("signature_header = signature_header.first if signature_header.is_a?(Array)");
+        writer.writeLine("if signature_header.nil? || signature_header.to_s.empty?");
+        writer.indent();
+        writer.writeLine(`warn(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)})`);
+        writer.writeLine("return false");
+        writer.dedent();
+        writer.writeLine("end");
+        writer.newLine();
+        writer.writeLine("key_id = nil");
+        writer.writeLine("algorithm = nil");
+        writer.writeLine(`settings_header = ${headerLookup(getWireValue(algorithmHeader.headerName))}`);
+        writer.writeLine("settings_header = settings_header.first if settings_header.is_a?(Array)");
+        writer.writeLine("unless settings_header.nil? || settings_header.to_s.empty?");
+        writer.indent();
+        if (algorithmHeader.keyIdDelimiter != null) {
+            writer.writeLine(
+                `key_id, _, algorithm_value = settings_header.to_s.rpartition(${rubyStringLiteral(algorithmHeader.keyIdDelimiter)})`
+            );
+            writer.writeLine("key_id = nil if key_id.empty?");
+        } else {
+            writer.writeLine("algorithm_value = settings_header.to_s");
+        }
+        writer.writeLine("unless HMAC_ALGORITHMS.key?(algorithm_value)");
+        writer.indent();
+        writer.writeLine(`warn(${JSON.stringify(UNSUPPORTED_ALGORITHM_MESSAGE)})`);
+        writer.writeLine("return false");
+        writer.dedent();
+        writer.writeLine("end");
+        writer.writeLine("algorithm = algorithm_value");
+        writer.dedent();
+        writer.writeLine("end");
+        writer.newLine();
+        writer.writeLine(
+            "resolved_key = signature_key.respond_to?(:call) ? signature_key.call(key_id) : signature_key"
+        );
+        writer.writeLine("if resolved_key.nil? || resolved_key.to_s.empty?");
+        writer.indent();
+        writer.writeLine(`warn(${JSON.stringify(UNRESOLVED_KEY_MESSAGE)})`);
+        writer.writeLine("return false");
+        writer.dedent();
+        writer.writeLine("end");
+        writer.newLine();
+        writer.writeLine("verify_signature(");
+        writer.indent();
+        writer.writeLine("request_body: request_body,");
+        writer.writeLine("signature_header: signature_header,");
+        writer.writeLine("signature_key: resolved_key,");
+        for (const component of config.payloadFormat.components) {
+            if (component === "NOTIFICATION_URL") {
+                writer.writeLine("notification_url: notification_url,");
+            } else if (component === "MESSAGE_ID") {
+                writer.writeLine("message_id: message_id,");
+            }
+        }
+        if (config.timestamp != null) {
+            writer.writeLine(`timestamp_header: ${headerLookup(getWireValue(config.timestamp.headerName))}.to_s,`);
+        }
+        writer.writeLine("algorithm: algorithm");
+        writer.dedent();
+        writer.writeLine(")");
     }
 
     /**
@@ -488,7 +620,7 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine("payload: payload,");
         writer.writeLine("secret: signature_key,");
-        writer.writeLine(`algorithm: algorithm || "${algorithm}",`);
+        writer.writeLine(`algorithm: ${WebhooksHelperGenerator.algorithmExpression(config)},`);
         writer.writeLine(`encoding: "${encoding}"`);
         writer.dedent();
         writer.writeLine(")");
@@ -497,6 +629,14 @@ export class WebhooksHelperGenerator {
         writer.writeLine(`valid = Internal::WebhookSignature.timing_safe_equal(${signatureExpr}, expected)`);
         writer.writeLine(`warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)}) unless valid`);
         writer.writeLine("valid");
+    }
+
+    private static algorithmExpression(config: FernIr.HmacSignatureVerification): string {
+        const fallback = `"${mapHmacAlgorithm(config.algorithm)}"`;
+        if (config.algorithmHeader == null) {
+            return `algorithm || ${fallback}`;
+        }
+        return `algorithm.nil? ? ${fallback} : HMAC_ALGORITHMS.fetch(algorithm, algorithm)`;
     }
 
     private static writeTimestampValidation(writer: ruby.Writer, timestamp: FernIr.WebhookTimestampConfig): void {
@@ -795,7 +935,7 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine("payload: payload,");
         writer.writeLine("secret: signature_key,");
-        writer.writeLine(`algorithm: algorithm || "${algorithm}",`);
+        writer.writeLine(`algorithm: ${WebhooksHelperGenerator.algorithmExpression(config)},`);
         writer.writeLine(`encoding: "${encoding}"`);
         writer.dedent();
         writer.writeLine(")");
