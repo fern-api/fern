@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.30.4
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` now consumes `algorithm-header` from `api.settings.webhook-signature`:
+        a request-level `verifyRequest` helper reads the configured signature header first (missing or empty
+        fails early with "could not run: missing signature header"), then the algorithm-selection header
+        (e.g. `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`) to pick the HMAC algorithm from
+        the configured wire values and hand the key ID to an application-supplied secret resolver. When the
+        header is absent the configured default algorithm and the plain secret are used, so legacy
+        auth-token flows keep working. The lower-level `verifySignature` is unchanged and still returns
+        `false` without throwing.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 2.30.3
   changelogEntry:
     - summary: |
