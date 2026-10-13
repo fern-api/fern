@@ -164,7 +164,6 @@ export declare namespace SdkGenerator {
         fetchSupport: "node-fetch" | "native";
         packagePath: string | undefined;
         omitFernHeaders: boolean;
-        requestIdHeader: string | undefined;
         includePlatformHeaders: boolean;
         userAgentOnly: boolean;
         allowUserAgentAppInfo: boolean;
@@ -606,9 +605,7 @@ export class SdkGenerator {
             skipResponseValidation: config.skipResponseValidation,
             websocketHandlerMode: config.websocketHandlerMode
         });
-        this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator({
-            requestIdHeader: config.requestIdHeader
-        });
+        this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
         this.nonStatusCodeErrorHandlerGenerator = new NonStatusCodeErrorHandlerGenerator();
         this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
