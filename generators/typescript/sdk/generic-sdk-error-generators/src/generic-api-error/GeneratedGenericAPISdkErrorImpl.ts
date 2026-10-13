@@ -13,7 +13,6 @@ import {
 export declare namespace GeneratedGenericAPISdkErrorImpl {
     export interface Init {
         errorClassName: string;
-        requestIdHeader?: string;
     }
 }
 
@@ -36,13 +35,11 @@ export class GeneratedGenericAPISdkErrorImpl
 
     private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
     private static readonly REQUEST_ID_PROPERTY_NAME = "requestId";
-    private static readonly DEFAULT_REQUEST_ID_HEADER = "X-Request-Id";
+    private static readonly REQUEST_ID_HEADER = "X-Request-Id";
+    private static readonly REQUEST_ID_HEADER_FALLBACK_PATTERN = "/request[-_]?id$/i";
 
-    private readonly requestIdHeader: string;
-
-    constructor({ errorClassName, requestIdHeader }: GeneratedGenericAPISdkErrorImpl.Init) {
+    constructor({ errorClassName }: GeneratedGenericAPISdkErrorImpl.Init) {
         super({ errorClassName });
-        this.requestIdHeader = requestIdHeader ?? GeneratedGenericAPISdkErrorImpl.DEFAULT_REQUEST_ID_HEADER;
     }
 
     public writeToFile(context: FileContext): void {
@@ -352,7 +349,23 @@ export class GeneratedGenericAPISdkErrorImpl
             returnType: "string | undefined",
             scope: Scope.Public,
             statements: [
-                `return this.${GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME}?.headers?.get(${JSON.stringify(this.requestIdHeader)}) ?? undefined;`
+                [
+                    `const headers = this.${GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME}?.headers;`,
+                    "if (headers == null) {",
+                    "    return undefined;",
+                    "}",
+                    `const requestId = headers.get(${JSON.stringify(GeneratedGenericAPISdkErrorImpl.REQUEST_ID_HEADER)});`,
+                    "if (requestId != null) {",
+                    "    return requestId;",
+                    "}",
+                    "let fallback: string | undefined;",
+                    "headers.forEach((value, name) => {",
+                    `    if (fallback === undefined && ${GeneratedGenericAPISdkErrorImpl.REQUEST_ID_HEADER_FALLBACK_PATTERN}.test(name)) {`,
+                    "        fallback = value;",
+                    "    }",
+                    "});",
+                    "return fallback;"
+                ].join("\n")
             ]
         });
     }

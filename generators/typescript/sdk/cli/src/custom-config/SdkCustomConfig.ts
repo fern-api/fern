@@ -73,7 +73,6 @@ export interface SdkCustomConfig {
     fetchSupport: "node-fetch" | "native";
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
-    requestIdHeader: string | undefined;
     includePlatformHeaders: boolean | undefined;
     userAgentOnly: boolean | undefined;
     allowUserAgentAppInfo: boolean | undefined;
