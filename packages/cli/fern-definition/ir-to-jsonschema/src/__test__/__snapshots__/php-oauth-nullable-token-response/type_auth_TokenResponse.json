@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "expires_in": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "refresh_token": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "An OAuth token response whose properties are all optional, as is common\nfor OpenAPI specs that do not mark `access_token` / `expires_in` as required.",
+  "definitions": {}
+}
