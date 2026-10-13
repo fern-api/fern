@@ -7,6 +7,8 @@
         `https://api.{edge}.{region}.example.com` with `edge: { default: "" }` resolves to
         `https://api.us1.example.com` instead of `https://api..us1.example.com`.
       type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 5.156.0
   changelogEntry:
     - summary: |
