@@ -1592,6 +1592,43 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(JSON.stringify(request)).not.toContain("secret");
     });
 
+    it.each([
+        ["${MY_NUGET_KEY}", { apiKeyEnvironmentVariable: "MY_NUGET_KEY" }],
+        ["OIDC", {}],
+        ["literal-nuget-key", {}]
+    ])("maps a legacy NuGet apiKey of %s to a secret name only when it names one", (apiKey, expectedExtra) => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: invocation({
+                name: "fernapi/fern-csharp-sdk",
+                language: "csharp",
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner: "acme",
+                        repo: "dotnet-sdk",
+                        reviewers: [],
+                        publishInfo: FernFiddle.GithubPublishInfo.nuget({
+                            registryUrl: "https://api.nuget.org/v3/index.json",
+                            packageName: "Acme.Sdk",
+                            apiKey
+                        })
+                    })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(Buffer.from("bundle"))
+        });
+
+        expect(request.targets[0]?.requestedOutput).toMatchObject({
+            type: "github",
+            publish: { registry: "nuget", url: "https://api.nuget.org/v3/index.json", ...expectedExtra }
+        });
+        expect(JSON.stringify(request)).not.toContain("literal-nuget-key");
+    });
+
     it("maps direct registry publication and package identity", () => {
         const request = createFernSdkGenApiRequest({
             apiName: "Petstore",

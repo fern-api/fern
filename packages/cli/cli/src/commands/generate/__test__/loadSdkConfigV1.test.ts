@@ -577,6 +577,64 @@ describe("loadSdkConfigV1", () => {
         });
     });
 
+    it("forwards a NuGet apiKey as a repository secret name without sending it in the SDK Config document", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet", mode: "pull-request" },
+                publish: { registry: "nuget", apiKey: "${MY_NUGET_KEY}" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-dotnet",
+            mode: "pull-request",
+            publish: { registry: "nuget", apiKeyEnvironmentVariable: "MY_NUGET_KEY" }
+        });
+        expect(loaded.payload.targets[0]?.body.toString("utf8")).not.toContain("MY_NUGET_KEY");
+    });
+
+    it("does not set a NuGet secret name when no apiKey is configured", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet" },
+                publish: { registry: "nuget" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toMatchObject({
+            publish: { registry: "nuget" }
+        });
+        expect(loaded.payload.targets[0]?.requestedOutput).not.toHaveProperty("publish.apiKeyEnvironmentVariable");
+    });
+
+    it("rejects a NuGet apiKey that is not an environment expression naming a secret", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet" },
+                publish: { registry: "nuget", apiKey: "literal-nuget-key" }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            "output.publish.apiKey for nuget must be an environment expression naming a repository secret"
+        );
+        await expect(loadSdkConfigV1(configPath)).rejects.not.toThrow("literal-nuget-key");
+    });
+
     it("preserves GitHub delivery while omitting registry publication credentials", async () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "typescript",

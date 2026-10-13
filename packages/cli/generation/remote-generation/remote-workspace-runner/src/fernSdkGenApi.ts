@@ -14,6 +14,7 @@ import { gunzipSync } from "zlib";
 import {
     type FernSdkGenApiPublishCredentialSource,
     MAX_PUBLISH_CREDENTIALS_BYTES,
+    parseSecretNameExpression,
     resolveFernSdkGenApiPublishCredentialSource,
     validateFernSdkGenApiPublishUrl,
     validateFernSdkGenApiPublishTargets as validatePublishTargets
@@ -75,6 +76,8 @@ export type FernSdkGenApiPublishRegistry =
 export interface FernSdkGenApiPublishConfig {
     registry: FernSdkGenApiPublishRegistry;
     url?: string;
+    /** Name of the repository secret the generated NuGet release workflow reads the API key from. */
+    apiKeyEnvironmentVariable?: string;
 }
 
 export interface FernSdkGenApiPackageConfig {
@@ -650,13 +653,15 @@ function mapMavenPublish(
 
 function mapNamedPublish(
     registry: "nuget" | "rubygems" | "crates",
-    output: { registryUrl: string; packageName: string } | undefined
+    output: { registryUrl: string; packageName: string; apiKey?: string } | undefined
 ): FernSdkGenApiPublicationMapping {
+    const apiKeyEnvironmentVariable = registry === "nuget" ? parseSecretNameExpression(output?.apiKey) : undefined;
     return {
         ...(output?.packageName ? { package: { packageName: output.packageName } } : {}),
         publish: {
             registry,
-            ...(output?.registryUrl ? { url: output.registryUrl } : {})
+            ...(output?.registryUrl ? { url: output.registryUrl } : {}),
+            ...(apiKeyEnvironmentVariable != null ? { apiKeyEnvironmentVariable } : {})
         }
     };
 }

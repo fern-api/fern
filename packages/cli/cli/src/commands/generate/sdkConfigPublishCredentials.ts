@@ -1,5 +1,8 @@
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import type { FernSdkGenApiPublishCredentialSource } from "@fern-api/remote-workspace-runner/direct-publish-credentials";
+import {
+    type FernSdkGenApiPublishCredentialSource,
+    parseSecretNameExpression
+} from "@fern-api/remote-workspace-runner/direct-publish-credentials";
 
 interface CredentialFields {
     token?: unknown;
@@ -14,21 +17,24 @@ export function sanitizeSdkConfigPublishCredentials(
 ): {
     sanitizedInput: unknown;
     credentials: Array<FernSdkGenApiPublishCredentialSource | undefined>;
+    /** Per target, the repository secret a NuGet release workflow reads its API key from. */
+    nugetApiKeySecretNames: Array<string | undefined>;
 } {
     if (!isRecord(input) || !Array.isArray(input.targets)) {
-        return { sanitizedInput: input, credentials: [] };
+        return { sanitizedInput: input, credentials: [], nugetApiKeySecretNames: [] };
     }
     const rootOutput = sanitizeOutput(input.output);
     const sanitizedTargets = input.targets.map((target) => {
         if (!isRecord(target)) {
-            return { target, credential: undefined };
+            return { target, credential: undefined, nugetApiKeySecretName: undefined };
         }
         const sanitized = sanitizeOutput(target.output);
         const targetOutput = isRecord(target) ? target.output : undefined;
         const output = targetOutput ?? input.output;
         return {
             target: sanitized.output === target.output ? target : { ...target, output: sanitized.output },
-            credential: isPreview ? undefined : extractPublishCredential(output)
+            credential: isPreview ? undefined : extractPublishCredential(output),
+            nugetApiKeySecretName: extractNugetApiKeySecretName(output)
         };
     });
     return {
@@ -37,8 +43,30 @@ export function sanitizeSdkConfigPublishCredentials(
             ...(rootOutput.output === input.output ? {} : { output: rootOutput.output }),
             targets: sanitizedTargets.map(({ target }) => target)
         },
-        credentials: sanitizedTargets.map(({ credential }) => credential)
+        credentials: sanitizedTargets.map(({ credential }) => credential),
+        nugetApiKeySecretNames: sanitizedTargets.map(({ nugetApiKeySecretName }) => nugetApiKeySecretName)
     };
+}
+
+/**
+ * A NuGet `apiKey` names the repository secret the generated release workflow reads, so it is
+ * forwarded as a name and never resolved. Anything else could be a literal key and is rejected.
+ */
+function extractNugetApiKeySecretName(output: unknown): string | undefined {
+    if (!isRecord(output) || !isRecord(output.publish) || output.publish.registry !== "nuget") {
+        return undefined;
+    }
+    const { apiKey } = output.publish;
+    if (apiKey == null) {
+        return undefined;
+    }
+    const secretName = typeof apiKey === "string" ? parseSecretNameExpression(apiKey) : undefined;
+    if (secretName == null) {
+        throw new Error(
+            "output.publish.apiKey for nuget must be an environment expression naming a repository secret, such as ${NUGET_API_KEY}"
+        );
+    }
+    return secretName;
 }
 
 function sanitizeOutput(value: unknown): { output: unknown } {
