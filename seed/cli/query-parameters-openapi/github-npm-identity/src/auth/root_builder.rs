@@ -103,6 +103,7 @@ impl AuthSchemeBuilder for BearerAuth {
 pub struct ApiKeyAuth {
     name: String,
     source: AuthCredentialSource,
+    prefix: Option<String>,
 }
 
 impl ApiKeyAuth {
@@ -112,7 +113,16 @@ impl ApiKeyAuth {
         Self {
             name: name.into(),
             source: AuthCredentialSource::Missing,
+            prefix: None,
         }
+    }
+
+    /// Send the key as `<prefix> <key>` (e.g. `prefix("Key")` →
+    /// `X-Api-Key: Key <key>`). Applies to every credential source, including
+    /// the keyring entry `auth login` stores, which holds the bare key.
+    pub fn prefix(mut self, prefix: impl Into<String>) -> Self {
+        self.prefix = Some(prefix.into());
+        self
     }
 
     /// Read the API key from an environment variable.
@@ -142,7 +152,20 @@ impl ApiKeyAuth {
 
 impl AuthSchemeBuilder for ApiKeyAuth {
     fn into_binding(self) -> (String, SchemeBinding) {
-        (self.name, SchemeBinding::Token(self.source))
+        let prefix = self
+            .prefix
+            .map(|prefix| prefix.trim().to_string())
+            .filter(|prefix| !prefix.is_empty());
+        match prefix {
+            Some(prefix) => (
+                self.name,
+                SchemeBinding::PrefixedToken {
+                    source: self.source,
+                    prefix,
+                },
+            ),
+            None => (self.name, SchemeBinding::Token(self.source)),
+        }
     }
 }
 
@@ -514,6 +537,47 @@ mod tests {
         assert!(
             matches!(binding, SchemeBinding::Token(AuthCredentialSource::Env(ref e)) if e == "API_KEY")
         );
+    }
+
+    #[test]
+    fn api_key_auth_with_prefix_builds_prefixed_token_binding() {
+        let (name, binding) = ApiKeyAuth::new("apiKey")
+            .env("API_KEY")
+            .prefix("Key")
+            .into_binding();
+        assert_eq!(name, "apiKey");
+        assert!(matches!(
+            binding,
+            SchemeBinding::PrefixedToken { source: AuthCredentialSource::Env(ref e), ref prefix }
+                if e == "API_KEY" && prefix == "Key"
+        ));
+    }
+
+    #[test]
+    fn api_key_auth_with_empty_prefix_builds_token_binding() {
+        let (_, binding) = ApiKeyAuth::new("apiKey").env("API_KEY").prefix("").into_binding();
+        assert!(matches!(binding, SchemeBinding::Token(_)));
+    }
+
+    #[test]
+    fn api_key_auth_with_whitespace_only_prefix_builds_token_binding() {
+        let (_, binding) = ApiKeyAuth::new("apiKey")
+            .env("API_KEY")
+            .prefix(" \t ")
+            .into_binding();
+        assert!(matches!(binding, SchemeBinding::Token(_)));
+    }
+
+    #[test]
+    fn api_key_auth_trims_padded_prefix() {
+        let (_, binding) = ApiKeyAuth::new("apiKey")
+            .env("API_KEY")
+            .prefix("  Key ")
+            .into_binding();
+        assert!(matches!(
+            binding,
+            SchemeBinding::PrefixedToken { ref prefix, .. } if prefix == "Key"
+        ));
     }
 
     #[test]

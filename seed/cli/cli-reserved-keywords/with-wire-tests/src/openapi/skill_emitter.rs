@@ -345,7 +345,9 @@ fn describe_scheme_type(scheme: &SecurityScheme) -> String {
 
 fn describe_binding_source(binding: &SchemeBinding) -> String {
     match binding {
-        SchemeBinding::Token(src) => describe_credential_source(src),
+        SchemeBinding::Token(src) | SchemeBinding::PrefixedToken { source: src, .. } => {
+            describe_credential_source(src)
+        }
         SchemeBinding::Basic { username, password } => {
             format!(
                 "HTTP basic — username: {}, password: {}",
@@ -392,7 +394,9 @@ fn collect_env_vars(bindings: &[(String, SchemeBinding)]) -> Vec<String> {
 
 fn collect_env_vars_from_binding(binding: &SchemeBinding, out: &mut Vec<String>) {
     match binding {
-        SchemeBinding::Token(src) => collect_env_vars_from_source(src, out),
+        SchemeBinding::Token(src) | SchemeBinding::PrefixedToken { source: src, .. } => {
+            collect_env_vars_from_source(src, out)
+        }
         SchemeBinding::Basic { username, password } => {
             collect_env_vars_from_source(username, out);
             collect_env_vars_from_source(password, out);

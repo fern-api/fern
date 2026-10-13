@@ -1,5 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { createLogger, LogLevel } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, mkdtemp, readdir, readFile, stat, writeFile } from "fs/promises";
 import { homedir, tmpdir } from "os";
@@ -596,6 +597,48 @@ describe("packLocalOutputForGroup", () => {
         await packLocalOutputForGroup({ group, context: createMockTaskContext(), packOnly: true });
 
         expect(await readdir(outputDir)).toEqual(["Package.swift"]);
+    });
+
+    it("packages a Rust crate with cargo and copies the .crate into fern-dist", async () => {
+        await writeFile(path.join(outputDir, "Cargo.toml"), '[package]\nname = "acme"\n');
+        await mkdir(path.join(outputDir, "target", "package"), { recursive: true });
+        await writeFile(path.join(outputDir, "target", "package", "acme-0.1.0.crate"), "crate-bytes");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-rust-sdk", language: "rust", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        expect(loggingExecaMock).toHaveBeenCalledWith(
+            expect.anything(),
+            "cargo",
+            ["package", "--allow-dirty", "--no-verify"],
+            expect.objectContaining({ cwd: outputDir })
+        );
+        expect(await readdir(path.join(outputDir, "fern-dist"))).toEqual(["acme-0.1.0.crate"]);
+    });
+
+    it("skips cargo and keeps the source when Rust output has no Cargo.toml (rust-model) and packOnly is set", async () => {
+        await mkdir(path.join(outputDir, "src"), { recursive: true });
+        await writeFile(path.join(outputDir, "src", "lib.rs"), "pub mod types;\n");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-rust-model", language: "rust", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+        const log = vi.fn<(level: LogLevel, ...args: string[]) => void>();
+
+        await packLocalOutputForGroup({
+            group,
+            context: createMockTaskContext({ logger: createLogger(log) }),
+            packOnly: true
+        });
+
+        expect(loggingExecaMock).not.toHaveBeenCalled();
+        expect(log).toHaveBeenCalledWith(LogLevel.Warn, expect.stringMatching(/No Cargo\.toml found/));
+        expect(await readdir(outputDir)).toEqual(["src"]);
     });
 
     it("keeps generated source alongside fern-dist when packOnly is not set", async () => {

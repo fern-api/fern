@@ -1265,6 +1265,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("ruby")) {
         return generatorsYml.GenerationLanguage.RUBY;
     }
+    if (generatorName.includes("rust")) {
+        return generatorsYml.GenerationLanguage.RUST;
+    }
     if (generatorName.includes("swift")) {
         return generatorsYml.GenerationLanguage.SWIFT;
     }

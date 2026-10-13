@@ -48,6 +48,13 @@ export interface IrSummary {
      * generated README.
      */
     whiteLabel: boolean;
+    /**
+     * `generationMetadata.requestedVersion`: the raw `--version` the Fern CLI
+     * was invoked with (or SDK Config's `sdkVersion`). Local-file-system
+     * output runs in `downloadFiles` mode, whose generator config carries no
+     * version, so this is the only place that version reaches the generator.
+     */
+    requestedVersion: string | undefined;
 }
 
 /**
@@ -78,7 +85,8 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
         headers: ir.headers,
         services: ir.services,
         environments: ir.environments,
-        whiteLabel: ir.readmeConfig?.whiteLabel ?? false
+        whiteLabel: ir.readmeConfig?.whiteLabel ?? false,
+        requestedVersion: ir.generationMetadata?.requestedVersion
     };
 }
 

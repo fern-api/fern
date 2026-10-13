@@ -1,4 +1,45 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.155.8
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` now migrates OAuth client-credentials auth. If one auth scheme cannot be
+        migrated, the other schemes are still written to `api.auth`. A `FERN_API_AUTH_SCHEME_OMITTED`
+        warning names the scheme that was left out and the fields it affects. `FERN_API_AUTH_FIELD_UNSUPPORTED`
+        reports OAuth settings that SDK Config cannot hold. OAuth token URLs follow the token endpoint's base
+        paths, namespaced references, and environment URL overrides; a token endpoint on a host that differs
+        by environment is reported instead of being pointed at the API base URL.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.7
+  changelogEntry:
+    - summary: |
+        Detect Rust as the language for `fernapi/fern-rust-sdk` and `fernapi/fern-rust-model` generators in
+        `generators.yml`. Previously the language was left unset, so `fern generate --package` reported
+        "Nothing to package" for Rust groups and Rust-specific CLI behavior (reserved-word casing, crates.io
+        version checks) was skipped. `--package` now builds a `.crate` for Rust SDK output and warns (keeping the
+        source) for Rust output without a `Cargo.toml`, such as `fern-rust-model` output.
+      type: fix
+    - summary: |
+        An auth scheme declared under the name `bearer`, `basic` or `oauth` in `auth-schemes` is now
+        used when `api.auth` references it. Previously the reference resolved to the built-in shorthand
+        of the same name and dropped the declaration, so settings such as `token.env` were lost and
+        generators fell back to a derived environment variable (for example `<CLI_NAME>_TOKEN`).
+        A declared auth scheme's `docs` now also reach the IR when the reference itself has no `docs`.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.6
+  changelogEntry:
+    - summary: |
+        `fern export` no longer marks `optional<T>` object properties (including union variant values and
+        multipart form fields), query parameters, headers, and request bodies as `nullable: true`. Optionality is already expressed by leaving them out of `required`, so the
+        extra flag turned every `optional<T>` into `optional<nullable<T>>` when the spec was imported or used
+        to generate an SDK. `nullable<T>` and `optional<nullable<T>>` still export with `nullable: true`, as do
+        `optional<T>` list items, map values, aliases, and responses, where `null` is how an absent value is sent.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 5.155.5
   changelogEntry:
     - summary: |

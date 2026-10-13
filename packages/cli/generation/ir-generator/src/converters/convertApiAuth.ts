@@ -105,11 +105,12 @@ function convertSchemeReference({
     endpointResolver: EndpointResolver;
     typeResolver: TypeResolver;
 }): AuthScheme {
-    const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
+    const convertNamedAuthSchemeReference = (reference: string, referenceDocs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];
         if (declaration == null) {
             throw new CliError({ message: "Unknown auth scheme: " + reference, code: CliError.Code.ReferenceError });
         }
+        const docs = referenceDocs ?? (typeof declaration === "object" ? declaration.docs : undefined);
         const playgroundDocs = typeof declaration === "object" ? declaration["playground-docs"] : undefined;
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
@@ -167,6 +168,12 @@ function convertSchemeReference({
     };
 
     const scheme = typeof reference === "string" ? reference : reference.scheme;
+
+    // A declared scheme whose name collides with a built-in shorthand (`bearer`, `basic`, `oauth`)
+    // must win, or its env var, token name and placeholder are silently dropped.
+    if (authSchemeDeclarations?.[scheme] != null) {
+        return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
+    }
 
     switch (scheme) {
         case "bearer":

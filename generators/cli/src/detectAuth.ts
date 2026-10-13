@@ -1,4 +1,5 @@
 import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { getWireValue } from "@fern-api/ir-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { toEnvVarPrefix } from "./identity.js";
 
@@ -31,6 +32,13 @@ export interface DetectedAuthBinding {
      * a valid-looking header that can never match.
      */
     basicHalf?: "username" | "password" | "both";
+    /**
+     * For `header`, the header the credential is sent in, the env var that
+     * supplies it, and the configured value prefix (`null` when the raw
+     * credential is sent). Lets the wire-test manifest assert the exact
+     * outgoing value rather than mere presence.
+     */
+    headerAuth?: { headerName: string; envVar: string; prefix: string | null };
     /**
      * For `oauth-client-credentials`, the resolved token-endpoint contract the
      * generated CLI actually calls at runtime. Consumed by the wire-test
@@ -116,7 +124,8 @@ export function authStrategyVariant(auth: {
  *
  *   - `bearer` → `.auth(BearerAuth::new("<key>").env("<env>"))`
  *   - `header` → `.auth(ApiKeyAuth::new("<key>").source(...))` with a
- *     `--api-key` flag tried first, falling back to the env var
+ *     `--api-key` flag tried first, falling back to the env var, plus
+ *     `.prefix("<prefix>")` when the scheme configures one
  *   - `basic` (both halves bound) → `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))`
  *     at root, so `auth status` enumerates the scheme [FER-11474]. The
  *     root `BasicAuth` builder lowers to the same `SchemeBinding::Basic`
@@ -209,13 +218,20 @@ function bindingForScheme(args: {
             // the env var. `.cli()` and `.env()` on the builder overwrite each
             // other, so the chain has to go through `.source(Chain([...]))`
             // rather than `.cli().env()`.
+            const prefix = header.prefix?.trim() ?? "";
+            const prefixCall = prefix !== "" ? `.prefix(${rustString(prefix)})` : "";
             return {
                 schemeName: header.key,
-                rustCall: `.auth(ApiKeyAuth::new("${header.key}").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("${flag}"), AuthCredentialSource::from_env("${env}")])))`,
+                rustCall: `.auth(ApiKeyAuth::new("${header.key}").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("${flag}"), AuthCredentialSource::from_env("${env}")]))${prefixCall})`,
                 placement: "root",
                 authTypeImport: "ApiKeyAuth, AuthCredentialSource",
                 envVars: [env],
-                kind: "header"
+                kind: "header",
+                headerAuth: {
+                    headerName: getWireValue(header.name),
+                    envVar: env,
+                    prefix: prefix !== "" ? prefix : null
+                }
             };
         },
         basic: (basic) => {
