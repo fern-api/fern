@@ -76,7 +76,8 @@ function isInternalProduct(product: docsYml.RawSchemas.ProductConfig): product i
 
 /**
  * Finds the product at the ref that corresponds to a product on the current branch:
- * a product with the same slug if there is one, else the first with the same display name.
+ * a product with the same slug if there is one, else the first with the same display name
+ * whose slug does not conflict.
  * Only internal products carry a slug, so an external product can only match by display name.
  */
 function findProductAtRef(
@@ -89,7 +90,12 @@ function findProductAtRef(
             return bySlug;
         }
     }
-    return products.find((product) => product.displayName === scope.displayName);
+    // Two different slugs mean two different products, even if their display names match.
+    return products.find(
+        (product) =>
+            product.displayName === scope.displayName &&
+            (scope.slug == null || !isInternalProduct(product) || product.slug == null)
+    );
 }
 
 /**

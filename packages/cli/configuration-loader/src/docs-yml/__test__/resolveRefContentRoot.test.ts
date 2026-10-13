@@ -180,6 +180,18 @@ describe("resolveRefContentRoot", () => {
             );
         });
 
+        it("does not match a same-name product whose slug differs", async () => {
+            const fernFolder = await makeProductsFolder();
+
+            await expect(
+                resolveRefContentRoot({
+                    materialized: materialized(fernFolder),
+                    scope: { type: "product", displayName: "Containers", slug: "kata" },
+                    context
+                })
+            ).rejects.toThrow(/Could not find product 'Containers'/);
+        });
+
         it("falls back to the product file's navigation when the product has no versions at the ref", async () => {
             const fernFolder = await makeProductsFolder();
 
