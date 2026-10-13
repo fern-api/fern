@@ -342,6 +342,7 @@ function renderMainRs(args: {
 
     if (banner != null) {
         const config = typeof banner === "string" ? { text: banner } : banner;
+        // Colours are already hex-validated in customConfig; escaping anyway keeps every Rust literal here safe on its own.
         const colorList = (colors: string[]) =>
             `&[${colors.map((color) => `"${escapeRustStringLiteral(color)}"`).join(", ")}]`;
         let bannerBuilder = `Banner::new("${escapeRustStringLiteral(config.text)}")`;

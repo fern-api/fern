@@ -23,8 +23,8 @@ use serde_json::Value;
 
 use crate::auth::root_builder::AuthSchemeBuilder;
 use crate::auth::SchemeBinding;
-pub use crate::banner::{Banner, BannerDirection};
 use crate::banner::BannerMode;
+pub use crate::banner::{Banner, BannerDirection};
 use crate::binding::{Binding, DispatchResult};
 use crate::error::{write_error_json, CliError, ErrorDisplayContext};
 use crate::formatter;
@@ -161,7 +161,9 @@ impl CliApp {
         }
     }
 
-    fn banner_mode(&self) -> BannerMode {
+    /// Only process stdout is probed for a terminal; a caller-supplied writer
+    /// (`output_is_stdout == false`) is treated as non-terminal, like a pipe.
+    fn banner_mode(&self, output_is_stdout: bool) -> BannerMode {
         #[cfg(test)]
         if let Some(mode) = self.banner_mode_override {
             return mode;
@@ -170,7 +172,7 @@ impl CliApp {
         let no_color = std::env::var_os("NO_COLOR");
         let term = std::env::var_os("TERM");
         crate::banner::banner_mode(
-            std::io::stdout().is_terminal(),
+            output_is_stdout && std::io::stdout().is_terminal(),
             no_color.as_deref(),
             term.as_deref(),
         )
@@ -693,7 +695,7 @@ impl CliApp {
         let prepare_error = self.prepare(&args);
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
         let mut out = std::io::stdout().lock();
-        let exit = rt.block_on(self.run_inner(args, prepare_error, &mut out));
+        let exit = rt.block_on(self.run_inner(args, prepare_error, &mut out, true));
         drop(out);
         std::process::exit(exit);
     }
@@ -710,11 +712,13 @@ impl CliApp {
         let prepare_error = self.prepare(&args);
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
         let mut out = std::io::stdout().lock();
-        rt.block_on(self.run_inner(args, prepare_error, &mut out))
+        rt.block_on(self.run_inner(args, prepare_error, &mut out, true))
     }
 
     /// Testable entry point that captures output into the provided
     /// writer instead of stdout. Returns `(exit_code, bytes_written)`.
+    /// The writer is never treated as a terminal, so the startup banner is
+    /// omitted.
     ///
     /// This is the preferred method for behavior tests — it avoids
     /// process-global stdout redirection (`gag`) which is racy under
@@ -728,7 +732,7 @@ impl CliApp {
         let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
         let prepare_error = self.prepare(&args);
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
-        rt.block_on(self.run_inner(args, prepare_error, &mut *out))
+        rt.block_on(self.run_inner(args, prepare_error, &mut *out, false))
     }
 
     /// One-time setup every entry point performs before the pipeline runs:
@@ -940,9 +944,10 @@ impl CliApp {
         args: Vec<std::ffi::OsString>,
         profile_error: Option<CliError>,
         out: &mut W,
+        output_is_stdout: bool,
     ) -> i32 {
         let banner_mode = if self.banner.is_some() {
-            self.banner_mode()
+            self.banner_mode(output_is_stdout)
         } else {
             BannerMode::Off
         };
@@ -2354,6 +2359,17 @@ mod tests {
         );
         assert!(!subcommand_help.contains("LOGO"));
         assert!(!subcommand_help.contains("\x1b[38;2;"));
+    }
+
+    #[test]
+    fn caller_supplied_writer_omits_the_banner() {
+        let help = help_output(
+            app_with_binding().banner(Banner::new("LOGO\n").colors(&["#ff0000"])),
+            &["test", "--help"],
+        );
+
+        assert!(!help.contains("LOGO"));
+        assert!(!help.contains("\x1b[38;2;"));
     }
 
     #[test]
