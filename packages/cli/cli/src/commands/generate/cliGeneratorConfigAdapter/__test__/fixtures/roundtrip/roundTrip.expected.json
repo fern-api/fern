@@ -61,12 +61,12 @@
     },
     "cli-oauth-login-flow": {
       "diff": [
-        "api.auth",
-        "auth-schemes"
+        "auth-schemes.OAuth2.error-redirect-url",
+        "auth-schemes.OAuth2.success-redirect-url"
       ],
-      "reason": "migrate on this branch cannot yet write the authorization-code scheme (FERN_API_AUTH_REQUIRES_REVIEW); fix(cli): migrate OAuth authorization-code public client IDs in fern sdk migrate (#18286) adds it. The translation maps it once migrate writes flows[].clientId.",
+      "reason": "SDK Config has no field for the browser-login success-redirect-url and error-redirect-url, so migrate drops them (FERN_API_AUTH_FIELD_UNSUPPORTED) and the CLI serves its built-in pages.",
       "docker": {
-        "translated": 10
+        "translated": 1
       }
     },
     "cli-profiles": {
