@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Populated with `grant_type` / `refresh_token` when an inferred bearer auth scheme sets
   `type: refresh-token`.
 
-## [v67.30.0] - 2026-10-05
+## [v67.31.0] - 2026-10-05
 
 - Add `HmacSignatureVerification.algorithmHeader` (optional `WebhookAlgorithmHeader`): a request
   header whose value selects the HMAC algorithm per request (optionally prefixed by a key ID,
