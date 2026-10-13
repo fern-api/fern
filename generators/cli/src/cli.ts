@@ -55,7 +55,13 @@ async function generate(configPath: string): Promise<void> {
             );
 
             const ir = await readIr(config.irFilepath);
-            const outputConfig = resolveOutputConfig(config.output);
+            const outputConfig = resolveOutputConfig(config.output, ir.requestedVersion);
+            if (outputConfig.ignoredRequestedVersion != null) {
+                // biome-ignore lint/suspicious/noConsole: generator CLI output
+                console.warn(
+                    `Ignoring requested version "${outputConfig.ignoredRequestedVersion}": Cargo package versions must be semver.`
+                );
+            }
             const outcome = await runPipeline({
                 outputDir: config.output.path,
                 customConfig: getCustomConfig(config),

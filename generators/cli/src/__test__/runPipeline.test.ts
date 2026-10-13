@@ -113,11 +113,13 @@ describe("runPipeline", () => {
         headers: overrides.headers ?? [],
         services: overrides.services ?? {},
         environments: overrides.environments,
-        whiteLabel: overrides.whiteLabel ?? false
+        whiteLabel: overrides.whiteLabel ?? false,
+        requestedVersion: overrides.requestedVersion
     });
 
     const localFilesConfig: ResolvedOutputConfig = {
-        version: "0.0.0",
+        version: undefined,
+        ignoredRequestedVersion: undefined,
         isGithubOutput: false,
         repoUrl: undefined,
         npmPublishInfo: undefined
@@ -125,6 +127,7 @@ describe("runPipeline", () => {
 
     const githubConfigNoNpm: ResolvedOutputConfig = {
         version: "1.0.0",
+        ignoredRequestedVersion: undefined,
         isGithubOutput: true,
         repoUrl: "https://github.com/acme/cli",
         npmPublishInfo: undefined
@@ -132,6 +135,7 @@ describe("runPipeline", () => {
 
     const githubConfig: ResolvedOutputConfig = {
         version: "1.5.0",
+        ignoredRequestedVersion: undefined,
         isGithubOutput: true,
         repoUrl: "https://github.com/acme/cli",
         npmPublishInfo: {
@@ -385,6 +389,7 @@ describe("runPipeline", () => {
 
         const versionedConfig: ResolvedOutputConfig = {
             version: "2.3.1",
+            ignoredRequestedVersion: undefined,
             isGithubOutput: false,
             repoUrl: undefined,
             npmPublishInfo: undefined
@@ -403,6 +408,30 @@ describe("runPipeline", () => {
 
         const lock = await readFile(path.join(outputDir, "Cargo.lock"), "utf-8");
         expect(lock).toContain('name = "fern-cli-sdk"\nversion = "2.3.1"');
+    });
+
+    it("keeps Cargo.toml and Cargo.lock on 0.0.0 together when no version is resolved", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+        // The shipped lock pins the template's own release version, so the
+        // lock has to be rewritten even when nothing was requested.
+        const templateLockPath = path.join(sdkTemplateDir, "Cargo.lock");
+        const templateLock = await readFile(templateLockPath, "utf-8");
+        await writeFile(templateLockPath, templateLock.replace('version = "0.0.0"', 'version = "0.18.1"'));
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: localFilesConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const cargo = await readFile(path.join(outputDir, "Cargo.toml"), "utf-8");
+        expect(cargo).toMatch(/^\[package\]\nname = "fern-cli-sdk"\nversion = "0\.0\.0"$/m);
+        const lock = await readFile(path.join(outputDir, "Cargo.lock"), "utf-8");
+        expect(lock).toContain('name = "fern-cli-sdk"\nversion = "0.0.0"');
     });
 
     it("does NOT emit .github/ when output mode is local_files (isGithubOutput: false)", async () => {

@@ -3301,7 +3301,7 @@ checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
 
 [[package]]
 name = "query_parameters_api_types"
-version = "0.0.0"
+version = "1.0.0"
 dependencies = [
  "base64",
  "chrono",
@@ -3313,7 +3313,7 @@ dependencies = [
 
 [[package]]
 name = "query_parameters_api_sdk"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "bytes",
  "chrono",
