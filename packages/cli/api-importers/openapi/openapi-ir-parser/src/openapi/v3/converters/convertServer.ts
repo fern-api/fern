@@ -59,10 +59,36 @@ function getServerUrl({
     );
 
     for (const [variable, value] of Object.entries(valuesToSubstitute)) {
-        url = url.replace(`{${variable}}`, encodeURIComponent(value));
+        url =
+            value === ""
+                ? removeOptionalVariable({ url, placeholder: `{${variable}}` })
+                : url.replace(`{${variable}}`, encodeURIComponent(value));
     }
 
     return url;
+}
+
+const URL_SEPARATORS = new Set([".", "-"]);
+
+/**
+ * A server variable with an empty default is optional: drop its placeholder together with one
+ * adjacent `.`/`-` separator (leading first) so `https://api.{edge}.{region}.example.com` becomes
+ * `https://api.{region}.example.com` rather than `https://api..{region}.example.com`.
+ */
+function removeOptionalVariable({ url, placeholder }: { url: string; placeholder: string }): string {
+    const index = url.indexOf(placeholder);
+    if (index === -1) {
+        return url;
+    }
+    const before = url.slice(0, index);
+    const after = url.slice(index + placeholder.length);
+    if (URL_SEPARATORS.has(before.charAt(before.length - 1))) {
+        return before.slice(0, -1) + after;
+    }
+    if (URL_SEPARATORS.has(after.charAt(0))) {
+        return before + after.slice(1);
+    }
+    return before + after;
 }
 
 function getServerName(

@@ -2038,11 +2038,36 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunction).toContain('const _edge = options?.edge ?? ""');
             expect(normalizeFunction).toContain('const _region = options?.region ?? "us1"');
             expect(normalizeFunction).toContain(
-                '[environments.TestEnvironment.Production, `https://api.${_edge === "" ? "" : `${_edge}.`}${_region}.example.com`]'
+                '[environments.TestEnvironment.Production, `https://api${_edge === "" ? "" : `.${_edge}`}.${_region}.example.com`]'
             );
             expect(normalizeFunction).toContain(
                 "[environments.TestEnvironment.Staging, `https://api.stage-${_region}.example.com`]"
             );
+        });
+
+        it("drops the leading separator of an optional server variable when both sides have one", () => {
+            const edge = createServerVariable({ id: "edge", name: "edge", default: "" });
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "Default",
+                baseUrlEnvVar: undefined,
+                environments: FernIr.Environments.singleBaseUrl({
+                    environments: [
+                        {
+                            id: "Default",
+                            name: casingsGenerator.generateName("Default"),
+                            url: "https://api.example.com",
+                            urlTemplate: "https://api-{edge}.example.com",
+                            urlVariables: [edge],
+                            audiences: undefined,
+                            defaultUrl: "https://api.example.com",
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            const normalizeFunction = getNormalizeFunction(ir);
+            expect(normalizeFunction).toContain('`https://api${_edge === "" ? "" : `-${_edge}`}.example.com`');
         });
 
         it("interpolates server variables into a single base URL", () => {

@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.155.9
+  changelogEntry:
+    - summary: |
+        OpenAPI server variables with an empty default are treated as optional: the resolved server URL
+        drops the placeholder together with one adjacent `.`/`-` separator, so
+        `https://api.{edge}.{region}.example.com` with `edge: { default: "" }` resolves to
+        `https://api.us1.example.com` instead of `https://api..us1.example.com`.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 5.155.8
   changelogEntry:
     - summary: |

@@ -70,13 +70,13 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
             const _environmentUrls = new Map<unknown, string>([
                 [
                     environments.SeedApiEnvironment.Production,
-                    `https://api.${_edge === "" ? "" : `${_edge}.`}${_region}.example.com`,
+                    `https://api${_edge === "" ? "" : `.${_edge}`}.${_region}.example.com`,
                 ],
                 [environments.SeedApiEnvironment.Staging, `https://api.stage-${_region}.example.com`],
             ]);
             baseUrl =
                 _environmentUrls.get(options?.environment) ??
-                `https://api.${_edge === "" ? "" : `${_edge}.`}${_region}.example.com`;
+                `https://api${_edge === "" ? "" : `.${_edge}`}.${_region}.example.com`;
         }
     }
 

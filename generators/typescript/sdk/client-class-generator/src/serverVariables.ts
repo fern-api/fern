@@ -119,8 +119,9 @@ const SEPARATORS = new Set([".", "-"]);
 
 /**
  * Substitutes an optional variable's placeholder so that, when the variable is the empty
- * string, the placeholder and one adjacent separator are dropped from the URL.
- * `api.{edge}.{region}` -> `api.${_edge === "" ? "" : `${_edge}.`}${_region}`.
+ * string, the placeholder and one adjacent separator are dropped from the URL. The leading
+ * separator wins so that `api-{edge}.example.com` drops the hyphen, not the dot.
+ * `api.{edge}.{region}` -> `api${_edge === "" ? "" : `.${_edge}`}.${_region}`.
  */
 function substituteOptionalPlaceholder(template: string, placeholder: string, localName: string): string {
     let result = "";
@@ -134,12 +135,12 @@ function substituteOptionalPlaceholder(template: string, placeholder: string, lo
         const after = rest.slice(index + placeholder.length);
         const trailing = after.charAt(0);
         const leading = before.charAt(before.length - 1);
-        if (SEPARATORS.has(trailing)) {
-            result += `${before}\${${localName} === "" ? "" : \`\${${localName}}${trailing}\`}`;
-            rest = after.slice(1);
-        } else if (SEPARATORS.has(leading)) {
+        if (SEPARATORS.has(leading)) {
             result += `${before.slice(0, -1)}\${${localName} === "" ? "" : \`${leading}\${${localName}}\`}`;
             rest = after;
+        } else if (SEPARATORS.has(trailing)) {
+            result += `${before}\${${localName} === "" ? "" : \`\${${localName}}${trailing}\`}`;
+            rest = after.slice(1);
         } else {
             result += `${before}\${${localName}}`;
             rest = after;
