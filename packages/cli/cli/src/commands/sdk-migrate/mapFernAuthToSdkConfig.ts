@@ -40,6 +40,13 @@ interface LostField {
 }
 
 type SchemeMapping = { scheme: SdkConfigAuthScheme; lostFields: LostField[] } | { unsupportedReason: string };
+type OAuthFlowMapping =
+    | {
+          flow: SdkConfigOAuthScheme["flows"][number];
+          credentials: Pick<SdkConfigOAuthScheme, "clientId" | "clientSecret">;
+          lostFields: LostField[];
+      }
+    | { unsupportedReason: string };
 
 const AUTH_REQUIRES_REVIEW = "FERN_API_AUTH_REQUIRES_REVIEW";
 const AUTH_SCHEME_OMITTED = "FERN_API_AUTH_SCHEME_OMITTED";
@@ -192,19 +199,34 @@ function mapFernAuthScheme(
     });
 }
 
-const OAUTH_MAPPED_KEYS = new Set([
-    "scheme",
-    "type",
-    "docs",
-    "playground-docs",
-    "scopes",
-    "token-header",
-    "token-prefix",
+const OAUTH_SCHEME_KEYS = ["scheme", "type", "docs", "playground-docs", "scopes", "token-header", "token-prefix"];
+const CLIENT_CREDENTIALS_MAPPED_KEYS = new Set([
+    ...OAUTH_SCHEME_KEYS,
     "client-id-env",
     "client-secret-env",
     "get-token",
     "refresh-token"
 ]);
+const AUTHORIZATION_CODE_MAPPED_KEYS = new Set([
+    ...OAUTH_SCHEME_KEYS,
+    "client-id",
+    "authorization-url",
+    "token-url",
+    "refresh-url"
+]);
+const ENV_CLIENT_ID_REASON =
+    "flows[].clientId must be a literal public client ID, and schemes[].clientId holds a confidential client's runtime parameter, so an environment-variable client ID cannot be migrated";
+const AUTHORIZATION_CODE_FIELD_REASONS: Record<string, string> = {
+    "client-id-env": `${ENV_CLIENT_ID_REASON}; the literal client-id was written to flows[].clientId instead`,
+    "client-secret-env":
+        "an authorization-code flow is a public client, and schemes[].clientSecret holds confidential client credentials"
+};
+const AUTHORIZATION_CODE_REQUIRED_FIELDS = [
+    ["client-id", "flows[].clientId"],
+    ["authorization-url", "flows[].authorizationUrl"],
+    ["token-url", "flows[].tokenUrl"]
+] as const;
+const UNMAPPED_OAUTH_FIELD_REASON = "SDK Config v1 has no equivalent for this OAuth setting";
 // SDK Config carries no token request/response property names; consumers use these RFC 6749 names.
 const TOKEN_REQUEST_DEFAULTS: Record<string, string[]> = {
     "client-id": ["client_id"],
@@ -226,15 +248,41 @@ function mapFernOAuthScheme(
 ): SchemeMapping {
     // Fern defaults an omitted flow type to client credentials.
     const flowType: string = oauth.type ?? "client-credentials";
-    if (flowType === "authorization-code") {
-        return {
-            unsupportedReason:
-                "OAuth authorization-code needs a public client ID, which SDK Config v1 api.auth cannot hold yet"
-        };
+    const flowMapping =
+        flowType === "authorization-code"
+            ? mapAuthorizationCodeFlow(oauth)
+            : flowType === "client-credentials"
+              ? mapClientCredentialsFlow(oauth, definition)
+              : { unsupportedReason: `OAuth flow '${flowType}' has no SDK Config v1 equivalent` };
+    if ("unsupportedReason" in flowMapping) {
+        return flowMapping;
     }
-    if (flowType !== "client-credentials") {
-        return { unsupportedReason: `OAuth flow '${flowType}' has no SDK Config v1 equivalent` };
+
+    const lostFields = [...flowMapping.lostFields];
+    const tokenPrefix = oauth["token-prefix"];
+    if (tokenPrefix != null && tokenPrefix.trim().length === 0) {
+        lostFields.push({
+            path: ["token-prefix"],
+            reason: "SDK Config v1 tokenPrefix must be non-empty, so an empty prefix falls back to the consumer default"
+        });
     }
+    const scheme: SdkConfigOAuthScheme = {
+        id,
+        type: "oauth2",
+        flows: [flowMapping.flow],
+        ...flowMapping.credentials,
+        ...optional("tokenHeader", nonEmpty(oauth["token-header"])),
+        ...optional("tokenPrefix", nonEmpty(tokenPrefix)),
+        ...optional("description", description)
+    };
+    const validation = sdkConfigV1AuthSchemeSchema.safeParse(scheme);
+    if (!validation.success) {
+        return { unsupportedReason: `the migrated scheme is not valid SDK Config v1 (${validation.error.message})` };
+    }
+    return { scheme, lostFields };
+}
+
+function mapClientCredentialsFlow(oauth: RawSchemas.OAuthSchemeSchema, definition: FernDefinition): OAuthFlowMapping {
     const getToken = oauth["get-token"];
     if (getToken == null) {
         return { unsupportedReason: "the client-credentials flow has no get-token endpoint" };
@@ -245,12 +293,9 @@ function mapFernOAuthScheme(
             unsupportedReason: `its get-token endpoint '${getToken.endpoint}' ${token.failure}, so flows[].tokenUrl cannot be set`
         };
     }
-    const tokenUrl = token.url;
 
     const lostFields: LostField[] = [
-        ...Object.keys(oauth)
-            .filter((key) => !OAUTH_MAPPED_KEYS.has(key))
-            .map((key) => ({ path: [key], reason: "SDK Config v1 has no equivalent for this OAuth setting" })),
+        ...unmappedOAuthFields(oauth, CLIENT_CREDENTIALS_MAPPED_KEYS, {}),
         ...customPropertyNames(
             ["get-token", "request-properties"],
             getToken["request-properties"],
@@ -262,40 +307,70 @@ function mapFernOAuthScheme(
             TOKEN_RESPONSE_DEFAULTS
         )
     ];
-    const tokenPrefix = oauth["token-prefix"];
-    if (tokenPrefix != null && tokenPrefix.trim().length === 0) {
-        lostFields.push({
-            path: ["token-prefix"],
-            reason: "SDK Config v1 tokenPrefix must be non-empty, so an empty prefix falls back to the consumer default"
-        });
-    }
     const refreshUrl = mapRefreshEndpoint(oauth["refresh-token"], definition, lostFields);
-    const scopes = (oauth.scopes ?? []).map((name) => ({ name }));
-
-    const scheme: SdkConfigOAuthScheme = {
-        id,
-        type: "oauth2",
-        flows: [
-            {
-                type: "client-credentials",
-                tokenUrl,
-                ...optional("refreshUrl", refreshUrl),
-                ...(scopes.length === 0 ? {} : { scopes })
-            }
-        ],
-        ...(oauth["client-id-env"] == null ? {} : { clientId: { environmentVariable: oauth["client-id-env"] } }),
-        ...(oauth["client-secret-env"] == null
-            ? {}
-            : { clientSecret: { environmentVariable: oauth["client-secret-env"] } }),
-        ...optional("tokenHeader", nonEmpty(oauth["token-header"])),
-        ...optional("tokenPrefix", nonEmpty(tokenPrefix)),
-        ...optional("description", description)
+    return {
+        flow: {
+            type: "client-credentials",
+            tokenUrl: token.url,
+            ...optional("refreshUrl", refreshUrl),
+            ...mapOAuthScopes(oauth)
+        },
+        credentials: {
+            ...(oauth["client-id-env"] == null ? {} : { clientId: { environmentVariable: oauth["client-id-env"] } }),
+            ...(oauth["client-secret-env"] == null
+                ? {}
+                : { clientSecret: { environmentVariable: oauth["client-secret-env"] } })
+        },
+        lostFields
     };
-    const validation = sdkConfigV1AuthSchemeSchema.safeParse(scheme);
-    if (!validation.success) {
-        return { unsupportedReason: `the migrated scheme is not valid SDK Config v1 (${validation.error.message})` };
+}
+
+/**
+ * Fern's public-client authorization-code flow names its identity-provider URLs directly, so nothing is
+ * resolved against the definition. Its literal `client-id` becomes the public `flows[].clientId`; it
+ * never populates the confidential `schemes[].clientId`/`clientSecret` parameters.
+ */
+function mapAuthorizationCodeFlow(oauth: RawSchemas.OAuthSchemeSchema): OAuthFlowMapping {
+    const clientId = nonEmpty(oauth["client-id"]);
+    const authorizationUrl = nonEmpty(oauth["authorization-url"]);
+    const tokenUrl = nonEmpty(oauth["token-url"]);
+    if (clientId == null || authorizationUrl == null || tokenUrl == null) {
+        return { unsupportedReason: missingAuthorizationCodeFieldsReason(oauth) };
     }
-    return { scheme, lostFields };
+    return {
+        flow: {
+            type: "authorization-code",
+            authorizationUrl,
+            tokenUrl,
+            ...optional("refreshUrl", oauth["refresh-url"]),
+            ...mapOAuthScopes(oauth),
+            clientId
+        },
+        credentials: {},
+        lostFields: unmappedOAuthFields(oauth, AUTHORIZATION_CODE_MAPPED_KEYS, AUTHORIZATION_CODE_FIELD_REASONS)
+    };
+}
+
+function missingAuthorizationCodeFieldsReason(oauth: RawSchemas.OAuthSchemeSchema): string {
+    const missing = AUTHORIZATION_CODE_REQUIRED_FIELDS.filter(([key]) => nonEmpty(oauth[key]) == null);
+    const reason = `its authorization-code flow has no ${missing.map(([key]) => key).join(", ")}, so ${missing.map(([, target]) => target).join(", ")} cannot be set`;
+    const envOnly = nonEmpty(oauth["client-id"]) == null && oauth["client-id-env"] != null;
+    return envOnly ? `${reason}; it sets client-id-env, but ${ENV_CLIENT_ID_REASON}` : reason;
+}
+
+function unmappedOAuthFields(
+    oauth: RawSchemas.OAuthSchemeSchema,
+    mappedKeys: ReadonlySet<string>,
+    reasons: Record<string, string>
+): LostField[] {
+    return Object.keys(oauth)
+        .filter((key) => !mappedKeys.has(key))
+        .map((key) => ({ path: [key], reason: reasons[key] ?? UNMAPPED_OAUTH_FIELD_REASON }));
+}
+
+function mapOAuthScopes(oauth: RawSchemas.OAuthSchemeSchema): { scopes?: Array<{ name: string }> } {
+    const scopes = (oauth.scopes ?? []).map((name) => ({ name }));
+    return scopes.length === 0 ? {} : { scopes };
 }
 
 function mapRefreshEndpoint(
