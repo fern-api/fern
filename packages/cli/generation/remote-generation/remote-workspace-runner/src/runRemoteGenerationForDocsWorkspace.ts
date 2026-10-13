@@ -39,6 +39,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     ciSource,
     deployerAuthor,
     loginCommand,
+    domainOverride,
     docsVisibility
 }: {
     organization: string;
@@ -60,6 +61,11 @@ export async function runRemoteGenerationForDocsWorkspace({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    /**
+     * Publish to this Fern-hosted domain instead of the instance URL in docs.yml
+     * (used for anonymous publishes, where the domain is minted by FDR).
+     */
+    domainOverride?: string;
     /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
     docsVisibility?: VisibilityFilter;
 }): Promise<string | undefined> {
@@ -83,7 +89,10 @@ export async function runRemoteGenerationForDocsWorkspace({
 
     // Get instances after env var substitution has been applied to the config
     // This ensures the full instance object including custom domains goes through env var replacement
-    const instances = docsWorkspace.config.instances;
+    const instances =
+        domainOverride != null
+            ? [{ ...(docsWorkspace.config.instances[0] ?? {}), url: domainOverride, customDomain: undefined }]
+            : docsWorkspace.config.instances;
 
     if (instances.length === 0) {
         context.failAndThrow("No instances specified in docs.yml! Cannot register docs.", undefined, {
@@ -92,7 +101,9 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    if (instances.length > 1 && instanceUrl == null) {
+    const selectedInstanceUrl = domainOverride != null ? undefined : instanceUrl;
+
+    if (instances.length > 1 && selectedInstanceUrl == null) {
         context.failAndThrow(
             `More than one docs instances. Please specify one (e.g. --instance ${instances[0]?.url})`,
             undefined,
@@ -102,13 +113,13 @@ export async function runRemoteGenerationForDocsWorkspace({
     }
 
     const maybeInstance =
-        instanceUrl != null ? instances.find((instance) => instance.url === instanceUrl) : instances[0];
+        selectedInstanceUrl != null ? instances.find((instance) => instance.url === selectedInstanceUrl) : instances[0];
 
     if (maybeInstance == null) {
         const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
         context.failAndThrow(
-            instanceUrl != null
-                ? `No docs instance found matching '${instanceUrl}'.\n\nAvailable instances:\n${available}`
+            selectedInstanceUrl != null
+                ? `No docs instance found matching '${selectedInstanceUrl}'.\n\nAvailable instances:\n${available}`
                 : `No docs instance found. Failed to register.`,
             undefined,
             { code: CliError.Code.ConfigError }
