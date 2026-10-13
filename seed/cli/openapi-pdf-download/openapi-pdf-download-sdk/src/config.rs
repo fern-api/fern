@@ -42,7 +42,7 @@ impl Default for ClientConfig {
                     "X-Fern-SDK-Name".to_string(),
                     "openapi_pdf_download_sdk".to_string(),
                 ),
-                ("X-Fern-SDK-Version".to_string(), "0.1.0".to_string()),
+                ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
             user_agent: "Api Rust SDK".to_string(),
             reqwest_client: None,

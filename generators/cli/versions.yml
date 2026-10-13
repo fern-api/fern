@@ -1,4 +1,56 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.53.2
+  changelogEntry:
+    - summary: |
+        Header API-key schemes now send their configured prefix. An `auth-schemes` entry such as
+        `{ header: X-Api-Key, prefix: Key }` previously produced a CLI that sent the bare credential; it now
+        sends `X-Api-Key: Key <credential>` whether the key comes from the `--api-key` flag, the environment
+        variable, or the keyring entry `auth login` stores (which keeps holding the bare key). The prefix is
+        applied once, at request time, and schemes without a prefix are unchanged. The runtime gains
+        `ApiKeyAuth::prefix(...)`, `HeaderAuthProvider::with_prefix(...)`, and a
+        `SchemeBinding::PrefixedToken` variant; hand-written `custom.rs` code that matches `SchemeBinding`
+        exhaustively needs an arm for it.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.53.1
+  changelogEntry:
+    - summary: |
+        `fern generate --version <v>` (and SDK Config's `sdkVersion`) is now stamped into the generated CLI for
+        local-file-system output. That output runs in `downloadFiles` mode, whose generator config carries no
+        version, so the root `Cargo.toml`, its `Cargo.lock` entry, and `<cli> --version` always reported `0.0.0`.
+        The generator now falls back to the IR's `generationMetadata.requestedVersion` (semver only; `AUTO` and
+        non-semver values are ignored). The embedded `<cli>-sdk` and `<cli>-types` crates (including split type
+        crates) now carry the same version, so the SDK's `X-Fern-SDK-Version` header matches the CLI instead of a
+        fixed `0.1.0`. With no version supplied, output is unchanged (`0.0.0` root and types, `0.1.0` SDK).
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.53.0
+  changelogEntry:
+    - summary: |
+        Publish `@fern-api/cli-dynamic-snippets`, a browser-compatible generator that renders CLI command
+        snippets in docs from the dynamic IR — the same path the SDK languages use. The CLI generator
+        release now also builds, tests, and publishes this companion npm package (consumed by the docs
+        platform's snippet renderer). No change to the generated CLI itself.
+      type: feat
+    - summary: |
+        Shell completion is now dynamic, so TAB no longer hangs on large CLIs. `<cli> completion <shell>` used to print
+        a static script containing the whole command tree (14MB for zsh on a ~13.7k-command CLI, which took zsh over a
+        minute to parse on the first TAB). It now prints a ~1KB script that asks the binary for the candidates of the
+        current word on each TAB (via `<CLI>_COMPLETE=<shell>`), so the script never goes stale after an upgrade. The
+        zsh script works both sourced from `.zshrc` and installed as `_<cli>` in `$fpath`. JSON specs are also parsed
+        with serde_json instead of the YAML parser, roughly halving startup on CLIs with many embedded specs.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.52.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.2 updates.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
 - version: 0.52.0
   changelogEntry:
     - summary: |

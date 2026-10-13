@@ -3,7 +3,8 @@ import { mkdir, mkdtemp, rm } from "fs/promises";
 import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { generateWireTests } from "../wireTests/generateWireTests.js";
+import type { DetectedAuthBinding } from "../detectAuth.js";
+import { collectHeaderAuthValues, generateWireTests } from "../wireTests/generateWireTests.js";
 import { renderWireTestHarness } from "../wireTests/harness.js";
 import type { WireTestCase } from "../wireTests/manifest.js";
 import { buildWireTestManifest } from "../wireTests/manifest.js";
@@ -77,12 +78,16 @@ function makeAuthedIr(
     return ir as unknown as FernIr.IntermediateRepresentation;
 }
 
-function headerMatchersFor(ir: FernIr.IntermediateRepresentation): WireTestCase["headerMatchers"] {
+function headerMatchersFor(
+    ir: FernIr.IntermediateRepresentation,
+    headerAuthValues?: Array<{ headerName: string; value: string }>
+): WireTestCase["headerMatchers"] {
     const manifest = buildWireTestManifest(ir, {
         binaryName: "acme-cli",
         rootGroup: null,
         specs: [{ file: "cli/acme-cli/openapi0.json", namespace: null }],
-        authEnvVars: []
+        authEnvVars: [],
+        headerAuthValues
     });
     return manifest.cases[0]?.headerMatchers ?? [];
 }
@@ -103,6 +108,23 @@ describe("auth header matchers", () => {
         );
 
         expect(matchers).toEqual([{ name: "x-api-key", matches: ".+" }]);
+    });
+
+    it("pins an apiKey-in-header scheme to the exact value the CLI sends, prefix included", () => {
+        const matchers = headerMatchersFor(
+            makeAuthedIr({ type: "header", name: { wireValue: "x-api-key" }, prefix: "Key" }),
+            [{ headerName: "X-Api-Key", value: "Key test" }]
+        );
+
+        expect(matchers).toEqual([{ name: "x-api-key", equalTo: "Key test" }]);
+    });
+
+    it("leaves a bearer matcher alone when only header schemes are pinned", () => {
+        const matchers = headerMatchersFor(makeAuthedIr({ type: "bearer" }), [
+            { headerName: "X-Api-Key", value: "Key test" }
+        ]);
+
+        expect(matchers).toEqual([{ name: "Authorization", matches: "Bearer .+" }]);
     });
 
     it("emits a Bearer-prefixed regex for a bearer scheme", () => {
@@ -398,6 +420,65 @@ describe("renderWireTestHarness", () => {
     it("rejects a case id that is not a safe Rust identifier", () => {
         const badCase: WireTestCase = { ...searchCase, id: "bad-id" };
         expect(() => renderWireTestHarness({ binaryName: "acme-cli", cases: [badCase] })).toThrow(/Rust identifier/);
+    });
+});
+
+describe("collectHeaderAuthValues", () => {
+    const headerBinding = (envVar: string, headerName: string, prefix: string | null): DetectedAuthBinding => ({
+        schemeName: headerName,
+        rustCall: "",
+        placement: "root",
+        authTypeImport: null,
+        envVars: [envVar],
+        kind: "header",
+        headerAuth: { headerName, envVar, prefix }
+    });
+
+    it("joins the configured prefix and the seeded credential with one space", () => {
+        expect(
+            collectHeaderAuthValues(
+                [headerBinding("PREFIXED_KEY", "X-Api-Key", "Key"), headerBinding("RAW_KEY", "X-Raw-Key", null)],
+                [
+                    { name: "PREFIXED_KEY", value: "test" },
+                    { name: "RAW_KEY", value: "test" }
+                ]
+            )
+        ).toEqual([
+            { headerName: "X-Api-Key", value: "Key test" },
+            { headerName: "X-Raw-Key", value: "test" }
+        ]);
+    });
+
+    it("skips non-header bindings", () => {
+        const bearerBinding: DetectedAuthBinding = {
+            schemeName: "bearer",
+            rustCall: "",
+            placement: "root",
+            authTypeImport: null,
+            envVars: ["TOKEN"],
+            kind: "bearer"
+        };
+        expect(collectHeaderAuthValues([bearerBinding], [{ name: "TOKEN", value: "test" }])).toEqual([]);
+    });
+
+    it("reads the credential from the binding's declared header env var, not envVars[0]", () => {
+        const binding: DetectedAuthBinding = {
+            ...headerBinding("API_KEY", "X-Api-Key", "Key"),
+            envVars: ["OTHER", "API_KEY"]
+        };
+        expect(
+            collectHeaderAuthValues(
+                [binding],
+                [
+                    { name: "OTHER", value: "wrong" },
+                    { name: "API_KEY", value: "right" }
+                ]
+            )
+        ).toEqual([{ headerName: "X-Api-Key", value: "Key right" }]);
+    });
+
+    it("skips a header binding whose credential env var is not exported", () => {
+        expect(collectHeaderAuthValues([headerBinding("API_KEY", "X-Api-Key", "Key")], [])).toEqual([]);
     });
 });
 

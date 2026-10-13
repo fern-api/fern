@@ -165,6 +165,28 @@ same pass — `[package] name` and the lockfile must agree or
 `[lib] name = "fern_cli_sdk"` is deliberately **not** configurable: every
 `use fern_cli_sdk::...` in the vendored `src/` tree resolves through it.
 
+## Version
+
+`resolveOutputConfig` picks one version for the whole workspace:
+
+1. `config.output.mode.version` (github / publish modes)
+2. the IR's `generationMetadata.requestedVersion` — local-file-system
+   output runs in `downloadFiles` mode, whose config has no version slot,
+   so this is the only carrier for `fern generate --version` and SDK
+   Config's `sdkVersion`. Non-semver values (`AUTO`, `v1.2.3`) are dropped:
+   Cargo rejects them.
+3. none — root and types crates stay `0.0.0`, the SDK crate keeps the Rust
+   generator's `0.1.0`.
+
+The root `[package] version` is what `<cli> --version` and the User-Agent
+report (`env!("CARGO_PKG_VERSION")`); `patchCargoToml` rewrites the
+matching `Cargo.lock` entry on every run, since the shipped lock pins the
+template's own release. The embedded SDK (via the Rust SDK's
+`crateVersion`, which also feeds `X-Fern-SDK-Version`) and every types
+crate get the same version, matching the Rust generator stamping
+`--version` into each crate it emits. Their lock stanzas are derived from
+their manifests, so they follow automatically.
+
 ## Split type crates
 
 By default every generated model lands in a single `<binaryName>-types` crate.
@@ -375,7 +397,7 @@ Each scheme in the IR's `auth.schemes` is visited via
 | IR variant | Emitted call | Env var source |
 |---|---|---|
 | `bearer` | `.auth_scheme_env("<key>", "<env>")` | `scheme.tokenEnvVar` ?? `<BIN>_TOKEN` |
-| `header` | `.auth_scheme_env("<key>", "<env>")` | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
+| `header` | `.auth(ApiKeyAuth::new("<key>").source(<--api-key flag, then env>))`, plus `.prefix("<prefix>")` when the scheme sets one (sent as `<prefix> <credential>`, applied once at request time for every source, keyring included) | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
 | `basic` (both halves bound) | `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))` at root, so `auth status` enumerates it [FER-11474] | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}` |
 | `basic` (`usernameOmit`/`passwordOmit`) | `.auth_provider("<key>", BasicAuthProvider::…)` — stays binding-level; no root path for `BasicAuthProvider` | the bound half's env var; omitted half is a literal `""` |
 | `oauth` (`clientCredentials`) | `.auth(OAuth2Auth::new("<key>").client_id_env(...).client_secret_env(...).token_endpoint(OAuth2Endpoint::new(...))...)` at root, with structured token/refresh request and response mappings | `scheme.clientId/clientSecretEnvVar` plus deterministic env vars for custom request properties; optional properties are omitted when unset |

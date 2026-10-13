@@ -9,6 +9,7 @@ import {
     type AutomationRunOptions,
     type FernSdkConfigV1Payload,
     getFernSdkGenApiLanguage,
+    getFlagIndependentSdkGenApiRouting,
     resolveFernSdkGenApiEnabledByGenerator,
     selectGeneratorConfigRoute
 } from "@fern-api/remote-workspace-runner";
@@ -218,14 +219,24 @@ export async function generateAPIWorkspaces({
 
         // Start the per-generator flag requests now so they overlap login and the output-directory prompts.
         // Values are memoized per process, so the remote runner reuses them. Local (Docker) generation never
-        // routes through sdk-gen-api, so it makes no flag request. The helper never rejects, so the promise
-        // cannot go unobserved if a prompt below throws first.
+        // routes through sdk-gen-api, so it makes no flag request, and neither do SDK Config targets or
+        // post-cutover versions, whose routing the flag does not decide. The helper never rejects, so the
+        // promise cannot go unobserved if a prompt below throws first.
         const isAutomation = automation != null;
         const sdkGenApiEnabledByGenerator = useLocalDocker
             ? undefined
             : resolveFernSdkGenApiEnabledByGenerator({
                   organization: project.config.organization,
-                  generatorNames: listRequestedGenerators({ generations, isAutomation }).map(({ name }) => name)
+                  generatorNames: listRequestedGenerators({ generations, isAutomation })
+                      .filter(
+                          ({ name, version, kind }) =>
+                              getFlagIndependentSdkGenApiRouting({
+                                  generatorName: name,
+                                  version,
+                                  usesSdkConfig: kind === "sdk-config"
+                              }) == null
+                      )
+                      .map(({ name }) => name)
               });
 
         if (!useLocalDocker) {

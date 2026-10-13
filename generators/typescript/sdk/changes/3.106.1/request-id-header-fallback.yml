@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated API error's `requestId` getter now works without configuration for
+    APIs that return the request ID under a vendor-specific header: it reads
+    `X-Request-Id` and otherwise falls back to the first response header whose name
+    ends in `request-id` / `requestid` (e.g. `Twilio-Request-Id`, `x-amzn-RequestId`).
+    Removed the `requestIdHeader` config option introduced in 3.106.0.
+  type: fix

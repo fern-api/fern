@@ -18,4 +18,13 @@ describe("getPosthogManager", () => {
 
         expect(await getPosthogManager()).toBeInstanceOf(NoopPosthogManager);
     });
+
+    it("sends no events when the user opted out", async () => {
+        vi.stubEnv("POSTHOG_API_KEY", "phc_test");
+        vi.stubEnv("FERN_DISABLE_TELEMETRY", "true");
+        const { getPosthogManager } = await import("../src/getPosthogManager.js");
+        const { NoopPosthogManager } = await import("../src/NoopPosthogManager.js");
+
+        expect(await getPosthogManager()).toBeInstanceOf(NoopPosthogManager);
+    });
 });

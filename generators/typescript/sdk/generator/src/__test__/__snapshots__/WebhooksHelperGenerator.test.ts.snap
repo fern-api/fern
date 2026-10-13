@@ -478,6 +478,90 @@ export class WebhooksHelper {
 "
 `;
 
+exports[`WebhooksHelperGenerator > HMAC verification > writes verifyRequest when an algorithm header is configured 1`] = `
+"const HMAC_ALGORITHMS = { "HMAC_SHA1": "sha1", "HMAC_SHA256": "sha256" } as const;
+function getHeader(headers: Record<string, string | string[] | undefined>, name: string): string | undefined {
+    const lower = name.toLowerCase();
+    for (const key of Object.keys(headers)) {
+        if (key.toLowerCase() === lower) {
+            const value = headers[key];
+            return Array.isArray(value) ? value[0] : value;
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Twilio-Signature" header and pass it as the signatureHeader parameter.
+ * The requestBody parameter accepts either a raw string or a Record<string, string | string[]> of POST body parameters.
+ * When a Record is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string | Record<string, string | string[]>, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "HMAC_SHA1" | "HMAC_SHA256"): Promise<boolean> {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
+            return false;
+        }
+
+        const bodyString = typeof requestBody === "string"
+            ? requestBody
+            : Object.keys(requestBody)
+                .sort()
+                .map((key) => {
+                    const value = requestBody[key];
+                    const values = Array.isArray(value) ? value : [value];
+                    return Array.from(new Set(values))
+                        .sort()
+                        .map((v) => key + v)
+                        .join("");
+                })
+                .join("");
+        const payload = [notificationUrl, bodyString].join("");
+
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm != null ? (HMAC_ALGORITHMS[algorithm] ?? algorithm) : "sha1", encoding: "base64" });
+
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
+    }
+
+    public static async verifyRequest(headers: Record<string, string | string[] | undefined>, requestBody: string | Record<string, string | string[]>, notificationUrl: string, signatureKey: string | ((keyId: string | undefined) => string | undefined | Promise<string | undefined>)): Promise<boolean> {
+        const signatureHeader = getHeader(headers, "X-Twilio-Signature");
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        const settingsHeader = getHeader(headers, "X-Twilio-Webhook-Signature-Settings");
+        let keyId: string | undefined;
+        let algorithm: keyof typeof HMAC_ALGORITHMS | undefined;
+        if (settingsHeader != null && settingsHeader !== "") {
+            const delimiterIndex = settingsHeader.lastIndexOf(";");
+            const algorithmValue = delimiterIndex >= 0 ? settingsHeader.slice(delimiterIndex + 1) : settingsHeader;
+            keyId = delimiterIndex >= 0 ? settingsHeader.slice(0, delimiterIndex) : undefined;
+            if (!Object.prototype.hasOwnProperty.call(HMAC_ALGORITHMS, algorithmValue)) {
+                console.warn("Webhook signature verification could not run: unsupported algorithm");
+                return false;
+            }
+            algorithm = algorithmValue as keyof typeof HMAC_ALGORITHMS;
+        }
+        const resolvedKey = typeof signatureKey === "function" ? await signatureKey(keyId) : signatureKey;
+        if (resolvedKey == null || resolvedKey === "") {
+            console.warn("Webhook signature verification could not run: signing key could not be resolved");
+            return false;
+        }
+        return WebhooksHelper.verifySignature(requestBody, signatureHeader, resolvedKey, notificationUrl, algorithm);
+    }
+}
+"
+`;
+
 exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric RSA_SHA256 class with static key 1`] = `
 "/**
  * Verify an asymmetric webhook signature.

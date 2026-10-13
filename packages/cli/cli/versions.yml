@@ -1,4 +1,125 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.155.8
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` now migrates OAuth client-credentials auth. If one auth scheme cannot be
+        migrated, the other schemes are still written to `api.auth`. A `FERN_API_AUTH_SCHEME_OMITTED`
+        warning names the scheme that was left out and the fields it affects. `FERN_API_AUTH_FIELD_UNSUPPORTED`
+        reports OAuth settings that SDK Config cannot hold. OAuth token URLs follow the token endpoint's base
+        paths, namespaced references, and environment URL overrides; a token endpoint on a host that differs
+        by environment is reported instead of being pointed at the API base URL.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.7
+  changelogEntry:
+    - summary: |
+        Detect Rust as the language for `fernapi/fern-rust-sdk` and `fernapi/fern-rust-model` generators in
+        `generators.yml`. Previously the language was left unset, so `fern generate --package` reported
+        "Nothing to package" for Rust groups and Rust-specific CLI behavior (reserved-word casing, crates.io
+        version checks) was skipped. `--package` now builds a `.crate` for Rust SDK output and warns (keeping the
+        source) for Rust output without a `Cargo.toml`, such as `fern-rust-model` output.
+      type: fix
+    - summary: |
+        An auth scheme declared under the name `bearer`, `basic` or `oauth` in `auth-schemes` is now
+        used when `api.auth` references it. Previously the reference resolved to the built-in shorthand
+        of the same name and dropped the declaration, so settings such as `token.env` were lost and
+        generators fell back to a derived environment variable (for example `<CLI_NAME>_TOKEN`).
+        A declared auth scheme's `docs` now also reach the IR when the reference itself has no `docs`.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.6
+  changelogEntry:
+    - summary: |
+        `fern export` no longer marks `optional<T>` object properties (including union variant values and
+        multipart form fields), query parameters, headers, and request bodies as `nullable: true`. Optionality is already expressed by leaving them out of `required`, so the
+        extra flag turned every `optional<T>` into `optional<nullable<T>>` when the spec was imported or used
+        to generate an SDK. `nullable<T>` and `optional<nullable<T>>` still export with `nullable: true`, as do
+        `optional<T>` list items, map values, aliases, and responses, where `null` is how an absent value is sent.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.5
+  changelogEntry:
+    - summary: |
+        SDK Config GitHub delivery through sdk-gen-api now reports its outcome. The CLI prints the pull
+        request link when one is created, says explicitly when no changes were detected and nothing was
+        delivered, and fails instead of reporting success when sdk-gen-api never confirms the delivery.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.4
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` now keeps publish usernames written as plain text (such as the PyPI token
+        username `__token__`) instead of dropping them, which made `fern generate` fail with "Direct
+        pypi publication through sdk-gen-api requires username". Maven usernames are still omitted
+        unless they are environment variables, because Sonatype user tokens make them secret.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.3
+  changelogEntry:
+    - summary: |
+        Add `algorithm-header` to HMAC `webhook-signature` blocks (including
+        `api.settings.webhook-signature`). It names a request header whose value selects the
+        HMAC algorithm per request, optionally prefixed by a key ID
+        (e.g. Twilio's `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`), and maps the
+        allowed header values (`HMAC_SHA1`, `HMAC_SHA256`) to algorithms. Compiled into
+        `HmacSignatureVerification.algorithmHeader` in the IR so generated verifiers can read the
+        algorithm and key ID from the request themselves.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.2
+  changelogEntry:
+    - summary: |
+        Each feature flag evaluation now also sends a `feature_flag_evaluated` event with the same
+        properties (`org`, `environment`, `generator`, `language`, `version`) and the flag `response`
+        and `enabled` result. PostHog keeps only about one `$feature_flag_called` per org, flag, and
+        value per hour, so that event cannot count evaluations per generator; this one can.
+      type: fix
+    - summary: |
+        `fern generate` now routes SDK Config runs and generator versions at or past their SDK Config
+        cutover (for example TypeScript 4.0.0+, Python 6.0.0+) through sdk-gen-api regardless of the
+        `use-sdk-gen-api` feature flag, which now only governs earlier versions. A post-cutover version
+        configured in generators.yml always fails before generation with the `fern sdk migrate` /
+        `--sdk-config` error, instead of being sent to legacy generation when the flag is off.
+        `FERN_USE_SDK_GEN_API=false` still turns sdk-gen-api off, and `fernapi/fern-mcp-server` remains
+        gated by the flag.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.1
+  changelogEntry:
+    - summary: |
+        Feature flag usage events (`$feature_flag_called`) now carry the properties the flag was
+        evaluated with (`org`, `environment`, `generator`, `language`) plus the CLI `version`, and are
+        sent once per generator instead of once per org, so PostHog can break flag usage down by
+        generator, language, and release environment.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
+- version: 5.155.0
+  changelogEntry:
+    - summary: |
+        `fern docs dev` now runs the Astro docs preview server by default, matching how published Fern Docs sites render.
+        Pass `--legacy` to run the previous Next.js preview server. `--astro` is still accepted but no longer needed,
+        and `--beta` is now a deprecated alias for `--legacy`. `--private` now applies to the Astro preview too.
+        The older pages-router preview server that `--legacy` used to start is no longer available.
+      type: feat
+  createdAt: "2026-10-12"
+  irVersion: 67
+- version: 5.154.2
+  changelogEntry:
+    - summary: |
+        Feature flag checks now report usage to PostHog (`$feature_flag_called`) when CLI telemetry
+        is enabled, so flags like `use-sdk-gen-api` show usage metrics. Setting
+        `FERN_DISABLE_TELEMETRY=true` still turns these events off; flag evaluation is unchanged.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
 - version: 5.154.1
   changelogEntry:
     - summary: |

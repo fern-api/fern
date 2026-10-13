@@ -14,6 +14,8 @@ WEBHOOKS_MODULE_NAME = "webhooks"
 WEBHOOKS_HELPER_FILE_NAME = "webhooks_helper"
 MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header"
 VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch"
+UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm"
+UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved"
 
 DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300
 
@@ -164,6 +166,17 @@ class WebhooksHelperGenerator:
                 "encoding": config.encoding.value,
                 "signaturePrefix": config.signature_prefix,
                 "signatureHeaderName": _wire_value(config.signature_header_name),
+                "algorithmHeader": (
+                    None
+                    if config.algorithm_header is None
+                    else {
+                        "headerName": _wire_value(config.algorithm_header.header_name),
+                        "keyIdDelimiter": config.algorithm_header.key_id_delimiter,
+                        "algorithms": [
+                            [option.wire_value, option.algorithm.value] for option in config.algorithm_header.algorithms
+                        ],
+                    }
+                ),
                 "payloadFormat": {
                     "components": [component.value for component in config.payload_format.components],
                     "delimiter": config.payload_format.delimiter,
@@ -225,6 +238,7 @@ class _HmacHelperWriter:
         self._components = list(config.payload_format.components)
         self._body_hash_binding = config.body_hash_binding
         self._notification_url_normalization = config.notification_url_normalization
+        self._algorithm_header = config.algorithm_header
 
     def write(self) -> str:
         imports = self._build_imports()
@@ -253,7 +267,116 @@ class _HmacHelperWriter:
             lines.append(f"        {param},")
         lines.append("    ) -> bool:")
         lines.extend(_indent(body, 2))
+        if self._algorithm_header is not None:
+            lines.append("")
+            lines.append("    @staticmethod")
+            lines.append("    def verify_request(")
+            lines.append("        *,")
+            for param in self._build_verify_request_parameters():
+                lines.append(f"        {param},")
+            lines.append("    ) -> bool:")
+            lines.extend(_indent(self._build_verify_request_body(self._algorithm_header), 2))
         return "\n".join(lines) + "\n"
+
+    def _algorithm_param_type(self) -> str:
+        if self._algorithm_header is None:
+            return 'typing.Literal["sha1", "sha256", "sha384", "sha512"]'
+        options = ", ".join(json.dumps(option.wire_value) for option in self._algorithm_header.algorithms)
+        return f"typing.Literal[{options}]"
+
+    def _algorithm_expression(self) -> str:
+        fallback = json.dumps(_map_hmac_algorithm(self._config.algorithm))
+        if self._algorithm_header is None:
+            return f"algorithm or {fallback}"
+        return f"HMAC_ALGORITHMS.get(algorithm, algorithm) if algorithm is not None else {fallback}"
+
+    def _build_verify_request_parameters(self) -> List[str]:
+        body_type = (
+            "typing.Union[str, typing.Mapping[str, typing.Union[str, typing.Sequence[str]]]]"
+            if self._has_body_sort
+            else "str"
+        )
+        params: List[str] = ["headers: typing.Mapping[str, str]", f"request_body: {body_type}"]
+        params.extend(self._payload_parameters())
+        params.append("signature_key: typing.Union[str, typing.Callable[[typing.Optional[str]], typing.Optional[str]]]")
+        return params
+
+    def _payload_parameters(self) -> List[str]:
+        params: List[str] = []
+        has_notification_url = False
+        for component in self._components:
+            if component == ir_types.WebhookPayloadComponent.NOTIFICATION_URL:
+                params.append("notification_url: str")
+                has_notification_url = True
+            elif component == ir_types.WebhookPayloadComponent.MESSAGE_ID:
+                params.append("message_id: str")
+        if self._body_hash_binding is not None and not has_notification_url:
+            params.append("notification_url: str")
+        return params
+
+    def _build_verify_request_body(self, algorithm_header: ir_types.WebhookAlgorithmHeader) -> List[str]:
+        """
+        Request-level wrapper: reads the signature header and the algorithm-selection header
+        (`<key-id><delimiter><algorithm>`, e.g. Twilio's `X-Twilio-Webhook-Signature-Settings:
+        <sid>;HMAC_SHA256`). The key id is passed to the caller's resolver since the SDK never
+        holds secrets; when the header is absent the configured default algorithm is used and
+        the resolver is called with None.
+        """
+        signature_header = json.dumps(_wire_value(self._config.signature_header_name))
+        settings_header = json.dumps(_wire_value(algorithm_header.header_name))
+        algorithm_type = self._algorithm_param_type()
+        lines: List[str] = [
+            f"signature_header = _get_header(headers, {signature_header})",
+            'if signature_header is None or signature_header == "":',
+            f"    _logger.warning({json.dumps(MISSING_SIGNATURE_MESSAGE)})",
+            "    return False",
+        ]
+        if self._has_timestamp and self._config.timestamp is not None:
+            timestamp_header = json.dumps(_wire_value(self._config.timestamp.header_name))
+            lines.append(f'timestamp_header = _get_header(headers, {timestamp_header}) or ""')
+        lines.extend(
+            [
+                f"settings_header = _get_header(headers, {settings_header})",
+                "key_id: typing.Optional[str] = None",
+                f"algorithm: typing.Optional[{algorithm_type}] = None",
+                'if settings_header is not None and settings_header != "":',
+            ]
+        )
+        if algorithm_header.key_id_delimiter is not None:
+            delimiter = json.dumps(algorithm_header.key_id_delimiter)
+            lines.extend(
+                [
+                    f"    key_id, delimiter, algorithm_value = settings_header.rpartition({delimiter})",
+                    '    if delimiter == "":',
+                    "        key_id = None",
+                ]
+            )
+        else:
+            lines.append("    algorithm_value = settings_header")
+        lines.extend(
+            [
+                "    if algorithm_value not in HMAC_ALGORITHMS:",
+                f"        _logger.warning({json.dumps(UNSUPPORTED_ALGORITHM_MESSAGE)})",
+                "        return False",
+                f"    algorithm = typing.cast({algorithm_type}, algorithm_value)",
+                "resolved_key = signature_key(key_id) if callable(signature_key) else signature_key",
+                'if resolved_key is None or resolved_key == "":',
+                f"    _logger.warning({json.dumps(UNRESOLVED_KEY_MESSAGE)})",
+                "    return False",
+                f"return {self._class_name}.verify_signature(",
+                "    request_body=request_body,",
+                "    signature_header=signature_header,",
+                "    signature_key=resolved_key,",
+            ]
+        )
+        for param in self._payload_parameters():
+            name = param.split(":")[0]
+            lines.append(f"    {name}={name},")
+        if self._has_timestamp:
+            lines.append("    timestamp_header=timestamp_header,")
+        lines.append("    algorithm=algorithm,")
+        lines.append(")")
+        return lines
 
     def _build_imports(self) -> List[str]:
         imports: List[str] = []
@@ -283,6 +406,24 @@ class _HmacHelperWriter:
             constants.append(f"TIMESTAMP_TOLERANCE_SECONDS = {tolerance}")
         if self._config.signature_prefix is not None:
             constants.append(f"SIGNATURE_PREFIX = {json.dumps(self._config.signature_prefix)}")
+        if self._algorithm_header is not None:
+            entries = ", ".join(
+                f"{json.dumps(option.wire_value)}: {json.dumps(_map_hmac_algorithm(option.algorithm))}"
+                for option in self._algorithm_header.algorithms
+            )
+            constants.append(f"HMAC_ALGORITHMS: typing.Dict[str, str] = {{{entries}}}")
+            constants.extend(
+                [
+                    "",
+                    "",
+                    "def _get_header(headers: typing.Mapping[str, str], name: str) -> typing.Optional[str]:",
+                    "    lowered = name.lower()",
+                    "    for key, value in headers.items():",
+                    "        if key.lower() == lowered:",
+                    "            return value",
+                    "    return None",
+                ]
+            )
         return constants
 
     def _build_parameters(self) -> List[str]:
@@ -296,18 +437,10 @@ class _HmacHelperWriter:
             "signature_header: str",
             "signature_key: str",
         ]
-        has_notification_url = False
-        for component in self._components:
-            if component == ir_types.WebhookPayloadComponent.NOTIFICATION_URL:
-                params.append("notification_url: str")
-                has_notification_url = True
-            elif component == ir_types.WebhookPayloadComponent.MESSAGE_ID:
-                params.append("message_id: str")
-        if self._body_hash_binding is not None and not has_notification_url:
-            params.append("notification_url: str")
+        params.extend(self._payload_parameters())
         if self._has_timestamp:
             params.append("timestamp_header: str")
-        params.append('algorithm: typing.Optional[typing.Literal["sha1", "sha256", "sha384", "sha512"]] = None')
+        params.append(f"algorithm: typing.Optional[{self._algorithm_param_type()}] = None")
         return params
 
     def _build_body(self) -> List[str]:
@@ -349,12 +482,11 @@ class _HmacHelperWriter:
             lines.extend(self._build_payload_construction())
 
         lines.append("")
-        algorithm = _map_hmac_algorithm(self._config.algorithm)
         encoding = _map_encoding(self._config.encoding)
         lines.append("expected = compute_hmac_signature(")
         lines.append("    payload=payload,")
         lines.append("    secret=signature_key,")
-        lines.append(f'    algorithm=algorithm or "{algorithm}",')
+        lines.append(f"    algorithm={self._algorithm_expression()},")
         lines.append(f'    encoding="{encoding}",')
         lines.append(")")
 
@@ -393,7 +525,6 @@ class _HmacHelperWriter:
         signature_expr: str,
         normalization: ir_types.WebhookNotificationUrlNormalization,
     ) -> List[str]:
-        algorithm = _map_hmac_algorithm(self._config.algorithm)
         encoding = _map_encoding(self._config.encoding)
         binding = self._body_hash_binding
         lines: List[str] = []
@@ -442,7 +573,7 @@ class _HmacHelperWriter:
                 "    expected = compute_hmac_signature(",
                 "        payload=payload,",
                 "        secret=signature_key,",
-                f'        algorithm=algorithm or "{algorithm}",',
+                f"        algorithm={self._algorithm_expression()},",
                 f'        encoding="{encoding}",',
                 "    )",
                 f"    if timing_safe_equal({signature_expr}, expected):",

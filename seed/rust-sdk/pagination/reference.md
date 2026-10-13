@@ -960,7 +960,7 @@ async fn main() {
             &UsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
-                order: Some(Order::Asc),
+                order: Some(Order2::Asc),
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
@@ -1256,7 +1256,7 @@ async fn main() {
             &UsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
-                order: Some(Order::Asc),
+                order: Some(Order2::Asc),
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
@@ -1345,7 +1345,7 @@ async fn main() {
             &UsersListWithDoubleOffsetPaginationQueryRequest {
                 page: Some(1.1),
                 per_page: Some(1.1),
-                order: Some(Order::Asc),
+                order: Some(Order2::Asc),
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
@@ -1495,7 +1495,7 @@ async fn main() {
             &UsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
-                order: Some(Order::Asc),
+                order: Some(Order2::Asc),
                 ..Default::default()
             },
             None,
@@ -1576,7 +1576,7 @@ async fn main() {
             &UsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(3),
-                order: Some(Order::Asc),
+                order: Some(Order2::Asc),
                 ..Default::default()
             },
             None,
