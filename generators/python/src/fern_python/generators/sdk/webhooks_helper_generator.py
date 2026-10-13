@@ -287,9 +287,7 @@ class _HmacHelperWriter:
         )
         params: List[str] = ["headers: typing.Mapping[str, str]", f"request_body: {body_type}"]
         params.extend(self._payload_parameters())
-        params.append(
-            "signature_key: typing.Union[str, typing.Callable[[typing.Optional[str]], typing.Optional[str]]]"
-        )
+        params.append("signature_key: typing.Union[str, typing.Callable[[typing.Optional[str]], typing.Optional[str]]]")
         return params
 
     def _payload_parameters(self) -> List[str]:

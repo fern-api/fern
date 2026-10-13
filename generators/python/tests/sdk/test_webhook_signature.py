@@ -707,7 +707,7 @@ def _resolve_key(key_id: typing.Optional[str]) -> typing.Optional[str]:
     return _AUTH_TOKEN if key_id is None else _SHARED_KEYS.get(key_id)
 
 
-def _sign_with(payload: str, secret: str, algorithm: str) -> str:
+def _sign_with(payload: str, secret: str, algorithm: typing.Literal["sha1", "sha256"]) -> str:
     return compute_hmac_signature(payload=payload, secret=secret, algorithm=algorithm, encoding="base64")
 
 
@@ -717,8 +717,11 @@ def test_generated_verify_request_exposes_configured_algorithm_names() -> None:
     url = "https://example.com/sms"
     # per-call override accepts the configured wire values, not lowercase digest names
     assert helper.verify_signature(
-        request_body="", signature_header=_sign_with(url, _AUTH_TOKEN, "sha256"), signature_key=_AUTH_TOKEN,
-        notification_url=url, algorithm="HMAC_SHA256",
+        request_body="",
+        signature_header=_sign_with(url, _AUTH_TOKEN, "sha256"),
+        signature_key=_AUTH_TOKEN,
+        notification_url=url,
+        algorithm="HMAC_SHA256",
     )
 
 
@@ -760,11 +763,15 @@ def test_generated_verify_request_early_failures(caplog: typing.Any) -> None:
         assert "could not run: missing signature header" in caplog.text
         caplog.clear()
         headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhook-Signature-Settings": "CK123;HMAC_SHA512"}
-        assert not helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+        assert not helper.verify_request(
+            headers=headers, request_body="", notification_url=url, signature_key=_resolve_key
+        )
         assert "unsupported algorithm" in caplog.text
         caplog.clear()
         headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhook-Signature-Settings": "UNKNOWN;HMAC_SHA256"}
-        assert not helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+        assert not helper.verify_request(
+            headers=headers, request_body="", notification_url=url, signature_key=_resolve_key
+        )
         assert "signing key could not be resolved" in caplog.text
 
 
@@ -778,5 +785,7 @@ def test_generated_verify_request_mismatch_logs_failure(caplog: typing.Any) -> N
         "X-Twilio-Webhook-Signature-Settings": "CK123;HMAC_SHA256",
     }
     with caplog.at_level(logging.WARNING):
-        assert not helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=_resolve_key)
+        assert not helper.verify_request(
+            headers=headers, request_body="", notification_url=url, signature_key=_resolve_key
+        )
     assert "signature mismatch" in caplog.text
