@@ -5475,7 +5475,7 @@
               "type": "null"
             }
           ],
-          "description": "When true, remote generation emits a signed in-toto/SLSA provenance attestation for the\ngenerated SDK (spec digests, generator image digest, generation config digest, and the\ngit tree hash of the generated output) and attaches it to the pull request or commit.\nOnly supported for remote generation with GitHub output. Defaults to false.\n"
+          "description": "When true, remote generation emits a signed in-toto/SLSA provenance attestation for the\ngenerated SDK (spec digests, generator image digest, generation config digest, and the\ngit tree hash of the generated output) and attaches it to the pull request or commit.\nOnly supported for remote generation with GitHub output. Defaults to false."
         },
         "publish-metadata": {
           "oneOf": [
@@ -5683,7 +5683,7 @@
               "type": "null"
             }
           ],
-          "description": "When true, remote generation emits a signed in-toto/SLSA provenance attestation for the\ngenerated SDK (spec digests, generator image digest, generation config digest, and the\ngit tree hash of the generated output) and attaches it to the pull request or commit.\nOnly supported for remote generation with GitHub output. Defaults to false.\n"
+          "description": "When true, remote generation emits a signed in-toto/SLSA provenance attestation for the\ngenerated SDK (spec digests, generator image digest, generation config digest, and the\ngit tree hash of the generated output) and attaches it to the pull request or commit.\nOnly supported for remote generation with GitHub output. Defaults to false."
         },
         "publish-metadata": {
           "oneOf": [
