@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Path parameter values of exactly `.` or `..` now throw an error before the request is sent.
+    These values are dot-segments that the URL parser resolves, so they could change which
+    endpoint the request was sent to (e.g. `/contacts/../tags/T1` became `/tags/T1`).
+  type: fix

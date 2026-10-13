@@ -14,5 +14,10 @@ export function encodePathParam(param: unknown): string {
             param = String(param);
             break;
     }
-    return encodeURIComponent(param as string | number | boolean);
+    const encoded = encodeURIComponent(param as string | number | boolean);
+    // "." and ".." are dot-segments that URL parsers resolve, which would change the request path.
+    if (encoded === "." || encoded === "..") {
+        throw new Error(`Invalid path parameter value "${encoded}": "." and ".." are not allowed.`);
+    }
+    return encoded;
 }
