@@ -17,6 +17,7 @@ import {
     MAX_RAW_DIFF_BYTES,
     mapMagicVersionForLanguage,
     maxVersionBump,
+    mergeChangelogSections,
     prependChangelogBlock
 } from "../../autoversion/index";
 import type { PreparedReplay } from "../../replay/replay-run";
@@ -1056,11 +1057,13 @@ export class AutoVersionStep extends BaseStep {
                 versionBumpReason: consolidated.version_bump_reason || bestVersionBumpReason
             };
         } catch (error) {
-            this.logger.warn(`AutoVersionStep: ConsolidateChangelog failed (${String(error)}); using joined entries.`);
+            this.logger.warn(
+                `AutoVersionStep: ConsolidateChangelog failed (${String(error)}); merging chunk sections instead.`
+            );
             return {
                 versionBump: bestBump,
                 message: bestMessage,
-                changelogEntry: changelogEntries.join("\n\n"),
+                changelogEntry: mergeChangelogSections(changelogEntries),
                 versionBumpReason: bestVersionBumpReason
             };
         }
@@ -1071,7 +1074,8 @@ export class AutoVersionStep extends BaseStep {
      * chunks whose request fails are skipped as long as at least one chunk succeeds,
      * and the partial coverage is reported via `analysisWarning` so the PR is flagged
      * and never automerged. Results are aggregated with the same max-bump rule as the
-     * BAML path; entries are joined rather than consolidated (no hosted rollup endpoint).
+     * BAML path. Multiple entries are rolled up via `/sdks/consolidate-changelog`, falling
+     * back to a deterministic section merge so headers are never repeated.
      */
     private async analyzeChunksViaFaiService(
         chunks: string[],
@@ -1125,19 +1129,85 @@ export class AutoVersionStep extends BaseStep {
         if (analysisWarning != null) {
             this.logger.warn(`${label}: ${analysisWarning}; the ${bestBump} bump is based on the remaining chunks.`);
         }
-        const prDescriptions = chunkAnalyses
-            .filter((analysis) => analysis.versionBump === bestBump && hasText(analysis.prDescription))
-            .map((analysis) => analysis.prDescription?.trim() ?? "");
+        if (changelogEntries.length > 1) {
+            const consolidated = await this.consolidateViaFaiService(
+                changelogEntries,
+                bestBump,
+                language,
+                previousVersion,
+                label
+            );
+            return {
+                analysis: {
+                    versionBump: bestBump,
+                    message: bestMessage,
+                    changelogEntry: consolidated?.changelogEntry ?? mergeChangelogSections(changelogEntries),
+                    prDescription: consolidated?.prDescription,
+                    versionBumpReason: consolidated?.versionBumpReason ?? bestVersionBumpReason
+                },
+                analysisWarning
+            };
+        }
+        const prDescription = chunkAnalyses.find(
+            (analysis) => analysis.versionBump === bestBump && hasText(analysis.prDescription)
+        )?.prDescription;
         return {
             analysis: {
                 versionBump: bestBump,
                 message: bestMessage,
-                changelogEntry: changelogEntries.length > 0 ? changelogEntries.join("\n\n") : undefined,
-                prDescription: prDescriptions.length > 0 ? prDescriptions.join("\n\n") : undefined,
+                changelogEntry: changelogEntries[0],
+                prDescription: prDescription?.trim(),
                 versionBumpReason: bestVersionBumpReason
             },
             analysisWarning
         };
+    }
+
+    /**
+     * Rolls up per-chunk changelog entries via the hosted FAI `/sdks/consolidate-changelog`
+     * endpoint. Returns null on any failure so the caller can fall back to a section merge.
+     */
+    private async consolidateViaFaiService(
+        changelogEntries: string[],
+        versionBump: string,
+        language: string,
+        previousVersion: string,
+        label: string
+    ): Promise<{ changelogEntry: string; prDescription?: string; versionBumpReason?: string } | null> {
+        const baseUrl = this.config.faiBaseUrl ?? "https://fai.buildwithfern.com";
+        try {
+            const response = await fetch(`${baseUrl}/sdks/consolidate-changelog`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${this.config.fernToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    raw_entries: changelogEntries.join("\n\n"),
+                    version_bump: versionBump,
+                    language,
+                    previous_version: previousVersion,
+                    new_version: incrementVersion(previousVersion, versionBump as VersionBumpEnum)
+                })
+            });
+            if (!response.ok) {
+                throw new Error(`status ${response.status}`);
+            }
+            const parsed: unknown = await response.json();
+            if (!isFaiConsolidateResponse(parsed) || nonEmpty(parsed.consolidated_changelog) == null) {
+                throw new Error("unexpected response shape");
+            }
+            return {
+                changelogEntry: parsed.consolidated_changelog.trim(),
+                prDescription: nonEmpty(parsed.pr_description)?.trim(),
+                versionBumpReason: nonEmpty(parsed.version_bump_reason)?.trim()
+            };
+        } catch (error) {
+            this.logger.warn(
+                `${label}: FAI consolidate-changelog failed (${String(error)}); merging chunk sections instead.`
+            );
+            return null;
+        }
     }
 
     /**
@@ -1360,6 +1430,24 @@ function isFaiAnalyzeResponse(value: unknown): value is FaiAnalyzeResponse {
         typeof candidate.version_bump === "string" &&
         FAI_VERSION_BUMPS.includes(candidate.version_bump) &&
         isStringOrAbsent(candidate.changelog_entry) &&
+        isStringOrAbsent(candidate.pr_description) &&
+        isStringOrAbsent(candidate.version_bump_reason)
+    );
+}
+
+interface FaiConsolidateResponse {
+    consolidated_changelog: string;
+    pr_description?: string;
+    version_bump_reason?: string;
+}
+
+function isFaiConsolidateResponse(value: unknown): value is FaiConsolidateResponse {
+    if (typeof value !== "object" || value == null) {
+        return false;
+    }
+    const candidate = value as Record<string, unknown>;
+    return (
+        typeof candidate.consolidated_changelog === "string" &&
         isStringOrAbsent(candidate.pr_description) &&
         isStringOrAbsent(candidate.version_bump_reason)
     );

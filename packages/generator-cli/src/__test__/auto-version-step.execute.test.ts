@@ -1177,6 +1177,76 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(readFileSync(join(repo.repoPath, "changelog.md"), "utf-8")).toContain("## [3.0.0]");
     });
 
+    function multiEntryChunkResponse(diff: string) {
+        if (diff.includes("bigFeature")) {
+            return okResponse({
+                message: "feat!: remove legacy API",
+                version_bump: "MAJOR",
+                changelog_entry: "### Breaking Changes\n- Removed legacy API\n\n### Added\n- Added bigFeature()"
+            });
+        }
+        return okResponse({
+            message: "feat: filler",
+            version_bump: "MINOR",
+            changelog_entry: "### Added\n- Added filler helpers"
+        });
+    }
+
+    it("consolidates multiple chunk entries via /sdks/consolidate-changelog on the retry path", async () => {
+        mockFetch.mockImplementation(async (url: string, init: RequestInit) => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            if (url.endsWith("/sdks/consolidate-changelog")) {
+                return okResponse({
+                    consolidated_changelog: "### Breaking Changes\n- Removed legacy API\n\n### Added\n- Consolidated",
+                    pr_description: "## Summary\nConsolidated PR body.",
+                    version_bump_reason: "MAJOR because the legacy API was removed."
+                });
+            }
+            const body = JSON.parse(init.body as string) as { diff: string };
+            return multiEntryChunkResponse(body.diff);
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        const consolidateCalls = (mockFetch.mock.calls as Array<[string, RequestInit]>).filter(([url]) =>
+            url.endsWith("/sdks/consolidate-changelog")
+        );
+        expect(consolidateCalls).toHaveLength(1);
+        const consolidateBody = JSON.parse(consolidateCalls[0]?.[1].body as string) as Record<string, string>;
+        expect(consolidateBody.version_bump).toBe("MAJOR");
+        expect(consolidateBody.previous_version).toBe("2.0.0");
+        expect(consolidateBody.new_version).toBe("3.0.0");
+        expect(consolidateBody.raw_entries).toContain("Removed legacy API");
+        expect(result.version).toBe("3.0.0");
+        expect(result.changelogEntry).toBe("### Breaking Changes\n- Removed legacy API\n\n### Added\n- Consolidated");
+        expect(result.prDescription).toBe("## Summary\nConsolidated PR body.");
+    });
+
+    it("merges chunk sections so headers are not repeated when consolidate-changelog fails", async () => {
+        mockFetch.mockImplementation(async (url: string, init: RequestInit) => {
+            if (mockFetch.mock.calls.length === 1 || url.endsWith("/sdks/consolidate-changelog")) {
+                return failedResponse;
+            }
+            const body = JSON.parse(init.body as string) as { diff: string };
+            return multiEntryChunkResponse(body.diff);
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        const entry = result.changelogEntry ?? "";
+        expect(result.version).toBe("3.0.0");
+        expect(entry.match(/### Breaking Changes/g)).toHaveLength(1);
+        expect(entry.match(/### Added/g)).toHaveLength(1);
+        expect(entry.indexOf("### Breaking Changes")).toBeLessThan(entry.indexOf("### Added"));
+        expect(entry).toContain("Added bigFeature()");
+        expect(entry.match(/Added filler helpers/g)).toHaveLength(1);
+        expect(readFileSync(join(repo.repoPath, "changelog.md"), "utf-8").match(/### Added/g)).toHaveLength(1);
+    });
+
     it("tolerates individual chunk failures as long as one chunk succeeds, but flags the partial coverage", async () => {
         mockFetch.mockImplementation(async (_url: string, init: RequestInit) => {
             if (mockFetch.mock.calls.length === 1) {

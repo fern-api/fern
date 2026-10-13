@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Autoversion no longer repeats `### Breaking Changes` / `### Added` / `### Changed` headers in the
+    changelog and PR body for large, chunked diffs. The hosted FAI chunk-by-chunk retry now rolls
+    entries up via `/sdks/consolidate-changelog`, and when consolidation is unavailable (hosted or
+    local AI config) the per-chunk entries are merged into a single set of sections.
+  type: fix
