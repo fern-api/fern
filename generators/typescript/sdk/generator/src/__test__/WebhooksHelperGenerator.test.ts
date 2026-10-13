@@ -158,7 +158,9 @@ describe("WebhooksHelperGenerator", () => {
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain('algorithm?: "HMAC_SHA1" | "HMAC_SHA256"');
-            expect(text).toContain('const HMAC_ALGORITHMS = { "HMAC_SHA1": "sha1", "HMAC_SHA256": "sha256" } as const;');
+            expect(text).toContain(
+                'const HMAC_ALGORITHMS = { "HMAC_SHA1": "sha1", "HMAC_SHA256": "sha256" } as const;'
+            );
             expect(text).toContain('getHeader(headers, "X-Twilio-Webhook-Signature-Settings")');
             expect(text).toContain("public static async verifyRequest(");
             expect(text).toContain('algorithm != null ? HMAC_ALGORITHMS[algorithm] : "sha1"');

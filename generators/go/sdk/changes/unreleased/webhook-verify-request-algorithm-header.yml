@@ -5,6 +5,7 @@
     (e.g. `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`) to pick the HMAC algorithm from
     the configured wire values and hand the key ID to an application-supplied secret resolver. When the
     header is absent the configured default algorithm and the plain secret are used, so legacy
-    auth-token flows keep working. The lower-level `verifySignature` is unchanged and still returns
-    `false` without throwing.
+    auth-token flows keep working. Following `VerifySignature`, the Go helper reports these early
+    failures as `(false, error)` rather than logging. `VerifySignatureWithAlgorithm` additionally accepts
+    the configured wire values alongside the generic algorithm names.
   type: fix

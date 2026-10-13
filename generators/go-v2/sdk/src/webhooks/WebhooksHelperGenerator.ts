@@ -251,7 +251,9 @@ class HmacHelperWriter {
             );
             if (algorithmHeader != null) {
                 const names = algorithmHeader.algorithms.map((option) => `"${option.wireValue}"`).join(", ");
-                writer.writeLine(`// (${names}), overriding the configured default.`);
+                writer.writeLine(
+                    `// (${names}, or the generic "sha1", "sha256", "sha384" or "sha512"), overriding the configured default.`
+                );
             } else {
                 writer.writeLine('// ("sha1", "sha256", "sha384" or "sha512"), overriding the configured default.');
             }

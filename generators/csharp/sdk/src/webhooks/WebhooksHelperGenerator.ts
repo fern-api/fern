@@ -110,6 +110,22 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
                 body: this.csharp.codeblock((writer) => this.writeVerifyRequestBody(writer, algorithmHeader))
             });
             class_.addMethod({
+                name: "VerifyRequest",
+                access: ast.Access.Public,
+                type: ast.MethodType.STATIC,
+                isAsync: false,
+                return_: this.Primitive.boolean,
+                parameters: this.buildVerifyRequestParameters(this.Primitive.string),
+                body: this.csharp.codeblock((writer) => {
+                    const args = ["headers", "requestBody"];
+                    for (const parameter of this.buildPayloadParameters()) {
+                        args.push(parameter.name);
+                    }
+                    args.push("_ => signatureKey");
+                    writer.writeTextStatement(`return VerifyRequest(${args.join(", ")})`);
+                })
+            });
+            class_.addMethod({
                 name: "GetHeader",
                 access: ast.Access.Private,
                 type: ast.MethodType.STATIC,
@@ -216,9 +232,11 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         );
     }
 
-    private buildVerifyRequestParameters(): ast.Parameter[] {
+    private buildVerifyRequestParameters(signatureKeyType?: ast.Type): ast.Parameter[] {
         const headersType = this.headersType();
-        const resolverType = this.System.Func([this.Primitive.string.asNullable()], this.Primitive.string.asNullable());
+        const resolverType =
+            signatureKeyType ??
+            this.System.Func([this.Primitive.string.asNullable()], this.Primitive.string.asNullable());
         return [
             this.csharp.parameter({ name: "headers", type: headersType }),
             this.csharp.parameter({
@@ -277,10 +295,10 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeTextStatement("return false");
         writer.dedent();
         writer.writeLine("}");
-        writer.writeTextStatement("algorithm = algorithmValue");
+        writer.writeTextStatement("algorithm = HmacAlgorithms[algorithmValue]");
         writer.dedent();
         writer.writeLine("}");
-        writer.writeTextStatement("var resolvedKey = signatureKey(keyId)");
+        writer.writeTextStatement("var resolvedKey = signatureKey == null ? null : signatureKey(keyId)");
         writer.writeLine("if (string.IsNullOrEmpty(resolvedKey))");
         writer.writeLine("{");
         writer.indent();

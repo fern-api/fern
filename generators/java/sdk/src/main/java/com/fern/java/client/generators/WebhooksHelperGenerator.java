@@ -199,9 +199,16 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             helper.addMethod(buildMapVerifySignatureMethod());
         }
         config.getAlgorithmHeader().ifPresent(algorithmHeader -> {
-            helper.addMethod(buildVerifyRequestMethod(algorithmHeader, String.class));
-            helper.addMethod(buildVerifyRequestMethod(algorithmHeader, SIGNATURE_KEY_RESOLVER_TYPE));
-            helper.addMethod(buildVerifyRequestImplementation(algorithmHeader));
+            List<TypeName> requestBodyTypes = new ArrayList<>();
+            requestBodyTypes.add(TypeName.get(String.class));
+            if (config.getPayloadFormat().getBodySort().isPresent()) {
+                requestBodyTypes.add(MAP_REQUEST_BODY_TYPE);
+            }
+            for (TypeName requestBodyType : requestBodyTypes) {
+                helper.addMethod(buildVerifyRequestMethod(algorithmHeader, TypeName.get(String.class), requestBodyType));
+                helper.addMethod(buildVerifyRequestMethod(algorithmHeader, SIGNATURE_KEY_RESOLVER_TYPE, requestBodyType));
+                helper.addMethod(buildVerifyRequestImplementation(algorithmHeader, requestBodyType));
+            }
             helper.addMethod(buildGetHeaderMethod());
         });
 
@@ -356,12 +363,13 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
      * {@code Function<String, String>} resolving the key ID carried in the algorithm-selection header to its secret.
      * The SDK never holds shared-key secrets.
      */
-    private MethodSpec buildVerifyRequestMethod(WebhookAlgorithmHeader algorithmHeader, TypeName signatureKeyType) {
+    private MethodSpec buildVerifyRequestMethod(
+            WebhookAlgorithmHeader algorithmHeader, TypeName signatureKeyType, TypeName requestBodyType) {
         MethodSpec.Builder method = MethodSpec.methodBuilder("verifyRequest")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(TypeName.BOOLEAN)
                 .addJavadoc(buildVerifyRequestJavadoc(algorithmHeader))
-                .addParameters(buildVerifyRequestParameters(signatureKeyType));
+                .addParameters(buildVerifyRequestParameters(signatureKeyType, requestBodyType));
         CodeBlock.Builder invocation = CodeBlock.builder().add("return verifyRequestWithKey(headers, requestBody");
         for (ParameterSpec parameter : buildPayloadParameters()) {
             invocation.add(", $L", parameter.name);
@@ -375,24 +383,21 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         return method.build();
     }
 
-    private MethodSpec buildVerifyRequestMethod(WebhookAlgorithmHeader algorithmHeader, Class<?> signatureKeyType) {
-        return buildVerifyRequestMethod(algorithmHeader, TypeName.get(signatureKeyType));
-    }
-
-    private List<ParameterSpec> buildVerifyRequestParameters(TypeName signatureKeyType) {
+    private List<ParameterSpec> buildVerifyRequestParameters(TypeName signatureKeyType, TypeName requestBodyType) {
         List<ParameterSpec> parameters = new ArrayList<>();
         parameters.add(ParameterSpec.builder(HEADERS_TYPE, "headers").build());
-        parameters.add(ParameterSpec.builder(String.class, "requestBody").build());
+        parameters.add(ParameterSpec.builder(requestBodyType, "requestBody").build());
         parameters.addAll(buildPayloadParameters());
         parameters.add(ParameterSpec.builder(signatureKeyType, "signatureKey").build());
         return parameters;
     }
 
-    private MethodSpec buildVerifyRequestImplementation(WebhookAlgorithmHeader algorithmHeader) {
+    private MethodSpec buildVerifyRequestImplementation(
+            WebhookAlgorithmHeader algorithmHeader, TypeName requestBodyType) {
         MethodSpec.Builder method = MethodSpec.methodBuilder("verifyRequestWithKey")
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .returns(TypeName.BOOLEAN)
-                .addParameters(buildVerifyRequestParameters(SIGNATURE_KEY_RESOLVER_TYPE))
+                .addParameters(buildVerifyRequestParameters(SIGNATURE_KEY_RESOLVER_TYPE, requestBodyType))
                 .addStatement(
                         "String signatureHeader = getHeader(headers, $S)",
                         NameUtils.getWireValue(config.getSignatureHeaderName()))
