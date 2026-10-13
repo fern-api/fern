@@ -31,7 +31,9 @@ describe("README diagnostic codes", () => {
         );
         const readme = await readFile(join(COMMAND_DIRECTORY, "README.md"), "utf8");
         const start = readme.indexOf("## Diagnostic codes");
-        const table = readme.slice(start, readme.indexOf("\n## ", start + 1));
+        expect(start).toBeGreaterThanOrEqual(0);
+        const next = readme.indexOf("\n## ", start + 1);
+        const table = readme.slice(start, next === -1 ? undefined : next);
         const documented = new Set([...table.matchAll(README_CODE)].map((match) => match[1]));
         expect([...documented].sort()).toEqual([...emitted].sort());
     });
