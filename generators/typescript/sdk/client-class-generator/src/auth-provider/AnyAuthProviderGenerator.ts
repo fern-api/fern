@@ -83,7 +83,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
                 `type UnionToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;`,
                 "",
                 `type AtLeastOneOf<T extends readonly any[]> = {`,
-                `    [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;`,
+                `    [K in keyof T]: T[K] & Partial<UnionToIntersection<T[number]>>;`,
                 `}[number];`,
                 "",
                 `export type ${AUTH_OPTIONS_TYPE_NAME}<TAuthProviders extends readonly any[]> = AtLeastOneOf<TAuthProviders>;`,
