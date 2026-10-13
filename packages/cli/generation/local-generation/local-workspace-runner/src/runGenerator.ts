@@ -14,7 +14,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/serialization";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, readdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -354,6 +354,11 @@ export async function writeFilesToDiskAndRunGenerator({
         context
     });
 
+    await assertGeneratorProducedOutput({
+        generatorName: generatorInvocation.name,
+        absolutePathToTmpOutputDirectory
+    });
+
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
@@ -424,4 +429,45 @@ function getSourceConfig(workspace: FernWorkspace, usesContainerPaths: boolean):
 
 function getDockerDestinationForSource(source: IdentifiableSource): string {
     return `${CONTAINER_SOURCES_DIRECTORY}/${source.id}`;
+}
+
+/**
+ * A generator that exits successfully must have written something. Copying an empty output
+ * would delete every previously generated file (and, in self-hosted GitHub mode, commit and
+ * open a PR with that deletion), so treat it as a failed generation instead.
+ */
+export async function assertGeneratorProducedOutput({
+    generatorName,
+    absolutePathToTmpOutputDirectory
+}: {
+    generatorName: string;
+    absolutePathToTmpOutputDirectory: AbsoluteFilePath;
+}): Promise<void> {
+    if (!(await containsAnyFile(absolutePathToTmpOutputDirectory))) {
+        throw new CliError({
+            message:
+                `Generator ${generatorName} exited without writing any files, so the existing output was left untouched. ` +
+                "Check the generator logs above for the error.",
+            code: CliError.Code.ContainerError
+        });
+    }
+}
+
+async function containsAnyFile(directory: string): Promise<boolean> {
+    const entries = await readdir(directory, { withFileTypes: true }).catch((error: unknown) => {
+        if (isEnoentError(error)) {
+            return [];
+        }
+        throw error;
+    });
+    for (const entry of entries) {
+        if (!entry.isDirectory() || (await containsAnyFile(path.join(directory, entry.name)))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isEnoentError(error: unknown): boolean {
+    return error instanceof Error && "code" in error && error.code === "ENOENT";
 }
