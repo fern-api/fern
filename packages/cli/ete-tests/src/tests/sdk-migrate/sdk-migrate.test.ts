@@ -48,10 +48,14 @@ describe("fern sdk migrate", { timeout: TEST_TIMEOUT }, () => {
         const legacyText = await readFile(legacy, "utf8");
         expect(legacyText).toContain("# Migrated to ./sdk-config.yml.");
         expect(legacyText).toContain("# version: 3.63.3");
-        expect(
-            (yaml.load(await readFile(sdkConfig, "utf8")) as { targets: Array<{ language: string }> }).targets
-        ).toMatchObject([{ language: "typescript" }]);
+        const migratedSdkConfig = yaml.load(await readFile(sdkConfig, "utf8")) as {
+            sdkName: string;
+            targets: Array<{ language: string }>;
+        };
+        expect(migratedSdkConfig.sdkName).toBe("fern");
+        expect(migratedSdkConfig.targets).toMatchObject([{ language: "typescript" }]);
         expect(await readFile(docs, "utf8")).toBe(originalDocs);
+        expect(result.stderr).toContain("FERN_GENERATOR_VERSION_NOT_PRESERVED");
         expect(result.stderr).toContain("Rollback instructions:");
 
         const beforeRepeat = { legacy: await readFile(legacy, "utf8"), sdkConfig: await readFile(sdkConfig, "utf8") };
@@ -62,7 +66,7 @@ describe("fern sdk migrate", { timeout: TEST_TIMEOUT }, () => {
         await temporaryDirectory.cleanup();
     });
 
-    it("merges a later language into the existing SDK Config", async ({ signal }) => {
+    it("merges a later language into an SDK Config created by the previous CLI", async ({ signal }) => {
         const temporaryDirectory = await createFixture();
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
         const common = ["sdk", "migrate", "--group", "production", "--language"];
@@ -77,14 +81,18 @@ describe("fern sdk migrate", { timeout: TEST_TIMEOUT }, () => {
         );
 
         await runFernCli([...common, "typescript"], { cwd: directory, env: CLI_ENV, signal });
+        const sdkConfigPath = join(directory, RelativeFilePath.of("fern/sdk-config.yml"));
+        const currentSdkConfig = await readFile(sdkConfigPath, "utf8");
+        expect(currentSdkConfig).toContain("sdkName: fern");
+        await writeFile(sdkConfigPath, currentSdkConfig.replace("sdkName: fern", "sdkName: api"));
         await runFernCli([...common, "python"], { cwd: directory, env: CLI_ENV, signal });
 
-        const sdkConfig = yaml.load(
-            await readFile(join(directory, RelativeFilePath.of("fern/sdk-config.yml")), "utf8")
-        ) as {
+        const sdkConfig = yaml.load(await readFile(sdkConfigPath, "utf8")) as {
+            sdkName: string;
             generation?: { naming?: { clientName?: string } };
             targets: Array<{ language: string; generation?: { naming?: { clientName?: string } } }>;
         };
+        expect(sdkConfig.sdkName).toBe("api");
         expect(sdkConfig.targets.map((target) => target.language)).toEqual(["typescript", "python"]);
         expect(sdkConfig.generation?.naming?.clientName).toBeUndefined();
         expect(sdkConfig.targets.find((target) => target.language === "typescript")?.generation).toBeUndefined();
@@ -136,6 +144,7 @@ describe("fern sdk migrate", { timeout: TEST_TIMEOUT }, () => {
         );
 
         expect(result.stderr).toContain("Dry run: no files were changed.");
+        expect(result.stderr).toContain("FERN_GENERATOR_VERSION_NOT_PRESERVED");
         expect(await readFile(generators, "utf8")).toBe(original);
         await expect(access(join(directory, RelativeFilePath.of("fern/generators.legacy.yml")))).rejects.toMatchObject({
             code: "ENOENT"
