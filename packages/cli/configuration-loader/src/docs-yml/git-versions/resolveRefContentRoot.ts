@@ -4,6 +4,7 @@ import { AbsoluteFilePath, join, RelativeFilePath, resolve } from "@fern-api/fs-
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import { kebabCase } from "lodash-es";
 
 import { getVersionContentRef } from "./getVersionContentRef.js";
 import { MaterializedGitRef } from "./materializeGitRef.js";
@@ -74,25 +75,39 @@ function isInternalProduct(product: docsYml.RawSchemas.ProductConfig): product i
     return "path" in product;
 }
 
+/** The product's URL slug: its `slug`, else the slug generated from its display name. */
+function getProductUrlSlug(product: { displayName: string; slug: string | undefined }): string {
+    return product.slug ?? kebabCase(product.displayName);
+}
+
 /**
- * Finds the product at the ref that corresponds to a product on the current branch:
- * a product with the same slug if there is one, else the first with the same display name.
- * Only internal products carry a slug, so an external product can only match by display name.
+ * Finds the product at the ref that corresponds to a product on the current branch, in order:
+ * the first product with the same explicit `slug`, the first with the same URL slug, the first
+ * with the same display name. Only internal products have a URL slug, so an external product
+ * can only match by display name.
  */
 function findProductAtRef(
-    products: docsYml.RawSchemas.ProductConfig[] | undefined,
+    products: docsYml.RawSchemas.ProductConfig[],
     scope: { displayName: string; slug: string | undefined }
 ): docsYml.RawSchemas.ProductConfig | undefined {
-    if (products == null) {
-        return undefined;
-    }
-    if (scope.slug != null) {
-        const bySlug = products.find((product) => isInternalProduct(product) && product.slug === scope.slug);
-        if (bySlug != null) {
-            return bySlug;
-        }
-    }
-    return products.find((product) => product.displayName === scope.displayName);
+    const urlSlug = getProductUrlSlug(scope);
+    return (
+        (scope.slug != null
+            ? products.find((product) => isInternalProduct(product) && product.slug === scope.slug)
+            : undefined) ??
+        products.find(
+            (product) =>
+                isInternalProduct(product) &&
+                getProductUrlSlug({ displayName: product.displayName, slug: product.slug }) === urlSlug
+        ) ??
+        products.find((product) => product.displayName === scope.displayName)
+    );
+}
+
+function describeProductAtRef(product: docsYml.RawSchemas.ProductConfig): string {
+    return isInternalProduct(product)
+        ? `'${product.displayName}' (slug '${getProductUrlSlug({ displayName: product.displayName, slug: product.slug })}')`
+        : `'${product.displayName}' (external link)`;
 }
 
 /**
@@ -100,9 +115,10 @@ function findProductAtRef(
  * at the ref (`materialized`), in the scope the version is declared in on the current branch:
  * - `site`: the first entry in the ref docs.yml's `versions` list that has a `path`
  *   (entries with a `ref` are skipped); if none, the ref docs.yml's top-level `navigation`.
- * - `product`: the product in the ref docs.yml with the same `slug` (or, when either side
- *   has no `slug`, the same `displayName`), then the same rule on that product's `versions`;
- *   if none, the `navigation` in that product's file.
+ * - `product`: the product in the ref docs.yml with the same URL slug (else the same
+ *   `displayName`), then the same rule on that product's `versions`; if none, the
+ *   `navigation` in that product's file. A ref whose docs.yml declares no products
+ *   predates the site's use of products and is rejected rather than guessed at.
  *
  * Entries with a `ref` in the ref's docs.yml are ignored: only the docs.yml being built
  * decides which versions are published.
@@ -127,19 +143,27 @@ export async function resolveRefContentRoot({
     const describeRef = `git ref '${materialized.ref}' (${materialized.sha})`;
 
     if (scope.type === "product") {
-        const product = findProductAtRef(refDocsConfig.products, scope);
-        if (product == null) {
-            const available =
-                refDocsConfig.products != null && refDocsConfig.products.length > 0
-                    ? refDocsConfig.products.map((p) => `'${p.displayName}'`).join(", ")
-                    : undefined;
+        const refProducts = refDocsConfig.products ?? [];
+        if (refProducts.length === 0) {
             throw new CliError({
                 message:
-                    `Could not find product '${scope.displayName}' in the docs.yml at ${describeRef}. ` +
-                    (available != null
-                        ? `Products at the ref: ${available}. `
-                        : "The ref's docs.yml declares no products. ") +
-                    "Give the product the same slug on both branches to match it independently of its display name.",
+                    `The docs.yml at ${describeRef} declares no products, so the CLI can't locate the content ` +
+                    `for product '${scope.displayName}'. The ref predates the site's use of products. ` +
+                    `To keep the release, create a new branch or tag from the release with a docs.yml that declares ` +
+                    `product '${scope.displayName}', and set the version's \`ref\` to the new branch or tag. ` +
+                    `Otherwise, remove the version from the product's \`versions\`.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        const product = findProductAtRef(refProducts, scope);
+        if (product == null) {
+            throw new CliError({
+                message:
+                    `Could not find product '${scope.displayName}' (slug '${getProductUrlSlug(scope)}') ` +
+                    `in the docs.yml at ${describeRef}. ` +
+                    `Products at the ref: ${refProducts.map(describeProductAtRef).join(", ")}. ` +
+                    "The CLI matches a product by its URL slug (`slug`, or the slug generated from `display-name`), " +
+                    "then by `display-name`.",
                 code: CliError.Code.ConfigError
             });
         }

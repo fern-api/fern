@@ -21,9 +21,14 @@ export interface VersionConfig extends FernDocsConfig.WithPermissions, FernDocsC
      *   that have a `ref`). If the ref's docs.yml has no such entry, it uses the ref's
      *   top-level `navigation`.
      * - For a version listed under `products[].versions`, it finds the product with the
-     *   same `slug` (or, when either side has no `slug`, the same `display-name`) in the
-     *   ref's docs.yml and applies the same rule to that product's `versions` list,
-     *   falling back to the `navigation` in that product's file.
+     *   same URL slug (`slug`, or the slug generated from `display-name`) in the ref's
+     *   docs.yml, else the product with the same `display-name`. It applies the same rule
+     *   to that product's `versions` list, falling back to the `navigation` in that
+     *   product's file. If the ref's docs.yml declares no products, the ref predates the
+     *   site's use of products and the version fails to build. To keep the release, create
+     *   a new branch or tag from the release with a docs.yml that declares the product, and
+     *   point `ref` at the new branch or tag. Otherwise, remove the version from
+     *   `products[].versions`.
      * Entries with a `ref` in the ref's docs.yml are ignored: only the docs.yml being
      * built determines which versions are published.
      */

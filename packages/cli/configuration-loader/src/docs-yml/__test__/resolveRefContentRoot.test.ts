@@ -180,6 +180,61 @@ describe("resolveRefContentRoot", () => {
             );
         });
 
+        it("matches a renamed product by the slug generated from its display name at the ref", async () => {
+            const fernFolder = await makeFernFolder({
+                "docs.yml": [
+                    "instances: []",
+                    "products:",
+                    "  - display-name: Container Toolkit",
+                    "    path: ./products/toolkit.yml"
+                ].join("\n"),
+                "products/toolkit.yml": ["navigation:", "  - page: Install", "    path: ./install.mdx"].join("\n")
+            });
+
+            const result = await resolveRefContentRoot({
+                materialized: materialized(fernFolder),
+                scope: { type: "product", displayName: "NVIDIA Container Toolkit", slug: "container-toolkit" },
+                context
+            });
+
+            expect(result.absoluteFilepathToConfig).toBe(join(fernFolder, RelativeFilePath.of("products/toolkit.yml")));
+        });
+
+        it("matches the ref's explicit slug against the slug generated from the current display name", async () => {
+            const fernFolder = await makeFernFolder({
+                "docs.yml": [
+                    "instances: []",
+                    "products:",
+                    "  - display-name: Toolkit",
+                    "    slug: container-toolkit",
+                    "    path: ./products/toolkit.yml"
+                ].join("\n"),
+                "products/toolkit.yml": ["navigation:", "  - page: Install", "    path: ./install.mdx"].join("\n")
+            });
+
+            const result = await resolveRefContentRoot({
+                materialized: materialized(fernFolder),
+                scope: { type: "product", displayName: "Container Toolkit", slug: undefined },
+                context
+            });
+
+            expect(result.absoluteFilepathToConfig).toBe(join(fernFolder, RelativeFilePath.of("products/toolkit.yml")));
+        });
+
+        it("rejects a ref whose docs.yml predates products", async () => {
+            const fernFolder = await makeFernFolder({
+                "docs.yml": ["instances: []", "navigation:", "  - page: Home", "    path: ./home.mdx"].join("\n")
+            });
+
+            await expect(
+                resolveRefContentRoot({
+                    materialized: materialized(fernFolder),
+                    scope: { type: "product", displayName: "Containers", slug: "containers" },
+                    context
+                })
+            ).rejects.toThrow(/declares no products.*predates the site's use of products/);
+        });
+
         it("falls back to the product file's navigation when the product has no versions at the ref", async () => {
             const fernFolder = await makeProductsFolder();
 
@@ -205,7 +260,7 @@ describe("resolveRefContentRoot", () => {
                     context
                 })
             ).rejects.toThrow(
-                /Could not find product 'Kata'.*Products at the ref: 'Bare Metal', 'Containers', 'Forum'/
+                /Could not find product 'Kata' \(slug 'kata'\).*Products at the ref: 'Bare Metal' \(slug 'bare-metal'\), 'Containers' \(slug 'containers'\), 'Forum' \(external link\)/
             );
         });
 

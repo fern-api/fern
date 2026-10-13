@@ -2,7 +2,9 @@
 
 - summary: |
     Git-ref-backed versions (`ref:`) now work under `products[].versions`. The CLI locates the same
-    product in the ref's docs.yml (by slug, else display name) and builds that product's working-tree
-    version, falling back to the product file's navigation. At any scope, the first `path:` version
-    at the ref is used, so refs whose docs.yml lists older `ref:` entries first resolve correctly.
+    product in the ref's docs.yml by URL slug (`slug`, or the slug generated from `display-name`), else
+    by display name, and builds that product's working-tree version, falling back to the product file's
+    navigation. A ref whose docs.yml predates products fails with guidance to migrate the release or
+    remove the version. At any scope, the first `path:` version at the ref is used, so refs whose
+    docs.yml lists older `ref:` entries first resolve correctly.
   type: fix
