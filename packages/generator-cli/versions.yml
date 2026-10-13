@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.10.5
+  changelogEntry:
+    - summary: |
+        When hosted FAI analysis falls back to chunk-by-chunk requests, merge the per-chunk changelog
+        entries and PR descriptions under a single heading (e.g. one `### Breaking Changes` section)
+        instead of repeating the heading once per chunk.
+      type: fix
+  createdAt: "2026-10-13"
 - version: 0.10.4
   changelogEntry:
     - summary: |

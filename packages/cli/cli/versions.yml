@@ -1,11 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 5.155.10
+- version: 5.155.11
   changelogEntry:
     - summary: |
         OpenAPI server variables with an empty default are treated as optional: the resolved server URL
         drops the placeholder together with one adjacent `.`/`-` separator, so
         `https://api.{edge}.{region}.example.com` with `edge: { default: "" }` resolves to
         `https://api.us1.example.com` instead of `https://api..us1.example.com`.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.10
+  changelogEntry:
+    - summary: |
+        Upgrade `@postman/sdk-config` to 0.11.0. `fern sdk migrate` now carries the CLI generator's typed
+        generation settings, package metadata, Cargo dependency sources, and `distribution` (Homebrew,
+        Scoop, and GitHub App secret names) into SDK Config, and SDK Config accepts the public OAuth
+        `clientId` on authorization-code flows.
+      type: chore
+    - summary: |
+        SDK Config generation no longer uploads `output.github.credentials` (root or target level) in the
+        SDK Config document sent to the SDK Generation API; GitHub delivery is unchanged because the
+        service already discarded them. Malformed `github.credentials` is rejected without echoing its
+        value. CLI `output.distribution` secret names are never resolved or sent as publish credentials.
       type: fix
   createdAt: "2026-10-13"
   irVersion: 67

@@ -22,10 +22,16 @@ import {
 } from "../utils/structUtils.js";
 
 export declare namespace FileUploadRequestGenerator {
+    interface FileProperty {
+        key: FernIr.NameAndWireValueOrString;
+        isArray: boolean;
+        isOptional: boolean;
+    }
+
     interface Args {
         name: string;
         properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
-        fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
+        fileProperties: FileUploadRequestGenerator.FileProperty[];
         bodyProperties: FernIr.InlinedRequestBodyProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
@@ -44,7 +50,7 @@ export declare namespace FileUploadRequestGenerator {
 export class FileUploadRequestGenerator {
     private readonly name: string;
     private readonly properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
-    private readonly fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
+    private readonly fileProperties: FileUploadRequestGenerator.FileProperty[];
     private readonly bodyProperties: FernIr.InlinedRequestBodyProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
@@ -142,7 +148,8 @@ export class FileUploadRequestGenerator {
 
         // Add file fields
         for (const fileProp of this.fileProperties) {
-            const fieldName = this.getFieldName(fileProp.name);
+            const fieldName = this.getFieldName(fileProp.key);
+            const partName = getOriginalName(fileProp.key);
 
             if (fileProp.isOptional) {
                 if (fileProp.isArray) {
@@ -150,9 +157,9 @@ export class FileUploadRequestGenerator {
                     statements.push(`if let Some(ref files) = self.${fieldName} {`);
                     statements.push(`    for file_data in files {`);
                     statements.push(`        form = form.part(`);
-                    statements.push(`            "${fileProp.name}",`);
+                    statements.push(`            "${partName}",`);
                     statements.push(`            reqwest::multipart::Part::bytes(file_data.clone())`);
-                    statements.push(`                .file_name("${fileProp.name}")`);
+                    statements.push(`                .file_name("${partName}")`);
                     statements.push(`                .mime_str("application/octet-stream").unwrap()`);
                     statements.push(`        );`);
                     statements.push(`    }`);
@@ -161,9 +168,9 @@ export class FileUploadRequestGenerator {
                     // Optional single file
                     statements.push(`if let Some(ref file_data) = self.${fieldName} {`);
                     statements.push(`    form = form.part(`);
-                    statements.push(`        "${fileProp.name}",`);
+                    statements.push(`        "${partName}",`);
                     statements.push(`        reqwest::multipart::Part::bytes(file_data.clone())`);
-                    statements.push(`            .file_name("${fileProp.name}")`);
+                    statements.push(`            .file_name("${partName}")`);
                     statements.push(`            .mime_str("application/octet-stream").unwrap()`);
                     statements.push(`    );`);
                     statements.push(`}`);
@@ -173,18 +180,18 @@ export class FileUploadRequestGenerator {
                     // Required array of files
                     statements.push(`for file_data in &self.${fieldName} {`);
                     statements.push(`    form = form.part(`);
-                    statements.push(`        "${fileProp.name}",`);
+                    statements.push(`        "${partName}",`);
                     statements.push(`        reqwest::multipart::Part::bytes(file_data.clone())`);
-                    statements.push(`            .file_name("${fileProp.name}")`);
+                    statements.push(`            .file_name("${partName}")`);
                     statements.push(`            .mime_str("application/octet-stream").unwrap()`);
                     statements.push(`    );`);
                     statements.push(`}`);
                 } else {
                     // Required single file
                     statements.push(`form = form.part(`);
-                    statements.push(`    "${fileProp.name}",`);
+                    statements.push(`    "${partName}",`);
                     statements.push(`    reqwest::multipart::Part::bytes(self.${fieldName}.clone())`);
-                    statements.push(`        .file_name("${fileProp.name}")`);
+                    statements.push(`        .file_name("${partName}")`);
                     statements.push(`        .mime_str("application/octet-stream").unwrap()`);
                     statements.push(`);`);
                 }
@@ -195,7 +202,7 @@ export class FileUploadRequestGenerator {
         // Add body properties as text fields
         for (const bodyProp of this.bodyProperties) {
             const propName = getOriginalName(bodyProp.name);
-            const fieldName = this.getFieldName(propName);
+            const fieldName = this.getFieldName(bodyProp.name);
             const isOptional = isOptionalType(bodyProp.valueType);
 
             // A STRING part is written verbatim. `serde_json::to_string` would wrap it in quotes,
@@ -262,7 +269,7 @@ export class FileUploadRequestGenerator {
     }
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
-        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
+        const fieldName = this.getFieldName(property.name);
         const fieldType = generateFieldType(property, this.context);
         const skipSerialization = this.queryParamFieldNames.has(fieldName);
         const attributes = generateFieldAttributes(property, this.context, { skipSerialization });
@@ -275,13 +282,9 @@ export class FileUploadRequestGenerator {
         });
     }
 
-    private getFieldName(name: string): string {
-        // Convert to snake_case and escape Rust keywords if needed
-        const snakeCaseName = name
-            .replace(/([A-Z])/g, "_$1")
-            .toLowerCase()
-            .replace(/^_/, "");
-        return this.context.escapeRustKeyword(snakeCaseName);
+    // The struct declaration and `to_multipart()` must agree on field names, so both derive them here.
+    private getFieldName(name: FernIr.NameAndWireValueOrString): string {
+        return this.context.escapeRustKeyword(this.context.case.snakeUnsafe(name));
     }
 
     private allPropertiesAreOptional(): boolean {
