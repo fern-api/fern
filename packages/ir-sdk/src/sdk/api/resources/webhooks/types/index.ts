@@ -9,6 +9,8 @@ export * from "./InlinedWebhookPayloadProperty.js";
 export * from "./JwksKeySource.js";
 export * from "./StaticKeySource.js";
 export * from "./Webhook.js";
+export * from "./WebhookAlgorithmHeader.js";
+export * from "./WebhookAlgorithmOption.js";
 export * from "./WebhookBodyHashAlgorithm.js";
 export * from "./WebhookBodyHashBinding.js";
 export * from "./WebhookBodyHashLocation.js";

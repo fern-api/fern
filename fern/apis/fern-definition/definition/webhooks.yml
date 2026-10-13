@@ -80,6 +80,29 @@ types:
           When set, the signature is verified against multiple normalized forms of the
           notification URL (e.g. with/without port, legacy query encoding), succeeding if any
           candidate matches. Required by providers like Twilio.
+      algorithm-header:
+        type: optional<WebhookAlgorithmHeaderSchema>
+        docs: |
+          When set, the HMAC algorithm (and optionally a key ID) is read per request from
+          this header instead of being fixed to `algorithm`, which then only acts as the
+          default when the header is absent. E.g. Twilio's `X-Twilio-Webhook-Signature-Settings:
+          <key_id>;HMAC_SHA256`.
+
+  WebhookAlgorithmHeaderSchema:
+    properties:
+      header: string
+      key-id-delimiter:
+        type: optional<string>
+        docs: |
+          When set, the header value is `<key-id><delimiter><algorithm>`; the key ID is handed
+          back to the caller so it can resolve the matching secret. When omitted, the whole
+          header value is the algorithm.
+      algorithms:
+        type: map<string, WebhookSignatureAlgorithmSchema>
+        docs: |
+          Allowed header values mapped to the HMAC algorithm they select, e.g.
+          `HMAC_SHA1: sha1`, `HMAC_SHA256: sha256`. These wire values also become the
+          algorithm enum exposed by the generated verifier.
 
   AsymmetricSignatureSchema:
     properties:

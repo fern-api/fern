@@ -112,6 +112,34 @@ types:
           notification URL, succeeding if ANY candidate's signature matches (each compared in
           constant time). Required by providers (such as Twilio) whose backend is inconsistent
           about whether the signed URL carried a port and how its query string was encoded.
+      algorithmHeader:
+        type: optional<WebhookAlgorithmHeader>
+        docs: |
+          When present, the HMAC algorithm is selected per request from this header and
+          `algorithm` is only the default used when the header is absent. Generators expose the
+          header's wire values (e.g. HMAC_SHA1, HMAC_SHA256) as the verifier's algorithm enum.
+
+  WebhookAlgorithmHeader:
+    properties:
+      headerName:
+        type: commons.NameAndWireValueOrString
+        docs: The HTTP header that carries the algorithm selection.
+      keyIdDelimiter:
+        type: optional<string>
+        docs: |
+          When present, the header value is `<keyId><delimiter><algorithm>` and the key ID is
+          surfaced to the caller so it can resolve the matching signing secret. When absent,
+          the whole header value is the algorithm.
+      algorithms:
+        type: list<WebhookAlgorithmOption>
+        docs: Allowed header values and the algorithm each selects.
+
+  WebhookAlgorithmOption:
+    properties:
+      wireValue:
+        type: string
+        docs: The value as it appears in the header, e.g. HMAC_SHA256.
+      algorithm: HmacAlgorithm
 
   HmacAlgorithm:
     docs: The HMAC algorithm used to compute the webhook signature.
