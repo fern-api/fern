@@ -76,6 +76,9 @@ describe("generator rule", () => {
         ["APACHE", "Apache-2.0", { license: "Apache-2.0" }],
         ["apache", "Apache-2.0", { license: "Apache-2.0" }],
         ["Apache-2.0", "Apache-2.0", { license: "Apache-2.0" }],
+        ["apache-2.0", "Apache-2.0", { license: "Apache-2.0" }],
+        ["mit", "MIT", { license: "MIT" }],
+        ["gpl-3.0-only", "GPL-3.0-only", undefined],
         ["GPL3", "GPL-3.0-only", undefined],
         ["UNLICENSED", "UNLICENSED", undefined],
         ["BSD-3-Clause", "BSD-3-Clause", undefined]

@@ -23,7 +23,9 @@ const SOURCE_FIELDS = ["type", "path", "url", "ref", "registry"];
 const SPDX_LICENSES: Record<string, string> = {
     MIT: "MIT",
     APACHE: "Apache-2.0",
+    "APACHE-2.0": "Apache-2.0",
     GPL3: "GPL-3.0-only",
+    "GPL-3.0-ONLY": "GPL-3.0-only",
     UNLICENSED: "UNLICENSED"
 };
 /** `metadata.license` in generators.yml takes only these identifiers, or a custom file. */
