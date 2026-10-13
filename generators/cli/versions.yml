@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.53.3
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.3 updates.
+      type: fix
+    - summary: |
+        Fix a compile error in generated type crates for multipart upload requests whose property
+        names don't round-trip through the old snake_case conversion (for example `file_0` or `URLPath`).
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 0.53.2
   changelogEntry:
     - summary: |

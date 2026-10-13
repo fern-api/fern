@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.155.9
+  changelogEntry:
+    - summary: |
+        Upgrade `@postman/sdk-config` to 0.11.0. `fern sdk migrate` now carries the CLI generator's typed
+        generation settings, package metadata, Cargo dependency sources, and `distribution` (Homebrew,
+        Scoop, and GitHub App secret names) into SDK Config, and SDK Config accepts the public OAuth
+        `clientId` on authorization-code flows.
+      type: chore
+    - summary: |
+        `fern sdk migrate` now migrates OAuth `authorization-code` schemes instead of omitting them. The
+        literal `client-id` becomes the public `flows[].clientId`, alongside `authorizationUrl`,
+        `tokenUrl`, `refreshUrl`, and scopes. A scheme without a literal `client-id` (including one that
+        sets only `client-id-env`) is still omitted with a diagnostic, and settings SDK Config cannot hold
+        yet, such as `redirect-uri` and `pkce`, are reported.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 5.155.8
   changelogEntry:
     - summary: |
