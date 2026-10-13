@@ -437,8 +437,8 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             invocation.add(", $L", parameter.name);
         }
         config.getTimestamp()
-                .ifPresent(timestamp -> invocation.add(
-                        ", getHeader(headers, $S)", NameUtils.getWireValue(timestamp.getHeaderName())));
+                .ifPresent(timestamp ->
+                        invocation.add(", getHeader(headers, $S)", NameUtils.getWireValue(timestamp.getHeaderName())));
         invocation.add(", algorithm)");
         method.addStatement(invocation.build());
         return method.build();
