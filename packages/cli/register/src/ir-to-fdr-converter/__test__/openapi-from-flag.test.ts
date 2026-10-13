@@ -189,6 +189,69 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/openapi-auth-test-ir.snap");
     });
 
+    it("should keep server URL templates and variables", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/server-url-variables")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "server-url-variables"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        const endpoint = Object.values(fdrApiDefinition.rootPackage.endpoints)[0];
+        expect(endpoint?.environments).toEqual([
+            {
+                id: "Production",
+                baseUrl: "https://api.example.com/v1",
+                audiences: undefined,
+                urlTemplate: "https://{tenant-domain}/{version}",
+                urlVariables: [
+                    { id: "tenant-domain", default: "api.example.com", values: undefined },
+                    { id: "version", default: "v1", values: ["v1", "v2"] }
+                ]
+            }
+        ]);
+    });
+
     it("should handle OpenAPI with multiple security headers", async () => {
         // Test OpenAPI spec with endpoints requiring multiple security headers
         const context = createMockTaskContext();

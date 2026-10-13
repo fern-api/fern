@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` now publishes each environment's server URL template and variables
+    (OpenAPI `servers[].variables`: default and `enum` values) to the API definition. The API
+    playground can then fill those variables in from the viewer's login claims.
+  type: feat
