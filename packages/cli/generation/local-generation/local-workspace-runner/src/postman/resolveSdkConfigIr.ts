@@ -14,6 +14,8 @@ export declare namespace resolveSdkConfigIr {
         generatorInvocation: generatorsYml.GeneratorInvocation;
         /** Path to `fern.config.json`; `sdk-config.yml` sits beside it. */
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
+        /** Fern API identity from the selected workspace definition. */
+        apiName: string;
         organization: string;
         /** Directory the adapter writes the SDK into, in the coordinates the adapter will see. */
         outputPath: string;
@@ -38,6 +40,7 @@ export declare namespace resolveSdkConfigIr {
 export async function resolveSdkConfigIr({
     generatorInvocation,
     absolutePathToFernConfig,
+    apiName,
     organization,
     outputPath,
     rawSpecsManifest
@@ -63,6 +66,7 @@ export async function resolveSdkConfigIr({
                 sdkConfig: loaded.sdkConfig,
                 language: language as TargetLanguage,
                 generatorName: generatorInvocation.name,
+                apiName,
                 organization,
                 outputPath,
                 rawSpecsManifest
