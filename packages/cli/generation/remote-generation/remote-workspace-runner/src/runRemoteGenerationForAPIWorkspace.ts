@@ -24,6 +24,7 @@ import {
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiEnvOverride,
     getFernSdkGenApiLanguage,
+    getFlagIndependentSdkGenApiRouting,
     isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     resolveFernSdkGenApiEnabledByGenerator,
@@ -217,10 +218,20 @@ export async function runRemoteGenerationForAPIWorkspace({
     const generatorsYmlAbsolutePath = workspace.generatorsConfiguration?.absolutePathToConfiguration;
     const isSdkPreview = isPreview ?? absolutePathToPreview != null;
     // The flag is evaluated per generator, so an org, a language, or one generator in one org can be
-    // routed (or kept off sdk-gen-api) independently. Values are memoized per process.
+    // routed (or kept off sdk-gen-api) independently. Values are memoized per process. Generators whose
+    // routing the flag does not decide (SDK Config, post-cutover versions) make no flag request.
     const sdkGenApiEnabledByGenerator = await resolveFernSdkGenApiEnabledByGenerator({
         organization,
-        generatorNames: generatorGroup.generators.map((generator) => generator.name)
+        generatorNames: generatorGroup.generators
+            .filter(
+                (generator) =>
+                    getFlagIndependentSdkGenApiRouting({
+                        generatorName: generator.name,
+                        version: generator.version,
+                        usesSdkConfig: sdkConfigV1 != null
+                    }) == null
+            )
+            .map((generator) => generator.name)
     });
     // Select every target route before starting any per-target work. A bad target therefore cannot
     // race a sibling into remote registration or generation.
@@ -499,9 +510,24 @@ export function prepareFernSdkGenApiRoutes({
             if (configuredTarget?.generatorVersion != null) {
                 resolved = { ...resolved, version: configuredTarget.generatorVersion };
             }
-            if (!isSdkGenApiEnabled(generatorInvocation.name)) {
+            // SDK Config runs and Postman-built (post-cutover) versions have no Fiddle route, so they use
+            // sdk-gen-api whatever `use-sdk-gen-api` says; the flag only governs Fern-built versions. A
+            // post-cutover version without SDK Config therefore always gets the `fern sdk migrate` error
+            // from route selection below.
+            const flagIndependentRouting = getFlagIndependentSdkGenApiRouting({
+                generatorName: resolved.name,
+                version: resolved.version,
+                usesSdkConfig: sdkConfigV1 != null
+            });
+            if (!(flagIndependentRouting ?? isSdkGenApiEnabled(generatorInvocation.name))) {
                 if (sdkConfigV1 != null) {
                     throw new Error("SDK Config v1 generation requires the sdk-gen-api generation backend");
+                }
+                if (flagIndependentRouting === false) {
+                    throw new CliError({
+                        message: `${resolved.name} ${resolved.version} requires sdk-gen-api generation, which ${USE_SDK_GEN_API_ENV_VAR}=false turns off. Unset ${USE_SDK_GEN_API_ENV_VAR} to generate it.`,
+                        code: CliError.Code.ConfigError
+                    });
                 }
                 // Generators without a Fiddle fallback must not fall through to legacy
                 // generation, where they would fail opaquely.

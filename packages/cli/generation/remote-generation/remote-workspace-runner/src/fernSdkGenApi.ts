@@ -26,6 +26,7 @@ import {
     redactPublicationIdentifier,
     redactSensitiveValues
 } from "./redactSensitiveValues.js";
+import { parseExactSemver } from "./sdk-gen-client/exactSemver.js";
 import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
@@ -33,6 +34,7 @@ import {
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
+    selectGeneratorConfigRoute,
     selectUnpinnedGeneratorConfigRoute,
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
@@ -319,6 +321,54 @@ const SDK_GEN_API_ONLY_GENERATORS: ReadonlySet<string> = new Set(["fernapi/fern-
 
 export function isSdkGenApiOnly(generatorName: string): boolean {
     return SDK_GEN_API_ONLY_GENERATORS.has(generatorName);
+}
+
+/**
+ * Whether a first-party generator version is at or past its SDK Config cutover (a Postman-built
+ * generator). Those versions have no Fiddle route, so `use-sdk-gen-api` only governs earlier (Fern-built)
+ * versions. False for generators outside the cutover table and for versions it cannot classify
+ * (`latest`, ranges, partial versions), which keep their flag-based routing.
+ */
+export function isPostCutoverGeneratorVersion({
+    generatorName,
+    version
+}: {
+    generatorName: string;
+    version: string;
+}): boolean {
+    const language = getFernSdkGenApiLanguage(generatorName);
+    if (language == null || parseExactSemver(version) == null) {
+        return false;
+    }
+    return (
+        selectGeneratorConfigRoute({ generatorId: generatorName, language, requestedVersion: version }).configKind ===
+        "sdk-config-v1"
+    );
+}
+
+/**
+ * Routing that does not depend on `use-sdk-gen-api`. SDK Config runs and post-cutover versions have no
+ * Fiddle route, so they use sdk-gen-api unless `FERN_USE_SDK_GEN_API=false` turns it off (returns `false`,
+ * which callers must reject rather than send to Fiddle). Returns `undefined` when the flag decides:
+ * pre-cutover versions, unclassifiable versions, generators outside the cutover table, and
+ * sdk-gen-api-only generators, whose access the flag still gates.
+ */
+export function getFlagIndependentSdkGenApiRouting({
+    generatorName,
+    version,
+    usesSdkConfig
+}: {
+    generatorName: string;
+    version: string;
+    usesSdkConfig: boolean;
+}): boolean | undefined {
+    if (isSdkGenApiOnly(generatorName)) {
+        return undefined;
+    }
+    if (!usesSdkConfig && !isPostCutoverGeneratorVersion({ generatorName, version })) {
+        return undefined;
+    }
+    return getFernSdkGenApiEnvOverride() !== false;
 }
 
 /**

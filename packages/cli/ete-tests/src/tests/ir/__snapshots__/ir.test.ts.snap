@@ -232,6 +232,20 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                     "notificationUrlNormalization": {
                         "portVariants": true,
                         "legacyQueryEncoding": true
+                    },
+                    "algorithmHeader": {
+                        "headerName": "X-Twilio-Webhook-Signature-Settings",
+                        "keyIdDelimiter": ";",
+                        "algorithms": [
+                            {
+                                "wireValue": "HMAC_SHA1",
+                                "algorithm": "SHA1"
+                            },
+                            {
+                                "wireValue": "HMAC_SHA256",
+                                "algorithm": "SHA256"
+                            }
+                        ]
                     }
                 },
                 "fileUploadPayload": null,
@@ -281,7 +295,8 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                     },
                     "timestamp": null,
                     "bodyHashBinding": null,
-                    "notificationUrlNormalization": null
+                    "notificationUrlNormalization": null,
+                    "algorithmHeader": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -332,7 +347,8 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                     },
                     "timestamp": null,
                     "bodyHashBinding": null,
-                    "notificationUrlNormalization": null
+                    "notificationUrlNormalization": null,
+                    "algorithmHeader": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -702,6 +718,20 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
             "notificationUrlNormalization": {
                 "portVariants": true,
                 "legacyQueryEncoding": true
+            },
+            "algorithmHeader": {
+                "headerName": "X-Twilio-Webhook-Signature-Settings",
+                "keyIdDelimiter": ";",
+                "algorithms": [
+                    {
+                        "wireValue": "HMAC_SHA1",
+                        "algorithm": "SHA1"
+                    },
+                    {
+                        "wireValue": "HMAC_SHA256",
+                        "algorithm": "SHA256"
+                    }
+                ]
             }
         },
         "platformHeaders": {
@@ -33963,7 +33993,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "tolerance": 300
                     },
                     "bodyHashBinding": null,
-                    "notificationUrlNormalization": null
+                    "notificationUrlNormalization": null,
+                    "algorithmHeader": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -34017,7 +34048,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "tolerance": 300
                     },
                     "bodyHashBinding": null,
-                    "notificationUrlNormalization": null
+                    "notificationUrlNormalization": null,
+                    "algorithmHeader": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,

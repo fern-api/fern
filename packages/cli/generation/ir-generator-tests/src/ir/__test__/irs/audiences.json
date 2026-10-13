@@ -588,7 +588,8 @@
                         "tolerance": 300
                     },
                     "bodyHashBinding": null,
-                    "notificationUrlNormalization": null
+                    "notificationUrlNormalization": null,
+                    "algorithmHeader": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
