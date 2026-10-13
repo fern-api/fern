@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Each feature flag evaluation now also sends a `feature_flag_evaluated` event with the same
+    properties (`org`, `environment`, `generator`, `language`, `version`) and the flag `response`
+    and `enabled` result. PostHog keeps only about one `$feature_flag_called` per org, flag, and
+    value per hour, so that event cannot count evaluations per generator; this one can.
+  type: fix

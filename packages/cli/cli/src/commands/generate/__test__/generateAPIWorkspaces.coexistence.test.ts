@@ -154,11 +154,11 @@ describe("generateAPIWorkspaces coexistence", () => {
             generator: "fernapi/fern-python-sdk",
             language: "python"
         });
-        expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", {
-            org: "test",
-            generator: "fernapi/fern-typescript-sdk",
-            language: "typescript"
-        });
+        // SDK Config targets always route through sdk-gen-api, so the flag is never requested for them.
+        expect(featureFlags.isEnabled).not.toHaveBeenCalledWith(
+            "use-sdk-gen-api",
+            expect.objectContaining({ generator: "fernapi/fern-typescript-sdk" })
+        );
         expect(event?.properties?.requestedGenerators).toEqual([
             expect.objectContaining({
                 kind: "legacy",
@@ -169,7 +169,7 @@ describe("generateAPIWorkspaces coexistence", () => {
             expect.objectContaining({
                 kind: "sdk-config",
                 name: "fernapi/fern-typescript-sdk",
-                sdkGenApiEnabled: false
+                sdkGenApiEnabled: true
             })
         ]);
         // Identity and auth already come from the distinct ID, `userEmail`, and `usingAccessToken`.
