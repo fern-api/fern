@@ -1,0 +1,7 @@
+- summary: |
+    Fix the generated `OAuthTokenProvider` so that it compiles under phpstan (level max) when the
+    token endpoint's `access_token` / `expires_in` response properties are optional or nullable
+    (e.g. OpenAPI specs that do not list them as `required`). The provider now throws the SDK's
+    base exception when the response carries no access token, and only computes `expiresAt` when
+    `expires_in` is present.
+  type: fix
