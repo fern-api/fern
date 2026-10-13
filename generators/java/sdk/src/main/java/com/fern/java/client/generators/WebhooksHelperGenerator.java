@@ -473,16 +473,20 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         StringBuilder javadoc = new StringBuilder("Verify an incoming webhook request from its headers.\n\n");
         javadoc.append("Reads the signature from the \"")
                 .append(NameUtils.getWireValue(config.getSignatureHeaderName()))
-                .append("\" header (missing or empty means the request is unsigned and verification fails), then the \"")
+                .append(
+                        "\" header (missing or empty means the request is unsigned and verification fails), then the \"")
                 .append(NameUtils.getWireValue(algorithmHeader.getHeaderName()))
                 .append("\" header to select the HMAC algorithm (");
         javadoc.append(algorithmHeader.getAlgorithms().stream()
                 .map(option -> "\"" + option.getWireValue() + "\"")
                 .collect(java.util.stream.Collectors.joining(", ")));
         javadoc.append(").\n");
-        algorithmHeader.getKeyIdDelimiter().ifPresent(delimiter -> javadoc.append(
-                        "The header value is {@code <keyId>" + delimiter
-                                + "<algorithm>}; the key ID is passed to the {@code signatureKey} resolver so the application can look up the matching secret.\n"));
+        algorithmHeader
+                .getKeyIdDelimiter()
+                .ifPresent(
+                        delimiter -> javadoc.append(
+                                "The header value is {@code <keyId>" + delimiter
+                                        + "<algorithm>}; the key ID is passed to the {@code signatureKey} resolver so the application can look up the matching secret.\n"));
         javadoc.append("When that header is absent the configured default algorithm (\"")
                 .append(mapHmacAlgorithm(config.getAlgorithm()))
                 .append("\") is used and the resolver receives {@code null}.\n");
