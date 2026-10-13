@@ -2,9 +2,9 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
+    type generatorsYml,
     LEGACY_GENERATORS_CONFIGURATION_FILENAME,
-    SDK_CONFIG_FILENAME,
-    type generatorsYml
+    SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, dirname, doesPathExist, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
@@ -73,6 +73,11 @@ export async function sdkMigrate({
         });
     }
     const sourceBaseDirectory = dirname(outputPath).toString();
+    const apiName = fernWorkspace.definition.rootApiFile.contents.name;
+    const sdkName = resolveMigrationSdkName({
+        apiName,
+        organization: project.config.organization
+    });
 
     let mapped: MappingResult;
     try {
@@ -87,10 +92,7 @@ export async function sdkMigrate({
                 groups,
                 definition: fernWorkspace.definition
             }),
-            sdkName: resolveMigrationSdkName({
-                apiName: fernWorkspace.definition.rootApiFile.contents.name,
-                organization: project.config.organization
-            })
+            sdkName
         });
     } catch (error) {
         if (error instanceof FernConfigMappingError) {
@@ -117,6 +119,7 @@ export async function sdkMigrate({
     ]);
     const sdkConfigContents = mergeSdkConfig({
         existingContents: existingSdkConfig,
+        legacyPlaceholderSdkName: sdkName === apiName ? undefined : apiName,
         mapped,
         outputPath
     });
