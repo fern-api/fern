@@ -1140,6 +1140,38 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(result.analysisWarning).toBeUndefined();
     });
 
+    it("folds per-chunk PR descriptions and changelog entries under a single heading on the chunked retry", async () => {
+        let chunkCalls = 0;
+        mockFetch.mockImplementation(async () => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            chunkCalls++;
+            return okResponse({
+                message: "feat!: remove legacy API",
+                version_bump: "MAJOR",
+                changelog_entry: `### Breaking Changes\n\n- Removed method ${chunkCalls}`,
+                pr_description: `### Breaking Changes\n\n- Removed method ${chunkCalls}\n\n### Added\n\n- Added thing ${chunkCalls}`,
+                version_bump_reason: "Public method removed."
+            });
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(chunkCalls).toBeGreaterThan(1);
+        expect(result.versionBump).toBe("MAJOR");
+        const headings = (text: string | undefined, heading: string) =>
+            (text ?? "").split("\n").filter((line) => line === heading).length;
+        expect(headings(result.prDescription, "### Breaking Changes")).toBe(1);
+        expect(headings(result.prDescription, "### Added")).toBe(1);
+        expect(headings(result.changelogEntry, "### Breaking Changes")).toBe(1);
+        for (let i = 1; i <= chunkCalls; i++) {
+            expect(result.prDescription).toContain(`- Removed method ${i}`);
+            expect(result.prDescription).toContain(`- Added thing ${i}`);
+        }
+    });
+
     it("retries chunk-by-chunk when the full-diff request fails and keeps the highest bump", async () => {
         mockFetch.mockImplementation(async (_url: string, init: RequestInit) => {
             if (mockFetch.mock.calls.length === 1) {
