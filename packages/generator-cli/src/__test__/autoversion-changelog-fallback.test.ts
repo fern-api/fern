@@ -163,4 +163,31 @@ describe("mergeMarkdownSections", () => {
         ]);
         expect(merged).toBe("### Example\n\n````md\n```ts\n# still code\n```\n````\n\n### Other\n\n- x\n- y");
     });
+
+    it("keeps an empty parent heading and merges repeated parents with their children in order", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n### removeFoo\n\n**Migration:** Use bar",
+            "## Breaking Changes\n\n### removeBaz\n\n**Migration:** Use qux\n\n## What's New\n\n- x"
+        ]);
+        expect(merged).toBe(
+            "## Breaking Changes\n\n### removeFoo\n\n**Migration:** Use bar\n\n### removeBaz\n\n**Migration:** Use qux\n\n## What's New\n\n- x"
+        );
+    });
+
+    it("does not merge same-named headings that live under different parents", () => {
+        const merged = mergeMarkdownSections(["## A\n\n### Notes\n\n- a", "## B\n\n### Notes\n\n- b"]);
+        expect(merged).toBe("## A\n\n### Notes\n\n- a\n\n## B\n\n### Notes\n\n- b");
+    });
+
+    it("keeps a later chunk's intro text next to that chunk's own section", () => {
+        const merged = mergeMarkdownSections(["### Added\n- A", "B is a breaking change\n\n### Breaking Changes\n- B"]);
+        expect(merged).toBe("### Added\n\n- A\n\n### Breaking Changes\n\nB is a breaking change\n\n- B");
+    });
+
+    it("closes a fence with a longer run of the same marker and then recognizes later headings", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n````ts\nold()\n`````\n\n## What's New\n\nAdded bar"
+        ]);
+        expect(merged).toBe("## Breaking Changes\n\n````ts\nold()\n`````\n\n## What's New\n\nAdded bar");
+    });
 });

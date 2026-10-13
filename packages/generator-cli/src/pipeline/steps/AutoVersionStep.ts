@@ -1292,62 +1292,132 @@ const MARKDOWN_HEADING = /^(#{1,6})\s+(.+?)\s*#*\s*$/;
 const MARKDOWN_FENCE = /^\s*(`{3,}|~{3,})(.*)$/;
 const MARKDOWN_LIST_ITEM = /^\s*(?:[-*+]|\d+[.)])\s/;
 
+interface ParsedMarkdownSection {
+    /** Heading line without trailing `#`s, e.g. `### Breaking Changes`. */
+    heading: string;
+    level: number;
+    /** Text between this heading and the next heading of any level. */
+    body: string;
+    children: ParsedMarkdownSection[];
+}
+
+interface MergedMarkdownSection {
+    heading: string;
+    bodies: string[];
+    children: Map<string, MergedMarkdownSection>;
+}
+
+/** Splits markdown into `intro` (text before the first heading) and a heading tree. Headings inside code fences are ignored. */
+function parseMarkdownSections(text: string): { intro: string; sections: ParsedMarkdownSection[] } {
+    const sections: ParsedMarkdownSection[] = [];
+    const stack: ParsedMarkdownSection[] = [];
+    let intro = "";
+    let current: ParsedMarkdownSection | undefined;
+    let fence: string | undefined;
+    let buffer: string[] = [];
+    const closeBody = () => {
+        const body = buffer.join("\n").trim();
+        buffer = [];
+        if (current != null) {
+            current.body = body;
+        } else {
+            intro = body;
+        }
+    };
+    for (const line of text.trim().split("\n")) {
+        const fenceMatch = MARKDOWN_FENCE.exec(line);
+        if (fenceMatch != null) {
+            const marker = fenceMatch[1] ?? "";
+            if (fence == null) {
+                fence = marker;
+            } else if (marker[0] === fence[0] && marker.length >= fence.length && (fenceMatch[2] ?? "").trim() === "") {
+                fence = undefined;
+            }
+        }
+        const match = fence == null ? MARKDOWN_HEADING.exec(line) : null;
+        if (match == null) {
+            buffer.push(line);
+            continue;
+        }
+        closeBody();
+        const level = match[1]?.length ?? 1;
+        const section: ParsedMarkdownSection = {
+            heading: `${match[1]} ${match[2]?.trim()}`,
+            level,
+            body: "",
+            children: []
+        };
+        while (stack.length > 0 && (stack[stack.length - 1]?.level ?? 0) >= level) {
+            stack.pop();
+        }
+        const parent = stack[stack.length - 1];
+        (parent != null ? parent.children : sections).push(section);
+        stack.push(section);
+        current = section;
+    }
+    closeBody();
+    return { intro, sections };
+}
+
+function mergeParsedSections(
+    target: Map<string, MergedMarkdownSection>,
+    parsed: ParsedMarkdownSection[],
+    intro: string
+): void {
+    parsed.forEach((section, index) => {
+        const key = `${section.level} ${section.heading.toLowerCase().replace(/\s+/g, " ")}`;
+        let node = target.get(key);
+        if (node == null) {
+            node = { heading: section.heading, bodies: [], children: new Map() };
+            target.set(key, node);
+        }
+        // A chunk's text before its first heading stays attached to that chunk's first section.
+        if (index === 0 && hasText(intro)) {
+            node.bodies.push(intro);
+        }
+        if (section.body.length > 0) {
+            node.bodies.push(section.body);
+        }
+        mergeParsedSections(node.children, section.children, "");
+    });
+}
+
+function renderMergedSection(node: MergedMarkdownSection): string {
+    return [
+        node.heading,
+        ...(node.bodies.length > 0 ? [joinSectionBodies(node.bodies)] : []),
+        ...[...node.children.values()].map(renderMergedSection)
+    ].join("\n\n");
+}
+
 /**
  * Joins per-chunk markdown (changelog entries / PR descriptions) into one document, folding
- * sections that share a heading (same level and text, case-insensitive) under a single header
- * so a multi-chunk analysis reads as one `### Breaking Changes` list instead of one per chunk.
- * Headings inside fenced code blocks are ignored. Text before a chunk's first heading is kept as-is,
- * in chunk order, ahead of the merged sections; section order follows first appearance.
+ * sections that share a heading (same level and text, case-insensitive, under the same parent)
+ * under a single header so a multi-chunk analysis reads as one `### Breaking Changes` list instead
+ * of one per chunk. Heading hierarchy is preserved (an empty `## Breaking Changes` keeps its
+ * `###` children). Headings inside fenced code blocks are ignored. Text before a chunk's first
+ * heading stays with that chunk's first section; chunks with no headings stay in chunk order.
+ * Section order follows first appearance.
  */
 export function mergeMarkdownSections(texts: string[]): string {
-    const preamble: string[] = [];
-    const sections = new Map<string, { heading: string; bodies: string[] }>();
+    const order: Array<string | MergedMarkdownSection> = [];
+    const roots = new Map<string, MergedMarkdownSection>();
     for (const text of texts) {
-        let current: { heading: string } | undefined;
-        let fence: string | undefined;
-        const lines: string[] = [];
-        const flush = () => {
-            const body = lines.join("\n").trim();
-            lines.length = 0;
-            if (body.length === 0) {
-                return;
+        const { intro, sections } = parseMarkdownSections(text);
+        if (sections.length === 0) {
+            if (hasText(intro)) {
+                order.push(intro);
             }
-            if (current == null) {
-                preamble.push(body);
-                return;
-            }
-            const key = current.heading.toLowerCase().replace(/\s+/g, " ");
-            const section = sections.get(key) ?? { heading: current.heading, bodies: [] };
-            section.bodies.push(body);
-            sections.set(key, section);
-        };
-        for (const line of text.trim().split("\n")) {
-            const fenceMatch = MARKDOWN_FENCE.exec(line);
-            if (fenceMatch != null) {
-                const marker = fenceMatch[1] ?? "";
-                if (fence == null) {
-                    fence = marker;
-                } else if (
-                    marker[0] === fence[0] &&
-                    marker.length >= fence.length &&
-                    (fenceMatch[2] ?? "").trim() === ""
-                ) {
-                    fence = undefined;
-                }
-            }
-            const heading = fence == null ? MARKDOWN_HEADING.exec(line) : null;
-            if (heading != null) {
-                flush();
-                current = { heading: `${heading[1]} ${heading[2]?.trim()}` };
-                continue;
-            }
-            lines.push(line);
+            continue;
         }
-        flush();
+        mergeParsedSections(roots, sections, intro);
+        for (const node of roots.values()) {
+            if (!order.includes(node)) {
+                order.push(node);
+            }
+        }
     }
-    return [...preamble, ...[...sections.values()].map((s) => `${s.heading}\n\n${joinSectionBodies(s.bodies)}`)].join(
-        "\n\n"
-    );
+    return order.map((item) => (typeof item === "string" ? item : renderMergedSection(item))).join("\n\n");
 }
 
 /** Adjacent list bodies stay one tight list; anything else (paragraphs, code) is separated by a blank line. */
