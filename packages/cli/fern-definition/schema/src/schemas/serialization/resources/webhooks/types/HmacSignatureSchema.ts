@@ -3,6 +3,7 @@
 import type * as FernDefinition from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { WebhookAlgorithmHeaderSchema } from "./WebhookAlgorithmHeaderSchema.js";
 import { WebhookBodyHashBindingSchema } from "./WebhookBodyHashBindingSchema.js";
 import { WebhookPayloadFormatSchema } from "./WebhookPayloadFormatSchema.js";
 import { WebhookSignatureAlgorithmSchema } from "./WebhookSignatureAlgorithmSchema.js";
@@ -22,6 +23,7 @@ export const HmacSignatureSchema: core.serialization.ObjectSchema<
     timestamp: WebhookTimestampSchema.optional(),
     "body-hash-binding": WebhookBodyHashBindingSchema.optional(),
     "url-normalization": WebhookUrlNormalizationSchema.optional(),
+    "algorithm-header": WebhookAlgorithmHeaderSchema.optional(),
 });
 
 export declare namespace HmacSignatureSchema {
@@ -34,5 +36,6 @@ export declare namespace HmacSignatureSchema {
         timestamp?: WebhookTimestampSchema.Raw | null;
         "body-hash-binding"?: WebhookBodyHashBindingSchema.Raw | null;
         "url-normalization"?: WebhookUrlNormalizationSchema.Raw | null;
+        "algorithm-header"?: WebhookAlgorithmHeaderSchema.Raw | null;
     }
 }

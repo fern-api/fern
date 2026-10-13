@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.155.3
+  changelogEntry:
+    - summary: |
+        Add `algorithm-header` to HMAC `webhook-signature` blocks (including
+        `api.settings.webhook-signature`). It names a request header whose value selects the
+        HMAC algorithm per request, optionally prefixed by a key ID
+        (e.g. Twilio's `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`), and maps the
+        allowed header values (`HMAC_SHA1`, `HMAC_SHA256`) to algorithms. Compiled into
+        `HmacSignatureVerification.algorithmHeader` in the IR so generated verifiers can read the
+        algorithm and key ID from the request themselves.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
 - version: 5.155.2
   changelogEntry:
     - summary: |
