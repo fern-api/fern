@@ -124,7 +124,7 @@ thiserror = "2"
 # understand — see `profiles::store`.
 toml_edit = "0.22"
 webbrowser = "1"
-rand = "0.8"
+rand = "0.9"
 tokio = { version = "1", features = ["full"] }
 tokio-tungstenite = { version = "0.24", default-features = false, features = ["connect", "handshake"] }
 tokio-util = { version = "0.7", features = ["io"] }
