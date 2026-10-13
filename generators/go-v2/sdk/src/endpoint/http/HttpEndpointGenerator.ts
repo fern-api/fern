@@ -775,7 +775,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             case FernIr.PrimitiveTypeV1.DateTime:
                 return go.codeblock((writer) => {
                     writer.write(`${reference}.Format(`);
-                    writer.writeNode(go.typeReference({ name: "RFC3339", importPath: "time" }));
+                    writer.writeNode(go.typeReference({ name: "RFC3339Nano", importPath: "time" }));
                     writer.write(")");
                 });
             default:

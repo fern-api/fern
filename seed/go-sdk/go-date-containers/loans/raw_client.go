@@ -137,7 +137,7 @@ func (r *RawClient) ListLoansByTimestamp(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/loans/by-timestamp/%v",
-		request.AsOf.Format(time.RFC3339),
+		request.AsOf.Format(time.RFC3339Nano),
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
