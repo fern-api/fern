@@ -123,6 +123,7 @@ import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
 import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
+import { createEnvironmentProxyDispatcher } from "./utils/proxy.js";
 import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
@@ -340,29 +341,19 @@ async function tryRunCli(cliContext: CliContext) {
 }
 
 /**
- * Node's global `fetch` ignores proxy environment variables, so configure undici
- * explicitly. Timeouts are disabled because generation and uploads can legitimately
- * run for a long time.
+ * Node's global `fetch` ignores proxy environment variables, so route requests through a
+ * dispatcher that honors `http(s)_proxy`/`no_proxy` per origin.
+ * Timeouts are disabled because generation and uploads can legitimately run for a long time.
  */
 async function configureGlobalDispatcher(): Promise<void> {
-    const { setGlobalDispatcher, Agent, ProxyAgent } = await import("undici");
-    const options = { connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 };
-    const proxyUri = getProxyUriFromEnvironment();
-    setGlobalDispatcher(proxyUri != null ? new ProxyAgent({ ...options, uri: proxyUri }) : new Agent(options));
-}
-
-/**
- * Nearly all of the CLI's traffic is HTTPS, so prefer `HTTPS_PROXY` and fall back to
- * `HTTP_PROXY`; both lower- and upper-case spellings are honored like curl/npm do.
- */
-function getProxyUriFromEnvironment(): string | undefined {
-    for (const name of ["https_proxy", "HTTPS_PROXY", "http_proxy", "HTTP_PROXY"]) {
-        const value = process.env[name];
-        if (value != null && value !== "") {
-            return value;
-        }
-    }
-    return undefined;
+    const { setGlobalDispatcher } = await import("undici");
+    setGlobalDispatcher(
+        createEnvironmentProxyDispatcher({
+            connect: { timeout: 2147483647 },
+            bodyTimeout: 0,
+            headersTimeout: 2147483647
+        })
+    );
 }
 
 async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {
