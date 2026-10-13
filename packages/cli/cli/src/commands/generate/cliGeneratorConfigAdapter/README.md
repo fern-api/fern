@@ -34,9 +34,11 @@ Warnings print as `[warning] [CODE] path: message; action`, and errors stop the 
 listed. Run with `--log-level debug` to see the path of the translated `generators.yml` and the generator defaults
 that apply.
 
-## Settings SDK Config cannot hold
+## CLI settings, browser login and distribution
 
-SDK Config has no field for these, so the CLI generator uses its defaults:
+The `cli` target's `generation` settings (`binaryName`, `customCommands`, `rootGroup`, `profiles`, `splitTypeCrates`
+and `userAgentSuffixFlag`) are written to the generator's `config` under the same names. A setting that is not set
+keeps the generator's default, and a debug note lists them:
 
 | Setting | Default |
 |---|---|
@@ -45,8 +47,16 @@ SDK Config has no field for these, so the CLI generator uses its defaults:
 | `profiles` | Off |
 | `rootGroup` | None |
 
-Browser login (an OAuth authorization-code flow) is rejected: it needs a public client id, which SDK Config cannot
-hold.
+Browser login (an OAuth authorization-code flow) maps to `type: authorization-code` with the flow's public
+`clientId` as `client-id`. Without `clientId` the flow is rejected, as Fern's validator requires it. The scheme's
+`clientId` and `clientSecret` environment variables are not written for it, and a warning says so.
+
+`output.distribution` (GitHub delivery only) is written to `config.distribution`. The `*SecretName` fields become the
+generator's `appIdSecret`, `privateKeySecret` and `tokenEnvironmentVariable`, unchanged; they are GitHub Actions
+secret names that the generated release workflow reads, so the Fern CLI never resolves them. Generator defaults, such
+as `HOMEBREW_TAP_TOKEN`, are not written, so a channel without its own token still uses `githubApp`.
+
+npm publication for the `cli` target (`output.publish`) is not translated yet and is rejected.
 
 If `sdk-config.yml` came from `fern sdk migrate` and has no `api.auth`, migrate may have dropped the whole auth block
 (it does so when any scheme cannot be mapped). The CLI then uses the security schemes the spec declares.
@@ -99,13 +109,14 @@ Paths are SDK Config paths, such as `api.auth.schemes[0].location`.
 | `CLI_TARGET_REFRESH_ENDPOINT` | warning | No spec POST operation matches the refresh URL |
 | `CLI_TARGET_OAUTH_FLOW` | error | An implicit or password flow |
 | `CLI_TARGET_OAUTH_SECOND_FLOW` | error | A second flow on one OAuth scheme |
-| `CLI_TARGET_PUBLIC_CLIENT_ID` | error | A browser-login (authorization-code) flow |
+| `CLI_TARGET_PUBLIC_CLIENT_ID` | error | A browser-login (authorization-code) flow without `clientId` |
+| `CLI_TARGET_PUBLIC_CLIENT_CREDENTIALS` | warning | Browser login with scheme `clientId`/`clientSecret` environment variables, which are not written |
 | `CLI_TARGET_HEADER_IS_SCHEME_KEY` | warning | A header named after an API-key scheme key (written by `fern sdk migrate`); skipped |
 | `CLI_TARGET_MULTI_URL_ENVIRONMENT` | error | An environment with several URLs |
 | `CLI_TARGET_LICENSE` | error | A custom license without a file path |
 | `CLI_TARGET_UNTESTED` | warning | Several overrides files, or GitHub output |
 | `CLI_TARGET_ZIP_AS_FILES` | warning | Zip delivery; the `cli` target writes files |
-| `CLI_TARGET_MULTI_SPEC_BINARY_NAME` | warning | Several specs, so the binary name comes from the API display name |
+| `CLI_TARGET_MULTI_SPEC_BINARY_NAME` | warning | Several specs and no `binaryName`, so the binary name comes from the API display name |
 | `CLI_TARGET_ROOT_SETTING_CONFLICT` | warning | A spec's `pathParameterOrder` differs from root's; Fern reads it only at root |
 | `CLI_TARGET_GENERATOR_VERSION` | error | A generator version that is not an exact version, such as `latest` |
 | `CLI_TARGET_UNPOOLED_VERSION` | warning | A generator version with no Fern pool; the sdk-gen-api route fails |

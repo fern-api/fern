@@ -1,6 +1,6 @@
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
-import { FIELD_TREATMENT_OVERRIDES } from "./fieldTreatmentOverrides.js";
+import { FIELD_TREATMENT_OVERRIDES, LOCAL_FIELD_ADDITIONS } from "./fieldTreatmentOverrides.js";
 import { HOSTED_FIELD_TREATMENTS } from "./hostedFieldTreatments.js";
 import type { CliTargetDiagnostic } from "./types.js";
 import { type IrLeaf, nonDefaultLeaves } from "./walkIr.js";
@@ -10,9 +10,10 @@ export interface FieldTreatment {
     note: string;
 }
 
-/** The hosted bridge's table with the local overrides applied. One entry per schema leaf path. */
+/** The hosted bridge's table with the local overrides and additions applied. One entry per schema leaf path. */
 export const FIELD_TREATMENTS: Record<string, FieldTreatment> = {
     ...HOSTED_FIELD_TREATMENTS,
+    ...LOCAL_FIELD_ADDITIONS,
     ...FIELD_TREATMENT_OVERRIDES
 };
 

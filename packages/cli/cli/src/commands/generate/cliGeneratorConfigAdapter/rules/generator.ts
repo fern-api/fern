@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import type { Dependency, SdkConfigIrV1 } from "@postman/sdk-config";
 
 import type { MapperRule, RuleContext } from "../types.js";
+import { CLI_GENERATION_PATHS, cliGenerationConfig, DISTRIBUTION_PATHS, distributionConfig } from "./cliConfig.js";
 import { relativeToOutput } from "./output.js";
 
 export const GENERATOR_NAME = "fernapi/fern-cli-generator";
@@ -21,8 +22,8 @@ const SOURCE_FIELDS = ["type", "path", "url", "ref", "registry"];
 
 /**
  * The `cli` group: one fern-cli-generator invocation with its version, output, license metadata and
- * `config` (package identity, Cargo dependencies, wire tests). `ir-version` is left out; the Fern CLI
- * resolves it for the generator version.
+ * `config` (package identity, Cargo dependencies, wire tests, CLI generation settings, distribution).
+ * `ir-version` is left out; the Fern CLI resolves it for the generator version.
  */
 export const generatorRule: MapperRule = {
     name: "generator",
@@ -44,6 +45,8 @@ export const generatorRule: MapperRule = {
             ...SOURCE_FIELDS.map((field) => `package.${table}[].source.${field}`)
         ]),
         "generation.wireTests.enabled",
+        ...CLI_GENERATION_PATHS,
+        ...DISTRIBUTION_PATHS,
         "output.delivery",
         "output.path",
         "output.github.repository",
@@ -75,6 +78,11 @@ function generatorConfig(context: RuleContext, ir: SdkConfigIrV1): Record<string
     const config: Record<string, unknown> = {};
     if (ir.generation.wireTests?.enabled === true) {
         config.generateWireTests = true;
+    }
+    Object.assign(config, cliGenerationConfig(ir));
+    const distribution = distributionConfig(ir.output);
+    if (distribution != null) {
+        config.distribution = distribution;
     }
     const identity = packageIdentity(ir.package);
     if (Object.keys(identity).length > 0) {

@@ -10,3 +10,7 @@ targets:
     output:
       delivery: files
       path: ../out
+    generation:
+      binaryName: profiles-cli
+      profiles:
+        enabled: true

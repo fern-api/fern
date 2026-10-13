@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { FIELD_TREATMENT_OVERRIDES } from "../fieldTreatmentOverrides.js";
+import { FIELD_TREATMENT_OVERRIDES, LOCAL_FIELD_ADDITIONS } from "../fieldTreatmentOverrides.js";
 import { classifyFields, FIELD_TREATMENTS } from "../fieldTreatments.js";
 import { HOSTED_FIELD_TREATMENTS } from "../hostedFieldTreatments.js";
 import { mapSdkConfigToGeneratorsYml, RULES } from "../mapSdkConfigToGeneratorsYml.js";
@@ -33,6 +33,11 @@ describe("treatment table coverage", () => {
     it("has an override only for a path the hosted table lists", () => {
         const unknown = Object.keys(FIELD_TREATMENT_OVERRIDES).filter((path) => HOSTED_FIELD_TREATMENTS[path] == null);
         expect(unknown).toEqual([]);
+    });
+
+    it("has an addition only for a path the hosted table does not list", () => {
+        const hosted = Object.keys(LOCAL_FIELD_ADDITIONS).filter((path) => HOSTED_FIELD_TREATMENTS[path] != null);
+        expect(hosted).toEqual([]);
     });
 
     it("has a rule for every Map path, and every path a rule claims is Map", () => {

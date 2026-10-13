@@ -5,8 +5,29 @@ source:
     - id: openapi
       type: openapi
       path: ./openapi.yml
+api:
+  auth:
+    schemes:
+      - id: OAuth2
+        type: oauth2
+        flows:
+          - type: client-credentials
+            tokenUrl: /token
+            scopes:
+              - name: read:pets
+        clientId:
+          environmentVariable: ACME_CLIENT_ID
+        clientSecret:
+          environmentVariable: ACME_CLIENT_SECRET
+        tokenHeader: X-Access-Token
+    requirements:
+      - schemes:
+          - OAuth2
 targets:
   - language: cli
     output:
       delivery: files
       path: ../out
+    generation:
+      binaryName: oauth-test
+      customCommands: false

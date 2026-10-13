@@ -150,6 +150,42 @@ describe("translateCliTarget", () => {
         expect(result.generatorsYml).toBeDefined();
     });
 
+    it("does not warn about the binary name for several specs when the cli target sets binaryName", async () => {
+        const { path } = await setup({
+            "other.yml": await readFile(join(SPECS, "minimal.yml"), "utf8"),
+            "sdk-config.yml": sdkConfig({
+                source: {
+                    specs: [
+                        { id: "main", type: "openapi", path: "./openapi.yml" },
+                        { id: "other", type: "openapi", path: "./other.yml", namespace: "other" }
+                    ]
+                },
+                targets: [{ language: "typescript" }, { language: "cli", generation: { binaryName: "acme" } }]
+            })
+        });
+        const result = await translate(path);
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("notes only the generator defaults the cli target leaves unset", async () => {
+        const { path } = await setup({
+            "sdk-config.yml": sdkConfig({
+                targets: [
+                    { language: "typescript" },
+                    { language: "cli", generation: { binaryName: "acme", profiles: { enabled: true } } }
+                ]
+            })
+        });
+        const { notes, generatorsYml } = await translate(path);
+        const defaults = notes.find((note) => note.includes("defaults"));
+        expect(defaults).toContain("customCommands");
+        expect(defaults).not.toContain("binaryName");
+        expect(defaults).not.toContain("profiles");
+        const generators = record(record(record(generatorsYml).groups).cli).generators;
+        const [generator] = Array.isArray(generators) ? generators : [];
+        expect(record(record(generator).config)).toEqual({ binaryName: "acme", profiles: { enabled: true } });
+    });
+
     it("notes the generator defaults, and the missing auth block", async () => {
         const { path } = await setup();
         const { notes } = await translate(path);

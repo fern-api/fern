@@ -13,3 +13,5 @@ targets:
     output:
       delivery: files
       path: ../out
+    generation:
+      binaryName: basic-auth-cli

@@ -1,5 +1,6 @@
 import type { FieldTreatment } from "./fieldTreatments.js";
 import { HOSTED_FIELD_TREATMENTS } from "./hostedFieldTreatments.js";
+import { CLI_GENERATION_PATHS, DISTRIBUTION_PATHS } from "./rules/cliConfig.js";
 
 const LOCAL_GITHUB_FIELDS = new Set(["output.github.repository", "output.github.mode", "output.github.branch"]);
 
@@ -16,6 +17,36 @@ const GITHUB_WARNINGS: Record<string, FieldTreatment> = Object.fromEntries(
         ])
 );
 
+/** SDK Config allows npm publication for `cli` targets with GitHub delivery; the translation does not write it yet. */
+const PUBLISH_REJECTIONS: Record<string, FieldTreatment> = Object.fromEntries(
+    Object.keys(HOSTED_FIELD_TREATMENTS)
+        .filter((path) => path.startsWith("output.publish."))
+        .map((path) => [
+            path,
+            {
+                treatment: "Reject",
+                note: "CLI npm publication is not translated to generators.yml yet."
+            }
+        ])
+);
+
+const CLI_GENERATION_SETTINGS: Record<string, FieldTreatment> = Object.fromEntries(
+    CLI_GENERATION_PATHS.map((path) => [
+        path,
+        { treatment: "Map", note: "The fern-cli-generator `config` key of the same name." }
+    ])
+);
+
+const DISTRIBUTION_FIELDS: Record<string, FieldTreatment> = Object.fromEntries(
+    DISTRIBUTION_PATHS.map((path) => [
+        path,
+        {
+            treatment: "Map",
+            note: "`config.distribution`; *SecretName fields are written to the generator's secret-name keys unchanged."
+        }
+    ])
+);
+
 /**
  * Where the translation treats a field differently from the hosted bridge (see README.md). The hosted
  * table assumes sdk-gen-api owns delivery and that the generator version is pinned; locally, the translation
@@ -30,15 +61,16 @@ export const FIELD_TREATMENT_OVERRIDES: Record<string, FieldTreatment> = {
     "output.github.branch": { treatment: "Map", note: "GitHub output block (untested)." },
     ...GITHUB_WARNINGS,
     "output.fileName": { treatment: "Warn", note: "Zip delivery is hosted-only; the cli target writes files." },
+    ...PUBLISH_REJECTIONS,
     "api.auth.schemes[].flows[].authorizationUrl": {
-        treatment: "Ignore",
-        note: "Authorization-code flows are rejected (they need a public client id), so this is never written."
+        treatment: "Map",
+        note: "`authorization-url` on an authorization-code OAuth scheme."
     },
     "api.auth.schemes[].tokenHeader": { treatment: "Map", note: "`token-header` on the OAuth scheme." },
     "api.auth.schemes[].tokenPrefix": { treatment: "Map", note: "`token-prefix` on the OAuth scheme." },
     "api.auth.schemes[].flows[].refreshUrl": {
         treatment: "Map",
-        note: "`refresh-token`, matched to a spec POST operation; FCG builds a refresh path when it resolves."
+        note: "Client credentials: `refresh-token`, matched to a spec POST operation. Authorization code: `refresh-url`."
     },
     "api.auth.endpointSecurity": {
         treatment: "Map",
@@ -50,4 +82,15 @@ export const FIELD_TREATMENT_OVERRIDES: Record<string, FieldTreatment> = {
     },
     "target.sdkVersion": { treatment: "Ignore", note: "Passed to the generation as its version." },
     "target.apiName": { treatment: "Ignore", note: "Set for validation; the Fern CLI names the workspace." }
+};
+
+/** Fields newer than the hosted table's @postman/sdk-config version, which the hosted copy does not list. */
+export const LOCAL_FIELD_ADDITIONS: Record<string, FieldTreatment> = {
+    ...CLI_GENERATION_SETTINGS,
+    ...DISTRIBUTION_FIELDS,
+    "api.auth.schemes[].flows[].clientId": {
+        treatment: "Map",
+        note: "`client-id` on an authorization-code OAuth scheme: the public client ID browser login sends."
+    },
+    "package.extraPeerDependenciesMeta.*": { treatment: "Reject", note: "npm-only; no Cargo equivalent." }
 };

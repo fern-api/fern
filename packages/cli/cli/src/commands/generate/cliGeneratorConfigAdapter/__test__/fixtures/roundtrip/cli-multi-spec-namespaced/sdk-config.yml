@@ -18,3 +18,5 @@ targets:
     output:
       delivery: files
       path: ../out
+    generation:
+      binaryName: acme-versioned

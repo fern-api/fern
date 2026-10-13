@@ -7,6 +7,7 @@ import { authSchemes } from "./output.js";
 type OAuthScheme = Extract<AuthScheme, { type: "oauth2" }>;
 type OAuthFlow = OAuthScheme["flows"][number];
 type ClientCredentialsFlow = Extract<OAuthFlow, { type: "client-credentials" }>;
+type AuthorizationCodeFlow = Extract<OAuthFlow, { type: "authorization-code" }>;
 
 /** RFC 6749 property names, and the `get-token` keys Fern gives them. */
 const TOKEN_REQUEST = { client_id: "client-id", client_secret: "client-secret" };
@@ -15,8 +16,8 @@ const SCOPE_PROPERTIES = ["scopes", "scope"];
 
 /**
  * OAuth client credentials to `scheme: oauth`, `type: client-credentials`, with `get-token` naming
- * the spec's token operation. Authorization code (browser login) is rejected: it needs a public
- * client id, which SDK Config cannot hold.
+ * the spec's token operation. Authorization code (browser login) to `type: authorization-code` with
+ * the flow's public `client-id`; without one the flow is rejected, as Fern's validator requires it.
  */
 export const oauthRule: MapperRule = {
     name: "oauth",
@@ -26,6 +27,8 @@ export const oauthRule: MapperRule = {
         "api.auth.schemes[].tokenHeader",
         "api.auth.schemes[].tokenPrefix",
         "api.auth.schemes[].flows[].type",
+        "api.auth.schemes[].flows[].clientId",
+        "api.auth.schemes[].flows[].authorizationUrl",
         "api.auth.schemes[].flows[].tokenUrl",
         "api.auth.schemes[].flows[].refreshUrl",
         "api.auth.schemes[].flows[].scopes[].name"
@@ -71,15 +74,7 @@ function flowEntry(
         case "client-credentials":
             return clientCredentials(context, scheme, flow, flowPath);
         case "authorization-code":
-            // Browser login needs a public client id, which SDK Config cannot hold, and Fern's validator
-            // refuses the flow without one.
-            context.error(
-                `${flowPath}.type`,
-                "CLI_TARGET_PUBLIC_CLIENT_ID",
-                "Browser login (authorization-code) needs a public client id, which SDK Config cannot hold.",
-                "Use client credentials, or another auth scheme, for the cli target."
-            );
-            return undefined;
+            return authorizationCode(context, scheme, flow, flowPath);
         case "implicit":
         case "password":
             context.error(
@@ -149,6 +144,43 @@ function clientCredentials(
             "response-properties": properties(TOKEN_RESPONSE, operation.responseProperties, "$response")
         },
         ...refreshEntry(context, flow, flowPath)
+    };
+}
+
+function authorizationCode(
+    context: RuleContext,
+    scheme: OAuthScheme,
+    flow: AuthorizationCodeFlow,
+    flowPath: string
+): Record<string, unknown> | undefined {
+    if (flow.clientId == null) {
+        context.error(
+            `${flowPath}.clientId`,
+            "CLI_TARGET_PUBLIC_CLIENT_ID",
+            "Browser login (authorization-code) needs the OAuth app's public client ID.",
+            `Set ${flowPath}.clientId, or use client credentials for the cli target.`
+        );
+        return undefined;
+    }
+    if (scheme.clientId?.environmentVariable != null || scheme.clientSecret?.environmentVariable != null) {
+        context.warn(
+            flowPath,
+            "CLI_TARGET_PUBLIC_CLIENT_CREDENTIALS",
+            "Browser login sends the public flows[].clientId and no client secret, so the scheme's clientId and clientSecret environment variables are not written.",
+            "Remove them from the scheme unless another target uses them."
+        );
+    }
+    const scopes = scopeNames(flow.scopes);
+    return {
+        scheme: "oauth",
+        type: "authorization-code",
+        "client-id": flow.clientId,
+        "authorization-url": flow.authorizationUrl,
+        "token-url": flow.tokenUrl,
+        ...(flow.refreshUrl != null ? { "refresh-url": flow.refreshUrl } : {}),
+        ...(scheme.tokenHeader != null ? { "token-header": scheme.tokenHeader } : {}),
+        ...(scheme.tokenPrefix != null ? { "token-prefix": scheme.tokenPrefix } : {}),
+        ...(scopes.length > 0 ? { scopes } : {})
     };
 }
 

@@ -37,8 +37,11 @@ export interface CliTargetTranslation {
     version: string | undefined;
 }
 
-const GENERATOR_DEFAULTS =
-    "SDK Config cannot hold binaryName, customCommands or profiles, so the CLI generator uses its defaults: the binary is named from the API display name, custom commands are on and profiles are off.";
+const GENERATOR_DEFAULTS = {
+    binaryName: "the binary is named from the API display name",
+    customCommands: "custom commands are on",
+    profiles: "profiles are off"
+} as const;
 
 const NO_AUTH_NOTE =
     "sdk-config.yml has no api.auth, so the CLI uses the security schemes the spec declares. If the file came from `fern sdk migrate`, migrate may have dropped the auth block.";
@@ -86,13 +89,26 @@ export async function translateCliTarget(options: TranslateCliTargetOptions): Pr
         generatorsYml: failed ? undefined : mapped.generatorsYml,
         overlayMerges: failed ? [] : mapped.overlayMerges,
         diagnostics,
-        notes: [GENERATOR_DEFAULTS, ...(ir.api.auth == null ? [NO_AUTH_NOTE] : []), ...mapped.hints],
+        notes: [...generatorDefaultsNote(ir), ...(ir.api.auth == null ? [NO_AUTH_NOTE] : []), ...mapped.hints],
         version: ir.target.sdkVersion
     };
 }
 
+function generatorDefaultsNote(ir: SdkConfigIrV1): string[] {
+    const cli = ir.generation.language?.cli;
+    const unset = Object.entries(GENERATOR_DEFAULTS).filter(
+        ([setting]) => cli?.[setting as keyof typeof GENERATOR_DEFAULTS] === undefined
+    );
+    if (unset.length === 0) {
+        return [];
+    }
+    return [
+        `generation.language.cli does not set ${unset.map(([setting]) => setting).join(", ")}, so the CLI generator uses its defaults: ${unset.map(([, behavior]) => behavior).join(", ")}.`
+    ];
+}
+
 function multiSpecWarning(ir: SdkConfigIrV1): CliTargetDiagnostic[] {
-    if (ir.source.specs.length < 2) {
+    if (ir.source.specs.length < 2 || ir.generation.language?.cli?.binaryName != null) {
         return [];
     }
     return [
@@ -101,7 +117,7 @@ function multiSpecWarning(ir: SdkConfigIrV1): CliTargetDiagnostic[] {
             path: "source.specs",
             code: "CLI_TARGET_MULTI_SPEC_BINARY_NAME",
             message:
-                "With several specs, SDK Config has no binaryName, so the generator names the binary and crates from the API display name."
+                "With several specs and no generation.language.cli.binaryName, the generator names the binary and crates from the API display name."
         }
     ];
 }

@@ -2,75 +2,59 @@
   "generatorVersion": "0.49.0",
   "fixtures": {
     "cli-any-auth": {
-      "diff": [
-        "api.auth",
-        "auth-schemes",
-        "groups.cli.generators[0].config"
-      ],
-      "reason": "migrate drops the whole auth block when any scheme cannot be mapped (FERN_API_AUTH_REQUIRES_REVIEW); migrate drops generator config SDK Config cannot hold (binaryName, customCommands); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 12
       }
     },
     "cli-basic-auth": {
-      "diff": [
-        "groups.cli.generators[0].config.binaryName"
-      ],
-      "reason": "migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 0
       }
     },
     "cli-header-auth": {
-      "diff": [
-        "groups.cli.generators[0].config.binaryName"
-      ],
-      "reason": "migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 0
       }
     },
     "cli-multi-scheme-routing": {
-      "diff": [
-        "groups.cli.generators[0].config"
-      ],
-      "reason": "migrate drops generator config SDK Config cannot hold (binaryName, customCommands); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 12
       }
     },
     "cli-multi-spec": {
-      "diff": [
-        "groups.cli.generators[0].config"
-      ],
-      "reason": "migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 13
       }
     },
     "cli-multi-spec-namespaced": {
-      "diff": [
-        "groups.cli.generators[0].config"
-      ],
-      "reason": "migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED. migrate also writes the API-key scheme key `apiKey` as a header name; the translation skips it (no header diff).",
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 13
       }
     },
     "cli-namespace-stutter": {
       "diff": [],
-      "reason": "No difference.",
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 0
       }
     },
     "cli-oauth": {
       "diff": [
-        "api.auth",
-        "auth-schemes",
-        "groups.cli.generators[0].config"
+        "auth-schemes.OAuth2.token-prefix"
       ],
-      "reason": "migrate drops the whole auth block when any scheme cannot be mapped (FERN_API_AUTH_REQUIRES_REVIEW); migrate drops generator config SDK Config cannot hold (binaryName, customCommands); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "reason": "SDK Config tokenPrefix must be non-empty, so migrate drops `token-prefix: \"\"` (FERN_API_AUTH_FIELD_UNSUPPORTED) and the generator falls back to its default prefix.",
       "docker": {
         "translated": 12
       }
@@ -78,59 +62,62 @@
     "cli-oauth-login-flow": {
       "diff": [
         "api.auth",
-        "auth-schemes",
-        "groups.cli.generators[0].config.binaryName"
+        "auth-schemes"
       ],
-      "reason": "migrate drops the whole auth block when any scheme cannot be mapped (FERN_API_AUTH_REQUIRES_REVIEW) (with the browser-login client id); migrate drops generator config SDK Config cannot hold (binaryName); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "reason": "migrate on this branch cannot yet write the authorization-code scheme (FERN_API_AUTH_REQUIRES_REVIEW); fix(cli): migrate OAuth authorization-code public client IDs in fern sdk migrate (#18286) adds it. The translation maps it once migrate writes flows[].clientId.",
       "docker": {
         "translated": 15
       }
     },
     "cli-profiles": {
-      "diff": [
-        "groups.cli.generators[0].config"
-      ],
-      "reason": "migrate drops generator config SDK Config cannot hold (binaryName, profiles); FERN_CONFIG_FIELD_UNSUPPORTED.",
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 1
       }
     },
     "cli-reserved-keywords": {
       "diff": [],
-      "reason": "No difference.",
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 0
       }
     },
     "cli-shared-types": {
-      "diff": [
-        "groups.cli.generators[0].config"
-      ],
-      "reason": "migrate drops generator config SDK Config cannot hold (binaryName, splitTypeCrates); FERN_CONFIG_FIELD_UNSUPPORTED. splitTypeCrates is not on the D12 carry-over list.",
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 9
       }
     },
     "x-fern-global-parameters": {
       "diff": [],
-      "reason": "No difference.",
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 0
       }
     },
     "query-parameters-openapi": {
       "diff": [],
-      "reason": "No difference.",
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 0
       }
     },
     "file-upload-openapi": {
       "diff": [],
-      "reason": "No difference.",
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
       "docker": {
         "translated": 0
       }
+    },
+    "cli-bearer-env-var": {
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back."
+    },
+    "cli-header-auth-prefix": {
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back."
     }
   }
 }

@@ -12,6 +12,15 @@ function map(overrides: Record<string, unknown> = {}, outDir = "/work") {
     });
 }
 
+const GITHUB_TARGET = {
+    language: "cli",
+    sourceOrigin: "postman",
+    sdkName: "acme",
+    sdkVersion: "0.0.0",
+    apiName: "api",
+    organizationName: "acme"
+};
+
 function generator(result: ReturnType<typeof map>): Record<string, unknown> {
     const groups = result.generatorsYml.groups;
     const cli = typeof groups === "object" && groups != null && "cli" in groups ? groups.cli : undefined;
@@ -89,6 +98,72 @@ describe("generator rule", () => {
         expect(generator(map({ generation: { wireTests: { enabled: true } } })).config).toEqual({
             generateWireTests: true
         });
+    });
+
+    it("copies the typed CLI generation settings into config under the generator's key names", () => {
+        const cli = {
+            binaryName: "Acme CLI",
+            customCommands: false,
+            rootGroup: "api",
+            profiles: {
+                enabled: true,
+                commandName: "accounts",
+                revokeOperation: "iam.keys.remove",
+                provisionOperation: {
+                    operation: "iam.keys.create",
+                    credential: { username: "sid", password: "secret" },
+                    revokeParameters: { Sid: "sid" }
+                }
+            },
+            splitTypeCrates: true,
+            userAgentSuffixFlag: "via"
+        };
+        const result = map({ generation: { language: { cli } } });
+        expect(result.diagnostics).toEqual([]);
+        expect(generator(result).config).toEqual(cli);
+    });
+
+    it("writes only the CLI generation settings that are set, and warns for the Go CLI options", () => {
+        const result = map({ generation: { language: { cli: { binaryName: "acme", skills: true } } } });
+        expect(generator(result).config).toEqual({ binaryName: "acme" });
+        expect(codes(result.diagnostics)).toEqual(["warning CLI_TARGET_IGNORED_FIELD generation.language.cli.skills"]);
+    });
+
+    it("maps output.distribution to config.distribution with the generator's secret-name keys", () => {
+        const result = map({
+            target: GITHUB_TARGET,
+            output: {
+                delivery: "github",
+                github: { repository: "acme/cli", mode: "release" },
+                distribution: {
+                    githubApp: { appIdSecretName: "PUBLISH_APP_ID", privateKeySecretName: "PUBLISH_APP_KEY" },
+                    homebrew: { tap: "acme/homebrew-tap", formula: "acme", tokenSecretName: "TAP_PAT" },
+                    scoop: { bucket: "acme/scoop-bucket" }
+                }
+            }
+        });
+        expect(errorCodes(result.diagnostics)).toEqual([]);
+        expect(generator(result).config).toEqual({
+            distribution: {
+                githubApp: { appIdSecret: "PUBLISH_APP_ID", privateKeySecret: "PUBLISH_APP_KEY" },
+                homebrew: { tap: "acme/homebrew-tap", formula: "acme", tokenEnvironmentVariable: "TAP_PAT" },
+                scoop: { bucket: "acme/scoop-bucket" }
+            }
+        });
+        expect(JSON.stringify(result.generatorsYml)).not.toMatch(/HOMEBREW_TAP_TOKEN|SCOOP_BUCKET_TOKEN/);
+    });
+
+    it("rejects CLI npm publication, which the translation does not write yet", () => {
+        const result = map({
+            target: GITHUB_TARGET,
+            package: { packageName: "@acme/cli" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/cli", mode: "release" },
+                publish: { registry: "npm" }
+            }
+        });
+        expect(codes(result.diagnostics)).toContain("error CLI_TARGET_UNSUPPORTED_FIELD output.publish.registry");
     });
 
     it("writes local-file-system output at output.path", () => {

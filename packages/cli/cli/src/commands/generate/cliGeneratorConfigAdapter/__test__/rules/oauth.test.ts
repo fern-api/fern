@@ -191,22 +191,70 @@ describe("oauth rule", () => {
         expect(warningCodes(result.diagnostics)).toContain("CLI_TARGET_REFRESH_ENDPOINT");
     });
 
-    it("returns an error for an authorization-code flow, which needs a public client id", () => {
-        const result = map({
-            type: "oauth2",
-            flows: [
-                {
-                    type: "authorization-code",
-                    authorizationUrl: "https://a.test/authorize",
-                    tokenUrl: "https://a.test/token",
-                    scopes: [{ name: "read" }]
-                }
-            ]
+    const authorizationCode = (flow: Record<string, unknown> = {}, extra: Record<string, unknown> = {}) => ({
+        type: "oauth2",
+        flows: [
+            {
+                type: "authorization-code",
+                authorizationUrl: "https://a.test/authorize",
+                tokenUrl: "https://a.test/token",
+                scopes: [{ name: "read" }],
+                ...flow
+            }
+        ],
+        ...extra
+    });
+
+    it("maps an authorization-code flow with a public client id to a browser-login scheme", () => {
+        const result = map(
+            authorizationCode(
+                { clientId: "cli-public-client", refreshUrl: "https://a.test/refresh" },
+                { tokenHeader: "X-Token", tokenPrefix: "Token" }
+            )
+        );
+        expect(result.diagnostics).toEqual([]);
+        expect(entry(result)).toEqual({
+            scheme: "oauth",
+            type: "authorization-code",
+            "client-id": "cli-public-client",
+            "authorization-url": "https://a.test/authorize",
+            "token-url": "https://a.test/token",
+            "refresh-url": "https://a.test/refresh",
+            "token-header": "X-Token",
+            "token-prefix": "Token",
+            scopes: ["read"]
         });
+    });
+
+    it("needs no token operation in the spec for browser login", () => {
+        const result = map(authorizationCode({ clientId: "cli-public-client" }), { specFacts: facts() });
+        expect(errorCodes(result.diagnostics)).toEqual([]);
+        expect(entry(result)).toMatchObject({ type: "authorization-code", "token-url": "https://a.test/token" });
+    });
+
+    it("returns an error for an authorization-code flow without a public client id", () => {
+        const result = map(authorizationCode());
         expect(codes(result.diagnostics)).toEqual([
-            "error CLI_TARGET_PUBLIC_CLIENT_ID api.auth.schemes[0].flows[0].type"
+            "error CLI_TARGET_PUBLIC_CLIENT_ID api.auth.schemes[0].flows[0].clientId"
         ]);
         expect(entry(result)).toBeUndefined();
+    });
+
+    it("warns that confidential client environment variables are not written for browser login", () => {
+        const result = map(
+            authorizationCode(
+                { clientId: "cli-public-client" },
+                {
+                    clientId: { environmentVariable: "CLIENT_ID" },
+                    clientSecret: { environmentVariable: "CLIENT_SECRET" }
+                }
+            )
+        );
+        expect(codes(result.diagnostics)).toEqual([
+            "warning CLI_TARGET_PUBLIC_CLIENT_CREDENTIALS api.auth.schemes[0].flows[0]"
+        ]);
+        expect(entry(result)).not.toHaveProperty("client-id-env");
+        expect(entry(result)).not.toHaveProperty("client-secret-env");
     });
 
     it("returns an error for implicit and password flows", () => {
