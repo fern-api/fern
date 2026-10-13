@@ -3700,7 +3700,37 @@ describe("GitHub delivery result", () => {
 
         expect(result.pullRequestUrl).toBeUndefined();
         expect(contextLogger.info).not.toHaveBeenCalledWith(expect.stringContaining("secret"));
-        expect(contextLogger.warn).toHaveBeenCalledWith("sdk-gen-api did not return a pull request link for acme/sdk.");
+        expect(contextLogger.warn).toHaveBeenCalledWith(
+            "sdk-gen-api returned a pull request link for acme/sdk that was not a safe HTTPS URL."
+        );
+    });
+
+    it("prints only the origin and path of a pull request link", async () => {
+        const result = await runWithPublication(
+            githubPublication({ pullRequestUrl: `${pullRequestUrl}?token=abc#fragment` })
+        );
+
+        expect(result.pullRequestUrl).toBe(pullRequestUrl);
+        expect(contextLogger.info).toHaveBeenCalledWith(`Pull request: ${pullRequestUrl}`);
+    });
+
+    it("lets no changes win over a pull request link", async () => {
+        const result = await runWithPublication(githubPublication({ pullRequestUrl, noChangesDetected: true }));
+
+        expect(result.pullRequestUrl).toBeUndefined();
+        expect(result.noChangesDetected).toBe(true);
+        expect(contextLogger.info).toHaveBeenCalledTimes(1);
+        expect(contextLogger.info).not.toHaveBeenCalledWith(expect.stringContaining("Pull request"));
+    });
+
+    it("does not accept a publication to another destination as GitHub delivery", async () => {
+        await expect(
+            runWithPublication({
+                status: "success",
+                publishTarget: { type: "npm", identifier: "@acme/sdk" },
+                output: { packageName: "@acme/sdk" }
+            })
+        ).rejects.toThrow("did not confirm the GitHub delivery to acme/sdk");
     });
 
     it("fails instead of reporting success when delivery was never confirmed", async () => {

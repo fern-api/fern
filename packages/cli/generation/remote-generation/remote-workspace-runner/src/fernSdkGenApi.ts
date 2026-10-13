@@ -2088,33 +2088,55 @@ function resolveGithubDelivery(
     if (requestedOutput?.type !== "github") {
         return { pullRequestUrl: undefined, noChangesDetected: undefined };
     }
-    if (target.publication?.status !== "success") {
+    const { publication } = target;
+    if (publication?.status !== "success" || publication.publishTarget.type !== "github") {
         return participant.context.failAndThrow(
             `sdk-gen-api reported the build as succeeded but did not confirm the GitHub delivery to ${requestedOutput.repository}`,
             undefined,
             { code: CliError.Code.InternalError }
         );
     }
-    const { output } = target.publication;
+    const pullRequestUrl = toPullRequestLink(publication.output.pullRequestUrl);
+    const noChangesDetected = publication.output.noChangesDetected === true;
+    // A run that delivered nothing never created a pull request, so "no changes" wins over any link.
     const outcome: GithubDeliveryOutcome = {
-        pullRequestUrl: output.pullRequestUrl == null ? undefined : getSafePublicationUrl(output.pullRequestUrl),
-        noChangesDetected: output.noChangesDetected === true ? true : undefined
+        pullRequestUrl: noChangesDetected ? undefined : pullRequestUrl,
+        noChangesDetected: noChangesDetected ? true : undefined
     };
-    logGithubDelivery(participant.context.logger, requestedOutput, outcome);
+    const linkRejected = publication.output.pullRequestUrl != null && pullRequestUrl == null;
+    logGithubDelivery(participant.context.logger, requestedOutput, outcome, linkRejected);
     return outcome;
+}
+
+/** Keeps only the origin and path of a safe HTTPS link, so a query string or fragment is never printed. */
+function toPullRequestLink(value: string | undefined): string | undefined {
+    const safeUrl = value == null ? undefined : getSafePublicationUrl(value);
+    if (safeUrl == null) {
+        return undefined;
+    }
+    const { origin, pathname } = new URL(safeUrl);
+    return `${origin}${pathname}`;
 }
 
 function logGithubDelivery(
     logger: InteractiveTaskContext["logger"],
     { repository, mode }: Extract<FernSdkGenApiRequestedOutput, { type: "github" }>,
-    { pullRequestUrl, noChangesDetected }: GithubDeliveryOutcome
+    { pullRequestUrl, noChangesDetected }: GithubDeliveryOutcome,
+    linkRejected: boolean
 ): void {
     if (noChangesDetected) {
         logger.info(`No changes detected for ${repository}; nothing was delivered to GitHub.`);
+        return;
     }
     if (pullRequestUrl != null) {
         logger.info(`Pull request: ${pullRequestUrl}`);
-    } else if (mode === "pull-request" && !noChangesDetected) {
+        return;
+    }
+    if (linkRejected) {
+        logger.warn(`sdk-gen-api returned a pull request link for ${repository} that was not a safe HTTPS URL.`);
+        return;
+    }
+    if (mode === "pull-request") {
         logger.warn(`sdk-gen-api did not return a pull request link for ${repository}.`);
     }
 }
