@@ -2,11 +2,29 @@
 - version: 5.156.0
   changelogEntry:
     - summary: |
-        Docs sites can now show Fern CLI command snippets alongside the SDK languages. Declaring
-        `snippets: cli` on an API reference (with the Fern CLI generator in `generators.yml`) builds a
-        `cli` dynamic IR during docs publish and registers it with FDR, which the docs frontend renders
-        as runnable CLI commands.
+        `fern generate` now generates the `cli` target of `sdk-config.yml`. No generator takes SDK Config for it, so the
+        CLI translates the target into a temporary `generators.yml` for `fernapi/fern-cli-generator` and generates it
+        like a `generators.yml` group, locally with `--local` or remotely. No file in the project changes.
+        The translation writes the target's CLI generation settings (`binaryName`, `customCommands`, `rootGroup`,
+        `profiles`, `splitTypeCrates`, `userAgentSuffixFlag`), browser login (an authorization-code flow with a public
+        `clientId`) and Homebrew/Scoop `distribution`.
       type: feat
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 5.155.10
+  changelogEntry:
+    - summary: |
+        Upgrade `@postman/sdk-config` to 0.11.0. `fern sdk migrate` now carries the CLI generator's typed
+        generation settings, package metadata, Cargo dependency sources, and `distribution` (Homebrew,
+        Scoop, and GitHub App secret names) into SDK Config, and SDK Config accepts the public OAuth
+        `clientId` on authorization-code flows.
+      type: chore
+    - summary: |
+        SDK Config generation no longer uploads `output.github.credentials` (root or target level) in the
+        SDK Config document sent to the SDK Generation API; GitHub delivery is unchanged because the
+        service already discarded them. Malformed `github.credentials` is rejected without echoing its
+        value. CLI `output.distribution` secret names are never resolved or sent as publish credentials.
+      type: fix
   createdAt: "2026-10-13"
   irVersion: 67
 - version: 5.155.9

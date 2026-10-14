@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When hosted FAI analysis falls back to chunk-by-chunk requests, merge the per-chunk changelog
+    entries and PR descriptions under a single heading (e.g. one `### Breaking Changes` section)
+    instead of repeating the heading once per chunk.
+  type: fix

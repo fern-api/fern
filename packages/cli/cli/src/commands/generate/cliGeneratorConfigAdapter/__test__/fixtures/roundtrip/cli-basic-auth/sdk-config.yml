@@ -1,0 +1,17 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.yml
+generation:
+  wireTests:
+    enabled: true
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out
+    generation:
+      binaryName: basic-auth-cli

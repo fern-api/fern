@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Docs sites can now show Fern CLI command snippets alongside the SDK languages. Declaring
+    `snippets: cli` on an API reference (with the Fern CLI generator in `generators.yml`) builds a
+    `cli` dynamic IR during docs publish and registers it with FDR, which the docs frontend renders
+    as runnable CLI commands.
+  type: feat

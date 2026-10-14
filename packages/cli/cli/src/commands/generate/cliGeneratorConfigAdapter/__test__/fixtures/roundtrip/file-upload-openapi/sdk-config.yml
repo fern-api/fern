@@ -1,0 +1,15 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.json
+generation:
+  wireTests:
+    enabled: true
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out

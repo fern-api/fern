@@ -1,6 +1,6 @@
 [package]
 name = "fern-cli-sdk"
-version = "0.0.0"
+version = "0.0.1"
 edition = "2021"
 description = "CLI generator — dynamic command surface from OpenAPI and GraphQL schemas"
 license = "Apache-2.0"
@@ -51,7 +51,7 @@ anyhow = "1"
 base64 = "0.22"
 bytes = "1"
 clap = { version = "4", features = ["derive", "string", "env"] }
-clap_complete = "4"
+clap_complete = { version = "4", features = ["unstable-dynamic"] }
 clap_mangen = "0.2"
 hmac = "0.12"
 dotenvy = "0.15"

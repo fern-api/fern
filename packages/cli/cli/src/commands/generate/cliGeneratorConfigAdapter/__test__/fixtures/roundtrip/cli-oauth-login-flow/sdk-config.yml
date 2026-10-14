@@ -1,0 +1,32 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.yml
+api:
+  auth:
+    schemes:
+      - id: OAuth2
+        type: oauth2
+        flows:
+          - type: authorization-code
+            authorizationUrl: https://api.example.com/oauth/authorize
+            tokenUrl: https://api.example.com/oauth/token
+            scopes:
+              - name: read:widgets
+            clientId: login-flow-test-client
+    requirements:
+      - schemes:
+          - OAuth2
+generation:
+  wireTests:
+    enabled: true
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out
+    generation:
+      binaryName: login-flow
