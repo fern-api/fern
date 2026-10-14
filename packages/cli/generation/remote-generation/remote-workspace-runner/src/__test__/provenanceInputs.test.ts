@@ -21,12 +21,16 @@ async function createFernDirectory(files: Record<string, string>): Promise<strin
     return path.join(root, "fern");
 }
 
-function invocation(raw: Record<string, unknown>): generatorsYml.GeneratorInvocation {
+function invocation(
+    raw: Record<string, unknown>,
+    apiOverride?: generatorsYml.GeneratorInvocation["apiOverride"]
+): generatorsYml.GeneratorInvocation {
     return {
         name: "fernapi/fern-go-sdk",
         version: "1.64.2",
         config: {},
-        raw
+        raw,
+        apiOverride
     } as unknown as generatorsYml.GeneratorInvocation;
 }
 
@@ -97,10 +101,10 @@ describe("computeGenerationProvenanceInputs", () => {
                 type: "singleNamespace",
                 definitions: [location("root.yaml")]
             }),
-            generatorInvocation: {
-                ...invocation({ name: "g", version: "1" }),
-                apiOverride: { specs: [{ openapi: "override.yaml", overlays: "override-overlay.yml" }] }
-            } as unknown as generatorsYml.GeneratorInvocation
+            generatorInvocation: invocation(
+                { name: "g", version: "1" },
+                { specs: [{ openapi: "override.yaml", overlays: "override-overlay.yml" }] }
+            )
         });
         expect(result.specs).toEqual([
             { path: "override-overlay.yml", sha256: sha256("overlay") },
