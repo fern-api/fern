@@ -104,7 +104,7 @@ describe("createProtoWorkspace", () => {
         expect(spec).not.toHaveProperty("target");
     });
 
-    it("warns about missing annotations, streaming, unresolved imports and a buf config, without failing", async () => {
+    it("warns about streaming, unresolved imports and a buf config, without failing", async () => {
         const source = await temporaryDirectory();
         const workspace = await temporaryDirectory();
         await write(
@@ -122,7 +122,6 @@ message Res {}
         await run({ workspace, protoPath: source });
 
         const output = warnings.join("\n");
-        expect(output).toContain("google.api.http");
         expect(output).toContain("streaming");
         expect(output).toContain("vendor/thing.proto");
         expect(output).toContain("buf.yaml");

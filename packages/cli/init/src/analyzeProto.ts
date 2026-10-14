@@ -4,7 +4,6 @@ export interface ProtoFileAnalysis {
     relativePath: string;
     imports: string[];
     hasService: boolean;
-    hasHttpAnnotation: boolean;
     hasStreamingRpc: boolean;
     /** Well-known types the C# generator is known to turn into code that does not build, e.g. `Struct`. */
     unsupportedWellKnownTypes: string[];
@@ -18,7 +17,6 @@ const WELL_KNOWN_IMPORT_PREFIX = "google/protobuf/";
 const STRING_OR_COMMENT = /("(?:[^"\\]|\\.)*")|\/\/[^\n]*|\/\*[\s\S]*?\*\//g;
 const IMPORT = /^\s*import\s+(?:public\s+|weak\s+)?"([^"]+)"\s*;/gm;
 const SERVICE = /\bservice\s+\w+\s*\{/;
-const HTTP_ANNOTATION = /\(\s*google\.api\.http\s*\)/;
 // Only types seen to produce C# that fails to build: Struct (no `Add` on it) and FieldMask (emitted as a string).
 const UNSUPPORTED_WELL_KNOWN_TYPE = /\bgoogle\.protobuf\.(Struct|FieldMask)\b/g;
 const STREAMING_RPC = /\brpc\s+\w+\s*\(\s*stream\b|\breturns\s*\(\s*stream\b/;
@@ -40,7 +38,6 @@ export function analyzeProtoFile({
             (importPath): importPath is string => importPath != null
         ),
         hasService: SERVICE.test(source),
-        hasHttpAnnotation: HTTP_ANNOTATION.test(source),
         hasStreamingRpc: STREAMING_RPC.test(source),
         unsupportedWellKnownTypes: [
             ...new Set(
@@ -87,14 +84,6 @@ export function getProtoWarnings({ files }: { files: ProtoFileAnalysis[] }): str
     if (withServices.length === 0) {
         warnings.push("No gRPC `service` was found in the proto files, so the generated SDK will have no clients.");
         return warnings;
-    }
-
-    const withoutAnnotations = withServices.filter((file) => !file.hasHttpAnnotation);
-    if (withoutAnnotations.length > 0) {
-        warnings.push(
-            `${list(withoutAnnotations)} defines a service without any \`google.api.http\` annotations. ` +
-                "Fern reads those annotations to find the RPCs, so the generated SDK will have no methods for them."
-        );
     }
 
     const streaming = withServices.filter((file) => file.hasStreamingRpc);

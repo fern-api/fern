@@ -7,6 +7,6 @@
     `--grpc` writes a sample unary `.proto` service. `--proto` takes your own `.proto` file or a directory of
     them and copies them into the workspace, adding the `google/api` protos if they are imported but missing.
     Both write a `generators.yml` that compiles the proto locally with `buf` and generates the SDK remotely.
-    `--proto` warns when the proto has no `google.api.http` annotations, has streaming RPCs, or imports
-    files that cannot be found.
+    `--proto` warns when the proto has streaming RPCs, uses `google.protobuf.Struct` or `FieldMask`, or
+    imports files that cannot be found. These make the C# SDK fail to build.
   type: feat

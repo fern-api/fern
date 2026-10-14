@@ -11,7 +11,7 @@ message Res {}
 `;
 
 describe("analyzeProtoFile", () => {
-    it("detects imports, services, http annotations and streaming", () => {
+    it("detects imports, services and streaming", () => {
         const analysis = analyzeProtoFile({
             relativePath: "a.proto",
             contents: `
@@ -26,7 +26,6 @@ service S {
             relativePath: "a.proto",
             imports: ["google/api/annotations.proto", "other.proto"],
             hasService: true,
-            hasHttpAnnotation: true,
             hasStreamingRpc: true,
             unsupportedWellKnownTypes: []
         });
@@ -60,13 +59,12 @@ message M {
             relativePath: "a.proto",
             contents: `
 // service Fake { rpc X(stream A) returns (B); }
-/* import "commented/out.proto"; option (google.api.http) = {}; */
+/* import "commented/out.proto"; */
 message M {}`
         });
         expect(analysis).toMatchObject({
             imports: [],
             hasService: false,
-            hasHttpAnnotation: false,
             hasStreamingRpc: false
         });
     });
@@ -74,9 +72,11 @@ message M {}`
     it("does not treat // inside a string as a comment", () => {
         const analysis = analyzeProtoFile({
             relativePath: "a.proto",
-            contents: `service S { rpc A(Req) returns (Res) { option (google.api.http) = { get: "http://x/y" }; } }`
+            contents: `service S { rpc A(Req) returns (Res) { option (my.option) = { url: "http://x/y" }; } }
+service T { rpc B(Req) returns (stream Res); }`
         });
-        expect(analysis).toMatchObject({ hasService: true, hasHttpAnnotation: true });
+        // If the `//` in the URL swallowed the rest of the line, the second service would be missed.
+        expect(analysis).toMatchObject({ hasService: true, hasStreamingRpc: true });
     });
 });
 
@@ -123,14 +123,6 @@ describe("getProtoWarnings", () => {
         expect(getProtoWarnings({ files })).toEqual([expect.stringContaining("No gRPC `service`")]);
     });
 
-    it("warns about a service without google.api.http annotations", () => {
-        const files = [analyzeProtoFile({ relativePath: "svc.proto", contents: PLAIN_SERVICE })];
-        const warnings = getProtoWarnings({ files });
-        expect(warnings).toHaveLength(1);
-        expect(warnings[0]).toContain("svc.proto");
-        expect(warnings[0]).toContain("google.api.http");
-    });
-
     it("warns about streaming RPCs", () => {
         const files = [
             analyzeProtoFile({
@@ -156,11 +148,11 @@ message Req { google.protobuf.Struct meta = 1; }`
         expect(warnings[0]).toContain("google.protobuf.Struct");
     });
 
-    it("has nothing to say about a unary, annotated service", () => {
+    it("has nothing to say about a unary service with no annotations", () => {
         const files = [
             analyzeProtoFile({
                 relativePath: "svc.proto",
-                contents: `service S { rpc A(Req) returns (Res) { option (google.api.http) = { get: "/a" }; } }`
+                contents: "service S { rpc A(Req) returns (Res); }"
             })
         ];
         expect(getProtoWarnings({ files })).toEqual([]);
