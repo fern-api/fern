@@ -375,7 +375,7 @@ describe("migrateDocsConfiguration", () => {
         });
     });
 
-    it("creates one API reference section per spec when the API has several", async () => {
+    it("keeps several specs of one API together in a single section", async () => {
         await writeFile(
             docsPath,
             [
@@ -384,7 +384,6 @@ describe("migrateDocsConfiguration", () => {
                 "    contents:",
                 "      - api: API reference",
                 "        slug: api",
-                "        display-errors: true",
                 "      - page: Intro",
                 "        path: ./intro.mdx",
                 ""
@@ -392,73 +391,26 @@ describe("migrateDocsConfiguration", () => {
         );
         const pets = { ...createSourceSpec(temporaryDirectory), namespace: "pets" };
         const orders = { ...createSourceSpec(temporaryDirectory), namespace: "orders" };
-        const unnamed = { ...createSourceSpec(temporaryDirectory), namespace: undefined };
 
         const updated = await migrate({
             docsPath,
             workspaceName: undefined,
             isOnlyApiWorkspace: true,
-            sourceSpecs: [pets, orders, unnamed]
+            sourceSpecs: [pets, orders]
         });
 
         const migrated = YAML.parse(await readFile(docsPath, "utf8")) as {
             navigation: Array<{ contents: Array<Record<string, unknown>> }>;
         };
         const contents = migrated.navigation[0]?.contents ?? [];
-        expect(updated).toBe(3);
-        expect(contents).toHaveLength(4);
-        expect(contents.slice(0, 3).map((item) => [item.api, item.slug, item["display-errors"]])).toEqual([
-            ["API reference - pets", "api-pets", true],
-            ["API reference - orders", "api-orders", true],
-            ["API reference - openapi", "api-openapi", true]
+        expect(updated).toBe(1);
+        expect(contents).toHaveLength(2);
+        expect(contents[0]).toMatchObject({ api: "API reference", slug: "api" });
+        expect((contents[0]?.specs as Array<{ namespace: string }>).map((spec) => spec.namespace)).toEqual([
+            "pets",
+            "orders"
         ]);
-        for (const item of contents.slice(0, 3)) {
-            expect(item.specs).toHaveLength(1);
-        }
-        expect(contents[3]).toEqual({ page: "Intro", path: "./intro.mdx" });
-    });
-
-    it("keeps split section titles distinct when specs share a file name", async () => {
-        await writeFile(docsPath, ["navigation:", "  - api: API reference", ""].join("\n"));
-        const first = {
-            ...createSourceSpec(temporaryDirectory),
-            absolutePath: AbsoluteFilePath.of(join(temporaryDirectory, "a", "openapi.yml")),
-            namespace: undefined
-        };
-        const second = {
-            ...createSourceSpec(temporaryDirectory),
-            absolutePath: AbsoluteFilePath.of(join(temporaryDirectory, "b", "openapi.yml")),
-            namespace: undefined
-        };
-
-        await migrate({ docsPath, workspaceName: undefined, isOnlyApiWorkspace: true, sourceSpecs: [first, second] });
-
-        const migrated = YAML.parse(await readFile(docsPath, "utf8")) as { navigation: Array<{ api: string }> };
-        expect(migrated.navigation.map((item) => item.api)).toEqual([
-            "API reference - openapi",
-            "API reference - openapi-2"
-        ]);
-    });
-
-    it("keeps split section titles unique when a namespace looks like a generated suffix", async () => {
-        const unnamed = (directory: string) => ({
-            ...createSourceSpec(temporaryDirectory),
-            absolutePath: AbsoluteFilePath.of(join(temporaryDirectory, directory, "openapi.yml")),
-            namespace: undefined
-        });
-        const lookalike = { ...createSourceSpec(temporaryDirectory), namespace: "openapi-2" };
-
-        for (const sourceSpecs of [
-            [unnamed("a"), unnamed("b"), lookalike],
-            [lookalike, unnamed("a"), unnamed("b")]
-        ]) {
-            await writeFile(docsPath, ["navigation:", "  - api: API reference", ""].join("\n"));
-            await migrate({ docsPath, workspaceName: undefined, isOnlyApiWorkspace: true, sourceSpecs });
-            const migrated = YAML.parse(await readFile(docsPath, "utf8")) as { navigation: Array<{ api: string }> };
-            const titles = migrated.navigation.map((item) => item.api);
-            expect(titles).toHaveLength(3);
-            expect(new Set(titles).size).toBe(3);
-        }
+        expect(contents[1]).toEqual({ page: "Intro", path: "./intro.mdx" });
     });
 
     it("leaves API reference sections in place when there are no specs to add", async () => {

@@ -91,9 +91,8 @@ function migrateDocument({
     const docsDirectory = dirname(configurationPath).toString();
     let updatedSections = 0;
     visitNode(document.contents, (map) => {
-        // With no specs there is nothing to write, and splitting would drop the section from the navigation.
         if (sourceSpecs.length === 0 || !isApiReferenceSection(map) || map.has("specs")) {
-            return undefined;
+            return;
         }
         const referencedApiName = scalarString(map.get("api-name", true));
         const isAssociated =
@@ -101,11 +100,15 @@ function migrateDocument({
             (referencedApiName == null && isOnlyApiWorkspace) ||
             (referencedApiName == null && workspaceName == null);
         if (!isAssociated) {
-            return undefined;
+            return;
         }
-        const sections = splitApiReferenceSection(map, sourceSpecs, docsDirectory);
-        updatedSections += sections.length;
-        return sections;
+        // All specs of an API stay in one section: the docs merge them into one API reference, as they did when
+        // they were read from generators.yml.
+        map.set(
+            "specs",
+            sourceSpecs.map((spec) => serializeDocsSpec(spec, docsDirectory))
+        );
+        updatedSections++;
     });
 
     if (updatedSections === 0) {
@@ -113,41 +116,6 @@ function migrateDocument({
     }
     const yaml = document.toString({ lineWidth: 0 });
     return { edit: { contents: yaml.endsWith("\n") ? yaml : `${yaml}\n`, path: configurationPath }, updatedSections };
-}
-
-/**
- * One API reference section per source spec, so each spec is its own navigation item. A single spec keeps the
- * original section as is. With several, each copy gets a distinct title (and slug, when one is set) built from the
- * spec's namespace, or its file name when it has none.
- */
-function splitApiReferenceSection(
-    section: YAMLMap,
-    sourceSpecs: ResolvedMigrationSourceSpec[],
-    docsDirectory: string
-): YAMLMap[] {
-    const [onlySpec] = sourceSpecs;
-    if (onlySpec != null && sourceSpecs.length === 1) {
-        section.set("specs", [serializeDocsSpec(onlySpec, docsDirectory)]);
-        return [section];
-    }
-    const title = scalarString(section.get("api", true));
-    const slug = scalarString(section.get("slug", true));
-    const usedLabels = new Set<string>();
-    return sourceSpecs.map((spec) => {
-        const baseLabel = spec.namespace ?? path.basename(spec.absolutePath, path.extname(spec.absolutePath));
-        let label = baseLabel;
-        for (let suffix = 2; usedLabels.has(label); suffix++) {
-            label = `${baseLabel}-${suffix}`;
-        }
-        usedLabels.add(label);
-        const copy = section.clone() as YAMLMap;
-        copy.set("api", `${title} - ${label}`);
-        if (slug != null) {
-            copy.set("slug", `${slug}-${label}`);
-        }
-        copy.set("specs", [serializeDocsSpec(spec, docsDirectory)]);
-        return copy;
-    });
 }
 
 function collectReferencedNavigationPaths(document: YAML.Document.Parsed, fernDirectory: string): AbsoluteFilePath[] {
@@ -261,28 +229,20 @@ function usesLegacyOpenApiParser(document: YAML.Document.Parsed): boolean {
     return isScalar(setting) && setting.value === false;
 }
 
-/**
- * Walks the navigation tree. `expandSection` may return replacement sections for a map that sits in a list, in which
- * case the map is swapped out and its replacements are not walked again.
- */
-function visitNode(node: Node | null | undefined, expandSection: (map: YAMLMap) => YAMLMap[] | undefined): void {
+function visitNode(node: Node | null | undefined, visitMap: (map: YAMLMap) => void): void {
     if (isMap(node)) {
+        visitMap(node);
         for (const pair of node.items) {
             if (scalarString(pair.key) === "feature-flag") {
                 continue;
             }
-            visitNode(pair.value as Node | null, expandSection);
+            visitNode(pair.value as Node | null, visitMap);
         }
         return;
     }
     if (isSeq(node)) {
-        node.items = node.items.flatMap((item) => {
-            const replacement = isMap(item) ? expandSection(item) : undefined;
-            if (replacement != null) {
-                return replacement;
-            }
-            visitNode(item as Node | null, expandSection);
-            return [item];
-        });
+        for (const item of node.items) {
+            visitNode(item as Node | null, visitMap);
+        }
     }
 }
