@@ -75,9 +75,11 @@ export interface FernCliCustomConfig {
      * Overrides the generated crate's `[package]` identity — the metadata
      * cargo (and cargo-dist's installers) publish under.
      *
-     * When omitted, the crate keeps the SDK template's Fern-owned
-     * identity (`fern-cli-sdk`, `github.com/fern-api/cli-sdk`), which is
-     * what every existing generation ships today.
+     * Unset fields default from the GitHub output repo: `repository` and
+     * `homepage` to its URL, and `name` to the binary name when that is a
+     * valid crate name. Without a GitHub repo (local-files / publish output)
+     * they keep the SDK template's Fern-owned identity (`fern-cli-sdk`,
+     * `github.com/fern-api/cli-sdk`).
      *
      * The `[lib]` name (`fern_cli_sdk`) is deliberately not configurable:
      * every `use fern_cli_sdk::...` in the vendored `src/` tree depends

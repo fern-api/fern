@@ -539,6 +539,104 @@ describe("runPipeline", () => {
         expect(ciYml).toContain("x86_64-unknown-linux-musl");
         expect(ciYml).toContain("aarch64-apple-darwin");
     });
+
+    // cargo-dist names the archives and `<name>-installer.sh` after the
+    // crate and downloads them from `repository`, so both must be the
+    // consumer's or every installer 404s against Fern's repo.
+    it("defaults the crate identity from the GitHub repo and threads it into every artifact", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const cargo = await readFile(path.join(outputDir, "Cargo.toml"), "utf-8");
+        expect(cargo).toMatch(/^\[package\]\nname = "acme"$/m);
+        expect(cargo).toContain('repository = "https://github.com/acme/cli"');
+        expect(cargo).toContain('homepage = "https://github.com/acme/cli"');
+        expect(cargo).not.toContain("fern-api/cli-sdk");
+        expect(cargo).not.toMatch(/^description = /m);
+
+        const lock = await readFile(path.join(outputDir, "Cargo.lock"), "utf-8");
+        expect(lock).toContain('name = "acme"\nversion = "1.5.0"');
+        expect(lock).not.toContain('name = "fern-cli-sdk"');
+
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+        expect(readme).toContain("https://github.com/acme/cli/releases/latest/download/acme-installer.sh");
+        expect(readme).toContain("https://github.com/acme/cli/releases/latest/download/acme-installer.ps1");
+        expect(readme).not.toContain("fern-cli-sdk-installer");
+
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        expect(ciYml).toContain('"homepage": "https://github.com/acme/cli"');
+    });
+
+    it("keeps the template crate name when the binary name is not a valid crate name", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "3d-cli" },
+            ir: ir({ apiDisplayName: "3D" }),
+            outputConfig: githubConfigNoNpm,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const cargo = await readFile(path.join(outputDir, "Cargo.toml"), "utf-8");
+        expect(cargo).toMatch(/^\[package\]\nname = "fern-cli-sdk"$/m);
+        expect(cargo).toContain('repository = "https://github.com/acme/cli"');
+        const lock = await readFile(path.join(outputDir, "Cargo.lock"), "utf-8");
+        expect(lock).toContain('name = "fern-cli-sdk"\nversion = "1.0.0"');
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+        expect(readme).toContain("https://github.com/acme/cli/releases/latest/download/fern-cli-sdk-installer.sh");
+    });
+
+    it("lets an explicit packageIdentity.name win over the binary name everywhere", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme", packageIdentity: { name: "acme-tool" } },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfigNoNpm,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const cargo = await readFile(path.join(outputDir, "Cargo.toml"), "utf-8");
+        expect(cargo).toMatch(/^\[package\]\nname = "acme-tool"$/m);
+        const lock = await readFile(path.join(outputDir, "Cargo.lock"), "utf-8");
+        expect(lock).toContain('name = "acme-tool"\nversion = "1.0.0"');
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+        expect(readme).toContain("/releases/latest/download/acme-tool-installer.sh");
+    });
+
+    it("keeps the template identity for non-GitHub output", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: localFilesConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const cargo = await readFile(path.join(outputDir, "Cargo.toml"), "utf-8");
+        expect(cargo).toMatch(/^\[package\]\nname = "fern-cli-sdk"$/m);
+        expect(cargo).toContain('repository = "https://github.com/fern-api/cli-sdk"');
+        expect(cargo).toContain('homepage = "https://github.com/fern-api/cli-sdk"');
+    });
     // -----------------------------------------------------------------
     // Distribution channels (Homebrew / Scoop)
     // -----------------------------------------------------------------
