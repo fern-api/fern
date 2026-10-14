@@ -36,5 +36,6 @@ describe("tag display names", () => {
         expect(ir.services["service_plant"]?.displayName).toBe("Plants");
         expect(ir.services["service_wateringSchedule"]?.displayName).toBe("Watering Schedules");
         expect(ir.services["service_seed"]?.displayName).toBe("SEED");
+        expect(ir.services["service_petStore"]?.displayName).toBe("pet-store");
     }, 90_000);
 });

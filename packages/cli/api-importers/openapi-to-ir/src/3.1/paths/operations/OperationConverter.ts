@@ -1272,8 +1272,10 @@ export class OperationConverter extends AbstractOperationConverter {
         if (tagDisplayName.toLowerCase().replaceAll(" ", "") === baseGroupName) {
             return tagDisplayName;
         }
-        const hasExplicitDisplayName = tagDisplayName !== rawOperationTag;
-        if (hasExplicitDisplayName && camelCase(rawOperationTag) === camelCase(baseGroupName)) {
+        if (
+            this.context.hasExplicitDisplayNameForTag(rawOperationTag) &&
+            camelCase(rawOperationTag) === camelCase(baseGroupName)
+        ) {
             return tagDisplayName;
         }
         return undefined;
