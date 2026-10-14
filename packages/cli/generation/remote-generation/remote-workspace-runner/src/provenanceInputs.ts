@@ -114,7 +114,7 @@ function collectLocationPaths(locations: generatorsYml.APIDefinitionLocation[], 
     }
 }
 
-function getSchemaPath(schema: generatorsYml.APIDefinitionSchema): string | undefined {
+function getSchemaPath(schema: generatorsYml.APIDefinitionLocation["schema"]): string | undefined {
     switch (schema.type) {
         case "oss":
         case "openrpc":
