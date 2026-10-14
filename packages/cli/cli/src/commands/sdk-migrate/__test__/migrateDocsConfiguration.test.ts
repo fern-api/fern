@@ -439,6 +439,27 @@ describe("migrateDocsConfiguration", () => {
             "API reference - openapi-2"
         ]);
     });
+
+    it("keeps split section titles unique when a namespace looks like a generated suffix", async () => {
+        const unnamed = (directory: string) => ({
+            ...createSourceSpec(temporaryDirectory),
+            absolutePath: AbsoluteFilePath.of(join(temporaryDirectory, directory, "openapi.yml")),
+            namespace: undefined
+        });
+        const lookalike = { ...createSourceSpec(temporaryDirectory), namespace: "openapi-2" };
+
+        for (const sourceSpecs of [
+            [unnamed("a"), unnamed("b"), lookalike],
+            [lookalike, unnamed("a"), unnamed("b")]
+        ]) {
+            await writeFile(docsPath, ["navigation:", "  - api: API reference", ""].join("\n"));
+            await migrate({ docsPath, workspaceName: undefined, isOnlyApiWorkspace: true, sourceSpecs });
+            const migrated = YAML.parse(await readFile(docsPath, "utf8")) as { navigation: Array<{ api: string }> };
+            const titles = migrated.navigation.map((item) => item.api);
+            expect(titles).toHaveLength(3);
+            expect(new Set(titles).size).toBe(3);
+        }
+    });
 });
 
 function createSourceSpec(temporaryDirectory: string): ResolvedMigrationSourceSpec {
