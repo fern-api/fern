@@ -460,6 +460,21 @@ describe("migrateDocsConfiguration", () => {
             expect(new Set(titles).size).toBe(3);
         }
     });
+
+    it("leaves API reference sections in place when there are no specs to add", async () => {
+        const original = ["navigation:", "  - api: API reference", ""].join("\n");
+        await writeFile(docsPath, original);
+
+        const result = await migrateDocsConfiguration({
+            docsPath,
+            workspaceName: undefined,
+            isOnlyApiWorkspace: true,
+            sourceSpecs: []
+        });
+
+        expect(result).toEqual({ edits: [], updatedSections: 0 });
+        expect(await readFile(docsPath, "utf8")).toBe(original);
+    });
 });
 
 function createSourceSpec(temporaryDirectory: string): ResolvedMigrationSourceSpec {

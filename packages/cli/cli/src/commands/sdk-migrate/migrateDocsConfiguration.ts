@@ -91,7 +91,8 @@ function migrateDocument({
     const docsDirectory = dirname(configurationPath).toString();
     let updatedSections = 0;
     visitNode(document.contents, (map) => {
-        if (!isApiReferenceSection(map) || map.has("specs")) {
+        // With no specs there is nothing to write, and splitting would drop the section from the navigation.
+        if (sourceSpecs.length === 0 || !isApiReferenceSection(map) || map.has("specs")) {
             return undefined;
         }
         const referencedApiName = scalarString(map.get("api-name", true));
