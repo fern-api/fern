@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.54.0
+  changelogEntry:
+    - summary: |
+        GitHub-mode output now defaults the crate's `[package]` identity from the output repo, so the cargo-dist
+        shell and PowerShell installers download from the consumer's releases instead of 404ing against
+        `github.com/fern-api/cli-sdk`. Unless `packageIdentity` pins them, `repository` and `homepage` default to
+        the repo URL (previously only when Homebrew was configured) and `name` defaults to the binary name when it
+        is a valid crate name. Release assets and installers are therefore renamed from `fern-cli-sdk-*` to
+        `<binaryName>-*`; the README install commands, `Cargo.lock`, and the npm launcher's `homepage` follow the
+        same identity. Local-files and publish output are unchanged.
+      type: feat
+    - summary: |
+        The generated npm publish workflow now skips any platform or launcher
+        package whose version is already on the configured registry, so re-running
+        failed jobs after a partial release completes it instead of failing on the
+        packages that already published. A failed version check (other than a 404)
+        still fails the job. When `npm publish` fails with `EOTP`, the job now
+        prints an error explaining the fix: use a granular npm access token with
+        "Bypass 2FA" enabled, or configure npm trusted publishing (OIDC).
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
 - version: 0.53.4
   changelogEntry:
     - summary: |
