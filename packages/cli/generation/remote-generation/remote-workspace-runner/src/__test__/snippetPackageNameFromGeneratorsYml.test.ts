@@ -11,6 +11,7 @@ import {
     collectSnippetGeneratorCandidates,
     getDocsSnippetPackageName,
     getSoleUnnamedGenerator,
+    getSoleUnnamedSnippetGenerator,
     getUnknownSnippetPackageWarningLines,
     selectVersionGeneratorForSnippet
 } from "../publishDocs.js";
@@ -66,6 +67,21 @@ describe("snippet package name from a parsed generators.yml", () => {
         expect(docsPackageName(typescript)).toBeUndefined();
         expect(getSoleUnnamedGenerator([typescript])).toBe(typescript);
         expect(getSoleUnnamedGenerator([python])).toBeUndefined();
+    });
+
+    it("prefers the API section's own unnamed generator over one borrowed from a sibling workspace", () => {
+        const borrowed = { ...typescript, name: "fernapi/fern-typescript-sdk-sibling" };
+        expect(getSoleUnnamedGenerator([typescript, borrowed])).toBeUndefined();
+        expect(
+            getSoleUnnamedSnippetGenerator({
+                language: "typescript",
+                ownGenerators: [typescript],
+                candidates: [typescript, borrowed]
+            })
+        ).toBe(typescript);
+        expect(
+            getSoleUnnamedSnippetGenerator({ language: "typescript", ownGenerators: [], candidates: [borrowed] })
+        ).toBe(borrowed);
     });
 
     it("docs version lookup selects the python generator for snippets package smallestai", () => {

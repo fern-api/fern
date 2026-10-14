@@ -62,7 +62,7 @@ import axios from "axios";
 import chalk from "chalk";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
-import { chunk } from "lodash-es";
+import { camelCase, chunk } from "lodash-es";
 import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
@@ -1978,6 +1978,63 @@ export function getSoleUnnamedGenerator(
     return resolveSnippetPackageName(only) == null ? only : undefined;
 }
 
+/**
+ * Like {@link getSoleUnnamedGenerator}, but the API section's own generators.yml wins: a
+ * generator borrowed from a sibling API workspace doesn't make the section's own one ambiguous.
+ */
+export function getSoleUnnamedSnippetGenerator({
+    language,
+    ownGenerators,
+    candidates
+}: {
+    language: string;
+    ownGenerators: generatorsYml.GeneratorInvocation[];
+    candidates: generatorsYml.GeneratorInvocation[];
+}): generatorsYml.GeneratorInvocation | undefined {
+    const ofLanguage = (generators: generatorsYml.GeneratorInvocation[]) =>
+        generators.filter((generatorInvocation) => generatorInvocation.language === language);
+    const own = ofLanguage(ownGenerators);
+    return getSoleUnnamedGenerator(own.length > 0 ? own : ofLanguage(candidates));
+}
+
+/**
+ * Maps each namespaced spec's top-level `fernFilepath` part (the importer camelCases the namespace,
+ * e.g. `messaging/bulk-messages` → `messagingBulkMessages`) to its generators.yml `namespace:`, so the
+ * CLI dynamic snippets mount commands the way the runtime's `spec_under` does.
+ */
+export function getCliSnippetNamespaces(specs: ReadonlyArray<object>): Record<string, string> | undefined {
+    const namespaces: Record<string, string> = {};
+    for (const spec of specs) {
+        const namespace = "namespace" in spec ? spec.namespace : undefined;
+        if (typeof namespace === "string" && namespace.length > 0) {
+            namespaces[camelCase(namespace)] = namespace;
+        }
+    }
+    return Object.keys(namespaces).length > 0 ? namespaces : undefined;
+}
+
+export function withCliSnippetNamespaces({
+    dynamicGeneratorConfig,
+    language,
+    namespaces
+}: {
+    dynamicGeneratorConfig: dynamic.GeneratorConfig | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
+    namespaces: Record<string, string> | undefined;
+}): dynamic.GeneratorConfig | undefined {
+    if (language !== "cli" || namespaces == null || dynamicGeneratorConfig == null) {
+        return dynamicGeneratorConfig;
+    }
+    const customConfig = dynamicGeneratorConfig.customConfig;
+    return {
+        ...dynamicGeneratorConfig,
+        customConfig: {
+            ...(customConfig != null && typeof customConfig === "object" ? customConfig : {}),
+            namespaces
+        }
+    };
+}
+
 export function describeGeneratorForSnippetLog(generatorInvocation: generatorsYml.GeneratorInvocation): string {
     const config = generatorInvocation.config;
     const configKeys = typeof config === "object" && config !== null ? Object.keys(config).join(",") : "none";
@@ -2104,11 +2161,25 @@ async function generateLanguageSpecificDynamicIRs({
     };
 
     const allGenerators = collectSnippetGeneratorCandidates({ workspace, apiWorkspaces, context });
+    const ownGenerators = workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? [];
+    const cliNamespaces = getCliSnippetNamespaces(
+        apiWorkspaces.find(
+            (candidate): candidate is OSSWorkspace =>
+                candidate instanceof OSSWorkspace && candidate.workspaceName === workspace.workspaceName
+        )?.specs ?? []
+    );
+    if (cliNamespaces != null) {
+        context.logger.debug(`[SDK Dynamic IR] cli namespaces: ${JSON.stringify(cliNamespaces)}`);
+    }
     for (const generatorInvocation of allGenerators) {
-        const dynamicGeneratorConfig = getDynamicGeneratorConfig({
-            apiName: workspace.workspaceName ?? "",
-            organization,
-            generatorInvocation
+        const dynamicGeneratorConfig = withCliSnippetNamespaces({
+            dynamicGeneratorConfig: getDynamicGeneratorConfig({
+                apiName: workspace.workspaceName ?? "",
+                organization,
+                generatorInvocation
+            }),
+            language: generatorInvocation.language,
+            namespaces: cliNamespaces
         });
         let packageName = getDocsSnippetPackageName({ generatorInvocation, dynamicGeneratorConfig });
 
@@ -2129,9 +2200,11 @@ async function generateLanguageSpecificDynamicIRs({
             continue;
         }
         if (packageName == null) {
-            const sole = getSoleUnnamedGenerator(
-                allGenerators.filter((candidate) => candidate.language === generatorInvocation.language)
-            );
+            const sole = getSoleUnnamedSnippetGenerator({
+                language: generatorInvocation.language,
+                ownGenerators,
+                candidates: allGenerators
+            });
             if (sole !== generatorInvocation) {
                 context.logger.debug(
                     `[SDK Dynamic IR] ${generatorInvocation.language}: ${describeGeneratorForSnippetLog(generatorInvocation)} has no resolvable package name, cannot match snippets package "${requestedPackage}"`
