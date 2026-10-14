@@ -1831,7 +1831,8 @@ function convertSnippetsConfiguration({
         ruby: rawConfig.ruby,
         csharp: rawConfig.csharp,
         php: rawConfig.php,
-        swift: rawConfig.swift
+        swift: rawConfig.swift,
+        cli: rawConfig.cli
     };
 }
 

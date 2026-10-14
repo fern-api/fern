@@ -491,6 +491,7 @@ export declare namespace DocsNavigationItem {
         csharp: string | VersionedSnippetLanguageConfiguration | undefined;
         php: string | VersionedSnippetLanguageConfiguration | undefined;
         swift: string | VersionedSnippetLanguageConfiguration | undefined;
+        cli: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
 
