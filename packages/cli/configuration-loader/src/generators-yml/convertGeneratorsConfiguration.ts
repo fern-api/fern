@@ -1247,6 +1247,11 @@ function getGithubPublishInfo(
 }
 
 function getLanguageFromGeneratorName(generatorName: string) {
+    // Checked first and matched specifically so a custom name like `acme/go-cli-generator` is not
+    // mis-resolved as CLI (or Go).
+    if (generatorName.includes("fern-cli-generator")) {
+        return generatorsYml.GenerationLanguage.CLI;
+    }
     if (generatorName.includes("csharp")) {
         return generatorsYml.GenerationLanguage.CSHARP;
     }

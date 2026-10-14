@@ -342,6 +342,11 @@ async function packOutputForLanguage({
                     "Share the output directory itself, or reference it as a local package dependency."
             );
             return false;
+        case "cli":
+            context.logger.warn(
+                "CLI SDKs are distributed as installable binaries (npm/curl install script), so there is no package artifact to build."
+            );
+            return false;
         default:
             assertNever(language);
     }

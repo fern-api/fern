@@ -2093,7 +2093,8 @@ async function generateLanguageSpecificDynamicIRs({
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
         swift: snippetsConfig.swiftSdk?.package,
-        rust: snippetsConfig.rustSdk?.package
+        rust: snippetsConfig.rustSdk?.package,
+        cli: snippetsConfig.cliSdk?.package
     };
 
     const allGenerators = collectSnippetGeneratorCandidates({ workspace, apiWorkspaces, context });
