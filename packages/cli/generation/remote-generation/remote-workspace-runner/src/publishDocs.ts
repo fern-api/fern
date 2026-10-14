@@ -207,6 +207,7 @@ export async function publishDocs({
     customDomains,
     apiWorkspaces,
     ossWorkspaces,
+    usesSdkConfig = false,
     context,
     preview,
     previewId,
@@ -230,6 +231,8 @@ export async function publishDocs({
     customDomains: string[];
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
+    /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
+    usesSdkConfig?: boolean;
     context: TaskContext;
     preview: boolean;
     previewId: string | undefined;
@@ -429,6 +432,7 @@ export async function publishDocs({
                 organization,
                 context,
                 snippetsConfig,
+                usesSdkConfig,
                 skipLanguages: languagesWithExistingSdkDynamicIr,
                 pool: dynamicIrWorkerPool
             });
@@ -2066,6 +2070,7 @@ async function generateLanguageSpecificDynamicIRs({
     organization,
     context,
     snippetsConfig,
+    usesSdkConfig,
     skipLanguages = new Set(),
     pool
 }: {
@@ -2074,6 +2079,7 @@ async function generateLanguageSpecificDynamicIRs({
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
+    usesSdkConfig: boolean;
     skipLanguages?: Set<string>;
     pool?: DynamicIrWorkerPool;
 }): Promise<(() => Record<string, DynamicIr>) | undefined> {
@@ -2167,12 +2173,15 @@ async function generateLanguageSpecificDynamicIRs({
     for (const [language, packageName] of Object.entries(snippetConfiguration)) {
         if (language && packageName && !languagesWithDynamicIr.has(language) && !skipLanguages.has(language)) {
             context.logger.warn();
-            context.logger.warn(
-                `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
-            );
-            context.logger.warn(
-                `Please make sure a generators.yml in this fern folder (checked ${workspace.workspaceName ? `${workspace.workspaceName}/` : ""}generators.yml and the other ${apiWorkspaces.length} API workspace(s)) has a generator that publishes a ${packageName} package.`
-            );
+            for (const line of getUnknownSnippetPackageWarningLines({
+                language,
+                packageName,
+                workspaceName: workspace.workspaceName,
+                otherApiWorkspaceCount: apiWorkspaces.length,
+                usesSdkConfig
+            })) {
+                context.logger.warn(line);
+            }
             context.logger.warn();
         }
     }
@@ -2189,6 +2198,36 @@ async function generateLanguageSpecificDynamicIRs({
     }
 
     return undefined;
+}
+
+/**
+ * Warning lines for a docs `snippets:` entry that no generator resolved to. Docs publishing only
+ * reads generators.yml for SDK packages, so for SDKs configured in sdk-config.yml (where `fern sdk migrate`
+ * moves the generators into sdk-config.yml) the package is not found and the snippets are dropped.
+ */
+export function getUnknownSnippetPackageWarningLines({
+    language,
+    packageName,
+    workspaceName,
+    otherApiWorkspaceCount,
+    usesSdkConfig
+}: {
+    language: string;
+    packageName: string;
+    workspaceName: string | undefined;
+    otherApiWorkspaceCount: number;
+    usesSdkConfig: boolean;
+}): string[] {
+    const lines = [
+        `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`,
+        `Please make sure a generators.yml in this fern folder (checked ${workspaceName ? `${workspaceName}/` : ""}generators.yml and the other ${otherApiWorkspaceCount} API workspace(s)) has a generator that publishes a ${packageName} package.`
+    ];
+    if (usesSdkConfig) {
+        lines.push(
+            "SDK snippets are not supported for SDKs configured in sdk-config.yml yet. The package name is only read from generators.yml, so migrated SDKs have no snippets in these docs."
+        );
+    }
+    return lines;
 }
 
 /**
