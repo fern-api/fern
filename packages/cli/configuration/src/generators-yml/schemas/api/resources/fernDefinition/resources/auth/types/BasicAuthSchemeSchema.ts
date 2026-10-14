@@ -2,7 +2,9 @@
 
 import type * as GeneratorsYml from "../../../../../index.js";
 
-export interface BasicAuthSchemeSchema extends GeneratorsYml.fernDefinition.WithDocsSchema {
+export interface BasicAuthSchemeSchema
+    extends GeneratorsYml.fernDefinition.WithDocsSchema,
+        GeneratorsYml.fernDefinition.WithPlaygroundDocsSchema {
     scheme: "basic";
     username?: GeneratorsYml.fernDefinition.AuthVariable;
     password?: GeneratorsYml.fernDefinition.AuthVariable;
