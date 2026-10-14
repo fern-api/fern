@@ -337,6 +337,15 @@ fixtures:
       outputFolder: with-split-type-crates
   # Explicit `token.env` on a scheme named `bearer`: the CLI must read
   # `BEARER_TOKEN`, not the derived `BEARER_ENV_CLI_TOKEN`.
+  # Request-body schemas referenced by JSON pointer into another component's
+  # `properties` (`#/components/schemas/Models/properties/Address`). The CLI
+  # validates the body against the embedded spec before sending, so a pointer
+  # it can't resolve fails the wire test with "Schema '...' not found".
+  cli-nested-component-refs:
+    - customConfig:
+        binaryName: nested-refs-cli
+        generateWireTests: true
+      outputFolder: with-wire-tests
   cli-bearer-env-var:
     - customConfig:
         binaryName: bearer-env-cli

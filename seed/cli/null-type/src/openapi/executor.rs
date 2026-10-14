@@ -12274,6 +12274,81 @@ mod tests {
     }
 
     #[test]
+    fn test_validate_body_through_refs_into_nested_component_schemas() {
+        // `$ref: '#/components/schemas/Models/properties/Address'` used to be
+        // looked up as `Address`, so every body using one failed with
+        // "Schema 'Address' not found" and the request was never sent.
+        let doc = crate::openapi::parser::load_openapi_spec(
+            r##"
+openapi: 3.0.3
+info: { title: t, version: "1" }
+paths:
+  /orders:
+    post:
+      operationId: orders_create
+      x-fern-sdk-group-name: orders
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Models/properties/OrderRequest"
+      responses:
+        "200": { description: ok }
+components:
+  schemas:
+    Models:
+      type: object
+      properties:
+        Address:
+          type: object
+          properties:
+            city: { type: string }
+          required: [city]
+        OrderRequest:
+          type: object
+          properties:
+            shipTo:
+              $ref: "#/components/schemas/Models/properties/Address"
+            stops:
+              type: array
+              items:
+                $ref: "#/components/schemas/Models/properties/Address"
+          required: [shipTo]
+"##,
+            "t",
+        )
+        .unwrap();
+        let schema = doc.resources["orders"].methods["create"]
+            .request
+            .as_ref()
+            .and_then(|r| r.schema_ref.as_deref())
+            .expect("request body ref");
+        assert_eq!(schema, "Models/properties/OrderRequest");
+
+        let ok = json!({ "shipTo": { "city": "Paris" }, "stops": [{ "city": "Lyon" }] });
+        validate_body_against_schema(&ok, schema, &doc).expect("valid body must pass");
+
+        // The nested schemas are really enforced, not skipped.
+        let err = validate_body_against_schema(&json!({ "shipTo": {} }), schema, &doc)
+            .expect_err("missing nested required property must be rejected");
+        assert!(
+            format!("{err}").contains("shipTo: Missing required property 'city'"),
+            "got: {err}"
+        );
+        let err = validate_body_against_schema(
+            &json!({ "shipTo": { "city": "Paris" }, "stops": [{ "city": 1 }] }),
+            schema,
+            &doc,
+        )
+        .expect_err("wrong type behind a nested ref must be rejected");
+        assert!(
+            format!("{err}").contains("Expected type 'string'"),
+            "got: {err}"
+        );
+    }
+
+    #[test]
     fn test_validate_value_schema_not_found() {
         let doc = RestDescription::default();
         let mut errors = Vec::new();

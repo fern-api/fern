@@ -1,0 +1,121 @@
+{
+  "binaryName": "nested-refs-cli",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/nested-refs-cli/openapi0.json",
+      "namespace": null
+    }
+  ],
+  "authEnvVars": [],
+  "globalFlags": [],
+  "authMock": null,
+  "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
+  "cases": [
+    {
+      "id": "create",
+      "method": "POST",
+      "path": "/orders",
+      "params": {},
+      "body": {
+        "customerId": "customerId",
+        "shipTo": {
+          "line1": "line1",
+          "city": "city"
+        },
+        "lines": [
+          {
+            "sku": "sku",
+            "quantity": 1
+          }
+        ]
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"status\": \"status\"\n}"
+      }
+    },
+    {
+      "id": "create_1",
+      "method": "POST",
+      "path": "/shipments",
+      "params": {},
+      "body": {
+        "destination": {
+          "line1": "line1",
+          "city": "city"
+        },
+        "items": [
+          {
+            "sku": "sku",
+            "quantity": 1
+          }
+        ]
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"destination\": {\n    \"line1\": \"line1\",\n    \"city\": \"city\"\n  }\n}"
+      }
+    },
+    {
+      "id": "create_error",
+      "method": "POST",
+      "path": "/orders",
+      "params": {},
+      "body": {
+        "customerId": "customerId",
+        "shipTo": {
+          "line1": "line1",
+          "city": "city"
+        },
+        "lines": [
+          {
+            "sku": "sku",
+            "quantity": 1
+          }
+        ]
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "create_1_error",
+      "method": "POST",
+      "path": "/shipments",
+      "params": {},
+      "body": {
+        "destination": {
+          "line1": "line1",
+          "city": "city"
+        },
+        "items": [
+          {
+            "sku": "sku",
+            "quantity": 1
+          }
+        ]
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    }
+  ]
+}

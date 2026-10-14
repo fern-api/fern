@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: Nested Component Refs
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /orders:
+    post:
+      operationId: orders_create
+      x-fern-sdk-group-name: orders
+      x-fern-sdk-method-name: create
+      summary: Create an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Models/properties/OrderRequest"
+      responses:
+        "200":
+          description: Created order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Models/properties/Order"
+  /shipments:
+    post:
+      operationId: shipments_create
+      x-fern-sdk-group-name: shipments
+      x-fern-sdk-method-name: create
+      summary: Create a shipment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destination:
+                  $ref: "#/components/schemas/Models/properties/Address"
+                items:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Models/properties/LineItem"
+              required:
+                - destination
+                - items
+      responses:
+        "200":
+          description: Created shipment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Shipment"
+components:
+  schemas:
+    # Wrapper schema: its `properties` hold the models, which are referenced
+    # by JSON pointer from operations and from each other.
+    Models:
+      type: object
+      properties:
+        Address:
+          type: object
+          properties:
+            line1:
+              type: string
+            city:
+              type: string
+          required:
+            - line1
+            - city
+        LineItem:
+          type: object
+          properties:
+            sku:
+              type: string
+            quantity:
+              type: integer
+          required:
+            - sku
+            - quantity
+        OrderRequest:
+          type: object
+          properties:
+            customerId:
+              type: string
+            shipTo:
+              $ref: "#/components/schemas/Models/properties/Address"
+            lines:
+              type: array
+              items:
+                $ref: "#/components/schemas/Models/properties/LineItem"
+          required:
+            - customerId
+            - shipTo
+            - lines
+        Order:
+          type: object
+          properties:
+            id:
+              type: string
+            status:
+              type: string
+          required:
+            - id
+            - status
+    # Top-level component, referenced the usual way. Keeps the plain-name
+    # path covered alongside the JSON-pointer one.
+    Shipment:
+      type: object
+      properties:
+        id:
+          type: string
+        destination:
+          $ref: "#/components/schemas/Models/properties/Address"
+      required:
+        - id
