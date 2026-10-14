@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 import { createHash } from "crypto";
 import { readFile, stat } from "fs/promises";
 import path from "path";
@@ -55,7 +56,12 @@ export async function computeGenerationProvenanceInputs({
     const configPath = generatorsConfiguration.absolutePathToConfiguration;
     const fernDirectory = path.dirname(configPath);
     const specPaths = new Set<string>();
-    collectSpecFilePaths(generatorsConfiguration.rawConfiguration.api, specPaths);
+    const apiOverrideSpecs = generatorInvocation.apiOverride?.specs;
+    if (apiOverrideSpecs != null) {
+        collectSpecFilePaths(apiOverrideSpecs, specPaths);
+    } else if (generatorsConfiguration.api != null) {
+        collectApiDefinitionPaths(generatorsConfiguration.api, specPaths);
+    }
 
     const specs: ProvenanceFileDigest[] = [];
     for (const specPath of [...specPaths].sort()) {
@@ -73,6 +79,53 @@ export async function computeGenerationProvenanceInputs({
         generatorName: generatorInvocation.name,
         generatorVersion: generatorInvocation.version
     };
+}
+
+function collectApiDefinitionPaths(api: generatorsYml.APIDefinition, paths: Set<string>): void {
+    switch (api.type) {
+        case "singleNamespace":
+            collectLocationPaths(api.definitions, paths);
+            return;
+        case "multiNamespace":
+            collectLocationPaths(api.rootDefinitions ?? [], paths);
+            for (const locations of Object.values(api.definitions)) {
+                collectLocationPaths(locations, paths);
+            }
+            return;
+        case "conjure":
+            paths.add(api.pathToConjureDefinition);
+            return;
+        default:
+            assertNever(api);
+    }
+}
+
+function collectLocationPaths(locations: generatorsYml.APIDefinitionLocation[], paths: Set<string>): void {
+    for (const location of locations) {
+        const schemaPath = getSchemaPath(location.schema);
+        if (schemaPath != null && !isUrl(schemaPath)) {
+            paths.add(schemaPath);
+        }
+        for (const extra of [location.overrides, location.overlays].flat()) {
+            if (extra != null && !isUrl(extra)) {
+                paths.add(extra);
+            }
+        }
+    }
+}
+
+function getSchemaPath(schema: generatorsYml.APIDefinitionSchema): string | undefined {
+    switch (schema.type) {
+        case "oss":
+        case "openrpc":
+        case "graphql":
+            return schema.path;
+        case "protobuf":
+            // A proto root is a directory; individual .proto files aren't hashed.
+            return undefined;
+        default:
+            return assertNever(schema);
+    }
 }
 
 function collectSpecFilePaths(value: unknown, paths: Set<string>): void {

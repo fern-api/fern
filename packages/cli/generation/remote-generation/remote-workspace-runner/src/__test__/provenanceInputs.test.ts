@@ -30,11 +30,26 @@ function invocation(raw: Record<string, unknown>): generatorsYml.GeneratorInvoca
     } as unknown as generatorsYml.GeneratorInvocation;
 }
 
-function configuration(fernDirectory: string, api: unknown): generatorsYml.GeneratorsConfiguration {
+function configuration(fernDirectory: string, api: generatorsYml.APIDefinition): generatorsYml.GeneratorsConfiguration {
     return {
         absolutePathToConfiguration: AbsoluteFilePath.of(path.join(fernDirectory, "generators.yml")),
-        rawConfiguration: { api }
+        api
     } as unknown as generatorsYml.GeneratorsConfiguration;
+}
+
+function location(
+    schemaPath: string,
+    extras: Partial<generatorsYml.APIDefinitionLocation> = {}
+): generatorsYml.APIDefinitionLocation {
+    return {
+        schema: { type: "oss", path: schemaPath },
+        origin: undefined,
+        overrides: undefined,
+        overlays: undefined,
+        audiences: undefined,
+        settings: undefined,
+        ...extras
+    };
 }
 
 describe("computeGenerationProvenanceInputs", () => {
@@ -45,14 +60,13 @@ describe("computeGenerationProvenanceInputs", () => {
             "openapi-overlay.yml": "overlay: 1.0.0",
             "overrides.yml": "paths: {}"
         });
-        const api = {
-            specs: [
-                {
-                    openapi: "../openapi.yaml",
+        const api: generatorsYml.APIDefinition = {
+            type: "singleNamespace",
+            definitions: [
+                location("../openapi.yaml", {
                     overlays: "openapi-overlay.yml",
-                    overrides: ["overrides.yml", "https://example.com/remote.yml"],
-                    settings: { "title-as-schema-name": false }
-                }
+                    overrides: ["overrides.yml", "https://example.com/remote.yml"]
+                })
             ]
         };
 
@@ -69,6 +83,29 @@ describe("computeGenerationProvenanceInputs", () => {
         expect(result.generatorsYml).toEqual({ path: "generators.yml", sha256: sha256("api: ...") });
         expect(result.generatorName).toBe("fernapi/fern-go-sdk");
         expect(result.generatorVersion).toBe("1.64.2");
+    });
+
+    it("uses the generator's api override instead of the root api", async () => {
+        const fernDirectory = await createFernDirectory({
+            "generators.yml": "api: ...",
+            "root.yaml": "root",
+            "override.yaml": "override",
+            "override-overlay.yml": "overlay"
+        });
+        const result = await computeGenerationProvenanceInputs({
+            generatorsConfiguration: configuration(fernDirectory, {
+                type: "singleNamespace",
+                definitions: [location("root.yaml")]
+            }),
+            generatorInvocation: {
+                ...invocation({ name: "g", version: "1" }),
+                apiOverride: { specs: [{ openapi: "override.yaml", overlays: "override-overlay.yml" }] }
+            } as unknown as generatorsYml.GeneratorInvocation
+        });
+        expect(result.specs).toEqual([
+            { path: "override-overlay.yml", sha256: sha256("overlay") },
+            { path: "override.yaml", sha256: sha256("override") }
+        ]);
     });
 
     it("produces the same config digest regardless of key order", async () => {
