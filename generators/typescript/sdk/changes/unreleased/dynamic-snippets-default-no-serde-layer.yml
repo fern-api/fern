@@ -3,6 +3,8 @@
 - summary: |
     Dynamic snippets now default `noSerdeLayer` to `true`, matching the SDK generator's default. Snippets for
     SDKs without an explicit setting now use the wire property names, string dates and arrays for sets
-    (e.g. `"X-API-Version": "0.0.1"` instead of `xApiVersion`), so they type-check against the generated SDK.
+    (e.g. `"X-API-Version": "0.0.1"` instead of `xAPIVersion`), so they type-check against the generated SDK.
+    Query, header and path parameters follow the SDK's naming (wire value without the serde layer,
+    `parameterNaming` overrides honored), and client-level header options stay camelCase.
     File and bytes uploads now always render as `new Blob([...])`, since the SDK never accepts a plain string there.
   type: fix

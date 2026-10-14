@@ -528,7 +528,7 @@ exports[`snippets > required-headers > 'GET /plants (simple)' 1`] = `
 async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
-        tenant_id: "my-tenant-id",
+        tenantId: "my-tenant-id",
     });
     await client.plantstore.list();
 }
@@ -542,7 +542,7 @@ exports[`snippets > required-headers > 'POST /plants (simple)' 1`] = `
 async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
-        tenant_id: "my-tenant-id",
+        tenantId: "my-tenant-id",
     });
     await client.plantstore.create({
         name: "Fern",
