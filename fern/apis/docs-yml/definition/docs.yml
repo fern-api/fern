@@ -735,6 +735,19 @@ types:
           A git ref—branch, tag, or commit SHA—whose committed content is built for this
           version. Branches are mutable and resolve to their latest commit on the remote;
           tags and commit SHAs are immutable.
+
+          The CLI checks out the ref and reads the docs.yml committed there to locate the
+          pages to build:
+          - For a version listed under top-level `versions`, it uses the ref's docs.yml
+            `versions` list and takes the first entry that has a `path` (skipping entries
+            that have a `ref`). If the ref's docs.yml has no such entry, it uses the ref's
+            top-level `navigation`.
+          - For a version listed under `products[].versions`, it finds the product with the
+            same `slug` (or, when either side has no `slug`, the same `display-name`) in the
+            ref's docs.yml and applies the same rule to that product's `versions` list,
+            falling back to the `navigation` in that product's file.
+          Entries with a `ref` in the ref's docs.yml are ignored: only the docs.yml being
+          built determines which versions are published.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.

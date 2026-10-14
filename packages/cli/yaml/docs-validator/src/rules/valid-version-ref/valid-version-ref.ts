@@ -9,7 +9,7 @@ export const ValidVersionRefRule: Rule = {
             version: ({ version }) => {
                 const ref = getVersionContentRef(version);
                 // A git-ref-backed version builds its content root from the ref itself
-                // (the ref's own `versions[0].path` or top-level `navigation:`), so a
+                // (the ref's own working-tree version or `navigation:`), so a
                 // current-branch `path:` has no effect. Reject the combination rather
                 // than silently ignoring `path:`.
                 if (ref != null && version.path != null) {
