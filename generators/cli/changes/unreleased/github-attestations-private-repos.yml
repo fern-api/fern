@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the generated release workflow failing every build on private repos.
+    GitHub Artifact Attestations need GitHub Enterprise Cloud on private
+    repos, and the attest step ran unconditionally, so no release was ever
+    cut. Add `distribution.githubAttestations` (`auto` | `true` | `false`,
+    default `auto`). `auto` skips the attest step on private repos; `true`
+    always attests (private repos on Enterprise Cloud); `false` drops the
+    step and its permission and sets `github-attestations = false` in
+    `dist-workspace.toml`.
+  type: fix

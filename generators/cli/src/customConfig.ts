@@ -279,7 +279,22 @@ export interface FernCliDistributionConfig {
      * Windows archive.
      */
     scoop?: FernCliScoopConfig;
+
+    /**
+     * Whether release builds sign artifacts with GitHub Artifact
+     * Attestations. GitHub only supports attestations on private repos
+     * with GitHub Enterprise Cloud, so on any other private repo the step
+     * fails every build leg and no release is cut.
+     *
+     * - `"auto"` (default): attest on public repos, skip on private ones.
+     *   Private repos on Enterprise Cloud should set `true`.
+     * - `true`: always attest.
+     * - `false`: never attest; drops the step and its permission.
+     */
+    githubAttestations?: FernCliGitHubAttestations;
 }
+
+export type FernCliGitHubAttestations = "auto" | boolean;
 
 export interface FernCliHomebrewConfig {
     /**
@@ -767,6 +782,15 @@ function validateDistribution(raw: unknown): FernCliDistributionConfig {
     }
     if (obj.scoop !== undefined) {
         result.scoop = validateScoop(obj.scoop);
+    }
+    if (obj.githubAttestations !== undefined) {
+        if (obj.githubAttestations !== "auto" && typeof obj.githubAttestations !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.distribution.githubAttestations: ${JSON.stringify(obj.githubAttestations)}. ` +
+                    'Expected "auto", true, or false.'
+            );
+        }
+        result.githubAttestations = obj.githubAttestations;
     }
     return result;
 }
