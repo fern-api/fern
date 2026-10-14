@@ -69,7 +69,6 @@ import terminalLink from "terminal-link";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
-import { getFernSdkGenApiEnvOverride } from "./fernSdkGenApi.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
@@ -208,6 +207,7 @@ export async function publishDocs({
     customDomains,
     apiWorkspaces,
     ossWorkspaces,
+    usesSdkConfig = false,
     context,
     preview,
     previewId,
@@ -231,6 +231,8 @@ export async function publishDocs({
     customDomains: string[];
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
+    /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
+    usesSdkConfig?: boolean;
     context: TaskContext;
     preview: boolean;
     previewId: string | undefined;
@@ -430,6 +432,7 @@ export async function publishDocs({
                 organization,
                 context,
                 snippetsConfig,
+                usesSdkConfig,
                 skipLanguages: languagesWithExistingSdkDynamicIr,
                 pool: dynamicIrWorkerPool
             });
@@ -2067,6 +2070,7 @@ async function generateLanguageSpecificDynamicIRs({
     organization,
     context,
     snippetsConfig,
+    usesSdkConfig,
     skipLanguages = new Set(),
     pool
 }: {
@@ -2075,6 +2079,7 @@ async function generateLanguageSpecificDynamicIRs({
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
+    usesSdkConfig: boolean;
     skipLanguages?: Set<string>;
     pool?: DynamicIrWorkerPool;
 }): Promise<(() => Record<string, DynamicIr>) | undefined> {
@@ -2173,7 +2178,7 @@ async function generateLanguageSpecificDynamicIRs({
                 packageName,
                 workspaceName: workspace.workspaceName,
                 otherApiWorkspaceCount: apiWorkspaces.length,
-                usesSdkGenApi: getFernSdkGenApiEnvOverride() === true
+                usesSdkConfig
             })) {
                 context.logger.warn(line);
             }
@@ -2205,19 +2210,19 @@ export function getUnknownSnippetPackageWarningLines({
     packageName,
     workspaceName,
     otherApiWorkspaceCount,
-    usesSdkGenApi
+    usesSdkConfig
 }: {
     language: string;
     packageName: string;
     workspaceName: string | undefined;
     otherApiWorkspaceCount: number;
-    usesSdkGenApi: boolean;
+    usesSdkConfig: boolean;
 }): string[] {
     const lines = [
         `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`,
         `Please make sure a generators.yml in this fern folder (checked ${workspaceName ? `${workspaceName}/` : ""}generators.yml and the other ${otherApiWorkspaceCount} API workspace(s)) has a generator that publishes a ${packageName} package.`
     ];
-    if (usesSdkGenApi) {
+    if (usesSdkConfig) {
         lines.push(
             "SDK snippets are not supported for SDKs configured in sdk-config.yml yet. The package name is only read from generators.yml, so migrated SDKs have no snippets in these docs."
         );

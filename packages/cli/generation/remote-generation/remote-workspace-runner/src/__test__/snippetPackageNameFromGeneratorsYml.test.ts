@@ -195,15 +195,15 @@ describe("unknown snippet package warning", () => {
         otherApiWorkspaceCount: 0
     };
 
-    it("keeps the generators.yml guidance and adds nothing when SDK Gen API is off", () => {
-        const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkGenApi: false });
+    it("keeps the generators.yml guidance and adds nothing when the project has no sdk-config.yml", () => {
+        const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkConfig: false });
         expect(lines).toHaveLength(2);
         expect(lines[0]).toContain("unknown package `@postman-uat/pets`");
         expect(lines[1]).toContain("generators.yml");
     });
 
-    it("says snippets are not supported for sdk-config.yml when SDK Gen API is on", () => {
-        const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkGenApi: true });
+    it("says snippets are not supported for sdk-config.yml when the project uses sdk-config.yml", () => {
+        const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkConfig: true });
         expect(lines).toHaveLength(3);
         expect(lines[2]).toContain("not supported for SDKs configured in sdk-config.yml");
     });
