@@ -13,6 +13,7 @@ const sha256 = (contents: string) => createHash("sha256").update(contents).diges
 async function createFernDirectory(files: Record<string, string>): Promise<string> {
     const root = await mkdtemp(path.join(tmpdir(), "provenance-"));
     for (const [relativePath, contents] of Object.entries(files)) {
+        // Paths are relative to fern/, so "../openapi.yaml" lands next to it, as in a real project.
         const absolutePath = path.join(root, "fern", relativePath);
         await mkdir(path.dirname(absolutePath), { recursive: true });
         await writeFile(absolutePath, contents);

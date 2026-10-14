@@ -423,12 +423,19 @@ async function startJob({
         context.logger.debug(`Appended specs tar.gz (${specsTarGzBuffer.length} bytes)`);
     }
 
-    const provenanceInputs = await computeGenerationProvenanceInputs({ generatorsConfiguration, generatorInvocation });
-    formData.append("provenance", JSON.stringify(provenanceInputs), {
-        filename: "provenance.json",
-        contentType: "application/json"
-    });
-    context.logger.debug(`Appended provenance inputs for ${provenanceInputs.specs.length} spec file(s)`);
+    try {
+        const provenanceInputs = await computeGenerationProvenanceInputs({
+            generatorsConfiguration,
+            generatorInvocation
+        });
+        formData.append("provenance", JSON.stringify(provenanceInputs), {
+            filename: "provenance.json",
+            contentType: "application/json"
+        });
+        context.logger.debug(`Appended provenance inputs for ${provenanceInputs.specs.length} spec file(s)`);
+    } catch (error) {
+        context.logger.debug(`Skipping provenance inputs: ${error instanceof Error ? error.message : String(error)}`);
+    }
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
