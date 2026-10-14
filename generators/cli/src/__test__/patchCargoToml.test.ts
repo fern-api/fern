@@ -477,6 +477,20 @@ describe("addExtraDependenciesToCargoLock", () => {
         expect(addExtraDependenciesToCargoLock(LOCK, { tokio: "1" })).toBe(LOCK);
     });
 
+    it("accepts caret-compatible requirements on the locked version", () => {
+        for (const requirement of ["0.10", "^0.10", "0.10.6", "^0.10.2"]) {
+            expect(addExtraDependenciesToCargoLock(LOCK, { sha1: requirement })).toContain(' "sha1",\n "tokio",');
+        }
+    });
+
+    it("skips requirements the locked version does not satisfy, or that it cannot check", () => {
+        for (const requirement of ["0.9", "0.11", "1", "0.10.7", ">=0.10", "~0.10", "*"]) {
+            expect(addExtraDependenciesToCargoLock(LOCK, { sha1: requirement })).toBe(LOCK);
+        }
+        expect(addExtraDependenciesToCargoLock(LOCK, { sha1: { version: "0.10", registry: "internal" } })).toBe(LOCK);
+        expect(addExtraDependenciesToCargoLock(LOCK, { sha1: { features: ["std"] } })).toBe(LOCK);
+    });
+
     it("treats a version-suffixed root entry as already listed", () => {
         const lock = LOCK.replace(' "base64",\n', ' "base64",\n "sha1 0.10.6",\n');
         expect(addExtraDependenciesToCargoLock(lock, { sha1: "0.10" })).toBe(lock);

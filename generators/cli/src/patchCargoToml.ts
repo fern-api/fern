@@ -502,6 +502,36 @@ function replaceVersion(cargoToml: string, version: string): string {
 const CARGO_LOCK_ROOT_DEPENDENCIES =
     /(\[\[package\]\]\nname = "fern-cli-sdk"\nversion = "[^"]*"\n(?:(?!\[\[package\]\])[^\n]*\n)*?dependencies = \[\n)((?: "[^"\n]*",\n)*)(\])/;
 
+/**
+ * Whether `version` satisfies a bare or `^` Cargo requirement (`"0.10"`,
+ * `"^1.2.3"`). Other operators and pre-releases return false, leaving the
+ * crate for cargo to resolve.
+ */
+function caretRequirementMatches(requirement: string, version: string): boolean {
+    const req = /^\^?(\d+)(?:\.(\d+))?(?:\.(\d+))?$/.exec(requirement.trim());
+    const ver = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
+    if (req == null || ver == null) {
+        return false;
+    }
+    const [major, minor, patch] = [req[1], req[2], req[3]].map((part) => (part == null ? undefined : Number(part)));
+    const [vMajor, vMinor, vPatch] = [ver[1], ver[2], ver[3]].map(Number);
+    if (major == null || vMajor == null || vMinor == null || vPatch == null) {
+        return false;
+    }
+    const atLeast =
+        vMajor !== major ? vMajor > major : vMinor !== (minor ?? 0) ? vMinor > (minor ?? 0) : vPatch >= (patch ?? 0);
+    if (!atLeast || vMajor !== major) {
+        return false;
+    }
+    if (major > 0 || minor == null) {
+        return true;
+    }
+    if (minor > 0 || patch == null) {
+        return vMinor === minor;
+    }
+    return vMinor === 0 && vPatch === patch;
+}
+
 /** Crate name of a lockfile dependency line: ` "tokio 1.0.0",` → `tokio`. */
 function lockDependencyName(line: string): string {
     return line.trim().replace(/^"/, "").replace(/",$/, "").split(" ")[0] ?? "";
@@ -512,7 +542,8 @@ function lockDependencyName(line: string): string {
  * Cargo.lock when the shipped lockfile already resolves the crate (e.g.
  * `sha1`, pulled in transitively), so a regenerated lockfile keeps it and
  * `cargo build --locked` accepts the output. Crates the lockfile does not
- * contain exactly once, plus `path`/`git`/`optional` ones, are left for
+ * contain exactly once at a version matching the requirement, plus
+ * `path`/`git`/`registry`/`optional` ones, are left for
  * the first `cargo build` to resolve, as is a root entry without a
  * `dependencies` list (the template always has one).
  */
@@ -531,12 +562,18 @@ export function addExtraDependenciesToCargoLock(
     const listed = new Set(lines.map(lockDependencyName));
     for (const [name, value] of Object.entries(extraDependencies)) {
         const spec: CargoDependencySpec = typeof value === "string" ? { version: value } : value;
-        if (spec.path != null || spec.git != null || spec.optional === true) {
+        if (spec.path != null || spec.git != null || spec.registry != null || spec.optional === true) {
             continue;
         }
         const crate = spec.package ?? name;
-        const packageEntries = cargoLock.split(`[[package]]\nname = "${crate}"\n`).length - 1;
-        if (packageEntries !== 1 || listed.has(crate)) {
+        const lockedVersions = lockPackageVersions(cargoLock, crate);
+        const lockedVersion = lockedVersions.length === 1 ? lockedVersions[0] : undefined;
+        if (
+            lockedVersion == null ||
+            spec.version == null ||
+            !caretRequirementMatches(spec.version, lockedVersion) ||
+            listed.has(crate)
+        ) {
             continue;
         }
         const line = ` "${crate}",`;
