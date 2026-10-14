@@ -17,6 +17,7 @@ import { editLegacyGeneratorsConfiguration } from "./editLegacyGeneratorsConfigu
 import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
 import { type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
 import { mergeSdkConfig } from "./mergeSdkConfig.js";
+import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import {
     identifySourceDerivedApiFields,
     resolveMigrationPathParameterStyle,
@@ -130,9 +131,17 @@ export async function sdkMigrate({
         selections
     });
 
+    const docsMigration = await migrateDocsConfiguration({
+        docsPath: project.docsWorkspaces?.absoluteFilepathToDocsConfig,
+        workspaceName: workspace.workspaceName,
+        isOnlyApiWorkspace: project.apiWorkspaces.length === 1,
+        sourceSpecs
+    });
+
     if (args.dryRun) {
         printDryRun({
             cliContext,
+            docsPaths: docsMigration.edits.map((edit) => edit.path),
             existingSdkConfig,
             legacyGeneratorsPath,
             outputPath,
@@ -154,7 +163,14 @@ export async function sdkMigrate({
                 contents: sdkConfigContents,
                 mode: await fileMode(outputPath),
                 path: outputPath
-            }
+            },
+            ...(await Promise.all(
+                docsMigration.edits.map(async (edit) => ({
+                    contents: edit.contents,
+                    mode: await fileMode(edit.path),
+                    path: edit.path
+                }))
+            ))
         ],
         remove: sourceGeneratorsPath === legacyGeneratorsPath ? [] : [sourceGeneratorsPath]
     });
@@ -163,8 +179,14 @@ export async function sdkMigrate({
     if (sourceGeneratorsPath !== legacyGeneratorsPath) {
         cliContext.stderr.info(`Renamed ${sourceGeneratorsPath} to ${legacyGeneratorsPath}`);
     }
+    if (docsMigration.updatedSections > 0) {
+        cliContext.stderr.info(
+            `Added specs to ${docsMigration.updatedSections} API reference section${docsMigration.updatedSections === 1 ? "" : "s"} in ${docsMigration.edits.map((edit) => edit.path).join(", ")}`
+        );
+    }
     printGeneratorVersionWarning(cliContext, group);
     printRollbackInstructions({
+        docsPaths: docsMigration.edits.map((edit) => edit.path),
         cliContext,
         legacyGeneratorsPath,
         outputPath,
@@ -237,6 +259,7 @@ function displayPathFromWorkspace(workspaceDirectory: AbsoluteFilePath, outputPa
 
 function printDryRun({
     cliContext,
+    docsPaths,
     existingSdkConfig,
     legacyGeneratorsPath,
     outputPath,
@@ -244,6 +267,7 @@ function printDryRun({
     sourceGeneratorsPath
 }: {
     cliContext: CliContext;
+    docsPaths: AbsoluteFilePath[];
     existingSdkConfig: string | undefined;
     legacyGeneratorsPath: AbsoluteFilePath;
     outputPath: AbsoluteFilePath;
@@ -255,6 +279,9 @@ function printDryRun({
         cliContext.stderr.info(`Would rename ${sourceGeneratorsPath} to ${legacyGeneratorsPath}.`);
     }
     cliContext.stderr.info(`${existingSdkConfig == null ? "Would create" : "Would update"} ${outputPath}.`);
+    for (const docsPath of docsPaths) {
+        cliContext.stderr.info(`Would add API specs to ${docsPath}.`);
+    }
     for (const selection of selections) {
         cliContext.stderr.info(
             selection.isEntireGroup
@@ -266,12 +293,14 @@ function printDryRun({
 
 function printRollbackInstructions({
     cliContext,
+    docsPaths,
     legacyGeneratorsPath,
     outputPath,
     rollbackGeneratorsPath,
     selections
 }: {
     cliContext: CliContext;
+    docsPaths: AbsoluteFilePath[];
     legacyGeneratorsPath: AbsoluteFilePath;
     outputPath: AbsoluteFilePath;
     rollbackGeneratorsPath: AbsoluteFilePath;
@@ -292,6 +321,11 @@ function printRollbackInstructions({
     cliContext.stderr.info(
         "3. Remove any active empty groups placeholder, then uncomment the preserved groups, generator invocations, default-group, and aliases."
     );
+    if (docsPaths.length > 0) {
+        cliContext.stderr.info(
+            `4. Optional: remove the specs added to API reference sections in ${docsPaths.join(", ")}. Docs then read the API from generators.yml again.`
+        );
+    }
 }
 
 function printDiagnostics(cliContext: CliContext, diagnostics: readonly FernConfigMappingDiagnostic[]): void {

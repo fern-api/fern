@@ -11,14 +11,13 @@ const CLI_ENV = { FERN_NO_VERSION_REDIRECTION: "true" };
 const TEST_TIMEOUT = 30_000;
 
 describe("fern sdk migrate", { timeout: TEST_TIMEOUT }, () => {
-    it("migrates one language, preserves rollback YAML, and leaves docs.yml unchanged", async ({ signal }) => {
+    it("migrates one language, preserves rollback YAML, and adds specs to docs.yml", async ({ signal }) => {
         const temporaryDirectory = await createFixture();
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
         const generators = join(directory, RelativeFilePath.of("fern/generators.yml"));
         const legacy = join(directory, RelativeFilePath.of("fern/generators.legacy.yml"));
         const sdkConfig = join(directory, RelativeFilePath.of("fern/sdk-config.yml"));
         const docs = join(directory, RelativeFilePath.of("fern/docs.yml"));
-        const originalDocs = await readFile(docs, "utf8");
 
         const command = [
             "sdk",
@@ -54,7 +53,12 @@ describe("fern sdk migrate", { timeout: TEST_TIMEOUT }, () => {
         };
         expect(migratedSdkConfig.sdkName).toBe("fern");
         expect(migratedSdkConfig.targets).toMatchObject([{ language: "typescript" }]);
-        expect(await readFile(docs, "utf8")).toBe(originalDocs);
+        const migratedDocs = yaml.load(await readFile(docs, "utf8")) as {
+            navigation: Array<{ api: string; specs?: Array<{ type: string; path: string }> }>;
+        };
+        expect(migratedDocs.navigation[0]?.specs).toEqual([
+            expect.objectContaining({ type: "openapi", path: expect.stringMatching(/^\.\//) })
+        ]);
         expect(result.stderr).toContain("FERN_GENERATOR_VERSION_NOT_PRESERVED");
         expect(result.stderr).toContain("Rollback instructions:");
 
