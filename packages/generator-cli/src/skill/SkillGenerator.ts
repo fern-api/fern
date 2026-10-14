@@ -1,3 +1,4 @@
+import { template } from "es-toolkit/compat";
 import type fs from "fs";
 
 import { FernGeneratorCli } from "../configuration/sdk/index.js";
@@ -77,6 +78,7 @@ export class SkillGenerator {
         }
         await this.writeWhenToUse({ writer });
         await this.writeInstallation({ writer });
+        await this.writeCustomSections({ writer });
         await this.writeFeatures({ writer });
         await this.writeResources({ writer });
         await this.writeRules({ writer });
@@ -114,16 +116,39 @@ export class SkillGenerator {
     }
 
     private async writeInstallation({ writer }: { writer: Writer }): Promise<void> {
-        if (this.readmeConfig.language.publishInfo == null) {
+        const requirements = this.readmeConfig.requirements ?? [];
+        if (this.readmeConfig.language.publishInfo == null && requirements.length === 0) {
             return;
         }
         await writer.writeLine("## Installation");
         await writer.writeLine();
-        if (this.readmeConfig.requirements != null && this.readmeConfig.requirements.length > 0) {
-            await writer.writeLine(`Requires ${this.readmeConfig.requirements.join(", ")}.`);
+        if (requirements.length > 0) {
+            await writer.writeLine(`Requires ${requirements.join(", ")}.`);
             await writer.writeLine();
         }
-        await writeInstallation({ writer, language: this.readmeConfig.language });
+        if (this.readmeConfig.language.publishInfo != null) {
+            await writeInstallation({ writer, language: this.readmeConfig.language });
+        }
+    }
+
+    private async writeCustomSections({ writer }: { writer: Writer }): Promise<void> {
+        const languageType = this.readmeConfig.language.type.toLowerCase();
+        for (const customSection of this.readmeConfig.customSections ?? []) {
+            if (customSection.language.toLowerCase() !== languageType) {
+                continue;
+            }
+            await writer.writeLine(`## ${customSection.name}`);
+            await writer.writeLine();
+            await writer.writeLine(applyTemplateOptions(customSection.content, this.getCustomSectionTemplateOptions()));
+            await writer.writeLine();
+        }
+    }
+
+    private getCustomSectionTemplateOptions(): Record<string, string> {
+        return {
+            apiName: this.apiName,
+            ...this.readmeConfig.language.publishInfo
+        };
     }
 
     private async writeFeatures({ writer }: { writer: Writer }): Promise<void> {
@@ -172,10 +197,11 @@ export class SkillGenerator {
     private async writeResources({ writer }: { writer: Writer }): Promise<void> {
         const resources: string[] = [];
         if (this.readmeConfig.referenceMarkdownPath != null) {
+            // SKILL.md lives three directories below the SDK root (.agents/skills/<name>/SKILL.md).
             const referenceLink =
                 this.readmeConfig.remote?.repoUrl != null
                     ? `${this.readmeConfig.remote.repoUrl}/blob/HEAD/${this.readmeConfig.referenceMarkdownPath}`
-                    : this.readmeConfig.referenceMarkdownPath;
+                    : `../../../${this.readmeConfig.referenceMarkdownPath.replace(/^\.?\//, "")}`;
             resources.push(
                 `Full list of clients, methods, parameters and return types for this SDK: [${this.readmeConfig.referenceMarkdownPath}](${referenceLink}). Read it before guessing a method name.`
             );
@@ -236,6 +262,14 @@ export class SkillGenerator {
  * The frontmatter `description` is a YAML folded block scalar, which takes its content literally
  * (`:`/`#` are fine) but must not contain line breaks or control characters.
  */
+function applyTemplateOptions(content: string, options: Record<string, string>): string {
+    try {
+        return template(content, { interpolate: /{{([^}]+)}}/g })(options);
+    } catch {
+        return content;
+    }
+}
+
 function toSingleLine(s: string): string {
     const withoutControlCharacters = Array.from(s)
         .filter((character) => {
