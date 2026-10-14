@@ -449,7 +449,12 @@ async function prepareSdkConfigGenerations({
                     ? getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex })
                     : new Set(loaded.config.targets.map((_, index) => index));
             const selectedTargets = loaded.config.targets
-                .map((target, index) => ({ target, payload: loaded.payload.targets[index], index }))
+                .map((target, index) => ({
+                    target,
+                    payload: loaded.payload.targets[index],
+                    githubNpmToken: loaded.githubNpmTokens[index],
+                    index
+                }))
                 .filter(({ index }) => selectedTargetIndexes.has(index));
             if (sdkConfigPath != null && generatorName != null && selectedTargets.length === 0) {
                 return cliContext.failAndThrow(
@@ -497,7 +502,7 @@ async function prepareSdkConfigGenerations({
                         organization: project.config.organization,
                         workspaceName: candidate.owner?.workspaceName,
                         cliVersion: cliContext.environment.packageVersion,
-                        npmToken: loaded.githubNpmTokens[selectedCliTargets[0]?.index ?? -1]
+                        npmToken: selectedCliTargets[0]?.githubNpmToken
                     })
                 );
                 prepared.push({

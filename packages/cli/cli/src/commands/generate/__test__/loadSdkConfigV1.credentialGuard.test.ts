@@ -250,6 +250,10 @@ describe("loadSdkConfigV1 credential guard", () => {
                         output: { delivery: "files", publish }
                     }
                 ]
+            },
+            {
+                output: { ...github, publish },
+                targets: [{ language: "cli", package: { packageName: "@acme/cli" }, output: github }]
             }
         ]) {
             await expect(loadSdkConfigV1(await writeSdkConfig(temporaryDirectories, document))).rejects.toThrow(

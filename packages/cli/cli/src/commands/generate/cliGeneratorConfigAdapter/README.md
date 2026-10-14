@@ -82,8 +82,15 @@ what is published (`isPackagePrivate`, `version`, `shouldGeneratePublishWorkflow
 `publishToJsr` warns.
 
 With npm publication, `package.packageName` is the npm package name, such as `@acme/cli`. It is also the crate name
-(`packageIdentity.name`) only if it is a valid crate name (a letter, then letters, digits, `-` or `_`, at most 64
-characters); otherwise the generator names the crate and a debug note says so. Without npm publication,
+(`packageIdentity.name`) if it is a valid crate name (a letter, then letters, digits, `-` or `_`, at most 64
+characters). Otherwise the crate is named from the first of these that is a valid crate name, and a debug note says
+which:
+
+1. The binary name, computed as fern-cli-generator does (kebab-cased): `generation.language.cli.binaryName`, or
+   without it the spec's `info.title` when there is one spec. With several specs the binary name is not computed.
+2. The kebab-cased npm name: `@acme/cli` becomes `acme-cli`.
+
+If neither is valid (for example `@1password/cli`), the generator names the crate. Without npm publication,
 `package.packageName` is the crate name.
 
 ## How fields are treated

@@ -123,16 +123,20 @@ function generatorConfig(context: RuleContext, ir: SdkConfigIrV1): Record<string
 
 function packageIdentity(context: RuleContext, ir: SdkConfigIrV1): Record<string, unknown> {
     const pkg = ir.package;
-    const npmNameOnly = npmPublish(ir.output) != null && pkg.packageName != null && !CRATE_NAME.test(pkg.packageName);
-    if (npmNameOnly) {
+    const npmName = npmPublish(ir.output) != null && pkg.packageName != null && !CRATE_NAME.test(pkg.packageName);
+    const crate = npmName && pkg.packageName != null ? crateNameForNpmPackage(context, pkg.packageName) : undefined;
+    if (npmName) {
         context.output.hints.push(
-            `package.packageName "${pkg.packageName}" is the npm package name and not a valid crate name, so the generator names the crate.`
+            crate != null
+                ? `package.packageName "${pkg.packageName}" is the npm package name and not a valid crate name, so the crate is named "${crate.name}" from ${crate.source}.`
+                : `package.packageName "${pkg.packageName}" is the npm package name and no valid crate name derives from it, so the generator names the crate.`
         );
     }
     const identity: Record<string, unknown> = {};
     for (const [field, key] of IDENTITY_FIELDS) {
-        if (pkg[field] != null && !(npmNameOnly && field === "packageName")) {
-            identity[key] = pkg[field];
+        const value = npmName && field === "packageName" ? crate?.name : pkg[field];
+        if (value != null) {
+            identity[key] = value;
         }
     }
     if (pkg.authors != null && pkg.authors.length > 0) {
@@ -144,6 +148,42 @@ function packageIdentity(context: RuleContext, ir: SdkConfigIrV1): Record<string
         identity.license = spdxLicense(pkg.license.type);
     }
     return identity;
+}
+
+/**
+ * The crate name when package.packageName is an npm name such as `@acme/cli`: the binary name, as fern-cli-generator
+ * derives it (its `deriveBinaryName`), when that is computable here; otherwise the kebab-cased npm name.
+ */
+function crateNameForNpmPackage(
+    context: RuleContext,
+    packageName: string
+): { name: string; source: string } | undefined {
+    const { ir, input } = context;
+    const binaryName = ir.generation.language?.cli?.binaryName;
+    const title = ir.source.specs.length === 1 ? input.specFacts[0]?.title : undefined;
+    const candidates: Array<[string | undefined, string]> = [
+        binaryName != null && binaryName.trim() !== ""
+            ? [binaryName, "generation.language.cli.binaryName"]
+            : [title, "the spec's info.title, which also names the binary"],
+        [packageName, "the npm package name"]
+    ];
+    for (const [raw, source] of candidates) {
+        const name = raw != null ? toKebabCase(raw) : undefined;
+        if (name != null && CRATE_NAME.test(name)) {
+            return { name, source };
+        }
+    }
+    return undefined;
+}
+
+/** fern-cli-generator's `toKebabCase`, which it applies to the binary name. */
+function toKebabCase(input: string): string {
+    return input
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .replace(/-{2,}/g, "-");
 }
 
 function licenseMetadata(

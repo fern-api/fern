@@ -326,7 +326,7 @@ describe("prepareCliTargetWorkspace", () => {
                 tokenEnvironmentVariable: variable,
                 shouldGeneratePublishWorkflow: true
             });
-            expect(generator?.config).toBeUndefined();
+            expect(generator?.config).toEqual({ packageIdentity: { name: "acme" } });
         } finally {
             await prepared.cleanup();
         }

@@ -2,6 +2,7 @@
     The `cli` target in `sdk-config.yml` can now publish to npm. With GitHub delivery, `output.publish` with
     `registry: npm` is written as an npm output for `fernapi/fern-cli-generator`: `trustedPublishing: true`
     publishes with OIDC, and otherwise `token: ${NAME}` names the token variable (`NPM_TOKEN` by default).
-    `package.packageName` is then the npm package name, and is used as the crate name only when it is a valid
-    crate name. Publish fields the CLI generator cannot honor warn or fail instead of being rejected as a block.
+    `package.packageName` is then the npm package name. When it is not a valid crate name (for example
+    `@acme/cli`), the crate is named from the CLI binary name, or else from the kebab-cased npm name
+    (`acme-cli`). Publish fields the CLI generator cannot honor warn or fail instead of being rejected as a block.
   type: feat

@@ -67,7 +67,7 @@ export async function loadSpecFacts({
     return { facts: extractSpecFacts(document), diagnostics: [] };
 }
 
-/** Reads security schemes, declared headers, POST operation properties and server URLs. Pure. */
+/** Reads security schemes, declared headers, POST operation properties, server URLs and the title. Pure. */
 export function extractSpecFacts(spec: Json): SpecFacts {
     const resolver = new RefResolver(spec);
     const securitySchemes = collectSecuritySchemes(spec, resolver);
@@ -83,7 +83,8 @@ export function extractSpecFacts(spec: Json): SpecFacts {
         ),
         schemeKeys: [...new Set(headerApiKeys.map(([key]) => key.toLowerCase()))].sort(),
         postOperations: collectPostOperations(spec, resolver),
-        serverUrls: collectServerUrls(spec)
+        serverUrls: collectServerUrls(spec),
+        ...(isObject(spec.info) && typeof spec.info.title === "string" ? { title: spec.info.title } : {})
     };
 }
 

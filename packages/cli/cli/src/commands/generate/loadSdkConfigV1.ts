@@ -61,7 +61,11 @@ export async function loadSdkConfigV1(
         const { sanitizedInput, credentials } = sanitizeSdkConfigPublishCredentials(input, isPreview);
         const githubNpmTokens = extractSdkConfigGithubNpmTokens(input);
         const { document, parsed } = validateAndParseSdkConfigV1(sanitizedInput);
-        if (document.targets.length !== credentials.length || parsed.targets.length !== credentials.length) {
+        if (
+            document.targets.length !== credentials.length ||
+            parsed.targets.length !== credentials.length ||
+            githubNpmTokens.length !== credentials.length
+        ) {
             throw new Error("SDK Config v1 target count changed during validation");
         }
         const targetIndexes = getTargetIndexes(parsed, selection.targetNames);

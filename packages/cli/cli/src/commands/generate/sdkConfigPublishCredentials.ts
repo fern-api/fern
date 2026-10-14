@@ -18,11 +18,7 @@ export function sanitizeSdkConfigPublishCredentials(
     if (!isRecord(input) || !Array.isArray(input.targets)) {
         return { sanitizedInput: input, credentials: [] };
     }
-    const inheritingTargets = input.targets.filter((target) => !isRecord(target) || target.output == null);
-    const rootOutput = sanitizeOutput(
-        input.output,
-        inheritingTargets.length > 0 && inheritingTargets.every(isCliTarget)
-    );
+    const rootOutput = sanitizeOutput(input.output, isRootOutputInheritedOnlyByCliTargets(input.targets));
     const sanitizedTargets = input.targets.map((target) => {
         if (!isRecord(target)) {
             return { target, credential: undefined };
@@ -68,6 +64,12 @@ export function extractSdkConfigGithubNpmTokens(input: unknown): Array<string | 
 
 function isCliTarget(target: unknown): boolean {
     return isRecord(target) && target.language === "cli";
+}
+
+function isRootOutputInheritedOnlyByCliTargets(targets: unknown[]): boolean {
+    const inheritingTargets = targets.filter((target) => !isRecord(target) || target.output == null);
+    const isInheritedAtAll = inheritingTargets.length > 0;
+    return isInheritedAtAll && inheritingTargets.every(isCliTarget);
 }
 
 // The cli target publishes to npm from its generated GitHub workflow, which supports trusted publishing; direct
