@@ -39,7 +39,7 @@ import {
     type FernSdkGenApiSourceArchive,
     validateFernSdkGenApiSourceCompatibility
 } from "./fernSdkGenApiSourceArchive.js";
-import { replaceEnvVariablesPreservingWorkflowApiKey } from "./githubWorkflowApiKey.js";
+import { replaceEnvVariablesPreservingWorkflowApiKey, substituteWorkflowApiKey } from "./githubWorkflowApiKey.js";
 import type { MapFernGroupToSdkConfig } from "./prepareFernSdkGenApiSdkConfigPayload.js";
 import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
@@ -464,18 +464,24 @@ export function prepareFernSdkGenApiRoutes({
 }> {
     return generators.map((generatorInvocation, generatorIndex) => {
         let resolved = generatorInvocation;
+        const substitution = {
+            onError: (error?: string) => {
+                if (!isPreview && requireEnvVars) {
+                    throw error;
+                }
+            }
+        };
+        const substitutionOptions = { substituteAsEmpty: isPreview };
+        // sdk-gen-api gets the NuGet/RubyGems `api-key` as a secret name. Every route that falls back
+        // to Fiddle gets it substituted, as it always has.
+        const forFiddle = (invocation: generatorsYml.GeneratorInvocation) =>
+            substituteWorkflowApiKey(invocation, substitution, substitutionOptions);
         const sdkConfigTargetIndex = getSdkConfigTargetIndex(generatorInvocation, generatorIndex);
         try {
             resolved = replaceEnvVariablesPreservingWorkflowApiKey(
                 generatorInvocation,
-                {
-                    onError: (error) => {
-                        if (!isPreview && requireEnvVars) {
-                            throw error;
-                        }
-                    }
-                },
-                { substituteAsEmpty: isPreview }
+                substitution,
+                substitutionOptions
             );
             // Previews download files instead of publishing, so only real publishes are rejected.
             if (!isPreview && sdkConfigV1 == null && isDirectRubyGemsOutputMode(resolved.outputMode)) {
@@ -541,7 +547,7 @@ export function prepareFernSdkGenApiRoutes({
                         code: CliError.Code.ConfigError
                     });
                 }
-                return { generatorInvocation: resolved, route: undefined, error: undefined };
+                return { generatorInvocation: forFiddle(resolved), route: undefined, error: undefined };
             }
             let route: GenerationConfigRoute | undefined;
             if (configuredTarget != null && configuredTarget.generatorVersion == null) {
@@ -582,7 +588,7 @@ export function prepareFernSdkGenApiRoutes({
                 } catch (error) {
                     if (route.configKind === "legacy-fern") {
                         return {
-                            generatorInvocation: resolved,
+                            generatorInvocation: forFiddle(resolved),
                             route: undefined,
                             error: undefined,
                             fallbackReason: extractErrorMessage(error)
@@ -601,7 +607,7 @@ export function prepareFernSdkGenApiRoutes({
             if (route != null && unsupportedOutput != null) {
                 if (route.configKind === "legacy-fern") {
                     return {
-                        generatorInvocation: resolved,
+                        generatorInvocation: forFiddle(resolved),
                         route: undefined,
                         error: undefined,
                         fallbackReason: unsupportedOutput

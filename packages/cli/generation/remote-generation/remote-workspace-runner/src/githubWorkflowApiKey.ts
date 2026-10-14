@@ -73,10 +73,11 @@ function withApiKey(
  * would replace the one thing sdk-gen-api needs with a key it must never receive. So the expression
  * is held back across substitution and restored afterwards.
  *
- * Nothing downstream loses a value it had before. Fern's own generated C# workflow reads `api-key`
- * only to choose between trusted publishing and its hardcoded `NUGET_API_TOKEN` secret, and `OIDC`
- * carries no `${...}` for substitution to touch, so an expression resolved to any value selected
- * the same branch that the preserved expression now selects.
+ * Only sdk-gen-api gets the expression. Any generator that falls back to Fiddle is handed the
+ * substituted value again by `substituteWorkflowApiKey`, so the legacy route behaves as before.
+ * Fern's generated C# workflow reads `api-key` only to choose between trusted publishing and its
+ * `NUGET_API_TOKEN` secret, unless the expression survives to `getGeneratorConfig`, which would
+ * turn it into the workflow's secret name. That is why the legacy route must not see it.
  */
 export function replaceEnvVariablesPreservingWorkflowApiKey(
     invocation: generatorsYml.GeneratorInvocation,
@@ -90,4 +91,23 @@ export function replaceEnvVariablesPreservingWorkflowApiKey(
     const held = withGithubPublishInfo(invocation, (publishInfo) => withApiKey(publishInfo, undefined));
     const resolved = replaceEnvVariables(held, context, options);
     return withGithubPublishInfo(resolved, (publishInfo) => withApiKey(publishInfo, apiKey));
+}
+
+/**
+ * The counterpart for generation that does not go through sdk-gen-api. Fiddle has no use for the
+ * secret name and reads `api-key` the way it always did, so its invocation gets the substituted
+ * value. Without this, a legacy C# run would start naming `MY_NUGET_KEY` as its workflow secret
+ * instead of falling back to `NUGET_API_TOKEN`, and a RubyGems run would hand Fiddle a `${...}`.
+ */
+export function substituteWorkflowApiKey(
+    invocation: generatorsYml.GeneratorInvocation,
+    context: { onError: (message?: string) => unknown | void | never },
+    options: { substituteAsEmpty?: boolean } = {}
+): generatorsYml.GeneratorInvocation {
+    const apiKey = workflowApiKeyExpression(invocation);
+    if (apiKey == null) {
+        return invocation;
+    }
+    const substituted = replaceEnvVariables(apiKey, context, options);
+    return withGithubPublishInfo(invocation, (publishInfo) => withApiKey(publishInfo, substituted));
 }
