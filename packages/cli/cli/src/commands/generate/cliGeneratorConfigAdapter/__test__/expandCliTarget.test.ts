@@ -13,7 +13,8 @@ async function expandDocument(document: Record<string, unknown>) {
     const folder = await tempFolder({ "sdk-config.yml": yaml(document) });
     try {
         const loaded = await loadSdkConfigV1(join(folder.path, "sdk-config.yml"));
-        return expandCliTarget(loaded.config, CONTEXT);
+        const cliIndex = loaded.config.targets.findIndex((target) => target.language === "cli");
+        return expandCliTarget(loaded.config, { ...CONTEXT, npmToken: loaded.githubNpmTokens[cliIndex] });
     } finally {
         await folder.remove();
     }
@@ -118,5 +119,72 @@ describe("expandCliTarget", () => {
             return copy;
         };
         expect(comparable(ir)).toEqual(comparable(hosted));
+    });
+
+    describe("npm publication", () => {
+        function npmTarget(publish: Record<string, unknown>, delivery: Record<string, unknown> = GITHUB_DELIVERY) {
+            return {
+                ...MINIMAL,
+                targets: [{ language: "cli", package: { packageName: "@acme/cli" }, output: { ...delivery, publish } }]
+            };
+        }
+        const GITHUB_DELIVERY = { delivery: "github", github: { repository: "acme/cli", mode: "release" } };
+
+        it("carries a token reference into the IR as tokenEnvironmentVariable", async () => {
+            const result = await expandDocument(npmTarget({ registry: "npm", token: "${ACME_NPM_TOKEN}" }));
+            expect(result.diagnostics).toEqual([]);
+            expect(result.ir?.output.publish).toEqual({ registry: "npm", tokenEnvironmentVariable: "ACME_NPM_TOKEN" });
+        });
+
+        it("leaves tokenEnvironmentVariable unset without a token", async () => {
+            const result = await expandDocument(npmTarget({ registry: "npm", trustedPublishing: true }));
+            expect(result.ir?.output.publish).toEqual({ registry: "npm", trustedPublishing: true });
+        });
+
+        it("rejects a literal token without echoing it", async () => {
+            const result = await expandDocument(npmTarget({ registry: "npm", token: "npm_literal_canary" }));
+            expect(codes(result.diagnostics)).toEqual(["error CLI_TARGET_NPM_PUBLISH output.publish.token"]);
+            expect(JSON.stringify(result.diagnostics)).not.toContain("npm_literal_canary");
+            expect(result.ir).toBeUndefined();
+        });
+
+        it("rejects a token with trustedPublishing", async () => {
+            const result = await expandDocument(
+                npmTarget({ registry: "npm", trustedPublishing: true, token: "${NPM_TOKEN}" })
+            );
+            expect(codes(result.diagnostics)).toEqual(["error CLI_TARGET_NPM_PUBLISH output.publish.token"]);
+        });
+
+        async function expandWithOutput(output: Record<string, unknown>) {
+            const folder = await tempFolder({ "sdk-config.yml": yaml(npmTarget({ registry: "npm" })) });
+            try {
+                const { config } = await loadSdkConfigV1(join(folder.path, "sdk-config.yml"));
+                const targets = config.targets.map((target) => ({ ...target, output }));
+                return expandCliTarget({ ...config, targets } as typeof config, {
+                    ...CONTEXT,
+                    npmToken: "${NPM_TOKEN}"
+                });
+            } finally {
+                await folder.remove();
+            }
+        }
+
+        it("is rejected by the loader without GitHub delivery", async () => {
+            await expect(expandDocument(npmTarget({ registry: "npm" }, { delivery: "files" }))).rejects.toThrow(
+                "requires output.delivery"
+            );
+        });
+
+        it("returns an expansion error, not a crash, for publication without GitHub delivery", async () => {
+            const result = await expandWithOutput({ delivery: "files", publish: { registry: "npm" } });
+            expect(codes(result.diagnostics)).toEqual(["error CLI_TARGET_EXPANSION targets"]);
+            expect(result.diagnostics[0]?.message).toContain('requires output.delivery \\"github\\"');
+        });
+
+        it("returns an expansion error, not a crash, for another registry", async () => {
+            const result = await expandWithOutput({ ...GITHUB_DELIVERY, publish: { registry: "crates" } });
+            expect(codes(result.diagnostics)).toEqual(["error CLI_TARGET_EXPANSION targets"]);
+            expect(result.diagnostics[0]?.message).toContain('registry \\"crates\\" is not supported');
+        });
     });
 });

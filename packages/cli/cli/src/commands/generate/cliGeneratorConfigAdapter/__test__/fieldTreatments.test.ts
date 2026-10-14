@@ -65,9 +65,45 @@ describe("local overrides", () => {
         ["api.auth.endpointSecurity", "Map"],
         ["target.generatorVersion", "Map"],
         ["target.sdkVersion", "Ignore"],
-        ["target.apiName", "Ignore"]
+        ["target.apiName", "Ignore"],
+        ["output.publish.registry", "Map"],
+        ["output.publish.trustedPublishing", "Map"],
+        ["output.publish.tokenEnvironmentVariable", "Map"],
+        ["output.publish.url", "Map"],
+        ["output.publish.releaseBranch", "Warn"],
+        ["output.publish.tolerateRepublish", "Warn"],
+        ["output.publish.publishToJsr", "Warn"],
+        ["output.publish.isPackagePrivate", "Reject"],
+        ["output.publish.version", "Reject"],
+        ["output.publish.shouldGeneratePublishWorkflow", "Reject"],
+        ["output.publish.credentialsRef", "Reject"],
+        ["output.publish.credentials.token", "Reject"]
     ])("treats %s as %s", (path, treatment) => {
         expect(FIELD_TREATMENTS[path]?.treatment).toBe(treatment);
+    });
+
+    it("rejects every publish field of the other registries", () => {
+        const npmFields = new Set([
+            "registry",
+            "trustedPublishing",
+            "tokenEnvironmentVariable",
+            "url",
+            "releaseBranch",
+            "tolerateRepublish",
+            "publishToJsr",
+            "isPackagePrivate",
+            "version",
+            "shouldGeneratePublishWorkflow",
+            "credentialsRef"
+        ]);
+        const others = Object.entries(FIELD_TREATMENTS).filter(
+            ([path]) =>
+                path.startsWith("output.publish.") &&
+                !path.startsWith("output.publish.credentials.") &&
+                !npmFields.has(path.slice("output.publish.".length))
+        );
+        expect(others.length).toBeGreaterThan(0);
+        expect(others.filter(([, entry]) => entry.treatment !== "Reject")).toEqual([]);
     });
 });
 

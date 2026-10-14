@@ -496,7 +496,8 @@ async function prepareSdkConfigGenerations({
                         sourceRoot,
                         organization: project.config.organization,
                         workspaceName: candidate.owner?.workspaceName,
-                        cliVersion: cliContext.environment.packageVersion
+                        cliVersion: cliContext.environment.packageVersion,
+                        npmToken: loaded.githubNpmTokens[selectedCliTargets[0]?.index ?? -1]
                     })
                 );
                 prepared.push({

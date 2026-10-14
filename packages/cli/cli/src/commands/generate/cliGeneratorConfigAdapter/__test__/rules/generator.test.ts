@@ -170,19 +170,6 @@ describe("generator rule", () => {
         expect(JSON.stringify(result.generatorsYml)).not.toMatch(/HOMEBREW_TAP_TOKEN|SCOOP_BUCKET_TOKEN/);
     });
 
-    it("rejects CLI npm publication, which the translation does not write yet", () => {
-        const result = map({
-            target: GITHUB_TARGET,
-            package: { packageName: "@acme/cli" },
-            output: {
-                delivery: "github",
-                github: { repository: "acme/cli", mode: "release" },
-                publish: { registry: "npm" }
-            }
-        });
-        expect(codes(result.diagnostics)).toContain("error CLI_TARGET_UNSUPPORTED_FIELD output.publish.registry");
-    });
-
     it("writes local-file-system output at output.path", () => {
         expect(generator(map({ output: { delivery: "files", path: "./sdks/cli" } })).output).toEqual({
             location: "local-file-system",
@@ -219,5 +206,123 @@ describe("generator rule", () => {
 
     it("produces no errors for a minimal target", () => {
         expect(errorCodes(map().diagnostics)).toEqual([]);
+    });
+});
+
+describe("generator rule: npm publication", () => {
+    const GITHUB = { repository: "acme/cli", mode: "release" };
+
+    function publish(publishBlock: Record<string, unknown>, packageName = "@acme/cli") {
+        return map({
+            target: GITHUB_TARGET,
+            package: { packageName },
+            output: { delivery: "github", github: GITHUB, publish: { registry: "npm", ...publishBlock } }
+        });
+    }
+
+    it("writes an npm output block next to github, with ${NPM_TOKEN} by default", () => {
+        const result = publish({});
+        expect(errorCodes(result.diagnostics)).toEqual([]);
+        expect(generator(result)).toMatchObject({
+            output: { location: "npm", "package-name": "@acme/cli", token: "${NPM_TOKEN}" },
+            github: GITHUB
+        });
+    });
+
+    it("writes the token environment variable as ${NAME}", () => {
+        expect(generator(publish({ tokenEnvironmentVariable: "ACME_NPM_TOKEN" })).output).toEqual({
+            location: "npm",
+            "package-name": "@acme/cli",
+            token: "${ACME_NPM_TOKEN}"
+        });
+    });
+
+    it("writes token: OIDC for trusted publishing", () => {
+        expect(generator(publish({ trustedPublishing: true })).output).toEqual({
+            location: "npm",
+            "package-name": "@acme/cli",
+            token: "OIDC"
+        });
+    });
+
+    it("writes a token, not OIDC, when trustedPublishing is false", () => {
+        expect(generator(publish({ trustedPublishing: false })).output).toMatchObject({ token: "${NPM_TOKEN}" });
+    });
+
+    it("writes the registry url", () => {
+        expect(generator(publish({ url: "https://npm.acme.test" })).output).toEqual({
+            location: "npm",
+            "package-name": "@acme/cli",
+            url: "https://npm.acme.test",
+            token: "${NPM_TOKEN}"
+        });
+    });
+
+    it("omits the crate name for a scoped npm name, with a note", () => {
+        const result = publish({});
+        expect(generator(result).config).toBeUndefined();
+        expect(result.hints.join("\n")).toContain('"@acme/cli" is the npm package name and not a valid crate name');
+    });
+
+    it("omits only the crate name and keeps the rest of packageIdentity", () => {
+        const result = map({
+            target: GITHUB_TARGET,
+            package: { packageName: "@acme/cli", description: "Acme CLI" },
+            output: { delivery: "github", github: GITHUB, publish: { registry: "npm" } }
+        });
+        expect(generator(result).config).toEqual({ packageIdentity: { description: "Acme CLI" } });
+    });
+
+    it("uses a valid unscoped name for both the npm package and the crate", () => {
+        const result = publish({}, "acme-cli");
+        expect(generator(result)).toMatchObject({
+            output: { "package-name": "acme-cli" },
+            config: { packageIdentity: { name: "acme-cli" } }
+        });
+        expect(result.hints).toEqual([]);
+    });
+
+    it("omits a crate name longer than 64 characters", () => {
+        const name = `a${"b".repeat(64)}`;
+        const result = publish({}, name);
+        expect(generator(result)).toMatchObject({ output: { "package-name": name } });
+        expect(generator(result).config).toBeUndefined();
+    });
+
+    it("keeps packageName as the crate name without npm publication, even when it is not a valid crate name", () => {
+        expect(generator(map({ package: { packageName: "@acme/cli" } })).config).toEqual({
+            packageIdentity: { name: "@acme/cli" }
+        });
+        const github = map({
+            target: GITHUB_TARGET,
+            package: { packageName: "@acme/cli" },
+            output: { delivery: "github", github: GITHUB }
+        });
+        expect(generator(github).output).toBeUndefined();
+        expect(generator(github).config).toEqual({ packageIdentity: { name: "@acme/cli" } });
+    });
+
+    it.each([
+        "releaseBranch",
+        "tolerateRepublish",
+        "publishToJsr"
+    ])("warns that output.publish.%s is not written, and still publishes", (field) => {
+        const result = publish({ [field]: field === "releaseBranch" ? "main" : true });
+        expect(codes(result.diagnostics)).toContain(`warning CLI_TARGET_IGNORED_FIELD output.publish.${field}`);
+        expect(errorCodes(result.diagnostics)).toEqual([]);
+        expect(generator(result).output).toMatchObject({ location: "npm" });
+    });
+
+    it.each([
+        ["isPackagePrivate", true],
+        ["version", "1.2.3"],
+        ["shouldGeneratePublishWorkflow", false],
+        ["credentialsRef", "npm-credentials"],
+        ["credentials", { token: "literal" }]
+    ])("rejects output.publish.%s", (field, value) => {
+        const result = publish({ [field]: value });
+        expect(errorCodes(result.diagnostics)).toEqual(["CLI_TARGET_UNSUPPORTED_FIELD"]);
+        expect(codes(result.diagnostics)[0]).toContain(`output.publish.${field}`);
+        expect(result.generatorsYml).toEqual({});
     });
 });

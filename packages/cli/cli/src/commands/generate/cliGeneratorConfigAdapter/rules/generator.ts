@@ -8,6 +8,9 @@ import { relativeToOutput } from "./output.js";
 export const GENERATOR_NAME = "fernapi/fern-cli-generator";
 export const GROUP_NAME = "cli";
 const DEFAULT_OUTPUT_PATH = "generated/cli";
+const DEFAULT_NPM_TOKEN_VARIABLE = "NPM_TOKEN";
+/** fern-cli-generator's crate-name check, plus crates.io's 64-character limit. */
+const CRATE_NAME = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
 
 const IDENTITY_FIELDS = [
     ["packageName", "name"],
@@ -63,6 +66,10 @@ export const generatorRule: MapperRule = {
         "output.github.repository",
         "output.github.mode",
         "output.github.branch",
+        "output.publish.registry",
+        "output.publish.trustedPublishing",
+        "output.publish.tokenEnvironmentVariable",
+        "output.publish.url",
         "api.audiences"
     ],
     apply(context) {
@@ -95,7 +102,7 @@ function generatorConfig(context: RuleContext, ir: SdkConfigIrV1): Record<string
     if (distribution != null) {
         config.distribution = distribution;
     }
-    const identity = packageIdentity(ir.package);
+    const identity = packageIdentity(context, ir);
     if (Object.keys(identity).length > 0) {
         config.packageIdentity = identity;
     }
@@ -114,10 +121,17 @@ function generatorConfig(context: RuleContext, ir: SdkConfigIrV1): Record<string
     return config;
 }
 
-function packageIdentity(pkg: SdkConfigIrV1["package"]): Record<string, unknown> {
+function packageIdentity(context: RuleContext, ir: SdkConfigIrV1): Record<string, unknown> {
+    const pkg = ir.package;
+    const npmNameOnly = npmPublish(ir.output) != null && pkg.packageName != null && !CRATE_NAME.test(pkg.packageName);
+    if (npmNameOnly) {
+        context.output.hints.push(
+            `package.packageName "${pkg.packageName}" is the npm package name and not a valid crate name, so the generator names the crate.`
+        );
+    }
     const identity: Record<string, unknown> = {};
     for (const [field, key] of IDENTITY_FIELDS) {
-        if (pkg[field] != null) {
+        if (pkg[field] != null && !(npmNameOnly && field === "packageName")) {
             identity[key] = pkg[field];
         }
     }
@@ -179,6 +193,7 @@ function cargoDependency(dependency: Dependency): unknown {
 function deliveryBlock(context: RuleContext, output: SdkConfigIrV1["output"]): Record<string, unknown> {
     switch (output.delivery) {
         case "files":
+            rejectPublishWithoutGithub(context, output);
             return {
                 output: {
                     location: "local-file-system",
@@ -186,6 +201,7 @@ function deliveryBlock(context: RuleContext, output: SdkConfigIrV1["output"]): R
                 }
             };
         case "zip":
+            rejectPublishWithoutGithub(context, output);
             context.warn(
                 "output.delivery",
                 "CLI_TARGET_ZIP_AS_FILES",
@@ -203,6 +219,7 @@ function deliveryBlock(context: RuleContext, output: SdkConfigIrV1["output"]): R
                 "Review the output block before generating."
             );
             return {
+                ...npmOutputBlock(context),
                 github: {
                     repository: output.github.repository,
                     ...(output.github.mode != null ? { mode: output.github.mode } : {}),
@@ -211,6 +228,61 @@ function deliveryBlock(context: RuleContext, output: SdkConfigIrV1["output"]): R
             };
         default:
             assertNever(output);
+    }
+}
+
+type NpmPublish = Extract<NonNullable<SdkConfigIrV1["output"]["publish"]>, { registry: "npm" }>;
+
+function npmPublish(output: SdkConfigIrV1["output"]): NpmPublish | undefined {
+    return output.delivery === "github" && output.publish?.registry === "npm" ? output.publish : undefined;
+}
+
+/** The generator-level npm output that, next to `github`, becomes the github output mode's npm `publishInfo`. */
+function npmOutputBlock(context: RuleContext): Record<string, unknown> {
+    const { output, package: pkg } = context.ir;
+    if (output.publish == null) {
+        return {};
+    }
+    const publish = npmPublish(output);
+    if (publish == null) {
+        context.error(
+            "output.publish.registry",
+            "CLI_TARGET_NPM_PUBLISH",
+            `The cli target publishes to npm only, not ${output.publish.registry}.`,
+            "Set output.publish.registry to npm, or remove output.publish."
+        );
+        return {};
+    }
+    if (pkg.packageName == null) {
+        context.error(
+            "package.packageName",
+            "CLI_TARGET_NPM_PUBLISH",
+            "npm publication needs the npm package name.",
+            "Set package.packageName."
+        );
+        return {};
+    }
+    return {
+        output: {
+            location: "npm",
+            "package-name": pkg.packageName,
+            ...(publish.url != null ? { url: publish.url } : {}),
+            token:
+                publish.trustedPublishing === true
+                    ? "OIDC"
+                    : `\${${publish.tokenEnvironmentVariable ?? DEFAULT_NPM_TOKEN_VARIABLE}}`
+        }
+    };
+}
+
+function rejectPublishWithoutGithub(context: RuleContext, output: SdkConfigIrV1["output"]): void {
+    if (output.publish != null) {
+        context.error(
+            "output.publish",
+            "CLI_TARGET_NPM_PUBLISH",
+            "npm publication for the cli target needs GitHub delivery: the generated workflow publishes.",
+            'Set output.delivery to "github", or remove output.publish.'
+        );
     }
 }
 

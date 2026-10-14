@@ -10,6 +10,8 @@ export interface ExpansionContext {
     apiName: string;
     /** Organization from fern.config.json. */
     organizationName: string;
+    /** The unresolved `output.publish.token`, which the loader strips from the config. */
+    npmToken?: string;
 }
 
 /**
@@ -44,6 +46,10 @@ export function expandCliTarget(
         ...(Object.keys(split.language).length > 0 ? { language: { [LANGUAGE]: split.language } } : {})
     };
     const sdkVersion = target.sdkVersion ?? config.sdkVersion;
+    const output = withNpmToken(target.output ?? config.output ?? { delivery: "files" }, context.npmToken);
+    if (output.error != null) {
+        return failure("CLI_TARGET_NPM_PUBLISH", output.error.message, output.error.action, "output.publish.token");
+    }
     const candidate = {
         schemaVersion: "sdk-config-ir/v1",
         source: {
@@ -73,7 +79,7 @@ export function expandCliTarget(
         api: config.api,
         client: mergeObjects(config.client, target.client),
         package: { ...config.package, ...target.package },
-        output: target.output ?? config.output ?? { delivery: "files" },
+        output: output.value,
         docs: mergeObjects(config.docs, target.docs),
         generation,
         ...(config.replay != null ? { replay: config.replay } : {})
@@ -90,6 +96,40 @@ export function expandCliTarget(
 }
 
 type SourceSpec = SdkConfigV1["source"]["specs"][number];
+type Output = NonNullable<SdkConfigV1["targets"][number]["output"]>;
+
+const ENV_REFERENCE = /^\$\{(\w+)\}$/;
+
+/** Carries a GitHub-delivery npm token reference into the IR as `tokenEnvironmentVariable`. */
+function withNpmToken(
+    output: Output,
+    token: string | undefined
+): { value: Output | Record<string, unknown>; error?: { message: string; action: string } } {
+    if (token == null || output.delivery !== "github" || output.publish?.registry !== "npm") {
+        return { value: output };
+    }
+    if (output.publish.trustedPublishing === true) {
+        return {
+            value: output,
+            error: {
+                message: "output.publish.token must be omitted when trustedPublishing is true.",
+                action: "Remove output.publish.token, or set trustedPublishing to false."
+            }
+        };
+    }
+    const name = ENV_REFERENCE.exec(token.trim())?.[1];
+    if (name == null) {
+        return {
+            value: output,
+            error: {
+                message:
+                    "The cli target writes the npm token to generators.yml only as an environment variable reference.",
+                action: "Set output.publish.token to a reference such as ${NPM_TOKEN}, or use trustedPublishing: true for OIDC."
+            }
+        };
+    }
+    return { value: { ...output, publish: { ...output.publish, tokenEnvironmentVariable: name } } };
+}
 
 /** A spec's local path, or its URL (which the specs rule rejects). */
 function specLocation(spec: SourceSpec): string {
@@ -100,8 +140,13 @@ function isPathSource(spec: SourceSpec): spec is Extract<SourceSpec, { path: str
     return "path" in spec;
 }
 
-function failure(code: string, message: string, action: string): { ir: undefined; diagnostics: CliTargetDiagnostic[] } {
-    return { ir: undefined, diagnostics: [{ severity: "error", path: "targets", code, message, action }] };
+function failure(
+    code: string,
+    message: string,
+    action: string,
+    path = "targets"
+): { ir: undefined; diagnostics: CliTargetDiagnostic[] } {
+    return { ir: undefined, diagnostics: [{ severity: "error", path, code, message, action }] };
 }
 
 /** Recursive merge where `override` wins; arrays and scalars replace. */

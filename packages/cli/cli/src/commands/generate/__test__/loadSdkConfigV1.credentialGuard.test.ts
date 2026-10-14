@@ -213,6 +213,49 @@ describe("loadSdkConfigV1 credential guard", () => {
             distribution: DISTRIBUTION
         });
         expect(findTransportedCanaries(loaded, request)).toEqual([]);
+        expect(JSON.stringify(loaded.config)).not.toContain("CANARY_NPM_TOKEN");
+        expect(loaded.githubNpmTokens).toEqual(["${CANARY_NPM_TOKEN}"]);
+    });
+
+    it("accepts trustedPublishing only for npm publication from a cli target's GitHub workflow", async () => {
+        const github = { delivery: "github", github: { repository: "acme/acme-cli" } };
+        const publish = { registry: "npm", trustedPublishing: true };
+        const cli = await loadSdkConfigV1(
+            await writeSdkConfig(temporaryDirectories, {
+                output: { ...github, publish },
+                targets: [{ language: "cli", package: { packageName: "@acme/cli" } }]
+            })
+        );
+        expect(cli.config.output).toMatchObject({ publish });
+        expect(cli.githubNpmTokens).toEqual([undefined]);
+
+        for (const document of [
+            {
+                targets: [
+                    { language: "typescript", package: { packageName: "@acme/sdk" }, output: { ...github, publish } }
+                ]
+            },
+            {
+                output: { ...github, publish },
+                targets: [
+                    { language: "cli", package: { packageName: "@acme/cli" } },
+                    { language: "typescript", package: { packageName: "@acme/sdk" } }
+                ]
+            },
+            {
+                targets: [
+                    {
+                        language: "cli",
+                        package: { packageName: "@acme/cli" },
+                        output: { delivery: "files", publish }
+                    }
+                ]
+            }
+        ]) {
+            await expect(loadSdkConfigV1(await writeSdkConfig(temporaryDirectories, document))).rejects.toThrow(
+                "Direct npm publication does not support option trustedPublishing"
+            );
+        }
     });
 
     it.each([

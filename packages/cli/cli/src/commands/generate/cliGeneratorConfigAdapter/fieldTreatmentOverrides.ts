@@ -17,17 +17,61 @@ const GITHUB_WARNINGS: Record<string, FieldTreatment> = Object.fromEntries(
         ])
 );
 
-/** SDK Config allows npm publication for `cli` targets with GitHub delivery; the translation does not write it yet. */
-const PUBLISH_REJECTIONS: Record<string, FieldTreatment> = Object.fromEntries(
-    Object.keys(HOSTED_FIELD_TREATMENTS)
-        .filter((path) => path.startsWith("output.publish."))
-        .map((path) => [
-            path,
+const NPM_PUBLISH_FIELDS: Record<string, FieldTreatment> = {
+    "output.publish.registry": {
+        treatment: "Map",
+        note: "npm only: a generator `output` block with `location: npm` next to `github`, named by package.packageName."
+    },
+    "output.publish.trustedPublishing": { treatment: "Map", note: "`token: OIDC` on the npm output block." },
+    "output.publish.tokenEnvironmentVariable": {
+        treatment: "Map",
+        note: "`token: ${NAME}` on the npm output block; `${NPM_TOKEN}` when unset."
+    },
+    "output.publish.url": { treatment: "Map", note: "`url` on the npm output block." },
+    "output.publish.releaseBranch": {
+        treatment: "Warn",
+        note: "Not written: the generated workflow publishes on version tags, from any branch."
+    },
+    "output.publish.tolerateRepublish": {
+        treatment: "Warn",
+        note: "Not written: the generated publish workflow decides how an already-published version is handled."
+    },
+    "output.publish.publishToJsr": {
+        treatment: "Warn",
+        note: "Not written: the cli target publishes to npm only, so nothing is published to JSR."
+    },
+    "output.publish.isPackagePrivate": {
+        treatment: "Reject",
+        note: "The generated npm packages cannot be marked private, so they would be published publicly."
+    },
+    "output.publish.version": {
+        treatment: "Reject",
+        note: "The npm packages take their version from the release tag; a separate npm version cannot be written."
+    },
+    "output.publish.shouldGeneratePublishWorkflow": {
+        treatment: "Reject",
+        note: "The publish workflow is generated whenever output.publish is set; remove output.publish to turn it off."
+    },
+    "output.publish.credentialsRef": {
+        treatment: "Reject",
+        note: "Credential references are resolved by the hosted path only; set output.publish.token to ${NAME}."
+    },
+    ...Object.fromEntries(
+        ["apiKey", "password", "token", "username"].map((field) => [
+            `output.publish.credentials.${field}`,
             {
                 treatment: "Reject",
-                note: "CLI npm publication is not translated to generators.yml yet."
+                note: "Literal credentials are not written to generators.yml; set output.publish.token to ${NAME}."
             }
         ])
+    )
+};
+
+/** Fields of the other registries; SDK Config allows only npm for `cli`. */
+const NON_NPM_PUBLISH_REJECTIONS: Record<string, FieldTreatment> = Object.fromEntries(
+    Object.keys(HOSTED_FIELD_TREATMENTS)
+        .filter((path) => path.startsWith("output.publish.") && NPM_PUBLISH_FIELDS[path] == null)
+        .map((path) => [path, { treatment: "Reject", note: "Not an npm field; the cli target publishes to npm only." }])
 );
 
 const CLI_GENERATION_SETTINGS: Record<string, FieldTreatment> = Object.fromEntries(
@@ -61,7 +105,8 @@ export const FIELD_TREATMENT_OVERRIDES: Record<string, FieldTreatment> = {
     "output.github.branch": { treatment: "Map", note: "GitHub output block (untested)." },
     ...GITHUB_WARNINGS,
     "output.fileName": { treatment: "Warn", note: "Zip delivery is hosted-only; the cli target writes files." },
-    ...PUBLISH_REJECTIONS,
+    ...NON_NPM_PUBLISH_REJECTIONS,
+    ...NPM_PUBLISH_FIELDS,
     "api.auth.schemes[].flows[].authorizationUrl": {
         treatment: "Map",
         note: "`authorization-url` on an authorization-code OAuth scheme."

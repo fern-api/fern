@@ -38,7 +38,8 @@ export async function prepareCliTargetWorkspace({
     sourceRoot,
     organization,
     workspaceName,
-    cliVersion
+    cliVersion,
+    npmToken
 }: {
     context: TaskContext;
     sdkConfig: SdkConfigV1;
@@ -47,6 +48,7 @@ export async function prepareCliTargetWorkspace({
     organization: string;
     workspaceName: string | undefined;
     cliVersion: string;
+    npmToken?: string;
 }): Promise<PreparedCliTargetWorkspace> {
     const folder = await mkdtemp(join(tmpdir(), "fern-cli-target-"));
     const cleanup = () => rm(folder, { recursive: true, force: true });
@@ -58,7 +60,8 @@ export async function prepareCliTargetWorkspace({
             sourceRoot,
             outDir: folder,
             apiName: workspaceName ?? "api",
-            organization
+            organization,
+            npmToken
         });
         const errors = translation.diagnostics.filter((diagnostic) => diagnostic.severity === "error");
         for (const diagnostic of translation.diagnostics.filter((entry) => entry.severity === "warning")) {
