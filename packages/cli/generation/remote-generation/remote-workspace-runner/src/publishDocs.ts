@@ -2197,7 +2197,7 @@ async function generateLanguageSpecificDynamicIRs({
 
 /**
  * Warning lines for a docs `snippets:` entry that no generator resolved to. Docs publishing only
- * reads generators.yml for SDK packages, so with FERN_USE_SDK_GEN_API=true (where `fern sdk migrate`
+ * reads generators.yml for SDK packages, so for SDKs configured in sdk-config.yml (where `fern sdk migrate`
  * moves the generators into sdk-config.yml) the package is not found and the snippets are dropped.
  */
 export function getUnknownSnippetPackageWarningLines({
@@ -2219,7 +2219,7 @@ export function getUnknownSnippetPackageWarningLines({
     ];
     if (usesSdkGenApi) {
         lines.push(
-            "SDK snippets are not supported for SDKs configured in sdk-config.yml yet (FERN_USE_SDK_GEN_API=true). The package name is only read from generators.yml, so migrated SDKs have no snippets in these docs."
+            "SDK snippets are not supported for SDKs configured in sdk-config.yml yet. The package name is only read from generators.yml, so migrated SDKs have no snippets in these docs."
         );
     }
     return lines;

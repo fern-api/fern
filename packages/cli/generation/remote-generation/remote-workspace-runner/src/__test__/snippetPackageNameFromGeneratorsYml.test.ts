@@ -206,6 +206,5 @@ describe("unknown snippet package warning", () => {
         const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkGenApi: true });
         expect(lines).toHaveLength(3);
         expect(lines[2]).toContain("not supported for SDKs configured in sdk-config.yml");
-        expect(lines[2]).toContain("FERN_USE_SDK_GEN_API=true");
     });
 });

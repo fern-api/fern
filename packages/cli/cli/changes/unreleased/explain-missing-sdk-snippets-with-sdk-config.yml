@@ -1,4 +1,4 @@
 - summary: |
-    When `FERN_USE_SDK_GEN_API=true`, the "unknown package" warning from `fern generate --docs` now explains
-    that SDK snippets are not supported yet for SDKs configured in `sdk-config.yml`.
+    The "unknown package" warning from `fern generate --docs` now explains that SDK snippets are not
+    supported yet for SDKs configured in `sdk-config.yml`.
   type: fix
