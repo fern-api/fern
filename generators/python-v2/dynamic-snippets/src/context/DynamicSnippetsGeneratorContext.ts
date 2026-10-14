@@ -1,6 +1,7 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec
+    FernGeneratorExec,
+    RESERVED_KEYWORDS
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -12,6 +13,7 @@ import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"];
+const PYTHON_RESERVED_NAMES = RESERVED_KEYWORDS.python;
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -66,6 +68,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             // and Python also does not allow fields to start with a number, so we need a
             // new prefix.
             return "f_" + snakeCase.substring(snakeCase.lastIndexOf("_") + 1);
+        }
+        // Docs build the dynamic IR without a generation language, so its safe names are not
+        // escaped for Python. Match the SDK, which suffixes reserved names (e.g. `long` -> `long_`).
+        if (PYTHON_RESERVED_NAMES.has(snakeCase)) {
+            return snakeCase + "_";
         }
         return snakeCase;
     }

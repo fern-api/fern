@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets now use fully qualified paths for big integers and base64 values
+    (`num_bigint::BigInt::parse_bytes(...)` and `base64::Engine::decode(&base64::engine::general_purpose::STANDARD, ...)`),
+    so they compile with only the SDK prelude imported.
+  type: fix

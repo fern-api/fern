@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets now default `noSerdeLayer` to `true`, matching the SDK generator's default. Snippets for
+    SDKs without an explicit setting now use the wire property names, string dates and arrays for sets
+    (e.g. `"X-API-Version": "0.0.1"` instead of `xApiVersion`), so they type-check against the generated SDK.
+  type: fix

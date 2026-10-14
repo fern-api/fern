@@ -108,7 +108,7 @@ export class DynamicTypeLiteralMapper {
                 });
             case "BIG_INTEGER":
                 // BigInt is num_bigint::BigInt in Rust - generate zero for placeholder
-                return rust.Expression.raw('BigInt::parse_bytes("0".as_bytes(), 10).unwrap()');
+                return rust.Expression.raw('num_bigint::BigInt::parse_bytes("0".as_bytes(), 10).unwrap()');
             case "BASE_64":
                 // Base64 is Vec<u8> in Rust - generate empty vec for placeholder
                 return rust.Expression.raw("vec![]");
@@ -245,13 +245,13 @@ export class DynamicTypeLiteralMapper {
                 if (str == null) {
                     return rust.Expression.raw("vec![]");
                 }
-                // Base64 is Vec<u8> in Rust - decode the base64 string to bytes
+                // Base64 is Vec<u8> in Rust - decode the base64 string to bytes. Call `decode` through
+                // the `base64::Engine` trait path so the snippet compiles without a `use` for the trait.
                 return rust.Expression.methodCall({
-                    target: rust.Expression.methodCall({
-                        target: rust.Expression.raw("base64::engine::general_purpose::STANDARD"),
-                        method: "decode",
-                        args: [rust.Expression.stringLiteral(str)]
-                    }),
+                    target: rust.Expression.functionCall("base64::Engine::decode", [
+                        rust.Expression.raw("&base64::engine::general_purpose::STANDARD"),
+                        rust.Expression.stringLiteral(str)
+                    ]),
                     method: "unwrap",
                     args: []
                 });
@@ -263,7 +263,7 @@ export class DynamicTypeLiteralMapper {
                 }
                 // BigInt is num_bigint::BigInt in Rust - parse from string
                 return rust.Expression.methodCall({
-                    target: rust.Expression.functionCall("BigInt::parse_bytes", [
+                    target: rust.Expression.functionCall("num_bigint::BigInt::parse_bytes", [
                         rust.Expression.raw(`${JSON.stringify(str)}.as_bytes()`),
                         rust.Expression.numberLiteral(10)
                     ]),
