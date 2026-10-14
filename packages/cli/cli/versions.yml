@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.157.1
+  changelogEntry:
+    - summary: |
+        Allow `playground-docs` on `auth-schemes` in `generators.yml`. Previously the CLI rejected it with
+        `Unexpected key "playground-docs"`, so schemes defined there could not set playground-only auth text.
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
 - version: 5.157.0
   changelogEntry:
     - summary: |
