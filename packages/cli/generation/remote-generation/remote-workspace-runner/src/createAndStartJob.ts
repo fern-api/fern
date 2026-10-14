@@ -15,6 +15,7 @@ import urlJoin from "url-join";
 import { promisify } from "util";
 import { gzip } from "zlib";
 import { migrateIntermediateRepresentationForInvocation } from "./migrateIntermediateRepresentationForInvocation.js";
+import { computeGenerationProvenanceInputs } from "./provenanceInputs.js";
 import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
 
 const gzipAsync = promisify(gzip);
@@ -137,7 +138,8 @@ export async function createAndStartJob({
         context,
         generatorInvocation,
         irVersionOverride,
-        specsTarGzBuffer
+        specsTarGzBuffer,
+        generatorsConfiguration: workspace.generatorsConfiguration
     });
     return job;
 }
@@ -383,7 +385,8 @@ async function startJob({
     job,
     context,
     irVersionOverride,
-    specsTarGzBuffer
+    specsTarGzBuffer,
+    generatorsConfiguration
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -391,6 +394,7 @@ async function startJob({
     context: TaskContext;
     irVersionOverride: string | undefined;
     specsTarGzBuffer: Buffer | undefined;
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
 }): Promise<void> {
     const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForInvocation({
         intermediateRepresentation,
@@ -418,6 +422,13 @@ async function startJob({
         formData.append("specs", specsTarGzBuffer, { filename: "specs.tar.gz", contentType: "application/gzip" });
         context.logger.debug(`Appended specs tar.gz (${specsTarGzBuffer.length} bytes)`);
     }
+
+    const provenanceInputs = await computeGenerationProvenanceInputs({ generatorsConfiguration, generatorInvocation });
+    formData.append("provenance", JSON.stringify(provenanceInputs), {
+        filename: "provenance.json",
+        contentType: "application/json"
+    });
+    context.logger.debug(`Appended provenance inputs for ${provenanceInputs.specs.length} spec file(s)`);
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
