@@ -1,5 +1,6 @@
 import { access, readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { getGithubPublishConfig } from "@fern-api/remote-workspace-runner";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { afterEach, describe, expect, it } from "vitest";
 import YAML from "yaml";
@@ -53,7 +54,8 @@ async function translate(path: string, outDir = join(path, "translated")) {
         absolutePathToConfig: loaded.absolutePath,
         outDir,
         apiName: "api",
-        organization: "acme"
+        organization: "acme",
+        npmToken: loaded.githubNpmTokens[loaded.config.targets.findIndex((target) => target.language === "cli")]
     });
 }
 
@@ -248,7 +250,8 @@ describe("prepareCliTargetWorkspace", () => {
             absolutePathToConfig: loaded.absolutePath,
             organization: "acme",
             workspaceName: undefined,
-            cliVersion: "0.0.0"
+            cliVersion: "0.0.0",
+            npmToken: loaded.githubNpmTokens[loaded.config.targets.findIndex((target) => target.language === "cli")]
         });
     }
 
@@ -282,6 +285,48 @@ describe("prepareCliTargetWorkspace", () => {
             expect(prepared.workspace.generatorsConfiguration?.groups[0]?.generators[0]?.outputMode.type).toBe(
                 "githubV2"
             );
+        } finally {
+            await prepared.cleanup();
+        }
+    });
+
+    it.each([
+        ["the default token", {}, "NPM_TOKEN"],
+        ["a token reference", { token: "${ACME_NPM_TOKEN}" }, "ACME_NPM_TOKEN"],
+        ["trusted publishing", { trustedPublishing: true }, "<USE_OIDC>"]
+    ])("loads npm publication with %s as the github output's npm publishInfo", async (_name, publish, variable) => {
+        const { path } = await setup({
+            "sdk-config.yml": sdkConfig({
+                output: undefined,
+                targets: [
+                    {
+                        language: "cli",
+                        package: { packageName: "@acme/cli" },
+                        output: {
+                            delivery: "github",
+                            github: { repository: "acme/cli", mode: "release" },
+                            publish: { registry: "npm", url: "https://npm.acme.test", ...publish }
+                        }
+                    }
+                ]
+            })
+        });
+        const prepared = await prepare(path);
+        try {
+            const generator = prepared.workspace.generatorsConfiguration?.groups[0]?.generators[0];
+            const outputMode = generator?.outputMode;
+            const publishInfo =
+                outputMode?.type === "githubV2" && outputMode.githubV2.type === "commitAndRelease"
+                    ? outputMode.githubV2.publishInfo
+                    : undefined;
+            expect(getGithubPublishConfig(publishInfo)).toMatchObject({
+                type: "npm",
+                registryUrl: "https://npm.acme.test",
+                packageName: "@acme/cli",
+                tokenEnvironmentVariable: variable,
+                shouldGeneratePublishWorkflow: true
+            });
+            expect(generator?.config).toEqual({ packageIdentity: { name: "acme" } });
         } finally {
             await prepared.cleanup();
         }

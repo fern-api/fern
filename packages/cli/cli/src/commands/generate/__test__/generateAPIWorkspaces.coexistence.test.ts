@@ -589,6 +589,75 @@ describe("generateAPIWorkspaces coexistence", () => {
         );
         expect(vi.mocked(generateWorkspace)).not.toHaveBeenCalled();
     });
+
+    describe("cli target npm token", () => {
+        const githubNpm = (repository: string, token: string) => ({
+            delivery: "github",
+            github: { repository, mode: "release" },
+            publish: { registry: "npm", token }
+        });
+        const TARGETS = [
+            {
+                language: "typescript",
+                package: { packageName: "@acme/sdk" },
+                output: githubNpm("acme/sdk", "${TS_NPM_TOKEN}")
+            },
+            { language: "go", output: { delivery: "files" } },
+            {
+                language: "cli",
+                package: { packageName: "@acme/cli" },
+                output: githubNpm("acme/cli", "${CLI_NPM_TOKEN}")
+            }
+        ];
+
+        function cliNpmToken(): unknown {
+            const workspace = vi
+                .mocked(generateWorkspace)
+                .mock.calls.map(([args]) => args.workspace)
+                .find((candidate) =>
+                    candidate.generatorsConfiguration?.groups.some((group) =>
+                        group.generators.some((generator) => generator.name === "fernapi/fern-cli-generator")
+                    )
+                );
+            const outputMode = workspace?.generatorsConfiguration?.groups[0]?.generators[0]?.outputMode;
+            return outputMode?.type === "githubV2" && outputMode.githubV2.type === "commitAndRelease"
+                ? outputMode.githubV2.publishInfo
+                : undefined;
+        }
+
+        it.each([
+            { name: "every target", targetNames: undefined },
+            { name: "--target cli", targetNames: ["cli"] },
+            { name: "--target go cli", targetNames: ["go", "cli"] }
+        ])("passes the cli target's own token, not another target's, with $name", async ({ targetNames }) => {
+            await writeSdkConfig(TARGETS);
+            await runGenerate({ project, cliContext, groupNames: undefined, targetNames });
+            expect(cliNpmToken()).toMatchObject({ type: "npm", packageName: "@acme/cli", token: "${CLI_NPM_TOKEN}" });
+        });
+
+        it("passes the cli target's own token with --sdk-config and a generator index", async () => {
+            const configPath = path.join(temporaryDirectory, "npm-sdk-config.yml");
+            await writeFile(
+                configPath,
+                YAML.stringify({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "payments",
+                    source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
+                    targets: TARGETS
+                })
+            );
+            await runGenerate({
+                project,
+                cliContext,
+                groupNames: undefined,
+                targetNames: undefined,
+                generatorIndex: 2,
+                sdkConfigPath: configPath
+            });
+            expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
+            expect(cliNpmToken()).toMatchObject({ token: "${CLI_NPM_TOKEN}" });
+        });
+    });
 });
 
 function createProject(directory: string): Project {

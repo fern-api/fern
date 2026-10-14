@@ -24,6 +24,8 @@ export interface TranslateCliTargetOptions {
     outDir: string;
     apiName: string;
     organization: string;
+    /** The cli target's unresolved `output.publish.token` (see `LoadedSdkConfigV1.githubNpmTokens`). */
+    npmToken?: string;
 }
 
 export interface CliTargetTranslation {
@@ -61,7 +63,8 @@ export async function translateCliTarget(options: TranslateCliTargetOptions): Pr
     };
     const expanded = expandCliTarget(options.sdkConfig, {
         apiName: options.apiName,
-        organizationName: options.organization
+        organizationName: options.organization,
+        npmToken: options.npmToken
     });
     if (expanded.ir == null) {
         return { ...empty, diagnostics: expanded.diagnostics };

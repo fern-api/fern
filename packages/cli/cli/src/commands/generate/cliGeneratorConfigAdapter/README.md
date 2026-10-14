@@ -56,14 +56,42 @@ generator's `appIdSecret`, `privateKeySecret` and `tokenEnvironmentVariable`, un
 secret names that the generated release workflow reads, so the Fern CLI never resolves them. Generator defaults, such
 as `HOMEBREW_TAP_TOKEN`, are not written, so a channel without its own token still uses `githubApp`.
 
-npm publication for the `cli` target (`output.publish`) is not translated yet and is rejected.
-
 `package.license.type` is written as an SPDX identifier: the canonical types `fern sdk migrate` writes become `MIT`,
 `Apache-2.0`, `GPL-3.0-only` and `UNLICENSED`, and any other value is kept. `metadata.license` (the LICENSE file)
 accepts only `MIT` and `Apache-2.0`, so other licenses set only `packageIdentity.license`.
 
 If `sdk-config.yml` came from `fern sdk migrate` and has no `api.auth`, migrate may have dropped the whole auth block
 (it does so when any scheme cannot be mapped). The CLI then uses the security schemes the spec declares.
+
+## npm publication
+
+With `output.delivery: github`, `output.publish` (npm only) is written as a generator-level `output` block next to
+`github:`; the Fern CLI turns the pair into the github output mode's npm `publishInfo`, and the generated workflow
+publishes on version tags:
+
+| SDK Config | `output` block |
+|---|---|
+| `registry: npm` | `location: npm`, `package-name: <package.packageName>` |
+| `trustedPublishing: true` | `token: OIDC` (trusted publishing) |
+| `token: ${NAME}` | `token: ${NAME}`; `${NPM_TOKEN}` when unset |
+| `url` | `url` |
+| `releaseBranch`, `tolerateRepublish` | Not written, with a warning |
+
+A literal `token`, or `token` with `trustedPublishing: true`, is an error. IR-only publish fields that would change
+what is published (`isPackagePrivate`, `version`, `shouldGeneratePublishWorkflow`, credentials) are rejected, and
+`publishToJsr` warns.
+
+With npm publication, `package.packageName` is the npm package name, such as `@acme/cli`. It is also the crate name
+(`packageIdentity.name`) if it is a valid crate name (a letter, then letters, digits, `-` or `_`, at most 64
+characters). Otherwise the crate is named from the first of these that is a valid crate name, and a debug note says
+which:
+
+1. The binary name, computed as fern-cli-generator does (kebab-cased): `generation.language.cli.binaryName`, or
+   without it the spec's `info.title` when there is one spec. With several specs the binary name is not computed.
+2. The kebab-cased npm name: `@acme/cli` becomes `acme-cli`.
+
+If neither is valid (for example `@1password/cli`), the generator names the crate. Without npm publication,
+`package.packageName` is the crate name.
 
 ## How fields are treated
 
@@ -118,6 +146,7 @@ Paths are SDK Config paths, such as `api.auth.schemes[0].location`.
 | `CLI_TARGET_HEADER_IS_SCHEME_KEY` | warning | A header named after an API-key scheme key (written by `fern sdk migrate`); skipped |
 | `CLI_TARGET_MULTI_URL_ENVIRONMENT` | error | An environment with several URLs |
 | `CLI_TARGET_LICENSE` | error | A custom license without a file path |
+| `CLI_TARGET_NPM_PUBLISH` | error | npm publication the `cli` target cannot write: a literal or conflicting token, no GitHub delivery, or another registry |
 | `CLI_TARGET_UNTESTED` | warning | Several overrides files, or GitHub output |
 | `CLI_TARGET_ZIP_AS_FILES` | warning | Zip delivery; the `cli` target writes files |
 | `CLI_TARGET_MULTI_SPEC_BINARY_NAME` | warning | Several specs and no `binaryName`, so the binary name comes from the API display name |
