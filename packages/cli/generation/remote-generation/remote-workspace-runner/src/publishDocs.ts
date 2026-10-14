@@ -2168,6 +2168,9 @@ async function generateLanguageSpecificDynamicIRs({
                 candidate instanceof OSSWorkspace && candidate.workspaceName === workspace.workspaceName
         )?.specs ?? []
     );
+    if (cliNamespaces != null) {
+        context.logger.debug(`[SDK Dynamic IR] cli namespaces: ${JSON.stringify(cliNamespaces)}`);
+    }
     for (const generatorInvocation of allGenerators) {
         const dynamicGeneratorConfig = withCliSnippetNamespaces({
             dynamicGeneratorConfig: getDynamicGeneratorConfig({
