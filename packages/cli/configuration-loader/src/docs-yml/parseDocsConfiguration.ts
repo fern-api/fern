@@ -583,7 +583,8 @@ function convertThemeConfig(
         footerNav: theme.footerNav ?? "default",
         languageSwitcher: theme.languageSwitcher ?? "default",
         productSwitcher: theme.productSwitcher ?? "default",
-        siteSwitcher: theme.siteSwitcher
+        siteSwitcher: theme.siteSwitcher,
+        codeBlocks: theme.codeBlocks
     };
 }
 

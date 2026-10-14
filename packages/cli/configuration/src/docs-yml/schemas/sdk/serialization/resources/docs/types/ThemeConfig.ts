@@ -4,6 +4,7 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { BodyThemeConfig } from "./BodyThemeConfig.js";
+import { CodeBlocksThemeConfig } from "./CodeBlocksThemeConfig.js";
 import { FooterNavThemeConfig } from "./FooterNavThemeConfig.js";
 import { LanguageSwitcherThemeConfig } from "./LanguageSwitcherThemeConfig.js";
 import { PageActionsThemeConfig } from "./PageActionsThemeConfig.js";
@@ -22,6 +23,7 @@ export const ThemeConfig: core.serialization.ObjectSchema<serializers.ThemeConfi
         languageSwitcher: core.serialization.property("language-switcher", LanguageSwitcherThemeConfig.optional()),
         productSwitcher: core.serialization.property("product-switcher", ProductSwitcherThemeConfig.optional()),
         siteSwitcher: core.serialization.property("site-switcher", SiteSwitcherThemeConfig.optional()),
+        codeBlocks: core.serialization.property("code-blocks", CodeBlocksThemeConfig.optional()),
     });
 
 export declare namespace ThemeConfig {
@@ -34,5 +36,6 @@ export declare namespace ThemeConfig {
         "language-switcher"?: LanguageSwitcherThemeConfig.Raw | null;
         "product-switcher"?: ProductSwitcherThemeConfig.Raw | null;
         "site-switcher"?: SiteSwitcherThemeConfig.Raw | null;
+        "code-blocks"?: CodeBlocksThemeConfig.Raw | null;
     }
 }
