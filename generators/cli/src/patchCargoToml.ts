@@ -358,9 +358,23 @@ function normalizeCrateName(name: string): string {
     return name.toLowerCase().replace(/-/g, "_");
 }
 
-/** Every `[[package]] name` recorded in a Cargo.lock. */
+/** Every `[[package]] name` recorded in a Cargo.lock, wherever it sits in its block and with LF or CRLF endings. */
 export function cargoLockPackageNames(cargoLock: string): Set<string> {
-    return new Set([...cargoLock.matchAll(/^\[\[package\]\]\nname = "([^"]+)"/gm)].map((m) => m[1] ?? ""));
+    const names = new Set<string>();
+    let inPackage = false;
+    for (const rawLine of cargoLock.split(/\r?\n/)) {
+        const line = rawLine.trim();
+        if (line.startsWith("[")) {
+            inPackage = line === "[[package]]";
+            continue;
+        }
+        const name = inPackage ? /^name\s*=\s*"([^"]+)"/.exec(line)?.[1] : undefined;
+        if (name != null) {
+            names.add(name);
+            inPackage = false;
+        }
+    }
+    return names;
 }
 
 /**

@@ -328,6 +328,76 @@ describe("generated crate lockfile entries after a package rename", () => {
     });
 });
 
+// `renameCargoLockPackage` rewrites only the root's own `name = ` line. That is
+// complete because nothing in the lock can depend on the root: the generated
+// types/SDK/partition crates are path dependencies *of* the root, so a reverse
+// edge would be a cycle cargo rejects, and no registry crate depends on it.
+describe("Cargo.lock references to the root package", () => {
+    const SEED_DIR = path.resolve(SDK_DIR, "../../../seed/cli/query-parameters-openapi");
+
+    function dependentsOf(cargoLock: string, crate: string): string[] {
+        return cargoLock
+            .split(/^\[\[package\]\]$/m)
+            .filter((block) => {
+                const deps = /^dependencies = \[\n((?: "[^"\n]*",\n)*)\]/m.exec(block)?.[1] ?? "";
+                return deps.split("\n").some(
+                    (line) =>
+                        line
+                            .trim()
+                            .replace(/^"|",?$/g, "")
+                            .split(" ")[0] === crate
+                );
+            })
+            .map((block) => /^name = "([^"]+)"/m.exec(block)?.[1] ?? "");
+    }
+
+    it("has no dependents in the shipped template lock", () => {
+        expect(dependentsOf(TEMPLATE_CARGO_LOCK, "fern-cli-sdk")).toEqual([]);
+        expect(dependentsOf(TEMPLATE_CARGO_LOCK, "clap")).toContain("fern-cli-sdk");
+    });
+
+    it("gains no dependents once the generated crates are added to a renamed lock", () => {
+        const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail");
+        const withTypes = addTypesCrateToLock(
+            renamed,
+            "agentmail-types",
+            { version: "0.0.0", dependencies: [{ name: "serde", versionReq: "1" }] },
+            true,
+            "agentmail"
+        );
+        const patched = addSdkCrateToLock(
+            withTypes,
+            "agentmail-sdk",
+            "agentmail-types",
+            {
+                version: "0.1.0",
+                dependencies: [
+                    { name: "agentmail_types", versionReq: undefined },
+                    { name: "serde", versionReq: "1.0" }
+                ]
+            },
+            "agentmail"
+        );
+        expect(patched).not.toContain("fern-cli-sdk");
+        expect(dependentsOf(patched, "agentmail")).toEqual([]);
+        expect(dependentsOf(patched, "agentmail_sdk")).toEqual(["agentmail"]);
+        expect(dependentsOf(patched, "agentmail_types")).toEqual(["agentmail_sdk"]);
+    });
+
+    it.each([
+        ["github-npm", "query-parameters-api"],
+        ["github-no-publish", "query-parameters-api"],
+        ["github-distribution", "query-parameters-api"],
+        ["github-distribution-app", "query-parameters-api"],
+        ["github-npm-identity", "query-params-cli"]
+    ])("has no dependents in the committed %s seed lock", async (fixture, rootName) => {
+        const lock = await readFile(path.join(SEED_DIR, fixture, "Cargo.lock"), "utf-8");
+        expect(cargoLockPackageNames(lock).has(rootName)).toBe(true);
+        expect(lock).not.toContain("fern-cli-sdk");
+        expect(dependentsOf(lock, rootName)).toEqual([]);
+    });
+});
+
 describe("parseGeneratedCrateManifest", () => {
     it("reads the version and dependency names the Rust generators emit", () => {
         const manifest = parseGeneratedCrateManifest(
@@ -734,5 +804,29 @@ describe("cargoLockPackageNames", () => {
         for (const name of ["fern-cli-sdk", "clap", "tokio"]) {
             expect(names.has(name)).toBe(true);
         }
+    });
+
+    it("reads CRLF lockfiles", () => {
+        const crlf = TEMPLATE_CARGO_LOCK.replace(/\n/g, "\r\n");
+        expect(cargoLockPackageNames(crlf)).toEqual(cargoLockPackageNames(TEMPLATE_CARGO_LOCK));
+    });
+
+    it("finds a name that is not the first key of its [[package]] block", () => {
+        const lock = [
+            "version = 4",
+            "",
+            "[[package]]",
+            'version = "1.0.0"',
+            'source = "registry+https://github.com/rust-lang/crates.io-index"',
+            'name = "clap"',
+            "",
+            "[[package]]",
+            '  name   =   "tokio"',
+            "",
+            "[metadata]",
+            'name = "not-a-package"',
+            ""
+        ].join("\n");
+        expect(cargoLockPackageNames(lock)).toEqual(new Set(["clap", "tokio"]));
     });
 });
