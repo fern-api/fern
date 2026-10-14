@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "destination": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ShipmentDestination"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ShipmentDestination": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "line1",
+        "city"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
