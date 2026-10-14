@@ -61,9 +61,13 @@ function extractApiKeySecretName(output: unknown): string | undefined {
     if (!isRecord(output) || !isRecord(output.publish) || typeof output.publish.registry !== "string") {
         return undefined;
     }
-    const { registry, apiKey } = output.publish;
+    const { registry, apiKey, trustedPublishing } = output.publish;
     if (!API_KEY_SECRET_REGISTRIES.has(registry) || apiKey == null) {
         return undefined;
+    }
+    // The schema enforces this too, but it never sees the apiKey: sanitizeOutput removes it first.
+    if (trustedPublishing === true) {
+        throw new Error(`output.publish for ${registry}: apiKey must be omitted when trustedPublishing is true`);
     }
     const secretName = typeof apiKey === "string" ? parseSecretNameExpression(apiKey) : undefined;
     if (secretName == null) {

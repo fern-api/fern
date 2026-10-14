@@ -635,6 +635,30 @@ describe("loadSdkConfigV1", () => {
         await expect(loadSdkConfigV1(configPath)).rejects.not.toThrow("literal-nuget-key");
     });
 
+    it.each([
+        { language: "csharp", registry: "nuget", packageName: "Acme.Sdk", apiKey: "${MY_NUGET_KEY}" },
+        { language: "ruby", registry: "rubygems", packageName: "acme-sdk", apiKey: "${MY_GEM_KEY}" }
+    ])("rejects a $registry apiKey combined with trustedPublishing", async ({
+        language,
+        registry,
+        packageName,
+        apiKey
+    }) => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language,
+            package: { packageName },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk" },
+                publish: { registry, apiKey, trustedPublishing: true }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            `output.publish for ${registry}: apiKey must be omitted when trustedPublishing is true`
+        );
+    });
+
     it("forwards a RubyGems apiKey as a repository secret name without sending it in the SDK Config document", async () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "ruby",
