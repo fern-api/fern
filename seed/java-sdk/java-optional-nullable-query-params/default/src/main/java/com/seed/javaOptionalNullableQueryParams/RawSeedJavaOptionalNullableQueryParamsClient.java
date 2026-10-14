@@ -83,6 +83,14 @@ public class RawSeedJavaOptionalNullableQueryParamsClient {
                     request.getRegularOptionalNoDefault().orElse(null),
                     false);
         }
+        if (request.getSortOrders().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "sortOrders", request.getSortOrders().get(), true);
+        }
+        if (request.getTags().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "tags", request.getTags().get(), true);
+        }
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

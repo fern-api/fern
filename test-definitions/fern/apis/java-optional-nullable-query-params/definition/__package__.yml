@@ -35,7 +35,25 @@ service:
           regularOptionalNoDefault:
             type: optional<nullable<string>>
             docs: Another optional nullable without default for comparison
+          sortOrders:
+            type: optional<nullable<SortOrder>>
+            docs: Optional array of enum values
+            allow-multiple: true
+          tags:
+            type: optional<nullable<string>>
+            docs: Optional array of string values
+            allow-multiple: true
       response: SearchResponse
+      examples:
+        - query-parameters:
+            query: "query"
+            sortOrders: [ASC, DESC]
+            tags: ["tag1", "tag2"]
+          response:
+            body:
+              results: ["results"]
+              totalCount: 1
+              query: "query"
 
 types:
   SortOrder:
