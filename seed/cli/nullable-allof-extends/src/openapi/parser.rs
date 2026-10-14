@@ -2150,6 +2150,9 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
 /// (`#/components/schemas/Wrapper/properties/Model`) keeps its whole remainder
 /// (`Wrapper/properties/Model`): that is the key
 /// [`hoist_nested_component_schema_refs`] registers the target under.
+/// The nested remainder stays RFC 6901-escaped on purpose so it matches the
+/// hoister's key; only a single top-level name is decoded, to match the
+/// declared component name.
 fn strip_ref_prefix(ref_path: &str) -> String {
     if let Some((_kind, name)) = ref_path
         .strip_prefix("#/components/")
@@ -2265,7 +2268,6 @@ fn resolve_json_pointer<'a>(
         }
     })
 }
-
 
 // ---------------------------------------------------------------------------
 // x-fern-global-headers
