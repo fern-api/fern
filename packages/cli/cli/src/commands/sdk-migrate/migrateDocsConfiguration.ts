@@ -102,8 +102,9 @@ function migrateDocument({
         if (!isAssociated) {
             return undefined;
         }
-        updatedSections++;
-        return splitApiReferenceSection(map, sourceSpecs, docsDirectory);
+        const sections = splitApiReferenceSection(map, sourceSpecs, docsDirectory);
+        updatedSections += sections.length;
+        return sections;
     });
 
     if (updatedSections === 0) {

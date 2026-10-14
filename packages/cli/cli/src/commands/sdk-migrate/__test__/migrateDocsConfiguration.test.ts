@@ -405,7 +405,7 @@ describe("migrateDocsConfiguration", () => {
             navigation: Array<{ contents: Array<Record<string, unknown>> }>;
         };
         const contents = migrated.navigation[0]?.contents ?? [];
-        expect(updated).toBe(1);
+        expect(updated).toBe(3);
         expect(contents).toHaveLength(4);
         expect(contents.slice(0, 3).map((item) => [item.api, item.slug, item["display-errors"]])).toEqual([
             ["API reference - pets", "api-pets", true],
