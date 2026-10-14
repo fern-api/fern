@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate invocation-only dynamic snippets. In addition to the full snippet
+    (client construction plus the call), the generator now exposes the structured
+    pieces a caller can render inside code it already owns (e.g. a documentation
+    code template): the bare invocation (`client.endpoints.update(...)`, honoring a
+    custom client variable name), the imports the invocation references, and the
+    generated client class name so docs can render the client construction and track
+    renames.
+
+    For Ruby the imports field is always the empty string: a generated Ruby SDK
+    references every type through the gem's module namespace (e.g.
+    `Acme::Types::Foo`), so a bare invocation never emits a per-symbol `require`.
+    Unlike TypeScript/PHP/C#/Java — where a call that references a type from another
+    namespace must emit an import/`use` line — Ruby has no import-referencing
+    invocation case to surface, so no imports mechanism is invented for it. The only
+    `require` a generated snippet emits (`require "acme"`) belongs to the client
+    construction the caller owns, not to the invocation, and is therefore omitted
+    from the invocation-only render.
+  type: feat

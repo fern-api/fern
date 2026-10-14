@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate invocation-only dynamic snippets. In addition to the full snippet
+    (client construction plus the call), the generator now exposes the structured
+    pieces a caller can render inside code it already owns (e.g. a documentation
+    code template): the bare invocation (`$client->endpoints->update(...)`,
+    honoring a custom client variable name), the PHP `use ...;` block that
+    invocation references (empty string when none), and the generated client class
+    name so docs can render `$client = new <ClientName>(...)` and track renames.
+
+    The `use` block is captured separately from the call via a new
+    `AstNode.toStringWithoutImports` helper (backed by `Writer.importsToString`),
+    the PHP analogue of the TypeScript AST's `toStringWithoutImports` (and the C#
+    AST's `toStringWithoutImports` / the Java AST's `renderNodeWithoutImports`): a
+    single render pass yields the node body (without the `<?php` prefix or
+    `namespace ...;` header) and the `use ...;` statements it references.
+    Invocations that construct types from another namespace inline (e.g. an inlined
+    request class or a `DateTime` body value) surface those `use` statements rather
+    than falling back to the complete snippet. A plain PHP invocation that
+    references no other namespaces returns an empty `use` block.
+  type: feat

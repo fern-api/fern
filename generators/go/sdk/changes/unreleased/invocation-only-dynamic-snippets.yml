@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate invocation-only dynamic snippets. In addition to the full snippet
+    (client construction plus the call), the generator now exposes the structured
+    pieces a caller can render inside code it already owns (e.g. a documentation
+    code template): the bare invocation (`client.Endpoints.Update(...)`, honoring a
+    custom client variable name), the Go `import (...)` block that invocation
+    references (empty string when none), and the generated client type name so docs
+    can render `client := New<ClientName>(...)` and track renames.
+
+    Imports are captured separately from the call via a new
+    `go.renderNodeWithoutImports` helper and `GoFile.getImports()`, the Go analogue
+    of the TypeScript AST's `toStringWithoutImports`. Invocations that reference
+    imported types (e.g. a body value constructed with `uuid.MustParse(...)`)
+    surface those imports rather than falling back to the complete snippet. Because
+    every Go SDK method takes a leading `context.Context`, the returned imports
+    always include the `context` import.
+  type: feat

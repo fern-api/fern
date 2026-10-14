@@ -29,4 +29,8 @@ export interface Options {
     // This is useful when multiple endpoints have the same HTTP method and path
     // across different namespaces, and we need to generate a snippet for a specific one.
     endpointId?: string;
+
+    // The name of the variable the endpoint is invoked on. Only used when generating
+    // an invocation-only snippet, where the client is instantiated by the caller.
+    clientVariableName?: string;
 }

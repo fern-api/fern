@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate invocation-only dynamic snippets. In addition to the full snippet
+    (client construction plus the call), the generator now exposes the structured
+    pieces a caller can render inside code it already owns (e.g. a documentation
+    code template): the bare invocation (`await client.Endpoints.Update(...)`,
+    honoring a custom client variable name), the C# `using ...;` block that
+    invocation references (empty string when none), and the generated client class
+    name so docs can render `var client = new <ClientName>(...)` and track renames.
+
+    The `using` block is captured separately from the call via a new
+    `AstNode.toStringWithoutImports` helper, the C# analogue of the TypeScript AST's
+    `toStringWithoutImports` (and the Java AST's `renderNodeWithoutImports`): a single
+    render pass yields the node body and the `using ...;` directives it references.
+    Invocations that construct imported types inline (e.g. a body value built with a
+    `System.DateTime` or `System.Guid`) surface those usings rather than falling back
+    to the complete snippet. A plain C# invocation references no usings, so a bare
+    call returns an empty using block.
+  type: feat

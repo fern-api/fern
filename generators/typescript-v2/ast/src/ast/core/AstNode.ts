@@ -30,4 +30,25 @@ export abstract class AstNode extends AbstractAstNode {
         this.write(file);
         return file.toString();
     }
+
+    /**
+     * Writes the node without the import statements it references. `imports` is the rendered
+     * import block the code would otherwise need (empty string when none), and `hasImports`
+     * reports whether any were separated out.
+     */
+    public toStringWithoutImports({
+        customConfig,
+        formatter
+    }: {
+        customConfig: TypescriptCustomConfigSchema | undefined;
+        formatter?: AbstractFormatter;
+    }): { code: string; imports: string; hasImports: boolean } {
+        const file = new TypeScriptFile({ customConfig, formatter });
+        this.write(file);
+        return {
+            code: file.toString({ omitImports: true }),
+            imports: file.getImports(),
+            hasImports: file.hasImports()
+        };
+    }
 }
