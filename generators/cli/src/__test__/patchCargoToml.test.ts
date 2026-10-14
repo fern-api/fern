@@ -431,6 +431,7 @@ describe("addExtraDependenciesToCargoLock", () => {
         "dependencies = [",
         ' "base64",',
         ' "tokio",',
+        ' "twice 2.0.0",',
         "]",
         "",
         "[[package]]",
@@ -453,7 +454,7 @@ describe("addExtraDependenciesToCargoLock", () => {
 
     it("lists a crate the lockfile already resolves under the root package, in order", () => {
         const patched = addExtraDependenciesToCargoLock(LOCK, { sha1: "0.10" });
-        expect(patched).toContain('dependencies = [\n "base64",\n "sha1",\n "tokio",\n]');
+        expect(patched).toContain('dependencies = [\n "base64",\n "sha1",\n "tokio",\n "twice 2.0.0",\n]');
     });
 
     it("resolves renamed crates by their package name", () => {
@@ -476,10 +477,18 @@ describe("addExtraDependenciesToCargoLock", () => {
         expect(addExtraDependenciesToCargoLock(LOCK, { tokio: "1" })).toBe(LOCK);
     });
 
+    it("treats a version-suffixed root entry as already listed", () => {
+        const lock = LOCK.replace(' "base64",\n', ' "base64",\n "sha1 0.10.6",\n');
+        expect(addExtraDependenciesToCargoLock(lock, { sha1: "0.10" })).toBe(lock);
+    });
+
+    it("counts only [[package]] entries when checking a crate resolves once", () => {
+        const lock = `${LOCK}\n[metadata]\nname = "sha1"\n`;
+        expect(addExtraDependenciesToCargoLock(lock, { sha1: "0.10" })).toContain(' "sha1",\n "tokio",');
+    });
+
     it("keeps the shipped lockfile's sha1 for the twilio-style config", () => {
-        if (!/\nname = "sha1"\n/.test(TEMPLATE_CARGO_LOCK)) {
-            return;
-        }
+        expect(TEMPLATE_CARGO_LOCK.split('[[package]]\nname = "sha1"\n')).toHaveLength(2);
         const patched = addExtraDependenciesToCargoLock(TEMPLATE_CARGO_LOCK, { sha1: "0.10" });
         expect(rootLockDependencies(patched)).toContain('"sha1"');
     });

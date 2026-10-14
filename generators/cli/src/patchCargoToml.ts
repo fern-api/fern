@@ -502,13 +502,19 @@ function replaceVersion(cargoToml: string, version: string): string {
 const CARGO_LOCK_ROOT_DEPENDENCIES =
     /(\[\[package\]\]\nname = "fern-cli-sdk"\nversion = "[^"]*"\n(?:(?!\[\[package\]\])[^\n]*\n)*?dependencies = \[\n)((?: "[^"\n]*",\n)*)(\])/;
 
+/** Crate name of a lockfile dependency line: ` "tokio 1.0.0",` → `tokio`. */
+function lockDependencyName(line: string): string {
+    return line.trim().replace(/^"/, "").replace(/",$/, "").split(" ")[0] ?? "";
+}
+
 /**
  * List `extraDependencies` under the root `fern-cli-sdk` entry of
  * Cargo.lock when the shipped lockfile already resolves the crate (e.g.
  * `sha1`, pulled in transitively), so a regenerated lockfile keeps it and
  * `cargo build --locked` accepts the output. Crates the lockfile does not
  * contain exactly once, plus `path`/`git`/`optional` ones, are left for
- * the first `cargo build` to resolve.
+ * the first `cargo build` to resolve, as is a root entry without a
+ * `dependencies` list (the template always has one).
  */
 export function addExtraDependenciesToCargoLock(
     cargoLock: string,
@@ -522,19 +528,19 @@ export function addExtraDependenciesToCargoLock(
         return cargoLock;
     }
     const lines = (match[2] ?? "").split("\n").filter((line) => line.length > 0);
-    const listed = new Set(lines.map((line) => line.trim().replace(/^"/, "").replace(/",$/, "")));
+    const listed = new Set(lines.map(lockDependencyName));
     for (const [name, value] of Object.entries(extraDependencies)) {
         const spec: CargoDependencySpec = typeof value === "string" ? { version: value } : value;
         if (spec.path != null || spec.git != null || spec.optional === true) {
             continue;
         }
         const crate = spec.package ?? name;
-        const occurrences = cargoLock.split(`\nname = "${crate}"\n`).length - 1;
-        if (occurrences !== 1 || listed.has(crate)) {
+        const packageEntries = cargoLock.split(`[[package]]\nname = "${crate}"\n`).length - 1;
+        if (packageEntries !== 1 || listed.has(crate)) {
             continue;
         }
         const line = ` "${crate}",`;
-        const insertAt = lines.findIndex((existing) => existing > line);
+        const insertAt = lines.findIndex((existing) => lockDependencyName(existing) > crate);
         lines.splice(insertAt === -1 ? lines.length : insertAt, 0, line);
         listed.add(crate);
     }
