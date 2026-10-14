@@ -25,6 +25,7 @@ export function getSkillName(readmeConfig: FernGeneratorCli.ReadmeConfig): strin
     const base = toKebabCase(readmeConfig.apiName ?? readmeConfig.organization);
     const suffix = `-${readmeConfig.language.type}-sdk`;
     const name = `${base.slice(0, MAX_SKILL_NAME_LENGTH - suffix.length)}${suffix}`;
+    // Collapse after truncating so the result can only get shorter and the 64-char cap always holds.
     return name.replace(/-+/g, "-").replace(/^-|-$/g, "");
 }
 
@@ -49,7 +50,7 @@ export class SkillGenerator {
     constructor({ readmeConfig }: { readmeConfig: FernGeneratorCli.ReadmeConfig }) {
         this.readmeConfig = readmeConfig;
         this.languageTitle = languageToTitle(readmeConfig.language);
-        this.apiName = readmeConfig.apiName ?? pascalCase(readmeConfig.organization);
+        this.apiName = toSingleLine(readmeConfig.apiName ?? pascalCase(readmeConfig.organization));
         this.packageName = getPackageName(readmeConfig.language);
     }
 
@@ -229,6 +230,20 @@ export class SkillGenerator {
         }
         return !feature.snippetsAreOptional && (feature.snippets == null || feature.snippets.length === 0);
     }
+}
+
+/**
+ * The frontmatter `description` is a YAML folded block scalar, which takes its content literally
+ * (`:`/`#` are fine) but must not contain line breaks or control characters.
+ */
+function toSingleLine(s: string): string {
+    const withoutControlCharacters = Array.from(s)
+        .filter((character) => {
+            const code = character.charCodeAt(0);
+            return code >= 0x20 && code !== 0x7f;
+        })
+        .join("");
+    return withoutControlCharacters.replace(/\s+/g, " ").trim();
 }
 
 function toKebabCase(s: string): string {
