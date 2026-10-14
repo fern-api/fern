@@ -121,16 +121,16 @@ export abstract class AbstractDynamicSnippetsGenerator<
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
+        if (this.createSnippetGenerator(this.context.clone() as Context).generateInvocationSnippetSync == null) {
+            return undefined;
+        }
         let bestResponse: InvocationSnippetResponse | undefined = undefined;
         let lastError: Error | undefined = undefined;
         for (const endpoint of endpoints) {
             const context = this.context.clone() as Context;
             const snippetGenerator = this.createSnippetGenerator(context);
-            if (snippetGenerator.generateInvocationSnippetSync == null) {
-                return undefined;
-            }
             try {
-                const response = snippetGenerator.generateInvocationSnippetSync({ endpoint, request, options });
+                const response = snippetGenerator.generateInvocationSnippetSync?.({ endpoint, request, options });
                 if (response == null) {
                     return undefined;
                 }
@@ -164,6 +164,11 @@ export abstract class AbstractDynamicSnippetsGenerator<
     }): boolean {
         if (current == null) {
             return true;
+        }
+        const candidateErrors = candidate.errors?.length ?? 0;
+        const currentErrors = current.errors?.length ?? 0;
+        if (candidateErrors !== currentErrors) {
+            return candidateErrors < currentErrors;
         }
         return candidate.snippet.length > current.snippet.length;
     }
