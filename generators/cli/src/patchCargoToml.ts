@@ -95,6 +95,7 @@ export async function patchCargoToml(args: {
     // otherwise `cargo build --locked` rejects the build.
     const cargoLockPath = path.join(outputDir, "Cargo.lock");
     let patchedLock = patchCargoLockVersion(await readFile(cargoLockPath, "utf-8"), packageVersion);
+    patchedLock = addExtraDependenciesToCargoLock(patchedLock, extraDependencies);
     const packageName = packageIdentity?.name;
     if (packageName != null) {
         patchedLock = renameCargoLockPackage(patchedLock, packageName);
@@ -496,6 +497,52 @@ function replaceVersion(cargoToml: string, version: string): string {
         throw new Error('patchCargoToml anchor missing — could not find version = "..." field');
     }
     return cargoToml.replace(versionRe, `$1"${version}"`);
+}
+
+const CARGO_LOCK_ROOT_DEPENDENCIES =
+    /(\[\[package\]\]\nname = "fern-cli-sdk"\nversion = "[^"]*"\n(?:(?!\[\[package\]\])[^\n]*\n)*?dependencies = \[\n)((?: "[^"\n]*",\n)*)(\])/;
+
+/**
+ * List `extraDependencies` under the root `fern-cli-sdk` entry of
+ * Cargo.lock when the shipped lockfile already resolves the crate (e.g.
+ * `sha1`, pulled in transitively), so a regenerated lockfile keeps it and
+ * `cargo build --locked` accepts the output. Crates the lockfile does not
+ * contain exactly once, plus `path`/`git`/`optional` ones, are left for
+ * the first `cargo build` to resolve.
+ */
+export function addExtraDependenciesToCargoLock(
+    cargoLock: string,
+    extraDependencies: Record<string, CargoDependencyValue> | undefined
+): string {
+    if (extraDependencies == null) {
+        return cargoLock;
+    }
+    const match = CARGO_LOCK_ROOT_DEPENDENCIES.exec(cargoLock);
+    if (match == null) {
+        return cargoLock;
+    }
+    const lines = (match[2] ?? "").split("\n").filter((line) => line.length > 0);
+    const listed = new Set(lines.map((line) => line.trim().replace(/^"/, "").replace(/",$/, "")));
+    for (const [name, value] of Object.entries(extraDependencies)) {
+        const spec: CargoDependencySpec = typeof value === "string" ? { version: value } : value;
+        if (spec.path != null || spec.git != null || spec.optional === true) {
+            continue;
+        }
+        const crate = spec.package ?? name;
+        const occurrences = cargoLock.split(`\nname = "${crate}"\n`).length - 1;
+        if (occurrences !== 1 || listed.has(crate)) {
+            continue;
+        }
+        const line = ` "${crate}",`;
+        const insertAt = lines.findIndex((existing) => existing > line);
+        lines.splice(insertAt === -1 ? lines.length : insertAt, 0, line);
+        listed.add(crate);
+    }
+    return cargoLock.replace(
+        CARGO_LOCK_ROOT_DEPENDENCIES,
+        (_whole, head: string, _body: string, tail: string) =>
+            `${head}${lines.map((line) => `${line}\n`).join("")}${tail}`
+    );
 }
 
 /**
