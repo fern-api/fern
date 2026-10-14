@@ -427,6 +427,47 @@ describe("migrateDocsConfiguration", () => {
         expect(result).toEqual({ edits: [], updatedSections: 0 });
         expect(await readFile(docsPath, "utf8")).toBe(original);
     });
+
+    it("fills in an empty or null specs list but leaves a non-empty one alone", async () => {
+        await writeFile(
+            docsPath,
+            [
+                "navigation:",
+                "  - api: Empty list",
+                "    api-name: empty",
+                "    specs: []",
+                "  - api: Missing value",
+                "    api-name: nothing",
+                "    specs:",
+                "  - api: Has specs",
+                "    api-name: existing",
+                "    specs:",
+                "      - type: openapi",
+                "        path: ./keep.yml",
+                ""
+            ].join("\n")
+        );
+
+        let updated = 0;
+        for (const workspaceName of ["empty", "nothing", "existing"]) {
+            updated += await migrate({
+                docsPath,
+                workspaceName,
+                isOnlyApiWorkspace: false,
+                sourceSpecs: [createSourceSpec(temporaryDirectory)]
+            });
+        }
+
+        const migrated = YAML.parse(await readFile(docsPath, "utf8")) as {
+            navigation: Array<{ specs: Array<{ path: string }> }>;
+        };
+        expect(updated).toBe(2);
+        expect(migrated.navigation.map((item) => item.specs.map((spec) => spec.path))).toEqual([
+            ["../specs/openapi.yml"],
+            ["../specs/openapi.yml"],
+            ["./keep.yml"]
+        ]);
+    });
 });
 
 function createSourceSpec(temporaryDirectory: string): ResolvedMigrationSourceSpec {

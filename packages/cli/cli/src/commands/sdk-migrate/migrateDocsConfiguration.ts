@@ -91,7 +91,7 @@ function migrateDocument({
     const docsDirectory = dirname(configurationPath).toString();
     let updatedSections = 0;
     visitNode(document.contents, (map) => {
-        if (sourceSpecs.length === 0 || !isApiReferenceSection(map) || map.has("specs")) {
+        if (sourceSpecs.length === 0 || !isApiReferenceSection(map) || hasDirectSpecs(map)) {
             return;
         }
         const referencedApiName = scalarString(map.get("api-name", true));
@@ -207,6 +207,12 @@ function relativizeDocsImportSettings(
 function relativePath(from: string, to: string): string {
     const relative = path.relative(from, to).split(path.sep).join("/");
     return relative.startsWith(".") ? relative : `./${relative}`;
+}
+
+/** Docs treat an empty or null `specs` as absent, so only a non-empty list counts as already migrated. */
+function hasDirectSpecs(map: YAMLMap): boolean {
+    const specs = map.get("specs", true);
+    return isSeq(specs) ? specs.items.length > 0 : isScalar(specs) ? specs.value != null : specs != null;
 }
 
 function isApiReferenceSection(map: YAMLMap): boolean {
