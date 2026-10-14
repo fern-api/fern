@@ -263,6 +263,7 @@ jobs:
             "name": "@fern/query-parameters-openapi",
             "version": "${VERSION}",
             "description": "CLI for query-parameters-api",
+            "homepage": "https://github.com/query-parameters-openapi/fern",
             "repository": {
               "type": "git",
               "url": "https://github.com/query-parameters-openapi/fern"
