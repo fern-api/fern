@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Fix `snippets: cli` on a docs.yml API reference being dropped while parsing docs.yml, so the
-    `cli` dynamic IR is now generated and `cliSdk` is registered with FDR during docs publish.
+    Fix `snippets: cli` on a docs API reference being dropped while parsing docs.yml (and the `docs`
+    section of fern.yml), so the `cli` dynamic IR is now generated and `cliSdk` is registered with FDR
+    during docs publish.
   type: fix
