@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { template } from "es-toolkit/compat";
 import type fs from "fs";
 
@@ -16,6 +17,7 @@ export const SKILLS_DIRECTORY = ".agents/skills";
 export const SKILL_FILENAME = "SKILL.md";
 
 const MAX_SKILL_NAME_LENGTH = 64;
+const TRUNCATION_HASH_LENGTH = 6;
 const SKIPPED_FEATURE_IDS = new Set<string>([FernGeneratorCli.StructuredFeatureId.Contributing]);
 
 /**
@@ -25,9 +27,15 @@ const SKIPPED_FEATURE_IDS = new Set<string>([FernGeneratorCli.StructuredFeatureI
 export function getSkillName(readmeConfig: FernGeneratorCli.ReadmeConfig): string {
     const base = toKebabCase(readmeConfig.apiName ?? readmeConfig.organization);
     const suffix = `-${readmeConfig.language.type}-sdk`;
-    const name = `${base.slice(0, MAX_SKILL_NAME_LENGTH - suffix.length)}${suffix}`;
+    const budget = MAX_SKILL_NAME_LENGTH - suffix.length;
+    // When the name has to be truncated, keep a short stable hash of the full name so two APIs that
+    // share a long prefix still get distinct skill directories.
+    const truncated =
+        base.length > budget
+            ? `${base.slice(0, budget - TRUNCATION_HASH_LENGTH - 1)}-${createHash("sha1").update(base).digest("hex").slice(0, TRUNCATION_HASH_LENGTH)}`
+            : base;
     // Collapse after truncating so the result can only get shorter and the 64-char cap always holds.
-    return name.replace(/-+/g, "-").replace(/^-|-$/g, "");
+    return `${truncated}${suffix}`.replace(/-+/g, "-").replace(/^-|-$/g, "");
 }
 
 /**

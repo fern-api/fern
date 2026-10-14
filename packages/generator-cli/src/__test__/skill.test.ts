@@ -19,8 +19,11 @@ describe("generate skill", () => {
         expect(getSkillName(COHERE_GO)).toBe("cohere-go-sdk");
         expect(getSkillName(ADVANCED)).toBe("imdb-inc-typescript-sdk");
         expect(getSkillDirectory(ADVANCED)).toBe(".agents/skills/imdb-inc-typescript-sdk");
-        expect(
-            getSkillName({ ...ADVANCED, apiName: undefined, organization: "A".repeat(80) }).length
-        ).toBeLessThanOrEqual(64);
+        const first = getSkillName({ ...ADVANCED, apiName: `${"A".repeat(60)}First` });
+        const second = getSkillName({ ...ADVANCED, apiName: `${"A".repeat(60)}Second` });
+        expect(first.length).toBeLessThanOrEqual(64);
+        expect(first).toMatch(/^a{42}-[0-9a-f]{6}-typescript-sdk$/);
+        expect(first).not.toBe(second);
+        expect(getSkillName({ ...ADVANCED, apiName: `${"A".repeat(60)}First` })).toBe(first);
     });
 });
