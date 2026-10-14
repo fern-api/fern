@@ -355,6 +355,9 @@ function renderMainRs(args: {
         if (emitBannerDirection) {
             bannerBuilder += `.direction(BannerDirection::${bannerDirection === "vertical" ? "Vertical" : "Diagonal"})`;
         }
+        if (config.animate === true) {
+            bannerBuilder += ".animate(true)";
+        }
         lines.push(`        .banner(${bannerBuilder})`);
     }
 

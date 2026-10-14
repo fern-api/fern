@@ -969,7 +969,10 @@ impl CliApp {
             // in whichever representation the caller already asked for.
             format: crate::formatter::resolve_format_from_raw_args(&str_args, &self.name),
         };
-        match self.dispatch_pipeline(args, profile_error, banner_mode, out).await {
+        match self
+            .dispatch_pipeline(args, profile_error, banner_mode, out)
+            .await
+        {
             Ok(PipelineOutcome::Success) => 0,
             Ok(PipelineOutcome::HelpShown) => 0,
             Err(err) => {
@@ -1436,7 +1439,11 @@ impl CliApp {
                     || e.kind() == clap::error::ErrorKind::DisplayVersion =>
             {
                 if banner_mode == BannerMode::Color {
-                    let _ = std::io::Write::write_fmt(out, format_args!("{}", e.render().ansi()));
+                    let help = e.render().ansi().to_string();
+                    if let Some(banner) = &self.banner {
+                        banner.play_intro(&help, out);
+                    }
+                    let _ = std::io::Write::write_fmt(out, format_args!("{help}"));
                 } else {
                     let _ = std::io::Write::write_fmt(out, format_args!("{e}"));
                 }

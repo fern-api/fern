@@ -434,11 +434,13 @@ export interface FernCliBannerConfig {
     colors?: string[];
     direction?: FernCliBannerDirection;
     lineColors?: string[];
+    /** Play a short highlight sweep across the banner before root help on an interactive terminal. */
+    animate?: boolean;
 }
 
 export type FernCliBannerDirection = "horizontal" | "vertical" | "diagonal";
 
-const BANNER_CONFIG_FIELDS: ReadonlySet<string> = new Set(["text", "colors", "direction", "lineColors"]);
+const BANNER_CONFIG_FIELDS: ReadonlySet<string> = new Set(["text", "colors", "direction", "lineColors", "animate"]);
 const BANNER_DIRECTIONS: ReadonlySet<string> = new Set(["horizontal", "vertical", "diagonal"]);
 const BANNER_COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
 
@@ -568,7 +570,7 @@ function validateBannerConfig(raw: unknown): string | FernCliBannerConfig {
     if (unknownKeys.length > 0) {
         throw new Error(
             `Invalid customConfig.banner: unknown field(s) ${unknownKeys.map((key) => `\`${key}\``).join(", ")}. ` +
-                "Supported fields: `text`, `colors`, `direction`, `lineColors`."
+                "Supported fields: `text`, `colors`, `direction`, `lineColors`, `animate`."
         );
     }
 
@@ -599,6 +601,14 @@ function validateBannerConfig(raw: unknown): string | FernCliBannerConfig {
             );
         }
         result.direction = obj.direction as FernCliBannerDirection;
+    }
+    if (obj.animate !== undefined) {
+        if (typeof obj.animate !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.banner.animate: expected a boolean, got ${describeConfigValue(obj.animate)}.`
+            );
+        }
+        result.animate = obj.animate;
     }
     return result;
 }

@@ -51,6 +51,15 @@ describe("validateCustomConfig", () => {
         });
     });
 
+    it("accepts and validates banner.animate", () => {
+        expect(validateCustomConfig({ banner: { text: "Fern", animate: true } })).toEqual({
+            banner: { text: "Fern", animate: true }
+        });
+        expect(() => validateCustomConfig({ banner: { text: "Fern", animate: "yes" } })).toThrow(
+            "Invalid customConfig.banner.animate: expected a boolean"
+        );
+    });
+
     it("rejects an unknown banner direction", () => {
         expect(() => validateCustomConfig({ banner: { text: "Fern", direction: "radial" } })).toThrow(
             'Invalid customConfig.banner.direction: expected "horizontal", "vertical", or "diagonal", got "radial".'
