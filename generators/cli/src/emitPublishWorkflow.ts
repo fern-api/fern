@@ -27,6 +27,43 @@ function shellSafeJson(value: string | string[]): string {
     return JSON.stringify(value).replace(/\\\\/g, "\\u005c").replace(/\$/g, "\\u0024").replace(/`/g, "\\u0060");
 }
 
+function constructNpmPublishOnceHelper(registryUrl: string): string {
+    return `          # Publishes the package in the current directory unless this exact
+          # version is already on the registry, so re-running a release after a
+          # partial failure skips what already shipped instead of failing on it.
+          npm_publish_once() {
+            local name version view_out view_err view_status publish_log publish_status
+            name=\$(node -p "require('./package.json').name")
+            version=\$(node -p "require('./package.json').version")
+
+            view_err=\$(mktemp)
+            view_status=0
+            view_out=\$(npm view "\${name}@\${version}" version --registry "${registryUrl}" 2>"\${view_err}") || view_status=\$?
+            if [[ "\${view_status}" -eq 0 && "\${view_out}" == "\${version}" ]]; then
+              echo "::notice::\${name}@\${version} is already published; skipping."
+              return 0
+            fi
+            # E404 means this version (or the whole package) is not on the
+            # registry yet. Any other failure (network, auth) must stop the job
+            # rather than be mistaken for "not published".
+            if [[ "\${view_status}" -ne 0 ]] && ! grep -Eq 'E404|404 Not Found' "\${view_err}"; then
+              cat "\${view_err}" >&2
+              echo "::error::Could not check whether \${name}@\${version} is already published (npm view exited \${view_status})."
+              return 1
+            fi
+
+            publish_log=\$(mktemp)
+            publish_status=0
+            npm publish "\$@" 2>&1 | tee "\${publish_log}" || publish_status=\$?
+            if [[ "\${publish_status}" -ne 0 ]]; then
+              if grep -q 'EOTP' "\${publish_log}"; then
+                echo "::error::npm publish of \${name}@\${version} requires a one-time password (EOTP). Use a granular npm access token with \\"Bypass 2FA\\" enabled, or configure npm trusted publishing (OIDC) for this package."
+              fi
+              return "\${publish_status}"
+            fi
+          }`;
+}
+
 /**
  * Cross-compilation targets for the CLI binary. Each entry maps a
  * Rust target triple to the npm platform package suffix that cargo-dist
@@ -164,6 +201,7 @@ function constructWorkflowYaml(args: {
 
     const oidcPermissions = useOidc ? `\n    permissions:\n      contents: read\n      id-token: write` : "";
     const tokenEnvBlock = useOidc ? "" : `\n        env:\n          NODE_AUTH_TOKEN: \${{ secrets.${tokenVar} }}`;
+    const npmPublishOnceHelper = constructNpmPublishOnceHelper(npmPublishInfo.registryUrl);
 
     const matrixIncludes = TARGETS.map(
         (t) =>
@@ -315,11 +353,10 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: \${{ matrix.runner }}${oidcPermissions}
     strategy:
-      # Don't cancel sibling matrix jobs on first failure — a transient
-      # failure on one platform would otherwise leave npm in a partial
-      # state (some platform packages published, others not, launcher
-      # never published), with no clean re-run since the already-
-      # published versions reject re-publish.
+      # Don't cancel sibling matrix jobs on first failure — let every
+      # platform that can publish do so. Publishing skips versions already
+      # on the registry, so re-running the failed jobs completes the
+      # release (the launcher waits for every platform package).
       fail-fast: false
       matrix:
         include:
@@ -409,6 +446,8 @@ ${matrixIncludes}
           PKGJSON
 
           cd "\${PKG_DIR}"
+${npmPublishOnceHelper}
+
           # Pre-release detection. ANY SemVer pre-release (a "-" after the
           # version core) must get a non-latest dist-tag: matching only
           # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
@@ -424,16 +463,16 @@ ${matrixIncludes}
               TAG=prerelease
             fi
             echo "Publishing pre-release \${VERSION} with --tag \${TAG}"
-            npm publish --access public --tag "\${TAG}"
+            npm_publish_once --access public --tag "\${TAG}"
           else
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
             CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
             if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
-              npm publish --access public --tag backport
+              npm_publish_once --access public --tag backport
             else
-              npm publish --access public
+              npm_publish_once --access public
             fi
           fi
 
@@ -536,6 +575,8 @@ ${launcherPlatformEntries}
           LAUNCHER
 
           cd "\${PKG_DIR}"
+${npmPublishOnceHelper}
+
           # Pre-release detection. ANY SemVer pre-release (a "-" after the
           # version core) must get a non-latest dist-tag: matching only
           # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
@@ -551,16 +592,16 @@ ${launcherPlatformEntries}
               TAG=prerelease
             fi
             echo "Publishing pre-release \${VERSION} with --tag \${TAG}"
-            npm publish --access public --tag "\${TAG}"
+            npm_publish_once --access public --tag "\${TAG}"
           else
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
             CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
             if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
-              npm publish --access public --tag backport
+              npm_publish_once --access public --tag backport
             else
-              npm publish --access public
+              npm_publish_once --access public
             fi
           fi
 `;
