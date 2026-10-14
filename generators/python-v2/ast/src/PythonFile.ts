@@ -88,6 +88,25 @@ export class PythonFile extends AstNode {
         return writer.toString().trimEnd();
     }
 
+    /**
+     * Renders the statements and their import block separately, using the same reference-name
+     * overrides for both so aliased imports (e.g. two `Item` classes from different modules) match
+     * the names used in the body.
+     */
+    public renderWithoutImports(): { code: string; imports: string } {
+        const uniqueReferences = this.deduplicateReferences();
+        const codeWriter = new Writer();
+        this.updateWriterRefNameOverrides({ writer: codeWriter, uniqueReferences });
+        this.statements.forEach((statement, idx) => {
+            if (idx > 0) {
+                codeWriter.newLine();
+            }
+            statement.write(codeWriter);
+        });
+        codeWriter.unsetRefNameOverrides();
+        return { code: codeWriter.toString(), imports: this.getImports() };
+    }
+
     /*******************************
      * Helper Methods
      *******************************/

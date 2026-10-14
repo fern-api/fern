@@ -12,13 +12,9 @@ const DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY = AbsoluteFilePath.of(
 // (`let client = AcmeClient(...)`), the `private func main() async throws { ... }` scaffold, or the
 // `import Foundation` / `import <Module>` preamble that construction emits.
 //
-// Swift's `imports` field is always the empty string. The Swift AST (`@fern-api/swift-codegen`) has
-// no per-node import mechanism (its `Writer` is a plain buffer with no `getImports`/`addImport`);
-// generated snippets reference every SDK type by a bare name that resolves through the two
-// module-level imports emitted once by the scaffold (`import Foundation`, `import <Module>`). Those
-// belong to the client construction the caller owns, so a bare invocation surfaces no per-symbol
-// `import`. This mirrors the Ruby/Rust ports (types referenced via the module/gem namespace), not
-// the C#/Java/PHP `{ code, imports }` helper pattern.
+// Swift's `imports` field is always `import Foundation`. The Swift AST has no per-symbol import
+// tracking, and calls can reference Foundation types (`Date`, `UUID`, `Data`) that the SDK module
+// import (`clientImport`) does not provide.
 describe("invocation-only snippets", () => {
     const generator = buildDynamicSnippetsGenerator({
         irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "exhaustive.json")),
@@ -60,12 +56,12 @@ describe("invocation-only snippets", () => {
         expect(response?.errors).toBeUndefined();
     });
 
-    it("returns no imports for a Swift invocation (types resolve via module-level imports)", () => {
+    it("returns the Foundation import for a Swift invocation", () => {
         const response = generator.generateInvocationSync(request);
 
         // Always empty for Swift: the AST has no per-symbol import mechanism, and types resolve
         // through the scaffold's `import Foundation` / `import <Module>` statements.
-        expect(response?.imports).toBe("");
+        expect(response?.imports).toBe("import Foundation");
     });
 
     it("exposes the generated client class name so docs can render the client construction", () => {
@@ -90,7 +86,7 @@ describe("invocation-only snippets", () => {
         expect(response?.snippet).toBe('try await mailchimp.endpoints.httpMethods.testGet(id: "id")');
     });
 
-    it("returns no imports even when the invocation constructs typed body values", () => {
+    it("returns the Foundation import when the invocation constructs typed body values", () => {
         // This body constructs typed values (Date, UUID, Data, dictionaries). In
         // TypeScript/PHP/C#/Java such a call would surface per-symbol imports; in Swift every type
         // resolves through the module-level imports, so `imports` remains empty. This documents that
@@ -127,7 +123,7 @@ describe("invocation-only snippets", () => {
         });
 
         expect(response).not.toBeUndefined();
-        expect(response?.imports).toBe("");
+        expect(response?.imports).toBe("import Foundation");
         expect(response?.snippet).not.toContain("import ");
     });
 });

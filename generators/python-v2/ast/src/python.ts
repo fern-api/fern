@@ -133,10 +133,7 @@ export function renderNodeWithoutImports({ node, modulePath }: { node: AstNode; 
     code: string;
     imports: string;
 } {
-    // A bare node's `toString()` only writes its own body — imports are emitted solely by
-    // PythonFile — so the body already excludes them. Wrapping the node in a file at the same
-    // path lets us compute just the import block the body references.
-    const code = node.toString();
-    const file = new PythonFile({ path: modulePath, statements: [node] });
-    return { code, imports: file.getImports() };
+    // Render through a file at the same path so the body and the import block share the same
+    // reference-name overrides (aliases for colliding names).
+    return new PythonFile({ path: modulePath, statements: [node] }).renderWithoutImports();
 }

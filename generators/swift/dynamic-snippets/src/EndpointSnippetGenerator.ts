@@ -62,18 +62,9 @@ export class EndpointSnippetGenerator {
      * (e.g. `try await client.endpoints.httpMethods.testGet(id: "id")`, honoring a custom client
      * variable name), the imports the call requires, and the generated client class name.
      *
-     * Swift's `imports` is always the empty string. Unlike TypeScript/PHP/C#/Java — whose AST tracks
-     * per-symbol imports and can surface the `import`/`using` lines a call references — the Swift AST
-     * (`@fern-api/swift-codegen`) has no per-node import mechanism at all: its {@link swift.Writer}
-     * is a plain buffer (no `getImports`/`importsToString`/`addImport`), and generated snippets
-     * reference every SDK type by a bare name that resolves through the two module-level imports
-     * emitted once by the scaffold — `import Foundation` and `import <Module>` (see
-     * {@link generateImportFoundationStatement} / {@link generateImportModuleStatement}). Those
-     * belong to the client construction the caller owns, not to the invocation. A bare invocation
-     * therefore emits no per-symbol `import`, so we return `""` rather than inventing an imports
-     * mechanism the language and its AST do not have. This mirrors the Ruby/Rust ports (types
-     * referenced via the module/gem namespace), not the C#/Java/PHP `{ code, imports }` helper
-     * pattern.
+     * Swift's `imports` is always `import Foundation`: the Swift AST has no per-symbol import tracking,
+     * SDK types resolve through the whole-module import returned as `clientImport`, and the call may
+     * reference Foundation types (`Date`, `UUID`, `Data`).
      */
     public generateInvocationSnippetSync({
         endpoint,
@@ -98,9 +89,9 @@ export class EndpointSnippetGenerator {
         const snippet = invocation.toString().trim().replace(/;$/, "").trim();
         return {
             snippet,
-            // Always empty for Swift — see the method doc comment: the AST has no per-symbol import
-            // mechanism and types resolve through the scaffold's module-level imports.
-            imports: "",
+            // The Swift AST has no per-symbol import tracking, so always surface Foundation: calls can
+            // reference `Date`, `UUID`, `Data`, etc., which the SDK module import alone does not provide.
+            imports: this.generateImportFoundationStatement().toString().trim(),
             clientName: this.getClientName(),
             // The import a docs template needs to construct the root client. In Swift, both the
             // client type and every SDK type it references resolve through a single whole-module

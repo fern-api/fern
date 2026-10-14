@@ -103,7 +103,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const invocation = this.callMethod({
             endpoint,
             snippet: request,
-            clientVariableName: options?.clientVariableName
+            clientVariableName: options?.clientVariableName,
+            bareInvocation: true
         });
         // The caller supplies the client and terminates the statement themselves, so the
         // invocation is emitted as a bare expression: no `var client = new ...Client()`
@@ -222,11 +223,13 @@ export class EndpointSnippetGenerator extends WithGeneration {
     private callMethod({
         endpoint,
         snippet,
-        clientVariableName
+        clientVariableName,
+        bareInvocation
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         clientVariableName?: string;
+        bareInvocation?: boolean;
     }): ast.CodeBlock | ast.MethodInvocation {
         // if the example has *any* sample with stream set to true, then the method is an async enumerable
         const isAsyncEnumerable =
@@ -242,7 +245,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             isAsyncEnumerable
         });
 
-        if (isAsyncEnumerable) {
+        if (isAsyncEnumerable && !bareInvocation) {
             return this.csharp.codeblock((writer) => {
                 writer.write("await foreach (var item in ");
                 writer.writeNode(invocation);

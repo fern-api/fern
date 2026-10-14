@@ -122,4 +122,28 @@ describe("invocation-only snippets", () => {
         expect(response?.imports).toContain("using System;");
         expect(response?.errors).toBeUndefined();
     });
+
+    describe("invocation-only snippets for streaming endpoints", () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "streaming.json")),
+            config: buildGeneratorConfig({})
+        });
+
+        it("returns the bare call without the full-example `await foreach` loop", () => {
+            const response = generator.generateInvocationSync({
+                endpoint: { method: "POST" as const, path: "/generate-stream" },
+                baseURL: undefined,
+                environment: undefined,
+                auth: undefined,
+                pathParameters: undefined,
+                queryParameters: undefined,
+                headers: undefined,
+                requestBody: { stream: true, num_events: 1 }
+            });
+
+            expect(response?.snippet).not.toContain("await foreach");
+            expect(response?.snippet).not.toContain("consume each item");
+            expect(response?.snippet).toContain("client.Dummy.GenerateStreamAsync(");
+        });
+    });
 });

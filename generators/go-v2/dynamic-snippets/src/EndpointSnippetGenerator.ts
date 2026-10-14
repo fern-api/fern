@@ -108,7 +108,8 @@ export class EndpointSnippetGenerator {
         const invocation = this.callMethod({
             endpoint,
             snippet: request,
-            clientVariableName: options?.clientVariableName
+            clientVariableName: options?.clientVariableName,
+            inlineRequest: true
         });
         // The caller supplies the client and terminates the statement themselves, so the
         // invocation is emitted as a bare expression with no client construction, no package or
@@ -287,13 +288,15 @@ export class EndpointSnippetGenerator {
         endpoint,
         snippet,
         includeTestIdHeader,
-        clientVariableName
+        clientVariableName,
+        inlineRequest
     }: {
         writer: go.Writer;
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         includeTestIdHeader?: boolean;
         clientVariableName?: string;
+        inlineRequest?: boolean;
     }): void {
         const clientVar = clientVariableName ?? CLIENT_VAR_NAME;
         const { otherArgs, requestArg } = this.getMethodArgs({ endpoint, snippet });
@@ -323,6 +326,19 @@ export class EndpointSnippetGenerator {
                             this.context.getContextTodoFunctionInvocation(),
                             ...otherArgs,
                             go.codeblock("nil"),
+                            ...optionArgsInvocation
+                        ]
+                    })
+                );
+            } else if (inlineRequest) {
+                writer.writeNode(
+                    go.invokeMethod({
+                        on: go.codeblock(clientVar),
+                        method: this.getMethod({ endpoint }),
+                        arguments_: [
+                            this.context.getContextTodoFunctionInvocation(),
+                            ...otherArgs,
+                            requestArg,
                             ...optionArgsInvocation
                         ]
                     })
@@ -360,14 +376,16 @@ export class EndpointSnippetGenerator {
     private callMethod({
         endpoint,
         snippet,
-        clientVariableName
+        clientVariableName,
+        inlineRequest
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         clientVariableName?: string;
+        inlineRequest?: boolean;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
-            this.writeMethodInvocation({ writer, endpoint, snippet, clientVariableName });
+            this.writeMethodInvocation({ writer, endpoint, snippet, clientVariableName, inlineRequest });
         });
     }
 

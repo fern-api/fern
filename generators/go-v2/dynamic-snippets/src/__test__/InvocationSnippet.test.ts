@@ -119,6 +119,9 @@ describe("invocation-only snippets", () => {
 
         expect(response).not.toBeUndefined();
         expect(response?.snippet).toContain("uuid.MustParse");
+        // The request value is passed inline so the snippet stays a single call expression.
+        expect(response?.snippet).not.toContain("request :=");
+        expect(response?.snippet?.startsWith("client.")).toBe(true);
         expect(response?.imports).toContain('uuid "github.com/google/uuid"');
         expect(response?.imports).toContain('context "context"');
         expect(response?.errors).toBeUndefined();
