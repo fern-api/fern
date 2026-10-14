@@ -1594,9 +1594,10 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it.each([
         ["${MY_NUGET_KEY}", { apiKeyEnvironmentVariable: "MY_NUGET_KEY" }],
-        ["OIDC", {}],
+        ["OIDC", { trustedPublishing: true }],
+        ["<USE_OIDC>", { trustedPublishing: true }],
         ["literal-nuget-key", {}]
-    ])("maps a legacy NuGet apiKey of %s to a secret name only when it names one", (apiKey, expectedExtra) => {
+    ])("maps a legacy NuGet apiKey of %s to how the workflow should authenticate", (apiKey, expectedExtra) => {
         const request = createFernSdkGenApiRequest({
             apiName: "Petstore",
             organization: "acme",
@@ -1631,9 +1632,10 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it.each([
         ["${MY_GEM_KEY}", { apiKeyEnvironmentVariable: "MY_GEM_KEY" }],
-        ["OIDC", {}],
+        ["OIDC", { trustedPublishing: true }],
+        ["<USE_OIDC>", { trustedPublishing: true }],
         ["literal-gem-key", {}]
-    ])("maps a legacy RubyGems apiKey of %s to a secret name only when it names one", (apiKey, expectedExtra) => {
+    ])("maps a legacy RubyGems apiKey of %s to how the workflow should authenticate", (apiKey, expectedExtra) => {
         const request = createFernSdkGenApiRequest({
             apiName: "Petstore",
             organization: "acme",

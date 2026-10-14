@@ -78,6 +78,8 @@ export interface FernSdkGenApiPublishConfig {
     url?: string;
     /** Name of the repository secret the generated release workflow reads the API key from. */
     apiKeyEnvironmentVariable?: string;
+    /** Authenticate the generated release workflow with an OIDC token instead of an API key secret. */
+    trustedPublishing?: boolean;
 }
 
 export interface FernSdkGenApiPackageConfig {
@@ -651,26 +653,34 @@ function mapMavenPublish(
     };
 }
 
+/** Fern states trusted publishing in the `api-key` field, as a marker rather than a secret name. */
+const TRUSTED_PUBLISHING_API_KEYS = new Set(["OIDC", "<USE_OIDC>"]);
+
 /**
- * An `api-key` that does not name a secret is dropped here, while the same value in sdk-config.yml
- * is rejected outright. The asymmetry is deliberate. generators.yml is Fern's own format and may
- * legitimately carry a literal key or `OIDC` for trusted publishing, so failing would break configs
- * that are valid where they were written; sdk-config.yml documents this field as a secret name and
- * its schema accepts nothing else. `fern sdk migrate` never carries a non-expression value across,
- * so a migrated config cannot reach the stricter path with one.
+ * A literal `api-key` is dropped here, while the same value in sdk-config.yml is rejected outright.
+ * The asymmetry is deliberate. generators.yml is Fern's own format and may legitimately carry one,
+ * so failing would break a config that is valid where it was written; sdk-config.yml documents this
+ * field as a secret name and its schema accepts nothing else. `fern sdk migrate` never carries a
+ * literal across, so a migrated config cannot reach the stricter path with one.
+ *
+ * A trusted publishing marker is not dropped. It is the one non-expression value with somewhere to
+ * go, and dropping it left the generated workflow reading a secret that was never meant to exist.
  */
 function mapNamedPublish(
     registry: "nuget" | "rubygems" | "crates",
     output: { registryUrl: string; packageName: string; apiKey?: string } | undefined
 ): FernSdkGenApiPublicationMapping {
+    const namesSecret = registry === "nuget" || registry === "rubygems";
+    const trustedPublishing = namesSecret && output?.apiKey != null && TRUSTED_PUBLISHING_API_KEYS.has(output.apiKey);
     const apiKeyEnvironmentVariable =
-        registry === "nuget" || registry === "rubygems" ? parseSecretNameExpression(output?.apiKey) : undefined;
+        namesSecret && !trustedPublishing ? parseSecretNameExpression(output?.apiKey) : undefined;
     return {
         ...(output?.packageName ? { package: { packageName: output.packageName } } : {}),
         publish: {
             registry,
             ...(output?.registryUrl ? { url: output.registryUrl } : {}),
-            ...(apiKeyEnvironmentVariable != null ? { apiKeyEnvironmentVariable } : {})
+            ...(apiKeyEnvironmentVariable != null ? { apiKeyEnvironmentVariable } : {}),
+            ...(trustedPublishing ? { trustedPublishing: true } : {})
         }
     };
 }
