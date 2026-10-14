@@ -766,7 +766,9 @@ describe("SDK Config migration", () => {
     });
 
     it("has no workspace specs for docs when the API lists none of its own", () => {
-        expect(resolveWorkspaceSourceSpecs({ absoluteFilePath: AbsoluteFilePath.of("/tmp/fern") } as never)).toBeUndefined();
+        expect(
+            resolveWorkspaceSourceSpecs({ absoluteFilePath: AbsoluteFilePath.of("/tmp/fern") } as never)
+        ).toBeUndefined();
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {
