@@ -21,6 +21,7 @@ import {
     type ResolvedMigrationSourceSpec,
     resolveMigrationPathParameterStyle,
     resolveMigrationSourceSpecs,
+    resolveWorkspaceSourceSpecs,
     serializeMigrationSource
 } from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
@@ -735,6 +736,37 @@ describe("SDK Config migration", () => {
             }
         });
         expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
+    });
+
+    it("resolves the API's own specs for docs, ignoring a generator's spec override", () => {
+        const generator = createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3");
+        generator.apiOverride = { specs: [{ openapi: "./internal.yml" }] };
+        const workspace = {
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
+            allSpecs: [createWorkspaceOpenApiSpec("Public", AbsoluteFilePath.of("/tmp/fern/public.yml"))],
+            generatorsConfiguration: {
+                api: {
+                    type: "multiNamespace",
+                    definitions: {
+                        Public: [createConfiguredOpenApiDefinition("public.yml", false)]
+                    },
+                    rootDefinitions: undefined
+                }
+            }
+        } as unknown as AbstractAPIWorkspace<unknown>;
+
+        expect(resolveWorkspaceSourceSpecs(workspace)?.map((spec) => spec.absolutePath)).toEqual([
+            "/tmp/fern/public.yml"
+        ]);
+        expect(
+            resolveMigrationSourceSpecs({ workspace, fernWorkspace: {} as FernWorkspace, generator }).map(
+                (spec) => spec.absolutePath
+            )
+        ).toEqual(["/tmp/fern/internal.yml"]);
+    });
+
+    it("has no workspace specs for docs when the API lists none of its own", () => {
+        expect(resolveWorkspaceSourceSpecs({ absoluteFilePath: AbsoluteFilePath.of("/tmp/fern") } as never)).toBeUndefined();
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {

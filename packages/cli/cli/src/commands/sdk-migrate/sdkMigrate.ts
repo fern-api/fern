@@ -20,7 +20,9 @@ import { mergeSdkConfig } from "./mergeSdkConfig.js";
 import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import {
     identifySourceDerivedApiFields,
+    type ResolvedMigrationSourceSpec,
     resolveMigrationPathParameterStyle,
+    resolveWorkspaceSourceSpecs,
     serializeMigrationSource
 } from "./projectMigrationSource.js";
 import { selectMigrationTarget } from "./selectMigrationTarget.js";
@@ -135,7 +137,7 @@ export async function sdkMigrate({
         docsPath: project.docsWorkspaces?.absoluteFilepathToDocsConfig,
         workspaceName: workspace.workspaceName,
         isOnlyApiWorkspace: project.apiWorkspaces.length === 1,
-        sourceSpecs
+        sourceSpecs: resolveDocsSourceSpecs({ cliContext, group, sourceSpecs, workspace })
     });
 
     if (args.dryRun) {
@@ -196,6 +198,37 @@ export async function sdkMigrate({
         ),
         selections
     });
+}
+
+/**
+ * Docs show the API itself, so they take the API's own specs. A generator can override its specs for its SDK only;
+ * those must never reach docs.yml.
+ */
+function resolveDocsSourceSpecs({
+    cliContext,
+    group,
+    sourceSpecs,
+    workspace
+}: {
+    cliContext: CliContext;
+    group: generatorsYml.GeneratorGroup;
+    sourceSpecs: ResolvedMigrationSourceSpec[];
+    workspace: Project["apiWorkspaces"][number];
+}): ResolvedMigrationSourceSpec[] {
+    try {
+        const workspaceSpecs = resolveWorkspaceSourceSpecs(workspace);
+        if (workspaceSpecs != null) {
+            return workspaceSpecs;
+        }
+    } catch (error) {
+        if (!(error instanceof CliError)) {
+            throw error;
+        }
+        cliContext.stderr.warn(`[warning] docs.yml was not updated: ${error.message}`);
+        return [];
+    }
+    // The API lists no specs of its own, so the SDK specs are the only source, unless a generator overrides them.
+    return group.generators.some((generator) => generator.apiOverride?.specs != null) ? [] : sourceSpecs;
 }
 
 function resolveMigrationSdkName({ apiName, organization }: { apiName: string; organization: string }): string {
