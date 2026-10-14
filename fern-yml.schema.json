@@ -5894,6 +5894,29 @@
                     }
                   ]
                 },
+                "cli": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string"
+                        },
+                        "package": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "version",
+                        "package"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
                 "rust": {
                   "anyOf": [
                     {
