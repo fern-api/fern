@@ -272,10 +272,10 @@ exports[`snippets > file-upload > 'POST /' 1`] = `
 async function main() {
     const client = new AcmeClient();
     await client.service.post({
-        file: "Hello, world!",
+        file: new Blob(["Hello, world!"]),
         file_list: [
-            "First",
-            "Second",
+            new Blob(["First"]),
+            new Blob(["Second"]),
         ],
     });
 }
@@ -289,7 +289,7 @@ exports[`snippets > file-upload > 'POST /just-file' 1`] = `
 async function main() {
     const client = new AcmeClient();
     await client.service.justFile({
-        file: "Hello, world!",
+        file: new Blob(["Hello, world!"]),
     });
 }
 main();
@@ -304,7 +304,7 @@ async function main() {
     await client.service.justFileWithQueryParams({
         integer: 42,
         maybeString: "exists",
-        file: "Hello, world!",
+        file: new Blob(["Hello, world!"]),
     });
 }
 main();

@@ -117,10 +117,8 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "blob": {
-                if (noSerdeLayer) {
-                    writer.writeNode(TypeLiteral.string(this.internalType.value));
-                    return;
-                }
+                // File uploads accept `core.file.Uploadable` (Blob, stream, ...) with or without the
+                // serde layer, so a plain string never type-checks.
                 writer.write("new Blob([");
                 writer.writeNode(TypeLiteral.string(this.internalType.value));
                 writer.write("])");
