@@ -90,6 +90,7 @@ function build(sdkConfig: Awaited<ReturnType<typeof loadFixture>>, overrides: Re
         sdkConfig,
         language: "typescript",
         generatorName: "fernapi/fern-typescript-sdk",
+        apiName: "movies",
         organization: "abbey",
         outputPath: "/fern/output",
         rawSpecsManifest: OPENAPI_MANIFEST,
@@ -402,6 +403,7 @@ describe("resolveSdkConfigIr", () => {
             const resolved = await resolveSdkConfigIr({
                 generatorInvocation: generatorInvocation(),
                 absolutePathToFernConfig,
+                apiName: "movies",
                 organization: "abbey",
                 outputPath: "/fern/output",
                 rawSpecsManifest: OPENAPI_MANIFEST
@@ -420,6 +422,7 @@ describe("resolveSdkConfigIr", () => {
             const resolved = await resolveSdkConfigIr({
                 generatorInvocation: generatorInvocation(),
                 absolutePathToFernConfig,
+                apiName: "movies",
                 organization: "abbey",
                 outputPath: "/fern/output",
                 rawSpecsManifest: OPENAPI_MANIFEST
@@ -429,6 +432,7 @@ describe("resolveSdkConfigIr", () => {
                 expect(resolved.sdkConfigIr.target).toMatchObject({
                     language: "typescript",
                     sdkName: "Abbey Movies",
+                    apiName: "movies",
                     organization: "abbey",
                     sourceOrigin: "fern"
                 });

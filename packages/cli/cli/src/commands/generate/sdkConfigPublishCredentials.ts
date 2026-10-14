@@ -79,10 +79,43 @@ function extractApiKeySecretName(output: unknown): string | undefined {
 }
 
 function sanitizeOutput(value: unknown): { output: unknown } {
-    if (!isRecord(value) || !isRecord(value.publish)) {
+    if (!isRecord(value)) {
         return { output: value };
     }
-    const publish = value.publish;
+    const github = sanitizeGithub(value.github);
+    const withGithub = github === value.github ? value : { ...value, github };
+    if (!isRecord(value.publish)) {
+        return { output: withGithub };
+    }
+    return { output: { ...withGithub, publish: sanitizePublish(value.publish) } };
+}
+
+// sdk-gen-api discards output.github.credentials on receipt and Fiddle delivers through Fern's GitHub App, so the
+// CLI never forwards them; stripping here keeps ${ENV} expressions and literals out of the uploaded body.
+function sanitizeGithub(github: unknown): unknown {
+    if (!isRecord(github) || !("credentials" in github)) {
+        return github;
+    }
+    const { credentials, ...intent } = github;
+    validateGithubCredentialShape(credentials);
+    return intent;
+}
+
+function validateGithubCredentialShape(credentials: unknown): void {
+    if (!isRecord(credentials)) {
+        throw new Error("GitHub output credentials must be an object");
+    }
+    for (const [field, value] of Object.entries(credentials)) {
+        if (field !== "username" && field !== "password" && field !== "token" && field !== "apiKey") {
+            throw new Error(`GitHub output does not support credential field ${field}`);
+        }
+        if (typeof value !== "string") {
+            throw new Error(`GitHub output credential ${field} must be a string`);
+        }
+    }
+}
+
+function sanitizePublish(publish: Record<string, unknown>): Record<string, unknown> {
     const registry = publish.registry;
     if (registry !== "npm" && registry !== "crates" && registry !== "pypi" && registry !== "maven") {
         const {
@@ -96,7 +129,7 @@ function sanitizeOutput(value: unknown): { output: unknown } {
             secretKey: _secretKey,
             ...intent
         } = publish;
-        return { output: { ...value, publish: intent } };
+        return intent;
     }
     const {
         credentials: _credentials,
@@ -107,7 +140,7 @@ function sanitizeOutput(value: unknown): { output: unknown } {
         ...intent
     } = publish;
     validateCredentialFieldShape(registry, publish, credentialFields(publish));
-    return { output: { ...value, publish: intent } };
+    return intent;
 }
 
 function extractPublishCredential(output: unknown): FernSdkGenApiPublishCredentialSource | undefined {

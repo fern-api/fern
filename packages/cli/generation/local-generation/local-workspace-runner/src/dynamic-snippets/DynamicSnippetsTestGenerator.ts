@@ -47,7 +47,9 @@ export class DynamicSnippetsTestGenerator {
         python: { generator: DynamicSnippetsPythonTestGenerator, unstable: true },
         ruby: { generator: DynamicSnippetsRubyTestGenerator },
         rust: { generator: DynamicSnippetsRustTestGenerator },
-        swift: { generator: DynamicSnippetsSwiftTestGenerator }
+        swift: { generator: DynamicSnippetsSwiftTestGenerator },
+        // The CLI has no language-specific dynamic-snippet test generator.
+        cli: undefined
     };
 
     constructor(

@@ -1,0 +1,34 @@
+openapi: 3.1.0
+info: { title: Acme, version: "1" }
+servers: [{ url: https://api.example.com/v1 }]
+paths:
+  /oauth/token:
+    post:
+      operationId: getToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: { client_id: { type: string }, client_secret: { type: string }, scope: { type: string } }
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: { access_token: { type: string }, expires_in: { type: integer }, refresh_token: { type: string } }
+  /oauth/refresh:
+    post:
+      operationId: refreshToken
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object, properties: { refresh_token: { type: string } } }
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema: { type: object, properties: { access_token: { type: string }, expires_in: { type: integer } } }

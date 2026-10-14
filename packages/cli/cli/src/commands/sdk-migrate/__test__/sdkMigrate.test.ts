@@ -35,6 +35,7 @@ describe("SDK Config migration", () => {
 
         expect(result.sdkConfig).toMatchObject({
             schemaVersion: "sdk-config/v1",
+            sdkName: "migration-api",
             api: {
                 audiences: [],
                 baseUrl: "https://api.example.com",
@@ -61,6 +62,17 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.package).toBeUndefined();
         expect(result.sdkConfig.docs).toBeUndefined();
         expect(result.sdkConfig.generation).toBeUndefined();
+    });
+
+    it("uses an explicitly resolved SDK name", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]),
+            source: createSource(),
+            sdkName: "acme"
+        });
+
+        expect(result.sdkConfig.sdkName).toBe("acme");
     });
 
     it("omits downloadSnippets synthesized for local output", () => {

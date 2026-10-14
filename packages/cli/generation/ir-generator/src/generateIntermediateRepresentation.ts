@@ -111,7 +111,7 @@ export declare namespace generateIntermediateRepresentation {
 
 export function generateIntermediateRepresentation({
     workspace,
-    generationLanguage,
+    generationLanguage: rawGenerationLanguage,
     keywords,
     smartCasing,
     smartCasingDigitWordBoundary,
@@ -131,6 +131,12 @@ export function generateIntermediateRepresentation({
     dynamicGeneratorConfig,
     generationMetadata
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
+    // The CLI generator is not an IR SupportedSdkLanguage; it historically resolved to `undefined`
+    // here. Preserve that so the dynamic IR's casing and the user-agent template are unchanged — CLI
+    // snippet command/flag names derive from the dynamic IR's originalName, not casings.
+    const generationLanguage =
+        rawGenerationLanguage === generatorsYml.GenerationLanguage.CLI ? undefined : rawGenerationLanguage;
+
     const irSettings = getIrGenerationSettings({ workspace });
 
     const casingsGenerator = constructCasingsGenerator({

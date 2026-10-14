@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.53.4
+  changelogEntry:
+    - summary: |
+        `extraDependencies` crates that the shipped `Cargo.lock` already resolves
+        (for example `sha1`) are now also listed under the root package in the
+        generated `Cargo.lock`, so regenerating no longer drops them from the
+        lockfile and `cargo build --locked` works without a lockfile refresh.
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
 - version: 0.53.3
   changelogEntry:
     - summary: |

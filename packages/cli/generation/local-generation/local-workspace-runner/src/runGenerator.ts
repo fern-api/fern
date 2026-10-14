@@ -316,6 +316,7 @@ export async function writeFilesToDiskAndRunGenerator({
         const built = await resolveSdkConfigIr({
             generatorInvocation,
             absolutePathToFernConfig,
+            apiName: workspace.definition.rootApiFile.contents.name,
             organization,
             outputPath: paths.outputDirectory,
             rawSpecsManifest
