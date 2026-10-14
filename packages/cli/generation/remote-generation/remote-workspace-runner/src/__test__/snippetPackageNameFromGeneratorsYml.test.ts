@@ -11,6 +11,7 @@ import {
     collectSnippetGeneratorCandidates,
     getDocsSnippetPackageName,
     getSoleUnnamedGenerator,
+    getUnknownSnippetPackageWarningLines,
     selectVersionGeneratorForSnippet
 } from "../publishDocs.js";
 
@@ -185,3 +186,26 @@ function asWorkspace(
     // Only the two fields the candidate collector reads are needed.
     return { workspaceName, generatorsConfiguration } as unknown as FernWorkspace;
 }
+
+describe("unknown snippet package warning", () => {
+    const base = {
+        language: "typescript",
+        packageName: "@postman-uat/pets",
+        workspaceName: undefined,
+        otherApiWorkspaceCount: 0
+    };
+
+    it("keeps the generators.yml guidance and adds nothing when SDK Gen API is off", () => {
+        const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkGenApi: false });
+        expect(lines).toHaveLength(2);
+        expect(lines[0]).toContain("unknown package `@postman-uat/pets`");
+        expect(lines[1]).toContain("generators.yml");
+    });
+
+    it("says snippets are not supported for sdk-config.yml when SDK Gen API is on", () => {
+        const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkGenApi: true });
+        expect(lines).toHaveLength(3);
+        expect(lines[2]).toContain("not supported for SDKs configured in sdk-config.yml");
+        expect(lines[2]).toContain("FERN_USE_SDK_GEN_API=true");
+    });
+});

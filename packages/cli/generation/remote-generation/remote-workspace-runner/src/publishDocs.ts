@@ -69,6 +69,7 @@ import terminalLink from "terminal-link";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
+import { getFernSdkGenApiEnvOverride } from "./fernSdkGenApi.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
@@ -2167,12 +2168,15 @@ async function generateLanguageSpecificDynamicIRs({
     for (const [language, packageName] of Object.entries(snippetConfiguration)) {
         if (language && packageName && !languagesWithDynamicIr.has(language) && !skipLanguages.has(language)) {
             context.logger.warn();
-            context.logger.warn(
-                `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
-            );
-            context.logger.warn(
-                `Please make sure a generators.yml in this fern folder (checked ${workspace.workspaceName ? `${workspace.workspaceName}/` : ""}generators.yml and the other ${apiWorkspaces.length} API workspace(s)) has a generator that publishes a ${packageName} package.`
-            );
+            for (const line of getUnknownSnippetPackageWarningLines({
+                language,
+                packageName,
+                workspaceName: workspace.workspaceName,
+                otherApiWorkspaceCount: apiWorkspaces.length,
+                usesSdkGenApi: getFernSdkGenApiEnvOverride() === true
+            })) {
+                context.logger.warn(line);
+            }
             context.logger.warn();
         }
     }
@@ -2189,6 +2193,36 @@ async function generateLanguageSpecificDynamicIRs({
     }
 
     return undefined;
+}
+
+/**
+ * Warning lines for a docs `snippets:` entry that no generator resolved to. Docs publishing only
+ * reads generators.yml for SDK packages, so with FERN_USE_SDK_GEN_API=true (where `fern sdk migrate`
+ * moves the generators into sdk-config.yml) the package is not found and the snippets are dropped.
+ */
+export function getUnknownSnippetPackageWarningLines({
+    language,
+    packageName,
+    workspaceName,
+    otherApiWorkspaceCount,
+    usesSdkGenApi
+}: {
+    language: string;
+    packageName: string;
+    workspaceName: string | undefined;
+    otherApiWorkspaceCount: number;
+    usesSdkGenApi: boolean;
+}): string[] {
+    const lines = [
+        `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`,
+        `Please make sure a generators.yml in this fern folder (checked ${workspaceName ? `${workspaceName}/` : ""}generators.yml and the other ${otherApiWorkspaceCount} API workspace(s)) has a generator that publishes a ${packageName} package.`
+    ];
+    if (usesSdkGenApi) {
+        lines.push(
+            "SDK snippets are not supported for SDKs configured in sdk-config.yml yet (FERN_USE_SDK_GEN_API=true). The package name is only read from generators.yml, so migrated SDKs have no snippets in these docs."
+        );
+    }
+    return lines;
 }
 
 /**
