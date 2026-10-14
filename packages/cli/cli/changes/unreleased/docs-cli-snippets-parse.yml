@@ -5,3 +5,8 @@
     section of fern.yml), so the `cli` dynamic IR is now generated and `cliSdk` is registered with FDR
     during docs publish.
   type: fix
+- summary: |
+    When an API reference's own generators.yml has a single generator for a snippet language with no
+    package name (e.g. a local-file-system CLI generator), docs publish now uses it for dynamic snippets
+    even if a sibling API workspace has a generator for the same language.
+  type: fix

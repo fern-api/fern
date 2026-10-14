@@ -1978,6 +1978,25 @@ export function getSoleUnnamedGenerator(
     return resolveSnippetPackageName(only) == null ? only : undefined;
 }
 
+/**
+ * Like {@link getSoleUnnamedGenerator}, but the API section's own generators.yml wins: a
+ * generator borrowed from a sibling API workspace doesn't make the section's own one ambiguous.
+ */
+export function getSoleUnnamedSnippetGenerator({
+    language,
+    ownGenerators,
+    candidates
+}: {
+    language: string;
+    ownGenerators: generatorsYml.GeneratorInvocation[];
+    candidates: generatorsYml.GeneratorInvocation[];
+}): generatorsYml.GeneratorInvocation | undefined {
+    const ofLanguage = (generators: generatorsYml.GeneratorInvocation[]) =>
+        generators.filter((generatorInvocation) => generatorInvocation.language === language);
+    const own = ofLanguage(ownGenerators);
+    return getSoleUnnamedGenerator(own.length > 0 ? own : ofLanguage(candidates));
+}
+
 export function describeGeneratorForSnippetLog(generatorInvocation: generatorsYml.GeneratorInvocation): string {
     const config = generatorInvocation.config;
     const configKeys = typeof config === "object" && config !== null ? Object.keys(config).join(",") : "none";
@@ -2104,6 +2123,7 @@ async function generateLanguageSpecificDynamicIRs({
     };
 
     const allGenerators = collectSnippetGeneratorCandidates({ workspace, apiWorkspaces, context });
+    const ownGenerators = workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? [];
     for (const generatorInvocation of allGenerators) {
         const dynamicGeneratorConfig = getDynamicGeneratorConfig({
             apiName: workspace.workspaceName ?? "",
@@ -2129,9 +2149,11 @@ async function generateLanguageSpecificDynamicIRs({
             continue;
         }
         if (packageName == null) {
-            const sole = getSoleUnnamedGenerator(
-                allGenerators.filter((candidate) => candidate.language === generatorInvocation.language)
-            );
+            const sole = getSoleUnnamedSnippetGenerator({
+                language: generatorInvocation.language,
+                ownGenerators,
+                candidates: allGenerators
+            });
             if (sole !== generatorInvocation) {
                 context.logger.debug(
                     `[SDK Dynamic IR] ${generatorInvocation.language}: ${describeGeneratorForSnippetLog(generatorInvocation)} has no resolvable package name, cannot match snippets package "${requestedPackage}"`
