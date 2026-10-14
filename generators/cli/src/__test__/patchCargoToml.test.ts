@@ -6,6 +6,7 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import {
     addCrateDependency,
     addExtraDependencies,
+    addExtraDependenciesToCargoLock,
     addSdkCrateToLock,
     addTypesCrateToLock,
     applyCargoTomlPatch,
@@ -415,6 +416,102 @@ describe("patchCargoLockVersion", () => {
         expect(() => patchCargoLockVersion("version = 4\n", "1.0.0")).toThrow(/could not find fern-cli-sdk/);
     });
 });
+
+describe("addExtraDependenciesToCargoLock", () => {
+    const LOCK = [
+        "version = 4",
+        "",
+        "[[package]]",
+        'name = "base64"',
+        'version = "0.22.1"',
+        "",
+        "[[package]]",
+        'name = "fern-cli-sdk"',
+        'version = "0.1.0"',
+        "dependencies = [",
+        ' "base64",',
+        ' "tokio",',
+        ' "twice 2.0.0",',
+        "]",
+        "",
+        "[[package]]",
+        'name = "sha1"',
+        'version = "0.10.6"',
+        "",
+        "[[package]]",
+        'name = "tokio"',
+        'version = "1.0.0"',
+        "",
+        "[[package]]",
+        'name = "twice"',
+        'version = "1.0.0"',
+        "",
+        "[[package]]",
+        'name = "twice"',
+        'version = "2.0.0"',
+        ""
+    ].join("\n");
+
+    it("lists a crate the lockfile already resolves under the root package, in order", () => {
+        const patched = addExtraDependenciesToCargoLock(LOCK, { sha1: "0.10" });
+        expect(patched).toContain('dependencies = [\n "base64",\n "sha1",\n "tokio",\n "twice 2.0.0",\n]');
+    });
+
+    it("resolves renamed crates by their package name", () => {
+        const patched = addExtraDependenciesToCargoLock(LOCK, { hash: { version: "0.10", package: "sha1" } });
+        expect(patched).toContain(' "sha1",\n "tokio",');
+    });
+
+    it("leaves crates that are missing, ambiguous, optional, path or git for cargo to resolve", () => {
+        const patched = addExtraDependenciesToCargoLock(LOCK, {
+            missing: "1",
+            twice: "1",
+            sha1: { version: "0.10", optional: true },
+            local: { path: "../local" },
+            remote: { git: "https://example.com/remote.git" }
+        });
+        expect(patched).toBe(LOCK);
+    });
+
+    it("does not duplicate a crate the root already lists", () => {
+        expect(addExtraDependenciesToCargoLock(LOCK, { tokio: "1" })).toBe(LOCK);
+    });
+
+    it("accepts caret-compatible requirements on the locked version", () => {
+        for (const requirement of ["0.10", "^0.10", "0.10.6", "^0.10.2"]) {
+            expect(addExtraDependenciesToCargoLock(LOCK, { sha1: requirement })).toContain(' "sha1",\n "tokio",');
+        }
+    });
+
+    it("skips requirements the locked version does not satisfy, or that it cannot check", () => {
+        for (const requirement of ["0.9", "0.11", "1", "0.10.7", ">=0.10", "~0.10", "*"]) {
+            expect(addExtraDependenciesToCargoLock(LOCK, { sha1: requirement })).toBe(LOCK);
+        }
+        expect(addExtraDependenciesToCargoLock(LOCK, { sha1: { version: "0.10", registry: "internal" } })).toBe(LOCK);
+        expect(addExtraDependenciesToCargoLock(LOCK, { sha1: { features: ["std"] } })).toBe(LOCK);
+    });
+
+    it("treats a version-suffixed root entry as already listed", () => {
+        const lock = LOCK.replace(' "base64",\n', ' "base64",\n "sha1 0.10.6",\n');
+        expect(addExtraDependenciesToCargoLock(lock, { sha1: "0.10" })).toBe(lock);
+    });
+
+    it("counts only [[package]] entries when checking a crate resolves once", () => {
+        const lock = `${LOCK}\n[metadata]\nname = "sha1"\n`;
+        expect(addExtraDependenciesToCargoLock(lock, { sha1: "0.10" })).toContain(' "sha1",\n "tokio",');
+    });
+
+    it("keeps the shipped lockfile's sha1 for the twilio-style config", () => {
+        expect(TEMPLATE_CARGO_LOCK.split('[[package]]\nname = "sha1"\n')).toHaveLength(2);
+        const patched = addExtraDependenciesToCargoLock(TEMPLATE_CARGO_LOCK, { sha1: "0.10" });
+        expect(rootLockDependencies(patched)).toContain('"sha1"');
+    });
+});
+
+function rootLockDependencies(lock: string): string {
+    const start = lock.indexOf('name = "fern-cli-sdk"');
+    return lock.slice(start, lock.indexOf("]", start));
+}
 
 describe("patchCargoToml (filesystem)", () => {
     let tmpDir: string;
