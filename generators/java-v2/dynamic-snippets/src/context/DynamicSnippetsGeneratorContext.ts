@@ -2,6 +2,7 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
     Options,
+    RESERVED_KEYWORDS,
     TypeInstance
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
@@ -30,6 +31,7 @@ const RESERVED_NAMES = new Set([
 
 // Method names that conflict with final methods in Java's Object class
 const RESERVED_METHOD_NAMES = new Set(["getClass", "notify", "notifyAll", "wait"]);
+const JAVA_RESERVED_NAMES = RESERVED_KEYWORDS.java;
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -123,6 +125,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         const methodName = name.camelCase.safeName;
         // Use suffix for reserved method names to match Java v1 generator behavior
         if (this.isReservedMethodName(methodName)) {
+            return methodName + "_";
+        }
+        // Docs build the dynamic IR without a generation language, so its safe names are not
+        // escaped for Java. Match the SDK, which suffixes keywords (e.g. `.long_(...)`).
+        if (JAVA_RESERVED_NAMES.has(methodName)) {
             return methodName + "_";
         }
         return this.getName(methodName);

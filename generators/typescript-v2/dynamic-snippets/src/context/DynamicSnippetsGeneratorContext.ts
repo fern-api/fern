@@ -72,6 +72,30 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.camelCase.unsafeName;
     }
 
+    /**
+     * Name of a query, header or path parameter in the SDK's request types. Mirrors the SDK's
+     * `getSdkParameterPropertyName`: `parameterNaming` overrides win, otherwise the wire value is used
+     * without the serde layer (or with `retainOriginalCasing`), and camelCase with it.
+     */
+    public getParameterPropertyName(name: FernIr.dynamic.NameAndWireValue): string {
+        switch (this.customConfig?.parameterNaming) {
+            case "originalName":
+                return this.formatOriginalPropertyName(name.name.originalName);
+            case "wireValue":
+                return this.formatOriginalPropertyName(name.wireValue);
+            case "camelCase":
+                return name.name.camelCase.unsafeName;
+            case "snakeCase":
+                return name.name.snakeCase.unsafeName;
+            default:
+                break;
+        }
+        if (this.customConfig?.retainOriginalCasing || resolveNoSerdeLayer(this.customConfig)) {
+            return this.formatOriginalPropertyName(name.wireValue);
+        }
+        return name.name.camelCase.unsafeName;
+    }
+
     public getMethodName(name: FernIr.Name): string {
         return name.camelCase.unsafeName;
     }

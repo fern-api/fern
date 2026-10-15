@@ -425,7 +425,8 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
         return {
-            name: this.context.getPropertyName(header.name.name),
+            // The SDK always names client-level header options in camelCase (BaseClientContextImpl.getOptionKeyForHeader).
+            name: header.name.name.camelCase.unsafeName,
             value: typeLiteral
         };
     }
@@ -647,7 +648,7 @@ export class EndpointSnippetGenerator {
             values: snippet.queryParameters ?? {}
         });
         const queryParameterFields = queryParameters.map((queryParameter) => ({
-            name: this.context.getPropertyName(queryParameter.name.name),
+            name: this.context.getParameterPropertyName(queryParameter.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
                 ...queryParameter,
                 convertOpts: { isForRequest: true }
@@ -661,7 +662,7 @@ export class EndpointSnippetGenerator {
             values: snippet.headers ?? {}
         });
         const headerFields = headers.map((header) => ({
-            name: this.context.getPropertyName(header.name.name),
+            name: this.context.getParameterPropertyName(header.name),
             value: this.context.dynamicTypeLiteralMapper.convert({ ...header, convertOpts: { isForRequest: true } })
         }));
         this.context.errors.unscope();
@@ -825,7 +826,7 @@ export class EndpointSnippetGenerator {
         });
         for (const parameter of pathParameters) {
             args.push({
-                name: this.context.getPropertyName(parameter.name.name),
+                name: this.context.getParameterPropertyName(parameter.name),
                 value: this.context.dynamicTypeLiteralMapper.convert({
                     ...parameter,
                     convertOpts: { isForRequest: true }
