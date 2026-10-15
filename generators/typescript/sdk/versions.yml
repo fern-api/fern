@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.107.1
+  changelogEntry:
+    - summary: |
+        Reject `.` and `..` as path parameter values. `encodeURIComponent` leaves dots unencoded, so URL resolution
+        removed these dot segments and sent the request, with its auth headers, to a different endpoint (for example,
+        `/users/{userId}/roles` with `userId: ".."` was sent to `/roles`). The SDK now throws its generic API error
+        (e.g. `MyClientError`) before the request is sent. SDKs generated with `neverThrowErrors` throw a plain `Error`.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
 - version: 3.107.0
   changelogEntry:
     - summary: |

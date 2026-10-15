@@ -48,7 +48,7 @@ export class BigunionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/bigunion/${core.url.encodePathParam(id)}`,
+                `/bigunion/${core.url.encodePathParam(id, errors.SeedUnionsError)}`,
             ),
             method: "GET",
             headers: _headers,

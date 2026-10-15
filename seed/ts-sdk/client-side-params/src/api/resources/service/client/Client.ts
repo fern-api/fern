@@ -138,7 +138,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/resources/${core.url.encodePathParam(resourceId)}`,
+                `/api/resources/${core.url.encodePathParam(resourceId, errors.SeedClientSideParamsError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -372,7 +372,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId, errors.SeedClientSideParamsError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -526,7 +526,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId, errors.SeedClientSideParamsError)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -580,7 +580,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId, errors.SeedClientSideParamsError)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -711,7 +711,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/connections/${core.url.encodePathParam(connectionId)}`,
+                `/api/connections/${core.url.encodePathParam(connectionId, errors.SeedClientSideParamsError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -875,7 +875,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/clients/${core.url.encodePathParam(clientId)}`,
+                `/api/clients/${core.url.encodePathParam(clientId, errors.SeedClientSideParamsError)}`,
             ),
             method: "GET",
             headers: _headers,

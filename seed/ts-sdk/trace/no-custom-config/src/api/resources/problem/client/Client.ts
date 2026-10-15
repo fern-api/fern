@@ -269,7 +269,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${core.url.encodePathParam(problemId)}`,
+                `/problem-crud/update/${core.url.encodePathParam(problemId, errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -338,7 +338,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${core.url.encodePathParam(problemId)}`,
+                `/problem-crud/delete/${core.url.encodePathParam(problemId, errors.SeedTraceError)}`,
             ),
             method: "DELETE",
             headers: _headers,

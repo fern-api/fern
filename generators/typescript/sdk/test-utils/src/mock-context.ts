@@ -100,7 +100,8 @@ export function createMockGeneratedClientClass() {
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createThis(),
                 ts.factory.createIdentifier(caseConverter.camelUnsafe(pathParam.name))
-            )
+            ),
+        getReferenceToInvalidPathParameterError: () => undefined
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }

@@ -126,7 +126,7 @@ export class ItemsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedApiEnvironment.Default,
-                `items/${core.url.encodePathParam(itemId)}`,
+                `items/${core.url.encodePathParam(itemId, errors.SeedApiError)}`,
             ),
             method: "GET",
             headers: _headers,
