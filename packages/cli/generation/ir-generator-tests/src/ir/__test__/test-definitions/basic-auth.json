@@ -933,7 +933,8 @@
                         }
                     },
                     "passwordOmit": null,
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -1057,7 +1058,8 @@
                         }
                     },
                     "passwordOmit": null,
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {

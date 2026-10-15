@@ -27,6 +27,18 @@ types:
           Set when the API declares multiple auth schemes (requirement ANY /
           ENDPOINT_SECURITY) and the SDK's constructor options for this scheme
           must be nested under this property, named after the scheme key.
+      requirement:
+        type: optional<AuthRequirement>
+        docs: |
+          The API's auth requirement. Lets generators tell `auth: any` (ANY) apart
+          from endpoint-level security (ENDPOINT_SECURITY), since both set
+          `wrapperProperty`.
+
+  AuthRequirement:
+    enum:
+      - ALL
+      - ANY
+      - ENDPOINT_SECURITY
 
   BasicAuth:
     extends: BaseAuth

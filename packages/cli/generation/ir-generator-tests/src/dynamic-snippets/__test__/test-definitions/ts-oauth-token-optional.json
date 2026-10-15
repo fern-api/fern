@@ -217,7 +217,8 @@
                     }
                 },
                 "customProperties": null,
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -506,7 +507,8 @@
                     }
                 },
                 "customProperties": null,
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
