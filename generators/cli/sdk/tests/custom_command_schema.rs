@@ -128,7 +128,7 @@ fn schema_on_a_custom_only_group_lists_its_commands() {
 }
 
 #[test]
-fn spec_operations_still_win_and_unknown_paths_still_error() {
+fn spec_operations_keep_their_schema_and_unknown_paths_still_error() {
     let (exit, schema) = run(&["plants", "list", "--schema"]);
     assert_eq!(exit, 0, "{schema:#}");
     assert!(schema.get("command").is_none(), "{schema:#}");
@@ -210,4 +210,75 @@ fn schema_on_a_runnable_custom_command_with_subcommands_describes_it() {
         .map(|entry| entry["command"].as_str().unwrap())
         .collect();
     assert_eq!(names, ["bloom", "bloom config"], "{root:#}");
+}
+
+#[test]
+fn schema_on_a_spec_group_also_lists_its_custom_commands() {
+    let (exit, schema) = run(&["plants", "--schema"]);
+    assert_eq!(exit, 0, "{schema:#}");
+    let entries = schema.as_array().expect("array");
+    assert!(
+        entries.iter().any(|e| e["command"] == "plants prune"),
+        "{schema:#}"
+    );
+    assert!(
+        entries.iter().any(|e| e.get("command").is_none()),
+        "spec operation missing: {schema:#}"
+    );
+}
+
+fn run_with(app: CliApp, args: &[&str]) -> (i32, serde_json::Value) {
+    let mut argv = vec!["probe-cli"];
+    argv.extend_from_slice(args);
+    let mut out: Vec<u8> = Vec::new();
+    let exit = app.try_run_from_with_output(argv, &mut out);
+    (exit, serde_json::from_slice(&out).unwrap())
+}
+
+#[test]
+fn a_custom_command_replacing_a_spec_operation_owns_its_schema() {
+    let app = CliApp::new("probe-cli")
+        .binding(OpenApiBinding::new().spec(SPEC))
+        .command_under(
+            &["plants"],
+            clap::Command::new("list").about("List plants from the local cache"),
+            OpenApiBinding::handler(handle),
+        );
+    let (exit, schema) = run_with(app, &["plants", "list", "--schema"]);
+    assert_eq!(exit, 0, "{schema:#}");
+    assert_eq!(schema["command"], "plants list", "{schema:#}");
+    assert_eq!(schema["description"], "List plants from the local cache");
+}
+
+#[test]
+fn hidden_custom_commands_are_described_but_not_listed() {
+    let app = || {
+        CliApp::new("probe-cli")
+            .binding(OpenApiBinding::new().spec(SPEC))
+            .command(
+                clap::Command::new("debug").about("Internal").hide(true),
+                OpenApiBinding::handler(handle),
+            )
+            .command(
+                clap::Command::new("lab").about("Experiments"),
+                OpenApiBinding::handler(handle),
+            )
+            .command(
+                clap::Command::new("water").about("Water every plant"),
+                OpenApiBinding::handler(handle),
+            )
+            .hide(&["lab"])
+    };
+    let (_, root) = run_with(app(), &["--schema"]);
+    let names: Vec<&str> = root["customCommands"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|e| e["command"].as_str().unwrap())
+        .collect();
+    assert_eq!(names, ["water"], "{root:#}");
+
+    let (exit, debug) = run_with(app(), &["debug", "--schema"]);
+    assert_eq!(exit, 0, "{debug:#}");
+    assert_eq!(debug["command"], "debug");
 }

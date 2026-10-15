@@ -822,11 +822,10 @@ impl CliApp {
     }
 
     /// Every invocable custom command, as the spellings argv may use for
-    /// each path segment (canonical name, clap aliases, deferred aliases)
-    /// paired with its `--schema` entry.
-    fn custom_command_leaves(
-        &self,
-    ) -> Vec<(Vec<crate::custom_commands::PathSegment>, serde_json::Value)> {
+    /// each path segment (canonical name, clap aliases, deferred aliases),
+    /// paired with its `--schema` entry and whether it is hidden (by clap's
+    /// `hide(true)` on it or an ancestor, or by [`CliApp::hide`]).
+    fn custom_command_leaves(&self) -> Vec<CustomCommandLeaf> {
         let mut leaves = Vec::new();
         for cc in &self.cli_commands {
             let mut prefix: Vec<crate::custom_commands::PathSegment> = cc
@@ -839,35 +838,59 @@ impl CliApp {
             for (segments, command) in found {
                 let name: Vec<String> = segments.iter().map(|seg| seg[0].clone()).collect();
                 let entry = describe_command_leaf(command, &name.join(" "));
-                leaves.push((self.with_deferred_aliases(segments), entry));
+                let mut node = &cc.cmd;
+                let mut hidden = node.is_hide_set();
+                for segment in &name[cc.path.len() + 1..] {
+                    match node.find_subcommand(segment) {
+                        Some(sub) => node = sub,
+                        None => break,
+                    }
+                    hidden |= node.is_hide_set();
+                }
+                hidden |= self
+                    .deferred_ops
+                    .iter()
+                    .any(|op| matches!(op, DeferredOp::Hide { path: at } if name.starts_with(at)));
+                leaves.push(CustomCommandLeaf {
+                    segments: self.with_deferred_aliases(segments),
+                    entry,
+                    hidden,
+                });
             }
         }
         leaves
     }
 
-    /// `--schema` for a path owned by a custom command rather than a binding:
-    /// the command's entry when `path` names an invocable one, otherwise an
-    /// array of every invocable custom command under `path` when it names a
-    /// group, otherwise `None`.
-    fn custom_command_schema(&self, path: &[String]) -> Option<serde_json::Value> {
-        let names = |segments: &[crate::custom_commands::PathSegment]| {
-            path.iter()
-                .zip(segments)
-                .all(|(token, spellings)| spellings.contains(token))
-        };
-        let leaves = self.custom_command_leaves();
-        if let Some((_, entry)) = leaves
-            .iter()
-            .find(|(segments, _)| segments.len() == path.len() && names(segments))
-        {
-            return Some(entry.clone());
+    /// Custom commands for a non-empty `--schema` path: the entry of the
+    /// command `path` names (hidden or not, as clap still runs it), and the
+    /// visible custom commands below `path`.
+    fn custom_command_schema(
+        &self,
+        path: &[String],
+    ) -> (Option<serde_json::Value>, Vec<serde_json::Value>) {
+        let mut exact = None;
+        let mut under = Vec::new();
+        if self.cli_commands.is_empty() || path.is_empty() {
+            return (exact, under);
         }
-        let under: Vec<serde_json::Value> = leaves
-            .into_iter()
-            .filter(|(segments, _)| segments.len() > path.len() && names(segments))
-            .map(|(_, entry)| entry)
-            .collect();
-        (!under.is_empty()).then_some(serde_json::Value::Array(under))
+        let at_or_below_path = |segments: &[crate::custom_commands::PathSegment]| {
+            segments.len() >= path.len()
+                && path
+                    .iter()
+                    .zip(segments)
+                    .all(|(token, spellings)| spellings.contains(token))
+        };
+        for leaf in self.custom_command_leaves() {
+            if !at_or_below_path(&leaf.segments) {
+                continue;
+            }
+            if leaf.segments.len() == path.len() {
+                exact.get_or_insert(leaf.entry);
+            } else if !leaf.hidden {
+                under.push(leaf.entry);
+            }
+        }
+        (exact, under)
     }
 
     /// The parameter and server-variable names `profiles create` will accept,
@@ -1105,7 +1128,8 @@ impl CliApp {
                 let custom: Vec<serde_json::Value> = self
                     .custom_command_leaves()
                     .into_iter()
-                    .map(|(_, entry)| entry)
+                    .filter(|leaf| !leaf.hidden)
+                    .map(|leaf| leaf.entry)
                     .collect();
                 if !custom.is_empty() {
                     wrapped.insert("customCommands".into(), serde_json::Value::Array(custom));
@@ -1126,27 +1150,38 @@ impl CliApp {
                 return Ok(PipelineOutcome::Success);
             }
 
-            for binding in &self.bindings {
-                match binding.schema(&path) {
-                    Ok(Some(value)) => {
-                        writeln!(
-                            out,
-                            "{}",
-                            serde_json::to_string_pretty(&value).map_err(|e| {
-                                CliError::Validation(format!("Failed to serialize spec: {e}"))
-                            })?
-                        )
-                        .map_err(|e| CliError::Other(e.into()))?;
-                        return Ok(PipelineOutcome::Success);
+            // Custom commands (`command` / `command_under`) are grafted onto
+            // the clap tree only at step 1b, so they are described from their
+            // clap definition. One on the exact path wins over a binding
+            // operation, as the graft replaces that operation at runtime;
+            // ones below the path join a binding's group listing.
+            let (custom_exact, custom_under) = self.custom_command_schema(&path);
+            let mut schema = custom_exact;
+            if schema.is_none() {
+                for binding in &self.bindings {
+                    match binding.schema(&path) {
+                        Ok(Some(value)) => {
+                            schema = Some(value);
+                            break;
+                        }
+                        Ok(None) => {}
+                        Err(e) => {
+                            tracing::warn!("--schema: binding `{}` errored: {e}", binding.name())
+                        }
                     }
-                    Ok(None) => {}
-                    Err(e) => tracing::warn!("--schema: binding `{}` errored: {e}", binding.name()),
                 }
+                schema = match schema {
+                    Some(serde_json::Value::Array(mut entries)) => {
+                        entries.extend(custom_under);
+                        Some(serde_json::Value::Array(entries))
+                    }
+                    None if !custom_under.is_empty() => {
+                        Some(serde_json::Value::Array(custom_under))
+                    }
+                    other => other,
+                };
             }
-            // No binding owns the path; a custom command (`command` /
-            // `command_under`) may. Those are grafted onto the clap tree only
-            // at step 1b, so they are described from their clap definition.
-            if let Some(value) = self.custom_command_schema(&path) {
+            if let Some(value) = schema {
                 writeln!(
                     out,
                     "{}",
@@ -2248,6 +2283,13 @@ fn describe_builtin_leaves(
         let name: Vec<String> = segments.iter().map(|seg| seg[0].clone()).collect();
         out.push(describe_command_leaf(leaf, &name.join(" ")));
     }
+}
+
+/// One invocable custom command, as found by `CliApp::custom_command_leaves`.
+struct CustomCommandLeaf {
+    segments: Vec<crate::custom_commands::PathSegment>,
+    entry: serde_json::Value,
+    hidden: bool,
 }
 
 /// Every invocable command in `command`'s subtree with its full path, each
