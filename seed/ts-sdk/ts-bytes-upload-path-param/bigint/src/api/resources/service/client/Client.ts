@@ -76,7 +76,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `upload-content/${core.url.encodePathParam(tenantId ?? "acme")}/${core.url.encodePathParam(objectPath)}/${core.url.encodePathParam(revision)}/${core.url.encodePathParam(uploadedAt)}/${core.url.encodePathParam(region)}`,
+                `upload-content/${core.url.encodePathParam(tenantId ?? "acme", errors.SeedTsBytesUploadPathParamError)}/${core.url.encodePathParam(objectPath, errors.SeedTsBytesUploadPathParamError)}/${core.url.encodePathParam(revision, errors.SeedTsBytesUploadPathParamError)}/${core.url.encodePathParam(uploadedAt, errors.SeedTsBytesUploadPathParamError)}/${core.url.encodePathParam(region, errors.SeedTsBytesUploadPathParamError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -154,7 +154,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `upload-content/${core.url.encodePathParam(tenantId ?? "acme")}/${core.url.encodePathParam(objectPath)}/metadata`,
+                `upload-content/${core.url.encodePathParam(tenantId ?? "acme", errors.SeedTsBytesUploadPathParamError)}/${core.url.encodePathParam(objectPath, errors.SeedTsBytesUploadPathParamError)}/metadata`,
             ),
             method: "POST",
             headers: _headers,

@@ -47,7 +47,7 @@ export class OrganizationsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/organizations/${core.url.encodePathParam(organization_id, errors.SeedPathParametersError)}/`,
             ),
             method: "GET",
             headers: _headers,
@@ -108,7 +108,7 @@ export class OrganizationsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/organizations/${core.url.encodePathParam(organizationId, errors.SeedPathParametersError)}/users/${core.url.encodePathParam(userId, errors.SeedPathParametersError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -176,7 +176,7 @@ export class OrganizationsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/organizations/${core.url.encodePathParam(organization_id, errors.SeedPathParametersError)}/search`,
             ),
             method: "GET",
             headers: _headers,

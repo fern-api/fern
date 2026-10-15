@@ -50,7 +50,7 @@ export class NullableOptionalClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId, errors.SeedNullableOptionalError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -190,7 +190,7 @@ export class NullableOptionalClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId, errors.SeedNullableOptionalError)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -535,7 +535,7 @@ export class NullableOptionalClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/profiles/complex/${core.url.encodePathParam(profileId)}`,
+                `/api/profiles/complex/${core.url.encodePathParam(profileId, errors.SeedNullableOptionalError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -625,7 +625,7 @@ export class NullableOptionalClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/profiles/complex/${core.url.encodePathParam(profileId)}`,
+                `/api/profiles/complex/${core.url.encodePathParam(profileId, errors.SeedNullableOptionalError)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -865,7 +865,7 @@ export class NullableOptionalClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}/notifications`,
+                `/api/users/${core.url.encodePathParam(userId, errors.SeedNullableOptionalError)}/notifications`,
             ),
             method: "GET",
             headers: _headers,
@@ -934,7 +934,7 @@ export class NullableOptionalClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}/tags`,
+                `/api/users/${core.url.encodePathParam(userId, errors.SeedNullableOptionalError)}/tags`,
             ),
             method: "PUT",
             headers: _headers,
