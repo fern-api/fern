@@ -27,7 +27,10 @@ Upload a file to the database
 <dd>
 
 ```ruby
-client.file_upload_example.upload_file
+client.file_upload_example.upload_file(
+  name: "name",
+  file: "/path/to/your/file"
+)
 ```
 </dd>
 </dl>

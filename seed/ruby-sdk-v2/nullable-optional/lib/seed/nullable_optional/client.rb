@@ -66,10 +66,10 @@ module Seed
       #       street: "street",
       #       city: "city",
       #       state: "state",
-      #       zip_code: "zipCode",
+      #       zipCode: "zipCode",
       #       country: "country",
-      #       building_id: "buildingId",
-      #       tenant_id: "tenantId"
+      #       buildingId: "buildingId",
+      #       tenantId: "tenantId"
       #     }
       #   )
       #
@@ -118,10 +118,10 @@ module Seed
       #       street: "street",
       #       city: "city",
       #       state: "state",
-      #       zip_code: "zipCode",
+      #       zipCode: "zipCode",
       #       country: "country",
-      #       building_id: "buildingId",
-      #       tenant_id: "tenantId"
+      #       buildingId: "buildingId",
+      #       tenantId: "tenantId"
       #     }
       #   )
       #
@@ -284,10 +284,10 @@ module Seed
       #         street: "street",
       #         city: "city",
       #         state: "state",
-      #         zip_code: "zipCode",
+      #         zipCode: "zipCode",
       #         country: "country",
-      #         building_id: "buildingId",
-      #         tenant_id: "tenantId"
+      #         buildingId: "buildingId",
+      #         tenantId: "tenantId"
       #       }
       #     },
       #     nullable_list_of_unions: [],
@@ -430,16 +430,16 @@ module Seed
       #       street: "street",
       #       city: "city",
       #       state: "state",
-      #       zip_code: "zipCode",
+      #       zipCode: "zipCode",
       #       country: "country",
-      #       building_id: "buildingId",
-      #       tenant_id: "tenantId"
+      #       buildingId: "buildingId",
+      #       tenantId: "tenantId"
       #     },
       #     optional_object: {
       #       id: "id",
       #       name: "name",
       #       domain: "domain",
-      #       employee_count: 1
+      #       employeeCount: 1
       #     }
       #   )
       #
