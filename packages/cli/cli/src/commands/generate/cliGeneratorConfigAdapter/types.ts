@@ -32,6 +32,8 @@ export interface SpecFacts {
     /** Keyed by path, for example `/token`. */
     postOperations: Record<string, SpecPostOperation>;
     serverUrls: string[];
+    /** `info.title`, which Fern uses as the API display name. */
+    title?: string;
 }
 
 export interface MapperInput {

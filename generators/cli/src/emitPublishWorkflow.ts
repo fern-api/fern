@@ -27,6 +27,44 @@ function shellSafeJson(value: string | string[]): string {
     return JSON.stringify(value).replace(/\\\\/g, "\\u005c").replace(/\$/g, "\\u0024").replace(/`/g, "\\u0060");
 }
 
+const NPM_PUBLISH_ONCE_HELPER = `          # Publishes the package in the current directory unless this exact
+          # version is already on the registry, so re-running a release after a
+          # partial failure skips what already shipped instead of failing on it.
+          npm_publish_once() {
+            local name version log view_out view_status publish_status
+            name=\$(node -p "require('./package.json').name")
+            version=\$(node -p "require('./package.json').version")
+            log=\$(mktemp)
+
+            view_status=0
+            view_out=\$(npm view "\${name}@\${version}" version --registry "\${NPM_REGISTRY_URL}" 2>"\${log}") || view_status=\$?
+            # npm <= 7 exits 0 with no output for a missing version; npm >= 8
+            # fails with E404. Any other failure (network, auth) must stop the
+            # job rather than be mistaken for "not published".
+            if [[ "\${view_status}" -eq 0 && "\${view_out}" == "\${version}" ]]; then
+              echo "::notice::\${name}@\${version} is already published; skipping."
+              rm -f "\${log}"
+              return 0
+            elif [[ "\${view_status}" -eq 0 ]]; then
+              echo "\${name}@\${version} is not on the registry yet; publishing."
+            elif grep -Eq '^npm (ERR!|error) code E404' "\${log}"; then
+              echo "\${name}@\${version} is not on the registry yet; publishing."
+            else
+              cat "\${log}" >&2
+              echo "::error::Could not check whether \${name}@\${version} is already published (npm view exited \${view_status})."
+              rm -f "\${log}"
+              return 1
+            fi
+
+            publish_status=0
+            npm publish "\$@" 2>&1 | tee "\${log}" || publish_status=\$?
+            if [[ "\${publish_status}" -ne 0 ]] && grep -q 'EOTP' "\${log}"; then
+              echo "::error::npm publish of \${name}@\${version} requires a one-time password (EOTP). Use a granular npm access token with \\"Bypass 2FA\\" enabled, or configure npm trusted publishing (OIDC) for this package."
+            fi
+            rm -f "\${log}"
+            return "\${publish_status}"
+          }`;
+
 /**
  * Cross-compilation targets for the CLI binary. Each entry maps a
  * Rust target triple to the npm platform package suffix that cargo-dist
@@ -163,7 +201,8 @@ function constructWorkflowYaml(args: {
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
 
     const oidcPermissions = useOidc ? `\n    permissions:\n      contents: read\n      id-token: write` : "";
-    const tokenEnvBlock = useOidc ? "" : `\n        env:\n          NODE_AUTH_TOKEN: \${{ secrets.${tokenVar} }}`;
+    const tokenEnvLine = useOidc ? "" : `\n          NODE_AUTH_TOKEN: \${{ secrets.${tokenVar} }}`;
+    const publishEnvBlock = `\n        env:\n          NPM_REGISTRY_URL: ${JSON.stringify(npmPublishInfo.registryUrl)}${tokenEnvLine}`;
 
     const matrixIncludes = TARGETS.map(
         (t) =>
@@ -315,11 +354,10 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: \${{ matrix.runner }}${oidcPermissions}
     strategy:
-      # Don't cancel sibling matrix jobs on first failure — a transient
-      # failure on one platform would otherwise leave npm in a partial
-      # state (some platform packages published, others not, launcher
-      # never published), with no clean re-run since the already-
-      # published versions reject re-publish.
+      # Don't cancel sibling matrix jobs on first failure — let every
+      # platform that can publish do so. Publishing skips versions already
+      # on the registry, so re-running the failed jobs completes the
+      # release (the launcher waits for every platform package).
       fail-fast: false
       matrix:
         include:
@@ -337,7 +375,7 @@ ${matrixIncludes}
         uses: actions/setup-node@v6
         with:
           node-version: "lts/Krypton"
-          registry-url: "${npmPublishInfo.registryUrl}"
+          registry-url: ${JSON.stringify(npmPublishInfo.registryUrl)}
 
       - name: Install musl build tools
         if: contains(matrix.rust-target, '-linux-musl')
@@ -368,7 +406,7 @@ ${matrixIncludes}
           fi
           cargo build --profile dist --target \${{ matrix.rust-target }}
 
-      - name: Package and publish npm platform package${tokenEnvBlock}
+      - name: Package and publish npm platform package${publishEnvBlock}
         shell: bash
         run: |
           set -euo pipefail
@@ -409,6 +447,8 @@ ${matrixIncludes}
           PKGJSON
 
           cd "\${PKG_DIR}"
+${NPM_PUBLISH_ONCE_HELPER}
+
           # Pre-release detection. ANY SemVer pre-release (a "-" after the
           # version core) must get a non-latest dist-tag: matching only
           # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
@@ -424,16 +464,16 @@ ${matrixIncludes}
               TAG=prerelease
             fi
             echo "Publishing pre-release \${VERSION} with --tag \${TAG}"
-            npm publish --access public --tag "\${TAG}"
+            npm_publish_once --access public --tag "\${TAG}"
           else
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
             CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
             if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
-              npm publish --access public --tag backport
+              npm_publish_once --access public --tag backport
             else
-              npm publish --access public
+              npm_publish_once --access public
             fi
           fi
 
@@ -449,9 +489,9 @@ ${matrixIncludes}
         uses: actions/setup-node@v6
         with:
           node-version: "lts/Krypton"
-          registry-url: "${npmPublishInfo.registryUrl}"
+          registry-url: ${JSON.stringify(npmPublishInfo.registryUrl)}
 
-      - name: Publish launcher package${tokenEnvBlock}
+      - name: Publish launcher package${publishEnvBlock}
         shell: bash
         run: |
           set -euo pipefail
@@ -536,6 +576,8 @@ ${launcherPlatformEntries}
           LAUNCHER
 
           cd "\${PKG_DIR}"
+${NPM_PUBLISH_ONCE_HELPER}
+
           # Pre-release detection. ANY SemVer pre-release (a "-" after the
           # version core) must get a non-latest dist-tag: matching only
           # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
@@ -551,16 +593,16 @@ ${launcherPlatformEntries}
               TAG=prerelease
             fi
             echo "Publishing pre-release \${VERSION} with --tag \${TAG}"
-            npm publish --access public --tag "\${TAG}"
+            npm_publish_once --access public --tag "\${TAG}"
           else
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
             CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
             if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
-              npm publish --access public --tag backport
+              npm_publish_once --access public --tag backport
             else
-              npm publish --access public
+              npm_publish_once --access public
             fi
           fi
 `;

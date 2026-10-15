@@ -1,4 +1,71 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.158.0
+  changelogEntry:
+    - summary: |
+        The `cli` target in `sdk-config.yml` can now publish to npm. With GitHub delivery, `output.publish` with
+        `registry: npm` is written as an npm output for `fernapi/fern-cli-generator`: `trustedPublishing: true`
+        publishes with OIDC, and otherwise `token: ${NAME}` names the token variable (`NPM_TOKEN` by default).
+        `package.packageName` is then the npm package name. When it is not a valid crate name (for example
+        `@acme/cli`), the crate is named from the CLI binary name, or else from the kebab-cased npm name
+        (`acme-cli`). Publish fields the CLI generator cannot honor warn or fail instead of being rejected as a block.
+      type: feat
+  createdAt: "2026-10-14"
+  irVersion: 67
+- version: 5.157.6
+  changelogEntry:
+    - summary: |
+        Restore the docs.yml step of `fern sdk migrate`. It adds `specs` (paths, namespaces, overlays, overrides, and import settings) to the API reference sections that use the migrated API, so docs no longer depend on generators.yml. All specs of an API stay in one section, so docs merge them into one API reference as before. The docs edits are committed together with the SDK Config and rolled back with it if anything fails.
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
+- version: 5.157.5
+  changelogEntry:
+    - summary: |
+        Fix `snippets: cli` on a docs API reference being dropped while parsing docs.yml (and the `docs`
+        section of fern.yml), so the `cli` dynamic IR is now generated and `cliSdk` is registered with FDR
+        during docs publish.
+      type: fix
+    - summary: |
+        When an API reference's own generators.yml has a single generator for a snippet language with no
+        package name (e.g. a local-file-system CLI generator), docs publish now uses it for dynamic snippets
+        even if a sibling API workspace has a generator for the same language.
+      type: fix
+    - summary: |
+        CLI snippets in docs now follow each spec's generators.yml `namespace:` the way the generated CLI
+        does (e.g. `twilio-cli messaging bulk-messages list` and `twilio-cli addresses list` instead of
+        `messaging-bulk-messages bulk-messages list` and `addresses addresses list`).
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
+- version: 5.157.4
+  changelogEntry:
+    - summary: |
+        The "unknown package" warning from `fern generate --docs` now explains that SDK snippets are not
+        supported yet for SDKs configured in `sdk-config.yml`.
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
+- version: 5.157.3
+  changelogEntry:
+    - summary: |
+        Git-ref-backed versions (`ref:`) now work under `products[].versions`. The CLI locates the same
+        product in the ref's docs.yml (by slug, else display name) and builds that product's working-tree
+        version, falling back to the product file's navigation. A ref from before the site adopted
+        `products:` uses its site-level versions or navigation, as before. At any scope, the first `path:` version
+        at the ref is used, so refs whose docs.yml lists older `ref:` entries first resolve correctly.
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
+- version: 5.157.2
+  changelogEntry:
+    - summary: |
+        The `x-displayName` extension on OpenAPI tags now sets the API Reference section name
+        in the v3 parser. Previously it was only applied when the display name differed from
+        the tag by letter casing, so a display name such as `Plants` for tag `plant`, or any
+        multi-word tag, fell back to the title-cased tag name.
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
 - version: 5.157.1
   changelogEntry:
     - summary: |

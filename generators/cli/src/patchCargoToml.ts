@@ -34,8 +34,9 @@ import { TEMPLATE_BINARY_NAME } from "./identity.js";
  *
  * What stays:
  *   - `[package] name = "fern-cli-sdk"` — unless `packageIdentity.name`
- *     overrides it; the shipped Cargo.lock pins the name, so a rename
- *     has to patch both files together.
+ *     overrides it (see {@link withDistributionDefaults} for the GitHub
+ *     default); the shipped Cargo.lock pins the name, so a rename has to
+ *     patch both files together.
  *   - `[lib] name = "fern_cli_sdk"` — every `use fern_cli_sdk::...`
  *     in the shipped src/ tree depends on it, so it is never renamed.
  *   - All dependency versions, features, and the `[profile.dist]` block.
@@ -281,31 +282,30 @@ function declaredDependencyNames(cargoToml: string, table: CargoDependencyTable)
 export const TEMPLATE_PACKAGE_NAME = "fern-cli-sdk";
 
 /**
- * Point the crate's `[package]` identity at the consumer when a Homebrew
- * formula will be published and they didn't pin these fields themselves.
+ * Point the crate's `[package]` identity at the consumer's GitHub repo for
+ * every field they didn't pin themselves. Explicit values always win.
  *
  * `packageIdentity` only rewrites the fields you set, so anything unset
- * keeps the SDK template's Fern-owned value. That is harmless while it
- * only lives in a `Cargo.toml` nobody reads — but cargo-dist renders the
- * published `.rb` straight off this block, and each field lands
- * somewhere different:
+ * keeps the SDK template's Fern-owned value — and cargo-dist builds every
+ * published artifact straight off this block:
  *
- * | `[package]`   | Where it surfaces in the formula          |
- * |---------------|-------------------------------------------|
- * | `repository`  | the per-arch **release download URLs**     |
- * | `homepage`    | `homepage "..."`                          |
- * | `description` | `desc "..."`                              |
+ * | `[package]`   | Where it surfaces                                          |
+ * |---------------|------------------------------------------------------------|
+ * | `name`        | archive names and `<name>-installer.sh` / `.ps1`            |
+ * | `repository`  | the installers' and Homebrew formula's **download URLs**    |
+ * | `homepage`    | the formula's `homepage "..."`                              |
+ * | `description` | the formula's `desc "..."`                                  |
  *
- * `repository` is the load-bearing one: left at the template's value the
- * formula's `url`s resolve to `github.com/fern-api/cli-sdk/releases/...`,
- * where the consumer's archives do not exist — so every `brew install`
- * 404s. The other two are cosmetic but publish Fern's branding on the
- * consumer's own tap.
+ * Left at the template's values, the shell/PowerShell installers (and
+ * every `brew install`) fetch from `github.com/fern-api/cli-sdk/releases/...`,
+ * where the consumer's archives do not exist, and the release assets ship as
+ * `fern-cli-sdk-*`. So with a `repoUrl`, `repository` and `homepage` default
+ * to it and `name` defaults to `binaryName` — unless that is not a valid
+ * crate name, or would collide with a crate the shipped `Cargo.lock` already
+ * resolves (`lockedPackageNames`), in which case it stays the template's.
  *
- * Scoped to the Homebrew case on purpose: applying it unconditionally
- * would change the `Cargo.toml` of every existing github-mode
- * generation, which is exactly the silent-default churn the
- * breaking-changes policy exists to prevent. Explicit values always win.
+ * `description` only defaults when a Homebrew formula is published.
+ * Without a `repoUrl` (non-GitHub output) nothing but that changes.
  *
  * Scoop needs no equivalent — its manifest reads `repoUrl` and the
  * resolved asset name directly rather than going through `[package]`.
@@ -314,22 +314,67 @@ export function withDistributionDefaults(args: {
     packageIdentity: CargoPackageIdentity | undefined;
     publishesHomebrew: boolean;
     repoUrl: string | undefined;
+    binaryName: string;
     /** Fallback `desc` for the formula, e.g. "CLI for the Acme API". */
     description: string | undefined;
+    lockedPackageNames?: ReadonlySet<string>;
 }): CargoPackageIdentity | undefined {
-    const { packageIdentity, publishesHomebrew, repoUrl, description } = args;
-    if (!publishesHomebrew) {
-        return packageIdentity;
-    }
+    const { packageIdentity, publishesHomebrew, repoUrl, binaryName, description, lockedPackageNames } = args;
     const resolved: CargoPackageIdentity = { ...packageIdentity };
     if (repoUrl != null) {
         resolved.repository ??= repoUrl;
         resolved.homepage ??= repoUrl;
+        if (resolved.name == null && canDefaultCrateName(binaryName, lockedPackageNames)) {
+            resolved.name = binaryName;
+        }
     }
-    if (description != null) {
+    if (publishesHomebrew && description != null) {
         resolved.description ??= description;
     }
     return Object.keys(resolved).length > 0 ? resolved : packageIdentity;
+}
+
+const CRATE_NAME_PATTERN = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
+
+/** Cargo's package-name rule: ASCII alphanumerics, `-` and `_`, starting with a letter, at most 64 chars. */
+export function isValidCrateName(name: string): boolean {
+    return CRATE_NAME_PATTERN.test(name);
+}
+
+function canDefaultCrateName(name: string, lockedPackageNames: ReadonlySet<string> | undefined): boolean {
+    if (!isValidCrateName(name)) {
+        return false;
+    }
+    const normalized = normalizeCrateName(name);
+    for (const locked of lockedPackageNames ?? []) {
+        if (locked !== TEMPLATE_PACKAGE_NAME && normalizeCrateName(locked) === normalized) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function normalizeCrateName(name: string): string {
+    return name.toLowerCase().replace(/-/g, "_");
+}
+
+/** Every `[[package]] name` recorded in a Cargo.lock, wherever it sits in its block and with LF or CRLF endings. */
+export function cargoLockPackageNames(cargoLock: string): Set<string> {
+    const names = new Set<string>();
+    let inPackage = false;
+    for (const rawLine of cargoLock.split(/\r?\n/)) {
+        const line = rawLine.trim();
+        if (line.startsWith("[")) {
+            inPackage = line === "[[package]]";
+            continue;
+        }
+        const name = inPackage ? /^name\s*=\s*"([^"]+)"/.exec(line)?.[1] : undefined;
+        if (name != null) {
+            names.add(name);
+            inPackage = false;
+        }
+    }
+    return names;
 }
 
 /**

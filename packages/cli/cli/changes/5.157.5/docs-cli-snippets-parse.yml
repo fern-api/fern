@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `snippets: cli` on a docs API reference being dropped while parsing docs.yml (and the `docs`
+    section of fern.yml), so the `cli` dynamic IR is now generated and `cliSdk` is registered with FDR
+    during docs publish.
+  type: fix
+- summary: |
+    When an API reference's own generators.yml has a single generator for a snippet language with no
+    package name (e.g. a local-file-system CLI generator), docs publish now uses it for dynamic snippets
+    even if a sibling API workspace has a generator for the same language.
+  type: fix
+- summary: |
+    CLI snippets in docs now follow each spec's generators.yml `namespace:` the way the generated CLI
+    does (e.g. `twilio-cli messaging bulk-messages list` and `twilio-cli addresses list` instead of
+    `messaging-bulk-messages bulk-messages list` and `addresses addresses list`).
+  type: fix

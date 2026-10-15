@@ -10,6 +10,69 @@ import (
 	time "time"
 )
 
+var (
+	listLoansByDateRequestFieldAsOf = big.NewInt(1 << 0)
+	listLoansByDateRequestFieldPage = big.NewInt(1 << 1)
+)
+
+type ListLoansByDateRequest struct {
+	AsOf time.Time    `json:"-" url:"-"`
+	Page *PageRequest `json:"-" url:"page"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListLoansByDateRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetAsOf sets the AsOf field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListLoansByDateRequest) SetAsOf(asOf time.Time) {
+	l.AsOf = asOf
+	l.require(listLoansByDateRequestFieldAsOf)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListLoansByDateRequest) SetPage(page *PageRequest) {
+	l.Page = page
+	l.require(listLoansByDateRequestFieldPage)
+}
+
+var (
+	listLoansByTimestampRequestFieldAsOf = big.NewInt(1 << 0)
+)
+
+type ListLoansByTimestampRequest struct {
+	AsOf time.Time `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListLoansByTimestampRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetAsOf sets the AsOf field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListLoansByTimestampRequest) SetAsOf(asOf time.Time) {
+	l.AsOf = asOf
+	l.require(listLoansByTimestampRequestFieldAsOf)
+}
+
 type DateList = []time.Time
 
 type DateTimeList = []time.Time
@@ -266,4 +329,106 @@ func (l *Loan) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	pageRequestFieldNumber = big.NewInt(1 << 0)
+	pageRequestFieldSize   = big.NewInt(1 << 1)
+)
+
+type PageRequest struct {
+	Number *int `json:"number,omitempty" url:"number,omitempty"`
+	Size   *int `json:"size,omitempty" url:"size,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PageRequest) GetNumber() *int {
+	if p == nil {
+		return nil
+	}
+	return p.Number
+}
+
+func (p *PageRequest) GetSize() *int {
+	if p == nil {
+		return nil
+	}
+	return p.Size
+}
+
+func (p *PageRequest) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PageRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
+	}
+	next.Or(next, field)
+	p.explicitFields = next
+}
+
+// SetNumber sets the Number field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PageRequest) SetNumber(number *int) {
+	p.Number = number
+	p.require(pageRequestFieldNumber)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PageRequest) SetSize(size *int) {
+	p.Size = size
+	p.require(pageRequestFieldSize)
+}
+
+func (p *PageRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler PageRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PageRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PageRequest) MarshalJSON() ([]byte, error) {
+	type embed PageRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PageRequest) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }

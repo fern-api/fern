@@ -488,6 +488,7 @@ export const SnippetsConfiguration = z.object({
     csharp: SnippetLanguageConfiguration.optional(),
     php: SnippetLanguageConfiguration.optional(),
     swift: SnippetLanguageConfiguration.optional(),
+    cli: SnippetLanguageConfiguration.optional(),
     rust: SnippetLanguageConfiguration.optional()
 });
 

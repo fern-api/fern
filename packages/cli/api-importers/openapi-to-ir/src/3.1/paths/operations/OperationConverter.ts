@@ -1263,14 +1263,20 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getGroupDisplayName(group: string[] | undefined): string | undefined {
-        let rawOperationTag = this.operation.tags?.[0];
-        if (rawOperationTag != null) {
-            rawOperationTag = this.context.getDisplayNameForTag(rawOperationTag);
-        }
+        const rawOperationTag = this.operation.tags?.[0];
         const baseGroupName = group?.[group.length - 1];
-        if (baseGroupName != null && rawOperationTag != null) {
-            const lowerCaseRawOperationTag = rawOperationTag.toLowerCase().replaceAll(" ", "");
-            return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined;
+        if (rawOperationTag == null || baseGroupName == null) {
+            return undefined;
+        }
+        const tagDisplayName = this.context.getDisplayNameForTag(rawOperationTag);
+        if (tagDisplayName.toLowerCase().replaceAll(" ", "") === baseGroupName) {
+            return tagDisplayName;
+        }
+        if (
+            this.context.hasExplicitDisplayNameForTag(rawOperationTag) &&
+            camelCase(rawOperationTag) === camelCase(baseGroupName)
+        ) {
+            return tagDisplayName;
         }
         return undefined;
     }

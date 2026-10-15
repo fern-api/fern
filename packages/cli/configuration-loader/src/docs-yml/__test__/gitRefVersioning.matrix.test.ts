@@ -340,7 +340,7 @@ describe("git-ref versioning matrix", () => {
             absolutePathToFernFolder: fernFolder(clone),
             context
         });
-        const root = await resolveRefContentRoot({ materialized: m, context });
+        const root = await resolveRefContentRoot({ materialized: m, scope: { type: "site" }, context });
         expect(root.absoluteFilepathToConfig.endsWith("versions/v2.yml")).toBe(true);
         expect(root.navigation).toBeDefined();
     });
@@ -349,7 +349,7 @@ describe("git-ref versioning matrix", () => {
         expect(git(clone, "show", "demo-v1.0.0:fern/docs.yml")).toBe(DOCS_WITH_TOP_NAV.trim());
         const m = await materializeGitRef({ ref: "demo-v1.0.0", absolutePathToFernFolder: fernFolder(clone), context });
         expect(await readFile(pathJoin(m.absolutePathToFernFolder, "docs.yml"), "utf-8")).toBe(DOCS_WITH_TOP_NAV);
-        const root = await resolveRefContentRoot({ materialized: m, context });
+        const root = await resolveRefContentRoot({ materialized: m, scope: { type: "site" }, context });
         expect(root.absoluteFilepathToConfig.endsWith("docs.yml")).toBe(true);
         expect(root.navigation).toBeDefined();
     });
@@ -395,7 +395,7 @@ describe("git-ref versioning matrix", () => {
             absolutePathToFernFolder: fernFolder(clone),
             context
         });
-        await expect(resolveRefContentRoot({ materialized: m, context })).rejects.toThrow(
+        await expect(resolveRefContentRoot({ materialized: m, scope: { type: "site" }, context })).rejects.toThrow(
             "Could not determine the content root for git ref 'demo-nocontent'"
         );
     });

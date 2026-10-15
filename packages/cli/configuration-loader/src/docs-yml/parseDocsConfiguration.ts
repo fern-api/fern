@@ -12,7 +12,7 @@ import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
 import { getAllPages, loadAllPages } from "./getAllPages.js";
 import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 import { materializeGitRef } from "./git-versions/materializeGitRef.js";
-import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
+import { type RefVersionScope, resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 import { resolveRedirects } from "./resolveRedirects.js";
 
@@ -847,19 +847,20 @@ async function loadWorkingTreeVersion({
 async function loadRefVersion({
     version,
     ref,
+    scope,
     absolutePathToFernFolder,
     context,
     folderTitleSource
 }: {
     version: docsYml.RawSchemas.VersionConfig;
     ref: string;
+    scope: RefVersionScope;
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.VersionInfo> {
     const materialized = await materializeGitRef({ ref, absolutePathToFernFolder, context });
-    const contentRoot = await resolveRefContentRoot({ materialized, context });
-
+    const contentRoot = await resolveRefContentRoot({ materialized, scope, context });
     const versionNavigation = await convertNavigationConfiguration({
         tabs: contentRoot.tabs,
         rawNavigationConfig: contentRoot.navigation,
@@ -892,12 +893,14 @@ async function loadRefVersion({
 
 async function getVersionedNavigationConfiguration({
     versions,
+    refScope,
     absolutePathToFernFolder,
     context,
     folderTitleSource,
     buildRefVersions = true
 }: {
     versions: docsYml.RawSchemas.VersionConfig[];
+    refScope: RefVersionScope;
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
     parentSlug?: string;
@@ -915,7 +918,7 @@ async function getVersionedNavigationConfiguration({
         }
 
         // A ref-backed version derives its content root from the ref itself
-        // (the ref's own `versions[0].path` or top-level `navigation:`), so a
+        // (the ref's own working-tree version or `navigation:`), so a
         // current-branch `path:` alongside `ref:` has no effect. Reject the
         // combination instead of silently ignoring `path:`. Runs regardless of
         // `buildRefVersions` so `fern check` surfaces it too.
@@ -935,7 +938,14 @@ async function getVersionedNavigationConfiguration({
         }
 
         versionedNavbars.push(
-            await loadRefVersion({ version, ref, absolutePathToFernFolder, context, folderTitleSource })
+            await loadRefVersion({
+                version,
+                ref,
+                scope: refScope,
+                absolutePathToFernFolder,
+                context,
+                folderTitleSource
+            })
         );
     }
     return {
@@ -1023,6 +1033,7 @@ async function getNavigationConfiguration({
                 if (product.versions != null && product.versions.length > 0) {
                     navigation = await getVersionedNavigationConfiguration({
                         versions: product.versions,
+                        refScope: { type: "product", displayName: product.displayName, slug: product.slug },
                         absolutePathToFernFolder,
                         context,
                         folderTitleSource,
@@ -1086,6 +1097,7 @@ async function getNavigationConfiguration({
     } else if (versions != null) {
         return await getVersionedNavigationConfiguration({
             versions,
+            refScope: { type: "site" },
             absolutePathToFernFolder,
             context,
             folderTitleSource,
@@ -1819,7 +1831,8 @@ function convertSnippetsConfiguration({
         ruby: rawConfig.ruby,
         csharp: rawConfig.csharp,
         php: rawConfig.php,
-        swift: rawConfig.swift
+        swift: rawConfig.swift,
+        cli: rawConfig.cli
     };
 }
 

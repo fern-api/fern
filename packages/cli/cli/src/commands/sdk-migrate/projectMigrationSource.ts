@@ -92,6 +92,33 @@ export function identifySourceDerivedApiFields({
     };
 }
 
+/**
+ * The specs of the API itself (the top-level `api:` section of generators.yml), ignoring any generator-level
+ * override. Returns undefined when the workspace does not list specs of its own.
+ */
+export function resolveWorkspaceSourceSpecs(
+    workspace: AbstractAPIWorkspace<unknown>
+): ResolvedMigrationSourceSpec[] | undefined {
+    if (!hasNonEmptySpecs(workspace)) {
+        return undefined;
+    }
+    const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
+    return workspace.allSpecs.map((spec) => {
+        const configuredDefinition = findConfiguredDefinition(
+            workspace.absoluteFilePath.toString(),
+            spec,
+            configuredDefinitions
+        );
+        if (configuredDefinition?.location.gitSource != null) {
+            throw new CliError({
+                message: `fern sdk migrate cannot create durable local paths for git-backed API specification '${configuredDefinition.location.gitSource.path}' from '${configuredDefinition.location.gitSource.repo}'. Move the specification into the project or migrate this configuration manually.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        return resolveWorkspaceSpec(spec, configuredDefinition?.location.settings);
+    });
+}
+
 export function resolveMigrationSourceSpecs({
     workspace,
     fernWorkspace,
@@ -104,22 +131,9 @@ export function resolveMigrationSourceSpecs({
     if (generator.apiOverride?.specs != null) {
         return resolveGeneratorSpecOverrides(workspace.absoluteFilePath, generator.apiOverride.specs);
     }
-    if (hasNonEmptySpecs(workspace)) {
-        const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
-        return workspace.allSpecs.map((spec) => {
-            const configuredDefinition = findConfiguredDefinition(
-                workspace.absoluteFilePath.toString(),
-                spec,
-                configuredDefinitions
-            );
-            if (configuredDefinition?.location.gitSource != null) {
-                throw new CliError({
-                    message: `fern sdk migrate cannot create durable local paths for git-backed API specification '${configuredDefinition.location.gitSource.path}' from '${configuredDefinition.location.gitSource.repo}'. Move the specification into the project or migrate this configuration manually.`,
-                    code: CliError.Code.ConfigError
-                });
-            }
-            return resolveWorkspaceSpec(spec, configuredDefinition?.location.settings);
-        });
+    const workspaceSpecs = resolveWorkspaceSourceSpecs(workspace);
+    if (workspaceSpecs != null) {
+        return workspaceSpecs;
     }
     if (fernWorkspace.sources.length > 0) {
         return fernWorkspace.sources.map(resolveIdentifiableSource);

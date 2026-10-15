@@ -101,6 +101,11 @@ describe("extractSpecFacts", () => {
         expect(extractSpecFacts(await spec("server-path.yml")).serverUrls).toEqual(["https://api.example.com/v1"]);
         expect(extractSpecFacts(await spec("swagger2.yml")).serverUrls).toEqual(["https://api.acme.test/v2"]);
     });
+
+    it("reads info.title, and leaves it unset when the spec has none", async () => {
+        expect(extractSpecFacts(await spec("swagger2.yml")).title).toBe("Acme");
+        expect(extractSpecFacts({ openapi: "3.0.0", paths: {} }).title).toBeUndefined();
+    });
 });
 
 describe("loadSpecFacts", () => {

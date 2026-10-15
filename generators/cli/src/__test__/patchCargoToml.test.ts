@@ -11,6 +11,8 @@ import {
     addTypesCrateToLock,
     applyCargoTomlPatch,
     applyPackageIdentityPatch,
+    cargoLockPackageNames,
+    isValidCrateName,
     parseGeneratedCrateManifest,
     patchCargoLockVersion,
     patchCargoToml,
@@ -326,6 +328,76 @@ describe("generated crate lockfile entries after a package rename", () => {
     });
 });
 
+// `renameCargoLockPackage` rewrites only the root's own `name = ` line. That is
+// complete because nothing in the lock can depend on the root: the generated
+// types/SDK/partition crates are path dependencies *of* the root, so a reverse
+// edge would be a cycle cargo rejects, and no registry crate depends on it.
+describe("Cargo.lock references to the root package", () => {
+    const SEED_DIR = path.resolve(SDK_DIR, "../../../seed/cli/query-parameters-openapi");
+
+    function dependentsOf(cargoLock: string, crate: string): string[] {
+        return cargoLock
+            .split(/^\[\[package\]\]$/m)
+            .filter((block) => {
+                const deps = /^dependencies = \[\n((?: "[^"\n]*",\n)*)\]/m.exec(block)?.[1] ?? "";
+                return deps.split("\n").some(
+                    (line) =>
+                        line
+                            .trim()
+                            .replace(/^"|",?$/g, "")
+                            .split(" ")[0] === crate
+                );
+            })
+            .map((block) => /^name = "([^"]+)"/m.exec(block)?.[1] ?? "");
+    }
+
+    it("has no dependents in the shipped template lock", () => {
+        expect(dependentsOf(TEMPLATE_CARGO_LOCK, "fern-cli-sdk")).toEqual([]);
+        expect(dependentsOf(TEMPLATE_CARGO_LOCK, "clap")).toContain("fern-cli-sdk");
+    });
+
+    it("gains no dependents once the generated crates are added to a renamed lock", () => {
+        const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail");
+        const withTypes = addTypesCrateToLock(
+            renamed,
+            "agentmail-types",
+            { version: "0.0.0", dependencies: [{ name: "serde", versionReq: "1" }] },
+            true,
+            "agentmail"
+        );
+        const patched = addSdkCrateToLock(
+            withTypes,
+            "agentmail-sdk",
+            "agentmail-types",
+            {
+                version: "0.1.0",
+                dependencies: [
+                    { name: "agentmail_types", versionReq: undefined },
+                    { name: "serde", versionReq: "1.0" }
+                ]
+            },
+            "agentmail"
+        );
+        expect(patched).not.toContain("fern-cli-sdk");
+        expect(dependentsOf(patched, "agentmail")).toEqual([]);
+        expect(dependentsOf(patched, "agentmail_sdk")).toEqual(["agentmail"]);
+        expect(dependentsOf(patched, "agentmail_types")).toEqual(["agentmail_sdk"]);
+    });
+
+    it.each([
+        ["github-npm", "query-parameters-api"],
+        ["github-no-publish", "query-parameters-api"],
+        ["github-distribution", "query-parameters-api"],
+        ["github-distribution-app", "query-parameters-api"],
+        ["github-npm-identity", "query-params-cli"]
+    ])("has no dependents in the committed %s seed lock", async (fixture, rootName) => {
+        const lock = await readFile(path.join(SEED_DIR, fixture, "Cargo.lock"), "utf-8");
+        expect(cargoLockPackageNames(lock).has(rootName)).toBe(true);
+        expect(lock).not.toContain("fern-cli-sdk");
+        expect(dependentsOf(lock, rootName)).toEqual([]);
+    });
+});
+
 describe("parseGeneratedCrateManifest", () => {
     it("reads the version and dependency names the Rust generators emit", () => {
         const manifest = parseGeneratedCrateManifest(
@@ -611,13 +683,14 @@ describe("patchCargoToml (filesystem)", () => {
 describe("withDistributionDefaults", () => {
     const repoUrl = "https://github.com/acme/acme-cli";
     const description = "CLI for the Acme API";
-    const base = { publishesHomebrew: true, repoUrl, description };
+    const base = { publishesHomebrew: true, repoUrl, binaryName: "acme", description };
 
-    // The load-bearing one: cargo-dist builds the formula's per-arch release
+    // The load-bearing one: cargo-dist builds the installers' and formula's
     // download URLs from `repository`. Left at the template's value every
-    // `brew install` 404s against github.com/fern-api/cli-sdk.
-    it("points repository, homepage and description at the consumer", () => {
+    // install 404s against github.com/fern-api/cli-sdk.
+    it("points name, repository, homepage and description at the consumer", () => {
         expect(withDistributionDefaults({ ...base, packageIdentity: undefined })).toEqual({
+            name: "acme",
             repository: repoUrl,
             homepage: repoUrl,
             description
@@ -639,31 +712,121 @@ describe("withDistributionDefaults", () => {
             withDistributionDefaults({
                 ...base,
                 packageIdentity: {
+                    name: "acme-tool",
                     repository: "https://github.com/acme/other",
                     homepage: "https://acme.com",
                     description: "Mine"
                 }
             })
         ).toEqual({
+            name: "acme-tool",
             repository: "https://github.com/acme/other",
             homepage: "https://acme.com",
             description: "Mine"
         });
     });
 
-    // Scoped to the Homebrew case: applying it unconditionally would change
-    // the Cargo.toml of every existing github-mode generation.
-    it("is inert when Homebrew is off", () => {
-        const packageIdentity = { name: "acme-cli" };
-        expect(withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity })).toBe(packageIdentity);
+    it("defaults name, repository and homepage for every GitHub output, Homebrew or not", () => {
+        expect(withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: undefined })).toEqual({
+            name: "acme",
+            repository: repoUrl,
+            homepage: repoUrl
+        });
+    });
+
+    it("leaves the template name when binaryName is not a valid crate name", () => {
+        for (const binaryName of ["1acme", "acme.cli", "acme cli", "_acme", "a".repeat(65)]) {
+            expect(withDistributionDefaults({ ...base, binaryName, packageIdentity: undefined })).toEqual({
+                repository: repoUrl,
+                homepage: repoUrl,
+                description
+            });
+        }
+    });
+
+    it("leaves the template name when binaryName collides with a crate in the shipped Cargo.lock", () => {
+        const lockedPackageNames = new Set(["fern-cli-sdk", "serde_json", "clap"]);
+        for (const binaryName of ["clap", "serde-json"]) {
+            expect(
+                withDistributionDefaults({ ...base, binaryName, lockedPackageNames, packageIdentity: undefined })
+            ).not.toHaveProperty("name");
+        }
         expect(
-            withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: undefined })
+            withDistributionDefaults({
+                ...base,
+                binaryName: "fern-cli-sdk",
+                lockedPackageNames,
+                packageIdentity: undefined
+            })
+        ).toHaveProperty("name", "fern-cli-sdk");
+    });
+
+    it("is inert without a repo url and Homebrew (non-GitHub output)", () => {
+        const packageIdentity = { license: "MIT" };
+        expect(
+            withDistributionDefaults({ ...base, repoUrl: undefined, publishesHomebrew: false, packageIdentity })
+        ).toEqual(packageIdentity);
+        expect(
+            withDistributionDefaults({
+                ...base,
+                repoUrl: undefined,
+                publishesHomebrew: false,
+                packageIdentity: undefined
+            })
         ).toBeUndefined();
     });
 
-    it("fills only what it can when the repo url is unknown", () => {
+    it("fills only the description when the repo url is unknown", () => {
         expect(withDistributionDefaults({ ...base, repoUrl: undefined, packageIdentity: undefined })).toEqual({
             description
         });
+    });
+});
+
+describe("isValidCrateName", () => {
+    it("accepts cargo package names", () => {
+        for (const name of ["acme", "acme-cli", "acme_cli", "Acme2", "a".repeat(64)]) {
+            expect(isValidCrateName(name)).toBe(true);
+        }
+    });
+
+    it("rejects names cargo refuses", () => {
+        for (const name of ["", "1acme", "-acme", "_acme", "acme.cli", "acme/cli", "acme+cli", "a".repeat(65)]) {
+            expect(isValidCrateName(name)).toBe(false);
+        }
+    });
+});
+
+describe("cargoLockPackageNames", () => {
+    it("collects every [[package]] name", () => {
+        const names = cargoLockPackageNames(TEMPLATE_CARGO_LOCK);
+        expect(names.size).toBe(new Set(TEMPLATE_CARGO_LOCK.match(/^\[\[package\]\]\nname = "[^"]+"/gm)).size);
+        for (const name of ["fern-cli-sdk", "clap", "tokio"]) {
+            expect(names.has(name)).toBe(true);
+        }
+    });
+
+    it("reads CRLF lockfiles", () => {
+        const crlf = TEMPLATE_CARGO_LOCK.replace(/\n/g, "\r\n");
+        expect(cargoLockPackageNames(crlf)).toEqual(cargoLockPackageNames(TEMPLATE_CARGO_LOCK));
+    });
+
+    it("finds a name that is not the first key of its [[package]] block", () => {
+        const lock = [
+            "version = 4",
+            "",
+            "[[package]]",
+            'version = "1.0.0"',
+            'source = "registry+https://github.com/rust-lang/crates.io-index"',
+            'name = "clap"',
+            "",
+            "[[package]]",
+            '  name   =   "tokio"',
+            "",
+            "[metadata]",
+            'name = "not-a-package"',
+            ""
+        ].join("\n");
+        expect(cargoLockPackageNames(lock)).toEqual(new Set(["clap", "tokio"]));
     });
 });

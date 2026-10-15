@@ -10,6 +10,8 @@ export interface ExpansionContext {
     apiName: string;
     /** Organization from fern.config.json. */
     organizationName: string;
+    /** The unresolved `output.publish.token`, which the loader strips from the config. */
+    npmToken?: string;
 }
 
 /**
@@ -44,6 +46,13 @@ export function expandCliTarget(
         ...(Object.keys(split.language).length > 0 ? { language: { [LANGUAGE]: split.language } } : {})
     };
     const sdkVersion = target.sdkVersion ?? config.sdkVersion;
+    const { output, diagnostics } = withNpmToken(
+        target.output ?? config.output ?? { delivery: "files" },
+        context.npmToken
+    );
+    if (output == null) {
+        return { ir: undefined, diagnostics };
+    }
     const candidate = {
         schemaVersion: "sdk-config-ir/v1",
         source: {
@@ -73,7 +82,7 @@ export function expandCliTarget(
         api: config.api,
         client: mergeObjects(config.client, target.client),
         package: { ...config.package, ...target.package },
-        output: target.output ?? config.output ?? { delivery: "files" },
+        output,
         docs: mergeObjects(config.docs, target.docs),
         generation,
         ...(config.replay != null ? { replay: config.replay } : {})
@@ -90,6 +99,42 @@ export function expandCliTarget(
 }
 
 type SourceSpec = SdkConfigV1["source"]["specs"][number];
+type Output = NonNullable<SdkConfigV1["targets"][number]["output"]>;
+
+const ENV_REFERENCE = /^\$\{(\w+)\}$/;
+
+/** Carries a GitHub-delivery npm token reference into the IR as `tokenEnvironmentVariable`. */
+function withNpmToken(
+    output: Output,
+    token: string | undefined
+): { output: object | undefined; diagnostics: CliTargetDiagnostic[] } {
+    if (token == null || output.delivery !== "github" || output.publish?.registry !== "npm") {
+        return { output, diagnostics: [] };
+    }
+    if (output.publish.trustedPublishing === true) {
+        return npmTokenError(
+            "output.publish.token must be omitted when trustedPublishing is true.",
+            "Remove output.publish.token, or set trustedPublishing to false."
+        );
+    }
+    const name = ENV_REFERENCE.exec(token.trim())?.[1];
+    if (name == null) {
+        return npmTokenError(
+            "The cli target writes the npm token to generators.yml only as an environment variable reference.",
+            "Set output.publish.token to a reference such as ${NPM_TOKEN}, or use trustedPublishing: true for OIDC."
+        );
+    }
+    return { output: { ...output, publish: { ...output.publish, tokenEnvironmentVariable: name } }, diagnostics: [] };
+}
+
+function npmTokenError(message: string, action: string): { output: undefined; diagnostics: CliTargetDiagnostic[] } {
+    return {
+        output: undefined,
+        diagnostics: [
+            { severity: "error", path: "output.publish.token", code: "CLI_TARGET_NPM_PUBLISH", message, action }
+        ]
+    };
+}
 
 /** A spec's local path, or its URL (which the specs rule rejects). */
 function specLocation(spec: SourceSpec): string {

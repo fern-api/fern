@@ -1,5 +1,5 @@
 [package]
-name = "fern-cli-sdk"
+name = "query-parameters-api"
 version = "1.0.0"
 edition = "2021"
 description = "CLI for the Query Parameters API"
