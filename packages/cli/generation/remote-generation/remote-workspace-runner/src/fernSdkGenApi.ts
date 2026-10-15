@@ -949,6 +949,8 @@ export interface FernSdkGenApiCandidate {
     sdkVersion: string | undefined;
     specsTarGzBuffer: Buffer | undefined;
     whitelabel?: FernFiddle.WhitelabelConfig;
+    /** The resolved SDK Config output. Absent for generators.yml groups. */
+    sdkConfigRequestedOutput?: FernSdkGenApiRequestedOutput;
 }
 
 export interface EligibleFernSdkGenApiCandidate extends FernSdkGenApiCandidate {
@@ -961,10 +963,19 @@ export function isEligibleForFernSdkGenApi(
 ): candidate is EligibleFernSdkGenApiCandidate {
     const { generatorInvocation, sdkVersion, specsTarGzBuffer, whitelabel } = candidate;
     const language = getFernSdkGenApiLanguage(generatorInvocation.name);
-    // Fiddle currently replaces AUTO after generation. Until that step moves into the shared
-    // pipeline, forwarding AUTO would write the literal placeholder into generated packages.
-    const hasConcreteVersion = sdkVersion != null && sdkVersion.trim().length > 0 && !isAutoVersion(sdkVersion);
-    return language != null && hasConcreteVersion && specsTarGzBuffer != null && whitelabel == null;
+    const hasVersion =
+        sdkVersion != null &&
+        sdkVersion.trim().length > 0 &&
+        (!isAutoVersion(sdkVersion) || supportsAutoVersion(candidate));
+    return language != null && hasVersion && specsTarGzBuffer != null && whitelabel == null;
+}
+
+/**
+ * sdk-gen-api resolves AUTO only by handing an SDK Config target's GitHub delivery to Fiddle, which
+ * picks the version after generation. Any other output would ship the placeholder version.
+ */
+export function supportsAutoVersion(candidate: FernSdkGenApiCandidate): boolean {
+    return candidate.sdkConfigRequestedOutput?.type === "github";
 }
 
 export interface FernSdkGenApiPayload {
@@ -1024,7 +1035,7 @@ export interface FernSdkGenApiBuildParameters {
 export interface FernSdkGenApiBuildResponse {
     createdSnippets: false;
     snippetsS3PreSignedReadUrl: undefined;
-    actualVersion: string;
+    actualVersion: string | undefined;
     pullRequestUrl: string | undefined;
     noChangesDetected: boolean | undefined;
     publishTarget: PublishTarget | undefined;
@@ -2086,14 +2097,16 @@ async function finishFernSdkGenApiTarget(
             skipFernignore: participant.skipFernignore
         });
     }
-    const actualVersion = target.result.actualVersion ?? participant.sdkVersion;
+    // An AUTO build that released nothing has no version, and "AUTO" itself is not one.
+    const actualVersion =
+        target.result.actualVersion ?? (isAutoVersion(participant.sdkVersion) ? undefined : participant.sdkVersion);
     const githubDelivery = resolveGithubDelivery(participant, target, requestedOutput);
     return {
         createdSnippets: false,
         snippetsS3PreSignedReadUrl: undefined,
         actualVersion,
         ...githubDelivery,
-        publishTarget: mapFernSdkGenApiPublishTarget(target, actualVersion)
+        publishTarget: actualVersion == null ? undefined : mapFernSdkGenApiPublishTarget(target, actualVersion)
     };
 }
 

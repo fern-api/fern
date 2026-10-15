@@ -49,6 +49,7 @@ import {
     isEligibleForFernSdkGenApi,
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
+    supportsAutoVersion,
     synthesizesSdkConfig
 } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive } from "./fernSdkGenApiSourceArchive.js";
@@ -310,16 +311,22 @@ export async function runRemoteGenerationForGenerator({
             generatorInvocation,
             sdkVersion: resolvedVersion,
             specsTarGzBuffer,
-            whitelabel
+            whitelabel,
+            sdkConfigRequestedOutput:
+                sdkConfigTarget != null
+                    ? resolveSdkConfigRequestedOutput(sdkConfigTarget.requestedOutput, isPreview)
+                    : undefined
         };
         if (!isEligibleForFernSdkGenApi(candidate)) {
             const reason =
                 resolvedVersion == null
                     ? "the SDK version could not be resolved"
-                    : isAutoVersion(resolvedVersion)
-                      ? "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
-                      : whitelabel != null
-                        ? "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
+                    : whitelabel != null
+                      ? "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
+                      : isAutoVersion(resolvedVersion) && !supportsAutoVersion(candidate)
+                        ? sdkConfigTarget != null
+                            ? "automatic SDK versioning (--version AUTO) through sdk-gen-api requires GitHub output"
+                            : "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
                         : specsTarGzBuffer == null
                           ? "the source archive is unavailable"
                           : `generator language ${generatorInvocation.language ?? "unknown"} does not match ${sdkGenApiLanguage}`;

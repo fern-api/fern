@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --version AUTO` now works for an `sdk-config.yml` target that delivers to GitHub, so
+    Fern Autorelease can release SDK Config targets. sdk-gen-api generates with a placeholder version,
+    and Fiddle picks the semver bump, replaces the placeholder and writes the changelog, as it does for
+    `generators.yml` groups. `AUTO` with download or direct registry output still fails before
+    generation, because nothing would replace the placeholder.
+  type: feat

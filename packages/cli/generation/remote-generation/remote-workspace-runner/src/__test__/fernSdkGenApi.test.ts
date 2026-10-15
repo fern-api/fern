@@ -1403,12 +1403,49 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.route?.payloadKind).toBe("sdk-config-v1");
     });
 
-    it("rejects AUTO until the shared pipeline owns Fern's post-generation version replacement", () => {
+    it("accepts AUTO for an SDK Config target with GitHub output, which Fiddle versions after generation", () => {
         expect(
             isEligibleForFernSdkGenApi({
                 generatorInvocation: invocation(),
                 sdkVersion: "AUTO",
-                specsTarGzBuffer: Buffer.from("archive")
+                specsTarGzBuffer: Buffer.from("archive"),
+                sdkConfigRequestedOutput: { type: "github", repository: "acme/sdk" }
+            })
+        ).toBe(true);
+    });
+
+    it("rejects AUTO for outputs that would ship the placeholder version", () => {
+        const outputs: Array<FernSdkGenApiRequestedOutput | undefined> = [
+            undefined,
+            { type: "download" },
+            { type: "publish", publish: { registry: "npm" } }
+        ];
+        for (const sdkConfigRequestedOutput of outputs) {
+            expect(
+                isEligibleForFernSdkGenApi({
+                    generatorInvocation: invocation(),
+                    sdkVersion: "AUTO",
+                    specsTarGzBuffer: Buffer.from("archive"),
+                    sdkConfigRequestedOutput
+                })
+            ).toBe(false);
+        }
+    });
+
+    it("rejects AUTO for whitelabel builds even with SDK Config GitHub output", () => {
+        expect(
+            isEligibleForFernSdkGenApi({
+                generatorInvocation: invocation(),
+                sdkVersion: "AUTO",
+                specsTarGzBuffer: Buffer.from("archive"),
+                sdkConfigRequestedOutput: { type: "github", repository: "acme/sdk" },
+                whitelabel: {
+                    github: {
+                        token: "token",
+                        username: "fern",
+                        email: "fern@example.com"
+                    }
+                }
             })
         ).toBe(false);
     });
@@ -3695,7 +3732,10 @@ describe("GitHub delivery result", () => {
         });
     }
 
-    async function runWithPublication(publication: Record<string, unknown> | undefined) {
+    async function runWithPublication(
+        publication: Record<string, unknown> | undefined,
+        { sdkVersion = "1.2.3", actualVersion = "1.2.3" }: { sdkVersion?: string; actualVersion?: string | null } = {}
+    ) {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
         const generatorInvocation = githubInvocation();
         const targetId = createFernSdkGenApiRequest({
@@ -3717,7 +3757,10 @@ describe("GitHub delivery result", () => {
                         targetId,
                         status: "succeeded",
                         logs: [],
-                        result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.3" },
+                        result: {
+                            artifactUrl: "https://example.test/artifact.zip",
+                            ...(actualVersion == null ? {} : { actualVersion })
+                        },
                         ...(publication == null ? {} : { publication })
                     }
                 ]
@@ -3728,7 +3771,7 @@ describe("GitHub delivery result", () => {
             organization: "acme",
             cliVersion: "0.0.0",
             generatorInvocation,
-            sdkVersion: "1.2.3",
+            sdkVersion,
             token: { value: "token" } as never,
             specsTarGzBuffer: validSourceArchive,
             payload: runtimePayload(validRuntimeBundle),
@@ -3756,6 +3799,25 @@ describe("GitHub delivery result", () => {
         expect(result.pullRequestUrl).toBe(pullRequestUrl);
         expect(result.noChangesDetected).toBeUndefined();
         expect(contextLogger.info).toHaveBeenCalledWith(`Pull request: ${pullRequestUrl}`);
+    });
+
+    it("reports the version that Fiddle computed for an AUTO build", async () => {
+        const result = await runWithPublication(githubPublication({ pullRequestUrl }), {
+            sdkVersion: "AUTO",
+            actualVersion: "1.3.0"
+        });
+
+        expect(result.actualVersion).toBe("1.3.0");
+    });
+
+    it("reports no version, not AUTO, for an AUTO build that released nothing", async () => {
+        const result = await runWithPublication(githubPublication({ noChangesDetected: true }), {
+            sdkVersion: "AUTO",
+            actualVersion: null
+        });
+
+        expect(result.actualVersion).toBeUndefined();
+        expect(result.noChangesDetected).toBe(true);
     });
 
     it("reports a skip for no changes explicitly instead of as a created pull request", async () => {
