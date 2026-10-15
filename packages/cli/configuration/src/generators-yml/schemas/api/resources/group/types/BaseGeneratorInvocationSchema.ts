@@ -26,6 +26,13 @@ export interface BaseGeneratorInvocationSchema {
     api?: GeneratorsYml.GeneratorApiSettingsSchema;
     /** Temporary way to unblock example serialization. */
     "disable-examples"?: boolean;
+    /**
+     * When true, remote generation emits a signed in-toto/SLSA provenance attestation for the
+     * generated SDK (spec digests, generator image digest, generation config digest, and the
+     * git tree hash of the generated output) and attaches it to the pull request or commit.
+     * Only supported for remote generation with GitHub output. Defaults to false.
+     */
+    provenance?: boolean;
     /** Deprecated, use `metadata` on the output block instead. */
     "publish-metadata"?: GeneratorsYml.GeneratorPublishMetadataSchema;
     /**
