@@ -966,16 +966,44 @@ export function isEligibleForFernSdkGenApi(
     const hasVersion =
         sdkVersion != null &&
         sdkVersion.trim().length > 0 &&
-        (!isAutoVersion(sdkVersion) || supportsAutoVersion(candidate));
+        (!isAutoVersion(sdkVersion) || supportsAutoVersion(candidate.sdkConfigRequestedOutput));
     return language != null && hasVersion && specsTarGzBuffer != null && whitelabel == null;
 }
 
-/**
- * sdk-gen-api resolves AUTO only by handing an SDK Config target's GitHub delivery to Fiddle, which
- * picks the version after generation. Any other output would ship the placeholder version.
- */
-export function supportsAutoVersion(candidate: FernSdkGenApiCandidate): boolean {
-    return candidate.sdkConfigRequestedOutput?.type === "github";
+/** Only Fiddle's GitHub delivery replaces the AUTO placeholder; other outputs would ship it. */
+export function supportsAutoVersion(sdkConfigRequestedOutput: FernSdkGenApiRequestedOutput | undefined): boolean {
+    return sdkConfigRequestedOutput?.type === "github";
+}
+
+/** The reason that isEligibleForFernSdkGenApi rejected a candidate. */
+export function describeFernSdkGenApiIneligibility({
+    candidate,
+    isSdkConfigTarget,
+    isPreview
+}: {
+    candidate: FernSdkGenApiCandidate;
+    isSdkConfigTarget: boolean;
+    isPreview: boolean;
+}): string {
+    const { generatorInvocation, sdkVersion, specsTarGzBuffer, whitelabel } = candidate;
+    if (sdkVersion == null) {
+        return "the SDK version could not be resolved";
+    }
+    if (whitelabel != null) {
+        return "whitelabel generation has not yet moved from Fiddle to the shared pipeline";
+    }
+    if (isAutoVersion(sdkVersion) && !supportsAutoVersion(candidate.sdkConfigRequestedOutput)) {
+        if (!isSdkConfigTarget) {
+            return "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline";
+        }
+        return isPreview
+            ? "preview generation only downloads files, so it cannot use --version AUTO"
+            : "automatic SDK versioning (--version AUTO) through sdk-gen-api requires GitHub output";
+    }
+    if (specsTarGzBuffer == null) {
+        return "the source archive is unavailable";
+    }
+    return `generator language ${generatorInvocation.language ?? "unknown"} does not match ${getFernSdkGenApiLanguage(generatorInvocation.name)}`;
 }
 
 export interface FernSdkGenApiPayload {

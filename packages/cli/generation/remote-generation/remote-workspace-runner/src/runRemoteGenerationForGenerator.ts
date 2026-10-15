@@ -38,6 +38,7 @@ import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config
 import { createAndStartJob } from "./createAndStartJob.js";
 import { discoverLatestSdkGenApiGeneratorVersions } from "./discoverSdkGenApiGeneratorVersions.js";
 import {
+    describeFernSdkGenApiIneligibility,
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
@@ -49,7 +50,6 @@ import {
     isEligibleForFernSdkGenApi,
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
-    supportsAutoVersion,
     synthesizesSdkConfig
 } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive } from "./fernSdkGenApiSourceArchive.js";
@@ -305,31 +305,25 @@ export async function runRemoteGenerationForGenerator({
           }
         | undefined;
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
-    const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (sdkGenApiRoute != null) {
+        // Preview must never retain a publishing destination from SDK Config.
+        const sdkConfigRequestedOutput =
+            sdkConfigTarget != null
+                ? resolveSdkConfigRequestedOutput(sdkConfigTarget.requestedOutput, isPreview)
+                : undefined;
         const candidate = {
             generatorInvocation,
             sdkVersion: resolvedVersion,
             specsTarGzBuffer,
             whitelabel,
-            sdkConfigRequestedOutput:
-                sdkConfigTarget != null
-                    ? resolveSdkConfigRequestedOutput(sdkConfigTarget.requestedOutput, isPreview)
-                    : undefined
+            sdkConfigRequestedOutput
         };
         if (!isEligibleForFernSdkGenApi(candidate)) {
-            const reason =
-                resolvedVersion == null
-                    ? "the SDK version could not be resolved"
-                    : whitelabel != null
-                      ? "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
-                      : isAutoVersion(resolvedVersion) && !supportsAutoVersion(candidate)
-                        ? sdkConfigTarget != null
-                            ? "automatic SDK versioning (--version AUTO) through sdk-gen-api requires GitHub output"
-                            : "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
-                        : specsTarGzBuffer == null
-                          ? "the source archive is unavailable"
-                          : `generator language ${generatorInvocation.language ?? "unknown"} does not match ${sdkGenApiLanguage}`;
+            const reason = describeFernSdkGenApiIneligibility({
+                candidate,
+                isSdkConfigTarget: sdkConfigTarget != null,
+                isPreview
+            });
             return interactiveTaskContext.failAndThrow(
                 `Cannot submit SDK generation to sdk-gen-api: ${reason}`,
                 undefined,
@@ -353,8 +347,7 @@ export async function runRemoteGenerationForGenerator({
                     token,
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
                     payload: createSdkConfigTargetPayload(sdkConfigTarget),
-                    // Preview must never retain a publishing destination from SDK Config.
-                    requestedOutput: resolveSdkConfigRequestedOutput(sdkConfigTarget.requestedOutput, isPreview),
+                    requestedOutput: sdkConfigRequestedOutput,
                     ...(!isPreview && sdkConfigTarget.publishCredential != null
                         ? { publishCredential: sdkConfigTarget.publishCredential }
                         : {}),
@@ -768,7 +761,7 @@ export async function runRemoteGenerationForGenerator({
     }
 
     // use the actual version from the generation result, fallback to pre-computed version
-    let actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
+    let actualVersionForUpload = result?.actualVersion ?? resolveVersionFallback(resolvedVersion);
     let versionUnresolvedReason: string | undefined;
     if (actualVersionForUpload == null && result != null && snippetPackageName != null) {
         if (snippetVersionCandidate == null) {

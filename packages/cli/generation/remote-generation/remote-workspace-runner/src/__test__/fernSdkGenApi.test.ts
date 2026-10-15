@@ -10,6 +10,7 @@ import {
     createFernSdkGenApiBatchRequest,
     createFernSdkGenApiPublishCredentials,
     createFernSdkGenApiRequest,
+    describeFernSdkGenApiIneligibility,
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
@@ -1414,22 +1415,19 @@ describe("isEligibleForFernSdkGenApi", () => {
         ).toBe(true);
     });
 
-    it("rejects AUTO for outputs that would ship the placeholder version", () => {
-        const outputs: Array<FernSdkGenApiRequestedOutput | undefined> = [
-            undefined,
-            { type: "download" },
-            { type: "publish", publish: { registry: "npm" } }
-        ];
-        for (const sdkConfigRequestedOutput of outputs) {
-            expect(
-                isEligibleForFernSdkGenApi({
-                    generatorInvocation: invocation(),
-                    sdkVersion: "AUTO",
-                    specsTarGzBuffer: Buffer.from("archive"),
-                    sdkConfigRequestedOutput
-                })
-            ).toBe(false);
-        }
+    it.each([
+        ["no SDK Config output", undefined],
+        ["download output", { type: "download" }],
+        ["direct registry output", { type: "publish", publish: { registry: "npm" } }]
+    ] as const)("rejects AUTO for %s, which would ship the placeholder version", (_case, sdkConfigRequestedOutput) => {
+        expect(
+            isEligibleForFernSdkGenApi({
+                generatorInvocation: invocation(),
+                sdkVersion: "AUTO",
+                specsTarGzBuffer: Buffer.from("archive"),
+                sdkConfigRequestedOutput
+            })
+        ).toBe(false);
     });
 
     it("rejects AUTO for whitelabel builds even with SDK Config GitHub output", () => {
@@ -3718,6 +3716,50 @@ describe("fernapi/fern-mcp-server target", () => {
             type: "publish",
             publish: { registry: "npm" }
         });
+    });
+});
+
+describe("describeFernSdkGenApiIneligibility", () => {
+    const whitelabel = { github: { token: "token", username: "fern", email: "fern@example.com" } };
+    const github: FernSdkGenApiRequestedOutput = { type: "github", repository: "acme/sdk" };
+
+    it.each([
+        [
+            "whitelabel before AUTO",
+            { sdkConfigRequestedOutput: github, whitelabel },
+            { isSdkConfigTarget: true, isPreview: false },
+            "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
+        ],
+        [
+            "AUTO for an SDK Config target without GitHub output",
+            { sdkConfigRequestedOutput: { type: "download" } },
+            { isSdkConfigTarget: true, isPreview: false },
+            "automatic SDK versioning (--version AUTO) through sdk-gen-api requires GitHub output"
+        ],
+        [
+            "AUTO in preview",
+            { sdkConfigRequestedOutput: { type: "download" } },
+            { isSdkConfigTarget: true, isPreview: true },
+            "preview generation only downloads files, so it cannot use --version AUTO"
+        ],
+        [
+            "AUTO for a generators.yml group",
+            {},
+            { isSdkConfigTarget: false, isPreview: false },
+            "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
+        ]
+    ] as const)("explains %s", (_case, candidate, options, expected) => {
+        expect(
+            describeFernSdkGenApiIneligibility({
+                candidate: {
+                    generatorInvocation: invocation(),
+                    sdkVersion: "AUTO",
+                    specsTarGzBuffer: Buffer.from("archive"),
+                    ...candidate
+                },
+                ...options
+            })
+        ).toBe(expected);
     });
 });
 
