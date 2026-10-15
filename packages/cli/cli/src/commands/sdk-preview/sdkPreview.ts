@@ -5,11 +5,12 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
-import { CliError } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import fs from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
@@ -49,6 +50,18 @@ export interface SdkPreviewError {
 }
 
 export type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
+
+export function toSdkPreviewError(error: unknown): SdkPreviewError {
+    // TaskAbortSignal means a nested task already logged the actionable error. Preserve the
+    // sentinel so the CLI exits without replacing that message with "[object Object]".
+    if (error instanceof TaskAbortSignal) {
+        throw error;
+    }
+    return {
+        status: "error",
+        message: extractErrorMessage(error)
+    };
+}
 
 /**
  * Returns true if the value looks like a registry URL rather than a filesystem path.
@@ -418,10 +431,7 @@ export async function sdkPreview({
             }
         }
     } catch (error) {
-        return {
-            status: "error",
-            message: error instanceof Error ? error.message : String(error)
-        };
+        return toSdkPreviewError(error);
     }
 
     return { status: "success", org: organization ?? "", previews };

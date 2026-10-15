@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve actionable sdk-gen-api errors instead of printing `[object Object]` when `fern sdk preview` fails.
+  type: fix
