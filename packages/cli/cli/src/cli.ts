@@ -123,6 +123,7 @@ import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
 import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
+import { createEnvironmentProxyDispatcher } from "./utils/proxy.js";
 import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
@@ -185,16 +186,7 @@ async function runCli() {
     };
 
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
-        const { setGlobalDispatcher, Agent } = await import("undici");
-        setGlobalDispatcher(
-            new Agent({ connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 })
-        );
-    }
-
-    if (process.env.HTTP_PROXY != null) {
-        const { setGlobalDispatcher, ProxyAgent } = await import("undici");
-        const proxyAgent = new ProxyAgent(process.env.HTTP_PROXY);
-        setGlobalDispatcher(proxyAgent);
+        await configureGlobalDispatcher();
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -346,6 +338,22 @@ async function tryRunCli(cliContext: CliContext) {
     });
 
     await cli.parse();
+}
+
+/**
+ * Node's global `fetch` ignores proxy environment variables, so route requests through a
+ * dispatcher that honors `http(s)_proxy`/`no_proxy` per origin.
+ * Timeouts are disabled because generation and uploads can legitimately run for a long time.
+ */
+async function configureGlobalDispatcher(): Promise<void> {
+    const { setGlobalDispatcher } = await import("undici");
+    setGlobalDispatcher(
+        createEnvironmentProxyDispatcher({
+            connect: { timeout: 2147483647 },
+            bodyTimeout: 0,
+            headersTimeout: 2147483647
+        })
+    );
 }
 
 async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {

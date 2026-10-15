@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern upgrade` (and the startup upgrade check) no longer fails with an opaque
+    `Failed to resolve latest CLI version: fetch failed`. The error now names the npm
+    registry that was contacted and the underlying cause (e.g. `getaddrinfo ENOTFOUND`,
+    `DEPTH_ZERO_SELF_SIGNED_CERT`, `ECONNREFUSED`) with hints for proxy / custom-CA setups.
+  type: fix
+- summary: |
+    The CLI now honors `HTTPS_PROXY`, `https_proxy`, `http_proxy` and `NO_PROXY`/`no_proxy` in
+    addition to `HTTP_PROXY` for its outbound requests (version lookups, Fern APIs, downloads).
+    HTTPS requests use the HTTPS proxy and HTTP requests the HTTP proxy, and loopback/`no_proxy`
+    hosts (e.g. the local docs preview) are never proxied. Previously only the upper-case
+    `HTTP_PROXY` was read, so machines behind a proxy configured via `HTTPS_PROXY` failed with
+    `fetch failed`.
+  type: fix
