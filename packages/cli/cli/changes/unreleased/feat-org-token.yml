@@ -1,0 +1,4 @@
+- summary: |
+    Add `fern org token` commands to manage organization API keys:
+    `list` (with `--json`/`--csv` output), `create` (prints the secret once), and `revoke <token-id>`.
+  type: feat
