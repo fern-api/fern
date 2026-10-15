@@ -286,15 +286,18 @@ async function buildFileManifest(
  * navigation `icon`/`image` refs (`file:<fileId>` or a bare fileId) included —
  * so the renderer's path-keyed file lookups resolve them.
  */
-export function remapFileIdsToPaths<T>(value: T, fileIdToPath: ReadonlyMap<string, string>): T {
+export function remapFileIdsToPaths(
+    config: DocsV1Write.DocsConfig,
+    fileIdToPath: ReadonlyMap<string, string>
+): DocsV1Write.DocsConfig {
     if (fileIdToPath.size === 0) {
-        return value;
+        return config;
     }
-    // The walk only swaps fileId strings for path strings, so the shape of `value` is preserved.
-    return remapValue(value, fileIdToPath) as T;
+    // The walk only swaps fileId strings for path strings inside plain JSON, so the shape is preserved.
+    return remapFileIdsInValue(config, fileIdToPath) as DocsV1Write.DocsConfig;
 }
 
-function remapValue(value: unknown, fileIdToPath: ReadonlyMap<string, string>): unknown {
+export function remapFileIdsInValue(value: unknown, fileIdToPath: ReadonlyMap<string, string>): unknown {
     if (typeof value === "string") {
         if (value.startsWith("file:")) {
             const path = fileIdToPath.get(value.slice("file:".length));
@@ -303,12 +306,22 @@ function remapValue(value: unknown, fileIdToPath: ReadonlyMap<string, string>): 
         return fileIdToPath.get(value) ?? value;
     }
     if (Array.isArray(value)) {
-        return value.map((item) => remapValue(item, fileIdToPath));
+        return value.map((item) => remapFileIdsInValue(item, fileIdToPath));
     }
-    if (value != null && typeof value === "object") {
-        return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, remapValue(item, fileIdToPath)]));
+    if (isPlainObject(value)) {
+        return Object.fromEntries(
+            Object.entries(value).map(([key, item]) => [key, remapFileIdsInValue(item, fileIdToPath)])
+        );
     }
     return value;
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+    if (value == null || typeof value !== "object") {
+        return false;
+    }
+    const prototype = Object.getPrototypeOf(value);
+    return prototype === Object.prototype || prototype === null;
 }
 
 export function fileKey(hash: string, fullPath: string): string {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { remapFileIdsToPaths } from "../astro/buildAstroPreviewModel.js";
+import { remapFileIdsInValue } from "../astro/buildAstroPreviewModel.js";
 
 const SVG_ID = "bc2eecf9-7976-42d6-9c06-c0d6dc443d7f";
 const PNG_ID = "b7404fc3-2f42-45c5-85bc-aa99fadde1af";
@@ -8,7 +8,7 @@ const fileIdToPath = new Map([
     [PNG_ID, "assets/green.png"]
 ]);
 
-describe("remapFileIdsToPaths", () => {
+describe("remapFileIdsInValue", () => {
     it("rewrites nav file icons and images from fileIds to paths", () => {
         const config = {
             title: "Product switcher",
@@ -26,7 +26,7 @@ describe("remapFileIdsToPaths", () => {
             }
         };
 
-        expect(remapFileIdsToPaths(config, fileIdToPath)).toEqual({
+        expect(remapFileIdsInValue(config, fileIdToPath)).toEqual({
             title: "Product switcher",
             root: {
                 type: "productgroup",
@@ -53,6 +53,14 @@ describe("remapFileIdsToPaths", () => {
             empty: null
         };
 
-        expect(remapFileIdsToPaths(config, fileIdToPath)).toEqual(config);
+        expect(remapFileIdsInValue(config, fileIdToPath)).toEqual(config);
+    });
+
+    it("keeps non-plain objects as-is", () => {
+        const date = new Date(0);
+        const remapped = remapFileIdsInValue({ date }, fileIdToPath);
+
+        expect(remapped).toEqual({ date });
+        expect((remapped as { date: Date }).date).toBe(date);
     });
 });
