@@ -57,7 +57,7 @@ export class PutClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `${core.url.encodePathParam(id)}`,
+                `${core.url.encodePathParam(id, errors.SeedExhaustiveError)}`,
             ),
             method: "PUT",
             headers: _headers,
