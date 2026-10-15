@@ -200,6 +200,8 @@ module <%= gem_namespace %>
 
             if value.is_a?(::Array)
               value = value.map { |item| !item.nil? && item.respond_to?(:to_h) ? item.to_h : item }
+            elsif value.is_a?(::Hash)
+              value = value.transform_values { |item| item.is_a?(Model) ? item.to_h : item }
             elsif !value.nil? && value.respond_to?(:to_h)
               value = value.to_h
             end
