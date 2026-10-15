@@ -2016,6 +2016,23 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(changedSource.idempotencyKey).not.toBe(original.idempotencyKey);
     });
 
+    it("gives every AUTO request a new idempotency key, because its result depends on the SDK repository", () => {
+        const createRequest = (sdkVersion: string) =>
+            createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation(),
+                sdkVersion,
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: runtimePayload(Buffer.from("bundle")),
+                requestedOutput: { type: "github", repository: "acme/sdk" }
+            });
+
+        expect(createRequest("AUTO").idempotencyKey).not.toBe(createRequest("AUTO").idempotencyKey);
+        expect(createRequest("1.2.3").idempotencyKey).toBe(createRequest("1.2.3").idempotencyKey);
+    });
+
     it("keeps credential identity and idempotency stable across equivalent direct-publication retries", () => {
         const directInvocation = invocation({
             outputMode: FernFiddle.OutputMode.publishV2(
@@ -3850,6 +3867,8 @@ describe("GitHub delivery result", () => {
         });
 
         expect(result.actualVersion).toBe("1.3.0");
+        // Fern Autorelease parses "new version: <semver>" from the CLI output.
+        expect(contextLogger.info).toHaveBeenCalledWith("AUTO versioning picked new version: 1.3.0");
     });
 
     it("reports no version, not AUTO, for an AUTO build that released nothing", async () => {
@@ -3860,6 +3879,7 @@ describe("GitHub delivery result", () => {
 
         expect(result.actualVersion).toBeUndefined();
         expect(result.noChangesDetected).toBe(true);
+        expect(contextLogger.info).not.toHaveBeenCalledWith(expect.stringContaining("new version"));
     });
 
     it("reports a skip for no changes explicitly instead of as a created pull request", async () => {

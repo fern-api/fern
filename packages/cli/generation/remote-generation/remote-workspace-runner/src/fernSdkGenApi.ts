@@ -8,7 +8,7 @@ import { type FeatureFlagContext, getFeatureFlagClient } from "@fern-api/posthog
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
-import { createHash } from "crypto";
+import { createHash, randomUUID } from "crypto";
 import FormData from "form-data";
 import { gunzipSync } from "zlib";
 import {
@@ -2129,6 +2129,10 @@ async function finishFernSdkGenApiTarget(
     const actualVersion =
         target.result.actualVersion ?? (isAutoVersion(participant.sdkVersion) ? undefined : participant.sdkVersion);
     const githubDelivery = resolveGithubDelivery(participant, target, requestedOutput);
+    if (isAutoVersion(participant.sdkVersion) && actualVersion != null) {
+        // Fern Autorelease reads the version from this phrase, which the legacy Fiddle path also logs.
+        participant.context.logger.info(`AUTO versioning picked new version: ${actualVersion}`);
+    }
     return {
         createdSnippets: false,
         snippetsS3PreSignedReadUrl: undefined,
@@ -2482,6 +2486,11 @@ export function createFernSdkGenApiBatchRequest({
     const credentialSetId = requestTargets.some((target) => target.requestedOutput.type === "publish")
         ? deterministicUuid(stableRequestIdentity)
         : undefined;
+    // An AUTO result depends on the SDK repository, which the inputs do not capture, so a rerun must not
+    // replay an earlier build (its pull request may be closed, or its publish may have failed).
+    const autoVersionRunId = requestTargets.some((target) => isAutoVersion(target.sdk.version))
+        ? randomUUID()
+        : undefined;
     const idempotencyKey = createHash("sha256")
         .update(specsTarGzBuffer)
         .update(
@@ -2492,7 +2501,8 @@ export function createFernSdkGenApiBatchRequest({
                 credentialSetId,
                 apiInputs,
                 targets: requestTargets,
-                payloadHashes
+                payloadHashes,
+                ...(autoVersionRunId != null ? { autoVersionRunId } : {})
             })
         )
         .digest("hex");

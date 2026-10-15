@@ -4,6 +4,7 @@
     `fern generate --version AUTO` now works for an `sdk-config.yml` target that delivers to GitHub, so
     Fern Autorelease can release SDK Config targets. sdk-gen-api generates with a placeholder version,
     and Fiddle picks the semver bump, replaces the placeholder and writes the changelog, as it does for
-    `generators.yml` groups. `AUTO` with download or direct registry output still fails before
-    generation, because nothing would replace the placeholder.
+    `generators.yml` groups. The CLI prints the picked version, and each AUTO run starts a new build
+    instead of replaying an earlier one. `AUTO` with download or direct registry output still fails
+    before generation, because nothing would replace the placeholder.
   type: feat
