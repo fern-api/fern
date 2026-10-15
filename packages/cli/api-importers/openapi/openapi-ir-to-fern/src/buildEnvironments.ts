@@ -624,7 +624,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             urls: {
                                 ...{ [DEFAULT_URL_NAME]: baseUrl ?? "" },
                                 ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
-                            }
+                            },
+                            ...getDefaultUrlTemplateData(schema)
                         }
                     });
                 } else {
@@ -654,7 +655,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             urls: {
                                 ...{ [DEFAULT_URL_NAME]: baseUrl ?? "" },
                                 ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
-                            }
+                            },
+                            ...getDefaultUrlTemplateData(schema)
                         }
                     });
                 } else {
@@ -930,4 +932,24 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             }
         }
     }
+}
+
+/**
+ * The `url-template` and `variables` of a single-URL server, keyed under the default URL name, for
+ * when it is merged into a multiple-base-URL environment (e.g. alongside WebSocket servers).
+ */
+function getDefaultUrlTemplateData(
+    schema: string | RawSchemas.SingleBaseUrlEnvironmentSchema | RawSchemas.MultipleBaseUrlsEnvironmentSchema
+): Pick<RawSchemas.MultipleBaseUrlsEnvironmentSchema, "url-templates" | "default-urls" | "variables"> {
+    if (typeof schema === "string" || isRawMultipleBaseUrlsEnvironment(schema)) {
+        return {};
+    }
+    if (schema["url-template"] == null || schema.variables == null || schema.variables.length === 0) {
+        return {};
+    }
+    return {
+        "url-templates": { [DEFAULT_URL_NAME]: schema["url-template"] },
+        ...(schema["default-url"] != null ? { "default-urls": { [DEFAULT_URL_NAME]: schema["default-url"] } } : {}),
+        variables: { [DEFAULT_URL_NAME]: schema.variables }
+    };
 }

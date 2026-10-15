@@ -243,9 +243,7 @@ function mergeEnvironments(
                         },
                         docs: undefined,
                         audiences: env.audiences,
-                        defaultUrls: undefined,
-                        urlTemplates: undefined,
-                        urlVariables: undefined
+                        ...getMergedUrlTemplateFields(environmentId, env, deconflictedEnvironments2.environments)
                     }))
                 })
             },
@@ -525,6 +523,38 @@ function deconflictMultipleEnvironments(
     });
 
     return { deconflictedEnvironments, changedBaseUrlIds };
+}
+
+/**
+ * Keeps each single-URL environment's `defaultUrl`, `urlTemplate` and `urlVariables`, keyed by its base URL id,
+ * when single-URL environments are merged into a multiple-base-URL environment.
+ */
+function getMergedUrlTemplateFields(
+    baseUrlId: string,
+    environment: FernIr.SingleBaseUrlEnvironment,
+    otherEnvironments: FernIr.SingleBaseUrlEnvironment[]
+): Pick<FernIr.MultipleBaseUrlsEnvironment, "defaultUrls" | "urlTemplates" | "urlVariables"> {
+    const defaultUrls: Record<string, string> = {};
+    const urlTemplates: Record<string, string> = {};
+    const urlVariables: Record<string, FernIr.ServerVariable[]> = {};
+    for (const [id, env] of [
+        [baseUrlId, environment],
+        ...otherEnvironments.map((other) => [other.id, other] as const)
+    ] as const) {
+        if (env.urlTemplate == null || env.urlVariables == null || env.urlVariables.length === 0) {
+            continue;
+        }
+        urlTemplates[id] = env.urlTemplate;
+        urlVariables[id] = env.urlVariables;
+        if (env.defaultUrl != null) {
+            defaultUrls[id] = env.defaultUrl;
+        }
+    }
+    return {
+        defaultUrls: Object.keys(defaultUrls).length > 0 ? defaultUrls : undefined,
+        urlTemplates: Object.keys(urlTemplates).length > 0 ? urlTemplates : undefined,
+        urlVariables: Object.keys(urlVariables).length > 0 ? urlVariables : undefined
+    };
 }
 
 function isWebsocketEnvironment(environment: FernIr.EnvironmentsConfig): boolean {

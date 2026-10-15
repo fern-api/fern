@@ -531,7 +531,7 @@ function convertIrEnvironments({
 }: {
     environmentsConfig: Ir.environment.EnvironmentsConfig;
     endpoint: Ir.http.HttpEndpoint;
-}): FdrCjsSdk.Environment[] {
+}): EnvironmentWithUrlTemplate[] {
     const environmentsConfigValue = environmentsConfig.environments;
     const endpointBaseUrlId = endpoint.baseUrl;
     const endpointBaseUrlIds = endpoint.v2BaseUrls;
@@ -541,7 +541,11 @@ function convertIrEnvironments({
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
                     baseUrl: singleBaseUrlEnvironment.url,
-                    audiences: singleBaseUrlEnvironment.audiences
+                    audiences: singleBaseUrlEnvironment.audiences,
+                    ...convertServerUrlTemplate(
+                        singleBaseUrlEnvironment.urlTemplate,
+                        singleBaseUrlEnvironment.urlVariables
+                    )
                 };
             });
         case "multipleBaseUrls":
@@ -558,7 +562,11 @@ function convertIrEnvironments({
                         return {
                             id: FdrCjsSdk.EnvironmentId(baseUrlId),
                             baseUrl: endpointBaseUrl,
-                            audiences: singleBaseUrlEnvironment.audiences
+                            audiences: singleBaseUrlEnvironment.audiences,
+                            ...convertServerUrlTemplate(
+                                singleBaseUrlEnvironment.urlTemplates?.[baseUrlId],
+                                singleBaseUrlEnvironment.urlVariables?.[baseUrlId]
+                            )
                         };
                     });
                 });
@@ -584,7 +592,11 @@ function convertIrEnvironments({
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
                     baseUrl: endpointBaseUrl,
-                    audiences: singleBaseUrlEnvironment.audiences
+                    audiences: singleBaseUrlEnvironment.audiences,
+                    ...convertServerUrlTemplate(
+                        singleBaseUrlEnvironment.urlTemplates?.[endpointBaseUrlId],
+                        singleBaseUrlEnvironment.urlVariables?.[endpointBaseUrlId]
+                    )
                 };
             });
         default:
@@ -598,7 +610,7 @@ function convertIrWebSocketEnvironments({
 }: {
     environmentsConfig: Ir.environment.EnvironmentsConfig;
     channel: Ir.websocket.WebSocketChannel;
-}): FdrCjsSdk.Environment[] {
+}): EnvironmentWithUrlTemplate[] {
     const environmentsConfigValue = environmentsConfig.environments;
     const channelBaseUrlId = channel.baseUrl;
     switch (environmentsConfigValue.type) {
@@ -607,7 +619,13 @@ function convertIrWebSocketEnvironments({
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
                     baseUrl: replaceProtocol(singleBaseUrlEnvironment.url, "wss"),
-                    audiences: singleBaseUrlEnvironment.audiences
+                    audiences: singleBaseUrlEnvironment.audiences,
+                    ...convertServerUrlTemplate(
+                        singleBaseUrlEnvironment.urlTemplate != null
+                            ? replaceProtocol(singleBaseUrlEnvironment.urlTemplate, "wss")
+                            : undefined,
+                        singleBaseUrlEnvironment.urlVariables
+                    )
                 };
             });
         case "multipleBaseUrls":
@@ -628,12 +646,43 @@ function convertIrWebSocketEnvironments({
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
                     baseUrl: channelBaseUrl,
-                    audiences: singleBaseUrlEnvironment.audiences
+                    audiences: singleBaseUrlEnvironment.audiences,
+                    ...convertServerUrlTemplate(
+                        singleBaseUrlEnvironment.urlTemplates?.[channelBaseUrlId],
+                        singleBaseUrlEnvironment.urlVariables?.[channelBaseUrlId]
+                    )
                 };
             });
         default:
             assertNever(environmentsConfigValue);
     }
+}
+
+// `urlTemplate` and `urlVariables` are absent from the pinned @fern-api/fdr-sdk type.
+export type EnvironmentWithUrlTemplate = FdrCjsSdk.Environment & {
+    urlTemplate?: string;
+    urlVariables?: { id: string; default?: string; values?: string[] }[];
+};
+
+/**
+ * The server URL template and its variables, so the docs can fill the variables in at runtime
+ * (e.g. from the viewer's login claims). Omitted when the server has no variables.
+ */
+function convertServerUrlTemplate(
+    urlTemplate: string | undefined,
+    urlVariables: Ir.environment.ServerVariable[] | undefined
+): Pick<EnvironmentWithUrlTemplate, "urlTemplate" | "urlVariables"> {
+    if (urlTemplate == null || urlVariables == null || urlVariables.length === 0) {
+        return {};
+    }
+    return {
+        urlTemplate,
+        urlVariables: urlVariables.map((variable) => ({
+            id: variable.id,
+            default: variable.default,
+            values: variable.values
+        }))
+    };
 }
 
 function replaceProtocol(url: string, protocol: string): string {
