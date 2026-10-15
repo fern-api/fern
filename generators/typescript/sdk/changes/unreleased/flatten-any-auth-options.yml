@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `flattenAnyAuthOptions` config option. When it is enabled and the API uses `auth: any`, each scheme's
+    client options are flat (e.g. `{ apiKey }`, `{ clientId, clientSecret }`, `{ token }`) instead of nested under the
+    scheme key (e.g. `{ apiKey: { apiKey } }`). This matches the Python SDK. Options with the same name, such as the
+    bearer `token` and the OAuth `token` override, are shared, and an OAuth `token` skips the client-credentials flow.
+    The default is `false`, so existing SDKs keep the nested shape.
+  type: feat
+- summary: |
+    Fix `auth: any` SDKs ignoring an OAuth token override (`oauth: { token }`). Previously the OAuth provider was only
+    used when `clientId` and `clientSecret` were set, so a token by itself sent no `Authorization` header.
+  type: fix

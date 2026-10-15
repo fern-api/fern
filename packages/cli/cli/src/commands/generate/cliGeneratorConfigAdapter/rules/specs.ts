@@ -16,6 +16,7 @@ export const SETTINGS_KEYS: Partial<Record<keyof ApiImportSettings, string>> = {
     groupMultiApiEnvironments: "group-multi-api-environments",
     idiomaticRequestNames: "idiomatic-request-names",
     ignoreTags: "ignore-tags",
+    inferDiscriminatedUnionBaseProperties: "infer-discriminated-union-base-properties",
     inlineAllOfSchemas: "inline-all-of-schemas",
     objectQueryParameters: "object-query-parameters",
     onlyIncludeReferencedSchemas: "only-include-referenced-schemas",

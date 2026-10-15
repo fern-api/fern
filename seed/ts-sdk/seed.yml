@@ -435,6 +435,9 @@ fixtures:
     - outputFolder: always-send-auth
       customConfig:
         alwaysSendAuth: true
+    - outputFolder: flatten-any-auth-options
+      customConfig:
+        flattenAnyAuthOptions: true
     - outputFolder: always-send-auth-optional-auth
       customConfig:
         alwaysSendAuth: true

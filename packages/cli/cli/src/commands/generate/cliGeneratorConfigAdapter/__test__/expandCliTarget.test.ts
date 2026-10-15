@@ -85,6 +85,18 @@ describe("expandCliTarget", () => {
         expect(result.ir?.generation.language?.cli).toEqual({ skills: false });
     });
 
+    it("carries no other target's language settings", async () => {
+        const result = await expandDocument({
+            ...MINIMAL,
+            targets: [
+                { language: "cli", generation: { skills: false } },
+                { language: "typescript", generation: { outputEsm: true } }
+            ]
+        });
+        expect(result.diagnostics).toEqual([]);
+        expect(Object.keys(result.ir?.generation.language ?? {})).toEqual(["cli"]);
+    });
+
     it("keeps output.path and output.github.* (sdk-gen-api forces zip; the translation does not)", async () => {
         const result = await expandDocument({
             ...MINIMAL,

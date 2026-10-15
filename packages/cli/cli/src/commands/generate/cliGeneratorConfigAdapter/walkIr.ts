@@ -147,6 +147,22 @@ export function schemaLeafPaths(schema: ZodLike = rootSchema()): Set<string> {
     return paths;
 }
 
+const LANGUAGE_SETTINGS = /^generation\.language\.([^.[]+)/;
+
+/**
+ * Whether a schema path can appear in a cli target's IR. `expandCliTarget` writes only
+ * `generation.language.cli`, so another language's settings never reach the translation.
+ */
+export function isCliTargetPath(path: string): boolean {
+    const language = LANGUAGE_SETTINGS.exec(path)?.[1];
+    return language == null || language === "cli";
+}
+
+/** The schema leaf paths a cli target's IR can carry: shared fields and the `cli` language settings. */
+export function cliTargetLeafPaths(): Set<string> {
+    return new Set([...schemaLeafPaths()].filter(isCliTargetPath));
+}
+
 /** Lists the leaves of an IR value, guided by the schema. Empty objects carry no setting. */
 export function irLeaves(value: unknown, schema: ZodLike = rootSchema()): IrLeaf[] {
     const leaves: IrLeaf[] = [];

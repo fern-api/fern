@@ -61,6 +61,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     private readonly endpoint: FernIr.HttpEndpoint;
     private readonly shouldUseWrapper: boolean;
     private readonly keepIfWrapper: (str: string) => string;
+    // Flat `auth: any` options are optional, so parameters must be checked before calling the token endpoint.
+    private readonly validateRequestParameters: boolean;
 
     constructor(init: InferredAuthProviderGenerator.Init) {
         this.ir = init.ir;
@@ -68,6 +70,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         this.neverThrowErrors = init.neverThrowErrors;
         this.shouldUseWrapper = init.shouldUseWrapper ?? false;
         this.keepIfWrapper = this.shouldUseWrapper ? (str: string) => str : () => "";
+        this.validateRequestParameters = this.shouldUseWrapper || init.ir.auth.requirement === "ANY";
         this.packageId = init.authScheme.tokenEndpoint.endpoint.subpackageId
             ? {
                   isRoot: false,
@@ -244,7 +247,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         // Add helper function for throwing required auth param errors
-        if (this.shouldUseWrapper && !this.neverThrowErrors) {
+        if (this.validateRequestParameters && !this.neverThrowErrors) {
             const errorConstructor = getTextOfTsNode(
                 context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
             );
@@ -462,7 +465,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         // Generate variable declarations and validation checks for each parameter
         const parameterStatements: (string | WriterFunction | StatementStructures)[] = [];
 
-        if (this.shouldUseWrapper) {
+        if (this.validateRequestParameters) {
             // Generate: const paramName = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.paramName);
             // Generate: if(paramName == null) { throwRequiredAuthParamErrorMessage("\${WRAPPER_PROPERTY}.paramName"); } OR return early
             for (const p of requestProperties) {
@@ -472,7 +475,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                         ? `this.${ROTATED_REFRESH_TOKEN_FIELD_NAME} ?? `
                         : "";
                 parameterStatements.push(
-                    `const ${varName} = ${rotatedPrefix}await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.${p.safeName});`
+                    `const ${varName} = ${rotatedPrefix}await core.Supplier.get(this.options${this.keepIfWrapper("[WRAPPER_PROPERTY]?")}.${p.safeName});`
                 );
 
                 if (!p.isOptional) {
@@ -482,7 +485,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     } else {
                         // When neverThrowErrors is false, throw an error
                         parameterStatements.push(
-                            `if(${varName} == null) {\n    throwRequiredAuthParamErrorMessage(\`\${WRAPPER_PROPERTY}.${p.safeName}\`);\n}`
+                            `if(${varName} == null) {\n    throwRequiredAuthParamErrorMessage(\`${this.keepIfWrapper("${WRAPPER_PROPERTY}.")}${p.safeName}\`);\n}`
                         );
                     }
                 }
@@ -643,8 +646,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         const propertyAssignments = requestProperties.map((p) => {
             let valueExpression: ts.Expression;
 
-            if (this.shouldUseWrapper) {
-                // When using wrapper, we've already extracted the value to a variable
+            if (this.validateRequestParameters) {
+                // We've already extracted and validated the value in a variable
                 // Just reference the variable name directly
                 valueExpression = ts.factory.createIdentifier(p.safeName);
             } else {

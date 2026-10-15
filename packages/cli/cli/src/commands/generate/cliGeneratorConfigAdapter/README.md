@@ -106,6 +106,10 @@ The table starts from the hosted bridge's table (`hostedFieldTreatments.ts`, cop
 differences are in `fieldTreatmentOverrides.ts`. A field the table does not know is an error, so a newer SDK Config
 field cannot slip through unreviewed.
 
+The table covers only the fields a `cli` target can carry: the shared fields and `generation.language.cli`. The
+expanded IR never holds another language's settings, so `generation.language.typescript`, `mcp` and the rest are
+left out, and a new setting for another language needs no entry.
+
 Specs are read with Fern's own loader, so overrides, overlays and references to other files apply exactly as in
 `fern generate`. The facts are used to skip headers the spec already declares, and to find OAuth token operations.
 

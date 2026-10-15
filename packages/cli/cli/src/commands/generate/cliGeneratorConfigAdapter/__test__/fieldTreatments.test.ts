@@ -4,23 +4,33 @@ import { FIELD_TREATMENT_OVERRIDES, LOCAL_FIELD_ADDITIONS } from "../fieldTreatm
 import { classifyFields, FIELD_TREATMENTS } from "../fieldTreatments.js";
 import { HOSTED_FIELD_TREATMENTS } from "../hostedFieldTreatments.js";
 import { mapSdkConfigToGeneratorsYml, RULES } from "../mapSdkConfigToGeneratorsYml.js";
-import { irLeaves, nonDefaultLeaves, schemaLeafPaths } from "../walkIr.js";
+import { cliTargetLeafPaths, irLeaves, isCliTargetPath, nonDefaultLeaves, schemaLeafPaths } from "../walkIr.js";
 import { cliIr, codes, facts } from "./helpers.js";
 
 const INPUT = { configDir: "/work", outDir: "/work", generatorVersion: "0.49.0", specFacts: [facts()] };
 const RULE_PATHS = new Set(RULES.flatMap((rule) => rule.paths));
 
 describe("treatment table coverage", () => {
-    const schemaPaths = schemaLeafPaths();
+    const schemaPaths = cliTargetLeafPaths();
 
-    it("lists every leaf path of sdkConfigIrV1Schema", () => {
+    it("lists every leaf path a cli target can carry", () => {
         const missing = [...schemaPaths].filter((path) => FIELD_TREATMENTS[path] == null);
         expect(missing).toEqual([]);
     });
 
-    it("lists no path that the schema does not have", () => {
+    it("lists no path that a cli target cannot carry", () => {
         const extra = Object.keys(FIELD_TREATMENTS).filter((path) => !schemaPaths.has(path));
         expect(extra).toEqual([]);
+    });
+
+    it("leaves out other languages' settings and keeps the cli ones", () => {
+        expect(isCliTargetPath("generation.language.typescript.outputEsm")).toBe(false);
+        expect(isCliTargetPath("generation.language.mcp.browser.*")).toBe(false);
+        expect(isCliTargetPath("generation.language.cli.binaryName")).toBe(true);
+        expect(isCliTargetPath("generation.includeWatermark")).toBe(true);
+        expect(isCliTargetPath("package.bugs.url")).toBe(true);
+        expect([...schemaPaths].some((path) => path.startsWith("generation.language.cli."))).toBe(true);
+        expect([...schemaLeafPaths()].some((path) => path.startsWith("generation.language.typescript."))).toBe(true);
     });
 
     it("uses only Map, Warn, Reject and Ignore", () => {

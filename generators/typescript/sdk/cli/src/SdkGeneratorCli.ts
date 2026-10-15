@@ -117,6 +117,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
             optionalAuth: parsed?.["optional-auth"] ?? false,
             guardProcessEnvAccess: parsed?.guardProcessEnvAccess ?? false,
+            flattenAnyAuthOptions: parsed?.flattenAnyAuthOptions ?? false,
             websocketHandlerMode: parsed?.websocketHandlerMode ?? "replace",
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
@@ -307,6 +308,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 alwaysSendAuth: customConfig.alwaysSendAuth,
                 optionalAuth: customConfig.optionalAuth,
                 guardProcessEnvAccess: customConfig.guardProcessEnvAccess,
+                flattenAnyAuthOptions: customConfig.flattenAnyAuthOptions,
                 websocketHandlerMode: customConfig.websocketHandlerMode,
                 generateReactQueryHooks: customConfig.generateReactQueryHooks
             }

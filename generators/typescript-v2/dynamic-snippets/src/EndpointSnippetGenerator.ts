@@ -378,7 +378,7 @@ export class EndpointSnippetGenerator {
 
     private wrapAuthFields({ auth, fields }: { auth: AuthFields; fields: ts.ObjectField[] }): ts.ObjectField[] {
         const wrapperProperty = getAuthWrapperProperty(auth);
-        if (wrapperProperty == null) {
+        if (wrapperProperty == null || this.context.customConfig?.flattenAnyAuthOptions === true) {
             return fields;
         }
         return [
