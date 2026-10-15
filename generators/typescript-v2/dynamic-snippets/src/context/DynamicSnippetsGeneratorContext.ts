@@ -75,6 +75,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.camelCase.unsafeName;
     }
 
+    public getPropertyNameFromNameAndWireValue(name: FernIr.dynamic.NameAndWireValue): string {
+        if (this.customConfig?.retainOriginalCasing || resolveNoSerdeLayer(this.customConfig)) {
+            return this.formatOriginalPropertyName(name.wireValue);
+        }
+        return name.name.camelCase.unsafeName;
+    }
+
     public getMethodName(name: FernIr.Name): string {
         return name.camelCase.unsafeName;
     }
