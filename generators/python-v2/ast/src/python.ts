@@ -5,6 +5,8 @@ import { Class } from "./Class.js";
 import { ClassInstantiation } from "./ClassInstantiation.js";
 import { CodeBlock } from "./CodeBlock.js";
 import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { ModulePath } from "./core/types.js";
 import { Decorator } from "./Decorator.js";
 import { Field } from "./Field.js";
 import { Lambda } from "./Lambda.js";
@@ -114,4 +116,24 @@ export function methodArgument(args: MethodArgument.Args): MethodArgument {
 
 export function operator(args: Operator.Args): Operator {
     return new Operator(args);
+}
+
+/**
+ * Renders a node separately from the imports it references, the Python analogue of the
+ * TypeScript AST's `toStringWithoutImports`. `code` is the node's body with no import lines,
+ * and `imports` is the rendered import block the body would otherwise need (empty string when
+ * none). This lets callers embed an invocation inside code they already own (e.g. a
+ * documentation code template) while surfacing the imports the call requires.
+ *
+ * `modulePath` is the module the code is imagined to live in; imports are relativized against it
+ * exactly as they would be in a generated file at that path, so the imports match what the full
+ * snippet would emit.
+ */
+export function renderNodeWithoutImports({ node, modulePath }: { node: AstNode; modulePath: ModulePath }): {
+    code: string;
+    imports: string;
+} {
+    // Render through a file at the same path so the body and the import block share the same
+    // reference-name overrides (aliases for colliding names).
+    return new PythonFile({ path: modulePath, statements: [node] }).renderWithoutImports();
 }

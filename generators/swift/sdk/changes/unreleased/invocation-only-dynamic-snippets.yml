@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate invocation-only dynamic snippets. In addition to the full snippet
+    (client construction plus the call), the generator now exposes the structured
+    pieces a caller can render inside code it already owns (e.g. a documentation
+    code template): the bare invocation
+    (`try await client.endpoints.httpMethods.testGet(id: "id")`, honoring a custom
+    client variable name), the imports the invocation references, and the generated
+    client class name so docs can render the client construction and track renames.
+
+    For Swift the imports field is always the empty string: the Swift AST has no
+    per-symbol import mechanism (its `Writer` is a plain buffer with no
+    `getImports`/`addImport`), and a generated Swift SDK resolves every type through
+    the two module-level imports (`import Foundation`, `import <Module>`) emitted once
+    by the client scaffold. Those belong to the client construction the caller owns,
+    not to the invocation, so a bare invocation never emits a per-symbol `import` and
+    no imports mechanism is invented for it. This mirrors the Ruby/Rust ports (types
+    referenced via the module/gem namespace), not the C#/Java/PHP `{ code, imports }`
+    helper pattern.
+  type: feat

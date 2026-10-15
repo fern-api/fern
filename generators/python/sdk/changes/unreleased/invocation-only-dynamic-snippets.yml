@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate invocation-only dynamic snippets. In addition to the full snippet
+    (client construction plus the call), the generator now exposes the structured
+    pieces a caller can render inside code it already owns (e.g. a documentation
+    code template): the bare invocation (`client.plants.update(...)`, honoring a
+    custom client variable name), the Python `import` block that invocation
+    references (empty string when none), and the generated root client class name
+    so docs can render `client = <ClientName>(...)` and track renames.
+
+    Imports are captured separately from the call via a new
+    `python.renderNodeWithoutImports` helper and `PythonFile.getImports()`, the
+    Python analogue of the TypeScript AST's `toStringWithoutImports`. Invocations
+    that reference imported types (e.g. a body value constructed with
+    `datetime.datetime.fromisoformat(...)` / `uuid.UUID(...)`) surface those
+    imports rather than falling back to the complete snippet.
+  type: feat

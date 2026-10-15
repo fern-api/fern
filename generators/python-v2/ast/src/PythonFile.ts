@@ -72,6 +72,41 @@ export class PythonFile extends AstNode {
         writer.unsetRefNameOverrides();
     }
 
+    /**
+     * The rendered import block for the statements in this file, or an empty string when nothing
+     * references an import. This is the Python equivalent of separating a node's imports from its
+     * body: callers that render an invocation inside code they already own (e.g. a documentation
+     * code template) can surface the imports the call needs without the surrounding file scaffold.
+     * The trailing blank line that `write` places between the imports and the body is trimmed.
+     */
+    public getImports(): string {
+        const writer = new Writer();
+        const uniqueReferences = this.deduplicateReferences();
+        this.updateWriterRefNameOverrides({ writer, uniqueReferences });
+        this.writeImports({ writer, uniqueReferences });
+        writer.unsetRefNameOverrides();
+        return writer.toString().trimEnd();
+    }
+
+    /**
+     * Renders the statements and their import block separately, using the same reference-name
+     * overrides for both so aliased imports (e.g. two `Item` classes from different modules) match
+     * the names used in the body.
+     */
+    public renderWithoutImports(): { code: string; imports: string } {
+        const uniqueReferences = this.deduplicateReferences();
+        const codeWriter = new Writer();
+        this.updateWriterRefNameOverrides({ writer: codeWriter, uniqueReferences });
+        this.statements.forEach((statement, idx) => {
+            if (idx > 0) {
+                codeWriter.newLine();
+            }
+            statement.write(codeWriter);
+        });
+        codeWriter.unsetRefNameOverrides();
+        return { code: codeWriter.toString(), imports: this.getImports() };
+    }
+
     /*******************************
      * Helper Methods
      *******************************/
