@@ -94,6 +94,13 @@ describe("specs rule", () => {
         expect(api(result).specs).toEqual([{ openapi: "./openapi.yml", settings: { "title-as-schema-name": false } }]);
     });
 
+    it("writes inferDiscriminatedUnionBaseProperties as infer-discriminated-union-base-properties", () => {
+        const result = map({ specs: [spec({ apiImportSettings: { inferDiscriminatedUnionBaseProperties: true } })] });
+        expect(api(result).specs).toEqual([
+            { openapi: "./openapi.yml", settings: { "infer-discriminated-union-base-properties": true } }
+        ]);
+    });
+
     it("lets a spec-level setting win over the root value", () => {
         const result = map({
             specs: [spec({ apiImportSettings: { titleAsSchemaName: true } })],

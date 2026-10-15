@@ -137,5 +137,23 @@ export const LOCAL_FIELD_ADDITIONS: Record<string, FieldTreatment> = {
         treatment: "Map",
         note: "`client-id` on an authorization-code OAuth scheme: the public client ID browser login sends."
     },
-    "package.extraPeerDependenciesMeta.*": { treatment: "Reject", note: "npm-only; no Cargo equivalent." }
+    "package.extraPeerDependenciesMeta.*": { treatment: "Reject", note: "npm-only; no Cargo equivalent." },
+    ...Object.fromEntries(
+        ["source.apiImportSettings", "source.specs[].apiImportSettings"].map((prefix) => [
+            `${prefix}.inferDiscriminatedUnionBaseProperties`,
+            { treatment: "Map", note: "`infer-discriminated-union-base-properties` in the spec and root `settings`." }
+        ])
+    ),
+    "package.bugs.url": {
+        treatment: "Warn",
+        note: "Not written: fern-cli-generator's packageIdentity has no bugs field."
+    },
+    "package.bugs.email": {
+        treatment: "Warn",
+        note: "Not written: fern-cli-generator's packageIdentity has no bugs field."
+    },
+    "output.distribution.githubAttestations": {
+        treatment: "Warn",
+        note: "Not written: fern-cli-generator's release workflow always attests build provenance."
+    }
 };
