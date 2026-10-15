@@ -47,15 +47,39 @@ export interface SdkPreviewError {
     status: "error";
     message: string;
     code?: CliError.Code;
+    /** Internal marker used to avoid logging a nested task failure twice. */
+    messageAlreadyLogged?: true;
 }
 
 export type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
+export type SerializableSdkPreviewResult = SdkPreviewSuccess | Omit<SdkPreviewError, "messageAlreadyLogged">;
+
+export function toSerializableSdkPreviewResult(result: SdkPreviewResult): SerializableSdkPreviewResult {
+    if (result.status === "success") {
+        return result;
+    }
+    return {
+        status: result.status,
+        message: result.message,
+        ...(result.code != null ? { code: result.code } : {})
+    };
+}
 
 export function toSdkPreviewError(error: unknown): SdkPreviewError {
-    // TaskAbortSignal means a nested task already logged the actionable error. Preserve the
-    // sentinel so the CLI exits without replacing that message with "[object Object]".
+    // A task-abort message has already been logged. Return it for structured callers while
+    // marking it so human output does not log the same message again.
     if (error instanceof TaskAbortSignal) {
-        throw error;
+        if (error.failureMessage == null) {
+            return {
+                status: "error",
+                message: "SDK preview failed"
+            };
+        }
+        return {
+            status: "error",
+            message: error.failureMessage,
+            messageAlreadyLogged: true
+        };
     }
     return {
         status: "error",
