@@ -1049,7 +1049,9 @@ export class EndpointSnippetGenerator {
                     break;
                 }
                 case "fileArray": {
-                    const fileValues = this.context.getFileArrayValues({ property, record }) ?? [FILE_PLACEHOLDER_PATH];
+                    const resolvedValues = this.context.getFileArrayValues({ property, record });
+                    const fileValues =
+                        resolvedValues != null && resolvedValues.length > 0 ? resolvedValues : [FILE_PLACEHOLDER_PATH];
                     args.push(
                         ruby.keywordArgument({
                             name: this.context.getPropertyName(property.name),
