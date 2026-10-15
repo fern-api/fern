@@ -1221,6 +1221,15 @@ types:
           showing the response status line and response headers alongside the body.
 
           @default: false
+      require-analytics-consent:
+        type: optional<boolean>
+        docs: |
+          If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:
+          no script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent
+          manager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching
+          `new Event("fern-analytics-consent")` on `window`.
+
+          @default: false
 
   SearchSettingsConfig:
     properties:
