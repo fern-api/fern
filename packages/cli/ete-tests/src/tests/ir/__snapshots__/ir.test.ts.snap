@@ -18310,7 +18310,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                         }
                     },
                     "passwordOmit": null,
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
