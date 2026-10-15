@@ -341,7 +341,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ANY"
             },
             "declaration": {
                 "name": {
@@ -661,7 +662,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ANY"
             },
             "declaration": {
                 "name": {
@@ -782,7 +784,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ANY"
             },
             "declaration": {
                 "name": {

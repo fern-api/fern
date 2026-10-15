@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.32.0] - 2026-10-15
+
+- Add `dynamic.BaseAuth.requirement` (optional `dynamic.AuthRequirement`: `ALL` / `ANY` /
+  `ENDPOINT_SECURITY`): the API's auth requirement. Lets dynamic snippet generators tell `auth: any`
+  apart from endpoint-level security, since both set `wrapperProperty`.
+
 ## [v67.30.0] - 2026-10-06
 
 - Add `InferredAuthSchemeTokenEndpoint.grantType` (optional `InferredAuthGrantType`): a token endpoint

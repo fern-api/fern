@@ -1191,7 +1191,8 @@
                         "variable": null
                     }
                 ],
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -1663,7 +1664,8 @@
                         "variable": null
                     }
                 ],
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {

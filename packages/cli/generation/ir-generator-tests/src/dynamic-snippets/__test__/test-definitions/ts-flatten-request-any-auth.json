@@ -176,7 +176,8 @@
                         "unsafeName": "BearerAuth",
                         "safeName": "BearerAuth"
                     }
-                }
+                },
+                "requirement": "ANY"
             },
             "declaration": {
                 "name": {
@@ -425,7 +426,8 @@
                         "unsafeName": "BearerAuth",
                         "safeName": "BearerAuth"
                     }
-                }
+                },
+                "requirement": "ANY"
             },
             "declaration": {
                 "name": {
