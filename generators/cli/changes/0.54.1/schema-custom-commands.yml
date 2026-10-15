@@ -14,10 +14,3 @@
     for restricted values and `multiple` for repeatable flags, and short-only flags are reported as flags
     rather than positional arguments.
   type: fix
-- summary: |
-    `--schema` listings no longer advertise a spec operation that a custom command registered on the
-    same path has replaced: the group array and root `operations` keep only the custom entry, matching
-    what dispatches. `--schema` on a group reached through a `CliApp::alias` (`<cli> ag --schema` for
-    `agents`) now resolves to the canonical group before asking the spec bindings, so the group's
-    operations are listed instead of only its custom commands.
-  type: fix
