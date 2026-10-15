@@ -82,6 +82,10 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
                 // Helper type to convert union to intersection
                 `type UnionToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;`,
                 "",
+                // Intersect each provider's options with Partial<all options> rather than
+                // Partial<Exclude<T[number], T[K]>>: Exclude drops structurally identical option types
+                // (e.g. flat OAuth and inferred auth both { clientId, clientSecret }), which erases their fields.
+                // Required fields of T[K] still win, so at least one scheme must be fully provided.
                 `type AtLeastOneOf<T extends readonly any[]> = {`,
                 `    [K in keyof T]: T[K] & Partial<UnionToIntersection<T[number]>>;`,
                 `}[number];`,

@@ -164,6 +164,7 @@ export declare namespace SdkGenerator {
         fetchSupport: "node-fetch" | "native";
         packagePath: string | undefined;
         omitFernHeaders: boolean;
+        requestIdHeader: string | undefined;
         includePlatformHeaders: boolean;
         userAgentOnly: boolean;
         allowUserAgentAppInfo: boolean;
@@ -606,7 +607,9 @@ export class SdkGenerator {
             skipResponseValidation: config.skipResponseValidation,
             websocketHandlerMode: config.websocketHandlerMode
         });
-        this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
+        this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator({
+            requestIdHeader: config.requestIdHeader
+        });
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
         this.nonStatusCodeErrorHandlerGenerator = new NonStatusCodeErrorHandlerGenerator();
         this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
@@ -1638,6 +1641,11 @@ export class SdkGenerator {
         const shouldUseWrapper =
             (authRequirement === "ANY" && !this.config.flattenAnyAuthOptions) ||
             authRequirement === "ENDPOINT_SECURITY";
+        if (this.config.flattenAnyAuthOptions && authRequirement !== "ANY") {
+            this.context.logger.warn(
+                `flattenAnyAuthOptions only applies to APIs with \`auth: any\`; ignoring it for auth requirement ${authRequirement}.`
+            );
+        }
 
         // Generate individual auth providers for all auth schemes
         for (const authScheme of this.intermediateRepresentation.auth.schemes) {
@@ -1729,6 +1737,17 @@ export class SdkGenerator {
             case "hmac":
                 return JSON.stringify({
                     ...common,
+                    algorithmHeader:
+                        verification.algorithmHeader == null
+                            ? null
+                            : {
+                                  headerName: getWireValue(verification.algorithmHeader.headerName),
+                                  keyIdDelimiter: verification.algorithmHeader.keyIdDelimiter ?? null,
+                                  algorithms: verification.algorithmHeader.algorithms.map((option) => [
+                                      option.wireValue,
+                                      option.algorithm
+                                  ])
+                              },
                     payloadFormat: {
                         components: verification.payloadFormat.components,
                         delimiter: verification.payloadFormat.delimiter,

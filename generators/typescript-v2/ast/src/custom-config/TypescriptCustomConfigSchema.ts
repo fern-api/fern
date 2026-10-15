@@ -62,6 +62,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     fetchSupport: z.optional(z.enum(["node-fetch", "native"])),
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
+    requestIdHeader: z.optional(z.string()),
     includePlatformHeaders: z.optional(z.boolean()),
     userAgentOnly: z.optional(z.boolean()),
     allowUserAgentAppInfo: z.optional(z.boolean()),
