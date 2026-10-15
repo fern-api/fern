@@ -36,6 +36,9 @@ Instead of a regular `git clone`, use sparse checkout from the start:
 git clone --filter=blob:none --sparse https://github.com/fern-api/fern.git
 cd fern
 
+# Include the sparse checkout helper script
+git sparse-checkout add scripts
+
 # Configure sparse checkout to exclude large directories
 bash ./scripts/sparse-checkout.sh
 ```
