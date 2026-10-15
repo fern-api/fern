@@ -369,6 +369,7 @@ export const DocsSettingsConfig = z.object({
     "use-javascript-as-typescript": z.boolean().optional(),
     "disable-explorer-proxy": z.boolean().optional(),
     "disable-analytics": z.boolean().optional(),
+    "require-analytics-consent": z.boolean().optional(),
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),

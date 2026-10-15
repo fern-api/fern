@@ -111,4 +111,13 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     showHeadersInExamples?: boolean;
+    /**
+     * If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:
+     * no script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent
+     * manager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching
+     * `new Event("fern-analytics-consent")` on `window`.
+     *
+     * @default: false
+     */
+    requireAnalyticsConsent?: boolean;
 }
