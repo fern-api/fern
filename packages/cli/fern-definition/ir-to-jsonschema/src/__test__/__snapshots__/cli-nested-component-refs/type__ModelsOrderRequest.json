@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "properties": {
+    "customerId": {
+      "type": "string"
+    },
+    "shipTo": {
+      "$ref": "#/definitions/ModelsOrderRequestShipTo"
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ModelsOrderRequestLinesItem"
+      }
+    }
+  },
+  "required": [
+    "customerId",
+    "shipTo",
+    "lines"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ModelsOrderRequestShipTo": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "line1",
+        "city"
+      ],
+      "additionalProperties": false
+    },
+    "ModelsOrderRequestLinesItem": {
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sku",
+        "quantity"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
