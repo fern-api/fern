@@ -456,7 +456,7 @@ export class DynamicTypeLiteralMapper {
             this.context.errors.scope(key);
             const property = object.properties.find((p) => p.name.wireValue === key);
             const typeReference = property?.typeReference ?? { type: "unknown" as const };
-            const propertyName = property?.name.name.snakeCase.safeName ?? key;
+            const propertyName = property?.name.wireValue ?? key;
             const converted = this.convert({ typeReference, value: val });
             if (!ruby.TypeLiteral.isNop(converted)) {
                 entries.push({
@@ -478,7 +478,7 @@ export class DynamicTypeLiteralMapper {
             const defaultValue = this.synthesizeDefaultValue(property.typeReference);
             if (!ruby.TypeLiteral.isNop(defaultValue)) {
                 entries.push({
-                    key: ruby.TypeLiteral.string(property.name.name.snakeCase.safeName),
+                    key: ruby.TypeLiteral.string(property.name.wireValue),
                     value: defaultValue
                 });
             }
@@ -605,7 +605,7 @@ export class DynamicTypeLiteralMapper {
                     const defaultValue = this.synthesizeDefaultValue(property.typeReference, newSeen);
                     if (!ruby.TypeLiteral.isNop(defaultValue)) {
                         entries.push({
-                            key: ruby.TypeLiteral.string(property.name.name.snakeCase.safeName),
+                            key: ruby.TypeLiteral.string(property.name.wireValue),
                             value: defaultValue
                         });
                     }

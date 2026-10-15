@@ -10,6 +10,23 @@ module Seed
         include Type
 
         class << self
+          # Serializes models nested in a hash, including inside arrays and nested hashes.
+          #
+          # @api private
+          def serialize_hash_values(hash)
+            hash.transform_values { |item| serialize_nested_value(item) }
+          end
+
+          # @api private
+          def serialize_nested_value(value)
+            case value
+            when Model then value.to_h
+            when ::Array then value.map { |item| serialize_nested_value(item) }
+            when ::Hash then serialize_hash_values(value)
+            else value
+            end
+          end
+
           # The defined fields for this model
           #
           # @api private
@@ -200,6 +217,8 @@ module Seed
 
             if value.is_a?(::Array)
               value = value.map { |item| !item.nil? && item.respond_to?(:to_h) ? item.to_h : item }
+            elsif value.is_a?(::Hash)
+              value = Model.serialize_hash_values(value)
             elsif !value.nil? && value.respond_to?(:to_h)
               value = value.to_h
             end

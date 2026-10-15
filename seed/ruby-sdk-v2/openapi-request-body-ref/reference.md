@@ -137,7 +137,12 @@ client.vendor.create_vendor(name: "name")
 <dd>
 
 ```ruby
-client.catalog.create_catalog_image
+client.catalog.create_catalog_image(
+  request: {
+    catalog_object_id: "catalog_object_id"
+  },
+  image_file: "/path/to/your/file"
+)
 ```
 </dd>
 </dl>
