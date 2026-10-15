@@ -5,11 +5,12 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
-import { CliError } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import fs from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
@@ -46,9 +47,45 @@ export interface SdkPreviewError {
     status: "error";
     message: string;
     code?: CliError.Code;
+    /** Internal marker used to avoid logging a nested task failure twice. */
+    messageAlreadyLogged?: true;
 }
 
 export type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
+export type SerializableSdkPreviewResult = SdkPreviewSuccess | Omit<SdkPreviewError, "messageAlreadyLogged">;
+
+export function toSerializableSdkPreviewResult(result: SdkPreviewResult): SerializableSdkPreviewResult {
+    if (result.status === "success") {
+        return result;
+    }
+    return {
+        status: result.status,
+        message: result.message,
+        ...(result.code != null ? { code: result.code } : {})
+    };
+}
+
+export function toSdkPreviewError(error: unknown): SdkPreviewError {
+    // A task-abort message has already been logged. Return it for structured callers while
+    // marking it so human output does not log the same message again.
+    if (error instanceof TaskAbortSignal) {
+        if (error.failureMessage == null) {
+            return {
+                status: "error",
+                message: "SDK preview failed"
+            };
+        }
+        return {
+            status: "error",
+            message: error.failureMessage,
+            messageAlreadyLogged: true
+        };
+    }
+    return {
+        status: "error",
+        message: extractErrorMessage(error)
+    };
+}
 
 /**
  * Returns true if the value looks like a registry URL rather than a filesystem path.
@@ -418,10 +455,7 @@ export async function sdkPreview({
             }
         }
     } catch (error) {
-        return {
-            status: "error",
-            message: error instanceof Error ? error.message : String(error)
-        };
+        return toSdkPreviewError(error);
     }
 
     return { status: "success", org: organization ?? "", previews };
