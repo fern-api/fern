@@ -24,6 +24,12 @@ type AuthWithWrapperPropertyField = AuthFields & {
     wrapperProperty?: FernIr.dynamic.Name | null;
 };
 
+type AuthRequirement = "ALL" | "ANY" | "ENDPOINT_SECURITY";
+
+type AuthWithRequirementField = AuthFields & {
+    requirement?: AuthRequirement | null;
+};
+
 // TODO: remove once @fern-api/dynamic-ir-sdk >= 67.27.0 ships wrapperProperty on Auth
 function hasWrapperPropertyField(auth: AuthFields): auth is AuthWithWrapperPropertyField {
     return "wrapperProperty" in auth;
@@ -31,6 +37,15 @@ function hasWrapperPropertyField(auth: AuthFields): auth is AuthWithWrapperPrope
 
 function getAuthWrapperProperty(auth: AuthFields): FernIr.dynamic.Name | undefined {
     return hasWrapperPropertyField(auth) ? (auth.wrapperProperty ?? undefined) : undefined;
+}
+
+// TODO: remove once @fern-api/dynamic-ir-sdk >= 67.32.0 ships requirement on Auth
+function hasRequirementField(auth: AuthFields): auth is AuthWithRequirementField {
+    return "requirement" in auth;
+}
+
+function getAuthRequirement(auth: AuthFields): AuthRequirement | undefined {
+    return hasRequirementField(auth) ? (auth.requirement ?? undefined) : undefined;
 }
 
 export class EndpointSnippetGenerator {
@@ -376,9 +391,19 @@ export class EndpointSnippetGenerator {
         return wrapperProperty.camelCase.unsafeName === "oAuth" ? "oauth" : wrapperProperty.camelCase.unsafeName;
     }
 
+    private shouldFlattenAuthFields(auth: AuthFields): boolean {
+        if (this.context.customConfig?.flattenAnyAuthOptions !== true) {
+            return false;
+        }
+        // The SDK only flattens `auth: any`; endpoint security keeps nested options. Older dynamic IR has no
+        // requirement, so it can't be told apart and falls back to flattening.
+        const requirement = getAuthRequirement(auth);
+        return requirement == null || requirement === "ANY";
+    }
+
     private wrapAuthFields({ auth, fields }: { auth: AuthFields; fields: ts.ObjectField[] }): ts.ObjectField[] {
         const wrapperProperty = getAuthWrapperProperty(auth);
-        if (wrapperProperty == null || this.context.customConfig?.flattenAnyAuthOptions === true) {
+        if (wrapperProperty == null || this.shouldFlattenAuthFields(auth)) {
             return fields;
         }
         return [
