@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `--schema` now describes hand-written commands registered with `CliApp::command` / `command_under`
+    (including their typed variants). Previously `<cli> <custom-command> --schema` failed with
+    `discoveryError` (exit 4) because `--schema` is answered before custom commands are added to the
+    command tree, so agents using `--schema` for discovery could not see them even though `--help` worked.
+    A custom command's path now returns `{command, description, flags}` built from its clap definition
+    (aliases resolve), a custom-only group returns its commands as an array, and root `--schema` gains a
+    `customCommands` array when any are registered. Spec operations still take precedence on the same
+    path. Flag entries (here and in `builtinCommands`) now also carry `type: boolean` for switches, `enum`
+    for restricted values and `multiple` for repeatable flags, and short-only flags are reported as flags
+    rather than positional arguments.
+  type: fix
