@@ -821,6 +821,78 @@ impl CliApp {
         path
     }
 
+    /// Every invocable custom command, as the spellings argv may use for
+    /// each path segment (canonical name, clap aliases, deferred aliases),
+    /// paired with its `--schema` entry and whether it is hidden (by clap's
+    /// `hide(true)` on it or an ancestor, or by [`CliApp::hide`]).
+    fn custom_command_leaves(&self) -> Vec<CustomCommandLeaf> {
+        let mut leaves = Vec::new();
+        for cc in &self.cli_commands {
+            let mut prefix: Vec<crate::custom_commands::PathSegment> = cc
+                .path
+                .iter()
+                .map(|segment| vec![segment.clone()])
+                .collect();
+            let mut found = Vec::new();
+            collect_command_leaves(&cc.cmd, true, &mut prefix, &mut found);
+            for (segments, command) in found {
+                let name: Vec<String> = segments.iter().map(|seg| seg[0].clone()).collect();
+                let entry = describe_command_leaf(command, &name.join(" "));
+                let mut node = &cc.cmd;
+                let mut hidden = node.is_hide_set();
+                for segment in &name[cc.path.len() + 1..] {
+                    match node.find_subcommand(segment) {
+                        Some(sub) => node = sub,
+                        None => break,
+                    }
+                    hidden |= node.is_hide_set();
+                }
+                hidden |= self
+                    .deferred_ops
+                    .iter()
+                    .any(|op| matches!(op, DeferredOp::Hide { path: at } if name.starts_with(at)));
+                leaves.push(CustomCommandLeaf {
+                    segments: self.with_deferred_aliases(segments),
+                    entry,
+                    hidden,
+                });
+            }
+        }
+        leaves
+    }
+
+    /// Custom commands for a non-empty `--schema` path: the entry of the
+    /// command `path` names (hidden or not, as clap still runs it), and the
+    /// visible custom commands below `path`.
+    fn custom_command_schema(
+        &self,
+        path: &[String],
+    ) -> (Option<serde_json::Value>, Vec<serde_json::Value>) {
+        let mut exact = None;
+        let mut under = Vec::new();
+        if self.cli_commands.is_empty() || path.is_empty() {
+            return (exact, under);
+        }
+        let at_or_below_path = |segments: &[crate::custom_commands::PathSegment]| {
+            segments.len() >= path.len()
+                && path
+                    .iter()
+                    .zip(segments)
+                    .all(|(token, spellings)| spellings.contains(token))
+        };
+        for leaf in self.custom_command_leaves() {
+            if !at_or_below_path(&leaf.segments) {
+                continue;
+            }
+            if leaf.segments.len() == path.len() {
+                exact.get_or_insert(leaf.entry);
+            } else if !leaf.hidden {
+                under.push(leaf.entry);
+            }
+        }
+        (exact, under)
+    }
+
     /// The parameter and server-variable names `profiles create` will accept,
     /// unioned across every registered binding.
     ///
@@ -1050,6 +1122,18 @@ impl CliApp {
                         &self.profiles_vocabulary(),
                     )),
                 );
+                // Hand-written commands registered via `command` /
+                // `command_under`. Omitted when there are none so CLIs without
+                // custom commands keep their root shape.
+                let custom: Vec<serde_json::Value> = self
+                    .custom_command_leaves()
+                    .into_iter()
+                    .filter(|leaf| !leaf.hidden)
+                    .map(|leaf| leaf.entry)
+                    .collect();
+                if !custom.is_empty() {
+                    wrapped.insert("customCommands".into(), serde_json::Value::Array(custom));
+                }
                 if any_sdk_vars {
                     wrapped.insert("sdkVariables".into(), serde_json::Value::Array(sdk_vars));
                 }
@@ -1066,22 +1150,47 @@ impl CliApp {
                 return Ok(PipelineOutcome::Success);
             }
 
-            for binding in &self.bindings {
-                match binding.schema(&path) {
-                    Ok(Some(value)) => {
-                        writeln!(
-                            out,
-                            "{}",
-                            serde_json::to_string_pretty(&value).map_err(|e| {
-                                CliError::Validation(format!("Failed to serialize spec: {e}"))
-                            })?
-                        )
-                        .map_err(|e| CliError::Other(e.into()))?;
-                        return Ok(PipelineOutcome::Success);
+            // Custom commands (`command` / `command_under`) are grafted onto
+            // the clap tree only at step 1b, so they are described from their
+            // clap definition. One on the exact path wins over a binding
+            // operation, as the graft replaces that operation at runtime;
+            // ones below the path join a binding's group listing.
+            let (custom_exact, custom_under) = self.custom_command_schema(&path);
+            let mut schema = custom_exact;
+            if schema.is_none() {
+                for binding in &self.bindings {
+                    match binding.schema(&path) {
+                        Ok(Some(value)) => {
+                            schema = Some(value);
+                            break;
+                        }
+                        Ok(None) => {}
+                        Err(e) => {
+                            tracing::warn!("--schema: binding `{}` errored: {e}", binding.name())
+                        }
                     }
-                    Ok(None) => {}
-                    Err(e) => tracing::warn!("--schema: binding `{}` errored: {e}", binding.name()),
                 }
+                schema = match schema {
+                    Some(serde_json::Value::Array(mut entries)) => {
+                        entries.extend(custom_under);
+                        Some(serde_json::Value::Array(entries))
+                    }
+                    None if !custom_under.is_empty() => {
+                        Some(serde_json::Value::Array(custom_under))
+                    }
+                    other => other,
+                };
+            }
+            if let Some(value) = schema {
+                writeln!(
+                    out,
+                    "{}",
+                    serde_json::to_string_pretty(&value).map_err(|e| {
+                        CliError::Validation(format!("Failed to serialize spec: {e}"))
+                    })?
+                )
+                .map_err(|e| CliError::Other(e.into()))?;
+                return Ok(PipelineOutcome::Success);
             }
             // A path with no schema is an error for an explicit `--schema` —
             // the caller asked for a document that does not exist. It must not
@@ -2151,7 +2260,7 @@ fn builtin_commands(
 
     let mut out = Vec::new();
     for command in &commands {
-        describe_builtin_leaves(command, &mut Vec::new(), &mut out);
+        describe_builtin_leaves(command, &[], &mut out);
     }
     out
 }
@@ -2163,55 +2272,115 @@ fn builtin_commands(
 /// listed: an agent needs the thing it can actually invoke.
 fn describe_builtin_leaves(
     command: &clap::Command,
-    path: &mut Vec<String>,
+    path: &[String],
     out: &mut Vec<serde_json::Value>,
 ) {
-    path.push(command.get_name().to_string());
-    let mut has_child = false;
+    let mut prefix: Vec<crate::custom_commands::PathSegment> =
+        path.iter().map(|segment| vec![segment.clone()]).collect();
+    let mut leaves = Vec::new();
+    collect_command_leaves(command, false, &mut prefix, &mut leaves);
+    for (segments, leaf) in leaves {
+        let name: Vec<String> = segments.iter().map(|seg| seg[0].clone()).collect();
+        out.push(describe_command_leaf(leaf, &name.join(" ")));
+    }
+}
+
+/// One invocable custom command, as found by `CliApp::custom_command_leaves`.
+struct CustomCommandLeaf {
+    segments: Vec<crate::custom_commands::PathSegment>,
+    entry: serde_json::Value,
+    hidden: bool,
+}
+
+/// Every invocable command in `command`'s subtree with its full path, each
+/// segment as the spellings argv may use for it (canonical name first, then
+/// clap aliases). Leaves are always invocable; with `runnable_groups`, so is a
+/// command that has subcommands but does not require one (`say` alongside
+/// `say config`).
+fn collect_command_leaves<'a>(
+    command: &'a clap::Command,
+    runnable_groups: bool,
+    prefix: &mut Vec<crate::custom_commands::PathSegment>,
+    out: &mut Vec<(Vec<crate::custom_commands::PathSegment>, &'a clap::Command)>,
+) {
+    let mut segment = vec![command.get_name().to_string()];
+    segment.extend(command.get_all_aliases().map(str::to_string));
+    prefix.push(segment);
+    let has_child = command.has_subcommands();
+    if !has_child || (runnable_groups && !command.is_subcommand_required_set()) {
+        out.push((prefix.clone(), command));
+    }
     for sub in command.get_subcommands() {
-        has_child = true;
-        describe_builtin_leaves(sub, path, out);
+        collect_command_leaves(sub, runnable_groups, prefix, out);
     }
-    if !has_child {
-        let flags: Vec<serde_json::Value> = command
-            .get_arguments()
-            .filter(|arg| !matches!(arg.get_action(), clap::ArgAction::Help))
-            .map(|arg| {
-                let mut entry = serde_json::Map::new();
-                match arg.get_long() {
-                    Some(long) => entry.insert("flag".into(), format!("--{long}").into()),
-                    // A required positional (`completion <SHELL>`,
-                    // `profiles use <NAME>`) has no long form; name it by its
-                    // value placeholder so the invocation is still derivable.
-                    None => entry.insert(
-                        "argument".into(),
-                        arg.get_value_names()
-                            .and_then(|names| names.first())
-                            .map(|name| name.to_string())
-                            .unwrap_or_else(|| arg.get_id().as_str().to_string())
-                            .into(),
-                    ),
-                };
-                if let Some(help) = arg.get_help() {
-                    entry.insert("description".into(), help.to_string().into());
+    prefix.pop();
+}
+
+/// The `--schema` entry for one invocable command, derived from its clap
+/// definition: `{command, description?, flags?}`.
+fn describe_command_leaf(command: &clap::Command, name: &str) -> serde_json::Value {
+    let flags: Vec<serde_json::Value> = command
+        .get_arguments()
+        .filter(|arg| {
+            !matches!(
+                arg.get_action(),
+                clap::ArgAction::Help
+                    | clap::ArgAction::HelpShort
+                    | clap::ArgAction::HelpLong
+                    | clap::ArgAction::Version
+            ) && !arg.is_hide_set()
+        })
+        .map(|arg| {
+            let mut entry = serde_json::Map::new();
+            match (arg.get_long(), arg.get_short()) {
+                (Some(long), _) => entry.insert("flag".into(), format!("--{long}").into()),
+                (None, Some(short)) => entry.insert("flag".into(), format!("-{short}").into()),
+                // A positional (`completion <SHELL>`, `profiles use <NAME>`)
+                // has no flag form; name it by its value placeholder so the
+                // invocation is still derivable.
+                (None, None) => entry.insert(
+                    "argument".into(),
+                    arg.get_value_names()
+                        .and_then(|names| names.first())
+                        .map(|name| name.to_string())
+                        .unwrap_or_else(|| arg.get_id().as_str().to_string())
+                        .into(),
+                ),
+            };
+            if let Some(help) = arg.get_help() {
+                entry.insert("description".into(), help.to_string().into());
+            }
+            if arg.is_required_set() {
+                entry.insert("required".into(), true.into());
+            }
+            if !arg.get_action().takes_values() {
+                entry.insert("type".into(), "boolean".into());
+            } else {
+                let values: Vec<serde_json::Value> = arg
+                    .get_possible_values()
+                    .iter()
+                    .filter(|value| !value.is_hide_set())
+                    .map(|value| value.get_name().into())
+                    .collect();
+                if !values.is_empty() {
+                    entry.insert("enum".into(), serde_json::Value::Array(values));
                 }
-                if arg.is_required_set() {
-                    entry.insert("required".into(), true.into());
+                if matches!(arg.get_action(), clap::ArgAction::Append) {
+                    entry.insert("multiple".into(), true.into());
                 }
-                serde_json::Value::Object(entry)
-            })
-            .collect();
-        let mut entry = serde_json::Map::new();
-        entry.insert("command".into(), path.join(" ").into());
-        if let Some(about) = command.get_about() {
-            entry.insert("description".into(), about.to_string().into());
-        }
-        if !flags.is_empty() {
-            entry.insert("flags".into(), serde_json::Value::Array(flags));
-        }
-        out.push(serde_json::Value::Object(entry));
+            }
+            serde_json::Value::Object(entry)
+        })
+        .collect();
+    let mut entry = serde_json::Map::new();
+    entry.insert("command".into(), name.into());
+    if let Some(about) = command.get_about() {
+        entry.insert("description".into(), about.to_string().into());
     }
-    path.pop();
+    if !flags.is_empty() {
+        entry.insert("flags".into(), serde_json::Value::Array(flags));
+    }
+    serde_json::Value::Object(entry)
 }
 
 // ── Tests ───────────────────────────────────────────────────────────
