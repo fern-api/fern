@@ -1592,6 +1592,82 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(JSON.stringify(request)).not.toContain("secret");
     });
 
+    it.each([
+        ["${MY_NUGET_KEY}", { apiKeyEnvironmentVariable: "MY_NUGET_KEY" }],
+        ["OIDC", { trustedPublishing: true }],
+        ["<USE_OIDC>", { trustedPublishing: true }],
+        ["literal-nuget-key", {}]
+    ])("maps a legacy NuGet apiKey of %s to how the workflow should authenticate", (apiKey, expectedExtra) => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: invocation({
+                name: "fernapi/fern-csharp-sdk",
+                language: "csharp",
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner: "acme",
+                        repo: "dotnet-sdk",
+                        reviewers: [],
+                        publishInfo: FernFiddle.GithubPublishInfo.nuget({
+                            registryUrl: "https://api.nuget.org/v3/index.json",
+                            packageName: "Acme.Sdk",
+                            apiKey
+                        })
+                    })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(Buffer.from("bundle"))
+        });
+
+        expect(request.targets[0]?.requestedOutput).toMatchObject({
+            type: "github",
+            publish: { registry: "nuget", url: "https://api.nuget.org/v3/index.json", ...expectedExtra }
+        });
+        expect(JSON.stringify(request)).not.toContain("literal-nuget-key");
+    });
+
+    it.each([
+        ["${MY_GEM_KEY}", { apiKeyEnvironmentVariable: "MY_GEM_KEY" }],
+        ["OIDC", { trustedPublishing: true }],
+        ["<USE_OIDC>", { trustedPublishing: true }],
+        ["literal-gem-key", {}]
+    ])("maps a legacy RubyGems apiKey of %s to how the workflow should authenticate", (apiKey, expectedExtra) => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: invocation({
+                name: "fernapi/fern-ruby-sdk",
+                language: "ruby",
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner: "acme",
+                        repo: "ruby-sdk",
+                        reviewers: [],
+                        publishInfo: FernFiddle.GithubPublishInfo.rubygems({
+                            registryUrl: "https://rubygems.org/",
+                            packageName: "acme-sdk",
+                            apiKey
+                        })
+                    })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(Buffer.from("bundle"))
+        });
+
+        expect(request.targets[0]?.requestedOutput).toMatchObject({
+            type: "github",
+            publish: { registry: "rubygems", url: "https://rubygems.org/", ...expectedExtra }
+        });
+        expect(JSON.stringify(request)).not.toContain("literal-gem-key");
+    });
+
     it("maps direct registry publication and package identity", () => {
         const request = createFernSdkGenApiRequest({
             apiName: "Petstore",

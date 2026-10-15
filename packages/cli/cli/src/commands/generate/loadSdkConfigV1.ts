@@ -58,7 +58,10 @@ export async function loadSdkConfigV1(
     }
 
     try {
-        const { sanitizedInput, credentials } = sanitizeSdkConfigPublishCredentials(input, isPreview);
+        const { sanitizedInput, credentials, apiKeySecretNames } = sanitizeSdkConfigPublishCredentials(
+            input,
+            isPreview
+        );
         const githubNpmTokens = extractSdkConfigGithubNpmTokens(input);
         const { document, parsed } = validateAndParseSdkConfigV1(sanitizedInput);
         if (
@@ -103,7 +106,7 @@ export async function loadSdkConfigV1(
                     ...(target.client?.pathParameterStyle != null
                         ? { clientPathParameterStyle: target.client.pathParameterStyle }
                         : {}),
-                    requestedOutput: toRequestedOutput(output, isPreview),
+                    requestedOutput: toRequestedOutput(output, isPreview, apiKeySecretNames[index]),
                     ...(output?.delivery === "zip"
                         ? {
                               absolutePathToLocalOutputArchive: AbsoluteFilePath.of(
@@ -272,7 +275,11 @@ function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOu
           };
 }
 
-function toRequestedOutput(output: SdkConfigV1["output"], isPreview: boolean): FernSdkGenApiRequestedOutput {
+function toRequestedOutput(
+    output: SdkConfigV1["output"],
+    isPreview: boolean,
+    apiKeySecretName: string | undefined
+): FernSdkGenApiRequestedOutput {
     if (isPreview) {
         return { type: "download" };
     }
@@ -286,7 +293,14 @@ function toRequestedOutput(output: SdkConfigV1["output"], isPreview: boolean): F
         ...(output.github.branch == null ? {} : { branch: output.github.branch }),
         ...(output.github.mode == null ? {} : { mode: toRequestedGithubMode(output.github.mode) }),
         ...(output.github.reviewers == null ? {} : { reviewers: output.github.reviewers }),
-        ...(output.publish == null ? {} : { publish: output.publish })
+        ...(output.publish == null
+            ? {}
+            : {
+                  publish: {
+                      ...output.publish,
+                      ...(apiKeySecretName == null ? {} : { apiKeyEnvironmentVariable: apiKeySecretName })
+                  }
+              })
     };
 }
 
