@@ -34,6 +34,16 @@ export const SDK_CONFIG_DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE =
     "Direct RubyGems publishing is not supported. Use output.delivery: github with publish.registry: rubygems " +
     "so the gem is published by the GitHub Actions workflow generated in that repository.";
 
+const SECRET_NAME_EXPRESSION = /^\$\{([A-Za-z_][A-Za-z0-9_]*)\}$/;
+
+/**
+ * Returns the name inside an exact `${SECRET_NAME}` expression. The name identifies a repository
+ * secret that a generated workflow reads; the secret's value is never resolved or transported.
+ */
+export function parseSecretNameExpression(value: string | undefined): string | undefined {
+    return value == null ? undefined : SECRET_NAME_EXPRESSION.exec(value)?.[1];
+}
+
 export interface FernSdkGenApiPublishTargetValidationInput {
     publicationRequested: boolean;
     credentialsRequired: boolean;
