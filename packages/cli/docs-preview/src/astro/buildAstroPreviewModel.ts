@@ -82,11 +82,15 @@ export async function buildAstroPreviewModel({
     context: TaskContext;
 }): Promise<AstroPreviewModel> {
     const { writeApiDefinitions, resolver, uploadedFiles } = previewResult.ledgerSource;
-    const docsDefinition = substituteEnvVars
+    const substitutedDefinition = substituteEnvVars
         ? substituteEnvVarsInDefinition(previewResult.ledgerSource.writeDocsDefinition, context)
         : previewResult.ledgerSource.writeDocsDefinition;
 
     const { fileManifest, fileIdToPath, files } = await buildFileManifest(uploadedFiles, context);
+    const docsDefinition: DocsV1Write.DocsDefinition = {
+        ...substitutedDefinition,
+        config: remapFileIdsToPaths(substitutedDefinition.config, fileIdToPath)
+    };
 
     const { localeEntry: baseLocale, blobs: rawBlobs } = buildLedgerInput({
         docsDefinition,
@@ -273,6 +277,38 @@ async function buildFileManifest(
     }
 
     return { fileManifest, fileIdToPath, files };
+}
+
+/**
+ * The local preview mints a UUID fileId per uploaded file, but the ledger keys
+ * files by `fullPath` (a real publish uses the path as the fileId). Page markdown
+ * is remapped in `buildLedgerInput`; this does the same for the docs config —
+ * navigation `icon`/`image` refs (`file:<fileId>` or a bare fileId) included —
+ * so the renderer's path-keyed file lookups resolve them.
+ */
+export function remapFileIdsToPaths<T>(value: T, fileIdToPath: ReadonlyMap<string, string>): T {
+    if (fileIdToPath.size === 0) {
+        return value;
+    }
+    // The walk only swaps fileId strings for path strings, so the shape of `value` is preserved.
+    return remapValue(value, fileIdToPath) as T;
+}
+
+function remapValue(value: unknown, fileIdToPath: ReadonlyMap<string, string>): unknown {
+    if (typeof value === "string") {
+        if (value.startsWith("file:")) {
+            const path = fileIdToPath.get(value.slice("file:".length));
+            return path != null ? `file:${path}` : value;
+        }
+        return fileIdToPath.get(value) ?? value;
+    }
+    if (Array.isArray(value)) {
+        return value.map((item) => remapValue(item, fileIdToPath));
+    }
+    if (value != null && typeof value === "object") {
+        return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, remapValue(item, fileIdToPath)]));
+    }
+    return value;
 }
 
 export function fileKey(hash: string, fullPath: string): string {
