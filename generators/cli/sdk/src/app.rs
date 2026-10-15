@@ -861,6 +861,50 @@ impl CliApp {
         leaves
     }
 
+    /// Map the spellings argv used for `path` back to canonical command
+    /// names, so a group reached through a `CliApp::alias` (`<cli> ag
+    /// --schema` for `agents`) is looked up in the bindings under the name
+    /// their schemas use. Segments that are not deferred aliases pass through.
+    fn canonical_path(&self, path: &[String]) -> Vec<String> {
+        let mut canonical: Vec<String> = Vec::with_capacity(path.len());
+        for segment in path {
+            let depth = canonical.len();
+            let resolved = self
+                .deferred_ops
+                .iter()
+                .find_map(|op| match op {
+                    DeferredOp::Alias { path: at, alias }
+                        if alias == segment
+                            && at.len() == depth + 1
+                            && at[..depth] == canonical[..] =>
+                    {
+                        Some(at[depth].clone())
+                    }
+                    _ => None,
+                })
+                .unwrap_or_else(|| segment.clone());
+            canonical.push(resolved);
+        }
+        canonical
+    }
+
+    /// Dotted canonical paths (`plants.list`) of every custom command,
+    /// hidden or not. A custom command grafted at a spec operation's exact
+    /// path replaces that operation at dispatch, so listings must not keep
+    /// advertising the operation.
+    fn custom_command_paths(&self) -> std::collections::HashSet<String> {
+        self.custom_command_leaves()
+            .iter()
+            .map(|leaf| {
+                leaf.segments
+                    .iter()
+                    .map(|seg| seg[0].as_str())
+                    .collect::<Vec<_>>()
+                    .join(".")
+            })
+            .collect()
+    }
+
     /// Custom commands for a non-empty `--schema` path: the entry of the
     /// command `path` names (hidden or not, as clap still runs it), and the
     /// visible custom commands below `path`.
@@ -1057,7 +1101,7 @@ impl CliApp {
         let help_as_schema = crate::cli_args::wants_help(&str_args)
             && crate::formatter::explicit_machine_format(&str_args);
         if dynamic_completion.is_none() && (explicit_schema || help_as_schema) {
-            let path = crate::cli_args::extract_subcommand_path(&str_args);
+            let path = self.canonical_path(&crate::cli_args::extract_subcommand_path(&str_args));
 
             if path.is_empty() {
                 let mut sdk_vars: Vec<serde_json::Value> = Vec::new();
@@ -1137,6 +1181,7 @@ impl CliApp {
                 if any_sdk_vars {
                     wrapped.insert("sdkVariables".into(), serde_json::Value::Array(sdk_vars));
                 }
+                drop_displaced_operations(&mut ops, &self.custom_command_paths());
                 wrapped.insert("operations".into(), serde_json::Value::Array(ops));
                 let output = serde_json::Value::Object(wrapped);
                 writeln!(
@@ -1172,6 +1217,7 @@ impl CliApp {
                 }
                 schema = match schema {
                     Some(serde_json::Value::Array(mut entries)) => {
+                        drop_displaced_operations(&mut entries, &self.custom_command_paths());
                         entries.extend(custom_under);
                         Some(serde_json::Value::Array(entries))
                     }
@@ -2286,6 +2332,22 @@ fn describe_builtin_leaves(
 }
 
 /// One invocable custom command, as found by `CliApp::custom_command_leaves`.
+/// Remove the spec operations whose dotted path is owned by a custom
+/// command (see [`CliApp::custom_command_paths`]).
+fn drop_displaced_operations(
+    ops: &mut Vec<serde_json::Value>,
+    owned: &std::collections::HashSet<String>,
+) {
+    if owned.is_empty() {
+        return;
+    }
+    ops.retain(|op| {
+        op["operation"]
+            .as_str()
+            .is_none_or(|operation| !owned.contains(operation))
+    });
+}
+
 struct CustomCommandLeaf {
     segments: Vec<crate::custom_commands::PathSegment>,
     entry: serde_json::Value,

@@ -282,3 +282,67 @@ fn hidden_custom_commands_are_described_but_not_listed() {
     assert_eq!(exit, 0, "{debug:#}");
     assert_eq!(debug["command"], "debug");
 }
+
+#[test]
+fn a_displaced_spec_operation_is_not_listed_next_to_its_replacement() {
+    let app = || {
+        CliApp::new("probe-cli")
+            .binding(OpenApiBinding::new().spec(SPEC))
+            .command_under(
+                &["plants"],
+                clap::Command::new("list").about("List plants from the local cache"),
+                OpenApiBinding::handler(handle),
+            )
+    };
+    let (exit, group) = run_with(app(), &["plants", "--schema"]);
+    assert_eq!(exit, 0, "{group:#}");
+    let entries = group.as_array().unwrap();
+    assert_eq!(entries.len(), 1, "{group:#}");
+    assert_eq!(entries[0]["command"], "plants list", "{group:#}");
+
+    let (_, root) = run_with(app(), &["--schema"]);
+    assert!(
+        root["operations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|op| op["operation"] != "plants.list"),
+        "{root:#}"
+    );
+    assert_eq!(
+        root["customCommands"][0]["command"], "plants list",
+        "{root:#}"
+    );
+}
+
+#[test]
+fn a_hidden_custom_command_still_displaces_the_spec_operation() {
+    let app = CliApp::new("probe-cli")
+        .binding(OpenApiBinding::new().spec(SPEC))
+        .command_under(
+            &["plants"],
+            clap::Command::new("list").about("Internal").hide(true),
+            OpenApiBinding::handler(handle),
+        );
+    let (exit, group) = run_with(app, &["plants", "--schema"]);
+    assert_eq!(exit, 0, "{group:#}");
+    assert_eq!(group.as_array().unwrap().len(), 0, "{group:#}");
+}
+
+#[test]
+fn a_group_alias_resolves_to_the_canonical_group_for_bindings_and_custom_commands() {
+    let app = || app().alias(&["plants"], "pl");
+    let (exit, aliased) = run_with(app(), &["pl", "--schema"]);
+    assert_eq!(exit, 0, "{aliased:#}");
+    let (_, canonical) = run_with(app(), &["plants", "--schema"]);
+    assert_eq!(aliased, canonical, "{aliased:#}");
+    let entries = aliased.as_array().unwrap();
+    assert!(
+        entries.iter().any(|e| e["operation"] == "plants.list"),
+        "spec operation missing through alias: {aliased:#}"
+    );
+    assert!(
+        entries.iter().any(|e| e["command"] == "plants prune"),
+        "custom command missing through alias: {aliased:#}"
+    );
+}
