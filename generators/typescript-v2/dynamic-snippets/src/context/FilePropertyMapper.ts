@@ -32,19 +32,19 @@ export class FilePropertyMapper {
             switch (property.type) {
                 case "file":
                     result.fileFields.push({
-                        name: this.context.getPropertyName(property.name),
+                        name: this.context.getPropertyNameFromNameAndWireValue(property),
                         value: this.getSingleFileProperty({ property, record })
                     });
                     break;
                 case "fileArray":
                     result.fileFields.push({
-                        name: this.context.getPropertyName(property.name),
+                        name: this.context.getPropertyNameFromNameAndWireValue(property),
                         value: this.getArrayFileProperty({ property, record })
                     });
                     break;
                 case "bodyProperty":
                     result.bodyPropertyFields.push({
-                        name: this.context.getPropertyName(property.name.name),
+                        name: this.context.getPropertyNameFromNameAndWireValue(property.name),
                         value: this.getBodyProperty({ property, record })
                     });
                     break;
@@ -64,7 +64,7 @@ export class FilePropertyMapper {
     }): ts.TypeLiteral {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return ts.TypeLiteral.nop();
+            return this.context.getFilePlaceholder();
         }
         return ts.TypeLiteral.blob(fileValue);
     }
