@@ -821,7 +821,7 @@ impl CliApp {
         path
     }
 
-    /// Every leaf of every custom command, as the spellings argv may use for
+    /// Every invocable custom command, as the spellings argv may use for
     /// each path segment (canonical name, clap aliases, deferred aliases)
     /// paired with its `--schema` entry.
     fn custom_command_leaves(
@@ -835,7 +835,7 @@ impl CliApp {
                 .map(|segment| vec![segment.clone()])
                 .collect();
             let mut found = Vec::new();
-            collect_command_leaves(&cc.cmd, &mut prefix, &mut found);
+            collect_command_leaves(&cc.cmd, true, &mut prefix, &mut found);
             for (segments, command) in found {
                 let name: Vec<String> = segments.iter().map(|seg| seg[0].clone()).collect();
                 let entry = describe_command_leaf(command, &name.join(" "));
@@ -846,8 +846,9 @@ impl CliApp {
     }
 
     /// `--schema` for a path owned by a custom command rather than a binding:
-    /// the leaf's entry when `path` names one, otherwise an array of every
-    /// custom leaf under `path` when it names a group, otherwise `None`.
+    /// the command's entry when `path` names an invocable one, otherwise an
+    /// array of every invocable custom command under `path` when it names a
+    /// group, otherwise `None`.
     fn custom_command_schema(&self, path: &[String]) -> Option<serde_json::Value> {
         let names = |segments: &[crate::custom_commands::PathSegment]| {
             path.iter()
@@ -2242,30 +2243,33 @@ fn describe_builtin_leaves(
     let mut prefix: Vec<crate::custom_commands::PathSegment> =
         path.iter().map(|segment| vec![segment.clone()]).collect();
     let mut leaves = Vec::new();
-    collect_command_leaves(command, &mut prefix, &mut leaves);
+    collect_command_leaves(command, false, &mut prefix, &mut leaves);
     for (segments, leaf) in leaves {
         let name: Vec<String> = segments.iter().map(|seg| seg[0].clone()).collect();
         out.push(describe_command_leaf(leaf, &name.join(" ")));
     }
 }
 
-/// Every leaf of `command`'s subtree with its full path, each segment as the
-/// spellings argv may use for it (canonical name first, then clap aliases).
+/// Every invocable command in `command`'s subtree with its full path, each
+/// segment as the spellings argv may use for it (canonical name first, then
+/// clap aliases). Leaves are always invocable; with `runnable_groups`, so is a
+/// command that has subcommands but does not require one (`say` alongside
+/// `say config`).
 fn collect_command_leaves<'a>(
     command: &'a clap::Command,
+    runnable_groups: bool,
     prefix: &mut Vec<crate::custom_commands::PathSegment>,
     out: &mut Vec<(Vec<crate::custom_commands::PathSegment>, &'a clap::Command)>,
 ) {
     let mut segment = vec![command.get_name().to_string()];
     segment.extend(command.get_all_aliases().map(str::to_string));
     prefix.push(segment);
-    let mut has_child = false;
-    for sub in command.get_subcommands() {
-        has_child = true;
-        collect_command_leaves(sub, prefix, out);
-    }
-    if !has_child {
+    let has_child = command.has_subcommands();
+    if !has_child || (runnable_groups && !command.is_subcommand_required_set()) {
         out.push((prefix.clone(), command));
+    }
+    for sub in command.get_subcommands() {
+        collect_command_leaves(sub, runnable_groups, prefix, out);
     }
     prefix.pop();
 }

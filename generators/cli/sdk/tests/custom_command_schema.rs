@@ -164,3 +164,50 @@ fn root_schema_omits_custom_commands_when_there_are_none() {
     let schema: serde_json::Value = serde_json::from_slice(&out).unwrap();
     assert!(schema.get("customCommands").is_none(), "{schema:#}");
 }
+
+#[test]
+fn schema_on_a_runnable_custom_command_with_subcommands_describes_it() {
+    let app = || {
+        CliApp::new("probe-cli")
+            .binding(OpenApiBinding::new().spec(SPEC))
+            .command(
+                clap::Command::new("bloom")
+                    .about("Report what is in bloom")
+                    .arg(
+                        clap::Arg::new("color")
+                            .long("color")
+                            .help("Only this color"),
+                    )
+                    .subcommand(clap::Command::new("config").about("Show bloom settings")),
+                OpenApiBinding::handler(handle),
+            )
+    };
+    let schema = |args: &[&str]| {
+        let mut argv = vec!["probe-cli"];
+        argv.extend_from_slice(args);
+        let mut out: Vec<u8> = Vec::new();
+        let exit = app().try_run_from_with_output(argv, &mut out);
+        (
+            exit,
+            serde_json::from_slice::<serde_json::Value>(&out).unwrap(),
+        )
+    };
+
+    let (exit, bloom) = schema(&["bloom", "--schema"]);
+    assert_eq!(exit, 0, "{bloom:#}");
+    assert_eq!(bloom["command"], "bloom", "{bloom:#}");
+    assert_eq!(bloom["flags"][0]["flag"], "--color", "{bloom:#}");
+
+    let (exit, config) = schema(&["bloom", "config", "--schema"]);
+    assert_eq!(exit, 0, "{config:#}");
+    assert_eq!(config["command"], "bloom config", "{config:#}");
+
+    let (_, root) = schema(&["--schema"]);
+    let names: Vec<&str> = root["customCommands"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|entry| entry["command"].as_str().unwrap())
+        .collect();
+    assert_eq!(names, ["bloom", "bloom config"], "{root:#}");
+}
