@@ -64,7 +64,7 @@ export class FilePropertyMapper {
     }): ts.TypeLiteral {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return ts.TypeLiteral.nop();
+            return this.context.getFilePlaceholder();
         }
         return ts.TypeLiteral.blob(fileValue);
     }

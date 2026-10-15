@@ -13,7 +13,7 @@ async function main() {
             "development",
             "public",
         ],
-        xAPIVersion: "0.0.1",
+        "X-API-Version": "0.0.1",
     });
 }
 main();
@@ -32,7 +32,7 @@ async function main() {
         tag: [
             "development",
         ],
-        xAPIVersion: "0.0.1",
+        "X-API-Version": "0.0.1",
     });
 }
 main();
@@ -153,7 +153,7 @@ async function main() {
         long: BigInt("1000000"),
         double: 1.1,
         bool: true,
-        datetime: new Date("2024-01-15T09:30:00Z"),
+        datetime: "2024-01-15T09:30:00Z",
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
@@ -161,9 +161,9 @@ async function main() {
             "list",
             "list",
         ],
-        set: new Set([
+        set: [
             "set",
-        ]),
+        ],
         map: {
             1: "map",
         },
@@ -268,15 +268,17 @@ main();
 
 exports[`snippets > file-upload > 'POST /' 1`] = `
 "import { AcmeClient } from "acme";
+import * as fs from "fs";
 
 async function main() {
     const client = new AcmeClient();
     await client.service.post({
         file: new Blob(["Hello, world!"]),
-        fileList: [
+        file_list: [
             new Blob(["First"]),
             new Blob(["Second"]),
         ],
+        maybe_file: fs.createReadStream("/path/to/your/file"),
     });
 }
 main();
@@ -319,7 +321,7 @@ async function main() {
         token: "<YOUR_API_KEY>",
     });
     await client.imdb.getMovie({
-        movieID: "movie_xyz",
+        movieId: "movie_xyz",
     });
 }
 main();
@@ -426,8 +428,8 @@ async function main() {
             "admin",
         ],
         metadata: {
-            createdAt: new Date("1980-01-01T00:00:00Z"),
-            updatedAt: new Date("1980-01-01T00:00:00Z"),
+            createdAt: "1980-01-01T00:00:00Z",
+            updatedAt: "1980-01-01T00:00:00Z",
             avatar: null,
             activated: null,
         },
@@ -477,10 +479,10 @@ exports[`snippets > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…'
 
 async function main() {
     const client = new AcmeClient({
-        tenantID: "my_tenant",
+        tenant_id: "my_tenant",
     });
     await client.user.getUserSpecifics({
-        userID: "my_user",
+        user_id: "my_user",
         version: 7,
         thought: "my_thought",
     });
@@ -528,7 +530,7 @@ exports[`snippets > required-headers > 'GET /plants (simple)' 1`] = `
 async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
-        tenantId: "my-tenant-id",
+        tenant_id: "my-tenant-id",
     });
     await client.plantstore.list();
 }
@@ -542,7 +544,7 @@ exports[`snippets > required-headers > 'POST /plants (simple)' 1`] = `
 async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
-        tenantId: "my-tenant-id",
+        tenant_id: "my-tenant-id",
     });
     await client.plantstore.create({
         name: "Fern",

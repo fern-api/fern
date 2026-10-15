@@ -9,6 +9,9 @@ import { constructNpmPackage, getNamespaceExport, resolveNaming } from "@fern-ap
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
+const VALID_IDENTIFIER_REGEX = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
+const FILE_PLACEHOLDER_PATH = "/path/to/your/file";
+
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: TypescriptCustomConfigSchema | undefined;
@@ -105,17 +108,24 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
+    public getFilePlaceholder(): ts.TypeLiteral {
+        return ts.TypeLiteral.reference(
+            ts.invokeFunction({
+                function_: ts.reference({
+                    name: "createReadStream",
+                    importFrom: { type: "star", moduleName: "fs", starImportAlias: "fs" }
+                }),
+                arguments_: [ts.TypeLiteral.string(FILE_PLACEHOLDER_PATH)]
+            })
+        );
+    }
+
     private formatOriginalPropertyName(value: string): string {
-        if (value.includes("-")) {
-            // For example, header names like the following:
-            //
-            // {
-            //   "X-API-Version": "X-API-Version",
-            //   body: "string"
-            // }
-            return `"${value}"`;
+        // Quote names that aren't valid identifiers, e.g. "X-API-Version" or "org.iso.18013.5.1".
+        if (VALID_IDENTIFIER_REGEX.test(value)) {
+            return value;
         }
-        return value;
+        return JSON.stringify(value);
     }
 }
 

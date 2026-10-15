@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    TypeScript dynamic snippets now follow the SDK generator's `noSerdeLayer` default (on unless `noSerdeLayer: false` or `serdeLayer: true` is set), so they use wire property names (e.g. `per_page`) that match the generated request types. Property names that aren't valid identifiers (e.g. `org.iso.18013.5.1`) are now quoted, file values are always sent as a `Blob`, and a file field missing from the example gets a `fs.createReadStream("/path/to/your/file")` placeholder instead of being dropped.
+  type: fix
