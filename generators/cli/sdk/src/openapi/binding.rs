@@ -951,12 +951,15 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override = self.inner.substitute_base_url_vars(
-            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?,
-            &self.ensure_prepared()?.doc,
-            matches,
-            None,
-        );
+        let prepared = self.ensure_prepared()?;
+        let raw_base_url_override =
+            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        // Fill on top of what earlier bindings already resolved, so a binding
+        // whose spec lacks `{region}` can't put the literal template back.
+        let resolve_base_url = |partial: Option<String>| {
+            self.inner
+                .substitute_base_url_vars(partial, &prepared.doc, matches, None)
+        };
         let entry = super::app::BindingEntry {
             http_config: entry.http_config.with_user_agent_suffix_override(
                 crate::cli_args::resolve_user_agent_suffix_override(matches),
@@ -969,7 +972,8 @@ impl Binding for OpenApiBinding {
                     ctx.add_entry(entry);
                     ctx.debug = debug;
                     ctx.quiet = quiet;
-                    ctx.base_url_override = base_url_override;
+                    ctx.base_url_override =
+                        resolve_base_url(ctx.base_url_override.take().or(raw_base_url_override));
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
@@ -982,7 +986,7 @@ impl Binding for OpenApiBinding {
                         entry.global_headers,
                         entry.global_params,
                     ).with_quiet(quiet)
-                     .with_base_url_override(base_url_override)
+                     .with_base_url_override(resolve_base_url(raw_base_url_override))
                      .with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
@@ -996,7 +1000,7 @@ impl Binding for OpenApiBinding {
                     entry.global_headers,
                     entry.global_params,
                 ).with_quiet(quiet)
-                 .with_base_url_override(base_url_override)
+                 .with_base_url_override(resolve_base_url(raw_base_url_override))
                  .with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
