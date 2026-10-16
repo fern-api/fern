@@ -3076,6 +3076,14 @@ pub(crate) fn collect_params_from_flags(
                 // literal string.
                 let mut arr: Vec<serde_json::Value> = Vec::new();
                 let mut explicit_null = false;
+                // Object/number/etc. elements are JSON, so `@file` references
+                // inside them resolve like the single-value branch below.
+                // String elements stay literal; an untyped list (`item_type:
+                // None`) is a string list, so it stays literal too.
+                let json_items = param_def
+                    .item_type
+                    .as_deref()
+                    .is_some_and(|t| t != "string");
                 for v in values {
                     // Null sentinel (ADR-0003): on a nullable list, a lone
                     // `null` is the user asking to send JSON null rather
@@ -3085,19 +3093,22 @@ pub(crate) fn collect_params_from_flags(
                         continue;
                     }
                     match serde_json::from_str::<serde_json::Value>(v) {
-                        Ok(serde_json::Value::Array(elems)) => arr.extend(elems),
+                        Ok(serde_json::Value::Array(mut elems)) => {
+                            if json_items {
+                                for elem in &mut elems {
+                                    executor::resolve_file_refs(elem)?;
+                                }
+                            }
+                            arr.extend(elems)
+                        }
                         // A non-string element type means each occurrence is
                         // itself JSON — `--inputs '{"text":"hi"}'` is one
                         // object, not the literal text of one. Keeping it a
                         // string made an array-of-objects flag impossible to
                         // use one element at a time, while `--schema` now
                         // advertises `items: {type: object}`.
-                        Ok(decoded)
-                            if param_def
-                                .item_type
-                                .as_deref()
-                                .is_some_and(|t| t != "string") =>
-                        {
+                        Ok(mut decoded) if json_items => {
+                            executor::resolve_file_refs(&mut decoded)?;
                             arr.push(decoded)
                         }
                         // Anything else — including non-array JSON like "123"
@@ -4885,6 +4896,110 @@ mod tests {
             result.get("tags"),
             Some(&serde_json::json!(["123", "null", "{}"])),
             "non-array values must stay literal strings",
+        );
+    }
+
+    fn object_list_method(name: &str) -> crate::openapi::discovery::RestMethod {
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            name.to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                item_type: Some("object".to_string()),
+                ..Default::default()
+            },
+        );
+        crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        }
+    }
+
+    fn object_list_matches(name: &'static str, values: &[&str]) -> clap::ArgMatches {
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new(name)
+                    .long(name)
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let mut argv = vec!["test".to_string()];
+        for v in values {
+            argv.push(format!("--{name}"));
+            argv.push((*v).to_string());
+        }
+        cmd.get_matches_from(argv)
+    }
+
+    #[test]
+    fn test_collect_params_repeated_object_resolves_file_refs() {
+        let tmp = tempfile::NamedTempFile::new().unwrap();
+        std::fs::write(tmp.path(), b"hello").unwrap();
+        let path = tmp.path().to_str().unwrap();
+        let data_ref = format!(r#"{{"content":"@data://{path}","filename":"a.txt"}}"#);
+        let text_ref = format!(r#"{{"content":"@{path}","filename":"b.txt"}}"#);
+        let method = object_list_method("attachments");
+        let matches = object_list_matches("attachments", &[&data_ref, &text_ref]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("attachments"),
+            Some(&serde_json::json!([
+                {"content": "aGVsbG8=", "filename": "a.txt"},
+                {"content": "hello", "filename": "b.txt"},
+            ])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_object_json_array_resolves_file_refs() {
+        let tmp = tempfile::NamedTempFile::new().unwrap();
+        std::fs::write(tmp.path(), b"hello").unwrap();
+        let path = tmp.path().to_str().unwrap();
+        let value = format!(r#"[{{"type":"text/plain","value":"@{path}"}}]"#);
+        let method = object_list_method("content");
+        let matches = object_list_matches("content", &[&value]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("content"),
+            Some(&serde_json::json!([{"type": "text/plain", "value": "hello"}])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_object_missing_file_errors() {
+        let method = object_list_method("attachments");
+        let matches = object_list_matches(
+            "attachments",
+            &[r#"{"content":"@data:///nonexistent/fern-cli-test.txt","filename":"a"}"#],
+        );
+        let err = collect_params_from_flags(&matches, &method, None).unwrap_err();
+        let msg = err.to_string();
+        assert!(msg.contains("/nonexistent/fern-cli-test.txt"), "{msg}");
+    }
+
+    #[test]
+    fn test_collect_params_repeated_string_keeps_at_literal() {
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let matches = object_list_matches("to", &["@handle", r#"["@other"]"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["@handle", "@other"]))
         );
     }
 
