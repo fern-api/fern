@@ -7,5 +7,7 @@
     is also listed under its real name: previously a command with visible aliases was shown only as its
     alphabetically-first alias (e.g. `dev` instead of `start`). Typed aliases still complete. Descriptions in
     the list are cut to their first sentence (at most 50 characters) so they fit narrow terminals instead of
-    being cut off or wrapping; `--help` keeps the full text. Nothing changes outside completion.
+    being cut off or wrapping; `--help` keeps the full text. A flag value that matches a subcommand name
+    (e.g. `<cli> serverless --profile list <TAB>`) is now read as the flag's value, as the command itself
+    parses it, instead of completing under that subcommand. Nothing changes outside completion.
   type: fix

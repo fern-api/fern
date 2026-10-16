@@ -103,6 +103,7 @@ pub fn write_dynamic_completions(
         return write_registration(shell, &bin_name, writer);
     }
     let index = completion_index(shell, &words);
+    let words = mask_option_values(cmd, words, index);
     *cmd = tidy_for_completion(std::mem::take(cmd), &words, index);
     let current_dir = std::env::current_dir().ok();
     let mut buf = Vec::new();
@@ -201,13 +202,75 @@ fn tidy_for_completion(cmd: Command, words: &[OsString], index: usize) -> Comman
     }
 }
 
+/// Rewrite the values of flags typed before the word being completed so none
+/// can be read as a subcommand. `clap_complete` checks for a subcommand name
+/// before an expected flag value, so `serverless --profile list <TAB>` would
+/// otherwise complete under `serverless list` even though the command parses
+/// `list` as the profile. Values never affect the candidates, only the count
+/// of words, so they are kept in place with a `=` prefix.
+fn mask_option_values(cmd: &Command, mut words: Vec<OsString>, index: usize) -> Vec<OsString> {
+    let end = index.min(words.len());
+    let mut path: Vec<&Command> = vec![cmd];
+    let mut expects_value = false;
+    for word in words.iter_mut().take(end).skip(1) {
+        let Some(text) = word.to_str().map(str::to_owned) else {
+            expects_value = false;
+            continue;
+        };
+        if text == "--" {
+            break;
+        }
+        let current = *path.last().expect("path starts at the root");
+        if expects_value && !text.starts_with('-') {
+            *word = OsString::from(format!("={text}"));
+            expects_value = false;
+            continue;
+        }
+        expects_value = false;
+        let find = |matches: &dyn Fn(&clap::Arg) -> bool| {
+            current.get_arguments().find(|a| matches(a)).or_else(|| {
+                path.iter()
+                    .rev()
+                    .skip(1)
+                    .flat_map(|c| c.get_arguments())
+                    .find(|a| a.is_global_set() && matches(a))
+            })
+        };
+        if let Some(long) = text.strip_prefix("--") {
+            if !long.contains('=') {
+                expects_value = find(&|a: &clap::Arg| {
+                    a.get_long_and_visible_aliases()
+                        .is_some_and(|names| names.contains(&long))
+                })
+                .is_some_and(|a| a.get_action().takes_values());
+            }
+        } else if let Some(shorts) = text.strip_prefix('-') {
+            let mut chars = shorts.chars();
+            while let Some(c) = chars.next() {
+                let takes_value = find(&|a: &clap::Arg| {
+                    a.get_short_and_visible_aliases()
+                        .is_some_and(|names| names.contains(&c))
+                })
+                .is_some_and(|a| a.get_action().takes_values());
+                if takes_value {
+                    expects_value = chars.as_str().is_empty();
+                    break;
+                }
+            }
+        } else if let Some(sub) = current.find_subcommand(&text) {
+            path.push(sub);
+        }
+    }
+    words
+}
+
 /// Canonical names of the subcommands already typed (matching names or
 /// aliases, skipping flags), and whether the deepest one has visible
 /// subcommands of its own. `None` when the `help` subcommand was typed.
 ///
-/// Mirrors `clap_complete`'s own walk, which also descends into a word naming
-/// a subcommand even right after a flag that takes a value, so the node tidied
-/// here is always the one being completed.
+/// Mirrors `clap_complete`'s own walk. Flag values are already masked by
+/// [`mask_option_values`], so the node tidied here is always the one being
+/// completed.
 fn resolve_subcommand_path(cmd: &Command, typed: &[OsString]) -> Option<(Vec<String>, bool)> {
     let mut path = Vec::new();
     let mut current = cmd;
@@ -445,6 +508,39 @@ mod tests {
     fn complete_env_var_is_namespaced_by_binary() {
         assert_eq!(complete_env_var("my-cli"), "MY_CLI_COMPLETE");
         assert_eq!(complete_env_var("twilio"), "TWILIO_COMPLETE");
+    }
+
+    #[test]
+    fn flag_value_naming_a_subcommand_is_read_as_the_value() {
+        let cli = || {
+            sample_cli().arg(
+                clap::Arg::new("profile")
+                    .long("profile")
+                    .short('p')
+                    .global(true)
+                    .action(clap::ArgAction::Set),
+            )
+        };
+        let group = complete_fish_with(cli(), &["my-cli", "messages", ""]);
+        for words in [
+            &["my-cli", "messages", "--profile", "list", ""][..],
+            &["my-cli", "messages", "-p", "list", ""],
+            &["my-cli", "--profile", "messages", "messages", ""],
+            &["my-cli", "messages", "--profile=list", ""],
+        ] {
+            assert_eq!(complete_fish_with(cli(), words), group, "{words:?}");
+        }
+        let leaf = complete_fish_with(cli(), &["my-cli", "messages", "list", ""]);
+        assert_ne!(leaf, group);
+        assert_eq!(
+            complete_fish_with(cli(), &["my-cli", "messages", "--verbose", "list", ""]),
+            leaf,
+            "flags without a value must not swallow the next word"
+        );
+        assert_eq!(
+            complete_fish_with(cli(), &["my-cli", "--profile", "x", "messages", "list", ""]),
+            leaf
+        );
     }
 
     #[test]
