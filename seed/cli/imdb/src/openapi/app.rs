@@ -2220,6 +2220,40 @@ impl CliApp {
         matches: &clap::ArgMatches,
         profile: Option<&crate::profiles::ResolvedProfile>,
     ) {
+        let (subs, caller_pinned_any) = self.resolve_server_var_subs(doc, matches, profile);
+        if !caller_pinned_any {
+            apply_default_server_urls(doc);
+        }
+        apply_server_var_substitutions(doc, &subs);
+    }
+
+    /// Fill `{name}` server-variable placeholders in a caller-supplied base
+    /// URL (`--base-url`, `<NAME>_BASE_URL`, or a profile's base URL) from the
+    /// same ladder that resolves the spec's own server URLs, so
+    /// `--base-url https://api.stage-{region}.twilio.com` honours `--region`.
+    pub(crate) fn substitute_base_url_vars(
+        &self,
+        url: Option<String>,
+        doc: &RestDescription,
+        matches: &clap::ArgMatches,
+        profile: Option<&crate::profiles::ResolvedProfile>,
+    ) -> Option<String> {
+        let url = url?;
+        if !url.contains('{') {
+            return Some(url);
+        }
+        let (subs, _) = self.resolve_server_var_subs(doc, matches, profile);
+        Some(substitute_url_vars(&url, &subs))
+    }
+
+    /// Server-variable values (command line > profile > env var > spec
+    /// default), plus whether the caller or a profile pinned any of them.
+    fn resolve_server_var_subs(
+        &self,
+        doc: &RestDescription,
+        matches: &clap::ArgMatches,
+        profile: Option<&crate::profiles::ResolvedProfile>,
+    ) -> (std::collections::HashMap<String, String>, bool) {
         let profile_var = |name: &str| match profile {
             Some(p) => p.server_variables.get(name).cloned(),
             None => crate::profiles::server_variable(name),
@@ -2285,10 +2319,7 @@ impl CliApp {
             }
         }
 
-        if !caller_pinned_any {
-            apply_default_server_urls(doc);
-        }
-        apply_server_var_substitutions(doc, &subs);
+        (subs, caller_pinned_any)
     }
 
     /// Handle the `generate-skills` subcommand: validate the output
@@ -5953,6 +5984,42 @@ paths:
         assert_eq!(doc.servers[0].url, "https://api.twilio.com");
         let list = doc.resources["messages"].methods.get("list-message").unwrap();
         assert_eq!(list.root_url, "https://api.twilio.com");
+    }
+
+    #[test]
+    fn test_substitute_base_url_vars_fills_region_in_caller_base_url() {
+        // `--base-url https://api.stage-{region}.twilio.com` must not reach
+        // the request builder with a literal `{region}`.
+        let app = CliApp::new("t").spec(TWILIO_SHAPED_SPEC);
+        let doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let stage = Some("https://api.stage-{region}.twilio.com".to_string());
+
+        let pinned = cli
+            .clone()
+            .try_get_matches_from(["t", "--region", "ie1", "messages", "list-message"])
+            .unwrap();
+        assert_eq!(
+            app.substitute_base_url_vars(stage.clone(), &doc, &pinned, None).as_deref(),
+            Some("https://api.stage-ie1.twilio.com")
+        );
+
+        let defaulted = cli.try_get_matches_from(["t", "messages", "list-message"]).unwrap();
+        assert_eq!(
+            app.substitute_base_url_vars(stage, &doc, &defaulted, None).as_deref(),
+            Some("https://api.stage-us1.twilio.com")
+        );
+        assert_eq!(
+            app.substitute_base_url_vars(
+                Some("http://127.0.0.1:8080/{unknown}".to_string()),
+                &doc,
+                &defaulted,
+                None,
+            )
+            .as_deref(),
+            Some("http://127.0.0.1:8080/{unknown}")
+        );
+        assert_eq!(app.substitute_base_url_vars(None, &doc, &defaulted, None), None);
     }
 
     #[test]

@@ -436,6 +436,9 @@ impl Binding for OpenApiBinding {
                 Some(url) if root_matches.get_one::<String>("base-url").is_none() => Some(url),
                 _ => crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
             };
+            let base_url =
+                self.inner
+                    .substitute_base_url_vars(base_url, &prepared.doc, root_matches, profile);
             // Strip the namespace prefix the same way `dispatch` does, so a
             // caller names the operation as it appears on the command line.
             let effective: &[String] = match &self.command_namespace {
@@ -803,8 +806,12 @@ impl Binding for OpenApiBinding {
             )?;
 
             // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
-            let base_url_override_owned =
-                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
+            let base_url_override_owned = self.inner.substitute_base_url_vars(
+                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
+                &prepared.doc,
+                root_matches,
+                None,
+            );
             let base_url_override = base_url_override_owned.as_deref();
 
             // --user-agent-suffix flag wins; otherwise {NAME}_USER_AGENT_SUFFIX
@@ -910,8 +917,12 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override =
-            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let base_url_override = self.inner.substitute_base_url_vars(
+            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?,
+            &self.ensure_prepared()?.doc,
+            matches,
+            None,
+        );
         let http_config = entry.http_config.with_user_agent_suffix_override(
             crate::cli_args::resolve_user_agent_suffix_override(matches),
         );
@@ -940,8 +951,15 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override =
+        let prepared = self.ensure_prepared()?;
+        let raw_base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        // Fill on top of what earlier bindings already resolved, so a binding
+        // whose spec lacks `{region}` can't put the literal template back.
+        let resolve_base_url = |partial: Option<String>| {
+            self.inner
+                .substitute_base_url_vars(partial, &prepared.doc, matches, None)
+        };
         let entry = super::app::BindingEntry {
             http_config: entry.http_config.with_user_agent_suffix_override(
                 crate::cli_args::resolve_user_agent_suffix_override(matches),
@@ -954,7 +972,8 @@ impl Binding for OpenApiBinding {
                     ctx.add_entry(entry);
                     ctx.debug = debug;
                     ctx.quiet = quiet;
-                    ctx.base_url_override = base_url_override;
+                    ctx.base_url_override =
+                        resolve_base_url(ctx.base_url_override.take().or(raw_base_url_override));
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
@@ -967,7 +986,7 @@ impl Binding for OpenApiBinding {
                         entry.global_headers,
                         entry.global_params,
                     ).with_quiet(quiet)
-                     .with_base_url_override(base_url_override)
+                     .with_base_url_override(resolve_base_url(raw_base_url_override))
                      .with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
@@ -981,7 +1000,7 @@ impl Binding for OpenApiBinding {
                     entry.global_headers,
                     entry.global_params,
                 ).with_quiet(quiet)
-                 .with_base_url_override(base_url_override)
+                 .with_base_url_override(resolve_base_url(raw_base_url_override))
                  .with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
