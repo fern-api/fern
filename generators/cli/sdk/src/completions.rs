@@ -103,10 +103,10 @@ pub fn write_dynamic_completions(
         return write_registration(shell, &bin_name, writer);
     }
     let index = completion_index(shell, &words);
-    let mut tidied = tidy_for_completion(std::mem::take(cmd), &words, index);
+    *cmd = tidy_for_completion(std::mem::take(cmd), &words, index);
     let current_dir = std::env::current_dir().ok();
     let mut buf = Vec::new();
-    completer.write_complete(&mut tidied, words, current_dir.as_deref(), &mut buf)?;
+    completer.write_complete(cmd, words, current_dir.as_deref(), &mut buf)?;
     writer.write_all(&buf)
 }
 
@@ -131,23 +131,30 @@ fn completion_index(shell: &str, words: &[OsString]) -> usize {
 /// - while choosing a subcommand, flags and the `help` subcommand stay out of
 ///   the list until the user types `-`, so the list is just the next commands.
 fn tidy_for_completion(cmd: Command, words: &[OsString], index: usize) -> Command {
+    let index = index.min(words.len());
     let current = words
         .get(index)
         .and_then(|w| w.to_str())
         .unwrap_or_default();
-    let typed = words.get(1..index.min(words.len())).unwrap_or_default();
-    let (path, target_has_subcommands) = resolve_subcommand_path(&cmd, typed);
-    let tidy = Tidy {
-        hide_flags: target_has_subcommands && !current.starts_with('-'),
-        hide_help_subcommand: !typed.iter().any(|w| w == "help"),
-    };
-    tidy.apply(cmd, &path)
+    let typed = words.get(1..index.max(1)).unwrap_or_default();
+    match resolve_subcommand_path(&cmd, typed) {
+        Some((path, target_has_subcommands)) => {
+            let hide_flags = target_has_subcommands && !current.starts_with('-');
+            tidy_path(cmd, &path, hide_flags)
+        }
+        // `<cli> ... help <TAB>`: leave clap's `help` subcommand path as is.
+        None => cmd,
+    }
 }
 
 /// Canonical names of the subcommands already typed (matching names or
-/// aliases, skipping flags and values), and whether the deepest one has
-/// visible subcommands of its own.
-fn resolve_subcommand_path(cmd: &Command, typed: &[OsString]) -> (Vec<String>, bool) {
+/// aliases, skipping flags), and whether the deepest one has visible
+/// subcommands of its own. `None` when the `help` subcommand was typed.
+///
+/// Mirrors `clap_complete`'s own walk, which also descends into a word naming
+/// a subcommand even right after a flag that takes a value, so the node tidied
+/// here is always the one being completed.
+fn resolve_subcommand_path(cmd: &Command, typed: &[OsString]) -> Option<(Vec<String>, bool)> {
     let mut path = Vec::new();
     let mut current = cmd;
     for word in typed {
@@ -157,45 +164,41 @@ fn resolve_subcommand_path(cmd: &Command, typed: &[OsString]) -> (Vec<String>, b
         if word.to_string_lossy().starts_with('-') {
             continue;
         }
+        if word == "help" && current.has_subcommands() && !current.is_disable_help_subcommand_set()
+        {
+            return None;
+        }
         if let Some(sub) = current.find_subcommand(word) {
             path.push(sub.get_name().to_string());
             current = sub;
         }
     }
     let has_subcommands = current.get_subcommands().any(|s| !s.is_hide_set());
-    (path, has_subcommands)
+    Some((path, has_subcommands))
 }
 
-struct Tidy {
-    hide_flags: bool,
-    hide_help_subcommand: bool,
-}
-
-impl Tidy {
-    fn apply(&self, cmd: Command, path: &[String]) -> Command {
-        // Global flags are copied down from the commands on the path when the
-        // tree is built, so hiding them there hides them at the target too.
-        let cmd = if self.hide_flags {
-            cmd.mut_args(|a| if a.is_positional() { a } else { a.hide(true) })
-                .disable_help_flag(true)
-                .disable_version_flag(true)
-        } else {
-            cmd
-        };
-        match path.split_first() {
-            Some((head, rest)) => cmd.mut_subcommand(head, |sub| self.apply(sub, rest)),
-            None => {
-                let mut cmd = cmd.mut_subcommands(hide_visible_aliases);
-                if self.hide_help_subcommand {
-                    // Built trees (the runtime builds before completing)
-                    // already carry clap's `help` subcommand.
-                    cmd = cmd.disable_help_subcommand(true);
-                    if cmd.get_subcommands().any(|s| s.get_name() == "help") {
-                        cmd = cmd.mut_subcommand("help", |h| h.hide(true));
-                    }
-                }
-                cmd
+fn tidy_path(cmd: Command, path: &[String], hide_flags: bool) -> Command {
+    // Global flags are copied down from the commands on the path when the
+    // tree is built, so hiding them there hides them at the target too.
+    let cmd = if hide_flags {
+        cmd.mut_args(|a| if a.is_positional() { a } else { a.hide(true) })
+            .disable_help_flag(true)
+            .disable_version_flag(true)
+    } else {
+        cmd
+    };
+    match path.split_first() {
+        Some((head, rest)) => cmd.mut_subcommand(head, |sub| tidy_path(sub, rest, hide_flags)),
+        None => {
+            // Built trees (the runtime builds before completing) already
+            // carry clap's `help` subcommand; unbuilt ones get none.
+            let mut cmd = cmd
+                .mut_subcommands(hide_visible_aliases)
+                .disable_help_subcommand(true);
+            if cmd.get_subcommands().any(|s| s.get_name() == "help") {
+                cmd = cmd.mut_subcommand("help", |h| h.hide(true));
             }
+            cmd
         }
     }
 }
@@ -419,6 +422,30 @@ mod tests {
         let out = complete_fish(&["my-cli", "messages", "--"]);
         assert!(out.contains("--verbose"), "{out}");
         assert!(out.contains("--help"), "{out}");
+    }
+
+    #[test]
+    fn tidy_tolerates_out_of_range_index() {
+        let words = os(&["my-cli", "messages", ""]);
+        for index in [0, 99] {
+            let cmd = tidy_for_completion(sample_cli(), &words, index);
+            assert!(cmd.find_subcommand("messages").is_some());
+        }
+    }
+
+    #[test]
+    fn dynamic_completion_leaves_the_caller_with_the_full_tree() {
+        let mut cmd = sample_cli();
+        let mut out = Vec::new();
+        write_dynamic_completions(
+            "fish",
+            &mut cmd,
+            os(&["my-cli", "--", "my-cli", ""]),
+            &mut out,
+        )
+        .unwrap();
+        assert_eq!(cmd.get_name(), "my-cli");
+        assert!(cmd.find_subcommand("messages").is_some());
     }
 
     #[test]
