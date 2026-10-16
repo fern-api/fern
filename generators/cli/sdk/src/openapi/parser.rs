@@ -602,6 +602,11 @@ struct OpenApiOperation {
     /// means the executor prints the full response.
     #[serde(rename = "x-fern-sdk-return-value", default)]
     x_fern_sdk_return_value: Option<String>,
+    /// Raw `x-fern-cli-table` extension: per-operation columns for `table`
+    /// output. Parsed into [`crate::table_columns::TableSpec`]; a malformed
+    /// value is ignored with a warning.
+    #[serde(rename = "x-fern-cli-table", default)]
+    x_fern_cli_table: Option<serde_yaml::Value>,
     /// Raw operation-level `x-fern-streaming` extension. May be:
     /// - the literal `true` (boolean shorthand → NDJSON, no terminator)
     /// - the literal `false` (explicit opt-out)
@@ -3236,6 +3241,20 @@ pub fn load_openapi_spec_from_value(
                 .map(|s| s.trim().to_string())
                 .filter(|s| !s.is_empty());
 
+            let table = operation.x_fern_cli_table.as_ref().and_then(|raw| {
+                match crate::table_columns::TableSpec::from_yaml(raw) {
+                    Ok(spec) => Some(spec),
+                    Err(reason) => {
+                        tracing::warn!(
+                            operation = operation.operation_id.as_deref().unwrap_or("unknown"),
+                            %reason,
+                            "invalid x-fern-cli-table; using the default table"
+                        );
+                        None
+                    }
+                }
+            });
+
             let streaming = parse_streaming_extension(
                 operation.x_fern_streaming.as_ref(),
                 operation.operation_id.as_deref().unwrap_or("unknown"),
@@ -3310,6 +3329,7 @@ pub fn load_openapi_spec_from_value(
                 idempotent,
                 no_auto_idempotency_key,
                 return_value,
+                table,
                 streaming,
                 retries,
                 audiences,
@@ -10210,6 +10230,30 @@ paths:
     // values normalized to `None` so downstream code only sees a
     // resolvable path or nothing.
     // ------------------------------------------------------------------
+
+    #[test]
+    fn test_operation_cli_table_parsed() {
+        let doc = parse_op_with_extra(
+            "      x-fern-cli-table:\n        columns:\n          - { header: NAME, path: name }\n          - { header: ROWS, path: stats.rows, align: right, maxWidth: 8 }",
+        );
+        let table = first_method(&doc, "things", "list")
+            .table
+            .as_ref()
+            .expect("x-fern-cli-table is parsed onto the method");
+        let headers: Vec<&str> = table.columns.iter().map(|c| c.header.as_str()).collect();
+        assert_eq!(headers, ["NAME", "ROWS"]);
+        assert_eq!(table.columns[1].path, "stats.rows");
+        assert_eq!(table.columns[1].max_width, Some(8));
+    }
+
+    #[test]
+    fn test_operation_cli_table_absent_or_invalid_is_none() {
+        let absent = parse_op_with_extra("");
+        assert!(first_method(&absent, "things", "list").table.is_none());
+        // A malformed extension must not fail the whole spec load.
+        let invalid = parse_op_with_extra("      x-fern-cli-table: { columns: [] }");
+        assert!(first_method(&invalid, "things", "list").table.is_none());
+    }
 
     #[test]
     fn test_operation_return_value_absent_is_none() {

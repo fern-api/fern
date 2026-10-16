@@ -2617,6 +2617,7 @@ impl AppContext {
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
             query: None,
+            table_columns: None,
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
         let filtered_global_params = self.extra_global_params_for_entry(entry, method, params_json);

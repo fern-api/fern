@@ -26,6 +26,11 @@ pub enum DispatchResult {
     /// [`OutputPipeline::emit_record`](crate::formatter::OutputPipeline::emit_record)
     /// so `table` output never mistakes it for a list response.
     Record(serde_json::Value),
+    /// A decoded response value plus the output pipeline the binding
+    /// resolved for it (for example an operation's `x-fern-cli-table`
+    /// columns). Hooks run as for `Value`; the root `CliApp` formats with
+    /// this pipeline instead of rebuilding one from the matches.
+    ValueWithPipeline(serde_json::Value, crate::formatter::OutputPipeline),
     /// The binding already wrote output (streaming, file download, paged dry-run).
     /// The root `CliApp` skips its own formatting.
     Handled,

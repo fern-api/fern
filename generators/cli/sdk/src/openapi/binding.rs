@@ -851,6 +851,19 @@ impl Binding for OpenApiBinding {
                 &self.inner.name,
             )
             .map_err(|e| CliError::Validation(e.to_string()))?;
+            let pipeline = match method.table.as_ref() {
+                Some(spec) => apply_table_spec(
+                    pipeline,
+                    spec,
+                    matched_args
+                        .try_get_one::<String>(commands::TABLE_COLUMNS_ARG_ID)
+                        .ok()
+                        .flatten()
+                        .map(String::as_str),
+                    root_matches.value_source("format") == Some(clap::parser::ValueSource::CommandLine),
+                )?,
+                None => pipeline,
+            };
 
             if pipeline.is_raw() && pagination.page_all {
                 return Err(CliError::Validation(
@@ -899,6 +912,9 @@ impl Binding for OpenApiBinding {
 
             match result {
                 Some(value) if dry_run => Ok(DispatchResult::Record(value)),
+                Some(value) if method.table.is_some() => {
+                    Ok(DispatchResult::ValueWithPipeline(value, pipeline))
+                }
                 Some(value) => Ok(DispatchResult::Value(value)),
                 None => Ok(DispatchResult::Handled),
             }
@@ -1228,6 +1244,37 @@ fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_
         }
         other => other,
     }
+}
+
+/// Attach an operation's `x-fern-cli-table` columns to `pipeline`.
+///
+/// `--columns` asks for a table, so it switches the default format (JSON
+/// when piped, or `<NAME>_OUTPUT`) to `table`. It is rejected next to an
+/// explicit non-table `--format` or a `--query`, which already picks fields.
+fn apply_table_spec(
+    mut pipeline: crate::formatter::OutputPipeline,
+    spec: &crate::table_columns::TableSpec,
+    selection: Option<&str>,
+    format_is_explicit: bool,
+) -> Result<crate::formatter::OutputPipeline, CliError> {
+    use crate::formatter::OutputFormat;
+    if selection.is_some() {
+        if pipeline.query.is_some() {
+            return Err(CliError::Validation(
+                "--columns can't be combined with --query; use one or the other".to_string(),
+            ));
+        }
+        if pipeline.format != OutputFormat::Table {
+            if format_is_explicit {
+                return Err(CliError::Validation(
+                    "--columns only applies to --format table".to_string(),
+                ));
+            }
+            pipeline.format = OutputFormat::Table;
+        }
+    }
+    let columns = spec.select(selection).map_err(CliError::Validation)?;
+    Ok(pipeline.with_table_columns(columns))
 }
 
 #[cfg(test)]

@@ -1650,6 +1650,13 @@ impl CliApp {
                     .map_err(|e| CliError::Other(e.into()))?;
                 Ok(PipelineOutcome::Success)
             }
+            Ok(DispatchResult::ValueWithPipeline(value, pipeline)) => {
+                let transformed = self.hooks.run_transform_response(value, &op_path).await?;
+                pipeline
+                    .emit(out, &transformed, false, true)
+                    .map_err(|e| CliError::Other(e.into()))?;
+                Ok(PipelineOutcome::Success)
+            }
             Ok(DispatchResult::Record(value)) => {
                 let transformed = self.hooks.run_transform_response(value, &op_path).await?;
                 let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
