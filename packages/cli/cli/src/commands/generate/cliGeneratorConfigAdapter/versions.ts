@@ -12,6 +12,17 @@ export const DEFAULT_GENERATOR_VERSION = "0.49.0";
 /** Versions with a Fern pool in sdk-gen-api's production index; others fail on that route. */
 export const POOLED_GENERATOR_VERSIONS: readonly string[] = ["0.49.0"];
 
+/**
+ * First fern-cli-generator version that reads `distribution.githubAttestations` (fern-api/fern#18300). Older
+ * versions ignore the key and always attest build provenance, which fails on most private repositories.
+ */
+export const GITHUB_ATTESTATIONS_MIN_GENERATOR_VERSION = "0.54.3";
+
+/** Whether the generator version honors `distribution.githubAttestations`; unparsable versions are reported elsewhere. */
+export function supportsGithubAttestations(version: string): boolean {
+    return semver.valid(version) == null || semver.gte(version, GITHUB_ATTESTATIONS_MIN_GENERATOR_VERSION);
+}
+
 /** The cli target's pinned generator version, or the default. */
 export function resolveGeneratorVersion({ pinned }: { pinned: string | undefined }): {
     version: string;
