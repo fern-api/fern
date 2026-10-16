@@ -1040,7 +1040,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -1756,6 +1759,9 @@
               "type": "boolean"
             },
             "basepath-aware": {
+              "type": "boolean"
+            },
+            "robots-txt-on-instance-url": {
               "type": "boolean"
             },
             "external-sitemaps": {
@@ -2949,6 +2955,9 @@
               "type": "boolean"
             },
             "show-nav-availability-badges": {
+              "type": "boolean"
+            },
+            "hide-webhook-method-badges": {
               "type": "boolean"
             },
             "breadcrumbs": {
@@ -5350,7 +5359,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -5468,7 +5480,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -5879,6 +5894,29 @@
                     }
                   ]
                 },
+                "cli": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string"
+                        },
+                        "package": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "version",
+                        "package"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
                 "rust": {
                   "anyOf": [
                     {
@@ -5947,7 +5985,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             },
             "skip-slug": {
@@ -5955,6 +5996,24 @@
             },
             "alphabetized": {
               "type": "boolean"
+            },
+            "sort-by-availability": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "unset",
+                  "stable",
+                  "generally-available",
+                  "in-development",
+                  "pre-release",
+                  "deprecated",
+                  "beta",
+                  "alpha",
+                  "preview",
+                  "legacy"
+                ]
+              }
             },
             "flattened": {
               "type": "boolean"
@@ -6368,7 +6427,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -6474,7 +6536,10 @@
                       "in-development",
                       "pre-release",
                       "deprecated",
-                      "beta"
+                      "beta",
+                      "alpha",
+                      "preview",
+                      "legacy"
                     ]
                   },
                   "slug": {
@@ -6644,7 +6709,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             },
             "playground": {
@@ -6768,7 +6836,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             },
             "playground": {
@@ -6889,7 +6960,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
@@ -6981,7 +7055,10 @@
                 "in-development",
                 "pre-release",
                 "deprecated",
-                "beta"
+                "beta",
+                "alpha",
+                "preview",
+                "legacy"
               ]
             }
           },
