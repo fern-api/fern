@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.159.3
+  changelogEntry:
+    - summary: |
+        `webhook-signature.algorithm-header` now accepts `key-id-parameter` and `algorithm-parameter`
+        so key/value settings headers such as Twilio's
+        `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256` are parsed into the
+        bare key ID and algorithm instead of `key=<id>` (IR 67.33.0).
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 5.159.2
   changelogEntry:
     - summary: |
