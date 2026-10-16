@@ -9,6 +9,7 @@ import { readFile } from "fs/promises";
 import path from "path";
 
 import { addDefaultDockerOrgIfNotPresent, correctIncorrectDockerOrgWithWarning } from "./getGeneratorName.js";
+import { resolveCliBannerFile } from "./resolveCliBannerFile.js";
 
 function parseSpecSource(source: generatorsYml.SpecSourceSchema): {
     path: string;
@@ -792,7 +793,11 @@ async function convertGenerator({
         name: normalizedName,
         containerImage,
         version: generator.version,
-        config: generator.config,
+        config: await resolveCliBannerFile({
+            generatorName: normalizedName,
+            config: generator.config,
+            absolutePathToGeneratorsConfiguration
+        }),
         outputMode: await convertOutputMode({
             absolutePathToGeneratorsConfiguration,
             generator,
