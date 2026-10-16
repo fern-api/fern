@@ -573,9 +573,10 @@ fn format_table_page(value: &Value, emit_header: bool) -> String {
     } else if let Value::Array(arr) = value {
         format_array_as_table(arr, emit_header)
     } else if let Value::Object(obj) = value {
-        // Single object: key/value table — flatten nested objects first
+        // Single object: key/value table — flatten nested objects first.
+        // Null fields would render as a key with no value, so they're skipped.
         let mut output = String::new();
-        let flat = flatten_object(obj, "");
+        let flat = flatten_object(&without_nulls(obj), "");
         let max_key_len = flat.iter().map(|(k, _)| k.len()).max().unwrap_or(0);
         for (key, val_str) in &flat {
             let _ = writeln!(output, "{key:max_key_len$}  {val_str}");
@@ -584,6 +585,16 @@ fn format_table_page(value: &Value, emit_header: bool) -> String {
     } else {
         value.to_string()
     }
+}
+
+fn without_nulls(obj: &serde_json::Map<String, Value>) -> serde_json::Map<String, Value> {
+    obj.iter()
+        .filter(|(_, v)| !v.is_null())
+        .map(|(k, v)| match v {
+            Value::Object(nested) => (k.clone(), Value::Object(without_nulls(nested))),
+            _ => (k.clone(), v.clone()),
+        })
+        .collect()
 }
 
 fn format_array_as_table(arr: &[Value], emit_header: bool) -> String {
@@ -963,6 +974,20 @@ mod tests {
         let output = format_value(&val, &OutputFormat::Table);
         assert!(output.contains("id"));
         assert!(output.contains("abc"));
+    }
+
+    #[test]
+    fn test_format_table_single_object_skips_null_fields() {
+        let val = json!({
+            "operationId": "op_1",
+            "statusUrl": null,
+            "links": {"self": "/x", "next": null}
+        });
+        let output = format_value(&val, &OutputFormat::Table);
+        assert!(output.contains("op_1"));
+        assert!(output.contains("links.self"));
+        assert!(!output.contains("statusUrl"), "{output}");
+        assert!(!output.contains("links.next"), "{output}");
     }
 
     #[test]

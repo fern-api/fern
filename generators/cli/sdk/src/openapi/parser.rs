@@ -3994,6 +3994,8 @@ fn array_item_type(
     let items = schema.items.as_deref()?;
     let resolved = resolve_ref_chain(items, component_schemas)
         .or_else(|| recognize_nullable_composite(items, component_schemas))?;
+    let resolved =
+        recognize_single_branch_composite(resolved, component_schemas).unwrap_or(resolved);
     match resolved.schema_type() {
         // An `allOf` / property-bag element has no `type` of its own but is
         // object-shaped — the inheritance idiom.
@@ -4224,6 +4226,33 @@ fn recognize_nullable_composite<'a>(
     obj: &'a OpenApiSchemaObject,
     component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
 ) -> Option<&'a OpenApiSchemaObject> {
+    match sole_composite_branch(obj, component_schemas)? {
+        (resolved, 1) => Some(resolved),
+        _ => None,
+    }
+}
+
+/// Recognize `anyOf`/`oneOf` with exactly one branch, no null sentinel, that
+/// resolves to a composite type — `oneOf: [$ref: Model]`, a common wrapper
+/// some spec generators emit around every `$ref`. Unlike
+/// [`recognize_nullable_composite`] the field stays non-nullable.
+fn recognize_single_branch_composite<'a>(
+    obj: &'a OpenApiSchemaObject,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    match sole_composite_branch(obj, component_schemas)? {
+        (resolved, 0) => Some(resolved),
+        _ => None,
+    }
+}
+
+/// The single non-null composite branch of an `anyOf`/`oneOf`, with the number
+/// of null-sentinel branches beside it. `None` for a true union (more than one
+/// non-null branch) or a scalar branch.
+fn sole_composite_branch<'a>(
+    obj: &'a OpenApiSchemaObject,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<(&'a OpenApiSchemaObject, usize)> {
     let branches: &[OpenApiSchemaObject] = if !obj.one_of.is_empty() {
         &obj.one_of
     } else if !obj.any_of.is_empty() {
@@ -4247,15 +4276,14 @@ fn recognize_nullable_composite<'a>(
         composite = Some(resolve_ref_chain(branch, component_schemas)?);
     }
 
-    if null_count != 1 {
-        return None;
-    }
     let resolved = composite?;
     match resolved.schema_type() {
-        Some("object") | Some("array") => Some(resolved),
+        Some("object") | Some("array") => Some((resolved, null_count)),
         // An `allOf` composition with properties is object-shaped even
         // without a `type` keyword (the inheritance idiom).
-        None if !resolved.all_of.is_empty() || !resolved.properties.is_empty() => Some(resolved),
+        None if !resolved.all_of.is_empty() || !resolved.properties.is_empty() => {
+            Some((resolved, null_count))
+        }
         _ => None,
     }
 }
@@ -4576,11 +4604,17 @@ fn flatten_body_params_prefix(
                 // nullable *composite* union (`anyOf: [$ref Model, null]`)
                 // promotes to the wrapped object/array instead; see ADR-0010.
                 let promoted_scalar = recognize_nullable_union(resolved, component_schemas);
-                let promoted_composite = if promoted_scalar.is_some() {
+                let nullable_composite = if promoted_scalar.is_some() {
                     None
                 } else {
                     recognize_nullable_composite(resolved, component_schemas)
                 };
+                let promoted_composite = nullable_composite.or_else(|| {
+                    promoted_scalar
+                        .is_none()
+                        .then(|| recognize_single_branch_composite(resolved, component_schemas))
+                        .flatten()
+                });
                 let effective = promoted_composite.unwrap_or(resolved);
                 let is_array = effective.schema_type() == Some("array");
                 // Parity with a bare `$ref` to the same object: emit the
@@ -4614,7 +4648,7 @@ fn flatten_body_params_prefix(
                                     .description
                                     .clone()
                                     .or_else(|| inner.description.clone()),
-                                nullable: true,
+                                nullable: nullable_composite.is_some(),
                                 ..Default::default()
                             },
                         );
@@ -4662,7 +4696,7 @@ fn flatten_body_params_prefix(
                         },
                         nullable: is_scalar_nullable(resolved)
                             || promoted_scalar.is_some()
-                            || promoted_composite.is_some(),
+                            || nullable_composite.is_some(),
                         ..Default::default()
                     },
                 );
@@ -4736,11 +4770,17 @@ fn flatten_body_params_prefix(
         // `anyOf: [{...object/array...}, null]` — pydantic's `Optional[T]`.
         // Promote to the wrapped composite so the value is coerced as JSON
         // rather than sent as an escaped string; see ADR-0010.
-        let promoted_composite = if promoted_scalar.is_some() {
+        let nullable_composite = if promoted_scalar.is_some() {
             None
         } else {
             recognize_nullable_composite(prop, component_schemas)
         };
+        let promoted_composite = nullable_composite.or_else(|| {
+            promoted_scalar
+                .is_none()
+                .then(|| recognize_single_branch_composite(prop, component_schemas))
+                .flatten()
+        });
         let effective = promoted_composite.unwrap_or(prop);
         let is_array = effective.schema_type() == Some("array");
         // Parity with a bare `$ref` to the same object: emit the
@@ -4770,7 +4810,7 @@ fn flatten_body_params_prefix(
                             .description
                             .clone()
                             .or_else(|| inner.description.clone()),
-                        nullable: true,
+                        nullable: nullable_composite.is_some(),
                         ..Default::default()
                     },
                 );
@@ -4812,7 +4852,7 @@ fn flatten_body_params_prefix(
                 },
                 nullable: is_scalar_nullable(prop)
                     || promoted_scalar.is_some()
-                    || promoted_composite.is_some(),
+                    || nullable_composite.is_some(),
                 ..Default::default()
             },
         );
@@ -12607,6 +12647,47 @@ paths:
         assert_eq!(tags.param_type.as_deref(), Some("string"));
         assert!(tags.repeated, "nullable array must be a repeated flag");
         assert!(tags.nullable);
+    }
+
+    #[test]
+    fn test_single_branch_one_of_promotes_to_object() {
+        // `oneOf: [$ref]` with no null branch — a wrapper some spec generators
+        // put around every `$ref`. Without promotion `--from '{...}'` was sent
+        // as a string and rejected with "Expected object".
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              from:
+                oneOf:
+                  - $ref: '#/components/schemas/Addr'
+              to:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/Addr'
+            "#,
+        )
+        .unwrap();
+        let addr: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              address:
+                type: string
+            "#,
+        )
+        .unwrap();
+        let mut component_schemas = HashMap::new();
+        component_schemas.insert("Addr".to_string(), addr);
+        let params = flatten_body_params(&schema, &component_schemas, 0);
+        let from = params.get("from").expect("from flag should be emitted");
+        assert_eq!(from.param_type.as_deref(), Some("object"));
+        assert!(!from.nullable, "no null branch, so no null sentinel");
+        assert!(params.contains_key("from.address"), "dotted leaf flag");
+        let to = params.get("to").expect("to flag should be emitted");
+        assert!(to.repeated);
+        assert_eq!(to.item_type.as_deref(), Some("object"));
     }
 
     #[test]
