@@ -68,6 +68,7 @@ describe("local overrides", () => {
         ["output.github.mode", "Map"],
         ["output.github.branch", "Map"],
         ["output.github.host", "Warn"],
+        ["output.github.workflows", "Warn"],
         ["output.fileName", "Warn"],
         ["api.auth.schemes[].tokenHeader", "Map"],
         ["api.auth.schemes[].tokenPrefix", "Map"],
