@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.161.1
+  changelogEntry:
+    - summary: |
+        Respect `github.workflows: false` in `generators.yml` when generation runs through sdk-gen-api.
+        The setting was dropped on that route, so generated `.github/workflows/*` files were still
+        committed. Requests that keep the default (`true`) are unchanged.
+      type: fix
+    - summary: |
+        Upgrade `@postman/sdk-config` to 0.14.0, which adds optional `output.github.workflows` to SDK Config.
+        `output.github.workflows: false` in `sdk-config.yml` is now sent to sdk-gen-api the same way as
+        the `generators.yml` setting. The SDK Config `cli` target accepts the field and ignores it with a
+        warning, like the other GitHub delivery settings its translated `generators.yml` does not write.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 5.161.0
   changelogEntry:
     - summary: |
