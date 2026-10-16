@@ -2781,16 +2781,17 @@ fn read_secret(
     input: &mut impl std::io::BufRead,
     out: &mut impl Write,
 ) -> Result<String, CliError> {
-    let _ = write!(out, "{label} (hidden): ");
+    let echo = EchoOff::new();
+    let hidden = echo.active();
+    let _ = write!(out, "{label}{}: ", if hidden { " (hidden)" } else { "" });
     let _ = out.flush();
     let mut line = String::new();
-    {
-        let _echo = EchoOff::new();
-        input
-            .read_line(&mut line)
-            .map_err(|e| CliError::Other(e.into()))?;
+    let read = input.read_line(&mut line);
+    drop(echo);
+    read.map_err(|e| CliError::Other(e.into()))?;
+    if hidden {
+        let _ = writeln!(out);
     }
-    let _ = writeln!(out);
     Ok(line.trim().to_string())
 }
 
@@ -2822,6 +2823,18 @@ impl EchoOff {
         #[cfg(not(unix))]
         {
             Self {}
+        }
+    }
+
+    /// Whether echo was actually turned off (never on non-Unix terminals).
+    pub(crate) fn active(&self) -> bool {
+        #[cfg(unix)]
+        {
+            self.saved.is_some()
+        }
+        #[cfg(not(unix))]
+        {
+            false
         }
     }
 }

@@ -245,18 +245,18 @@ pub(crate) fn read_fields_from_stdin(
     let mut out = Vec::with_capacity(fields.len());
     let typed = std::io::stdin().is_terminal();
     for (field, label) in fields.iter().zip(&labels) {
-        let hide = typed && crate::profiles::commands::is_secret_field(field);
+        let echo = (typed && crate::profiles::commands::is_secret_field(field))
+            .then(crate::profiles::commands::EchoOff::new);
+        let hidden = echo.as_ref().is_some_and(|echo| echo.active());
         let _ = if typed {
-            write!(err, "{label}{}: ", if hide { " (hidden)" } else { "" })
+            write!(err, "{label}{}: ", if hidden { " (hidden)" } else { "" })
         } else {
             writeln!(err, "{label}:")
         };
         let _ = err.flush();
-        let value = {
-            let _echo = hide.then(crate::profiles::commands::EchoOff::new);
-            read_line_from_stdin(label)
-        };
-        if hide {
+        let value = read_line_from_stdin(label);
+        drop(echo);
+        if hidden {
             let _ = writeln!(err);
         }
         out.push((*field, value?));
