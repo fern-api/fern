@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+    `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+    (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+    so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+  type: fix
