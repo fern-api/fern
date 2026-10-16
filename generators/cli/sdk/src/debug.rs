@@ -211,12 +211,11 @@ pub(crate) fn dump_error_response(
 /// - a `*` line with the HTTP status (no latency)
 /// - a `<` line per response header (sensitive headers are redacted)
 /// - a final `<` line indicating the body is not buffered
-pub(crate) fn dump_streaming_note(
-    status: u16,
-    headers: &HeaderMap,
-    extra_sensitive_headers: &[&str],
-) {
-    eprintln!("* {}", colorize(&format!("HTTP {status}"), "36"),);
+pub(crate) fn dump_streaming_note(status: u16, headers: &HeaderMap, extra_sensitive_headers: &[&str]) {
+    eprintln!(
+        "* {}",
+        colorize(&format!("HTTP {status}"), "36"),
+    );
 
     print_headers("<", headers, extra_sensitive_headers);
 
@@ -250,16 +249,10 @@ pub(crate) fn dump_response_headers_only(
 /// Checks the static denylist plus any spec-derived custom auth header names
 /// (e.g., `X-Custom-Auth` from an `apiKey in: header` security scheme).
 pub(crate) fn is_sensitive_header(name: &str, extra_sensitive: &[&str]) -> bool {
-    if REDACTED_HEADERS
-        .iter()
-        .any(|&h| h.eq_ignore_ascii_case(name))
-    {
+    if REDACTED_HEADERS.iter().any(|&h| h.eq_ignore_ascii_case(name)) {
         return true;
     }
-    if extra_sensitive
-        .iter()
-        .any(|&h| h.eq_ignore_ascii_case(name))
-    {
+    if extra_sensitive.iter().any(|&h| h.eq_ignore_ascii_case(name)) {
         return true;
     }
     name_looks_like_credential(name)
@@ -324,10 +317,7 @@ fn print_headers(line_prefix: &str, headers: &HeaderMap, extra_sensitive: &[&str
         } else {
             crate::output::sanitize_for_terminal(value.to_str().unwrap_or("<non-utf8>"))
         };
-        eprintln!(
-            "{line_prefix} {}: {display_value}",
-            colorize(name_str, "90")
-        );
+        eprintln!("{line_prefix} {}: {display_value}", colorize(name_str, "90"));
     }
 }
 
@@ -398,9 +388,7 @@ fn is_sensitive_body_key(key: &str) -> bool {
     let k = key.to_ascii_lowercase();
 
     // Exact match for short stems that would over-match as substrings.
-    const EXACT: &[&str] = &[
-        "token", "secret", "key", "session", "pwd", "jwt", "bearer", "cookie",
-    ];
+    const EXACT: &[&str] = &["token", "secret", "key", "session", "pwd", "jwt", "bearer", "cookie"];
     if EXACT.iter().any(|&e| e == k) {
         return true;
     }
@@ -489,11 +477,7 @@ pub(crate) fn redact_url_query(raw_url: &str, extra_sensitive_params: &[&str]) -
         })
         .collect::<Vec<_>>()
         .join("&");
-    url.set_query(if rebuilt.is_empty() {
-        None
-    } else {
-        Some(&rebuilt)
-    });
+    url.set_query(if rebuilt.is_empty() { None } else { Some(&rebuilt) });
     url.to_string()
 }
 
@@ -502,11 +486,9 @@ pub(crate) fn redact_url_query(raw_url: &str, extra_sensitive_params: &[&str]) -
 fn looks_like_form_encoded(body: &str) -> bool {
     // Must contain at least one `=` and no newlines (to distinguish from
     // plain text or multi-line payloads).
-    !body.contains('\n')
-        && body.contains('=')
-        && body
-            .split('&')
-            .all(|pair| pair.contains('=') || pair.is_empty())
+    !body.contains('\n') && body.contains('=') && body.split('&').all(|pair| {
+        pair.contains('=') || pair.is_empty()
+    })
 }
 
 /// Redact values for sensitive keys in a form-encoded string.
@@ -564,7 +546,10 @@ fn print_body_preview(line_prefix: &str, label: &str, body: &str) {
         eprintln!("{line_prefix} {line}");
     }
     if body.len() > MAX_BODY_DISPLAY {
-        eprintln!("{line_prefix} ... ({} bytes total, truncated)", body.len());
+        eprintln!(
+            "{line_prefix} ... ({} bytes total, truncated)",
+            body.len()
+        );
     }
 }
 
@@ -857,15 +842,7 @@ mod tests {
 
     #[test]
     fn safe_keys_not_over_matched() {
-        for key in &[
-            "username",
-            "email",
-            "id",
-            "name",
-            "count",
-            "tokenizer",
-            "secretary",
-        ] {
+        for key in &["username", "email", "id", "name", "count", "tokenizer", "secretary"] {
             assert!(
                 !is_sensitive_body_key(key),
                 "`{key}` should NOT be flagged as sensitive"
@@ -932,10 +909,7 @@ mod tests {
         // Simulates an ApiKeyQuery scheme with name "my_key".
         let url = "https://api.example.com/v1/data?my_key=s3cr3t&page=1";
         let safe = redact_url_query(url, &["my_key"]);
-        assert!(
-            !safe.contains("s3cr3t"),
-            "extra spec param should be redacted"
-        );
+        assert!(!safe.contains("s3cr3t"), "extra spec param should be redacted");
         assert!(safe.contains("page=1"));
     }
 
@@ -1049,14 +1023,8 @@ mod tests {
     fn url_credentials_redacted() {
         let url = "https://user:hunter2@api.example.com/v1/data";
         let safe = redact_url_query(url, &[]);
-        assert!(
-            !safe.contains("hunter2"),
-            "password should be redacted from URL"
-        );
-        assert!(
-            !safe.contains("user:"),
-            "username should be redacted from URL"
-        );
+        assert!(!safe.contains("hunter2"), "password should be redacted from URL");
+        assert!(!safe.contains("user:"), "username should be redacted from URL");
         assert!(safe.contains("api.example.com"), "host should be preserved");
     }
 
@@ -1079,14 +1047,8 @@ mod tests {
         use serde_json::json;
         let mut vars = json!({"username": "alice", "password": "s3cr3t", "page": 1});
         redact_json_value(&mut vars);
-        assert_eq!(
-            vars["username"], "alice",
-            "non-sensitive key must be preserved"
-        );
-        assert_eq!(
-            vars["password"], "[REDACTED]",
-            "password key must be redacted"
-        );
+        assert_eq!(vars["username"], "alice", "non-sensitive key must be preserved");
+        assert_eq!(vars["password"], "[REDACTED]", "password key must be redacted");
         assert_eq!(vars["page"], 1, "non-sensitive key must be preserved");
     }
 

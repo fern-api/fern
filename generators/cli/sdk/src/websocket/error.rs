@@ -140,7 +140,9 @@ pub(crate) fn classify_close_frame(
             } else {
                 format!(" ({})", frame.reason)
             };
-            eprintln!("websocket: session ended with code 1001 going away{reason_suffix}");
+            eprintln!(
+                "websocket: session ended with code 1001 going away{reason_suffix}"
+            );
             Ok(())
         }
         _ => {
@@ -174,8 +176,8 @@ fn truncate(s: &str, max: usize) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use tokio_tungstenite::tungstenite::protocol::{CloseFrame, frame::coding::CloseCode};
     use std::borrow::Cow;
-    use tokio_tungstenite::tungstenite::protocol::{frame::coding::CloseCode, CloseFrame};
 
     fn frame(code: u16, reason: &'static str) -> CloseFrame<'static> {
         CloseFrame {
@@ -194,9 +196,7 @@ mod tests {
         // 1001 = peer is leaving (page nav, server shutdown, session-cap
         // expiry). Treated as a clean end-of-session per OpenAI Realtime
         // 30-minute hard limit and similar "polite hangup" patterns.
-        assert!(
-            classify_close_frame(Some(&frame(1001, "session cap")), ABNORMAL_CLOSE_HINT).is_ok()
-        );
+        assert!(classify_close_frame(Some(&frame(1001, "session cap")), ABNORMAL_CLOSE_HINT).is_ok());
     }
 
     #[test]
@@ -224,10 +224,8 @@ mod tests {
         let custom = "Deepgram check: KeepAlive cadence + audio format";
         let err = classify_close_frame(Some(&frame(1006, "")), custom).unwrap_err();
         assert!(err.to_string().contains(custom));
-        assert!(
-            !err.to_string().contains(ABNORMAL_CLOSE_HINT),
-            "default hint should NOT appear when a custom one was passed"
-        );
+        assert!(!err.to_string().contains(ABNORMAL_CLOSE_HINT),
+            "default hint should NOT appear when a custom one was passed");
     }
 
     #[test]

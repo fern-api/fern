@@ -173,9 +173,7 @@ impl OpenApiBinding {
         username: AuthCredentialSource,
         password: AuthCredentialSource,
     ) -> Self {
-        self.inner = self
-            .inner
-            .auth_basic_scheme(scheme_name, username, password);
+        self.inner = self.inner.auth_basic_scheme(scheme_name, username, password);
         self
     }
 
@@ -256,10 +254,11 @@ impl OpenApiBinding {
         let mut doc = self.inner.build_doc()?;
         commands::filter_doc_by_audiences(&mut doc, &self.inner.audiences);
 
-        let http_config = crate::http::HttpConfig::new(&self.inner.name)?.with_parsed_root_certs(
-            self.inner.extra_root_certs.iter().cloned(),
-            self.inner.extra_root_certs_pem.iter().cloned(),
-        );
+        let http_config = crate::http::HttpConfig::new(&self.inner.name)?
+            .with_parsed_root_certs(
+                self.inner.extra_root_certs.iter().cloned(),
+                self.inner.extra_root_certs_pem.iter().cloned(),
+            );
         let auth_provider = self.inner.build_auth_provider(&doc);
 
         let arc = Arc::new(Prepared {
@@ -294,10 +293,11 @@ impl OpenApiBinding {
             prepared.auth_provider.clone()
         } else {
             let matches_arc = std::sync::Arc::new(matches.clone());
-            let finalized =
-                crate::auth::finalize_bindings(self.inner.auth_bindings.clone(), &matches_arc);
-            self.inner
-                .build_auth_provider_from_finalized(&finalized, doc)
+            let finalized = crate::auth::finalize_bindings(
+                self.inner.auth_bindings.clone(),
+                &matches_arc,
+            );
+            self.inner.build_auth_provider_from_finalized(&finalized, doc)
         };
 
         let global_headers: Vec<(String, String)> = doc
@@ -355,6 +355,7 @@ impl OpenApiBinding {
             f(matches, ctx)
         })
     }
+
 }
 
 impl Binding for OpenApiBinding {
@@ -441,9 +442,7 @@ impl Binding for OpenApiBinding {
             // Strip the namespace prefix the same way `dispatch` does, so a
             // caller names the operation as it appears on the command line.
             let effective: &[String] = match &self.command_namespace {
-                Some(ns) if op_path.first().map(String::as_str) == Some(ns.as_str()) => {
-                    &op_path[1..]
-                }
+                Some(ns) if op_path.first().map(String::as_str) == Some(ns.as_str()) => &op_path[1..],
                 Some(_) if !op_path.is_empty() => return Ok(None),
                 _ => op_path,
             };
@@ -508,8 +507,11 @@ impl Binding for OpenApiBinding {
         let Ok(prepared) = self.ensure_prepared() else {
             return Vec::new();
         };
-        let mut names: std::collections::BTreeSet<String> =
-            self.inner.server_var_names().into_iter().collect();
+        let mut names: std::collections::BTreeSet<String> = self
+            .inner
+            .server_var_names()
+            .into_iter()
+            .collect();
         names.extend(
             crate::openapi::app::collect_spec_server_variables(&prepared.doc)
                 .into_iter()
@@ -618,16 +620,19 @@ impl Binding for OpenApiBinding {
 
         // Strip the namespace prefix from op_path for internal routing.
         let effective_op_path: &[String] = match &self.command_namespace {
-            Some(ns) if _op_path.first().map(|s| s.as_str()) == Some(ns.as_str()) => &_op_path[1..],
+            Some(ns) if _op_path.first().map(|s| s.as_str()) == Some(ns.as_str()) => {
+                &_op_path[1..]
+            }
             _ => _op_path,
         };
 
         // Intercept `generate-skills` — it's not a spec operation.
         if effective_op_path == ["generate-skills"] {
             let output_dir = _sub_matches.get_one::<String>("output-dir");
-            let result = self
-                .inner
-                .handle_generate_skills(output_dir.map(|s| s.as_str()), &prepared.doc);
+            let result = self.inner.handle_generate_skills(
+                output_dir.map(|s| s.as_str()),
+                &prepared.doc,
+            );
             return Box::pin(async move {
                 result?;
                 Ok(DispatchResult::Handled)
@@ -642,10 +647,11 @@ impl Binding for OpenApiBinding {
                 prepared.auth_provider.clone()
             } else {
                 let matches_arc = std::sync::Arc::new(root_matches.clone());
-                let finalized =
-                    crate::auth::finalize_bindings(self.inner.auth_bindings.clone(), &matches_arc);
-                self.inner
-                    .build_auth_provider_from_finalized(&finalized, &prepared.doc)
+                let finalized = crate::auth::finalize_bindings(
+                    self.inner.auth_bindings.clone(),
+                    &matches_arc,
+                );
+                self.inner.build_auth_provider_from_finalized(&finalized, &prepared.doc)
             };
 
             // Apply server-variable substitutions to a local copy of the doc
@@ -670,15 +676,22 @@ impl Binding for OpenApiBinding {
                     .unwrap_or(root_matches),
                 None => root_matches,
             };
-            let (method, matched_args) = super::resolve_method_from_matches(doc, resolve_from)?;
+            let (method, matched_args) =
+                super::resolve_method_from_matches(doc, resolve_from)?;
 
-            let params_override = matched_args.get_one::<String>("params").map(|s| s.as_str());
+            let params_override = matched_args
+                .get_one::<String>("params")
+                .map(|s| s.as_str());
             // `collect_params_from_flags` may call `resolve_file_refs` which
             // performs blocking `std::fs::read` I/O. Wrap in `block_in_place`
             // so the tokio runtime can schedule other work while the thread is
             // parked on disk reads.
             let mut params = tokio::task::block_in_place(|| {
-                super::app::collect_params_from_flags(matched_args, method, params_override)
+                super::app::collect_params_from_flags(
+                    matched_args,
+                    method,
+                    params_override,
+                )
             })?;
             // Collect multipart/form-data parts from CLI flags for operations
             // that declare a `multipart/form-data` body. `None` for all others.
@@ -702,8 +715,7 @@ impl Binding for OpenApiBinding {
             let dry_run = matched_args.get_flag("dry-run");
             let debug = root_matches.get_flag("debug");
 
-            let pagination =
-                super::app::build_pagination_config(matched_args, doc, &self.inner.name);
+            let pagination = super::app::build_pagination_config(matched_args, doc, &self.inner.name);
 
             let no_extract = matched_args.get_flag("no-extract");
             let no_retry = matched_args.get_flag("no-retry");
@@ -735,13 +747,16 @@ impl Binding for OpenApiBinding {
                 .copied()
                 .unwrap_or(false);
 
-            let binary_body_path = method.binary_request_body.as_ref().and_then(|b| {
-                matched_args
-                    .try_get_one::<String>(&b.flag_name)
-                    .ok()
-                    .flatten()
-                    .map(|s| s.as_str())
-            });
+            let binary_body_path = method
+                .binary_request_body
+                .as_ref()
+                .and_then(|b| {
+                    matched_args
+                        .try_get_one::<String>(&b.flag_name)
+                        .ok()
+                        .flatten()
+                        .map(|s| s.as_str())
+                });
 
             // Validate binary body path for dangerous characters. Validate the
             // SAME string the executor will use as the file path — for plain
@@ -756,33 +771,39 @@ impl Binding for OpenApiBinding {
             // (`@file://-` / `@data://-`) is a literal filename and is still
             // validated.
             if let Some(path_str) = binary_body_path {
-                let flag = method
-                    .binary_request_body
-                    .as_ref()
-                    .map(|b| b.flag_name.as_str())
-                    .unwrap_or("file");
+                let flag = method.binary_request_body.as_ref()
+                    .map(|b| b.flag_name.as_str()).unwrap_or("file");
                 let (inner, is_stdin) = match executor::parse_at_ref(path_str) {
-                    executor::AtRef::File {
-                        path,
-                        mode: executor::AtMode::Auto,
-                    } => {
+                    executor::AtRef::File { path, mode: executor::AtMode::Auto } => {
                         let is_dash = path.as_ref() == "-";
                         (path, is_dash)
                     }
                     executor::AtRef::File { path, .. } => (path, false),
-                    executor::AtRef::Escaped(literal) => (std::borrow::Cow::Owned(literal), false),
-                    executor::AtRef::Plain(s) => (std::borrow::Cow::Borrowed(s), s == "-"),
+                    executor::AtRef::Escaped(literal) => {
+                        (std::borrow::Cow::Owned(literal), false)
+                    }
+                    executor::AtRef::Plain(s) => {
+                        (std::borrow::Cow::Borrowed(s), s == "-")
+                    }
                 };
                 if !is_stdin {
                     crate::output::reject_dangerous_chars(inner.as_ref(), &format!("--{flag}"))?;
                 }
             }
 
-            let global_header_overrides =
-                super::app::build_global_header_overrides(matched_args, doc, method, &params)?;
+            let global_header_overrides = super::app::build_global_header_overrides(
+                matched_args,
+                doc,
+                method,
+                &params,
+            )?;
 
-            let global_param_overrides =
-                super::app::build_global_parameter_overrides(matched_args, doc, method, &params)?;
+            let global_param_overrides = super::app::build_global_parameter_overrides(
+                matched_args,
+                doc,
+                method,
+                &params,
+            )?;
 
             // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
             let base_url_override_owned = self.inner.substitute_base_url_vars(
@@ -796,12 +817,9 @@ impl Binding for OpenApiBinding {
             // --user-agent-suffix flag wins; otherwise {NAME}_USER_AGENT_SUFFIX
             // env var (resolved inside HttpConfig). Apply the flag override to
             // a clone so the client this request builds carries it.
-            let http_config = prepared
-                .http_config
-                .clone()
-                .with_user_agent_suffix_override(
-                    crate::cli_args::resolve_user_agent_suffix_override(root_matches),
-                );
+            let http_config = prepared.http_config.clone().with_user_agent_suffix_override(
+                crate::cli_args::resolve_user_agent_suffix_override(root_matches),
+            );
 
             // Read --output flag for binary response file writing. The literal
             // `-` is a stdout sentinel (curl/wget convention) and bypasses
@@ -828,9 +846,11 @@ impl Binding for OpenApiBinding {
                 output_path_buf.as_deref().and_then(|p| p.to_str())
             };
 
-            let pipeline =
-                crate::formatter::OutputPipeline::from_matches(root_matches, &self.inner.name)
-                    .map_err(|e| CliError::Validation(e.to_string()))?;
+            let pipeline = crate::formatter::OutputPipeline::from_matches(
+                root_matches,
+                &self.inner.name,
+            )
+            .map_err(|e| CliError::Validation(e.to_string()))?;
 
             if pipeline.is_raw() && pagination.page_all {
                 return Err(CliError::Validation(
@@ -847,8 +867,9 @@ impl Binding for OpenApiBinding {
             // let the executor write directly to the pager (capture_output
             // = false). The executor spawns the pager and returns None,
             // which maps to DispatchResult::Handled below.
-            let use_pager =
-                pagination.page_all && !pagination.no_pager && std::io::stdout().is_terminal();
+            let use_pager = pagination.page_all
+                && !pagination.no_pager
+                && std::io::stdout().is_terminal();
             let capture_output = !pipeline.is_raw() && !pipeline.is_http() && !use_pager;
 
             let result = executor::execute_method(
@@ -858,7 +879,7 @@ impl Binding for OpenApiBinding {
                 body_json,
                 &auth_provider,
                 output_path,
-                None, // upload
+                None,  // upload
                 binary_body_path,
                 multipart_parts,
                 dry_run,
@@ -911,10 +932,9 @@ impl Binding for OpenApiBinding {
             http_config,
             entry.global_headers,
             entry.global_params,
-        )
-        .with_quiet(quiet)
-        .with_base_url_override(base_url_override)
-        .with_debug(debug);
+        ).with_quiet(quiet)
+         .with_base_url_override(base_url_override)
+         .with_debug(debug);
         Ok(Some(Box::new(ctx)))
     }
 
@@ -965,10 +985,9 @@ impl Binding for OpenApiBinding {
                         entry.http_config,
                         entry.global_headers,
                         entry.global_params,
-                    )
-                    .with_quiet(quiet)
-                    .with_base_url_override(resolve_base_url(raw_base_url_override))
-                    .with_debug(debug);
+                    ).with_quiet(quiet)
+                     .with_base_url_override(resolve_base_url(raw_base_url_override))
+                     .with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
@@ -980,10 +999,9 @@ impl Binding for OpenApiBinding {
                     entry.http_config,
                     entry.global_headers,
                     entry.global_params,
-                )
-                .with_quiet(quiet)
-                .with_base_url_override(resolve_base_url(raw_base_url_override))
-                .with_debug(debug);
+                ).with_quiet(quiet)
+                 .with_base_url_override(resolve_base_url(raw_base_url_override))
+                 .with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
         }
@@ -1180,7 +1198,9 @@ fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_
         arr.into_iter()
             .map(|mut entry| {
                 if let Some(op) = entry.get("operation").and_then(|v| v.as_str()) {
-                    entry["operation"] = serde_json::Value::String(format!("{ns}.{op}"));
+                    entry["operation"] = serde_json::Value::String(
+                        format!("{ns}.{op}"),
+                    );
                 }
                 entry
             })
@@ -1188,7 +1208,9 @@ fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_
     }
 
     match value {
-        serde_json::Value::Array(arr) => serde_json::Value::Array(prefix_ops(arr, namespace)),
+        serde_json::Value::Array(arr) => {
+            serde_json::Value::Array(prefix_ops(arr, namespace))
+        }
         serde_json::Value::Object(mut obj) => {
             if let Some(serde_json::Value::Array(ops)) = obj.remove("operations") {
                 obj.insert(
@@ -1247,13 +1269,22 @@ mod tests {
                     .global(true)
                     .action(clap::ArgAction::SetTrue),
             )
-            .subcommand(clap::Command::new("users").subcommand(clap::Command::new("get")))
-            .subcommand(clap::Command::new("files").subcommand(clap::Command::new("list")));
+            .subcommand(
+                clap::Command::new("users")
+                    .subcommand(clap::Command::new("get")),
+            )
+            .subcommand(
+                clap::Command::new("files")
+                    .subcommand(clap::Command::new("list")),
+            );
 
         let wrapped = wrap_subcommands_under_namespace(cmd, "api");
 
         // The namespace should be the only top-level subcommand.
-        let top_names: Vec<&str> = wrapped.get_subcommands().map(|s| s.get_name()).collect();
+        let top_names: Vec<&str> = wrapped
+            .get_subcommands()
+            .map(|s| s.get_name())
+            .collect();
         assert_eq!(top_names, vec!["api"]);
 
         // Original subcommands live under the namespace.
@@ -1261,7 +1292,10 @@ mod tests {
             .get_subcommands()
             .find(|s| s.get_name() == "api")
             .unwrap();
-        let ns_sub_names: Vec<&str> = ns_cmd.get_subcommands().map(|s| s.get_name()).collect();
+        let ns_sub_names: Vec<&str> = ns_cmd
+            .get_subcommands()
+            .map(|s| s.get_name())
+            .collect();
         assert!(ns_sub_names.contains(&"users"));
         assert!(ns_sub_names.contains(&"files"));
 
@@ -1309,10 +1343,7 @@ mod tests {
         // to the binding via `set_root_global_parameters` and land in the
         // inner CliApp's builder_global_parameters.
         let mut binding = OpenApiBinding::new();
-        binding.set_root_global_parameters(&[
-            gp("currency", Some("CURRENCY_ENV")),
-            gp("region", None),
-        ]);
+        binding.set_root_global_parameters(&[gp("currency", Some("CURRENCY_ENV")), gp("region", None)]);
         let names: Vec<&str> = binding
             .inner
             .builder_global_parameters

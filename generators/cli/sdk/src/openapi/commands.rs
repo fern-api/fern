@@ -73,9 +73,7 @@ fn filter_resources_by_audiences(
 /// `x-fern-audiences: [public]` deliberately do NOT match — matching
 /// how the upstream importer treats audience names as identifiers.
 fn method_matches_audiences(method_audiences: &[String], active: &[String]) -> bool {
-    active
-        .iter()
-        .any(|a| method_audiences.iter().any(|m| m == a))
+    active.iter().any(|a| method_audiences.iter().any(|m| m == a))
 }
 
 /// Prepends the availability badge (e.g. `[BETA] `) to `text` when one is
@@ -170,10 +168,7 @@ pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
             "Skip TLS verification (debugging only)".into(),
         ),
         (format!("{prefix}_PROXY"), "HTTP(S) proxy URL".into()),
-        (
-            format!("{prefix}_TIMEOUT_SECS"),
-            "Total request timeout".into(),
-        ),
+        (format!("{prefix}_TIMEOUT_SECS"), "Total request timeout".into()),
         (
             ua_env,
             format!("Product token appended to the User-Agent (e.g. my-app/1.0; --{ua_flag} wins)"),
@@ -276,7 +271,8 @@ pub fn build_cli(doc: &RestDescription) -> Command {
             &doc.tag_description_order,
             doc.pagination_token_query_param.is_some()
                 || doc.pagination_token_response_path.is_some(),
-        ) {
+        )
+        {
             root = root.subcommand(cmd);
         }
     }
@@ -353,8 +349,9 @@ fn find_tag_description<'a>(
         // ops carry both `voices` (no description) and `pvc-voices` would be
         // announced as "Create and manage Professional Voice Clones (PVCs)",
         // naming a subset of what the group actually does.
-        let group_declares_own_name_tag =
-            group_tags.iter().any(|tag| tag_match_key(tag) == name_key);
+        let group_declares_own_name_tag = group_tags
+            .iter()
+            .any(|tag| tag_match_key(tag) == name_key);
         if group_declares_own_name_tag {
             return None;
         }
@@ -409,13 +406,15 @@ fn find_tag_description<'a>(
         }
     }
 
-    tag_descriptions.get(name).or_else(|| {
-        let normalized_name = tag_match_key(name);
-        tag_descriptions
-            .iter()
-            .find(|(tag_name, _)| tag_match_key(tag_name) == normalized_name)
-            .map(|(_, description)| description)
-    })
+    tag_descriptions
+        .get(name)
+        .or_else(|| {
+            let normalized_name = tag_match_key(name);
+            tag_descriptions
+                .iter()
+                .find(|(tag_name, _)| tag_match_key(tag_name) == normalized_name)
+                .map(|(_, description)| description)
+        })
 }
 
 /// Return the generic `about()` line for a group without usable metadata.
@@ -845,7 +844,8 @@ fn build_resource_command(
             &HashMap::new(),
             &[],
             doc_has_pagination_defaults,
-        ) {
+        )
+        {
             has_children = true;
             cmd = cmd.subcommand(sub_cmd);
         }
@@ -1266,7 +1266,10 @@ fn enum_possible_values(wire_values: &[String], param: &MethodParameter) -> Vec<
     let mut possible: Vec<PossibleValue> = wire_values
         .iter()
         .map(|wire| {
-            let cfg = param.fern_enum.as_ref().and_then(|m| m.get(wire));
+            let cfg = param
+                .fern_enum
+                .as_ref()
+                .and_then(|m| m.get(wire));
             build_possible_value(wire, cfg)
         })
         .collect();
@@ -1384,7 +1387,9 @@ fn build_multipart_field_arg(field: &MultipartField) -> Arg {
     // Multipart field prose used to reach `--help` untruncated, while every
     // other parameter went through `truncate_description`. A single upload
     // operation could therefore render several hundred characters per flag.
-    let description = crate::text::collapse_whitespace(field.description.as_deref().unwrap_or(""));
+    let description = crate::text::collapse_whitespace(
+        field.description.as_deref().unwrap_or(""),
+    );
     let compose = |text: &str| -> String {
         match (text.is_empty(), help_prefix) {
             (false, "") => text.to_string(),
@@ -1572,9 +1577,7 @@ mod tests {
         };
 
         let cmd = build_cli(&doc);
-        let users_cmd = cmd
-            .find_subcommand("users")
-            .expect("users resource missing");
+        let users_cmd = cmd.find_subcommand("users").expect("users resource missing");
         let get_user_cmd = users_cmd
             .find_subcommand("get-user")
             .expect("get-user method missing");
@@ -1664,38 +1667,14 @@ mod tests {
 
         let leaf = leaf_with_params(params);
 
-        assert_eq!(
-            heading_of(&leaf, "uuid").as_deref(),
-            Some(HELP_HEADING_REQUIRED)
-        );
-        assert_eq!(
-            heading_of(&leaf, "status").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
-        assert_eq!(
-            heading_of(&leaf, "kind").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
-        assert_eq!(
-            heading_of(&leaf, "params").as_deref(),
-            Some(HELP_HEADING_REQUEST)
-        );
-        assert_eq!(
-            heading_of(&leaf, "json").as_deref(),
-            Some(HELP_HEADING_REQUEST)
-        );
-        assert_eq!(
-            heading_of(&leaf, "format").as_deref(),
-            Some(HELP_HEADING_GLOBAL)
-        );
-        assert_eq!(
-            heading_of(&leaf, "dry-run").as_deref(),
-            Some(HELP_HEADING_GLOBAL)
-        );
-        assert_eq!(
-            heading_of(&leaf, "help").as_deref(),
-            Some(HELP_HEADING_GLOBAL)
-        );
+        assert_eq!(heading_of(&leaf, "uuid").as_deref(), Some(HELP_HEADING_REQUIRED));
+        assert_eq!(heading_of(&leaf, "status").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading_of(&leaf, "kind").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading_of(&leaf, "params").as_deref(), Some(HELP_HEADING_REQUEST));
+        assert_eq!(heading_of(&leaf, "json").as_deref(), Some(HELP_HEADING_REQUEST));
+        assert_eq!(heading_of(&leaf, "format").as_deref(), Some(HELP_HEADING_GLOBAL));
+        assert_eq!(heading_of(&leaf, "dry-run").as_deref(), Some(HELP_HEADING_GLOBAL));
+        assert_eq!(heading_of(&leaf, "help").as_deref(), Some(HELP_HEADING_GLOBAL));
 
         // Required params stay clap-optional: a required body property may
         // also arrive via `--json`/`--params`, which the executor validates.
@@ -1704,10 +1683,7 @@ mod tests {
         // Rendered help leads with the required section and keeps the
         // global flags out of the per-operation groups.
         let help = leaf.clone().render_help().to_string();
-        let pos = |needle: &str| {
-            help.find(needle)
-                .unwrap_or_else(|| panic!("{needle:?} missing"))
-        };
+        let pos = |needle: &str| help.find(needle).unwrap_or_else(|| panic!("{needle:?} missing"));
         assert!(
             help.contains("Usage: test-cli users get [OPTIONS] --uuid <STRING>"),
             "{help}"
@@ -1747,26 +1723,11 @@ mod tests {
 
         let leaf = leaf_with_params(params);
 
-        assert_eq!(
-            heading_of(&leaf, "settings").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
-        assert_eq!(
-            heading_of(&leaf, "settings.auth_type").as_deref(),
-            Some(HELP_HEADING_REQUIRED)
-        );
-        assert_eq!(
-            heading_of(&leaf, "settings.region").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
-        assert_eq!(
-            heading_of(&leaf, "owner").as_deref(),
-            Some(HELP_HEADING_REQUIRED)
-        );
-        assert_eq!(
-            heading_of(&leaf, "owner.nickname").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
+        assert_eq!(heading_of(&leaf, "settings").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading_of(&leaf, "settings.auth_type").as_deref(), Some(HELP_HEADING_REQUIRED));
+        assert_eq!(heading_of(&leaf, "settings.region").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading_of(&leaf, "owner").as_deref(), Some(HELP_HEADING_REQUIRED));
+        assert_eq!(heading_of(&leaf, "owner.nickname").as_deref(), Some(HELP_HEADING_OPTIONAL));
     }
 
     /// A leaf marked required inside an *optional* object is only required
@@ -1805,47 +1766,29 @@ mod tests {
         // than silently demoting a genuinely required deep leaf.
         params.insert("billing".to_string(), body(false, true, "object"));
         params.insert("billing.card".to_string(), body(false, true, "object"));
-        params.insert(
-            "billing.card.number".to_string(),
-            body(true, true, "string"),
-        );
+        params.insert("billing.card.number".to_string(), body(true, true, "string"));
 
         let leaf = leaf_with_params(params);
 
-        assert_eq!(
-            heading_of(&leaf, "settings").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
+        assert_eq!(heading_of(&leaf, "settings").as_deref(), Some(HELP_HEADING_OPTIONAL));
         assert_eq!(
             heading_of(&leaf, "settings.region").as_deref(),
             Some(HELP_HEADING_OPTIONAL)
         );
-        assert_eq!(
-            heading_of(&leaf, "owner.address").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
+        assert_eq!(heading_of(&leaf, "owner.address").as_deref(), Some(HELP_HEADING_OPTIONAL));
         assert_eq!(
             heading_of(&leaf, "owner.address.city").as_deref(),
             Some(HELP_HEADING_OPTIONAL)
         );
-        assert_eq!(
-            heading_of(&leaf, "plan.tier").as_deref(),
-            Some(HELP_HEADING_REQUIRED)
-        );
+        assert_eq!(heading_of(&leaf, "plan.tier").as_deref(), Some(HELP_HEADING_REQUIRED));
         // ...and its shorthand steps aside for the leaf, as before.
-        assert_eq!(
-            heading_of(&leaf, "plan").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
+        assert_eq!(heading_of(&leaf, "plan").as_deref(), Some(HELP_HEADING_OPTIONAL));
 
         // `owner` is spec-required and its only required descendant is itself
         // conditional (inside optional `owner.address`), so nothing supersedes
         // the shorthand and it stays the required form. Demoting it here would
         // leave the operation advertising no required flag at all.
-        assert_eq!(
-            heading_of(&leaf, "owner").as_deref(),
-            Some(HELP_HEADING_REQUIRED)
-        );
+        assert_eq!(heading_of(&leaf, "owner").as_deref(), Some(HELP_HEADING_REQUIRED));
 
         // Nothing conditional leaks into the usage line (the flags still
         // exist — they are listed under `Optional parameters`).
@@ -1860,14 +1803,8 @@ mod tests {
             heading_of(&leaf, "billing.card.number").as_deref(),
             Some(HELP_HEADING_REQUIRED)
         );
-        assert_eq!(
-            heading_of(&leaf, "billing").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
-        assert_eq!(
-            heading_of(&leaf, "billing.card").as_deref(),
-            Some(HELP_HEADING_OPTIONAL)
-        );
+        assert_eq!(heading_of(&leaf, "billing").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading_of(&leaf, "billing.card").as_deref(), Some(HELP_HEADING_OPTIONAL));
 
         assert!(usage.contains("--plan.tier <STRING>"), "{usage}");
         assert!(usage.contains("--owner <JSON_OBJECT>"), "{usage}");
@@ -1934,7 +1871,9 @@ mod tests {
         let zones_cmd = cmd
             .find_subcommand("zones")
             .expect("zones resource missing");
-        let get_cmd = zones_cmd.find_subcommand("get").expect("zones.get missing");
+        let get_cmd = zones_cmd
+            .find_subcommand("get")
+            .expect("zones.get missing");
         let arg_ids: Vec<String> = get_cmd
             .get_arguments()
             .map(|a| a.get_id().to_string())
@@ -2239,10 +2178,7 @@ mod tests {
         let mut resources = HashMap::new();
         resources.insert(
             "things".to_string(),
-            RestResource {
-                methods,
-                resources: HashMap::new(),
-            },
+            RestResource { methods, resources: HashMap::new() },
         );
         let doc = RestDescription {
             name: "test-cli".to_string(),
@@ -2254,18 +2190,13 @@ mod tests {
         let arg = cmd
             .find_subcommand("things")
             .and_then(|c| c.find_subcommand("list"))
-            .and_then(|c| {
-                c.get_arguments()
-                    .find(|a| a.get_id() == "threshold")
-                    .cloned()
-            })
+            .and_then(|c| c.get_arguments().find(|a| a.get_id() == "threshold").cloned())
             .expect("threshold arg missing");
         let short = arg.get_help().expect("short help missing").to_string();
         let long = arg.get_long_help().expect("long help missing").to_string();
         assert_eq!(short, "Diarization threshold to apply.");
         assert!(
-            long.len() > short.len()
-                && long.starts_with("Diarization threshold to apply. A higher"),
+            long.len() > short.len() && long.starts_with("Diarization threshold to apply. A higher"),
             "long help should carry the fuller prose; got: {long}",
         );
         assert!(
@@ -2301,10 +2232,7 @@ mod tests {
         let mut resources = HashMap::new();
         resources.insert(
             "things".to_string(),
-            RestResource {
-                methods,
-                resources: HashMap::new(),
-            },
+            RestResource { methods, resources: HashMap::new() },
         );
         let doc = RestDescription {
             name: "test-cli".to_string(),
@@ -2317,10 +2245,7 @@ mod tests {
             .and_then(|c| c.find_subcommand("list"))
             .and_then(|c| c.get_arguments().find(|a| a.get_id() == "id").cloned())
             .expect("id arg missing");
-        assert_eq!(
-            arg.get_help().map(ToString::to_string).as_deref(),
-            Some("Filter by ID.")
-        );
+        assert_eq!(arg.get_help().map(ToString::to_string).as_deref(), Some("Filter by ID."));
         assert!(arg.get_long_help().is_none());
     }
 
@@ -2564,10 +2489,7 @@ mod tests {
             ..Default::default()
         };
         let once = resolve_param_flag_name(&collision_param, "format").unwrap();
-        assert_eq!(
-            once, "format-param",
-            "sanity: first application appends -param"
-        );
+        assert_eq!(once, "format-param", "sanity: first application appends -param");
         let twice = resolve_param_flag_name(&collision_param, &once).unwrap();
         assert_eq!(once, twice, "builtin-collision case must be idempotent");
     }
@@ -2944,7 +2866,10 @@ mod tests {
     #[test]
     fn test_filter_doc_by_audiences_multiple_unions_matches() {
         let mut doc = doc_with_audiences();
-        filter_doc_by_audiences(&mut doc, &["public".to_string(), "internal".to_string()]);
+        filter_doc_by_audiences(
+            &mut doc,
+            &["public".to_string(), "internal".to_string()],
+        );
         assert_eq!(
             method_names(&doc, "audiences"),
             vec!["internal-only", "multi-tagged", "public-only"],
@@ -3073,10 +2998,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Operations on 'things'",
         );
         assert!(things.get_long_about().is_none());
@@ -3102,10 +3024,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Things Operations",
         );
         // No `description` → no long_about override; clap will fall
@@ -3125,10 +3044,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Manage the things available to your account.",
         );
         assert_eq!(
@@ -3153,10 +3069,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Manage things across multiple lines.",
         );
         assert_eq!(
@@ -3198,10 +3111,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "This is the first sentence with enough words to exceed the short CLI limit.",
         );
         assert_eq!(
@@ -3239,9 +3149,7 @@ mod tests {
             .and_then(|things| things.find_subcommand("list"))
             .expect("list subcommand missing");
         assert_eq!(
-            list.get_about()
-                .map(ToString::to_string)
-                .unwrap_or_default(),
+            list.get_about().map(ToString::to_string).unwrap_or_default(),
             "This method's first sentence also has enough words to exceed the short CLI…",
         );
         assert_eq!(
@@ -3271,9 +3179,7 @@ mod tests {
             .and_then(|things| things.find_subcommand("list"))
             .expect("list subcommand missing");
         assert_eq!(
-            list.get_about()
-                .map(ToString::to_string)
-                .unwrap_or_default(),
+            list.get_about().map(ToString::to_string).unwrap_or_default(),
             "Lists the things.",
         );
         assert!(list.get_long_about().is_none());
@@ -3307,9 +3213,7 @@ mod tests {
             .and_then(|things| things.find_subcommand("list"))
             .expect("list subcommand missing");
         assert_eq!(
-            list.get_about()
-                .map(ToString::to_string)
-                .unwrap_or_default(),
+            list.get_about().map(ToString::to_string).unwrap_or_default(),
             "List things",
         );
         assert_eq!(
@@ -3422,8 +3326,10 @@ mod tests {
         let mut doc = make_doc_with_things_resource();
         doc.tag_descriptions
             .insert("access-all".to_string(), "Access everything.".to_string());
-        doc.group_tag_names
-            .insert("things".to_string(), vec!["access:all".to_string()]);
+        doc.group_tag_names.insert(
+            "things".to_string(),
+            vec!["access:all".to_string()],
+        );
         doc.group_tag_operation_counts.insert(
             "things".to_string(),
             HashMap::from([("accessall".to_string(), 1)]),
@@ -3446,24 +3352,36 @@ mod tests {
     #[test]
     fn test_exclusive_tag_with_majority_coverage_is_selected() {
         let mut doc = make_doc_with_things_resource();
-        doc.tag_descriptions
-            .insert("minority".to_string(), "Minority description.".to_string());
-        doc.tag_descriptions
-            .insert("majority".to_string(), "Majority description.".to_string());
+        doc.tag_descriptions.insert(
+            "minority".to_string(),
+            "Minority description.".to_string(),
+        );
+        doc.tag_descriptions.insert(
+            "majority".to_string(),
+            "Majority description.".to_string(),
+        );
         doc.group_tag_names.insert(
             "things".to_string(),
             vec!["minority".to_string(), "majority".to_string()],
         );
         doc.group_tag_operation_counts.insert(
             "things".to_string(),
-            HashMap::from([("minority".to_string(), 1), ("majority".to_string(), 3)]),
+            HashMap::from([
+                ("minority".to_string(), 1),
+                ("majority".to_string(), 3),
+            ]),
         );
         doc.group_operation_counts.insert("things".to_string(), 4);
-        doc.tag_group_names
-            .insert("minority".to_string(), vec!["things".to_string()]);
-        doc.tag_group_names
-            .insert("majority".to_string(), vec!["things".to_string()]);
-        doc.tag_description_order = vec!["minority".to_string(), "majority".to_string()];
+        doc.tag_group_names.insert(
+            "minority".to_string(),
+            vec!["things".to_string()],
+        );
+        doc.tag_group_names.insert(
+            "majority".to_string(),
+            vec!["things".to_string()],
+        );
+        doc.tag_description_order =
+            vec!["minority".to_string(), "majority".to_string()];
 
         let cmd = build_cli(&doc);
         assert_eq!(
@@ -3511,8 +3429,10 @@ mod tests {
             "text-to-speech".to_string(),
             "Convert text to speech.".to_string(),
         );
-        doc.tag_descriptions
-            .insert("voices".to_string(), "Manage voices.".to_string());
+        doc.tag_descriptions.insert(
+            "voices".to_string(),
+            "Manage voices.".to_string(),
+        );
 
         let cmd = build_cli(&doc);
         let top = cmd
@@ -3526,10 +3446,7 @@ mod tests {
             .find_subcommand("voices")
             .expect("nested subcommand missing");
         assert_eq!(
-            nested
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            nested.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Operations on 'voices'",
         );
     }
@@ -3553,10 +3470,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Things summary",
         );
         assert_eq!(
@@ -3589,10 +3503,7 @@ mod tests {
                 .find_subcommand("things")
                 .expect("things subcommand missing");
             assert_eq!(
-                things
-                    .get_about()
-                    .map(|s| s.to_string())
-                    .unwrap_or_default(),
+                things.get_about().map(|s| s.to_string()).unwrap_or_default(),
                 "Manage the things available to your account.",
                 "summary {summary:?} should fall through to the tag description",
             );
@@ -3614,10 +3525,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Things",
         );
     }
@@ -3643,10 +3551,7 @@ mod tests {
                 .find_subcommand("things")
                 .expect("things subcommand missing");
             assert_eq!(
-                things
-                    .get_about()
-                    .map(|s| s.to_string())
-                    .unwrap_or_default(),
+                things.get_about().map(|s| s.to_string()).unwrap_or_default(),
                 summary,
                 "summary {summary:?} should remain authoritative",
             );
@@ -3664,10 +3569,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             crate::text::truncate_description(
                 &crate::text::first_sentence(description),
                 crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
@@ -3706,10 +3608,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Long-form prose about things.",
         );
         assert!(things.get_long_about().is_none());
@@ -3733,10 +3632,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Manage the things in your account.",
         );
         assert_eq!(
@@ -3790,10 +3686,7 @@ mod tests {
             .find_subcommand("things")
             .expect("things subcommand missing");
         assert_eq!(
-            things
-                .get_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             "Things Operations",
         );
         assert_eq!(
@@ -3864,9 +3757,7 @@ paths:
             "Foo Operations",
         );
         assert_eq!(
-            foo.get_long_about()
-                .map(|s| s.to_string())
-                .unwrap_or_default(),
+            foo.get_long_about().map(|s| s.to_string()).unwrap_or_default(),
             "Operations on foo resources.",
         );
         // Group children are still present — `x-fern-groups` does not
@@ -3991,10 +3882,7 @@ paths:
         let arg = build_multipart_field_arg(&field);
         let short = arg.get_help().expect("short help missing").to_string();
         let long = arg.get_long_help().expect("long help missing").to_string();
-        assert_eq!(
-            short,
-            "A list of keyterms to bias the transcription towards."
-        );
+        assert_eq!(short, "A list of keyterms to bias the transcription towards.");
         assert!(
             !long.contains("  "),
             "spec indentation should be collapsed; got: {long}",
@@ -4070,18 +3958,9 @@ paths:
         };
 
         let labels = long_help_for("labels");
-        assert!(
-            labels.contains("Filter by label."),
-            "keeps the description: {labels}"
-        );
-        assert!(
-            labels.contains("Repeatable"),
-            "must disclose repeatability: {labels}"
-        );
-        assert!(
-            labels.contains("JSON array"),
-            "must disclose the array form: {labels}"
-        );
+        assert!(labels.contains("Filter by label."), "keeps the description: {labels}");
+        assert!(labels.contains("Repeatable"), "must disclose repeatability: {labels}");
+        assert!(labels.contains("JSON array"), "must disclose the array form: {labels}");
 
         // A non-repeated flag gains nothing.
         let limit = long_help_for("limit");

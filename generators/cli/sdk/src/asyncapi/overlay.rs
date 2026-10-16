@@ -204,7 +204,9 @@ enum PathSegment {
 }
 
 /// Convert a `serde_json_path` `NormalizedPath` location into our own segment list.
-fn normalized_path_to_segments(location: &serde_json_path::NormalizedPath<'_>) -> Vec<PathSegment> {
+fn normalized_path_to_segments(
+    location: &serde_json_path::NormalizedPath<'_>,
+) -> Vec<PathSegment> {
     location
         .iter()
         .filter_map(|elem| {
@@ -216,6 +218,7 @@ fn normalized_path_to_segments(location: &serde_json_path::NormalizedPath<'_>) -
         })
         .collect()
 }
+
 
 /// Navigate to a path's parent and remove the target node.
 fn remove_at_path(doc: &mut Value, segments: &[PathSegment]) {
@@ -291,7 +294,9 @@ pub fn deep_merge(base: &mut Value, update: &Value) {
     match (base, update) {
         (Value::Object(base_map), Value::Object(update_map)) => {
             for (key, update_val) in update_map {
-                let entry = base_map.entry(key.clone()).or_insert(Value::Null);
+                let entry = base_map
+                    .entry(key.clone())
+                    .or_insert(Value::Null);
                 deep_merge(entry, update_val);
             }
         }
@@ -372,10 +377,12 @@ pub fn apply_overlays_to_spec(
     let mut doc = yaml_to_json(yaml_value);
 
     for (idx, overlay_str) in overlay_strings.iter().enumerate() {
-        let overlay = parse_overlay(overlay_str)
-            .map_err(|e| CliError::Discovery(format!("Failed to parse overlay {idx}: {e}")))?;
-        validate_overlay(&overlay)
-            .map_err(|e| CliError::Validation(format!("Invalid overlay {idx}: {e}")))?;
+        let overlay = parse_overlay(overlay_str).map_err(|e| {
+            CliError::Discovery(format!("Failed to parse overlay {idx}: {e}"))
+        })?;
+        validate_overlay(&overlay).map_err(|e| {
+            CliError::Validation(format!("Invalid overlay {idx}: {e}"))
+        })?;
 
         tracing::debug!(
             "Applying overlay \"{}\" v{}",
@@ -466,10 +473,7 @@ actions:
     fn test_validate_overlay_missing_version() {
         let doc = OverlayDocument {
             overlay: String::new(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.info".into(),
@@ -485,10 +489,7 @@ actions:
     fn test_validate_overlay_no_actions() {
         let doc = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![],
         };
@@ -499,10 +500,7 @@ actions:
     fn test_validate_overlay_action_no_target() {
         let doc = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: String::new(),
@@ -518,10 +516,7 @@ actions:
     fn test_validate_overlay_action_no_update_no_remove() {
         let doc = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.info".into(),
@@ -543,10 +538,7 @@ actions:
         });
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.info".into(),
@@ -577,10 +569,7 @@ actions:
         });
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.components.schemas.User".into(),
@@ -618,10 +607,7 @@ actions:
         });
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.components.schemas.User.properties.email".into(),
@@ -654,10 +640,7 @@ actions:
         });
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.paths.*.get".into(),
@@ -678,10 +661,7 @@ actions:
         let doc = json!({"info": {"title": "Test"}});
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.nonexistent.path".into(),
@@ -712,10 +692,7 @@ actions:
         });
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![
                 OverlayAction {
@@ -744,13 +721,11 @@ actions:
         };
         let result = apply_overlay(&doc, &overlay).unwrap();
         assert_eq!(
-            result["components"]["schemas"]["User"]["properties"]["profile"]["properties"]["email"]
-                ["type"],
+            result["components"]["schemas"]["User"]["properties"]["profile"]["properties"]["email"]["type"],
             "string"
         );
         assert_eq!(
-            result["components"]["schemas"]["User"]["properties"]["profile"]["properties"]["name"]
-                ["type"],
+            result["components"]["schemas"]["User"]["properties"]["profile"]["properties"]["name"]["type"],
             "string"
         );
     }
@@ -762,10 +737,7 @@ actions:
         let doc = json!({"info": {"title": "Old"}});
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$".into(),
@@ -814,10 +786,7 @@ actions:
         // The result should be valid YAML that can be parsed
         let parsed: serde_yaml::Value = serde_yaml::from_str(&result).unwrap();
         let info = &parsed["info"];
-        assert_eq!(
-            info["description"],
-            serde_yaml::Value::String("A plant management API".into())
-        );
+        assert_eq!(info["description"], serde_yaml::Value::String("A plant management API".into()));
         // Original fields preserved
         assert_eq!(info["title"], serde_yaml::Value::String("Test API".into()));
     }
@@ -848,10 +817,7 @@ actions:
         });
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.paths['/plants'].get.parameters[1]".into(),
@@ -861,9 +827,7 @@ actions:
             }],
         };
         let result = apply_overlay(&doc, &overlay).unwrap();
-        let params = result["paths"]["/plants"]["get"]["parameters"]
-            .as_array()
-            .unwrap();
+        let params = result["paths"]["/plants"]["get"]["parameters"].as_array().unwrap();
         assert_eq!(params.len(), 2);
         assert_eq!(params[0]["name"], "id");
         assert_eq!(params[1]["name"], "offset");
@@ -901,8 +865,7 @@ actions:
       contact:
         name: "Plant Store Support"
 "#;
-        let result =
-            apply_overlays_to_spec(spec, &[overlay1.to_string(), overlay2.to_string()]).unwrap();
+        let result = apply_overlays_to_spec(spec, &[overlay1.to_string(), overlay2.to_string()]).unwrap();
         let parsed: serde_yaml::Value = serde_yaml::from_str(&result).unwrap();
         assert_eq!(
             parsed["info"]["description"],
@@ -933,10 +896,7 @@ actions:
         });
         let overlay = OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "T".into(),
-                version: "1".into(),
-            },
+            info: OverlayInfo { title: "T".into(), version: "1".into() },
             extends: None,
             actions: vec![OverlayAction {
                 target: "$.components.schemas.Plant.properties".into(),
@@ -949,18 +909,12 @@ actions:
             }],
         };
         let result = apply_overlay(&doc, &overlay).unwrap();
-        assert_eq!(
-            result["components"]["schemas"]["Plant"]["properties"]["height"]["type"],
-            "number"
-        );
+        assert_eq!(result["components"]["schemas"]["Plant"]["properties"]["height"]["type"], "number");
         assert_eq!(
             result["components"]["schemas"]["Plant"]["properties"]["species"]["description"],
             "The plant species"
         );
-        assert_eq!(
-            result["components"]["schemas"]["Plant"]["properties"]["color"]["type"],
-            "string"
-        );
+        assert_eq!(result["components"]["schemas"]["Plant"]["properties"]["color"]["type"], "string");
     }
 
     // -----------------------------------------------------------------------
@@ -971,10 +925,7 @@ actions:
     fn make_overlay(actions: Vec<OverlayAction>) -> OverlayDocument {
         OverlayDocument {
             overlay: "1.0.0".into(),
-            info: OverlayInfo {
-                title: "Test".into(),
-                version: "1.0".into(),
-            },
+            info: OverlayInfo { title: "Test".into(), version: "1.0".into() },
             extends: None,
             actions,
         }
@@ -1160,9 +1111,7 @@ actions:
             json!({ "description": "Query parameter" }),
         )]);
         let result = apply_overlay(&doc, &overlay).unwrap();
-        let params = result["paths"]["/plants"]["get"]["parameters"]
-            .as_array()
-            .unwrap();
+        let params = result["paths"]["/plants"]["get"]["parameters"].as_array().unwrap();
         assert_eq!(params[0]["description"], "Query parameter");
         assert_eq!(params[1]["description"], "Query parameter");
         assert!(params[2].get("description").is_none()); // header param untouched
@@ -1247,8 +1196,7 @@ actions:
             ),
         ]);
         let result = apply_overlay(&doc, &overlay).unwrap();
-        let habitat =
-            &result["components"]["schemas"]["Plant"]["properties"]["habitat"]["properties"];
+        let habitat = &result["components"]["schemas"]["Plant"]["properties"]["habitat"]["properties"];
         assert!(habitat["climate"].is_object());
         assert_eq!(habitat["soil"]["format"], "enum");
     }
@@ -1282,9 +1230,7 @@ actions:
         assert!(result["paths"]["/nurseries"]["get"]["security"].is_array());
         // Non-GET operations should not
         assert!(result["paths"]["/plants"]["post"].get("security").is_none());
-        assert!(result["paths"]["/nurseries"]["delete"]
-            .get("security")
-            .is_none());
+        assert!(result["paths"]["/nurseries"]["delete"].get("security").is_none());
     }
 
     /// Port of TS: "should handle zero-match JSONPath expressions"
@@ -1389,21 +1335,16 @@ actions:
             }),
         )]);
         let result = apply_overlay(&doc, &overlay).unwrap();
-        let habitat =
-            &result["components"]["schemas"]["Plant"]["properties"]["habitat"]["properties"];
+        let habitat = &result["components"]["schemas"]["Plant"]["properties"]["habitat"]["properties"];
         // Existing humidity preserved
-        assert_eq!(
-            habitat["climate"]["properties"]["humidity"]["type"],
-            "integer"
-        );
+        assert_eq!(habitat["climate"]["properties"]["humidity"]["type"], "integer");
         // New rainfall added
         assert_eq!(habitat["soil"]["properties"]["drainage"]["format"], "enum");
         // New sunlight section added
         assert_eq!(habitat["sunlight"]["properties"]["hours"]["default"], 6);
         // care section untouched
         assert_eq!(
-            result["components"]["schemas"]["Plant"]["properties"]["care"]["properties"]
-                ["watering"]["default"],
+            result["components"]["schemas"]["Plant"]["properties"]["care"]["properties"]["watering"]["default"],
             "weekly"
         );
     }
@@ -1446,10 +1387,7 @@ actions:
         ]);
         let result = apply_overlay(&doc, &overlay).unwrap();
         // Added fields
-        assert_eq!(
-            result["info"]["description"],
-            "API for managing plants and gardens"
-        );
+        assert_eq!(result["info"]["description"], "API for managing plants and gardens");
         assert!(result["servers"].is_array());
         assert_eq!(result["servers"].as_array().unwrap().len(), 2);
         assert!(result["externalDocs"].is_object());
@@ -1570,10 +1508,7 @@ actions:
         )]);
         let result = apply_overlay(&doc, &overlay).unwrap();
         let params = &result["paths"]["/plants"]["get"]["parameters"];
-        assert_eq!(
-            params[0]["description"],
-            "Maximum number of items to return"
-        );
+        assert_eq!(params[0]["description"], "Maximum number of items to return");
         assert_eq!(params[0]["schema"]["minimum"], 1);
         // Second param untouched
         assert!(params[1].get("description").is_none());
@@ -1769,17 +1704,14 @@ actions:
     update:
       x: 1
 "#;
-        let result =
-            apply_overlays_to_spec(yaml_with_comments, &[noop_overlay.to_string()]).unwrap();
+        let result = apply_overlays_to_spec(
+            yaml_with_comments,
+            &[noop_overlay.to_string()],
+        )
+        .unwrap();
         // Comments are stripped after roundtrip
-        assert!(
-            !result.contains("# inline comment"),
-            "inline comment should be stripped: {result}"
-        );
-        assert!(
-            !result.contains("# full line comment"),
-            "line comment should be stripped: {result}"
-        );
+        assert!(!result.contains("# inline comment"), "inline comment should be stripped: {result}");
+        assert!(!result.contains("# full line comment"), "line comment should be stripped: {result}");
         assert!(result.contains("title: Test"));
     }
 
@@ -1793,13 +1725,23 @@ servers:
   - url: *url
     description: production
 "#;
-        let yaml_value: serde_yaml::Value = serde_yaml::from_str(yaml_with_anchors).unwrap();
+        let yaml_value: serde_yaml::Value =
+            serde_yaml::from_str(yaml_with_anchors).unwrap();
         let json_val = yaml_to_json(yaml_value);
         // Alias is resolved to the concrete value
-        assert_eq!(json_val["servers"][0]["url"], "https://api.example.com");
-        assert_eq!(json_val["servers"][0]["description"], "production");
+        assert_eq!(
+            json_val["servers"][0]["url"],
+            "https://api.example.com"
+        );
+        assert_eq!(
+            json_val["servers"][0]["description"],
+            "production"
+        );
         // The anchor definition is also present as a regular key
-        assert_eq!(json_val["base_url"], "https://api.example.com");
+        assert_eq!(
+            json_val["base_url"],
+            "https://api.example.com"
+        );
     }
 
     #[test]
@@ -1808,7 +1750,8 @@ servers:
 value: !custom_tag
   inner: data
 "#;
-        let yaml_value: serde_yaml::Value = serde_yaml::from_str(yaml_with_tag).unwrap();
+        let yaml_value: serde_yaml::Value =
+            serde_yaml::from_str(yaml_with_tag).unwrap();
         let json_val = yaml_to_json(yaml_value);
         // Custom tags are stripped, value preserved
         assert_eq!(json_val["value"]["inner"], "data");
@@ -1836,7 +1779,8 @@ actions:
     update:
       description: "Added by overlay"
 "#;
-        let result = apply_overlays_to_spec(spec, &[overlay.to_string()]).unwrap();
+        let result =
+            apply_overlays_to_spec(spec, &[overlay.to_string()]).unwrap();
         assert!(result.contains("description: Added by overlay"));
         assert!(result.contains("title: Test API"));
         assert!(!result.contains('#'));
@@ -1861,7 +1805,10 @@ actions:
                 "$.paths['/users/{id}'].get",
                 json!({"description": "Get a user by ID"}),
             ),
-            update_action("$['x-extension']", json!({"extra": true})),
+            update_action(
+                "$['x-extension']",
+                json!({"extra": true}),
+            ),
         ]);
         let result = apply_overlay(&doc, &overlay).unwrap();
         assert_eq!(
@@ -1916,8 +1863,8 @@ components:
 "##;
 
     fn parse_asyncapi_yaml(yaml: &str) -> serde_json::Value {
-        let yaml_value: serde_yaml::Value =
-            serde_yaml::from_str(yaml).expect("YAML must parse for overlay tests");
+        let yaml_value: serde_yaml::Value = serde_yaml::from_str(yaml)
+            .expect("YAML must parse for overlay tests");
         yaml_to_json(yaml_value)
     }
 
@@ -1941,7 +1888,9 @@ components:
     #[test]
     fn overlay_remove_action_removes_node_from_parsed_asyncapi() {
         let doc = parse_asyncapi_yaml(SAMPLE_ASYNCAPI_YAML);
-        let overlay = make_overlay(vec![remove_action("$.channels.AgentMessages.subscribe")]);
+        let overlay = make_overlay(vec![remove_action(
+            "$.channels.AgentMessages.subscribe",
+        )]);
 
         let result = apply_overlay(&doc, &overlay).unwrap();
         assert!(
@@ -1966,8 +1915,9 @@ components:
             json!({ "description": "should not be applied" }),
         )]);
 
-        let result =
-            apply_overlay(&doc, &overlay).expect("zero-match overlay must succeed without error");
+        let result = apply_overlay(&doc, &overlay).expect(
+            "zero-match overlay must succeed without error",
+        );
         // Document is unchanged.
         assert_eq!(result, doc);
     }

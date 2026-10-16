@@ -57,11 +57,7 @@ fn list_nested_resource_operations(doc: &GraphQLSchema, path: &[&str]) -> Option
     Some(json!(ops))
 }
 
-fn operation_schema(
-    doc: &GraphQLSchema,
-    resource_path: &[&str],
-    method_name: &str,
-) -> Option<Value> {
+fn operation_schema(doc: &GraphQLSchema, resource_path: &[&str], method_name: &str) -> Option<Value> {
     let first = resource_path.first()?;
     let mut res = doc.resources.get(*first)?;
     for segment in &resource_path[1..] {
@@ -71,11 +67,7 @@ fn operation_schema(
     Some(build_operation_schema(resource_path, method_name, method))
 }
 
-fn build_operation_schema(
-    resource_path: &[&str],
-    method_name: &str,
-    method: &GraphQLOperation,
-) -> Value {
+fn build_operation_schema(resource_path: &[&str], method_name: &str, method: &GraphQLOperation) -> Value {
     let mut properties: Map<String, Value> = Map::new();
     let mut required: Vec<String> = Vec::new();
 
@@ -150,7 +142,7 @@ fn collect_resource_ops(res: &GraphQLResource, path: &[&str], ops: &mut Vec<Valu
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::graphql::discovery::{GraphQLOperation, GraphQLResource, MethodParameter};
+    use crate::graphql::discovery::{MethodParameter, GraphQLOperation, GraphQLResource};
     use std::collections::HashMap;
 
     fn make_doc() -> GraphQLSchema {
@@ -220,15 +212,9 @@ mod tests {
         let schema = operation_schema(&doc, &["users"], "get").unwrap();
         // Per ADR-0006: drop GraphQL execution detail; rename
         // `parameters` → `input`.
-        assert!(
-            schema.get("operationType").is_none(),
-            "operationType should be dropped"
-        );
+        assert!(schema.get("operationType").is_none(), "operationType should be dropped");
         assert!(schema.get("field").is_none(), "field should be dropped");
-        assert!(
-            schema.get("parameters").is_none(),
-            "`parameters` should be renamed to `input`"
-        );
+        assert!(schema.get("parameters").is_none(), "`parameters` should be renamed to `input`");
         let required = schema["input"]["required"].as_array().unwrap();
         assert!(required.iter().any(|v| v == "user_id"));
     }
@@ -314,10 +300,7 @@ mod tests {
 
         let path: Vec<String> = vec!["organizations".into(), "memberships".into()];
         let result = build_schema(&doc, &path);
-        assert!(
-            result.is_some(),
-            "sub-resource path should list operations, not be None"
-        );
+        assert!(result.is_some(), "sub-resource path should list operations, not be None");
     }
 
     #[test]
@@ -360,12 +343,8 @@ mod tests {
             ..Default::default()
         };
 
-        let schema =
-            operation_schema(&doc, &["organizations", "memberships"], "get-membership").unwrap();
-        assert_eq!(
-            schema["operation"],
-            "organizations.memberships.get-membership"
-        );
+        let schema = operation_schema(&doc, &["organizations", "memberships"], "get-membership").unwrap();
+        assert_eq!(schema["operation"], "organizations.memberships.get-membership");
     }
 
     #[test]
@@ -397,11 +376,7 @@ mod tests {
             ..Default::default()
         };
 
-        let path: Vec<String> = vec![
-            "organizations".into(),
-            "memberships".into(),
-            "get-membership".into(),
-        ];
+        let path: Vec<String> = vec!["organizations".into(), "memberships".into(), "get-membership".into()];
         let result = build_schema(&doc, &path);
         assert!(result.is_some(), "nested path should resolve correctly");
     }

@@ -579,10 +579,7 @@ mod tests {
 
     #[test]
     fn api_key_auth_with_empty_prefix_builds_token_binding() {
-        let (_, binding) = ApiKeyAuth::new("apiKey")
-            .env("API_KEY")
-            .prefix("")
-            .into_binding();
+        let (_, binding) = ApiKeyAuth::new("apiKey").env("API_KEY").prefix("").into_binding();
         assert!(matches!(binding, SchemeBinding::Token(_)));
     }
 

@@ -85,11 +85,7 @@ fn parse_and_validate_inputs(
         .map(|u| u.trim_end_matches('/').to_string())
         .unwrap_or_else(|| doc.root_url.clone());
 
-    Ok(ExecutionInput {
-        params,
-        body,
-        full_url,
-    })
+    Ok(ExecutionInput { params, body, full_url })
 }
 
 /// Build a POST request with auth and a JSON GraphQL body.
@@ -124,7 +120,10 @@ fn parse_graphql_response(body_text: &str) -> Result<String, CliError> {
         )
     })?;
 
-    let has_data = json_val.get("data").map(|d| !d.is_null()).unwrap_or(false);
+    let has_data = json_val
+        .get("data")
+        .map(|d| !d.is_null())
+        .unwrap_or(false);
 
     if let Some(errors) = json_val.get("errors").and_then(|e| e.as_array()) {
         if !errors.is_empty() {
@@ -214,6 +213,7 @@ async fn handle_json_response(
     }
     Ok(())
 }
+
 
 /// Resolve the retry policy for a run from the `--no-retry` opt-out.
 ///
@@ -329,11 +329,7 @@ pub async fn execute_method(
                 ))
             })?;
             if debug {
-                let query_str = input
-                    .body
-                    .get("query")
-                    .and_then(|q| q.as_str())
-                    .unwrap_or("");
+                let query_str = input.body.get("query").and_then(|q| q.as_str()).unwrap_or("");
                 let empty_vars = Value::Object(Map::new());
                 let variables = input.body.get("variables").unwrap_or(&empty_vars);
                 crate::debug::dump_graphql_request(
@@ -759,7 +755,10 @@ fn extract_graphql_cursor(response_body: &str) -> Option<String> {
     if !has_next {
         return None;
     }
-    page_info.get("endCursor")?.as_str().map(|s| s.to_string())
+    page_info
+        .get("endCursor")?
+        .as_str()
+        .map(|s| s.to_string())
 }
 
 /// Coerce a JSON value to the correct type based on the parameter definition.
@@ -903,8 +902,7 @@ mod tests {
             params: Map::new(),
         };
 
-        let request =
-            build_http_request(&client, &input, &crate::auth::no_auth_provider()).unwrap();
+        let request = build_http_request(&client, &input, &crate::auth::no_auth_provider()).unwrap();
         let built = request.build().unwrap();
 
         assert_eq!(built.method(), "POST");
@@ -1029,11 +1027,7 @@ mod tests {
         .await
         .expect("dry-run should succeed")
         .expect("dry-run with capture_output should return Some");
-        assert_eq!(
-            value["auth"]["credentials"],
-            json!("not_required"),
-            "{value}"
-        );
+        assert_eq!(value["auth"]["credentials"], json!("not_required"), "{value}");
     }
 
     // -----------------------------------------------------------------------
@@ -1103,10 +1097,7 @@ mod tests {
         let policy = resolve_retry_policy(true);
         let result = run_against_mock(&base_url, &policy, true).await;
 
-        assert!(
-            result.is_err(),
-            "503 with --no-retry should surface as an error"
-        );
+        assert!(result.is_err(), "503 with --no-retry should surface as an error");
         // `expect(1)` is verified on drop — exactly one request was sent.
     }
 
@@ -1141,11 +1132,7 @@ mod tests {
 
         let value = result.expect("should succeed after one retry");
         let value = value.expect("capture_output should return Some");
-        assert_eq!(
-            value,
-            json!("pong"),
-            "single-field data envelope is unwrapped"
-        );
+        assert_eq!(value, json!("pong"), "single-field data envelope is unwrapped");
         // Both `expect(1)` mocks are verified on drop: exactly two requests
         // total — one 503, one 200 — proving the retryable status retried.
     }
@@ -1199,10 +1186,7 @@ mod tests {
         .to_string();
         let result = parse_graphql_response(&body).unwrap();
         let val: Value = serde_json::from_str(&result).unwrap();
-        assert!(
-            val.get("nodes").is_some(),
-            "should unwrap single-field data envelope"
-        );
+        assert!(val.get("nodes").is_some(), "should unwrap single-field data envelope");
     }
 
     // -----------------------------------------------------------------------
@@ -1305,10 +1289,7 @@ mod tests {
         let body =
             build_graphql_body(&gql, &params, None, &method_params, Some("cursor-xyz")).unwrap();
         let vars = body["variables"].as_object().unwrap();
-        assert_eq!(
-            vars.get("after").and_then(|v| v.as_str()),
-            Some("cursor-xyz")
-        );
+        assert_eq!(vars.get("after").and_then(|v| v.as_str()), Some("cursor-xyz"));
         assert!(body["query"].as_str().unwrap().contains("$after: String"));
     }
 
@@ -1333,10 +1314,7 @@ mod tests {
         let body =
             build_graphql_body(&gql, &params, None, &method_params, Some("cursor-xyz")).unwrap();
         let vars = body["variables"].as_object().unwrap();
-        assert!(
-            vars.get("after").is_none(),
-            "no after arg = cursor not injected"
-        );
+        assert!(vars.get("after").is_none(), "no after arg = cursor not injected");
     }
 
     #[test]
@@ -1420,8 +1398,11 @@ mod tests {
             param_type: Some("object".to_string()),
             ..Default::default()
         };
-        let err =
-            coerce_graphql_value(&Value::String("not json".to_string()), Some(&mp)).unwrap_err();
+        let err = coerce_graphql_value(
+            &Value::String("not json".to_string()),
+            Some(&mp),
+        )
+        .unwrap_err();
         match err {
             CliError::Validation(_) => {}
             other => panic!("expected Validation error, got {other:?}"),
@@ -1439,7 +1420,8 @@ mod tests {
             ..Default::default()
         };
         for bad in [r#"42"#, r#"[1,2]"#, r#""hello""#, r#"true"#, r#"null"#] {
-            let err = coerce_graphql_value(&Value::String(bad.to_string()), Some(&mp)).unwrap_err();
+            let err = coerce_graphql_value(&Value::String(bad.to_string()), Some(&mp))
+                .unwrap_err();
             match err {
                 CliError::Validation(msg) => {
                     assert!(
@@ -1489,7 +1471,10 @@ mod tests {
         };
 
         let mut params = Map::new();
-        params.insert("name".to_string(), Value::String("Abraham".to_string()));
+        params.insert(
+            "name".to_string(),
+            Value::String("Abraham".to_string()),
+        );
 
         let mut method_params: HashMap<String, MethodParameter> = HashMap::new();
         method_params.insert(
@@ -1513,10 +1498,7 @@ mod tests {
         match err {
             CliError::Validation(msg) => {
                 assert!(msg.contains("--json"), "error must mention --json: {msg}");
-                assert!(
-                    msg.contains("--name"),
-                    "error must name the input flag: {msg}"
-                );
+                assert!(msg.contains("--name"), "error must name the input flag: {msg}");
             }
             other => panic!("expected Validation error, got {other:?}"),
         }
@@ -1572,10 +1554,7 @@ mod tests {
         let err = build_graphql_body(&gql, &params, None, &method_params, None).unwrap_err();
         match err {
             CliError::Validation(msg) => {
-                assert!(
-                    msg.contains("--filter"),
-                    "error must mention --filter: {msg}"
-                );
+                assert!(msg.contains("--filter"), "error must mention --filter: {msg}");
                 assert!(
                     msg.contains("--filter.name"),
                     "error must mention --filter.name: {msg}"

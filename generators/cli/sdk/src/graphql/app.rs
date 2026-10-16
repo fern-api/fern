@@ -8,7 +8,7 @@
 use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider, SchemeBinding};
 use crate::error::CliError;
 use crate::formatter;
-use crate::graphql::discovery::{GraphQLOperation as RestMethod, GraphQLSchema as RestDescription};
+use crate::graphql::discovery::{GraphQLSchema as RestDescription, GraphQLOperation as RestMethod};
 use crate::graphql::executor;
 
 /// Builder for a schema-driven CLI application (GraphQL).
@@ -115,9 +115,15 @@ impl CliApp {
 
     /// Variant of [`auth_provider`](Self::auth_provider) that takes an
     /// already-built [`DynAuthProvider`].
-    pub fn auth_provider_shared(mut self, scheme_name: &str, provider: DynAuthProvider) -> Self {
-        self.auth_bindings
-            .push((scheme_name.to_string(), SchemeBinding::Custom(provider)));
+    pub fn auth_provider_shared(
+        mut self,
+        scheme_name: &str,
+        provider: DynAuthProvider,
+    ) -> Self {
+        self.auth_bindings.push((
+            scheme_name.to_string(),
+            SchemeBinding::Custom(provider),
+        ));
         self
     }
 
@@ -186,6 +192,7 @@ impl CliApp {
         cli
     }
 
+
     /// Construct the [`DynAuthProvider`] used for this run from the
     /// registered bindings. GraphQL has no spec-declared schemes; with no
     /// bindings, returns a `NoAuthProvider`.
@@ -243,11 +250,7 @@ impl AppContext {
         http_config: crate::http::HttpConfig,
     ) -> Self {
         Self {
-            entries: vec![BindingEntry {
-                doc,
-                auth_provider,
-                http_config,
-            }],
+            entries: vec![BindingEntry { doc, auth_provider, http_config }],
             quiet: false,
             debug: false,
         }
@@ -335,7 +338,11 @@ impl AppContext {
     }
 
     /// Search all registered specs for a method at `resource.method_name`.
-    pub fn find_method(&self, resource: &str, method_name: &str) -> Result<&RestMethod, CliError> {
+    pub fn find_method(
+        &self,
+        resource: &str,
+        method_name: &str,
+    ) -> Result<&RestMethod, CliError> {
         for entry in &self.entries {
             if let Some(r) = entry.doc.resources.get(resource) {
                 if let Some(m) = r.methods.get(method_name) {
@@ -444,8 +451,9 @@ pub(crate) fn collect_params_from_flags(
 
     // Override with --params JSON if provided (--params wins)
     if let Some(json_str) = params_override {
-        let overrides: serde_json::Map<String, serde_json::Value> = serde_json::from_str(json_str)
-            .map_err(|e| CliError::Validation(format!("Invalid --params JSON: {e}")))?;
+        let overrides: serde_json::Map<String, serde_json::Value> =
+            serde_json::from_str(json_str)
+                .map_err(|e| CliError::Validation(format!("Invalid --params JSON: {e}")))?;
         for (key, value) in overrides {
             params.insert(key, value);
         }
@@ -460,8 +468,14 @@ pub(crate) fn build_pagination_config(
 ) -> executor::PaginationConfig {
     executor::PaginationConfig {
         page_all: matches.get_flag("page-all"),
-        page_limit: matches.get_one::<u32>("page-limit").copied().unwrap_or(10),
-        page_delay_ms: matches.get_one::<u64>("page-delay").copied().unwrap_or(100),
+        page_limit: matches
+            .get_one::<u32>("page-limit")
+            .copied()
+            .unwrap_or(10),
+        page_delay_ms: matches
+            .get_one::<u64>("page-delay")
+            .copied()
+            .unwrap_or(100),
         no_pager: matches.get_flag("no-pager"),
         cli_name: cli_name.to_string(),
     }
@@ -491,9 +505,7 @@ mod tests {
         let app = CliApp::new("graphql-fixture")
             .spec("{}")
             .endpoint("https://example.com/graphql");
-        assert_eq!(
-            app.endpoint_url.as_deref(),
-            Some("https://example.com/graphql")
-        );
+        assert_eq!(app.endpoint_url.as_deref(), Some("https://example.com/graphql"));
     }
+
 }

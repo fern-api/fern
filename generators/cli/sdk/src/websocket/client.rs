@@ -180,7 +180,10 @@ impl WebSocketClient {
     /// Default trust roots come from whichever TLS backend the feature
     /// gate selects (`native-tls` reads the OS keychain; `rustls` uses
     /// Mozilla's bundled webpki roots).
-    pub async fn connect(mut config: WsConfig, http_config: &HttpConfig) -> Result<Self, CliError> {
+    pub async fn connect(
+        mut config: WsConfig,
+        http_config: &HttpConfig,
+    ) -> Result<Self, CliError> {
         // Resolve transport config up front. Even though v1 doesn't yet
         // translate CA bundle / insecure into a tungstenite Connector,
         // calling resolve() surfaces a misconfigured CA path immediately
@@ -190,9 +193,7 @@ impl WebSocketClient {
         // Apply URL/header auth. FirstMessage is deferred to first send().
         let mut url = config.url.clone();
         let mut headers: Vec<(String, String)> = Vec::new();
-        config
-            .auth
-            .apply_to_url_and_headers(&mut url, &mut headers)?;
+        config.auth.apply_to_url_and_headers(&mut url, &mut headers)?;
 
         // Build the handshake request (WS control headers + User-Agent +
         // auth headers). See `build_handshake_request`.
@@ -206,14 +207,12 @@ impl WebSocketClient {
         // Connect, with optional handshake deadline.
         let connect_fut = tokio_tungstenite::connect_async(request);
         let connect_result = if let Some(deadline) = resolved.connect_timeout {
-            tokio::time::timeout(deadline, connect_fut)
-                .await
-                .map_err(|_| {
-                    CliError::Other(anyhow::anyhow!(
-                        "WebSocket handshake timed out after {}s",
-                        deadline.as_secs(),
-                    ))
-                })?
+            tokio::time::timeout(deadline, connect_fut).await.map_err(|_| {
+                CliError::Other(anyhow::anyhow!(
+                    "WebSocket handshake timed out after {}s",
+                    deadline.as_secs(),
+                ))
+            })?
         } else {
             connect_fut.await
         };
@@ -235,8 +234,9 @@ impl WebSocketClient {
             self.config.auth.merge_into_first_message(&mut to_send)?;
             self.first_send_done = true;
         }
-        let text = serde_json::to_string(&to_send)
-            .map_err(|e| CliError::Validation(format!("failed to serialize WS frame: {e}")))?;
+        let text = serde_json::to_string(&to_send).map_err(|e| {
+            CliError::Validation(format!("failed to serialize WS frame: {e}"))
+        })?;
         let hint = self.config.abnormal_close_hint.clone();
         self.stream
             .send(Message::Text(text))
@@ -320,10 +320,7 @@ impl WebSocketClient {
         let _stdin_tx_keepalive;
         let stdin_handle = if stdin_input {
             _stdin_tx_keepalive = None;
-            Some(tokio::spawn(stdin_reader_task(
-                stdin_tx,
-                stdin_validate_json,
-            )))
+            Some(tokio::spawn(stdin_reader_task(stdin_tx, stdin_validate_json)))
         } else {
             _stdin_tx_keepalive = Some(stdin_tx);
             None
@@ -561,7 +558,10 @@ async fn handle_inbound(
                             }
                         };
                         if let Err(e) = sink.send(Message::Text(reply_text)).await {
-                            return FrameDisposition::Stop(Err(map_stream_error(e, abnormal_hint)));
+                            return FrameDisposition::Stop(Err(map_stream_error(
+                                e,
+                                abnormal_hint,
+                            )));
                         }
                         return FrameDisposition::Continue;
                     }
@@ -718,10 +718,7 @@ mod tests {
             build_handshake_request("wss://example.com/socket", &[], "elevenlabs-cli/1.4.0")
                 .expect("request builds");
         assert_eq!(
-            request
-                .headers()
-                .get(USER_AGENT)
-                .map(|v| v.to_str().unwrap()),
+            request.headers().get(USER_AGENT).map(|v| v.to_str().unwrap()),
             Some("elevenlabs-cli/1.4.0"),
         );
     }
@@ -735,10 +732,7 @@ mod tests {
             build_handshake_request("wss://example.com/socket", &headers, "elevenlabs-cli/1.4.0")
                 .expect("request builds");
         assert_eq!(
-            request
-                .headers()
-                .get(USER_AGENT)
-                .map(|v| v.to_str().unwrap()),
+            request.headers().get(USER_AGENT).map(|v| v.to_str().unwrap()),
             Some("custom/9.9"),
         );
     }

@@ -204,9 +204,7 @@ mod tests {
 
     impl<C> CustomCommandRegistry<C> {
         fn new() -> Self {
-            Self {
-                entries: Vec::new(),
-            }
+            Self { entries: Vec::new() }
         }
 
         fn register(&mut self, cmd: clap::Command, handler: HandlerFn<C>) {
@@ -230,7 +228,11 @@ mod tests {
             cli
         }
 
-        fn dispatch(&self, matches: &clap::ArgMatches, ctx: &C) -> Option<Result<(), CliError>> {
+        fn dispatch(
+            &self,
+            matches: &clap::ArgMatches,
+            ctx: &C,
+        ) -> Option<Result<(), CliError>> {
             for (path, cmd, handler) in &self.entries {
                 if let Some(target) = walk_matches_to_custom(matches, path, cmd.get_name()) {
                     return Some(handler(target, ctx));
@@ -265,15 +267,12 @@ mod tests {
 
     #[test]
     fn graft_top_level_collision_replaces_leaf() {
-        let cli =
-            clap::Command::new("root").subcommand(clap::Command::new("dup").about("from spec"));
+        let cli = clap::Command::new("root")
+            .subcommand(clap::Command::new("dup").about("from spec"));
         let custom = clap::Command::new("dup").about("from custom");
         let grafted = graft_subcommand(cli, &[], custom);
         let dup = grafted.find_subcommand("dup").unwrap();
-        assert_eq!(
-            dup.get_about().map(|s| s.to_string()).as_deref(),
-            Some("from custom")
-        );
+        assert_eq!(dup.get_about().map(|s| s.to_string()).as_deref(), Some("from custom"));
     }
 
     #[test]
@@ -294,8 +293,8 @@ mod tests {
 
     #[test]
     fn graft_leaf_collision_under_parent_replaces() {
-        let webhooks =
-            clap::Command::new("webhooks").subcommand(clap::Command::new("list").about("spec"));
+        let webhooks = clap::Command::new("webhooks")
+            .subcommand(clap::Command::new("list").about("spec"));
         let cli = clap::Command::new("root").subcommand(webhooks);
         let custom_list = clap::Command::new("list").about("custom");
         let grafted = graft_subcommand(cli, &["webhooks".to_string()], custom_list);
@@ -304,10 +303,7 @@ mod tests {
             .unwrap()
             .find_subcommand("list")
             .unwrap();
-        assert_eq!(
-            leaf.get_about().map(|s| s.to_string()).as_deref(),
-            Some("custom")
-        );
+        assert_eq!(leaf.get_about().map(|s| s.to_string()).as_deref(), Some("custom"));
     }
 
     #[test]
@@ -436,14 +432,8 @@ mod tests {
         let base = clap::Command::new("adopt").about("Adopt a pet");
         let augmented = AdoptArgs::augment_args(base);
         // The augmented command should have --name and --tag arguments.
-        let args: Vec<_> = augmented
-            .get_arguments()
-            .map(|a| a.get_id().as_str().to_string())
-            .collect();
-        assert!(
-            args.contains(&"name".to_string()),
-            "missing --name: {args:?}"
-        );
+        let args: Vec<_> = augmented.get_arguments().map(|a| a.get_id().as_str().to_string()).collect();
+        assert!(args.contains(&"name".to_string()), "missing --name: {args:?}");
         assert!(args.contains(&"tag".to_string()), "missing --tag: {args:?}");
     }
 
@@ -452,13 +442,7 @@ mod tests {
         let cmd = AdoptArgs::augment_args(clap::Command::new("adopt"));
         let matches = cmd.get_matches_from(vec!["adopt", "--name", "Fido", "--tag", "dog"]);
         let parsed = AdoptArgs::from_arg_matches(&matches).unwrap();
-        assert_eq!(
-            parsed,
-            AdoptArgs {
-                name: "Fido".into(),
-                tag: Some("dog".into())
-            }
-        );
+        assert_eq!(parsed, AdoptArgs { name: "Fido".into(), tag: Some("dog".into()) });
     }
 
     #[test]
@@ -466,13 +450,7 @@ mod tests {
         let cmd = AdoptArgs::augment_args(clap::Command::new("adopt"));
         let matches = cmd.get_matches_from(vec!["adopt", "--name", "Buddy"]);
         let parsed = AdoptArgs::from_arg_matches(&matches).unwrap();
-        assert_eq!(
-            parsed,
-            AdoptArgs {
-                name: "Buddy".into(),
-                tag: None
-            }
-        );
+        assert_eq!(parsed, AdoptArgs { name: "Buddy".into(), tag: None });
     }
 
     #[test]
@@ -493,9 +471,9 @@ mod tests {
         let erased: crate::app::CliCommandHandler = Box::new(move |matches, ctx| {
             let args = AdoptArgs::from_arg_matches(matches)
                 .map_err(|e| CliError::Validation(e.to_string()))?;
-            let ctx = ctx
-                .downcast_ref::<DummyCtx>()
-                .ok_or_else(|| CliError::Validation("binding context type mismatch".into()))?;
+            let ctx = ctx.downcast_ref::<DummyCtx>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
             handler_fn(args, ctx)
         });
 
@@ -518,9 +496,9 @@ mod tests {
         let erased: crate::app::CliCommandHandler = Box::new(move |matches, ctx| {
             let args = AdoptArgs::from_arg_matches(matches)
                 .map_err(|e| CliError::Validation(e.to_string()))?;
-            let ctx = ctx
-                .downcast_ref::<DummyCtx>()
-                .ok_or_else(|| CliError::Validation("binding context type mismatch".into()))?;
+            let ctx = ctx.downcast_ref::<DummyCtx>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
             handler_fn(args, ctx)
         });
 

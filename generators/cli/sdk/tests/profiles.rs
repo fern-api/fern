@@ -69,10 +69,7 @@ impl Sandbox {
                 return candidate;
             }
         }
-        panic!(
-            "profiles.toml was not written anywhere under {}",
-            home.display()
-        );
+        panic!("profiles.toml was not written anywhere under {}", home.display());
     }
 }
 
@@ -191,14 +188,7 @@ fn create_then_use_then_the_parameter_default_lands() {
 fn create_use_flag_activates_in_one_step() {
     let sandbox = Sandbox::new();
     assert_ok(
-        &sandbox.run(&[
-            "profiles",
-            "create",
-            "prod",
-            "--set",
-            "searchQuery=alice",
-            "--use",
-        ]),
+        &sandbox.run(&["profiles", "create", "prod", "--set", "searchQuery=alice", "--use"]),
         "profiles create --use",
     );
     let current = sandbox.run(&["profiles", "current", "--format", "json"]);
@@ -210,15 +200,7 @@ fn create_use_flag_activates_in_one_step() {
 fn list_json_reports_the_resolved_view_and_marks_the_active_profile() {
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "prod", "--set", "searchQuery=alice"]);
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "acme",
-        "--parent",
-        "prod",
-        "--set",
-        "searchQuery=bob",
-    ]);
+    sandbox.run(&["profiles", "create", "acme", "--parent", "prod", "--set", "searchQuery=bob"]);
     assert_ok(&sandbox.run(&["profiles", "use", "acme"]), "profiles use");
 
     let output = sandbox.run(&["profiles", "list", "--format", "json"]);
@@ -253,14 +235,7 @@ fn list_json_reports_the_resolved_view_and_marks_the_active_profile() {
 #[test]
 fn use_dash_clears_the_active_profile() {
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--set",
-        "searchQuery=alice",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--set", "searchQuery=alice", "--use"]);
     assert_ok(&sandbox.run(&["profiles", "use", "-"]), "profiles use -");
 
     let output = sandbox.run(&["users", "list", "--dry-run", "--format", "json"]);
@@ -290,14 +265,7 @@ fn remove_refuses_without_confirmation_when_stdin_is_not_a_tty() {
 #[test]
 fn remove_with_yes_deletes_the_profile_and_clears_active() {
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--set",
-        "searchQuery=alice",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--set", "searchQuery=alice", "--use"]);
     assert_ok(
         &sandbox.run(&["profiles", "remove", "prod", "--yes"]),
         "profiles remove --yes",
@@ -326,23 +294,10 @@ fn remove_refuses_to_orphan_a_child_profile() {
 #[test]
 fn explicit_flag_beats_the_profile() {
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--set",
-        "searchQuery=alice",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--set", "searchQuery=alice", "--use"]);
 
     let output = sandbox.run(&[
-        "users",
-        "list",
-        "--dry-run",
-        "--format",
-        "json",
-        "--search-query",
-        "zed",
+        "users", "list", "--dry-run", "--format", "json", "--search-query", "zed",
     ]);
     assert_ok(&output, "users list with an explicit flag");
     assert_eq!(
@@ -356,21 +311,11 @@ fn the_profile_beats_the_spec_default() {
     // `user_type` carries `x-fern-default: all`. The profile has to outrank
     // it, or a profile can never change a parameter the spec defaults.
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--set",
-        "user_type=managed",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--set", "user_type=managed", "--use"]);
 
     let output = sandbox.run(&["users", "list", "--dry-run", "--format", "json"]);
     assert_ok(&output, "users list");
-    assert_eq!(
-        dry_run_query(&output),
-        vec!["user_type=managed".to_string()]
-    );
+    assert_eq!(dry_run_query(&output), vec!["user_type=managed".to_string()]);
 }
 
 #[test]
@@ -379,35 +324,18 @@ fn a_profile_may_store_an_enum_display_alias() {
     // wire value `managed`), so a profile must accept it too — and it must
     // reach the wire as the wire value.
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--set",
-        "user_type=Managed",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--set", "user_type=Managed", "--use"]);
 
     let output = sandbox.run(&["users", "list", "--dry-run", "--format", "json"]);
     assert_ok(&output, "users list");
-    assert_eq!(
-        dry_run_query(&output),
-        vec!["user_type=managed".to_string()]
-    );
+    assert_eq!(dry_run_query(&output), vec!["user_type=managed".to_string()]);
 }
 
 #[test]
 fn the_profile_flag_overrides_the_active_profile_for_one_invocation() {
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "prod", "--set", "searchQuery=alice"]);
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "acme",
-        "--set",
-        "searchQuery=bob",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "acme", "--set", "searchQuery=bob", "--use"]);
 
     for flag in [&["-p", "prod"][..], &["--profile", "prod"][..]] {
         let mut args = vec!["users", "list", "--dry-run", "--format", "json"];
@@ -432,14 +360,7 @@ fn the_profile_flag_overrides_the_active_profile_for_one_invocation() {
 fn the_profile_env_var_beats_the_active_profile() {
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "prod", "--set", "searchQuery=alice"]);
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "acme",
-        "--set",
-        "searchQuery=bob",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "acme", "--set", "searchQuery=bob", "--use"]);
 
     let output = sandbox.run_with_env(
         &["users", "list", "--dry-run", "--format", "json"],
@@ -456,15 +377,7 @@ fn the_profile_flag_beats_the_profile_env_var() {
     sandbox.run(&["profiles", "create", "acme", "--set", "searchQuery=bob"]);
 
     let output = sandbox.run_with_env(
-        &[
-            "users",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
-            "-p",
-            "acme",
-        ],
+        &["users", "list", "--dry-run", "--format", "json", "-p", "acme"],
         &[("OPENAPI_FIXTURE_PROFILE", "prod")],
     );
     assert!(dry_run_query(&output).contains(&"filter_term=bob".to_string()));
@@ -476,12 +389,7 @@ fn the_active_profile_base_url_beats_the_env_var() {
     // env var only fills in when the profile has none.
     let sandbox = Sandbox::new();
     sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--base-url",
-        "https://profile.example",
-        "--use",
+        "profiles", "create", "prod", "--base-url", "https://profile.example", "--use",
     ]);
 
     let from_profile = sandbox.run(&["users", "list", "--dry-run", "--format", "json"]);
@@ -500,13 +408,8 @@ fn the_active_profile_base_url_beats_the_env_var() {
     // And the flag beats both.
     let from_flag = sandbox.run_with_env(
         &[
-            "users",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
-            "--base-url",
-            "https://flag.example",
+            "users", "list", "--dry-run", "--format", "json",
+            "--base-url", "https://flag.example",
         ],
         &[("OPENAPI_FIXTURE_BASE_URL", "https://env.example")],
     );
@@ -534,9 +437,8 @@ fn a_selected_profile_reorders_the_credential_chain_above_env() {
     sandbox.run(&["profiles", "create", "prod", "--use"]);
 
     let active = credential_source_order(&sandbox.run(&["auth", "status", "--format", "json"]));
-    let explicit = credential_source_order(
-        &sandbox.run(&["auth", "status", "--format", "json", "-p", "prod"]),
-    );
+    let explicit =
+        credential_source_order(&sandbox.run(&["auth", "status", "--format", "json", "-p", "prod"]));
     for (label, order) in [("active", &active), ("-p", &explicit)] {
         assert!(
             order[0].contains("keyring entry") && order[0].contains("#prod"),
@@ -547,38 +449,20 @@ fn a_selected_profile_reorders_the_credential_chain_above_env() {
             "{label}: the env var must still be a rung: {order:?}",
         );
     }
-    assert_eq!(
-        active, explicit,
-        "selection mechanism must not change the order"
-    );
+    assert_eq!(active, explicit, "selection mechanism must not change the order");
 }
 
 #[test]
 fn an_explicit_profile_flag_outranks_the_base_url_env_var() {
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--base-url",
-        "https://profile.example",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--base-url", "https://profile.example"]);
 
     let flagged = sandbox.run_with_env(
-        &[
-            "users",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
-            "-p",
-            "prod",
-        ],
+        &["users", "list", "--dry-run", "--format", "json", "-p", "prod"],
         &[("OPENAPI_FIXTURE_BASE_URL", "https://env.example")],
     );
     assert_eq!(
-        json(&flagged)["url"],
-        "https://profile.example/users",
+        json(&flagged)["url"], "https://profile.example/users",
         "-p should outrank the env var",
     );
 }
@@ -588,13 +472,7 @@ fn a_profile_selected_by_env_var_also_outranks_the_base_url_env_var() {
     // `<BIN>_PROFILE` selects a profile just like `-p` and `profiles use`
     // do, and the selected profile's stored base URL wins the same way.
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--base-url",
-        "https://profile.example",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--base-url", "https://profile.example"]);
 
     let via_env = sandbox.run_with_env(
         &["users", "list", "--dry-run", "--format", "json"],
@@ -646,23 +524,13 @@ fn a_profile_can_set_an_sdk_variable() {
     // request then failed with "Missing required SDK variable".
     let sandbox = Sandbox::new();
     assert_ok(
-        &sandbox.run(&[
-            "profiles",
-            "create",
-            "prod",
-            "--set",
-            "gardenId=g-profile",
-            "--use",
-        ]),
+        &sandbox.run(&["profiles", "create", "prod", "--set", "gardenId=g-profile", "--use"]),
         "profiles create",
     );
     let output = sandbox.run(&["zones", "list", "--dry-run", "--format", "json"]);
     assert_ok(&output, "zones list");
     assert!(
-        json(&output)["url"]
-            .as_str()
-            .unwrap_or_default()
-            .contains("/gardens/g-profile/"),
+        json(&output)["url"].as_str().unwrap_or_default().contains("/gardens/g-profile/"),
         "{}",
         stdout(&output),
     );
@@ -671,14 +539,7 @@ fn a_profile_can_set_an_sdk_variable() {
 #[test]
 fn an_sdk_variable_follows_the_same_precedence_ladder() {
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--set",
-        "gardenId=g-profile",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--set", "gardenId=g-profile", "--use"]);
     let url = |o: &Output| json(o)["url"].as_str().unwrap_or_default().to_string();
 
     // The active profile beats the env var…
@@ -686,51 +547,21 @@ fn an_sdk_variable_follows_the_same_precedence_ladder() {
         &["zones", "list", "--dry-run", "--format", "json"],
         &[("GARDEN_ID", "g-env")],
     );
-    assert!(
-        url(&active).contains("/gardens/g-profile/"),
-        "{}",
-        url(&active)
-    );
+    assert!(url(&active).contains("/gardens/g-profile/"), "{}", url(&active));
 
     // …so does an explicitly named one…
     let explicit = sandbox.run_with_env(
-        &[
-            "zones",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
-            "-p",
-            "prod",
-        ],
+        &["zones", "list", "--dry-run", "--format", "json", "-p", "prod"],
         &[("GARDEN_ID", "g-env")],
     );
-    assert!(
-        url(&explicit).contains("/gardens/g-profile/"),
-        "{}",
-        url(&explicit)
-    );
+    assert!(url(&explicit).contains("/gardens/g-profile/"), "{}", url(&explicit));
 
     // …and the flag beats everything.
     let flagged = sandbox.run_with_env(
-        &[
-            "zones",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
-            "-p",
-            "prod",
-            "--garden-id",
-            "g-flag",
-        ],
+        &["zones", "list", "--dry-run", "--format", "json", "-p", "prod", "--garden-id", "g-flag"],
         &[("GARDEN_ID", "g-env")],
     );
-    assert!(
-        url(&flagged).contains("/gardens/g-flag/"),
-        "{}",
-        url(&flagged)
-    );
+    assert!(url(&flagged).contains("/gardens/g-flag/"), "{}", url(&flagged));
 }
 
 #[test]
@@ -741,10 +572,7 @@ fn an_sdk_variable_still_resolves_from_env_with_no_profile() {
         &[("GARDEN_ID", "g-env")],
     );
     assert_ok(&output, "zones list");
-    assert!(json(&output)["url"]
-        .as_str()
-        .unwrap_or_default()
-        .contains("/gardens/g-env/"));
+    assert!(json(&output)["url"].as_str().unwrap_or_default().contains("/gardens/g-env/"));
 }
 
 // ── Inheritance ─────────────────────────────────────────────────────────
@@ -753,23 +581,12 @@ fn an_sdk_variable_still_resolves_from_env_with_no_profile() {
 fn a_child_inherits_the_parents_parameters_and_overrides_one() {
     let sandbox = Sandbox::new();
     sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--set",
-        "searchQuery=alice",
-        "--set",
-        "user_type=managed",
+        "profiles", "create", "prod",
+        "--set", "searchQuery=alice",
+        "--set", "user_type=managed",
     ]);
     sandbox.run(&[
-        "profiles",
-        "create",
-        "acme",
-        "--parent",
-        "prod",
-        "--set",
-        "searchQuery=bob",
-        "--use",
+        "profiles", "create", "acme", "--parent", "prod", "--set", "searchQuery=bob", "--use",
     ]);
 
     let output = sandbox.run(&["users", "list", "--dry-run", "--format", "json"]);
@@ -777,10 +594,7 @@ fn a_child_inherits_the_parents_parameters_and_overrides_one() {
     assert_eq!(
         dry_run_query(&output),
         // `user_type` inherited, `filter_term` overridden.
-        vec![
-            "filter_term=bob".to_string(),
-            "user_type=managed".to_string()
-        ],
+        vec!["filter_term=bob".to_string(), "user_type=managed".to_string()],
     );
 }
 
@@ -836,14 +650,7 @@ fn an_invalid_default_format_is_rejected_at_create_time() {
 #[test]
 fn a_profile_default_format_applies_when_nothing_else_asks() {
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--default-format",
-        "yaml",
-        "--use",
-    ]);
+    sandbox.run(&["profiles", "create", "prod", "--default-format", "yaml", "--use"]);
 
     // No `--format`, and stdout is a pipe (so the TTY default would be json).
     let output = sandbox.run(&["users", "list", "--dry-run"]);
@@ -893,25 +700,14 @@ fn a_named_but_missing_profile_errors_and_never_falls_back_silently() {
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "prod"]);
 
-    let output = sandbox.run(&[
-        "users",
-        "list",
-        "--dry-run",
-        "--format",
-        "json",
-        "-p",
-        "nope",
-    ]);
+    let output = sandbox.run(&["users", "list", "--dry-run", "--format", "json", "-p", "nope"]);
     assert_ne!(output.status.code(), Some(0), "{}", stdout(&output));
     let message = json(&output)["error"]["message"]
         .as_str()
         .unwrap_or_default()
         .to_string();
     assert!(message.contains("unknown profile `nope`"), "{message}");
-    assert!(
-        message.contains("prod"),
-        "known profiles must be listed: {message}"
-    );
+    assert!(message.contains("prod"), "known profiles must be listed: {message}");
 }
 
 #[test]
@@ -943,24 +739,14 @@ fn a_value_outside_the_parameters_enum_is_rejected_at_create_time() {
 #[test]
 fn creating_a_profile_that_exists_needs_force() {
     let sandbox = Sandbox::new();
-    assert_ok(
-        &sandbox.run(&["profiles", "create", "prod"]),
-        "first create",
-    );
+    assert_ok(&sandbox.run(&["profiles", "create", "prod"]), "first create");
 
     let output = sandbox.run(&["profiles", "create", "prod"]);
     assert_ne!(output.status.code(), Some(0));
     assert!(stdout(&output).contains("--force"), "{}", stdout(&output));
 
     assert_ok(
-        &sandbox.run(&[
-            "profiles",
-            "create",
-            "prod",
-            "--force",
-            "--set",
-            "searchQuery=alice",
-        ]),
+        &sandbox.run(&["profiles", "create", "prod", "--force", "--set", "searchQuery=alice"]),
         "create --force",
     );
 }
@@ -970,19 +756,10 @@ fn force_preserves_fields_the_rerun_did_not_mention() {
     // A re-run that only passes `--set` must not wipe the profile's base URL.
     let sandbox = Sandbox::new();
     sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--base-url",
-        "https://profile.example",
+        "profiles", "create", "prod", "--base-url", "https://profile.example",
     ]);
     sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--force",
-        "--set",
-        "searchQuery=alice",
+        "profiles", "create", "prod", "--force", "--set", "searchQuery=alice",
     ]);
 
     let rows = json(&sandbox.run(&["profiles", "list", "--format", "json"]));
@@ -1000,11 +777,7 @@ fn a_broken_active_profile_leaves_the_profiles_group_usable() {
     sandbox.run(&["profiles", "create", "prod", "--use"]);
     let path = sandbox.profiles_path();
     let text = std::fs::read_to_string(&path).unwrap();
-    std::fs::write(
-        &path,
-        text.replace("active = \"prod\"", "active = \"ghost\""),
-    )
-    .unwrap();
+    std::fs::write(&path, text.replace("active = \"prod\"", "active = \"ghost\"")).unwrap();
 
     // A real command errors, and says how to fix it.
     let broken = sandbox.run(&["users", "list", "--dry-run", "--format", "json"]);
@@ -1019,16 +792,10 @@ fn a_broken_active_profile_leaves_the_profiles_group_usable() {
     );
 
     // But the group that fixes it still works, as do `--help` and `--schema`.
-    assert_ok(
-        &sandbox.run(&["profiles", "list", "--format", "json"]),
-        "profiles list",
-    );
+    assert_ok(&sandbox.run(&["profiles", "list", "--format", "json"]), "profiles list");
     assert_ok(&sandbox.run(&["--help"]), "--help");
     assert_ok(&sandbox.run(&["--schema"]), "--schema");
-    assert_ok(
-        &sandbox.run(&["profiles", "use", "prod"]),
-        "profiles use prod",
-    );
+    assert_ok(&sandbox.run(&["profiles", "use", "prod"]), "profiles use prod");
     assert_ok(
         &sandbox.run(&["users", "list", "--dry-run", "--format", "json"]),
         "users list after the repair",
@@ -1079,15 +846,10 @@ fn secrets_never_reach_profiles_toml() {
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "root"]);
     sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--credential",
-        "root",
-        "--oauth-client-id",
-        "public-client-id",
-        "--set",
-        "searchQuery=alice",
+        "profiles", "create", "prod",
+        "--credential", "root",
+        "--oauth-client-id", "public-client-id",
+        "--set", "searchQuery=alice",
     ]);
     let text = std::fs::read_to_string(sandbox.profiles_path()).unwrap();
     // A *borrowed* slot is recorded; a slot equal to the profile's own name is
@@ -1095,10 +857,7 @@ fn secrets_never_reach_profiles_toml() {
     assert!(text.contains("credential = \"root\""), "{text}");
     // The client id is public by construction (RFC 6749 §2.2) and is meant
     // to be here; nothing that looks like a token is.
-    assert!(
-        text.contains("oauth_client_id = \"public-client-id\""),
-        "{text}"
-    );
+    assert!(text.contains("oauth_client_id = \"public-client-id\""), "{text}");
     for forbidden in ["token", "secret", "password", "api_key"] {
         assert!(
             !text.to_lowercase().contains(forbidden),
@@ -1170,10 +929,7 @@ fn schema_advertises_the_profiles_commands_and_the_profile_flag() {
     assert!(flags.contains(&"--profile".to_string()), "{flags:?}");
 
     // The operation catalog is unchanged in shape.
-    assert!(!parsed["operations"]
-        .as_array()
-        .expect("operations")
-        .is_empty());
+    assert!(!parsed["operations"].as_array().expect("operations").is_empty());
 }
 
 #[test]
@@ -1192,14 +948,9 @@ fn the_profiles_file_lives_beside_the_other_credential_state() {
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "prod"]);
     let path = sandbox.profiles_path();
+    assert_eq!(path.file_name().and_then(|n| n.to_str()), Some("profiles.toml"));
     assert_eq!(
-        path.file_name().and_then(|n| n.to_str()),
-        Some("profiles.toml")
-    );
-    assert_eq!(
-        path.parent()
-            .and_then(Path::file_name)
-            .and_then(|n| n.to_str()),
+        path.parent().and_then(Path::file_name).and_then(|n| n.to_str()),
         Some("openapi-fixture"),
     );
 }
@@ -1221,14 +972,7 @@ fn a_child_given_its_own_credential_does_not_overwrite_the_parents() {
     );
     assert_ok(
         &sandbox.run_with_env(
-            &[
-                "profiles",
-                "create",
-                "kid",
-                "--parent",
-                "prod",
-                "--from-env",
-            ],
+            &["profiles", "create", "kid", "--parent", "prod", "--from-env"],
             &[("OPENAPI_FIXTURE_API_KEY", "child-key")],
         ),
         "create child with its own credential",
@@ -1288,10 +1032,7 @@ fn a_profile_can_set_retries_and_the_flag_and_env_outrank_it() {
     );
 
     let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
-    assert!(
-        listed.contains("\"retries\": 7"),
-        "profile should carry it: {listed}"
-    );
+    assert!(listed.contains("\"retries\": 7"), "profile should carry it: {listed}");
 
     // `profiles current` surfaces it too, so "what will this command do?" is answerable.
     let current = stdout(&sandbox.run(&["profiles", "current", "--format", "json"]));
@@ -1308,10 +1049,7 @@ fn retries_zero_is_distinct_from_unset() {
         "create with --retries 0",
     );
     let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
-    assert!(
-        listed.contains("\"retries\": 0"),
-        "0 must persist: {listed}"
-    );
+    assert!(listed.contains("\"retries\": 0"), "0 must persist: {listed}");
 }
 
 #[test]
@@ -1355,14 +1093,8 @@ fn exactly_one_row_is_marked_active_even_when_env_credentials_are_set() {
     // ...and exactly one row claims to be active.
     let active = rows.iter().filter(|r| r["active"] == "*").count();
     assert_eq!(active, 1, "exactly one ACTIVE marker expected: {listed}");
-    let marked = rows
-        .iter()
-        .find(|r| r["active"] == "*")
-        .expect("one active");
-    assert_eq!(
-        marked["profile"], "staging",
-        "the selected profile is the active one"
-    );
+    let marked = rows.iter().find(|r| r["active"] == "*").expect("one active");
+    assert_eq!(marked["profile"], "staging", "the selected profile is the active one");
 }
 
 #[test]
@@ -1392,29 +1124,17 @@ fn the_hint_is_suppressed_when_nothing_is_missing() {
         &["profiles", "create", "withcred", "--from-env"],
         &[("OPENAPI_FIXTURE_API_KEY", "shell-key")],
     );
-    assert!(
-        !stderr(&captured).contains("No credential stored yet"),
-        "{}",
-        stderr(&captured)
-    );
+    assert!(!stderr(&captured).contains("No credential stored yet"), "{}", stderr(&captured));
 
     sandbox.run(&["profiles", "create", "parent"]);
     let child = sandbox.run(&["profiles", "create", "kid", "--parent", "parent"]);
-    assert!(
-        !stderr(&child).contains("No credential stored yet"),
-        "{}",
-        stderr(&child)
-    );
+    assert!(!stderr(&child).contains("No credential stored yet"), "{}", stderr(&child));
 
     let with_env = sandbox.run_with_env(
         &["profiles", "create", "envuser"],
         &[("OPENAPI_FIXTURE_API_KEY", "shell-key")],
     );
-    assert!(
-        !stderr(&with_env).contains("No credential stored yet"),
-        "{}",
-        stderr(&with_env)
-    );
+    assert!(!stderr(&with_env).contains("No credential stored yet"), "{}", stderr(&with_env));
 }
 
 #[test]
@@ -1431,11 +1151,7 @@ fn auth_login_from_env_captures_into_the_active_profile() {
         &[("OPENAPI_FIXTURE_API_KEY", "prod-key")],
     );
     assert_ok(&first, "auth login --from-env");
-    assert!(
-        stderr(&first).contains("profile `prod`"),
-        "{}",
-        stderr(&first)
-    );
+    assert!(stderr(&first).contains("profile `prod`"), "{}", stderr(&first));
 
     // Switching and capturing again must land in a *different* slot.
     sandbox.run(&["profiles", "use", "staging"]);
@@ -1444,11 +1160,7 @@ fn auth_login_from_env_captures_into_the_active_profile() {
         &[("OPENAPI_FIXTURE_API_KEY", "staging-key")],
     );
     assert_ok(&second, "second capture");
-    assert!(
-        stderr(&second).contains("profile `staging`"),
-        "{}",
-        stderr(&second)
-    );
+    assert!(stderr(&second).contains("profile `staging`"), "{}", stderr(&second));
 
     // Each profile now reads its own.
     for profile in ["prod", "staging"] {
@@ -1473,10 +1185,7 @@ fn auth_login_from_env_explains_itself_when_no_variable_is_set() {
     assert_ne!(output.status.code(), Some(0), "{}", stdout(&output));
     let text = format!("{}{}", stdout(&output), stderr(&output));
     assert!(text.contains("--from-env"), "{text}");
-    assert!(
-        text.contains("auth status"),
-        "should point at the surface that lists them: {text}"
-    );
+    assert!(text.contains("auth status"), "should point at the surface that lists them: {text}");
 }
 
 #[test]
@@ -1525,11 +1234,7 @@ fn no_near_miss_warning_when_the_real_variable_is_set_or_unrelated() {
         &["profiles", "list", "--human"],
         &[("SOMETHING_COMPLETELY_UNRELATED", "x")],
     );
-    assert!(
-        !stderr(&unrelated).contains("Did you mean"),
-        "{}",
-        stderr(&unrelated)
-    );
+    assert!(!stderr(&unrelated).contains("Did you mean"), "{}", stderr(&unrelated));
 }
 
 #[test]
@@ -1550,10 +1255,7 @@ fn the_env_row_labels_its_variables_and_prose_sorts_last() {
     let text = stdout(&output);
     let header = text.lines().next().expect("a header row");
 
-    assert!(
-        header.contains("VARIABLES"),
-        "env vars need their own label: {header}"
-    );
+    assert!(header.contains("VARIABLES"), "env vars need their own label: {header}");
     assert!(
         !header.contains("CREDENTIAL "),
         "the old profile key must not leak into the header: {header}",
@@ -1597,22 +1299,14 @@ fn show_and_current_report_the_oauth_client_id() {
     // answer "which client is this?" by name.
     let sandbox = Sandbox::new();
     sandbox.run(&[
-        "profiles",
-        "create",
-        "prod",
-        "--oauth-client-id",
-        "public-client-id",
-        "--use",
+        "profiles", "create", "prod", "--oauth-client-id", "public-client-id", "--use",
     ]);
 
     let shown = json(&sandbox.run(&["profiles", "show", "prod", "--format", "json"]));
     assert_eq!(shown["oauth_client_id"], "public-client-id", "{shown:#?}");
 
     let current = json(&sandbox.run(&["profiles", "current", "--format", "json"]));
-    assert_eq!(
-        current["oauth_client_id"], "public-client-id",
-        "{current:#?}"
-    );
+    assert_eq!(current["oauth_client_id"], "public-client-id", "{current:#?}");
 }
 
 #[test]
@@ -1622,11 +1316,7 @@ fn list_folds_the_oauth_client_id_into_the_account_column() {
     // OAuth client id. Two mostly-empty columns told the reader less.
     let sandbox = Sandbox::new();
     sandbox.run(&[
-        "profiles",
-        "create",
-        "oauth",
-        "--oauth-client-id",
-        "OQpublicclientid1234567890",
+        "profiles", "create", "oauth", "--oauth-client-id", "OQpublicclientid1234567890",
     ]);
 
     let rows = json(&sandbox.run(&["profiles", "list", "--format", "json"]));
@@ -1644,13 +1334,7 @@ fn show_prints_identity_fields_in_a_fixed_order() {
     // same layout whether that identifier is a basic-auth account or an
     // OAuth client id, rather than alphabetical key order.
     let sandbox = Sandbox::new();
-    sandbox.run(&[
-        "profiles",
-        "create",
-        "oauth",
-        "--oauth-client-id",
-        "public-client-id",
-    ]);
+    sandbox.run(&["profiles", "create", "oauth", "--oauth-client-id", "public-client-id"]);
     sandbox.run(&["profiles", "set", "oauth", "OPENAPI_FIXTURE_RETRIES=3"]);
 
     let output = sandbox.run(&["profiles", "show", "oauth", "--human"]);
@@ -1660,11 +1344,7 @@ fn show_prints_identity_fields_in_a_fixed_order() {
         .lines()
         .filter_map(|line| line.split_whitespace().next())
         .collect();
-    assert_eq!(
-        keys,
-        ["profile", "active", "oauth_client_id", "retries"],
-        "{text}"
-    );
+    assert_eq!(keys, ["profile", "active", "oauth_client_id", "retries"], "{text}");
 }
 
 #[test]
@@ -1687,10 +1367,7 @@ fn show_names_the_known_profiles_when_the_name_is_wrong() {
     let output = sandbox.run(&["profiles", "show", "nope"]);
     assert_ne!(output.status.code(), Some(0));
     let text = format!("{}{}", stdout(&output), stderr(&output));
-    assert!(
-        text.contains("test_1"),
-        "should list what does exist: {text}"
-    );
+    assert!(text.contains("test_1"), "should list what does exist: {text}");
 }
 
 #[test]
@@ -1713,9 +1390,7 @@ fn show_honours_the_profile_flag_when_no_name_is_given() {
     assert_eq!(json(&bare)["active"], serde_json::Value::Bool(true));
 
     // an explicit name beats -p, since it is the more specific statement
-    let both = sandbox.run(&[
-        "-p", "test_2", "profiles", "show", "test_1", "--format", "json",
-    ]);
+    let both = sandbox.run(&["-p", "test_2", "profiles", "show", "test_1", "--format", "json"]);
     assert_eq!(json(&both)["profile"], "test_1");
 }
 

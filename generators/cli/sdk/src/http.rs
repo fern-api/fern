@@ -288,7 +288,9 @@ impl HttpConfig {
         let mut extra_root_certs_pem: Vec<Vec<u8>> = self.extra_root_certs_pem.clone();
         if let Some(path) = ca_bundle_path(prefix, &profile) {
             let pem = std::fs::read(&path).map_err(|e| {
-                CliError::Other(anyhow::anyhow!("failed to read CA bundle from {path}: {e}"))
+                CliError::Other(anyhow::anyhow!(
+                    "failed to read CA bundle from {path}: {e}"
+                ))
             })?;
             // Validate the bundle here so transport callers don't have to
             // re-implement the "empty / non-PEM" diagnostic. We parse but
@@ -355,7 +357,9 @@ impl HttpConfig {
         // --- Runtime trust roots from env / profile ---
         if let Some(path) = ca_bundle_path(prefix, &profile) {
             let pem = std::fs::read(&path).map_err(|e| {
-                CliError::Other(anyhow::anyhow!("failed to read CA bundle from {path}: {e}"))
+                CliError::Other(anyhow::anyhow!(
+                    "failed to read CA bundle from {path}: {e}"
+                ))
             })?;
             let source = format!("CA bundle at {path}");
             for cert in parse_pem_bundle(&pem, &source)? {
@@ -396,7 +400,8 @@ impl HttpConfig {
                 // `Policy::custom` replaces reqwest's built-in hop limit, so
                 // re-impose it here or a redirect loop runs forever.
                 if attempt.previous().len() >= MAX_REDIRECTS {
-                    return attempt.error(format!("too many redirects (limit {MAX_REDIRECTS})"));
+                    return attempt
+                        .error(format!("too many redirects (limit {MAX_REDIRECTS})"));
                 }
                 // Render both origins before deciding: `Attempt::error`
                 // consumes `attempt`, so nothing may still borrow it.
@@ -464,9 +469,9 @@ impl HttpConfig {
             builder = builder.connect_timeout(std::time::Duration::from_secs(secs));
         }
 
-        builder
-            .build()
-            .map_err(|e| CliError::Other(anyhow::anyhow!("failed to build HTTP client: {e}")))
+        builder.build().map_err(|e| {
+            CliError::Other(anyhow::anyhow!("failed to build HTTP client: {e}"))
+        })
     }
 }
 
@@ -582,7 +587,8 @@ fn warn_insecure_once(name: &str, active_key: &str) {
 /// silencing them across multiple binaries built on the SDK in the same
 /// process (e.g. test harnesses, library consumers wiring up two CLIs).
 fn is_first_emission(name: &str, kind: &str) -> bool {
-    static EMITTED: LazyLock<Mutex<HashSet<String>>> = LazyLock::new(|| Mutex::new(HashSet::new()));
+    static EMITTED: LazyLock<Mutex<HashSet<String>>> =
+        LazyLock::new(|| Mutex::new(HashSet::new()));
     let mut guard = EMITTED.lock().unwrap_or_else(|e| e.into_inner());
     guard.insert(format!("{name}::{kind}"))
 }
@@ -853,11 +859,7 @@ pub fn compute_backoff_delay_with_rand(
     let jitter_span = raw_ms * policy.jitter;
     let offset = (rand_unit.clamp(0.0, 1.0) - 0.5) * jitter_span;
     let ms = (raw_ms + offset).max(0.0);
-    let capped = if ms > u64::MAX as f64 {
-        u64::MAX
-    } else {
-        ms as u64
-    };
+    let capped = if ms > u64::MAX as f64 { u64::MAX } else { ms as u64 };
     Duration::from_millis(capped)
 }
 
@@ -1200,10 +1202,7 @@ mod tests {
         let cfg = HttpConfig::new("elevenlabs").unwrap();
         assert_eq!(
             cfg.user_agent(),
-            format!(
-                "elevenlabs-cli/{} partner-app/3.1",
-                env!("CARGO_PKG_VERSION")
-            ),
+            format!("elevenlabs-cli/{} partner-app/3.1", env!("CARGO_PKG_VERSION")),
         );
     }
 
@@ -1392,10 +1391,7 @@ mod tests {
         let cfg = HttpConfig::new("cli-empty-bundle-test").unwrap();
         let err = cfg.build_client().expect_err("empty bundle should error");
         let msg = err.to_string().to_lowercase();
-        assert!(
-            msg.contains("no pem") || msg.contains("empty"),
-            "error: {msg}"
-        );
+        assert!(msg.contains("no pem") || msg.contains("empty"), "error: {msg}");
     }
 
     #[test]
@@ -1478,11 +1474,8 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
             .with_extra_root_cert(TEST_PEM.as_bytes())
             .unwrap();
         let resolved = cfg.resolve().expect("resolve should succeed");
-        assert_eq!(
-            resolved.extra_root_certs_pem.len(),
-            2,
-            "compile-time PEM first, env PEM appended"
-        );
+        assert_eq!(resolved.extra_root_certs_pem.len(), 2,
+            "compile-time PEM first, env PEM appended");
     }
 
     #[test]
@@ -1638,10 +1631,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         assert_eq!(parts[3].len(), 4);
         assert_eq!(parts[4].len(), 12);
         // Version nibble = 4
-        assert!(
-            parts[2].starts_with('4'),
-            "version nibble should be 4: {key}"
-        );
+        assert!(parts[2].starts_with('4'), "version nibble should be 4: {key}");
     }
 
     #[test]
@@ -1687,23 +1677,14 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
     #[test]
     fn decide_retry_no_retry_flag_short_circuits() {
         let p = RetryPolicy::default();
-        let outcome = RetryOutcome {
-            status: Some(503),
-            retry_after: None,
-        };
+        let outcome = RetryOutcome { status: Some(503), retry_after: None };
         assert!(decide_retry(0, &outcome, &p, "GET", false, true).is_none());
     }
 
     #[test]
     fn decide_retry_exhausts_max_attempts() {
-        let p = RetryPolicy {
-            max_attempts: 3,
-            ..RetryPolicy::default()
-        };
-        let outcome = RetryOutcome {
-            status: Some(503),
-            retry_after: None,
-        };
+        let p = RetryPolicy { max_attempts: 3, ..RetryPolicy::default() };
+        let outcome = RetryOutcome { status: Some(503), retry_after: None };
         assert!(decide_retry(0, &outcome, &p, "GET", false, false).is_some());
         assert!(decide_retry(1, &outcome, &p, "GET", false, false).is_some());
         assert!(decide_retry(2, &outcome, &p, "GET", false, false).is_none());
@@ -1712,20 +1693,14 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
     #[test]
     fn decide_retry_post_5xx_without_idempotent_no_retry() {
         let p = RetryPolicy::default();
-        let outcome = RetryOutcome {
-            status: Some(503),
-            retry_after: None,
-        };
+        let outcome = RetryOutcome { status: Some(503), retry_after: None };
         assert!(decide_retry(0, &outcome, &p, "POST", false, false).is_none());
     }
 
     #[test]
     fn decide_retry_post_429_always_safe() {
         let p = RetryPolicy::default();
-        let outcome = RetryOutcome {
-            status: Some(429),
-            retry_after: None,
-        };
+        let outcome = RetryOutcome { status: Some(429), retry_after: None };
         assert!(decide_retry(0, &outcome, &p, "POST", false, false).is_some());
     }
 
@@ -1790,8 +1765,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         let mut env = EnvGuard::default();
         env.unset("REDIRECTREFUSE_ALLOW_CROSS_HOST_REDIRECTS");
 
-        let target =
-            always_respond(wiremock::ResponseTemplate::new(200).set_body_string("{}")).await;
+        let target = always_respond(wiremock::ResponseTemplate::new(200).set_body_string("{}")).await;
         // Same machine, different *host string* — a genuine cross-host hop
         // without needing DNS or a second interface.
         let target_url = format!("http://localhost:{}/", target.address().port());
@@ -2040,10 +2014,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
             .await
             .expect("body");
 
-        assert!(
-            body.contains("reached"),
-            "expected to land on the target, got: {body}"
-        );
+        assert!(body.contains("reached"), "expected to land on the target, got: {body}");
         drop(env);
     }
 
@@ -2082,9 +2053,6 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
             .await
             .expect("body");
 
-        assert!(
-            body.contains("final"),
-            "expected to land on /final, got: {body}"
-        );
+        assert!(body.contains("final"), "expected to land on /final, got: {body}");
     }
 }

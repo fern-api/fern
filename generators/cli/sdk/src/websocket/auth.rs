@@ -132,7 +132,9 @@ impl WsAuth {
                 append_query_param(url, key, secret.expose_secret());
                 Ok(())
             }
-            WsAuth::Header(name, source) => apply_single_header(name, source, headers),
+            WsAuth::Header(name, source) => {
+                apply_single_header(name, source, headers)
+            }
             WsAuth::Headers(pairs) => {
                 for (name, source) in pairs {
                     apply_single_header(name, source, headers)?;
@@ -165,10 +167,7 @@ impl WsAuth {
                      (got {observed})"
                 ))
             })?;
-            obj.insert(
-                field.clone(),
-                Value::String(secret.expose_secret().to_string()),
-            );
+            obj.insert(field.clone(), Value::String(secret.expose_secret().to_string()));
         }
         Ok(())
     }
@@ -284,10 +283,7 @@ mod tests {
         WsAuth::QueryParam("authorization".into(), literal("tok"))
             .apply_to_url_and_headers(&mut url, &mut headers)
             .unwrap();
-        assert_eq!(
-            url,
-            "wss://api.example.com/v1/socket?agent_id=abc&authorization=tok"
-        );
+        assert_eq!(url, "wss://api.example.com/v1/socket?agent_id=abc&authorization=tok");
     }
 
     #[test]
@@ -312,10 +308,7 @@ mod tests {
             .apply_to_url_and_headers(&mut url, &mut headers)
             .unwrap();
         assert_eq!(url, "wss://api.example.com/");
-        assert_eq!(
-            headers,
-            vec![("xi-api-key".to_string(), "sk-test".to_string())]
-        );
+        assert_eq!(headers, vec![("xi-api-key".to_string(), "sk-test".to_string())]);
     }
 
     #[test]
@@ -407,10 +400,8 @@ mod tests {
             let err = WsAuth::Header((*reserved).into(), literal("x"))
                 .apply_to_url_and_headers(&mut url, &mut headers)
                 .expect_err(reserved);
-            assert!(
-                matches!(err, CliError::Validation(_)),
-                "reserved `{reserved}` should validation-error, got: {err:?}"
-            );
+            assert!(matches!(err, CliError::Validation(_)),
+                "reserved `{reserved}` should validation-error, got: {err:?}");
         }
         // Sanity: a non-reserved name passes.
         assert!(WsAuth::Header("X-My-Custom".into(), literal("x"))
@@ -423,18 +414,21 @@ mod tests {
         let mut url = "wss://api.openai.com/v1/realtime?model=gpt-4o".to_string();
         let mut headers = Vec::new();
         WsAuth::Headers(vec![
-            ("Authorization".into(), literal("Bearer sk-openai-test")),
-            ("OpenAI-Beta".into(), literal("realtime=v1")),
+            (
+                "Authorization".into(),
+                literal("Bearer sk-openai-test"),
+            ),
+            (
+                "OpenAI-Beta".into(),
+                literal("realtime=v1"),
+            ),
         ])
         .apply_to_url_and_headers(&mut url, &mut headers)
         .unwrap();
         assert_eq!(
             headers,
             vec![
-                (
-                    "Authorization".to_string(),
-                    "Bearer sk-openai-test".to_string()
-                ),
+                ("Authorization".to_string(), "Bearer sk-openai-test".to_string()),
                 ("OpenAI-Beta".to_string(), "realtime=v1".to_string()),
             ]
         );
@@ -479,10 +473,7 @@ mod tests {
             .unwrap();
         assert_eq!(
             headers,
-            vec![(
-                "Authorization".to_string(),
-                "Bearer sk-openai-test".to_string()
-            )]
+            vec![("Authorization".to_string(), "Bearer sk-openai-test".to_string())]
         );
     }
 
@@ -524,7 +515,8 @@ mod tests {
             .apply_to_url_and_headers(&mut url, &mut headers)
             .unwrap();
         assert_eq!(
-            headers[0].1, "Token Token already-prefixed",
+            headers[0].1,
+            "Token Token already-prefixed",
             "token() always prepends — by design"
         );
     }

@@ -141,23 +141,16 @@ fn auth_status_lists_the_stored_rungs() {
 
         let listed = sources(None);
         assert!(
-            listed
-                .iter()
-                .any(|s| s.contains("client_id") && s.contains("oauth#prod")),
+            listed.iter().any(|s| s.contains("client_id") && s.contains("oauth#prod")),
             "{listed:?}",
         );
         assert!(
-            listed
-                .iter()
-                .any(|s| s.contains("client_secret") && s.contains("oauth#prod")),
+            listed.iter().any(|s| s.contains("client_secret") && s.contains("oauth#prod")),
             "{listed:?}",
         );
         // The env vars stay listed — a user asking "is OA_CLIENT_ID picked
         // up?" needs to see them either way.
-        assert!(
-            listed.iter().any(|s| s.contains("OA_CLIENT_ID")),
-            "{listed:?}"
-        );
+        assert!(listed.iter().any(|s| s.contains("OA_CLIENT_ID")), "{listed:?}");
     });
 }
 
@@ -167,11 +160,7 @@ fn both_halves_are_required() {
     with_clean_env(|| {
         run(&["oa", "profiles", "create", "prod", "--use"]);
         fern_cli_sdk::auth::active_store()
-            .set(
-                "oa",
-                "oauth#prod",
-                &serde_json::json!({"client_id": "id-1"}).to_string(),
-            )
+            .set("oa", "oauth#prod", &serde_json::json!({"client_id": "id-1"}).to_string())
             .unwrap();
         assert!(!logged_in(None), "a client id alone is not a credential");
     });
@@ -227,25 +216,12 @@ fn the_client_id_may_come_from_the_profile_but_the_secret_may_not() {
     // legitimate home for it. The secret has no plaintext rung, so a
     // profile carrying only the id is still not logged in.
     with_clean_env(|| {
-        run(&[
-            "oa",
-            "profiles",
-            "create",
-            "prod",
-            "--oauth-client-id",
-            "public-id",
-            "--use",
-        ]);
-        assert!(
-            !logged_in(None),
-            "an id without a secret is not a credential"
-        );
+        run(&["oa", "profiles", "create", "prod", "--oauth-client-id", "public-id", "--use"]);
+        assert!(!logged_in(None), "an id without a secret is not a credential");
 
         let listed = sources(None);
         assert!(
-            listed
-                .iter()
-                .any(|s| s.contains("oauth_client_id in the active profile")),
+            listed.iter().any(|s| s.contains("oauth_client_id in the active profile")),
             "the profile's client id should be reported as a rung: {listed:?}",
         );
 
@@ -281,12 +257,7 @@ fn a_keyring_client_id_is_shown_by_list_show_and_current() {
     with_clean_env(|| {
         run(&["oa", "profiles", "create", "prod", "--use"]);
         let (code, output) = run(&[
-            "oa",
-            "profiles",
-            "set",
-            "prod",
-            "OA_CLIENT_ID=keyring-id",
-            "OA_CLIENT_SECRET=s",
+            "oa", "profiles", "set", "prod", "OA_CLIENT_ID=keyring-id", "OA_CLIENT_SECRET=s",
         ]);
         assert_eq!(code, 0, "{output}");
 
@@ -313,15 +284,7 @@ fn the_keyring_client_id_outranks_the_plaintext_one_in_show() {
     // Reported in the order the provider resolves them, so `show` names the
     // id a request will actually send.
     with_clean_env(|| {
-        run(&[
-            "oa",
-            "profiles",
-            "create",
-            "prod",
-            "--oauth-client-id",
-            "plain-id",
-            "--use",
-        ]);
+        run(&["oa", "profiles", "create", "prod", "--oauth-client-id", "plain-id", "--use"]);
         store("prod", "keyring-id", "s");
 
         let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);

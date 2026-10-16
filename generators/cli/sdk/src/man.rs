@@ -24,11 +24,7 @@ pub fn wants_man(args: &[String]) -> bool {
 /// CLI surface (subcommands, flags, etc.) so the generated page is complete.
 ///
 /// Returns an IO error if writing fails.
-pub fn generate_man_to(
-    cmd: Command,
-    bin_name: &str,
-    writer: &mut dyn std::io::Write,
-) -> std::io::Result<()> {
+pub fn generate_man_to(cmd: Command, bin_name: &str, writer: &mut dyn std::io::Write) -> std::io::Result<()> {
     let cmd = cmd.name(bin_name.to_owned());
     let man = clap_mangen::Man::new(cmd);
     let mut buf = Vec::new();

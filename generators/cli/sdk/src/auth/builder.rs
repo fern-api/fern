@@ -146,8 +146,10 @@ pub fn render_auth_help_section(bindings: &[(String, SchemeBinding)]) -> Option<
     let mut out = String::from("Authentication:\n");
     for (name, binding) in bindings {
         let sources = describe_binding_sources(binding);
-        let _ =
-            std::fmt::Write::write_fmt(&mut out, format_args!("  {name:<max_name$}   {sources}\n"));
+        let _ = std::fmt::Write::write_fmt(
+            &mut out,
+            format_args!("  {name:<max_name$}   {sources}\n"),
+        );
     }
     Some(out)
 }
@@ -166,12 +168,7 @@ pub fn render_auth_layers_help(layers: &[(String, Vec<String>)]) -> Option<Strin
     if layers.is_empty() {
         return None;
     }
-    let max_name = layers
-        .iter()
-        .map(|(n, _)| n.len())
-        .max()
-        .unwrap_or(0)
-        .max(8);
+    let max_name = layers.iter().map(|(n, _)| n.len()).max().unwrap_or(0).max(8);
     let mut out = String::new();
     for (name, hints) in layers {
         let sources = if hints.is_empty() {
@@ -179,8 +176,10 @@ pub fn render_auth_layers_help(layers: &[(String, Vec<String>)]) -> Option<Strin
         } else {
             format!("{} (optional)", hints.join(" / "))
         };
-        let _ =
-            std::fmt::Write::write_fmt(&mut out, format_args!("  {name:<max_name$}   {sources}\n"));
+        let _ = std::fmt::Write::write_fmt(
+            &mut out,
+            format_args!("  {name:<max_name$}   {sources}\n"),
+        );
     }
     Some(out)
 }
@@ -451,7 +450,8 @@ pub fn build_provider_with_strategy(
         // isn't in the registry. Don't warn when there are no declared
         // schemes (that's legacy-style usage with no spec security).
         if declared.is_none() && !security_schemes.is_empty() {
-            let declared_names: Vec<&str> = security_schemes.keys().map(String::as_str).collect();
+            let declared_names: Vec<&str> =
+                security_schemes.keys().map(String::as_str).collect();
             tracing::warn!(
                 scheme = name.as_str(),
                 declared = ?declared_names,
@@ -563,9 +563,7 @@ mod tests {
         )];
         let p = build_provider_from_doc(&doc, &bindings);
         assert_eq!(p.name(), "any");
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("Bearer tok"));
     }
 
@@ -582,9 +580,7 @@ mod tests {
             SchemeBinding::Token(AuthCredentialSource::literal("k")),
         )];
         let p = build_provider_from_doc(&doc, &bindings);
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-api-key").as_deref(), Some("k"));
     }
 
@@ -598,8 +594,8 @@ mod tests {
     }
 
     fn api_key_matches(value: Option<&str>) -> Arc<clap::ArgMatches> {
-        let cmd =
-            clap::Command::new("t").arg(clap::Arg::new("api-key").long("api-key").num_args(1));
+        let cmd = clap::Command::new("t")
+            .arg(clap::Arg::new("api-key").long("api-key").num_args(1));
         let mut argv = vec!["t".to_string()];
         if let Some(v) = value {
             argv.extend(["--api-key".to_string(), v.to_string()]);
@@ -620,8 +616,7 @@ mod tests {
         let bindings = finalize_bindings(bindings, &api_key_matches(flag));
         let p = build_provider_from_doc(&x_api_key_doc(), &bindings);
         header(
-            p.apply(req(), &EndpointAuthMetadata::unspecified())
-                .unwrap(),
+            p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap(),
             "x-api-key",
         )
     }
@@ -668,9 +663,7 @@ mod tests {
             },
         )];
         let p = build_provider_from_bindings(&bindings, &HashMap::new(), false);
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("Key k"));
     }
 
@@ -700,10 +693,7 @@ mod tests {
             },
         )];
         let out = render_auth_help_section(&bindings).unwrap();
-        assert!(
-            out.contains("--api-key flag / GEN3_PREFIX_API_KEY env var"),
-            "{out}"
-        );
+        assert!(out.contains("--api-key flag / GEN3_PREFIX_API_KEY env var"), "{out}");
     }
 
     #[tokio::test]
@@ -720,9 +710,7 @@ mod tests {
             },
         )];
         let p = build_provider_from_doc(&doc, &bindings);
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(
             auth_header(r).as_deref(),
             Some("Basic YWxpY2U6aHVudGVyMg=="),
@@ -780,10 +768,7 @@ mod tests {
         let r = p.apply(req(), &endpoint).unwrap();
         let built = r.build().unwrap();
         assert_eq!(
-            built
-                .headers()
-                .get("x-api-key")
-                .and_then(|v| v.to_str().ok()),
+            built.headers().get("x-api-key").and_then(|v| v.to_str().ok()),
             Some("k"),
         );
         assert!(built.headers().get("authorization").is_none());
@@ -841,9 +826,7 @@ mod tests {
         let endpoint = EndpointAuthMetadata::with_requirements(vec![req_map]);
         let r = p.apply(req(), &endpoint).unwrap();
         assert_eq!(header(r, "x-api-key").as_deref(), Some("second"));
-        let r2 = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r2 = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r2, "x-api-key").as_deref(), Some("second"));
     }
 
@@ -858,9 +841,7 @@ mod tests {
         )];
         let p = build_provider_from_bindings(&bindings, &HashMap::new(), false);
         assert_eq!(p.name(), "any");
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("Bearer g"));
     }
 
@@ -883,24 +864,21 @@ mod tests {
                 )),
             ),
         ];
-        let p = build_provider_with_strategy(&bindings, &HashMap::new(), AuthStrategy::All, false);
+        let p = build_provider_with_strategy(
+            &bindings,
+            &HashMap::new(),
+            AuthStrategy::All,
+            false,
+        );
         assert_eq!(p.name(), "all");
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         let built = r.build().unwrap();
         assert_eq!(
-            built
-                .headers()
-                .get("authorization")
-                .and_then(|v| v.to_str().ok()),
+            built.headers().get("authorization").and_then(|v| v.to_str().ok()),
             Some("Bearer tok"),
         );
         assert_eq!(
-            built
-                .headers()
-                .get("x-api-key")
-                .and_then(|v| v.to_str().ok()),
+            built.headers().get("x-api-key").and_then(|v| v.to_str().ok()),
             Some("k"),
         );
     }
@@ -965,12 +943,8 @@ mod tests {
             "bearer".to_string(),
             SchemeBinding::Token(AuthCredentialSource::literal("t")),
         )];
-        let p = build_provider_with_strategy(
-            &bindings,
-            &doc.security_schemes,
-            AuthStrategy::Auto,
-            true,
-        );
+        let p =
+            build_provider_with_strategy(&bindings, &doc.security_schemes, AuthStrategy::Auto, true);
         assert_eq!(p.name(), "routing");
     }
 
@@ -981,7 +955,12 @@ mod tests {
         // applies regardless of `strategy` — a Routing wrapper around zero
         // schemes would have only its (also empty) default to fall back on,
         // which isn't a useful state to expose.
-        let p = build_provider_with_strategy(&[], &HashMap::new(), AuthStrategy::Routing, true);
+        let p = build_provider_with_strategy(
+            &[],
+            &HashMap::new(),
+            AuthStrategy::Routing,
+            true,
+        );
         assert_eq!(p.name(), "none");
         assert!(!p.has_credentials());
     }
@@ -991,7 +970,12 @@ mod tests {
         // Same contract for All. An empty AllAuthProvider would vacuously
         // claim no credentials anyway, but collapsing to NoAuthProvider
         // keeps the unauthenticated case uniform across strategies.
-        let p = build_provider_with_strategy(&[], &HashMap::new(), AuthStrategy::All, false);
+        let p = build_provider_with_strategy(
+            &[],
+            &HashMap::new(),
+            AuthStrategy::All,
+            false,
+        );
         assert_eq!(p.name(), "none");
         assert!(!p.has_credentials());
     }
@@ -1002,7 +986,12 @@ mod tests {
             "bearer".to_string(),
             SchemeBinding::Token(AuthCredentialSource::literal("t")),
         )];
-        let p = build_provider_with_strategy(&bindings, &HashMap::new(), AuthStrategy::Auto, false);
+        let p = build_provider_with_strategy(
+            &bindings,
+            &HashMap::new(),
+            AuthStrategy::Auto,
+            false,
+        );
         assert_eq!(p.name(), "any");
     }
 
@@ -1100,20 +1089,14 @@ mod tests {
             "ApiKeyAuth",
             AuthCredentialSource::from_env("CLOSE_API_KEY"),
         ));
-        let bindings = vec![("ApiKeyAuth".to_string(), SchemeBinding::Custom(provider))];
+        let bindings = vec![(
+            "ApiKeyAuth".to_string(),
+            SchemeBinding::Custom(provider),
+        )];
         let out = render_auth_help_section(&bindings).unwrap();
-        assert!(
-            out.contains("CLOSE_API_KEY env var"),
-            "should show env var name with short label, got: {out}"
-        );
-        assert!(
-            !out.contains("environment variable"),
-            "should use 'env var' not 'environment variable', got: {out}"
-        );
-        assert!(
-            !out.contains("custom auth provider"),
-            "should not show opaque label, got: {out}"
-        );
+        assert!(out.contains("CLOSE_API_KEY env var"), "should show env var name with short label, got: {out}");
+        assert!(!out.contains("environment variable"), "should use 'env var' not 'environment variable', got: {out}");
+        assert!(!out.contains("custom auth provider"), "should not show opaque label, got: {out}");
     }
 
     #[tokio::test]
@@ -1127,9 +1110,7 @@ mod tests {
         let doc = crate::openapi::discovery::RestDescription::default();
         let bindings = vec![("custom".to_string(), SchemeBinding::Custom(custom))];
         let p = build_provider_from_doc(&doc, &bindings);
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-custom").as_deref(), Some("c"));
     }
 }

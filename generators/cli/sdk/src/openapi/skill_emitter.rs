@@ -155,7 +155,10 @@ fn render_shared_skill(
         out,
         "| `--format <FMT>` | Output format: `json`, `table`, `yaml`, `csv`, `raw`, `jsonl`, `http` | `table` on a TTY, `json` when piped |"
     );
-    let _ = writeln!(out, "| `--base-url <URL>` | Override the API base URL | |");
+    let _ = writeln!(
+        out,
+        "| `--base-url <URL>` | Override the API base URL | |"
+    );
     let _ = writeln!(
         out,
         "| `--params <JSON>` | URL/query/path parameters as JSON | |"
@@ -180,7 +183,10 @@ fn render_shared_skill(
             out,
             "| `--page-all` | Auto-paginate (NDJSON). Only on paginable operations. | off |"
         );
-        let _ = writeln!(out, "| `--page-limit <N>` | Max pages to fetch | `10` |");
+        let _ = writeln!(
+            out,
+            "| `--page-limit <N>` | Max pages to fetch | `10` |"
+        );
         let _ = writeln!(
             out,
             "| `--page-delay <MS>` | Delay between page fetches | `100` |"
@@ -190,8 +196,14 @@ fn render_shared_skill(
             "| `--no-pager` | Disable pager even on interactive terminals | |"
         );
     }
-    let _ = writeln!(out, "| `--no-retry` | Disable retries | |");
-    let _ = writeln!(out, "| `--no-extract` | Print the full response body | |");
+    let _ = writeln!(
+        out,
+        "| `--no-retry` | Disable retries | |"
+    );
+    let _ = writeln!(
+        out,
+        "| `--no-extract` | Print the full response body | |"
+    );
     let _ = writeln!(out);
 
     // Output formatting tips
@@ -202,7 +214,10 @@ fn render_shared_skill(
     let _ = writeln!(out, "# Table view");
     let _ = writeln!(out, "{bin_name} <resource> <method> --format table\n");
     let _ = writeln!(out, "# Pipe-friendly: jq, grep, etc.");
-    let _ = writeln!(out, "{bin_name} <resource> <method> | jq '.fieldName'");
+    let _ = writeln!(
+        out,
+        "{bin_name} <resource> <method> | jq '.fieldName'"
+    );
     let _ = writeln!(out, "```\n");
 
     // Dry-run section
@@ -265,7 +280,10 @@ fn render_auth_section(
                 .unwrap_or_else(|| "bearer".to_string());
 
             let source_desc = describe_binding_source(binding);
-            let _ = writeln!(out, "- **{scheme_name}** ({scheme_type}): {source_desc}");
+            let _ = writeln!(
+                out,
+                "- **{scheme_name}** ({scheme_type}): {source_desc}"
+            );
         }
         let _ = writeln!(out);
 
@@ -582,10 +600,10 @@ pub fn example_placeholder(param: &crate::openapi::discovery::MethodParameter) -
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashMap;
     use crate::openapi::discovery::{
         MethodParameter, RestDescription, RestMethod, RestResource, SdkGroupInfo,
     };
-    use std::collections::HashMap;
 
     fn minimal_doc() -> RestDescription {
         let mut resources = HashMap::new();
@@ -633,12 +651,7 @@ mod tests {
     #[test]
     fn generates_shared_and_group_files() {
         let doc = minimal_doc();
-        let files = generate_skills(
-            &doc,
-            "testcli",
-            &bindings_for("TEST_API_KEY"),
-            crate::auth::AuthStrategy::default(),
-        );
+        let files = generate_skills(&doc, "testcli", &bindings_for("TEST_API_KEY"), crate::auth::AuthStrategy::default());
         let names: Vec<String> = files.iter().map(|(p, _)| p.display().to_string()).collect();
         assert!(names.contains(&"testcli-shared/SKILL.md".to_string()));
         assert!(names.contains(&"testcli-items/SKILL.md".to_string()));
@@ -648,12 +661,7 @@ mod tests {
     #[test]
     fn shared_skill_has_valid_frontmatter() {
         let doc = minimal_doc();
-        let files = generate_skills(
-            &doc,
-            "testcli",
-            &bindings_for("TEST_API_KEY"),
-            crate::auth::AuthStrategy::default(),
-        );
+        let files = generate_skills(&doc, "testcli", &bindings_for("TEST_API_KEY"), crate::auth::AuthStrategy::default());
         let shared = &files[0].1;
         assert!(shared.starts_with("---\n"));
         assert!(shared.contains("name: \"testcli-shared\""));
@@ -666,12 +674,7 @@ mod tests {
     #[test]
     fn group_skill_has_valid_frontmatter() {
         let doc = minimal_doc();
-        let files = generate_skills(
-            &doc,
-            "testcli",
-            &bindings_for("TEST_API_KEY"),
-            crate::auth::AuthStrategy::default(),
-        );
+        let files = generate_skills(&doc, "testcli", &bindings_for("TEST_API_KEY"), crate::auth::AuthStrategy::default());
         let group = &files[1].1;
         assert!(group.starts_with("---\n"));
         assert!(group.contains("name: \"testcli-items\""));
@@ -681,12 +684,7 @@ mod tests {
     #[test]
     fn shared_skill_contains_auth_section() {
         let doc = minimal_doc();
-        let files = generate_skills(
-            &doc,
-            "testcli",
-            &bindings_for("TEST_API_KEY"),
-            crate::auth::AuthStrategy::default(),
-        );
+        let files = generate_skills(&doc, "testcli", &bindings_for("TEST_API_KEY"), crate::auth::AuthStrategy::default());
         let shared = &files[0].1;
         assert!(shared.contains("## Authentication"));
         assert!(shared.contains("TEST_API_KEY"));
@@ -723,13 +721,7 @@ mod tests {
 
         let files = generate_skills(&doc, "testcli", &[], crate::auth::AuthStrategy::default());
         let shared = &files[0].1;
-        for absent in [
-            "--page-all",
-            "--page-limit",
-            "--page-delay",
-            "--no-pager",
-            "--output",
-        ] {
+        for absent in ["--page-all", "--page-limit", "--page-delay", "--no-pager", "--output"] {
             assert!(
                 !shared.contains(absent),
                 "{absent} must not be advertised on a spec that never registers it: {shared}",
@@ -770,10 +762,7 @@ mod tests {
     fn shared_skill_says_set_one_of_for_alternative_schemes() {
         let doc = minimal_doc();
         let bindings = vec![
-            (
-                "BearerAuth".to_string(),
-                bindings_for("API_KEY")[0].1.clone(),
-            ),
+            ("BearerAuth".to_string(), bindings_for("API_KEY")[0].1.clone()),
             ("TokenAuth".to_string(), bindings_for("TOKEN")[0].1.clone()),
         ];
 
@@ -786,9 +775,7 @@ mod tests {
 
         let all = generate_skills(&doc, "testcli", &bindings, crate::auth::AuthStrategy::All);
         assert!(
-            all[0]
-                .1
-                .contains("Set the required environment variable(s)"),
+            all[0].1.contains("Set the required environment variable(s)"),
             "an `All` strategy genuinely needs every variable: {}",
             all[0].1,
         );
@@ -937,18 +924,8 @@ mod tests {
     fn deterministic_output_across_calls() {
         let doc = minimal_doc();
         let bindings = bindings_for("KEY");
-        let a = generate_skills(
-            &doc,
-            "test",
-            &bindings,
-            crate::auth::AuthStrategy::default(),
-        );
-        let b = generate_skills(
-            &doc,
-            "test",
-            &bindings,
-            crate::auth::AuthStrategy::default(),
-        );
+        let a = generate_skills(&doc, "test", &bindings, crate::auth::AuthStrategy::default());
+        let b = generate_skills(&doc, "test", &bindings, crate::auth::AuthStrategy::default());
         assert_eq!(a.len(), b.len());
         for (fa, fb) in a.iter().zip(b.iter()) {
             assert_eq!(fa.0, fb.0);
@@ -1004,8 +981,10 @@ mod tests {
                 ..Default::default()
             },
         );
-        doc.tag_descriptions
-            .insert("items".to_string(), "Items exposed by the API.".to_string());
+        doc.tag_descriptions.insert(
+            "items".to_string(),
+            "Items exposed by the API.".to_string(),
+        );
 
         let files = generate_skills(&doc, "test", &[], crate::auth::AuthStrategy::default());
         assert!(files[1]
@@ -1020,7 +999,10 @@ mod tests {
     fn frontmatter_description_escapes_quotes() {
         let mut resources = HashMap::new();
         let mut methods = HashMap::new();
-        methods.insert("get".to_string(), RestMethod::default());
+        methods.insert(
+            "get".to_string(),
+            RestMethod::default(),
+        );
         resources.insert(
             "test".to_string(),
             RestResource {

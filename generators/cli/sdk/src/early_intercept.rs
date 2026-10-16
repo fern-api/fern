@@ -100,19 +100,13 @@ mod tests {
 
     #[test]
     fn first_positional_basic() {
-        assert!(first_positional_is(
-            &args(&["box", "completion", "bash"]),
-            "completion"
-        ));
+        assert!(first_positional_is(&args(&["box", "completion", "bash"]), "completion"));
         assert!(first_positional_is(&args(&["box", "man"]), "man"));
     }
 
     #[test]
     fn first_positional_false_for_other_subcommand() {
-        assert!(!first_positional_is(
-            &args(&["box", "files", "get"]),
-            "completion"
-        ));
+        assert!(!first_positional_is(&args(&["box", "files", "get"]), "completion"));
     }
 
     #[test]
@@ -234,10 +228,7 @@ mod tests {
     #[test]
     fn nth_positional_eq_flag() {
         assert_eq!(
-            nth_positional(
-                &args(&["box", "--base-url=http://localhost", "completion", "bash"]),
-                1
-            ),
+            nth_positional(&args(&["box", "--base-url=http://localhost", "completion", "bash"]), 1),
             Some("bash"),
         );
     }

@@ -57,11 +57,7 @@ fn with_temp_home<R>(f: impl FnOnce() -> R) -> R {
     std::env::set_var("HOME", home.path());
     std::env::set_var("USERPROFILE", home.path());
     let r = f();
-    for (k, v) in [
-        ("HOME", prev),
-        ("USERPROFILE", prev_up),
-        ("RV_BASE_URL", prev_base),
-    ] {
+    for (k, v) in [("HOME", prev), ("USERPROFILE", prev_up), ("RV_BASE_URL", prev_base)] {
         match v {
             Some(value) => std::env::set_var(k, value),
             None => std::env::remove_var(k),
@@ -88,10 +84,7 @@ fn revoke_is_registered_and_names_the_operation_when_configured() {
         let (code, output) = run(true, &["rv", "profiles", "remove", "--help"]);
         assert_eq!(code, 0, "{output}");
         assert!(output.contains("--revoke"), "{output}");
-        assert!(
-            output.contains("keys remove"),
-            "help should name the op: {output}"
-        );
+        assert!(output.contains("keys remove"), "help should name the op: {output}");
     });
 }
 
@@ -118,10 +111,7 @@ async fn revoke_calls_the_operation_then_removes_the_profile() {
             );
             assert_eq!(code, 0, "{output}");
 
-            let (code, output) = run(
-                true,
-                &["rv", "profiles", "remove", "prod", "--yes", "--revoke"],
-            );
+            let (code, output) = run(true, &["rv", "profiles", "remove", "prod", "--yes", "--revoke"]);
             assert_eq!(code, 0, "{output}");
 
             // Gone locally too.
@@ -158,22 +148,13 @@ async fn a_failed_revoke_leaves_the_profile_intact() {
     tokio::task::spawn_blocking(move || {
         with_temp_home(|| {
             std::env::set_var("RV_BASE_URL", &uri);
-            run(
-                true,
-                &["rv", "profiles", "create", "prod", "--set", "KeySid=SK123"],
-            );
+            run(true, &["rv", "profiles", "create", "prod", "--set", "KeySid=SK123"]);
 
-            let (code, output) = run(
-                true,
-                &["rv", "profiles", "remove", "prod", "--yes", "--revoke"],
-            );
+            let (code, output) = run(true, &["rv", "profiles", "remove", "prod", "--yes", "--revoke"]);
             assert_ne!(code, 0, "a rejected revoke must fail the command: {output}");
 
             let (_, listed) = run(true, &["rv", "profiles", "list", "--format", "json"]);
-            assert!(
-                listed.contains("prod"),
-                "the profile must survive: {listed}"
-            );
+            assert!(listed.contains("prod"), "the profile must survive: {listed}");
         });
     })
     .await
@@ -195,10 +176,7 @@ async fn removing_without_revoke_makes_no_request() {
     tokio::task::spawn_blocking(move || {
         with_temp_home(|| {
             std::env::set_var("RV_BASE_URL", &uri);
-            run(
-                true,
-                &["rv", "profiles", "create", "prod", "--set", "KeySid=SK123"],
-            );
+            run(true, &["rv", "profiles", "create", "prod", "--set", "KeySid=SK123"]);
             let (code, output) = run(true, &["rv", "profiles", "remove", "prod", "--yes"]);
             assert_eq!(code, 0, "{output}");
         });
@@ -215,14 +193,8 @@ fn a_missing_required_parameter_names_it() {
     // something the profile does not carry has to say which.
     with_temp_home(|| {
         run(true, &["rv", "profiles", "create", "bare"]);
-        let (code, output) = run(
-            true,
-            &["rv", "profiles", "remove", "bare", "--yes", "--revoke"],
-        );
+        let (code, output) = run(true, &["rv", "profiles", "remove", "bare", "--yes", "--revoke"]);
         assert_ne!(code, 0, "{output}");
-        assert!(
-            output.contains("KeySid"),
-            "the error should name it: {output}"
-        );
+        assert!(output.contains("KeySid"), "the error should name it: {output}");
     });
 }
