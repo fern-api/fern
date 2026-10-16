@@ -172,6 +172,8 @@ class WebhooksHelperGenerator:
                     else {
                         "headerName": _wire_value(config.algorithm_header.header_name),
                         "keyIdDelimiter": config.algorithm_header.key_id_delimiter,
+                        "keyIdParameter": config.algorithm_header.key_id_parameter,
+                        "algorithmParameter": config.algorithm_header.algorithm_parameter,
                         "algorithms": [
                             [option.wire_value, option.algorithm.value] for option in config.algorithm_header.algorithms
                         ],
@@ -342,7 +344,22 @@ class _HmacHelperWriter:
                 'if settings_header is not None and settings_header != "":',
             ]
         )
-        if algorithm_header.key_id_delimiter is not None:
+        if algorithm_header.algorithm_parameter is not None:
+            delimiter = json.dumps(algorithm_header.key_id_delimiter or ",")
+            algorithm_parameter = json.dumps(algorithm_header.algorithm_parameter)
+            lines.extend(
+                [
+                    "    settings_parts: typing.Dict[str, str] = {}",
+                    f"    for part in settings_header.split({delimiter}):",
+                    '        name, separator, value = part.partition("=")',
+                    "        if separator:",
+                    "            settings_parts[name.strip()] = value.strip()",
+                    f'    algorithm_value = settings_parts.get({algorithm_parameter}, "")',
+                ]
+            )
+            if algorithm_header.key_id_parameter is not None:
+                lines.append(f"    key_id = settings_parts.get({json.dumps(algorithm_header.key_id_parameter)})")
+        elif algorithm_header.key_id_delimiter is not None:
             delimiter = json.dumps(algorithm_header.key_id_delimiter)
             lines.extend(
                 [

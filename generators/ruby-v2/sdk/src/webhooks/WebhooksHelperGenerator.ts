@@ -154,6 +154,8 @@ export class WebhooksHelperGenerator {
                     : {
                           headerName: getWireValue(config.algorithmHeader.headerName),
                           keyIdDelimiter: config.algorithmHeader.keyIdDelimiter ?? null,
+                          keyIdParameter: config.algorithmHeader.keyIdParameter ?? null,
+                          algorithmParameter: config.algorithmHeader.algorithmParameter ?? null,
                           algorithms: config.algorithmHeader.algorithms.map((option) => [
                               option.wireValue,
                               option.algorithm
@@ -483,7 +485,22 @@ export class WebhooksHelperGenerator {
         writer.writeLine("settings_header = settings_header.first if settings_header.is_a?(Array)");
         writer.writeLine("unless settings_header.nil? || settings_header.to_s.empty?");
         writer.indent();
-        if (algorithmHeader.keyIdDelimiter != null) {
+        if (algorithmHeader.algorithmParameter != null) {
+            writer.writeLine(
+                `settings_parts = settings_header.to_s.split(${rubyStringLiteral(algorithmHeader.keyIdDelimiter ?? ",")}).each_with_object({}) do |part, parts|`
+            );
+            writer.indent();
+            writer.writeLine('name, separator, value = part.partition("=")');
+            writer.writeLine("parts[name.strip] = value.strip unless separator.empty?");
+            writer.dedent();
+            writer.writeLine("end");
+            writer.writeLine(
+                `algorithm_value = settings_parts.fetch(${rubyStringLiteral(algorithmHeader.algorithmParameter)}, "")`
+            );
+            if (algorithmHeader.keyIdParameter != null) {
+                writer.writeLine(`key_id = settings_parts[${rubyStringLiteral(algorithmHeader.keyIdParameter)}]`);
+            }
+        } else if (algorithmHeader.keyIdDelimiter != null) {
             writer.writeLine(
                 `key_id, _, algorithm_value = settings_header.to_s.rpartition(${rubyStringLiteral(algorithmHeader.keyIdDelimiter)})`
             );

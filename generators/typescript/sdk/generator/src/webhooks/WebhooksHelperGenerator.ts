@@ -130,7 +130,23 @@ export class WebhooksHelperGenerator {
             "let algorithm: keyof typeof HMAC_ALGORITHMS | undefined;",
             'if (settingsHeader != null && settingsHeader !== "") {'
         );
-        if (algorithmHeader.keyIdDelimiter != null) {
+        if (algorithmHeader.algorithmParameter != null) {
+            const delimiter = JSON.stringify(algorithmHeader.keyIdDelimiter ?? ",");
+            lines.push(
+                "    const settingsParts: Record<string, string> = {};",
+                `    for (const part of settingsHeader.split(${delimiter})) {`,
+                '        const separatorIndex = part.indexOf("=");',
+                "        if (separatorIndex < 0) {",
+                "            continue;",
+                "        }",
+                "        settingsParts[part.slice(0, separatorIndex).trim()] = part.slice(separatorIndex + 1).trim();",
+                "    }",
+                `    const algorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}] ?? "";`
+            );
+            if (algorithmHeader.keyIdParameter != null) {
+                lines.push(`    keyId = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}];`);
+            }
+        } else if (algorithmHeader.keyIdDelimiter != null) {
             lines.push(
                 `    const delimiterIndex = settingsHeader.lastIndexOf(${JSON.stringify(algorithmHeader.keyIdDelimiter)});`,
                 `    const algorithmValue = delimiterIndex >= 0 ? settingsHeader.slice(delimiterIndex + ${algorithmHeader.keyIdDelimiter.length}) : settingsHeader;`,

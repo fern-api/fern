@@ -414,12 +414,36 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                         NameUtils.getWireValue(algorithmHeader.getHeaderName()))
                 .beginControlFlow("if (settingsHeader != null && !settingsHeader.isEmpty())")
                 .addStatement("String algorithmValue = settingsHeader");
-        algorithmHeader.getKeyIdDelimiter().ifPresent(delimiter -> method.addStatement(
-                        "int delimiterIndex = settingsHeader.lastIndexOf($S)", delimiter)
-                .beginControlFlow("if (delimiterIndex >= 0)")
-                .addStatement("keyId = settingsHeader.substring(0, delimiterIndex)")
-                .addStatement("algorithmValue = settingsHeader.substring(delimiterIndex + $L)", delimiter.length())
-                .endControlFlow());
+        if (algorithmHeader.getAlgorithmParameter().isPresent()) {
+            String delimiter = algorithmHeader.getKeyIdDelimiter().orElse(",");
+            method.addStatement(
+                            "$T<String, String> settingsParts = new $T<>()",
+                            java.util.Map.class,
+                            java.util.HashMap.class)
+                    .beginControlFlow(
+                            "for (String part : settingsHeader.split($T.quote($S)))",
+                            java.util.regex.Pattern.class,
+                            delimiter)
+                    .addStatement("int separatorIndex = part.indexOf('=')")
+                    .beginControlFlow("if (separatorIndex >= 0)")
+                    .addStatement(
+                            "settingsParts.put(part.substring(0, separatorIndex).trim(), part.substring(separatorIndex + 1).trim())")
+                    .endControlFlow()
+                    .endControlFlow()
+                    .addStatement(
+                            "algorithmValue = settingsParts.getOrDefault($S, \"\")",
+                            algorithmHeader.getAlgorithmParameter().get());
+            algorithmHeader
+                    .getKeyIdParameter()
+                    .ifPresent(keyIdParameter -> method.addStatement("keyId = settingsParts.get($S)", keyIdParameter));
+        } else {
+            algorithmHeader.getKeyIdDelimiter().ifPresent(delimiter -> method.addStatement(
+                            "int delimiterIndex = settingsHeader.lastIndexOf($S)", delimiter)
+                    .beginControlFlow("if (delimiterIndex >= 0)")
+                    .addStatement("keyId = settingsHeader.substring(0, delimiterIndex)")
+                    .addStatement("algorithmValue = settingsHeader.substring(delimiterIndex + $L)", delimiter.length())
+                    .endControlFlow());
+        }
         method.beginControlFlow("if (!HMAC_ALGORITHMS.containsKey(algorithmValue))")
                 .addStatement("LOGGER.warning($S)", UNSUPPORTED_ALGORITHM_MESSAGE)
                 .addStatement("return false")

@@ -125,6 +125,8 @@ export class WebhooksHelperGenerator {
                     : {
                           headerName: getWireValue(config.algorithmHeader.headerName),
                           keyIdDelimiter: config.algorithmHeader.keyIdDelimiter ?? null,
+                          keyIdParameter: config.algorithmHeader.keyIdParameter ?? null,
+                          algorithmParameter: config.algorithmHeader.algorithmParameter ?? null,
                           algorithms: config.algorithmHeader.algorithms.map((option) => [
                               option.wireValue,
                               option.algorithm
@@ -370,7 +372,22 @@ class HmacHelperWriter {
         writer.writeLine('\tkeyID := ""');
         writer.writeLine(`\tif settings := ${helperName}(headers, ${settingsHeader}); settings != "" {`);
         writer.writeLine("\t\talgorithmValue := settings");
-        if (algorithmHeader.keyIdDelimiter != null) {
+        if (algorithmHeader.algorithmParameter != null) {
+            writer.writeLine("\t\tsettingsParts := map[string]string{}");
+            writer.writeLine(
+                `\t\tfor _, part := range ${stringsAlias}.Split(settings, ${JSON.stringify(algorithmHeader.keyIdDelimiter ?? ",")}) {`
+            );
+            writer.writeLine(`\t\t\tif name, value, found := ${stringsAlias}.Cut(part, "="); found {`);
+            writer.writeLine(
+                `\t\t\t\tsettingsParts[${stringsAlias}.TrimSpace(name)] = ${stringsAlias}.TrimSpace(value)`
+            );
+            writer.writeLine("\t\t\t}");
+            writer.writeLine("\t\t}");
+            writer.writeLine(`\t\talgorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}]`);
+            if (algorithmHeader.keyIdParameter != null) {
+                writer.writeLine(`\t\tkeyID = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}]`);
+            }
+        } else if (algorithmHeader.keyIdDelimiter != null) {
             writer.writeLine(
                 `\t\tif index := ${stringsAlias}.LastIndex(settings, ${JSON.stringify(algorithmHeader.keyIdDelimiter)}); index >= 0 {`
             );

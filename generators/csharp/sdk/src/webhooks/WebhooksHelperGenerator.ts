@@ -273,7 +273,39 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeLine("{");
         writer.indent();
         writer.writeTextStatement("var algorithmValue = settingsHeader");
-        if (algorithmHeader.keyIdDelimiter != null) {
+        if (algorithmHeader.algorithmParameter != null) {
+            const delimiter = this.csharp.string_({ string: algorithmHeader.keyIdDelimiter ?? "," });
+            const algorithmParameter = this.csharp.string_({ string: algorithmHeader.algorithmParameter });
+            writer.writeTextStatement(
+                "var settingsParts = new System.Collections.Generic.Dictionary<string, string>()"
+            );
+            writer.write("foreach (var part in settingsHeader.Split(");
+            writer.writeNode(delimiter);
+            writer.writeLine("))");
+            writer.writeLine("{");
+            writer.indent();
+            writer.writeTextStatement("var separatorIndex = part.IndexOf('=')");
+            writer.writeLine("if (separatorIndex < 0)");
+            writer.writeLine("{");
+            writer.indent();
+            writer.writeTextStatement("continue");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeTextStatement(
+                "settingsParts[part.Substring(0, separatorIndex).Trim()] = part.Substring(separatorIndex + 1).Trim()"
+            );
+            writer.dedent();
+            writer.writeLine("}");
+            writer.write("algorithmValue = settingsParts.TryGetValue(");
+            writer.writeNode(algorithmParameter);
+            writer.writeTextStatement(', out var configuredAlgorithm) ? configuredAlgorithm : ""');
+            if (algorithmHeader.keyIdParameter != null) {
+                const keyIdParameter = this.csharp.string_({ string: algorithmHeader.keyIdParameter });
+                writer.write("keyId = settingsParts.TryGetValue(");
+                writer.writeNode(keyIdParameter);
+                writer.writeTextStatement(", out var configuredKeyId) ? configuredKeyId : null");
+            }
+        } else if (algorithmHeader.keyIdDelimiter != null) {
             const delimiter = this.csharp.string_({ string: algorithmHeader.keyIdDelimiter });
             writer.write("var delimiterIndex = settingsHeader.LastIndexOf(");
             writer.writeNode(delimiter);
