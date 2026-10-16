@@ -606,13 +606,13 @@ function convertSettingsConfig(
     // `search.default-filter-by-current-product`. Either one enables the behavior.
     const defaultFilterByCurrentProduct =
         (settings.search?.defaultFilterByCurrentProduct ?? false) || (settings.defaultSearchFilters ?? false);
+    const prioritizeCurrentProduct = settings.search?.prioritizeCurrentProduct ?? false;
 
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
-            // Left undefined when unset so the docs renderer applies its default.
-            prioritizeCurrentProduct: settings.search?.prioritizeCurrentProduct,
+            prioritizeCurrentProduct,
             defaultFilterByCurrentProduct,
             externalSitemaps: undefined
         },
@@ -836,6 +836,7 @@ async function loadWorkingTreeVersion({
         availability: version.availability,
         slug: version.slug,
         hidden: version.hidden,
+        default: version.default,
         viewers: parseRoles(version.viewers),
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
@@ -877,6 +878,7 @@ async function loadRefVersion({
         availability: version.availability,
         slug: version.slug,
         hidden: version.hidden,
+        default: version.default,
         viewers: parseRoles(version.viewers),
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
@@ -889,6 +891,23 @@ async function loadRefVersion({
             libraries: parseLibrariesConfiguration(contentRoot.rawLibraries)
         }
     };
+}
+
+/**
+ * Validated against the raw `versions` list so `fern check` reports it even when
+ * git-ref-backed versions are not built.
+ */
+function assertAtMostOneDefaultVersion(versions: docsYml.RawSchemas.VersionConfig[]): void {
+    const defaults = versions.filter((version) => version.default === true);
+    if (defaults.length > 1) {
+        throw new CliError({
+            message:
+                `Only one version can set 'default: true', but ${defaults.length} do: ` +
+                `${defaults.map((version) => `'${version.displayName}'`).join(", ")}. ` +
+                "Remove 'default: true' from all but one version.",
+            code: CliError.Code.ConfigError
+        });
+    }
 }
 
 async function getVersionedNavigationConfiguration({
@@ -907,6 +926,7 @@ async function getVersionedNavigationConfiguration({
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
     buildRefVersions?: boolean;
 }): Promise<docsYml.VersionedDocsNavigation> {
+    assertAtMostOneDefaultVersion(versions);
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
         const ref = getVersionContentRef(version);
