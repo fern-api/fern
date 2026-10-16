@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `settings.search.prioritize-current-product` in `docs.yml` now defaults to `true`.
+    When unset, search boosts results from the current product/version without
+    hiding other products/versions. Set it to `false` to keep the previous ranking.
+  type: feat
