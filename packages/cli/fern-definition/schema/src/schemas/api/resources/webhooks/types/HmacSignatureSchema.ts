@@ -28,8 +28,8 @@ export interface HmacSignatureSchema {
     /**
      * When set, the HMAC algorithm (and optionally a key ID) is read per request from
      * this header instead of being fixed to `algorithm`, which then only acts as the
-     * default when the header is absent. E.g. Twilio's `X-Twilio-Webhook-Signature-Settings:
-     * <key_id>;HMAC_SHA256`.
+     * default when the header is absent. E.g. Twilio's `X-Twilio-Webhooks-Signature-Settings:
+     * key=<key_id>,algorithm=HMAC_SHA256`.
      */
     "algorithm-header"?: FernDefinition.WebhookAlgorithmHeaderSchema;
 }

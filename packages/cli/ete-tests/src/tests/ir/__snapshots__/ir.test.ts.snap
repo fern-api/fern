@@ -234,8 +234,10 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                         "legacyQueryEncoding": true
                     },
                     "algorithmHeader": {
-                        "headerName": "X-Twilio-Webhook-Signature-Settings",
-                        "keyIdDelimiter": ";",
+                        "headerName": "X-Twilio-Webhooks-Signature-Settings",
+                        "keyIdDelimiter": ",",
+                        "keyIdParameter": "key",
+                        "algorithmParameter": "algorithm",
                         "algorithms": [
                             {
                                 "wireValue": "HMAC_SHA1",
@@ -720,8 +722,10 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                 "legacyQueryEncoding": true
             },
             "algorithmHeader": {
-                "headerName": "X-Twilio-Webhook-Signature-Settings",
-                "keyIdDelimiter": ";",
+                "headerName": "X-Twilio-Webhooks-Signature-Settings",
+                "keyIdDelimiter": ",",
+                "keyIdParameter": "key",
+                "algorithmParameter": "algorithm",
                 "algorithms": [
                     {
                         "wireValue": "HMAC_SHA1",
