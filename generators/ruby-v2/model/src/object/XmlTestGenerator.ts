@@ -169,15 +169,15 @@ export class XmlTestGenerator {
     }
 
     private childOrderTest(): string | undefined {
-        const names = this.contentChildNames();
+        const [first, second] = this.contentChildDeclarations();
         const hasText = this.properties.some(
             (property) => property.kind === "TEXT" && primitiveKind(property.itemType) === "string"
         );
         let body: string | undefined;
-        if (names.length >= 2) {
-            body = `<${names[0]}/><${names[1]}/><${names[0]}/>`;
-        } else if (names.length === 1 && hasText) {
-            body = `a<${names[0]}/>b`;
+        if (first != null && second != null) {
+            body = `${this.sampleElement(first)}${this.sampleElement(second)}${this.sampleElement(first)}`;
+        } else if (first != null && hasText) {
+            body = `a${this.sampleElement(first)}b`;
         }
         if (body == null) {
             return undefined;
@@ -309,20 +309,22 @@ export class XmlTestGenerator {
         return `<${name}${namespaceDeclaration}${attributes}>${text}</${name}>`;
     }
 
-    private contentChildNames(): string[] {
-        const names: string[] = [];
+    private contentChildDeclarations(): FernIr.TypeDeclaration[] {
+        const declarations: FernIr.TypeDeclaration[] = [];
+        const seen = new Set<string>();
         for (const property of this.properties) {
             if (property.kind !== "ELEMENT" || (property.xml.wrapped && property.isList)) {
                 continue;
             }
             for (const child of this.xmlObjectDeclarations(property.itemType)) {
                 const xml = child.encoding?.xml;
-                if (xml != null && xml.namespace == null && !names.includes(xml.name)) {
-                    names.push(xml.name);
+                if (xml != null && xml.namespace == null && !seen.has(xml.name)) {
+                    seen.add(xml.name);
+                    declarations.push(child);
                 }
             }
         }
-        return names;
+        return declarations;
     }
 
     /** The xml-encoded object types reachable from a child element's type (directly or via an undiscriminated union). */
