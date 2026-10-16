@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    TAB completion now lists just the next commands. While choosing a subcommand, global flags and clap's
+    `help` subcommand are left out of the list until you type `-` (leaf commands still list their flags),
+    so `<cli> <group> <TAB>` no longer scrolls long flag descriptions under the commands. Each subcommand
+    is also listed under its real name: previously a command with visible aliases was shown only as its
+    alphabetically-first alias (e.g. `dev` instead of `start`). Typed aliases still complete, and nothing
+    changes outside completion.
+  type: fix

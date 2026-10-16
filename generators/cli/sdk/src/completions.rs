@@ -102,10 +102,110 @@ pub fn write_dynamic_completions(
         let bin_name = cmd.get_name().to_string();
         return write_registration(shell, &bin_name, writer);
     }
+    let index = completion_index(shell, &words);
+    let mut tidied = tidy_for_completion(std::mem::take(cmd), &words, index);
     let current_dir = std::env::current_dir().ok();
     let mut buf = Vec::new();
-    completer.write_complete(cmd, words, current_dir.as_deref(), &mut buf)?;
+    completer.write_complete(&mut tidied, words, current_dir.as_deref(), &mut buf)?;
     writer.write_all(&buf)
+}
+
+/// Position of the word being completed, using the same convention as the
+/// `clap_complete` shell adapters (bash/zsh pass it, the others complete the
+/// last word). May equal `words.len()` when the cursor sits on a new word.
+fn completion_index(shell: &str, words: &[OsString]) -> usize {
+    let last = words.len().saturating_sub(1);
+    match shell {
+        "bash" | "zsh" => std::env::var("_CLAP_COMPLETE_INDEX")
+            .ok()
+            .and_then(|i| i.parse().ok())
+            .unwrap_or(last),
+        _ => last,
+    }
+}
+
+/// Shape the command tree for the TAB list. The completion process never runs
+/// a command, so this only changes what is suggested:
+/// - each subcommand is listed once, under its real name (`start`, not its
+///   alphabetically-first alias `dev`); aliases still complete when typed.
+/// - while choosing a subcommand, flags and the `help` subcommand stay out of
+///   the list until the user types `-`, so the list is just the next commands.
+fn tidy_for_completion(cmd: Command, words: &[OsString], index: usize) -> Command {
+    let current = words
+        .get(index)
+        .and_then(|w| w.to_str())
+        .unwrap_or_default();
+    let typed = words.get(1..index.min(words.len())).unwrap_or_default();
+    let (path, target_has_subcommands) = resolve_subcommand_path(&cmd, typed);
+    let tidy = Tidy {
+        hide_flags: target_has_subcommands && !current.starts_with('-'),
+        hide_help_subcommand: !typed.iter().any(|w| w == "help"),
+    };
+    tidy.apply(cmd, &path)
+}
+
+/// Canonical names of the subcommands already typed (matching names or
+/// aliases, skipping flags and values), and whether the deepest one has
+/// visible subcommands of its own.
+fn resolve_subcommand_path(cmd: &Command, typed: &[OsString]) -> (Vec<String>, bool) {
+    let mut path = Vec::new();
+    let mut current = cmd;
+    for word in typed {
+        if word == "--" {
+            break;
+        }
+        if word.to_string_lossy().starts_with('-') {
+            continue;
+        }
+        if let Some(sub) = current.find_subcommand(word) {
+            path.push(sub.get_name().to_string());
+            current = sub;
+        }
+    }
+    let has_subcommands = current.get_subcommands().any(|s| !s.is_hide_set());
+    (path, has_subcommands)
+}
+
+struct Tidy {
+    hide_flags: bool,
+    hide_help_subcommand: bool,
+}
+
+impl Tidy {
+    fn apply(&self, cmd: Command, path: &[String]) -> Command {
+        // Global flags are copied down from the commands on the path when the
+        // tree is built, so hiding them there hides them at the target too.
+        let cmd = if self.hide_flags {
+            cmd.mut_args(|a| if a.is_positional() { a } else { a.hide(true) })
+                .disable_help_flag(true)
+                .disable_version_flag(true)
+        } else {
+            cmd
+        };
+        match path.split_first() {
+            Some((head, rest)) => cmd.mut_subcommand(head, |sub| self.apply(sub, rest)),
+            None => {
+                let mut cmd = cmd.mut_subcommands(hide_visible_aliases);
+                if self.hide_help_subcommand {
+                    // Built trees (the runtime builds before completing)
+                    // already carry clap's `help` subcommand.
+                    cmd = cmd.disable_help_subcommand(true);
+                    if cmd.get_subcommands().any(|s| s.get_name() == "help") {
+                        cmd = cmd.mut_subcommand("help", |h| h.hide(true));
+                    }
+                }
+                cmd
+            }
+        }
+    }
+}
+
+fn hide_visible_aliases(cmd: Command) -> Command {
+    if cmd.get_visible_aliases().next().is_none() {
+        return cmd;
+    }
+    let aliases: Vec<String> = cmd.get_all_aliases().map(str::to_owned).collect();
+    cmd.alias(None).aliases(aliases)
 }
 
 /// Returns `true` when `args` contains `"completion"` as the first
@@ -212,7 +312,11 @@ mod tests {
             .subcommand(
                 Command::new("messages")
                     .about("Manage messages")
-                    .subcommand(Command::new("list").about("List messages"))
+                    .subcommand(
+                        Command::new("list")
+                            .about("List messages")
+                            .visible_aliases(["ls", "all"]),
+                    )
                     .subcommand(Command::new("create").about("Create a message")),
             )
             .subcommand(Command::new("calls").about("Manage calls"))
@@ -224,10 +328,14 @@ mod tests {
     }
 
     fn complete_fish(words: &[&str]) -> String {
+        complete_fish_with(sample_cli(), words)
+    }
+
+    fn complete_fish_with(mut cmd: Command, words: &[&str]) -> String {
         let mut argv = os(&["my-cli", "--"]);
         argv.extend(os(words));
         let mut out = Vec::new();
-        write_dynamic_completions("fish", &mut sample_cli(), argv, &mut out).unwrap();
+        write_dynamic_completions("fish", &mut cmd, argv, &mut out).unwrap();
         String::from_utf8(out).unwrap()
     }
 
@@ -265,6 +373,85 @@ mod tests {
     fn dynamic_completion_offers_global_flags() {
         let out = complete_fish(&["my-cli", "messages", "list", "--ver"]);
         assert!(out.contains("--verbose"), "{out}");
+    }
+
+    fn values(out: &str) -> Vec<&str> {
+        out.lines().map(|l| l.split('\t').next().unwrap()).collect()
+    }
+
+    #[test]
+    fn dynamic_completion_lists_only_subcommands_while_choosing_one() {
+        assert_eq!(
+            values(&complete_fish(&["my-cli", ""])),
+            vec!["messages", "calls"]
+        );
+        assert_eq!(
+            values(&complete_fish(&["my-cli", "--verbose", "messages", ""])),
+            vec!["list", "create"]
+        );
+    }
+
+    #[test]
+    fn dynamic_completion_lists_subcommands_under_their_real_name() {
+        let out = complete_fish(&["my-cli", "messages", ""]);
+        assert!(out.contains("list\tList messages"), "{out}");
+        assert!(!out.contains("ls") && !out.contains("all"), "{out}");
+    }
+
+    #[test]
+    fn dynamic_completion_still_completes_typed_aliases() {
+        assert_eq!(
+            values(&complete_fish(&["my-cli", "messages", "a"])),
+            vec!["all"]
+        );
+        assert_eq!(
+            values(&complete_fish(&["my-cli", "ls"])),
+            Vec::<&str>::new()
+        );
+        assert_eq!(
+            values(&complete_fish(&["my-cli", "messages", "ls", "--ver"])),
+            vec!["--verbose"]
+        );
+    }
+
+    #[test]
+    fn dynamic_completion_offers_flags_once_dash_is_typed() {
+        let out = complete_fish(&["my-cli", "messages", "--"]);
+        assert!(out.contains("--verbose"), "{out}");
+        assert!(out.contains("--help"), "{out}");
+    }
+
+    #[test]
+    fn dynamic_completion_tidies_an_already_built_tree() {
+        let mut cmd = sample_cli();
+        cmd.build();
+        assert_eq!(
+            values(&complete_fish_with(
+                cmd.clone(),
+                &["my-cli", "messages", ""]
+            )),
+            vec!["list", "create"]
+        );
+        let out = complete_fish_with(cmd, &["my-cli", "messages", "--"]);
+        assert!(out.contains("--verbose") && out.contains("--help"), "{out}");
+    }
+
+    #[test]
+    fn dynamic_completion_offers_flags_on_leaf_commands() {
+        let out = complete_fish(&["my-cli", "messages", "list", ""]);
+        assert!(out.contains("--verbose"), "{out}");
+    }
+
+    #[test]
+    fn dynamic_completion_keeps_help_subcommand_working() {
+        assert_eq!(
+            values(&complete_fish(&["my-cli", "he"])),
+            Vec::<&str>::new()
+        );
+        assert_eq!(
+            values(&complete_fish(&["my-cli", "help", "m"])),
+            vec!["messages"]
+        );
     }
 
     #[test]
