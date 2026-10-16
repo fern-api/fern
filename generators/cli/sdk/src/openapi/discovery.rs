@@ -865,6 +865,11 @@ pub struct RestMethod {
     /// ignore this field.
     #[serde(default, skip)]
     pub global_parameter_opt_ins: Vec<String>,
+    /// Response fields shown by default in table output, from
+    /// `x-twilio.defaultOutputProperties`. Only applied when the binary
+    /// opts in via `CliApp::default_output_properties`.
+    #[serde(default, skip)]
+    pub default_output_properties: Vec<String>,
 }
 
 /// Per-operation pagination configuration, resolved from the

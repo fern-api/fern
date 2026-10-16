@@ -50,6 +50,10 @@ pub struct OutputPipeline {
     pub quiet: bool,
     /// Optional JMESPath expression applied to every response before formatting.
     pub query: Option<String>,
+    /// Fields to show in `table` output (the operation's
+    /// `x-twilio.defaultOutputProperties`). Empty = every field. Ignored
+    /// by other formats and when `--query` is set.
+    pub default_properties: Vec<String>,
 }
 
 impl OutputPipeline {
@@ -121,6 +125,7 @@ impl OutputPipeline {
             color_mode: ColorMode::Auto,
             quiet,
             query,
+            default_properties: Vec::new(),
         })
     }
 
@@ -157,10 +162,15 @@ impl OutputPipeline {
             }
             None => value,
         };
-        let rendered = if paginated {
-            format_value_paginated(effective, &self.format, is_first_page)
+        let selected = if self.query.is_none() && self.format == OutputFormat::Table {
+            format_default_properties(effective, &self.default_properties, paginated, is_first_page)
         } else {
-            format_value(effective, &self.format)
+            None
+        };
+        let rendered = match selected {
+            Some(rendered) => rendered,
+            None if paginated => format_value_paginated(effective, &self.format, is_first_page),
+            None => format_value(effective, &self.format),
         };
         writeln!(out, "{rendered}")?;
         Ok(())
@@ -630,29 +640,36 @@ fn format_array_as_table(arr: &[Value], emit_header: bool) -> String {
         })
         .collect();
 
-    // Calculate column widths (char-count, not byte-count).
-    let mut widths: Vec<usize> = columns.iter().map(|c| c.chars().count()).collect();
     let rows: Vec<Vec<String>> = row_maps
         .iter()
         .map(|row| {
             columns
                 .iter()
-                .enumerate()
-                .map(|(i, col)| {
-                    let cell = row.get(col.as_str()).copied().unwrap_or("").to_string();
-                    let char_len = cell.chars().count();
-                    if char_len > widths[i] {
-                        widths[i] = char_len;
-                    }
-                    // Cap column width at 60 chars
-                    if widths[i] > 60 {
-                        widths[i] = 60;
-                    }
-                    cell
-                })
+                .map(|col| row.get(col.as_str()).copied().unwrap_or("").to_string())
                 .collect()
         })
         .collect();
+
+    render_columns(&columns, &rows, emit_header)
+}
+
+/// Lay out `rows` under `columns` as an aligned text table. Columns are
+/// capped at 60 chars; longer cells are truncated with an ellipsis.
+fn render_columns(columns: &[String], rows: &[Vec<String>], emit_header: bool) -> String {
+    // Calculate column widths (char-count, not byte-count).
+    let mut widths: Vec<usize> = columns.iter().map(|c| c.chars().count()).collect();
+    for row in rows {
+        for (i, cell) in row.iter().enumerate().take(widths.len()) {
+            let char_len = cell.chars().count();
+            if char_len > widths[i] {
+                widths[i] = char_len;
+            }
+            // Cap column width at 60 chars
+            if widths[i] > 60 {
+                widths[i] = 60;
+            }
+        }
+    }
 
     let mut output = String::new();
 
@@ -671,10 +688,11 @@ fn format_array_as_table(arr: &[Value], emit_header: bool) -> String {
     }
 
     // Rows — truncate by char count to avoid panicking on multi-byte UTF-8.
-    for row in &rows {
+    for row in rows {
         let cells: Vec<String> = row
             .iter()
             .enumerate()
+            .take(widths.len())
             .map(|(i, c)| {
                 let char_len = c.chars().count();
                 let truncated = if char_len > widths[i] {
@@ -693,6 +711,134 @@ fn format_array_as_table(arr: &[Value], emit_header: bool) -> String {
     }
 
     output
+}
+
+/// Render `value` as a table of only the `properties` columns, one row per
+/// record (a single object is one row), the way Twilio's CLI applies
+/// `defaultOutputProperties`. Property names match response keys ignoring
+/// case and `_`/`-` (`date_sent` matches `dateSent`). Properties no record
+/// has are dropped, and `None` (render normally) is returned when nothing
+/// matches. With `--page-all` (`paginated`) every property is kept on every
+/// page, so continuation pages line up under the first page's header.
+/// `None` also when `properties` is empty or the value isn't a record or a
+/// list of records.
+fn format_default_properties(
+    value: &Value,
+    properties: &[String],
+    paginated: bool,
+    is_first_page: bool,
+) -> Option<String> {
+    if properties.is_empty() {
+        return None;
+    }
+    let mut records = Vec::new();
+    if !collect_records(value, properties, &mut records) || records.is_empty() {
+        return None;
+    }
+    let lookup = |record: &serde_json::Map<String, Value>, property: &str| -> Option<Value> {
+        let wanted = property_match_key(property);
+        record
+            .iter()
+            .find(|(key, _)| property_match_key(key) == wanted)
+            .map(|(_, v)| v.clone())
+    };
+    let selected: Vec<&String> = properties
+        .iter()
+        .filter(|p| paginated || records.iter().any(|r| lookup(r, p).is_some()))
+        .collect();
+    if selected.is_empty() {
+        return None;
+    }
+    let columns: Vec<String> = selected.iter().map(|p| property_heading(p)).collect();
+    let rows: Vec<Vec<String>> = records
+        .iter()
+        .map(|r| {
+            selected
+                .iter()
+                .map(|p| lookup(r, p).map(|v| value_to_cell(&v)).unwrap_or_default())
+                .collect()
+        })
+        .collect();
+    Some(render_columns(&columns, &rows, !paginated || is_first_page))
+}
+
+/// Gather the records `value` holds: an object that has one of
+/// `properties` is a record (even if it also has array fields); any other
+/// object is treated as a list envelope and its item array is used; an
+/// array (records, or the page envelopes `--page-all` collects) is walked
+/// element by element. `false` when something isn't a record or envelope.
+fn collect_records<'a>(
+    value: &'a Value,
+    properties: &[String],
+    out: &mut Vec<&'a serde_json::Map<String, Value>>,
+) -> bool {
+    match value {
+        Value::Array(arr) => arr.iter().all(|item| collect_records(item, properties, out)),
+        Value::Object(obj) => {
+            let wanted: Vec<String> = properties.iter().map(|p| property_match_key(p)).collect();
+            if obj.keys().any(|k| wanted.contains(&property_match_key(k))) {
+                out.push(obj);
+                return true;
+            }
+            match extract_items(value) {
+                Some((_, arr)) => arr.iter().all(|item| match item {
+                    Value::Object(record) => {
+                        out.push(record);
+                        true
+                    }
+                    _ => false,
+                }),
+                None => false,
+            }
+        }
+        _ => false,
+    }
+}
+
+fn property_match_key(name: &str) -> String {
+    name.chars()
+        .filter(|c| *c != '_' && *c != '-')
+        .flat_map(char::to_lowercase)
+        .collect()
+}
+
+/// Column heading for a property, matching Twilio's CLI: words split on
+/// `_`/`-`/camelCase, capitalized, with `Id`/`Sid`/`Iso`/`Sms`/`Url`
+/// upper-cased (`date_sent` → `Date Sent`, `parent_sid` → `Parent SID`).
+fn property_heading(name: &str) -> String {
+    let mut words: Vec<String> = Vec::new();
+    let mut current = String::new();
+    for c in name.chars() {
+        if c == '_' || c == '-' || c == ' ' {
+            if !current.is_empty() {
+                words.push(std::mem::take(&mut current));
+            }
+        } else if c.is_uppercase() && !current.is_empty() {
+            words.push(std::mem::take(&mut current));
+            current.push(c);
+        } else {
+            current.push(c);
+        }
+    }
+    if !current.is_empty() {
+        words.push(current);
+    }
+    words
+        .iter()
+        .map(|word| {
+            let lower = word.to_lowercase();
+            if matches!(lower.as_str(), "id" | "sid" | "iso" | "sms" | "url") {
+                lower.to_uppercase()
+            } else {
+                let mut chars = lower.chars();
+                match chars.next() {
+                    Some(first) => first.to_uppercase().chain(chars).collect(),
+                    None => String::new(),
+                }
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ")
 }
 
 fn format_yaml(value: &Value) -> String {
@@ -903,6 +1049,117 @@ mod tests {
     use super::*;
     use serde_json::json;
 
+    fn emit_to_string(pipeline: &OutputPipeline, value: &Value) -> String {
+        let mut out = Vec::new();
+        pipeline.emit(&mut out, value, false, true).unwrap();
+        String::from_utf8(out).unwrap()
+    }
+
+    fn table_with_properties(props: &[&str]) -> OutputPipeline {
+        OutputPipeline {
+            format: OutputFormat::Table,
+            default_properties: props.iter().map(|p| p.to_string()).collect(),
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn default_properties_render_single_record_as_one_row() {
+        let value = json!({
+            "accountSid": "AC1",
+            "dateSent": "Fri, 16 Oct 2026",
+            "sid": "SM1",
+            "status": "queued",
+            "body": "hi"
+        });
+        let out = emit_to_string(&table_with_properties(&["sid", "date_sent", "status", "missing"]), &value);
+        let lines: Vec<&str> = out.lines().collect();
+        assert_eq!(lines[0].split_whitespace().collect::<Vec<_>>(), ["SID", "Date", "Sent", "Status"]);
+        assert!(lines[2].starts_with("SM1  Fri, 16 Oct 2026  queued"), "{out}");
+        assert!(!out.contains("AC1") && !out.contains("hi"), "{out}");
+    }
+
+    #[test]
+    fn default_properties_render_list_items() {
+        let value = json!({
+            "messages": [
+                {"sid": "SM1", "to": "+1", "body": "a"},
+                {"sid": "SM2", "to": "+2", "body": "b"}
+            ],
+            "meta": {"page": 0}
+        });
+        let out = emit_to_string(&table_with_properties(&["sid", "to"]), &value);
+        let lines: Vec<&str> = out.lines().filter(|l| !l.is_empty()).collect();
+        assert_eq!(lines.len(), 4, "{out}");
+        assert!(lines[0].starts_with("SID  To"), "{out}");
+        assert!(lines[2].starts_with("SM1  +1") && lines[3].starts_with("SM2  +2"), "{out}");
+        assert!(!out.contains("body") && !out.contains("page"), "{out}");
+    }
+
+    #[test]
+    fn default_properties_ignored_for_json_query_and_no_match() {
+        let value = json!({"sid": "SM1", "body": "hi"});
+        let json_pipeline = OutputPipeline {
+            format: OutputFormat::Json,
+            ..table_with_properties(&["sid"])
+        };
+        assert!(emit_to_string(&json_pipeline, &value).contains("\"body\""));
+
+        let query_pipeline = OutputPipeline {
+            query: Some("@".to_string()),
+            ..table_with_properties(&["sid"])
+        };
+        assert!(emit_to_string(&query_pipeline, &value).contains("body"));
+
+        let no_match = emit_to_string(&table_with_properties(&["nope"]), &value);
+        assert_eq!(no_match, emit_to_string(&table_with_properties(&[]), &value));
+        assert!(no_match.contains("body"));
+    }
+
+    #[test]
+    fn default_properties_keep_every_column_across_pages() {
+        let pipeline = table_with_properties(&["sid", "date_sent"]);
+        let render = |value: &Value, first: bool| {
+            let mut out = Vec::new();
+            pipeline.emit(&mut out, value, true, first).unwrap();
+            String::from_utf8(out).unwrap()
+        };
+        let page1 = render(&json!({"messages": [{"sid": "SM1", "dateSent": "d1"}]}), true);
+        let page2 = render(&json!({"messages": [{"sid": "SM2", "body": "x"}]}), false);
+        assert!(page1.starts_with("SID  Date Sent"), "{page1}");
+        assert_eq!(page2.trim_end(), "SM2", "{page2}");
+        assert!(!page2.contains("body") && !page2.contains("SID"), "{page2}");
+    }
+
+    #[test]
+    fn default_properties_single_record_with_array_field_stays_one_row() {
+        let value = json!({"sid": "SM1", "status": "sent", "tags": ["a", "b"]});
+        let out = emit_to_string(&table_with_properties(&["sid", "status"]), &value);
+        let lines: Vec<&str> = out.lines().filter(|l| !l.is_empty()).collect();
+        assert_eq!(lines.len(), 3, "{out}");
+        assert!(lines[2].starts_with("SM1  sent"), "{out}");
+    }
+
+    #[test]
+    fn default_properties_flatten_captured_pages() {
+        let value = json!([
+            {"messages": [{"sid": "SM1", "body": "a"}], "meta": {"page": 0}},
+            {"messages": [{"sid": "SM2", "body": "b"}], "meta": {"page": 1}}
+        ]);
+        let out = emit_to_string(&table_with_properties(&["sid"]), &value);
+        let lines: Vec<&str> = out.lines().filter(|l| !l.is_empty()).collect();
+        assert_eq!(lines, ["SID", "───", "SM1", "SM2"], "{out}");
+    }
+
+    #[test]
+    fn property_heading_matches_twilio_cli() {
+        assert_eq!(property_heading("sid"), "SID");
+        assert_eq!(property_heading("date_sent"), "Date Sent");
+        assert_eq!(property_heading("parent_sid"), "Parent SID");
+        assert_eq!(property_heading("smsUrl"), "SMS URL");
+        assert_eq!(property_heading("iso_country"), "ISO Country");
+    }
+
     #[test]
     fn test_output_format_from_str() {
         assert_eq!(OutputFormat::from_str("json"), OutputFormat::Json);
@@ -984,6 +1241,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: None,
+            default_properties: Vec::new(),
         };
         let mut out = Vec::new();
         pipeline.emit_record(&mut out, &val).unwrap();
@@ -1014,6 +1272,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: None,
+            default_properties: Vec::new(),
         };
         let mut out = Vec::new();
         pipeline.emit_record(&mut out, &val).unwrap();
@@ -1031,6 +1290,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: true,
             query: None,
+            default_properties: Vec::new(),
         };
         let mut out = Vec::new();
         quiet.emit_record(&mut out, &val).unwrap();
@@ -1041,6 +1301,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: Some("url".to_string()),
+            default_properties: Vec::new(),
         };
         let mut out = Vec::new();
         queried.emit_record(&mut out, &val).unwrap();
@@ -1682,6 +1943,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: None,
+            default_properties: Vec::new(),
         };
         let val = json!({"name": "test", "n": 1});
         let mut buf: Vec<u8> = Vec::new();
@@ -1700,6 +1962,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: None,
+            default_properties: Vec::new(),
         };
         let val = json!({"name": "test", "n": 1});
         let mut buf: Vec<u8> = Vec::new();
@@ -1720,6 +1983,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: true,
             query: None,
+            default_properties: Vec::new(),
         };
         let val = json!({"name": "test"});
         let mut buf: Vec<u8> = Vec::new();
@@ -1762,6 +2026,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: Some("name".to_string()),
+            default_properties: Vec::new(),
         };
         let val = json!({"name": "test", "extra": 123});
         let mut buf: Vec<u8> = Vec::new();
@@ -1778,6 +2043,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: Some("nonexistent".to_string()),
+            default_properties: Vec::new(),
         };
         let val = json!({"foo": "bar"});
         let result = pipeline.apply_query_streaming(&val).unwrap();
@@ -1791,6 +2057,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: Some("foo".to_string()),
+            default_properties: Vec::new(),
         };
         let val = json!({"foo": "bar"});
         let result = pipeline.apply_query_streaming(&val).unwrap();
@@ -1815,6 +2082,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: None,
+            default_properties: Vec::new(),
         };
         assert!(pipeline.is_raw());
     }
@@ -1827,6 +2095,7 @@ mod tests {
                 color_mode: ColorMode::Never,
                 quiet: false,
                 query: None,
+                default_properties: Vec::new(),
             };
             assert!(!pipeline.is_raw());
         }
@@ -1949,6 +2218,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: None,
+            default_properties: Vec::new(),
         };
         let val = json!([{"a": 1}, {"a": 2}]);
         let mut buf: Vec<u8> = Vec::new();
@@ -1976,6 +2246,7 @@ mod tests {
             color_mode: ColorMode::Never,
             quiet: false,
             query: None,
+            default_properties: Vec::new(),
         };
         assert!(pipeline.is_http());
     }
@@ -1988,6 +2259,7 @@ mod tests {
                 color_mode: ColorMode::Never,
                 quiet: false,
                 query: None,
+                default_properties: Vec::new(),
             };
             assert!(!pipeline.is_http());
         }

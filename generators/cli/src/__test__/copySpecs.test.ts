@@ -405,6 +405,35 @@ describe("copySpecs", () => {
         expect(nsIdx).toBeGreaterThan(lastSpecUnder);
     });
 
+    it("emits .default_output_properties(true) only when defaultOutputProperties is true", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const render = async (defaultOutputProperties: boolean | undefined): Promise<string> => {
+            const outputDir = path.join(tmpDir, `out-${String(defaultOutputProperties)}`);
+            await mkdir(outputDir, { recursive: true });
+            await copySpecs({
+                outputDir,
+                binaryName: BIN,
+                authBindings: [],
+                globalParamBindings: [],
+                specsDir,
+                defaultOutputProperties
+            });
+            return readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        };
+
+        expect(await render(true)).toContain(".default_output_properties(true)");
+        expect(await render(false)).not.toContain(".default_output_properties");
+        expect(await render(undefined)).not.toContain(".default_output_properties");
+    });
+
     it("does not emit .command_namespace() when rootGroup is unset", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
