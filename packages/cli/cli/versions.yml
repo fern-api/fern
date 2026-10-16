@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.159.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` dropping uploaded (`file:`) icons and images from the navigation,
+        such as custom product switcher and navbar link icons. The Astro preview now maps the
+        preview's file IDs to file paths in the docs config, matching how `fern generate --docs`
+        publishes. Translated `navbar-links` overrides now also show up in the preview.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 5.159.1
   changelogEntry:
     - summary: |
