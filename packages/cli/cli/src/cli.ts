@@ -106,7 +106,7 @@ import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecs
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkMigrate } from "./commands/sdk-migrate/sdkMigrate.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
-import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
+import { sdkPreview, toSerializableSdkPreviewResult } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
@@ -3475,7 +3475,7 @@ function writeSdkPreviewOutput({
     cliContext: CliContext;
 }): void {
     if (json) {
-        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+        process.stdout.write(JSON.stringify(toSerializableSdkPreviewResult(result), null, 2) + "\n");
         if (result.status === "error") {
             process.exitCode = 1;
         }
@@ -3483,6 +3483,10 @@ function writeSdkPreviewOutput({
     }
 
     if (result.status === "error") {
+        if (result.messageAlreadyLogged === true) {
+            process.exitCode = 1;
+            return;
+        }
         return cliContext.failAndThrow(
             result.message,
             undefined,

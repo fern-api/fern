@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.159.1
+  changelogEntry:
+    - summary: |
+        Preserve actionable sdk-gen-api errors instead of printing `[object Object]` when `fern sdk preview` fails.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
 - version: 5.159.0
   changelogEntry:
     - summary: |
