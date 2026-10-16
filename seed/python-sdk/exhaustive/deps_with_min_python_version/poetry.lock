@@ -1245,33 +1245,34 @@ websockets = ">=14,<17"
 
 [[package]]
 name = "langsmith"
-version = "0.14.9"
+version = "0.14.11"
 description = "Client library to connect to the LangSmith Observability and Evaluation Platform."
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "langsmith-0.14.9-py3-none-any.whl", hash = "sha256:ae8a41f6b3712fe344c9163e16e06c6c1294623aaf5f565874da65f36482e7e4"},
-    {file = "langsmith-0.14.9.tar.gz", hash = "sha256:e54c41dcc06cbad971364fe5ecaaf976c11b418bdd0a125f816e2534c6caf2f2"},
+    {file = "langsmith-0.14.11-py3-none-any.whl", hash = "sha256:9ecca7633df228ef2c44563f7187e426b8a79e7c5c2351c5dd8c9074c61512e7"},
+    {file = "langsmith-0.14.11.tar.gz", hash = "sha256:d9e7ffe587e12ce51573cab654d02e84feb924d3b1f582274c4b1412ebeabf4c"},
 ]
 
 [package.dependencies]
-anyio = ">=3.5.0"
-distro = ">=1.7.0"
+anyio = ">=3.5.0,<5"
+distro = ">=1.7.0,<2"
 httpx2 = ">=2,<3"
 orjson = {version = ">=3.9.14", markers = "platform_python_implementation != \"PyPy\""}
 packaging = ">=23.2"
 pydantic = ">=2,<3"
 requests = ">=2.0.0"
 requests-toolbelt = ">=1.0.0"
-sniffio = ">=1.1"
-typing-extensions = ">=4.0.0"
+sniffio = "*"
+typing-extensions = ">=4.14,<5"
 uuid-utils = ">=0.12.0,<1.0"
 websockets = ">=15.0"
 xxhash = ">=3.0.0"
 zstandard = ">=0.23.0"
 
 [package.extras]
+aiohttp = ["aiohttp (>=3.14.3,<4)", "httpx-aiohttp (>=0.1.9)"]
 claude-agent-sdk = ["claude-agent-sdk (>=0.1.0) ; python_version >= \"3.10\""]
 gemini-live = ["google-genai (>=1.75)"]
 google-adk = ["google-adk (>=1.0.0)", "wrapt (>=1.16.0)"]
