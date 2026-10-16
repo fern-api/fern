@@ -75,13 +75,24 @@ function renderEndpointTable(rows: EndpointIndexRow[]): string {
         const label = getAvailabilityLabel(row.availability);
         const title = `[${escapeMarkdownText(row.title)}](${toHref(row.slug)})${label != null ? ` *(${label})*` : ""}`;
         const description = row.description != null ? getFirstSentence(row.description) : "";
-        lines.push(`| ${title} | \`${row.method}\` | \`${row.path.replace(/\|/g, "\\|")}\` | ${description} |`);
+        lines.push(`| ${title} | ${toCodeSpan(row.method)} | ${toCodeSpan(row.path)} | ${description} |`);
     }
     return lines.join("\n");
 }
 
 function toHref(slug: FernNavigation.V1.Slug): string {
-    return `/${slug}`;
+    return `/${slug}`.replace(
+        /[\s()<>[\]`|]/g,
+        (char) => `%${char.charCodeAt(0).toString(16).toUpperCase().padStart(2, "0")}`
+    );
+}
+
+/** Wraps text in a code span whose fence is longer than any backtick run inside it, with `|` escaped for GFM tables. */
+function toCodeSpan(text: string): string {
+    const longestBacktickRun = Math.max(0, ...(text.match(/`+/g) ?? []).map((run) => run.length));
+    const fence = "`".repeat(longestBacktickRun + 1);
+    const padding = longestBacktickRun > 0 ? " " : "";
+    return `${fence}${padding}${text.replace(/\|/g, "\\|")}${padding}${fence}`;
 }
 
 export function getAvailabilityLabel(

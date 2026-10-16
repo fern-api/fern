@@ -6,6 +6,7 @@
     section's summary page gets an "Endpoints" list (a summary page is generated for sections
     that don't have one; existing summaries and tag-description pages keep their content, with
     the list appended below). Each row links to the endpoint page and shows the HTTP method,
-    path, the first sentence of the description, and a marker for deprecated or beta endpoints.
+    path, the first sentence of the description, and an availability marker such as *(Beta)* or
+    *(Deprecated)* for endpoints that are not stable.
     Hidden endpoints and endpoints filtered out by audiences are left out, matching the sidebar.
   type: feat

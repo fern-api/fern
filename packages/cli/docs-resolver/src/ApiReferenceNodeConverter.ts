@@ -324,14 +324,19 @@ export class ApiReferenceNodeConverter {
     }
 
     #setEndpointIndexPage(slug: FernNavigation.V1.Slug, markdown: string): FernNavigation.V1.PageId {
-        const relativeFilePath = `endpoint-index-${kebabCase(slug)}.md`;
+        const baseName = `endpoint-index-${kebabCase(slug)}`;
+        let relativeFilePath = `${baseName}.md`;
+        // kebabCase is lossy (e.g. `v1.0` and `v1-0`), so distinct slugs can map to the same file name.
+        for (let suffix = 2; this.#endpointIndexContent.has(AbsoluteFilePath.of(`/${relativeFilePath}`)); suffix++) {
+            relativeFilePath = `${baseName}-${suffix}.md`;
+        }
         this.#endpointIndexContent.set(AbsoluteFilePath.of(`/${relativeFilePath}`), markdown);
         return FernNavigation.V1.PageId(relativeFilePath);
     }
 
     /**
-     * Collects the endpoints listed under `children`, mirroring what the sidebar shows: hidden,
-     * orphaned, and permission- or feature-flag-gated nodes (and everything under them) are left out.
+     * Collects the endpoints listed under `children`, mirroring what the sidebar shows: hidden and
+     * permission- or feature-flag-gated nodes (and everything under them) are left out.
      */
     #collectEndpointIndexGroup(
         title: string,
@@ -384,7 +389,7 @@ export class ApiReferenceNodeConverter {
         // When the whole API section is hidden every node is marked hidden, so only an explicit hide counts.
         const isHidden = node.hidden === true && !this.hideChildren;
         const isGated = (node.viewers?.length ?? 0) > 0 || (node.featureFlags?.length ?? 0) > 0;
-        return !isHidden && node.orphaned !== true && !isGated;
+        return !isHidden && !isGated;
     }
 
     #toEndpointIndexRow(

@@ -10,7 +10,7 @@ import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter.js";
 import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
 import { NodeIdGenerator } from "../NodeIdGenerator.js";
 import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition.js";
-import { getFirstSentence } from "../utils/endpointIndexMarkdown.js";
+import { getFirstSentence, renderSectionEndpointsMarkdown } from "../utils/endpointIndexMarkdown.js";
 
 const context = createMockTaskContext();
 
@@ -198,6 +198,32 @@ describe("endpoint-index-pages", () => {
             ["Returns a <b>plant</b> | or not.", "Returns a plant \\| or not."]
         ])("%j -> %j", (input, expected) => {
             expect(getFirstSentence(input)).toBe(expected);
+        });
+
+        it("keeps spec-derived paths and slugs inert in the table", () => {
+            const markdown = renderSectionEndpointsMarkdown({
+                title: "Odd",
+                slug: FernNavigation.V1.Slug("api/odd"),
+                rows: [
+                    {
+                        title: "Odd path",
+                        slug: FernNavigation.V1.Slug("api/odd/a)b"),
+                        method: "GET",
+                        path: "/a`b|c",
+                        description: undefined,
+                        availability: undefined
+                    }
+                ],
+                subgroups: []
+            });
+            expect(markdown).toContain("| [Odd path](/api/odd/a%29b) | `GET` | `` /a`b\\|c `` |  |");
+        });
+
+        it("escapes text after a code span cut open by truncation", () => {
+            const result = getFirstSentence(`${"word ".repeat(38)}\`code [x] and more words in the code span\``);
+            expect(result.endsWith("…")).toBe(true);
+            expect(result).toContain("`code \\[x\\]");
+            expect(result).not.toContain("`code [x]");
         });
     });
 });
