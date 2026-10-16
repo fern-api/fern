@@ -3968,7 +3968,8 @@ describe("sdk-gen-api target failure message", () => {
             "FERN_BUILD_TIMEOUT: Build exceeded 15 minutes"
         ],
         ["uses the message when there is no code", { message: "Generator crashed" }, "Generator crashed"],
-        ["uses the default text when there is no error", undefined, "sdk-gen-api generation failed"]
+        ["uses the default text when there is no error", undefined, "sdk-gen-api generation failed"],
+        ["uses the default text when the message is empty", { message: "" }, "sdk-gen-api generation failed"]
     ] as const)("%s", async (_name, error, expectedMessage) => {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
         const generatorInvocation = invocation();

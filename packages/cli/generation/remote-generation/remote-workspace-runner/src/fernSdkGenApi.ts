@@ -2117,7 +2117,7 @@ async function finishFernSdkGenApiTarget(
 }
 
 function formatFernSdkGenApiTargetError(error: FernBuildStatus["targets"][number]["error"]): string {
-    const message = error?.message ?? "sdk-gen-api generation failed";
+    const message = error?.message || "sdk-gen-api generation failed";
     return error?.code != null && error.code !== "" ? `${error.code}: ${message}` : message;
 }
 
