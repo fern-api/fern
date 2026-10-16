@@ -195,7 +195,7 @@ fn tidy_for_completion(cmd: Command, words: &[OsString], index: usize) -> Comman
     match resolve_subcommand_path(&cmd, typed) {
         Some((path, target_has_subcommands)) => {
             let hide_flags = target_has_subcommands && !current.starts_with('-');
-            tidy_path(cmd, &path, hide_flags)
+            tidy_path(cmd, &path, hide_flags, current)
         }
         // `<cli> ... help <TAB>`: leave clap's `help` subcommand path as is.
         None => cmd,
@@ -294,7 +294,7 @@ fn resolve_subcommand_path(cmd: &Command, typed: &[OsString]) -> Option<(Vec<Str
     Some((path, has_subcommands))
 }
 
-fn tidy_path(cmd: Command, path: &[String], hide_flags: bool) -> Command {
+fn tidy_path(cmd: Command, path: &[String], hide_flags: bool, current: &str) -> Command {
     // Global flags are copied down from the commands on the path when the
     // tree is built, so hiding them there hides them at the target too.
     let cmd = if hide_flags {
@@ -305,12 +305,14 @@ fn tidy_path(cmd: Command, path: &[String], hide_flags: bool) -> Command {
         cmd
     };
     match path.split_first() {
-        Some((head, rest)) => cmd.mut_subcommand(head, |sub| tidy_path(sub, rest, hide_flags)),
+        Some((head, rest)) => {
+            cmd.mut_subcommand(head, |sub| tidy_path(sub, rest, hide_flags, current))
+        }
         None => {
             // Built trees (the runtime builds before completing) already
             // carry clap's `help` subcommand; unbuilt ones get none.
             let mut cmd = cmd
-                .mut_subcommands(|s| shorten_about(hide_visible_aliases(s)))
+                .mut_subcommands(|s| shorten_about(hide_aliases_if_name_matches(s, current)))
                 .mut_args(shorten_help)
                 .disable_help_subcommand(true);
             if cmd.get_subcommands().any(|s| s.get_name() == "help") {
@@ -365,8 +367,11 @@ fn short_description(text: &str) -> String {
     )
 }
 
-fn hide_visible_aliases(cmd: Command) -> Command {
-    if cmd.get_visible_aliases().next().is_none() {
+/// List a command under its real name when that matches the typed prefix;
+/// otherwise keep its visible aliases so `de<TAB>` still offers `dev` (an
+/// alias of `start`) next to `deploy`.
+fn hide_aliases_if_name_matches(cmd: Command, current: &str) -> Command {
+    if cmd.get_visible_aliases().next().is_none() || !cmd.get_name().starts_with(current) {
         return cmd;
     }
     let aliases: Vec<String> = cmd.get_all_aliases().map(str::to_owned).collect();
@@ -610,6 +615,29 @@ mod tests {
             values(&complete_fish(&["my-cli", "messages", "ls", "--ver"])),
             vec!["--verbose"]
         );
+    }
+
+    #[test]
+    fn dynamic_completion_offers_aliases_whose_command_name_does_not_match() {
+        let cli = || {
+            Command::new("my-cli").subcommand(
+                Command::new("serverless")
+                    .subcommand(Command::new("deploy"))
+                    .subcommand(Command::new("delete"))
+                    .subcommand(Command::new("start").visible_aliases(["dev", "run"])),
+            )
+        };
+        let complete = |w: &str| {
+            complete_fish_with(cli(), &["my-cli", "serverless", w])
+                .lines()
+                .map(|l| l.split('\t').next().unwrap().to_string())
+                .collect::<Vec<_>>()
+        };
+        assert_eq!(complete(""), vec!["deploy", "delete", "start"]);
+        assert_eq!(complete("de"), vec!["deploy", "delete", "dev"]);
+        assert_eq!(complete("dev"), vec!["dev"]);
+        assert_eq!(complete("r"), vec!["run"]);
+        assert_eq!(complete("st"), vec!["start"]);
     }
 
     #[test]
