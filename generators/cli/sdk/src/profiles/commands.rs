@@ -17,6 +17,7 @@ use clap::{Arg, ArgAction, ArgMatches, Command};
 
 use crate::auth::keyring_store::active_store;
 use crate::auth::login::{self, DynLoginFlow};
+use crate::auth::oauth2::CLIENT_ID_FIELD;
 use crate::auth::{AuthCredentialSource, SchemeBinding};
 use crate::error::CliError;
 use crate::profiles::selection::{self, PROFILE_FLAG};
@@ -1083,8 +1084,8 @@ fn handle_list<W: Write>(
                 .credential
                 .as_ref()
                 .and_then(|credential| {
-                    stored_account(store, credential)
-                        .or_else(|| stored_oauth_client_id(store, credential))
+                    stored_account(ctx, store, credential)
+                        .or_else(|| stored_oauth_client_id(ctx, store, credential))
                 })
                 .or_else(|| resolved.oauth_client_id.clone());
             if let Some(account) = account {
@@ -1350,28 +1351,59 @@ fn insert_map(
 ///
 /// Read from the record, never the keychain: on macOS every keychain read by
 /// a binary not on the entry's access list prompts for the login password,
-/// once per profile, which made `profiles list` unusable. `None` when nothing
-/// was recorded (no basic scheme, nothing stored, or stored by an older
-/// binary) and the column is omitted.
-fn stored_account(store: &ProfileStore, credential: &str) -> Option<String> {
-    store.credential_record(credential)?.account
+/// once per profile, which made `profiles list` unusable. Basic schemes are
+/// tried in declaration order. `None` when nothing is recorded and the column
+/// is omitted.
+fn stored_account(ctx: &ProfilesContext<'_>, store: &ProfileStore, credential: &str) -> Option<String> {
+    let basic = ctx
+        .auth_bindings
+        .iter()
+        .filter(|(_, binding)| matches!(binding, SchemeBinding::Basic { .. }))
+        .map(|(scheme, _)| scheme.as_str());
+    recorded_field(store, credential, basic, |identity| identity.account.clone())
 }
 
 /// The OAuth2 client id recorded for `credential` — what
 /// `profiles set <name> <CLIENT_ID_VAR>=…` and `auth login --with-token`
 /// write. Public (RFC 6749 §2.2), and read from the record for the same
 /// reason as [`stored_account`].
-fn stored_oauth_client_id(store: &ProfileStore, credential: &str) -> Option<String> {
-    store.credential_record(credential)?.oauth_client_id
+fn stored_oauth_client_id(
+    ctx: &ProfilesContext<'_>,
+    store: &ProfileStore,
+    credential: &str,
+) -> Option<String> {
+    let oauth = ctx
+        .auth_bindings
+        .iter()
+        .filter(|(scheme, _)| {
+            login::scheme_credential_fields(scheme, ctx.auth_bindings)
+                .is_some_and(|fields| fields.contains(&CLIENT_ID_FIELD))
+        })
+        .map(|(scheme, _)| scheme.as_str());
+    recorded_field(store, credential, oauth, |identity| identity.oauth_client_id.clone())
 }
 
-/// Record what is stored in each of `credentials` that has no record yet:
+fn recorded_field<'a>(
+    store: &ProfileStore,
+    credential: &str,
+    schemes: impl IntoIterator<Item = &'a str>,
+    field: impl Fn(&store::StoredIdentity) -> Option<String>,
+) -> Option<String> {
+    let record = store.credential_record(credential)?;
+    schemes
+        .into_iter()
+        .find_map(|scheme| record.schemes.get(scheme).and_then(&field))
+}
+
+/// Record what is stored in `credentials` for each scheme not yet recorded:
 /// credentials stored by an older binary, before `profiles.toml` kept a copy.
 ///
-/// Reads the keychain once per entry after an upgrade and never again for
-/// that slot. `every_scheme: false` reads only multi-field schemes (basic,
-/// OAuth2 client credentials) — the ones `list` and `show` have an identity
-/// to report from — so no command prompts more than it did before.
+/// Reads each keychain entry once after an upgrade and never again; an entry
+/// found absent is noted so it is not looked up again either. A failed read
+/// (a refused prompt, a locked keychain) is left unrecorded and retried next
+/// time, as before. `every_scheme: false` reads only multi-field schemes
+/// (basic, OAuth2 client credentials) — the ones `list` and `show` have an
+/// identity to report from — so no command reads more than it did before.
 fn backfill_credential_records(
     ctx: &ProfilesContext<'_>,
     store: &mut ProfileStore,
@@ -1380,19 +1412,22 @@ fn backfill_credential_records(
 ) {
     let mut changed = false;
     for credential in credentials {
-        if store.credential_record(&credential).is_some() {
-            continue;
-        }
+        let record = store.credential_record(&credential).unwrap_or_default();
         for (scheme, _) in ctx.auth_bindings {
+            if record.schemes.contains_key(scheme) || record.checked.contains(scheme) {
+                continue;
+            }
             if !every_scheme && login::scheme_credential_fields(scheme, ctx.auth_bindings).is_none()
             {
                 continue;
             }
             let account = super::keyring_account_for(scheme, &credential);
-            if let Ok(Some(stored)) = active_store().get(ctx.cli_name, &account) {
-                store.record_credential(&credential, scheme, &stored);
-                changed = true;
+            match active_store().get(ctx.cli_name, &account) {
+                Ok(Some(stored)) => store.record_credential(&credential, scheme, &stored),
+                Ok(None) => store.mark_credential_absent(&credential, scheme),
+                Err(_) => continue,
             }
+            changed = true;
         }
     }
     // Only the copy is lost; the next listing reads the keychain again.
@@ -2015,7 +2050,7 @@ async fn handle_remove(
             let account = super::keyring_account_for(scheme, &credential);
             active_store().delete(ctx.cli_name, &account)?;
         }
-        store.forget_credential(&credential, None);
+        store.forget_credential(&credential);
         if let Some(cache) = crate::auth::TokenCache::for_cli_unprofiled(ctx.cli_name) {
             cache.purge_profile(&credential)?;
         }
@@ -2211,12 +2246,13 @@ async fn revoke_remote_credential(
 /// two cannot drift into reporting different things about the same profile.
 fn resolved_profile_fields(
     profile: &store::ResolvedProfile,
+    ctx: &ProfilesContext<'_>,
     store: &ProfileStore,
 ) -> serde_json::Map<String, serde_json::Value> {
     let mut map = serde_json::Map::new();
     map.insert("profile".into(), profile.name.clone().into());
     if let Some(credential) = &profile.credential {
-        if let Some(account) = stored_account(store, credential) {
+        if let Some(account) = stored_account(ctx, store, credential) {
             map.insert("account".into(), account.into());
         }
         if credential != &profile.name {
@@ -2228,7 +2264,7 @@ fn resolved_profile_fields(
     let client_id = profile
         .credential
         .as_ref()
-        .and_then(|credential| stored_oauth_client_id(store, credential))
+        .and_then(|credential| stored_oauth_client_id(ctx, store, credential))
         .or_else(|| profile.oauth_client_id.clone());
     if let Some(client_id) = client_id {
         map.insert("oauth_client_id".into(), client_id.into());
@@ -2323,7 +2359,7 @@ fn handle_show<W: Write>(
 
     let pipeline = crate::formatter::OutputPipeline::from_matches(matches, ctx.cli_name)
         .map_err(|e| CliError::Validation(e.to_string()))?;
-    let mut map = resolved_profile_fields(&resolved, store);
+    let mut map = resolved_profile_fields(&resolved, ctx, store);
     // Whether this is the profile commands would use by default — the one bit
     // of selection context that is meaningful for a profile you are merely
     // inspecting.
@@ -2362,7 +2398,7 @@ fn handle_current<W: Write>(
     let payload = match &selected {
         Some(selection) => {
             let profile = &selection.profile;
-            let mut map = resolved_profile_fields(profile, store);
+            let mut map = resolved_profile_fields(profile, ctx, store);
             // `selected_by`, not `source`: this answers *why* this profile is in
             // play; precedence is the same for every source (`outranks_env`).
             map.insert("selected_by".into(), selection.source.label().into());

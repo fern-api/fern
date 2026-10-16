@@ -245,7 +245,7 @@ pub(crate) fn note_stored_credential(cli_name: &str, scheme: &str, stored: &str)
 /// [`note_stored_credential`] for a removed entry.
 pub(crate) fn note_removed_credential(cli_name: &str, scheme: &str) {
     update_active_credential_record(cli_name, |store, credential| {
-        store.forget_credential(credential, Some(scheme))
+        store.mark_credential_absent(credential, scheme)
     });
 }
 

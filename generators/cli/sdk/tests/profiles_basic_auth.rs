@@ -445,3 +445,17 @@ fn removing_a_profile_forgets_its_recorded_account() {
         assert!(!logged_in(Some("prod")));
     });
 }
+
+#[test]
+#[serial]
+fn an_empty_profile_is_looked_up_once() {
+    with_clean_env(|home| {
+        run(&["bsc", "profiles", "create", "empty", "--use"]);
+        let reads = count_reads(home);
+        for expected_reads in [true, false] {
+            let (code, output) = run(&["bsc", "profiles", "list", "--format", "json"]);
+            assert_eq!(code, 0, "{output}");
+            assert_eq!(take(&reads) > 0, expected_reads);
+        }
+    });
+}
