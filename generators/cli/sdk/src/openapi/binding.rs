@@ -436,6 +436,9 @@ impl Binding for OpenApiBinding {
                 Some(url) if root_matches.get_one::<String>("base-url").is_none() => Some(url),
                 _ => crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
             };
+            let base_url =
+                self.inner
+                    .substitute_base_url_vars(base_url, &prepared.doc, root_matches, profile);
             // Strip the namespace prefix the same way `dispatch` does, so a
             // caller names the operation as it appears on the command line.
             let effective: &[String] = match &self.command_namespace {
@@ -803,8 +806,12 @@ impl Binding for OpenApiBinding {
             )?;
 
             // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
-            let base_url_override_owned =
-                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
+            let base_url_override_owned = self.inner.substitute_base_url_vars(
+                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
+                &prepared.doc,
+                root_matches,
+                None,
+            );
             let base_url_override = base_url_override_owned.as_deref();
 
             // --user-agent-suffix flag wins; otherwise {NAME}_USER_AGENT_SUFFIX
@@ -910,8 +917,12 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override =
-            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let base_url_override = self.inner.substitute_base_url_vars(
+            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?,
+            &self.ensure_prepared()?.doc,
+            matches,
+            None,
+        );
         let http_config = entry.http_config.with_user_agent_suffix_override(
             crate::cli_args::resolve_user_agent_suffix_override(matches),
         );
@@ -940,8 +951,12 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override =
-            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let base_url_override = self.inner.substitute_base_url_vars(
+            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?,
+            &self.ensure_prepared()?.doc,
+            matches,
+            None,
+        );
         let entry = super::app::BindingEntry {
             http_config: entry.http_config.with_user_agent_suffix_override(
                 crate::cli_args::resolve_user_agent_suffix_override(matches),
