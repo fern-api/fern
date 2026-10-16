@@ -12,3 +12,11 @@
     the first report after upgrading reads the same keychain entries it read before and records what it
     finds, so the output is unchanged and later reports read nothing.
   type: fix
+
+- summary: |
+    A command now reads each OS keychain entry at most once. Choosing an auth scheme and then resolving
+    each field of the credential used to read the same entry several times per request (eight for a
+    Twilio API call), and on macOS each read can raise a password prompt. Values are kept in memory for
+    a few seconds; failed or denied reads are not kept, and the CLI's own writes and deletes update the
+    kept copy.
+  type: fix

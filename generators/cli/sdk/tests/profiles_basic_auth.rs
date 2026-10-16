@@ -407,6 +407,41 @@ fn profile_reports_never_read_the_keychain() {
     });
 }
 
+fn count_cached_reads(home: &std::path::Path) -> std::sync::Arc<std::sync::atomic::AtomicUsize> {
+    let reads = std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0));
+    fern_cli_sdk::auth::set_active_store(std::sync::Arc::new(
+        fern_cli_sdk::auth::CachingKeyringStore::new(CountingStore {
+            inner: fern_cli_sdk::auth::FileKeyringStore::at_root(home.to_path_buf()),
+            reads: reads.clone(),
+        }),
+    ));
+    reads
+}
+
+#[test]
+#[serial]
+fn a_request_reads_the_keychain_entry_once() {
+    // Selection probes the scheme, then the request resolves the username
+    // and the password: three lookups of one entry. The cache makes that one
+    // keychain read, with the same request going out.
+    with_clean_env(|home| {
+        run(&["bsc", "profiles", "create", "prod", "--use"]);
+        store_basic("prod", "AC3333", "tok");
+        let request = ["bsc", "messages", "list", "--account-sid", "AC3333", "--dry-run"];
+
+        let reads = count_reads(home);
+        let (code, uncached) = run(&request);
+        assert_eq!(code, 0, "{uncached}");
+        assert!(take(&reads) > 1, "the uncached path reads once per lookup");
+
+        let reads = count_cached_reads(home);
+        let (code, cached) = run(&request);
+        assert_eq!(code, 0, "{cached}");
+        assert_eq!(take(&reads), 1);
+        assert_eq!(cached, uncached);
+    });
+}
+
 #[test]
 #[serial]
 fn a_credential_stored_by_an_older_binary_is_read_once() {
