@@ -9,7 +9,7 @@ use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider};
 use crate::binding::{Binding, BoxFuture, DispatchResult};
 use crate::error::CliError;
 use crate::openapi::commands;
-use crate::openapi::discovery::RestDescription;
+use crate::openapi::discovery::{RestDescription, RestMethod};
 use crate::openapi::executor;
 
 /// Prepared state computed once in `build_command()` and reused in
@@ -209,6 +209,17 @@ impl OpenApiBinding {
     pub fn default_output_properties(mut self, enabled: bool) -> Self {
         self.inner = self.inner.default_output_properties(enabled);
         self
+    }
+
+    /// The fields `table` output shows for `method`: its
+    /// `x-twilio.defaultOutputProperties` when the binary opted in,
+    /// otherwise empty (every field).
+    fn default_properties_for(&self, method: &RestMethod) -> Vec<String> {
+        if self.inner.default_output_properties {
+            method.default_output_properties.clone()
+        } else {
+            Vec::new()
+        }
     }
 
     /// Register a global parameter that surfaces as a top-level CLI flag
@@ -626,7 +637,7 @@ impl Binding for OpenApiBinding {
             None => root_matches,
         };
         super::resolve_method_from_matches(&prepared.doc, resolve_from)
-            .map(|(method, _)| method.default_output_properties.clone())
+            .map(|(method, _)| self.default_properties_for(method))
             .unwrap_or_default()
     }
 
@@ -875,9 +886,7 @@ impl Binding for OpenApiBinding {
                 &self.inner.name,
             )
             .map_err(|e| CliError::Validation(e.to_string()))?;
-            if self.inner.default_output_properties {
-                pipeline.default_properties = method.default_output_properties.clone();
-            }
+            pipeline.default_properties = self.default_properties_for(method);
 
             if pipeline.is_raw() && pagination.page_all {
                 return Err(CliError::Validation(

@@ -163,7 +163,7 @@ impl OutputPipeline {
             None => value,
         };
         let selected = if self.query.is_none() && self.format == OutputFormat::Table {
-            format_default_properties(effective, &self.default_properties, !paginated || is_first_page)
+            format_default_properties(effective, &self.default_properties, paginated, is_first_page)
         } else {
             None
         };
@@ -659,7 +659,7 @@ fn render_columns(columns: &[String], rows: &[Vec<String>], emit_header: bool) -
     // Calculate column widths (char-count, not byte-count).
     let mut widths: Vec<usize> = columns.iter().map(|c| c.chars().count()).collect();
     for row in rows {
-        for (i, cell) in row.iter().enumerate() {
+        for (i, cell) in row.iter().enumerate().take(widths.len()) {
             let char_len = cell.chars().count();
             if char_len > widths[i] {
                 widths[i] = char_len;
@@ -692,6 +692,7 @@ fn render_columns(columns: &[String], rows: &[Vec<String>], emit_header: bool) -
         let cells: Vec<String> = row
             .iter()
             .enumerate()
+            .take(widths.len())
             .map(|(i, c)| {
                 let char_len = c.chars().count();
                 let truncated = if char_len > widths[i] {
@@ -716,9 +717,17 @@ fn render_columns(columns: &[String], rows: &[Vec<String>], emit_header: bool) -
 /// record (a single object is one row), the way Twilio's CLI applies
 /// `defaultOutputProperties`. Property names match response keys ignoring
 /// case and `_`/`-` (`date_sent` matches `dateSent`). Properties no record
-/// has are dropped. `None` (render normally) when `properties` is empty,
-/// the value isn't a record or list of records, or nothing matches.
-fn format_default_properties(value: &Value, properties: &[String], emit_header: bool) -> Option<String> {
+/// has are dropped, and `None` (render normally) is returned when nothing
+/// matches. With `--page-all` (`paginated`) every property is kept on every
+/// page, so continuation pages line up under the first page's header.
+/// `None` also when `properties` is empty or the value isn't a record or a
+/// list of records.
+fn format_default_properties(
+    value: &Value,
+    properties: &[String],
+    paginated: bool,
+    is_first_page: bool,
+) -> Option<String> {
     if properties.is_empty() {
         return None;
     }
@@ -742,7 +751,7 @@ fn format_default_properties(value: &Value, properties: &[String], emit_header: 
     };
     let selected: Vec<&String> = properties
         .iter()
-        .filter(|p| records.iter().any(|r| lookup(r, p).is_some()))
+        .filter(|p| paginated || records.iter().any(|r| lookup(r, p).is_some()))
         .collect();
     if selected.is_empty() {
         return None;
@@ -757,7 +766,7 @@ fn format_default_properties(value: &Value, properties: &[String], emit_header: 
                 .collect()
         })
         .collect();
-    Some(render_columns(&columns, &rows, emit_header))
+    Some(render_columns(&columns, &rows, !paginated || is_first_page))
 }
 
 fn property_match_key(name: &str) -> String {
@@ -1079,6 +1088,21 @@ mod tests {
         let no_match = emit_to_string(&table_with_properties(&["nope"]), &value);
         assert_eq!(no_match, emit_to_string(&table_with_properties(&[]), &value));
         assert!(no_match.contains("body"));
+    }
+
+    #[test]
+    fn default_properties_keep_every_column_across_pages() {
+        let pipeline = table_with_properties(&["sid", "date_sent"]);
+        let render = |value: &Value, first: bool| {
+            let mut out = Vec::new();
+            pipeline.emit(&mut out, value, true, first).unwrap();
+            String::from_utf8(out).unwrap()
+        };
+        let page1 = render(&json!({"messages": [{"sid": "SM1", "dateSent": "d1"}]}), true);
+        let page2 = render(&json!({"messages": [{"sid": "SM2", "body": "x"}]}), false);
+        assert!(page1.starts_with("SID  Date Sent"), "{page1}");
+        assert_eq!(page2.trim_end(), "SM2", "{page2}");
+        assert!(!page2.contains("body") && !page2.contains("SID"), "{page2}");
     }
 
     #[test]
