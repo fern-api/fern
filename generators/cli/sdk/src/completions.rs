@@ -193,7 +193,8 @@ fn tidy_path(cmd: Command, path: &[String], hide_flags: bool) -> Command {
             // Built trees (the runtime builds before completing) already
             // carry clap's `help` subcommand; unbuilt ones get none.
             let mut cmd = cmd
-                .mut_subcommands(hide_visible_aliases)
+                .mut_subcommands(|s| shorten_about(hide_visible_aliases(s)))
+                .mut_args(shorten_help)
                 .disable_help_subcommand(true);
             if cmd.get_subcommands().any(|s| s.get_name() == "help") {
                 cmd = cmd.mut_subcommand("help", |h| h.hide(true));
@@ -201,6 +202,50 @@ fn tidy_path(cmd: Command, path: &[String], hide_flags: bool) -> Command {
             cmd
         }
     }
+}
+
+/// Longest description shown next to a TAB candidate. zsh and fish print
+/// `name -- description` on one line, so long descriptions are cut off or wrap
+/// in narrow windows; the full text stays in `--help`.
+const MAX_COMPLETION_DESCRIPTION: usize = 50;
+
+fn shorten_about(cmd: Command) -> Command {
+    match cmd.get_about().map(|a| short_description(&a.to_string())) {
+        Some(short) => cmd.about(short),
+        None => cmd,
+    }
+}
+
+fn shorten_help(arg: clap::Arg) -> clap::Arg {
+    match arg.get_help().map(|h| short_description(&h.to_string())) {
+        Some(short) => arg.help(short),
+        None => arg,
+    }
+}
+
+/// First sentence of `text`, cut at a word boundary to fit
+/// [`MAX_COMPLETION_DESCRIPTION`].
+fn short_description(text: &str) -> String {
+    let line = text.lines().next().unwrap_or_default().trim();
+    let sentence = match line.find(". ") {
+        Some(i) => &line[..i],
+        None => line.strip_suffix('.').unwrap_or(line),
+    };
+    if sentence.chars().count() <= MAX_COMPLETION_DESCRIPTION {
+        return sentence.to_string();
+    }
+    let limit = sentence
+        .char_indices()
+        .nth(MAX_COMPLETION_DESCRIPTION - 1)
+        .map_or(sentence.len(), |(i, _)| i);
+    let cut = sentence[..limit]
+        .rfind(' ')
+        .filter(|&i| i > 0)
+        .unwrap_or(limit);
+    format!(
+        "{}…",
+        sentence[..cut].trim_end_matches([',', ';', ':', ' '])
+    )
 }
 
 fn hide_visible_aliases(cmd: Command) -> Command {
@@ -422,6 +467,35 @@ mod tests {
         let out = complete_fish(&["my-cli", "messages", "--"]);
         assert!(out.contains("--verbose"), "{out}");
         assert!(out.contains("--help"), "{out}");
+    }
+
+    #[test]
+    fn short_description_keeps_the_first_sentence_within_the_limit() {
+        assert_eq!(short_description("Print help"), "Print help");
+        assert_eq!(
+            short_description("Create a project. Runs the wizard.\nMore text"),
+            "Create a project"
+        );
+        assert_eq!(
+            short_description(
+                "List Services, environments, builds, Functions, Assets or variables"
+            ),
+            "List Services, environments, builds, Functions…"
+        );
+        assert!(short_description(&"é".repeat(80)).chars().count() <= MAX_COMPLETION_DESCRIPTION);
+    }
+
+    #[test]
+    fn dynamic_completion_shortens_descriptions() {
+        let cli =
+            Command::new("my-cli").subcommand(Command::new("list").about(
+                "List Services, environments, builds, Functions, Assets or variables. Extra.",
+            ));
+        let out = complete_fish_with(cli, &["my-cli", ""]);
+        assert!(
+            out.contains("list\tList Services, environments, builds, Functions…"),
+            "{out}"
+        );
     }
 
     #[test]
