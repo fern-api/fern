@@ -146,8 +146,10 @@ export async function publishDocsViaLedgerPreview({
     // in a single call.
     context.logger.debug("[ledger-preview] Finishing preview deployment...");
     const finishStart = performance.now();
-    // Built before the call so `sourceInstanceUrl` type-checks against SDKs that predate it;
-    // FDR versions that predate it drop the unknown key.
+    // Built before the call so `sourceInstanceUrl` type-checks against SDKs that predate it (the
+    // rest of the payload is still checked for required fields and types); FDR versions that
+    // predate it drop the unknown key.
+    // TODO: pass the literal straight to `finish` once @fern-api/fdr-sdk includes `sourceInstanceUrl`.
     const finishInput = {
         orgId: organization,
         domain: registerResult.domain,
