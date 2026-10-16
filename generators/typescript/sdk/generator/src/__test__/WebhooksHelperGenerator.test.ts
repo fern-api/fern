@@ -176,8 +176,6 @@ describe("WebhooksHelperGenerator", () => {
                 algorithmHeader: {
                     headerName: createWireValue("X-Twilio-Webhooks-Signature-Settings"),
                     keyIdDelimiter: ",",
-                    keyIdParameter: undefined,
-                    algorithmParameter: undefined,
                     keyIdParameter: "key",
                     algorithmParameter: "algorithm",
                     algorithms: [
