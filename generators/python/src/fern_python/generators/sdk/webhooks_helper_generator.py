@@ -2,13 +2,13 @@ import json
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
-import fern.ir.resources as ir_types
-
 from fern_python.codegen import Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.utils import pascal_case, snake_case
+
+import fern.ir.resources as ir_types
 
 WEBHOOKS_MODULE_NAME = "webhooks"
 WEBHOOKS_HELPER_FILE_NAME = "webhooks_helper"
