@@ -8,6 +8,7 @@
     `[credentials.<slot>]` in `profiles.toml`, written whenever `profiles create`, `profiles set`,
     `auth login` or an OAuth flow stores a credential and cleared by `profiles remove` / `auth logout`.
     Only requests that need the secret read the keychain. `profiles set` also skips its keychain read
-    when every field of a multi-field credential is supplied. Profiles whose credential was stored by an
-    older version show no ACCOUNT until the credential is stored again.
+    when every field of a multi-field credential is supplied. For a credential stored by an older version,
+    the first report after upgrading reads the same keychain entries it read before and records what it
+    finds, so the output is unchanged and later reports read nothing.
   type: fix
