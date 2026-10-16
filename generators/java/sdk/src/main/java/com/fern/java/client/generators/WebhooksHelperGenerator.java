@@ -435,13 +435,12 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                     .addStatement(
                             "algorithmValue = settingsParts.getOrDefault($S, \"\")",
                             algorithmHeader.getAlgorithmParameter().get());
-            algorithmHeader
-                    .getKeyIdParameter()
-                    .ifPresent(keyIdParameter -> method.addStatement("keyId = settingsParts.get($S)", keyIdParameter)
-                            .beginControlFlow("if (keyId == null || keyId.isEmpty())")
-                            .addStatement("LOGGER.warning($S)", MISSING_KEY_ID_MESSAGE)
-                            .addStatement("return false")
-                            .endControlFlow());
+            algorithmHeader.getKeyIdParameter().ifPresent(keyIdParameter -> method.addStatement(
+                            "keyId = settingsParts.get($S)", keyIdParameter)
+                    .beginControlFlow("if (keyId == null || keyId.isEmpty())")
+                    .addStatement("LOGGER.warning($S)", MISSING_KEY_ID_MESSAGE)
+                    .addStatement("return false")
+                    .endControlFlow());
         } else {
             algorithmHeader.getKeyIdDelimiter().ifPresent(delimiter -> method.addStatement(
                             "int delimiterIndex = settingsHeader.lastIndexOf($S)", delimiter)

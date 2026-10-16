@@ -384,7 +384,9 @@ class HmacHelperWriter {
             );
             writer.writeLine("\t\t\t}");
             writer.writeLine("\t\t}");
-            writer.writeLine(`\t\talgorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}]`);
+            writer.writeLine(
+                `\t\talgorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}]`
+            );
             if (algorithmHeader.keyIdParameter != null) {
                 writer.writeLine(`\t\tkeyID = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}]`);
                 writer.writeLine('\t\tif keyID == "" {');

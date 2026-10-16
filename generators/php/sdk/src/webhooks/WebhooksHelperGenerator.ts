@@ -378,7 +378,9 @@ export class WebhooksHelperGenerator {
                     `$algorithmValue = $settingsParts[${this.phpString(algorithmHeader.algorithmParameter)}] ?? '';`
                 );
                 if (algorithmHeader.keyIdParameter != null) {
-                    writer.writeLine(`$keyId = $settingsParts[${this.phpString(algorithmHeader.keyIdParameter)}] ?? null;`);
+                    writer.writeLine(
+                        `$keyId = $settingsParts[${this.phpString(algorithmHeader.keyIdParameter)}] ?? null;`
+                    );
                     writer.writeLine("if ($keyId === null || $keyId === '') {");
                     writer.indent();
                     writer.writeLine(`error_log(${this.phpString(MISSING_KEY_ID_MESSAGE)});`);
