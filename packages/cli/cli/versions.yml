@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.160.0
+  changelogEntry:
+    - summary: |
+        `settings.search.prioritize-current-product` in `docs.yml` now defaults to `true`.
+        When unset, search boosts results from the current product/version without
+        hiding other products/versions. Set it to `false` to keep the previous ranking.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 5.159.3
   changelogEntry:
     - summary: |
