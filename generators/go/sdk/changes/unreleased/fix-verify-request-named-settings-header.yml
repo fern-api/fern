@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
-
 - summary: |
     `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
     `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
