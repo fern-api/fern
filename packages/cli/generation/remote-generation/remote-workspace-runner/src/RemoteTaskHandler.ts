@@ -528,11 +528,9 @@ async function downloadZipForTask({
     const outputZipPath = path.join(tmpDir.path, "output.zip");
     await pipeline(request.data, createWriteStream(outputZipPath));
 
-    // decompress to user-specified location
-    // Force remove the directory to handle read-only files (e.g., .git/objects)
-    await forceRemoveDirectory(absolutePathToLocalOutput);
-    await mkdir(absolutePathToLocalOutput, { recursive: true });
-    await extractZipToDirectory(outputZipPath, absolutePathToLocalOutput);
+    // decompress to user-specified location, replacing the previous output only once the archive
+    // has been fully extracted
+    await extractZipToDirectory(outputZipPath, absolutePathToLocalOutput, { replaceExisting: true });
 }
 
 async function forceRemoveDirectory(dirPath: AbsoluteFilePath): Promise<void> {
@@ -703,22 +701,32 @@ const EXTRACT_STAGING_SUFFIX = ".fern-extract-";
 /**
  * Extracts the archive into a staging directory next to `outputDir` and only moves the files into
  * place once every entry has been written and verified against the archive's entry count. An
- * interrupted or failed extraction therefore never leaves a partial tree in `outputDir`.
+ * interrupted or failed extraction therefore never leaves a partial tree in `outputDir`, and with
+ * `replaceExisting` the previous contents of `outputDir` survive until the new tree is complete.
  */
-export async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
+export async function extractZipToDirectory(
+    zipPath: string,
+    outputDir: AbsoluteFilePath,
+    { replaceExisting = false }: { replaceExisting?: boolean } = {}
+): Promise<void> {
     await removeStaleStagingDirectories(outputDir);
     const stagingDir = AbsoluteFilePath.of(`${outputDir}${EXTRACT_STAGING_SUFFIX}${process.pid}-${Date.now()}`);
     await mkdir(stagingDir, { recursive: true });
     try {
         await extractZipEntries(zipPath, stagingDir);
-        if (await isMissingOrEmptyDirectory(outputDir)) {
-            await rm(outputDir, { recursive: true, force: true });
+        if (replaceExisting || (await isMissingOrEmptyDirectory(outputDir))) {
+            // handles read-only files in the previous output (e.g., .git/objects)
+            await forceRemoveDirectory(outputDir);
             await rename(stagingDir, outputDir);
         } else {
             await cp(stagingDir, outputDir, { recursive: true, verbatimSymlinks: true });
         }
     } finally {
-        await rm(stagingDir, { recursive: true, force: true });
+        try {
+            await rm(stagingDir, { recursive: true, force: true });
+        } catch {
+            // best-effort cleanup; never mask the extraction result
+        }
     }
 }
 
@@ -729,10 +737,31 @@ async function removeStaleStagingDirectories(outputDir: AbsoluteFilePath): Promi
     }
     const prefix = `${path.basename(outputDir)}${EXTRACT_STAGING_SUFFIX}`;
     for (const entry of await readdir(parent)) {
-        if (entry.startsWith(prefix)) {
+        if (entry.startsWith(prefix) && !isOwnedByLiveProcess(entry.slice(prefix.length))) {
             await rm(path.join(parent, entry), { recursive: true, force: true });
         }
     }
+}
+
+function isOwnedByLiveProcess(stagingDirId: string): boolean {
+    const pid = Number.parseInt(stagingDirId.split("-")[0] ?? "", 10);
+    if (Number.isNaN(pid)) {
+        // not a directory we created; leave it alone
+        return true;
+    }
+    if (pid === process.pid) {
+        return true;
+    }
+    try {
+        process.kill(pid, 0);
+        return true;
+    } catch (error) {
+        return isNodeError(error) && error.code === "EPERM";
+    }
+}
+
+function isNodeError(error: unknown): error is NodeJS.ErrnoException {
+    return error instanceof Error && "code" in error;
 }
 
 async function isMissingOrEmptyDirectory(dir: AbsoluteFilePath): Promise<boolean> {
@@ -784,8 +813,11 @@ function extractZipEntries(zipPath: string, outputDir: AbsoluteFilePath): Promis
                                 reject(streamErr ?? new Error("Failed to open read stream"));
                                 return;
                             }
-                            readStream.on("error", reject);
                             const writeStream = createWriteStream(outputPath);
+                            readStream.on("error", (streamError) => {
+                                writeStream.destroy();
+                                reject(streamError);
+                            });
                             writeStream.on("finish", onEntryExtracted).on("error", reject);
                             readStream.pipe(writeStream);
                         });

@@ -154,17 +154,54 @@ describe("extractZipToDirectory", () => {
         expect((await readdir(tmpDir.path)).sort()).toEqual(["output", "test.zip"]);
     });
 
-    it("removes stale staging directories from a previous interrupted extraction", async () => {
+    it("removes stale staging directories left by dead processes but keeps those of live ones", async () => {
         const tmpDir = await tmp.dir({ unsafeCleanup: true });
         const zipPath = await createTestZip(tmpDir, [{ name: "file.txt", content: "hello" }]);
         const outputDir = AbsoluteFilePath.of(path.join(tmpDir.path, "output"));
-        const staleStagingDir = path.join(tmpDir.path, "output.fern-extract-123-456");
+        const deadPid = 2 ** 22 + 1;
+        const staleStagingDir = path.join(tmpDir.path, `output.fern-extract-${deadPid}-456`);
+        const liveStagingDir = path.join(tmpDir.path, `output.fern-extract-${process.pid}-789`);
         await mkdir(staleStagingDir, { recursive: true });
         await writeFile(path.join(staleStagingDir, "partial.txt"), "partial");
+        await mkdir(liveStagingDir, { recursive: true });
 
         await extractZipToDirectory(zipPath, outputDir);
 
-        expect((await readdir(tmpDir.path)).sort()).toEqual(["output", "test.zip"]);
+        expect((await readdir(tmpDir.path)).sort()).toEqual([
+            "output",
+            `output.fern-extract-${process.pid}-789`,
+            "test.zip"
+        ]);
         expect(await readdir(outputDir)).toEqual(["file.txt"]);
+    });
+
+    it("replaces the previous output only after the archive has been fully extracted", async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        const zipPath = await createTestZip(tmpDir, [{ name: "new.txt", content: "new" }]);
+        const outputDir = AbsoluteFilePath.of(path.join(tmpDir.path, "output"));
+        await mkdir(outputDir, { recursive: true });
+        await writeFile(path.join(outputDir, "old.txt"), "old");
+
+        await extractZipToDirectory(zipPath, outputDir, { replaceExisting: true });
+
+        expect(await readdir(outputDir)).toEqual(["new.txt"]);
+        expect((await readdir(tmpDir.path)).sort()).toEqual(["output", "test.zip"]);
+    });
+
+    it("keeps the previous output intact when a replacing extraction fails", async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        const zipPath = await createTestZip(tmpDir, [{ name: "new.txt", content: "n".repeat(4096) }]);
+        const zipBytes = await readFile(zipPath);
+        zipBytes.fill(0xff, 30 + "new.txt".length, 30 + "new.txt".length + 32);
+        await writeFile(zipPath, zipBytes);
+        const outputDir = AbsoluteFilePath.of(path.join(tmpDir.path, "output"));
+        await mkdir(outputDir, { recursive: true });
+        await writeFile(path.join(outputDir, "old.txt"), "old");
+
+        await expect(extractZipToDirectory(zipPath, outputDir, { replaceExisting: true })).rejects.toThrow();
+
+        expect(await readdir(outputDir)).toEqual(["old.txt"]);
+        expect(await readFile(path.join(outputDir, "old.txt"), "utf-8")).toBe("old");
+        expect((await readdir(tmpDir.path)).sort()).toEqual(["output", "test.zip"]);
     });
 });
