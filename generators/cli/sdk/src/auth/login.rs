@@ -223,26 +223,75 @@ pub(crate) fn multi_field_keyring_value(
 ///
 /// Pipeable (`printf 'id\nsecret\n' | cli auth login --with-token`), the
 /// same contract single-value paste already has. Prompts go to stderr so
-/// piping stdout is unaffected, and each is on its own line so a piped run
-/// does not render them run together.
+/// piping stdout is unaffected. In a terminal the value is typed on the
+/// prompt's line and secret fields are not echoed; piped runs keep one
+/// prompt per line so they don't render run together.
 pub(crate) fn read_fields_from_stdin(
+    scheme_name: &str,
     fields: &[&'static str],
 ) -> Result<Vec<(&'static str, String)>, CliError> {
     let stderr = std::io::stderr();
     let mut err = stderr.lock();
+    let labels: Vec<String> = fields
+        .iter()
+        .map(|field| field_label(scheme_name, field).unwrap_or_else(|| (*field).to_string()))
+        .collect();
     let _ = writeln!(
         err,
         "This scheme needs {} values: {}.",
         fields.len(),
-        fields.join(", "),
+        labels.join(", "),
     );
     let mut out = Vec::with_capacity(fields.len());
-    for field in fields {
-        let _ = writeln!(err, "{field}:");
+    let typed = std::io::stdin().is_terminal();
+    for (field, label) in fields.iter().zip(&labels) {
+        let echo = (typed && crate::profiles::commands::is_secret_field(field))
+            .then(crate::profiles::commands::EchoOff::new);
+        let hidden = echo.as_ref().is_some_and(|echo| echo.active());
+        let _ = if typed {
+            write!(err, "{label}{}: ", if hidden { " (hidden)" } else { "" })
+        } else {
+            writeln!(err, "{label}:")
+        };
         let _ = err.flush();
-        out.push((*field, read_line_from_stdin(field)?));
+        let value = read_line_from_stdin(label);
+        drop(echo);
+        if hidden {
+            let _ = writeln!(err);
+        }
+        out.push((*field, value?));
     }
     Ok(out)
+}
+
+/// Prompt labels declared by the schemes (`scheme`, `field`, `label`), e.g.
+/// basic auth's `username` shown as `Account Sid`. Process-wide because the
+/// paste paths that prompt have no access to the registered bindings.
+static FIELD_LABELS: std::sync::RwLock<Vec<(String, String, String)>> =
+    std::sync::RwLock::new(Vec::new());
+
+/// Record the prompt labels a scheme declares. Called by `CliApp::auth`.
+pub(crate) fn register_field_labels(scheme_name: &str, labels: Vec<(String, String)>) {
+    if labels.is_empty() {
+        return;
+    }
+    let mut registry = FIELD_LABELS.write().unwrap_or_else(|e| e.into_inner());
+    registry.retain(|(scheme, _, _)| scheme != scheme_name);
+    registry.extend(
+        labels
+            .into_iter()
+            .map(|(field, label)| (scheme_name.to_string(), field, label)),
+    );
+}
+
+/// The label a scheme declared for one of its credential fields, if any.
+pub(crate) fn field_label(scheme_name: &str, field: &str) -> Option<String> {
+    FIELD_LABELS
+        .read()
+        .unwrap_or_else(|e| e.into_inner())
+        .iter()
+        .find(|(scheme, f, _)| scheme == scheme_name && f == field)
+        .map(|(_, _, label)| label.clone())
 }
 
 /// Concrete token-paste implementation, separated so the universal
@@ -277,7 +326,7 @@ pub(crate) fn run_token_paste_for(
     }
     let stored = if let Some(fields) = fields {
         drop(err);
-        multi_field_keyring_value(&read_fields_from_stdin(&fields)?)?
+        multi_field_keyring_value(&read_fields_from_stdin(scheme_name, &fields)?)?
     } else {
         let _ = writeln!(err, "Paste your token (input will be read from stdin):");
         let _ = err.flush();
@@ -1164,6 +1213,20 @@ fn append_to_chain(
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn field_labels_are_scoped_to_their_scheme() {
+        super::register_field_labels(
+            "labels_test_scheme",
+            vec![("username".to_string(), "Account Sid".to_string())],
+        );
+        assert_eq!(
+            super::field_label("labels_test_scheme", "username").as_deref(),
+            Some("Account Sid")
+        );
+        assert_eq!(super::field_label("labels_test_scheme", "password"), None);
+        assert_eq!(super::field_label("labels_other_scheme", "username"), None);
+    }
+
     use super::*;
     use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
     use serial_test::serial;
