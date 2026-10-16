@@ -16,3 +16,7 @@
     `prompts` (credential field labels) and `profileParameters` (profile parameters copied from the
     typed credential).
   type: feat
+- summary: |
+    `profiles remove --revoke` now authenticates the revoke request with the profile's own stored
+    key. Previously it only worked when the parent credentials were also exported as env vars.
+  type: fix

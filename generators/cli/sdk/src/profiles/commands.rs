@@ -23,7 +23,7 @@ use crate::auth::{AuthCredentialSource, SchemeBinding};
 use crate::error::CliError;
 use crate::profiles::selection::{self, PROFILE_FLAG};
 use crate::profiles::store::{self, ProfileEntry, ProfileStore};
-use crate::profiles::ProfilesConfig;
+use crate::profiles::{keyring_account_for, ProfilesConfig};
 
 /// Names a profile may not take. `active` is a `profiles.toml` top-level key,
 /// and the rest would make `profiles use <name>` ambiguous with a
@@ -101,7 +101,10 @@ impl Vocabulary {
         for spec in specs {
             self.parameter_labels.insert(spec.name.clone());
             let key = crate::text::normalize_identifier(&spec.name);
-            let entry = self.parameters.entry(key).or_insert_with(|| Some(BTreeSet::new()));
+            let entry = self
+                .parameters
+                .entry(key)
+                .or_insert_with(|| Some(BTreeSet::new()));
             match (entry.as_mut(), spec.allowed_values) {
                 (Some(known), Some(values)) => known.extend(values),
                 // Unconstrained anywhere → unconstrained everywhere.
@@ -154,7 +157,10 @@ impl Vocabulary {
         if self.parameters.is_empty() {
             return Ok(());
         }
-        let Some(allowed) = self.parameters.get(&crate::text::normalize_identifier(name)) else {
+        let Some(allowed) = self
+            .parameters
+            .get(&crate::text::normalize_identifier(name))
+        else {
             return Err(unknown_name_error(
                 "parameter",
                 name,
@@ -200,12 +206,7 @@ impl Vocabulary {
     }
 }
 
-fn unknown_name_error(
-    kind: &str,
-    name: &str,
-    known: &BTreeSet<String>,
-    flag: &str,
-) -> CliError {
+fn unknown_name_error(kind: &str, name: &str, known: &BTreeSet<String>, flag: &str) -> CliError {
     let suggestion = crate::text::nearest(name, known.iter().cloned())
         .map(|candidate| format!(" Did you mean `{candidate}`?"))
         .unwrap_or_default();
@@ -285,8 +286,10 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
                 // without going to `--schema` first.
                 .help(match server_variable_hint(vocabulary) {
                     Some(hint) => format!("Value for a server-URL template variable ({hint})"),
-                    None => "Value for a server-URL template variable, e.g. --server-var region=us1"
-                        .to_string(),
+                    None => {
+                        "Value for a server-URL template variable, e.g. --server-var region=us1"
+                            .to_string()
+                    }
                 }),
         )
         .arg(
@@ -351,10 +354,9 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
                 ),
         )
         .arg(
-            Arg::new("scheme")
-                .long("scheme")
-                .value_name("NAME")
-                .help("Auth scheme for --with-token / --from-env (required when several are declared)"),
+            Arg::new("scheme").long("scheme").value_name("NAME").help(
+                "Auth scheme for --with-token / --from-env (required when several are declared)",
+            ),
         )
         .arg(
             Arg::new("force")
@@ -425,26 +427,20 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
                 .about("List every profile, marking the active one"),
         )
         .subcommand(
-            Command::new("use")
-                .about("Set the active profile")
-                .arg(
-                    Arg::new("name")
-                        .required(true)
-                        .value_name("NAME")
-                        .help("Profile to activate, or `-` to clear the active profile"),
-                ),
+            Command::new("use").about("Set the active profile").arg(
+                Arg::new("name")
+                    .required(true)
+                    .value_name("NAME")
+                    .help("Profile to activate, or `-` to clear the active profile"),
+            ),
         )
         .subcommand(
             Command::new("show")
                 .about("Show one profile's resolved config, without selecting it")
-                .arg(
-                    Arg::new("name")
-                        .value_name("NAME")
-                        .help(
-                            "Profile to inspect. Defaults to the one this invocation \
+                .arg(Arg::new("name").value_name("NAME").help(
+                    "Profile to inspect. Defaults to the one this invocation \
                              would use (--profile, <NAME>_PROFILE, or the active one).",
-                        ),
-                ),
+                )),
         )
         .subcommand(
             Command::new("set")
@@ -490,10 +486,23 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
 fn create_owns_flag(kebab: &str) -> bool {
     matches!(
         kebab,
-        "name" | "parent" | "set" | "server-var" | "base-url" | "default-format"
+        "name"
+            | "parent"
+            | "set"
+            | "server-var"
+            | "base-url"
+            | "default-format"
             | "retries"
-            | "credential" | "oauth-client-id" | "with-token" | "scheme" | "from-env" | "provision" | "api-key"
-            | "force" | "use" | "help"
+            | "credential"
+            | "oauth-client-id"
+            | "with-token"
+            | "scheme"
+            | "from-env"
+            | "provision"
+            | "api-key"
+            | "force"
+            | "use"
+            | "help"
     ) || kebab == PROFILE_FLAG
 }
 
@@ -548,8 +557,9 @@ fn build_remove_command(config: &ProfilesConfig) -> Command {
 /// Mirrors how `dispatch_auth` is gated on `login | logout | status`: when a
 /// spec also declares a `profiles` group, only these leaves are intercepted
 /// and everything else falls through to the spec's binding.
-pub const BUILTIN_SUBCOMMANDS: &[&str] = &["create", "list", "ls", "use",
-    "set", "remove", "rm", "current", "show"];
+pub const BUILTIN_SUBCOMMANDS: &[&str] = &[
+    "create", "list", "ls", "use", "set", "remove", "rm", "current", "show",
+];
 
 // ── Dispatch ────────────────────────────────────────────────────────────
 
@@ -723,8 +733,7 @@ async fn handle_create(
         // Validated here rather than at read time: a profile that stores an
         // unknown format would fail every subsequent command with an error
         // that points at `--format`, a flag the user did not pass.
-        crate::formatter::OutputFormat::parse(format)
-            .map_err(CliError::Validation)?;
+        crate::formatter::OutputFormat::parse(format).map_err(CliError::Validation)?;
         entry.format = Some(format.clone());
     }
 
@@ -768,7 +777,9 @@ async fn handle_create(
         if matches.value_source(variable) != Some(clap::parser::ValueSource::CommandLine) {
             continue;
         }
-        entry.server_variables.insert(variable.clone(), value.clone());
+        entry
+            .server_variables
+            .insert(variable.clone(), value.clone());
     }
 
     // Supplying a credential means this profile owns one, so it must not be
@@ -819,10 +830,8 @@ async fn handle_create(
             ctx.auth_bindings,
             ctx.login_flows,
         )?;
-        let account = super::keyring_account_for(
-            &scheme,
-            resolved.credential.as_deref().unwrap_or(&name),
-        );
+        let account =
+            super::keyring_account_for(&scheme, resolved.credential.as_deref().unwrap_or(&name));
         // Some schemes take several values (basic: username + password;
         // OAuth2 client credentials: client id + secret) and are stored as
         // one JSON entry. The scheme declares which.
@@ -907,17 +916,19 @@ async fn handle_create(
         let scheme = minted.scheme;
         let account =
             super::keyring_account_for(&scheme, resolved.credential.as_deref().unwrap_or(&name));
-        active_store().set(ctx.cli_name, &account, &minted.stored).map_err(|e| {
-            CliError::Validation(format!(
-                "provisioned a credential{} but could not store it: {e}. \
+        active_store()
+            .set(ctx.cli_name, &account, &minted.stored)
+            .map_err(|e| {
+                CliError::Validation(format!(
+                    "provisioned a credential{} but could not store it: {e}. \
                  Run `profiles remove {name} --revoke` to revoke it.",
-                minted
-                    .identity
-                    .as_deref()
-                    .map(|id| format!(" ({id})"))
-                    .unwrap_or_default(),
-            ))
-        })?;
+                    minted
+                        .identity
+                        .as_deref()
+                        .map(|id| format!(" ({id})"))
+                        .unwrap_or_default(),
+                ))
+            })?;
         let _ = writeln!(
             stderr,
             "{}",
@@ -960,8 +971,7 @@ async fn handle_create(
         let _ = writeln!(
             stderr,
             "  Run `{} {} use {name}` to make it active, or pass `-p {name}` per command.",
-            ctx.cli_name,
-            ctx.command_name,
+            ctx.cli_name, ctx.command_name,
         );
     }
 
@@ -1010,7 +1020,9 @@ fn existing_was_updated(matches: &ArgMatches) -> bool {
 
 fn validate_profile_name(name: &str) -> Result<(), CliError> {
     if name.is_empty() {
-        return Err(CliError::Validation("profile name must not be empty".to_string()));
+        return Err(CliError::Validation(
+            "profile name must not be empty".to_string(),
+        ));
     }
     if RESERVED_PROFILE_NAMES.contains(&name) {
         return Err(CliError::Validation(format!(
@@ -1086,7 +1098,6 @@ pub(crate) fn credential_sources(
         .chain(slots.alternatives)
         .collect()
 }
-
 
 // ── list ────────────────────────────────────────────────────────────────
 
@@ -1462,7 +1473,10 @@ fn stored_keyring_field<'a>(
 /// Whether any scheme has a keyring entry under this profile's credential
 /// slot. A locked or failing keyring counts as "nothing stored", mirroring
 /// [`stored_account`]: reporting must never block on the keychain.
-fn profile_stores_a_credential(ctx: &ProfilesContext<'_>, profile: &store::ResolvedProfile) -> bool {
+fn profile_stores_a_credential(
+    ctx: &ProfilesContext<'_>,
+    profile: &store::ResolvedProfile,
+) -> bool {
     let Some(credential) = &profile.credential else {
         return false;
     };
@@ -1611,10 +1625,7 @@ pub fn fixed_profile_env_suffixes() -> Vec<String> {
 /// `scheme_credential_fields` names them, so slot *index* gives the field:
 /// `required[0]` is `username`, `required[1]` is `password`. That keeps this
 /// generic — nothing here knows what a scheme's halves are called.
-fn credential_targets(
-    var: &str,
-    ctx: &ProfilesContext<'_>,
-) -> Vec<(String, Option<&'static str>)> {
+fn credential_targets(var: &str, ctx: &ProfilesContext<'_>) -> Vec<(String, Option<&'static str>)> {
     let mut out = Vec::new();
     for (scheme, binding) in ctx.auth_bindings {
         let slots = login::expand_slots(scheme, binding, ctx.login_flows, ctx.cli_name);
@@ -1689,15 +1700,20 @@ fn unsettable_key(key: &str, ctx: &ProfilesContext<'_>) -> CliError {
     let prefix = crate::text::env_var_prefix(ctx.cli_name);
     let mut known: Vec<String> = Vec::new();
     for (scheme, binding) in ctx.auth_bindings {
-        known.extend(login::shadowing_env_vars(ctx.cli_name, scheme, std::slice::from_ref(
-            &(scheme.clone(), binding.clone()),
-        )));
+        known.extend(login::shadowing_env_vars(
+            ctx.cli_name,
+            scheme,
+            std::slice::from_ref(&(scheme.clone(), binding.clone())),
+        ));
     }
     for suffix in fixed_profile_env_suffixes() {
         known.push(format!("{prefix}_{suffix}"));
     }
     for variable in &ctx.vocabulary.server_variables {
-        known.push(format!("{prefix}_{}", crate::text::to_screaming_snake(variable)));
+        known.push(format!(
+            "{prefix}_{}",
+            crate::text::to_screaming_snake(variable)
+        ));
     }
     known.sort();
     known.dedup();
@@ -1797,7 +1813,9 @@ fn handle_set(
             }
             SetTarget::Retries => {
                 let parsed: u32 = value.parse().map_err(|_| {
-                    CliError::Validation(format!("`{key}` expects a non-negative integer, got `{value}`"))
+                    CliError::Validation(format!(
+                        "`{key}` expects a non-negative integer, got `{value}`"
+                    ))
                 })?;
                 entry.retries = Some(parsed);
                 notes.push(format!("{key} \u{2192} retries"));
@@ -1949,11 +1967,7 @@ fn handle_use(
     if name == "-" {
         store.clear_active();
         store.save()?;
-        let _ = writeln!(
-            stderr,
-            "{}",
-            login::green("✓ Cleared the active profile."),
-        );
+        let _ = writeln!(stderr, "{}", login::green("✓ Cleared the active profile."),);
         return Ok(());
     }
 
@@ -2156,7 +2170,8 @@ async fn provision_remote_credential(
     for binding in ctx.bindings {
         if let Some(value) = binding
             .invoke_operation(&op_path, &params, ctx.root_matches, Some(resolved))
-            .await? {
+            .await?
+        {
             response = Some(value);
             break;
         }
@@ -2258,20 +2273,42 @@ async fn revoke_remote_credential(
     }
     let params = serde_json::Value::Object(params);
 
-    for binding in ctx.bindings {
-        // `Ok(None)` means "not my path" — keep looking, exactly as the
-        // `--schema` walk does.
-        if binding
-            .invoke_operation(op_path, &params, ctx.root_matches, Some(&resolved))
-            .await?
-            .is_some() {
-            return Ok(());
+    // The `profiles` group runs unprofiled, so the operation's auth would
+    // read the bare scheme account. Serve it this profile's stored key.
+    let credential = resolved
+        .credential
+        .clone()
+        .unwrap_or_else(|| name.to_string());
+    let mut stored = None;
+    for (scheme, _) in ctx.auth_bindings {
+        if let Some(value) =
+            active_store().get(ctx.cli_name, &keyring_account_for(scheme, &credential))?
+        {
+            stored = Some((scheme.clone(), value));
+            break;
         }
     }
-    Err(CliError::Validation(format!(
-        "--revoke: no operation `{}` found in this CLI.",
-        op_path.join(" "),
-    )))
+    let invoke = || async {
+        for binding in ctx.bindings {
+            // `Ok(None)` means "not my path" — keep looking, exactly as the
+            // `--schema` walk does.
+            if binding
+                .invoke_operation(op_path, &params, ctx.root_matches, Some(&resolved))
+                .await?
+                .is_some()
+            {
+                return Ok(());
+            }
+        }
+        Err(CliError::Validation(format!(
+            "--revoke: no operation `{}` found in this CLI.",
+            op_path.join(" "),
+        )))
+    };
+    match stored {
+        Some((scheme, value)) => with_credential_value(ctx, &scheme, value, invoke).await,
+        None => invoke().await,
+    }
 }
 
 // ── current ─────────────────────────────────────────────────────────────
@@ -2393,7 +2430,10 @@ fn handle_show<W: Write>(
     // Whether this is the profile commands would use by default — the one bit
     // of selection context that is meaningful for a profile you are merely
     // inspecting.
-    map.insert("active".into(), (store.active() == Some(name.as_str())).into());
+    map.insert(
+        "active".into(),
+        (store.active() == Some(name.as_str())).into(),
+    );
 
     let payload = serde_json::Value::Object(map);
     if pipeline.format.is_machine_readable() {
@@ -2401,7 +2441,8 @@ fn handle_show<W: Write>(
             .emit(out, &payload, false, true)
             .map_err(|e| CliError::Other(e.into()))?;
     } else {
-        write!(out, "{}", render_profile_fields(&payload)).map_err(|e| CliError::Other(e.into()))?;
+        write!(out, "{}", render_profile_fields(&payload))
+            .map_err(|e| CliError::Other(e.into()))?;
     }
     Ok(())
 }
@@ -2433,7 +2474,10 @@ fn handle_current<W: Write>(
             // field never contradicts `auth status` when the keyring wins.
             if !profile_stores_a_credential(ctx, profile) {
                 if let Some(env_row) = env_pseudo_row(ctx) {
-                    map.insert("credential_env_fallback".into(), env_row["variables"].clone());
+                    map.insert(
+                        "credential_env_fallback".into(),
+                        env_row["variables"].clone(),
+                    );
                 }
             }
             serde_json::Value::Object(map)
@@ -2454,7 +2498,8 @@ fn handle_current<W: Write>(
     let mut stderr = std::io::stderr();
     match selected {
         Some(_) => {
-            write!(out, "{}", render_profile_fields(&payload)).map_err(|e| CliError::Other(e.into()))?;
+            write!(out, "{}", render_profile_fields(&payload))
+                .map_err(|e| CliError::Other(e.into()))?;
         }
         None => {
             let _ = writeln!(
@@ -2852,7 +2897,21 @@ async fn with_typed_credential<T, Fut>(
 where
     Fut: std::future::Future<Output = Result<T, CliError>>,
 {
-    let shape = login::scheme_credential_fields(&typed.scheme, ctx.auth_bindings);
+    with_credential_value(ctx, &typed.scheme, typed.stored()?, f).await
+}
+
+/// Run `f` with `value` answering every keyring read for schemes shaped like
+/// `scheme`, and with the env vars that would shadow it cleared.
+async fn with_credential_value<T, Fut>(
+    ctx: &ProfilesContext<'_>,
+    scheme: &str,
+    value: String,
+    f: impl FnOnce() -> Fut,
+) -> Result<T, CliError>
+where
+    Fut: std::future::Future<Output = Result<T, CliError>>,
+{
+    let shape = login::scheme_credential_fields(scheme, ctx.auth_bindings);
     let schemes: Vec<String> = ctx
         .auth_bindings
         .iter()
@@ -2863,7 +2922,7 @@ where
     set_active_store(Arc::new(TypedCredentialStore {
         inner: Arc::clone(&previous),
         schemes,
-        value: typed.stored()?,
+        value,
     }));
     let saved: Vec<(String, Option<std::ffi::OsString>)> = ctx
         .auth_bindings
@@ -2951,7 +3010,10 @@ fn confirm(
     input
         .read_line(&mut answer)
         .map_err(|e| CliError::Other(e.into()))?;
-    Ok(matches!(answer.trim().to_ascii_lowercase().as_str(), "y" | "yes"))
+    Ok(matches!(
+        answer.trim().to_ascii_lowercase().as_str(),
+        "y" | "yes"
+    ))
 }
 
 #[cfg(test)]
@@ -3069,10 +3131,7 @@ mod tests {
         vocabulary.add_parameters([
             ParameterSpec::unconstrained("AccountSid"),
             ParameterSpec::unconstrained("PageSize"),
-            ParameterSpec::with_values(
-                "UserType",
-                vec!["All".to_string(), "Managed".to_string()],
-            ),
+            ParameterSpec::with_values("UserType", vec!["All".to_string(), "Managed".to_string()]),
         ]);
         vocabulary
     }
@@ -3103,7 +3162,15 @@ mod tests {
 
     #[test]
     fn reserved_and_malformed_names_are_rejected() {
-        for name in ["list", "create", "env", "", "has space", "with#hash", "sl/ash"] {
+        for name in [
+            "list",
+            "create",
+            "env",
+            "",
+            "has space",
+            "with#hash",
+            "sl/ash",
+        ] {
             assert!(
                 validate_profile_name(name).is_err(),
                 "`{name}` should be rejected",
@@ -3114,7 +3181,10 @@ mod tests {
     #[test]
     fn ordinary_names_are_accepted() {
         for name in ["prod", "tenant-acme", "au_1", "v1.2"] {
-            assert!(validate_profile_name(name).is_ok(), "`{name}` should be accepted");
+            assert!(
+                validate_profile_name(name).is_ok(),
+                "`{name}` should be accepted"
+            );
         }
     }
 
@@ -3123,7 +3193,13 @@ mod tests {
     #[test]
     fn parses_repeated_key_values() {
         let m = create_matches(&[
-            "profiles", "create", "p", "--set", "AccountSid=AC11", "--set", "PageSize=10",
+            "profiles",
+            "create",
+            "p",
+            "--set",
+            "AccountSid=AC11",
+            "--set",
+            "PageSize=10",
         ]);
         let pairs = parse_key_values(&m, "set", "--set").unwrap();
         assert_eq!(
@@ -3147,7 +3223,9 @@ mod tests {
     #[test]
     fn a_missing_equals_is_an_error_not_a_silent_skip() {
         let m = create_matches(&["profiles", "create", "p", "--set", "AccountSid"]);
-        let err = parse_key_values(&m, "set", "--set").unwrap_err().to_string();
+        let err = parse_key_values(&m, "set", "--set")
+            .unwrap_err()
+            .to_string();
         assert!(err.contains("expected KEY=VALUE"), "{err}");
     }
 
@@ -3221,7 +3299,9 @@ mod tests {
 
     #[test]
     fn an_enum_value_the_spec_allows_passes() {
-        assert!(vocabulary().validate_parameter("UserType", "Managed").is_ok());
+        assert!(vocabulary()
+            .validate_parameter("UserType", "Managed")
+            .is_ok());
     }
 
     #[test]
@@ -3296,8 +3376,13 @@ mod tests {
             ..Default::default()
         };
         let command = build_profiles_command(&ProfilesConfig::default(), &vocab);
-        let create = command.find_subcommand("create").expect("create subcommand");
-        let longs: Vec<&str> = create.get_arguments().filter_map(|a| a.get_long()).collect();
+        let create = command
+            .find_subcommand("create")
+            .expect("create subcommand");
+        let longs: Vec<&str> = create
+            .get_arguments()
+            .filter_map(|a| a.get_long())
+            .collect();
         assert!(!longs.contains(&"region"), "{longs:?}");
         assert!(!longs.contains(&"edge"), "{longs:?}");
         // The generic form is what `create` owns.
@@ -3311,8 +3396,13 @@ mod tests {
         // `profiles create p --format json` would quietly set the profile's
         // stored format while looking like a request for JSON output.
         let command = build_profiles_command(&ProfilesConfig::default(), &Vocabulary::default());
-        let create = command.find_subcommand("create").expect("create subcommand");
-        let longs: Vec<&str> = create.get_arguments().filter_map(|a| a.get_long()).collect();
+        let create = command
+            .find_subcommand("create")
+            .expect("create subcommand");
+        let longs: Vec<&str> = create
+            .get_arguments()
+            .filter_map(|a| a.get_long())
+            .collect();
         assert!(!longs.contains(&"format"), "{longs:?}");
         assert!(longs.contains(&"default-format"), "{longs:?}");
     }
@@ -3361,9 +3451,15 @@ mod tests {
                 .map(String::from)
                 .to_vec()
         };
-        assert_eq!(similar_profile("basicAuth", names()).as_deref(), Some("basicAuthTest"));
+        assert_eq!(
+            similar_profile("basicAuth", names()).as_deref(),
+            Some("basicAuthTest")
+        );
         assert_eq!(similar_profile("prd", names()).as_deref(), Some("prod"));
-        assert_eq!(similar_profile("stagign", names()).as_deref(), Some("staging"));
+        assert_eq!(
+            similar_profile("stagign", names()).as_deref(),
+            Some("staging")
+        );
         assert_eq!(similar_profile("stag", names()).as_deref(), Some("staging"));
         assert_eq!(similar_profile("sandbox", names()), None);
         assert_eq!(similar_profile("d", names()), None);
@@ -3375,8 +3471,11 @@ mod tests {
         let both = "Profile `basicAuth` doesn't exist. Did you mean `basicAuthTest`? [y/N] \
                     Create profile `basicAuth`? [y/N] ";
         for (answers, expected, prompt) in [
-            ("y\n", MissingProfile::Use("basicAuthTest".to_string()),
-             "Profile `basicAuth` doesn't exist. Did you mean `basicAuthTest`? [y/N] "),
+            (
+                "y\n",
+                MissingProfile::Use("basicAuthTest".to_string()),
+                "Profile `basicAuth` doesn't exist. Did you mean `basicAuthTest`? [y/N] ",
+            ),
             ("n\ny\n", MissingProfile::Create, both),
             ("\nyes\n", MissingProfile::Create, both),
             ("n\nn\n", MissingProfile::Cancel, both),
@@ -3392,15 +3491,23 @@ mod tests {
             )
             .unwrap();
             assert_eq!(got, expected, "answers {answers:?}");
-            assert_eq!(String::from_utf8(out).unwrap(), prompt, "answers {answers:?}");
+            assert_eq!(
+                String::from_utf8(out).unwrap(),
+                prompt,
+                "answers {answers:?}"
+            );
         }
     }
 
     #[test]
     fn ask_missing_profile_without_a_suggestion_asks_to_create() {
-        for (answer, expected) in [("y\n", MissingProfile::Create), ("n\n", MissingProfile::Cancel)] {
+        for (answer, expected) in [
+            ("y\n", MissingProfile::Create),
+            ("n\n", MissingProfile::Cancel),
+        ] {
             let mut out: Vec<u8> = Vec::new();
-            let got = ask_missing_profile("sandbox", None, &mut answer.as_bytes(), &mut out).unwrap();
+            let got =
+                ask_missing_profile("sandbox", None, &mut answer.as_bytes(), &mut out).unwrap();
             assert_eq!(got, expected, "answer {answer:?}");
             assert_eq!(
                 String::from_utf8(out).unwrap(),

@@ -266,6 +266,61 @@ async fn revoke_uses_the_recorded_key_id() {
     drop(server);
 }
 
+// "SKnew:s3cret" in base64.
+const KEY_BASIC: &str = "Basic U0tuZXc6czNjcmV0";
+
+#[tokio::test]
+#[serial]
+async fn revoke_authenticates_with_the_profiles_stored_key() {
+    // `profiles` commands run unprofiled, so without the parent's env vars
+    // the revoke must still find the profile's own key in the keyring.
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Accounts/ACparent/Keys"))
+        .respond_with(ResponseTemplate::new(201).set_body_json(serde_json::json!({
+            "sid": "SKnew",
+            "secret": "s3cret"
+        })))
+        .mount(&server)
+        .await;
+    Mock::given(method("DELETE"))
+        .and(path("/Accounts/ACparent/Keys/SKnew"))
+        .and(header("authorization", KEY_BASIC))
+        .respond_with(ResponseTemplate::new(204))
+        .expect(1)
+        .mount(&server)
+        .await;
+    let uri = server.uri();
+
+    tokio::task::spawn_blocking(move || {
+        with_parent_env(&uri, || {
+            let (code, output) = run(
+                true,
+                &[
+                    "pv",
+                    "profiles",
+                    "create",
+                    "prod",
+                    "--set",
+                    "AccountSid=ACparent",
+                    "--api-key",
+                ],
+            );
+            assert_eq!(code, 0, "{output}");
+            std::env::remove_var("PV_USERNAME");
+            std::env::remove_var("PV_PASSWORD");
+            let (code, output) = run(
+                true,
+                &["pv", "profiles", "remove", "prod", "--yes", "--revoke"],
+            );
+            assert_eq!(code, 0, "{output}");
+        });
+    })
+    .await
+    .unwrap();
+    drop(server);
+}
+
 #[tokio::test]
 #[serial]
 async fn a_response_missing_a_mapped_field_stores_nothing() {
