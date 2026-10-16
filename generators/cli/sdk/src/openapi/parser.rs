@@ -4615,6 +4615,9 @@ fn flatten_body_params_prefix(
                         .then(|| recognize_single_branch_composite(resolved, component_schemas))
                         .flatten()
                 });
+                // OpenAPI 3.0 `nullable: true` next to a one-option wrapper.
+                let composite_nullable = nullable_composite.is_some()
+                    || (promoted_composite.is_some() && resolved.is_nullable());
                 let effective = promoted_composite.unwrap_or(resolved);
                 let is_array = effective.schema_type() == Some("array");
                 // Parity with a bare `$ref` to the same object: emit the
@@ -4648,7 +4651,7 @@ fn flatten_body_params_prefix(
                                     .description
                                     .clone()
                                     .or_else(|| inner.description.clone()),
-                                nullable: nullable_composite.is_some(),
+                                nullable: composite_nullable,
                                 ..Default::default()
                             },
                         );
@@ -4696,7 +4699,7 @@ fn flatten_body_params_prefix(
                         },
                         nullable: is_scalar_nullable(resolved)
                             || promoted_scalar.is_some()
-                            || nullable_composite.is_some(),
+                            || composite_nullable,
                         ..Default::default()
                     },
                 );
@@ -4781,6 +4784,9 @@ fn flatten_body_params_prefix(
                 .then(|| recognize_single_branch_composite(prop, component_schemas))
                 .flatten()
         });
+        // OpenAPI 3.0 `nullable: true` next to a one-option wrapper.
+        let composite_nullable = nullable_composite.is_some()
+            || (promoted_composite.is_some() && prop.is_nullable());
         let effective = promoted_composite.unwrap_or(prop);
         let is_array = effective.schema_type() == Some("array");
         // Parity with a bare `$ref` to the same object: emit the
@@ -4810,7 +4816,7 @@ fn flatten_body_params_prefix(
                             .description
                             .clone()
                             .or_else(|| inner.description.clone()),
-                        nullable: nullable_composite.is_some(),
+                        nullable: composite_nullable,
                         ..Default::default()
                     },
                 );
@@ -4852,7 +4858,7 @@ fn flatten_body_params_prefix(
                 },
                 nullable: is_scalar_nullable(prop)
                     || promoted_scalar.is_some()
-                    || nullable_composite.is_some(),
+                    || composite_nullable,
                 ..Default::default()
             },
         );
@@ -12666,6 +12672,10 @@ paths:
                 items:
                   oneOf:
                     - $ref: '#/components/schemas/Addr'
+              reply_to:
+                nullable: true
+                oneOf:
+                  - $ref: '#/components/schemas/Addr'
             "#,
         )
         .unwrap();
@@ -12688,6 +12698,9 @@ paths:
         let to = params.get("to").expect("to flag should be emitted");
         assert!(to.repeated);
         assert_eq!(to.item_type.as_deref(), Some("object"));
+        let reply_to = params.get("reply_to").expect("reply_to flag should be emitted");
+        assert_eq!(reply_to.param_type.as_deref(), Some("object"));
+        assert!(reply_to.nullable, "`nullable: true` on the wrapper keeps null");
     }
 
     #[test]
