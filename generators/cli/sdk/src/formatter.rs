@@ -731,15 +731,8 @@ fn format_default_properties(
     if properties.is_empty() {
         return None;
     }
-    let items: Vec<&Value> = match (extract_items(value), value) {
-        (Some((_, arr)), _) => arr.iter().collect(),
-        (None, Value::Array(arr)) => arr.iter().collect(),
-        (None, Value::Object(_)) => vec![value],
-        _ => return None,
-    };
-    let records: Vec<&serde_json::Map<String, Value>> =
-        items.iter().filter_map(|item| item.as_object()).collect();
-    if records.is_empty() || records.len() != items.len() {
+    let mut records = Vec::new();
+    if !collect_records(value, properties, &mut records) || records.is_empty() {
         return None;
     }
     let lookup = |record: &serde_json::Map<String, Value>, property: &str| -> Option<Value> {
@@ -767,6 +760,39 @@ fn format_default_properties(
         })
         .collect();
     Some(render_columns(&columns, &rows, !paginated || is_first_page))
+}
+
+/// Gather the records `value` holds: an object that has one of
+/// `properties` is a record (even if it also has array fields); any other
+/// object is treated as a list envelope and its item array is used; an
+/// array (records, or the page envelopes `--page-all` collects) is walked
+/// element by element. `false` when something isn't a record or envelope.
+fn collect_records<'a>(
+    value: &'a Value,
+    properties: &[String],
+    out: &mut Vec<&'a serde_json::Map<String, Value>>,
+) -> bool {
+    match value {
+        Value::Array(arr) => arr.iter().all(|item| collect_records(item, properties, out)),
+        Value::Object(obj) => {
+            let wanted: Vec<String> = properties.iter().map(|p| property_match_key(p)).collect();
+            if obj.keys().any(|k| wanted.contains(&property_match_key(k))) {
+                out.push(obj);
+                return true;
+            }
+            match extract_items(value) {
+                Some((_, arr)) => arr.iter().all(|item| match item {
+                    Value::Object(record) => {
+                        out.push(record);
+                        true
+                    }
+                    _ => false,
+                }),
+                None => false,
+            }
+        }
+        _ => false,
+    }
 }
 
 fn property_match_key(name: &str) -> String {
@@ -1103,6 +1129,26 @@ mod tests {
         assert!(page1.starts_with("SID  Date Sent"), "{page1}");
         assert_eq!(page2.trim_end(), "SM2", "{page2}");
         assert!(!page2.contains("body") && !page2.contains("SID"), "{page2}");
+    }
+
+    #[test]
+    fn default_properties_single_record_with_array_field_stays_one_row() {
+        let value = json!({"sid": "SM1", "status": "sent", "tags": ["a", "b"]});
+        let out = emit_to_string(&table_with_properties(&["sid", "status"]), &value);
+        let lines: Vec<&str> = out.lines().filter(|l| !l.is_empty()).collect();
+        assert_eq!(lines.len(), 3, "{out}");
+        assert!(lines[2].starts_with("SM1  sent"), "{out}");
+    }
+
+    #[test]
+    fn default_properties_flatten_captured_pages() {
+        let value = json!([
+            {"messages": [{"sid": "SM1", "body": "a"}], "meta": {"page": 0}},
+            {"messages": [{"sid": "SM2", "body": "b"}], "meta": {"page": 1}}
+        ]);
+        let out = emit_to_string(&table_with_properties(&["sid"]), &value);
+        let lines: Vec<&str> = out.lines().filter(|l| !l.is_empty()).collect();
+        assert_eq!(lines, ["SID", "───", "SM1", "SM2"], "{out}");
     }
 
     #[test]
