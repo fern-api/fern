@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createWriteStream } from "fs";
-import { mkdir, readdir, readFile } from "fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import yazl from "yazl";
@@ -118,5 +118,53 @@ describe("extractZipToDirectory", () => {
         expect(entries).toHaveLength(0);
 
         await tmpDir.cleanup();
+    });
+
+    it("merges into an existing non-empty directory without touching existing files", async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        const zipPath = await createTestZip(tmpDir, [{ name: "generated.txt", content: "generated" }]);
+        const outputDir = AbsoluteFilePath.of(path.join(tmpDir.path, "output"));
+        await mkdir(path.join(outputDir, ".git"), { recursive: true });
+        await writeFile(path.join(outputDir, ".git", "HEAD"), "ref: refs/heads/main");
+
+        await extractZipToDirectory(zipPath, outputDir);
+
+        expect((await readdir(outputDir)).sort()).toEqual([".git", "generated.txt"]);
+        expect(await readFile(path.join(outputDir, "generated.txt"), "utf-8")).toBe("generated");
+        expect(await readFile(path.join(outputDir, ".git", "HEAD"), "utf-8")).toBe("ref: refs/heads/main");
+    });
+
+    it("leaves no partial tree or staging directory behind when the archive is corrupt", async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        const zipPath = await createTestZip(tmpDir, [
+            { name: "first.txt", content: "a".repeat(4096) },
+            { name: "second.txt", content: "b".repeat(4096) }
+        ]);
+        const zipBytes = await readFile(zipPath);
+        // Overwrite the compressed payload of the first entry (after its 30-byte local header + file name)
+        // so inflating it fails part-way through the extraction.
+        zipBytes.fill(0xff, 30 + "first.txt".length, 30 + "first.txt".length + 32);
+        await writeFile(zipPath, zipBytes);
+        const outputDir = AbsoluteFilePath.of(path.join(tmpDir.path, "output"));
+        await mkdir(outputDir, { recursive: true });
+
+        await expect(extractZipToDirectory(zipPath, outputDir)).rejects.toThrow();
+
+        expect(await readdir(outputDir)).toEqual([]);
+        expect((await readdir(tmpDir.path)).sort()).toEqual(["output", "test.zip"]);
+    });
+
+    it("removes stale staging directories from a previous interrupted extraction", async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        const zipPath = await createTestZip(tmpDir, [{ name: "file.txt", content: "hello" }]);
+        const outputDir = AbsoluteFilePath.of(path.join(tmpDir.path, "output"));
+        const staleStagingDir = path.join(tmpDir.path, "output.fern-extract-123-456");
+        await mkdir(staleStagingDir, { recursive: true });
+        await writeFile(path.join(staleStagingDir, "partial.txt"), "partial");
+
+        await extractZipToDirectory(zipPath, outputDir);
+
+        expect((await readdir(tmpDir.path)).sort()).toEqual(["output", "test.zip"]);
+        expect(await readdir(outputDir)).toEqual(["file.txt"]);
     });
 });

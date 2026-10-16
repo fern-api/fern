@@ -13,7 +13,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
-import { chmod, cp, mkdir, readdir, rm } from "fs/promises";
+import { chmod, cp, mkdir, readdir, rename, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -698,7 +698,51 @@ async function downloadAndExtractZipToDirectory({
     await extractZipToDirectory(outputZipPath, outputPath);
 }
 
+const EXTRACT_STAGING_SUFFIX = ".fern-extract-";
+
+/**
+ * Extracts the archive into a staging directory next to `outputDir` and only moves the files into
+ * place once every entry has been written and verified against the archive's entry count. An
+ * interrupted or failed extraction therefore never leaves a partial tree in `outputDir`.
+ */
 export async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
+    await removeStaleStagingDirectories(outputDir);
+    const stagingDir = AbsoluteFilePath.of(`${outputDir}${EXTRACT_STAGING_SUFFIX}${process.pid}-${Date.now()}`);
+    await mkdir(stagingDir, { recursive: true });
+    try {
+        await extractZipEntries(zipPath, stagingDir);
+        if (await isMissingOrEmptyDirectory(outputDir)) {
+            await rm(outputDir, { recursive: true, force: true });
+            await rename(stagingDir, outputDir);
+        } else {
+            await cp(stagingDir, outputDir, { recursive: true, verbatimSymlinks: true });
+        }
+    } finally {
+        await rm(stagingDir, { recursive: true, force: true });
+    }
+}
+
+async function removeStaleStagingDirectories(outputDir: AbsoluteFilePath): Promise<void> {
+    const parent = path.dirname(outputDir);
+    if (!(await doesPathExist(AbsoluteFilePath.of(parent)))) {
+        return;
+    }
+    const prefix = `${path.basename(outputDir)}${EXTRACT_STAGING_SUFFIX}`;
+    for (const entry of await readdir(parent)) {
+        if (entry.startsWith(prefix)) {
+            await rm(path.join(parent, entry), { recursive: true, force: true });
+        }
+    }
+}
+
+async function isMissingOrEmptyDirectory(dir: AbsoluteFilePath): Promise<boolean> {
+    if (!(await doesPathExist(dir))) {
+        return true;
+    }
+    return (await readdir(dir)).length === 0;
+}
+
+function extractZipEntries(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
     return new Promise((resolve, reject) => {
         yauzl.open(zipPath, { lazyEntries: true }, (err, zipFile) => {
             if (err || !zipFile) {
@@ -706,16 +750,30 @@ export async function extractZipToDirectory(zipPath: string, outputDir: Absolute
                 return;
             }
 
+            let extractedEntries = 0;
+            const onEntryExtracted = () => {
+                extractedEntries++;
+                zipFile.readEntry();
+            };
+
             zipFile.on("error", reject);
-            zipFile.on("end", resolve);
+            zipFile.on("end", () => {
+                if (extractedEntries !== zipFile.entryCount) {
+                    reject(
+                        new Error(
+                            `Archive ${zipPath} declares ${zipFile.entryCount} entries but only ${extractedEntries} were extracted`
+                        )
+                    );
+                    return;
+                }
+                resolve();
+            });
 
             zipFile.on("entry", (entry: yauzl.Entry) => {
                 const outputPath = path.join(outputDir, entry.fileName);
 
                 if (entry.fileName.endsWith("/")) {
-                    mkdir(outputPath, { recursive: true })
-                        .then(() => zipFile.readEntry())
-                        .catch(reject);
+                    mkdir(outputPath, { recursive: true }).then(onEntryExtracted).catch(reject);
                     return;
                 }
 
@@ -726,10 +784,10 @@ export async function extractZipToDirectory(zipPath: string, outputDir: Absolute
                                 reject(streamErr ?? new Error("Failed to open read stream"));
                                 return;
                             }
-                            readStream
-                                .pipe(createWriteStream(outputPath))
-                                .on("finish", () => zipFile.readEntry())
-                                .on("error", reject);
+                            readStream.on("error", reject);
+                            const writeStream = createWriteStream(outputPath);
+                            writeStream.on("finish", onEntryExtracted).on("error", reject);
+                            readStream.pipe(writeStream);
                         });
                     })
                     .catch(reject);

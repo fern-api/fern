@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate` now extracts remotely generated SDK output into a staging directory and only moves
+    it into the configured output path once every archive entry has been written and verified, so an
+    interrupted or failed extraction can no longer leave a truncated, partial SDK tree behind.
+  type: fix
