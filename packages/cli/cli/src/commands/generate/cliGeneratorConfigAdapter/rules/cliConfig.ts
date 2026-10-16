@@ -31,7 +31,8 @@ export const DISTRIBUTION_PATHS = [
     "output.distribution.homebrew.formula",
     "output.distribution.homebrew.tokenSecretName",
     "output.distribution.scoop.bucket",
-    "output.distribution.scoop.tokenSecretName"
+    "output.distribution.scoop.tokenSecretName",
+    "output.distribution.githubAttestations"
 ] as const;
 
 type CliDistribution = NonNullable<Extract<SdkConfigIrV1["output"], { delivery: "github" }>["distribution"]>;
@@ -56,7 +57,7 @@ export function distributionConfig(output: SdkConfigIrV1["output"]): Record<stri
     if (output.delivery !== "github" || output.distribution == null) {
         return undefined;
     }
-    const { githubApp, homebrew, scoop }: CliDistribution = output.distribution;
+    const { githubApp, homebrew, scoop, githubAttestations }: CliDistribution = output.distribution;
     return {
         ...(githubApp != null
             ? {
@@ -84,6 +85,7 @@ export function distributionConfig(output: SdkConfigIrV1["output"]): Record<stri
                       ...(scoop.tokenSecretName != null ? { tokenEnvironmentVariable: scoop.tokenSecretName } : {})
                   }
               }
-            : {})
+            : {}),
+        ...(githubAttestations != null ? { githubAttestations } : {})
     };
 }

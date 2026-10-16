@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The sdk-config.yml `cli` target now writes `output.distribution.githubAttestations` (`auto`, `true` or `false`)
+    to fern-cli-generator's `config.distribution.githubAttestations`, so the generated release workflow can skip
+    build-provenance attestations on private repositories. Previously the field was dropped with a warning and the
+    workflow always attested. Generator versions before 0.54.3 ignore the key, so `auto` or `false` on those
+    versions warns with `CLI_TARGET_ATTESTATIONS_VERSION`.
+  type: feat

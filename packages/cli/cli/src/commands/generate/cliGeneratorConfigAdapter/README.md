@@ -56,6 +56,11 @@ generator's `appIdSecret`, `privateKeySecret` and `tokenEnvironmentVariable`, un
 secret names that the generated release workflow reads, so the Fern CLI never resolves them. Generator defaults, such
 as `HOMEBREW_TAP_TOKEN`, are not written, so a channel without its own token still uses `githubApp`.
 
+`output.distribution.githubAttestations` (`auto`, `true` or `false`) is written as-is. With `auto`, the generator's
+default, the release workflow attests build provenance only on public repositories; `false` drops the step. Generator
+versions before 0.54.3 ignore the key and always attest, so for any value other than `true` on those versions a
+warning asks for a newer `target.generatorVersion`.
+
 `package.license.type` is written as an SPDX identifier: the canonical types `fern sdk migrate` writes become `MIT`,
 `Apache-2.0`, `GPL-3.0-only` and `UNLICENSED`, and any other value is kept. `metadata.license` (the LICENSE file)
 accepts only `MIT` and `Apache-2.0`, so other licenses set only `packageIdentity.license`.
@@ -157,6 +162,7 @@ Paths are SDK Config paths, such as `api.auth.schemes[0].location`.
 | `CLI_TARGET_ROOT_SETTING_CONFLICT` | warning | A spec's `pathParameterOrder` differs from root's; Fern reads it only at root |
 | `CLI_TARGET_GENERATOR_VERSION` | error | A generator version that is not an exact version, such as `latest` |
 | `CLI_TARGET_UNPOOLED_VERSION` | warning | A generator version with no Fern pool; the sdk-gen-api route fails |
+| `CLI_TARGET_ATTESTATIONS_VERSION` | warning | `githubAttestations` other than `true` with a generator version that ignores it |
 
 ## Tests
 

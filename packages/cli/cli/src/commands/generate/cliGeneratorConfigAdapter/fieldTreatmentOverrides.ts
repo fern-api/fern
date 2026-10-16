@@ -86,7 +86,7 @@ const DISTRIBUTION_FIELDS: Record<string, FieldTreatment> = Object.fromEntries(
         path,
         {
             treatment: "Map",
-            note: "`config.distribution`; *SecretName fields are written to the generator's secret-name keys unchanged."
+            note: "`config.distribution`; *SecretName fields are written to the generator's secret-name keys unchanged, and githubAttestations as-is."
         }
     ])
 );
@@ -151,10 +151,6 @@ export const LOCAL_FIELD_ADDITIONS: Record<string, FieldTreatment> = {
     "package.bugs.email": {
         treatment: "Warn",
         note: "Not written: fern-cli-generator's packageIdentity has no bugs field."
-    },
-    "output.distribution.githubAttestations": {
-        treatment: "Warn",
-        note: "Not written: fern-cli-generator's release workflow always attests build provenance."
     },
     "output.github.workflows": {
         treatment: "Warn",
