@@ -300,12 +300,14 @@ pub(crate) fn render(value: &Value, columns: &[TableColumn], emit_header: bool) 
             Some(render_rows(&rows, columns, emit_header))
         }
         Value::Object(obj) => {
+            // A record with its own array fields (e.g. `tags`) is still a
+            // record, not a list envelope.
+            if columns.iter().any(|c| lookup(value, &c.path).is_some()) {
+                return Some(render_record(value, columns));
+            }
             if let Some((_, rows)) = crate::formatter::extract_items(value) {
                 let rows: Vec<&Value> = rows.iter().collect();
                 return Some(render_rows(&rows, columns, emit_header));
-            }
-            if columns.iter().any(|c| lookup(value, &c.path).is_some()) {
-                return Some(render_record(value, columns));
             }
             // A list envelope whose page came back empty.
             if obj
@@ -508,6 +510,16 @@ columns:
         let trailing_empty_page = json!([{ "datasets": rows(), "next": "p2" }, { "next": null }]);
         let out = render(&trailing_empty_page, &cols, true).unwrap();
         assert_eq!(out.lines().count(), 4, "{out}");
+    }
+
+    #[test]
+    fn a_record_with_array_fields_renders_as_a_record() {
+        let spec = datasets_spec();
+        let cols = spec.default_columns();
+        let record = json!({ "name": "aa_lcr", "tags": ["a", "b"] });
+        let out = render(&record, &cols, true).unwrap();
+        assert!(out.starts_with("NAME"), "{out}");
+        assert!(out.lines().next().unwrap().ends_with("aa_lcr"), "{out}");
     }
 
     #[test]

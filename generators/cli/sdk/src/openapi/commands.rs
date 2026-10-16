@@ -842,7 +842,10 @@ fn build_resource_command(
         // `--columns` picks the `x-fern-cli-table` columns. An operation
         // that already has a `--columns` flag (a request parameter) keeps
         // it, and the picker becomes `--table-columns`.
-        if let Some(ref table) = method.table {
+        let picker_id_taken = method_cmd
+            .get_arguments()
+            .any(|a| a.get_id() == TABLE_COLUMNS_ARG_ID);
+        if let Some(table) = method.table.as_ref().filter(|_| !picker_id_taken) {
             let flag = table_columns_flag(&method_cmd);
             method_cmd = method_cmd.arg(
                 Arg::new(TABLE_COLUMNS_ARG_ID)
