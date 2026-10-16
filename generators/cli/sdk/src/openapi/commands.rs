@@ -87,6 +87,21 @@ fn with_availability_badge(text: &str, availability: Option<Availability>) -> St
     }
 }
 
+/// Clap id of the `--columns` flag on operations with `x-fern-cli-table`.
+pub(crate) const TABLE_COLUMNS_ARG_ID: &str = "fern-table-columns";
+
+/// `columns`, or `table-columns` when `cmd` already has a `--columns` flag.
+fn table_columns_flag(cmd: &Command) -> &'static str {
+    let taken = |name: &str| {
+        flag_name_is_reserved(name) || cmd.get_arguments().any(|a| a.get_long() == Some(name))
+    };
+    if taken("columns") {
+        "table-columns"
+    } else {
+        "columns"
+    }
+}
+
 /// Names of built-in flags that must not be duplicated by parameter-derived flags.
 pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
     "params",
@@ -820,6 +835,20 @@ fn build_resource_command(
                         complete (handy for piping into another JSON tool)",
                     )
                     .action(clap::ArgAction::SetTrue)
+                    .help_heading(HELP_HEADING_REQUEST),
+            );
+        }
+
+        // `--columns` picks the `x-fern-cli-table` columns. An operation
+        // that already has a `--columns` flag (a request parameter) keeps
+        // it, and the picker becomes `--table-columns`.
+        if let Some(ref table) = method.table {
+            let flag = table_columns_flag(&method_cmd);
+            method_cmd = method_cmd.arg(
+                Arg::new(TABLE_COLUMNS_ARG_ID)
+                    .long(flag)
+                    .value_name("COLS")
+                    .help(table.columns_help())
                     .help_heading(HELP_HEADING_REQUEST),
             );
         }
