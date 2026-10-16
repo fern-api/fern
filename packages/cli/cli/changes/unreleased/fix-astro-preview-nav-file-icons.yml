@@ -2,6 +2,7 @@
 
 - summary: |
     Fix `fern docs dev` dropping uploaded (`file:`) icons and images from the navigation,
-    such as custom product switcher icons. The Astro preview now maps the preview's
-    file IDs to file paths in the docs config, matching how `fern generate --docs` publishes.
+    such as custom product switcher and navbar link icons. The Astro preview now maps the
+    preview's file IDs to file paths in the docs config, matching how `fern generate --docs`
+    publishes. Translated `navbar-links` overrides now also show up in the preview.
   type: fix

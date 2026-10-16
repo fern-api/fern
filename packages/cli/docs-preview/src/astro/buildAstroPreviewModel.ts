@@ -154,7 +154,8 @@ export async function buildAstroPreviewModel({
                 segments: result.segments,
                 nav: result.nav,
                 deploymentSegments: result.deploymentSegments,
-                files: tagFiles(result.fileEntries)
+                files: tagFiles(result.fileEntries),
+                configJson: remapFileIdsInValue(result.configJson, fileIdToPath)
             });
         }
     }
