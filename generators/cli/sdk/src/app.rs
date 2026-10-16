@@ -1023,14 +1023,18 @@ impl CliApp {
         // command's subtree, so bindings skip specs mounted elsewhere (the
         // biggest part of a TAB's cost on many-spec CLIs).
         let completion_focus = crate::completions::dynamic_completion_shell(&self.name)
-            .and_then(|shell| crate::completions::typed_top_level_command(&shell, &args))
+            .and_then(|shell| crate::completions::completion_focus_word(&shell, &args))
             .map(|word| {
-                let outside_specs = self.cli_commands.iter().any(|cc| cc.path.first() == Some(&word))
-                    || BUILTIN_TOP_LEVEL_COMMANDS.contains(&word.as_str())
-                    || self
-                        .profiles
-                        .as_ref()
-                        .is_some_and(|config| config.command_name == word);
+                let outside_specs = word.as_ref().is_some_and(|word| {
+                    self.cli_commands
+                        .iter()
+                        .any(|cc| cc.path.first() == Some(word))
+                        || BUILTIN_TOP_LEVEL_COMMANDS.contains(&word.as_str())
+                        || self
+                            .profiles
+                            .as_ref()
+                            .is_some_and(|config| config.command_name == *word)
+                });
                 crate::completions::set_completion_focus(crate::completions::CompletionFocus {
                     word,
                     outside_specs,
@@ -1430,8 +1434,8 @@ impl CliApp {
         // before completion/man generation so aliases appear in tab-
         // completion scripts and man pages reflect hidden/stability state.
         for op in &self.deferred_ops {
-            // A focused completion tree lacks the other top-level commands.
-            if completion_focus.is_some() && !op_path(op).first().is_none_or(|head| cli.find_subcommand(head).is_some()) {
+            // A focused completion tree lacks commands from the specs it skipped.
+            if completion_focus.is_some() && !has_path(&cli, op_path(op)) {
                 continue;
             }
             match op {
@@ -2081,6 +2085,15 @@ fn modify_at_path(
 /// Top-level commands every CLI grafts besides the spec's own (`profiles` is
 /// configurable and checked separately).
 const BUILTIN_TOP_LEVEL_COMMANDS: &[&str] = &["auth", "completion", "man", "help"];
+
+fn has_path(cmd: &clap::Command, path: &[String]) -> bool {
+    match path.split_first() {
+        Some((head, rest)) => cmd
+            .find_subcommand(head)
+            .is_some_and(|sub| has_path(sub, rest)),
+        None => true,
+    }
+}
 
 fn op_path(op: &DeferredOp) -> &[String] {
     match op {

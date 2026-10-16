@@ -1012,6 +1012,37 @@ pub(crate) struct SpecEntry {
     overrides: Vec<String>,
 }
 
+impl SpecEntry {
+    /// Whether this spec's top-level group can be listed from its prefix
+    /// alone: a JSON spec with no overlays or overrides that has no tag, SDK
+    /// group or path's first segment the group's metadata could be looked up
+    /// by (any string, or first `/` segment of one, equal to the prefix up to
+    /// case and punctuation). Errs towards parsing.
+    fn listable_from_prefix(&self) -> bool {
+        let Some(top) = self.prefix_path.first() else {
+            return false;
+        };
+        if !self.overlays.is_empty()
+            || !self.overrides.is_empty()
+            || !self.yaml.trim_start().starts_with('{')
+        {
+            return false;
+        }
+        let key = crate::openapi::commands::tag_match_key(top);
+        let names_group = |s: &str| {
+            s.len() <= 4 * top.len() + 8
+                && s.chars()
+                    .filter(|c| c.is_alphanumeric())
+                    .flat_map(char::to_lowercase)
+                    .eq(key.chars())
+        };
+        key != "default"
+            && !self.yaml.split('"').any(|s| {
+                names_group(s) || s.trim_start_matches('/').split('/').next().is_some_and(names_group)
+            })
+    }
+}
+
 /// A server-URL template variable like `{store_hash}` in
 /// `https://api.bigcommerce.com/stores/{store_hash}/v3`. Resolved at runtime
 /// from a CLI flag (`--<name>`), an env var, or a built-in default — first
@@ -1416,23 +1447,56 @@ impl CliApp {
     }
 
     /// Build the merged `RestDescription` from all registered specs.
-    /// Every spec, except while building the tree for a TAB completion
-    /// under one top-level command: then only unprefixed specs and those
-    /// mounted under that command, since no other spec can add to its subtree.
-    /// Unrecognised words (e.g. an alias) keep every spec.
+    /// Every spec, except while building the tree for a TAB completion:
+    /// - under one top-level command, only unprefixed specs and those mounted
+    ///   under that command, since no other spec can add to its subtree
+    ///   (unrecognised words, e.g. an alias, keep every spec);
+    /// - for the top-level word itself, only the specs whose top-level group
+    ///   can't be listed from its prefix alone (see
+    ///   [`Self::completion_placeholders`]).
     fn specs_to_build(&self) -> Vec<&SpecEntry> {
+        let all = || self.specs.iter().collect();
         let Some(focus) = crate::completions::completion_focus() else {
-            return self.specs.iter().collect();
+            return all();
         };
-        let mounted_under_focus =
-            |e: &SpecEntry| e.prefix_path.first().is_some_and(|p| *p == focus.word);
+        if !self.audiences.is_empty() {
+            return all();
+        }
+        let Some(word) = focus.word.as_deref() else {
+            return self
+                .specs
+                .iter()
+                .filter(|e| !e.listable_from_prefix())
+                .collect();
+        };
+        let mounted_under_focus = |e: &SpecEntry| e.prefix_path.first().is_some_and(|p| p == word);
         if !focus.outside_specs && !self.specs.iter().any(mounted_under_focus) {
-            return self.specs.iter().collect();
+            return all();
         }
         self.specs
             .iter()
             .filter(|e| e.prefix_path.is_empty() || mounted_under_focus(e))
             .collect()
+    }
+
+    /// Top-level groups to list without parsing their specs while completing
+    /// the top-level word: the prefixes of the specs [`Self::specs_to_build`]
+    /// skipped. Their `about` comes from the parsed specs' metadata, exactly
+    /// as it would in a full build.
+    pub(crate) fn completion_placeholders(&self) -> Vec<String> {
+        let top_level = crate::completions::completion_focus().is_some_and(|f| f.word.is_none());
+        if !top_level || !self.audiences.is_empty() {
+            return Vec::new();
+        }
+        let mut names: Vec<String> = self
+            .specs
+            .iter()
+            .filter(|e| e.listable_from_prefix())
+            .map(|e| e.prefix_path[0].clone())
+            .collect();
+        names.sort();
+        names.dedup();
+        names
     }
 
     pub(crate) fn build_doc(&self) -> Result<RestDescription, CliError> {

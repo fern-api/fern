@@ -573,7 +573,8 @@ impl Binding for OpenApiBinding {
 
     fn build_command(&self) -> Result<clap::Command, CliError> {
         let prepared = self.ensure_prepared()?;
-        let cli = commands::build_cli(&prepared.doc)
+        let placeholders = self.inner.completion_placeholders();
+        let cli = commands::build_cli_with_placeholders(&prepared.doc, &placeholders)
             .subcommand(crate::openapi::skill_emitter::generate_skills_command());
         let mut cli = self.inner.decorate_command(&prepared.doc, cli);
 
@@ -1214,6 +1215,49 @@ fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn spec_with_tag(tag: &str, description: &str) -> String {
+        serde_json::json!({
+            "openapi": "3.0.0",
+            "info": { "title": "T", "version": "1" },
+            "tags": [{ "name": tag, "description": description }],
+            "paths": { "/things": { "get": {
+                "operationId": "listThings",
+                "tags": [tag],
+                "responses": { "200": { "description": "ok" } }
+            } } }
+        })
+        .to_string()
+    }
+
+    #[test]
+    fn top_level_completion_lists_unparsed_specs_by_prefix() {
+        let binding = || {
+            let mut b = OpenApiBinding::new()
+                .spec_under("alpha/v1", &spec_with_tag("Things", "All the things."))
+                .spec_under("beta", &spec_with_tag("Beta", "Beta products."));
+            b.set_cli_name("my-cli");
+            b
+        };
+        let full = binding().build_command().unwrap();
+        let _focus = crate::completions::set_completion_focus(crate::completions::CompletionFocus {
+            word: None,
+            outside_specs: false,
+        });
+        let fast = binding().build_command().unwrap();
+
+        let tops = |c: &clap::Command| -> Vec<(String, String)> {
+            c.get_subcommands()
+                .map(|s| (s.get_name().to_string(), s.get_about().map(|a| a.to_string()).unwrap_or_default()))
+                .collect()
+        };
+        assert_eq!(tops(&fast), tops(&full));
+        // `alpha` was listed from its prefix; `beta` has a matching tag, so
+        // its spec was parsed for the description.
+        let alpha = fast.find_subcommand("alpha").unwrap();
+        assert_eq!(alpha.get_subcommands().count(), 0);
+        assert!(fast.find_subcommand("beta").unwrap().get_subcommands().count() > 0);
+    }
 
     #[test]
     fn prefix_schema_operations_array() {

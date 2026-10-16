@@ -110,12 +110,13 @@ pub fn write_dynamic_completions(
     writer.write_all(&buf)
 }
 
-/// The top-level command a TAB completion request is under, so the tree can
-/// be built for that command alone instead of every spec (see
-/// [`CompletionFocus`]).
+/// What a TAB completion request is about, so the tree can be built for that
+/// alone instead of from every spec.
 pub(crate) struct CompletionFocus {
-    /// First word after the binary name, e.g. `core` in `twilio core msg<TAB>`.
-    pub(crate) word: String,
+    /// First word after the binary name once it has been typed, e.g. `core` in
+    /// `twilio core msg<TAB>`. `None` while that word itself is being
+    /// completed (`twilio <TAB>`), when only the top-level names matter.
+    pub(crate) word: Option<String>,
     /// The word names a custom or built-in command rather than a spec prefix,
     /// so specs mounted under other prefixes cannot contribute.
     pub(crate) outside_specs: bool,
@@ -145,17 +146,22 @@ pub(crate) fn completion_focus() -> Option<std::rc::Rc<CompletionFocus>> {
     COMPLETION_FOCUS.with(|f| f.borrow().clone())
 }
 
-/// The top-level command already typed on a line being TAB-completed: the
-/// first word after the binary name, once the cursor has moved past it.
-/// `None` when that word is a flag (its value could look like a command) or
-/// is the word being completed.
-pub(crate) fn typed_top_level_command(shell: &str, args: &[OsString]) -> Option<String> {
+/// The top-level word of a line being TAB-completed: `Some(Some(word))` once
+/// the cursor has moved past it, `Some(None)` while it is the word being
+/// completed. `None` (build everything) when it is a flag, since a flag's
+/// value could look like a command, or when there is no completion request.
+pub(crate) fn completion_focus_word(shell: &str, args: &[OsString]) -> Option<Option<String>> {
     let words = &args[args.iter().position(|a| a == "--")? + 1..];
-    if completion_index(shell, words) < 2 {
+    let word = words.get(1).map(|w| w.to_str())?.unwrap_or("-");
+    if word.starts_with('-') {
         return None;
     }
-    let word = words.get(1)?.to_str()?;
-    (!word.is_empty() && !word.starts_with('-')).then(|| word.to_string())
+    match completion_index(shell, words) {
+        0 => None,
+        1 => Some(None),
+        _ if word.is_empty() => None,
+        _ => Some(Some(word.to_string())),
+    }
 }
 
 /// Position of the word being completed, using the same convention as the
@@ -547,17 +553,22 @@ mod tests {
     }
 
     #[test]
-    fn typed_top_level_command_needs_a_finished_first_word() {
+    fn completion_focus_word_follows_the_first_word() {
         let focus = |w: &[&str]| {
             let mut argv = os(&["my-cli", "--", "my-cli"]);
             argv.extend(os(w));
-            typed_top_level_command("fish", &argv)
+            completion_focus_word("fish", &argv)
         };
-        assert_eq!(focus(&["core", ""]).as_deref(), Some("core"));
-        assert_eq!(focus(&["core", "messages", "li"]).as_deref(), Some("core"));
-        assert_eq!(focus(&["co"]), None);
+        assert_eq!(focus(&["core", ""]), Some(Some("core".to_string())));
+        assert_eq!(
+            focus(&["core", "messages", "li"]),
+            Some(Some("core".to_string()))
+        );
+        assert_eq!(focus(&["co"]), Some(None));
+        assert_eq!(focus(&[""]), Some(None));
+        assert_eq!(focus(&["-"]), None);
         assert_eq!(focus(&["--profile", "prod", ""]), None);
-        assert_eq!(typed_top_level_command("fish", &os(&["my-cli"])), None);
+        assert_eq!(completion_focus_word("fish", &os(&["my-cli"])), None);
     }
 
     #[test]
