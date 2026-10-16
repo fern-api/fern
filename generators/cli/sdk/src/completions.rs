@@ -110,6 +110,54 @@ pub fn write_dynamic_completions(
     writer.write_all(&buf)
 }
 
+/// The top-level command a TAB completion request is under, so the tree can
+/// be built for that command alone instead of every spec (see
+/// [`CompletionFocus`]).
+pub(crate) struct CompletionFocus {
+    /// First word after the binary name, e.g. `core` in `twilio core msg<TAB>`.
+    pub(crate) word: String,
+    /// The word names a custom or built-in command rather than a spec prefix,
+    /// so specs mounted under other prefixes cannot contribute.
+    pub(crate) outside_specs: bool,
+}
+
+thread_local! {
+    static COMPLETION_FOCUS: std::cell::RefCell<Option<std::rc::Rc<CompletionFocus>>> =
+        const { std::cell::RefCell::new(None) };
+}
+
+/// Clears the focus when dropped.
+pub(crate) struct CompletionFocusGuard(());
+
+impl Drop for CompletionFocusGuard {
+    fn drop(&mut self) {
+        COMPLETION_FOCUS.with(|f| f.borrow_mut().take());
+    }
+}
+
+/// Set the focus for the rest of this (synchronous) tree build.
+pub(crate) fn set_completion_focus(focus: CompletionFocus) -> CompletionFocusGuard {
+    COMPLETION_FOCUS.with(|f| *f.borrow_mut() = Some(std::rc::Rc::new(focus)));
+    CompletionFocusGuard(())
+}
+
+pub(crate) fn completion_focus() -> Option<std::rc::Rc<CompletionFocus>> {
+    COMPLETION_FOCUS.with(|f| f.borrow().clone())
+}
+
+/// The top-level command already typed on a line being TAB-completed: the
+/// first word after the binary name, once the cursor has moved past it.
+/// `None` when that word is a flag (its value could look like a command) or
+/// is the word being completed.
+pub(crate) fn typed_top_level_command(shell: &str, args: &[OsString]) -> Option<String> {
+    let words = &args[args.iter().position(|a| a == "--")? + 1..];
+    if completion_index(shell, words) < 2 {
+        return None;
+    }
+    let word = words.get(1)?.to_str()?;
+    (!word.is_empty() && !word.starts_with('-')).then(|| word.to_string())
+}
+
 /// Position of the word being completed, using the same convention as the
 /// `clap_complete` shell adapters (bash/zsh pass it, the others complete the
 /// last word). May equal `words.len()` when the cursor sits on a new word.
@@ -496,6 +544,20 @@ mod tests {
             out.contains("list\tList Services, environments, builds, Functions…"),
             "{out}"
         );
+    }
+
+    #[test]
+    fn typed_top_level_command_needs_a_finished_first_word() {
+        let focus = |w: &[&str]| {
+            let mut argv = os(&["my-cli", "--", "my-cli"]);
+            argv.extend(os(w));
+            typed_top_level_command("fish", &argv)
+        };
+        assert_eq!(focus(&["core", ""]).as_deref(), Some("core"));
+        assert_eq!(focus(&["core", "messages", "li"]).as_deref(), Some("core"));
+        assert_eq!(focus(&["co"]), None);
+        assert_eq!(focus(&["--profile", "prod", ""]), None);
+        assert_eq!(typed_top_level_command("fish", &os(&["my-cli"])), None);
     }
 
     #[test]

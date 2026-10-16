@@ -1416,6 +1416,25 @@ impl CliApp {
     }
 
     /// Build the merged `RestDescription` from all registered specs.
+    /// Every spec, except while building the tree for a TAB completion
+    /// under one top-level command: then only unprefixed specs and those
+    /// mounted under that command, since no other spec can add to its subtree.
+    /// Unrecognised words (e.g. an alias) keep every spec.
+    fn specs_to_build(&self) -> Vec<&SpecEntry> {
+        let Some(focus) = crate::completions::completion_focus() else {
+            return self.specs.iter().collect();
+        };
+        let mounted_under_focus =
+            |e: &SpecEntry| e.prefix_path.first().is_some_and(|p| *p == focus.word);
+        if !focus.outside_specs && !self.specs.iter().any(mounted_under_focus) {
+            return self.specs.iter().collect();
+        }
+        self.specs
+            .iter()
+            .filter(|e| e.prefix_path.is_empty() || mounted_under_focus(e))
+            .collect()
+    }
+
     pub(crate) fn build_doc(&self) -> Result<RestDescription, CliError> {
         if self.specs.is_empty() {
             return Err(CliError::Discovery(
@@ -1425,7 +1444,7 @@ impl CliApp {
 
         let mut merged: Option<RestDescription> = None;
 
-        for entry in &self.specs {
+        for entry in self.specs_to_build() {
             // 1. Apply overlays (RFC 7396 style) first.
             let effective_yaml = crate::openapi::overlay::apply_overlays_to_spec(
                 &entry.yaml,
@@ -1485,7 +1504,8 @@ impl CliApp {
             }
         }
 
-        let mut doc = merged.expect("at least one spec was processed");
+        // Only a focused completion build can skip every spec.
+        let mut doc = merged.unwrap_or_default();
         if let Some(ref t) = self.title_override {
             doc.title = Some(t.clone());
         }

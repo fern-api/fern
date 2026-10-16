@@ -1019,6 +1019,24 @@ impl CliApp {
             ));
         }
 
+        // A TAB completion under one top-level command only needs that
+        // command's subtree, so bindings skip specs mounted elsewhere (the
+        // biggest part of a TAB's cost on many-spec CLIs).
+        let completion_focus = crate::completions::dynamic_completion_shell(&self.name)
+            .and_then(|shell| crate::completions::typed_top_level_command(&shell, &args))
+            .map(|word| {
+                let outside_specs = self.cli_commands.iter().any(|cc| cc.path.first() == Some(&word))
+                    || BUILTIN_TOP_LEVEL_COMMANDS.contains(&word.as_str())
+                    || self
+                        .profiles
+                        .as_ref()
+                        .is_some_and(|config| config.command_name == word);
+                crate::completions::set_completion_focus(crate::completions::CompletionFocus {
+                    word,
+                    outside_specs,
+                })
+            });
+
         // 0. Validate auth bindings — hard error if a binding's spec
         // references a scheme not registered at root.
         self.validate_auth()?;
@@ -1412,6 +1430,10 @@ impl CliApp {
         // before completion/man generation so aliases appear in tab-
         // completion scripts and man pages reflect hidden/stability state.
         for op in &self.deferred_ops {
+            // A focused completion tree lacks the other top-level commands.
+            if completion_focus.is_some() && !op_path(op).first().is_none_or(|head| cli.find_subcommand(head).is_some()) {
+                continue;
+            }
             match op {
                 DeferredOp::Alias { path, alias } => {
                     cli = apply_alias(cli, path, alias);
@@ -1436,7 +1458,9 @@ impl CliApp {
         cli = crate::cli_args::apply_global_help_heading(cli);
 
         // 1f. Validate hook patterns against the command tree.
-        self.hooks.validate_patterns(&cli)?;
+        if completion_focus.is_none() {
+            self.hooks.validate_patterns(&cli)?;
+        }
 
         // 1g. Intercept `completion` and `man` before clap parses.
         if let Some(shell) = dynamic_completion {
@@ -2054,6 +2078,20 @@ fn modify_at_path(
 }
 
 /// Apply a clap alias to the command at `path`.
+/// Top-level commands every CLI grafts besides the spec's own (`profiles` is
+/// configurable and checked separately).
+const BUILTIN_TOP_LEVEL_COMMANDS: &[&str] = &["auth", "completion", "man", "help"];
+
+fn op_path(op: &DeferredOp) -> &[String] {
+    match op {
+        DeferredOp::Alias { path, .. }
+        | DeferredOp::Hide { path }
+        | DeferredOp::Stability { path, .. }
+        | DeferredOp::Describe { path, .. }
+        | DeferredOp::HideGlobalFlags { path, .. } => path,
+    }
+}
+
 fn apply_alias(cli: clap::Command, path: &[String], alias: &str) -> clap::Command {
     let alias_owned = alias.to_string();
     modify_at_path(cli, path, &|c| c.visible_alias(alias_owned.clone()))

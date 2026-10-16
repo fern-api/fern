@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    TAB completion under a top-level command (e.g. `<cli> core <TAB>`) now loads only the specs mounted under
+    that command (plus unprefixed ones) instead of every embedded spec, and skips specs entirely under custom or
+    built-in commands. On a 60-spec CLI this cuts a TAB from ~0.25s to 0.01–0.05s. Completing the first word
+    still loads every spec. Normal command runs are unchanged.
+  type: fix
