@@ -539,9 +539,16 @@ fn as_name_value_pairs(arr: &[Value]) -> Option<Vec<(&str, &Value)>> {
 ///
 /// Nested objects become `parent.child` key names so that `--format table` can
 /// render them as individual columns instead of raw JSON blobs.
-fn flatten_object(obj: &serde_json::Map<String, Value>, prefix: &str) -> Vec<(String, String)> {
+fn flatten_object(
+    obj: &serde_json::Map<String, Value>,
+    prefix: &str,
+    skip_nulls: bool,
+) -> Vec<(String, String)> {
     let mut out = Vec::new();
     for (key, val) in obj {
+        if skip_nulls && val.is_null() {
+            continue;
+        }
         let full_key = if prefix.is_empty() {
             key.clone()
         } else {
@@ -549,7 +556,7 @@ fn flatten_object(obj: &serde_json::Map<String, Value>, prefix: &str) -> Vec<(St
         };
         match val {
             Value::Object(nested) => {
-                out.extend(flatten_object(nested, &full_key));
+                out.extend(flatten_object(nested, &full_key, skip_nulls));
             }
             _ => {
                 out.push((full_key, value_to_cell(val)));
@@ -576,7 +583,7 @@ fn format_table_page(value: &Value, emit_header: bool) -> String {
         // Single object: key/value table — flatten nested objects first.
         // Null fields would render as a key with no value, so they're skipped.
         let mut output = String::new();
-        let flat = flatten_object(&without_nulls(obj), "");
+        let flat = flatten_object(obj, "", true);
         let max_key_len = flat.iter().map(|(k, _)| k.len()).max().unwrap_or(0);
         for (key, val_str) in &flat {
             let _ = writeln!(output, "{key:max_key_len$}  {val_str}");
@@ -585,16 +592,6 @@ fn format_table_page(value: &Value, emit_header: bool) -> String {
     } else {
         value.to_string()
     }
-}
-
-fn without_nulls(obj: &serde_json::Map<String, Value>) -> serde_json::Map<String, Value> {
-    obj.iter()
-        .filter(|(_, v)| !v.is_null())
-        .map(|(k, v)| match v {
-            Value::Object(nested) => (k.clone(), Value::Object(without_nulls(nested))),
-            _ => (k.clone(), v.clone()),
-        })
-        .collect()
 }
 
 fn format_array_as_table(arr: &[Value], emit_header: bool) -> String {
@@ -606,7 +603,7 @@ fn format_array_as_table(arr: &[Value], emit_header: bool) -> String {
     let flat_rows: Vec<Vec<(String, String)>> = arr
         .iter()
         .map(|item| match item {
-            Value::Object(obj) => flatten_object(obj, ""),
+            Value::Object(obj) => flatten_object(obj, "", false),
             _ => vec![(String::new(), value_to_cell(item))],
         })
         .collect();

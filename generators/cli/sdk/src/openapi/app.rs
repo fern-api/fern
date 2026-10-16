@@ -3078,7 +3078,8 @@ pub(crate) fn collect_params_from_flags(
                 let mut explicit_null = false;
                 // Object/number/etc. elements are JSON, so `@file` references
                 // inside them resolve like the single-value branch below.
-                // String elements stay literal.
+                // String elements stay literal; an untyped list (`item_type:
+                // None`) is a string list, so it stays literal too.
                 let json_items = param_def
                     .item_type
                     .as_deref()
