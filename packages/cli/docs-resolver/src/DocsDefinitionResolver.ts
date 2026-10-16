@@ -497,6 +497,7 @@ export class DocsDefinitionResolver {
         translatedIrsByLocale?: Map<string, IntermediateRepresentation>;
     }> = [];
     private pendingApiCounter = 0;
+    private pagesWithEndpointIndex = new Set<RelativeFilePath>();
     private skippedApiCounter = 0;
     private skippedApiDefinitions: Record<string, APIV1Read.ApiDefinition> = {};
     /**
@@ -932,6 +933,24 @@ export class DocsDefinitionResolver {
         );
 
         return { config, pages, jsFiles };
+    }
+
+    private appendEndpointIndexToPage(relativePath: RelativeFilePath, endpointsMarkdown: string): void {
+        const markdown = this.parsedDocsConfig.pages[relativePath];
+        if (markdown == null) {
+            this.taskContext.logger.debug(`Skipping endpoint index for ${relativePath}: page not found`);
+            return;
+        }
+        // A summary page shared by several API sections or versions only gets one endpoint list.
+        if (this.pagesWithEndpointIndex.has(relativePath)) {
+            return;
+        }
+        this.pagesWithEndpointIndex.add(relativePath);
+        this.parsedDocsConfig.pages[relativePath] = `${markdown.trimEnd()}\n\n${endpointsMarkdown}\n`;
+        const rawMarkdown = this.rawMarkdownFiles[relativePath];
+        if (rawMarkdown != null) {
+            this.rawMarkdownFiles[relativePath] = `${rawMarkdown.trimEnd()}\n\n${endpointsMarkdown}\n`;
+        }
     }
 
     private resolveFilepath(unresolvedFilepath: string): AbsoluteFilePath;
@@ -2256,9 +2275,10 @@ export class DocsDefinitionResolver {
             graphqlData.typeCategories
         );
 
-        // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
-        const tagDescriptionContent = node.getTagDescriptionContent();
-        for (const [absolutePath, content] of tagDescriptionContent.entries()) {
+        // Extract tag description and endpoint index content and add it to both rawMarkdownFiles and
+        // parsedDocsConfig.pages
+        const virtualPageContent = [...node.getTagDescriptionContent(), ...node.getEndpointIndexContent()];
+        for (const [absolutePath, content] of virtualPageContent) {
             // Extract just the filename from the absolute path (e.g., "/tag-users.md" -> "tag-users.md")
             const filename = absolutePath.split("/").pop() || absolutePath;
             const relativePath = RelativeFilePath.of(filename);
@@ -2281,6 +2301,11 @@ export class DocsDefinitionResolver {
             // Add to both collections so the file appears in the final pages output
             this.rawMarkdownFiles[relativePath] = stripMdxComments(processedContent);
             this.parsedDocsConfig.pages[relativePath] = processedContent;
+        }
+
+        // Append generated endpoint lists to existing section summary pages
+        for (const [pageId, endpointsMarkdown] of node.getEndpointIndexAppendices()) {
+            this.appendEndpointIndexToPage(RelativeFilePath.of(pageId), endpointsMarkdown);
         }
 
         const apiReferenceNode = node.get();

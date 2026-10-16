@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: Garden API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+tags:
+  - name: plants
+    description: Plant operations
+  - name: users
+  - name: store
+    description: Order seeds and supplies from the garden store.
+paths:
+  /plants:
+    get:
+      tags: [plants]
+      operationId: listPlants
+      summary: List plants
+      description: Returns all plants in the garden. Results are paginated.
+      responses:
+        "200":
+          description: OK
+    post:
+      tags: [plants]
+      operationId: createPlant
+      summary: Create plant
+      description: Adds a plant to the garden.
+      x-fern-availability: beta
+      responses:
+        "200":
+          description: OK
+  /plants/{plantId}:
+    delete:
+      tags: [plants]
+      operationId: deletePlant
+      summary: Delete plant
+      description: Removes a plant. Use archive instead.
+      deprecated: true
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+  /users:
+    get:
+      tags: [users]
+      operationId: listUsers
+      summary: List users
+      description: Lists every gardener with access to the garden.
+      responses:
+        "200":
+          description: OK
+  /users/{userId}:
+    delete:
+      tags: [users]
+      operationId: deleteUser
+      summary: Delete user
+      description: Removes a gardener.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+  /store/orders:
+    post:
+      tags: [store]
+      operationId: createOrder
+      summary: Create order
+      description: Places an order for seeds.
+      responses:
+        "200":
+          description: OK

@@ -1603,6 +1603,7 @@ async function convertNavigationItem({
             availability: rawConfig.availability,
             showErrors: rawConfig.displayErrors ?? true,
             tagDescriptionPages: rawConfig.tagDescriptionPages ?? false,
+            endpointIndexPages: rawConfig.endpointIndexPages ?? false,
             snippetsConfiguration:
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })

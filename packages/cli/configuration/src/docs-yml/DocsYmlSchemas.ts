@@ -912,6 +912,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         audiences: Audience.optional(),
         "display-errors": z.boolean().optional(),
         "tag-description-pages": z.boolean().optional(),
+        "endpoint-index-pages": z.boolean().optional(),
         snippets: SnippetsConfiguration.optional(),
         postman: z.string().optional(),
         summary: z.string().optional(),
