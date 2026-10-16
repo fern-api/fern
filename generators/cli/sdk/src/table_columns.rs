@@ -147,7 +147,14 @@ impl TableSpec {
         }
 
         if modifiers == 0 {
-            return Ok(Some(tokens.iter().map(|t| self.column_for(t)).collect()));
+            let mut columns: Vec<TableColumn> = Vec::new();
+            for token in &tokens {
+                let column = self.column_for(token);
+                if !columns.contains(&column) {
+                    columns.push(column);
+                }
+            }
+            return Ok(Some(columns));
         }
 
         let mut columns = self.default_columns();
@@ -176,6 +183,14 @@ impl TableSpec {
                 }
             }
         }
+        // Keep declared order however the modifiers were written; ad hoc
+        // field paths go last.
+        columns.sort_by_key(|c| {
+            self.columns
+                .iter()
+                .position(|d| d == c)
+                .unwrap_or(usize::MAX)
+        });
         if columns.is_empty() {
             return Err("--columns removed every column".to_string());
         }
@@ -313,16 +328,24 @@ fn page_rows<'a>(items: &'a [Value], columns: &[TableColumn]) -> Option<Vec<&'a 
         return None;
     }
     let mut rows = Vec::new();
+    let mut parsed_pages = 0;
     for item in items {
         match item {
-            Value::Array(page) => rows.extend(page),
+            Value::Array(page) => {
+                parsed_pages += 1;
+                rows.extend(page);
+            }
             Value::Object(_) if !columns.iter().any(|c| lookup(item, &c.path).is_some()) => {
-                rows.extend(crate::formatter::extract_items(item)?.1);
+                // A page without a row list (e.g. `{"next": null}`) adds no rows.
+                if let Some((_, page)) = crate::formatter::extract_items(item) {
+                    parsed_pages += 1;
+                    rows.extend(page);
+                }
             }
             _ => return None,
         }
     }
-    Some(rows)
+    (parsed_pages > 0).then_some(rows)
 }
 
 fn render_rows(rows: &[&Value], columns: &[TableColumn], emit_header: bool) -> String {
@@ -381,7 +404,7 @@ fn render_record(record: &Value, columns: &[TableColumn]) -> String {
     let mut output = String::new();
     for column in columns {
         let text = cell(record, column);
-        let text = truncate(&text, column.max_width.unwrap_or(usize::MAX));
+        let text = truncate(&text, column.max_width.unwrap_or(DEFAULT_MAX_WIDTH));
         let line = format!("{}  {text}", pad(&column.header, label_width, Align::Left));
         let _ = writeln!(output, "{}", line.trim_end());
     }
@@ -482,6 +505,9 @@ columns:
             2,
             "{out}"
         );
+        let trailing_empty_page = json!([{ "datasets": rows(), "next": "p2" }, { "next": null }]);
+        let out = render(&trailing_empty_page, &cols, true).unwrap();
+        assert_eq!(out.lines().count(), 4, "{out}");
     }
 
     #[test]
@@ -547,6 +573,11 @@ columns:
             ["NAME", "STAGE", "ROWS", "DESCRIPTION"]
         );
         assert_eq!(select(&spec, Some("name,datasetId")), ["NAME", "datasetId"]);
+        assert_eq!(select(&spec, Some("name,NAME,stage")), ["NAME", "STAGE"]);
+        assert_eq!(
+            select(&spec, Some("-v,+datasetId,+v")),
+            ["NAME", "V", "STAGE", "ROWS", "CREATED", "datasetId"]
+        );
         assert_eq!(spec.select(Some("all")).unwrap(), None);
     }
 

@@ -860,7 +860,7 @@ impl Binding for OpenApiBinding {
                         .ok()
                         .flatten()
                         .map(String::as_str),
-                    root_matches.get_one::<String>("format").is_some(),
+                    root_matches.value_source("format") == Some(clap::parser::ValueSource::CommandLine),
                 )?,
                 None => pipeline,
             };
