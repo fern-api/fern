@@ -155,5 +155,9 @@ export const LOCAL_FIELD_ADDITIONS: Record<string, FieldTreatment> = {
     "output.distribution.githubAttestations": {
         treatment: "Warn",
         note: "Not written: fern-cli-generator's release workflow always attests build provenance."
+    },
+    "output.github.workflows": {
+        treatment: "Warn",
+        note: "Not written: the translated github output block has repository, mode and branch only."
     }
 };
