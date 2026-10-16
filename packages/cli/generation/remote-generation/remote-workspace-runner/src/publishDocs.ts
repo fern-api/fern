@@ -974,7 +974,8 @@ export async function publishDocs({
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                     editThisPage,
-                    resolver
+                    resolver,
+                    sourceInstanceUrl: domain
                 });
                 if (deployMode === "ledger") {
                     urlToOutput = previewResult.previewUrl;
