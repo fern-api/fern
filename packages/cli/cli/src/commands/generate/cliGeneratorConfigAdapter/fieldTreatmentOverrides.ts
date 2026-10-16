@@ -123,7 +123,7 @@ export const FIELD_TREATMENT_OVERRIDES: Record<string, FieldTreatment> = {
     },
     "target.generatorVersion": {
         treatment: "Map",
-        note: "Any version fern-cli-generator's versions.yml lists; 0.49.0 by default."
+        note: "An exact fern-cli-generator version; unset, the generator is written as `version: latest`."
     },
     "target.sdkVersion": { treatment: "Ignore", note: "Passed to the generation as its version." },
     "target.apiName": { treatment: "Ignore", note: "Set for validation; the Fern CLI names the workspace." }

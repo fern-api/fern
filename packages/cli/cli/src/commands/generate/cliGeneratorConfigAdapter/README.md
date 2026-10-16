@@ -118,8 +118,10 @@ left out, and a new setting for another language needs no entry.
 Specs are read with Fern's own loader, so overrides, overlays and references to other files apply exactly as in
 `fern generate`. The facts are used to skip headers the spec already declares, and to find OAuth token operations.
 
-The generator version is 0.49.0 unless the `cli` target pins one: it is the newest version with a Fern pool in
-sdk-gen-api. Anything but an exact version is an error.
+When the `cli` target pins no `generatorVersion`, the generator is written as `version: latest`, like an unpinned
+generator in `generators.yml`: with `FERN_USE_SDK_GEN_API=true`, sdk-gen-api's version discovery
+(`/v1/fern/generator-versions/discover`) picks the newest version it can run; Fiddle and `--local` use the newest
+published version. A pinned version must be exact; anything else is an error.
 
 ## Diagnostic codes
 
@@ -160,8 +162,7 @@ Paths are SDK Config paths, such as `api.auth.schemes[0].location`.
 | `CLI_TARGET_ZIP_AS_FILES` | warning | Zip delivery; the `cli` target writes files |
 | `CLI_TARGET_MULTI_SPEC_BINARY_NAME` | warning | Several specs and no `binaryName`, so the binary name comes from the API display name |
 | `CLI_TARGET_ROOT_SETTING_CONFLICT` | warning | A spec's `pathParameterOrder` differs from root's; Fern reads it only at root |
-| `CLI_TARGET_GENERATOR_VERSION` | error | A generator version that is not an exact version, such as `latest` |
-| `CLI_TARGET_UNPOOLED_VERSION` | warning | A generator version with no Fern pool; the sdk-gen-api route fails |
+| `CLI_TARGET_GENERATOR_VERSION` | error | A pinned generator version that is not an exact version, such as `latest` |
 | `CLI_TARGET_ATTESTATIONS_VERSION` | warning | `githubAttestations` other than `true` with a generator version that ignores it |
 
 ## Tests
