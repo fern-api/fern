@@ -1,5 +1,6 @@
 // cspell:ignore kotlin octocat unstub
 import { generatorsYml } from "@fern-api/configuration";
+import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
@@ -3874,5 +3875,134 @@ describe("GitHub delivery result", () => {
         await expect(runWithPublication(undefined)).rejects.toThrow(
             "sdk-gen-api reported the build as succeeded but did not confirm the GitHub delivery to acme/sdk"
         );
+    });
+});
+
+describe("sdk-gen-api build status polling", () => {
+    const pollTimeoutMs = 18 * 60 * 1_000;
+
+    function startBuild(targetAfterDeadline: Record<string, unknown>) {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        const failures: Array<{ message: string; code: CliError.Code | undefined }> = [];
+        const capturingContext = {
+            logger: contextLogger,
+            failAndThrow: (message: string, _error: unknown, options?: { code?: CliError.Code }) => {
+                failures.push({ message, code: options?.code });
+                throw new Error(message);
+            }
+        } as never;
+        const pollTimes: number[] = [];
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockImplementation((() => {
+            const now = Date.now();
+            pollTimes.push(now);
+            const target =
+                now >= pollTimeoutMs ? { targetId, ...targetAfterDeadline } : { targetId, status: "running", logs: [] };
+            return Promise.resolve({ data: { buildId: "build-1", status: "running", targets: [target] } });
+        }) as never);
+        const outcome = runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context: capturingContext
+        }).catch((error: unknown) => error);
+        return { outcome, failures, pollTimes };
+    }
+
+    beforeEach(() => {
+        vi.useFakeTimers({ toFake: ["setTimeout", "Date"] });
+        vi.setSystemTime(0);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    it("finishes normally when the final poll after the deadline is terminal", async () => {
+        const { outcome, failures, pollTimes } = startBuild({
+            status: "succeeded",
+            logs: [],
+            result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.4" }
+        });
+
+        await vi.advanceTimersByTimeAsync(pollTimeoutMs);
+
+        await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
+        expect(failures).toEqual([]);
+        expect(pollTimes.filter((time) => time >= pollTimeoutMs)).toEqual([pollTimeoutMs]);
+    });
+
+    it("fails with a non-network error when the final poll after the deadline is not terminal", async () => {
+        const { outcome, failures, pollTimes } = startBuild({ status: "running", logs: [] });
+
+        await vi.advanceTimersByTimeAsync(pollTimeoutMs);
+
+        const message = "Timed out waiting for sdk-gen-api build build-1 after 18 minutes";
+        await expect(outcome).resolves.toMatchObject({ message });
+        expect(failures).toEqual([{ message, code: CliError.Code.InternalError }]);
+        expect(pollTimes.filter((time) => time >= pollTimeoutMs)).toEqual([pollTimeoutMs]);
+    });
+});
+
+describe("sdk-gen-api target failure message", () => {
+    it.each([
+        [
+            "prefixes the message with the error code",
+            { code: "FERN_BUILD_TIMEOUT", message: "Build exceeded 15 minutes" },
+            "FERN_BUILD_TIMEOUT: Build exceeded 15 minutes"
+        ],
+        ["uses the message when there is no code", { message: "Generator crashed" }, "Generator crashed"],
+        ["uses the default text when there is no error", undefined, "sdk-gen-api generation failed"]
+    ] as const)("%s", async (_name, error, expectedMessage) => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "failed",
+                targets: [{ targetId, status: "failed", logs: [], ...(error == null ? {} : { error }) }]
+            }
+        } as never);
+
+        await expect(
+            runFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                token: { value: "token" } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(validRuntimeBundle),
+                absolutePathToPreview: undefined,
+                context
+            })
+        ).rejects.toMatchObject({ message: expectedMessage });
     });
 });
