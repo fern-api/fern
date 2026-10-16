@@ -142,7 +142,10 @@ impl DeviceCodeLoginFlow {
         K: Into<String>,
         V: Into<String>,
     {
-        self.device_authorization_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self.device_authorization_params = params
+            .into_iter()
+            .map(|(k, v)| (k.into(), v.into()))
+            .collect();
         self
     }
     /// Extra literal parameters included in the device-code token exchange (polling) request.
@@ -152,7 +155,10 @@ impl DeviceCodeLoginFlow {
         K: Into<String>,
         V: Into<String>,
     {
-        self.token_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self.token_params = params
+            .into_iter()
+            .map(|(k, v)| (k.into(), v.into()))
+            .collect();
         self
     }
     /// Extra literal parameters included in the refresh token request.
@@ -162,7 +168,10 @@ impl DeviceCodeLoginFlow {
         K: Into<String>,
         V: Into<String>,
     {
-        self.refresh_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self.refresh_params = params
+            .into_iter()
+            .map(|(k, v)| (k.into(), v.into()))
+            .collect();
         self
     }
 
@@ -254,7 +263,11 @@ async fn run_device_code(
     if let Some(s) = scope {
         device_form.push(("scope".to_string(), s.to_string()));
     }
-    extend_with_extra(&mut device_form, device_authorization_params, &["client_id", "scope"]);
+    extend_with_extra(
+        &mut device_form,
+        device_authorization_params,
+        &["client_id", "scope"],
+    );
     let resp = http
         .post(device_auth_url)
         .form(&device_form)
@@ -306,7 +319,11 @@ async fn run_device_code(
         ("client_id".to_string(), client_id.to_string()),
         ("device_code".to_string(), device.device_code.clone()),
     ];
-    extend_with_extra(&mut token_form, token_params, &["grant_type", "client_id", "device_code"]);
+    extend_with_extra(
+        &mut token_form,
+        token_params,
+        &["grant_type", "client_id", "device_code"],
+    );
     // Floor the poll interval at 1 second. RFC 8628 §3.5 mandates a
     // minimum of 5s in production, but tests deliberately use interval=0
     // for speed. A 1s floor keeps tests fast while preventing any
@@ -318,7 +335,8 @@ async fn run_device_code(
     loop {
         if std::time::Instant::now() >= deadline {
             return Err(CliError::Auth(
-                "Device code expired before authorization was granted. Run `auth login` again.".to_string(),
+                "Device code expired before authorization was granted. Run `auth login` again."
+                    .to_string(),
             ));
         }
 
@@ -337,9 +355,8 @@ async fn run_device_code(
             .map_err(|e| CliError::Auth(format!("device token response body: {e}")))?;
 
         if status.is_success() {
-            let ok: TokenSuccessBody = serde_json::from_str(&body).map_err(|e| {
-                CliError::Auth(format!("token response not JSON: {e}"))
-            })?;
+            let ok: TokenSuccessBody = serde_json::from_str(&body)
+                .map_err(|e| CliError::Auth(format!("token response not JSON: {e}")))?;
             let bundle = TokenBundle::from_token_response(
                 &ok.access_token,
                 ok.refresh_token.as_deref(),
@@ -571,7 +588,10 @@ impl PkceLoginFlow {
         K: Into<String>,
         V: Into<String>,
     {
-        self.authorization_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self.authorization_params = params
+            .into_iter()
+            .map(|(k, v)| (k.into(), v.into()))
+            .collect();
         self
     }
     /// Extra literal parameters included in the authorization-code token exchange.
@@ -581,7 +601,10 @@ impl PkceLoginFlow {
         K: Into<String>,
         V: Into<String>,
     {
-        self.token_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self.token_params = params
+            .into_iter()
+            .map(|(k, v)| (k.into(), v.into()))
+            .collect();
         self
     }
     /// Extra literal parameters included in the refresh token request.
@@ -591,7 +614,10 @@ impl PkceLoginFlow {
         K: Into<String>,
         V: Into<String>,
     {
-        self.refresh_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self.refresh_params = params
+            .into_iter()
+            .map(|(k, v)| (k.into(), v.into()))
+            .collect();
         self
     }
 
@@ -699,7 +725,10 @@ impl LoginFlow for PkceLoginFlow {
 /// Bind a loopback TCP listener on the first available port in `candidate_ports` (tried in order).
 /// Pass `[0]` for an ephemeral (OS-assigned) port. Returns the bound listener, or an error naming
 /// every candidate when all are taken.
-async fn bind_loopback_listener(host: &str, candidate_ports: &[u16]) -> Result<TcpListener, CliError> {
+async fn bind_loopback_listener(
+    host: &str,
+    candidate_ports: &[u16],
+) -> Result<TcpListener, CliError> {
     let mut last_err: Option<String> = None;
     for &port in candidate_ports {
         match TcpListener::bind((host, port)).await {
@@ -767,10 +796,11 @@ async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliE
     // Wait for the browser to hit /callback with code+state. The listener checks the `state` it
     // received against the one we sent, but answers the browser only for a callback it rejects —
     // a usable one comes back still connected, via the responder.
-    let (code, responder) = match accept_callback(&listener, &redirect_path, &state, flow.callback_pages()).await {
-        Ok(v) => v,
-        Err(e) => return Err(e),
-    };
+    let (code, responder) =
+        match accept_callback(&listener, &redirect_path, &state, flow.callback_pages()).await {
+            Ok(v) => v,
+            Err(e) => return Err(e),
+        };
 
     // Everything the browser is still waiting on. Funneled through one result so the page it lands
     // on is chosen from what actually happened, rather than from having received a code.
@@ -821,7 +851,13 @@ async fn exchange_code_and_store(
     extend_with_extra(
         &mut form,
         &flow.token_params,
-        &["grant_type", "code", "code_verifier", "client_id", "redirect_uri"],
+        &[
+            "grant_type",
+            "code",
+            "code_verifier",
+            "client_id",
+            "redirect_uri",
+        ],
     );
     let resp = http
         .post(&flow.token_url)
@@ -871,10 +907,12 @@ impl<'a> CallbackPages<'a> {
     /// such values, so this only fires if one reaches a built binary anyway — in which case we
     /// serve the built-in page instead of emitting a malformed response.
     fn success(&self) -> Option<&'a str> {
-        self.success_redirect_url.filter(|url| is_header_safe_url(url))
+        self.success_redirect_url
+            .filter(|url| is_header_safe_url(url))
     }
     fn error(&self) -> Option<&'a str> {
-        self.error_redirect_url.filter(|url| is_header_safe_url(url))
+        self.error_redirect_url
+            .filter(|url| is_header_safe_url(url))
     }
 }
 
@@ -899,8 +937,12 @@ impl<'a> CallbackResponder<'a> {
                 let _ = write_redirect(&mut self.socket, url).await;
             }
             None => {
-                let _ =
-                    write_response_html(&mut self.socket, 200, &render_callback_page(CallbackOutcome::Success)).await;
+                let _ = write_response_html(
+                    &mut self.socket,
+                    200,
+                    &render_callback_page(CallbackOutcome::Success),
+                )
+                .await;
             }
         }
     }
@@ -915,7 +957,8 @@ impl<'a> CallbackResponder<'a> {
 /// What a hosted error page is told when the callback was accepted but the login failed afterwards.
 /// The reason itself stays in the terminal: a token-endpoint body is not something to forward into
 /// a URL, and the user is being sent back to the terminal to read it anyway.
-const POST_CALLBACK_FAILURE_DESCRIPTION: &str = "The CLI could not complete the login. Check your terminal for details.";
+const POST_CALLBACK_FAILURE_DESCRIPTION: &str =
+    "The CLI could not complete the login. Check your terminal for details.";
 
 /// Cap on how long the PKCE listener waits for the browser callback
 /// before bailing. Five minutes matches typical OAuth authorization-code
@@ -933,7 +976,14 @@ async fn accept_callback<'a>(
     expected_state: &str,
     pages: CallbackPages<'a>,
 ) -> Result<(String, CallbackResponder<'a>), CliError> {
-    accept_callback_with_timeout(listener, expected_path, expected_state, pages, PKCE_CALLBACK_TIMEOUT).await
+    accept_callback_with_timeout(
+        listener,
+        expected_path,
+        expected_state,
+        pages,
+        PKCE_CALLBACK_TIMEOUT,
+    )
+    .await
 }
 
 async fn accept_callback_with_timeout<'a>(
@@ -1015,7 +1065,9 @@ async fn accept_callback_inner<'a>(
         if let Some(e) = error_param {
             write_failure(&mut socket, &pages, &e, error_description.as_deref()).await;
             return Err(CliError::Auth(match error_description {
-                Some(description) => format!("Authorization server returned error: {e} ({description})"),
+                Some(description) => {
+                    format!("Authorization server returned error: {e} ({description})")
+                }
                 None => format!("Authorization server returned error: {e}"),
             }));
         }
@@ -1030,7 +1082,9 @@ async fn accept_callback_inner<'a>(
                     &mut socket,
                     &pages,
                     "invalid_request",
-                    Some(&format!("The callback was missing its `{missing}` parameter.")),
+                    Some(&format!(
+                        "The callback was missing its `{missing}` parameter."
+                    )),
                 )
                 .await;
                 return Err(CliError::Auth(format!(
@@ -1073,7 +1127,11 @@ fn parse_request_path(req: &str) -> Option<&str> {
     parts.next() // path
 }
 
-async fn write_response(socket: &mut tokio::net::TcpStream, status: u16, msg: &str) -> std::io::Result<()> {
+async fn write_response(
+    socket: &mut tokio::net::TcpStream,
+    status: u16,
+    msg: &str,
+) -> std::io::Result<()> {
     let body = msg;
     let resp = format!(
         "HTTP/1.1 {status} {}\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
@@ -1150,7 +1208,11 @@ async fn write_redirect(socket: &mut tokio::net::TcpStream, location: &str) -> s
     socket.flush().await
 }
 
-async fn write_response_html(socket: &mut tokio::net::TcpStream, status: u16, body: &str) -> std::io::Result<()> {
+async fn write_response_html(
+    socket: &mut tokio::net::TcpStream,
+    status: u16,
+    body: &str,
+) -> std::io::Result<()> {
     let resp = format!(
         "HTTP/1.1 {status} {}\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
         status_phrase(status),
@@ -1299,12 +1361,7 @@ impl std::fmt::Debug for OAuth2KeyringProvider {
 }
 
 impl OAuth2KeyringProvider {
-    pub fn new(
-        scheme_name: &str,
-        cli_name: &str,
-        token_url: &str,
-        client_id: &str,
-    ) -> Self {
+    pub fn new(scheme_name: &str, cli_name: &str, token_url: &str, client_id: &str) -> Self {
         Self {
             scheme_name: scheme_name.to_string(),
             cli_name: cli_name.to_string(),
@@ -1367,7 +1424,11 @@ impl OAuth2KeyringProvider {
             ("client_id".to_string(), self.client_id.clone()),
             ("refresh_token".to_string(), refresh.to_string()),
         ];
-        extend_with_extra(&mut form, &self.refresh_params, &["grant_type", "client_id", "refresh_token"]);
+        extend_with_extra(
+            &mut form,
+            &self.refresh_params,
+            &["grant_type", "client_id", "refresh_token"],
+        );
         let resp = http
             .post(&self.token_url)
             .form(&form)
@@ -1391,9 +1452,8 @@ impl OAuth2KeyringProvider {
                 self.cli_name
             )));
         }
-        let ok: TokenSuccessBody = serde_json::from_str(&body).map_err(|e| {
-            CliError::Auth(format!("refresh response not JSON: {e}"))
-        })?;
+        let ok: TokenSuccessBody = serde_json::from_str(&body)
+            .map_err(|e| CliError::Auth(format!("refresh response not JSON: {e}")))?;
         let new_bundle = TokenBundle::from_token_response(
             &ok.access_token,
             ok.refresh_token.as_deref().or(Some(refresh)),
@@ -1668,7 +1728,8 @@ mod tests {
         let mock = Arc::new(MockKeyringStore::new());
         let mut expired = TokenBundle::from_token_response("old", Some("ref-1"), Some(3600));
         expired.expires_at = Some(0); // forcibly expired
-        mock.set("my-cli", "OAuth2", &expired.to_keyring_value().unwrap()).unwrap();
+        mock.set("my-cli", "OAuth2", &expired.to_keyring_value().unwrap())
+            .unwrap();
         set_active_store(mock.clone());
 
         Mock::given(method("POST"))
@@ -1689,7 +1750,10 @@ mod tests {
             "client",
         );
         let r = p
-            .apply(reqwest::Client::new().get("https://example.com"), &EndpointAuthMetadata::unspecified())
+            .apply(
+                reqwest::Client::new().get("https://example.com"),
+                &EndpointAuthMetadata::unspecified(),
+            )
             .unwrap()
             .build()
             .unwrap();
@@ -1697,7 +1761,8 @@ mod tests {
         assert_eq!(auth, "Bearer new-acc");
 
         // New tokens persisted.
-        let stored: TokenBundle = serde_json::from_str(&mock.get("my-cli", "OAuth2").unwrap().unwrap()).unwrap();
+        let stored: TokenBundle =
+            serde_json::from_str(&mock.get("my-cli", "OAuth2").unwrap().unwrap()).unwrap();
         assert_eq!(stored.access_token, "new-acc");
         assert_eq!(stored.refresh_token.as_deref(), Some("ref-2"));
     }
@@ -1709,7 +1774,8 @@ mod tests {
         let mock = Arc::new(MockKeyringStore::new());
         let mut expired = TokenBundle::from_token_response("old", Some("stale"), Some(3600));
         expired.expires_at = Some(0);
-        mock.set("my-cli", "OAuth2", &expired.to_keyring_value().unwrap()).unwrap();
+        mock.set("my-cli", "OAuth2", &expired.to_keyring_value().unwrap())
+            .unwrap();
         set_active_store(mock.clone());
 
         Mock::given(method("POST"))
@@ -1728,7 +1794,10 @@ mod tests {
             "client",
         );
         let err = p
-            .apply(reqwest::Client::new().get("https://example.com"), &EndpointAuthMetadata::unspecified())
+            .apply(
+                reqwest::Client::new().get("https://example.com"),
+                &EndpointAuthMetadata::unspecified(),
+            )
             .unwrap_err();
         let msg = format!("{err}");
         assert!(msg.contains("session has expired"));
@@ -1861,7 +1930,12 @@ mod tests {
             .unwrap()
             .build()
             .unwrap();
-        let auth = req.headers().get("authorization").unwrap().to_str().unwrap();
+        let auth = req
+            .headers()
+            .get("authorization")
+            .unwrap()
+            .to_str()
+            .unwrap();
         assert_eq!(auth, "Bearer pkce-acc");
     }
 
@@ -1903,7 +1977,12 @@ mod tests {
             .unwrap()
             .build()
             .unwrap();
-        let auth = req.headers().get("authorization").unwrap().to_str().unwrap();
+        let auth = req
+            .headers()
+            .get("authorization")
+            .unwrap()
+            .to_str()
+            .unwrap();
         assert_eq!(auth, "Bearer device-refreshed-acc");
 
         // The refreshed tokens were persisted for the next invocation.
@@ -1936,10 +2015,19 @@ mod tests {
             .client_id("real-id")
             .authorization_url("https://auth.example.com/authorize")
             .token_url("https://auth.example.com/token")
-            .authorization_params([("client_id", "attacker"), ("audience", "https://api.acme.io")]);
+            .authorization_params([
+                ("client_id", "attacker"),
+                ("audience", "https://api.acme.io"),
+            ]);
         let url = f.build_authorize_url("s", "c");
-        assert!(url.contains("client_id=real-id"), "reserved client_id was overridden: {url}");
-        assert!(!url.contains("client_id=attacker"), "attacker client_id leaked: {url}");
+        assert!(
+            url.contains("client_id=real-id"),
+            "reserved client_id was overridden: {url}"
+        );
+        assert!(
+            !url.contains("client_id=attacker"),
+            "attacker client_id leaked: {url}"
+        );
         assert!(url.contains("audience=https%3A%2F%2Fapi.acme.io"));
     }
 
@@ -1950,8 +2038,13 @@ mod tests {
             ("audience".to_string(), "https://api.acme.io".to_string()),
             ("grant_type".to_string(), "attacker".to_string()), // reserved — must be dropped
         ];
-        let mut form: Vec<(String, String)> = vec![("grant_type".to_string(), "refresh_token".to_string())];
-        extend_with_extra(&mut form, &extra, &["grant_type", "client_id", "refresh_token"]);
+        let mut form: Vec<(String, String)> =
+            vec![("grant_type".to_string(), "refresh_token".to_string())];
+        extend_with_extra(
+            &mut form,
+            &extra,
+            &["grant_type", "client_id", "refresh_token"],
+        );
         assert!(form.contains(&("audience".to_string(), "https://api.acme.io".to_string())));
         // The reserved `grant_type` was not clobbered or duplicated.
         assert_eq!(form.iter().filter(|(k, _)| k == "grant_type").count(), 1);
@@ -1965,7 +2058,9 @@ mod tests {
         let v = generate_code_verifier();
         assert!(v.len() >= 43 && v.len() <= 128, "verifier len {}", v.len());
         // URL-safe alphabet: A-Z a-z 0-9 - _ (no padding).
-        assert!(v.chars().all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_'));
+        assert!(v
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_'));
     }
 
     #[test]
@@ -2019,7 +2114,9 @@ mod tests {
             l.local_addr().unwrap().port() // freed when `l` drops at end of block
         };
 
-        let listener = bind_loopback_listener("127.0.0.1", &[taken, free]).await.unwrap();
+        let listener = bind_loopback_listener("127.0.0.1", &[taken, free])
+            .await
+            .unwrap();
         assert_eq!(
             listener.local_addr().unwrap().port(),
             free,
@@ -2035,9 +2132,14 @@ mod tests {
         let pa = a.local_addr().unwrap().port();
         let pb = b.local_addr().unwrap().port();
 
-        let err = bind_loopback_listener("127.0.0.1", &[pa, pb]).await.unwrap_err();
+        let err = bind_loopback_listener("127.0.0.1", &[pa, pb])
+            .await
+            .unwrap_err();
         let msg = format!("{err}");
-        assert!(msg.contains(&pa.to_string()) && msg.contains(&pb.to_string()), "error should name all ports: {msg}");
+        assert!(
+            msg.contains(&pa.to_string()) && msg.contains(&pb.to_string()),
+            "error should name all ports: {msg}"
+        );
     }
 
     #[test]
@@ -2051,7 +2153,10 @@ mod tests {
             .redirect_host("localhost")
             .redirect_path("/oauth/callback")
             .redirect_port(8484);
-        assert_eq!(localhost.redirect_uri(), "http://localhost:8484/oauth/callback");
+        assert_eq!(
+            localhost.redirect_uri(),
+            "http://localhost:8484/oauth/callback"
+        );
 
         let default = PkceLoginFlow::new("OAuth2").redirect_port(8484);
         assert_eq!(default.redirect_uri(), "http://127.0.0.1:8484/callback");
@@ -2092,7 +2197,10 @@ mod tests {
         assert_ne!(port, 0, "OS should assign a nonzero ephemeral port");
         flow.redirect_port = Some(port);
 
-        assert_eq!(flow.redirect_uri(), format!("http://127.0.0.1:{port}/callback"));
+        assert_eq!(
+            flow.redirect_uri(),
+            format!("http://127.0.0.1:{port}/callback")
+        );
         let url = flow.build_authorize_url("s", "c");
         assert!(
             url.contains(&format!("127.0.0.1%3A{port}%2Fcallback")),
@@ -2142,7 +2250,8 @@ mod tests {
         expected_state: &str,
         pages: CallbackPages<'_>,
     ) -> Result<String, CliError> {
-        let (code, responder) = accept_callback(listener, expected_path, expected_state, pages).await?;
+        let (code, responder) =
+            accept_callback(listener, expected_path, expected_state, pages).await?;
         responder.success().await;
         Ok(code)
     }
@@ -2154,7 +2263,8 @@ mod tests {
         expected_state: &str,
         pages: CallbackPages<'_>,
     ) -> Result<String, CliError> {
-        let (code, responder) = accept_callback(listener, expected_path, expected_state, pages).await?;
+        let (code, responder) =
+            accept_callback(listener, expected_path, expected_state, pages).await?;
         responder
             .failure("server_error", Some(POST_CALLBACK_FAILURE_DESCRIPTION))
             .await;
@@ -2194,7 +2304,13 @@ mod tests {
 
         // Spawn the accept task.
         let acceptor = tokio::spawn(async move {
-            accept_and_confirm(&listener, "/callback", "state-xyz", CallbackPages::default()).await
+            accept_and_confirm(
+                &listener,
+                "/callback",
+                "state-xyz",
+                CallbackPages::default(),
+            )
+            .await
         });
 
         // Act as the browser.
@@ -2261,9 +2377,10 @@ mod tests {
                 .await
         });
 
-        let (code, responder) = accept_callback(&listener, "/callback", "s", CallbackPages::default())
-            .await
-            .expect("valid callback");
+        let (code, responder) =
+            accept_callback(&listener, "/callback", "s", CallbackPages::default())
+                .await
+                .expect("valid callback");
         assert_eq!(code, "c");
 
         // Still connected, still unanswered — this is where the token exchange would be running.
@@ -2292,7 +2409,9 @@ mod tests {
             success_redirect_url: Some("https://acme.com/cli/success"),
             error_redirect_url: Some("https://acme.com/cli/error"),
         };
-        let acceptor = tokio::spawn(async move { accept_and_fail(&listener, "/callback", "state-xyz", pages).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_fail(&listener, "/callback", "state-xyz", pages).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let resp = reqwest::Client::builder()
@@ -2322,7 +2441,13 @@ mod tests {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
         let acceptor = tokio::spawn(async move {
-            accept_and_fail(&listener, "/callback", "state-xyz", CallbackPages::default()).await
+            accept_and_fail(
+                &listener,
+                "/callback",
+                "state-xyz",
+                CallbackPages::default(),
+            )
+            .await
         });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
@@ -2411,7 +2536,13 @@ mod tests {
             "https://acme.com/cli/error?error=access_denied&error_description=User+denied+the+request"
         );
         // The redirect is cosmetic: login still fails, and the terminal still explains why.
-        let err = format!("{}", acceptor.await.unwrap().expect_err("denied authorization must fail"));
+        let err = format!(
+            "{}",
+            acceptor
+                .await
+                .unwrap()
+                .expect_err("denied authorization must fail")
+        );
         assert!(err.contains("access_denied"), "{err}");
     }
 
@@ -2420,7 +2551,13 @@ mod tests {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
         let acceptor = tokio::spawn(async move {
-            accept_and_confirm(&listener, "/callback", "state-xyz", CallbackPages::default()).await
+            accept_and_confirm(
+                &listener,
+                "/callback",
+                "state-xyz",
+                CallbackPages::default(),
+            )
+            .await
         });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
@@ -2449,8 +2586,9 @@ mod tests {
             success_redirect_url: Some("https://acme.com/cli/success"),
             error_redirect_url: Some("https://acme.com/cli/error"),
         };
-        let acceptor =
-            tokio::spawn(async move { accept_and_confirm(&listener, "/callback", "state-xyz", pages).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/callback", "state-xyz", pages).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let resp = reqwest::Client::builder()
@@ -2480,7 +2618,11 @@ mod tests {
             "https://acme.com/cli/error?error=access_denied"
         );
         assert_eq!(
-            build_error_redirect("https://acme.com/cli/error?src=cli", "access_denied", Some("No & yes")),
+            build_error_redirect(
+                "https://acme.com/cli/error?src=cli",
+                "access_denied",
+                Some("No & yes")
+            ),
             "https://acme.com/cli/error?src=cli&error=access_denied&error_description=No+%26+yes"
         );
         assert_eq!(
@@ -2494,7 +2636,13 @@ mod tests {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
         let acceptor = tokio::spawn(async move {
-            accept_and_confirm(&listener, "/callback", "only-state", CallbackPages::default()).await
+            accept_and_confirm(
+                &listener,
+                "/callback",
+                "only-state",
+                CallbackPages::default(),
+            )
+            .await
         });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
@@ -2514,7 +2662,13 @@ mod tests {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
         let acceptor = tokio::spawn(async move {
-            accept_and_confirm(&listener, "/callback", "state-xyz", CallbackPages::default()).await
+            accept_and_confirm(
+                &listener,
+                "/callback",
+                "state-xyz",
+                CallbackPages::default(),
+            )
+            .await
         });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
@@ -2535,8 +2689,9 @@ mod tests {
     async fn pkce_loopback_ignores_favicon_and_accepts_callback() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor =
-            tokio::spawn(async move { accept_and_confirm(&listener, "/callback", "s1", CallbackPages::default()).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/callback", "s1", CallbackPages::default()).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let client = reqwest::Client::new();
@@ -2547,9 +2702,7 @@ mod tests {
             .await
             .unwrap();
         let _ = client
-            .get(format!(
-                "http://127.0.0.1:{port}/callback?code=c1&state=s1"
-            ))
+            .get(format!("http://127.0.0.1:{port}/callback?code=c1&state=s1"))
             .send()
             .await
             .unwrap();
@@ -2572,7 +2725,9 @@ mod tests {
         let client = reqwest::Client::new();
         // The old default path must now be ignored (404), not treated as the callback.
         let _ = client
-            .get(format!("http://127.0.0.1:{port}/callback?code=wrong&state=wrong"))
+            .get(format!(
+                "http://127.0.0.1:{port}/callback?code=wrong&state=wrong"
+            ))
             .send()
             .await
             .unwrap();
@@ -2596,7 +2751,13 @@ mod tests {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
         let acceptor = tokio::spawn(async move {
-            accept_and_confirm(&listener, "/callback", "expected-state", CallbackPages::default()).await
+            accept_and_confirm(
+                &listener,
+                "/callback",
+                "expected-state",
+                CallbackPages::default(),
+            )
+            .await
         });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
@@ -2612,7 +2773,13 @@ mod tests {
         let body = resp.text().await.unwrap();
         assert!(body.contains("Authorization didn't complete"), "{body}");
         assert!(!body.contains("You're all set"), "{body}");
-        let err = format!("{}", acceptor.await.unwrap().expect_err("state mismatch must fail"));
+        let err = format!(
+            "{}",
+            acceptor
+                .await
+                .unwrap()
+                .expect_err("state mismatch must fail")
+        );
         assert!(err.contains("possible CSRF"), "{err}");
     }
 
@@ -2626,8 +2793,9 @@ mod tests {
             success_redirect_url: Some("https://acme.com/cli/success"),
             error_redirect_url: Some("https://acme.com/cli/error"),
         };
-        let acceptor =
-            tokio::spawn(async move { accept_and_confirm(&listener, "/callback", "expected-state", pages).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/callback", "expected-state", pages).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let resp = reqwest::Client::builder()
@@ -2642,7 +2810,13 @@ mod tests {
             .unwrap();
 
         assert_eq!(resp.status().as_u16(), 302);
-        let location = resp.headers().get("location").unwrap().to_str().unwrap().to_string();
+        let location = resp
+            .headers()
+            .get("location")
+            .unwrap()
+            .to_str()
+            .unwrap()
+            .to_string();
         assert_eq!(
             location,
             "https://acme.com/cli/error?error=invalid_request\
@@ -2663,7 +2837,10 @@ mod tests {
         set_active_store(mock);
         let p = OAuth2KeyringProvider::new("OAuth2", "my-cli", "https://unused", "client");
         let r = p
-            .apply(reqwest::Client::new().get("https://example.com"), &EndpointAuthMetadata::unspecified())
+            .apply(
+                reqwest::Client::new().get("https://example.com"),
+                &EndpointAuthMetadata::unspecified(),
+            )
             .unwrap()
             .build()
             .unwrap();

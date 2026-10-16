@@ -91,7 +91,6 @@ pub(crate) fn colorize(text: &str, ansi_color: &str) -> String {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

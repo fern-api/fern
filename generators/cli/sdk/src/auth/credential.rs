@@ -253,8 +253,9 @@ impl AuthCredentialSource {
     /// `apply` resolves through [`try_resolve`](Self::try_resolve).
     pub fn has_stored_value(&self) -> bool {
         match self {
-            AuthCredentialSource::Keyring { .. }
-            | AuthCredentialSource::KeyringField { .. } => self.resolve().is_some(),
+            AuthCredentialSource::Keyring { .. } | AuthCredentialSource::KeyringField { .. } => {
+                self.resolve().is_some()
+            }
             AuthCredentialSource::Chain(sources) => {
                 sources.iter().any(|source| source.has_stored_value())
             }
@@ -397,17 +398,13 @@ impl AuthCredentialSource {
                 let m = Arc::clone(matches);
                 let hint = format!("--{name} flag");
                 AuthCredentialSource::Closure(
-                    Arc::new(move || {
-                        m.try_get_one::<String>(&name).ok().flatten().cloned()
-                    }),
+                    Arc::new(move || m.try_get_one::<String>(&name).ok().flatten().cloned()),
                     Some(hint),
                 )
             }
-            AuthCredentialSource::Chain(sources) => {
-                AuthCredentialSource::Chain(
-                    sources.into_iter().map(|s| s.finalize(matches)).collect(),
-                )
-            }
+            AuthCredentialSource::Chain(sources) => AuthCredentialSource::Chain(
+                sources.into_iter().map(|s| s.finalize(matches)).collect(),
+            ),
             other => other,
         }
     }
@@ -773,17 +770,10 @@ mod tests {
     }
 
     fn build_matches(arg_name: &'static str, value: Option<&str>) -> Arc<clap::ArgMatches> {
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new(arg_name)
-                .long(arg_name)
-                .num_args(1),
-        );
+        let cmd =
+            clap::Command::new("test").arg(clap::Arg::new(arg_name).long(arg_name).num_args(1));
         let argv: Vec<String> = match value {
-            Some(v) => vec![
-                "test".to_string(),
-                format!("--{arg_name}"),
-                v.to_string(),
-            ],
+            Some(v) => vec!["test".to_string(), format!("--{arg_name}"), v.to_string()],
             None => vec!["test".to_string()],
         };
         Arc::new(cmd.try_get_matches_from(argv).unwrap())
@@ -874,10 +864,7 @@ mod tests {
     #[test]
     fn credential_hints_file() {
         let s = AuthCredentialSource::file("~/.config/token");
-        assert_eq!(
-            s.credential_hints(),
-            vec!["~/.config/token file"],
-        );
+        assert_eq!(s.credential_hints(), vec!["~/.config/token file"],);
     }
 
     #[test]
@@ -904,7 +891,9 @@ mod tests {
 
     #[test]
     fn credential_hints_literal_is_empty() {
-        assert!(AuthCredentialSource::literal("x").credential_hints().is_empty());
+        assert!(AuthCredentialSource::literal("x")
+            .credential_hints()
+            .is_empty());
     }
 
     #[test]
@@ -988,7 +977,9 @@ mod tests {
 
     impl crate::auth::keyring_store::KeyringStore for DeniedKeyringStore {
         fn get(&self, _: &str, _: &str) -> Result<Option<String>, CliError> {
-            Err(CliError::Auth("keyring get failed: User denied access".into()))
+            Err(CliError::Auth(
+                "keyring get failed: User denied access".into(),
+            ))
         }
         fn set(&self, _: &str, _: &str, _: &str) -> Result<(), CliError> {
             unreachable!()
@@ -1093,9 +1084,8 @@ mod tests {
 
     #[test]
     fn credential_hints_closure_with_hint_from_finalize() {
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new("api-token").long("api-token").num_args(1),
-        );
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("api-token").long("api-token").num_args(1));
         let matches = Arc::new(cmd.try_get_matches_from(vec!["test"]).unwrap());
         let s = AuthCredentialSource::cli("api-token").finalize(&matches);
         assert_eq!(s.credential_hints(), vec!["--api-token flag"]);

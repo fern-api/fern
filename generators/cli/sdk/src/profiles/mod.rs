@@ -163,6 +163,14 @@ impl ProvisionOperation {
         self
     }
 
+    /// The configured `prompts` label for `field`, if one is set.
+    pub fn prompt_for(&self, field: &str) -> Option<&str> {
+        self.prompts
+            .iter()
+            .find(|(f, _)| f == field)
+            .map(|(_, label)| label.as_str())
+    }
+
     /// The prompt label for credential `field`.
     pub fn label_for(&self, field: &str) -> String {
         self.prompts

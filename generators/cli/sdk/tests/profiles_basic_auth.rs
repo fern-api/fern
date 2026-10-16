@@ -169,14 +169,30 @@ fn two_profiles_hold_independent_basic_credentials() {
 fn a_subaccount_profile_borrows_the_parents_basic_credential() {
     // The Twilio case: act on a different AccountSid without a second login.
     with_clean_env(|_| {
-        run(&["bsc", "profiles", "create", "sierra-prod", "--set", "AccountSid=AC1234"]);
         run(&[
-            "bsc", "profiles", "create", "tenant-acme",
-            "--parent", "sierra-prod", "--set", "AccountSid=AC99",
+            "bsc",
+            "profiles",
+            "create",
+            "sierra-prod",
+            "--set",
+            "AccountSid=AC1234",
+        ]);
+        run(&[
+            "bsc",
+            "profiles",
+            "create",
+            "tenant-acme",
+            "--parent",
+            "sierra-prod",
+            "--set",
+            "AccountSid=AC99",
         ]);
         store_basic("sierra-prod", "AC1234", "authtoken");
 
-        assert!(logged_in(Some("tenant-acme")), "child should read the parent's entry");
+        assert!(
+            logged_in(Some("tenant-acme")),
+            "child should read the parent's entry"
+        );
     });
 }
 
@@ -203,10 +219,19 @@ fn the_shadow_warning_names_the_schemes_real_env_vars() {
                 },
             )],
         );
-        assert!(candidates.contains(&"BSC_USERNAME".to_string()), "{candidates:?}");
-        assert!(candidates.contains(&"BSC_PASSWORD".to_string()), "{candidates:?}");
+        assert!(
+            candidates.contains(&"BSC_USERNAME".to_string()),
+            "{candidates:?}"
+        );
+        assert!(
+            candidates.contains(&"BSC_PASSWORD".to_string()),
+            "{candidates:?}"
+        );
         // And none of the old guesses, which matched nothing real.
-        assert!(!candidates.iter().any(|c| c == "BSC_TOKEN"), "{candidates:?}");
+        assert!(
+            !candidates.iter().any(|c| c == "BSC_TOKEN"),
+            "{candidates:?}"
+        );
     });
 }
 
@@ -218,8 +243,14 @@ fn the_shadow_warning_falls_back_when_the_scheme_is_unknown() {
     // that is available.
     with_clean_env(|_| {
         let candidates = fern_cli_sdk::auth::shadowing_env_vars("bsc", "mystery", &[]);
-        assert!(candidates.contains(&"BSC_MYSTERY".to_string()), "{candidates:?}");
-        assert!(candidates.contains(&"BSC_TOKEN".to_string()), "{candidates:?}");
+        assert!(
+            candidates.contains(&"BSC_MYSTERY".to_string()),
+            "{candidates:?}"
+        );
+        assert!(
+            candidates.contains(&"BSC_TOKEN".to_string()),
+            "{candidates:?}"
+        );
     });
 }
 
@@ -238,11 +269,17 @@ fn env_vars_still_satisfy_basic_with_no_profile() {
 #[serial]
 fn the_profiles_tenant_parameter_reaches_the_request() {
     with_clean_env(|_| {
-        run(&["bsc", "profiles", "create", "prod", "--set", "AccountSid=AC1234", "--use"]);
-        store_basic("prod", "AC1234", "authtoken");
-        let (code, output) = run(&[
-            "bsc", "messages", "list", "--dry-run", "--format", "json",
+        run(&[
+            "bsc",
+            "profiles",
+            "create",
+            "prod",
+            "--set",
+            "AccountSid=AC1234",
+            "--use",
         ]);
+        store_basic("prod", "AC1234", "authtoken");
+        let (code, output) = run(&["bsc", "messages", "list", "--dry-run", "--format", "json"]);
         assert_eq!(code, 0, "{output}");
         assert!(
             output.contains("/Accounts/AC1234/Messages"),
@@ -304,12 +341,18 @@ fn show_prints_the_full_stored_account() {
         let (code, output) = run(&["bsc", "profiles", "show", "prod", "--format", "json"]);
         assert_eq!(code, 0, "{output}");
         let shown: serde_json::Value = serde_json::from_str(&output).expect("json");
-        assert_eq!(shown["account"], "AC56534d6b579feeba83f0563ca7fa7075", "{shown:#?}");
+        assert_eq!(
+            shown["account"], "AC56534d6b579feeba83f0563ca7fa7075",
+            "{shown:#?}"
+        );
 
         let (code, output) = run(&["bsc", "profiles", "current", "--format", "json"]);
         assert_eq!(code, 0, "{output}");
         let current: serde_json::Value = serde_json::from_str(&output).expect("json");
-        assert_eq!(current["account"], "AC56534d6b579feeba83f0563ca7fa7075", "{current:#?}");
+        assert_eq!(
+            current["account"], "AC56534d6b579feeba83f0563ca7fa7075",
+            "{current:#?}"
+        );
     });
 }
 

@@ -13,23 +13,25 @@ pub mod binding;
 pub mod cli_args;
 pub mod completions;
 pub(crate) mod custom_commands;
-pub mod http;
 pub mod error;
 pub mod formatter;
 pub mod graphql;
 pub mod hooks;
+pub mod http;
 pub mod man;
 pub mod openapi;
 pub mod pager;
 pub mod profiles;
+pub mod sdk_executor;
 pub mod stability;
 pub mod user_agent;
 pub mod validate;
-pub mod sdk_executor;
 pub mod websocket;
 
 // Convenience re-exports for auth types
-pub use auth::{ApiKeyAuth, BasicAuth, BearerAuth, OAuth2Auth, OAuth2Grant, OAuth2TokenProvider, TokenCache};
+pub use auth::{
+    ApiKeyAuth, BasicAuth, BearerAuth, OAuth2Auth, OAuth2Grant, OAuth2TokenProvider, TokenCache,
+};
 
 // Re-exported for the generated wire-test harness so it derives multipart
 // field flag names (`--<kebab>`) with the exact same rule the CLI registers
@@ -261,5 +263,4 @@ mod dotenv_filter_tests {
             "MY_CLI_COMPLETE"
         );
     }
-
 }

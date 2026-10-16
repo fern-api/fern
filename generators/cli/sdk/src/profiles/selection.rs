@@ -244,9 +244,9 @@ fn annotate(error: CliError, source: SelectionSource, cli_name: &str) -> CliErro
             " (named by the {} environment variable)",
             profile_env_var(cli_name),
         ),
-        SelectionSource::Active => format!(
-            " (the active profile — run `{cli_name} profiles use <name>` to change it)",
-        ),
+        SelectionSource::Active => {
+            format!(" (the active profile — run `{cli_name} profiles use <name>` to change it)",)
+        }
     };
     match error {
         CliError::Validation(message) => CliError::Validation(format!("{message}{hint}")),
@@ -506,10 +506,9 @@ mod tests {
         let store = store_with(&["flagged", "envd", "actived"], Some("actived"));
         with_env_profile("cli", Some("envd"), || {
             // Flag wins over both.
-            let selected =
-                resolve_selection_in(&store, "cli", &args(&["cli", "-p", "flagged"]))
-                    .unwrap()
-                    .unwrap();
+            let selected = resolve_selection_in(&store, "cli", &args(&["cli", "-p", "flagged"]))
+                .unwrap()
+                .unwrap();
             assert_eq!(selected.profile.name, "flagged");
             assert_eq!(selected.source, SelectionSource::Flag);
 

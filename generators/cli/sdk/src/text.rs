@@ -61,7 +61,10 @@ fn is_sentence_boundary(chars: &[char], period_index: usize) -> bool {
     // Prose resumes with a capital (or a digit). A lowercase continuation
     // means the period belonged to the phrase — an abbreviation this list
     // doesn't know about.
-    match chars[period_index + 1..].iter().find(|c| !c.is_whitespace()) {
+    match chars[period_index + 1..]
+        .iter()
+        .find(|c| !c.is_whitespace())
+    {
         Some(next) => !next.is_lowercase(),
         None => true,
     }
@@ -468,9 +471,7 @@ fn edit_distance(a: &str, b: &str) -> usize {
         current[0] = i + 1;
         for (j, &b_char) in b.iter().enumerate() {
             let substitution = previous[j] + usize::from(a_char != b_char);
-            current[j + 1] = substitution
-                .min(previous[j + 1] + 1)
-                .min(current[j] + 1);
+            current[j + 1] = substitution.min(previous[j + 1] + 1).min(current[j] + 1);
         }
         std::mem::swap(&mut previous, &mut current);
     }
@@ -693,7 +694,10 @@ registered account in the workspace.";
             !truncated.ends_with("e.g."),
             "truncated at an abbreviation: {truncated}"
         );
-        assert!(truncated.ends_with('…'), "expected a word-boundary cut: {truncated}");
+        assert!(
+            truncated.ends_with('…'),
+            "expected a word-boundary cut: {truncated}"
+        );
     }
 
     #[test]
@@ -701,7 +705,10 @@ registered account in the workspace.";
         assert!(is_name_restating("Models", "models"));
         assert!(is_name_restating("Text To Speech", "text-to-speech"));
         assert!(is_name_restating("Audio_Isolation", "audio-isolation"));
-        assert!(!is_name_restating("Pronunciation Dictionary", "pronunciation-dictionaries"));
+        assert!(!is_name_restating(
+            "Pronunciation Dictionary",
+            "pronunciation-dictionaries"
+        ));
         assert!(!is_name_restating("Manage models", "models"));
     }
 
@@ -712,25 +719,24 @@ registered account in the workspace.";
     #[test]
     fn test_sanitize_flag_name_table() {
         let cases: &[(&str, &str)] = &[
-            ("id:in",                   "id-in"),
-            ("customer_group_id:in",    "customer-group-id-in"),
-            ("date_created:min",        "date-created-min"),
-            ("email:like",              "email-like"),
-            ("customer_id",             "customer-id"),
-            ("customerId",              "customer-id"),
-            ("address.street",          "address-street"),
-            ("tag[0]",                  "tag-0"),
-            ("customer{id}",            "customer-id"),
-            ("q+filter",               "q-filter"),
-            ("category,subcategory",    "category-subcategory"),
-            ("na\u{00ef}ve",            "naive"),      // naïve → NFKD
-            ("from-date",              "from-date"),   // already valid
-            ("__proto__",              "proto"),        // leading/trailing trimmed
+            ("id:in", "id-in"),
+            ("customer_group_id:in", "customer-group-id-in"),
+            ("date_created:min", "date-created-min"),
+            ("email:like", "email-like"),
+            ("customer_id", "customer-id"),
+            ("customerId", "customer-id"),
+            ("address.street", "address-street"),
+            ("tag[0]", "tag-0"),
+            ("customer{id}", "customer-id"),
+            ("q+filter", "q-filter"),
+            ("category,subcategory", "category-subcategory"),
+            ("na\u{00ef}ve", "naive"),  // naïve → NFKD
+            ("from-date", "from-date"), // already valid
+            ("__proto__", "proto"),     // leading/trailing trimmed
         ];
         for (wire, expected) in cases {
-            let result = sanitize_flag_name(wire).unwrap_or_else(|e| {
-                panic!("sanitize_flag_name({wire:?}) returned Err: {e}")
-            });
+            let result = sanitize_flag_name(wire)
+                .unwrap_or_else(|e| panic!("sanitize_flag_name({wire:?}) returned Err: {e}"));
             assert_eq!(
                 result, *expected,
                 "sanitize_flag_name({wire:?}): got {result:?}, expected {expected:?}",
@@ -761,7 +767,12 @@ registered account in the workspace.";
 
     #[test]
     fn test_sanitize_flag_name_idempotence() {
-        let cases = &["id:in", "customer_group_id:in", "address.street", "na\u{00ef}ve"];
+        let cases = &[
+            "id:in",
+            "customer_group_id:in",
+            "address.street",
+            "na\u{00ef}ve",
+        ];
         for wire in cases {
             let first = sanitize_flag_name(wire).unwrap();
             let second = sanitize_flag_name(&first).unwrap();

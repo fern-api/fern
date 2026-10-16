@@ -236,7 +236,10 @@ impl CliApp {
     ///     .run()
     /// ```
     pub fn auth(mut self, builder: impl AuthSchemeBuilder) -> Self {
-        self.auth_bindings.push(builder.into_binding());
+        let labels = builder.credential_labels();
+        let (name, binding) = builder.into_binding();
+        crate::auth::login::register_field_labels(&name, labels);
+        self.auth_bindings.push((name, binding));
         self
     }
 

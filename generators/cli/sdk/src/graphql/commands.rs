@@ -7,7 +7,7 @@ use clap::{Arg, Command};
 
 use crate::cli_args::{HELP_HEADING_OPTIONAL, HELP_HEADING_REQUEST, HELP_HEADING_REQUIRED};
 use crate::graphql::discovery::{
-    GraphQLSchema as RestDescription, GraphQLResource as RestResource, MethodParameter,
+    GraphQLResource as RestResource, GraphQLSchema as RestDescription, MethodParameter,
 };
 use crate::text::to_kebab_flag;
 use std::collections::HashMap;
@@ -316,7 +316,9 @@ fn input_shorthand_flag(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::graphql::discovery::{GraphQLOperation as RestMethod, GraphQLResource as RestResource};
+    use crate::graphql::discovery::{
+        GraphQLOperation as RestMethod, GraphQLResource as RestResource,
+    };
 
     fn make_doc() -> RestDescription {
         let mut methods = HashMap::new();
@@ -406,7 +408,9 @@ mod tests {
         };
 
         let cmd = build_cli(&doc);
-        let users_cmd = cmd.find_subcommand("users").expect("users resource missing");
+        let users_cmd = cmd
+            .find_subcommand("users")
+            .expect("users resource missing");
         let get_user_cmd = users_cmd
             .find_subcommand("get-user")
             .expect("get-user method missing");
@@ -499,7 +503,10 @@ mod tests {
             Some("[or via --input JSON]".to_string())
         );
         assert_eq!(arg("input").get_help_heading(), Some(HELP_HEADING_OPTIONAL));
-        assert_eq!(arg("nickname").get_help_heading(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(
+            arg("nickname").get_help_heading(),
+            Some(HELP_HEADING_OPTIONAL)
+        );
         assert_eq!(arg("tier").get_help_heading(), Some(HELP_HEADING_OPTIONAL));
         assert!(!arg("name").is_required_set());
 

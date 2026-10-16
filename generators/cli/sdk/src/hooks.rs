@@ -58,14 +58,14 @@ impl PathPattern {
             (Some(_), None) => {
                 // Remaining pattern segments with no path left — only
                 // matches if all remaining are globstars.
-                pattern.iter().all(|s| matches!(s, PatternSegment::Globstar))
+                pattern
+                    .iter()
+                    .all(|s| matches!(s, PatternSegment::Globstar))
             }
             (Some(PatternSegment::Literal(lit)), Some(seg)) => {
                 lit == seg && Self::do_match(&pattern[1..], &path[1..])
             }
-            (Some(PatternSegment::Single), Some(_)) => {
-                Self::do_match(&pattern[1..], &path[1..])
-            }
+            (Some(PatternSegment::Single), Some(_)) => Self::do_match(&pattern[1..], &path[1..]),
         }
     }
 }
@@ -218,9 +218,7 @@ fn collect_leaf_paths(cmd: &clap::Command, prefix: &mut Vec<String>) -> Vec<Vec<
         let name = sub.get_name().to_string();
         // Skip built-in utility commands and binding-internal
         // subcommands that bypass the hook pipeline.
-        if name == "help" || name == "completion" || name == "man"
-            || name == "generate-skills"
-        {
+        if name == "help" || name == "completion" || name == "man" || name == "generate-skills" {
             continue;
         }
         prefix.push(name);
@@ -232,11 +230,15 @@ fn collect_leaf_paths(cmd: &clap::Command, prefix: &mut Vec<String>) -> Vec<Vec<
 
 /// Extract display-friendly strings from a pattern for error messages.
 fn pattern_to_strings(pattern: &PathPattern) -> Vec<String> {
-    pattern.segments.iter().map(|s| match s {
-        PatternSegment::Literal(lit) => lit.clone(),
-        PatternSegment::Single => "*".to_string(),
-        PatternSegment::Globstar => "**".to_string(),
-    }).collect()
+    pattern
+        .segments
+        .iter()
+        .map(|s| match s {
+            PatternSegment::Literal(lit) => lit.clone(),
+            PatternSegment::Single => "*".to_string(),
+            PatternSegment::Globstar => "**".to_string(),
+        })
+        .collect()
 }
 
 // ── Tests ───────────────────────────────────────────────────────────

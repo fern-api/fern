@@ -7,15 +7,15 @@ use std::collections::{HashMap, HashSet};
 
 use serde::{Deserialize, Deserializer};
 
-use crate::text::to_kebab_flag;
+use crate::error::CliError;
 use crate::openapi::discovery::{
     Availability, BinaryRequestBody, BodyEncoding, GlobalHeader, GlobalParameter,
     GlobalParameterApplyMode, GlobalParameterLocation, IdempotencyHeader, JsonSchema,
     JsonSchemaProperty, MethodParameter, MultipartField, PaginationConfig, RestDescription,
-    RestMethod, RestResource, RetriesConfig, SchemaRef, SdkGroupInfo, SdkVariable,
-    SecurityScheme, StreamingConfig,
+    RestMethod, RestResource, RetriesConfig, SchemaRef, SdkGroupInfo, SdkVariable, SecurityScheme,
+    StreamingConfig,
 };
-use crate::error::CliError;
+use crate::text::to_kebab_flag;
 
 /// Deserialize `x-fern-sdk-group-name` as either a string scalar or a list of
 /// strings. The Fern extension allows both forms; specs like AssemblyAI's use
@@ -39,7 +39,9 @@ where
 
 /// Deserialize `x-fern-global-parameter` as either a single string or an
 /// array of strings. The extension accepts both forms for convenience.
-fn deserialize_global_parameter_opt_ins<'de, D>(deserializer: D) -> Result<Option<Vec<String>>, D::Error>
+fn deserialize_global_parameter_opt_ins<'de, D>(
+    deserializer: D,
+) -> Result<Option<Vec<String>>, D::Error>
 where
     D: Deserializer<'de>,
 {
@@ -79,10 +81,7 @@ const ALLOW_NULL_KEYS: &[&str] = &[
     "x-codeSamples",
 ];
 
-pub fn deep_merge_yaml(
-    base: serde_yaml::Value,
-    overrides: serde_yaml::Value,
-) -> serde_yaml::Value {
+pub fn deep_merge_yaml(base: serde_yaml::Value, overrides: serde_yaml::Value) -> serde_yaml::Value {
     let merged = deep_merge_yaml_inner(base, overrides);
     remove_nulls(merged, false)
 }
@@ -108,16 +107,12 @@ fn deep_merge_yaml_inner(
             }
             serde_yaml::Value::Mapping(base_map)
         }
-        (
-            serde_yaml::Value::Sequence(base_seq),
-            serde_yaml::Value::Sequence(override_seq),
-        ) => {
+        (serde_yaml::Value::Sequence(base_seq), serde_yaml::Value::Sequence(override_seq)) => {
             // Fern parity: arrays of objects are merged element-by-element
             // (by index). Arrays of primitives (or mixed) replace wholesale.
             if all_objects(&base_seq) && all_objects(&override_seq) {
-                let mut result: Vec<serde_yaml::Value> = Vec::with_capacity(
-                    std::cmp::max(base_seq.len(), override_seq.len()),
-                );
+                let mut result: Vec<serde_yaml::Value> =
+                    Vec::with_capacity(std::cmp::max(base_seq.len(), override_seq.len()));
                 let mut base_iter = base_seq.into_iter();
                 let mut ovr_iter = override_seq.into_iter();
                 loop {
@@ -158,11 +153,11 @@ fn remove_nulls(value: serde_yaml::Value, allow_nulls: bool) -> serde_yaml::Valu
             }
             serde_yaml::Value::Mapping(cleaned)
         }
-        serde_yaml::Value::Sequence(seq) => {
-            serde_yaml::Value::Sequence(
-                seq.into_iter().map(|v| remove_nulls(v, allow_nulls)).collect(),
-            )
-        }
+        serde_yaml::Value::Sequence(seq) => serde_yaml::Value::Sequence(
+            seq.into_iter()
+                .map(|v| remove_nulls(v, allow_nulls))
+                .collect(),
+        ),
         other => other,
     }
 }
@@ -247,9 +242,7 @@ struct OpenApiSpec {
 /// by the CLI help surface. Some real-world specs contain primitive entries
 /// in this array, so malformed entries are skipped rather than rejecting the
 /// whole document.
-fn deserialize_openapi_tags<'de, D>(
-    deserializer: D,
-) -> Result<OpenApiTagMetadata, D::Error>
+fn deserialize_openapi_tags<'de, D>(deserializer: D) -> Result<OpenApiTagMetadata, D::Error>
 where
     D: Deserializer<'de>,
 {
@@ -292,7 +285,10 @@ where
             }
         }
     }
-    Ok(OpenApiTagMetadata { descriptions, order })
+    Ok(OpenApiTagMetadata {
+        descriptions,
+        order,
+    })
 }
 
 #[derive(Debug, Default)]
@@ -551,7 +547,11 @@ struct OpenApiOperation {
     servers: Vec<OpenApiServer>,
     #[serde(default)]
     tags: Option<Vec<String>>,
-    #[serde(rename = "x-fern-sdk-group-name", default, deserialize_with = "deserialize_group_name")]
+    #[serde(
+        rename = "x-fern-sdk-group-name",
+        default,
+        deserialize_with = "deserialize_group_name"
+    )]
     x_fern_sdk_group_name: Option<Vec<String>>,
     #[serde(rename = "x-fern-sdk-method-name")]
     x_fern_sdk_method_name: Option<String>,
@@ -637,7 +637,11 @@ struct OpenApiOperation {
     /// declared in the spec-root `x-fern-global-parameters`. Only
     /// `apply: explicit` parameters are affected — `apply: auto`
     /// parameters ignore this field.
-    #[serde(rename = "x-fern-global-parameter", default, deserialize_with = "deserialize_global_parameter_opt_ins")]
+    #[serde(
+        rename = "x-fern-global-parameter",
+        default,
+        deserialize_with = "deserialize_global_parameter_opt_ins"
+    )]
     x_fern_global_parameter: Option<Vec<String>>,
 }
 
@@ -855,11 +859,17 @@ impl<'de> Deserialize<'de> for TypeField {
             }
 
             fn visit_str<E: de::Error>(self, v: &str) -> Result<Self::Value, E> {
-                Ok(TypeField { schema_type: Some(v.to_string()), null_in_array: false })
+                Ok(TypeField {
+                    schema_type: Some(v.to_string()),
+                    null_in_array: false,
+                })
             }
 
             fn visit_string<E: de::Error>(self, v: String) -> Result<Self::Value, E> {
-                Ok(TypeField { schema_type: Some(v), null_in_array: false })
+                Ok(TypeField {
+                    schema_type: Some(v),
+                    null_in_array: false,
+                })
             }
 
             fn visit_seq<A: de::SeqAccess<'de>>(self, mut seq: A) -> Result<Self::Value, A::Error> {
@@ -869,7 +879,10 @@ impl<'de> Deserialize<'de> for TypeField {
                 }
                 let null_in_array = types.iter().any(|t| t == "null");
                 let schema_type = types.into_iter().find(|t| t != "null");
-                Ok(TypeField { schema_type, null_in_array })
+                Ok(TypeField {
+                    schema_type,
+                    null_in_array,
+                })
             }
 
             fn visit_none<E: de::Error>(self) -> Result<Self::Value, E> {
@@ -1017,10 +1030,7 @@ struct OpenApiSchemaObject {
     /// so `--schema` can surface it without re-quoting. Empty / absent ⇒ None.
     #[serde(default)]
     default: Option<serde_yaml::Value>,
-    #[serde(
-        default,
-        deserialize_with = "deserialize_additional_properties"
-    )]
+    #[serde(default, deserialize_with = "deserialize_additional_properties")]
     additional_properties: Option<Box<OpenApiSchemaObject>>,
 }
 
@@ -1178,8 +1188,8 @@ where
             serde_yaml::Value::Sequence(seq) if seq.len() == 1 => seq[0].clone(),
             _ => value,
         };
-        let schema = serde_yaml::from_value::<OpenApiSchemaObject>(schema_value)
-            .unwrap_or_default();
+        let schema =
+            serde_yaml::from_value::<OpenApiSchemaObject>(schema_value).unwrap_or_default();
         result.insert(key, schema);
     }
     Ok(result)
@@ -1260,14 +1270,24 @@ struct OpenApiSecurityScheme {
 fn lower_security_scheme(raw: &OpenApiSecurityScheme) -> SecurityScheme {
     let type_str = raw.type_field.as_deref().unwrap_or("").to_ascii_lowercase();
     match type_str.as_str() {
-        "http" => match raw.scheme.as_deref().map(str::to_ascii_lowercase).as_deref() {
+        "http" => match raw
+            .scheme
+            .as_deref()
+            .map(str::to_ascii_lowercase)
+            .as_deref()
+        {
             Some("bearer") => SecurityScheme::HttpBearer,
             Some("basic") => SecurityScheme::HttpBasic,
             other => SecurityScheme::Other(format!("http/{}", other.unwrap_or(""))),
         },
         "apikey" => {
             let name = raw.name.clone().unwrap_or_default();
-            match raw.location.as_deref().map(str::to_ascii_lowercase).as_deref() {
+            match raw
+                .location
+                .as_deref()
+                .map(str::to_ascii_lowercase)
+                .as_deref()
+            {
                 Some("header") => SecurityScheme::ApiKeyHeader { name },
                 Some("query") => SecurityScheme::ApiKeyQuery { name },
                 other => SecurityScheme::Other(format!("apiKey/{}", other.unwrap_or(""))),
@@ -1400,7 +1420,11 @@ fn parse_pagination_config(
             return Err(CliError::Discovery(format!(
                 "Invalid {} `x-fern-pagination` for operation '{op_id}': expected an object, \
                 got {}.",
-                if inherited { "inherited" } else { "operation-level" },
+                if inherited {
+                    "inherited"
+                } else {
+                    "operation-level"
+                },
                 describe_yaml_kind(value)
             )));
         }
@@ -1563,8 +1587,7 @@ fn parse_streaming_extension(
         }
     };
 
-    let terminator =
-        optional_str_field_named(map, "terminator", op_id, "x-fern-streaming")?;
+    let terminator = optional_str_field_named(map, "terminator", op_id, "x-fern-streaming")?;
 
     if matches!(format, StreamingFormat::Text) && terminator.is_some() {
         // Mirrors the IR (`TextStreamChunk` carries no `terminator`
@@ -1701,8 +1724,7 @@ fn parse_retries_value(
         serde_yaml::Value::Bool(true) => Ok(Some(RetriesConfig::default())),
         serde_yaml::Value::Bool(false) => Ok(Some(RetriesConfig::disabled())),
         serde_yaml::Value::Mapping(map) => {
-            let config =
-                apply_retries_object(RetriesConfig::default(), map, op_id, inherited)?;
+            let config = apply_retries_object(RetriesConfig::default(), map, op_id, inherited)?;
             if config.max_attempts == 0 {
                 return Ok(Some(RetriesConfig::disabled()));
             }
@@ -1711,7 +1733,11 @@ fn parse_retries_value(
         other => Err(CliError::Discovery(format!(
             "Invalid {} `x-fern-retries` for operation '{op_id}': expected an object or \
             boolean, got {}.",
-            if inherited { "inherited" } else { "operation-level" },
+            if inherited {
+                "inherited"
+            } else {
+                "operation-level"
+            },
             describe_yaml_kind(other)
         ))),
     }
@@ -1738,7 +1764,11 @@ fn apply_retries_object(
                 return Err(CliError::Discovery(format!(
                     "Invalid {} `x-fern-retries` for operation '{op_id}': field `disabled` \
                     must be a boolean, got {}.",
-                    if inherited { "inherited" } else { "operation-level" },
+                    if inherited {
+                        "inherited"
+                    } else {
+                        "operation-level"
+                    },
                     describe_yaml_kind(other)
                 )));
             }
@@ -1749,29 +1779,38 @@ fn apply_retries_object(
     // since the upstream IR has not yet settled on one; the fern docs
     // refer to "max retry attempts" colloquially.
     if let Some(v) = retries_field(map, &["max_attempts", "max-attempts", "max"]) {
-        let parsed = match v {
-            serde_yaml::Value::Number(n) => n.as_u64(),
-            other => {
-                return Err(CliError::Discovery(format!(
+        let parsed =
+            match v {
+                serde_yaml::Value::Number(n) => n.as_u64(),
+                other => {
+                    return Err(CliError::Discovery(format!(
                     "Invalid {} `x-fern-retries` for operation '{op_id}': field `max_attempts` \
                     must be a non-negative integer, got {}.",
                     if inherited { "inherited" } else { "operation-level" },
                     describe_yaml_kind(other)
                 )));
-            }
-        };
+                }
+            };
         let parsed = parsed.ok_or_else(|| {
             CliError::Discovery(format!(
                 "Invalid {} `x-fern-retries` for operation '{op_id}': field `max_attempts` \
                 must be a non-negative integer.",
-                if inherited { "inherited" } else { "operation-level" },
+                if inherited {
+                    "inherited"
+                } else {
+                    "operation-level"
+                },
             ))
         })?;
         config.max_attempts = u32::try_from(parsed).map_err(|_| {
             CliError::Discovery(format!(
                 "Invalid {} `x-fern-retries` for operation '{op_id}': field `max_attempts` \
                 must fit in a u32, got {parsed}.",
-                if inherited { "inherited" } else { "operation-level" },
+                if inherited {
+                    "inherited"
+                } else {
+                    "operation-level"
+                },
             ))
         })?;
     }
@@ -1782,14 +1821,22 @@ fn apply_retries_object(
                 CliError::Discovery(format!(
                     "Invalid {} `x-fern-retries` for operation '{op_id}': field \
                     `base_delay_ms` must be a non-negative integer.",
-                    if inherited { "inherited" } else { "operation-level" },
+                    if inherited {
+                        "inherited"
+                    } else {
+                        "operation-level"
+                    },
                 ))
             })?,
             other => {
                 return Err(CliError::Discovery(format!(
                     "Invalid {} `x-fern-retries` for operation '{op_id}': field \
                     `base_delay_ms` must be an integer, got {}.",
-                    if inherited { "inherited" } else { "operation-level" },
+                    if inherited {
+                        "inherited"
+                    } else {
+                        "operation-level"
+                    },
                     describe_yaml_kind(other)
                 )));
             }
@@ -1803,7 +1850,11 @@ fn apply_retries_object(
             return Err(CliError::Discovery(format!(
                 "Invalid {} `x-fern-retries` for operation '{op_id}': field `factor` must be \
                 >= 1.0, got {parsed}.",
-                if inherited { "inherited" } else { "operation-level" },
+                if inherited {
+                    "inherited"
+                } else {
+                    "operation-level"
+                },
             )));
         }
         config.factor = parsed;
@@ -1815,7 +1866,11 @@ fn apply_retries_object(
             return Err(CliError::Discovery(format!(
                 "Invalid {} `x-fern-retries` for operation '{op_id}': field `jitter` must be \
                 in [0.0, 1.0], got {parsed}.",
-                if inherited { "inherited" } else { "operation-level" },
+                if inherited {
+                    "inherited"
+                } else {
+                    "operation-level"
+                },
             )));
         }
         config.jitter = parsed;
@@ -1851,13 +1906,21 @@ fn retries_required_f64(
             CliError::Discovery(format!(
                 "Invalid {} `x-fern-retries` for operation '{op_id}': field `{field}` must be \
                 a finite number.",
-                if inherited { "inherited" } else { "operation-level" },
+                if inherited {
+                    "inherited"
+                } else {
+                    "operation-level"
+                },
             ))
         }),
         other => Err(CliError::Discovery(format!(
             "Invalid {} `x-fern-retries` for operation '{op_id}': field `{field}` must be a \
             number, got {}.",
-            if inherited { "inherited" } else { "operation-level" },
+            if inherited {
+                "inherited"
+            } else {
+                "operation-level"
+            },
             describe_yaml_kind(other)
         ))),
     }
@@ -2068,7 +2131,10 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
         description: obj.description.clone(),
         properties,
         schema_ref: None,
-        items: obj.items.as_ref().map(|i| Box::new(convert_schema_property(i))),
+        items: obj
+            .items
+            .as_ref()
+            .map(|i| Box::new(convert_schema_property(i))),
         // `effective_enum_values` rather than `obj.enum_values` so a `const:`
         // lowers to a single-member enum here exactly as it does everywhere
         // else the parser reads an enum.
@@ -2114,7 +2180,10 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
         description: obj.description.clone(),
         schema_ref: None,
         format: obj.format.clone(),
-        items: obj.items.as_ref().map(|i| Box::new(convert_schema_property(i))),
+        items: obj
+            .items
+            .as_ref()
+            .map(|i| Box::new(convert_schema_property(i))),
         properties,
         required: obj.required.clone(),
         read_only: obj.read_only,
@@ -2146,11 +2215,7 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
 
 fn strip_ref_prefix(ref_path: &str) -> String {
     // Handles "#/components/schemas/Foo" and "#/components/parameters/Foo"
-    ref_path
-        .rsplit('/')
-        .next()
-        .unwrap_or(ref_path)
-        .to_string()
+    ref_path.rsplit('/').next().unwrap_or(ref_path).to_string()
 }
 
 // ---------------------------------------------------------------------------
@@ -2316,9 +2381,7 @@ fn parse_sdk_variables(mapping: Option<&serde_yaml::Mapping>) -> Vec<SdkVariable
         let schema_map = match schema_val.as_mapping() {
             Some(m) => m,
             None => {
-                tracing::warn!(
-                    "x-fern-sdk-variables entry '{name}' is not an object; skipping"
-                );
+                tracing::warn!("x-fern-sdk-variables entry '{name}' is not an object; skipping");
                 continue;
             }
         };
@@ -2644,7 +2707,11 @@ fn convert_fern_enum(
             },
         );
     }
-    if out.is_empty() { None } else { Some(out) }
+    if out.is_empty() {
+        None
+    } else {
+        Some(out)
+    }
 }
 
 /// Convert a `serde_yaml::Value` into a `serde_json::Value` for storage on
@@ -2698,9 +2765,7 @@ fn resolve_parameter<'a>(
         OpenApiParamOrRef::Inline(p) => Some(p.as_ref()),
         OpenApiParamOrRef::Ref { ref_path, .. } => {
             let name = strip_ref_prefix(ref_path);
-            components
-                .as_ref()
-                .and_then(|c| c.parameters.get(&name))
+            components.as_ref().and_then(|c| c.parameters.get(&name))
         }
     }
 }
@@ -2728,8 +2793,8 @@ fn resolve_parameter_display_name(
             x_fern_parameter_name: ref_site,
             ..
         } => {
-            let resolved = resolve_parameter(por, components)
-                .and_then(|p| p.x_fern_parameter_name.clone());
+            let resolved =
+                resolve_parameter(por, components).and_then(|p| p.x_fern_parameter_name.clone());
             ref_site.clone().or(resolved)
         }
     }
@@ -2894,7 +2959,9 @@ pub fn load_openapi_spec_from_value(
     // either omit `x-fern-retries` or set it to `true`. Parsed once here
     // so per-op resolution stays a cheap merge.
     let spec_root_retries = parse_retries_value(
-        spec.x_fern_retries.as_ref().unwrap_or(&serde_yaml::Value::Null),
+        spec.x_fern_retries
+            .as_ref()
+            .unwrap_or(&serde_yaml::Value::Null),
         /*op_id=*/ "<spec-root>",
         /*inherited=*/ true,
     )?;
@@ -2920,10 +2987,8 @@ pub fn load_openapi_spec_from_value(
 
     // Build a set of declared global parameter names for validating
     // per-operation `x-fern-global-parameter` references.
-    let declared_global_param_names: std::collections::HashSet<String> = global_parameters
-        .iter()
-        .map(|p| p.name.clone())
-        .collect();
+    let declared_global_param_names: std::collections::HashSet<String> =
+        global_parameters.iter().map(|p| p.name.clone()).collect();
 
     // Lower the document-root `x-fern-groups` extension. Keys are
     // kebab-cased so they match the resource-tree keys built from
@@ -3085,7 +3150,11 @@ pub fn load_openapi_spec_from_value(
             // OpenAPI 3.1's allowance of sibling fields next to `$ref` and
             // fern's overlay system, which routinely uses ref-site ignores.
             let mut params = HashMap::new();
-            for por in path_item.parameters.iter().chain(operation.parameters.iter()) {
+            for por in path_item
+                .parameters
+                .iter()
+                .chain(operation.parameters.iter())
+            {
                 if parameter_should_ignore(por, &spec.components) {
                     tracing::debug!(
                         "{} {} has a parameter marked with x-fern-ignore. Skipping.",
@@ -3113,11 +3182,11 @@ pub fn load_openapi_spec_from_value(
             // the command builder can render per-field flags alongside `--json`.
             let (request, binary_request_body, body_encoding, body_params, multipart_fields) =
                 extract_request_body(
-                &operation.request_body,
-                operation.operation_id.as_deref().unwrap_or("unknown"),
-                &mut doc.schemas,
-                component_schemas,
-            );
+                    &operation.request_body,
+                    operation.operation_id.as_deref().unwrap_or("unknown"),
+                    &mut doc.schemas,
+                    component_schemas,
+                );
 
             // Extract the primary success response schema. Inline response
             // schemas are registered in doc.schemas under a synthetic
@@ -3155,7 +3224,8 @@ pub fn load_openapi_spec_from_value(
                         .is_none_or(|summary| prose_adds_detail(prose, summary))
                 });
 
-            let method_root_url = operation.servers
+            let method_root_url = operation
+                .servers
                 .first()
                 .map(|s| s.url.clone())
                 .unwrap_or_else(|| root_url.clone());
@@ -3241,7 +3311,8 @@ pub fn load_openapi_spec_from_value(
                 operation.operation_id.as_deref().unwrap_or("unknown"),
             )?;
 
-            let has_binary_response = response_has_binary_media_type(&operation.responses, component_responses);
+            let has_binary_response =
+                response_has_binary_media_type(&operation.responses, component_responses);
 
             // Mutual exclusivity: an operation that's both streamed and
             // paginated is incoherent — pagination drives a loop of
@@ -3260,7 +3331,6 @@ pub fn load_openapi_spec_from_value(
                     operation.operation_id.as_deref().unwrap_or("unknown"),
                 )));
             }
-
 
             // Per-operation `x-fern-global-parameter` opt-in. Validate
             // that every referenced name is declared in the spec-root
@@ -3319,8 +3389,7 @@ pub fn load_openapi_spec_from_value(
             };
 
             // Walk group_name to create/find nested resources
-            let kebab_groups: Vec<String> =
-                group_name.iter().map(|g| camel_to_kebab(g)).collect();
+            let kebab_groups: Vec<String> = group_name.iter().map(|g| camel_to_kebab(g)).collect();
             let operation_tags = operation.tags.as_deref().unwrap_or(&[]);
             if let Some(top_level_group) = kebab_groups.first() {
                 *doc.group_operation_counts
@@ -3343,9 +3412,7 @@ pub fn load_openapi_spec_from_value(
                         *tag_counts.entry(tag_key.clone()).or_default() += 1;
                     }
                     append_unique_tags(
-                        doc.tag_group_names
-                            .entry(tag_key)
-                            .or_default(),
+                        doc.tag_group_names.entry(tag_key).or_default(),
                         std::slice::from_ref(top_level_group),
                     );
                 }
@@ -3393,9 +3460,7 @@ fn insert_method_into_resources(
         return;
     }
 
-    let resource = resources
-        .entry(groups[0].clone())
-        .or_default();
+    let resource = resources.entry(groups[0].clone()).or_default();
     append_unique_tags(group_tag_names.entry(groups[0].clone()).or_default(), tags);
 
     if groups.len() == 1 {
@@ -3592,7 +3657,13 @@ fn extract_request_body(
             operation_id,
         );
         if !multipart_fields.is_empty() {
-            return (None, None, BodyEncoding::Json, HashMap::new(), multipart_fields);
+            return (
+                None,
+                None,
+                BodyEncoding::Json,
+                HashMap::new(),
+                multipart_fields,
+            );
         }
     }
 
@@ -3751,7 +3822,10 @@ fn select_response_content_type(
     }
     let mut entries: Vec<_> = content.iter().collect();
     entries.sort_by_key(|(k, _)| k.to_ascii_lowercase());
-    if let Some((k, v)) = entries.iter().find(|(ct, _)| ct.eq_ignore_ascii_case("application/json")) {
+    if let Some((k, v)) = entries
+        .iter()
+        .find(|(ct, _)| ct.eq_ignore_ascii_case("application/json"))
+    {
         return Some((*k, *v));
     }
     let json_like = entries.iter().find(|(ct, _)| {
@@ -3945,8 +4019,7 @@ fn classify_multipart_property_at_depth(
     // Array of binary files (e.g. `type: array, items: { type: string, format: binary }`)
     if ty == Some("array") {
         if let Some(items) = &resolved.items {
-            if (items.schema_type() == Some("string")
-                && items.format.as_deref() == Some("binary"))
+            if (items.schema_type() == Some("string") && items.format.as_deref() == Some("binary"))
                 || items.schema_type() == Some("file")
             {
                 return (true, None);
@@ -4350,10 +4423,7 @@ fn recognize_scalar_or_array_union<'a>(
 
         match resolved.schema_type() {
             Some("array") => {
-                let item_type = resolved
-                    .items
-                    .as_ref()
-                    .and_then(|it| it.schema_type());
+                let item_type = resolved.items.as_ref().and_then(|it| it.schema_type());
                 match item_type {
                     Some(t) => {
                         if array_item_type.is_some() {
@@ -4407,7 +4477,10 @@ const MAX_ALL_OF_DEPTH: u8 = 8;
 fn merge_all_of_properties(
     schema: &OpenApiSchemaObject,
     component_schemas: &HashMap<String, OpenApiSchemaObject>,
-) -> Option<(HashMap<String, OpenApiSchemaObject>, std::collections::HashSet<String>)> {
+) -> Option<(
+    HashMap<String, OpenApiSchemaObject>,
+    std::collections::HashSet<String>,
+)> {
     if schema.all_of.is_empty() {
         return None;
     }
@@ -4437,7 +4510,9 @@ fn walk_all_of(
         if let Some(ref_path) = &branch.schema_ref {
             let name = strip_ref_prefix(ref_path);
             match component_schemas.get(&name) {
-                Some(resolved) => walk_all_of(props, required, resolved, component_schemas, depth + 1),
+                Some(resolved) => {
+                    walk_all_of(props, required, resolved, component_schemas, depth + 1)
+                }
                 None => tracing::warn!("allOf branch references unresolvable schema: {ref_path}"),
             }
         } else {
@@ -4510,7 +4585,12 @@ fn flatten_body_params_prefix(
                 // schemas — the latter is the inheritance pattern
                 // (`Mixin: {allOf: [Base, extras]}`) Box uses heavily.
                 if resolved.schema_type() == Some("object") || !resolved.all_of.is_empty() {
-                    let nested = flatten_body_params_prefix(resolved, component_schemas, depth + 1, &full_key);
+                    let nested = flatten_body_params_prefix(
+                        resolved,
+                        component_schemas,
+                        depth + 1,
+                        &full_key,
+                    );
                     if !nested.is_empty() {
                         out.extend(nested);
                         out.insert(
@@ -4539,23 +4619,33 @@ fn flatten_body_params_prefix(
                 // Recognize oneOf/anyOf [T, array<T>] unions and emit as a
                 // repeated flag so the executor JSON-parses array inputs
                 // instead of passing them as literal strings.
-                if let Some(element_type) = recognize_scalar_or_array_union(resolved, component_schemas) {
+                if let Some(element_type) =
+                    recognize_scalar_or_array_union(resolved, component_schemas)
+                {
                     let spec_required = required.contains(name.as_str());
                     let (const_default, const_doc_default) =
                         const_defaults(resolved, spec_required);
-                    let has_null_branch = resolved.one_of.iter()
-                        .chain(resolved.any_of.iter())
-                        .any(|b| {
-                            let eff = b.schema_ref.as_ref().and_then(|r| {
-                                component_schemas.get(&strip_ref_prefix(r))
-                            }).unwrap_or(b);
-                            is_null_sentinel(eff)
-                        });
+                    let has_null_branch =
+                        resolved
+                            .one_of
+                            .iter()
+                            .chain(resolved.any_of.iter())
+                            .any(|b| {
+                                let eff = b
+                                    .schema_ref
+                                    .as_ref()
+                                    .and_then(|r| component_schemas.get(&strip_ref_prefix(r)))
+                                    .unwrap_or(b);
+                                is_null_sentinel(eff)
+                            });
                     out.insert(
                         full_key,
                         MethodParameter {
                             param_type: Some(element_type.to_string()),
-                            description: prop.description.clone().or_else(|| resolved.description.clone()),
+                            description: prop
+                                .description
+                                .clone()
+                                .or_else(|| resolved.description.clone()),
                             location: Some("body".to_string()),
                             required: spec_required && const_default.is_none(),
                             required_by_spec: spec_required,
@@ -4637,14 +4727,17 @@ fn flatten_body_params_prefix(
                         } else {
                             resolved.schema_type().map(str::to_string)
                         },
-                        description: prop.description.clone().or_else(|| resolved.description.clone()),
+                        description: prop
+                            .description
+                            .clone()
+                            .or_else(|| resolved.description.clone()),
                         location: Some("body".to_string()),
                         // A required `const` is auto-injected via
                         // default_value (the value is fixed, so requiring the
                         // user to type it is ceremony), which also satisfies
                         // the required check.
                         required: spec_required && const_default.is_none(),
-                            required_by_spec: spec_required,
+                        required_by_spec: spec_required,
                         format: effective.format.clone(),
                         enum_values: effective_enum_values(effective),
                         default_value: const_default,
@@ -4701,14 +4794,14 @@ fn flatten_body_params_prefix(
         if let Some(element_type) = recognize_scalar_or_array_union(prop, component_schemas) {
             let spec_required = required.contains(name.as_str());
             let (const_default, const_doc_default) = const_defaults(prop, spec_required);
-            let has_null_branch = prop.one_of.iter()
-                .chain(prop.any_of.iter())
-                .any(|b| {
-                    let eff = b.schema_ref.as_ref().and_then(|r| {
-                        component_schemas.get(&strip_ref_prefix(r))
-                    }).unwrap_or(b);
-                    is_null_sentinel(eff)
-                });
+            let has_null_branch = prop.one_of.iter().chain(prop.any_of.iter()).any(|b| {
+                let eff = b
+                    .schema_ref
+                    .as_ref()
+                    .and_then(|r| component_schemas.get(&strip_ref_prefix(r)))
+                    .unwrap_or(b);
+                is_null_sentinel(eff)
+            });
             out.insert(
                 full_key,
                 MethodParameter {
@@ -4716,7 +4809,7 @@ fn flatten_body_params_prefix(
                     description: prop.description.clone(),
                     location: Some("body".to_string()),
                     required: spec_required && const_default.is_none(),
-                            required_by_spec: spec_required,
+                    required_by_spec: spec_required,
                     format: prop.format.clone(),
                     default_value: const_default,
                     documentation_default_value: const_doc_default,
@@ -4753,8 +4846,7 @@ fn flatten_body_params_prefix(
         // Arrays are excluded — they lower to a repeated flag, not a
         // nested object (same as a plain `type: array` property).
         if let Some(inner) = promoted_composite.filter(|_| !is_array) {
-            let nested =
-                flatten_body_params_prefix(inner, component_schemas, depth + 1, &full_key);
+            let nested = flatten_body_params_prefix(inner, component_schemas, depth + 1, &full_key);
             if !nested.is_empty() {
                 out.extend(nested);
                 out.insert(
@@ -4794,7 +4886,7 @@ fn flatten_body_params_prefix(
                 description: prop.description.clone(),
                 location: Some("body".to_string()),
                 required: spec_required && const_default.is_none(),
-                            required_by_spec: spec_required,
+                required_by_spec: spec_required,
                 format: effective.format.clone(),
                 enum_values: effective_enum_values(effective),
                 default_value: const_default,
@@ -4916,10 +5008,8 @@ mod tests {
             "#,
         )
         .unwrap();
-        let labels: OpenApiSchemaObject = serde_yaml::from_str(
-            "type: array\nitems:\n  type: string\n",
-        )
-        .unwrap();
+        let labels: OpenApiSchemaObject =
+            serde_yaml::from_str("type: array\nitems:\n  type: string\n").unwrap();
         let mut components = HashMap::new();
         components.insert("Labels".to_string(), labels);
         let (_, ref_mp) = convert_parameter(&via_ref, None, &components);
@@ -4949,7 +5039,10 @@ mod tests {
         .unwrap();
         let (_, inline_mp) = convert_parameter(&inline, None, &HashMap::new());
         assert_eq!(inline_mp.param_type.as_deref(), Some("array"));
-        assert!(inline_mp.repeated, "nullable array param must be repeatable");
+        assert!(
+            inline_mp.repeated,
+            "nullable array param must be repeatable"
+        );
 
         let via_ref: OpenApiParameter = serde_yaml::from_str(
             r#"
@@ -4965,7 +5058,8 @@ mod tests {
         let mut components = HashMap::new();
         components.insert(
             "VoiceIds".to_string(),
-            serde_yaml::from_str::<OpenApiSchemaObject>("type: array\nitems:\n  type: string\n").unwrap(),
+            serde_yaml::from_str::<OpenApiSchemaObject>("type: array\nitems:\n  type: string\n")
+                .unwrap(),
         );
         let (_, ref_mp) = convert_parameter(&via_ref, None, &components);
         assert_eq!(ref_mp.param_type.as_deref(), Some("array"));
@@ -5112,10 +5206,8 @@ mod tests {
         let mut components = HashMap::new();
         components.insert(
             "Labels".to_string(),
-            serde_yaml::from_str::<OpenApiSchemaObject>(
-                "type: array\nitems:\n  type: integer\n",
-            )
-            .unwrap(),
+            serde_yaml::from_str::<OpenApiSchemaObject>("type: array\nitems:\n  type: integer\n")
+                .unwrap(),
         );
 
         // Inline, string elements -> `Some("string")`, spelled out rather than
@@ -5249,10 +5341,9 @@ properties:
         // keyword. The guard passed its test and never fired on a real spec.
         //
         // So this asserts the lowering from spec YAML, not a struct literal.
-        let nullable_ref: OpenApiSchemaObject = serde_yaml::from_str(
-            "$ref: '#/components/schemas/Metadata'\nnullable: true\n",
-        )
-        .unwrap();
+        let nullable_ref: OpenApiSchemaObject =
+            serde_yaml::from_str("$ref: '#/components/schemas/Metadata'\nnullable: true\n")
+                .unwrap();
         let lowered = convert_schema_property(&nullable_ref);
         assert_eq!(lowered.schema_ref.as_deref(), Some("Metadata"));
         assert!(
@@ -5268,10 +5359,9 @@ properties:
 
         // The 3.1 spelling, for contrast: null-ness lives in the branch, which
         // `has_null_branch` handles on the executor side.
-        let component: OpenApiSchemaObject = serde_yaml::from_str(
-            "$ref: '#/components/schemas/Metadata'\nnullable: true\n",
-        )
-        .unwrap();
+        let component: OpenApiSchemaObject =
+            serde_yaml::from_str("$ref: '#/components/schemas/Metadata'\nnullable: true\n")
+                .unwrap();
         assert!(convert_schema_object(&component).nullable);
     }
 
@@ -5341,7 +5431,10 @@ properties:
         )
         .unwrap();
         let (_, mp) = convert_parameter(&scalar, None, &components);
-        assert_eq!(mp.item_enum_values, None, "a scalar enum belongs on enum_values");
+        assert_eq!(
+            mp.item_enum_values, None,
+            "a scalar enum belongs on enum_values"
+        );
         assert!(mp.enum_values.is_some());
     }
 
@@ -5393,7 +5486,7 @@ properties:
         }
         for case in [
             "scheduledEvents",
-            "Metadata taxonomies",  // hit the bug that started this
+            "Metadata taxonomies", // hit the bug that started this
             "Channel Settings",
             "foo--bar",
             "CustomerList",
@@ -5417,8 +5510,14 @@ properties:
         assert_eq!(tokenize("getCustomers"), vec!["get", "customers"]);
         assert_eq!(tokenize("customersList"), vec!["customers", "list"]);
         // snake_case / spaces / mixed: split on non-alphanumeric
-        assert_eq!(tokenize("customer_addresses"), vec!["customer", "addresses"]);
-        assert_eq!(tokenize("Customer Addresses"), vec!["customer", "addresses"]);
+        assert_eq!(
+            tokenize("customer_addresses"),
+            vec!["customer", "addresses"]
+        );
+        assert_eq!(
+            tokenize("Customer Addresses"),
+            vec!["customer", "addresses"]
+        );
         // already a single token
         assert_eq!(tokenize("customers"), vec!["customers"]);
     }
@@ -5437,7 +5536,10 @@ properties:
     #[test]
     fn test_strip_tag_prefix_no_strip_when_no_overlap() {
         // BigCommerce-style: op `getCustomers` doesn't start with tag tokens.
-        assert_eq!(strip_tag_prefix("getCustomers", "Customers"), "getCustomers");
+        assert_eq!(
+            strip_tag_prefix("getCustomers", "Customers"),
+            "getCustomers"
+        );
     }
 
     #[test]
@@ -5456,7 +5558,10 @@ paths:
 "#;
         let doc = load_openapi_spec(yaml, "t").unwrap();
         let customers = &doc.resources["customers"];
-        assert!(customers.methods.contains_key("list"), "method should be `list` after strip");
+        assert!(
+            customers.methods.contains_key("list"),
+            "method should be `list` after strip"
+        );
     }
 
     #[test]
@@ -7122,18 +7227,33 @@ paths:
         let create = &doc.resources["users"].methods["create"];
 
         // Depth-0: top-level scalar.
-        assert!(create.parameters.contains_key("name"), "depth-0 'name' should be a flag");
+        assert!(
+            create.parameters.contains_key("name"),
+            "depth-0 'name' should be a flag"
+        );
 
         // Depth-1: one level of nesting.
-        assert!(create.parameters.contains_key("address.city"), "depth-1 'address.city' should be a flag");
+        assert!(
+            create.parameters.contains_key("address.city"),
+            "depth-1 'address.city' should be a flag"
+        );
 
         // Depth-2: two levels of nesting — now emitted (matches GraphQL behaviour).
-        assert!(create.parameters.contains_key("address.location.street"), "depth-2 'address.location.street' should be a flag");
+        assert!(
+            create.parameters.contains_key("address.location.street"),
+            "depth-2 'address.location.street' should be a flag"
+        );
 
         // Depth-3: NOT emitted — beyond MAX_BODY_DEPTH.
-        assert!(!create.parameters.contains_key("address.location.geo.lat"), "depth-3 'address.location.geo.lat' must not be a flag");
+        assert!(
+            !create.parameters.contains_key("address.location.geo.lat"),
+            "depth-3 'address.location.geo.lat' must not be a flag"
+        );
         // address.location.geo surfaces as a plain object flag (depth limit hit, recursion returns empty).
-        assert!(create.parameters.contains_key("address.location.geo"), "depth-2 object at limit should surface as plain flag");
+        assert!(
+            create.parameters.contains_key("address.location.geo"),
+            "depth-2 object at limit should surface as plain flag"
+        );
     }
 
     #[test]
@@ -7179,15 +7299,31 @@ components:
         let create = &doc.resources["orders"].methods["create"];
 
         // Top-level scalar — present as-is.
-        assert!(create.parameters.contains_key("note"), "'note' should be a flag");
+        assert!(
+            create.parameters.contains_key("note"),
+            "'note' should be a flag"
+        );
 
         // $ref to an object at depth 0 — resolved and flattened into dot-notation flags.
-        assert!(create.parameters.contains_key("address.city"), "'address.city' should be a flag after $ref resolution");
-        assert!(create.parameters.contains_key("address.zip"), "'address.zip' should be a flag after $ref resolution");
+        assert!(
+            create.parameters.contains_key("address.city"),
+            "'address.city' should be a flag after $ref resolution"
+        );
+        assert!(
+            create.parameters.contains_key("address.zip"),
+            "'address.zip' should be a flag after $ref resolution"
+        );
 
         // The $ref itself should appear as an object-typed shorthand flag (not a typeless flag).
-        let addr = create.parameters.get("address").expect("'address' should appear as an object-typed shorthand flag");
-        assert_eq!(addr.param_type.as_deref(), Some("object"), "'address' must have param_type 'object', not be typeless");
+        let addr = create
+            .parameters
+            .get("address")
+            .expect("'address' should appear as an object-typed shorthand flag");
+        assert_eq!(
+            addr.param_type.as_deref(),
+            Some("object"),
+            "'address' must have param_type 'object', not be typeless"
+        );
     }
 
     #[test]
@@ -7231,17 +7367,40 @@ paths:
         let create = &doc.resources["users"].methods["create"];
 
         // Sub-flags must exist.
-        assert!(create.parameters.contains_key("name.first"), "name.first sub-flag must be present");
-        assert!(create.parameters.contains_key("name.last"), "name.last sub-flag must be present");
+        assert!(
+            create.parameters.contains_key("name.first"),
+            "name.first sub-flag must be present"
+        );
+        assert!(
+            create.parameters.contains_key("name.last"),
+            "name.last sub-flag must be present"
+        );
 
         // Parent object-level flag must ALSO exist.
-        let parent = create.parameters.get("name")
+        let parent = create
+            .parameters
+            .get("name")
             .expect("parent 'name' object flag must be present");
-        assert_eq!(parent.param_type.as_deref(), Some("object"), "parent flag must have param_type 'object'");
-        assert_eq!(parent.location.as_deref(), Some("body"), "parent flag must have location 'body'");
+        assert_eq!(
+            parent.param_type.as_deref(),
+            Some("object"),
+            "parent flag must have param_type 'object'"
+        );
+        assert_eq!(
+            parent.location.as_deref(),
+            Some("body"),
+            "parent flag must have location 'body'"
+        );
         // required is always false at CLI level for object shorthand flags.
-        assert!(!parent.required, "parent object flag must be required: false regardless of schema required");
-        assert_eq!(parent.description.as_deref(), Some("Full name of the user"), "parent flag should carry description");
+        assert!(
+            !parent.required,
+            "parent object flag must be required: false regardless of schema required"
+        );
+        assert_eq!(
+            parent.description.as_deref(),
+            Some("Full name of the user"),
+            "parent flag should carry description"
+        );
     }
 
     #[test]
@@ -7287,15 +7446,34 @@ components:
         let create = &doc.resources["orders"].methods["create"];
 
         // Sub-flags must still exist.
-        assert!(create.parameters.contains_key("address.city"), "'address.city' must be present");
-        assert!(create.parameters.contains_key("address.zip"), "'address.zip' must be present");
+        assert!(
+            create.parameters.contains_key("address.city"),
+            "'address.city' must be present"
+        );
+        assert!(
+            create.parameters.contains_key("address.zip"),
+            "'address.zip' must be present"
+        );
 
         // Parent object-level flag must ALSO exist now.
-        let parent = create.parameters.get("address")
+        let parent = create
+            .parameters
+            .get("address")
             .expect("parent 'address' object flag must be present for $ref branch");
-        assert_eq!(parent.param_type.as_deref(), Some("object"), "parent flag must have param_type 'object'");
-        assert_eq!(parent.location.as_deref(), Some("body"), "parent flag must have location 'body'");
-        assert!(!parent.required, "parent object flag must be required: false");
+        assert_eq!(
+            parent.param_type.as_deref(),
+            Some("object"),
+            "parent flag must have param_type 'object'"
+        );
+        assert_eq!(
+            parent.location.as_deref(),
+            Some("body"),
+            "parent flag must have location 'body'"
+        );
+        assert!(
+            !parent.required,
+            "parent object flag must be required: false"
+        );
         // $ref properties typically carry no inline description; the parent
         // flag must fall back to the resolved schema's description so --help
         // is not blank.
@@ -7424,10 +7602,20 @@ paths:
           description: ok
 "#;
         let doc = load_openapi_spec(yaml, "test").unwrap();
-        assert_eq!(doc.idempotency_headers.len(), 2, "both header entries parsed");
+        assert_eq!(
+            doc.idempotency_headers.len(),
+            2,
+            "both header entries parsed"
+        );
         assert_eq!(doc.idempotency_headers[0].header, "Idempotency-Key");
-        assert_eq!(doc.idempotency_headers[0].name.as_deref(), Some("idempotency_key"));
-        assert_eq!(doc.idempotency_headers[0].env.as_deref(), Some("API_IDEMPOTENCY_KEY"));
+        assert_eq!(
+            doc.idempotency_headers[0].name.as_deref(),
+            Some("idempotency_key")
+        );
+        assert_eq!(
+            doc.idempotency_headers[0].env.as_deref(),
+            Some("API_IDEMPOTENCY_KEY")
+        );
         assert_eq!(doc.idempotency_headers[1].header, "X-Trace-Id");
         assert!(doc.idempotency_headers[1].name.is_none());
         assert!(doc.idempotency_headers[1].env.is_none());
@@ -7611,7 +7799,10 @@ paths:
             .parameters
             .get("Idempotency-Key")
             .expect("declared param present");
-        assert_eq!(p.description.as_deref(), Some("Custom description from author."));
+        assert_eq!(
+            p.description.as_deref(),
+            Some("Custom description from author.")
+        );
         assert!(
             p.env_var.is_none(),
             "spec-declared param does not pick up env_var from the spec-root extension",
@@ -7858,8 +8049,11 @@ paths:
           description: ok
 "#;
         let doc = load_openapi_spec(yaml, "test").unwrap();
-        let headers: Vec<&str> =
-            doc.global_headers.iter().map(|h| h.header.as_str()).collect();
+        let headers: Vec<&str> = doc
+            .global_headers
+            .iter()
+            .map(|h| h.header.as_str())
+            .collect();
         assert_eq!(headers, vec!["First", "Second", "Third"]);
     }
 
@@ -8179,7 +8373,10 @@ paths:
         // With no summary the prose already is the description, so keeping a
         // second copy would only duplicate the line in help output.
         let others = first_method(&doc, "others", "list");
-        assert_eq!(others.description.as_deref(), Some("Only prose, no summary."));
+        assert_eq!(
+            others.description.as_deref(),
+            Some("Only prose, no summary.")
+        );
         assert_eq!(others.long_description, None);
     }
 
@@ -8321,10 +8518,7 @@ paths:
             doc.group_tag_names.get("conversational-ai"),
             Some(&vec!["Conversational AI".to_string()])
         );
-        assert_eq!(
-            doc.group_operation_counts.get("history"),
-            Some(&1),
-        );
+        assert_eq!(doc.group_operation_counts.get("history"), Some(&1),);
         assert_eq!(
             doc.group_tag_operation_counts
                 .get("history")
@@ -8761,7 +8955,10 @@ components:
 paths: {}
 "#;
         let doc = load_openapi_spec(yaml, "t").unwrap();
-        assert_eq!(doc.security_schemes.get("a"), Some(&SecurityScheme::HttpBearer));
+        assert_eq!(
+            doc.security_schemes.get("a"),
+            Some(&SecurityScheme::HttpBearer)
+        );
         assert_eq!(
             doc.security_schemes.get("b"),
             Some(&SecurityScheme::ApiKeyHeader {
@@ -8846,7 +9043,10 @@ paths:
         let base: serde_yaml::Value = serde_yaml::from_str("title: Original").unwrap();
         let overrides: serde_yaml::Value = serde_yaml::from_str("title: Overridden").unwrap();
         let merged = deep_merge_yaml(base, overrides);
-        assert_eq!(merged["title"], serde_yaml::Value::String("Overridden".into()));
+        assert_eq!(
+            merged["title"],
+            serde_yaml::Value::String("Overridden".into())
+        );
     }
 
     #[test]
@@ -8861,37 +9061,58 @@ paths:
     /// Fern CLI test: "should handle nested object merging"
     #[test]
     fn test_deep_merge_nested_object_merging() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             config:
               settings:
                 theme: light
                 notifications: true
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             config:
               settings:
                 theme: dark
                 sound: false
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
-        assert_eq!(merged["config"]["settings"]["theme"], serde_yaml::Value::String("dark".into()));
-        assert_eq!(merged["config"]["settings"]["notifications"], serde_yaml::Value::Bool(true));
-        assert_eq!(merged["config"]["settings"]["sound"], serde_yaml::Value::Bool(false));
+        assert_eq!(
+            merged["config"]["settings"]["theme"],
+            serde_yaml::Value::String("dark".into())
+        );
+        assert_eq!(
+            merged["config"]["settings"]["notifications"],
+            serde_yaml::Value::Bool(true)
+        );
+        assert_eq!(
+            merged["config"]["settings"]["sound"],
+            serde_yaml::Value::Bool(false)
+        );
     }
 
     /// Fern CLI test: "deep-merges nested objects rather than replacing them"
     #[test]
     fn test_deep_merge_nested_sibling_keys() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             foo:
               bar:
                 existingKey: original
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             foo:
               bar:
                 newKey: added
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         assert_eq!(
             merged["foo"]["bar"]["existingKey"],
@@ -8905,20 +9126,26 @@ paths:
 
     #[test]
     fn test_deep_merge_nested_openapi_paths() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             paths:
               /users:
                 get:
                   summary: List users
                   operationId: listUsers
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             paths:
               /users:
                 get:
                   x-fern-sdk-group-name: [users]
                   x-fern-sdk-method-name: list
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         assert_eq!(
             merged["paths"]["/users"]["get"]["summary"],
@@ -8938,31 +9165,49 @@ paths:
 
     #[test]
     fn test_deep_merge_null_deletes_key() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             info:
               title: API
               description: A description
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             info:
               description: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
-        assert_eq!(merged["info"]["title"], serde_yaml::Value::String("API".into()));
+        assert_eq!(
+            merged["info"]["title"],
+            serde_yaml::Value::String("API".into())
+        );
         let info = merged["info"].as_mapping().unwrap();
-        assert!(!info.contains_key("description"), "null should delete the key");
+        assert!(
+            !info.contains_key("description"),
+            "null should delete the key"
+        );
     }
 
     /// Fern CLI test: "removes null values from merged result"
     #[test]
     fn test_deep_merge_null_removes_from_merged_result() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             title: Title
             description: A description
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             description: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         assert_eq!(merged["title"], serde_yaml::Value::String("Title".into()));
         assert!(!merged.as_mapping().unwrap().contains_key("description"));
@@ -8971,25 +9216,32 @@ paths:
     /// Nulls inside non-allowlisted keys are still removed.
     #[test]
     fn test_deep_merge_removes_pre_existing_nulls_outside_examples() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             type: object
             properties:
               name:
                 type: string
                 description: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let overrides: serde_yaml::Value = serde_yaml::from_str("{}").unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let name = merged["properties"]["name"].as_mapping().unwrap();
         assert!(name.contains_key("type"));
-        assert!(!name.contains_key("description"), "null outside examples should be removed");
+        assert!(
+            !name.contains_key("description"),
+            "null outside examples should be removed"
+        );
     }
 
     /// Fern CLI parity: nulls inside `examples` keys are preserved
     /// (allowNullKeys = ["examples"]).
     #[test]
     fn test_deep_merge_preserves_nulls_inside_examples() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             type: object
             properties:
               name:
@@ -8997,19 +9249,27 @@ paths:
                 examples:
                   example1: John
                   example2: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let overrides: serde_yaml::Value = serde_yaml::from_str("{}").unwrap();
         let merged = deep_merge_yaml(base, overrides);
-        let examples = merged["properties"]["name"]["examples"].as_mapping().unwrap();
+        let examples = merged["properties"]["name"]["examples"]
+            .as_mapping()
+            .unwrap();
         assert!(examples.contains_key("example1"));
-        assert!(examples.contains_key("example2"), "null inside examples should be preserved");
+        assert!(
+            examples.contains_key("example2"),
+            "null inside examples should be preserved"
+        );
         assert!(examples.get("example2").unwrap().is_null());
     }
 
     /// Nulls deeply nested under an `examples` key are also preserved.
     #[test]
     fn test_deep_merge_preserves_nulls_deeply_nested_under_examples() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             examples:
               myExample:
                 value:
@@ -9017,47 +9277,70 @@ paths:
                   email: null
                   nested:
                     field: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let overrides: serde_yaml::Value = serde_yaml::from_str("{}").unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let value = &merged["examples"]["myExample"]["value"];
-        assert!(value["email"].is_null(), "null under examples descendant preserved");
-        assert!(value["nested"]["field"].is_null(), "deeply nested null under examples preserved");
+        assert!(
+            value["email"].is_null(),
+            "null under examples descendant preserved"
+        );
+        assert!(
+            value["nested"]["field"].is_null(),
+            "deeply nested null under examples preserved"
+        );
     }
 
     /// Nulls outside `examples` are removed even when siblings of examples.
     #[test]
     fn test_deep_merge_mixed_examples_and_non_examples_nulls() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             schema:
               description: null
               examples:
                 ex1: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let overrides: serde_yaml::Value = serde_yaml::from_str("{}").unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let schema = merged["schema"].as_mapping().unwrap();
-        assert!(!schema.contains_key("description"), "null outside examples removed");
+        assert!(
+            !schema.contains_key("description"),
+            "null outside examples removed"
+        );
         let examples = schema.get("examples").unwrap().as_mapping().unwrap();
-        assert!(examples.contains_key("ex1"), "null inside examples preserved");
+        assert!(
+            examples.contains_key("ex1"),
+            "null inside examples preserved"
+        );
     }
 
     /// Null deletion should be recursive through deeply nested maps.
     #[test]
     fn test_deep_merge_null_deletes_deeply_nested() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             a:
               b:
                 c:
                   keep: true
                   remove_me: value
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             a:
               b:
                 c:
                   remove_me: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let c = merged["a"]["b"]["c"].as_mapping().unwrap();
         assert!(c.contains_key("keep"));
@@ -9069,12 +9352,18 @@ paths:
     /// Fern CLI test: "should replace arrays of primitives"
     #[test]
     fn test_deep_merge_primitive_arrays_replaced_wholesale() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             tags: [tag1, tag2]
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             tags: [tag3, tag4]
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let tags = merged["tags"].as_sequence().unwrap();
         assert_eq!(tags.len(), 2);
@@ -9097,24 +9386,33 @@ paths:
     /// Fern CLI test: "should merge arrays of objects"
     #[test]
     fn test_deep_merge_object_arrays_merged_by_index() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             items:
               - id: 1
                 name: Item 1
               - id: 2
                 name: Item 2
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             items:
               - id: 1
                 description: Updated Item 1
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let items = merged["items"].as_sequence().unwrap();
         // Element 0 merged: base {id:1, name: Item 1} + override {id:1, description: Updated Item 1}
         assert_eq!(items[0]["id"], serde_yaml::Value::Number(1.into()));
         assert_eq!(items[0]["name"], serde_yaml::Value::String("Item 1".into()));
-        assert_eq!(items[0]["description"], serde_yaml::Value::String("Updated Item 1".into()));
+        assert_eq!(
+            items[0]["description"],
+            serde_yaml::Value::String("Updated Item 1".into())
+        );
         // Element 1 carried from base (override only has 1 element)
         assert_eq!(items.len(), 2);
         assert_eq!(items[1]["id"], serde_yaml::Value::Number(2.into()));
@@ -9124,26 +9422,39 @@ paths:
     /// Override array longer than base — extra elements appended.
     #[test]
     fn test_deep_merge_object_arrays_override_longer() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             servers:
               - url: "https://a.com"
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             servers:
               - url: "https://a-patched.com"
               - url: "https://b.com"
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let servers = merged["servers"].as_sequence().unwrap();
         assert_eq!(servers.len(), 2);
-        assert_eq!(servers[0]["url"], serde_yaml::Value::String("https://a-patched.com".into()));
-        assert_eq!(servers[1]["url"], serde_yaml::Value::String("https://b.com".into()));
+        assert_eq!(
+            servers[0]["url"],
+            serde_yaml::Value::String("https://a-patched.com".into())
+        );
+        assert_eq!(
+            servers[1]["url"],
+            serde_yaml::Value::String("https://b.com".into())
+        );
     }
 
     /// OpenAPI parameters array (array of objects) should merge by index.
     #[test]
     fn test_deep_merge_parameters_array_merges_by_index() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             parameters:
               - name: limit
                 in: query
@@ -9151,34 +9462,51 @@ paths:
               - name: offset
                 in: query
                 required: false
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             parameters:
               - description: Maximum number of results
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let params = merged["parameters"].as_sequence().unwrap();
         assert_eq!(params.len(), 2);
         // First param: merged with override
         assert_eq!(params[0]["name"], serde_yaml::Value::String("limit".into()));
-        assert_eq!(params[0]["description"], serde_yaml::Value::String("Maximum number of results".into()));
+        assert_eq!(
+            params[0]["description"],
+            serde_yaml::Value::String("Maximum number of results".into())
+        );
         // Second param: untouched from base
-        assert_eq!(params[1]["name"], serde_yaml::Value::String("offset".into()));
+        assert_eq!(
+            params[1]["name"],
+            serde_yaml::Value::String("offset".into())
+        );
     }
 
     // -- Mixed arrays (primitives + objects): replaced wholesale -------------
 
     #[test]
     fn test_deep_merge_mixed_array_replaced_wholesale() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             mixed:
               - name: obj
               - just_a_string
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             mixed:
               - replaced: true
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let mixed = merged["mixed"].as_sequence().unwrap();
         // Base had mixed types → override replaces wholesale
@@ -9189,21 +9517,30 @@ paths:
 
     #[test]
     fn test_deep_merge_enum_array_replaced() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             accountStatus:
               type: string
               enum: [active, suspended, deleted]
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             accountStatus:
               enum: [active, suspended, deleted, inactive]
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let enums = merged["accountStatus"]["enum"].as_sequence().unwrap();
         assert_eq!(enums.len(), 4);
         assert_eq!(enums[3], serde_yaml::Value::String("inactive".into()));
         // type preserved from base
-        assert_eq!(merged["accountStatus"]["type"], serde_yaml::Value::String("string".into()));
+        assert_eq!(
+            merged["accountStatus"]["type"],
+            serde_yaml::Value::String("string".into())
+        );
     }
 
     // -- Overrides-resolution fixture parity --------------------------------
@@ -9212,7 +9549,8 @@ paths:
     /// property (lastName) to an existing schema, preserving existing ones.
     #[test]
     fn test_deep_merge_override_adds_schema_property() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             components:
               schemas:
                 UserUpdate:
@@ -9223,8 +9561,11 @@ paths:
                     email:
                       type: string
                       nullable: true
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             components:
               schemas:
                 UserUpdate:
@@ -9237,10 +9578,13 @@ paths:
                     email:
                       type: string
                       nullable: true
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let props = merged["components"]["schemas"]["UserUpdate"]["properties"]
-            .as_mapping().unwrap();
+            .as_mapping()
+            .unwrap();
         assert!(props.contains_key("name"));
         assert!(props.contains_key("lastName"), "new property from override");
         assert!(props.contains_key("email"));
@@ -9249,7 +9593,8 @@ paths:
     /// Override introduces an entirely new schema that doesn't exist in the base.
     #[test]
     fn test_deep_merge_override_adds_new_schema() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             components:
               schemas:
                 User:
@@ -9257,8 +9602,11 @@ paths:
                   properties:
                     id:
                       type: string
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             components:
               schemas:
                 UserStats:
@@ -9266,11 +9614,16 @@ paths:
                   properties:
                     totalLogins:
                       type: integer
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let schemas = merged["components"]["schemas"].as_mapping().unwrap();
         assert!(schemas.contains_key("User"), "base schema preserved");
-        assert!(schemas.contains_key("UserStats"), "new schema from override");
+        assert!(
+            schemas.contains_key("UserStats"),
+            "new schema from override"
+        );
     }
 
     // -- Sequential override application ------------------------------------
@@ -9291,11 +9644,14 @@ paths:
 
     #[test]
     fn test_deep_merge_empty_override_is_identity() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             info:
               title: API
               version: "1.0"
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let overrides: serde_yaml::Value = serde_yaml::from_str("{}").unwrap();
         let merged = deep_merge_yaml(base.clone(), overrides);
         // With the exception of pre-existing nulls being removed, result
@@ -9429,20 +9785,29 @@ paths:
 
     #[test]
     fn test_deep_merge_null_removed_inside_object_array() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             items:
               - name: keep
                 remove: value
-        "#).unwrap();
-        let overrides: serde_yaml::Value = serde_yaml::from_str(r#"
+        "#,
+        )
+        .unwrap();
+        let overrides: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             items:
               - remove: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, overrides);
         let item = &merged["items"].as_sequence().unwrap()[0];
         let map = item.as_mapping().unwrap();
         assert!(map.contains_key("name"));
-        assert!(!map.contains_key("remove"), "null inside object array element should be removed");
+        assert!(
+            !map.contains_key("remove"),
+            "null inside object array element should be removed"
+        );
     }
 
     // -- Verification: from_str vs from_value round-trip --------------------
@@ -9456,45 +9821,73 @@ paths:
         assert!(ALLOW_NULL_KEYS.contains(&"x-fern-examples"));
         assert!(ALLOW_NULL_KEYS.contains(&"x-code-samples"));
         assert!(ALLOW_NULL_KEYS.contains(&"x-codeSamples"));
-        assert_eq!(ALLOW_NULL_KEYS.len(), 5, "should have exactly 5 keys matching Fern CLI");
+        assert_eq!(
+            ALLOW_NULL_KEYS.len(),
+            5,
+            "should have exactly 5 keys matching Fern CLI"
+        );
     }
 
     #[test]
     fn test_null_preserved_under_example_singular() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             schema:
               example: null
               description: null
-        "#).unwrap();
-        let merged = deep_merge_yaml(base.clone(), serde_yaml::Value::Mapping(serde_yaml::Mapping::new()));
+        "#,
+        )
+        .unwrap();
+        let merged = deep_merge_yaml(
+            base.clone(),
+            serde_yaml::Value::Mapping(serde_yaml::Mapping::new()),
+        );
         let map = merged.as_mapping().unwrap();
         let schema = map.get("schema").unwrap().as_mapping().unwrap();
-        assert!(schema.contains_key("example"), "'example' (singular) null should be preserved");
-        assert!(!schema.contains_key("description"), "'description' null should be removed");
+        assert!(
+            schema.contains_key("example"),
+            "'example' (singular) null should be preserved"
+        );
+        assert!(
+            !schema.contains_key("description"),
+            "'description' null should be removed"
+        );
     }
 
     #[test]
     fn test_null_preserved_under_x_fern_examples() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             x-fern-examples:
               - value: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, serde_yaml::Value::Mapping(serde_yaml::Mapping::new()));
         let seq = merged["x-fern-examples"].as_sequence().unwrap();
         let item = seq[0].as_mapping().unwrap();
-        assert!(item.get("value").unwrap().is_null(), "null under x-fern-examples should be preserved");
+        assert!(
+            item.get("value").unwrap().is_null(),
+            "null under x-fern-examples should be preserved"
+        );
     }
 
     #[test]
     fn test_null_preserved_under_x_code_samples() {
-        let base: serde_yaml::Value = serde_yaml::from_str(r#"
+        let base: serde_yaml::Value = serde_yaml::from_str(
+            r#"
             x-code-samples:
               - lang: python
                 source: null
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         let merged = deep_merge_yaml(base, serde_yaml::Value::Mapping(serde_yaml::Mapping::new()));
         let item = &merged["x-code-samples"].as_sequence().unwrap()[0];
-        assert!(item["source"].is_null(), "null under x-code-samples should be preserved");
+        assert!(
+            item["source"].is_null(),
+            "null under x-code-samples should be preserved"
+        );
     }
 
     // -- Verification: real overrides e2e -----------------------------------
@@ -9503,11 +9896,18 @@ paths:
 
     #[test]
     fn test_all_objects_empty_arrays_vacuous_truth() {
-        assert!(all_objects(&[]), "empty array should pass all_objects (vacuous truth)");
+        assert!(
+            all_objects(&[]),
+            "empty array should pass all_objects (vacuous truth)"
+        );
         let base: serde_yaml::Value = serde_yaml::from_str("items: []").unwrap();
         let ovr: serde_yaml::Value = serde_yaml::from_str("items: []").unwrap();
         let merged = deep_merge_yaml(base, ovr);
-        assert_eq!(merged["items"].as_sequence().unwrap().len(), 0, "two empty arrays merge to empty");
+        assert_eq!(
+            merged["items"].as_sequence().unwrap().len(),
+            0,
+            "two empty arrays merge to empty"
+        );
     }
 
     #[test]
@@ -9519,7 +9919,10 @@ servers:
 "#;
         let val: serde_yaml::Value = serde_yaml::from_str(yaml).unwrap();
         let servers = val["servers"].as_sequence().unwrap();
-        assert!(all_objects(servers), "servers array should be all objects → index-merge path");
+        assert!(
+            all_objects(servers),
+            "servers array should be all objects → index-merge path"
+        );
     }
 
     #[test]
@@ -9531,7 +9934,10 @@ tags:
 "#;
         let val: serde_yaml::Value = serde_yaml::from_str(yaml).unwrap();
         let tags = val["tags"].as_sequence().unwrap();
-        assert!(!all_objects(tags), "string array should NOT be all objects → replace path");
+        assert!(
+            !all_objects(tags),
+            "string array should NOT be all objects → replace path"
+        );
     }
 
     // ---------------------------------------------------------------
@@ -9736,10 +10142,7 @@ results: $response.data
         );
         let err = resolve_pagination_extension(Some(&op), None, "listFoos")
             .expect_err("missing next_cursor should error");
-        assert!(
-            format!("{err}").contains("next_cursor"),
-            "got: {err}"
-        );
+        assert!(format!("{err}").contains("next_cursor"), "got: {err}");
     }
 
     #[test]
@@ -9811,10 +10214,7 @@ results: $response.items
         );
         let err = resolve_pagination_extension(Some(&op), None, "listFoos")
             .expect_err("non-custom `type` should error");
-        assert!(
-            format!("{err}").contains("`type: custom`"),
-            "got: {err}"
-        );
+        assert!(format!("{err}").contains("`type: custom`"), "got: {err}");
     }
 
     #[test]
@@ -9824,10 +10224,7 @@ results: $response.items
         let op = serde_yaml::Value::Bool(true);
         let err = resolve_pagination_extension(Some(&op), Some(&root), "listFoos")
             .expect_err("root-also-bool should error");
-        assert!(
-            format!("{err}").contains("spec-root"),
-            "got: {err}"
-        );
+        assert!(format!("{err}").contains("spec-root"), "got: {err}");
     }
 
     #[test]
@@ -9996,7 +10393,10 @@ paths:
     fn test_operation_availability_absent_defaults_to_none() {
         let doc = parse_op_with_extra("");
         let m = first_method(&doc, "things", "list");
-        assert_eq!(m.availability, None, "no extension and no deprecated flag → no badge");
+        assert_eq!(
+            m.availability, None,
+            "no extension and no deprecated flag → no badge"
+        );
     }
 
     #[test]
@@ -10013,9 +10413,7 @@ paths:
     #[test]
     fn test_operation_x_fern_availability_overrides_openapi_deprecated() {
         // Both set — x-fern-availability wins.
-        let doc = parse_op_with_extra(
-            "      deprecated: true\n      x-fern-availability: beta",
-        );
+        let doc = parse_op_with_extra("      deprecated: true\n      x-fern-availability: beta");
         let m = first_method(&doc, "things", "list");
         assert_eq!(
             m.availability,
@@ -10197,7 +10595,10 @@ paths:
         assert_eq!(normalize_base_path(Some("   ")), None);
         assert_eq!(normalize_base_path(Some("/v1")), Some("/v1".to_string()));
         assert_eq!(normalize_base_path(Some("v1")), Some("v1".to_string()));
-        assert_eq!(normalize_base_path(Some("  /v1  ")), Some("/v1".to_string()));
+        assert_eq!(
+            normalize_base_path(Some("  /v1  ")),
+            Some("/v1".to_string())
+        );
     }
 
     // ------------------------------------------------------------------
@@ -10740,7 +11141,11 @@ x-fern-sdk-variables:
 paths: {}
 "#;
         let doc = load_openapi_spec(yaml, "garden").unwrap();
-        assert_eq!(doc.sdk_variables.len(), 2, "expected two declared variables");
+        assert_eq!(
+            doc.sdk_variables.len(),
+            2,
+            "expected two declared variables"
+        );
         // Preserves declaration order so --help renders deterministically.
         assert_eq!(doc.sdk_variables[0].name, "gardenId");
         assert_eq!(doc.sdk_variables[0].ty, "string");
@@ -11110,8 +11515,14 @@ paths:
             .expect("op:true materializes defaults");
         assert_eq!(cfg, RetriesConfig::default());
         assert!(cfg.enabled);
-        assert_eq!(cfg.max_attempts, crate::openapi::discovery::DEFAULT_RETRY_MAX_ATTEMPTS);
-        assert_eq!(cfg.base_delay_ms, crate::openapi::discovery::DEFAULT_RETRY_BASE_DELAY_MS);
+        assert_eq!(
+            cfg.max_attempts,
+            crate::openapi::discovery::DEFAULT_RETRY_MAX_ATTEMPTS
+        );
+        assert_eq!(
+            cfg.base_delay_ms,
+            crate::openapi::discovery::DEFAULT_RETRY_BASE_DELAY_MS
+        );
     }
 
     #[test]
@@ -11241,8 +11652,7 @@ paths:
         // Negative values must be rejected (u32 can't hold them) —
         // surface a clear discovery error.
         let op = yaml("max_attempts: -1\n");
-        let err = resolve_retries_extension(Some(&op), None, "getFoo")
-            .unwrap_err();
+        let err = resolve_retries_extension(Some(&op), None, "getFoo").unwrap_err();
         let msg = format!("{err}");
         assert!(msg.contains("max_attempts"), "{msg}");
     }
@@ -11252,8 +11662,7 @@ paths:
         // Backoff factor < 1.0 would mean delays shrink, which is
         // nonsensical. Reject to catch authoring bugs.
         let op = yaml("factor: 0.5\n");
-        let err = resolve_retries_extension(Some(&op), None, "getFoo")
-            .unwrap_err();
+        let err = resolve_retries_extension(Some(&op), None, "getFoo").unwrap_err();
         let msg = format!("{err}");
         assert!(msg.contains("factor"), "{msg}");
     }
@@ -11263,8 +11672,7 @@ paths:
         // Jitter is a fraction in [0, 1]; anything else is an
         // authoring bug.
         let op = yaml("jitter: 1.5\n");
-        let err = resolve_retries_extension(Some(&op), None, "getFoo")
-            .unwrap_err();
+        let err = resolve_retries_extension(Some(&op), None, "getFoo").unwrap_err();
         let msg = format!("{err}");
         assert!(msg.contains("jitter"), "{msg}");
     }
@@ -11274,8 +11682,7 @@ paths:
         // Arrays/strings are not a valid shape. Mirror the
         // pagination resolver's strict typing.
         let op = yaml("- 1\n- 2\n");
-        let err = resolve_retries_extension(Some(&op), None, "getFoo")
-            .unwrap_err();
+        let err = resolve_retries_extension(Some(&op), None, "getFoo").unwrap_err();
         let msg = format!("{err}");
         assert!(msg.contains("x-fern-retries"), "{msg}");
     }
@@ -11284,8 +11691,7 @@ paths:
     fn test_resolve_retries_invalid_disabled_non_bool_errors() {
         // `disabled` must be boolean. Surface authoring bugs early.
         let op = yaml("disabled: yes-please\n");
-        let err = resolve_retries_extension(Some(&op), None, "getFoo")
-            .unwrap_err();
+        let err = resolve_retries_extension(Some(&op), None, "getFoo").unwrap_err();
         let msg = format!("{err}");
         assert!(msg.contains("disabled"), "{msg}");
     }
@@ -11367,9 +11773,7 @@ paths:
 
     #[test]
     fn test_x_fern_audiences_single_value() {
-        let doc = parse_op_with_extra(
-            "      x-fern-audiences:\n        - public",
-        );
+        let doc = parse_op_with_extra("      x-fern-audiences:\n        - public");
         let m = first_method(&doc, "things", "list");
         assert_eq!(m.audiences, vec!["public".to_string()]);
     }
@@ -11400,9 +11804,8 @@ paths:
         // the raw array through, so mirroring that means duplicate
         // entries land verbatim in the IR (the audience filter does
         // its own membership check and is dedup-tolerant).
-        let doc = parse_op_with_extra(
-            "      x-fern-audiences:\n        - public\n        - public",
-        );
+        let doc =
+            parse_op_with_extra("      x-fern-audiences:\n        - public\n        - public");
         let m = first_method(&doc, "things", "list");
         assert_eq!(
             m.audiences,
@@ -11516,10 +11919,19 @@ paths:
         )
         .unwrap();
         let params = flatten_body_params(&schema, &HashMap::new(), 0);
-        assert!(params.contains_key("id"), "id from first branch: {params:?}");
-        assert!(params.contains_key("extra"), "extra from second branch: {params:?}");
+        assert!(
+            params.contains_key("id"),
+            "id from first branch: {params:?}"
+        );
+        assert!(
+            params.contains_key("extra"),
+            "extra from second branch: {params:?}"
+        );
         assert!(params["id"].required, "id was required in base branch");
-        assert!(!params["extra"].required, "extra was not in any required list");
+        assert!(
+            !params["extra"].required,
+            "extra was not in any required list"
+        );
     }
 
     #[test]
@@ -11754,10 +12166,7 @@ paths:
         let base: OpenApiSchemaObject = serde_yaml::from_str("type: string\n").unwrap();
         let mut components = HashMap::new();
         components.insert("ThreadIdString".to_string(), base);
-        assert_eq!(
-            recognize_nullable_union(&obj, &components),
-            Some("string"),
-        );
+        assert_eq!(recognize_nullable_union(&obj, &components), Some("string"),);
     }
 
     #[test]
@@ -11915,7 +12324,10 @@ paths:
             "#,
         )
         .unwrap();
-        assert_eq!(recognize_scalar_or_array_union(&obj, &HashMap::new()), Some("string"));
+        assert_eq!(
+            recognize_scalar_or_array_union(&obj, &HashMap::new()),
+            Some("string")
+        );
     }
 
     #[test]
@@ -11930,7 +12342,10 @@ paths:
             "#,
         )
         .unwrap();
-        assert_eq!(recognize_scalar_or_array_union(&obj, &HashMap::new()), Some("string"));
+        assert_eq!(
+            recognize_scalar_or_array_union(&obj, &HashMap::new()),
+            Some("string")
+        );
     }
 
     #[test]
@@ -11946,7 +12361,10 @@ paths:
             "#,
         )
         .unwrap();
-        assert_eq!(recognize_scalar_or_array_union(&obj, &HashMap::new()), Some("string"));
+        assert_eq!(
+            recognize_scalar_or_array_union(&obj, &HashMap::new()),
+            Some("string")
+        );
     }
 
     #[test]
@@ -12012,7 +12430,10 @@ paths:
             "#,
         )
         .unwrap();
-        assert_eq!(recognize_scalar_or_array_union(&obj, &HashMap::new()), Some("integer"));
+        assert_eq!(
+            recognize_scalar_or_array_union(&obj, &HashMap::new()),
+            Some("integer")
+        );
     }
 
     #[test]
@@ -12045,7 +12466,10 @@ paths:
             serde_yaml::from_str("type: array\nitems:\n  type: string\n").unwrap();
         let mut components = HashMap::new();
         components.insert("StringArray".to_string(), arr);
-        assert_eq!(recognize_scalar_or_array_union(&obj, &components), Some("string"));
+        assert_eq!(
+            recognize_scalar_or_array_union(&obj, &components),
+            Some("string")
+        );
     }
 
     #[test]
@@ -12083,7 +12507,10 @@ paths:
         assert_eq!(to_param.param_type.as_deref(), Some("string"));
         assert!(to_param.repeated, "'to' should be marked as repeated");
         assert!(to_param.required, "'to' should be required");
-        assert!(!to_param.nullable, "'to' should not be nullable (no null branch)");
+        assert!(
+            !to_param.nullable,
+            "'to' should not be nullable (no null branch)"
+        );
     }
 
     #[test]
@@ -12108,7 +12535,10 @@ paths:
         let cc_param = params.get("cc").expect("'cc' parameter should exist");
         assert_eq!(cc_param.param_type.as_deref(), Some("string"));
         assert!(cc_param.repeated, "'cc' should be marked as repeated");
-        assert!(cc_param.nullable, "'cc' should be nullable (has null branch)");
+        assert!(
+            cc_param.nullable,
+            "'cc' should be nullable (has null branch)"
+        );
     }
 
     #[test]
@@ -12129,7 +12559,10 @@ paths:
         .unwrap();
         let params = flatten_body_params(&schema, &HashMap::new(), 0);
         let author = &params["authorId"];
-        assert!(author.nullable, "should be promoted to nullable: {author:?}");
+        assert!(
+            author.nullable,
+            "should be promoted to nullable: {author:?}"
+        );
         assert_eq!(author.param_type.as_deref(), Some("string"));
     }
 
@@ -12189,7 +12622,11 @@ paths:
         )
         .unwrap();
         let prop = convert_schema_property(&obj);
-        let seq = prop.examples.as_ref().and_then(|v| v.as_sequence()).unwrap();
+        let seq = prop
+            .examples
+            .as_ref()
+            .and_then(|v| v.as_sequence())
+            .unwrap();
         assert_eq!(seq.len(), 2);
         assert_eq!(seq[0], serde_yaml::Value::String("alpha".to_string()));
         assert_eq!(seq[1], serde_yaml::Value::String("beta".to_string()));
@@ -12247,7 +12684,10 @@ paths:
         )
         .unwrap();
         let prop = convert_schema_property(&obj);
-        assert_eq!(prop.minimum, None, "minimum becomes exclusive in 3.0 flag form");
+        assert_eq!(
+            prop.minimum, None,
+            "minimum becomes exclusive in 3.0 flag form"
+        );
         assert_eq!(prop.exclusive_minimum, Some(5.0));
     }
 
@@ -12303,7 +12743,10 @@ paths:
         )
         .unwrap();
         let prop = convert_schema_property(&obj);
-        assert_eq!(prop.maximum, None, "maximum becomes exclusive in 3.0 flag form");
+        assert_eq!(
+            prop.maximum, None,
+            "maximum becomes exclusive in 3.0 flag form"
+        );
         assert_eq!(prop.exclusive_maximum, Some(99.0));
     }
 
@@ -12373,8 +12816,14 @@ paths:
         let component_schemas = HashMap::new();
         let params = flatten_body_params(&schema, &component_schemas, 0);
         let status = params.get("status").expect("status flag should be emitted");
-        assert_eq!(status.enum_values.as_deref(), Some(&["active".to_string()][..]));
-        assert_eq!(status.default_value, Some(serde_json::Value::String("active".into())));
+        assert_eq!(
+            status.enum_values.as_deref(),
+            Some(&["active".to_string()][..])
+        );
+        assert_eq!(
+            status.default_value,
+            Some(serde_json::Value::String("active".into()))
+        );
         assert!(!status.required, "const-bearing flag must be optional");
     }
 
@@ -12403,8 +12852,14 @@ paths:
         component_schemas.insert("Role".to_string(), role_schema);
         let params = flatten_body_params(&schema, &component_schemas, 0);
         let role = params.get("role").expect("role flag should be emitted");
-        assert_eq!(role.enum_values.as_deref(), Some(&["admin".to_string()][..]));
-        assert_eq!(role.default_value, Some(serde_json::Value::String("admin".into())));
+        assert_eq!(
+            role.enum_values.as_deref(),
+            Some(&["admin".to_string()][..])
+        );
+        assert_eq!(
+            role.default_value,
+            Some(serde_json::Value::String("admin".into()))
+        );
         assert!(!role.required, "const-bearing $ref'd flag must be optional");
     }
 
@@ -12505,7 +12960,9 @@ paths:
             "Optional[Model] must expose the same flags as Model",
         );
         assert_eq!(
-            nullable_params["voice_settings.stability"].param_type.as_deref(),
+            nullable_params["voice_settings.stability"]
+                .param_type
+                .as_deref(),
             Some("number"),
             "leaf flags must keep the branch's own types",
         );
@@ -12875,7 +13332,10 @@ components:
         .unwrap();
         let params = flatten_body_params(&schema, &HashMap::new(), 0);
         let user_id = params.get("userId").expect("userId flag should be emitted");
-        assert!(user_id.nullable, "scalar nullable (3.0) must propagate to MethodParameter");
+        assert!(
+            user_id.nullable,
+            "scalar nullable (3.0) must propagate to MethodParameter"
+        );
     }
 
     #[test]
@@ -12891,7 +13351,10 @@ components:
         .unwrap();
         let params = flatten_body_params(&schema, &HashMap::new(), 0);
         let user_id = params.get("userId").expect("userId flag should be emitted");
-        assert!(user_id.nullable, "scalar nullable (3.1) must propagate to MethodParameter");
+        assert!(
+            user_id.nullable,
+            "scalar nullable (3.1) must propagate to MethodParameter"
+        );
     }
 
     #[test]
@@ -12955,7 +13418,10 @@ components:
         .unwrap();
         let params = flatten_body_params(&schema, &HashMap::new(), 0);
         // tags is an array → repeated, single flag, nullable must be false.
-        assert!(!params["tags"].nullable, "nullable array must not set param.nullable");
+        assert!(
+            !params["tags"].nullable,
+            "nullable array must not set param.nullable"
+        );
         // metadata is flattened to metadata.code; the only emitted flag is
         // the inner scalar, which is non-nullable.
         assert!(!params["metadata.code"].nullable);
@@ -13063,7 +13529,10 @@ components:
             ref_path: "#/components/responses/Foo".to_string(),
         };
         let resolved = resolve_response_ref(&r, &components);
-        assert!(resolved.is_some(), "should resolve $ref to component response");
+        assert!(
+            resolved.is_some(),
+            "should resolve $ref to component response"
+        );
     }
 
     #[test]
@@ -13084,14 +13553,8 @@ components:
             content: Some(HashMap::new()),
         };
         let mut responses = HashMap::new();
-        responses.insert(
-            "201".to_string(),
-            OpenApiResponseOrRef::Inline(resp_201),
-        );
-        responses.insert(
-            "200".to_string(),
-            OpenApiResponseOrRef::Inline(resp_200),
-        );
+        responses.insert("201".to_string(), OpenApiResponseOrRef::Inline(resp_201));
+        responses.insert("200".to_string(), OpenApiResponseOrRef::Inline(resp_200));
         let components = HashMap::new();
         let result = select_primary_response(&responses, &components);
         assert!(result.is_some(), "should select a 2xx response");
@@ -13103,10 +13566,7 @@ components:
             content: Some(HashMap::new()),
         };
         let mut responses = HashMap::new();
-        responses.insert(
-            "default".to_string(),
-            OpenApiResponseOrRef::Inline(resp),
-        );
+        responses.insert("default".to_string(), OpenApiResponseOrRef::Inline(resp));
         let components = HashMap::new();
         let result = select_primary_response(&responses, &components);
         assert!(result.is_some(), "should fall back to 'default'");
@@ -13144,7 +13604,10 @@ components:
         );
 
         let result = extract_response(&responses, "test_op", &mut schemas, &component_responses);
-        assert!(result.is_some(), "should extract response schema from $ref'd response");
+        assert!(
+            result.is_some(),
+            "should extract response schema from $ref'd response"
+        );
         let sr = result.unwrap();
         assert_eq!(sr.schema_ref.as_deref(), Some("Widget"));
     }
@@ -13159,7 +13622,10 @@ components:
             "application/json".to_string(),
             OpenApiMediaType {
                 schema: Some(OpenApiSchemaObject {
-                    type_field: TypeField { schema_type: Some("object".to_string()), null_in_array: false },
+                    type_field: TypeField {
+                        schema_type: Some("object".to_string()),
+                        null_in_array: false,
+                    },
                     ..Default::default()
                 }),
                 encoding: HashMap::new(),
@@ -13224,11 +13690,14 @@ paths:
                     - type: integer
                       description: "wrapped in array"
 "#;
-        let doc = load_openapi_spec(yaml, "t")
-            .expect("spec with array-valued property should parse");
+        let doc =
+            load_openapi_spec(yaml, "t").expect("spec with array-valued property should parse");
         let items = doc.resources.get("items").expect("items resource");
         assert!(
-            items.methods.values().any(|m| m.id.as_deref() == Some("listItems")),
+            items
+                .methods
+                .values()
+                .any(|m| m.id.as_deref() == Some("listItems")),
             "listItems method should exist",
         );
     }
@@ -13268,7 +13737,10 @@ paths:
             .expect("spec with multi-element array property should parse");
         let things = doc.resources.get("things").expect("things resource");
         assert!(
-            things.methods.values().any(|m| m.id.as_deref() == Some("getThings")),
+            things
+                .methods
+                .values()
+                .any(|m| m.id.as_deref() == Some("getThings")),
             "getThings method should exist",
         );
     }
@@ -13332,5 +13804,4 @@ components:
         let value = super::parse_spec_value(yaml).unwrap();
         assert_eq!(value["openapi"], serde_yaml::Value::String("3.0.0".into()));
     }
-
 }

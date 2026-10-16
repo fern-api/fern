@@ -137,11 +137,7 @@ impl AuthProvider for AllAuthProvider {
     }
 
     fn has_stored_credentials(&self) -> bool {
-        !self.providers.is_empty()
-            && self
-                .providers
-                .iter()
-                .all(|p| p.has_stored_credentials())
+        !self.providers.is_empty() && self.providers.iter().all(|p| p.has_stored_credentials())
     }
 
     fn inject_token_cache(&self, cli_name: &str) {
@@ -418,11 +414,8 @@ impl AuthProvider for RoutingAuthProvider {
             },
             Some(reqs) if reqs.is_empty() => true,
             Some(reqs) => reqs.iter().any(|req| {
-                req.keys().all(|name| {
-                    self.schemes
-                        .get(name)
-                        .is_some_and(|p| p.has_credentials())
-                })
+                req.keys()
+                    .all(|name| self.schemes.get(name).is_some_and(|p| p.has_credentials()))
             }),
         }
     }
@@ -506,11 +499,8 @@ impl RoutingAuthProvider {
         requirements: &'a [HashMap<String, Vec<String>>],
     ) -> Option<&'a HashMap<String, Vec<String>>> {
         requirements.iter().find(|req| {
-            req.keys().all(|name| {
-                self.schemes
-                    .get(name)
-                    .is_some_and(|p| p.has_credentials())
-            })
+            req.keys()
+                .all(|name| self.schemes.get(name).is_some_and(|p| p.has_credentials()))
         })
     }
 }
@@ -564,14 +554,14 @@ mod tests {
 
     #[tokio::test]
     async fn any_auth_picks_first_with_credentials() {
-        let a: DynAuthProvider = Arc::new(BearerAuthProvider::new(
-            "a",
-            AuthCredentialSource::Missing,
-        ));
+        let a: DynAuthProvider =
+            Arc::new(BearerAuthProvider::new("a", AuthCredentialSource::Missing));
         let b: DynAuthProvider = api_key("b", "X-Api-Key", "k");
         let any = AnyAuthProvider::new(vec![a, b]);
         assert!(any.has_credentials());
-        let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        let r = any
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
         assert_eq!(header(r, "x-api-key").as_deref(), Some("k"));
     }
 
@@ -581,7 +571,9 @@ mod tests {
         let _state = precedence_state(SelectionSource::Flag, true);
         let any = AnyAuthProvider::new(vec![basic_env_provider(), stored_bearer_provider()]);
 
-        let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        let r = any
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("Bearer stored-token"));
     }
 
@@ -592,7 +584,9 @@ mod tests {
             let _state = precedence_state(source, true);
             let any = AnyAuthProvider::new(vec![basic_env_provider(), stored_bearer_provider()]);
 
-            let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+            let r = any
+                .apply(req(), &EndpointAuthMetadata::unspecified())
+                .unwrap();
             assert_eq!(
                 auth_header(r).as_deref(),
                 Some("Bearer stored-token"),
@@ -607,7 +601,9 @@ mod tests {
         let _state = precedence_state(SelectionSource::Flag, false);
         let any = AnyAuthProvider::new(vec![basic_env_provider(), stored_bearer_provider()]);
 
-        let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        let r = any
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
         assert!(auth_header(r).unwrap().starts_with("Basic "));
     }
 
@@ -623,9 +619,8 @@ mod tests {
         // though that child would attach nothing to the request.
         let mut routing_schemes: HashMap<String, DynAuthProvider> = HashMap::new();
         routing_schemes.insert("apiKey".to_string(), api_key("apiKey", "X-Api-Key", "k"));
-        let routing_child: DynAuthProvider = std::sync::Arc::new(
-            RoutingAuthProvider::new(routing_schemes),
-        );
+        let routing_child: DynAuthProvider =
+            std::sync::Arc::new(RoutingAuthProvider::new(routing_schemes));
         let bearer_child: DynAuthProvider = bearer("bearer", "tok");
         let any = AnyAuthProvider::new(vec![routing_child, bearer_child]);
 
@@ -646,7 +641,9 @@ mod tests {
             AuthCredentialSource::Missing,
         ))]);
         assert!(!any.has_credentials());
-        let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        let r = any
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
         assert_eq!(auth_header(r), None);
     }
 
@@ -658,14 +655,22 @@ mod tests {
         let b: DynAuthProvider = api_key("b", "X-Api-Key", "k");
         let all = AllAuthProvider::new(vec![a, b]);
         assert!(all.has_credentials());
-        let r = all.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        let r = all
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
         let built = r.build().unwrap();
         assert_eq!(
-            built.headers().get("authorization").and_then(|v| v.to_str().ok()),
+            built
+                .headers()
+                .get("authorization")
+                .and_then(|v| v.to_str().ok()),
             Some("Bearer tok"),
         );
         assert_eq!(
-            built.headers().get("x-api-key").and_then(|v| v.to_str().ok()),
+            built
+                .headers()
+                .get("x-api-key")
+                .and_then(|v| v.to_str().ok()),
             Some("k"),
         );
     }
@@ -673,10 +678,8 @@ mod tests {
     #[test]
     fn all_auth_has_credentials_requires_every_child() {
         let a: DynAuthProvider = bearer("a", "tok");
-        let b: DynAuthProvider = Arc::new(BearerAuthProvider::new(
-            "b",
-            AuthCredentialSource::Missing,
-        ));
+        let b: DynAuthProvider =
+            Arc::new(BearerAuthProvider::new("b", AuthCredentialSource::Missing));
         let all = AllAuthProvider::new(vec![a, b]);
         // One missing → all auth can't be satisfied.
         assert!(!all.has_credentials());
@@ -719,10 +722,15 @@ mod tests {
             true,
         ));
         let p = LayeredAuthProvider::new(primary, vec![layer]);
-        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        let r = p
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
         let built = r.build().unwrap();
         assert_eq!(
-            built.headers().get("authorization").and_then(|v| v.to_str().ok()),
+            built
+                .headers()
+                .get("authorization")
+                .and_then(|v| v.to_str().ok()),
             Some("Bearer tok"),
         );
         assert_eq!(
@@ -746,13 +754,21 @@ mod tests {
             true,
         ));
         let p = LayeredAuthProvider::new(primary, vec![layer]);
-        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        let r = p
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
         let built = r.build().unwrap();
         assert_eq!(
-            built.headers().get("authorization").and_then(|v| v.to_str().ok()),
+            built
+                .headers()
+                .get("authorization")
+                .and_then(|v| v.to_str().ok()),
             Some("Bearer tok"),
         );
-        assert!(built.headers().get("anduril-sandbox-authorization").is_none());
+        assert!(built
+            .headers()
+            .get("anduril-sandbox-authorization")
+            .is_none());
     }
 
     #[test]
@@ -799,7 +815,10 @@ mod tests {
             .apply(req(), &EndpointAuthMetadata::explicit_anonymous())
             .unwrap();
         let built = r.build().unwrap();
-        assert!(built.headers().get("anduril-sandbox-authorization").is_none());
+        assert!(built
+            .headers()
+            .get("anduril-sandbox-authorization")
+            .is_none());
     }
 
     // -------- RoutingAuthProvider --------
@@ -827,8 +846,8 @@ mod tests {
         // unauthenticated. Even with a default provider that would happily
         // attach a bearer header, the routing wrapper must respect the
         // operation's opt-out.
-        let routing = RoutingAuthProvider::new(HashMap::new())
-            .with_default(bearer("bearer", "tok"));
+        let routing =
+            RoutingAuthProvider::new(HashMap::new()).with_default(bearer("bearer", "tok"));
         let out = routing
             .apply(req(), &EndpointAuthMetadata::explicit_anonymous())
             .unwrap();
@@ -918,19 +937,25 @@ mod tests {
         let out = routing.apply(req(), &endpoint).unwrap();
         let built = out.build().unwrap();
         assert_eq!(
-            built.headers().get("authorization").and_then(|v| v.to_str().ok()),
+            built
+                .headers()
+                .get("authorization")
+                .and_then(|v| v.to_str().ok()),
             Some("Bearer tok"),
         );
         assert_eq!(
-            built.headers().get("x-api-key").and_then(|v| v.to_str().ok()),
+            built
+                .headers()
+                .get("x-api-key")
+                .and_then(|v| v.to_str().ok()),
             Some("k"),
         );
     }
 
     #[tokio::test]
     async fn routing_uses_default_when_endpoint_has_no_requirements() {
-        let routing = RoutingAuthProvider::new(HashMap::new())
-            .with_default(bearer("bearer", "tok"));
+        let routing =
+            RoutingAuthProvider::new(HashMap::new()).with_default(bearer("bearer", "tok"));
         let out = routing
             .apply(req(), &EndpointAuthMetadata::unspecified())
             .unwrap();
@@ -1011,8 +1036,8 @@ mod tests {
     #[test]
     fn routing_has_credentials_for_unspecified_delegates_to_default() {
         // Default present + has creds → endpoint-aware check inherits.
-        let routing = RoutingAuthProvider::new(HashMap::new())
-            .with_default(bearer("bearer", "tok"));
+        let routing =
+            RoutingAuthProvider::new(HashMap::new()).with_default(bearer("bearer", "tok"));
         assert!(routing.has_credentials_for(&EndpointAuthMetadata::unspecified()));
     }
 
@@ -1039,11 +1064,7 @@ mod tests {
         assert_eq!(r.schemes["apiKey"].name(), "apiKey");
         assert_eq!(r.schemes["bearer"].name(), "bearer");
         // Silence dead-code lint on HeaderAuthProvider import path.
-        let _: &dyn AuthProvider = &HeaderAuthProvider::new(
-            "x",
-            "Y",
-            AuthCredentialSource::Missing,
-            false,
-        );
+        let _: &dyn AuthProvider =
+            &HeaderAuthProvider::new("x", "Y", AuthCredentialSource::Missing, false);
     }
 }

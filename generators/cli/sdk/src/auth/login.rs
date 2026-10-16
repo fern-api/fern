@@ -208,9 +208,7 @@ pub(crate) fn scheme_credential_fields(
 /// one JSON object, read back field-by-field by
 /// [`AuthCredentialSource::KeyringField`] (basic) or the provider's own
 /// lookup (OAuth2).
-pub(crate) fn multi_field_keyring_value(
-    fields: &[(&str, String)],
-) -> Result<String, CliError> {
+pub(crate) fn multi_field_keyring_value(fields: &[(&str, String)]) -> Result<String, CliError> {
     let map: serde_json::Map<String, serde_json::Value> = fields
         .iter()
         .map(|(k, v)| ((*k).to_string(), serde_json::Value::String(v.clone())))
@@ -226,23 +224,58 @@ pub(crate) fn multi_field_keyring_value(
 /// piping stdout is unaffected, and each is on its own line so a piped run
 /// does not render them run together.
 pub(crate) fn read_fields_from_stdin(
+    scheme_name: &str,
     fields: &[&'static str],
 ) -> Result<Vec<(&'static str, String)>, CliError> {
     let stderr = std::io::stderr();
     let mut err = stderr.lock();
+    let labels: Vec<String> = fields
+        .iter()
+        .map(|field| field_label(scheme_name, field).unwrap_or_else(|| (*field).to_string()))
+        .collect();
     let _ = writeln!(
         err,
         "This scheme needs {} values: {}.",
         fields.len(),
-        fields.join(", "),
+        labels.join(", "),
     );
     let mut out = Vec::with_capacity(fields.len());
-    for field in fields {
-        let _ = writeln!(err, "{field}:");
+    for (field, label) in fields.iter().zip(&labels) {
+        let _ = writeln!(err, "{label}:");
         let _ = err.flush();
-        out.push((*field, read_line_from_stdin(field)?));
+        out.push((*field, read_line_from_stdin(label)?));
     }
     Ok(out)
+}
+
+/// Prompt labels declared by the schemes (`scheme`, `field`, `label`), e.g.
+/// basic auth's `username` shown as `Account Sid`. Process-wide because the
+/// paste paths that prompt have no access to the registered bindings.
+static FIELD_LABELS: std::sync::RwLock<Vec<(String, String, String)>> =
+    std::sync::RwLock::new(Vec::new());
+
+/// Record the prompt labels a scheme declares. Called by `CliApp::auth`.
+pub(crate) fn register_field_labels(scheme_name: &str, labels: Vec<(String, String)>) {
+    if labels.is_empty() {
+        return;
+    }
+    let mut registry = FIELD_LABELS.write().unwrap_or_else(|e| e.into_inner());
+    registry.retain(|(scheme, _, _)| scheme != scheme_name);
+    registry.extend(
+        labels
+            .into_iter()
+            .map(|(field, label)| (scheme_name.to_string(), field, label)),
+    );
+}
+
+/// The label a scheme declared for one of its credential fields, if any.
+pub(crate) fn field_label(scheme_name: &str, field: &str) -> Option<String> {
+    FIELD_LABELS
+        .read()
+        .unwrap_or_else(|e| e.into_inner())
+        .iter()
+        .find(|(scheme, f, _)| scheme == scheme_name && f == field)
+        .map(|(_, _, label)| label.clone())
 }
 
 /// Concrete token-paste implementation, separated so the universal
@@ -277,7 +310,7 @@ pub(crate) fn run_token_paste_for(
     }
     let stored = if let Some(fields) = fields {
         drop(err);
-        multi_field_keyring_value(&read_fields_from_stdin(&fields)?)?
+        multi_field_keyring_value(&read_fields_from_stdin(scheme_name, &fields)?)?
     } else {
         let _ = writeln!(err, "Paste your token (input will be read from stdin):");
         let _ = err.flush();
@@ -440,11 +473,16 @@ fn handle_login(
             .ok_or_else(|| {
                 CliError::Validation(
                     "This CLI declares no auth schemes. Pass `--scheme <name>` to choose \
-                     the keyring slot for your token.".to_string(),
+                     the keyring slot for your token."
+                        .to_string(),
                 )
             })?
     } else {
-        resolve_scheme_for(matches.get_one::<String>("scheme"), auth_bindings, login_flows)?
+        resolve_scheme_for(
+            matches.get_one::<String>("scheme"),
+            auth_bindings,
+            login_flows,
+        )?
     };
 
     // `--from-env` exists here and not only on `profiles create` because
@@ -572,9 +610,7 @@ fn handle_status<W: Write>(
     }
 
     for (scheme_name, binding) in auth_bindings {
-        let flow = login_flows
-            .iter()
-            .find(|f| f.scheme_name() == scheme_name);
+        let flow = login_flows.iter().find(|f| f.scheme_name() == scheme_name);
 
         let _ = writeln!(
             stderr,
@@ -1060,10 +1096,7 @@ fn status_entry_for(
 /// Called by `CliApp::run` before bindings are propagated. Precedence
 /// stays CLI > env > keyring > file — keyring is appended last in the
 /// existing chain so any explicit user-configured source wins.
-pub fn inject_keyring_sources(
-    cli_name: &str,
-    bindings: &mut [(String, SchemeBinding)],
-) {
+pub fn inject_keyring_sources(cli_name: &str, bindings: &mut [(String, SchemeBinding)]) {
     for (scheme_name, binding) in bindings.iter_mut() {
         // The account is profile-scoped: `<scheme>` with no profile
         // selected (byte-identical to the pre-profiles key, so an existing
@@ -1164,6 +1197,20 @@ fn append_to_chain(
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn field_labels_are_scoped_to_their_scheme() {
+        super::register_field_labels(
+            "labels_test_scheme",
+            vec![("username".to_string(), "Account Sid".to_string())],
+        );
+        assert_eq!(
+            super::field_label("labels_test_scheme", "username").as_deref(),
+            Some("Account Sid")
+        );
+        assert_eq!(super::field_label("labels_test_scheme", "password"), None);
+        assert_eq!(super::field_label("labels_other_scheme", "username"), None);
+    }
+
     use super::*;
     use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
     use serial_test::serial;
@@ -1218,9 +1265,11 @@ mod tests {
 
     #[test]
     fn token_paste_with_url_carries_hint() {
-        let f = TokenPasteLoginFlow::new("OAuth2")
-            .token_paste_url("https://example.com/settings");
-        assert_eq!(f.token_paste_url.as_deref(), Some("https://example.com/settings"));
+        let f = TokenPasteLoginFlow::new("OAuth2").token_paste_url("https://example.com/settings");
+        assert_eq!(
+            f.token_paste_url.as_deref(),
+            Some("https://example.com/settings")
+        );
     }
 
     /// Run `f` with `profile` installed process-wide, restoring afterwards.
@@ -1421,8 +1470,14 @@ mod tests {
     #[test]
     fn resolve_scheme_explicit_wins() {
         let bindings = vec![
-            ("a".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
-            ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
+            (
+                "a".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
+            (
+                "b".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
         ];
         let s = resolve_scheme_for(Some(&"b".to_string()), &bindings, &[]).unwrap();
         assert_eq!(s, "b");
@@ -1431,8 +1486,14 @@ mod tests {
     #[test]
     fn resolve_scheme_multiple_bindings_no_arg_errors() {
         let bindings = vec![
-            ("a".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
-            ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
+            (
+                "a".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
+            (
+                "b".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
         ];
         let err = resolve_scheme_for(None, &bindings, &[]).unwrap_err();
         match err {
@@ -1449,8 +1510,14 @@ mod tests {
     fn resolve_scheme_disambiguates_via_single_login_flow() {
         // Multiple bindings, but only one has a declared login flow → use it.
         let bindings = vec![
-            ("a".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
-            ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
+            (
+                "a".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
+            (
+                "b".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
         ];
         let flows: Vec<DynLoginFlow> = vec![Arc::new(TokenPasteLoginFlow::new("b"))];
         let s = resolve_scheme_for(None, &bindings, &flows).unwrap();
@@ -1492,13 +1559,14 @@ mod tests {
         // path that reads stdin is exercised by tests/oauth_fixture_wire.rs.)
         let cmd = build_auth_command();
         let m = cmd
-            .try_get_matches_from(vec![
-                "auth", "login", "--with-token", "--scheme", "api-key",
-            ])
+            .try_get_matches_from(vec!["auth", "login", "--with-token", "--scheme", "api-key"])
             .unwrap();
         let (_, sub) = m.subcommand().unwrap();
         assert!(sub.get_flag("with-token"));
-        assert_eq!(sub.get_one::<String>("scheme").map(String::as_str), Some("api-key"));
+        assert_eq!(
+            sub.get_one::<String>("scheme").map(String::as_str),
+            Some("api-key")
+        );
     }
 
     #[test]
@@ -1547,7 +1615,6 @@ mod tests {
         assert!(slots.required.is_empty());
         assert_eq!(slots.alternatives.len(), 1);
         match &slots.alternatives[0] {
-
             AuthCredentialSource::Keyring { service, account } => {
                 assert_eq!(service, "my-cli");
                 assert_eq!(account, "OAuth2");
@@ -1826,8 +1893,9 @@ mod tests {
             describe_source(&AuthCredentialSource::cli("api-token")),
             "--api-token flag"
         );
-        assert!(describe_source(&AuthCredentialSource::keyring("cli", "scheme"))
-            .contains("cli:scheme"));
+        assert!(
+            describe_source(&AuthCredentialSource::keyring("cli", "scheme")).contains("cli:scheme")
+        );
     }
 
     #[test]

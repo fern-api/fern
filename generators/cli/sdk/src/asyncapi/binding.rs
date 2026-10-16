@@ -271,7 +271,9 @@ impl Binding for AsyncApiBinding {
             let (channel_name, channel, matched_args) =
                 Self::resolve_channel(&prepared.doc, root_matches)?;
 
-            let message_arg = matched_args.get_one::<String>("message").map(String::as_str);
+            let message_arg = matched_args
+                .get_one::<String>("message")
+                .map(String::as_str);
 
             // `--dry-run` is a global flag. It is registered by the AsyncAPI
             // command tree (`commands::build_cli`) and, in mixed apps, also by
@@ -299,19 +301,20 @@ impl Binding for AsyncApiBinding {
             // can point at `ws://127.0.0.1:<port>` and still hit the
             // binary's `/v1/convai/conversation` route. When only one of
             // the two is set, it's used verbatim.
-            let base_url_override_owned = crate::cli_args::resolve_base_url_override(
-                root_matches,
-                &self.inner.name,
-            )?;
+            let base_url_override_owned =
+                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
             let composed = executor::compose_base_url_override(
                 base_url_override_owned.as_deref(),
                 self.inner.endpoint_url.as_deref(),
             );
             let base_url_override = composed.as_deref();
 
-            let http_config = prepared.http_config.clone().with_user_agent_suffix_override(
-                crate::cli_args::resolve_user_agent_suffix_override(root_matches),
-            );
+            let http_config = prepared
+                .http_config
+                .clone()
+                .with_user_agent_suffix_override(
+                    crate::cli_args::resolve_user_agent_suffix_override(root_matches),
+                );
 
             // Resolve binding-level CLI args (e.g. `--voice`, `--audio-out`)
             // ONCE per dispatch, then pick the init payload and
@@ -325,11 +328,9 @@ impl Binding for AsyncApiBinding {
             // --format http is HTTP-specific; reject for AsyncAPI/WebSocket.
             // Use OutputPipeline::from_matches so both --format flag and
             // <NAME>_OUTPUT env var are resolved.
-            let pipeline = crate::formatter::OutputPipeline::from_matches(
-                root_matches,
-                &self.inner.name,
-            )
-            .map_err(|e| CliError::Validation(e.to_string()))?;
+            let pipeline =
+                crate::formatter::OutputPipeline::from_matches(root_matches, &self.inner.name)
+                    .map_err(|e| CliError::Validation(e.to_string()))?;
             if pipeline.is_http() {
                 return Err(CliError::Validation(
                     "the `http` output format is only supported for OpenAPI-based CLIs".to_string(),
@@ -443,7 +444,9 @@ paths:
         let cli = clap::Command::new("root")
             .subcommand_required(true)
             .subcommand(clap::Command::new("agent-messages"));
-        let matches = cli.try_get_matches_from(["root", "agent-messages"]).unwrap();
+        let matches = cli
+            .try_get_matches_from(["root", "agent-messages"])
+            .unwrap();
 
         let (resolved_name, _, _) =
             AsyncApiBinding::resolve_channel(&doc, &matches).expect("resolver matches kebab leaf");
@@ -504,9 +507,7 @@ paths:
             .expect("admin list must resolve to AdminList");
         assert_eq!(admin_name, "AdminList");
 
-        let users_matches = cli
-            .try_get_matches_from(["root", "users", "list"])
-            .unwrap();
+        let users_matches = cli.try_get_matches_from(["root", "users", "list"]).unwrap();
         let (users_name, _, _) = AsyncApiBinding::resolve_channel(&doc, &users_matches)
             .expect("users list must resolve to UserList");
         assert_eq!(users_name, "UserList");
@@ -518,9 +519,11 @@ paths:
         // channel leaf because the arg is `.global(true)`. Use the
         // ElevenLabs fixture which has `AgentMessages` falling back to
         // the kebab leaf.
-        let mut binding = AsyncApiBinding::new()
-            .spec(FIXTURE)
-            .cli_arg("voice", BindingArgKind::Flag, "Enable voice mode");
+        let mut binding = AsyncApiBinding::new().spec(FIXTURE).cli_arg(
+            "voice",
+            BindingArgKind::Flag,
+            "Enable voice mode",
+        );
         binding.set_cli_name("convai");
         let cmd = binding.build_command().expect("clap tree builds");
         // Pass `--voice` AFTER the leaf — only a global arg parses here.
