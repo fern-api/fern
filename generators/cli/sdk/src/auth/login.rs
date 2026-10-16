@@ -223,8 +223,9 @@ pub(crate) fn multi_field_keyring_value(
 ///
 /// Pipeable (`printf 'id\nsecret\n' | cli auth login --with-token`), the
 /// same contract single-value paste already has. Prompts go to stderr so
-/// piping stdout is unaffected, and each is on its own line so a piped run
-/// does not render them run together.
+/// piping stdout is unaffected. In a terminal the value is typed on the
+/// prompt's line and secret fields are not echoed; piped runs keep one
+/// prompt per line so they don't render run together.
 pub(crate) fn read_fields_from_stdin(
     scheme_name: &str,
     fields: &[&'static str],
@@ -242,10 +243,23 @@ pub(crate) fn read_fields_from_stdin(
         labels.join(", "),
     );
     let mut out = Vec::with_capacity(fields.len());
+    let typed = std::io::stdin().is_terminal();
     for (field, label) in fields.iter().zip(&labels) {
-        let _ = write!(err, "{label}: ");
+        let hide = typed && crate::profiles::commands::is_secret_field(field);
+        let _ = if typed {
+            write!(err, "{label}{}: ", if hide { " (hidden)" } else { "" })
+        } else {
+            writeln!(err, "{label}:")
+        };
         let _ = err.flush();
-        out.push((*field, read_line_from_stdin(label)?));
+        let value = {
+            let _echo = hide.then(crate::profiles::commands::EchoOff::new);
+            read_line_from_stdin(label)
+        };
+        if hide {
+            let _ = writeln!(err);
+        }
+        out.push((*field, value?));
     }
     Ok(out)
 }

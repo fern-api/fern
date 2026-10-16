@@ -2746,7 +2746,7 @@ fn provision_scheme(
         .ok_or(err)
 }
 
-fn is_secret_field(field: &str) -> bool {
+pub(crate) fn is_secret_field(field: &str) -> bool {
     let field = field.to_ascii_lowercase();
     ["password", "secret", "token"]
         .iter()
@@ -2795,13 +2795,13 @@ fn read_secret(
 }
 
 /// Turns terminal echo off for its lifetime on Unix; a no-op elsewhere.
-struct EchoOff {
+pub(crate) struct EchoOff {
     #[cfg(unix)]
     saved: Option<libc::termios>,
 }
 
 impl EchoOff {
-    fn new() -> Self {
+    pub(crate) fn new() -> Self {
         #[cfg(unix)]
         {
             // SAFETY: `termios` is plain data; tcgetattr fills it before use
