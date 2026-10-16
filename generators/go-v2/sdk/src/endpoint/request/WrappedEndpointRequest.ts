@@ -219,13 +219,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
             reference: bodyProperty.valueType,
             value: go.codeblock(field)
         });
-        // Enums are sent as plain form values, not JSON-encoded strings.
+        // Enums are sent as plain form values unless the part is declared as JSON.
         const iterableType = this.context.maybeUnwrapIterable(bodyProperty.valueType);
-        const isEnum =
+        const isJsonPart = bodyProperty.contentType?.toLowerCase().includes("json") ?? false;
+        const isEnumValue =
             iterableType != null
                 ? this.context.maybeEnum(iterableType) != null &&
                   this.context.maybeUnwrapOptionalOrNullable(iterableType) == null
                 : this.context.maybeEnum(bodyProperty.valueType) != null;
+        const isEnum = isEnumValue && !isJsonPart;
         const formatType = format.isPrimitive || isEnum ? "field" : "json";
         if (format.isIterable) {
             writer.writeLine(`for _, part := range ${field} {`);
