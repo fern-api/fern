@@ -243,7 +243,7 @@ pub(crate) fn read_fields_from_stdin(
     );
     let mut out = Vec::with_capacity(fields.len());
     for (field, label) in fields.iter().zip(&labels) {
-        let _ = writeln!(err, "{label}:");
+        let _ = write!(err, "{label}: ");
         let _ = err.flush();
         out.push((*field, read_line_from_stdin(label)?));
     }
