@@ -1,7 +1,8 @@
 import { runFernCli } from "../../utils/runFernCli.js";
 import { init } from "../init/init.js";
 
-// Ensure that the generators list command works and the format doesn't change, since fern-bot consumes this
+// Ensure that the generators list command works and its output format only changes intentionally.
+// Each API nests legacy generator groups under `groups` and SDK Config targets under `targets`.
 describe("fern generator list", () => {
     it("fern generator list", async ({ signal }) => {
         const pathOfDirectory = await init({ signal });

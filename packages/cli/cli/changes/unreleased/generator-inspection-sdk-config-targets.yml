@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generator list` and `fern generator get` now describe SDK Config targets from `sdk-config.yml`
+    alongside legacy generator groups, so they stay accurate after `fern sdk migrate`.
+
+    `fern generator list` output now nests each API under `groups` (legacy groups from `generators.yml` or
+    `generators.legacy.yml`) and `targets` (SDK Config targets with their language, generator, and version,
+    where an unpinned target reports `latest`). A language configured in both files appears in both sections.
+    The new `--targets` option filters SDK Config targets by language or target id.
+
+    `fern generator get --target <language>` reads an SDK Config target's version, language, or repository.
+    Missing selections now fail with the configuration files inspected, and a legacy selection that was
+    migrated points at its SDK Config target.
+  type: feat
