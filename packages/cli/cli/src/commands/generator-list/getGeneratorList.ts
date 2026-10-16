@@ -83,9 +83,7 @@ export async function getGeneratorList({
             });
         })
     );
-    const sdkConfigSources = (await loadSdkConfigTargets({ project, cliContext })).filter((source) =>
-        isSelectedApi(source.workspaceName)
-    );
+    const sdkConfigSources = await loadSdkConfigTargets({ project, cliContext, isSelectedApi });
 
     const generators: Record<string, GeneratorListApiEntry> = {};
     const getApiEntry = (workspaceName: string | undefined): GeneratorListApiEntry => {
@@ -165,15 +163,15 @@ export async function getGeneratorList({
 
 /** An exclusion, when given, decides on its own: it overrides --include-mode rather than narrowing it. */
 function isIncludedByModes(
-    mode: GenerationModeFilter | undefined,
+    mode: GenerationModeFilter,
     includedModes: Set<GenerationModeFilter> | undefined,
     excludedModes: Set<GenerationModeFilter> | undefined
 ): boolean {
     if (excludedModes != null) {
-        return mode == null || !excludedModes.has(mode);
+        return !excludedModes.has(mode);
     }
     if (includedModes != null) {
-        return mode != null && includedModes.has(mode);
+        return includedModes.has(mode);
     }
     return true;
 }
@@ -198,9 +196,10 @@ function getGeneratorInvocationMode(generator: generatorsYml.GeneratorInvocation
  * Maps SDK Config delivery onto the legacy output modes. GitHub delivery stays `github` even when it also publishes,
  * matching a legacy github output with publish settings; files or zip delivery that publishes is a direct publish.
  */
-function getSdkConfigOutputMode(output: SdkConfigV1OutputConfig | undefined): GenerationModeFilter | undefined {
+function getSdkConfigOutputMode(output: SdkConfigV1OutputConfig | undefined): GenerationModeFilter {
+    // `fern generate` downloads a target without output, the same as files delivery
     if (output == null) {
-        return undefined;
+        return GenerationModeFilter.Local;
     }
     switch (output.delivery) {
         case "github":

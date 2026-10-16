@@ -1,4 +1,4 @@
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -8,6 +8,8 @@ import { vi } from "vitest";
 import YAML from "yaml";
 
 import type { CliContext } from "../../../cli-context/CliContext.js";
+
+const OPENAPI_YML = "openapi: 3.0.0\ninfo:\n  title: Acme\n  version: 1.0.0\npaths: {}\n";
 
 export const LEGACY_GENERATORS_YML = {
     api: { specs: [{ openapi: "./openapi.yml" }] },
@@ -63,10 +65,7 @@ export async function createFernProject({
     const directory = await mkdtemp(path.join(tmpdir(), "fern-generator-inspect-"));
     temporaryDirectories.push(directory);
     await writeFile(path.join(directory, "fern.config.json"), '{"organization":"test","version":"*"}\n');
-    await writeFile(
-        path.join(directory, "openapi.yml"),
-        "openapi: 3.0.0\ninfo:\n  title: Acme\n  version: 1.0.0\npaths: {}\n"
-    );
+    await writeFile(path.join(directory, "openapi.yml"), OPENAPI_YML);
     if (generatorsYml != null) {
         await writeFile(path.join(directory, "generators.yml"), YAML.stringify(generatorsYml));
     }
@@ -76,7 +75,30 @@ export async function createFernProject({
     if (sdkConfigYml != null) {
         await writeFile(path.join(directory, "sdk-config.yml"), YAML.stringify(sdkConfigYml));
     }
+    return loadFernProject(directory);
+}
 
+/** Writes an SDK Config-only fern/apis/<name>/ workspace per entry; values are raw sdk-config.yml contents. */
+export async function createMultiApiFernProject({
+    sdkConfigYmlByApi,
+    temporaryDirectories
+}: {
+    sdkConfigYmlByApi: Record<string, string>;
+    temporaryDirectories: string[];
+}): Promise<FernProjectFixture> {
+    const directory = await mkdtemp(path.join(tmpdir(), "fern-generator-inspect-"));
+    temporaryDirectories.push(directory);
+    await writeFile(path.join(directory, "fern.config.json"), '{"organization":"test","version":"*"}\n');
+    for (const [apiName, sdkConfigYml] of Object.entries(sdkConfigYmlByApi)) {
+        const apiDirectory = path.join(directory, "apis", apiName);
+        await mkdir(apiDirectory, { recursive: true });
+        await writeFile(path.join(apiDirectory, "openapi.yml"), OPENAPI_YML);
+        await writeFile(path.join(apiDirectory, "sdk-config.yml"), sdkConfigYml);
+    }
+    return loadFernProject(directory);
+}
+
+async function loadFernProject(directory: string): Promise<FernProjectFixture> {
     const taskContext = createMockTaskContext();
     const project = await loadProjectFromDirectory({
         absolutePathToFernDirectory: AbsoluteFilePath.of(directory),

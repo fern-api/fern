@@ -224,7 +224,7 @@ export async function getSdkConfigTargetMetadata({
     };
 }
 
-async function getSelectedSdkConfigSources({
+function getSelectedSdkConfigSources({
     project,
     cliContext,
     apiFilter
@@ -233,9 +233,11 @@ async function getSelectedSdkConfigSources({
     cliContext: CliContext;
     apiFilter: string | undefined;
 }): Promise<SdkConfigTargetSource[]> {
-    return (await loadSdkConfigTargets({ project, cliContext })).filter((source) =>
-        isSelectedApi(source.workspaceName, apiFilter)
-    );
+    return loadSdkConfigTargets({
+        project,
+        cliContext,
+        isSelectedApi: (workspaceName) => isSelectedApi(workspaceName, apiFilter)
+    });
 }
 
 function isSelectedApi(workspaceName: string | undefined, apiFilter: string | undefined): boolean {

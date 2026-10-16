@@ -1,9 +1,11 @@
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
-
+import YAML from "yaml";
 import type { CliContext } from "../../../cli-context/CliContext.js";
+
 import {
     createFernProject,
+    createMultiApiFernProject,
     LEGACY_GENERATORS_YML,
     removeTemporaryDirectories,
     sdkConfig
@@ -182,5 +184,23 @@ describe("generator get with SDK Config targets", () => {
             `Generator fern-java-sdk, in group java-sdk was not found in ${path.join(directory, "generators.legacy.yml")}. ` +
                 `It is configured as SDK Config target 'java' in ${path.join(directory, "sdk-config.yml")}; use --target java.`
         );
+    });
+
+    it("--api never reads the sdk-config.yml of an unselected API", async () => {
+        const { project, cliContext } = await createMultiApiFernProject({
+            sdkConfigYmlByApi: {
+                payments: YAML.stringify(
+                    sdkConfig([
+                        { language: "java", generatorVersion: "4.8.12", output: { delivery: "files", path: "./java" } }
+                    ])
+                ),
+                billing: "targets: [this is: not valid yaml"
+            },
+            temporaryDirectories
+        });
+
+        await expect(
+            getSdkConfigTargetMetadata({ cliContext, project, targetFilter: "java", apiFilter: "payments" })
+        ).resolves.toMatchObject({ version: "4.8.12" });
     });
 });

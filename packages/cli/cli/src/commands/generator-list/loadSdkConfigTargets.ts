@@ -31,16 +31,21 @@ export interface SdkConfigTargetSource {
  * Reads the SDK Config targets `fern generate` would discover, for commands that only describe configuration.
  *
  * An API workspace owns the sdk-config.yml beside its generators.yml; an SDK Config-only workspace owns its own.
- * Files load in preview mode, so publishing credentials are never resolved.
+ * Files load in preview mode, so publishing credentials are never resolved. Unselected APIs are skipped before their
+ * files are read, so an invalid sdk-config.yml in one API cannot fail a command scoped to another.
  */
 export async function loadSdkConfigTargets({
     project,
-    cliContext
+    cliContext,
+    isSelectedApi
 }: {
     project: Project;
     cliContext: CliContext;
+    isSelectedApi: (workspaceName: string | undefined) => boolean;
 }): Promise<SdkConfigTargetSource[]> {
-    const owners = [...project.apiWorkspaces, ...(project.sdkConfigWorkspaces ?? [])];
+    const owners = [...project.apiWorkspaces, ...(project.sdkConfigWorkspaces ?? [])].filter((owner) =>
+        isSelectedApi(owner.workspaceName)
+    );
     const sources: SdkConfigTargetSource[] = [];
     const seenPaths = new Set<string>();
     for (const owner of owners) {

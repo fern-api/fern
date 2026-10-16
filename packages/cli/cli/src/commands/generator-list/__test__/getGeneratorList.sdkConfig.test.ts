@@ -6,6 +6,7 @@ import YAML from "yaml";
 import { GenerationModeFilter, getGeneratorList } from "../getGeneratorList.js";
 import {
     createFernProject,
+    createMultiApiFernProject,
     type FernProjectFixture,
     LEGACY_GENERATORS_YML,
     removeTemporaryDirectories,
@@ -30,6 +31,7 @@ describe("getGeneratorList with SDK Config targets", () => {
             generatorFilter?: Set<string>;
             groupFilter?: Set<string>;
             targetFilter?: Set<string>;
+            apiFilter?: Set<string>;
             includedModes?: Set<GenerationModeFilter>;
             excludedModes?: Set<GenerationModeFilter>;
         } = {}
@@ -41,7 +43,7 @@ describe("getGeneratorList with SDK Config targets", () => {
             generatorFilter: filters.generatorFilter,
             groupFilter: filters.groupFilter,
             targetFilter: filters.targetFilter,
-            apiFilter: undefined,
+            apiFilter: filters.apiFilter,
             apiKeyFallback: undefined,
             outputLocation,
             includedModes: filters.includedModes,
@@ -179,6 +181,52 @@ describe("getGeneratorList with SDK Config targets", () => {
                     ).FERN_DEFAULT.targets
                 )
             ).toEqual(["java"]);
+        });
+
+        it("filters a target without output by the global output it inherits", async () => {
+            // SDK Config requires a target output unless a global output is configured
+            const fixture = await createFernProject({
+                sdkConfigYml: {
+                    ...sdkConfig([
+                        { language: "python" },
+                        { language: "java", output: { delivery: "github", github: { repository: "acme/java-sdk" } } }
+                    ]),
+                    output: { delivery: "files", path: "./sdks" }
+                },
+                temporaryDirectories
+            });
+
+            expect(await list(fixture, { includedModes: new Set([GenerationModeFilter.Local]) })).toEqual({
+                FERN_DEFAULT: {
+                    groups: {},
+                    targets: { python: { language: "python", generator: "fernapi/fern-python-sdk", version: "latest" } }
+                }
+            });
+            expect(await list(fixture, { excludedModes: new Set([GenerationModeFilter.Local]) })).toEqual({
+                FERN_DEFAULT: {
+                    groups: {},
+                    targets: { java: { language: "java", generator: "fernapi/fern-java-sdk", version: "latest" } }
+                }
+            });
+        });
+
+        it("--apis never reads the sdk-config.yml of an unselected API", async () => {
+            const fixture = await createMultiApiFernProject({
+                sdkConfigYmlByApi: {
+                    payments: YAML.stringify(
+                        sdkConfig([{ language: "java", output: { delivery: "files", path: "./sdks/java" } }])
+                    ),
+                    billing: "targets: [this is: not valid yaml"
+                },
+                temporaryDirectories
+            });
+
+            expect(await list(fixture, { apiFilter: new Set(["payments"]) })).toEqual({
+                payments: {
+                    groups: {},
+                    targets: { java: { language: "java", generator: "fernapi/fern-java-sdk", version: "latest" } }
+                }
+            });
         });
     });
 });
