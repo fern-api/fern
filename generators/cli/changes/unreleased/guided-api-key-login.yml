@@ -20,3 +20,8 @@
     `profiles remove --revoke` now authenticates the revoke request with the profile's own stored
     key. Previously it only worked when the parent credentials were also exported as env vars.
   type: fix
+- summary: |
+    `profiles create --provision` and the guided flow no longer require `--scheme` on CLIs that
+    declare several auth schemes: they use the first scheme whose credential fields the
+    provisioning response fills (e.g. the basic scheme for a `username`/`password` key).
+  type: fix

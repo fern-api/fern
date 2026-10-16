@@ -2137,7 +2137,7 @@ async fn provision_remote_credential(
             "--provision is not configured for this CLI.".to_string(),
         ));
     };
-    let scheme = login::resolve_scheme_for(explicit_scheme, ctx.auth_bindings, ctx.login_flows)?;
+    let scheme = provision_scheme(explicit_scheme, op, ctx.auth_bindings, ctx.login_flows)?;
     let fields = login::scheme_credential_fields(&scheme, ctx.auth_bindings);
 
     let mut params: serde_json::Map<String, serde_json::Value> = resolved
@@ -2681,8 +2681,9 @@ fn prompt_guided_credential(
             "no provisioning operation is configured for this CLI.".to_string(),
         ));
     };
-    let scheme = login::resolve_scheme_for(
+    let scheme = provision_scheme(
         matches.get_one::<String>("scheme"),
+        op,
         ctx.auth_bindings,
         ctx.login_flows,
     )?;
@@ -2707,6 +2708,36 @@ fn prompt_guided_credential(
         scheme,
         fields: values,
     })
+}
+
+/// The scheme a provisioned key belongs to. When the usual resolution is
+/// ambiguous (several schemes, no `--scheme`), pick the first scheme whose
+/// credential fields are the ones the provisioning response fills.
+fn provision_scheme(
+    explicit: Option<&String>,
+    op: &super::ProvisionOperation,
+    auth_bindings: &[(String, SchemeBinding)],
+    login_flows: &[DynLoginFlow],
+) -> Result<String, CliError> {
+    let err = match login::resolve_scheme_for(explicit, auth_bindings, login_flows) {
+        Ok(scheme) => return Ok(scheme),
+        Err(err) => err,
+    };
+    if explicit.is_some() || op.credential_fields.is_empty() {
+        return Err(err);
+    }
+    let mut wanted: Vec<&str> = op.credential_fields.iter().map(|(f, _)| f.as_str()).collect();
+    wanted.sort_unstable();
+    auth_bindings
+        .iter()
+        .find(|(name, _)| {
+            let mut fields =
+                login::scheme_credential_fields(name, auth_bindings).unwrap_or_else(|| vec!["token"]);
+            fields.sort_unstable();
+            fields == wanted
+        })
+        .map(|(name, _)| name.clone())
+        .ok_or(err)
 }
 
 fn is_secret_field(field: &str) -> bool {
@@ -3016,6 +3047,38 @@ fn confirm(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn basic_binding() -> SchemeBinding {
+        SchemeBinding::Basic {
+            username: AuthCredentialSource::Missing,
+            password: AuthCredentialSource::Missing,
+        }
+    }
+
+    #[test]
+    fn provision_scheme_picks_the_scheme_the_key_fills_when_ambiguous() {
+        let bindings = vec![
+            ("bearer".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
+            ("accountSid_authToken".to_string(), basic_binding()),
+            ("other_basic".to_string(), basic_binding()),
+        ];
+        let op = super::super::ProvisionOperation::new("keys.create")
+            .credential_field("username", "sid")
+            .credential_field("password", "secret");
+        assert_eq!(
+            provision_scheme(None, &op, &bindings, &[]).unwrap(),
+            "accountSid_authToken"
+        );
+        let explicit = "other_basic".to_string();
+        assert_eq!(
+            provision_scheme(Some(&explicit), &op, &bindings, &[]).unwrap(),
+            "other_basic"
+        );
+        let token_op = super::super::ProvisionOperation::new("keys.create").credential_field("token", "key");
+        assert_eq!(provision_scheme(None, &token_op, &bindings, &[]).unwrap(), "bearer");
+        let no_match = super::super::ProvisionOperation::new("keys.create").credential_field("client_id", "id");
+        assert!(provision_scheme(None, &no_match, &bindings, &[]).is_err());
+    }
 
     #[test]
     fn confirm_default_yes_treats_enter_as_yes_and_eof_as_no() {
