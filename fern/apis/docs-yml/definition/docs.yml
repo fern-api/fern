@@ -1740,6 +1740,9 @@ types:
       tag-description-pages:
         type: optional<boolean>
         docs: If true, a page will be created for each tag in the OpenAPI spec that contains a description.
+      endpoint-index-pages:
+        type: optional<boolean>
+        docs: If true, the CLI generates an "All Endpoints" page listing every endpoint grouped by section, and appends an endpoint list to each section's summary page (creating one when the section has none).
       snippets: optional<SnippetsConfiguration>
       postman:
         type: optional<string>

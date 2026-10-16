@@ -97,6 +97,7 @@ async function visitNavigationItem({
         audiences: noop,
         displayErrors: noop,
         tagDescriptionPages: noop,
+        endpointIndexPages: noop,
         snippets: noop,
         summary: noop,
         title: noop,
