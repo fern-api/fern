@@ -205,6 +205,12 @@ impl OpenApiBinding {
         self
     }
 
+    /// See [`super::CliApp::default_output_properties`].
+    pub fn default_output_properties(mut self, enabled: bool) -> Self {
+        self.inner = self.inner.default_output_properties(enabled);
+        self
+    }
+
     /// Register a global parameter that surfaces as a top-level CLI flag
     /// and is injected into outgoing requests at the configured wire
     /// location. Emitted by the TypeScript codegen layer
@@ -606,6 +612,24 @@ impl Binding for OpenApiBinding {
         Ok(cli)
     }
 
+    fn output_properties_for(&self, root_matches: &clap::ArgMatches) -> Vec<String> {
+        if !self.inner.default_output_properties {
+            return Vec::new();
+        }
+        let Ok(prepared) = self.ensure_prepared() else {
+            return Vec::new();
+        };
+        let resolve_from = match &self.command_namespace {
+            Some(ns) => root_matches
+                .subcommand_matches(ns.as_str())
+                .unwrap_or(root_matches),
+            None => root_matches,
+        };
+        super::resolve_method_from_matches(&prepared.doc, resolve_from)
+            .map(|(method, _)| method.default_output_properties.clone())
+            .unwrap_or_default()
+    }
+
     fn dispatch<'a>(
         &'a self,
         root_matches: &'a clap::ArgMatches,
@@ -846,11 +870,14 @@ impl Binding for OpenApiBinding {
                 output_path_buf.as_deref().and_then(|p| p.to_str())
             };
 
-            let pipeline = crate::formatter::OutputPipeline::from_matches(
+            let mut pipeline = crate::formatter::OutputPipeline::from_matches(
                 root_matches,
                 &self.inner.name,
             )
             .map_err(|e| CliError::Validation(e.to_string()))?;
+            if self.inner.default_output_properties {
+                pipeline.default_properties = method.default_output_properties.clone();
+            }
 
             if pipeline.is_raw() && pagination.page_all {
                 return Err(CliError::Validation(
@@ -1315,6 +1342,37 @@ mod tests {
         let result = prefix_schema_operations(input, "api");
         assert_eq!(result["operation"], "api.users.get");
         assert_eq!(result["httpMethod"], "GET");
+    }
+
+    #[test]
+    fn default_output_properties_resolves_dispatched_operation() {
+        let spec = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /things:
+    x-twilio:
+      defaultOutputProperties: [sid, status]
+    get:
+      x-fern-sdk-group-name: ["things"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#;
+        let props = |mut binding: OpenApiBinding| {
+            binding.set_cli_name("cli");
+            let matches = binding
+                .build_command()
+                .unwrap()
+                .try_get_matches_from(["cli", "things", "list"])
+                .unwrap();
+            binding.output_properties_for(&matches)
+        };
+        assert_eq!(
+            props(OpenApiBinding::new().spec(spec).default_output_properties(true)),
+            vec!["sid".to_string(), "status".to_string()],
+        );
+        assert!(props(OpenApiBinding::new().spec(spec)).is_empty());
     }
 
     #[test]

@@ -297,6 +297,7 @@ impl AppContext {
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
             query: None,
+            default_properties: Vec::new(),
         };
 
         // Programmatic execution from custom command handlers honors the

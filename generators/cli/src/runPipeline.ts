@@ -169,6 +169,7 @@ export async function runPipeline(args: {
         specsDir,
         customCommands,
         rootGroup: customConfig.rootGroup,
+        defaultOutputProperties: customConfig.defaultOutputProperties,
         userAgentSuffixFlag: customConfig.userAgentSuffixFlag,
         // `undefined` (not `false`) is the off switch: `copySpecs` emits no
         // `.profiles(...)` call at all, so the feature is inert rather than

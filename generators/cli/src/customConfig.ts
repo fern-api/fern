@@ -43,6 +43,15 @@ export interface FernCliCustomConfig {
     rootGroup?: string;
 
     /**
+     * Honor Twilio's `x-twilio.defaultOutputProperties` spec extension:
+     * `table` output of an operation that declares it shows only those
+     * fields (one row per record), like Twilio's own CLI. `json`/`yaml`/
+     * other formats and `--query` still get the full response. Off by
+     * default.
+     */
+    defaultOutputProperties?: boolean;
+
+    /**
      * Name of the global flag (and, by derivation, the environment
      * variable) a downstream consumer uses to append a product token to
      * the generated CLI's `User-Agent`.
@@ -474,6 +483,14 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.rootGroup = obj.rootGroup;
+    }
+    if ("defaultOutputProperties" in obj && obj.defaultOutputProperties !== undefined) {
+        if (typeof obj.defaultOutputProperties !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.defaultOutputProperties: expected a boolean, got ${typeof obj.defaultOutputProperties}.`
+            );
+        }
+        result.defaultOutputProperties = obj.defaultOutputProperties;
     }
     if ("userAgentSuffixFlag" in obj && obj.userAgentSuffixFlag !== undefined) {
         if (typeof obj.userAgentSuffixFlag !== "string") {

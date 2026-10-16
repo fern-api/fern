@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `defaultOutputProperties` config option. When it's `true`, `table` output of an
+    operation whose spec declares `x-twilio.defaultOutputProperties` (on the operation or its path)
+    shows only those fields, one row per record, with Twilio-style headings (`date_sent` → `Date Sent`,
+    `sid` → `SID`). `json`, `yaml` and other formats, and `--query`, still get the full response.
+    Off by default, so existing CLIs are unchanged.
+  type: feat

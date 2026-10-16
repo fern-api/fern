@@ -47,6 +47,16 @@ describe("validateCustomConfig", () => {
         expect(() => validateCustomConfig({ customCommands: "yes" })).toThrow(/expected a boolean, got string/);
     });
 
+    it("accepts a boolean defaultOutputProperties", () => {
+        expect(validateCustomConfig({ defaultOutputProperties: true })).toEqual({ defaultOutputProperties: true });
+    });
+
+    it("throws on non-boolean defaultOutputProperties", () => {
+        expect(() => validateCustomConfig({ defaultOutputProperties: "yes" })).toThrow(
+            /defaultOutputProperties: expected a boolean, got string/
+        );
+    });
+
     it("accepts a string rootGroup", () => {
         expect(validateCustomConfig({ rootGroup: "api" })).toEqual({ rootGroup: "api" });
     });

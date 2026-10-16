@@ -1643,8 +1643,10 @@ impl CliApp {
                 let transformed = self.hooks.run_transform_response(value, &op_path).await?;
 
                 // Format and write output.
-                let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
+                let mut pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
                     .map_err(|e| CliError::Validation(e.to_string()))?;
+                pipeline.default_properties =
+                    self.bindings[binding_idx].output_properties_for(&matches);
                 pipeline
                     .emit(out, &transformed, false, true)
                     .map_err(|e| CliError::Other(e.into()))?;
