@@ -851,7 +851,6 @@ def test_generated_verify_request_named_settings_fail_closed(caplog: typing.Any)
     with caplog.at_level(logging.WARNING):
         for settings in (
             f"key={_TWILIO_KEY_ID},algorithm=HMAC_SHA512",
-            f"{_TWILIO_KEY_ID},HMAC_SHA256",
             f"key={_TWILIO_KEY_ID}",
         ):
             headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhooks-Signature-Settings": settings}
@@ -860,6 +859,17 @@ def test_generated_verify_request_named_settings_fail_closed(caplog: typing.Any)
             )
             assert "unsupported algorithm" in caplog.text
             caplog.clear()
-        headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhooks-Signature-Settings": "key=unknown,algorithm=HMAC_SHA256"}
+        headers = {
+            "X-Twilio-Signature": "x",
+            "X-Twilio-Webhooks-Signature-Settings": "key=unknown,algorithm=HMAC_SHA256",
+        }
         assert not helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=resolve)
         assert "signing key could not be resolved" in caplog.text
+        caplog.clear()
+        for settings in ("algorithm=HMAC_SHA256", f"{_TWILIO_KEY_ID},HMAC_SHA256"):
+            caplog.clear()
+            headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhooks-Signature-Settings": settings}
+            assert not helper.verify_request(
+                headers=headers, request_body="", notification_url=url, signature_key=resolve
+            )
+            assert "missing the key ID" in caplog.text

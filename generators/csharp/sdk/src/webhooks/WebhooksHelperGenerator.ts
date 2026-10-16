@@ -11,6 +11,7 @@ const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run:
 const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
 const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
 const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
@@ -304,6 +305,13 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
                 writer.write("keyId = settingsParts.TryGetValue(");
                 writer.writeNode(keyIdParameter);
                 writer.writeTextStatement(", out var configuredKeyId) ? configuredKeyId : null");
+                writer.writeLine("if (string.IsNullOrEmpty(keyId))");
+                writer.writeLine("{");
+                writer.indent();
+                writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${MISSING_KEY_ID_MESSAGE}")`);
+                writer.writeTextStatement("return false");
+                writer.dedent();
+                writer.writeLine("}");
             }
         } else if (algorithmHeader.keyIdDelimiter != null) {
             const delimiter = this.csharp.string_({ string: algorithmHeader.keyIdDelimiter });

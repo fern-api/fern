@@ -11,6 +11,7 @@ const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
 const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
 const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 
 interface WebhookVerificationEntry {
     config: FernIr.HmacSignatureVerification;
@@ -386,6 +387,9 @@ class HmacHelperWriter {
             writer.writeLine(`\t\talgorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}]`);
             if (algorithmHeader.keyIdParameter != null) {
                 writer.writeLine(`\t\tkeyID = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}]`);
+                writer.writeLine('\t\tif keyID == "" {');
+                writer.writeLine(`\t\t\treturn false, ${errorsAlias}.New(${JSON.stringify(MISSING_KEY_ID_MESSAGE)})`);
+                writer.writeLine("\t\t}");
             }
         } else if (algorithmHeader.keyIdDelimiter != null) {
             writer.writeLine(

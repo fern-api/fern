@@ -2,19 +2,20 @@ import json
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.utils import pascal_case, snake_case
 
-import fern.ir.resources as ir_types
-
 WEBHOOKS_MODULE_NAME = "webhooks"
 WEBHOOKS_HELPER_FILE_NAME = "webhooks_helper"
 MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header"
 VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch"
 UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm"
+MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID"
 UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved"
 
 DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300
@@ -358,7 +359,14 @@ class _HmacHelperWriter:
                 ]
             )
             if algorithm_header.key_id_parameter is not None:
-                lines.append(f"    key_id = settings_parts.get({json.dumps(algorithm_header.key_id_parameter)})")
+                lines.extend(
+                    [
+                        f"    key_id = settings_parts.get({json.dumps(algorithm_header.key_id_parameter)})",
+                        "    if not key_id:",
+                        f"        _logger.warning({json.dumps(MISSING_KEY_ID_MESSAGE)})",
+                        "        return False",
+                    ]
+                )
         elif algorithm_header.key_id_delimiter is not None:
             delimiter = json.dumps(algorithm_header.key_id_delimiter)
             lines.extend(

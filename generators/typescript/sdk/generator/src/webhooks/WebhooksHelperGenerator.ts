@@ -12,6 +12,7 @@ const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: sign
 const HMAC_ALGORITHM_TYPE = '"sha1" | "sha256" | "sha384" | "sha512"';
 const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
 const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 const HEADER_LOOKUP_FUNCTION = `function getHeader(headers: Record<string, string | string[] | undefined>, name: string): string | undefined {
     const lower = name.toLowerCase();
     for (const key of Object.keys(headers)) {
@@ -144,7 +145,13 @@ export class WebhooksHelperGenerator {
                 `    const algorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}] ?? "";`
             );
             if (algorithmHeader.keyIdParameter != null) {
-                lines.push(`    keyId = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}];`);
+                lines.push(
+                    `    keyId = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}];`,
+                    '    if (keyId == null || keyId === "") {',
+                    `        console.warn(${JSON.stringify(MISSING_KEY_ID_MESSAGE)});`,
+                    "        return false;",
+                    "    }"
+                );
             }
         } else if (algorithmHeader.keyIdDelimiter != null) {
             lines.push(

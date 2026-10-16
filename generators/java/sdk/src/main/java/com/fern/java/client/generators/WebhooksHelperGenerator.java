@@ -228,6 +228,8 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             "Webhook signature verification could not run: missing signature header";
     private static final String VERIFICATION_FAILED_MESSAGE =
             "Webhook signature verification failed: signature mismatch";
+    private static final String MISSING_KEY_ID_MESSAGE =
+            "Webhook signature verification could not run: settings header is missing the key ID";
     private static final String UNSUPPORTED_ALGORITHM_MESSAGE =
             "Webhook signature verification could not run: unsupported algorithm";
     private static final String UNRESOLVED_KEY_MESSAGE =
@@ -435,7 +437,11 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                             algorithmHeader.getAlgorithmParameter().get());
             algorithmHeader
                     .getKeyIdParameter()
-                    .ifPresent(keyIdParameter -> method.addStatement("keyId = settingsParts.get($S)", keyIdParameter));
+                    .ifPresent(keyIdParameter -> method.addStatement("keyId = settingsParts.get($S)", keyIdParameter)
+                            .beginControlFlow("if (keyId == null || keyId.isEmpty())")
+                            .addStatement("LOGGER.warning($S)", MISSING_KEY_ID_MESSAGE)
+                            .addStatement("return false")
+                            .endControlFlow());
         } else {
             algorithmHeader.getKeyIdDelimiter().ifPresent(delimiter -> method.addStatement(
                             "int delimiterIndex = settingsHeader.lastIndexOf($S)", delimiter)

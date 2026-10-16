@@ -11,6 +11,7 @@ const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run:
 const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
 const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
 const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
@@ -378,6 +379,12 @@ export class WebhooksHelperGenerator {
                 );
                 if (algorithmHeader.keyIdParameter != null) {
                     writer.writeLine(`$keyId = $settingsParts[${this.phpString(algorithmHeader.keyIdParameter)}] ?? null;`);
+                    writer.writeLine("if ($keyId === null || $keyId === '') {");
+                    writer.indent();
+                    writer.writeLine(`error_log(${this.phpString(MISSING_KEY_ID_MESSAGE)});`);
+                    writer.writeLine("return false;");
+                    writer.dedent();
+                    writer.writeLine("}");
                 }
             } else if (algorithmHeader.keyIdDelimiter != null) {
                 const delimiter = this.phpString(algorithmHeader.keyIdDelimiter);

@@ -119,6 +119,10 @@ export class WebhooksHelper {
             }
             const algorithmValue = settingsParts["algorithm"] ?? "";
             keyId = settingsParts["key"];
+            if (keyId == null || keyId === "") {
+                console.warn("Webhook signature verification could not run: settings header is missing the key ID");
+                return false;
+            }
             if (!Object.prototype.hasOwnProperty.call(HMAC_ALGORITHMS, algorithmValue)) {
                 console.warn("Webhook signature verification could not run: unsupported algorithm");
                 return false;

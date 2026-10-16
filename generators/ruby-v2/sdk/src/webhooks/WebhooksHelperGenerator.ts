@@ -10,6 +10,7 @@ const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run:
 const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
 const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
 const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 
 const DEFAULT_HELPER_CLASS_NAME = "WebhooksHelper";
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
@@ -499,6 +500,12 @@ export class WebhooksHelperGenerator {
             );
             if (algorithmHeader.keyIdParameter != null) {
                 writer.writeLine(`key_id = settings_parts[${rubyStringLiteral(algorithmHeader.keyIdParameter)}]`);
+                writer.writeLine("if key_id.nil? || key_id.empty?");
+                writer.indent();
+                writer.writeLine(`warn(${JSON.stringify(MISSING_KEY_ID_MESSAGE)})`);
+                writer.writeLine("return false");
+                writer.dedent();
+                writer.writeLine("end");
             }
         } else if (algorithmHeader.keyIdDelimiter != null) {
             writer.writeLine(
