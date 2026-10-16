@@ -6757,7 +6757,7 @@
               "type": "null"
             }
           ],
-          "description": "If set to true, search results from the current product/version are\nboosted in Algolia's ranking (via `optionalFilters`) without excluding\nresults from other products/versions.\n\n@default: false"
+          "description": "If set to true, search results from the current product/version are\nboosted in Algolia's ranking (via `optionalFilters`) without excluding\nresults from other products/versions. Set to false to rank all\nproducts/versions equally.\n\n@default: true"
         },
         "default-filter-by-current-product": {
           "oneOf": [

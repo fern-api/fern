@@ -606,13 +606,13 @@ function convertSettingsConfig(
     // `search.default-filter-by-current-product`. Either one enables the behavior.
     const defaultFilterByCurrentProduct =
         (settings.search?.defaultFilterByCurrentProduct ?? false) || (settings.defaultSearchFilters ?? false);
-    const prioritizeCurrentProduct = settings.search?.prioritizeCurrentProduct ?? false;
 
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
-            prioritizeCurrentProduct,
+            // Left undefined when unset so the docs renderer applies its default.
+            prioritizeCurrentProduct: settings.search?.prioritizeCurrentProduct,
             defaultFilterByCurrentProduct,
             externalSitemaps: undefined
         },
