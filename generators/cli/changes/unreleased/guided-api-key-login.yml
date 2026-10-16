@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    CLIs with `profiles.provisionOperation` configured get an interactive API-key flow in a terminal.
+    `auth login` asks for a profile name and the credential, offers to create an API key with it, and
+    saves and activates the profile. A bare `profiles create <name>` prompts the same way, and
+    `profiles remove` offers to revoke the profile's provisioned key after the existing confirmation.
+    The typed credential only authenticates the key creation; only the new key is stored. Scripts and
+    non-interactive runs, `auth login --with-token/--from-env/--scheme`, and CLIs without
+    `provisionOperation` are unchanged.
+  type: feat
+- summary: |
+    The `profiles create` provisioning flag is now `--api-key`; `--provision` keeps working as a
+    hidden alias. `provisionOperation` accepts optional `flag`, `parameters` (extra request values
+    with `{cli}`, `{profile}`, `{user}` and `{host}` substituted, e.g. a Twilio `FriendlyName`),
+    `prompts` (credential field labels) and `profileParameters` (profile parameters copied from the
+    typed credential).
+  type: feat

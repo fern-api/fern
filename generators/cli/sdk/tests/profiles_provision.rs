@@ -136,7 +136,9 @@ fn provision_is_registered_and_names_the_operation_when_configured() {
     with_parent_env("https://unused.invalid", || {
         let (code, output) = run(true, &["pv", "profiles", "create", "--help"]);
         assert_eq!(code, 0, "{output}");
-        assert!(output.contains("--provision"), "{output}");
+        assert!(output.contains("--api-key"), "{output}");
+        // The original spelling stays accepted, but hidden.
+        assert!(!output.contains("--provision"), "{output}");
         assert!(
             output.contains("keys create"),
             "help should name the op: {output}"

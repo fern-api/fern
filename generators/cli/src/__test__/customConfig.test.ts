@@ -501,6 +501,48 @@ describe("validateCustomConfig — profiles", () => {
         });
     });
 
+    it("accepts the interactive provisionOperation fields", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        operation: "core.keys.create",
+                        credential: { username: "sid", password: "secret" },
+                        flag: "api-key",
+                        parameters: { FriendlyName: "{cli} for {user} on {host}" },
+                        prompts: { username: "Account SID", password: "Auth Token" },
+                        profileParameters: { AccountSid: "username" }
+                    }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({
+            operation: "core.keys.create",
+            credential: { username: "sid", password: "secret" },
+            flag: "api-key",
+            parameters: { FriendlyName: "{cli} for {user} on {host}" },
+            prompts: { username: "Account SID", password: "Auth Token" },
+            profileParameters: { AccountSid: "username" }
+        });
+    });
+
+    it("rejects an invalid provisionOperation flag or unsafe text", () => {
+        const base = { operation: "core.keys.create", credential: { token: "secret" } };
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation: { ...base, flag: "--api-key" } } })
+        ).toThrow(/provisionOperation.flag/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { ...base, parameters: { FriendlyName: 'a"b' } } }
+            })
+        ).toThrow(/provisionOperation.parameters.FriendlyName/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { ...base, prompts: { username: 3 } } }
+            })
+        ).toThrow(/provisionOperation.prompts.username/);
+    });
+
     it("rejects a provisionOperation without a credential mapping", () => {
         expect(() =>
             validateCustomConfig({ profiles: { enabled: true, provisionOperation: { operation: "iam.keys.create" } } })
