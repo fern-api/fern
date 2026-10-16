@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `profiles list`, `profiles show` and `profiles current` no longer read the OS keychain. On macOS each
+    keychain read by a binary that is not on the entry's access list asks for the login password, so
+    listing nine profiles could raise nine prompts. The ACCOUNT column (basic-auth username or OAuth
+    client id) and the "credential stored" check now come from a non-secret copy kept in
+    `[credentials.<slot>]` in `profiles.toml`, written whenever `profiles create`, `profiles set`,
+    `auth login` or an OAuth flow stores a credential and cleared by `profiles remove` / `auth logout`.
+    Only requests that need the secret read the keychain. `profiles set` also skips its keychain read
+    when every field of a multi-field credential is supplied. Profiles whose credential was stored by an
+    older version show no ACCOUNT until the credential is stored again.
+  type: fix

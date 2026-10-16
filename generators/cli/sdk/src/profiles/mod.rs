@@ -232,6 +232,37 @@ pub fn keyring_account_for(scheme: &str, credential: &str) -> String {
     format!("{scheme}#{credential}")
 }
 
+/// Note in `profiles.toml` that the active profile's credential slot now
+/// holds `stored` for `scheme`, so `profiles list` / `show` / `current` can
+/// report it without reading the keychain. No-op without an active profile:
+/// unprofiled credentials are never listed.
+pub(crate) fn note_stored_credential(cli_name: &str, scheme: &str, stored: &str) {
+    update_active_credential_record(cli_name, |store, credential| {
+        store.record_credential(credential, scheme, stored)
+    });
+}
+
+/// [`note_stored_credential`] for a removed entry.
+pub(crate) fn note_removed_credential(cli_name: &str, scheme: &str) {
+    update_active_credential_record(cli_name, |store, credential| {
+        store.forget_credential(credential, Some(scheme))
+    });
+}
+
+fn update_active_credential_record(cli_name: &str, update: impl FnOnce(&mut ProfileStore, &str)) {
+    let Some(credential) = active().and_then(|p| p.credential.clone()) else {
+        return;
+    };
+    let Some(mut store) = ProfileStore::for_cli(cli_name) else {
+        return;
+    };
+    update(&mut store, &credential);
+    // Only the display copy is lost; the credential itself is stored.
+    if let Err(e) = store.save() {
+        eprintln!("warning: could not update {}: {e}", store.path().display());
+    }
+}
+
 /// The profile's default for the parameter registered as `wire_name` with
 /// flag `--<flag_name>`, if any.
 ///

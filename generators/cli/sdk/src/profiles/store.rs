@@ -102,6 +102,23 @@ pub struct ProfileEntry {
     pub transport: TransportSettings,
 }
 
+/// What `profiles list` / `show` / `current` display about a stored
+/// credential, copied out of the secret when it is written.
+///
+/// Lives in `[credentials.<slot>]`, keyed by the keyring slot rather than the
+/// profile, so profiles sharing a slot agree. Nothing here is a secret: a
+/// basic-auth username (`AC…`) and an OAuth client id (RFC 6749 §2.2) are
+/// both public identifiers. Keeping a copy means reporting never reads the
+/// OS keychain, which on macOS prompts once per entry for a binary that is
+/// not on the entry's access list.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CredentialRecord {
+    /// Schemes with a keyring entry in this slot.
+    pub schemes: Vec<String>,
+    pub account: Option<String>,
+    pub oauth_client_id: Option<String>,
+}
+
 /// Per-profile defaults for the transport knobs [`crate::http::HttpConfig`]
 /// reads from env. Each field mirrors one `<NAME>_*` variable.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
@@ -237,6 +254,31 @@ impl ProfileStore {
             .collect()
     }
 
+    /// The display copy of what is stored in keyring slot `credential`.
+    pub fn credential_record(&self, credential: &str) -> Option<CredentialRecord> {
+        let table = self
+            .doc
+            .get("credentials")?
+            .as_table()?
+            .get(credential)?
+            .as_table_like()?;
+        let schemes = table
+            .get("schemes")
+            .and_then(Item::as_array)
+            .map(|array| {
+                array
+                    .iter()
+                    .filter_map(|value| value.as_str().map(str::to_string))
+                    .collect()
+            })
+            .unwrap_or_default();
+        Some(CredentialRecord {
+            schemes,
+            account: str_field(table, "account"),
+            oauth_client_id: str_field(table, "oauth_client_id"),
+        })
+    }
+
     // ── Mutation ────────────────────────────────────────────────────────
 
     /// Insert or replace `entry`. Only the keys this binary models are
@@ -316,6 +358,78 @@ impl ProfileStore {
     pub fn set_active(&mut self, name: &str) {
         self.ensure_version();
         self.doc["active"] = toml_edit::value(name);
+    }
+
+    /// Note that `scheme`'s entry in slot `credential` now holds `stored`,
+    /// copying out its public identifiers (`username`, `client_id`).
+    pub fn record_credential(&mut self, credential: &str, scheme: &str, stored: &str) {
+        let fields: BTreeMap<String, String> = serde_json::from_str(stored).unwrap_or_default();
+        let field = |key: &str| fields.get(key).filter(|v| !v.is_empty()).cloned();
+        let mut record = self.credential_record(credential).unwrap_or_default();
+        if !record.schemes.iter().any(|s| s == scheme) {
+            record.schemes.push(scheme.to_string());
+        }
+        if let Some(account) = field("username") {
+            record.account = Some(account);
+        }
+        if let Some(client_id) = field(crate::auth::oauth2::CLIENT_ID_FIELD) {
+            record.oauth_client_id = Some(client_id);
+        }
+        self.write_credential_record(credential, &record);
+    }
+
+    /// Drop the record for `scheme` in slot `credential`, or for every scheme
+    /// when `scheme` is `None`.
+    pub fn forget_credential(&mut self, credential: &str, scheme: Option<&str>) {
+        let record = match scheme {
+            None => CredentialRecord::default(),
+            Some(scheme) => {
+                let Some(mut record) = self.credential_record(credential) else {
+                    return;
+                };
+                record.schemes.retain(|s| s != scheme);
+                if record.schemes.is_empty() {
+                    CredentialRecord::default()
+                } else {
+                    record
+                }
+            }
+        };
+        self.write_credential_record(credential, &record);
+    }
+
+    fn write_credential_record(&mut self, credential: &str, record: &CredentialRecord) {
+        if record.schemes.is_empty() {
+            if let Some(table) = self.doc.get_mut("credentials").and_then(Item::as_table_mut) {
+                table.remove(credential);
+                if table.is_empty() {
+                    self.doc.remove("credentials");
+                }
+            }
+            return;
+        }
+        self.ensure_version();
+        if self.doc.get("credentials").and_then(Item::as_table).is_none() {
+            let mut table = Table::new();
+            table.set_implicit(true);
+            self.doc.insert("credentials", Item::Table(table));
+        }
+        let credentials = self.doc["credentials"]
+            .as_table_mut()
+            .expect("credentials table was just installed");
+        if credentials.get(credential).and_then(Item::as_table).is_none() {
+            credentials.insert(credential, Item::Table(Table::new()));
+        }
+        let table = credentials[credential]
+            .as_table_mut()
+            .expect("credential record was just installed");
+        let mut schemes = toml_edit::Array::new();
+        for scheme in &record.schemes {
+            schemes.push(scheme.as_str());
+        }
+        table["schemes"] = toml_edit::value(schemes);
+        set_str(table, "account", record.account.as_deref());
+        set_str(table, "oauth_client_id", record.oauth_client_id.as_deref());
     }
 
     /// Drop `active`, so resolution falls through to "no profile".
