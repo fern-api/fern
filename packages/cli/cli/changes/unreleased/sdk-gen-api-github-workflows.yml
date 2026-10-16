@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Respect `github.workflows: false` in `generators.yml` when generation runs through sdk-gen-api.
+    The setting was dropped on that route, so generated `.github/workflows/*` files were still
+    committed. Requests that keep the default (`true`) are unchanged.
+  type: fix
