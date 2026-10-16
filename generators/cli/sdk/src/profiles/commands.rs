@@ -2693,7 +2693,7 @@ fn prompt_guided_credential(
     for field in fields {
         let label = op.label_for(&field);
         let value = if is_secret_field(&field) {
-            read_secret(&label, &mut stderr)?
+            read_secret(&label, &mut std::io::stdin().lock(), &mut stderr)?
         } else {
             prompt_line(&label, None, &mut std::io::stdin().lock(), &mut stderr)?
         };
@@ -2712,7 +2712,7 @@ fn is_secret_field(field: &str) -> bool {
     let field = field.to_ascii_lowercase();
     ["password", "secret", "token"]
         .iter()
-        .any(|needle| field.contains(needle))
+        .any(|suffix| field.ends_with(suffix))
 }
 
 fn prompt_line(
@@ -2738,15 +2738,17 @@ fn prompt_line(
 }
 
 /// Read one line from the terminal without echoing it.
-fn read_secret(label: &str, out: &mut impl Write) -> Result<String, CliError> {
-    use std::io::BufRead;
+fn read_secret(
+    label: &str,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl Write,
+) -> Result<String, CliError> {
     let _ = write!(out, "{label} (hidden): ");
     let _ = out.flush();
     let mut line = String::new();
     {
         let _echo = EchoOff::new();
-        std::io::stdin()
-            .lock()
+        input
             .read_line(&mut line)
             .map_err(|e| CliError::Other(e.into()))?;
     }
@@ -2913,17 +2915,32 @@ where
     for (var, _) in &saved {
         std::env::remove_var(var);
     }
+    let _restore = CredentialOverrideGuard {
+        store: Some(previous),
+        env: saved,
+    };
+    f().await
+}
 
-    let result = f().await;
+/// Puts the keyring store and env vars back when the override ends, including
+/// on panic or when the future is dropped mid-request.
+struct CredentialOverrideGuard {
+    store: Option<Arc<dyn KeyringStore>>,
+    env: Vec<(String, Option<std::ffi::OsString>)>,
+}
 
-    for (var, value) in saved {
-        match value {
-            Some(value) => std::env::set_var(&var, value),
-            None => std::env::remove_var(&var),
+impl Drop for CredentialOverrideGuard {
+    fn drop(&mut self) {
+        for (var, value) in self.env.drain(..) {
+            match value {
+                Some(value) => std::env::set_var(&var, value),
+                None => std::env::remove_var(&var),
+            }
+        }
+        if let Some(store) = self.store.take() {
+            set_active_store(store);
         }
     }
-    set_active_store(previous);
-    result
 }
 
 /// A keyring view that answers one typed credential for the given schemes'
@@ -2992,6 +3009,7 @@ fn confirm(
 
 #[cfg(test)]
 mod tests {
+    use super::*;
 
     #[test]
     fn confirm_default_yes_treats_enter_as_yes_and_eof_as_no() {
@@ -3079,6 +3097,8 @@ mod tests {
         assert!(is_secret_field("token"));
         assert!(!is_secret_field("username"));
         assert!(!is_secret_field("client_id"));
+        assert!(!is_secret_field("tokenEndpoint"));
+        assert!(!is_secret_field("secret_name"));
     }
 
     #[test]
@@ -3095,7 +3115,6 @@ mod tests {
             assert!(create.get_flag("provision"), "{flag}");
         }
     }
-    use super::*;
 
     fn vocabulary() -> Vocabulary {
         let mut vocabulary = Vocabulary {
