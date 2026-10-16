@@ -676,7 +676,7 @@ async fn handle_create(
     } else {
         None
     };
-    if provision
+    if (provision || typed.is_some())
         && existing
             .as_ref()
             .is_some_and(|entry| !entry.credential_parameters.is_empty())
@@ -2291,7 +2291,7 @@ async fn revoke_remote_credential(
         )))
     };
     match stored {
-        Some((scheme, value)) => with_credential_value(ctx, &scheme, value, invoke).await,
+        Some((scheme, value)) => with_credential_value(ctx, &scheme, value, false, invoke).await,
         None => invoke().await,
     }
 }
@@ -2627,6 +2627,7 @@ pub fn guided_auth_login_applies(config: &ProfilesConfig, login: &ArgMatches) ->
         && interactive_terminal()
         && !login.get_flag("with-token")
         && !login.get_flag("from-env")
+        && login.try_get_one::<bool>("no-browser").ok().flatten() != Some(&true)
         && login.get_one::<String>("scheme").is_none()
 }
 
@@ -2876,15 +2877,17 @@ async fn with_typed_credential<T, Fut>(
 where
     Fut: std::future::Future<Output = Result<T, CliError>>,
 {
-    with_credential_value(ctx, &typed.scheme, typed.stored()?, f).await
+    with_credential_value(ctx, &typed.scheme, typed.stored()?, true, f).await
 }
 
-/// Run `f` with `value` answering every keyring read for schemes shaped like
-/// `scheme`, and with the env vars that would shadow it cleared.
+/// Run `f` with `value` answering keyring reads for `scheme` (and, with
+/// `same_shape`, every scheme shaped like it), with the env vars that would
+/// shadow it cleared.
 async fn with_credential_value<T, Fut>(
     ctx: &ProfilesContext<'_>,
     scheme: &str,
     value: String,
+    same_shape: bool,
     f: impl FnOnce() -> Fut,
 ) -> Result<T, CliError>
 where
@@ -2894,7 +2897,10 @@ where
     let schemes: Vec<String> = ctx
         .auth_bindings
         .iter()
-        .filter(|(name, _)| login::scheme_credential_fields(name, ctx.auth_bindings) == shape)
+        .filter(|(name, _)| {
+            name.as_str() == scheme
+                || (same_shape && login::scheme_credential_fields(name, ctx.auth_bindings) == shape)
+        })
         .map(|(name, _)| name.clone())
         .collect();
     let previous = active_store();
@@ -3102,9 +3108,10 @@ mod tests {
     }
 
     #[test]
-    fn provision_flag_defaults_to_api_key_and_keeps_provision_as_an_alias() {
-        let config = ProfilesConfig::new()
-            .provision_operation(crate::profiles::ProvisionOperation::new("keys.create"));
+    fn a_renamed_provision_flag_keeps_provision_as_an_alias() {
+        let config = ProfilesConfig::new().provision_operation(
+            crate::profiles::ProvisionOperation::new("keys.create").flag("api-key"),
+        );
         let cmd = build_profiles_command(&config, &Vocabulary::default());
         for flag in ["--api-key", "--provision"] {
             let m = cmd

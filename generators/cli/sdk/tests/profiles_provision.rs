@@ -65,6 +65,7 @@ fn app(provision: bool) -> CliApp {
     if provision {
         config = config.provision_operation(
             ProvisionOperation::new("keys.create")
+                .flag("api-key")
                 .credential_field("username", "sid")
                 .credential_field("password", "secret")
                 .revoke_parameter("Sid", "sid"),

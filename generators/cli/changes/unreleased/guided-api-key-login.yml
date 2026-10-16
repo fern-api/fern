@@ -10,8 +10,8 @@
     `provisionOperation` are unchanged.
   type: feat
 - summary: |
-    The `profiles create` provisioning flag is now `--api-key`; `--provision` keeps working as a
-    hidden alias. `provisionOperation` accepts optional `flag`, `parameters` (extra request values
+    `provisionOperation` accepts optional `flag` (rename `--provision`, e.g. to `--api-key`;
+    `--provision` keeps working as a hidden alias), `parameters` (extra request values
     with `{cli}`, `{profile}`, `{user}` and `{host}` substituted, e.g. a Twilio `FriendlyName`),
     `prompts` (credential field labels) and `profileParameters` (profile parameters copied from the
     typed credential).

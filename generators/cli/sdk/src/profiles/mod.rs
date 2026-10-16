@@ -119,7 +119,7 @@ pub struct ProvisionOperation {
     /// read from. Stored on the profile as `credential_parameters`, consulted
     /// only by `profiles remove --revoke` — never as a request default.
     pub revoke_parameters: Vec<(String, String)>,
-    /// Long name of the `profiles create` flag. `None` means `--api-key`;
+    /// Long name of the `profiles create` flag. `None` keeps `--provision`; when renamed,
     /// `--provision` always stays accepted as a hidden alias.
     pub flag: Option<String>,
     /// Extra request values sent with the operation, e.g. `FriendlyName` →
@@ -190,7 +190,7 @@ impl ProvisionOperation {
 
     /// The `profiles create` flag's long name.
     pub fn flag_name(&self) -> &str {
-        self.flag.as_deref().unwrap_or("api-key")
+        self.flag.as_deref().unwrap_or("provision")
     }
 
     pub fn credential_field(

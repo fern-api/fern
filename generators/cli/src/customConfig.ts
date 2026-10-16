@@ -247,7 +247,7 @@ export interface FernCliProfilesProvisionConfig {
     revokeParameters?: Record<string, string>;
 
     /**
-     * Long name of the `profiles create` flag. Defaults to `api-key`;
+     * Long name of the `profiles create` flag. Defaults to `provision` (e.g. set `api-key`);
      * `--provision` is always accepted as a hidden alias.
      */
     flag?: string;
