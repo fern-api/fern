@@ -1,5 +1,6 @@
 import { exposesSourceSpecs } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration-loader";
+import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import {
     createGroupedSpecsTarGzArchiveSettled,
     createSpecsTarGzArchive,
@@ -11,7 +12,7 @@ import {
     type FernSourceArchiveRequest,
     type FernSourceArchiveResolution
 } from "@fern-api/remote-workspace-runner";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 export function createFernSourceArchiveResolver({
@@ -52,6 +53,9 @@ export function createFernSourceArchiveResolver({
             requests.map(async (request) => {
                 if (request.sdkGenApiRoute == null) {
                     return undefined;
+                }
+                if (workspace instanceof LazyFernWorkspace && !(await workspace.composesSourceSpecs())) {
+                    throw fernDefinitionDeprecatedError(workspace);
                 }
                 const specs = await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
                 if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
@@ -150,6 +154,17 @@ function getClientPathParameterStyle(
         sdkConfigV1?.targets[request.sdkConfigTargetIndex]?.clientPathParameterStyle ??
         sdkConfigV1?.clientPathParameterStyle
     );
+}
+
+function fernDefinitionDeprecatedError(workspace: LazyFernWorkspace): CliError {
+    return new CliError({
+        message:
+            `Workspace ${workspace.workspaceName ?? workspace.absoluteFilePath} uses a Fern Definition, which is deprecated ` +
+            "and not supported for SDK generation through sdk-gen-api. sdk-gen-api generates from source specs " +
+            "(OpenAPI, AsyncAPI, protobuf). Migrate the API to OpenAPI: run `fern export <output-path>` to export it, " +
+            "then reference the exported spec under `api.specs` in generators.yml.",
+        code: CliError.Code.ConfigError
+    });
 }
 
 function requestRequiresSourceArchive(request: FernSourceArchiveRequest): boolean {

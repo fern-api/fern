@@ -139,6 +139,12 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         return workspace;
     }
 
+    /** False for a plain Fern Definition: no composed dependency carries source specs. */
+    public async composesSourceSpecs(): Promise<boolean> {
+        await this.toFernWorkspace({ context: this.context });
+        return (this.composedSpecs[this.cacheKey(undefined)]?.specs.length ?? 0) > 0;
+    }
+
     public async getSourceSpecs(): Promise<Spec[]> {
         await this.toFernWorkspace({ context: this.context });
         const composed = this.composedSpecs[this.cacheKey(undefined)];
