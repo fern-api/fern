@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.163.1
+  changelogEntry:
+    - summary: |
+        `fern generate` now fails with a deprecation error when a Fern Definition workspace is routed to sdk-gen-api,
+        instead of the internal "composes no spec-bearing dependencies" error. sdk-gen-api generates from source specs,
+        so the error points to `fern export` for migrating the API to OpenAPI.
+      type: fix
+  createdAt: "2026-10-17"
+  irVersion: 67
 - version: 5.163.0
   changelogEntry:
     - summary: |
