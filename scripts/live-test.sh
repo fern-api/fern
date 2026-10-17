@@ -2,6 +2,8 @@
 
 set -e
 
+trap 'rm -rf "${test_dir:-}" "${register_dir:-}" "${install_dir:-}"' EXIT
+
 cli_path="$1"
 token="$2"
 test_tarball="${3:-false}"
@@ -54,8 +56,3 @@ set +x
 node "$cli_path" register --log-level debug
 
 echo "All commands completed successfully!"
-
-rm -rf "$test_dir" "$register_dir"
-if [ "$test_tarball" = "true" ] && [ -n "$install_dir" ]; then
-    rm -rf "$install_dir"
-fi
