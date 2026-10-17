@@ -37,6 +37,7 @@ service:
 types:
   # this is also the type that would be produced by
   AliasMapInline: map<string, AliasInlineValue>
+  AliasMapListInline: map<string, list<AliasInlineValue>>
   AliasSetInline: set<AliasInlineValue>
   AliasListInline: list<AliasInlineValue>
 
@@ -69,6 +70,9 @@ types:
       fooList:
         type: list<RootType1FooListItem>
         docs: lorem ipsum
+      fooListMap:
+        type: map<string, list<RootType1FooListMapItem>>
+        docs: lorem ipsum
       fooSet:
         type: set<RootType1FooSetItem>
         docs: lorem ipsum
@@ -88,6 +92,17 @@ types:
         docs: lorem ipsum
 
   RootType1FooListItem:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1FooListMapItem:
     inline: true
     docs: lorem ipsum
     properties:

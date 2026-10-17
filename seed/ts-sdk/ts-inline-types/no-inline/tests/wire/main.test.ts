@@ -20,6 +20,12 @@ describe("SeedObjectClient", () => {
                 { foo: "foo", ref: { foo: "foo" } },
                 { foo: "foo", ref: { foo: "foo" } },
             ],
+            fooListMap: {
+                fooListMap: [
+                    { foo: "foo", ref: { foo: "foo" } },
+                    { foo: "foo", ref: { foo: "foo" } },
+                ],
+            },
             fooSet: [{ foo: "foo", ref: { foo: "foo" } }],
             ref: { foo: "foo" },
         };
