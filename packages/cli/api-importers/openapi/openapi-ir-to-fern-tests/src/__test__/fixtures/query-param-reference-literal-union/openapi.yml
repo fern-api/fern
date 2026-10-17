@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Query Parameter Reference Literal Union
+  version: 1.0.0
+
+paths:
+  /resources:
+    get:
+      operationId: listResources
+      parameters:
+        - $ref: "#/components/parameters/ParentIdentifier"
+        - $ref: "#/components/parameters/RequiredParentIdentifier"
+        - $ref: "#/components/parameters/RequiredMixedValue"
+        - $ref: "#/components/parameters/RequiredConstrainedValue"
+      responses:
+        "200":
+          description: Successful response
+
+components:
+  parameters:
+    ParentIdentifier:
+      name: parent.id
+      in: query
+      description: Filter resources by their parent identifier.
+      schema:
+        anyOf:
+          - $ref: "#/components/schemas/ConstrainedIdentifier"
+          - type: string
+            enum:
+              - none
+    RequiredParentIdentifier:
+      name: required-parent.id
+      in: query
+      required: true
+      description: Filter resources by a required parent identifier.
+      schema:
+        $ref: "#/components/schemas/IdentifierOrNone"
+    RequiredMixedValue:
+      name: mixed.value
+      in: query
+      required: true
+      description: Filter resources by a mixed value.
+      schema:
+        $ref: "#/components/schemas/IntegerOrNone"
+    RequiredConstrainedValue:
+      name: constrained.value
+      in: query
+      required: true
+      description: Filter resources by a constrained value.
+      schema:
+        $ref: "#/components/schemas/ConstrainedStringOrNone"
+
+  schemas:
+    ConstrainedIdentifier:
+      type: string
+      pattern: "^[a-f0-9]{8}$"
+      example: deadbeef
+    IdentifierOrNone:
+      anyOf:
+        - $ref: "#/components/schemas/ConstrainedIdentifier"
+        - type: string
+          enum:
+            - none
+    IntegerOrNone:
+      anyOf:
+        - type: integer
+        - type: string
+          enum:
+            - none
+    ConstrainedStringOrNone:
+      anyOf:
+        - type: string
+          pattern: "^[A-Z]{3}$"
+        - type: string
+          enum:
+            - none
