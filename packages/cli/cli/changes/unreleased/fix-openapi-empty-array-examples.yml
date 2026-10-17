@@ -1,0 +1,3 @@
+- summary: |
+    Preserve explicit empty arrays in imported OpenAPI examples.
+  type: fix

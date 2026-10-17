@@ -132,6 +132,24 @@ function makeStringSchema(): SchemaWithExample {
     );
 }
 
+function makeArraySchema(): SchemaWithExample {
+    return SchemaWithExample.array({
+        value: makeStringSchema(),
+        example: undefined,
+        minItems: undefined,
+        maxItems: undefined,
+        default: undefined,
+        description: undefined,
+        availability: undefined,
+        generatedName: "TestArray",
+        nameOverride: undefined,
+        groupName: undefined,
+        namespace: undefined,
+        title: undefined,
+        inline: undefined
+    });
+}
+
 function makeObjectSchema({
     properties,
     additionalProperties
@@ -613,6 +631,28 @@ describe("ExampleTypeFactory", () => {
             if (result?.type === "object") {
                 expect(Object.keys(result.properties).sort()).toEqual(["request_id", "webhook"]);
             }
+        });
+    });
+
+    describe("explicit empty arrays", () => {
+        it("should preserve an explicit empty array without changing absent array handling", () => {
+            const schema = makeOptionalSchema(makeArraySchema());
+
+            const explicitResult = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: [],
+                options: DEFAULT_OPTIONS
+            });
+            const absentResult = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: undefined,
+                options: { ...DEFAULT_OPTIONS, ignoreOptionals: true }
+            });
+
+            expect(explicitResult).toMatchObject({ type: "array", value: [] });
+            expect(absentResult).toBeUndefined();
         });
     });
 
