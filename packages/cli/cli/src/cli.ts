@@ -426,6 +426,16 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     boolean: true,
                     description: "Initialize with a sample Fern Definition instead of an OpenAPI spec"
                 })
+                .option("grpc", {
+                    boolean: true,
+                    description:
+                        "Initialize with a sample gRPC (.proto) API and a C# SDK, the only language with native gRPC output"
+                })
+                .option("proto", {
+                    type: "string",
+                    description:
+                        "Filepath to an existing .proto file, or a directory of them, to initialize a gRPC API with a C# SDK"
+                })
                 .option("mintlify", {
                     type: "string",
                     description: "Migrate docs from Mintlify provided a path to a mint.json file"
@@ -461,6 +471,25 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
+            } else if (argv.grpc === true && argv.proto != null) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --grpc and --proto. Use --grpc for a sample API, or --proto to use your own.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            } else if (
+                (argv.grpc === true || argv.proto != null) &&
+                (argv.openapi != null ||
+                    argv["fern-definition"] === true ||
+                    argv.docs != null ||
+                    argv.mintlify != null ||
+                    argv.readme != null)
+            ) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot combine --grpc or --proto with --openapi, --fern-definition, --docs, --mintlify or --readme. Please choose one.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             } else if (argv.readme != null) {
                 await cliContext.runTask(async (context) => {
                     await initializeWithReadme({
@@ -493,6 +522,22 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 const useSdkConfig = isSdkConfigInitEnabled();
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 let openApiUrl: string | undefined = undefined;
+                let absoluteProtoPath: AbsoluteFilePath | undefined = undefined;
+                if (argv.proto != null) {
+                    if (isURL(argv.proto)) {
+                        cliContext.failAndThrow(
+                            "--proto does not support URLs. Download the .proto files and pass their path.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
+                    absoluteProtoPath = AbsoluteFilePath.of(resolve(cwd(), argv.proto));
+                    if (!(await doesPathExist(absoluteProtoPath))) {
+                        cliContext.failAndThrow(`${absoluteProtoPath} does not exist`, undefined, {
+                            code: CliError.Code.ConfigError
+                        });
+                    }
+                }
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
                         openApiUrl = argv.openapi;
@@ -525,7 +570,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         openApiUrl,
                         useFernDefinition: argv["fern-definition"] === true,
                         useSdkConfig,
-                        includeDocs: argv.api == null
+                        includeDocs: argv.api == null && argv.grpc !== true && argv.proto == null,
+                        useGrpc: argv.grpc === true,
+                        protoPath: absoluteProtoPath
                     });
                 });
             }
