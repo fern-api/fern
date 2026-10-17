@@ -41,6 +41,7 @@ export function getPaginationInfo({
     pagination,
     signature,
     endpoint,
+    subpackage,
     callerReference,
     errorDecoder
 }: {
@@ -48,6 +49,7 @@ export function getPaginationInfo({
     pagination: FernIr.Pagination;
     signature: EndpointSignatureInfo;
     endpoint: FernIr.HttpEndpoint;
+    subpackage: FernIr.Subpackage | undefined;
     callerReference: go.AstNode;
     errorDecoder: go.CodeBlock | undefined;
 }): PaginationInfo {
@@ -71,6 +73,7 @@ export function getPaginationInfo({
             pagePropertyFormat,
             requestBodyPageProperty,
             endpoint,
+            subpackage,
             errorDecoder
         }),
         readPageResponse: getReadPageResponse({
@@ -96,6 +99,7 @@ function getPrepareCall({
     pagePropertyFormat,
     requestBodyPageProperty,
     endpoint,
+    subpackage,
     errorDecoder
 }: {
     context: SdkGeneratorContext;
@@ -106,6 +110,7 @@ function getPrepareCall({
     pagePropertyFormat: go.AstNode;
     requestBodyPageProperty: RequestBodyPageProperty | undefined;
     endpoint: FernIr.HttpEndpoint;
+    subpackage: FernIr.Subpackage | undefined;
     errorDecoder: go.CodeBlock | undefined;
 }): go.AstNode {
     const pagePropertySetter = getPagePropertySetter({
@@ -143,7 +148,8 @@ function getPrepareCall({
                             url: go.codeblock("nextURL"),
                             request: requestReference,
                             response: go.codeblock(PAGE_REQUEST_RESPONSE_NAME),
-                            errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
+                            errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined,
+                            namespaceImportPath: context.getNamespaceImportPath(subpackage)
                         })
                     );
                 }),
