@@ -88,6 +88,7 @@
             "!!generators/typescript/utils/core-utilities/**",
             "!!lerna-debug.log*",
             "!!npm-debug.log*",
+            "!!packages/wizard/templates/**",
             "!!packages/cli/api-importers/conjure/conjure-sdk/**",
             "!!packages/cli/api-importers/openapi/openapi-ir/**",
             "!!packages/cli/configuration/src/docs-yml/schemas/**",

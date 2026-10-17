@@ -1,0 +1,30 @@
+---
+title: October 1, 2025
+slug: 10-01-2025
+tags: ["plants-api", "breaking-change", "customers", "orders"]
+---
+
+## New features
+
+### Customer loyalty program
+Introduced new `/customers/{id}/loyalty` endpoint for accessing customer loyalty points and rewards.
+
+### Wishlist functionality
+Customers can now maintain wishlists:
+- `POST /customers/{id}/wishlist` - Add plants to wishlist
+- `GET /customers/{id}/wishlist` - Retrieve wishlist
+- `DELETE /customers/{id}/wishlist/{plant_id}` - Remove from wishlist
+
+## Breaking changes
+
+### Order status field
+The order `status` field now uses standardized values. Legacy status values will be deprecated on December 1, 2025:
+- `pending_payment` → `pending`
+- `in_progress` → `processing`
+
+Please update your integrations to use the new values.
+
+## Enhancements
+
+- Added pagination support to `/plants` endpoint with `limit` and `offset` parameters
+- Improved error messages with more detailed validation feedback

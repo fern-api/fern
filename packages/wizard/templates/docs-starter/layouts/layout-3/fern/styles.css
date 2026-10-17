@@ -1,0 +1,95 @@
+/* Custom styles for Fern Docs Starter */
+
+/* Subtle linear gradient background */
+.fern-background-image {
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 50%);
+}
+
+/* WebGL mesh gradient canvas */
+.mesh-gradient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Animated film grain overlay */
+.fern-background-image::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.1;
+  pointer-events: none;
+  animation: grain 3s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { background-position: 0 0; }
+  10% { background-position: -50px -100px; }
+  20% { background-position: -150px 50px; }
+  30% { background-position: 70px -250px; }
+  40% { background-position: -50px 250px; }
+  50% { background-position: -150px 100px; }
+  60% { background-position: 150px 0; }
+  70% { background-position: 0 150px; }
+  80% { background-position: 30px 350px; }
+  90% { background-position: -100px 100px; }
+}
+
+/* Nebula WebGL background */
+.background-graphic-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.background-graphic-wrapper canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Center header tabs (replaces the Ledger-rejected theme.tabs.alignment: center) */
+.fern-header-tabs {
+  justify-content: center;
+}
+
+/* Welcome page: extra spacing around header and action buttons */
+.fern-layout-overview article > header {
+  padding-top: 4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fern-layout-overview article > header > div:first-child {
+  justify-content: center;
+}
+
+.fern-layout-overview article > header h1 {
+  font-size: 3rem;
+}
+
+.welcome-help {
+  text-align: center;
+}
+
+.welcome-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: -1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 4rem;
+}
