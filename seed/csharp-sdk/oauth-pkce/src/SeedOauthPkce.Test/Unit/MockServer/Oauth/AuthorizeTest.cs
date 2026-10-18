@@ -10,53 +10,7 @@ namespace SeedOauthPkce.Test.Unit.MockServer.Oauth;
 public class AuthorizeTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string mockResponse = """
-            {
-              "code": "code",
-              "state": "state"
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/oauth/authorize")
-                    .WithParam("response_type", "code")
-                    .WithParam("client_id", "client_id")
-                    .WithParam("redirect_uri", "redirect_uri")
-                    .WithParam("code_challenge", "code_challenge")
-                    .WithParam("code_challenge_method", "S256")
-                    .WithParam("scope", "scope")
-                    .WithParam("state", "state")
-                    .UsingGet()
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Oauth.AuthorizeAsync(
-            new AuthorizeRequest
-            {
-                ResponseType = "code",
-                ClientId = "client_id",
-                RedirectUri = "redirect_uri",
-                CodeChallenge = "code_challenge",
-                CodeChallengeMethod = "S256",
-                Scope = "scope",
-                State = "state",
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

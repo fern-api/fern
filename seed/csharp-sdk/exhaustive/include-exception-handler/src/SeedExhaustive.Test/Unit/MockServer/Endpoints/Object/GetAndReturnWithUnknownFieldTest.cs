@@ -10,50 +10,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Object;
 public class GetAndReturnWithUnknownFieldTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string requestJson = """
-            {
-              "unknown": {
-                "key": "value"
-              }
-            }
-            """;
-
-        const string mockResponse = """
-            {
-              "unknown": {
-                "key": "value"
-              }
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/object/get-and-return-with-unknown-field")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
-            new ObjectWithUnknownField
-            {
-                Unknown = new Dictionary<object, object?>() { { "key", "value" } },
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

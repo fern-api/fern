@@ -10,54 +10,7 @@ namespace SeedApi.Test.Unit.MockServer.Clients;
 public class CreateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string requestJson = """
-            {
-              "client": {
-                "name": "name",
-                "email": "email"
-              }
-            }
-            """;
-
-        const string mockResponse = """
-            {
-              "client": {
-                "id": "id",
-                "name": "name",
-                "email": "email"
-              }
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/clients")
-                    .WithHeader("Content-Type", "application/json")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Clients.CreateAsync(
-            new ClientRequest
-            {
-                Client = new Client { Name = "name", Email = "email" },
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -90,7 +43,7 @@ public class CreateTest : BaseMockServerTest
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
+                    .WithStatusCode(201)
                     .WithBody(mockResponse)
             );
 
