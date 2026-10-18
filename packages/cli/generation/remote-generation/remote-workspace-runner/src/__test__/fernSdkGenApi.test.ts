@@ -1222,6 +1222,67 @@ describe("isEligibleForFernSdkGenApi", () => {
         });
     });
 
+    describe("github.workflows", () => {
+        const githubModes = [
+            [
+                "push",
+                (workflows: boolean | undefined) =>
+                    FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", workflows })
+            ],
+            [
+                "pull-request",
+                (workflows: boolean | undefined) =>
+                    FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [], workflows })
+            ],
+            [
+                "release",
+                (workflows: boolean | undefined) =>
+                    FernFiddle.GithubOutputModeV2.commitAndRelease({ owner: "acme", repo: "sdk", workflows })
+            ]
+        ] as const;
+        const cases = githubModes.flatMap(([mode, githubOutput]) =>
+            ([false, true, undefined] as const).map((workflows) => ({ mode, githubOutput, workflows }))
+        );
+
+        it.each(cases)("sends workflows only when $mode output opts out ($workflows)", ({
+            mode,
+            githubOutput,
+            workflows
+        }) => {
+            const generatorInvocation = invocation({
+                outputMode: FernFiddle.OutputMode.githubV2(githubOutput(workflows))
+            });
+            const request = createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: runtimePayload(validRuntimeBundle),
+                githubOptions: { verify: true }
+            });
+
+            const expected = {
+                type: "github",
+                repository: "acme/sdk",
+                mode,
+                ...(workflows === false ? { workflows: false } : {})
+            };
+            const mapped = mapFernSdkGenApiOutput(generatorInvocation).requestedOutput;
+            const wire = request.targets[0]?.requestedOutput;
+            expect(mapped).toEqual(expected);
+            expect(wire).toEqual({ ...expected, verify: true });
+            // toEqual ignores undefined-valued keys; the wire must not carry the key at all.
+            if (workflows === false) {
+                expect(wire).toHaveProperty("workflows", false);
+            } else {
+                expect(wire).not.toHaveProperty("workflows");
+                expect(JSON.stringify(wire)).not.toContain("workflows");
+            }
+        });
+    });
+
     it.each([
         [
             "npm",

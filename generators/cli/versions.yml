@@ -1,4 +1,53 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.54.4
+  changelogEntry:
+    - summary: |
+        TAB completion under a top-level command (e.g. `<cli> core <TAB>`) now loads only the specs mounted under
+        that command (plus unprefixed ones) instead of every embedded spec, and skips specs entirely under custom or
+        built-in commands. Completing the first word (`<cli> <TAB>`) lists spec-mounted commands from their prefixes
+        and only parses specs whose metadata could describe the top-level group; custom and built-in commands are
+        listed as before. On a 60-spec CLI this cuts a TAB from ~0.25s to 0.01–0.05s under a command and to ~0.09s
+        for the first word. Normal command runs are unchanged.
+      type: fix
+    - summary: |
+        TAB completion now lists just the next commands. While choosing a subcommand, global flags and clap's
+        `help` subcommand are left out of the list until you type `-` (leaf commands still list their flags),
+        so `<cli> <group> <TAB>` no longer scrolls long flag descriptions under the commands. Each subcommand
+        is also listed under its real name: previously a command with visible aliases was shown only as its
+        alphabetically-first alias (e.g. `dev` instead of `start`). Aliases are still offered when their command's
+        real name doesn't match what was typed (`de<TAB>` offers `deploy`, `delete` and `dev`). Descriptions in
+        the list are cut to their first sentence (at most 50 characters) so they fit narrow terminals instead of
+        being cut off or wrapping; `--help` keeps the full text. A flag value that matches a subcommand name
+        (e.g. `<cli> serverless --profile list <TAB>`) is now read as the flag's value, as the command itself
+        parses it, instead of completing under that subcommand. Nothing changes outside completion.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 0.54.3
+  changelogEntry:
+    - summary: |
+        Fix the generated release workflow failing every build on private repos.
+        GitHub Artifact Attestations need GitHub Enterprise Cloud on private
+        repos, and the attest step ran unconditionally, so no release was ever
+        cut. Add `distribution.githubAttestations` (`auto` | `true` | `false`,
+        default `auto`). `auto` skips the attest step on private repos; `true`
+        always attests (private repos on Enterprise Cloud); `false` drops the
+        step and its permission and sets `github-attestations = false` in
+        `dist-workspace.toml`.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 0.54.2
+  changelogEntry:
+    - summary: |
+        Fill server-variable placeholders such as `{region}` in a caller-supplied base URL
+        (`--base-url`, `<NAME>_BASE_URL`, or a profile's base URL). Previously
+        `--base-url https://api.stage-{region}.twilio.com` sent the literal `{region}` and the
+        request failed with "builder error"; it now uses `--region`, the profile, the env var,
+        or the spec default, like the spec's own server URLs.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 0.54.1
   changelogEntry:
     - summary: |

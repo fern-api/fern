@@ -1,4 +1,103 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.163.1
+  changelogEntry:
+    - summary: |
+        `fern generate` now fails with a deprecation error when a Fern Definition workspace is routed to sdk-gen-api,
+        instead of the internal "composes no spec-bearing dependencies" error. sdk-gen-api generates from source specs,
+        so the error points to `fern export` for migrating the API to OpenAPI.
+      type: fix
+  createdAt: "2026-10-17"
+  irVersion: 67
+- version: 5.163.0
+  changelogEntry:
+    - summary: |
+        An sdk-config.yml `cli` target without `generatorVersion` now generates with the newest fern-cli-generator the
+        route can run, like an unpinned generator in generators.yml: the translated generator is written as
+        `version: latest`, which sdk-gen-api resolves through its generator version discovery, and Fiddle and `--local`
+        resolve to the newest published version. Previously it was pinned to 0.49.0, which predates the crate-name,
+        installer URL, npm publish and build-attestation fixes. The `CLI_TARGET_UNPOOLED_VERSION` warning is removed.
+      type: feat
+  createdAt: "2026-10-17"
+  irVersion: 67
+- version: 5.162.0
+  changelogEntry:
+    - summary: |
+        The sdk-config.yml `cli` target now writes `output.distribution.githubAttestations` (`auto`, `true` or `false`)
+        to fern-cli-generator's `config.distribution.githubAttestations`, so the generated release workflow can skip
+        build-provenance attestations on private repositories. Previously the field was dropped with a warning and the
+        workflow always attested. Generator versions before 0.54.3 ignore the key, so `auto` or `false` on those
+        versions warns with `CLI_TARGET_ATTESTATIONS_VERSION`.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.161.1
+  changelogEntry:
+    - summary: |
+        Respect `github.workflows: false` in `generators.yml` when generation runs through sdk-gen-api.
+        The setting was dropped on that route, so generated `.github/workflows/*` files were still
+        committed. Requests that keep the default (`true`) are unchanged.
+      type: fix
+    - summary: |
+        Upgrade `@postman/sdk-config` to 0.14.0, which adds optional `output.github.workflows` to SDK Config.
+        `output.github.workflows: false` in `sdk-config.yml` is now sent to sdk-gen-api the same way as
+        the `generators.yml` setting. The SDK Config `cli` target accepts the field and ignores it with a
+        warning, like the other GitHub delivery settings its translated `generators.yml` does not write.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.161.0
+  changelogEntry:
+    - summary: |
+        `fern generator list` and `fern generator get` now describe SDK Config targets from `sdk-config.yml`
+        alongside legacy generator groups, so they stay accurate after `fern sdk migrate`.
+
+        `fern generator list` output now nests each API under `groups` (legacy groups from `generators.yml` or
+        `generators.legacy.yml`) and `targets` (SDK Config targets with their language, generator, and version,
+        where an unpinned target reports `latest`). A language configured in both files appears in both sections.
+        The new `--targets` option filters SDK Config targets by language or target id.
+
+        `fern generator get --target <language>` reads an SDK Config target's version, language, or repository.
+        Missing selections now fail with the configuration files inspected, and a legacy selection that was
+        migrated points at its SDK Config target.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.160.0
+  changelogEntry:
+    - summary: |
+        `settings.search.prioritize-current-product` in `docs.yml` now defaults to `true`.
+        When unset, search boosts results from the current product/version without
+        hiding other products/versions. Set it to `false` to keep the previous ranking.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.159.3
+  changelogEntry:
+    - summary: |
+        `webhook-signature.algorithm-header` now accepts `key-id-parameter` and `algorithm-parameter`
+        so key/value settings headers such as Twilio's
+        `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256` are parsed into the
+        bare key ID and algorithm instead of `key=<id>` (IR 67.33.0).
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.159.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` dropping uploaded (`file:`) icons and images from the navigation,
+        such as custom product switcher and navbar link icons. The Astro preview now maps the
+        preview's file IDs to file paths in the docs config, matching how `fern generate --docs`
+        publishes. Translated `navbar-links` overrides now also show up in the preview.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.159.1
+  changelogEntry:
+    - summary: |
+        Preserve actionable sdk-gen-api errors instead of printing `[object Object]` when `fern sdk preview` fails.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
 - version: 5.159.0
   changelogEntry:
     - summary: |

@@ -248,6 +248,8 @@ describe("WebhooksHelperGenerator verify_request", () => {
     const algorithmHeader: FernIr.WebhookAlgorithmHeader = {
         headerName: createWireValue("X-Twilio-Webhook-Signature-Settings"),
         keyIdDelimiter: ";",
+        keyIdParameter: undefined,
+        algorithmParameter: undefined,
         algorithms: [
             { wireValue: "HMAC_SHA1", algorithm: "SHA1" },
             { wireValue: "HMAC_SHA256", algorithm: "SHA256" }

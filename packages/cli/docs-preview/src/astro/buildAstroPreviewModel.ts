@@ -82,11 +82,15 @@ export async function buildAstroPreviewModel({
     context: TaskContext;
 }): Promise<AstroPreviewModel> {
     const { writeApiDefinitions, resolver, uploadedFiles } = previewResult.ledgerSource;
-    const docsDefinition = substituteEnvVars
+    const substitutedDefinition = substituteEnvVars
         ? substituteEnvVarsInDefinition(previewResult.ledgerSource.writeDocsDefinition, context)
         : previewResult.ledgerSource.writeDocsDefinition;
 
     const { fileManifest, fileIdToPath, files } = await buildFileManifest(uploadedFiles, context);
+    const docsDefinition: DocsV1Write.DocsDefinition = {
+        ...substitutedDefinition,
+        config: remapFileIdsToPaths(substitutedDefinition.config, fileIdToPath)
+    };
 
     const { localeEntry: baseLocale, blobs: rawBlobs } = buildLedgerInput({
         docsDefinition,
@@ -150,7 +154,8 @@ export async function buildAstroPreviewModel({
                 segments: result.segments,
                 nav: result.nav,
                 deploymentSegments: result.deploymentSegments,
-                files: tagFiles(result.fileEntries)
+                files: tagFiles(result.fileEntries),
+                configJson: remapFileIdsInValue(result.configJson, fileIdToPath)
             });
         }
     }
@@ -273,6 +278,51 @@ async function buildFileManifest(
     }
 
     return { fileManifest, fileIdToPath, files };
+}
+
+/**
+ * The local preview mints a UUID fileId per uploaded file, but the ledger keys
+ * files by `fullPath` (a real publish uses the path as the fileId). Page markdown
+ * is remapped in `buildLedgerInput`; this does the same for the docs config —
+ * navigation `icon`/`image` refs (`file:<fileId>` or a bare fileId) included —
+ * so the renderer's path-keyed file lookups resolve them.
+ */
+export function remapFileIdsToPaths(
+    config: DocsV1Write.DocsConfig,
+    fileIdToPath: ReadonlyMap<string, string>
+): DocsV1Write.DocsConfig {
+    if (fileIdToPath.size === 0) {
+        return config;
+    }
+    // The walk only swaps fileId strings for path strings inside plain JSON, so the shape is preserved.
+    return remapFileIdsInValue(config, fileIdToPath) as DocsV1Write.DocsConfig;
+}
+
+export function remapFileIdsInValue(value: unknown, fileIdToPath: ReadonlyMap<string, string>): unknown {
+    if (typeof value === "string") {
+        if (value.startsWith("file:")) {
+            const path = fileIdToPath.get(value.slice("file:".length));
+            return path != null ? `file:${path}` : value;
+        }
+        return fileIdToPath.get(value) ?? value;
+    }
+    if (Array.isArray(value)) {
+        return value.map((item) => remapFileIdsInValue(item, fileIdToPath));
+    }
+    if (isPlainObject(value)) {
+        return Object.fromEntries(
+            Object.entries(value).map(([key, item]) => [key, remapFileIdsInValue(item, fileIdToPath)])
+        );
+    }
+    return value;
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+    if (value == null || typeof value !== "object") {
+        return false;
+    }
+    const prototype = Object.getPrototypeOf(value);
+    return prototype === Object.prototype || prototype === null;
 }
 
 export function fileKey(hash: string, fullPath: string): string {

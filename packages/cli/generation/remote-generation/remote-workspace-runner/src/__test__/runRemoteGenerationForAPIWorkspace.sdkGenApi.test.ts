@@ -577,6 +577,44 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         expect(prepared?.generatorInvocation.outputMode).toEqual(generator.outputMode);
     });
 
+    it("routes legacy preview registry publishing through sdk-gen-api", () => {
+        const generator = invocation("fernapi/fern-typescript-sdk", "typescript", "3.96.0");
+        generator.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.npmOverride({
+                registryUrl: "https://npm.buildwithfern.com",
+                packageName: "@acme-preview/pets",
+                token: "preview-secret"
+            })
+        );
+
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [generator],
+            isSdkGenApiEnabled: () => true,
+            requireEnvVars: false,
+            isPreview: true
+        });
+
+        expect(prepared?.error).toBeUndefined();
+        expect(prepared?.route).toMatchObject({ configKind: "legacy-fern" });
+        expect(prepared?.fallbackReason).toBeUndefined();
+        expect(prepared?.generatorInvocation.outputMode).toEqual(generator.outputMode);
+    });
+
+    it("continues routing legacy download previews through sdk-gen-api", () => {
+        const generator = invocation("fernapi/fern-typescript-sdk", "typescript", "3.96.0");
+
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [generator],
+            isSdkGenApiEnabled: () => true,
+            requireEnvVars: false,
+            isPreview: true
+        });
+
+        expect(prepared?.error).toBeUndefined();
+        expect(prepared?.route).toMatchObject({ configKind: "legacy-fern" });
+        expect(prepared?.fallbackReason).toBeUndefined();
+    });
+
     it("warns when a legacy target falls back to Fiddle generation", async () => {
         const generator = invocation("fernapi/fern-csharp-sdk", "csharp", "2.999.999");
         generator.outputMode = FernFiddle.OutputMode.publishV2(

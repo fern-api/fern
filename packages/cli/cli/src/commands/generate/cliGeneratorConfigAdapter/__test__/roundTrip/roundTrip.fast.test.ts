@@ -7,7 +7,6 @@ import YAML from "yaml";
 
 import { loadSdkConfigV1 } from "../../../loadSdkConfigV1.js";
 import { translateCliTarget } from "../../translateCliTarget.js";
-import { DEFAULT_GENERATOR_VERSION } from "../../versions.js";
 import {
     generatorsDiff,
     ROUND_TRIP_FIXTURES,
@@ -77,9 +76,8 @@ describe("round trip (fast): migrate output translated, compared with the origin
     const fixtures = await roundTripFixtures();
     const recording = process.env.CLI_TARGET_RECORD === "1";
 
-    it("records the round trip at the default generator version", async () => {
-        expect((await readExpectations()).generatorVersion).toBe(DEFAULT_GENERATOR_VERSION);
-        expect(ROUND_TRIP_GENERATOR_VERSION).toBe(DEFAULT_GENERATOR_VERSION);
+    it("records the round trip at the generator version the originals pin", async () => {
+        expect((await readExpectations()).generatorVersion).toBe(ROUND_TRIP_GENERATOR_VERSION);
     });
 
     it("has an expectation for every fixture, and none for a fixture that is gone", async () => {
@@ -93,7 +91,7 @@ describe("round trip (fast): migrate output translated, compared with the origin
         expect(errors).toEqual([]);
         const actual = generatorsDiff(original, translated);
         if (recording) {
-            const empty: Expectations = { generatorVersion: DEFAULT_GENERATOR_VERSION, fixtures: {} };
+            const empty: Expectations = { generatorVersion: ROUND_TRIP_GENERATOR_VERSION, fixtures: {} };
             const expectations = await readExpectations().catch(() => empty);
             const previous = expectations.fixtures[fixture];
             expectations.fixtures[fixture] = { ...previous, diff: actual, reason: previous?.reason ?? "TODO" };

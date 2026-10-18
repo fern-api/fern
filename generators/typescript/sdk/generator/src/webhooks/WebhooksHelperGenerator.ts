@@ -12,6 +12,7 @@ const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: sign
 const HMAC_ALGORITHM_TYPE = '"sha1" | "sha256" | "sha384" | "sha512"';
 const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
 const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 const HEADER_LOOKUP_FUNCTION = `function getHeader(headers: Record<string, string | string[] | undefined>, name: string): string | undefined {
     const lower = name.toLowerCase();
     for (const key of Object.keys(headers)) {
@@ -130,7 +131,29 @@ export class WebhooksHelperGenerator {
             "let algorithm: keyof typeof HMAC_ALGORITHMS | undefined;",
             'if (settingsHeader != null && settingsHeader !== "") {'
         );
-        if (algorithmHeader.keyIdDelimiter != null) {
+        if (algorithmHeader.algorithmParameter != null) {
+            const delimiter = JSON.stringify(algorithmHeader.keyIdDelimiter ?? ",");
+            lines.push(
+                "    const settingsParts: Record<string, string> = {};",
+                `    for (const part of settingsHeader.split(${delimiter})) {`,
+                '        const separatorIndex = part.indexOf("=");',
+                "        if (separatorIndex < 0) {",
+                "            continue;",
+                "        }",
+                "        settingsParts[part.slice(0, separatorIndex).trim()] = part.slice(separatorIndex + 1).trim();",
+                "    }",
+                `    const algorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}] ?? "";`
+            );
+            if (algorithmHeader.keyIdParameter != null) {
+                lines.push(
+                    `    keyId = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}];`,
+                    '    if (keyId == null || keyId === "") {',
+                    `        console.warn(${JSON.stringify(MISSING_KEY_ID_MESSAGE)});`,
+                    "        return false;",
+                    "    }"
+                );
+            }
+        } else if (algorithmHeader.keyIdDelimiter != null) {
             lines.push(
                 `    const delimiterIndex = settingsHeader.lastIndexOf(${JSON.stringify(algorithmHeader.keyIdDelimiter)});`,
                 `    const algorithmValue = delimiterIndex >= 0 ? settingsHeader.slice(delimiterIndex + ${algorithmHeader.keyIdDelimiter.length}) : settingsHeader;`,

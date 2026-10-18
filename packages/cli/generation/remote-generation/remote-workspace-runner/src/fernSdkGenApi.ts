@@ -111,6 +111,11 @@ export type FernSdkGenApiRequestedOutput =
           mode?: "release" | "pull-request" | "push";
           reviewers?: { teams?: string[]; users?: string[] };
           publish?: FernSdkGenApiPublishConfig;
+          /**
+           * `false` keeps generated `.github/workflows/*` files out of the commit and leaves existing
+           * ones untouched. Omitted means the default, committing them.
+           */
+          workflows?: boolean;
       } & FernSdkGenApiGithubOptions)
     | { type: "publish"; publish: FernSdkGenApiPublishConfig };
 
@@ -486,6 +491,7 @@ export function mapFernSdkGenApiOutput(
                 mode: github.type === "pullRequest" ? "pull-request" : github.type === "push" ? "push" : "release",
                 reviewers: github.type === "pullRequest" ? mapGithubReviewers(github.reviewers) : undefined,
                 publishInfo: github.publishInfo,
+                workflows: github.workflows,
                 githubOptions
             });
         }
@@ -514,6 +520,7 @@ function mapGithubOutput({
     mode,
     reviewers,
     publishInfo,
+    workflows,
     githubOptions
 }: {
     owner: string;
@@ -523,6 +530,7 @@ function mapGithubOutput({
     mode: "release" | "pull-request" | "push";
     reviewers?: { teams?: string[]; users?: string[] };
     publishInfo?: FernFiddle.GithubPublishInfo;
+    workflows?: boolean;
     githubOptions?: FernSdkGenApiGithubOptions;
 }): FernSdkGenApiOutputMapping {
     const publication = publishInfo != null ? mapGithubPublishInfo(publishInfo) : undefined;
@@ -538,6 +546,9 @@ function mapGithubOutput({
             mode,
             ...(reviewers != null ? { reviewers } : {}),
             ...(publication != null ? { publish: publication.publish } : {}),
+            // generators.yml resolves an unset `github.workflows` to true, so only the opt-out is
+            // sent. Every request that keeps the default stays unchanged on the wire.
+            ...(workflows === false ? { workflows: false } : {}),
             ...githubOptions
         }
     };

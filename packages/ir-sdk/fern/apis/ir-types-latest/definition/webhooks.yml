@@ -130,6 +130,15 @@ types:
           When present, the header value is `<keyId><delimiter><algorithm>` and the key ID is
           surfaced to the caller so it can resolve the matching signing secret. When absent,
           the whole header value is the algorithm.
+      keyIdParameter:
+        type: optional<string>
+        docs: |
+          When present (with `algorithmParameter`), the header is a `keyIdDelimiter`-separated
+          list of `<name>=<value>` pairs and the key ID is the value of this parameter
+          (e.g. `key` in Twilio's `key=<id>,algorithm=HMAC_SHA256`).
+      algorithmParameter:
+        type: optional<string>
+        docs: Name of the `<name>=<value>` pair carrying the algorithm when parsing named parameters.
       algorithms:
         type: list<WebhookAlgorithmOption>
         docs: Allowed header values and the algorithm each selects.

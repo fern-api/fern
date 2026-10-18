@@ -1,4 +1,5 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { flushFeatureFlagClient, getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
@@ -136,7 +137,14 @@ export class CliContext {
 
     public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error, options);
-        throw new TaskAbortSignal();
+        throw new TaskAbortSignal(
+            message ??
+                (error instanceof TaskAbortSignal
+                    ? error.failureMessage
+                    : error != null
+                      ? extractErrorMessage(error)
+                      : undefined)
+        );
     }
 
     public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
@@ -282,10 +290,14 @@ export class CliContext {
         try {
             result = await run(context);
         } catch (error) {
+            const failureMessage =
+                error instanceof TaskAbortSignal
+                    ? (error.failureMessage ?? context.getLastFailureMessage())
+                    : extractErrorMessage(error);
             context.failWithoutThrowing(undefined, error);
 
             // We need to throw a TaskAbortSignal to stop execution.
-            throw new TaskAbortSignal();
+            throw new TaskAbortSignal(failureMessage);
         } finally {
             context.finish();
         }

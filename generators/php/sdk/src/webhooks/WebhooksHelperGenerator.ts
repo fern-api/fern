@@ -11,6 +11,7 @@ const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run:
 const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
 const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
 const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
@@ -126,6 +127,8 @@ export class WebhooksHelperGenerator {
                     : {
                           headerName: getWireValue(config.algorithmHeader.headerName),
                           keyIdDelimiter: config.algorithmHeader.keyIdDelimiter ?? null,
+                          keyIdParameter: config.algorithmHeader.keyIdParameter ?? null,
+                          algorithmParameter: config.algorithmHeader.algorithmParameter ?? null,
                           algorithms: config.algorithmHeader.algorithms.map((option) => [
                               option.wireValue,
                               option.algorithm
@@ -355,7 +358,37 @@ export class WebhooksHelperGenerator {
             writer.writeLine("if ($settingsHeader !== null && $settingsHeader !== '') {");
             writer.indent();
             writer.writeLine("$algorithmValue = $settingsHeader;");
-            if (algorithmHeader.keyIdDelimiter != null) {
+            if (algorithmHeader.algorithmParameter != null) {
+                const delimiter = this.phpString(algorithmHeader.keyIdDelimiter ?? ",");
+                writer.writeLine("$settingsParts = [];");
+                writer.writeLine(`foreach (explode(${delimiter}, $settingsHeader) as $part) {`);
+                writer.indent();
+                writer.writeLine("$separatorIndex = strpos($part, '=');");
+                writer.writeLine("if ($separatorIndex === false) {");
+                writer.indent();
+                writer.writeLine("continue;");
+                writer.dedent();
+                writer.writeLine("}");
+                writer.writeLine(
+                    "$settingsParts[trim(substr($part, 0, $separatorIndex))] = trim(substr($part, $separatorIndex + 1));"
+                );
+                writer.dedent();
+                writer.writeLine("}");
+                writer.writeLine(
+                    `$algorithmValue = $settingsParts[${this.phpString(algorithmHeader.algorithmParameter)}] ?? '';`
+                );
+                if (algorithmHeader.keyIdParameter != null) {
+                    writer.writeLine(
+                        `$keyId = $settingsParts[${this.phpString(algorithmHeader.keyIdParameter)}] ?? null;`
+                    );
+                    writer.writeLine("if ($keyId === null || $keyId === '') {");
+                    writer.indent();
+                    writer.writeLine(`error_log(${this.phpString(MISSING_KEY_ID_MESSAGE)});`);
+                    writer.writeLine("return false;");
+                    writer.dedent();
+                    writer.writeLine("}");
+                }
+            } else if (algorithmHeader.keyIdDelimiter != null) {
                 const delimiter = this.phpString(algorithmHeader.keyIdDelimiter);
                 writer.writeLine(`$delimiterIndex = strrpos($settingsHeader, ${delimiter});`);
                 writer.writeLine("if ($delimiterIndex !== false) {");
