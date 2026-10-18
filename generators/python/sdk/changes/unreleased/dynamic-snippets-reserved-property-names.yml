@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets now escape reserved Python names in keyword arguments the same way the SDK does
+    (e.g. `long_=1000000` and `from_="..."` instead of `long=` and `from=`), so docs snippets compile.
+  type: fix

@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets now escape Java keywords in builder method names the same way the SDK does
+    (e.g. `.long_(1000000L)` instead of `.long(1000000L)`), so docs snippets compile.
+  type: fix
