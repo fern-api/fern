@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../api-yml.schema.json
+
+name: go-pagination-namespace-errors
+
+# Regression fixture: a paginated endpoint in a subpackage whose errors are declared in that
+# subpackage. The pager's ErrorDecoder must reference the subpackage's ErrorCodes
+# (e.g. `users.ErrorCodes`), not the root package's, which does not exist.
+auth: bearer
+error-discrimination:
+  strategy: status-code
