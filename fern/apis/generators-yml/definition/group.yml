@@ -64,6 +64,13 @@ types:
       disable-examples:
         type: optional<boolean>
         docs: Temporary way to unblock example serialization.
+      provenance:
+        type: optional<boolean>
+        docs: |
+          When true, remote generation emits a signed in-toto/SLSA provenance attestation for the
+          generated SDK (spec digests, generator image digest, generation config digest, and the
+          git tree hash of the generated output) and attaches it to the pull request or commit.
+          Only supported for remote generation with GitHub output. Defaults to false.
       publish-metadata:
         type: optional<GeneratorPublishMetadataSchema>
         docs: Deprecated, use `metadata` on the output block instead.

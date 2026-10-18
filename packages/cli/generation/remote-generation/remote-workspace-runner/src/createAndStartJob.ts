@@ -15,6 +15,7 @@ import urlJoin from "url-join";
 import { promisify } from "util";
 import { gzip } from "zlib";
 import { migrateIntermediateRepresentationForInvocation } from "./migrateIntermediateRepresentationForInvocation.js";
+import type { ProvenanceInputs } from "./provenanceInputs.js";
 import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
 
 const gzipAsync = promisify(gzip);
@@ -43,7 +44,8 @@ export async function createAndStartJob({
     skipIfNoDiff,
     verify,
     loginCommand = "fern login",
-    specsTarGzBuffer
+    specsTarGzBuffer,
+    provenanceInputs
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -81,6 +83,7 @@ export async function createAndStartJob({
      */
     loginCommand?: string;
     specsTarGzBuffer?: Buffer;
+    provenanceInputs?: ProvenanceInputs;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -120,7 +123,8 @@ export async function createAndStartJob({
                 autoMerge,
                 skipIfNoDiff,
                 verify,
-                loginCommand
+                loginCommand,
+                provenanceInputs
             }),
         retryRateLimited,
         logger: context.logger,
@@ -159,7 +163,8 @@ async function createJob({
     fernignoreContents,
     skipIfNoDiff,
     verify,
-    loginCommand
+    loginCommand,
+    provenanceInputs
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -182,6 +187,7 @@ async function createJob({
     skipIfNoDiff?: boolean;
     verify?: boolean;
     loginCommand: string;
+    provenanceInputs: ProvenanceInputs | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -219,7 +225,10 @@ async function createJob({
         pushPreviewBranch,
         fernignoreContents,
         skipIfNoDiff,
-        verify
+        verify,
+        // Like `replay`, not on fiddle-sdk's CreateJobRequestV2 yet; Fiddle signs a provenance
+        // attestation only when this is present.
+        provenance: provenanceInputs
         // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
         //   automationMode,
         //   autoMerge,

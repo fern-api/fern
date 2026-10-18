@@ -1,0 +1,6 @@
+- summary: |
+    Add an opt-in `provenance: true` generator setting. On remote (Fiddle) generation the CLI
+    sends sha256 digests of the API definition files (specs, overlays, overrides) and
+    `generators.yml` with the job, so Fiddle can emit a signed in-toto/SLSA provenance
+    attestation for the generated SDK. Off by default.
+  type: feat
