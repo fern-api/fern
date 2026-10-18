@@ -627,7 +627,8 @@ function convertSettingsConfig(
         disableAnalytics: settings.disableAnalytics ?? false,
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
         embedding: settings.embedding,
-        showHeadersInExamples: settings.showHeadersInExamples ?? false
+        showHeadersInExamples: settings.showHeadersInExamples ?? false,
+        buildWithFernAsProd: settings.buildWithFernAsProd ?? false
     };
 }
 

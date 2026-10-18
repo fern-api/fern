@@ -53,6 +53,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
     websocketOneofDisplay: "flat" | "grouped" | undefined;
     embedding: EmbeddingConfig | undefined;
     showHeadersInExamples: boolean | undefined;
+    buildWithFernAsProd: boolean | undefined;
     search:
         | {
               prioritizeCurrentProduct: boolean | undefined;
