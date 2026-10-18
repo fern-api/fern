@@ -2,6 +2,7 @@ export { AbstractDynamicSnippetsGenerator } from "./AbstractDynamicSnippetsGener
 export { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext.js";
 export { type DiscriminatedUnionTypeInstance } from "./DiscriminatedUnionTypeInstance.js";
 export { ErrorReporter, Severity } from "./ErrorReporter.js";
+export { type InvocationSnippetResponse } from "./InvocationSnippetResponse.js";
 export { type Options, Style } from "./Options.js";
 export { Result } from "./Result.js";
 export { Scope } from "./Scope.js";

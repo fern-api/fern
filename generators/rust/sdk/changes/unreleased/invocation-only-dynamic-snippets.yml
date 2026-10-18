@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate invocation-only dynamic snippets. In addition to the full snippet
+    (client construction plus the call), the generator now exposes the structured
+    pieces a caller can render inside code it already owns (e.g. a documentation
+    code template): the bare invocation (`client.endpoints.update(...).await`,
+    honoring a custom client variable name), the imports the invocation references,
+    and the generated client struct name so docs can render the client construction
+    and track renames.
+
+    For Rust the imports field is always the empty string: the Rust AST has no
+    per-symbol import mechanism, and a generated Rust SDK resolves every type through
+    a single blanket glob (`use <crate>::prelude::*;`) emitted once by the client
+    scaffold. That glob belongs to the client construction the caller owns, not to
+    the invocation, so a bare invocation never emits a per-symbol `use` and no imports
+    mechanism is invented for it. This mirrors the Ruby port (types referenced via the
+    gem namespace), not the C#/Java/PHP `{ code, imports }` helper pattern.
+  type: feat

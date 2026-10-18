@@ -1,4 +1,11 @@
-import { AbstractFormatter, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractFormatter,
+    InvocationSnippetResponse,
+    Options,
+    Scope,
+    Severity,
+    Style
+} from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
@@ -105,6 +112,58 @@ export class EndpointSnippetGenerator {
         options?: Options;
     }): Promise<java.AstNode> {
         throw new Error("Unsupported");
+    }
+
+    /**
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `client.plants().update(...)`), the imports the call requires, and the generated
+     * client class name.
+     */
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        const config = this.getConfig(options ?? {});
+        const invocation = this.callMethod({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName
+        });
+        // The caller supplies the client and terminates the statement themselves, so the
+        // invocation is emitted as a bare expression: no `Client client = Client.builder()...`
+        // construction, no `package`/class/method scaffold, and no trailing `;`. When the call
+        // references SDK or stdlib types (e.g. a body value constructed with `Optional`, a date,
+        // or a UUID) the imports it needs are surfaced separately so the caller can render them
+        // rather than falling back to the complete snippet.
+        const { code, imports } = java.renderNodeWithoutImports({
+            node: invocation,
+            packageName: config.fullStylePackageName ?? SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig,
+            formatter: this.formatter
+        });
+        // Render a bare reference to the generated root client class so its `import ...;` can be
+        // surfaced on its own. This lets docs render the client import (e.g. to construct the
+        // client themselves) without hand-authoring it. Rendered at the snippet package so the
+        // client's own package is not elided; empty string when the client needs no import.
+        const { imports: clientImport } = java.renderNodeWithoutImports({
+            node: this.context.getRootClientClassReference(),
+            packageName: config.fullStylePackageName ?? SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig,
+            formatter: this.formatter
+        });
+        return {
+            snippet: code.trim(),
+            imports,
+            clientName: this.context.getRootClientClassNameForSnippets(),
+            clientImport,
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
     }
 
     private buildCodeBlock({
@@ -555,13 +614,15 @@ export class EndpointSnippetGenerator {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        clientVariableName
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
     }): java.MethodInvocation {
         return java.invokeMethod({
-            on: java.codeblock(CLIENT_VAR_NAME),
+            on: java.codeblock(clientVariableName ?? CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet })
         });
