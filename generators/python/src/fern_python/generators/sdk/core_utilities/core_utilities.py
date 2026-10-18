@@ -810,6 +810,7 @@ class CoreUtilities:
         base_max_retries: Optional[AST.Expression] = None,
         async_base_headers: Optional[AST.Expression] = None,
         logging_config: Optional[AST.Expression] = None,
+        refresh_auth: Optional[AST.Expression] = None,
     ) -> AST.Expression:
         func_args = [
             ("httpx_client", base_client),
@@ -826,6 +827,8 @@ class CoreUtilities:
             func_args.append(("async_base_headers", async_base_headers))
         if logging_config is not None:
             func_args.append(("logging_config", logging_config))
+        if refresh_auth is not None:
+            func_args.append(("refresh_auth", refresh_auth))
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
