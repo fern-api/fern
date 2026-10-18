@@ -1,0 +1,7 @@
+- summary: |
+    Fix remote generation hanging until the 10 minute timeout when the Go generator has no
+    `output:` block in `generators.yml`. The coordinator sends the `publish` output mode in that
+    case, which the generator rejected as unrecognized and exited before reporting the failure.
+    `publish` is now written to disk like `downloadFiles`, and configuration errors are reported
+    to the coordinator so a failure surfaces immediately instead of timing out.
+  type: fix
