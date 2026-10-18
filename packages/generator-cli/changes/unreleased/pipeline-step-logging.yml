@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Log start/finish (with elapsed time) of each `pipeline run` step and emit a 30s heartbeat while a step is running, so a hung post-generation pipeline identifies the stalled step instead of failing silently.
+  type: fix
