@@ -19,11 +19,17 @@ export function isEndpointSecurity(context: SdkGeneratorContext): boolean {
  * are needed to route auth headers, so scopes are dropped here.
  *
  * Example: `[{Bearer: []}, {ApiKey: []}]` -> `new[] { new[] { "Bearer" }, new[] { "ApiKey" } }`.
+ * Example: `[{Basic: []}, {}]` -> `new[] { new[] { "Basic" }, new string[] { } }`.
  */
 export function getEndpointSecurityLiteral(endpoint: FernIr.HttpEndpoint): string {
     const requirements = endpoint.security ?? [];
     const requirementLiterals = requirements.map((requirement) => {
         const schemeKeys = Object.keys(requirement);
+        // An empty requirement (`{}`, i.e. auth is optional) has no element to infer the
+        // array type from, so `new[] { }` would not compile (CS0826).
+        if (schemeKeys.length === 0) {
+            return "new string[] { }";
+        }
         return `new[] { ${schemeKeys.map((key) => `"${key}"`).join(", ")} }`;
     });
     return `new[] { ${requirementLiterals.join(", ")} }`;
