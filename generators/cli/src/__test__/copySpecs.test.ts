@@ -732,7 +732,6 @@ describe("copySpecs", () => {
                 credential: { username: "sid", password: "secret" },
                 flag: "new-key",
                 parameters: { FriendlyName: "{cli} for {user} on {host}" },
-                prompts: { username: "Account SID" },
                 profileParameters: { AccountSid: "username" }
             }
         });
@@ -743,7 +742,6 @@ describe("copySpecs", () => {
                 '.credential_field("username", "sid").credential_field("password", "secret")' +
                 '.flag("new-key")' +
                 '.parameter("FriendlyName", "{cli} for {user} on {host}")' +
-                '.prompt("username", "Account SID")' +
                 '.profile_parameter("AccountSid", "username")))'
         );
     });

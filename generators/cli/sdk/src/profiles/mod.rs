@@ -126,9 +126,6 @@ pub struct ProvisionOperation {
     /// `{cli} for {user} on {host}`. `{cli}`, `{profile}`, `{user}` and
     /// `{host}` are substituted; a value the profile already sets wins.
     pub parameters: Vec<(String, String)>,
-    /// Credential field → prompt label for the interactive flow, e.g.
-    /// `username` → `Account SID`. Unlisted fields are prompted by name.
-    pub prompts: Vec<(String, String)>,
     /// Profile parameter → typed credential field it is copied from, e.g.
     /// `AccountSid` → `username`, so requests keep the account once the
     /// credential is replaced by the provisioned key.
@@ -143,14 +140,8 @@ impl ProvisionOperation {
             revoke_parameters: Vec::new(),
             flag: None,
             parameters: Vec::new(),
-            prompts: Vec::new(),
             profile_parameters: Vec::new(),
         }
-    }
-
-    pub fn prompt(mut self, field: impl Into<String>, label: impl Into<String>) -> Self {
-        self.prompts.push((field.into(), label.into()));
-        self
     }
 
     pub fn profile_parameter(
@@ -163,27 +154,13 @@ impl ProvisionOperation {
         self
     }
 
-    /// The configured `prompts` label for `field`, if one is set.
-    pub fn prompt_for(&self, field: &str) -> Option<&str> {
-        self.prompts
-            .iter()
-            .find(|(f, _)| f == field)
-            .map(|(_, label)| label.as_str())
-    }
-
     /// The prompt label for credential `field`.
     pub fn label_for(&self, field: &str) -> String {
-        self.prompts
-            .iter()
-            .find(|(f, _)| f == field)
-            .map(|(_, label)| label.clone())
-            .unwrap_or_else(|| {
-                let mut chars = field.replace('_', " ").chars().collect::<Vec<_>>();
-                if let Some(first) = chars.first_mut() {
-                    *first = first.to_ascii_uppercase();
-                }
-                chars.into_iter().collect()
-            })
+        let mut chars = field.replace('_', " ").chars().collect::<Vec<_>>();
+        if let Some(first) = chars.first_mut() {
+            *first = first.to_ascii_uppercase();
+        }
+        chars.into_iter().collect()
     }
 
     pub fn flag(mut self, flag: impl Into<String>) -> Self {

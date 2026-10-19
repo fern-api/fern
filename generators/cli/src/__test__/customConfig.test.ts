@@ -523,7 +523,6 @@ describe("validateCustomConfig — profiles", () => {
                         credential: { username: "sid", password: "secret" },
                         flag: "api-key",
                         parameters: { FriendlyName: "{cli} for {user} on {host}" },
-                        prompts: { username: "Account SID", password: "Auth Token" },
                         profileParameters: { AccountSid: "username" }
                     }
                 }
@@ -533,7 +532,6 @@ describe("validateCustomConfig — profiles", () => {
             credential: { username: "sid", password: "secret" },
             flag: "api-key",
             parameters: { FriendlyName: "{cli} for {user} on {host}" },
-            prompts: { username: "Account SID", password: "Auth Token" },
             profileParameters: { AccountSid: "username" }
         });
     });
@@ -548,11 +546,6 @@ describe("validateCustomConfig — profiles", () => {
                 profiles: { enabled: true, provisionOperation: { ...base, parameters: { FriendlyName: 'a"b' } } }
             })
         ).toThrow(/provisionOperation.parameters.FriendlyName/);
-        expect(() =>
-            validateCustomConfig({
-                profiles: { enabled: true, provisionOperation: { ...base, prompts: { username: 3 } } }
-            })
-        ).toThrow(/provisionOperation.prompts.username/);
     });
 
     it("rejects a provisionOperation without a credential mapping", () => {

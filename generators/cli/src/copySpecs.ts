@@ -452,9 +452,6 @@ function renderProvisionOperation(config: FernCliProfilesProvisionConfig): strin
     for (const [parameter, value] of Object.entries(config.parameters ?? {})) {
         out += `.parameter(${rustStringLiteral(parameter, "profiles.provisionOperation.parameters")}, ${rustStringLiteral(value, "profiles.provisionOperation.parameters")})`;
     }
-    for (const [field, label] of Object.entries(config.prompts ?? {})) {
-        out += `.prompt(${rustStringLiteral(field, "profiles.provisionOperation.prompts")}, ${rustStringLiteral(label, "profiles.provisionOperation.prompts")})`;
-    }
     for (const [parameter, field] of Object.entries(config.profileParameters ?? {})) {
         out += `.profile_parameter(${rustStringLiteral(parameter, "profiles.provisionOperation.profileParameters")}, ${rustStringLiteral(field, "profiles.provisionOperation.profileParameters")})`;
     }

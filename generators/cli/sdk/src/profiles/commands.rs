@@ -2695,11 +2695,7 @@ fn prompt_guided_credential(
     let mut stderr = std::io::stderr();
     let mut values = Vec::with_capacity(fields.len());
     for field in fields {
-        let label = op
-            .prompt_for(&field)
-            .map(str::to_string)
-            .or_else(|| login::field_label(&scheme, &field))
-            .unwrap_or_else(|| op.label_for(&field));
+        let label = login::field_label(&scheme, &field).unwrap_or_else(|| op.label_for(&field));
         let value = if is_secret_field(&field) {
             read_secret(&label, &mut std::io::stdin().lock(), &mut stderr)?
         } else {

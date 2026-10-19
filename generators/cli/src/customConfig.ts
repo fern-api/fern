@@ -260,12 +260,6 @@ export interface FernCliProfilesProvisionConfig {
     parameters?: Record<string, string>;
 
     /**
-     * Credential field → label shown by the interactive `auth login` /
-     * `profiles create` prompts, e.g. `{ username: "Account SID" }`.
-     */
-    prompts?: Record<string, string>;
-
-    /**
      * Profile parameter → typed credential field it is copied from, e.g.
      * `{ AccountSid: "username" }`, so requests keep the account once the
      * credential is replaced by the provisioned key.
@@ -810,9 +804,6 @@ function validateProvisionOperation(raw: unknown): FernCliProfilesProvisionConfi
     }
     if (obj.parameters !== undefined) {
         result.parameters = validateTextMap(obj.parameters, `${label}.parameters`);
-    }
-    if (obj.prompts !== undefined) {
-        result.prompts = validateTextMap(obj.prompts, `${label}.prompts`);
     }
     if (obj.profileParameters !== undefined) {
         result.profileParameters = validateStringMap(obj.profileParameters, `${label}.profileParameters`);
