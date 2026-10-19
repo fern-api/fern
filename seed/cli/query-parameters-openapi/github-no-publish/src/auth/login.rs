@@ -288,6 +288,7 @@ pub(crate) fn run_token_paste_for(
     let mut err = stderr.lock();
     let account = crate::profiles::keyring_account(scheme_name);
     active_store().set(cli_name, &account, &stored)?;
+    crate::profiles::note_stored_credential(cli_name, scheme_name, &stored);
 
     let _ = writeln!(
         err,
@@ -505,6 +506,7 @@ fn handle_logout(
     // active would silently log the user out of every tenant.
     let account = crate::profiles::keyring_account(&scheme);
     active_store().delete(cli_name, &account)?;
+    crate::profiles::note_removed_credential(cli_name, &scheme);
     let _ = writeln!(
         std::io::stderr().lock(),
         "{}",
@@ -894,6 +896,7 @@ fn run_env_capture(
             .ok_or_else(|| from_env_error(cli_name, scheme, "a credential"))?,
     };
     crate::auth::keyring_store::active_store().set(cli_name, &account, &stored)?;
+    crate::profiles::note_stored_credential(cli_name, scheme, &stored);
 
     let mut stderr = std::io::stderr();
     let scope = match crate::profiles::active_name() {

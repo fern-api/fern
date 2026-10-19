@@ -60,7 +60,8 @@ pub use compose::{AllAuthProvider, AnyAuthProvider, LayeredAuthProvider, Routing
 pub use credential::{AuthCredentialSource, CredentialSlots};
 pub use error::{ensure_credentials_for, handle_error_response};
 pub use keyring_store::{
-    active_store, auto_store, set_active_store, FileKeyringStore, KeyringStore, MockKeyringStore,
+    active_store, auto_store, set_active_store, CachingKeyringStore, FileKeyringStore, KeyringStore,
+    MockKeyringStore,
 };
 #[cfg(not(target_env = "musl"))]
 pub use keyring_store::OsKeyringStore;
