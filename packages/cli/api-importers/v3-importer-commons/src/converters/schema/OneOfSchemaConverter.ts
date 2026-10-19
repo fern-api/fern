@@ -204,6 +204,13 @@ export class OneOfSchemaConverter extends AbstractConverter<
      * Filters out the discriminant property from a schema's properties.
      * This is needed when the discriminant is redeclared in variant schemas.
      */
+    private getEnclosingComponentRef(): string | undefined {
+        const [section, kind, name] = this.breadcrumbs;
+        return section === "components" && kind === "schemas" && name != null
+            ? `#/components/schemas/${name}`
+            : undefined;
+    }
+
     private filterDiscriminantFromSchema(
         schema: OpenAPIV3_1.SchemaObject,
         discriminantProperty: string
@@ -323,14 +330,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 ref != null ? { $ref: ref } : variantSchema;
 
             // If the variant schema contains the discriminant property, filter it out
-            // and convert as an inlined schema with the original type ID. A variant that is
-            // already being inlined further up (a self-referencing union) stays a $ref, since
-            // inlining it again would recurse forever.
+            // and convert as an inlined schema with the original type ID. A variant that refers to
+            // the component being converted, or that is already being inlined further up, stays a
+            // $ref: inlining it would recurse forever and replace the component's own declaration.
             const isVariantInProgress = typeId != null && this.context.discriminatedVariantsInProgress.has(typeId);
+            const isSelfReference = ref != null && ref === this.getEnclosingComponentRef();
             const shouldInlineVariant =
                 variantSchema?.properties != null &&
                 discriminantProperty in variantSchema.properties &&
-                !(isVariantInProgress && ref != null);
+                !((isVariantInProgress || isSelfReference) && ref != null);
             if (shouldInlineVariant && variantSchema != null) {
                 schemaOrReference = this.filterDiscriminantFromSchema(variantSchema, discriminantProperty);
             }

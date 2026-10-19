@@ -15,6 +15,7 @@ interface IRType {
         _type: string;
         discriminant?: string;
         types?: { discriminantValue: string; displayName?: string }[];
+        properties?: { name: string | { wireValue: string } }[];
     };
 }
 
@@ -66,7 +67,14 @@ describe("self-referencing discriminated union", () => {
         const ir = await loadIr("discriminated-union-recursive");
 
         expect(findType(ir, "Leaf")).toBeDefined();
-        expect(findType(ir, "Branch")).toBeDefined();
+        const branch = findType(ir, "Branch");
+        expect(branch?.shape._type).toBe("object");
+        expect(
+            (branch?.shape.properties ?? []).map((property) =>
+                typeof property.name === "string" ? property.name : property.name.wireValue
+            )
+        ).toEqual(["type", "parts"]);
+        expect(findType(ir, "BranchWrapper")).toBeUndefined();
         const unions = Object.values(ir.types).filter((t) => t.shape._type === "union");
         expect(unions.length).toBeGreaterThan(0);
         for (const union of unions) {
