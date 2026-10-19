@@ -3983,10 +3983,6 @@ fn classify_multipart_property_at_depth(
     (false, None)
 }
 
-/// Element type of an array schema, resolved through `$ref` and through a
-/// nullable composition on the items. `None` for a non-array, an untyped
-/// element, or a plain string element — the caller treats `None` as "string",
-/// which is what every lowering produced before this existed.
 /// The sole required property of an object schema, when it is a string —
 /// `email` on `EmailAddr: {required: [email], properties: {email, name}}`.
 /// See [`MethodParameter::shorthand_field`].
@@ -4015,6 +4011,10 @@ fn array_item_shorthand_field(
     sole_required_string_field(schema.items.as_deref()?, component_schemas)
 }
 
+/// Element type of an array schema, resolved through `$ref` and through a
+/// nullable composition on the items. `None` for a non-array, an untyped
+/// element, or a plain string element — the caller treats `None` as "string",
+/// which is what every lowering produced before this existed.
 fn array_item_type(
     schema: &OpenApiSchemaObject,
     component_schemas: &HashMap<String, OpenApiSchemaObject>,

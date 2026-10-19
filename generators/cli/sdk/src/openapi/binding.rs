@@ -691,14 +691,9 @@ impl Binding for OpenApiBinding {
                 )
             })?;
             // In a terminal, ask for required inputs the user left out rather
-            // than failing on them. Skipped when the body itself is read from
-            // stdin (`--json -`), which the prompts would otherwise consume.
-            let body_from_stdin = matched_args
-                .try_get_one::<String>("json")
-                .ok()
-                .flatten()
-                .is_some_and(|v| v == "-");
-            if !body_from_stdin && super::app::interactive_terminal() {
+            // than failing on them. Skipped when any input is read from stdin
+            // (`--json -`, `@-`), which the prompts would otherwise consume.
+            if super::app::interactive_terminal() && !super::app::args_read_stdin(matched_args) {
                 let globals = super::app::build_global_parameter_overrides(
                     matched_args,
                     doc,

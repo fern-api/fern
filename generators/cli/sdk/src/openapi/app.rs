@@ -3237,6 +3237,20 @@ pub(crate) fn interactive_terminal() -> bool {
     std::io::stdin().is_terminal() && std::io::stderr().is_terminal()
 }
 
+/// Whether any flag value reads stdin: `--json -`, a multipart file `-`, or
+/// an `@-` reference anywhere in a value. Prompts must not compete for it.
+/// `--output -` is stdout, not stdin.
+pub(crate) fn args_read_stdin(matched_args: &clap::ArgMatches) -> bool {
+    matched_args.ids().filter(|id| id.as_str() != "output").any(|id| {
+        matched_args
+            .get_raw(id.as_str())
+            .into_iter()
+            .flatten()
+            .filter_map(|v| v.to_str())
+            .any(|v| v == "-" || v.contains("@-"))
+    })
+}
+
 /// Required parameters the user supplied by no flag, `--params` or `--json`,
 /// in the spec's order — the same set the executor would report as missing.
 /// `exempt` holds wire names a resolved global parameter will fill.
@@ -3261,8 +3275,8 @@ pub(crate) fn missing_required_params(
     names.extend(rest);
 
     let ancestor_object_supplied = |name: &str| {
-        let mut rest = name;
-        while let Some((prefix, _)) = rest.rsplit_once('.') {
+        let mut remaining = name;
+        while let Some((prefix, _)) = remaining.rsplit_once('.') {
             if params.contains_key(prefix)
                 && method
                     .parameters
@@ -3272,7 +3286,7 @@ pub(crate) fn missing_required_params(
             {
                 return true;
             }
-            rest = prefix;
+            remaining = prefix;
         }
         false
     };
@@ -3320,9 +3334,14 @@ pub(crate) fn prompt_for_params(
         let _ = write!(out, "--{flag}{hint}: ");
         let _ = out.flush();
         let mut answer = String::new();
-        input
+        let read = input
             .read_line(&mut answer)
             .map_err(|e| CliError::Other(e.into()))?;
+        if read == 0 {
+            // EOF (Ctrl-D): stop asking; the executor reports what's left.
+            let _ = writeln!(out);
+            break;
+        }
         let answer = answer.trim();
         if answer.is_empty() {
             continue;
@@ -7230,5 +7249,31 @@ paths:
         let shown = String::from_utf8(out).unwrap();
         assert!(shown.contains("--to (comma-separated): "), "{shown}");
         assert!(shown.contains("--subject: "), "{shown}");
+    }
+
+    #[test]
+    fn test_prompt_for_params_stops_at_eof() {
+        let method = shorthand_method();
+        let mut params = serde_json::Map::new();
+        let mut input = std::io::Cursor::new(Vec::new());
+        let mut out = Vec::new();
+        prompt_for_params(
+            &["to".to_string(), "subject".to_string()],
+            &method,
+            &mut params,
+            &mut input,
+            &mut out,
+        )
+        .unwrap();
+        let shown = String::from_utf8(out).unwrap();
+        assert!(params.is_empty());
+        assert!(!shown.contains("--subject"), "no prompts after EOF: {shown}");
+    }
+
+    #[test]
+    fn test_args_read_stdin_detects_dash_and_at_dash() {
+        assert!(args_read_stdin(&shorthand_matches(&["--json", "-"])));
+        assert!(args_read_stdin(&shorthand_matches(&["--to", r#"{"email":"@-"}"#])));
+        assert!(!args_read_stdin(&shorthand_matches(&["--to", "a@x.com", "--subject", "Hi"])));
     }
 }
