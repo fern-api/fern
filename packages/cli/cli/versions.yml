@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.168.0
+  changelogEntry:
+    - summary: |
+        `fern docs md generate` now parses library source locally with Docker by default, with no
+        Fern login required. Pass `--remote` to parse on Fern's servers instead.
+        `--local` is still accepted but no longer needed.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.167.0
+  changelogEntry:
+    - summary: |
+        Add `theme.code-blocks` to docs.yml to choose the syntax-highlighting color scheme for
+        code blocks, with separate `light` and `dark` Shiki themes. Supported themes are
+        `github-dark`, `github-dark-default`, `github-dark-dimmed`, `github-dark-high-contrast`,
+        `github-light`, `github-light-default`, `github-light-high-contrast`,
+        `material-theme-darker`, `min-dark`, and `min-light`.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
 - version: 5.166.0
   changelogEntry:
     - summary: |
