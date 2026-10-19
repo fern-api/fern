@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.165.0
+  changelogEntry:
+    - summary: |
+        Initialize new SDK projects with sdk-config.yml instead of generators.yml by default. Set FERN_USE_SDK_CONFIG=false to temporarily use the legacy initialization path.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
 - version: 5.164.1
   changelogEntry:
     - summary: |
