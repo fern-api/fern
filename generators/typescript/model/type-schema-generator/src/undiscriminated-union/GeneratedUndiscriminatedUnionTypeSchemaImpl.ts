@@ -34,6 +34,7 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
         if (
             member.type.type !== "container" ||
             member.type.container.type !== "map" ||
+            !isStringKey(member.type.container.keyType) ||
             !this.isSelfRecursive(member.type.container.valueType)
         ) {
             return context.typeSchema.getReferenceToRawType(member.type).typeNode;
@@ -61,6 +62,10 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
         const unwrapped = unwrapOptionalAndNullable(typeRef);
         return unwrapped.type === "named" && this.case.pascalUnsafe(unwrapped.name) === this.typeName;
     }
+}
+
+function isStringKey(keyType: FernIr.TypeReference): boolean {
+    return keyType.type === "primitive" && keyType.primitive.v1 === "STRING";
 }
 
 function unwrapOptionalAndNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference {

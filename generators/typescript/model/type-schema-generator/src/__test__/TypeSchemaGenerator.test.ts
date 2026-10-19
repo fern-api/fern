@@ -937,11 +937,14 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
             return context;
         }
 
-        function createMapMember(valueTypeName: string): FernIr.UndiscriminatedUnionMember {
+        function createMapMember(
+            valueTypeName: string,
+            keyType: FernIr.TypeReference = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+        ): FernIr.UndiscriminatedUnionMember {
             return createUndiscriminatedMember(
                 FernIr.TypeReference.container(
                     FernIr.ContainerType.map({
-                        keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        keyType,
                         valueType: FernIr.TypeReference.named({
                             ...createDeclaredTypeName(valueTypeName),
                             default: undefined,
@@ -963,6 +966,20 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
             const output = writeSchemaAndGetText(schema, createRawTypeContext());
             expect(output).toContain("[key: string]: serializers.Node.Raw;");
             expect(output).not.toContain("Record<string, serializers.Node.Raw>");
+        });
+
+        it("keeps Record in the raw type for a self-recursive map member with non-string keys", () => {
+            const colorKey = FernIr.TypeReference.named({
+                ...createDeclaredTypeName("Color"),
+                default: undefined,
+                inline: undefined
+            });
+            const schema = createUndiscriminatedUnionSchema({
+                typeName: "Node",
+                members: [createMapMember("Node", colorKey)]
+            });
+            const output = writeSchemaAndGetText(schema, createRawTypeContext());
+            expect(output).not.toContain("[key: string]");
         });
 
         it("keeps Record in the raw type for a map member of another type", () => {
