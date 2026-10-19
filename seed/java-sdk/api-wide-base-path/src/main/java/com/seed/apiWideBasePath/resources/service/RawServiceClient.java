@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.apiWideBasePath.core.BodyProperties;
 import com.seed.apiWideBasePath.core.ClientOptions;
 import com.seed.apiWideBasePath.core.ObjectMappers;
+import com.seed.apiWideBasePath.core.PathSegments;
 import com.seed.apiWideBasePath.core.RequestOptions;
 import com.seed.apiWideBasePath.core.RetryInterceptor;
 import com.seed.apiWideBasePath.core.SeedApiWideBasePathApiException;
@@ -37,10 +38,10 @@ public class RawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test")
-                .addPathSegment(clientOptions.pathParam())
-                .addPathSegment(serviceParam)
-                .addPathSegment(Integer.toString(endpointParam))
-                .addPathSegment(resourceParam);
+                .addPathSegment(PathSegments.validate(clientOptions.pathParam()))
+                .addPathSegment(PathSegments.validate(serviceParam))
+                .addPathSegment(PathSegments.validate(Integer.toString(endpointParam)))
+                .addPathSegment(PathSegments.validate(resourceParam));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

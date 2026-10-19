@@ -9,6 +9,7 @@ import com.seed.pathParameters.core.BodyProperties;
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.MediaTypes;
 import com.seed.pathParameters.core.ObjectMappers;
+import com.seed.pathParameters.core.PathSegments;
 import com.seed.pathParameters.core.QueryStringMapper;
 import com.seed.pathParameters.core.RequestOptions;
 import com.seed.pathParameters.core.RetryInterceptor;
@@ -59,9 +60,9 @@ public class AsyncRawUserClient {
             String userId, GetUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -133,7 +134,7 @@ public class AsyncRawUserClient {
             User request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -217,9 +218,9 @@ public class AsyncRawUserClient {
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -311,9 +312,9 @@ public class AsyncRawUserClient {
             String userId, SearchUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("search");
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -414,11 +415,11 @@ public class AsyncRawUserClient {
             String userId, int version, GetUserMetadataRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("metadata")
-                .addPathSegment("v" + Integer.toString(version));
+                .addPathSegment(PathSegments.validate("v" + Integer.toString(version)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -519,12 +520,12 @@ public class AsyncRawUserClient {
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("specifics")
-                .addPathSegment(Integer.toString(version))
-                .addPathSegment(thought);
+                .addPathSegment(PathSegments.validate(Integer.toString(version)))
+                .addPathSegment(PathSegments.validate(thought));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

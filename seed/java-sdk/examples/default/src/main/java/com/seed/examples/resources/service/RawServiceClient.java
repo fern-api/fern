@@ -8,6 +8,7 @@ import com.seed.examples.core.BodyProperties;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.MediaTypes;
 import com.seed.examples.core.ObjectMappers;
+import com.seed.examples.core.PathSegments;
 import com.seed.examples.core.QueryStringMapper;
 import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.RetryInterceptor;
@@ -44,7 +45,7 @@ public class RawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movie")
-                .addPathSegment(movieId);
+                .addPathSegment(PathSegments.validate(movieId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
