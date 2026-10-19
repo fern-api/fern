@@ -160,6 +160,15 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             return;
         }
 
+        // With respect-per-spec-base-path, a plain base path belongs to this spec's endpoints rather
+        // than the whole API, so it survives merging with other specs.
+        if (this.context.settings.respectPerSpecBasePath && parsed.parameters.length === 0) {
+            if (!parsed.pathsIncludeBasePath) {
+                prependBasePathToPaths({ openApi: this.context.spec, basePath: parsed.path });
+            }
+            return;
+        }
+
         this.ir.basePath = constructHttpPath(parsed.path);
 
         for (const param of parsed.parameters) {
@@ -518,4 +527,21 @@ function convertExtensionDefaultToLiteral(value: unknown): Literal | undefined {
         return Literal.boolean(value);
     }
     return undefined;
+}
+
+function prependBasePathToPaths({ openApi, basePath }: { openApi: OpenAPIV3_1.Document; basePath: string }): void {
+    const trimmedBasePath = basePath.replace(/\/+$/, "");
+    if (openApi.paths == null || trimmedBasePath.length === 0) {
+        return;
+    }
+    const newPaths: OpenAPIV3_1.PathsObject = {};
+    for (const [path, pathItem] of Object.entries(openApi.paths)) {
+        if (path === trimmedBasePath || path.startsWith(`${trimmedBasePath}/`)) {
+            newPaths[path] = pathItem;
+            continue;
+        }
+        const relativePath = path.replace(/^\/+/, "");
+        newPaths[relativePath.length > 0 ? `${trimmedBasePath}/${relativePath}` : trimmedBasePath] = pathItem;
+    }
+    openApi.paths = newPaths;
 }

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The v3 OpenAPI parser now honors `respect-per-spec-base-path`. Each spec's plain
+    `x-fern-base-path` is applied to that spec's endpoint paths, so it is no longer dropped
+    when `generators.yml` lists more than one spec (for example in docs API Reference URLs).
+  type: fix
