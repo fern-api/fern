@@ -1,3 +1,0 @@
-rootProject.name = 'discriminated-union-with-nested-oneof'
-
-include 'sample-app'

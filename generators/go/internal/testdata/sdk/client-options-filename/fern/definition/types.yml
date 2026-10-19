@@ -1,4 +1,0 @@
-types:
-  ClientOptions:
-    properties:
-      value: string

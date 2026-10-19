@@ -20,7 +20,6 @@ import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import { assertVerifyPipelineSucceeded } from "./assertVerifyPipelineSucceeded.js";
-import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace.js";
@@ -34,8 +33,6 @@ export declare namespace GenerationRunner {
         context: TaskContext;
         irVersionOverride: string | undefined;
         outputVersionOverride: string | undefined;
-        shouldGenerateDynamicSnippetTests: boolean | undefined;
-        skipUnstableDynamicSnippetTests?: boolean;
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
         skipFernignore?: boolean;
@@ -90,8 +87,6 @@ export class GenerationRunner {
         context,
         irVersionOverride,
         outputVersionOverride,
-        shouldGenerateDynamicSnippetTests,
-        skipUnstableDynamicSnippetTests,
         inspect,
         skipFernignore,
         skipAutogenerationIfManualExamplesExist,
@@ -133,24 +128,6 @@ export class GenerationRunner {
                             interactiveTaskContext.logger.info(
                                 chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                             );
-
-                            if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
-                                interactiveTaskContext.logger.info(
-                                    `Generating dynamic snippet tests for ${generatorInvocation.language}...`
-                                );
-                                await generateDynamicSnippetTests({
-                                    context: interactiveTaskContext,
-                                    ir,
-                                    config: generatorConfig,
-                                    language: generatorInvocation.language,
-                                    outputDir: generatorInvocation.absolutePathToLocalOutput,
-                                    skipUnstable: skipUnstableDynamicSnippetTests
-                                });
-                            } else {
-                                interactiveTaskContext.logger.info(
-                                    `Skipping dynamic snippet tests; shouldGenerateDynamicSnippetTests: ${shouldGenerateDynamicSnippetTests}, language: ${generatorInvocation.language}`
-                                );
-                            }
 
                             if (verify === true) {
                                 await runVerifyPipeline({

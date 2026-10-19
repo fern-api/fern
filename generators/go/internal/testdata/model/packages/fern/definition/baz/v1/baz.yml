@@ -1,4 +1,0 @@
-types:
-  Baz:
-    properties:
-      name: string

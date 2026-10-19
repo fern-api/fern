@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Remove the unused dynamic snippet test generation path from local generation. `fern generate`
+    never enabled it, so local generation output is unchanged.
+  type: internal

@@ -1,3 +1,0 @@
-rootProject.name = 'oauth-client-credentials'
-
-include 'sample-app'

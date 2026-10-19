@@ -17,16 +17,6 @@ devbox shell
 
 DevBox automatically provides: Node.js 22, pnpm 9.4.0, Go 1.23, Python 3.10, Poetry 1.8, JDK 17, buf 1.50.0, and git-lfs. All versions are pinned in `devbox.json` to match CI.
 
-**Manual .NET Installation** (Required for C# generator development):
-
-DevBox cannot pin multiple .NET SDK versions simultaneously, so .NET must be installed separately. The C# generators require:
-- **.NET 10** (latest)
-- **.NET 9** (test TFM)
-
-We provide a setup script that helps:
-```bash
-bash scripts/setup-dotnet.sh
-```
 
 This script checks for required .NET versions and can automatically install them using official Microsoft installation scripts, or provide links to the official guides. When you run `devbox shell`, the setup script runs automatically and the `.NET` installation is added to your PATH.
 
@@ -73,8 +63,6 @@ pnpm fern:build                 # Build production CLI
 pnpm fern:local                 # Run local development CLI
 pnpm fern                       # Run local CLI directly
 
-# Seed (generator testing)
-pnpm seed:build                 # Build seed CLI for generator testing
 ```
 
 **Running Individual Package Commands**: For commands in subfolder packages, use `pnpm turbo run <command> --filter @fern-api/cli` (e.g., `pnpm turbo run test --filter @fern-api/cli`)
@@ -83,7 +71,7 @@ pnpm seed:build                 # Build seed CLI for generator testing
 
 ## Architecture Overview
 
-Fern is a CLI tool for API-first development that transforms API definitions into SDKs and documentation. The architecture has three main layers:
+Fern is a CLI tool for API-first development that transforms API definitions into SDKs and documentation. The architecture has these main layers:
 
 ### 1. CLI Layer (`/packages/cli/`)
 - **Entry Point**: `packages/cli/cli/src/cli.ts` - Main yargs-based CLI
@@ -99,14 +87,8 @@ Fern is a CLI tool for API-first development that transforms API definitions int
 - **Import/Export**: Converts external formats (OpenAPI, AsyncAPI, gRPC) to Fern IR
 - **Utilities**: Core libraries for file system, logging, path handling, etc.
 
-### 3. Generator Layer (`/generators/`)
-Language-specific generators that consume IR and produce outputs:
-- **Pattern**: Each language has `base/`, `ast/`, `model/`, `sdk/`, sometimes `server/`
-- **Supported**: TypeScript, Python, Java, Go, C#, Ruby, PHP, Rust, Swift
-- **Special**: OpenAPI export
-
-### 4. Testing (`/seed/`)
-Comprehensive generator testing with Docker-based fixtures across all supported languages.
+### 3. Generators
+SDK generators consume the IR produced here, but they no longer live in this repo. The CLI runs them as published Docker images (or via Fiddle for remote generation).
 
 ## Key Architectural Patterns
 
@@ -127,7 +109,7 @@ When users run `fern generate --group <group-name>` in production:
    - Multiple APIs: `fern/apis/<api-name>/generators.yml` (separate configs per API)
 3. **Generator Selection**: Uses `--group` parameter or `default-group` field to determine which generator group to run
 4. **IR Generation**: Creates Fern IR file containing all information needed for generation (always latest IR version)
-5. **Version Compatibility**: Checks generator version (e.g., `typescript-node-sdk:2.6.3`) against required IR version (e.g., `irVersion: 58`) using `/generators/<lang>/sdk/versions.yml`
+5. **Version Compatibility**: Checks generator version (e.g., `typescript-node-sdk:2.6.3`) against required IR version (e.g., `irVersion: 58`) (from the generator registry in FDR)
 6. **IR Migration**: If needed, migrates IR backward to match generator's expected version using `/packages/cli/generation/ir-migrations`
 7. **Generation Execution**:
    - **Local**: `--local` flag downloads Docker image and runs generation locally
@@ -136,31 +118,6 @@ When users run `fern generate --group <group-name>` in production:
    - **Package registries**: npm, PyPI, Maven, NuGet, RubyGems
    - **GitHub**: release/pull-request/push modes  
    - **Local filesystem**: saves to specified directory
-
-### Seed Testing (Development)
-
-Seed validates generator changes against test fixtures. Essential for bug fixes and feature development.
-
-**Structure**: `/test-definitions/` (inputs) → `/packages/seed/` (CLI) → `/seed/<generator>/<fixture>/` (outputs)
-
-**Setup**: `pnpm install && pnpm compile && pnpm seed:build`
-
-**Commands**:
-```bash
-# Test predefined fixture
-pnpm seed test --generator python-sdk --fixture file-download --skip-scripts
-
-# Test custom project
-pnpm seed run --generator go-sdk --path /path/to/project --skip-scripts
-```
-
-**Development Cycle**:
-1. Run seed test to reproduce issue
-2. Modify generator code
-3. Re-run seed test (use `git diff` to see output changes)
-4. Repeat until fixed
-
-**Output**: Seed test overwrites `/seed/<generator>/<fixture>/`, seed run writes to temp directory
 
 ### Breaking Changes Policy (Generators)
 
@@ -210,21 +167,12 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 
 - **CLI Entry**: `packages/cli/cli/src/cli.ts`
 - **IR Schema**: `packages/ir-sdk/` (central data structure)
-- **Generator Base**: `generators/base/` (shared generator infrastructure)
 - **Workspace Loading**: `packages/cli/workspace/loader/`
 - **Configuration**: `packages/cli/configuration/`
 - **Build Config**: `turbo.json`, `pnpm-workspace.yaml`
 
 ## Development Notes
 
-- **Generator Development**: Implement `AbstractGeneratorCli`, use IR as input, follow existing language patterns
-- **Generator-Specific Documentation**: Each major generator has its own CLAUDE.md file:
-  - `generators/python/CLAUDE.md` - Python v1+v2 tandem system
-  - `generators/java/CLAUDE.md` - Java v1+v2 tandem system
-  - `generators/go/CLAUDE.md` - Go v1+v2 tandem system
-  - `generators/typescript/CLAUDE.md` - Legacy TypeScript generator
-  - `generators/ruby-v2/CLAUDE.md` - Modern Ruby generator (standalone)
-  - `generators/csharp/CLAUDE.md` - Modern C# generator
 - **IR Changes**: Require migrations in `packages/generation/ir-migrations/`
 - **Testing**: Always run `pnpm test:ete` for end-to-end validation after CLI changes
 - **Monorepo**: Use Turbo filters for focused builds/tests on specific packages
@@ -321,19 +269,11 @@ Here are additional TypeScript rules beyond type safety:
 
 ## Generated Code Management
 
-**Identifying**: Generated by Fern (not third-party tools). Common locations: `/sdk/src/serialization/`, `/sdk/src/api/`, `/seed/` test fixtures.
+**Identifying**: Generated by Fern (not third-party tools). Common locations: `/sdk/src/serialization/`, `/sdk/src/api/`.
 
 **Regenerating**: `pnpm fern generate [--group <name>]` or `pnpm fern:local generate` for local testing
 
 **Validation**: Run `pnpm compile` to check for issues. Test individual fixtures during development. Run full validation (`pnpm check:fix`, `pnpm test`, `pnpm test:ete`) only when changes are complete.
-
-## Seed Testing & Fixtures
-
-### Adding/Updating Fixtures
-
-**New fixtures**: Create `/seed/<generator>/<fixture>/` directory → Add `seed.yml` config → Run `pnpm seed:build` → Run `pnpm test:update` and `pnpm test:ete:update` → Validate → Commit
-
-**Update fixtures**: `pnpm seed:build --filter <fixture-name>` or `pnpm test:update` for snapshots
 
 ## Pull Request Guidelines
 
@@ -398,12 +338,11 @@ For Sentry `buildwithfern` / `cli` false-positive triage, see the Devin skill at
 ### Quick Fixes by Issue Type
 - **Generator failures**: Check `docker ps` → Rebuild image → Check container logs
 - **IR compilation**: `pnpm fern check` → Check circular refs → Review migrations
-- **Test failures**: Unit (check generated code) | E2E (`pnpm fern:build`) | Seed (`pnpm seed:build`) | Lint (`pnpm format:fix`)
+- **Test failures**: Unit (check generated code) | E2E (`pnpm fern:build`) | Lint (`pnpm format:fix`)
 - **Performance**: Use Turbo filters | `pnpm clean` then rebuild | Check Docker limits
 
 ### Debug Locations
 - **Build outputs**: `dist/`, `.turbo/` directories
-- **Test outputs**: `/seed/<generator>/<fixture>/` directories
 
 # Individual Preferences
 @~/.claude/my-fern-instructions.md

@@ -1,4 +1,0 @@
-- summary: |
-    Fix pydantic-v2 generator failing to find `.gitignore.Template` at runtime by
-    copying the `asIs` directory into the dist bundle.
-  type: fix

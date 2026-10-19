@@ -1,4 +1,0 @@
-- summary: |
-    Positional path parameters that an example does not supply are now rendered with their
-    `client-default` value instead of `undefined`, so generated snippets typecheck.
-  type: fix

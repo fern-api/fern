@@ -1,2 +1,0 @@
-# Files owned by the user — fern generate will not overwrite these.
-cli/path-param-body-collision/custom.rs

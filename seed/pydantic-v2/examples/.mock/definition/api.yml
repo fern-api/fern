@@ -1,8 +1,0 @@
-name: examples
-auth: bearer
-error-discrimination:
-  strategy: status-code
-environments:
-  Production: https://production.com/api
-  Staging: https://staging.com/api
-default-environment: null

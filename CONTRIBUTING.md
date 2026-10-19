@@ -186,67 +186,6 @@ FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/
 
 <br>
 
-## Generators
-
-All of Fern's generators live in a directory called [generators](./generators/). This directory contains generators for several languages such as
-[typescript](./generators/typescript/), [python](./generators/python/), [go](./generators/go).
-
-Some of the generators are written in the language they generate (i.e. Python is written in python, Go is written in Go, and Java is written in Java).
-We are moving to a world where each generator will be written in TypeScript so that we can share more utilities and enforce a consistent structure
-in the generator.
-
-### Generator Testing
-
-**Note**: Please make sure that the docker daemon is running before running commands below.
-
-To test our generators we have built a CLI called seed.
-
-Seed handles building the generators from source and running them against all of the
-[test definitions](./test-definitions/fern/) that are present in the repository. Generated code is then stored in a directory named
-[seed](./seed/).
-
-Each generator configures a `seed.yml`. For example, the TypeScript generator's configuration lives [here](./seed/ts-sdk/seed.yml).
-
-Seed also handles running scripts against the generated code to make sure that the generated code compiles and works
-as intended. For example, in the TypeScript generator seed runs `yarn install` and `yarn build` to compile the source code.
-
-To build seed, simply run
-
-```sh
-pnpm seed:build
-```
-
-**Note**: If you make any changes to the seed [source code](./packages/seed/src/) then you will need to rerun `pnpm seed:build`.
-
-To run seed, you can use the command:
-
-```
-pnpm seed test [--generator <generator-id>] [--fixture <fixture-name>] [--skip-scripts] [--local]
-```
-
-Below are some examples of using the command.
-
-- For a single generator: `pnpm seed test --generator python-sdk`
-- For a single generator and test definition: `pnpm seed test --generator python-sdk --fixture file-download`
-- For a single generator, test definition, and skipping scripts: `pnpm seed test --generator python-sdk --fixture file-download --skip-scripts`
-- For running the generator locally (not on docker): `pnpm seed test --generator python-sdk --local`
-
-### Running seed against a custom fern definition
-
-It may be valuable to run seed on a particular Fern definition or OpenAPI spec. To do this,
-you can use the `seed run` command and point it at the fern folder:
-
-```
-pnpm seed run [--generator <generator-id>] [--path /path/to/fern/folder] [--output-path /path/for/sdk/output] [--audience <audience>]
-```
-
-Below are some examples of using the command.
-
-- Pointed at a fern folder: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern --audience external`
-- Pointed at a fern folder with an audience: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern`
-- Pointed at a fern folder with multiple apis: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern/apis/<name-of-api>`
-
-<br>
 ## Feedback
 
 If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!

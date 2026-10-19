@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedInferredAuthImplicitNoExpiry.Test/SeedInferredAuthImplicitNoExpiry.Test.csproj" />
-  <Project Path="src/SeedInferredAuthImplicitNoExpiry/SeedInferredAuthImplicitNoExpiry.csproj" />
-</Solution>

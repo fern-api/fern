@@ -1,6 +1,5 @@
 packages:
   - packages/**
-  - generators/**
   - "!**/dist"
   - "!**/lib"
   - "!**/generated"
