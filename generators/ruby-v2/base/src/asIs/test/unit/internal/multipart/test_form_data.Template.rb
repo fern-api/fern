@@ -69,6 +69,7 @@ describe <%= gem_namespace %>::Internal::Multipart::FormData do
       assert_equal "data", part.contents
       assert_equal "file", part.filename
       assert_includes body, "filename=\"file\""
+      assert_includes body, "Content-Type: application/octet-stream"
     end
 
     it "adds one part per file" do
