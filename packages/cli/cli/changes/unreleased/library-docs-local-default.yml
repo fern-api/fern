@@ -2,5 +2,6 @@
 
 - summary: |
     `fern docs md generate` now parses library source locally with Docker by default, with no
-    Fern login required. Pass `--no-local` to parse on Fern's servers instead.
+    Fern login required. Pass `--remote` to parse on Fern's servers instead.
+    `--local` is still accepted but no longer needed.
   type: feat

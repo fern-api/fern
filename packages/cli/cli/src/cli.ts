@@ -2227,11 +2227,15 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     type: "string",
                     description: "Name of a specific library defined in docs.yml to generate docs for"
                 })
+                .option("remote", {
+                    boolean: true,
+                    default: false,
+                    description: "Run the library parser(s) on Fern's servers instead of locally using Docker"
+                })
                 .option("local", {
                     boolean: true,
-                    default: true,
-                    description:
-                        "Run the library parser(s) locally using Docker. Pass --no-local to parse on Fern's servers instead"
+                    hidden: true,
+                    description: "Deprecated: local generation is the default"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2247,7 +2251,7 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 project,
                 cliContext,
                 library: argv.library,
-                local: argv.local
+                local: !argv.remote
             });
         }
     );
