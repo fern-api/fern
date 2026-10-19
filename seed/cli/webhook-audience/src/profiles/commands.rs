@@ -584,12 +584,12 @@ pub async fn dispatch_profiles<W: Write>(
     let mut store = open_store(ctx.cli_name)?;
     match matches.subcommand() {
         Some(("create", m)) => handle_create(m, ctx, &mut store).await,
-        Some(("list" | "ls", m)) => handle_list(m, ctx, &store, out),
+        Some(("list" | "ls", m)) => handle_list(m, ctx, &mut store, out),
         Some(("use", m)) => handle_use(m, ctx, &mut store),
         Some(("set", m)) => handle_set(m, ctx, &mut store),
-        Some(("show", m)) => handle_show(m, ctx, &store, out),
+        Some(("show", m)) => handle_show(m, ctx, &mut store, out),
         Some(("remove" | "rm", m)) => handle_remove(m, ctx, &mut store).await,
-        Some(("current", m)) => handle_current(m, ctx, &store, out),
+        Some(("current", m)) => handle_current(m, ctx, &mut store, out),
         _ => Err(CliError::Validation(
             "profiles requires a subcommand: create, list, use, remove, or current".to_string(),
         )),
@@ -808,6 +808,11 @@ async fn handle_create(
                 .ok_or_else(|| login::from_env_error(ctx.cli_name, &scheme, "a credential"))?,
         };
         active_store().set(ctx.cli_name, &account, &stored)?;
+        store.record_credential(
+            resolved.credential.as_deref().unwrap_or(&name),
+            &scheme,
+            &stored,
+        );
         let _ = writeln!(
             stderr,
             "{}",
@@ -849,6 +854,12 @@ async fn handle_create(
                     .unwrap_or_default(),
             ))
         })?;
+        store.record_credential(
+            resolved.credential.as_deref().unwrap_or(&name),
+            &scheme,
+            &minted.stored,
+        );
+        store.save()?;
         let _ = writeln!(
             stderr,
             "{}",
@@ -1021,9 +1032,17 @@ pub(crate) fn credential_sources(
 fn handle_list<W: Write>(
     matches: &ArgMatches,
     ctx: &ProfilesContext<'_>,
-    store: &ProfileStore,
+    store: &mut ProfileStore,
     out: &mut W,
 ) -> Result<(), CliError> {
+    let credentials: Vec<String> = store
+        .entries()
+        .into_iter()
+        .filter_map(|entry| store::resolve(store, &entry.name).ok()?.credential)
+        .collect();
+    backfill_credential_records(ctx, store, credentials, Report::List);
+    let store: &ProfileStore = store;
+
     // Re-resolve rather than reading the installed global: the `profiles`
     // group is exempted from selection (so `use` / `remove` keep working when
     // `active` is stale), which means the global is empty here. Falling back
@@ -1065,8 +1084,8 @@ fn handle_list<W: Write>(
                 .credential
                 .as_ref()
                 .and_then(|credential| {
-                    stored_account(ctx, credential)
-                        .or_else(|| stored_oauth_client_id(ctx, credential))
+                    stored_account(ctx, store, credential)
+                        .or_else(|| stored_oauth_client_id(ctx, store, credential))
                 })
                 .or_else(|| resolved.oauth_client_id.clone());
             if let Some(account) = account {
@@ -1325,82 +1344,197 @@ fn insert_map(
     row.insert(key.to_string(), serde_json::Value::Object(nested));
 }
 
-/// The account identifier stored for `credential`, for the `ACCOUNT` column.
+/// The *username* half of the stored basic credential — `AC1234…` for a
+/// Twilio-shaped API — as recorded in `profiles.toml` when it was written.
+/// That is what a listing should answer ("which account is this profile?");
+/// the slot name usually just echoes the profile name.
 ///
-/// Reads the *username* half of a stored basic credential — `AC1234…` for a
-/// Twilio-shaped API. A username is not a secret, so surfacing it is safe, and
-/// it is what a user actually wants the listing to answer: "which account is
-/// this profile?" The `CREDENTIALS FROM` column can only answer "which slot",
-/// which is the same as the profile name in the common case and therefore
-/// tells them nothing.
-///
-/// Returns `None` — and the column disappears — when:
-/// - no scheme has a `username` field (bearer / API-key CLIs have no account)
-/// - nothing is stored yet for this profile
-/// - the keyring read fails or is locked
-///
-/// That last case is deliberate: `profiles list` must never error or block on
-/// a locked keychain just to render a column.
-fn stored_account(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
-    let basic = ctx
-        .auth_bindings
-        .iter()
-        .filter(|(_, binding)| matches!(binding, SchemeBinding::Basic { .. }))
-        .map(|(scheme, _)| scheme.as_str());
-    stored_keyring_field(ctx, credential, basic, "username")
+/// Read from the record, never the keychain: on macOS every keychain read by
+/// a binary not on the entry's access list prompts for the login password,
+/// once per profile, which made `profiles list` unusable. Basic schemes are
+/// tried in declaration order. `None` when nothing is recorded and the column
+/// is omitted.
+fn stored_account(ctx: &ProfilesContext<'_>, store: &ProfileStore, credential: &str) -> Option<String> {
+    recorded_field(store, credential, basic_schemes(ctx), |identity| identity.account.clone())
 }
 
-/// The OAuth2 client id stored in the keyring for `credential` — what
+/// The OAuth2 client id recorded for `credential` — what
 /// `profiles set <name> <CLIENT_ID_VAR>=…` and `auth login --with-token`
-/// write. A client id is public (RFC 6749 §2.2), so it is as safe to print
-/// as a basic-auth username. Same never-block rule as [`stored_account`].
-fn stored_oauth_client_id(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
-    let oauth = ctx
-        .auth_bindings
+/// write. Public (RFC 6749 §2.2), and read from the record for the same
+/// reason as [`stored_account`].
+fn stored_oauth_client_id(
+    ctx: &ProfilesContext<'_>,
+    store: &ProfileStore,
+    credential: &str,
+) -> Option<String> {
+    recorded_field(store, credential, oauth_schemes(ctx), |identity| {
+        identity.oauth_client_id.clone()
+    })
+}
+
+fn basic_schemes<'a>(ctx: &ProfilesContext<'a>) -> Vec<&'a str> {
+    ctx.auth_bindings
+        .iter()
+        .filter(|(_, binding)| matches!(binding, SchemeBinding::Basic { .. }))
+        .map(|(scheme, _)| scheme.as_str())
+        .collect()
+}
+
+fn oauth_schemes<'a>(ctx: &ProfilesContext<'a>) -> Vec<&'a str> {
+    ctx.auth_bindings
         .iter()
         .filter(|(scheme, _)| {
             login::scheme_credential_fields(scheme, ctx.auth_bindings)
                 .is_some_and(|fields| fields.contains(&CLIENT_ID_FIELD))
         })
-        .map(|(scheme, _)| scheme.as_str());
-    stored_keyring_field(ctx, credential, oauth, CLIENT_ID_FIELD)
+        .map(|(scheme, _)| scheme.as_str())
+        .collect()
 }
 
-/// The first non-empty `field` of a multi-field keyring entry stored under
-/// `credential` for any of `schemes`.
-fn stored_keyring_field<'a>(
-    ctx: &ProfilesContext<'_>,
+fn recorded_field(
+    store: &ProfileStore,
     credential: &str,
-    schemes: impl IntoIterator<Item = &'a str>,
-    field: &str,
+    schemes: Vec<&str>,
+    field: impl Fn(&store::StoredIdentity) -> Option<String>,
 ) -> Option<String> {
-    schemes.into_iter().find_map(|scheme| {
-        let account = super::keyring_account_for(scheme, credential);
-        let Ok(Some(raw)) = crate::auth::keyring_store::active_store().get(ctx.cli_name, &account)
-        else {
-            return None;
-        };
-        serde_json::from_str::<serde_json::Value>(&raw)
-            .ok()
-            .and_then(|v| v.get(field)?.as_str().map(str::to_string))
-            .filter(|value| !value.is_empty())
-    })
+    let record = store.credential_record(credential)?;
+    schemes
+        .into_iter()
+        .find_map(|scheme| record.schemes.get(scheme).and_then(&field))
 }
 
-/// Whether any scheme has a keyring entry under this profile's credential
-/// slot. A locked or failing keyring counts as "nothing stored", mirroring
-/// [`stored_account`]: reporting must never block on the keychain.
-fn profile_stores_a_credential(ctx: &ProfilesContext<'_>, profile: &store::ResolvedProfile) -> bool {
-    let Some(credential) = &profile.credential else {
-        return false;
-    };
-    ctx.auth_bindings.iter().any(|(scheme, _)| {
+/// Which report is being rendered, and so which keychain entries it read
+/// before `profiles.toml` kept a copy.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Report {
+    /// The account, or the OAuth client id when there is none.
+    List,
+    /// The account and the OAuth client id.
+    Show,
+    /// As `Show`, plus whether any credential is stored at all.
+    Current,
+}
+
+/// Fill the record for `credentials` from the keychain where it cannot yet
+/// answer `report`: credentials stored by an older binary, before
+/// `profiles.toml` kept a copy.
+///
+/// Reads, in the same order and with the same early exits, only the entries
+/// `report` read before, so the first run after an upgrade prompts no more
+/// than any run did; each answer is recorded (an absent entry as `checked`),
+/// so later runs read nothing. A failed read (a refused prompt, a locked
+/// keychain) is left unrecorded and retried next time, as before.
+fn backfill_credential_records(
+    ctx: &ProfilesContext<'_>,
+    store: &mut ProfileStore,
+    credentials: impl IntoIterator<Item = String>,
+    report: Report,
+) {
+    let mut changed = false;
+    for credential in credentials {
+        let account = backfill_field(ctx, store, &credential, basic_schemes(ctx), &mut changed, |i| {
+            i.account.clone()
+        });
+        if account.is_none() || report != Report::List {
+            backfill_field(ctx, store, &credential, oauth_schemes(ctx), &mut changed, |i| {
+                i.oauth_client_id.clone()
+            });
+        }
+        if report == Report::Current {
+            backfill_any_stored(ctx, store, &credential, &mut changed);
+        }
+    }
+    // Only the copy is lost; the next report reads the keychain again.
+    if changed {
+        if let Err(e) = store.save() {
+            eprintln!("warning: could not update {}: {e}", store.path().display());
+        }
+    }
+}
+
+/// The first `field` stored for `schemes`, taken from the record and read
+/// from the keychain only for schemes the record knows nothing about.
+fn backfill_field(
+    ctx: &ProfilesContext<'_>,
+    store: &mut ProfileStore,
+    credential: &str,
+    schemes: Vec<&str>,
+    changed: &mut bool,
+    field: impl Fn(&store::StoredIdentity) -> Option<String>,
+) -> Option<String> {
+    for scheme in schemes {
+        let record = store.credential_record(credential).unwrap_or_default();
+        if let Some(identity) = record.schemes.get(scheme) {
+            match field(identity) {
+                Some(value) => return Some(value),
+                None => continue,
+            }
+        }
+        if record.checked.iter().any(|s| s == scheme) {
+            continue;
+        }
         let account = super::keyring_account_for(scheme, credential);
-        matches!(
-            crate::auth::keyring_store::active_store().get(ctx.cli_name, &account),
-            Ok(Some(_))
-        )
-    })
+        match active_store().get(ctx.cli_name, &account) {
+            Ok(Some(stored)) => {
+                store.record_credential(credential, scheme, &stored);
+                *changed = true;
+                let value = store
+                    .credential_record(credential)
+                    .and_then(|record| record.schemes.get(scheme).and_then(&field));
+                if value.is_some() {
+                    return value;
+                }
+            }
+            Ok(None) => {
+                store.mark_credential_absent(credential, scheme);
+                *changed = true;
+            }
+            Err(_) => {}
+        }
+    }
+    None
+}
+
+/// Make the record able to tell whether any scheme has an entry in
+/// `credential`, reading only until the first entry is found.
+fn backfill_any_stored(
+    ctx: &ProfilesContext<'_>,
+    store: &mut ProfileStore,
+    credential: &str,
+    changed: &mut bool,
+) {
+    for (scheme, _) in ctx.auth_bindings {
+        let record = store.credential_record(credential).unwrap_or_default();
+        if !record.schemes.is_empty() {
+            return;
+        }
+        if record.checked.contains(scheme) {
+            continue;
+        }
+        let account = super::keyring_account_for(scheme, credential);
+        match active_store().get(ctx.cli_name, &account) {
+            Ok(Some(stored)) => {
+                store.record_credential(credential, scheme, &stored);
+                *changed = true;
+                return;
+            }
+            Ok(None) => {
+                store.mark_credential_absent(credential, scheme);
+                *changed = true;
+            }
+            Err(_) => {}
+        }
+    }
+}
+
+/// Whether any scheme has a recorded keyring entry under this profile's
+/// credential slot.
+fn profile_stores_a_credential(store: &ProfileStore, profile: &store::ResolvedProfile) -> bool {
+    profile
+        .credential
+        .as_ref()
+        .and_then(|credential| store.credential_record(credential))
+        .is_some_and(|record| !record.schemes.is_empty())
 }
 
 /// Warn about a variable that is set, looks like one of this CLI's credential
@@ -1815,8 +1949,15 @@ fn handle_set(
     for (scheme, fields) in &pending {
         let account = super::keyring_account_for(scheme, &account_owner);
         // Merge with whatever is already stored so setting one half of a
-        // two-field credential does not discard the other.
-        let mut merged = existing_fields(ctx.cli_name, &account);
+        // two-field credential does not discard the other. Setting every
+        // half replaces the entry outright, so it skips the keychain read.
+        let complete = login::scheme_credential_fields(scheme, ctx.auth_bindings)
+            .is_some_and(|all| all.iter().all(|field| fields.contains_key(*field)));
+        let mut merged = if complete {
+            BTreeMap::new()
+        } else {
+            existing_fields(ctx.cli_name, &account)
+        };
         merged.extend(fields.clone());
         let pairs: Vec<(&str, String)> = merged
             .iter()
@@ -1824,10 +1965,12 @@ fn handle_set(
             .collect();
         let stored = login::multi_field_keyring_value(&pairs)?;
         active_store().set(ctx.cli_name, &account, &stored)?;
+        store.record_credential(&account_owner, scheme, &stored);
     }
     for (scheme, value) in &pending_single {
         let account = super::keyring_account_for(scheme, &account_owner);
         active_store().set(ctx.cli_name, &account, value)?;
+        store.record_credential(&account_owner, scheme, value);
     }
     store.save()?;
 
@@ -1996,6 +2139,7 @@ async fn handle_remove(
             let account = super::keyring_account_for(scheme, &credential);
             active_store().delete(ctx.cli_name, &account)?;
         }
+        store.forget_credential(&credential);
         if let Some(cache) = crate::auth::TokenCache::for_cli_unprofiled(ctx.cli_name) {
             cache.purge_profile(&credential)?;
         }
@@ -2192,22 +2336,24 @@ async fn revoke_remote_credential(
 fn resolved_profile_fields(
     profile: &store::ResolvedProfile,
     ctx: &ProfilesContext<'_>,
+    store: &ProfileStore,
 ) -> serde_json::Map<String, serde_json::Value> {
     let mut map = serde_json::Map::new();
     map.insert("profile".into(), profile.name.clone().into());
     if let Some(credential) = &profile.credential {
-        if let Some(account) = stored_account(ctx, credential) {
+        if let Some(account) = stored_account(ctx, store, credential) {
             map.insert("account".into(), account.into());
         }
         if credential != &profile.name {
             map.insert("credentials_from".into(), credential.clone().into());
         }
     }
-    // Keyring before plaintext: the order the OAuth2 provider resolves them in.
+    // The keyring's id before the plaintext one: the order the OAuth2
+    // provider resolves them in.
     let client_id = profile
         .credential
         .as_ref()
-        .and_then(|credential| stored_oauth_client_id(ctx, credential))
+        .and_then(|credential| stored_oauth_client_id(ctx, store, credential))
         .or_else(|| profile.oauth_client_id.clone());
     if let Some(client_id) = client_id {
         map.insert("oauth_client_id".into(), client_id.into());
@@ -2267,7 +2413,7 @@ fn insert_settings(
 fn handle_show<W: Write>(
     matches: &ArgMatches,
     ctx: &ProfilesContext<'_>,
-    store: &ProfileStore,
+    store: &mut ProfileStore,
     out: &mut W,
 ) -> Result<(), CliError> {
     // The name is optional and falls back to whatever this invocation would
@@ -2297,10 +2443,12 @@ fn handle_show<W: Write>(
         return Err(store::unknown_profile(store, &name));
     }
     let resolved = store::resolve(store, &name)?;
+    backfill_credential_records(ctx, store, resolved.credential.clone(), Report::Show);
+    let store: &ProfileStore = store;
 
     let pipeline = crate::formatter::OutputPipeline::from_matches(matches, ctx.cli_name)
         .map_err(|e| CliError::Validation(e.to_string()))?;
-    let mut map = resolved_profile_fields(&resolved, ctx);
+    let mut map = resolved_profile_fields(&resolved, ctx, store);
     // Whether this is the profile commands would use by default — the one bit
     // of selection context that is meaningful for a profile you are merely
     // inspecting.
@@ -2320,7 +2468,7 @@ fn handle_show<W: Write>(
 fn handle_current<W: Write>(
     matches: &ArgMatches,
     ctx: &ProfilesContext<'_>,
-    store: &ProfileStore,
+    store: &mut ProfileStore,
     out: &mut W,
 ) -> Result<(), CliError> {
     let pipeline = crate::formatter::OutputPipeline::from_matches(matches, ctx.cli_name)
@@ -2330,11 +2478,16 @@ fn handle_current<W: Write>(
     // exempted from selection (so `profiles use` still works when `active`
     // is stale), which means the global is empty here.
     let selected = selection::resolve_selection_in(store, ctx.cli_name, &argv())?;
+    let credential = selected
+        .as_ref()
+        .and_then(|selection| selection.profile.credential.clone());
+    backfill_credential_records(ctx, store, credential, Report::Current);
+    let store: &ProfileStore = store;
 
     let payload = match &selected {
         Some(selection) => {
             let profile = &selection.profile;
-            let mut map = resolved_profile_fields(profile, ctx);
+            let mut map = resolved_profile_fields(profile, ctx, store);
             // `selected_by`, not `source`: this answers *why* this profile is in
             // play; precedence is the same for every source (`outranks_env`).
             map.insert("selected_by".into(), selection.source.label().into());
@@ -2342,7 +2495,7 @@ fn handle_current<W: Write>(
             // profile's stored credential; they are consulted only when the
             // profile has none stored. Name them only in that case, so the
             // field never contradicts `auth status` when the keyring wins.
-            if !profile_stores_a_credential(ctx, profile) {
+            if !profile_stores_a_credential(store, profile) {
                 if let Some(env_row) = env_pseudo_row(ctx) {
                     map.insert("credential_env_fallback".into(), env_row["variables"].clone());
                 }
