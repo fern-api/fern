@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Multipart uploads of a readable object with no path or name (e.g. `StringIO`) now send the form field name as the part's `filename`. Before, the part had no `filename`, so servers that tell files from text fields by `filename` read it as a text field.
+  type: fix

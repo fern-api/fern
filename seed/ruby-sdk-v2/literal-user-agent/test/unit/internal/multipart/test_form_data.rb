@@ -59,6 +59,18 @@ describe Seed::Internal::Multipart::FormData do
       assert_equal "custom.bin", part.filename
     end
 
+    it "falls back to the field name as filename for readable objects without a path" do
+      form_data = FormData.new
+      form_data.add_file(name: "file", file: StringIO.new("data"))
+
+      part = form_data.parts.first
+      body = form_data.encode
+
+      assert_equal "data", part.contents
+      assert_equal "file", part.filename
+      assert_includes body, "filename=\"file\""
+    end
+
     it "adds one part per file" do
       Tempfile.create("a") do |first|
         Tempfile.create("b") do |second|
