@@ -195,7 +195,7 @@ describe("runLibraryDocsGeneration", () => {
         ).rejects.toThrow(/Library 'nonexistent' not found/);
     });
 
-    it("rejects 'path' input for remote generation (requires --local)", async () => {
+    it("rejects 'path' input for remote generation (requires local generation)", async () => {
         await expect(
             runLibraryDocsGeneration({
                 libraries: {
@@ -210,7 +210,7 @@ describe("runLibraryDocsGeneration", () => {
                 tokenValue: "tok",
                 context: makeContext()
             })
-        ).rejects.toThrow(/'path' input requires the --local flag/);
+        ).rejects.toThrow(/'path' input requires local generation/);
     });
 
     it("local mode: parses a 'path' input library without a token and generates (Python)", async () => {
