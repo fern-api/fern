@@ -24,6 +24,19 @@ use std::fmt::Write;
 /// generic table formatter.
 const DEFAULT_MAX_WIDTH: usize = 60;
 
+/// Column widths of a streamed `--page-all` table, set by the first page
+/// with rows and reused for later pages so their columns line up under the
+/// one header. Longer values on later pages are cut off with `…`.
+#[derive(Debug, Clone, Default)]
+pub struct PageWidths(std::sync::Arc<std::sync::Mutex<Option<Vec<usize>>>>);
+
+impl PageWidths {
+    pub(crate) fn with<R>(&self, f: impl FnOnce(&mut Option<Vec<usize>>) -> R) -> R {
+        let mut slot = self.0.lock().unwrap_or_else(|e| e.into_inner());
+        f(&mut slot)
+    }
+}
+
 /// Parsed `x-fern-cli-table` extension.
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -293,11 +306,19 @@ fn pad(text: &str, width: usize, align: Align) -> String {
 /// Render one response (or one page of a paginated response) using
 /// `columns`. Returns `None` when the value has no rows or record these
 /// columns describe, so the caller falls back to the generic table.
-pub(crate) fn render(value: &Value, columns: &[TableColumn], emit_header: bool) -> Option<String> {
+///
+/// `page_widths` is set for streamed pages: the first page with rows prints
+/// the header and fixes the widths that later pages reuse.
+pub(crate) fn render(
+    value: &Value,
+    columns: &[TableColumn],
+    emit_header: bool,
+    page_widths: Option<&mut Option<Vec<usize>>>,
+) -> Option<String> {
     match value {
         Value::Array(items) => {
             let rows = page_rows(items, columns).unwrap_or_else(|| items.iter().collect());
-            Some(render_rows(&rows, columns, emit_header))
+            Some(render_rows(&rows, columns, emit_header, page_widths))
         }
         Value::Object(obj) => {
             // A record with its own array fields (e.g. `tags`) is still a
@@ -307,14 +328,14 @@ pub(crate) fn render(value: &Value, columns: &[TableColumn], emit_header: bool) 
             }
             if let Some((_, rows)) = crate::formatter::extract_items(value) {
                 let rows: Vec<&Value> = rows.iter().collect();
-                return Some(render_rows(&rows, columns, emit_header));
+                return Some(render_rows(&rows, columns, emit_header, page_widths));
             }
             // A list envelope whose page came back empty.
             if obj
                 .values()
                 .any(|v| matches!(v, Value::Array(a) if a.is_empty()))
             {
-                return Some(render_rows(&[], columns, emit_header));
+                return Some(render_rows(&[], columns, emit_header, page_widths));
             }
             None
         }
@@ -350,27 +371,34 @@ fn page_rows<'a>(items: &'a [Value], columns: &[TableColumn]) -> Option<Vec<&'a 
     (parsed_pages > 0).then_some(rows)
 }
 
-fn render_rows(rows: &[&Value], columns: &[TableColumn], emit_header: bool) -> String {
+fn render_rows(
+    rows: &[&Value],
+    columns: &[TableColumn],
+    emit_header: bool,
+    page_widths: Option<&mut Option<Vec<usize>>>,
+) -> String {
     if rows.is_empty() {
+        // An empty page partway through a streamed table adds nothing.
+        if matches!(page_widths, Some(Some(_))) {
+            return String::new();
+        }
         return "(empty)\n".to_string();
     }
     let cells: Vec<Vec<String>> = rows
         .iter()
         .map(|row| columns.iter().map(|c| cell(row, c)).collect())
         .collect();
-    let widths: Vec<usize> = columns
-        .iter()
-        .enumerate()
-        .map(|(i, c)| {
-            let widest = cells
-                .iter()
-                .map(|r| r[i].chars().count())
-                .max()
-                .unwrap_or(0);
-            let cap = c.max_width.unwrap_or(DEFAULT_MAX_WIDTH);
-            widest.min(cap).max(c.header.chars().count())
-        })
-        .collect();
+    // Later streamed pages keep the first page's widths. A longer value
+    // pushes the rest of its row right rather than being cut off.
+    let (widths, emit_header, carried) = match page_widths {
+        Some(Some(widths)) => (widths.clone(), false, true),
+        Some(slot) => {
+            let widths = measure(&cells, columns);
+            *slot = Some(widths.clone());
+            (widths, true, false)
+        }
+        None => (measure(&cells, columns), emit_header, false),
+    };
 
     let mut output = String::new();
     let mut push_line = |parts: Vec<String>| {
@@ -390,11 +418,34 @@ fn render_rows(rows: &[&Value], columns: &[TableColumn], emit_header: bool) -> S
         push_line(
             row.iter()
                 .zip(columns.iter().zip(&widths))
-                .map(|(text, (c, w))| pad(&truncate(text, *w), *w, c.align))
+                .map(|(text, (c, w))| {
+                    let limit = if carried {
+                        c.max_width.unwrap_or(DEFAULT_MAX_WIDTH)
+                    } else {
+                        *w
+                    };
+                    pad(&truncate(text, limit), *w, c.align)
+                })
                 .collect(),
         );
     }
     output
+}
+
+fn measure(cells: &[Vec<String>], columns: &[TableColumn]) -> Vec<usize> {
+    columns
+        .iter()
+        .enumerate()
+        .map(|(i, c)| {
+            let widest = cells
+                .iter()
+                .map(|r| r[i].chars().count())
+                .max()
+                .unwrap_or(0);
+            let cap = c.max_width.unwrap_or(DEFAULT_MAX_WIDTH);
+            widest.min(cap).max(c.header.chars().count())
+        })
+        .collect()
 }
 
 fn render_record(record: &Value, columns: &[TableColumn]) -> String {
@@ -463,7 +514,7 @@ columns:
     #[test]
     fn renders_declared_columns_in_order_with_alignment_and_dates() {
         let spec = datasets_spec();
-        let out = render(&rows(), &spec.default_columns(), true).unwrap();
+        let out = render(&rows(), &spec.default_columns(), true, None).unwrap();
         assert_eq!(
             out,
             "NAME          V  STAGE     ROWS  CREATED\n\
@@ -476,16 +527,51 @@ columns:
     #[test]
     fn continuation_pages_skip_the_header() {
         let spec = datasets_spec();
-        let out = render(&rows(), &spec.default_columns(), false).unwrap();
+        let out = render(&rows(), &spec.default_columns(), false, None).unwrap();
         assert!(out.starts_with("aa_lcr "), "{out}");
         assert!(!out.contains("NAME"), "{out}");
+    }
+
+    #[test]
+    fn streamed_pages_reuse_the_first_page_widths() {
+        let spec = datasets_spec();
+        let cols = spec.select(Some("name,v")).unwrap().unwrap();
+        let mut widths = None;
+        let first = render(&json!([]), &cols, true, Some(&mut widths)).unwrap();
+        assert_eq!(first, "(empty)\n");
+        let page1 = render(
+            &json!([{ "name": "a", "version": 1 }]),
+            &cols,
+            false,
+            Some(&mut widths),
+        )
+        .unwrap();
+        assert_eq!(page1, "NAME  V\n────  ─\na     1\n");
+        let page2 = render(
+            &json!([{ "name": "very-long-name", "version": 10 }]),
+            &cols,
+            false,
+            Some(&mut widths),
+        )
+        .unwrap();
+        assert_eq!(page2, "very-long-name  10\n");
+        let page3 = render(
+            &json!([{ "name": "b", "version": 2 }]),
+            &cols,
+            false,
+            Some(&mut widths),
+        )
+        .unwrap();
+        assert_eq!(page3, "b     2\n");
+        let empty = render(&json!([]), &cols, false, Some(&mut widths)).unwrap();
+        assert_eq!(empty, "");
     }
 
     #[test]
     fn rows_are_found_inside_a_list_envelope() {
         let spec = datasets_spec();
         let envelope = json!({ "datasets": rows(), "nextCursor": "abc" });
-        let out = render(&envelope, &spec.default_columns(), true).unwrap();
+        let out = render(&envelope, &spec.default_columns(), true, None).unwrap();
         assert!(out.contains("aa_lcr_128k"), "{out}");
     }
 
@@ -494,21 +580,21 @@ columns:
         let spec = datasets_spec();
         let cols = spec.default_columns();
         let pages = json!([rows(), [rows()[0].clone()]]);
-        let out = render(&pages, &cols, true).unwrap();
+        let out = render(&pages, &cols, true, None).unwrap();
         assert_eq!(
             out.lines().filter(|l| l.starts_with("aa_lcr ")).count(),
             2,
             "{out}"
         );
         let envelopes = json!([{ "datasets": rows(), "next": "p2" }, { "datasets": rows() }]);
-        let out = render(&envelopes, &cols, true).unwrap();
+        let out = render(&envelopes, &cols, true, None).unwrap();
         assert_eq!(
             out.lines().filter(|l| l.starts_with("aa_lcr_128k")).count(),
             2,
             "{out}"
         );
         let trailing_empty_page = json!([{ "datasets": rows(), "next": "p2" }, { "next": null }]);
-        let out = render(&trailing_empty_page, &cols, true).unwrap();
+        let out = render(&trailing_empty_page, &cols, true, None).unwrap();
         assert_eq!(out.lines().count(), 4, "{out}");
     }
 
@@ -517,7 +603,7 @@ columns:
         let spec = datasets_spec();
         let cols = spec.default_columns();
         let record = json!({ "name": "aa_lcr", "tags": ["a", "b"] });
-        let out = render(&record, &cols, true).unwrap();
+        let out = render(&record, &cols, true, None).unwrap();
         assert!(out.starts_with("NAME"), "{out}");
         assert!(out.lines().next().unwrap().ends_with("aa_lcr"), "{out}");
     }
@@ -526,9 +612,9 @@ columns:
     fn empty_pages_render_as_empty() {
         let spec = datasets_spec();
         let cols = spec.default_columns();
-        assert_eq!(render(&json!([]), &cols, true).unwrap(), "(empty)\n");
+        assert_eq!(render(&json!([]), &cols, true, None).unwrap(), "(empty)\n");
         assert_eq!(
-            render(&json!({ "datasets": [] }), &cols, true).unwrap(),
+            render(&json!({ "datasets": [] }), &cols, true, None).unwrap(),
             "(empty)\n"
         );
     }
@@ -536,7 +622,7 @@ columns:
     #[test]
     fn single_records_render_as_label_value_pairs() {
         let spec = datasets_spec();
-        let out = render(&rows()[0], &spec.default_columns(), true).unwrap();
+        let out = render(&rows()[0], &spec.default_columns(), true, None).unwrap();
         assert_eq!(
             out,
             "NAME     aa_lcr\nV        10\nSTAGE    approved\nROWS     3870\nCREATED  2026-06-30\n"
@@ -546,14 +632,20 @@ columns:
     #[test]
     fn unrelated_objects_fall_back_to_the_generic_table() {
         let spec = datasets_spec();
-        assert!(render(&json!({ "saved_file": "x" }), &spec.default_columns(), true).is_none());
+        assert!(render(
+            &json!({ "saved_file": "x" }),
+            &spec.default_columns(),
+            true,
+            None
+        )
+        .is_none());
     }
 
     #[test]
     fn max_width_truncates_long_values() {
         let spec = datasets_spec();
         let cols = spec.select(Some("name,description")).unwrap().unwrap();
-        let out = render(&rows(), &cols, true).unwrap();
+        let out = render(&rows(), &cols, true, None).unwrap();
         assert!(out.contains("Long contex…"), "{out}");
         assert!(
             out.lines()

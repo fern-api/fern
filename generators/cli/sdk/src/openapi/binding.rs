@@ -846,24 +846,8 @@ impl Binding for OpenApiBinding {
                 output_path_buf.as_deref().and_then(|p| p.to_str())
             };
 
-            let pipeline = crate::formatter::OutputPipeline::from_matches(
-                root_matches,
-                &self.inner.name,
-            )
-            .map_err(|e| CliError::Validation(e.to_string()))?;
-            let pipeline = match method.table.as_ref() {
-                Some(spec) => apply_table_spec(
-                    pipeline,
-                    spec,
-                    matched_args
-                        .try_get_one::<String>(commands::TABLE_COLUMNS_ARG_ID)
-                        .ok()
-                        .flatten()
-                        .map(String::as_str),
-                    root_matches.value_source("format") == Some(clap::parser::ValueSource::CommandLine),
-                )?,
-                None => pipeline,
-            };
+            let pipeline =
+                operation_pipeline(root_matches, &self.inner.name, method, matched_args)?;
 
             if pipeline.is_raw() && pagination.page_all {
                 return Err(CliError::Validation(
@@ -919,6 +903,23 @@ impl Binding for OpenApiBinding {
                 None => Ok(DispatchResult::Handled),
             }
         })
+    }
+
+    fn output_pipeline(
+        &self,
+        root_matches: &clap::ArgMatches,
+    ) -> Option<crate::formatter::OutputPipeline> {
+        let prepared = self.ensure_prepared().ok()?;
+        let resolve_from = match &self.command_namespace {
+            Some(ns) => root_matches
+                .subcommand_matches(ns.as_str())
+                .unwrap_or(root_matches),
+            None => root_matches,
+        };
+        let (method, matched_args) =
+            super::resolve_method_from_matches(&prepared.doc, resolve_from).ok()?;
+        method.table.as_ref()?;
+        operation_pipeline(root_matches, &self.inner.name, method, matched_args).ok()
     }
 
     fn binding_context(
@@ -1251,6 +1252,31 @@ fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_
 /// `--columns` asks for a table, so it switches the default format (JSON
 /// when piped, or `<NAME>_OUTPUT`) to `table`. It is rejected next to an
 /// explicit non-table `--format` or a `--query`, which already picks fields.
+/// The global output settings plus the operation's `x-fern-cli-table`
+/// columns and `--columns` selection.
+fn operation_pipeline(
+    root_matches: &clap::ArgMatches,
+    app_name: &str,
+    method: &super::discovery::RestMethod,
+    matched_args: &clap::ArgMatches,
+) -> Result<crate::formatter::OutputPipeline, CliError> {
+    let pipeline = crate::formatter::OutputPipeline::from_matches(root_matches, app_name)
+        .map_err(|e| CliError::Validation(e.to_string()))?;
+    match method.table.as_ref() {
+        Some(spec) => apply_table_spec(
+            pipeline,
+            spec,
+            matched_args
+                .try_get_one::<String>(commands::TABLE_COLUMNS_ARG_ID)
+                .ok()
+                .flatten()
+                .map(String::as_str),
+            root_matches.value_source("format") == Some(clap::parser::ValueSource::CommandLine),
+        ),
+        None => Ok(pipeline),
+    }
+}
+
 fn apply_table_spec(
     mut pipeline: crate::formatter::OutputPipeline,
     spec: &crate::table_columns::TableSpec,

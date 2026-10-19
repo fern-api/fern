@@ -158,6 +158,20 @@ async fn columns_flag_picks_adds_and_resets_columns() {
 }
 
 #[tokio::test(flavor = "multi_thread")]
+async fn a_recovered_response_keeps_the_selected_columns() {
+    let server = MockServer::start().await;
+    Mock::given(method("GET"))
+        .and(path("/catalog/datasets"))
+        .respond_with(ResponseTemplate::new(409).set_body_json(serde_json::json!({
+            "message": "conflict"
+        })))
+        .mount(&server)
+        .await;
+    let text = stdout(&run(&server, &["catalog", "list", "--columns", "name,v"]));
+    assert_eq!(text, "NAME       V\n─────────  ─\nrecovered  1\n\n");
+}
+
+#[tokio::test(flavor = "multi_thread")]
 async fn columns_flag_rejects_conflicting_flags() {
     let server = server().await;
     for args in [

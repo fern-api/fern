@@ -67,6 +67,16 @@ pub trait Binding: Send + Sync {
         op_path: &'a [String],
     ) -> BoxFuture<'a, Result<DispatchResult, CliError>>;
 
+    /// Output settings for the matched operation, used to format a value
+    /// returned by a `recover_error` hook. `None` (the default) means the
+    /// global `--format` / `--query` settings.
+    fn output_pipeline(
+        &self,
+        _root_matches: &clap::ArgMatches,
+    ) -> Option<crate::formatter::OutputPipeline> {
+        None
+    }
+
     /// Return the embedded API spec(s) as a YAML string.
     ///
     /// - `raw == false` → the **effective** spec: source with overlays +

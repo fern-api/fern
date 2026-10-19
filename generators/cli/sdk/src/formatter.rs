@@ -53,6 +53,10 @@ pub struct OutputPipeline {
     /// Columns from the operation's `x-fern-cli-table` extension. Used only
     /// for `table` output without `--query`; `None` keeps the generic table.
     pub table_columns: Option<Vec<crate::table_columns::TableColumn>>,
+    /// Widths shared by the pages of a streamed `--page-all` table that uses
+    /// `table_columns`.
+    #[doc(hidden)]
+    pub table_page_widths: crate::table_columns::PageWidths,
 }
 
 impl OutputPipeline {
@@ -125,6 +129,7 @@ impl OutputPipeline {
             quiet,
             query,
             table_columns: None,
+            table_page_widths: Default::default(),
         })
     }
 
@@ -142,7 +147,17 @@ impl OutputPipeline {
             (&self.format, &self.query, &self.table_columns)
         {
             let emit_header = !paginated || is_first_page;
-            if let Some(rendered) = crate::table_columns::render(value, columns, emit_header) {
+            let rendered = if paginated {
+                self.table_page_widths.with(|widths| {
+                    if is_first_page {
+                        *widths = None;
+                    }
+                    crate::table_columns::render(value, columns, emit_header, Some(widths))
+                })
+            } else {
+                crate::table_columns::render(value, columns, emit_header, None)
+            };
+            if let Some(rendered) = rendered {
                 return rendered;
             }
         }
@@ -1002,6 +1017,7 @@ mod tests {
         });
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Table,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1033,6 +1049,7 @@ mod tests {
         let val = json!({"headers": [["X-A", "1"]], "url": "u"});
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1051,6 +1068,7 @@ mod tests {
         let val = json!({"headers": [["X-A", "1"]], "url": "u"});
         let quiet = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Table,
             color_mode: ColorMode::Never,
             quiet: true,
@@ -1062,6 +1080,7 @@ mod tests {
 
         let queried = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Table,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1704,6 +1723,7 @@ mod tests {
     fn pipeline_emit_single_page_json_is_pretty_with_trailing_newline() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1723,6 +1743,7 @@ mod tests {
     fn pipeline_emit_paginated_json_is_compact_one_line() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1744,6 +1765,7 @@ mod tests {
     fn pipeline_emit_quiet_suppresses_output() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: true,
@@ -1787,6 +1809,7 @@ mod tests {
     fn pipeline_emit_with_query_projects_value() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1804,6 +1827,7 @@ mod tests {
     fn pipeline_apply_query_streaming_suppresses_null() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1818,6 +1842,7 @@ mod tests {
     fn pipeline_apply_query_streaming_passes_non_null() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1843,6 +1868,7 @@ mod tests {
     fn is_raw_returns_true_for_raw_format() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Raw,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1856,6 +1882,7 @@ mod tests {
         for fmt in [OutputFormat::Json, OutputFormat::Table, OutputFormat::Yaml, OutputFormat::Csv, OutputFormat::Jsonl, OutputFormat::Http] {
             let pipeline = OutputPipeline {
                 table_columns: None,
+                table_page_widths: Default::default(),
                 format: fmt,
                 color_mode: ColorMode::Never,
                 quiet: false,
@@ -1979,6 +2006,7 @@ mod tests {
     fn pipeline_emit_jsonl_flattens_array() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Jsonl,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -2007,6 +2035,7 @@ mod tests {
     fn is_http_returns_true_for_http_format() {
         let pipeline = OutputPipeline {
             table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Http,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -2020,6 +2049,7 @@ mod tests {
         for fmt in [OutputFormat::Json, OutputFormat::Table, OutputFormat::Yaml, OutputFormat::Csv, OutputFormat::Raw, OutputFormat::Jsonl] {
             let pipeline = OutputPipeline {
                 table_columns: None,
+                table_page_widths: Default::default(),
                 format: fmt,
                 color_mode: ColorMode::Never,
                 quiet: false,

@@ -2618,6 +2618,7 @@ impl AppContext {
             quiet: self.quiet,
             query: None,
             table_columns: None,
+            table_page_widths: Default::default(),
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
         let filtered_global_params = self.extra_global_params_for_entry(entry, method, params_json);

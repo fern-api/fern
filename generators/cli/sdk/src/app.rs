@@ -1680,8 +1680,13 @@ impl CliApp {
                     match self.hooks.run_recover_error(err, &op_path).await {
                         Ok(value) => {
                             let pipeline =
-                                formatter::OutputPipeline::from_matches(&matches, &self.name)
-                                    .map_err(|e| CliError::Validation(e.to_string()))?;
+                                match self.bindings[binding_idx].output_pipeline(&matches) {
+                                    Some(pipeline) => pipeline,
+                                    None => formatter::OutputPipeline::from_matches(
+                                        &matches, &self.name,
+                                    )
+                                    .map_err(|e| CliError::Validation(e.to_string()))?,
+                                };
                             pipeline
                                 .emit(out, &value, false, true)
                                 .map_err(|e| CliError::Other(e.into()))?;
