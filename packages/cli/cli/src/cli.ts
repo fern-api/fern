@@ -490,7 +490,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else {
-                const useSdkConfig = isSdkConfigInitEnabled();
+                const useFernDefinition = argv["fern-definition"] === true;
+                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition;
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 let openApiUrl: string | undefined = undefined;
                 if (argv.openapi != null) {
@@ -523,7 +524,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         context,
                         openApiPath: absoluteOpenApiPath,
                         openApiUrl,
-                        useFernDefinition: argv["fern-definition"] === true,
+                        useFernDefinition,
                         useSdkConfig,
                         includeDocs: argv.api == null
                     });
