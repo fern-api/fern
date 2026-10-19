@@ -2073,6 +2073,7 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
         // lowers to a single-member enum here exactly as it does everywhere
         // else the parser reads an enum.
         enum_values: effective_enum_values(obj),
+        format: obj.format.clone(),
         required: obj.required.clone(),
         one_of: convert_composition_branches(&obj.one_of),
         any_of: convert_composition_branches(&obj.any_of),

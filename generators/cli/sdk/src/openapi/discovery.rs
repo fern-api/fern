@@ -1310,6 +1310,10 @@ pub struct JsonSchema {
     /// enforced. Mirrors [`JsonSchemaProperty::enum_values`].
     #[serde(rename = "enum")]
     pub enum_values: Option<Vec<String>>,
+    /// The component's own `format` (`Email: {type: string, format: email}`),
+    /// so a `$ref`'d format is checked like an inline one. Mirrors
+    /// [`JsonSchemaProperty::format`].
+    pub format: Option<String>,
     #[serde(default)]
     pub required: Vec<String>,
     /// JSON Schema composition branches at the component-schema root. Mirrors
