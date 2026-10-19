@@ -37,16 +37,13 @@ pub fn parse(input: &str) -> Result<AsyncApiDescription, CliError> {
     // Parse into a generic JSON value first. Try JSON, then YAML — mirrors
     // the openapi overlay loader strategy.
     let doc: Value = serde_json::from_str::<Value>(input).or_else(|_| {
-        let yaml_value: serde_yaml::Value = serde_yaml::from_str(input).map_err(|e| {
-            CliError::Discovery(format!("Failed to parse AsyncAPI document: {e}"))
-        })?;
+        let yaml_value: serde_yaml::Value = serde_yaml::from_str(input)
+            .map_err(|e| CliError::Discovery(format!("Failed to parse AsyncAPI document: {e}")))?;
         Ok::<Value, CliError>(yaml_to_json(yaml_value))
     })?;
 
     let obj = doc.as_object().ok_or_else(|| {
-        CliError::Validation(
-            "AsyncAPI document must be a mapping at the top level".to_string(),
-        )
+        CliError::Validation("AsyncAPI document must be a mapping at the top level".to_string())
     })?;
 
     // ---- Version guard --------------------------------------------------
@@ -431,22 +428,19 @@ channels:
 
     #[test]
     fn parse_rejects_asyncapi_3_0_0() {
-        let err = parse(&minimal_spec_with_version("3.0.0"))
-            .expect_err("3.0.0 must be rejected");
+        let err = parse(&minimal_spec_with_version("3.0.0")).expect_err("3.0.0 must be rejected");
         assert_validation_error(err, "3.0.0");
     }
 
     #[test]
     fn parse_rejects_asyncapi_2_5_0() {
-        let err = parse(&minimal_spec_with_version("2.5.0"))
-            .expect_err("2.5.0 must be rejected");
+        let err = parse(&minimal_spec_with_version("2.5.0")).expect_err("2.5.0 must be rejected");
         assert_validation_error(err, "2.5.0");
     }
 
     #[test]
     fn parse_rejects_asyncapi_1_2_0() {
-        let err = parse(&minimal_spec_with_version("1.2.0"))
-            .expect_err("1.2.0 must be rejected");
+        let err = parse(&minimal_spec_with_version("1.2.0")).expect_err("1.2.0 must be rejected");
         assert_validation_error(err, "1.2.0");
     }
 
@@ -491,30 +485,26 @@ channels:
 
     #[test]
     fn parse_rejects_protocol_mqtt() {
-        let err = parse(&minimal_spec_with_protocol("mqtt"))
-            .expect_err("mqtt must be rejected");
+        let err = parse(&minimal_spec_with_protocol("mqtt")).expect_err("mqtt must be rejected");
         let msg = assert_validation_error(err, "mqtt");
         assert!(msg.contains("prod"), "expected server name, got: {msg}");
     }
 
     #[test]
     fn parse_rejects_protocol_kafka() {
-        let err = parse(&minimal_spec_with_protocol("kafka"))
-            .expect_err("kafka must be rejected");
+        let err = parse(&minimal_spec_with_protocol("kafka")).expect_err("kafka must be rejected");
         assert_validation_error(err, "kafka");
     }
 
     #[test]
     fn parse_rejects_protocol_amqp() {
-        let err = parse(&minimal_spec_with_protocol("amqp"))
-            .expect_err("amqp must be rejected");
+        let err = parse(&minimal_spec_with_protocol("amqp")).expect_err("amqp must be rejected");
         assert_validation_error(err, "amqp");
     }
 
     #[test]
     fn parse_rejects_protocol_sse() {
-        let err = parse(&minimal_spec_with_protocol("sse"))
-            .expect_err("sse must be rejected");
+        let err = parse(&minimal_spec_with_protocol("sse")).expect_err("sse must be rejected");
         assert_validation_error(err, "sse");
     }
 
@@ -569,7 +559,10 @@ components:
         let api = parse(spec).expect("must parse");
         let channel = api.channels.get("Main").expect("Main channel present");
         let publish = channel.publish.as_ref().expect("publish op present");
-        assert_eq!(publish.message_refs, vec!["Foo".to_string(), "Bar".to_string()]);
+        assert_eq!(
+            publish.message_refs,
+            vec!["Foo".to_string(), "Bar".to_string()]
+        );
     }
 
     #[test]

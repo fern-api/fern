@@ -12,10 +12,11 @@
 use serde_json::Value;
 use std::collections::HashMap;
 
-use crate::graphql::discovery::{
-    GraphQLArgDef, GraphQLMethodInfo, MethodParameter, GraphQLSchema, GraphQLOperation, GraphQLResource,
-};
 use crate::error::CliError;
+use crate::graphql::discovery::{
+    GraphQLArgDef, GraphQLMethodInfo, GraphQLOperation, GraphQLResource, GraphQLSchema,
+    MethodParameter,
+};
 
 /// GraphQL built-in scalar type names.
 const BUILTIN_SCALARS: &[&str] = &["String", "Int", "Float", "Boolean", "ID"];
@@ -102,7 +103,10 @@ pub fn load_graphql_schema(
 
     // Process Query fields
     if let Some(query_type) = object_types.get(query_type_name) {
-        let fields = query_type["fields"].as_array().map(Vec::as_slice).unwrap_or(&[]);
+        let fields = query_type["fields"]
+            .as_array()
+            .map(Vec::as_slice)
+            .unwrap_or(&[]);
         for field in fields {
             let field_name = match field["name"].as_str() {
                 Some(n) if !n.starts_with('_') => n,
@@ -128,14 +132,21 @@ pub fn load_graphql_schema(
                 }),
                 ..Default::default()
             };
-            resources.entry(resource_name).or_default().methods.insert(method_name, method);
+            resources
+                .entry(resource_name)
+                .or_default()
+                .methods
+                .insert(method_name, method);
         }
     }
 
     // Process Mutation fields
     if let Some(mt_name) = mutation_type_name {
         if let Some(mutation_type) = object_types.get(mt_name) {
-            let fields = mutation_type["fields"].as_array().map(Vec::as_slice).unwrap_or(&[]);
+            let fields = mutation_type["fields"]
+                .as_array()
+                .map(Vec::as_slice)
+                .unwrap_or(&[]);
             for field in fields {
                 let field_name = match field["name"].as_str() {
                     Some(n) if !n.starts_with('_') => n,
@@ -161,7 +172,11 @@ pub fn load_graphql_schema(
                     }),
                     ..Default::default()
                 };
-                resources.entry(resource_name).or_default().methods.insert(method_name, method);
+                resources
+                    .entry(resource_name)
+                    .or_default()
+                    .methods
+                    .insert(method_name, method);
             }
         }
     }
@@ -348,8 +363,7 @@ fn singular_word(word: &str) -> String {
     if let Some(stem) = word.strip_suffix('s') {
         // Block Latin/Greek singulars that end in -us and must not be stripped.
         const LATIN_SINGULARS: &[&str] = &[
-            "status", "bonus", "campus", "census", "focus",
-            "nexus", "radius", "virus", "alias",
+            "status", "bonus", "campus", "census", "focus", "nexus", "radius", "virus", "alias",
         ];
         if stem.len() >= 3 && !stem.ends_with('s') && !LATIN_SINGULARS.contains(&word) {
             return stem.to_string();
@@ -457,16 +471,14 @@ fn build_parameters_from_args(
             // empty: the executor merges the parsed object into the input
             // map at the top level. `or_insert` so a same-named leaf flag
             // (pathological) wins.
-            params
-                .entry(flag_key.clone())
-                .or_insert(MethodParameter {
-                    param_type: Some("object".to_string()),
-                    graphql_input_arg: Some(arg_name.to_string()),
-                    graphql_field_path: Some(String::new()),
-                    description: desc(arg),
-                    required: false,
-                    ..Default::default()
-                });
+            params.entry(flag_key.clone()).or_insert(MethodParameter {
+                param_type: Some("object".to_string()),
+                graphql_input_arg: Some(arg_name.to_string()),
+                graphql_field_path: Some(String::new()),
+                description: desc(arg),
+                required: false,
+                ..Default::default()
+            });
             arg_defs.push(GraphQLArgDef {
                 name: arg_name.to_string(),
                 flag_key,
@@ -670,7 +682,10 @@ fn build_scalar_fields(
             parts.push(field_name.to_string());
         } else if !ft.ends_with("Connection") {
             if let Some(inner_obj) = object_types.get(ft.as_str()) {
-                let inner_fields = inner_obj["fields"].as_array().map(Vec::as_slice).unwrap_or(&[]);
+                let inner_fields = inner_obj["fields"]
+                    .as_array()
+                    .map(Vec::as_slice)
+                    .unwrap_or(&[]);
                 let inner_scalars: Vec<&str> = inner_fields
                     .iter()
                     .filter(|if_| {
@@ -704,7 +719,10 @@ mod tests {
         assert_eq!(camel_to_kebab("issue"), "issue");
         assert_eq!(camel_to_kebab("customView"), "custom-view");
         assert_eq!(camel_to_kebab("attachmentsForURL"), "attachments-for-url");
-        assert_eq!(camel_to_kebab("teamMembershipCreate"), "team-membership-create");
+        assert_eq!(
+            camel_to_kebab("teamMembershipCreate"),
+            "team-membership-create"
+        );
     }
 
     #[test]
@@ -880,10 +898,22 @@ mod tests {
 
         let list = issue.methods.get("list").unwrap();
         let list_sel = &list.graphql.as_ref().unwrap().default_selection;
-        assert!(list_sel.contains("pageInfo"), "list selection missing pageInfo: {list_sel}");
-        assert!(list_sel.contains("hasNextPage"), "list selection missing hasNextPage: {list_sel}");
-        assert!(list_sel.contains("endCursor"), "list selection missing endCursor: {list_sel}");
-        assert!(list.parameters.contains_key("after"), "missing --after flag");
+        assert!(
+            list_sel.contains("pageInfo"),
+            "list selection missing pageInfo: {list_sel}"
+        );
+        assert!(
+            list_sel.contains("hasNextPage"),
+            "list selection missing hasNextPage: {list_sel}"
+        );
+        assert!(
+            list_sel.contains("endCursor"),
+            "list selection missing endCursor: {list_sel}"
+        );
+        assert!(
+            list.parameters.contains_key("after"),
+            "missing --after flag"
+        );
 
         let create = issue.methods.get("create").unwrap();
         assert!(create.parameters.contains_key("title"));
@@ -947,48 +977,93 @@ mod tests {
 
         let doc = load_graphql_schema(&schema, "test", "https://api.example.com/graphql").unwrap();
         let all_params: Vec<String> = doc
-            .resources.values()
+            .resources
+            .values()
             .flat_map(|r| r.methods.values())
             .flat_map(|m| m.parameters.keys().cloned())
             .collect();
 
-        assert!(all_params.iter().any(|k| k == "query"), "missing top-level query param: {all_params:?}");
-        assert!(all_params.iter().any(|k| k.contains("start")), "missing dateRange.start: {all_params:?}");
-        assert!(all_params.iter().any(|k| k.contains("end")), "missing dateRange.end: {all_params:?}");
+        assert!(
+            all_params.iter().any(|k| k == "query"),
+            "missing top-level query param: {all_params:?}"
+        );
+        assert!(
+            all_params.iter().any(|k| k.contains("start")),
+            "missing dateRange.start: {all_params:?}"
+        );
+        assert!(
+            all_params.iter().any(|k| k.contains("end")),
+            "missing dateRange.end: {all_params:?}"
+        );
 
         // Parent object-level flag must ALSO be emitted for the nested input type.
         // The flag key is "date-range" (no arg prefix, since flatten_input_type is called
         // with an empty flag_prefix for top-level input args).
-        let search = doc.resources.get("search").expect("search resource missing");
-        let list = search.methods.get("list").expect("search.list method missing");
-        let date_range_flag = list.parameters.get("date-range")
+        let search = doc
+            .resources
+            .get("search")
+            .expect("search resource missing");
+        let list = search
+            .methods
+            .get("list")
+            .expect("search.list method missing");
+        let date_range_flag = list
+            .parameters
+            .get("date-range")
             .expect("parent 'date-range' object flag must be present");
-        assert_eq!(date_range_flag.param_type.as_deref(), Some("object"),
-            "parent input-type flag must have param_type 'object'");
-        assert!(!date_range_flag.required,
-            "parent object flag must be required: false at CLI level");
-        assert_eq!(date_range_flag.graphql_input_arg.as_deref(), Some("filter"),
-            "parent object flag must have graphql_input_arg set");
-        assert_eq!(date_range_flag.graphql_field_path.as_deref(), Some("dateRange"),
-            "parent object flag must have graphql_field_path set to the dotted path");
+        assert_eq!(
+            date_range_flag.param_type.as_deref(),
+            Some("object"),
+            "parent input-type flag must have param_type 'object'"
+        );
+        assert!(
+            !date_range_flag.required,
+            "parent object flag must be required: false at CLI level"
+        );
+        assert_eq!(
+            date_range_flag.graphql_input_arg.as_deref(),
+            Some("filter"),
+            "parent object flag must have graphql_input_arg set"
+        );
+        assert_eq!(
+            date_range_flag.graphql_field_path.as_deref(),
+            Some("dateRange"),
+            "parent object flag must have graphql_field_path set to the dotted path"
+        );
         // Description must flow through to the nested object-shorthand flag
         // so --help shows the input field's description, not blank.
-        assert_eq!(date_range_flag.description.as_deref(), Some("Bounded date range for filtering."),
-            "nested object-shorthand flag must carry the input field's description");
+        assert_eq!(
+            date_range_flag.description.as_deref(),
+            Some("Bounded date range for filtering."),
+            "nested object-shorthand flag must carry the input field's description"
+        );
 
         // JFL-1.4: input-arg-level object-shorthand flag must also be emitted
         // for the whole input arg `filter`. Lets users pass
         // `--filter '{"query":"x","dateRange":{...}}'` as a single payload.
-        let filter_flag = list.parameters.get("filter")
+        let filter_flag = list
+            .parameters
+            .get("filter")
             .expect("input-arg-level 'filter' object flag must be present");
-        assert_eq!(filter_flag.param_type.as_deref(), Some("object"),
-            "input-arg flag must have param_type 'object'");
-        assert!(!filter_flag.required,
-            "input-arg flag must be required: false at CLI level");
-        assert_eq!(filter_flag.graphql_input_arg.as_deref(), Some("filter"),
-            "input-arg flag must have graphql_input_arg set to the arg name");
-        assert_eq!(filter_flag.graphql_field_path.as_deref(), Some(""),
-            "input-arg flag must have empty graphql_field_path");
+        assert_eq!(
+            filter_flag.param_type.as_deref(),
+            Some("object"),
+            "input-arg flag must have param_type 'object'"
+        );
+        assert!(
+            !filter_flag.required,
+            "input-arg flag must be required: false at CLI level"
+        );
+        assert_eq!(
+            filter_flag.graphql_input_arg.as_deref(),
+            Some("filter"),
+            "input-arg flag must have graphql_input_arg set to the arg name"
+        );
+        assert_eq!(
+            filter_flag.graphql_field_path.as_deref(),
+            Some(""),
+            "input-arg flag must have empty graphql_field_path"
+        );
     }
 
     #[test]
@@ -1019,19 +1094,26 @@ mod tests {
         ]));
 
         let doc = load_graphql_schema(&schema, "test", "https://api.example.com/graphql").unwrap();
-        let foo_method = doc.resources.get("foo")
+        let foo_method = doc
+            .resources
+            .get("foo")
             .expect("foo resource missing")
-            .methods.get("execute")
+            .methods
+            .get("execute")
             .expect("foo.execute method missing");
 
-        let input_flag = foo_method.parameters.get("input")
+        let input_flag = foo_method
+            .parameters
+            .get("input")
             .expect("--input arg-level object flag must be present");
         assert_eq!(input_flag.param_type.as_deref(), Some("object"));
         assert_eq!(input_flag.graphql_input_arg.as_deref(), Some("input"));
         assert_eq!(input_flag.graphql_field_path.as_deref(), Some(""));
         assert!(!input_flag.required);
 
-        let field_flag = foo_method.parameters.get("field")
+        let field_flag = foo_method
+            .parameters
+            .get("field")
             .expect("--field per-field leaf flag must be present");
         assert_eq!(field_flag.param_type.as_deref(), Some("string"));
         assert_eq!(field_flag.graphql_input_arg.as_deref(), Some("input"));
@@ -1068,7 +1150,8 @@ mod tests {
 
         let doc = load_graphql_schema(&schema, "test", "https://api.example.com/graphql").unwrap();
         let all_params: Vec<String> = doc
-            .resources.values()
+            .resources
+            .values()
             .flat_map(|r| r.methods.values())
             .flat_map(|m| m.parameters.keys().cloned())
             .collect();
@@ -1077,5 +1160,4 @@ mod tests {
             "undeclared Cursor scalar should produce --after flag: {all_params:?}"
         );
     }
-
 }

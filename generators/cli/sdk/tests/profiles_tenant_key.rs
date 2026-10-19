@@ -102,7 +102,15 @@ fn the_tenant_key_flag_sets_the_profile_parameter() {
     with_temp_home(|| {
         let (code, output) = run(
             TENANTED,
-            &["tk", "profiles", "create", "acme", "--account-sid", "AC99", "--use"],
+            &[
+                "tk",
+                "profiles",
+                "create",
+                "acme",
+                "--account-sid",
+                "AC99",
+                "--use",
+            ],
         );
         assert_eq!(code, 0, "{output}");
 
@@ -153,8 +161,22 @@ fn a_tenant_key_flag_still_validates_its_value() {
 #[serial]
 fn the_table_leads_with_profile_and_ends_with_active() {
     with_temp_home(|| {
-        run(TENANTED, &["tk", "profiles", "create", "prod", "--account-sid", "AC12"]);
-        run(TENANTED, &["tk", "profiles", "create", "acme", "--account-sid", "AC99", "--use"]);
+        run(
+            TENANTED,
+            &["tk", "profiles", "create", "prod", "--account-sid", "AC12"],
+        );
+        run(
+            TENANTED,
+            &[
+                "tk",
+                "profiles",
+                "create",
+                "acme",
+                "--account-sid",
+                "AC99",
+                "--use",
+            ],
+        );
 
         let (code, output) = run(TENANTED, &["tk", "profiles", "list", "--human"]);
         assert_eq!(code, 0, "{output}");
@@ -184,7 +206,10 @@ fn a_profile_with_no_extra_fields_collapses_to_two_columns() {
 #[serial]
 fn machine_format_is_unaffected_by_the_table_rendering() {
     with_temp_home(|| {
-        run(TENANTED, &["tk", "profiles", "create", "prod", "--account-sid", "AC12"]);
+        run(
+            TENANTED,
+            &["tk", "profiles", "create", "prod", "--account-sid", "AC12"],
+        );
         let (code, output) = run(TENANTED, &["tk", "profiles", "list", "--format", "json"]);
         assert_eq!(code, 0, "{output}");
         let rows: serde_json::Value = serde_json::from_str(&output).expect("still JSON");
@@ -198,9 +223,16 @@ fn machine_format_is_unaffected_by_the_table_rendering() {
 #[serial]
 fn create_accepts_the_name_positionally_or_via_profile() {
     with_temp_home(|| {
-        assert_eq!(run(TENANTED, &["tk", "profiles", "create", "positional"]).0, 0);
         assert_eq!(
-            run(TENANTED, &["tk", "profiles", "create", "--profile", "flagged"]).0,
+            run(TENANTED, &["tk", "profiles", "create", "positional"]).0,
+            0
+        );
+        assert_eq!(
+            run(
+                TENANTED,
+                &["tk", "profiles", "create", "--profile", "flagged"]
+            )
+            .0,
             0,
         );
         let (_, listed) = run(TENANTED, &["tk", "profiles", "list", "--format", "json"]);

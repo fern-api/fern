@@ -118,11 +118,10 @@ impl GraphqlBinding {
             doc.resources = std::collections::HashMap::from([(prefix.clone(), wrapper)]);
         }
 
-        let http_config = crate::http::HttpConfig::new(&self.inner.name)?
-            .with_parsed_root_certs(
-                self.inner.extra_root_certs.iter().cloned(),
-                self.inner.extra_root_certs_pem.iter().cloned(),
-            );
+        let http_config = crate::http::HttpConfig::new(&self.inner.name)?.with_parsed_root_certs(
+            self.inner.extra_root_certs.iter().cloned(),
+            self.inner.extra_root_certs_pem.iter().cloned(),
+        );
         let auth_provider = self.inner.build_auth_provider();
 
         let arc = Arc::new(Prepared {
@@ -149,10 +148,8 @@ impl GraphqlBinding {
             prepared.auth_provider.clone()
         } else {
             let matches_arc = std::sync::Arc::new(matches.clone());
-            let finalized = crate::auth::finalize_bindings(
-                self.inner.auth_bindings.clone(),
-                &matches_arc,
-            );
+            let finalized =
+                crate::auth::finalize_bindings(self.inner.auth_bindings.clone(), &matches_arc);
             self.inner.build_auth_provider_from_finalized(&finalized)
         };
 
@@ -181,8 +178,6 @@ impl GraphqlBinding {
             f(matches, ctx)
         })
     }
-
-
 }
 
 impl Binding for GraphqlBinding {
@@ -246,24 +241,17 @@ impl Binding for GraphqlBinding {
                 prepared.auth_provider.clone()
             } else {
                 let matches_arc = std::sync::Arc::new(root_matches.clone());
-                let finalized = crate::auth::finalize_bindings(
-                    self.inner.auth_bindings.clone(),
-                    &matches_arc,
-                );
+                let finalized =
+                    crate::auth::finalize_bindings(self.inner.auth_bindings.clone(), &matches_arc);
                 self.inner.build_auth_provider_from_finalized(&finalized)
             };
 
             let (method, matched_args) =
                 super::resolve_method_from_matches(&prepared.doc, root_matches)?;
 
-            let params_override = matched_args
-                .get_one::<String>("params")
-                .map(|s| s.as_str());
-            let params = super::app::collect_params_from_flags(
-                matched_args,
-                method,
-                params_override,
-            )?;
+            let params_override = matched_args.get_one::<String>("params").map(|s| s.as_str());
+            let params =
+                super::app::collect_params_from_flags(matched_args, method, params_override)?;
             let params_json_string = serde_json::to_string(&params)
                 .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
             let params_json: Option<&str> = if params.is_empty() {
@@ -304,20 +292,23 @@ impl Binding for GraphqlBinding {
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
             let base_url_override = base_url_override_owned.as_deref();
 
-            let http_config = prepared.http_config.clone().with_user_agent_suffix_override(
-                crate::cli_args::resolve_user_agent_suffix_override(root_matches),
-            );
+            let http_config = prepared
+                .http_config
+                .clone()
+                .with_user_agent_suffix_override(
+                    crate::cli_args::resolve_user_agent_suffix_override(root_matches),
+                );
 
             // When --page-all is active on a TTY without --no-pager,
             // let the executor write directly to the pager (capture_output
             // = false). The executor spawns the pager and returns None,
             // which maps to DispatchResult::Handled below.
-            let use_pager = pagination.page_all
-                && !pagination.no_pager
-                && std::io::stdout().is_terminal();
+            let use_pager =
+                pagination.page_all && !pagination.no_pager && std::io::stdout().is_terminal();
             let capture_output = !use_pager;
 
-            let pipeline = crate::formatter::OutputPipeline::from_matches(root_matches, &self.inner.name)
+            let pipeline =
+                crate::formatter::OutputPipeline::from_matches(root_matches, &self.inner.name)
                     .map_err(|e| CliError::Validation(e.to_string()))?;
             if pipeline.is_http() {
                 return Err(CliError::Validation(
@@ -366,11 +357,9 @@ impl Binding for GraphqlBinding {
         let http_config = entry.http_config.with_user_agent_suffix_override(
             crate::cli_args::resolve_user_agent_suffix_override(matches),
         );
-        let ctx = super::AppContext::new(
-            entry.doc,
-            entry.auth_provider,
-            http_config,
-        ).with_quiet(quiet).with_debug(debug);
+        let ctx = super::AppContext::new(entry.doc, entry.auth_provider, http_config)
+            .with_quiet(quiet)
+            .with_debug(debug);
         Ok(Some(Box::new(ctx)))
     }
 
@@ -402,21 +391,18 @@ impl Binding for GraphqlBinding {
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
-                    let ctx = super::AppContext::new(
-                        entry.doc,
-                        entry.auth_provider,
-                        entry.http_config,
-                    ).with_quiet(quiet).with_debug(debug);
+                    let ctx =
+                        super::AppContext::new(entry.doc, entry.auth_provider, entry.http_config)
+                            .with_quiet(quiet)
+                            .with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
             },
             None => {
-                let ctx = super::AppContext::new(
-                    entry.doc,
-                    entry.auth_provider,
-                    entry.http_config,
-                ).with_quiet(quiet).with_debug(debug);
+                let ctx = super::AppContext::new(entry.doc, entry.auth_provider, entry.http_config)
+                    .with_quiet(quiet)
+                    .with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
         }

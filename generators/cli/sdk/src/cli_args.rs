@@ -196,7 +196,16 @@ pub fn wants_spec_raw(args: &[String]) -> bool {
 pub fn extract_subcommand_path(args: &[String]) -> Vec<String> {
     // Boolean (no-value) global flags. The token immediately after one of
     // these is NOT consumed as a value — it may be a subcommand name.
-    const BOOL_FLAGS: &[&str] = &["--schema", "--spec", "--spec-raw", "--debug", "--version", "-V", "--help", "-h"];
+    const BOOL_FLAGS: &[&str] = &[
+        "--schema",
+        "--spec",
+        "--spec-raw",
+        "--debug",
+        "--version",
+        "-V",
+        "--help",
+        "-h",
+    ];
 
     let mut path = Vec::new();
     let mut iter = args.iter().skip(1).peekable(); // skip binary name
@@ -311,21 +320,15 @@ pub fn read_stdin_to_string() -> Result<String, CliError> {
         .map_err(|e| CliError::Validation(format!("failed to read stdin: {e}")))?;
     if buf.trim().is_empty() {
         return Err(CliError::Validation(
-            "stdin was empty; `--json -` expects a JSON body to be piped on stdin"
-                .to_string(),
+            "stdin was empty; `--json -` expects a JSON body to be piped on stdin".to_string(),
         ));
     }
     Ok(buf)
 }
 
 /// Resolve `--json` flag: `-` reads from stdin, else returns the literal.
-pub fn resolve_body_json(
-    matched_args: &clap::ArgMatches,
-) -> Result<Option<String>, CliError> {
-    let raw = matched_args
-        .try_get_one::<String>("json")
-        .ok()
-        .flatten();
+pub fn resolve_body_json(matched_args: &clap::ArgMatches) -> Result<Option<String>, CliError> {
+    let raw = matched_args.try_get_one::<String>("json").ok().flatten();
     match raw {
         Some(s) if s == "-" => read_stdin_to_string().map(Some),
         Some(s) => Ok(Some(s.clone())),
@@ -351,7 +354,11 @@ mod tests {
             clap::Command::new("list")
                 // No help heading, mirroring a protocol builder that does not
                 // yet assign one (e.g. AsyncAPI channel params).
-                .arg(clap::Arg::new("version").long("version").value_name("STRING"))
+                .arg(
+                    clap::Arg::new("version")
+                        .long("version")
+                        .value_name("STRING"),
+                )
                 .arg(
                     clap::Arg::new("format")
                         .long("format")
@@ -367,7 +374,11 @@ mod tests {
                 .unwrap_or_else(|| panic!("{id} missing"))
                 .get_help_heading()
         };
-        assert_eq!(heading("version"), None, "spec param must keep its own section");
+        assert_eq!(
+            heading("version"),
+            None,
+            "spec param must keep its own section"
+        );
         assert_eq!(heading("format"), Some(HELP_HEADING_GLOBAL));
         // Clap's real auto `--help` still lands under Global options.
         assert_eq!(heading("help"), Some(HELP_HEADING_GLOBAL));
@@ -385,7 +396,14 @@ mod tests {
     fn test_wants_schema_present() {
         assert!(wants_schema(&args(&["cli", "--schema"])));
         assert!(wants_schema(&args(&["cli", "users", "--schema"])));
-        assert!(wants_schema(&args(&["cli", "users", "get", "--user-id", "X", "--schema"])));
+        assert!(wants_schema(&args(&[
+            "cli",
+            "users",
+            "get",
+            "--user-id",
+            "X",
+            "--schema"
+        ])));
     }
 
     #[test]
@@ -399,7 +417,14 @@ mod tests {
     fn test_wants_spec_present() {
         assert!(wants_spec(&args(&["cli", "--spec"])));
         assert!(wants_spec(&args(&["cli", "users", "--spec"])));
-        assert!(wants_spec(&args(&["cli", "users", "get", "--user-id", "X", "--spec"])));
+        assert!(wants_spec(&args(&[
+            "cli",
+            "users",
+            "get",
+            "--user-id",
+            "X",
+            "--spec"
+        ])));
     }
 
     #[test]
@@ -414,7 +439,14 @@ mod tests {
     fn test_wants_spec_raw_present() {
         assert!(wants_spec_raw(&args(&["cli", "--spec-raw"])));
         assert!(wants_spec_raw(&args(&["cli", "users", "--spec-raw"])));
-        assert!(wants_spec_raw(&args(&["cli", "users", "get", "--user-id", "X", "--spec-raw"])));
+        assert!(wants_spec_raw(&args(&[
+            "cli",
+            "users",
+            "get",
+            "--user-id",
+            "X",
+            "--spec-raw"
+        ])));
     }
 
     #[test]
@@ -453,7 +485,14 @@ mod tests {
         // Flags that appear after the subcommand tokens do not end up in the
         // path. Value-taking flags consume their following argument too.
         assert_eq!(
-            extract_subcommand_path(&args(&["cli", "users", "get", "--user-id", "X", "--schema"])),
+            extract_subcommand_path(&args(&[
+                "cli",
+                "users",
+                "get",
+                "--user-id",
+                "X",
+                "--schema"
+            ])),
             vec!["users", "get"],
         );
     }
@@ -463,7 +502,13 @@ mod tests {
         // A value-taking global flag (--base-url <url>) before the subcommand
         // names must not swallow them.
         assert_eq!(
-            extract_subcommand_path(&args(&["cli", "--base-url", "http://mock:9999", "users", "get"])),
+            extract_subcommand_path(&args(&[
+                "cli",
+                "--base-url",
+                "http://mock:9999",
+                "users",
+                "get"
+            ])),
             vec!["users", "get"],
         );
     }
@@ -482,7 +527,12 @@ mod tests {
     fn test_extract_subcommand_path_embedded_value_flag() {
         // --flag=value form: the `=` embeds the value; nothing extra consumed.
         assert_eq!(
-            extract_subcommand_path(&args(&["cli", "--base-url=http://mock:9999", "users", "get"])),
+            extract_subcommand_path(&args(&[
+                "cli",
+                "--base-url=http://mock:9999",
+                "users",
+                "get"
+            ])),
             vec!["users", "get"],
         );
     }
@@ -504,23 +554,37 @@ mod tests {
         // `cli errors list` must defer to clap rather than print the
         // exit codes table.
         assert!(!is_errors_subcommand(&args(&["cli", "errors", "list"])));
-        assert!(!is_errors_subcommand(&args(&["cli", "errors", "get", "123"])));
+        assert!(!is_errors_subcommand(&args(&[
+            "cli", "errors", "get", "123"
+        ])));
     }
 
     #[test]
     fn test_is_errors_subcommand_allows_help_and_format_flags() {
         assert!(is_errors_subcommand(&args(&["cli", "errors", "--help"])));
         assert!(is_errors_subcommand(&args(&["cli", "errors", "-h"])));
-        assert!(is_errors_subcommand(&args(&["cli", "errors", "--format", "json"])));
-        assert!(is_errors_subcommand(&args(&["cli", "errors", "--format=json"])));
+        assert!(is_errors_subcommand(&args(&[
+            "cli", "errors", "--format", "json"
+        ])));
+        assert!(is_errors_subcommand(&args(&[
+            "cli",
+            "errors",
+            "--format=json"
+        ])));
     }
 
     #[test]
     fn test_is_errors_subcommand_rejects_unknown_flags() {
         // Unknown flags after `errors` mean the user is targeting a
         // spec-defined `errors` resource — defer to clap.
-        assert!(!is_errors_subcommand(&args(&["cli", "errors", "--json", "{}"])));
-        assert!(!is_errors_subcommand(&args(&["cli", "errors", "--page-all"])));
+        assert!(!is_errors_subcommand(&args(&[
+            "cli", "errors", "--json", "{}"
+        ])));
+        assert!(!is_errors_subcommand(&args(&[
+            "cli",
+            "errors",
+            "--page-all"
+        ])));
     }
 
     #[test]
@@ -542,17 +606,33 @@ mod tests {
     #[test]
     fn test_is_errors_subcommand_format_space_separated() {
         // `--format json` (space-separated) must be recognized.
-        assert!(is_errors_subcommand(&args(&["cli", "errors", "--format", "json"])));
-        assert!(is_errors_subcommand(&args(&["cli", "errors", "--format", "yaml"])));
-        assert!(is_errors_subcommand(&args(&["cli", "errors", "--format", "table"])));
-        assert!(is_errors_subcommand(&args(&["cli", "errors", "--format", "csv"])));
+        assert!(is_errors_subcommand(&args(&[
+            "cli", "errors", "--format", "json"
+        ])));
+        assert!(is_errors_subcommand(&args(&[
+            "cli", "errors", "--format", "yaml"
+        ])));
+        assert!(is_errors_subcommand(&args(&[
+            "cli", "errors", "--format", "table"
+        ])));
+        assert!(is_errors_subcommand(&args(&[
+            "cli", "errors", "--format", "csv"
+        ])));
     }
 
     #[test]
     fn test_is_errors_subcommand_format_equals() {
         // `--format=json` (equals form) must be recognized.
-        assert!(is_errors_subcommand(&args(&["cli", "errors", "--format=json"])));
-        assert!(is_errors_subcommand(&args(&["cli", "errors", "--format=yaml"])));
+        assert!(is_errors_subcommand(&args(&[
+            "cli",
+            "errors",
+            "--format=json"
+        ])));
+        assert!(is_errors_subcommand(&args(&[
+            "cli",
+            "errors",
+            "--format=yaml"
+        ])));
     }
 
     #[test]

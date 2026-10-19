@@ -1244,10 +1244,7 @@ impl MethodParameter {
     /// HTTP layer must send. When no override matches, returns the input
     /// unchanged so non-enum params and absent extensions are pure
     /// identity.
-    pub fn resolve_enum_display_to_wire<'a>(
-        &self,
-        input: &'a str,
-    ) -> std::borrow::Cow<'a, str> {
+    pub fn resolve_enum_display_to_wire<'a>(&self, input: &'a str) -> std::borrow::Cow<'a, str> {
         let Some(map) = self.fern_enum.as_ref() else {
             return std::borrow::Cow::Borrowed(input);
         };

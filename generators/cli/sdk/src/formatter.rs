@@ -113,8 +113,7 @@ impl OutputPipeline {
         // Validate the expression eagerly so typos are caught before the
         // request is sent.
         if let Some(ref expr) = query {
-            jmespath::compile(expr)
-                .map_err(|e| FormatError::InvalidQuery(e.to_string()))?;
+            jmespath::compile(expr).map_err(|e| FormatError::InvalidQuery(e.to_string()))?;
         }
         Ok(Self {
             format,
@@ -890,8 +889,7 @@ fn value_to_cell(value: &Value) -> String {
 /// converts the result back to `serde_json::Value`. Returns `Value::Null`
 /// when the expression does not match anything in the input.
 pub(crate) fn apply_jmespath(value: &Value, expr_str: &str) -> Result<Value, FormatError> {
-    let expr = jmespath::compile(expr_str)
-        .map_err(|e| FormatError::InvalidQuery(e.to_string()))?;
+    let expr = jmespath::compile(expr_str).map_err(|e| FormatError::InvalidQuery(e.to_string()))?;
     // Convert serde_json::Value → JSON string → jmespath::Variable.
     let json_str =
         serde_json::to_string(value).map_err(|e| FormatError::QueryEvaluation(e.to_string()))?;
@@ -1463,11 +1461,7 @@ mod tests {
 
     fn matches_for(args: &[&str]) -> clap::ArgMatches {
         clap::Command::new("test")
-            .arg(
-                clap::Arg::new("format")
-                    .long("format")
-                    .value_name("FORMAT"),
-            )
+            .arg(clap::Arg::new("format").long("format").value_name("FORMAT"))
             .try_get_matches_from(args)
             .expect("clap parse should succeed in tests")
     }
@@ -1710,7 +1704,10 @@ mod tests {
         pipeline.emit(&mut buf, &val, false, true).unwrap();
         let s = String::from_utf8(buf).unwrap();
         // pretty JSON spans multiple lines
-        assert!(s.contains("\"name\": \"test\""), "expected pretty JSON, got: {s}");
+        assert!(
+            s.contains("\"name\": \"test\""),
+            "expected pretty JSON, got: {s}"
+        );
         assert!(s.contains('\n'), "expected indented (multi-line) JSON");
         assert!(s.ends_with('\n'), "expected trailing newline");
     }
@@ -1730,9 +1727,15 @@ mod tests {
         // compact form: exactly one newline (the trailing one); no pretty
         // indentation; suitable for NDJSON.
         let body = s.strip_suffix('\n').expect("trailing newline");
-        assert!(!body.contains('\n'), "expected single-line NDJSON, got: {s}");
+        assert!(
+            !body.contains('\n'),
+            "expected single-line NDJSON, got: {s}"
+        );
         assert!(!body.contains("  "), "expected no indentation, got: {s}");
-        assert!(body.contains("\"name\":\"test\""), "expected compact JSON, got: {s}");
+        assert!(
+            body.contains("\"name\":\"test\""),
+            "expected compact JSON, got: {s}"
+        );
     }
 
     #[test]
@@ -1790,7 +1793,10 @@ mod tests {
         pipeline.emit(&mut buf, &val, false, true).unwrap();
         let s = String::from_utf8(buf).unwrap();
         assert!(s.contains("\"test\""), "expected projected value, got: {s}");
-        assert!(!s.contains("extra"), "should not contain non-projected fields");
+        assert!(
+            !s.contains("extra"),
+            "should not contain non-projected fields"
+        );
     }
 
     #[test]
@@ -1803,7 +1809,10 @@ mod tests {
         };
         let val = json!({"foo": "bar"});
         let result = pipeline.apply_query_streaming(&val).unwrap();
-        assert!(result.is_none(), "null projection should be suppressed in streaming");
+        assert!(
+            result.is_none(),
+            "null projection should be suppressed in streaming"
+        );
     }
 
     #[test]
@@ -1843,7 +1852,14 @@ mod tests {
 
     #[test]
     fn is_raw_returns_false_for_other_formats() {
-        for fmt in [OutputFormat::Json, OutputFormat::Table, OutputFormat::Yaml, OutputFormat::Csv, OutputFormat::Jsonl, OutputFormat::Http] {
+        for fmt in [
+            OutputFormat::Json,
+            OutputFormat::Table,
+            OutputFormat::Yaml,
+            OutputFormat::Csv,
+            OutputFormat::Jsonl,
+            OutputFormat::Http,
+        ] {
             let pipeline = OutputPipeline {
                 format: fmt,
                 color_mode: ColorMode::Never,
@@ -1856,7 +1872,10 @@ mod tests {
 
     #[test]
     fn resolve_default_format_env_raw() {
-        assert_eq!(resolve_default_format(Some("raw"), false), OutputFormat::Raw);
+        assert_eq!(
+            resolve_default_format(Some("raw"), false),
+            OutputFormat::Raw
+        );
     }
 
     #[test]
@@ -1880,7 +1899,10 @@ mod tests {
         let first = format_value_paginated(&val, &OutputFormat::Raw, true);
         let second = format_value_paginated(&val, &OutputFormat::Raw, false);
         assert!(!first.contains('\n'));
-        assert_eq!(first, second, "raw paginated fallback ignores is_first_page");
+        assert_eq!(
+            first, second,
+            "raw paginated fallback ignores is_first_page"
+        );
     }
 
     // -----------------------------------------------------------------------
@@ -1900,7 +1922,10 @@ mod tests {
     fn jsonl_single_object_is_compact_one_line() {
         let val = json!({"name": "test", "n": 1});
         let out = format_value(&val, &OutputFormat::Jsonl);
-        assert!(!out.contains('\n'), "single object should be one line, got: {out}");
+        assert!(
+            !out.contains('\n'),
+            "single object should be one line, got: {out}"
+        );
         assert!(out.contains("\"name\":\"test\""), "should be compact JSON");
     }
 
@@ -1909,7 +1934,11 @@ mod tests {
         let val = json!([{"id": 1}, {"id": 2}, {"id": 3}]);
         let out = format_value(&val, &OutputFormat::Jsonl);
         let lines: Vec<&str> = out.lines().collect();
-        assert_eq!(lines.len(), 3, "each array element on its own line, got: {out}");
+        assert_eq!(
+            lines.len(),
+            3,
+            "each array element on its own line, got: {out}"
+        );
         assert_eq!(lines[0], r#"{"id":1}"#);
         assert_eq!(lines[1], r#"{"id":2}"#);
         assert_eq!(lines[2], r#"{"id":3}"#);
@@ -1923,7 +1952,11 @@ mod tests {
         });
         let out = format_value(&val, &OutputFormat::Jsonl);
         let lines: Vec<&str> = out.lines().collect();
-        assert_eq!(lines.len(), 2, "should flatten extracted data array, got: {out}");
+        assert_eq!(
+            lines.len(),
+            2,
+            "should flatten extracted data array, got: {out}"
+        );
         assert_eq!(lines[0], r#"{"id":"a"}"#);
         assert_eq!(lines[1], r#"{"id":"b"}"#);
     }
@@ -1932,7 +1965,10 @@ mod tests {
     fn jsonl_empty_array_is_empty_string() {
         let val = json!([]);
         let out = format_value(&val, &OutputFormat::Jsonl);
-        assert!(out.is_empty(), "empty array should produce empty string, got: {out}");
+        assert!(
+            out.is_empty(),
+            "empty array should produce empty string, got: {out}"
+        );
     }
 
     #[test]
@@ -1954,7 +1990,10 @@ mod tests {
 
     #[test]
     fn resolve_default_format_env_jsonl() {
-        assert_eq!(resolve_default_format(Some("jsonl"), false), OutputFormat::Jsonl);
+        assert_eq!(
+            resolve_default_format(Some("jsonl"), false),
+            OutputFormat::Jsonl
+        );
     }
 
     #[test]
@@ -1977,7 +2016,11 @@ mod tests {
         pipeline.emit(&mut buf, &val, false, true).unwrap();
         let s = String::from_utf8(buf).unwrap();
         let lines: Vec<&str> = s.trim_end().lines().collect();
-        assert_eq!(lines.len(), 2, "emit should flatten array to JSONL, got: {s}");
+        assert_eq!(
+            lines.len(),
+            2,
+            "emit should flatten array to JSONL, got: {s}"
+        );
     }
 
     // -----------------------------------------------------------------------
@@ -2004,7 +2047,14 @@ mod tests {
 
     #[test]
     fn is_http_returns_false_for_other_formats() {
-        for fmt in [OutputFormat::Json, OutputFormat::Table, OutputFormat::Yaml, OutputFormat::Csv, OutputFormat::Raw, OutputFormat::Jsonl] {
+        for fmt in [
+            OutputFormat::Json,
+            OutputFormat::Table,
+            OutputFormat::Yaml,
+            OutputFormat::Csv,
+            OutputFormat::Raw,
+            OutputFormat::Jsonl,
+        ] {
             let pipeline = OutputPipeline {
                 format: fmt,
                 color_mode: ColorMode::Never,
@@ -2017,7 +2067,10 @@ mod tests {
 
     #[test]
     fn resolve_default_format_env_http() {
-        assert_eq!(resolve_default_format(Some("http"), false), OutputFormat::Http);
+        assert_eq!(
+            resolve_default_format(Some("http"), false),
+            OutputFormat::Http
+        );
     }
 
     #[test]
@@ -2041,6 +2094,9 @@ mod tests {
         let first = format_value_paginated(&val, &OutputFormat::Http, true);
         let second = format_value_paginated(&val, &OutputFormat::Http, false);
         assert!(!first.contains('\n'));
-        assert_eq!(first, second, "http paginated fallback ignores is_first_page");
+        assert_eq!(
+            first, second,
+            "http paginated fallback ignores is_first_page"
+        );
     }
 }

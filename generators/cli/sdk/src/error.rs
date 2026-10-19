@@ -55,7 +55,6 @@ pub enum CliError {
     RawSentinel { code: u16 },
 }
 
-
 impl CliError {
     pub const EXIT_CODE_API: i32 = 1;
     pub const EXIT_CODE_AUTH: i32 = 2;
@@ -302,11 +301,7 @@ pub fn api_error_from_body(status: u16, body: &str) -> CliError {
     // problem belongs to which `loc`.
     let details = match &located {
         Some(m) => {
-            let path: Vec<Seg> = scope_prefix
-                .iter()
-                .chain(m.path.iter())
-                .cloned()
-                .collect();
+            let path: Vec<Seg> = scope_prefix.iter().chain(m.path.iter()).cloned().collect();
             prune(remove_at_path(parsed, &path))
         }
         None => prune(parsed),
@@ -385,15 +380,16 @@ const MAX_DETAIL_LINES: usize = 10;
 /// message and the reason. A leaf repeating one of them is noise: services
 /// routinely echo the same token as `code`, `status` and `type`, which turned a
 /// one-fact 404 into five lines that said the same thing four times.
-fn detail_lines(
-    details: &serde_json::Value,
-    max: usize,
-    already_shown: &[&str],
-) -> Vec<String> {
+fn detail_lines(details: &serde_json::Value, max: usize, already_shown: &[&str]) -> Vec<String> {
     let mut lines = Vec::new();
     let mut seen: std::collections::HashSet<String> =
         already_shown.iter().map(|s| s.to_string()).collect();
-    walk_details(unwrap_sole_object(details), &mut String::new(), &mut lines, &mut seen);
+    walk_details(
+        unwrap_sole_object(details),
+        &mut String::new(),
+        &mut lines,
+        &mut seen,
+    );
     if lines.len() > max {
         let hidden = lines.len() - max;
         lines.truncate(max);
@@ -470,13 +466,7 @@ fn scalar_list(items: &[serde_json::Value]) -> Option<String> {
     if items.is_empty() || items.iter().any(|v| v.is_object() || v.is_array()) {
         return None;
     }
-    Some(
-        items
-            .iter()
-            .map(scalar_text)
-            .collect::<Vec<_>>()
-            .join(", "),
-    )
+    Some(items.iter().map(scalar_text).collect::<Vec<_>>().join(", "))
 }
 
 /// Render a scalar without JSON's quoting, which adds nothing in a terminal.
@@ -614,7 +604,13 @@ impl UsageText {
             } else if trimmed.starts_with(Self::TRY_HELP) {
                 continue;
             } else if message.is_empty() {
-                message.push(trimmed.strip_prefix("error:").unwrap_or(trimmed).trim().to_string());
+                message.push(
+                    trimmed
+                        .strip_prefix("error:")
+                        .unwrap_or(trimmed)
+                        .trim()
+                        .to_string(),
+                );
             } else {
                 // A wrapped sentence or a `[possible values: ...]` list — advice
                 // about the failure rather than the failure itself.
@@ -702,11 +698,31 @@ fn message_from(scope: &serde_json::Value) -> Option<LocatedMessage> {
 
 /// All documented exit codes with their human-readable descriptions.
 pub const EXIT_CODE_TABLE: &[(i32, &str, &str)] = &[
-    (CliError::EXIT_CODE_API, "api", "API returned a non-success HTTP status"),
-    (CliError::EXIT_CODE_AUTH, "auth", "Authentication failed or credentials missing"),
-    (CliError::EXIT_CODE_VALIDATION, "validation", "Invalid arguments or request body"),
-    (CliError::EXIT_CODE_DISCOVERY, "discovery", "Schema loading or endpoint resolution failed"),
-    (CliError::EXIT_CODE_OTHER, "other", "Unexpected internal error"),
+    (
+        CliError::EXIT_CODE_API,
+        "api",
+        "API returned a non-success HTTP status",
+    ),
+    (
+        CliError::EXIT_CODE_AUTH,
+        "auth",
+        "Authentication failed or credentials missing",
+    ),
+    (
+        CliError::EXIT_CODE_VALIDATION,
+        "validation",
+        "Invalid arguments or request body",
+    ),
+    (
+        CliError::EXIT_CODE_DISCOVERY,
+        "discovery",
+        "Schema loading or endpoint resolution failed",
+    ),
+    (
+        CliError::EXIT_CODE_OTHER,
+        "other",
+        "Unexpected internal error",
+    ),
 ];
 
 /// Render all documented exit codes to stdout in the format requested
@@ -760,12 +776,19 @@ pub fn print_errors_table() {
 fn write_errors_table_to(out: &mut dyn std::io::Write) {
     let _ = writeln!(out, "Exit codes:\n");
     let _ = writeln!(out, "  {:<6}  {:<14}  DESCRIPTION", "CODE", "CATEGORY");
-    let _ = writeln!(out, "  {:<6}  {:<14}  ───────────────────────────────────────────", "──────", "──────────────");
+    let _ = writeln!(
+        out,
+        "  {:<6}  {:<14}  ───────────────────────────────────────────",
+        "──────", "──────────────"
+    );
     for &(code, category, description) in EXIT_CODE_TABLE {
         let _ = writeln!(out, "  {:<6}  {:<14}  {}", code, category, description);
     }
     let _ = writeln!(out);
-    let _ = writeln!(out, "Exit code 0 means success. Any non-zero code indicates an error.");
+    let _ = writeln!(
+        out,
+        "Exit code 0 means success. Any non-zero code indicates an error."
+    );
 }
 
 /// Print all documented exit codes as a JSON array on stdout.
@@ -802,7 +825,11 @@ fn write_errors_json_to(out: &mut dyn std::io::Write) {
         }));
     }
     let doc = json!({ "exit_codes": entries });
-    let _ = writeln!(out, "{}", serde_json::to_string_pretty(&doc).expect("static EXIT_CODE_TABLE always serializes"));
+    let _ = writeln!(
+        out,
+        "{}",
+        serde_json::to_string_pretty(&doc).expect("static EXIT_CODE_TABLE always serializes")
+    );
 }
 
 fn error_label(err: &CliError) -> String {
@@ -865,7 +892,9 @@ pub fn write_error_json(
     // One representation per invocation. Emitting both makes a consumer that
     // merges stdout and stderr see the same error twice with no way to tell
     // which is authoritative.
-    let format = ctx.map(|c| c.format).unwrap_or(crate::formatter::OutputFormat::Json);
+    let format = ctx
+        .map(|c| c.format)
+        .unwrap_or(crate::formatter::OutputFormat::Json);
     let machine_readable = format.is_machine_readable();
     let docs_url = ctx
         .and_then(|ctx| ctx.docs_base_url.as_deref())
@@ -1075,7 +1104,10 @@ mod tests {
         // The one-sentence promise: no embedded newlines anywhere.
         for field in ["message", "help", "usage"] {
             let value = json["error"][field].as_str().expect("string field");
-            assert!(!value.contains('\n'), "{field} should be a single line: {value}");
+            assert!(
+                !value.contains('\n'),
+                "{field} should be a single line: {value}"
+            );
         }
     }
 
@@ -1109,7 +1141,10 @@ mod tests {
             json["error"]["message"],
             "invalid value 'xml' for '--format <FORMAT>'"
         );
-        assert_eq!(json["error"]["help"], "[possible values: json, table, yaml]");
+        assert_eq!(
+            json["error"]["help"],
+            "[possible values: json, table, yaml]"
+        );
     }
 
     #[test]
@@ -1125,10 +1160,22 @@ mod tests {
 
     #[test]
     fn test_exit_codes_all_variants() {
-        assert_eq!(CliError::api(404, "", "").exit_code(), CliError::EXIT_CODE_API);
-        assert_eq!(CliError::Auth(String::new()).exit_code(), CliError::EXIT_CODE_AUTH);
-        assert_eq!(CliError::Validation(String::new()).exit_code(), CliError::EXIT_CODE_VALIDATION);
-        assert_eq!(CliError::Discovery(String::new()).exit_code(), CliError::EXIT_CODE_DISCOVERY);
+        assert_eq!(
+            CliError::api(404, "", "").exit_code(),
+            CliError::EXIT_CODE_API
+        );
+        assert_eq!(
+            CliError::Auth(String::new()).exit_code(),
+            CliError::EXIT_CODE_AUTH
+        );
+        assert_eq!(
+            CliError::Validation(String::new()).exit_code(),
+            CliError::EXIT_CODE_VALIDATION
+        );
+        assert_eq!(
+            CliError::Discovery(String::new()).exit_code(),
+            CliError::EXIT_CODE_DISCOVERY
+        );
         assert_eq!(
             CliError::Other(anyhow::anyhow!("oops")).exit_code(),
             CliError::EXIT_CODE_OTHER
@@ -1430,14 +1477,24 @@ mod tests {
             let message = err.to_string();
             assert_eq!(
                 message,
-                format!("HTTP 502 badGateway (non-JSON response, {} bytes)", page.len())
+                format!(
+                    "HTTP 502 badGateway (non-JSON response, {} bytes)",
+                    page.len()
+                )
             );
-            assert!(!message.contains('\n'), "message must be one line: {message}");
+            assert!(
+                !message.contains('\n'),
+                "message must be one line: {message}"
+            );
             let json = err.to_json();
             let body = json["error"]["details"]["body"].as_str().unwrap();
             assert!(body.starts_with("<"), "the bytes are kept: {body}");
             assert!(!body.contains('\n'), "details.body is collapsed: {body}");
-            assert!(body.len() < 600, "details.body is clipped: {} bytes", body.len());
+            assert!(
+                body.len() < 600,
+                "details.body is clipped: {} bytes",
+                body.len()
+            );
         }
     }
 
@@ -1563,8 +1620,14 @@ mod tests {
         );
         // Nothing is lost: the envelope still carries every field.
         let json = err.to_json();
-        assert_eq!(json["error"]["details"]["detail"]["status"], "workspace_not_found");
-        assert_eq!(json["error"]["details"]["detail"]["code"], "workspace_not_found");
+        assert_eq!(
+            json["error"]["details"]["detail"]["status"],
+            "workspace_not_found"
+        );
+        assert_eq!(
+            json["error"]["details"]["detail"]["code"],
+            "workspace_not_found"
+        );
     }
 
     #[test]
@@ -1686,8 +1749,14 @@ mod tests {
     #[test]
     fn validation_label_is_error_validation() {
         let label = error_label(&CliError::Validation("oops".to_string()));
-        assert!(label.contains("error[validation]"), "expected 'error[validation]:' label, got: {label}");
-        assert!(!label.contains("warning:"), "label should not contain 'warning:'");
+        assert!(
+            label.contains("error[validation]"),
+            "expected 'error[validation]:' label, got: {label}"
+        );
+        assert!(
+            !label.contains("warning:"),
+            "label should not contain 'warning:'"
+        );
     }
 
     #[test]
@@ -1699,7 +1768,11 @@ mod tests {
         };
         // Validation errors should get the hint.
         let mut out = Vec::new();
-        write_error_json(&CliError::Validation("bad input".to_string()), &mut out, Some(&ctx));
+        write_error_json(
+            &CliError::Validation("bad input".to_string()),
+            &mut out,
+            Some(&ctx),
+        );
         // Stdout is the JSON envelope — we don't assert stderr here since eprintln
         // always targets the real stderr in unit tests. The gating logic is covered
         // by the `matches!` branch; the wire test exercises it end-to-end.
@@ -1715,7 +1788,9 @@ mod tests {
         ] {
             let mut o = Vec::new();
             write_error_json(&err, &mut o, Some(&ctx));
-            assert!(serde_json::from_str::<serde_json::Value>(&String::from_utf8(o).unwrap()).is_ok());
+            assert!(
+                serde_json::from_str::<serde_json::Value>(&String::from_utf8(o).unwrap()).is_ok()
+            );
         }
     }
 
@@ -1765,7 +1840,10 @@ mod tests {
             CliError::EXIT_CODE_OTHER,
         ];
         for code in expected {
-            assert!(table_codes.contains(&code), "EXIT_CODE_TABLE missing code {code}");
+            assert!(
+                table_codes.contains(&code),
+                "EXIT_CODE_TABLE missing code {code}"
+            );
         }
     }
 
@@ -1773,7 +1851,11 @@ mod tests {
     fn exit_code_table_has_no_duplicates() {
         let codes: Vec<i32> = EXIT_CODE_TABLE.iter().map(|&(c, _, _)| c).collect();
         let unique: std::collections::HashSet<i32> = codes.iter().copied().collect();
-        assert_eq!(unique.len(), codes.len(), "EXIT_CODE_TABLE has duplicate codes");
+        assert_eq!(
+            unique.len(),
+            codes.len(),
+            "EXIT_CODE_TABLE has duplicate codes"
+        );
     }
 
     fn args(slice: &[&str]) -> Vec<String> {
@@ -1782,7 +1864,10 @@ mod tests {
 
     #[test]
     fn detect_errors_format_defaults_to_table() {
-        assert_eq!(detect_errors_format(&args(&["cli", "errors"])), ErrorsFormat::Table);
+        assert_eq!(
+            detect_errors_format(&args(&["cli", "errors"])),
+            ErrorsFormat::Table
+        );
     }
 
     #[test]
@@ -1907,13 +1992,13 @@ mod tests {
             }));
         }
         let payload = json!({ "exit_codes": entries });
-        let arr = payload["exit_codes"].as_array().expect("exit_codes is array");
+        let arr = payload["exit_codes"]
+            .as_array()
+            .expect("exit_codes is array");
         assert_eq!(arr.len(), EXIT_CODE_TABLE.len() + 1);
         assert_eq!(arr[0]["code"], 0);
-        let codes: std::collections::HashSet<i64> = arr
-            .iter()
-            .filter_map(|e| e["code"].as_i64())
-            .collect();
+        let codes: std::collections::HashSet<i64> =
+            arr.iter().filter_map(|e| e["code"].as_i64()).collect();
         for &(code, _, _) in EXIT_CODE_TABLE {
             assert!(codes.contains(&(code as i64)), "missing code {code}");
         }

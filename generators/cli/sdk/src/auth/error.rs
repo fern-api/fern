@@ -458,8 +458,14 @@ mod tests {
         .unwrap_err();
         match err {
             CliError::Auth(msg) => {
-                assert!(msg.contains("--api-token"), "expected flag hint, got: {msg}");
-                assert!(msg.contains("__FERN_TEST_CHAIN_TOKEN"), "expected env var hint, got: {msg}");
+                assert!(
+                    msg.contains("--api-token"),
+                    "expected flag hint, got: {msg}"
+                );
+                assert!(
+                    msg.contains("__FERN_TEST_CHAIN_TOKEN"),
+                    "expected env var hint, got: {msg}"
+                );
             }
             other => panic!("Expected Auth, got: {other:?}"),
         }
@@ -469,12 +475,9 @@ mod tests {
     fn friendly_error_names_cli_flag_after_finalize() {
         // Simulate the production path: finalize() converts Cli to Closure,
         // but the hint must survive so the error message still names the flag.
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new("api-token").long("api-token").num_args(1),
-        );
-        let matches = std::sync::Arc::new(
-            cmd.try_get_matches_from(vec!["test"]).unwrap(),
-        );
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("api-token").long("api-token").num_args(1));
+        let matches = std::sync::Arc::new(cmd.try_get_matches_from(vec!["test"]).unwrap());
         let source = AuthCredentialSource::any([
             AuthCredentialSource::cli("api-token"),
             AuthCredentialSource::from_env("__FERN_TEST_FINALIZE_TOKEN"),
@@ -491,8 +494,14 @@ mod tests {
         .unwrap_err();
         match err {
             CliError::Auth(msg) => {
-                assert!(msg.contains("--api-token"), "expected flag hint after finalize, got: {msg}");
-                assert!(msg.contains("__FERN_TEST_FINALIZE_TOKEN"), "expected env var hint after finalize, got: {msg}");
+                assert!(
+                    msg.contains("--api-token"),
+                    "expected flag hint after finalize, got: {msg}"
+                );
+                assert!(
+                    msg.contains("__FERN_TEST_FINALIZE_TOKEN"),
+                    "expected env var hint after finalize, got: {msg}"
+                );
             }
             other => panic!("Expected Auth, got: {other:?}"),
         }
@@ -510,7 +519,10 @@ mod tests {
         .unwrap_err();
         match err {
             CliError::Auth(msg) => {
-                assert!(msg.contains("Access denied"), "expected fallback msg, got: {msg}");
+                assert!(
+                    msg.contains("Access denied"),
+                    "expected fallback msg, got: {msg}"
+                );
                 assert!(
                     msg.contains("environment variable, --flag, or credential file"),
                     "expected generic hint in fallback, got: {msg}",

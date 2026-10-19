@@ -35,11 +35,7 @@ impl PagerConfig {
         let program = std::env::var(&binary_pager_var)
             .ok()
             .filter(|v| !v.is_empty())
-            .or_else(|| {
-                std::env::var("PAGER")
-                    .ok()
-                    .filter(|v| !v.is_empty())
-            })
+            .or_else(|| std::env::var("PAGER").ok().filter(|v| !v.is_empty()))
             .unwrap_or_else(default_pager_program);
 
         Self {
@@ -172,7 +168,6 @@ fn is_less_compatible(program: &str) -> bool {
     basename == "less" || basename == "less.exe"
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -193,7 +188,9 @@ mod tests {
         assert!(is_less_compatible("less"));
         assert!(is_less_compatible("/usr/bin/less"));
         assert!(is_less_compatible("less.exe"));
-        assert!(is_less_compatible("C:\\Program Files\\Git\\usr\\bin\\less.exe"));
+        assert!(is_less_compatible(
+            "C:\\Program Files\\Git\\usr\\bin\\less.exe"
+        ));
         assert!(!is_less_compatible("more"));
         assert!(!is_less_compatible("bat"));
         assert!(!is_less_compatible("cat"));

@@ -110,7 +110,10 @@ impl TokenCache {
     /// Build a cache at an explicit path (for testing).
     #[cfg(test)]
     fn at_path(path: PathBuf) -> Self {
-        Self { path, profile: None }
+        Self {
+            path,
+            profile: None,
+        }
     }
 
     /// Build a cache at an explicit path scoped to a profile (for testing).
@@ -1023,7 +1026,9 @@ impl OAuth2TokenProvider {
         let contract = self.contract.as_ref()?;
         let refresh_endpoint = contract.refresh_endpoint.as_ref()?;
         let client_id = self.resolve_client_id(&contract.client_id_env).ok()?;
-        let client_secret = self.resolve_client_secret(&contract.client_secret_env).ok()?;
+        let client_secret = self
+            .resolve_client_secret(&contract.client_secret_env)
+            .ok()?;
         match execute_contract_endpoint(
             refresh_endpoint,
             endpoint.base_url_override.as_deref(),
@@ -1067,7 +1072,9 @@ impl OAuth2TokenProvider {
         let result = if let Some(contract) = &self.contract {
             let refresh_endpoint = contract.refresh_endpoint.as_ref()?;
             let client_id = self.resolve_client_id(&contract.client_id_env).ok()?;
-            let client_secret = self.resolve_client_secret(&contract.client_secret_env).ok()?;
+            let client_secret = self
+                .resolve_client_secret(&contract.client_secret_env)
+                .ok()?;
             execute_contract_endpoint(
                 refresh_endpoint,
                 endpoint.base_url_override.as_deref(),
@@ -1423,12 +1430,10 @@ impl OAuth2TokenProvider {
             }
         }
         if let Some(contract) = &self.contract {
-            return self
-                .client_credentials_available(
-                    &contract.client_id_env,
-                    &contract.client_secret_env,
-                )
-                && contract.token_endpoint.required_env_vars().all(env_is_set);
+            return self.client_credentials_available(
+                &contract.client_id_env,
+                &contract.client_secret_env,
+            ) && contract.token_endpoint.required_env_vars().all(env_is_set);
         }
         match &self.grant {
             OAuth2Grant::ClientCredentials {
@@ -1658,7 +1663,8 @@ mod tests {
     #[test]
     #[serial]
     fn ambient_selection_prefers_profile_oauth_client_secret() {
-        let _state = oauth_precedence_state(SelectionSource::Active, Some(STORED_CLIENT_JSON), None);
+        let _state =
+            oauth_precedence_state(SelectionSource::Active, Some(STORED_CLIENT_JSON), None);
         let provider = precedence_provider();
 
         assert_eq!(

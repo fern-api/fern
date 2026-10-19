@@ -18,8 +18,7 @@ use tokio::io::AsyncWriteExt;
 
 use crate::auth::dry_run::dry_run_auth_info;
 use crate::auth::{
-    ensure_credentials_for, handle_error_response, DynAuthProvider,
-    EndpointAuthMetadata,
+    ensure_credentials_for, handle_error_response, DynAuthProvider, EndpointAuthMetadata,
 };
 use crate::error::CliError;
 use crate::openapi::discovery::{
@@ -171,7 +170,11 @@ fn resolve_file_refs_at_path(value: &mut Value, pointer: &mut String) -> Result<
                 // No `@` prefix — leave the value alone.
                 AtRef::Plain(_) => {}
                 AtRef::File { path, mode } => {
-                    let field = if pointer.is_empty() { "/" } else { pointer.as_str() };
+                    let field = if pointer.is_empty() {
+                        "/"
+                    } else {
+                        pointer.as_str()
+                    };
                     // Match the path-safety contract every other file-read site
                     // honors (binary body in binding.rs, multipart in app.rs):
                     // reject control chars / dangerous Unicode before disk I/O so
@@ -263,7 +266,10 @@ impl<'a> BinaryBodySource<'a> {
             // `@data://-`) is *not* stdin — the user opted into a literal
             // file-path interpretation, so `-` is just a filename.
             AtRef::Plain("-") => Self::Stdin,
-            AtRef::File { path, mode: AtMode::Auto } if path.as_ref() == "-" => Self::Stdin,
+            AtRef::File {
+                path,
+                mode: AtMode::Auto,
+            } if path.as_ref() == "-" => Self::Stdin,
             AtRef::File { path, mode } => Self::File { path, mode },
             // `\@<REST>` resolves to a literal-path file read at this site
             // (FER-10436). The literal already carries no scheme prefix, so
@@ -423,7 +429,10 @@ pub(crate) fn multipart_has_stdin(parts: &Option<Vec<MultipartPart>>) -> bool {
                 AtRef::Escaped(_) => false,
                 // Only `Auto`-mode `@-` (or bare `-`) is stdin. An explicit
                 // scheme like `@file://-` means a literal file path named `-`.
-                AtRef::File { path, mode: AtMode::Auto } => path.as_ref() == "-",
+                AtRef::File {
+                    path,
+                    mode: AtMode::Auto,
+                } => path.as_ref() == "-",
                 AtRef::File { .. } => false,
                 AtRef::Plain(s) => s == "-",
             },
@@ -439,7 +448,10 @@ pub(crate) fn multipart_has_stdin(parts: &Option<Vec<MultipartPart>>) -> bool {
 /// number of seconds, or an HTTP-date. We accept either. Past dates
 /// (the server's clock is ahead, or `Retry-After: 0`) collapse to
 /// zero so callers don't underflow.
-pub(crate) fn parse_retry_after(value: &str, now: std::time::SystemTime) -> Option<std::time::Duration> {
+pub(crate) fn parse_retry_after(
+    value: &str,
+    now: std::time::SystemTime,
+) -> Option<std::time::Duration> {
     let trimmed = value.trim();
     if trimmed.is_empty() {
         return None;
@@ -451,7 +463,11 @@ pub(crate) fn parse_retry_after(value: &str, now: std::time::SystemTime) -> Opti
     // HTTP-date (IMF-fixdate / RFC 850 / asctime). `httpdate::parse_http_date`
     // accepts all three formats per RFC 7231.
     if let Ok(target) = httpdate::parse_http_date(trimmed) {
-        return Some(target.duration_since(now).unwrap_or(std::time::Duration::ZERO));
+        return Some(
+            target
+                .duration_since(now)
+                .unwrap_or(std::time::Duration::ZERO),
+        );
     }
     None
 }
@@ -463,10 +479,7 @@ pub(crate) fn parse_retry_after(value: &str, now: std::time::SystemTime) -> Opti
 /// `[1 - jitter/2, 1 + jitter/2]` applied to the result. The jitter
 /// factor is sampled from a fast LCG so test runs are deterministic
 /// when seeded — see [`compute_backoff_delay_with_rand`] below.
-pub(crate) fn compute_backoff_delay(
-    attempt: u32,
-    config: &RetriesConfig,
-) -> std::time::Duration {
+pub(crate) fn compute_backoff_delay(attempt: u32, config: &RetriesConfig) -> std::time::Duration {
     // Use system entropy for the random sample. Unit tests use
     // `compute_backoff_delay_with_rand` to pin the sample.
     let jitter_sample = if config.jitter > 0.0 {
@@ -648,8 +661,10 @@ fn parse_and_validate_inputs(
     // `location: path` global (whose OpenAPI target must be declared as a
     // required path variable) would always trip the check before its
     // value is ever applied.
-    let global_param_targets: std::collections::HashSet<&str> =
-        extra_global_params.iter().map(|gp| gp.target.as_str()).collect();
+    let global_param_targets: std::collections::HashSet<&str> = extra_global_params
+        .iter()
+        .map(|gp| gp.target.as_str())
+        .collect();
 
     // Every missing required parameter, not just the first one found.
     //
@@ -746,7 +761,10 @@ fn parse_and_validate_inputs(
     let mut raw_body_flag_keys: Vec<String> = Vec::new();
 
     for (key, value) in &params {
-        let location = method.parameters.get(key).and_then(|p| p.location.as_deref());
+        let location = method
+            .parameters
+            .get(key)
+            .and_then(|p| p.location.as_deref());
         match location {
             Some("header") => {
                 let param_def = method.parameters.get(key);
@@ -843,16 +861,16 @@ fn parse_and_validate_inputs(
         use crate::openapi::discovery::GlobalParameterLocation;
         match gp.location {
             GlobalParameterLocation::Header => {
-                if !header_params.iter().any(|(k, _)| k.eq_ignore_ascii_case(&gp.target)) {
+                if !header_params
+                    .iter()
+                    .any(|(k, _)| k.eq_ignore_ascii_case(&gp.target))
+                {
                     header_params.push((gp.target.clone(), gp.value.clone()));
                 }
             }
             GlobalParameterLocation::Query => {
                 if !non_header_params.contains_key(&gp.target) {
-                    non_header_params.insert(
-                        gp.target.clone(),
-                        Value::String(gp.value.clone()),
-                    );
+                    non_header_params.insert(gp.target.clone(), Value::String(gp.value.clone()));
                 }
             }
             GlobalParameterLocation::Body => {
@@ -862,10 +880,7 @@ fn parse_and_validate_inputs(
             }
             GlobalParameterLocation::Path => {
                 if !non_header_params.contains_key(&gp.target) {
-                    non_header_params.insert(
-                        gp.target.clone(),
-                        Value::String(gp.value.clone()),
-                    );
+                    non_header_params.insert(gp.target.clone(), Value::String(gp.value.clone()));
                 }
             }
         }
@@ -918,7 +933,13 @@ fn parse_and_validate_inputs(
         }
     }
 
-    let (full_url, query_params) = build_url(doc, method, &non_header_params, is_media_upload, base_url_override)?;
+    let (full_url, query_params) = build_url(
+        doc,
+        method,
+        &non_header_params,
+        is_media_upload,
+        base_url_override,
+    )?;
     let is_upload = is_media_upload && method.supports_media_upload;
 
     Ok(ExecutionInput {
@@ -1246,7 +1267,10 @@ async fn build_http_request(
             })?;
             request = request.header("Content-Type", &binary.content_type);
             match BinaryBodySource::parse(raw) {
-                BinaryBodySource::File { path, mode: AtMode::Auto } => {
+                BinaryBodySource::File {
+                    path,
+                    mode: AtMode::Auto,
+                } => {
                     let path_ref: &str = path.as_ref();
                     let file_meta = tokio::fs::metadata(path_ref).await.map_err(|e| {
                         CliError::Validation(format!(
@@ -1576,10 +1600,7 @@ async fn handle_json_response(
                             // The response chooses the next request's URL, so it
                             // must not be able to steer it off-host and take the
                             // credential with it.
-                            let base = page_state
-                                .url_override()
-                                .unwrap_or(request_url)
-                                .to_string();
+                            let base = page_state.url_override().unwrap_or(request_url).to_string();
                             match crate::http::check_pagination_target(
                                 &pagination.cli_name,
                                 &base,
@@ -1609,10 +1630,7 @@ async fn handle_json_response(
                             // Resolve relative paths (e.g. `/v1/things?cursor=…`)
                             // against the previous request's URL so the host
                             // + scheme are preserved across pages.
-                            let base = page_state
-                                .url_override()
-                                .unwrap_or(request_url)
-                                .to_string();
+                            let base = page_state.url_override().unwrap_or(request_url).to_string();
                             match resolve_next_path(&base, path).and_then(|resolved| {
                                 // `next_path` may be an absolute URL, which
                                 // replaces the base's origin — so the resolved
@@ -1659,10 +1677,8 @@ async fn handle_json_response(
 
             if should_continue {
                 if pagination.page_delay_ms > 0 {
-                    tokio::time::sleep(std::time::Duration::from_millis(
-                        pagination.page_delay_ms,
-                    ))
-                    .await;
+                    tokio::time::sleep(std::time::Duration::from_millis(pagination.page_delay_ms))
+                        .await;
                 }
                 return Ok(true);
             }
@@ -2186,8 +2202,7 @@ pub async fn execute_method(
         .map(|b| b.flag_name.as_str());
     if binary_body_path.is_some() && binary_flag.is_none() {
         return Err(CliError::Validation(
-            "binary body path is only valid for operations with a binary request body"
-                .to_string(),
+            "binary body path is only valid for operations with a binary request body".to_string(),
         ));
     }
     if binary_body_path.is_some() && body_json.is_some() {
@@ -2197,7 +2212,16 @@ pub async fn execute_method(
         )));
     }
 
-    let input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers, extra_global_params)?;
+    let input = parse_and_validate_inputs(
+        doc,
+        method,
+        params_json,
+        body_json,
+        upload.is_some(),
+        base_url_override,
+        extra_headers,
+        extra_global_params,
+    )?;
 
     // Human-readable identifier for the operation, used in
     // `x-fern-sdk-return-value` extraction errors so the user can find
@@ -2371,19 +2395,16 @@ pub async fn execute_method(
 
     // Pre-compute the body string for the debug request dump. This is
     // computed once here because the body doesn't change across retries.
-    let body_str_for_dump: Option<String> = if debug
-        && binary_body_path.is_none()
-        && !input.is_upload
-        && multipart_parts.is_none()
-    {
-        if method.body_encoding.is_form() {
-            input.body.as_ref().map(encode_form_body)
+    let body_str_for_dump: Option<String> =
+        if debug && binary_body_path.is_none() && !input.is_upload && multipart_parts.is_none() {
+            if method.body_encoding.is_form() {
+                input.body.as_ref().map(encode_form_body)
+            } else {
+                input.body.as_ref().map(|v| v.to_string())
+            }
         } else {
-            input.body.as_ref().map(|v| v.to_string())
-        }
-    } else {
-        None
-    };
+            None
+        };
 
     // Build the client once outside the pagination loop. Client construction
     // reads env vars and (with TLS) builds a connection pool; rebuilding per
@@ -2970,12 +2991,8 @@ fn serialize_query_param(
     value: &Value,
     param_def: Option<&crate::openapi::discovery::MethodParameter>,
 ) -> Vec<(String, String)> {
-    let style = param_def
-        .and_then(|p| p.style.as_deref())
-        .unwrap_or("form");
-    let explode = param_def
-        .and_then(|p| p.explode)
-        .unwrap_or(style == "form");
+    let style = param_def.and_then(|p| p.style.as_deref()).unwrap_or("form");
+    let explode = param_def.and_then(|p| p.explode).unwrap_or(style == "form");
 
     match style {
         "deepObject" => serialize_deep_object(key, value),
@@ -3013,8 +3030,7 @@ fn serialize_deep_object(key: &str, value: &Value) -> Vec<(String, String)> {
             // ArrayFormat::Unindexed gives filter[tags]=a&filter[tags]=b,
             // consistent with the Fern Python and C# SDKs.
             let wrapped = serde_json::json!({ key: value });
-            let config = serde_qs::Config::new()
-                .array_format(serde_qs::ArrayFormat::Unindexed);
+            let config = serde_qs::Config::new().array_format(serde_qs::ArrayFormat::Unindexed);
             match config.serialize_string(&wrapped) {
                 Ok(qs) => {
                     // serde-qs URL-encodes the output; decode each pair
@@ -3157,7 +3173,13 @@ fn append_query_string(base_url: &str, pairs: &[(String, String)]) -> String {
     }
     let query = pairs
         .iter()
-        .map(|(k, v)| format!("{}={}", encode_query_component(k), encode_query_component(v)))
+        .map(|(k, v)| {
+            format!(
+                "{}={}",
+                encode_query_component(k),
+                encode_query_component(v)
+            )
+        })
         .collect::<Vec<_>>()
         .join("&");
     let sep = if base_url.contains('?') { '&' } else { '?' };
@@ -3165,7 +3187,11 @@ fn append_query_string(base_url: &str, pairs: &[(String, String)]) -> String {
 }
 
 fn effective_root_url(method: &RestMethod, doc: &RestDescription) -> String {
-    if !method.root_url.is_empty() { method.root_url.clone() } else { doc.root_url.clone() }
+    if !method.root_url.is_empty() {
+        method.root_url.clone()
+    } else {
+        doc.root_url.clone()
+    }
 }
 
 /// Prepend `doc.base_path` (sourced from `x-fern-base-path`) to `base`,
@@ -3348,7 +3374,11 @@ fn build_url(
         // symmetric prevents a silent gap if either side ever changes.
         let root = base_url_override
             .map(|b| b.trim_end_matches('/').to_string())
-            .unwrap_or_else(|| effective_root_url(method, doc).trim_end_matches('/').to_string());
+            .unwrap_or_else(|| {
+                effective_root_url(method, doc)
+                    .trim_end_matches('/')
+                    .to_string()
+            });
         let root = apply_base_path(&root, rendered_base_path.as_deref());
         format!("{root}{upload_path}")
     } else {
@@ -3459,11 +3489,7 @@ fn render_path_template(
 /// literal. Because `encode_path_segment` itself encodes those characters,
 /// assembling the segment from already-encoded values keeps the separators
 /// from being double-encoded.
-fn serialize_path_param(
-    name: &str,
-    value: &Value,
-    param_def: Option<&MethodParameter>,
-) -> String {
+fn serialize_path_param(name: &str, value: &Value, param_def: Option<&MethodParameter>) -> String {
     let style = param_def
         .and_then(|p| p.style.as_deref())
         .unwrap_or("simple");
@@ -3495,9 +3521,7 @@ fn serialize_path_param(
                     // explode=false: flat k,v,k,v comma-separated.
                     let body = map
                         .iter()
-                        .flat_map(|(k, v)| {
-                            [crate::validate::encode_path_segment(k), enc(v)]
-                        })
+                        .flat_map(|(k, v)| [crate::validate::encode_path_segment(k), enc(v)])
                         .collect::<Vec<_>>()
                         .join(",");
                     format!(".{body}")
@@ -3517,17 +3541,13 @@ fn serialize_path_param(
             }
             Value::Object(map) if explode => map
                 .iter()
-                .map(|(k, v)| {
-                    format!(";{}={}", crate::validate::encode_path_segment(k), enc(v))
-                })
+                .map(|(k, v)| format!(";{}={}", crate::validate::encode_path_segment(k), enc(v)))
                 .collect::<Vec<_>>()
                 .join(""),
             Value::Object(map) => {
                 let body = map
                     .iter()
-                    .map(|(k, v)| {
-                        format!("{},{}", crate::validate::encode_path_segment(k), enc(v))
-                    })
+                    .map(|(k, v)| format!("{},{}", crate::validate::encode_path_segment(k), enc(v)))
                     .collect::<Vec<_>>()
                     .join(",");
                 format!(";{name}={body}")
@@ -3539,9 +3559,7 @@ fn serialize_path_param(
             Value::Array(arr) => arr.iter().map(&enc).collect::<Vec<_>>().join(","),
             Value::Object(map) if explode => map
                 .iter()
-                .map(|(k, v)| {
-                    format!("{}={}", crate::validate::encode_path_segment(k), enc(v))
-                })
+                .map(|(k, v)| format!("{}={}", crate::validate::encode_path_segment(k), enc(v)))
                 .collect::<Vec<_>>()
                 .join(","),
             Value::Object(map) => map
@@ -4244,7 +4262,9 @@ fn coerce_body_param_value(
             })?;
             serde_json::Number::from_f64(n)
                 .map(Value::Number)
-                .ok_or_else(|| CliError::Validation(format!("Non-finite number body value '{raw}'")))
+                .ok_or_else(|| {
+                    CliError::Validation(format!("Non-finite number body value '{raw}'"))
+                })
         }
         Some("boolean") => match raw.as_str() {
             "true" | "1" => Ok(Value::Bool(true)),
@@ -4368,7 +4388,8 @@ fn validate_non_body_param_type(
             if let Value::String(raw) = value {
                 let is_member = members.iter().any(|wire| wire == raw)
                     || param.fern_enum.as_ref().is_some_and(|m| {
-                        m.values().any(|cfg| cfg.display_name.as_deref() == Some(raw.as_str()))
+                        m.values()
+                            .any(|cfg| cfg.display_name.as_deref() == Some(raw.as_str()))
                     })
                     || (param.nullable && raw == "null");
                 if !is_member {
@@ -4544,7 +4565,12 @@ fn resolve_schema_chain<'a>(
 /// Shared by [`validate_property`] (inline-typed properties) and
 /// [`validate_value`] (`$ref`-resolved components) so the two cannot drift —
 /// they did, and the component path had no type check at all.
-fn check_json_type(value: &Value, expected_type: &str, path: &str, errors: &mut Vec<String>) -> bool {
+fn check_json_type(
+    value: &Value,
+    expected_type: &str,
+    path: &str,
+    errors: &mut Vec<String>,
+) -> bool {
     let matches = match (expected_type, value) {
         ("string", Value::String(_)) => true,
         ("integer", Value::Number(n)) => n.is_i64() || n.is_u64(),
@@ -4585,9 +4611,7 @@ fn validate_value(
     // nullable-union composition (`oneOf: [T, null]` / `anyOf: [T, null]`)
     // would incorrectly reject JSON null with "Expected object".
     if value.is_null()
-        && (schema.nullable
-            || has_null_branch(&schema.one_of)
-            || has_null_branch(&schema.any_of))
+        && (schema.nullable || has_null_branch(&schema.one_of) || has_null_branch(&schema.any_of))
     {
         return;
     }
@@ -4624,8 +4648,8 @@ fn validate_value(
         // the branch, exactly as at the property level above. Without this a
         // component spelled `anyOf: [{type: string}, {type: null}]` accepted
         // any value, while the identical property spelled inline did not.
-        if let Some(branch) = sole_non_null_branch(&schema.any_of)
-            .or_else(|| sole_non_null_branch(&schema.one_of))
+        if let Some(branch) =
+            sole_non_null_branch(&schema.any_of).or_else(|| sole_non_null_branch(&schema.one_of))
         {
             validate_property(value, branch, doc, path, errors);
             return;
@@ -4812,9 +4836,9 @@ fn has_null_branch(branches: &[crate::openapi::discovery::JsonSchemaProperty]) -
 fn sole_non_null_branch(
     branches: &[crate::openapi::discovery::JsonSchemaProperty],
 ) -> Option<&crate::openapi::discovery::JsonSchemaProperty> {
-    let mut non_null = branches
-        .iter()
-        .filter(|b| !(b.prop_type.as_deref() == Some("null") || (b.nullable && b.prop_type.is_none())));
+    let mut non_null = branches.iter().filter(|b| {
+        !(b.prop_type.as_deref() == Some("null") || (b.nullable && b.prop_type.is_none()))
+    });
     let first = non_null.next()?;
     if non_null.next().is_some() {
         return None;
@@ -5268,11 +5292,7 @@ fn sanitize_server_supplied_filename(raw: &str) -> Option<String> {
         return None;
     }
     let basename = std::path::Path::new(s).file_name()?.to_str()?;
-    if basename.is_empty()
-        || basename == "."
-        || basename == ".."
-        || basename.starts_with('.')
-    {
+    if basename.is_empty() || basename == "." || basename == ".." || basename.starts_with('.') {
         return None;
     }
     Some(basename.to_string())
@@ -5433,8 +5453,14 @@ mod tests {
     fn test_method_allows_retry_non_idempotent_methods_only_when_marked() {
         // POST/PATCH only retry when the spec marks the op idempotent.
         for m in ["POST", "PATCH"] {
-            assert!(!method_allows_retry(m, false), "{m} should NOT retry by default");
-            assert!(method_allows_retry(m, true), "{m} retries when x-fern-idempotent");
+            assert!(
+                !method_allows_retry(m, false),
+                "{m} should NOT retry by default"
+            );
+            assert!(
+                method_allows_retry(m, true),
+                "{m} retries when x-fern-idempotent"
+            );
         }
     }
 
@@ -5543,7 +5569,10 @@ mod tests {
         assert_eq!(file_part_mime(None, Some("paper.pdf")), "application/pdf");
         assert_eq!(file_part_mime(None, Some("notes.md")), "text/markdown");
         assert_eq!(file_part_mime(None, Some("page.html")), "text/html");
-        assert_eq!(file_part_mime(None, Some("book.epub")), "application/epub+zip");
+        assert_eq!(
+            file_part_mime(None, Some("book.epub")),
+            "application/epub+zip"
+        );
         assert_eq!(
             file_part_mime(None, Some("report.docx")),
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -5553,8 +5582,14 @@ mod tests {
         assert_eq!(file_part_mime(None, Some("clip.m4a")), "audio/mp4");
         assert_eq!(file_part_mime(None, Some("clip.flac")), "audio/flac");
         // Unrecognized or absent extension falls back to the OAS default.
-        assert_eq!(file_part_mime(None, Some("archive.xyz")), "application/octet-stream");
-        assert_eq!(file_part_mime(None, Some("README")), "application/octet-stream");
+        assert_eq!(
+            file_part_mime(None, Some("archive.xyz")),
+            "application/octet-stream"
+        );
+        assert_eq!(
+            file_part_mime(None, Some("README")),
+            "application/octet-stream"
+        );
     }
 
     #[test]
@@ -5566,7 +5601,10 @@ mod tests {
             file_part_mime(Some("text/plain\r\nX-Injected: 1"), None),
             "text/plainX-Injected: 1"
         );
-        assert_eq!(file_part_mime(Some("\r\n"), None), "application/octet-stream");
+        assert_eq!(
+            file_part_mime(Some("\r\n"), None),
+            "application/octet-stream"
+        );
     }
 
     /// Send a built multipart form to a local mock server and return the raw
@@ -5614,7 +5652,10 @@ mod tests {
             body.contains("Content-Type: application/json"),
             "text part Content-Type should come from encoding; got: {body}"
         );
-        assert!(body.contains("{\"k\":1}"), "value should be in body; got: {body}");
+        assert!(
+            body.contains("{\"k\":1}"),
+            "value should be in body; got: {body}"
+        );
     }
 
     #[tokio::test]
@@ -5637,7 +5678,10 @@ mod tests {
             body.contains("Content-Type: application/octet-stream"),
             "file part with an unrecognized extension should default to octet-stream; got: {body}"
         );
-        assert!(body.contains("payload-bytes"), "file bytes should stream; got: {body}");
+        assert!(
+            body.contains("payload-bytes"),
+            "file bytes should stream; got: {body}"
+        );
     }
 
     #[tokio::test]
@@ -5969,8 +6013,7 @@ mod tests {
             status: Some(503),
             retry_after: Some("7"),
         };
-        let d = decide_retry(0, &outcome, &cfg, "GET", false, false)
-            .expect("should retry");
+        let d = decide_retry(0, &outcome, &cfg, "GET", false, false).expect("should retry");
         assert_eq!(d, std::time::Duration::from_secs(7));
     }
 
@@ -5981,8 +6024,7 @@ mod tests {
             status: Some(503),
             retry_after: Some("not-a-number"),
         };
-        let d = decide_retry(0, &outcome, &cfg, "GET", false, false)
-            .expect("should retry");
+        let d = decide_retry(0, &outcome, &cfg, "GET", false, false).expect("should retry");
         // Falls back to backoff math \u2014 not zero, not the parsed value.
         assert!(d > std::time::Duration::ZERO);
     }
@@ -6011,13 +6053,19 @@ mod tests {
 
     #[test]
     fn test_binary_body_source_dash_is_stdin() {
-        assert!(matches!(BinaryBodySource::parse("-"), BinaryBodySource::Stdin));
+        assert!(matches!(
+            BinaryBodySource::parse("-"),
+            BinaryBodySource::Stdin
+        ));
     }
 
     #[test]
     fn test_binary_body_source_at_dash_is_stdin() {
         // curl's spelling for stdin is `@-`; we accept it as an alias for `-`.
-        assert!(matches!(BinaryBodySource::parse("@-"), BinaryBodySource::Stdin));
+        assert!(matches!(
+            BinaryBodySource::parse("@-"),
+            BinaryBodySource::Stdin
+        ));
     }
 
     #[test]
@@ -6213,7 +6261,10 @@ mod tests {
             panic!("expected Validation, got {err:?}");
         };
         assert!(msg.contains(missing), "error must include path: {msg}");
-        assert!(msg.contains("/outer/pic"), "error must include JSON pointer: {msg}");
+        assert!(
+            msg.contains("/outer/pic"),
+            "error must include JSON pointer: {msg}"
+        );
     }
 
     #[test]
@@ -6321,7 +6372,10 @@ mod tests {
             msg.contains("@data://"),
             "error must hint at @data:// escape hatch: {msg}"
         );
-        assert!(msg.contains("/blob"), "error must include JSON pointer: {msg}");
+        assert!(
+            msg.contains("/blob"),
+            "error must include JSON pointer: {msg}"
+        );
     }
 
     #[test]
@@ -6443,10 +6497,18 @@ mod tests {
             ..Default::default()
         };
 
-        let params_json =
-            r#"{"user_id": "123", "X-Custom-Header": "my-value", "limit": "10"}"#;
-        let input =
-            parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[]).unwrap();
+        let params_json = r#"{"user_id": "123", "X-Custom-Header": "my-value", "limit": "10"}"#;
+        let input = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(params_json),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .unwrap();
 
         // Header param should be in header_params
         assert_eq!(input.header_params.len(), 1);
@@ -6481,10 +6543,7 @@ mod tests {
             full_url: "https://example.com/users".to_string(),
             body: None,
             query_params: Vec::new(),
-            header_params: vec![(
-                "X-Custom-Header".to_string(),
-                "header-value".to_string(),
-            )],
+            header_params: vec![("X-Custom-Header".to_string(), "header-value".to_string())],
             is_upload: false,
         };
 
@@ -6719,12 +6778,11 @@ mod tests {
             is_upload: false,
         };
         // A bare bearer leaf — would normally attach Authorization.
-        let provider: crate::auth::DynAuthProvider = std::sync::Arc::new(
-            crate::auth::BearerAuthProvider::new(
+        let provider: crate::auth::DynAuthProvider =
+            std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
                 "bearerAuth",
                 crate::auth::AuthCredentialSource::literal("tok"),
-            ),
-        );
+            ));
 
         let request = build_http_request(
             &client,
@@ -6744,7 +6802,10 @@ mod tests {
 
         let built = request.build().unwrap();
         assert!(
-            built.headers().get(reqwest::header::AUTHORIZATION).is_none(),
+            built
+                .headers()
+                .get(reqwest::header::AUTHORIZATION)
+                .is_none(),
             "security: [] must opt out of auth even with a bearer provider"
         );
     }
@@ -6784,12 +6845,9 @@ mod tests {
     #[test]
     fn test_coerce_body_param_value_nested_decodes_json() {
         // Object/array body fields accept a JSON string from the CLI flag.
-        let arr = coerce_body_param_value(
-            &Value::String(r#"["a","b"]"#.into()),
-            Some("array"),
-            false,
-        )
-        .unwrap();
+        let arr =
+            coerce_body_param_value(&Value::String(r#"["a","b"]"#.into()), Some("array"), false)
+                .unwrap();
         assert_eq!(arr, json!(["a", "b"]));
 
         let obj = coerce_body_param_value(
@@ -6875,23 +6933,16 @@ mod tests {
 
     #[test]
     fn test_coerce_body_param_value_rejects_bad_input() {
-        let err = coerce_body_param_value(
-            &Value::String("not-an-int".into()),
-            Some("integer"),
-            false,
-        )
-        .unwrap_err();
+        let err =
+            coerce_body_param_value(&Value::String("not-an-int".into()), Some("integer"), false)
+                .unwrap_err();
         match err {
             CliError::Validation(msg) => assert!(msg.contains("Invalid integer")),
             _ => panic!("Expected Validation error"),
         }
 
-        let err = coerce_body_param_value(
-            &Value::String("yes".into()),
-            Some("boolean"),
-            false,
-        )
-        .unwrap_err();
+        let err = coerce_body_param_value(&Value::String("yes".into()), Some("boolean"), false)
+            .unwrap_err();
         match err {
             CliError::Validation(msg) => assert!(msg.contains("Invalid boolean")),
             _ => panic!("Expected Validation error"),
@@ -6932,11 +6983,22 @@ mod tests {
         };
 
         let params_json = r#"{"name": "Acme", "count": "3"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
-            .unwrap();
+        let input = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(params_json),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .unwrap();
 
         // Body must contain both fields, with `count` coerced to a JSON integer.
-        let body = input.body.expect("body should be populated from body params");
+        let body = input
+            .body
+            .expect("body should be populated from body params");
         assert_eq!(body, json!({ "name": "Acme", "count": 3 }));
 
         // Body fields must NOT bleed into the query string or headers.
@@ -6993,10 +7055,7 @@ mod tests {
         .unwrap_err();
         match err {
             CliError::Validation(msg) => {
-                assert!(
-                    msg.contains("--json"),
-                    "error must mention --json: {msg}"
-                );
+                assert!(msg.contains("--json"), "error must mention --json: {msg}");
                 assert!(
                     msg.contains("--name") || msg.contains("--description"),
                     "error must name a conflicting per-field flag: {msg}"
@@ -7039,9 +7098,18 @@ mod tests {
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
-                assert!(msg.contains("'name'"), "error names the missing field: {msg}");
-                assert!(msg.contains("--name"), "error names the per-field flag: {msg}");
-                assert!(msg.contains("--json"), "error names --json for body fields: {msg}");
+                assert!(
+                    msg.contains("'name'"),
+                    "error names the missing field: {msg}"
+                );
+                assert!(
+                    msg.contains("--name"),
+                    "error names the per-field flag: {msg}"
+                );
+                assert!(
+                    msg.contains("--json"),
+                    "error names --json for body fields: {msg}"
+                );
                 assert!(msg.contains("--params"), "error names --params: {msg}");
             }
             other => panic!("expected Validation error, got {other:?}"),
@@ -7084,13 +7152,22 @@ mod tests {
             .to_string();
 
         // Every missing input is named, not just one.
-        assert!(message.contains("3 required inputs are missing"), "got: {message}");
+        assert!(
+            message.contains("3 required inputs are missing"),
+            "got: {message}"
+        );
         for name in ["pod_id", "url", "event_types"] {
-            assert!(message.contains(name), "{name} must be listed; got: {message}");
+            assert!(
+                message.contains(name),
+                "{name} must be listed; got: {message}"
+            );
         }
         // The path parameter no longer hides the body ones, and is still
         // identified as a path parameter.
-        assert!(message.contains("path parameter 'pod_id'"), "got: {message}");
+        assert!(
+            message.contains("path parameter 'pod_id'"),
+            "got: {message}"
+        );
 
         // Stable across runs, and in `parameter_order`, not hash order.
         for _ in 0..20 {
@@ -7102,7 +7179,10 @@ mod tests {
         let pod = message.find("pod_id").unwrap_or_default();
         let url = message.find("'url'").unwrap_or_default();
         let events = message.find("event_types").unwrap_or_default();
-        assert!(pod < url && url < events, "must follow parameter_order; got: {message}");
+        assert!(
+            pod < url && url < events,
+            "must follow parameter_order; got: {message}"
+        );
 
         // A single missing input keeps the original one-line wording.
         let one = RestMethod {
@@ -7113,8 +7193,14 @@ mod tests {
         let single = parse_and_validate_inputs(&doc, &one, None, None, false, None, &[], &[])
             .expect_err("one missing")
             .to_string();
-        assert!(single.starts_with("Required parameter 'url' is missing."), "got: {single}");
-        assert!(!single.contains("required inputs are missing"), "got: {single}");
+        assert!(
+            single.starts_with("Required parameter 'url' is missing."),
+            "got: {single}"
+        );
+        assert!(
+            !single.contains("required inputs are missing"),
+            "got: {single}"
+        );
     }
 
     #[test]
@@ -7203,7 +7289,10 @@ mod tests {
         match err {
             CliError::Validation(msg) => {
                 assert!(msg.contains("--json"), "error must mention --json: {msg}");
-                assert!(msg.contains("--name"), "error must name the per-field flag: {msg}");
+                assert!(
+                    msg.contains("--name"),
+                    "error must name the per-field flag: {msg}"
+                );
             }
             other => panic!("expected Validation error, got {other:?}"),
         }
@@ -7240,9 +7329,15 @@ mod tests {
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
-                assert!(msg.contains("--limit"), "error names the per-field flag: {msg}");
+                assert!(
+                    msg.contains("--limit"),
+                    "error names the per-field flag: {msg}"
+                );
                 assert!(msg.contains("--params"), "error names --params: {msg}");
-                assert!(!msg.contains("--json"), "non-body error should not mention --json: {msg}");
+                assert!(
+                    !msg.contains("--json"),
+                    "non-body error should not mention --json: {msg}"
+                );
             }
             other => panic!("expected Validation error, got {other:?}"),
         }
@@ -7392,8 +7487,17 @@ mod tests {
         };
 
         let params_json = r#"{"name": "not-an-integer"}"#;
-        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
-            .unwrap_err();
+        let err = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(params_json),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .unwrap_err();
         match err {
             CliError::Validation(msg) => {
                 assert!(
@@ -7447,7 +7551,10 @@ mod tests {
         match err {
             CliError::Validation(msg) => {
                 assert!(msg.contains("--json"), "error must mention --json: {msg}");
-                assert!(msg.contains("--name"), "error must name the per-field flag: {msg}");
+                assert!(
+                    msg.contains("--name"),
+                    "error must name the per-field flag: {msg}"
+                );
             }
             other => panic!("expected Validation error, got {other:?}"),
         }
@@ -7489,8 +7596,17 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"last\":\"Lincoln\"}", "name.first": "Abraham"}"#;
-        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
-            .unwrap_err();
+        let err = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(params_json),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .unwrap_err();
         match err {
             CliError::Validation(msg) => {
                 assert!(msg.contains("--name"), "error must mention --name: {msg}");
@@ -7530,10 +7646,22 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"first\":\"Abraham\",\"last\":\"Lincoln\"}"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
-            .unwrap();
+        let input = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(params_json),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .unwrap();
         let body = input.body.expect("body should be populated");
-        assert_eq!(body, json!({ "name": { "first": "Abraham", "last": "Lincoln" } }));
+        assert_eq!(
+            body,
+            json!({ "name": { "first": "Abraham", "last": "Lincoln" } })
+        );
     }
 
     #[test]
@@ -7574,8 +7702,17 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"first\":\"Abraham\"}"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
-            .expect("required leaf satisfied by ancestor shorthand should pass");
+        let input = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(params_json),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .expect("required leaf satisfied by ancestor shorthand should pass");
         let body = input.body.expect("body should be populated");
         assert_eq!(body, json!({ "name": { "first": "Abraham" } }));
     }
@@ -7795,7 +7932,14 @@ mod tests {
         // single-letter forms are rejected on purpose — pydantic/FastAPI do not
         // accept them, and the value is forwarded verbatim, so accepting one
         // here would only move the 400 later.
-        for bad in [json!("ture"), json!("maybe"), json!("2"), json!(2), json!("t"), json!("y")] {
+        for bad in [
+            json!("ture"),
+            json!("maybe"),
+            json!("2"),
+            json!(2),
+            json!("t"),
+            json!("y"),
+        ] {
             assert!(
                 validate_non_body_param_type("flag", &bad, Some(&bool_param)).is_err(),
                 "{bad} should be rejected",
@@ -7820,7 +7964,12 @@ mod tests {
         };
         validate_non_body_param_type("ids", &json!(["1", "2"]), Some(&param))
             .expect("integer elements must pass");
-        for bad in [json!(["abc"]), json!(["1", "abc"]), json!(["1.5"]), json!([""])] {
+        for bad in [
+            json!(["abc"]),
+            json!(["1", "abc"]),
+            json!(["1.5"]),
+            json!([""]),
+        ] {
             assert!(
                 validate_non_body_param_type("ids", &bad, Some(&param)).is_err(),
                 "{bad} must be rejected",
@@ -7848,7 +7997,13 @@ mod tests {
             location: Some("query".to_string()),
             ..Default::default()
         };
-        for bad in [json!(1.0), json!(1.5), json!(-2.25), json!(1e3), json!("1.5")] {
+        for bad in [
+            json!(1.0),
+            json!(1.5),
+            json!(-2.25),
+            json!(1e3),
+            json!("1.5"),
+        ] {
             assert!(
                 validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
                 "{bad} is not an integer",
@@ -7897,7 +8052,14 @@ mod tests {
         };
 
         // Agreement across u64, including the old i64 boundary.
-        for raw in ["0", "5", "-3", "9223372036854775807", "9223372036854775808", "18446744073709551615"] {
+        for raw in [
+            "0",
+            "5",
+            "-3",
+            "9223372036854775807",
+            "9223372036854775808",
+            "18446744073709551615",
+        ] {
             validate_non_body_param_type("limit", &json!(raw), Some(&param))
                 .unwrap_or_else(|e| panic!("flag path must accept {raw}: {e}"));
             validate_non_body_param_type(
@@ -7925,7 +8087,13 @@ mod tests {
 
         // Shape is still enforced on the flag path. (An empty string is
         // deliberately accepted — see `test_typed_param_accepts_an_empty_string`.)
-        for bad in [json!("12a"), json!("-"), json!("+"), json!("1_0"), json!("+5")] {
+        for bad in [
+            json!("12a"),
+            json!("-"),
+            json!("+"),
+            json!("1_0"),
+            json!("+5"),
+        ] {
             assert!(
                 validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
                 "{bad} should be rejected",
@@ -7963,7 +8131,8 @@ mod tests {
             repeated: true,
             ..Default::default()
         };
-        validate_non_body_param_type("ids", &json!(["1", "2"]), Some(&repeated)).expect("elements ok");
+        validate_non_body_param_type("ids", &json!(["1", "2"]), Some(&repeated))
+            .expect("elements ok");
         assert!(validate_non_body_param_type("ids", &json!(["1", "no"]), Some(&repeated)).is_err());
     }
 
@@ -8028,7 +8197,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let body = json!({ "userId": null });
         assert!(
             validate_body_against_schema(&body, "Event", &doc).is_ok(),
@@ -8057,10 +8229,16 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let body = json!({ "code": null });
         let result = validate_body_against_schema(&body, "Item", &doc);
-        assert!(result.is_err(), "null on non-nullable property must still be rejected");
+        assert!(
+            result.is_err(),
+            "null on non-nullable property must still be rejected"
+        );
     }
 
     #[test]
@@ -8075,7 +8253,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let body = json!({ "name": "foo", "count": 3, "nested": {"x": 1} });
         assert!(
             validate_body_against_schema(&body, "Body", &doc).is_ok(),
@@ -8280,7 +8461,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let body = json!({ "authorId": null });
         assert!(
             validate_body_against_schema(&body, "Msg", &doc).is_ok(),
@@ -8322,7 +8506,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let body = json!({ "authorId": null });
         assert!(
             validate_body_against_schema(&body, "Msg", &doc).is_ok(),
@@ -8375,7 +8562,10 @@ mod tests {
                 },
             ),
         ]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
 
         // Legal members pass, as a scalar and as array elements.
         for body in [
@@ -8398,7 +8588,10 @@ mod tests {
                 .expect_err(&format!("must reject a non-member: {body}"));
             let message = format!("{error}");
             assert!(message.contains("bogus"), "got: {message}");
-            assert!(message.contains("send"), "must list valid options; got: {message}");
+            assert!(
+                message.contains("send"),
+                "must list valid options; got: {message}"
+            );
         }
     }
 
@@ -8444,7 +8637,10 @@ mod tests {
                 },
             ),
         ]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
 
         assert!(
             validate_body_against_schema(&json!({ "metadata": null }), "Msg", &doc).is_ok(),
@@ -8480,7 +8676,10 @@ mod tests {
             .expect_err("a non-member must be rejected");
         let message = error.to_string();
         assert!(message.contains("--direction"), "got: {message}");
-        assert!(message.contains("send"), "must list valid options; got: {message}");
+        assert!(
+            message.contains("send"),
+            "must list valid options; got: {message}"
+        );
 
         // The accepted set must match clap's, not just the wire values, or this
         // rejects input the flag path allows. clap registers an `x-fern-enum`
@@ -8565,7 +8764,10 @@ mod tests {
             let message = error.to_string();
             assert!(message.contains("--event-types"), "got: {message}");
             assert!(message.contains("bogus"), "got: {message}");
-            assert!(message.contains("sent"), "must list valid options; got: {message}");
+            assert!(
+                message.contains("sent"),
+                "must list valid options; got: {message}"
+            );
         }
 
         // Null still short-circuits, and an array param with no element enum
@@ -8635,8 +8837,14 @@ mod tests {
         )
         .expect_err("combining an object shorthand with its leaf must be rejected");
         let message = error.to_string();
-        assert!(message.contains("--permissions.inbox-read"), "got: {message}");
-        assert!(!message.contains("--permissions.inbox_read"), "got: {message}");
+        assert!(
+            message.contains("--permissions.inbox-read"),
+            "got: {message}"
+        );
+        assert!(
+            !message.contains("--permissions.inbox_read"),
+            "got: {message}"
+        );
     }
 
     #[test]
@@ -8686,7 +8894,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
 
         // Valid values, including null, still pass.
         for body in [
@@ -8744,7 +8955,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         for body in [json!({ "to": "a@b.c" }), json!({ "to": ["a@b.c"] })] {
             assert!(
                 validate_body_against_schema(&body, "Msg", &doc).is_ok(),
@@ -8791,7 +9005,10 @@ mod tests {
                 },
             ),
         ]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         assert!(validate_body_against_schema(&json!({ "subject": "hi" }), "Msg", &doc).is_ok());
         assert!(validate_body_against_schema(&json!({ "subject": null }), "Msg", &doc).is_ok());
         assert!(
@@ -8849,7 +9066,10 @@ mod tests {
                 },
             ),
         ]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         // Valid: both merged props present.
         let body = json!({ "subject": "hi", "body": "world" });
         assert!(
@@ -8918,7 +9138,10 @@ mod tests {
                 },
             ),
         ]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let body = json!({
             "attachment": { "url": "https://x.example", "checksum": "abc" }
         });
@@ -8987,7 +9210,10 @@ mod tests {
                 },
             ),
         ]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         // Valid: both merged fields present, no unknowns.
         let body = json!({
             "attachment": { "url": "https://x.example", "checksum": "abc" }
@@ -9061,7 +9287,10 @@ mod tests {
                 },
             ),
         ]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
 
         // Happy path: required `url` present.
         let ok = json!({ "attachment": { "url": "https://x.example" } });
@@ -9117,7 +9346,10 @@ mod tests {
                 },
             ),
         ]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let body = json!({ "address": null });
         assert!(
             validate_body_against_schema(&body, "User", &doc).is_ok(),
@@ -9351,7 +9583,8 @@ mod tests {
         };
         let params = Map::new();
 
-        let (url, _) = build_url(&doc, &method, &params, false, Some("http://localhost:9000")).unwrap();
+        let (url, _) =
+            build_url(&doc, &method, &params, false, Some("http://localhost:9000")).unwrap();
         assert_eq!(url, "http://localhost:9000/files");
     }
 
@@ -9370,9 +9603,17 @@ mod tests {
         let params = Map::new();
 
         // With trailing slash on override
-        let (url_with, _) = build_url(&doc, &method, &params, false, Some("http://localhost:9000/")).unwrap();
+        let (url_with, _) = build_url(
+            &doc,
+            &method,
+            &params,
+            false,
+            Some("http://localhost:9000/"),
+        )
+        .unwrap();
         // Without trailing slash on override
-        let (url_without, _) = build_url(&doc, &method, &params, false, Some("http://localhost:9000")).unwrap();
+        let (url_without, _) =
+            build_url(&doc, &method, &params, false, Some("http://localhost:9000")).unwrap();
         assert_eq!(url_with, url_without);
         assert_eq!(url_with, "http://localhost:9000/users/me");
     }
@@ -9391,7 +9632,8 @@ mod tests {
         };
         let params = Map::new();
 
-        let (url, _) = build_url(&doc, &method, &params, false, Some("http://localhost:9000")).unwrap();
+        let (url, _) =
+            build_url(&doc, &method, &params, false, Some("http://localhost:9000")).unwrap();
         assert_eq!(url, "http://localhost:9000/users/me");
     }
 
@@ -9620,14 +9862,8 @@ mod tests {
         };
         let mut params = Map::new();
         params.insert("thingId".to_string(), json!("abc"));
-        let (url, _) = build_url(
-            &doc,
-            &method,
-            &params,
-            false,
-            Some("http://server.example"),
-        )
-        .unwrap();
+        let (url, _) =
+            build_url(&doc, &method, &params, false, Some("http://server.example")).unwrap();
         assert_eq!(url, "http://server.example/v1/things/abc");
     }
 
@@ -9668,7 +9904,10 @@ mod tests {
         params.insert("tenant".to_string(), json!("acme"));
         let (url, qs) = build_url(&doc, &method, &params, false, None).unwrap();
         assert_eq!(url, "https://api.example.com/acme/v1/things");
-        assert!(qs.is_empty(), "tenant must be consumed by base_path, not leaked as query: {qs:?}");
+        assert!(
+            qs.is_empty(),
+            "tenant must be consumed by base_path, not leaked as query: {qs:?}"
+        );
     }
 
     /// Multi-placeholder base paths (e.g. `/{region}/{tenant}/v1`) are
@@ -9760,7 +9999,14 @@ mod tests {
         };
         let mut params = Map::new();
         params.insert("tenant".to_string(), json!("acme"));
-        let (url, qs) = build_url(&doc, &method, &params, false, Some("https://staging.example.com")).unwrap();
+        let (url, qs) = build_url(
+            &doc,
+            &method,
+            &params,
+            false,
+            Some("https://staging.example.com"),
+        )
+        .unwrap();
         assert_eq!(url, "https://staging.example.com/acme/v1/things");
         assert!(qs.is_empty());
     }
@@ -10279,14 +10525,22 @@ mod tests {
         // spaceDelimited joins elements with a literal space; the encoder
         // turns that into `%20` on the wire.
         let value = json!(["1", "2"]);
-        let result = serialize_query_param("ids", &value, Some(&param_with("spaceDelimited", Some(false))));
+        let result = serialize_query_param(
+            "ids",
+            &value,
+            Some(&param_with("spaceDelimited", Some(false))),
+        );
         assert_eq!(result, vec![("ids".to_string(), "1 2".to_string())]);
     }
 
     #[test]
     fn test_serialize_pipe_delimited_array() {
         let value = json!(["1", "2"]);
-        let result = serialize_query_param("ids", &value, Some(&param_with("pipeDelimited", Some(false))));
+        let result = serialize_query_param(
+            "ids",
+            &value,
+            Some(&param_with("pipeDelimited", Some(false))),
+        );
         assert_eq!(result, vec![("ids".to_string(), "1|2".to_string())]);
     }
 
@@ -10294,7 +10548,11 @@ mod tests {
     fn test_serialize_delimited_scalar_degrades_to_value() {
         // A non-array under a delimited style is just the scalar value.
         let value = json!("solo");
-        let result = serialize_query_param("ids", &value, Some(&param_with("spaceDelimited", Some(false))));
+        let result = serialize_query_param(
+            "ids",
+            &value,
+            Some(&param_with("spaceDelimited", Some(false))),
+        );
         assert_eq!(result, vec![("ids".to_string(), "solo".to_string())]);
     }
 
@@ -10303,9 +10561,16 @@ mod tests {
         // form/object/explode=true: each property becomes its own top-level
         // key; the parameter name is dropped.
         let value = json!({"role": "admin", "active": "true"});
-        let result = serialize_query_param("profile", &value, Some(&param_with("form", Some(true))));
-        assert!(result.contains(&("role".to_string(), "admin".to_string())), "got: {result:?}");
-        assert!(result.contains(&("active".to_string(), "true".to_string())), "got: {result:?}");
+        let result =
+            serialize_query_param("profile", &value, Some(&param_with("form", Some(true))));
+        assert!(
+            result.contains(&("role".to_string(), "admin".to_string())),
+            "got: {result:?}"
+        );
+        assert!(
+            result.contains(&("active".to_string(), "true".to_string())),
+            "got: {result:?}"
+        );
         assert!(
             !result.iter().any(|(k, _)| k == "profile"),
             "parameter name must be dropped for exploded object; got: {result:?}"
@@ -10317,8 +10582,12 @@ mod tests {
         // form/object/explode=false: comma-joined key,value pairs under the
         // single parameter key.
         let value = json!({"role": "admin"});
-        let result = serialize_query_param("profile", &value, Some(&param_with("form", Some(false))));
-        assert_eq!(result, vec![("profile".to_string(), "role,admin".to_string())]);
+        let result =
+            serialize_query_param("profile", &value, Some(&param_with("form", Some(false))));
+        assert_eq!(
+            result,
+            vec![("profile".to_string(), "role,admin".to_string())]
+        );
     }
 
     #[test]
@@ -10331,7 +10600,10 @@ mod tests {
     fn test_encode_query_component_reserved_chars() {
         assert_eq!(encode_query_component("a&b=c#d"), "a%26b%3Dc%23d");
         // Brackets (deepObject keys) are percent-encoded.
-        assert_eq!(encode_query_component("filter[status]"), "filter%5Bstatus%5D");
+        assert_eq!(
+            encode_query_component("filter[status]"),
+            "filter%5Bstatus%5D"
+        );
         // The pipe delimiter encodes to %7C.
         assert_eq!(encode_query_component("1|2"), "1%7C2");
     }
@@ -10608,8 +10880,7 @@ mod tests {
         defs.insert("id".to_string(), path_param("label", None));
         let mut params = Map::new();
         params.insert("id".to_string(), json!("42"));
-        let rendered =
-            render_path_template("/path/label/{id}", &params, Some(&defs)).unwrap();
+        let rendered = render_path_template("/path/label/{id}", &params, Some(&defs)).unwrap();
         assert_eq!(rendered, "/path/label/.42");
     }
 
@@ -10618,8 +10889,7 @@ mod tests {
         // Base-path placeholders pass `None` for defs -> plain encoded value.
         let mut params = Map::new();
         params.insert("tenant".to_string(), json!("acme"));
-        let rendered =
-            render_path_template("/{tenant}/v1", &params, None).unwrap();
+        let rendered = render_path_template("/{tenant}/v1", &params, None).unwrap();
         assert_eq!(rendered, "/acme/v1");
     }
 
@@ -10628,9 +10898,15 @@ mod tests {
         let mut params = Map::new();
         params.insert("fileId".to_string(), json!(".."));
         let result = render_path_template("/v1/files/{fileId}/content", &params, None);
-        assert!(result.is_err(), "bare '..' must be rejected as a dot-segment");
+        assert!(
+            result.is_err(),
+            "bare '..' must be rejected as a dot-segment"
+        );
         let err_msg = result.unwrap_err().to_string();
-        assert!(err_msg.contains("dot-segment"), "error should mention dot-segment: {err_msg}");
+        assert!(
+            err_msg.contains("dot-segment"),
+            "error should mention dot-segment: {err_msg}"
+        );
     }
 
     #[test]
@@ -10638,7 +10914,10 @@ mod tests {
         let mut params = Map::new();
         params.insert("id".to_string(), json!("."));
         let result = render_path_template("/v1/users/{id}", &params, None);
-        assert!(result.is_err(), "bare '.' must be rejected as a dot-segment");
+        assert!(
+            result.is_err(),
+            "bare '.' must be rejected as a dot-segment"
+        );
     }
 
     #[test]
@@ -10740,10 +11019,7 @@ mod tests {
             get_nested_value(&val, "users.0.name"),
             Some(&json!("alice"))
         );
-        assert_eq!(
-            get_nested_value(&val, "users.1.name"),
-            Some(&json!("bob"))
-        );
+        assert_eq!(get_nested_value(&val, "users.1.name"), Some(&json!("bob")));
     }
 
     #[test]
@@ -11227,7 +11503,10 @@ mod tests {
         )
         .await;
         assert!(!cont, "an absolute off-host next_path must not be followed");
-        assert!(!matches!(state, PageState::NextUrl(Some(_))), "got {state:?}");
+        assert!(
+            !matches!(state, PageState::NextUrl(Some(_))),
+            "got {state:?}"
+        );
     }
 
     #[tokio::test]
@@ -11667,10 +11946,9 @@ mod tests {
 
         assert!(result, "full page (3 >= 3) must continue pagination");
         match page_state {
-            PageState::Offset(n) => assert_eq!(
-                n, 3,
-                "offset advances by len(items), not by the step value"
-            ),
+            PageState::Offset(n) => {
+                assert_eq!(n, 3, "offset advances by len(items), not by the step value")
+            }
             other => panic!("expected Offset(3), got {other:?}"),
         }
     }
@@ -11758,37 +12036,136 @@ mod tests {
 
     #[test]
     fn test_mime_from_extension_various() {
-        assert_eq!(mime_from_extension("doc.txt"), Some("text/plain".to_string()));
-        assert_eq!(mime_from_extension("page.htm"), Some("text/html".to_string()));
-        assert_eq!(mime_from_extension("style.css"), Some("text/css".to_string()));
-        assert_eq!(mime_from_extension("data.xml"), Some("application/xml".to_string()));
-        assert_eq!(mime_from_extension("app.js"), Some("application/javascript".to_string()));
-        assert_eq!(mime_from_extension("doc.pdf"), Some("application/pdf".to_string()));
-        assert_eq!(mime_from_extension("arc.zip"), Some("application/zip".to_string()));
-        assert_eq!(mime_from_extension("file.gz"), Some("application/gzip".to_string()));
-        assert_eq!(mime_from_extension("file.gzip"), Some("application/gzip".to_string()));
-        assert_eq!(mime_from_extension("archive.tar"), Some("application/x-tar".to_string()));
-        assert_eq!(mime_from_extension("img.png"), Some("image/png".to_string()));
-        assert_eq!(mime_from_extension("photo.jpg"), Some("image/jpeg".to_string()));
-        assert_eq!(mime_from_extension("photo.jpeg"), Some("image/jpeg".to_string()));
-        assert_eq!(mime_from_extension("anim.gif"), Some("image/gif".to_string()));
-        assert_eq!(mime_from_extension("icon.svg"), Some("image/svg+xml".to_string()));
-        assert_eq!(mime_from_extension("img.webp"), Some("image/webp".to_string()));
-        assert_eq!(mime_from_extension("fav.ico"), Some("image/x-icon".to_string()));
-        assert_eq!(mime_from_extension("song.mp3"), Some("audio/mpeg".to_string()));
-        assert_eq!(mime_from_extension("sound.wav"), Some("audio/wav".to_string()));
-        assert_eq!(mime_from_extension("video.mp4"), Some("video/mp4".to_string()));
-        assert_eq!(mime_from_extension("clip.webm"), Some("video/webm".to_string()));
-        assert_eq!(mime_from_extension("config.yaml"), Some("application/yaml".to_string()));
-        assert_eq!(mime_from_extension("config.yml"), Some("application/yaml".to_string()));
-        assert_eq!(mime_from_extension("config.toml"), Some("application/toml".to_string()));
-        assert_eq!(mime_from_extension("word.doc"), Some("application/msword".to_string()));
-        assert_eq!(mime_from_extension("word.docx"), Some("application/vnd.openxmlformats-officedocument.wordprocessingml.document".to_string()));
-        assert_eq!(mime_from_extension("sheet.xls"), Some("application/vnd.ms-excel".to_string()));
-        assert_eq!(mime_from_extension("sheet.xlsx"), Some("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".to_string()));
-        assert_eq!(mime_from_extension("slides.ppt"), Some("application/vnd.ms-powerpoint".to_string()));
-        assert_eq!(mime_from_extension("slides.pptx"), Some("application/vnd.openxmlformats-officedocument.presentationml.presentation".to_string()));
-        assert_eq!(mime_from_extension("module.wasm"), Some("application/wasm".to_string()));
+        assert_eq!(
+            mime_from_extension("doc.txt"),
+            Some("text/plain".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("page.htm"),
+            Some("text/html".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("style.css"),
+            Some("text/css".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("data.xml"),
+            Some("application/xml".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("app.js"),
+            Some("application/javascript".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("doc.pdf"),
+            Some("application/pdf".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("arc.zip"),
+            Some("application/zip".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("file.gz"),
+            Some("application/gzip".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("file.gzip"),
+            Some("application/gzip".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("archive.tar"),
+            Some("application/x-tar".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("img.png"),
+            Some("image/png".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("photo.jpg"),
+            Some("image/jpeg".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("photo.jpeg"),
+            Some("image/jpeg".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("anim.gif"),
+            Some("image/gif".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("icon.svg"),
+            Some("image/svg+xml".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("img.webp"),
+            Some("image/webp".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("fav.ico"),
+            Some("image/x-icon".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("song.mp3"),
+            Some("audio/mpeg".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("sound.wav"),
+            Some("audio/wav".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("video.mp4"),
+            Some("video/mp4".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("clip.webm"),
+            Some("video/webm".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("config.yaml"),
+            Some("application/yaml".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("config.yml"),
+            Some("application/yaml".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("config.toml"),
+            Some("application/toml".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("word.doc"),
+            Some("application/msword".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("word.docx"),
+            Some(
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    .to_string()
+            )
+        );
+        assert_eq!(
+            mime_from_extension("sheet.xls"),
+            Some("application/vnd.ms-excel".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("sheet.xlsx"),
+            Some("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("slides.ppt"),
+            Some("application/vnd.ms-powerpoint".to_string())
+        );
+        assert_eq!(
+            mime_from_extension("slides.pptx"),
+            Some(
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                    .to_string()
+            )
+        );
+        assert_eq!(
+            mime_from_extension("module.wasm"),
+            Some("application/wasm".to_string())
+        );
         assert_eq!(mime_from_extension("file.unknown"), None);
     }
 
@@ -11796,8 +12173,14 @@ mod tests {
     fn test_mime_to_extension_additional_branches() {
         assert_eq!(mime_to_extension("image/gif"), "gif");
         // Use MIMEs that don't contain "xml" (which matches earlier in the chain)
-        assert_eq!(mime_to_extension("application/vnd.ms-excel.spreadsheet"), "xlsx");
-        assert_eq!(mime_to_extension("application/vnd.ms-word.document.12"), "docx");
+        assert_eq!(
+            mime_to_extension("application/vnd.ms-excel.spreadsheet"),
+            "xlsx"
+        );
+        assert_eq!(
+            mime_to_extension("application/vnd.ms-word.document.12"),
+            "docx"
+        );
         assert_eq!(mime_to_extension("application/octet-stream"), "bin");
         assert_eq!(mime_to_extension("application/unknown-type"), "bin");
     }
@@ -11838,9 +12221,7 @@ mod tests {
         // Charsets other than UTF-8 / ISO-8859-1 fall through and the caller
         // ends up with the `download.<ext>` default.
         assert_eq!(
-            extract_content_disposition_filename(
-                "attachment; filename*=Shift_JIS''%82%a0.mp3"
-            ),
+            extract_content_disposition_filename("attachment; filename*=Shift_JIS''%82%a0.mp3"),
             None,
         );
     }
@@ -11927,16 +12308,12 @@ mod tests {
     fn test_extract_content_disposition_filename_decodes_rfc5987_utf8() {
         // RFC 5987: charset'lang'percent-encoded-bytes. We support UTF-8.
         assert_eq!(
-            extract_content_disposition_filename(
-                "attachment; filename*=UTF-8''%E5%A3%B0.mp3"
-            ),
+            extract_content_disposition_filename("attachment; filename*=UTF-8''%E5%A3%B0.mp3"),
             Some("声.mp3".to_string())
         );
         // ISO-8859-1 is also RFC-listed; supported as raw bytes (no decode).
         assert_eq!(
-            extract_content_disposition_filename(
-                "attachment; filename*=ISO-8859-1''cafe.mp3"
-            ),
+            extract_content_disposition_filename("attachment; filename*=ISO-8859-1''cafe.mp3"),
             Some("cafe.mp3".to_string())
         );
     }
@@ -11972,7 +12349,10 @@ mod tests {
         // char::is_control returns false. We must reject it explicitly to
         // prevent server-controlled extension spoofing where the displayed
         // name reads `invoice.jpg` but the saved file is actually `.exe`.
-        assert_eq!(sanitize_server_supplied_filename("invoice\u{202E}gpj.exe"), None);
+        assert_eq!(
+            sanitize_server_supplied_filename("invoice\u{202E}gpj.exe"),
+            None
+        );
         // Other bidi/format chars in the same family.
         assert_eq!(sanitize_server_supplied_filename("a\u{200E}b.mp3"), None);
         assert_eq!(sanitize_server_supplied_filename("a\u{200F}b.mp3"), None);
@@ -12170,8 +12550,17 @@ mod tests {
     fn test_parse_and_validate_inputs_invalid_params_json() {
         let doc = RestDescription::default();
         let method = RestMethod::default();
-        let err =
-            parse_and_validate_inputs(&doc, &method, Some("{not json}"), None, false, None, &[], &[]).unwrap_err();
+        let err = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some("{not json}"),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .unwrap_err();
         assert!(err.to_string().contains("Invalid --params JSON"));
     }
 
@@ -12179,8 +12568,17 @@ mod tests {
     fn test_parse_and_validate_inputs_invalid_body_json() {
         let doc = RestDescription::default();
         let method = RestMethod::default();
-        let err =
-            parse_and_validate_inputs(&doc, &method, None, Some("{not json}"), false, None, &[], &[]).unwrap_err();
+        let err = parse_and_validate_inputs(
+            &doc,
+            &method,
+            None,
+            Some("{not json}"),
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .unwrap_err();
         assert!(err.to_string().contains("Invalid --json body"));
     }
 
@@ -12200,7 +12598,8 @@ mod tests {
             parameters,
             ..Default::default()
         };
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[]).unwrap_err();
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
+            .unwrap_err();
         assert!(err.to_string().contains("Required parameter 'api_key'"));
     }
 
@@ -12302,7 +12701,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let mut errors = Vec::new();
         validate_value(&Value::Null, "NullableObj", &doc, "body", &mut errors);
         assert!(
@@ -12340,7 +12742,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let mut errors = Vec::new();
         validate_value(&Value::Null, "NullableUnionObj", &doc, "body", &mut errors);
         assert!(
@@ -12366,7 +12771,10 @@ mod tests {
                 ..Default::default()
             },
         )]);
-        let doc = RestDescription { schemas, ..Default::default() };
+        let doc = RestDescription {
+            schemas,
+            ..Default::default()
+        };
         let mut errors = Vec::new();
         validate_value(&Value::Null, "StrictObj", &doc, "body", &mut errors);
         assert!(
@@ -12401,11 +12809,8 @@ mod tests {
     fn test_resolve_next_path_relative_path_inherits_directory() {
         // No leading slash → resolved relative to the previous request's
         // directory (browser-style URL resolution).
-        let url = resolve_next_path(
-            "https://api.example.com/v1/things",
-            "things?cursor=b",
-        )
-        .unwrap();
+        let url =
+            resolve_next_path("https://api.example.com/v1/things", "things?cursor=b").unwrap();
         assert_eq!(url, "https://api.example.com/v1/things?cursor=b");
     }
 
@@ -12418,58 +12823,87 @@ mod tests {
     #[test]
     fn test_page_state_initial_for_each_form() {
         assert!(matches!(
-            PageState::initial(Some(&EndpointPagination::Cursor {
-                cursor: "c".into(),
-                next_cursor: "n".into(),
-                results: "r".into(),
-            }), &[], &HashMap::new()),
+            PageState::initial(
+                Some(&EndpointPagination::Cursor {
+                    cursor: "c".into(),
+                    next_cursor: "n".into(),
+                    results: "r".into(),
+                }),
+                &[],
+                &HashMap::new()
+            ),
             PageState::Cursor(None)
         ));
         assert!(matches!(
-            PageState::initial(Some(&EndpointPagination::Offset {
-                offset: "o".into(),
-                results: "r".into(),
-                step: None,
-                has_next_page: None,
-            }), &[], &HashMap::new()),
+            PageState::initial(
+                Some(&EndpointPagination::Offset {
+                    offset: "o".into(),
+                    results: "r".into(),
+                    step: None,
+                    has_next_page: None,
+                }),
+                &[],
+                &HashMap::new()
+            ),
             PageState::Offset(1)
         ));
         assert!(matches!(
-            PageState::initial(Some(&EndpointPagination::Offset {
-                offset: "o".into(),
-                results: "r".into(),
-                step: Some("limit".into()),
-                has_next_page: None,
-            }), &[], &HashMap::new()),
+            PageState::initial(
+                Some(&EndpointPagination::Offset {
+                    offset: "o".into(),
+                    results: "r".into(),
+                    step: Some("limit".into()),
+                    has_next_page: None,
+                }),
+                &[],
+                &HashMap::new()
+            ),
             PageState::Offset(0)
         ));
         assert!(matches!(
-            PageState::initial(Some(&EndpointPagination::Uri {
-                next_uri: "n".into(),
-                results: "r".into(),
-            }), &[], &HashMap::new()),
+            PageState::initial(
+                Some(&EndpointPagination::Uri {
+                    next_uri: "n".into(),
+                    results: "r".into(),
+                }),
+                &[],
+                &HashMap::new()
+            ),
             PageState::NextUrl(None)
         ));
         assert!(matches!(
-            PageState::initial(Some(&EndpointPagination::Path {
-                next_path: "n".into(),
-                results: "r".into(),
-            }), &[], &HashMap::new()),
+            PageState::initial(
+                Some(&EndpointPagination::Path {
+                    next_path: "n".into(),
+                    results: "r".into(),
+                }),
+                &[],
+                &HashMap::new()
+            ),
             PageState::NextUrl(None)
         ));
         assert!(matches!(
-            PageState::initial(Some(&EndpointPagination::Custom {
-                results: "r".into(),
-            }), &[], &HashMap::new()),
+            PageState::initial(
+                Some(&EndpointPagination::Custom {
+                    results: "r".into(),
+                }),
+                &[],
+                &HashMap::new()
+            ),
             PageState::Custom
         ));
-        assert!(matches!(PageState::initial(None, &[], &HashMap::new()), PageState::Cursor(None)));
+        assert!(matches!(
+            PageState::initial(None, &[], &HashMap::new()),
+            PageState::Cursor(None)
+        ));
     }
 
     #[test]
     fn test_page_state_url_override_only_for_next_url() {
         assert!(PageState::Cursor(None).url_override().is_none());
-        assert!(PageState::Cursor(Some("tok".into())).url_override().is_none());
+        assert!(PageState::Cursor(Some("tok".into()))
+            .url_override()
+            .is_none());
         assert!(PageState::Offset(5).url_override().is_none());
         assert!(PageState::NextUrl(None).url_override().is_none());
         assert!(PageState::Custom.url_override().is_none());
@@ -12494,7 +12928,9 @@ mod tests {
         let custom = EndpointPagination::Custom {
             results: "items".into(),
         };
-        assert!(PageState::Custom.injection(Some(&custom), "page_token").is_none());
+        assert!(PageState::Custom
+            .injection(Some(&custom), "page_token")
+            .is_none());
     }
 
     // -----------------------------------------------------------------
@@ -12568,23 +13004,13 @@ mod tests {
         // object — the WHATWG spec says they join with `\n` and
         // dispatch as one event on the blank-line separator. The TS
         // runtime's `iterSseEvents` loop does exactly this.
-        let payloads = drive(&[
-            "data: {",
-            "data:   \"foo\": 1",
-            "data: }",
-            "",
-        ]);
+        let payloads = drive(&["data: {", "data:   \"foo\": 1", "data: }", ""]);
         assert_eq!(payloads, vec!["{\n  \"foo\": 1\n}".to_string()]);
     }
 
     #[test]
     fn test_sse_decoder_dispatches_two_events_separated_by_blank() {
-        let payloads = drive(&[
-            "data: {\"step\":1}",
-            "",
-            "data: {\"step\":2}",
-            "",
-        ]);
+        let payloads = drive(&["data: {\"step\":1}", "", "data: {\"step\":2}", ""]);
         assert_eq!(
             payloads,
             vec!["{\"step\":1}".to_string(), "{\"step\":2}".to_string(),]
@@ -12747,7 +13173,10 @@ mod tests {
         let config = StreamingConfig::Sse { terminator: None };
         match &config {
             StreamingConfig::Sse { terminator } => {
-                assert!(terminator.is_none(), "auto-detected SSE must have no terminator");
+                assert!(
+                    terminator.is_none(),
+                    "auto-detected SSE must have no terminator"
+                );
             }
             _ => panic!("expected Sse variant"),
         }
@@ -13020,7 +13449,11 @@ async fn test_dry_run_names_the_requirement_that_was_satisfied() {
     .await;
     assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
     assert_eq!(auth["satisfied_by"], json!("OtherAuth"), "{auth}");
-    assert_eq!(auth["schemes"], json!(["MissingAuth", "OtherAuth"]), "{auth}");
+    assert_eq!(
+        auth["schemes"],
+        json!(["MissingAuth", "OtherAuth"]),
+        "{auth}"
+    );
 }
 
 #[tokio::test]
@@ -13039,7 +13472,11 @@ async fn test_dry_run_redacts_api_key_query_params() {
         &crate::auth::no_auth_provider(),
     )
     .await;
-    assert_eq!(out["query_params"], json!([["api_key", "[REDACTED]"]]), "{out}");
+    assert_eq!(
+        out["query_params"],
+        json!([["api_key", "[REDACTED]"]]),
+        "{out}"
+    );
     assert_eq!(out["auth"]["credentials"], json!("supplied"), "{out}");
     assert!(
         !out.to_string().contains("sk-query-secret"),
@@ -13388,7 +13825,10 @@ async fn test_get_does_not_set_content_length_zero() {
 async fn test_bearer_header_sends_bearer_prefix() {
     use crate::openapi::discovery::RestMethod;
 
-    let client = crate::http::HttpConfig::new("test").unwrap().build_client().unwrap();
+    let client = crate::http::HttpConfig::new("test")
+        .unwrap()
+        .build_client()
+        .unwrap();
     let method = RestMethod {
         http_method: "GET".to_string(),
         path: "/test".to_string(),
@@ -13526,8 +13966,7 @@ fn write_http_preamble_binary_header_value() {
     // byte sequence that includes characters outside the visible ASCII
     // range accepted by `to_str` (which requires only 0x20..=0x7E
     // plus TAB).
-    let raw_val =
-        reqwest::header::HeaderValue::from_bytes(&[0x80, 0xAB, 0xFF]).unwrap();
+    let raw_val = reqwest::header::HeaderValue::from_bytes(&[0x80, 0xAB, 0xFF]).unwrap();
     headers.insert("x-binary", raw_val);
 
     write_http_preamble(
@@ -13675,7 +14114,10 @@ fn test_global_param_query_injection() {
         parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
             .unwrap();
     assert!(
-        input.query_params.iter().any(|(k, v)| k == "api_version" && v == "2024-01-01"),
+        input
+            .query_params
+            .iter()
+            .any(|(k, v)| k == "api_version" && v == "2024-01-01"),
         "query param should appear in query_params: {:?}",
         input.query_params
     );
@@ -13704,7 +14146,9 @@ fn test_global_param_body_injection() {
     let input =
         parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
             .unwrap();
-    let body = input.body.expect("body should be populated from global param");
+    let body = input
+        .body
+        .expect("body should be populated from global param");
     assert_eq!(body["currency"], "USD");
 }
 
@@ -13741,7 +14185,9 @@ fn test_global_param_nested_body_injection_when_absent() {
         &global_params,
     )
     .unwrap();
-    let body = input.body.expect("body should carry the injected nested global");
+    let body = input
+        .body
+        .expect("body should carry the injected nested global");
     assert_eq!(body["config"]["currency"], "USD");
     assert_eq!(body["query"], "shoes");
 }
@@ -13918,7 +14364,10 @@ fn test_global_param_multiple_locations() {
     assert_eq!(input.header_params.len(), 1);
     assert_eq!(input.header_params[0].0, "X-Tenant");
     assert!(
-        input.query_params.iter().any(|(k, v)| k == "version" && v == "v2"),
+        input
+            .query_params
+            .iter()
+            .any(|(k, v)| k == "version" && v == "v2"),
         "query param should appear in query_params: {:?}",
         input.query_params
     );

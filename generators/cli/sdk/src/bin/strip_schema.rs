@@ -14,15 +14,21 @@
 ///   cargo run --bin strip-schema -- path/to/schema.json > src/bin/myapi/schema.json
 ///   cat schema.json | cargo run --bin strip-schema > src/bin/myapi/schema.json
 use serde_json::Value;
-use std::{env, fs, io::{self, Read}};
+use std::{
+    env, fs,
+    io::{self, Read},
+};
 
 fn main() {
     let input = match env::args().nth(1) {
-        Some(path) => fs::read_to_string(&path)
-            .unwrap_or_else(|e| panic!("Cannot read {path}: {e}")),
+        Some(path) => {
+            fs::read_to_string(&path).unwrap_or_else(|e| panic!("Cannot read {path}: {e}"))
+        }
         None => {
             let mut buf = String::new();
-            io::stdin().read_to_string(&mut buf).expect("Failed to read stdin");
+            io::stdin()
+                .read_to_string(&mut buf)
+                .expect("Failed to read stdin");
             buf
         }
     };
@@ -53,7 +59,10 @@ fn main() {
 
     strip_noise(&mut data);
 
-    println!("{}", serde_json::to_string(&data).expect("Serialization failed"));
+    println!(
+        "{}",
+        serde_json::to_string(&data).expect("Serialization failed")
+    );
 
     let original_kb = input.len() / 1024;
     let stripped_kb = serde_json::to_string(&data).unwrap().len() / 1024;
